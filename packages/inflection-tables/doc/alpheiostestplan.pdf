@@ -1,0 +1,517 @@
+Test Plan | Alpheios  http://alpheios.net/content/test-plan
+
+        Test Plan
+
+         Submitted by MonicaZugan (/users/monicazugan) on Thu, 09/24/2009 - 10:34
+         in
+
+         Test cases to be executed on mac and pc, latin and greek tools
+
+         Installation
+         1) installation on previous build
+         2) remove components from add-ons
+         3) clean installation - release notes should open when completed (or when clicking on version # from banner)
+         4) test on different version of firefox
+
+         Uninstall
+         1) Uninstall all Alpheios tools from the FF Tools/Add-Ons menu. Upon restart of FF, type about:config in browser location and
+         then filter on 'extensions.alpheios'. Verify that no alpheios settings remain.
+
+         Alpheios tools enabled
+         1) test that the Alpheios toolbar is added to the Firefox toolbar when link to any enhanced text
+         2) test that the Alpheios toolbar is added to the Firefox toolbar when link from any Alpheios-enabled site selected from
+         greek/latin links
+
+         Alpheios tools disabled
+         1) test that Alpheios toolbar is removed when visiting any non-alpheios URLs from Location Bar or History menu in the
+         browser
+         2) test that Alpheios toolbar is removed when using back/forward buttons on the browser
+         3) test that a pop-up should be generated when Alpheios toolbar is removed
+         4) answer survey in pop-up
+         5) send feed-back from pop-up, from toolbar, from help menu
+
+         Default configuration (Firefox toolbar with text)
+         1) correct language should be detected and displayed on the right side of toolbar
+         2) the correct language should replace xxxxxx in Look up a xxxxxxx word by double-clicking on it.
+         3) check Alpheios drop-down menu and links to inflection table, grammar and help
+
+         Default configuration (Firefox toolbar with Alpheios enhanced text)
+         1) correct language should be detected and displayed on the right side of toolbar
+         2) the correct language should replace xxxxxx in Look up a xxxxxxx word by double-clicking on it.
+         3) check Alpheios drop-down menu and links to inflection table, grammar and help
+
+         Default configuration (Alpheios enhanced text toolbar)
+         1) the correct language should replace xxxxxx in Look up a xxxxxxx word by double-clicking on it.
+         2) reading mode should be the default mode and translation panel should be opened by default
+         3) check switch to quiz mode, inflection table, grammar, options and help. should open the correspondent splash screen
+         pages.
+
+         Options (can be access from add-ons, firefox toolbar and Alpheios toolbar for enhanced text)
+         1) in General, change to mousemove in word lookup tab and check that mouse over is the trigger for lookup
+         2) in General, enable interlinear translation in the correspondent tab. Show Interlinear Translation checkbox is enable on the
+         Alpheios enhanced text.
+         3) check/uncheck Show Interlinear Translation checkbox to enable/disable the interlinear translation in the Translation Panel
+         or in the enhanced text.
+         4) in Advanced, select Window/Panel Settings button. uncheck Translation Panel in the Enhanced column in the Panels Open
+         By Default section to change the default status to close. open any enhanced text in reading mode/quiz mode, the translation
+         panel should not be opened automatically.
+         5) in Advanced, select Window/Panel Settings button. check Translation Panel in the Enhanced column in the Panels Open
+         By Default section to change back the default status to open. open any enhanced text in reading mode/quiz mode, the
+         translation panel should be opened.
+         6) Change setting to trigger lookup from double click to mouse over when in quiz mode. Mouseover is disabled in Quiz Mode
+         pops up. Double-click to select a word.
+         7) Change setting to trigger lookup from double click to mouse over when in reading mode. Switch to quiz mode. Verify that
+
+1 of 7                01/23/2014 09:25 AM
+Test Plan | Alpheios  http://alpheios.net/content/test-plan
+
+        double click is the trigger to select a word.
+
+        Panels (Alpheios enhanced text)
+        1) double click (or mousemove) on any word to open short dictionary definition. The morphology popup will appear for that
+        word.
+        2) click on diagram, define and inflect (if available). check that treebank, full dictionary definition and inflection table (if
+        available) popups will open.
+        3) click on any hyper-linked grammatical term in the morphology popup to open the relevant section in the Grammar.
+        4) double click (or mousemove) on any word in quiz mode will open the quiz window.
+        5) all popup should close when navigating away from Alpheios site.
+
+        Panels (Alpheios text)
+        1) double click (or mousemove) on any word to open short dictionary definition. The morphology popup will appear for that
+        word.
+        2) click on define or inflect (not always available). check that full dictionary definition and inflection table (if available) popups
+        will open.
+        3) click on any hyper-linked grammatical term in the morphology popup to open the relevant section in the Grammar.
+        4) check that quiz mode is not available.
+        5) all popup should close when navigating away from Alpheios site.
+
+        Latin inflection tables, grammar and treebank (cupidinibus) noun
+        1) double click (or mouse over) on cupidinibus (line 2 of the Elegies 1). all 3 icons should be availablein morphology panel.
+        2) click on inflection, it should open the Third Noun inflection table with a link to Full table.
+        3) the ending ibus (masculine/feminine ablative plural) should be highlighted in yellow in the Third declension column (exact
+        match). all the other endings in ibus should be highlighted in blue.
+        4) check that same endings are highlighted also when switching to Full table.
+        5) click on the Inflection Index link to access of all available inflection tables.
+        6) check that the ablative link will open that specific section in the Bennett's grammar.
+        7) check that the 3rd declension link will open that specific section in the Bennett's grammar.
+        8) click on the Diagram icon, the Diagram View pop-up should open with cupidinibus highlighted in yellow in the tree and in
+        the sentence.
+        9) double click on cupidinibus from the tree. only inflect and define icons should be available in lookup. click on icons to open
+        the related panels.
+
+        Latin inflection tables, grammar and treebank (aut) conjunction --> no inflection table available
+        1) double click (or mouse over) on aut (line 3 of the Elegies 2). only diagram and define icons should be available.
+        2) click on the Diagram icon, the Diagram View pop-up should open with aut highlighted in yellow in the tree and in the
+        sentence.
+        3) double click on aut from the tree. only define icon should be available in lookup. click on icon to open the Dictionary panel.
+        4) all panels and pop-ups should close when navigating away from Alpheios site.
+
+        Latin inflection tables, grammar and treebank (constantis) adjective (bug 332)
+        1) double click (or mouse over) on constantis (Elegies 1). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Adjective inflection table.
+        3) the ending is(singular genitive masculine) should be highlighted in yellow in the 3rd declension column (exact match). all
+        the other endings in is should be highlighted in blue.
+        4) click on the Inflection Index link to access of all available inflection tables.
+        5) check that the 3rd Declension link should open the Adjectives of the Third Declensions section in the Bennett's grammar.
+        6) check that the genitive and adjective links should open the specific sections in the Bennett's grammar.
+        7) click on the Diagram icon, the Diagram View pop-up should open with constantis highlighted in yellow in the tree and in the
+        sentence.
+        8) double click on constantis from the tree. only inflect and define icons should be available in lookup. click on icons to open
+        the related panels.
+
+        Latin inflection tables, grammar and treebank (quid) adverb --> no inflection table available
+        1) double click (or mouse over) on quid (Elegies 2). only diagram and define icons should be available.
+        2) click on the Diagram icon, the Diagram View pop-up should open with quid highlighted in yellow in the tree and in the
+        sentence.
+        3) double click on quid from the tree. only define icon should be available in lookup. click on the icon to open the Dictionary
+        panel.
+        4) check that the adverb link should open the Adverb section in the Bennett's grammar.
+        5) all panels and pop-ups should close when navigating away from Alpheios site.
+
+        Latin inflection tables, grammar and treebank (illis) pronoun --> no inflection table available
+        1) double click (or mouse over) on illis (Elegies 2). only diagram and define icons should be available.
+        2) click on the Diagram icon, the Diagram View pop-up should open with quid highlighted in yellow in the tree and in the
+        sentence.
+        3) double click on illis from the tree. only define icon should be available in lookup. click on the icon to open the Dictionary
+        panel.
+
+2 of 7                01/23/2014 09:25 AM
+Test Plan | Alpheios  http://alpheios.net/content/test-plan
+
+        4) check that the pronoun and 6th Declension links should open the related sections in the Bennett's grammar.
+        5) all panels and pop-ups should close when navigating away from Alpheios site.
+
+        Latin inflection tables, grammar and treebank (vendere) verb infinitive
+        1) double click (or mouse over) on vendere (Elegies 2). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Verb Conjugations Infinitive table.
+        3) the ending in ere for the present active should be highlighted in yellow in the 3rd Conjugation column (exact match) and in
+        blue in the second Conjugation column.
+        4) check that similar endings are highlighted in blue when switching to verb conjugation.
+        5) click on the Inflection Index link to access of all available inflection tables.
+        6) check that the Verb link will open the Verbs section in the Bennett's grammar.
+        7) check that the 3rd conjugation and infinitive will open those specific sections in the Bennett's grammar.
+        8) click on the Diagram icon, the Diagram View pop-up should open with
+        vendere highlighted in yellow in the tree and in the sentence.
+        9) double click on vendere from the tree. only inflect and define icons should be available in lookup. click on icons to open the
+        related panels.
+
+        Latin inflection tables, grammar and treebank (ornato) verb participle
+        1) double click (or mouse over) on ornato (Elegies 2). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Verb Participles table.
+        3) click on the Inflection Index link to access of all available inflection tables.
+        4) check that the verb participle link will open the Participles section in the Bennett's grammar.
+        5) check that the ablative link will open the Ablatives section in the Bennett's grammar.
+        6) click on the Diagram icon, the Diagram View pop-up should open with ornato highlighted in yellow in the tree and in the
+        sentence.
+        7) double click on ornato from the tree. only inflect and define icons should be available in lookup. click on icons to open the
+        related panels.
+
+        Latin inflection tables, grammar and treebank (cepit) verb
+        1) double click (or mouse over) on cepit (Elegies 1). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Verb Conjugations Full table.
+        3) the ending in it should be highlighted in yellow (exact match) in the 3rd Person Singular Perfect of Active Indicative 3rd
+        Conjugation column.
+        4) check that same cell is highlighted when switching to conjugation>mood>voice or to mood>conjugation>voice.
+        5) click on the Inflection Index link to access of all available inflection tables.
+        6) check that the verb and 3rd Conjugation links will open the related sections in the Bennett's grammar.
+        7) check that the indicative link will open the Indicative section in the Bennett's grammar.
+        8) click on the Diagram icon, the Diagram View pop-up should open with cepit highlighted in yellow in the tree and in the
+        sentence.
+        9) double click on cepit from the tree. only inflect and define icons should be available in lookup. click on icons to open the
+        related panels.
+
+        Greek inflection tables, grammar and treebank (μοῦσα) noun
+        1) double click (or mouse over) on μοῦσα (line 1 of the Odyssey, Book 1). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Noun inflection table.
+        3) the ending α (feminine vocative singular) should be highlighted in yellow in the First declension column (exact match). all
+        the other endings in α should be highlighted in blue.
+        4) check that same endings are highlighted also when switching to noun simplified table.
+        5) click on the Inflection Index link to access of all available inflection tables.
+        6) check that the 1st Declension link will open the first declension (stem in α) section in the Smyth's grammar.
+        7) check that the vocative link will open that specific section in the Smyth's grammar.
+        8) click on the Diagram icon, the Diagram View pop-up should open with μοῦσα highlighted in yellow in the tree and in the
+        sentence.
+        9) double click on μοῦσα from the tree. only inflect and define icons should be available in lookup.
+        Greek inflection tables, grammar and treebank (ἐπεὶ) conjunction --> no inflection table available
+        1) double click (or mouse over) on ἐπεὶ (line 2 of the Odyssey, Book 1). only diagram and define icons should be available.
+        2) click on the Diagram icon, the Diagram View pop-up should open with ἐπεὶ highlighted in yellow in the tree and in the
+        sentence.
+        3) double click on ἐπεὶ from the tree. only define icon should be available in lookup. click on icons to open the related panels.
+        4) all panels and pop-ups should close when navigating away from Alpheios site.
+        Greek inflection tables, grammar and treebank (πολλὰ) adjective (bug 262)
+        1) double click (or mouse over) on πολλὰ (line 4 of the Odyssey, Book 1). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Adjective inflection table.
+        3) the ending α (plural accusative neuter) should be highlighted in yellow in the 2nd declension column (exact match). all the
+        other endings in α should be highlighted in blue.
+        4) check that same endings are highlighted also when switching to Adjective simplified table.
+        5) click on the Inflection Index link to access of all available inflection tables.
+        6) check that the 1st&2nd Declension link will open the Adjectives of the First and Second Declensions section in the Smyth's
+
+3 of 7                01/23/2014 09:25 AM
+Test Plan | Alpheios  http://alpheios.net/content/test-plan
+
+        grammar.
+        7) check that the accusative link will open that specific section in the Smyth's grammar.
+
+        8) click on the Diagram icon, the Diagram View pop-up should open with πολλὰ highlighted in yellow in the tree and in the
+        sentence.
+
+        9) double click on πολλὰ from the tree. only inflect and define icons should be available in lookup.
+
+        Greek inflection tables, grammar and treebank (πολλὰ) adverb (bug 262) --> no inflection table available
+
+        1) double click (or mouse over) on πολλὰ (line 1 of the Odyssey, Book 1). only diagram and define icons should be available.
+
+        2) click on the Diagram icon, the Diagram View pop-up should open with πολλὰ highlighted in yellow in the tree and in the
+        sentence.
+
+        3) double click on πολλὰ from the tree. only define icon should be available in lookup. click on icons to open the related
+        panels.
+        4) all panels and pop-ups should close when navigating away from Alpheios site.
+
+        Greek inflection tables, grammar and treebank (τῷ) article
+
+        1) double click (or mouse over) on τῷ (second line of Prometheus and the gift of fire). all 3 icons should be available in
+        morphology panel.
+        2) click on inflection, it should open the Article table.
+        3) the exact match should be highlighted in yellow in the Singular Dative Neuter cell and in blue in the Singular Dative
+        Masculine cell.
+        4) click on the Inflection Index link to access of all available inflection tables.
+        5) check that the Article link will open the Article section in the Smyth's grammar.
+        6) check that the dative link will open that specific section in the Smyth's grammar.
+
+        7) click on the Diagram icon, the Diagram View pop-up should open with τῷ highlighted in yellow in the tree and in the
+        sentence.
+
+        8) double click on τῷ from the tree. only inflect and define icons should be available in lookup.
+
+        Greek inflection tables, grammar and treebank (ὅ) article (bug 262) --> no forms available
+
+        1) double click (or mouse over) on ὅ (line 4 of the Odyssey, Book 1). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Article table.
+
+        3) there is no exact match as we are missing the form info. ὅ should be highlighted in blue in the Singular Nominative
+        Masculine cell.
+        4) click on the Inflection Index link to access of all available inflection tables.
+        5) check that the Article link will open the Article section in the Smyth's grammar.
+
+        6) click on the Diagram icon, the Diagram View pop-up should open with ὅ highlighted in yellow in the tree and in the
+        sentence.
+
+        7) double click on ὅ from the tree. only inflect and define icons should be available in lookup. click on icons to open the related
+        panels.
+
+        Greek inflection tables, grammar and treebank (ἡμῖν) pronoun
+
+        1) double click (or mouse over) on ἡμῖν (line 10 of the Odyssey, Book 1). all 3 icons should be available in morphology panel.
+        2) click on inflection, it should open the Personal Pronoun table.
+        3) the exact match should be highlighted in yellow in the Plural Dative cell for the First Person column
+        4) click on the Inflection Index link to access of all available inflection tables.
+        5) check that the Pronoun link will open the Pronoun section in the Smyth's grammar.
+        6) check that the dative link will open that specific section in the Smyth's grammar.
+
+        7) click on the Diagram icon, the Diagram View pop-up should open with ἡμῖν highlighted in yellow in the tree and in the
+        sentence.
+
+        8) double click on ἡμῖν from the tree. only inflect and define icons should be available in lookup. click on icons to open the
+        related panels.
+        Greek inflection tables, dictionary and grammar (τέτταρες) numeral
+        1) Enable lookup toolbar in Options and enter τέτταρες (four) - Define and Inflect icons should be available in morphology
+        panel.
+        2) click on inflection, it should open the Numeral table.
+        3) the exact match should be highlighted in yellow in the Plural Nominative of the Masculine/Feminine column.
+        4) click on the Inflection Index link to access of all available inflection tables.
+        5) check that the Numeral link from Morphology Panel will open the Numerals section in the Smyth's grammar.
+        6) check that the nominative link will open that specific section in the Smyth's grammar.
+        7) click on Define and check for the content in the related Dictionary Panel.
+
+        Greek inflection tables, grammar and treebank (διδοῦσι) verb --> bug 299
+
+        1) double click (or mouse over) on διδοῦσι (line 313 of the Odyssey, Book 1). all 3 icons should be available in morphology
+        panel.
+
+        2) click on inflection, it should open the Present System Active of Contract verb in -όω table.
+        3) the ending similar to the verb should be highlighted in yellow in the 3rd Person Plural of Indicative column.
+        4) check that same cell is highlighted when switching to verb (all) conjugation.
+        5) click on the Inflection Index link to access of all available inflection tables.
+        6) check that the Verb link will open the Verbs section in the Smyth's grammar.
+        7) check that the 3rd person link will open the Personal endings section and that present, indicative and active links will open
+        those specific sections in the Smyth's grammar.
+
+        8) click on the Diagram icon, the Diagram View pop-up should open with διδοῦσι highlighted in yellow in the tree and in the
+        sentence.
+
+4 of 7                01/23/2014 09:25 AM
+Test Plan | Alpheios  http://alpheios.net/content/test-plan
+
+        9) double click on διδοῦσι from the tree. only inflect and define icons should be available in lookup. click on icons to open the
+        related panels.
+        Greek inflection tables, grammar and treebank (ἐπειγόμενός) verb participle--> bug 299
+        1) double click (or mouse over) on ἐπειγόμενός (line 309 of the Odyssey, Book 1). all 3 icons should be available in
+        morphology panel.
+        2) click on inflection, it should open the Participles in -μενος, -μένη, -μενον (all middle-passive and middle except perfect)
+        table.
+        3) the ending similar to the verb should be highlighted in yellow in the singular nominative of the masculine column.
+        4) check that same cell is highlighted when switching to verb (all) conjugation. (bug 310 - to be fixed)
+        5) click on the Inflection Index link to access of all available inflection tables.
+        6) check that the verb participle link will open the Declension of participles section in the Smyth's grammar.
+        7) check that present, mediopassive and nominative links will open those specific sections in the Smyth's grammar.
+        8) click on the Diagram icon, the Diagram View pop-up should open with ἐπειγόμενός highlighted in yellow in the tree and in
+        the sentence.
+        9) double click on ἐπειγόμενός from the tree. only inflect and define icons should be available in lookup. click on icons to
+        open the related panels.
+        Greek inflection tables (διπλοῦς) -- accent (bug 232)
+        1) Enable lookup toolbar in Options and enter διπλοῦς - In the Morphology panel, the stem+suffix is διπλ-ους which is Attic
+        dialect.
+        2) click on inflection, it should open the Adjective table.
+        3) the exact match should be highlighted in yellow in the Singular Nominative of the Masculine/Feminine column (ending in
+        οῦς) and in the Plural Accusative (ending in ους ούς οῦς)
+        Greek inflection tables (κανῷ) -- dialect
+        1) Enable lookup toolbar in Options and enter κανῷ - In the Morphology panel, the stem+suffix is καν-ῷ which is Attic epic
+        Doric dialect.
+        2) click on inflection, it should open the Noun declension table.
+        3) the exact match should be highlighted in yellow in the Singular Dative Neuter cell (ending in ῳ ῷ) and in blue for the
+        Singular Dative Masculine/Feminine cell (ending in ῳ) for the Second declension. ῷ is a secondary ending in the table.
+
+        Lookup from Firefox toolbar
+        1) in Options, go to General tab and check the Enable Toolbar Lookup.
+        2) enter puellas in the toolbar from latin enhanced text. Verify that it's a feminine noun, 1st declension plural accusative in the
+        morphology popup.
+        3) click on inflection, it should open the 1st Noun inflection table with a link to Full table.
+        4) the ending as (feminine plural accusative) should be highlighted in yellow in the First declension column (exact match). all
+        the other endings in as should be highlighted in blue.
+        5) enter μοῦσα in the toolbar from greek enhanced text. Verify that it's a feminine noun, 1st declension singular nominative
+        vocative in the morphology popup.
+        6) the ending α (feminine singular nominative vocative) should be highlighted in yellow in the First declension column (exact
+        match). all the other endings in α should be highlighted in blue.
+
+        Greek Dictionary Search order
+        1) open the Dictionary tab for Greek in options and move the Autenrieth dictionary up in the list for short definition and for long
+        definition.
+        2) double click (or mouse over) on ἅμαξαν from Heracles and the ox-driver fable. check that the dictionary used in the
+        morphology panel is Autenrieth.
+        3) click on Define and check that Autenrieth dictionary is used in the dictionary panel too.
+        4) enter ἅμαξαν from lookup toolbar and check again that Autenrieth dictionary is used in the Morphology and Dictionary
+        Panel.
+        5) test that Autenrieth dictionary is also used in quiz mode and diagram.
+        6) go back to the Dictionary tab for Greek in options and move the LSJ dictionary up in the list for short definition and Middle
+        Liddell for long definition. Refresh.
+        7) double click (or mouse over) on παῖς from Apollodorus: Deucalion and Pyrrha and the Flood. check that the dictionary
+        used in the morphology panel is LSJ.
+        8) click on Define and check that an intermediate Greek-English lexicon is used in the dictionary panel.
+        9) enter οὗτος from lookup toolbar and check that LSJ dictionary is used in the Morphology Panel and that Middle Liddell is
+        used in the Dictionary Panel.
+        10) double click on Δευκαλίων and check that Autenrieth dictionary is used for both short and long definition as the lemma is
+        not found in the preferred dictionary.
+        11) switch to quiz mode and take the quiz for any word. check that the dictionary definition in the quiz page is from LSJ and
+        Middle Liddell is used in the Dictionary Panel.
+
+        Greek reading mode/quiz mode (verb, noun)
+        1) click on Translation Panel button from Firefox toolbar and from Alpheios toolbar to turn on/off the Translation Panel in
+        reading mode.
+        2) click on Quiz mode button from Firefox toolbar and from Alpheios toolbar to switch to quiz mode with Translation Panel on.
+        Access the quiz for a Greek word by double-clicking on it should be displayed in both toolbars.
+
+5 of 7                01/23/2014 09:25 AM
+Test Plan | Alpheios  http://alpheios.net/content/test-plan
+
+        3) double click on ἔννεπε (line 1 of the Odyssey, book 1). You will be prompted to click on the word or words in the translation
+        which most closely represent the selected word. select few words from translation panel such as man devices o muse then
+        click on tell which is correct but more words are needed to complete the translation. select the first of. Translation is
+        completed.
+        4) Once you have selected all the aligned words correctly, the Quiz Window will open with the translation and definition of the
+        word plus the part of speech to choose from.
+        5) Choose verb as last choice. at this point it should prompt you again if you want to answer the inflection questions.
+        6) Choose no. The form is populated with the verb info: 2nd person singular present imperative active and also the diagram,
+        define and inflect icons are available on the top of the page.
+        7) click on Inflect to verify exact match. It should open the ω-Verbs: Present System Active table.
+        8) Now choose yes to answer the inflection questions (repeat steps 3 to 5). click on few cells in the table (present, dual, plural,
+        optative singular) and see that they should be populated with the correspondent verb form.
+        9) click on 2nd person singular present imperative cell and you should have the exact match.
+        10) click on Diagram from the quiz window. you should be able to start the quiz again for any word in the tree.
+
+        11) if quiz mode is not available for a word (e.g. ἕσπετο line 125, Odyssey book 1) the form is automatically populated after
+        selecting the part of speech.
+
+        12) click on Translation Panel icon from FF toolbar or Alpheios toolbar to close the panel if opened. Double click on ἑταίρων
+        (line 5 of the Odyssey), the Quiz window will open immediately and you will be prompt to identify the translation from a
+        selection of words randomly generated from the text. Choose "of his comrades" as last choice.
+        13) check noun as the last available option for the part of speech. It should prompt you again if you want to identify the
+        inflected form for the word.
+        14) answer yes and the form table will be displayed. Check Singular under Number and the table will be populated by red
+        check marks in all the singular cells. click on Reset
+        15) Now click again on any cell in the Singular section and it will be populated by red check marks and the endings. Repeat it
+        for dual. Plural is automatically checked in green (correct answer).
+        16) click on reset and then click on Plural from Number. the Singular and Dual section should be automatically checked in red.
+        17) Click on any cell in the Plural Feminine and Neuter columns. They should be populated by red check marks and endings.
+        Click on masculine/feminine or masculine genitive plural cell and the endings are green and all table is automatically
+        populated.
+        18) repeat the quiz to 16). Now check the Masculine option in gender. it will automatically populate the Feminine and Neuter
+        columns in red.
+        19) check the Nominative case. it will gray out all the nominative cells in the table. you can still click on any cell and have it
+        populated with the endings for that combination. same for Dative and Vocative and Accusative.
+        20) it will automatically display the genitive endings in green for the masculine and highlighted in masculine/feminine column.
+        Quiz is now completed.
+        21) check all links to Grammar from the quiz window.
+
+        Latin reading mode/quiz mode (noun, verb)
+        1) click on Translation Panel button from Firefox toolbar and from Alpheios toolbar to turn on/off the Translation Panel in
+        reading mode.
+        2) click on Quiz mode button from Firefox toolbar and from Alpheios toolbar to switch to quiz mode with Translation Panel on.
+        Access the quiz for a Latin word by double-clicking on it should be displayed in both toolbars.
+        3) double click on bonis (Elegies 2). You will be prompted to click on the word or words in the translation which most closely
+        represent the selected word. select few words from translation panel such as limbs, shine, adornment then click on
+        loveliness. Translation is completed.
+        4) The Quiz Window will open with the translation and definition of the word plus the part of speech to choose from.
+        5) Choose noun as last choice. at this point it should prompt you again if you want to answer the inflection questions.
+        6) Choose no. The form is populated with the noun info: 2nd person neuter plural ablative. Also the diagram, define and inflect
+        icons are available on the top of the page.
+        7) click on Inflect to verify exact match. It should open the noun declension table with exact match highlighted in yellow.
+        8) Now choose yes to answer the inflection questions (repeat steps 3 to 5). Make the correct selection as the last option in
+        number, gender and case. The cells in the table should be populated with the correspondent ending when case is selected.
+        9) exact match is for number=plural, gender=neuter and case=ablative.
+        10) click on Diagram from the quiz window. you should be able to start the quiz again for any word in the tree.
+        11) if quiz mode is not available for a word (e.g. aut from Elegies 2) you can only choose options in the part of speech.
+        12) click on Translation Panel icon from FF toolbar or Alpheios toolbar to close the panel if opened. Double click on contudit
+        (Elegies 1), the Quiz window will open immediately and you will be prompt to identify the translation from a selection of words
+        randomly generated from the text. Choose "broke down" as last choice.
+        13) check verb as the last available option in the part of speech. It should prompt if you want to identify the inflected form for
+        the word.
+        14) answer yes and the form table will be displayed. Check Passive under Voice, the table will be populated by red check
+        marks in all the passive cells. click on Reset
+        15) Now click Passive in the Form table header, it will be populated by red check marks. Active is automatically checked in
+        green (correct answer).
+        16) click on Subjunctive in the Mood section. all the subjunctive column should be checked in red. Indicative is checked in
+        green.
+        17) choose Perfect as last option in Tense, either from the radio buttons or by clicking on the Tense in the Form table.
+        18) Click on any cell in the gray area of the Form table. They should be populated by the endings.
+
+6 of 7                01/23/2014 09:25 AM
+Test Plan | Alpheios  http://alpheios.net/content/test-plan
+
+        19) check Singular in Number. All Plural should be grayed in the Form table
+        20) choose Third as last option for the Person (either from the radio buttons or by clicking on the cell in the Form table). it will
+        automatically display the ending in green for the third singular perfect indicative active verb. Quiz is now completed.
+        21) check all links to Grammar from the quiz window.
+
+        Multiple tabs
+        1) have Alpheios enhanced text for Latin open in one tab, then the Greek tool open in an other tab and browse any latin
+        Alpheios text in an other tab .
+        2) have grammar and inflection window open for the latin, the inflection table open for the greek enhanced text and the
+        grammar open for latin Alpheios text in an other tab.
+        3) you should be able to switch from one tab to the other and refresh the content of the windows as they are shared between
+        tabs.
+        4) verify that the lookup pop-up stays open when switching from tab to tab and that shows the correct definition for the
+        selected word.
+        5) close a tab. It should close all the related windows (e.g. inflection table and grammar) and panels (e.g. definition or
+        diagram).
+
+        Multiple windows (tbd)
+        1) have Alpheios enhanced text for Latin open in one window, then the Greek tool open in an other window and browse any
+        latin Alpheios text in an other window.
+        2) have grammar and inflection window open for the latin, the inflection table open for the greek enhanced text and the
+        grammar open for latin Alpheios text in an other window.
+        3) you should be able to switch from one window to the other and refresh the content of windows and panels.
+        4) verify that the lookup pop-up stays open when switching from window to window and that shows the correct definition for
+        the word.
+        5) close a window. It should close all the related windows (e.g. inflection table and grammar) and panels (e.g. definition or
+        diagram).
+
+        Comments
+
+        added test cases for Dictionary search (/content/test-plan#comment-23)
+
+        Submitted by MonicaZugan (/users/monicazugan) on Thu, 10/01/2009 - 13:09.
+
+        added test cases for Greek Dictionary search
+
+        additional tests needed (/content/test-plan#comment-21)
+
+        Submitted by BridgetAlmas (/users/bridgetalmas) on Mon, 09/28/2009 - 09:23.
+
+        1) Under inflection tables, grammar and treebank, we should add test cases for each part of speech. Need to make sure to test at
+        least one match on each distinct inflection table in each language.
+
+        2) Under greek inflection tables, we should also add tests for matches on endings which don't appear by default (e.g. dialect
+        variations)
+
+        3) Need also to test inflection matching which ignores accents, diaresis, etc.
+
+        4) Under Quizzes, need to add test cases for each supported part of speech
+
+        5) Add tests for each item in the Alpheios toolbar (e.g. About, Help, Feedback, Site) for both basic toolbar and in site enhanced
+        text toolbar
+
+        6) Test dictionary search order (Greek)
+
+        7) Add test cases for some of the strange diambiguation scenarios for enhanced texts? (E.g. See Bugs 299 and 262)
+
+            added test cases for Greek (/content/test-plan#comment-22)
+
+            Submitted by MonicaZugan (/users/monicazugan) on Wed, 09/30/2009 - 14:00.
+
+            added test cases for Greek Inflection tables (1,2,3 and 7) - I think comment 5 is pretty much covered. maybe I'll add a new test
+            case.
+
+7 of 7                01/23/2014 09:25 AM
+
