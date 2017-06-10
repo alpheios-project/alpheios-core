@@ -48,6 +48,7 @@ An alternate transform was used if the user was in "quiz" mode to present an int
 1. should use modern data structures and libraries (i.e. eliminate reliance on dwindling browser support for XML and XSLT)
 1. Should include full coverage unit tests
 1. Should not have server-side dependencies (e.g. should be full executable client-side in the user's browser)
+1. Can reuse third-party libraries but should avoid reliance on javascript frameworks
 
 # Original Code
 
