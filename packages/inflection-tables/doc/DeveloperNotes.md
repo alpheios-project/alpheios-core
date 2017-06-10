@@ -10,7 +10,7 @@
 * tables are specific to part of speech
 * if analyses included possible multiple parts of speech, user can switch between different tables
 * in each table, all matching suffixes are highlighted
-* suffixes which are for inflections which are an exact match are highlighted differently from those which are matching suffixes but mismatch on inflection properties
+* suffixes which are for inflections which are an exact match are highlighted differently from those which are matching suffixes but mismatch on inflection properties (such as .... ?)
 * user can expand the tables to get a full view of all inflection suffixes for that part of speech
 * user can request to navigate and view all tables for all parts of speech
 * inflection table components can be linked to other related resources (such as grammars)
