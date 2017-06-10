@@ -37,7 +37,7 @@ An alternate transform was used if the user was in "quiz" mode to present an int
 
 # Requirements for New Implementation
 
-1. The inflection table library is responsible for taking a language code, a word, along with its analyses, and returning the matching inflection tables.
+1. The inflection table library is responsible for taking a language code, a word, along with its analyses, and returning the matching inflection tables. (See Sample morphological analysis service queries under References below for examples of analysis/inflection input data)
 1. The response should be available in different formats, per client request, including as:
     1. JSON data structures 
     1. actionable, styled HTML5 views (i.e with javascript, css, etc.)
@@ -69,8 +69,12 @@ The javascript driver code includes references to HTML element classes such as `
 
 # References
   * Morphological Analysis Service Queries:
-     `curl -H Accept: application/json http://morph.perseids.org/analysis/word?lang=lat&engine=morpheuslat&word=mare`
-     `curl -H Accept: application/json http://morph.perseids.org/analysis/word?lang=grc&engine=morpheusgrc&word= τέχνῃ`
+  
+     ```
+     curl -H "Accept: application/json" "http://morph.perseids.org/analysis/word?lang=lat&engine=morpheuslat&word=mare"
+     curl -H "Accept: application/json" "http://morph.perseids.org/analysis/word?lang=grc&engine=morpheusgrc&word=τέχνῃ"
+     ```
+  
   * [Plugin Code Map](http://alpheios.net/content/alpheios-firefox-plugins#codemap)
   * [User Guide](http://alpheios.net/content/lexicons-grammars-and-inflections)
   * [Tutorial](http://alpheios.net/alpheios-demos/inflection.htm)
