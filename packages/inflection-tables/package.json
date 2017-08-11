@@ -1,0 +1,26 @@
+{
+  "name": "inflection-tables",
+  "version": "0.1.0",
+  "description": "Inflection library for Alpheios project",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "hello": "node ./test/sum.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/inflection-tables.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/inflection-tables/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/inflection-tables#readme",
+  "devDependencies": {
+    "jest": "^20.0.4"
+  }
+}
