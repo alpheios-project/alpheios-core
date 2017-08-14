@@ -1,6 +1,9 @@
 'use strict';
 // Import shared language data
 import * as Alpheios from "./lib.js"
+// Export for testing
+export {langData};
+
 console.log('Inflections start');
 
 // Load Latin language data
