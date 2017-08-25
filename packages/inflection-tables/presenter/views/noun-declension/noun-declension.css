@@ -1,0 +1,32 @@
+strong {
+    font-weight: 700;
+}
+
+.inflection-table {
+    /*font-family: 'Source Sans Pro', sans-serif;*/
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+.inflection-table tr:last-child {
+    border-bottom: 1px solid #000;
+}
+
+.inflection-table__cell {
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    padding: 2px 5px;
+}
+
+.inflection-table__cell:last-child {
+    border-right: 1px solid #000;
+}
+
+.inflection-table__cell--case-title {
+    padding-left: 20px;
+    font-style: italic;
+}
+
+.inflection-table__ending {
+    cursor: pointer;
+}

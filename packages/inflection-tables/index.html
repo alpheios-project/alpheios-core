@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Inflection Tables Test Page</title>
+    <link rel="stylesheet" href="presenter/views/noun-declension/noun-declension.css">
 </head>
 <body>
-    Inflection Tables Test Page
+    <h1>Inflection Tables Test</h1>
+    <p>Hover over the suffix to see its grammar features</p>
+    <div id="id-inflections-table"></div>
 
-    <script type="module" src="lib/main.js"></script>
+    <script src="presenter/support/handlebars-4.0.10/handlebars.runtime-v4.0.10.js"></script>
+    <script type="module" src="controller.js"></script>
     <script nomodule src="dist/inflection-tables.js"></script>
 </body>
 </html>

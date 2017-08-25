@@ -1,0 +1,74 @@
+<table class="inflection-table">
+    {{#each endings}}
+        {{#if @first}}
+            <!-- Gender -->
+            {{#each data}}
+                {{#if @first}}
+                <tr class="inflection-table__row">
+                    <td class="inflection-table__cell">Declension Stem</td>
+                    {{#each data}}
+                        <!-- Declension -->
+                        <td class="inflection-table__cell"  colspan="4">{{value}}</td>
+                    {{/each}}
+                </tr>
+                <tr class="inflection-table__row">
+                    <td class="inflection-table__cell">Gender</td>
+                    {{#each data}}
+                        <!-- Declension -->
+                        {{#each data}}
+                            <!-- Gender -->
+                            <td class="inflection-table__cell" colspan="2">{{value}}</td>
+                        {{/each}}
+                    {{/each}}
+                </tr>
+                <tr class="inflection-table__row">
+                    <td class="inflection-table__cell">Type</td>
+                    {{#each data}}
+                        <!-- Declension -->
+                        {{#each data}}
+                            <!-- Gender -->
+                            <td class="inflection-table__cell" colspan="2">
+                                {{#each data}}
+                                    <!-- Type -->
+                                    {{value}}{{#unless @last}}&nbsp;|&nbsp;{{/unless}}
+                                {{/each}}
+                            </td>
+                        {{/each}}
+                    {{/each}}
+                </tr>
+                {{/if}}
+        {{/each}}
+        {{/if}}
+    {{/each}}
+    {{#each endings}}
+        <!-- Gender -->
+        <tr class="inflection-table__row"><td class="inflection-table__cell" colspan="31">{{value}}</td></tr>
+        {{#each data}}
+            <!-- Case -->
+            <tr class="inflection-table__row">
+                <td class="inflection-table__cell inflection-table__cell--case-title">{{value}}</td>
+                {{#each data}}
+                    <!-- Declension -->
+                    {{#each data}}
+                        <!-- Gender -->
+                        {{#each data}}
+                            <!-- Type -->
+                            <td class="inflection-table__cell">
+                                {{#each data}}
+                                    <!-- Endings -->
+                                    <a class="inflection-table__ending" title="{{ending}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}">{{ending}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}
+                                {{/each}}
+                            </td>
+                        {{/each}}
+                    {{/each}}
+                {{/each}}
+            </tr>
+        {{/each}}
+    {{/each}}
+</table>
+
+<br>
+<br>
+{{#each footnotes}}
+    <span><strong>{{index}}:</strong> {{text}}</span><br>
+{{/each}}

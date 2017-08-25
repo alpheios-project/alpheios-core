@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "buildtemplates": "handlebars presenter/views/ -f ./presenter/views/views.js -e hbs"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,6 @@
   },
   "jest": {
     "verbose": false
-  }
+  },
+  "dependencies": {}
 }
