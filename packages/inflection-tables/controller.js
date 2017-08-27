@@ -304,27 +304,30 @@ let testJSON1 = {
     }
 };
 
+// Inserts rendered view to the specific element of the web page
 let show = function show(html, whereSel) {
     "use strict";
     let selector = document.querySelector(whereSel);
-
     selector.innerHTML = html;
 };
 
 
-console.log('Inflections start');
+console.log('Sequence started');
 
 // Load Latin language data
 import * as ModuleNS from './lib/lang/latin.js';
 let langData = ModuleNS.dataSet;
 
-
+// Transform Morphological Analyzer's response into a library standard Homonym object
 let result = Tufts.transform(testJSON1);
 
+// Get matching suffixes from an inflection library
 let suffixes = langData.getSuffixes(result);
 
+// Make Presenter build a view's HTML
 let html = Presenter.render(suffixes);
 
+// Insert rendered view to a page
 show(html, '#id-inflections-table');
 
-console.log('Inflections finish');
+console.log('Sequence finished');

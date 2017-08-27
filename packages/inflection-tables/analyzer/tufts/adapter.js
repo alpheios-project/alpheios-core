@@ -13,6 +13,11 @@ maService.languages.add('lat', Alpheios.languages.latin);
 maService.setLanguageData(TuftsLatin.data);
 
 
+/**
+ * A function that maps a morphological service's specific data types and values into an inflection library standard.
+ * @param {object} jsonObj - A JSON data from a Morphological Analyzer.
+ * @returns {Homonym} A library standard Homonym object.
+ */
 let transform = function(jsonObj) {
     "use strict";
     let lexemes = [];

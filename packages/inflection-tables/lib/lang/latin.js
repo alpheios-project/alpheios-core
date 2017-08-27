@@ -354,8 +354,13 @@ dataSet.addEnding('ēs', parts.noun, numbers.plural, cases.vocative, declensions
 //dataSet.addEnding('dative', parts.noun, numbers.singular, [cases.dative, cases.accusative], declensions.first, [genders.neuter], types.irregular, footnotes[7]);
 // endregion Test values only
 
-/*
-This is a function that determines whether an ending will match inflection or not and what type of match that will be
+
+// TODO: Implement match type. Add some real matching rules.
+/**
+ * Determines whether an ending will match inflections or not and what type of match that will be (exact, partial, etc.)
+ * @param {Inflection[]} inflections - Inflections that are returned by a morphological service.
+ * @param {Ending} ending - An ending we need to match inflections against.
+ * @returns {boolean} Whether an ending is a match for inflections provided or not.
  */
 dataSet.match = function match(inflections, ending) {
     "use strict";

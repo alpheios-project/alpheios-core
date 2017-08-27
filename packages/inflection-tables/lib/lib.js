@@ -386,6 +386,12 @@ class Ending {
         return clone;
     };
 
+    /**
+     * Splits an ending that has multiple values of one or more grammatical features into an array of endings with
+     * each ending having only a single value of those grammatical features.
+     * @param {Feature[]} featureValues - Multiple grammatical feature values.
+     * @returns {Ending[]} - An array of endings.
+     */
     split(featureValues) {
         "use strict";
         let copy = this.clone();
@@ -439,6 +445,19 @@ class Ending {
         return commonGroups;
     }
 
+    /**
+     * Finds out if an ending is in the same group with some other ending. The other ending is provided as a function argument.
+     * Two endings are considered to be in the same group if they are:
+     * a. Have at least one common group in featureGroups;
+     * b. Have the same ending
+     * c. Have values of all features the same except for those that belong to a common group(s)
+     * d. Values of the common group features must be complementary. Here is an example:
+     * Let's say a 'gender' group can have values such as 'masculine' and 'feminine'. Then endings will be combined
+     * only if gender value of one ending is 'masculine' and the other value is 'feminine'. If both endings have the same
+     * either 'masculine' or 'feminine' value, they sill not be combined as are not being complementary.
+     * @param {Ending} ending - An other ending that we compare this ending with.
+     * @returns {boolean} - True if both endings are in the same group, false otherwise.
+     */
     isInSameGroupWith(ending) {
         "use strict";
 
@@ -473,15 +492,22 @@ class Ending {
             }
         }
 
-
         commonGroups.forEach(feature => {
-            result = result && commonValues[feature].size == 2
+            result = result && commonValues[feature].size === 2
         });
 
         return result;
     }
 
-    static combineGroups(endings) {
+    /**
+     * Combines endings that are in the same group together.
+     * @param {Ending[]} endings - An array of endings to be combined.
+     * @param {function} mergeFunction - A function that will merge two endings. It is presentation specific and is
+     * define in a Presenter's View module. A function has two parameters each of Ending type. It returns a single
+     * Ending object.
+     * @returns {Ending[]} An array of endings with some items possibly combined together.
+     */
+    static combine(endings, mergeFunction) {
         "use strict";
 
         let matchFound = false;
@@ -490,6 +516,12 @@ class Ending {
         do {
             matchFound = false;
 
+            /*
+            Go through an array of endings end compare each ending with each other (two-way compare) one time. \
+            If items are in the same group, merge two endings, break out of a loop,
+            and remove one matching ending (the second one) from an array.
+            Then repeat on a modified array until no further matches found.
+             */
             for (let i=0; i<endings.length; i++) {
                 if (matchFound) {
                     continue;
@@ -498,7 +530,7 @@ class Ending {
                     if (endings[i].isInSameGroupWith(endings[j])) {
                         matchIdx = j;
                         matchFound = true;
-                        endings[i].features.gender = "COMBINED"; // TODO: testing only
+                        mergeFunction(endings[i], endings[j]);
                     }
                 }
             }
@@ -509,41 +541,6 @@ class Ending {
         }
         while (matchFound);
         return endings;
-    }
-
-    static areSameGroup(endings) {
-        "use strict";
-
-        let commonGroups = Ending.getCommonGroups(endings);
-        if (commonGroups.length < 1) {
-            return false;
-        }
-
-        let commonValues = {};
-        commonGroups.forEach(feature => commonValues[feature] = new Set());
-
-        var sameGroup = endings.reduce( (accumulator, value) => {
-            accumulator = accumulator && value.ending === endings[0].ending;
-            for (let feature of Object.keys(endings[0].features)) {
-                if (commonGroups.indexOf(feature)>=0) {
-                    let f = value.features[feature];
-                    commonValues[feature].add(value.features[feature]);
-
-                    // Do not compare common groups
-                    continue;
-                }
-                accumulator = accumulator && value.features[feature] === endings[0].features[feature]
-            }
-            return accumulator;
-        }, true);
-
-        if (!sameGroup) {
-            return false;
-        }
-
-        commonGroups.forEach(feature => sameGroup = sameGroup && commonValues[feature].length === endings.length);
-
-        return sameGroup;
     }
 }
 

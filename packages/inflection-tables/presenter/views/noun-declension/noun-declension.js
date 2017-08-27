@@ -30,12 +30,13 @@ let deduplicateBy = LibLatin.genders;
 
 
 /**
- * A compare function that can be used to sort ending according to specific requirements of the current view
- * @param featureOrder
- * @param a
- * @param b
+ * A compare function that can be used to sort ending according to specific requirements of the current view.
+ * This function is for use with Array.prototype.sort().
+ * @param {FeatureType[]} featureOrder
+ * @param {Ending} a
+ * @param {Ending} b
  */
-let compare = function(featureOrder, a, b) {
+let compare = function compare(featureOrder, a, b) {
     "use strict";
 
     // Set custom sort order if necessary
@@ -54,10 +55,10 @@ let compare = function(featureOrder, a, b) {
             return -1;
         }
         /*
-         If values on this level are equal, continue comparing to the next level. If we are at the last level of
-         comparison and elements are equal, return 0.
+         If values on this level are equal, continue comparing using values of the next level.
+         If we are at the last level of comparison (defined by featureOrder) and elements are equal, return 0.
          */
-        else if (index == featureOrder.length-1) {
+        else if (index === featureOrder.length-1) {
             // This is the last sort order item
             return 0;
         }
@@ -66,10 +67,12 @@ let compare = function(featureOrder, a, b) {
 };
 
 /**
- *
- * @param featureType
- * @param featureValues
- * @param ending
+ * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
+ * This function is for use with Array.prototype.filter().
+ * @param {FeatureType} featureType - a grammatical feature type we need to filter on
+ * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
+ * this ending should have
+ * @param {Ending} ending - an ending we need to filter out
  * @returns {boolean}
  */
 let filter = function filter(featureType, featureValues, ending) {
@@ -88,55 +91,73 @@ let filter = function filter(featureType, featureValues, ending) {
     return false;
 };
 
-// TODO: Works with one feature and two values so far. Need to simplify
-let deduplicate = function deduplicate(endings) {
-
-    if (endings.length <=0) {
-        return endings;
+/**
+ * This function provide a view-specific logic that is used to merge two endings together when they are combined.
+ * @param {Ending} endingA - A first of two endings to merge (to be returned).
+ * @param {Ending} endingB - A second ending to merge (to be discarded).
+ * @returns {Ending} A modified value of ending A.
+ */
+let merge = function merge(endingA, endingB) {
+    let commonGroups = Lib.Ending.getCommonGroups([endingA, endingB]);
+    for (let type of commonGroups) {
+        // Combine values using a comma separator. Can do anything else if we need to.
+        endingA.features[type] = endingA.features[type] + ', ' + endingB.features[type];
     }
-
-    // Specify how to combine
-    let result = Lib.Ending.combineGroups(endings);
-
-
-    return result;
+    return endingA;
 };
 
-let splitByFeature = function splitByFeature(values, splitFeatures, currentLevel) {
-    let feature = splitFeatures[currentLevel];
-    let splitted = [];
+/**
+ * A recursive function that organizes endings by features from a groupFeatures list into a multi-dimensional
+ * array. Each of levels of this array corresponds to a feature from a groupFeatures list.
+ * @param {Ending[]} endings - A list of endings.
+ * @param {FeatureType[]} groupFeatures - A list of feature types to be used for grouping.
+ * @param {function} mergeFunction - A function that merges two endings together.
+ * @param {number} currentLevel - A recursion level, used to stop recursion.
+ * @returns {Ending[]} Endings grouped into a multi-dimensional array.
+ */
+let groupByFeature = function groupByFeature(endings, groupFeatures, mergeFunction, currentLevel = 0) {
+    let feature = groupFeatures[currentLevel];
+    let grouped = [];
     for (const featureValue of feature.orderIndex) {
         let result = {
             type: feature.type,
             value: featureValue
         };
-        let splitResult = values.filter(filter.bind(this, feature.type, featureValue));
-        if (currentLevel < splitFeatures.length - 1) {
+        let selected = endings.filter(filter.bind(this, feature.type, featureValue));
+        if (currentLevel < groupFeatures.length - 1) {
             // Split more
-            splitResult = splitByFeature(splitResult, splitFeatures, currentLevel + 1);
+            selected = groupByFeature(selected, groupFeatures, mergeFunction, currentLevel + 1);
         }
         else {
             // This is the last level
-            // Split result has a list of endings in a table cell. We can now deduplicate them if we want
-            splitResult = deduplicate(splitResult);
+            // Split result has a list of endings in a table cell. We can now combine duplicated items if we want
+            if (selected.length >0) {
+                selected = Lib.Ending.combine(selected, mergeFunction);
+            }
+
         }
-        result.data = splitResult;
-        splitted.push(result);
+        result.data = selected;
+        grouped.push(result);
     }
-    return splitted;
+    return grouped;
 };
 
+/**
+ * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table.
+ * @param {ResultSet} resultSet - A result set from inflection tables library.
+ * @returns {string} HTML code representing an inflection table.
+ */
 let render = function data(resultSet) {
     "use strict";
 
+    // We can sort endings if we need to
     //let sorted = resultSet.endings.sort(compare.bind(this, featureOrder));
 
     // Create data structure for a template
     let displayData = {};
 
-    displayData.endings = splitByFeature(resultSet.endings, featureOrder, 0);
+    displayData.endings = groupByFeature(resultSet.endings, featureOrder, merge);
     displayData.footnotes = resultSet.footnotes;
 
     return Handlebars.templates[templateName](displayData);
-
 };

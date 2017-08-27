@@ -12,7 +12,6 @@ data.addFeature(typeName).add(providerValueName, alpheiosValueName);
 (functions are chainable)
 Types and values that are unknown (undefined) will be skipped during parsing.
  */
-// TODO: provide a function to transform array of Features to flat values
 data.addFeature(Alpheios.types.part)
     .add('noun', Latin.parts.noun);
 
