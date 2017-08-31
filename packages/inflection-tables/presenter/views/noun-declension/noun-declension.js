@@ -1,5 +1,5 @@
 import * as Lib from "../../../lib/lib.js";
-import * as LibLatin from "../../../lib/lang/latin.js";
+import * as LibLatin from "../../../lib/lang/latin/latin.js";
 import * as Templates from "../views.js";
 
 export {render};

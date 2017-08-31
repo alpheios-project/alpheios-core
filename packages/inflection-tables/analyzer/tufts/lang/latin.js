@@ -1,6 +1,6 @@
 import * as Alpheios from "../../../lib/lib.js";
 import * as Service from "../../analyzer.js";
-import * as Latin from '../../../lib/lang/latin.js';
+import * as Latin from '../../../lib/lang/latin/latin.js';
 export {data};
 
 let data = new Service.LanguageData(Alpheios.languages.latin);

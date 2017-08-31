@@ -1,6 +1,6 @@
 'use strict';
 // Import shared language data
-import * as Alpheios from "./lib/lib.js";
+import * as Lib from "./lib/lib.js";
 import * as Tufts from "./analyzer/tufts/adapter.js";
 import * as Presenter from "./presenter/presenter.js";
 
@@ -314,20 +314,34 @@ let show = function show(html, whereSel) {
 
 console.log('Sequence started');
 
-// Load Latin language data
-import * as ModuleNS from './lib/lang/latin.js';
-let langData = ModuleNS.dataSet;
+//import * as PapaParse from './lib/support/papaparse-4.3.2/papaparse.js';
+/*PapaParse.Papa.parse(fileInput.files[0], {
+    complete: function(results) {
+        console.log(results);
+    }
+});*/
 
 // Transform Morphological Analyzer's response into a library standard Homonym object
 let result = Tufts.transform(testJSON1);
 
-// Get matching suffixes from an inflection library
-let suffixes = langData.getSuffixes(result);
+// Load Latin language data
+import * as ModuleNS from './lib/lang/latin/latin.js';
+import {dataSet} from "./lib/lang/latin/latin";
+
+let langData = ModuleNS.dataSet;
+
+dataSet.loadData().then(function() {
+    // Get matching suffixes from an inflection library
+    let suffixes = langData.getSuffixes(result);
 
 // Make Presenter build a view's HTML
-let html = Presenter.render(suffixes);
+    let html = Presenter.render(suffixes);
 
 // Insert rendered view to a page
-show(html, '#id-inflections-table');
+    show(html, '#id-inflections-table');
 
-console.log('Sequence finished');
+    console.log('Sequence finished');
+});
+
+
+

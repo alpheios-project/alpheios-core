@@ -1,7 +1,8 @@
 /**
  * Shared data structures and functions
  */
-export {Feature, FeatureType, IndexFeatureType, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset, Ending, ResultSet};
+export {Feature, FeatureType, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
+    Ending, ResultSet, loadData};
 
 
 /**
@@ -42,12 +43,21 @@ class Feature {
 }
 
 /**
- * Definition class for a grammatical feature. Stores type information and all possible values of the feature.
- * It serves as a feature generator. It generates a Feature object each time a property that corresponds to
- * a feature value is called
+ * Definition class for a grammatical feature. Stores type information and (optionally) all possible values of the feature.
+ * It serves as a feature generator. If list of possible values is provided, it can generate a Feature object
+ * each time a property that corresponds to a feature value is accessed. If no list of possible values provided,
+ * a Feature object can be generated with get(value) method.
  */
 class FeatureType {
     // TODO: value checking
+    /**
+     *
+     * @param type
+     * @param {string[]} values - A list of allowed values for this feature type. If not provided, there will be no
+     * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
+     * such as footnotes).
+     * @param {string} language - A language of a feature
+     */
     constructor(type, values, language) {
         this.type = type;
         this.language = language;
@@ -59,12 +69,30 @@ class FeatureType {
          */
         this._orderLookup = {};
 
-        for (const [index, value] of values.entries()) {
-            this._orderIndex.push(value);
-            this[value] = new Feature(value, this.type, this.language);
-            this._orderLookup[value] = index;
+        if (values && Array.isArray(values)) {
+            for (const [index, value] of values.entries()) {
+                this._orderIndex.push(value);
+                this[value] = new Feature(value, this.type, this.language);
+                this._orderLookup[value] = index;
+            }
         }
     };
+
+    /**
+     * Return a Feature with an arbitrary value. This can be especially useful for features that do not set
+     * a list of predefined values, such as footnotes.
+     * @param value
+     * @returns {Feature}
+     */
+    get(value) {
+        return new Feature(value, this.type, this.language);
+    }
+
+    addImporter(name) {
+        this.importer = this.importer || {};
+        this.importer[name] = this.importer[name] || new Importer();
+        return this.importer[name];
+    }
 
     get orderIndex() {
         "use strict";
@@ -127,16 +155,40 @@ class FeatureType {
 }
 
 /**
- * Generates a Feature object that holds index as a value. indexMin and indexMax specifies possible index range.
+ * This is a hash table that maps values imported from an external file or service into library standard values
  */
-class IndexFeatureType {
-    constructor (type, indexMin, indexMax, language) {
-        this.type = type;
-        this.language = language;
-        for (let index = indexMin; index <= indexMax; index++) {
-            this[index] = new Feature(index, this.type, this.language);
+class Importer {
+    constructor() {
+        this.valueMap = {};
+
+        return this;
+    }
+
+    /**
+     * Sets mapping between external imported value and one or more library standard values
+     * @param {string} importedValue - External value
+     * @param {Feature | Feature[]} libraryValue - Library standard value
+     */
+    map(importedValue, libraryValue) {
+        this.valueMap[importedValue] = libraryValue;
+        return this;
+    }
+
+    /**
+     * Returns one or more library standard values that match an external value
+     * @param importedValue - External value
+     * @returns {Feature | Feature[]} One or more of library standard values
+     */
+    get(importedValue) {
+        if (this.valueMap.hasOwnProperty(importedValue)) {
+            return this.valueMap[importedValue];
         }
-    };
+        else {
+            console.error('Cannot find a library value for "' + importedValue + '" unknown value.');
+            // TODO: throw an error?
+
+        }
+    }
 }
 
 const languages = {
@@ -240,12 +292,6 @@ class LanguageDataset {
         return this.features[type];
     };
 
-    defineIndexFeatureType(type, indexMin, indexMax) {
-        "use strict";
-        this.features[type] = new IndexFeatureType(types.footnote, indexMin, indexMax, this.language);
-        return this.features[type];
-    };
-
     /**
      * Each grammatical feature can be either a single or an array of Feature objects. The latter is the case when
      * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
@@ -263,18 +309,13 @@ class LanguageDataset {
 
 
         // Go through all features provided
-        for (var feature of featureTypes) {
+        for (let feature of featureTypes) {
 
-            // If this is a footnote
+            // If this is a footnote. Footnotes should go in flat array, not in a list
+            // because we don't need to split by them
             if (feature.type === types.footnote) {
-                if (!Array.isArray(feature)) {
-                    feature = [feature];
-                }
-
-                endingItem[types.footnote] = [];
-                for (let value of feature) {
-                    endingItem[types.footnote].push(value.value);
-                }
+                endingItem[types.footnote] = endingItem[types.footnote] || [];
+                endingItem[types.footnote].push(feature.value);
                 continue;
             }
 
@@ -552,3 +593,13 @@ class ResultSet {
         this.footnotes = [];
     }
 }
+
+let loadData = function loadData(filePath) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", filePath);
+        xhr.onload = () => resolve(xhr.responseText);
+        xhr.onerror = () => reject(xhr.statusText);
+        xhr.send();
+    });
+};

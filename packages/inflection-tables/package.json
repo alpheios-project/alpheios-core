@@ -9,7 +9,8 @@
   "scripts": {
     "test": "jest",
     "build": "rollup -c",
-    "buildtemplates": "handlebars presenter/views/ -f ./presenter/views/views.js -e hbs"
+    "buildtemplates": "handlebars presenter/views/ -f ./presenter/views/views.js -e hbs",
+    "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,11 @@
   "homepage": "https://github.com/alpheios-project/inflection-tables#readme",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
+    "babyparse": "^0.4.6",
     "jest": "^20.0.4",
-    "rollup": "^0.47.2"
+    "rollup": "^0.47.2",
+    "xmldom": "^0.1.27",
+    "xmltojson": "^1.3.5"
   },
   "jest": {
     "verbose": false
