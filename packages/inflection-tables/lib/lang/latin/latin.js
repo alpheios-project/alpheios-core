@@ -2,7 +2,15 @@
  * Latin language data module
  */
 export {language, parts, numbers, cases, declensions, genders, types, dataSet};
-import * as Lib from "../../lib.js"
+import * as Lib from "../../lib.js";
+import nounSuffixesCSV from './data/noun/suffixes.csv';
+import nounFootnotesCSV from './data/noun/footnotes.csv';
+
+/*
+CommonJS module below should be used exactly as specified, or it will result in incorrect import due to the bug in
+rollup-plugin-commonjs, see https://github.com/rollup/rollup-plugin-commonjs/issues/200
+*/
+import papaparse from "../../support/papaparse-4.3.2/papaparse.js";
 
 // A language of this module
 const language = Lib.languages.latin;
@@ -46,7 +54,7 @@ const types = dataSet.defineFeatureType(Lib.types.type, ['regular', 'irregular']
 types.addImporter(importerName)
     .map('regular', types.regular)
     .map('irregular', types.irregular);
-const footnotes = dataSet.defineFeatureType(Lib.types.footnote);
+const footnotes = dataSet.defineFeatureType(Lib.types.footnote, []);
 
 // endregion Definition of grammatical features
 
@@ -75,22 +83,28 @@ dataSet.addFootnotes = function addFootnotes(data) {
 };
 
 dataSet.loadData = function loadData() {
+    let suffixes = papaparse.parse(nounSuffixesCSV, {});
+    console.log('Suffixes ', suffixes);
+
+
     return new Promise((resolve, reject) => {
-        let suffixRequest = Lib.loadData("/lib/lang/latin/data/noun/suffixes.csv").catch( error => console.log(error));
-        let footnoteRequest = Lib.loadData("/lib/lang/latin/data/noun/footnotes.csv").catch( error => console.log(error));
+        let suffixRequest = Lib.loadData("/lib/lang/latin/data/noun/suffixes.csv");
+        let footnoteRequest = Lib.loadData("/lib/lang/latin/data/noun/footnotes.csv");
 
         let that = this;
         Promise.all([suffixRequest, footnoteRequest]).then(values => {
             let suffixes, footnotes;
             [suffixes, footnotes] = values;
 
-            suffixes = Papa.parse(suffixes, {});
+            suffixes = papaparse.parse(suffixes, {});
             that.addSuffixes(suffixes.data);
 
-            footnotes = Papa.parse(footnotes, {});
+            footnotes = papaparse.parse(footnotes, {});
             that.addFootnotes(footnotes.data);
 
             resolve();
+        }).catch(reason => {
+            reject(reason);
         });
     });
 };
@@ -111,7 +125,7 @@ dataSet.match = function match(inflections, ending) {
     // Any of those features must match between an inflection and an ending
     let optionalMatches = [Lib.types.grmCase, Lib.types.declension, Lib.types.gender, Lib.types.number];
 
-    let match = false;
+    let matchFound = false;
 
     // TODO: filter out features of wrong type
     for (let inflection of inflections) {
@@ -122,11 +136,11 @@ dataSet.match = function match(inflections, ending) {
         }
         for (let feature of optionalMatches) {
             if (ending.featureMatch(feature, inflection[feature])) {
-                match = true;
-                return match;
+                matchFound = true;
+                return matchFound;
             }
         }
     }
-    return match;
+    return matchFound;
 };
 

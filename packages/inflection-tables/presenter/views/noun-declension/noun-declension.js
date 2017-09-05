@@ -1,6 +1,7 @@
 import * as Lib from "../../../lib/lib.js";
 import * as LibLatin from "../../../lib/lang/latin/latin.js";
-import * as Templates from "../views.js";
+import Handlebars from "../../support/handlebars-4.0.10/handlebars-v4.0.10";  // CommonJS module
+import template from './noun-declension.hbs';
 
 export {render};
 
@@ -159,5 +160,7 @@ let render = function data(resultSet) {
     displayData.endings = groupByFeature(resultSet.endings, featureOrder, merge);
     displayData.footnotes = resultSet.footnotes;
 
-    return Handlebars.templates[templateName](displayData);
+    let compiled = Handlebars.compile(template);
+
+    return compiled(displayData);
 };

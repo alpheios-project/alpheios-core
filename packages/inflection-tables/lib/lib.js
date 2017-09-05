@@ -1,77 +1,171 @@
 /**
  * Shared data structures and functions
  */
-export {Feature, FeatureType, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
+export {Feature, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
     Ending, ResultSet, loadData};
 
 
+// Should have no spaces in values in order to be used in HTML templates
+const types = {
+    word: 'word',
+    part: 'partOfSpeech', // Part of speech
+    number: 'number',
+    grmCase: 'case',
+    declension: 'declension',
+    gender: 'gender',
+    type: 'type',
+    frequency: 'frequency', // How frequent this word is
+    meaning: 'meaning', // Meaning of a word
+    source: 'source', // Source of word definition
+    footnote: 'footnote', // A footnote for a word's ending
+    isAllowed(value) {
+        return Object.values(this).includes(value);
+    }
+};
+
+const languages = {
+    type: 'language',
+    latin: 'latin',
+    greek: 'greek',
+    isAllowed(language) {
+        if (language === this.type) {
+            return false;
+        }
+        else {
+            return Object.values(this).includes(language);
+        }
+    }
+};
+
 /**
- * Wrapper class for a grammatical feature, such as part of speech or declension. Keeps both value and type information.
+ * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
  */
 class Feature {
+
+    /**
+     * Initializes a Feature object
+     * @param {string | string[]} value - A single feature value or, if this feature could have multiple
+     * values, an array of values.
+     * @param {types} type - A type of the feature, allowed values are specified in 'types' object.
+     * @param {languages} language - A language of a feature, allowed values are specified in 'languages' object.
+     */
     constructor (value, type, language) {
+        if (!types.isAllowed(type)) {
+            throw new Error('Features of "' + type + '" type are not supported.');
+        }
+        if (!languages.isAllowed(language)) {
+            throw new Error('Language "' + language + '" is not supported.');
+        }
+        if (!value) {
+            throw new Error('Feature should have a non-empty value.');
+        }
         this.value = value;
         this.type = type;
         this.language = language;
     };
 
-    static decompose(dataType) {
-        if (dataType) {
-            let type;
-            let value;
-            if (Array.isArray(dataType)) {
-                if (dataType.length > 1) {
-                    type = dataType[0].type;
-                    value = [];
-                    for (let element of dataType) {
-                        value.push(element.value);
-                    }
-                }
-                else if (dataType.length = 1) {
-                    type = dataType[0].type;
-                    value = dataType[0].value;
-                }
-            }
-            else {
-                // dataType is a single Feature object
-                type = dataType.type;
-                value = dataType.value;
-            }
-            return {type, value};
+    /**
+     * Converts one or more Feature objects into a single Feature item. If resulting Feature object is created from
+     * multiple features of the same type, a value field of that object will be an array of values
+     * of all Feature items that were provided as arguments.
+     * @param {Feature | Feature[]} features
+     * @returns {Feature}
+     */
+    static create(features) {
+        if (!features) {
+            throw new Error('At least one Feature object should be provided.');
         }
+        let type = undefined;
+        let language = undefined;
+        let value = undefined;
+        if (Array.isArray(features)) {
+            value = [];
+            for (let feature of features) {
+                // All features should have the same type
+                if (type === undefined || type === feature.type) {
+                    type = feature.type;
+                }
+                else {
+                    throw new Error('Type mismatch: "' + type + '", "' + feature.type + '". All features must be of the same type.');
+                }
+
+                // All features should have the same language
+                if (language === undefined || language === feature.language) {
+                    language = feature.language;
+                }
+                else {
+                    throw new Error('Language mismatch: "' + language + '", "' + feature.language + '". All features must be of the same language.');
+                }
+
+                value.push(feature.value);
+            }
+
+            // If array has a single value only
+            if (value.length === 1) {
+                value = value[0];
+            }
+        }
+        else {
+            type = features.type;
+            language = features.language;
+            value = features.value;
+        }
+
+        return new Feature(value, type, language);
     }
 }
 
 /**
- * Definition class for a grammatical feature. Stores type information and (optionally) all possible values of the feature.
+ * Definition class for a (grammatical) feature. Stores type information and (optionally) all possible values of the feature.
  * It serves as a feature generator. If list of possible values is provided, it can generate a Feature object
  * each time a property that corresponds to a feature value is accessed. If no list of possible values provided,
  * a Feature object can be generated with get(value) method.
+ *
+ * An order of values determines a default sort and grouping order. If two values should have the same order,
+ * they should be grouped within an array: value1, [value2, value3], value4. Here 'value2' and 'value3' have
+ * the same priority for sorting and grouping.
  */
 class FeatureType {
     // TODO: value checking
     /**
-     *
-     * @param type
-     * @param {string[]} values - A list of allowed values for this feature type. If not provided, there will be no
+     * Creates and initializes a Feature Type object.
+     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+     * @param {string[] | string[][]} values - A list of allowed values for this feature type.
+     * If an empty array is provided, there will be no
      * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
      * such as footnotes).
-     * @param {string} language - A language of a feature
+     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor(type, values, language) {
+        if (!types.isAllowed(type)) {
+            throw new Error('Features of "' + type + '" type are not supported.');
+        }
+        if (!languages.isAllowed(language)) {
+            throw new Error('Language "' + language + '" is not supported.');
+        }
+        if (!values || !Array.isArray(values)) {
+            throw new Error('Values should be an array (or an empty array) of values.');
+        }
+
         this.type = type;
         this.language = language;
 
-        this._orderIndex = [];
         /*
          This is a sort order index for a grammatical feature values. It is determined by the order of values in
          a 'values' array.
          */
+        this._orderIndex = [];
         this._orderLookup = {};
 
-        if (values && Array.isArray(values)) {
-            for (const [index, value] of values.entries()) {
-                this._orderIndex.push(value);
+        for (const [index, value] of values.entries()) {
+            this._orderIndex.push(value);
+            if (Array.isArray(value)) {
+                for (let element of value) {
+                    this[element] = new Feature(element, this.type, this.language);
+                    this._orderLookup[element] = index;
+                }
+            }
+            else {
                 this[value] = new Feature(value, this.type, this.language);
                 this._orderLookup[value] = index;
             }
@@ -85,20 +179,46 @@ class FeatureType {
      * @returns {Feature}
      */
     get(value) {
-        return new Feature(value, this.type, this.language);
+        if (value) {
+            return new Feature(value, this.type, this.language);
+        }
+        else {
+            throw new Error('A non-empty value should be provided.');
+        }
+
     }
 
+    /**
+     * Creates and returns a new importer with a specific name. If an importer with this name already exists,
+     * an existing Importer object will be returned.
+     * @param {string} name - A name of an importer object
+     * @returns {Importer} A new or existing Importer object that matches a name provided
+     */
     addImporter(name) {
+        if (!name) {
+            throw new Error('Importer should have a non-empty name.');
+        }
         this.importer = this.importer || {};
         this.importer[name] = this.importer[name] || new Importer();
         return this.importer[name];
     }
 
+    /**
+     * Returns an ordered array of type values. If some values have the same order, they will be returned as an
+     * array within an array: [value1, [value2, value3], value4]
+     * @returns {string[] | string[][]}
+     */
     get orderIndex() {
         "use strict";
         return this._orderIndex;
     }
 
+    /**
+     * Returns a lookup table for type values as:
+     *  {value1: order1, value2: order2}, where order is a sort order of an item. If two items have the same sort order,
+     *  their order value will be the same.
+     * @returns {object}
+     */
     get orderLookup() {
         "use strict";
         return this._orderLookup;
@@ -106,7 +226,7 @@ class FeatureType {
 
     /**
      * Sets an order of grammatical feature values for a grammatical feature. Used mostly for sorting, filtering,
-     * and displaying
+     * and displaying.
      *
      * @param {Feature[] | Feature[][]} values - a list of grammatical features that specify their order for
      * sorting and filtering. Some features can be grouped as [[genders.masculine, genders.feminine], LibLatin.genders.neuter].
@@ -117,21 +237,33 @@ class FeatureType {
      */
     set order(values) {
         "use strict";
-        // Erase whatever sort order was set previously
-        this._orderLookup = {};
-        this._orderIndex = [];
-
-        // Input data control
         if (!values) {
-            console.error('Empty argument has been provided for FeatureType.order(values) of "' + this.type + '" of "' + this.language + '"."' +
-                '" Must be a single value or an array of values. Sort order will not be set.');
-            return;
+            throw new Error("A non-empty list of values should be provided.");
         }
 
         // If a single value is provided, convert it into an array
         if (!Array.isArray(values)) {
             values = [values];
         }
+
+        for (let value of values) {
+            if (Array.isArray(value)) {
+                for (let element of value) {
+                    if (!this.hasOwnProperty(element.value)) {
+                        throw new Error("Trying to order a '" + element.value + "' value that a '" + this.type + "' type is missing.");
+                    }
+                }
+            }
+            else {
+                if (!this.hasOwnProperty(value.value)) {
+                    throw new Error("Trying to order a '" + value.value + "' value that a '" + this.type + "' type is missing.");
+                }
+            }
+        }
+
+        // Erase whatever sort order was set previously
+        this._orderLookup = {};
+        this._orderIndex = [];
 
         // Define a new sort order
         for (const [index, element] of values.entries()) {
@@ -159,8 +291,7 @@ class FeatureType {
  */
 class Importer {
     constructor() {
-        this.valueMap = {};
-
+        this.hash = {};
         return this;
     }
 
@@ -170,8 +301,12 @@ class Importer {
      * @param {Feature | Feature[]} libraryValue - Library standard value
      */
     map(importedValue, libraryValue) {
-        this.valueMap[importedValue] = libraryValue;
+        this.hash[importedValue] = libraryValue;
         return this;
+    }
+
+    has(importedValue) {
+        return this.hash.hasOwnProperty(importedValue);
     }
 
     /**
@@ -180,8 +315,8 @@ class Importer {
      * @returns {Feature | Feature[]} One or more of library standard values
      */
     get(importedValue) {
-        if (this.valueMap.hasOwnProperty(importedValue)) {
-            return this.valueMap[importedValue];
+        if (this.has(importedValue)) {
+            return this.hash[importedValue];
         }
         else {
             console.error('Cannot find a library value for "' + importedValue + '" unknown value.');
@@ -190,28 +325,6 @@ class Importer {
         }
     }
 }
-
-const languages = {
-    type: 'language',
-    latin: 'latin',
-    greek: 'greek'
-};
-
-// Should have no spaces in values in order to be used in HTML templates
-const types = {
-    word: 'word',
-    part: 'partOfSpeech', // Part of speech
-    number: 'number',
-    grmCase: 'case',
-    declension: 'declension',
-    gender: 'gender',
-    type: 'type',
-    frequency: 'frequency', // How frequent this word is
-    meaning: 'meaning', // Meaning of a word
-    source: 'source', // Source of word definition
-    footnote: 'footnote' // A footnote for a word's ending (if ay)
-};
-
 
 /*
  Hierarchical structure:
@@ -248,7 +361,7 @@ class Inflection {
     set feature(dataType) {
         "use strict";
         // TODO: Check if dataType's language matches those of an inflection
-        let feature = Feature.decompose(dataType);
+        let feature = Feature.create(dataType);
         this[feature.type] = feature.value;
     }
 }
@@ -278,14 +391,30 @@ class Homonym {
 
 
 class LanguageDataset {
+    /**
+     * Initializes a LanguageDataset.
+     * @param {languages} language - A language of a dataset, from an allowed languages list (see 'languages' object).
+     */
     constructor(language) {
         "use strict";
+        if (!languages.hasOwnProperty(language)) {
+            // Language is not supported
+            throw new Error('Language "' + language + '" is not supported.');
+        }
         this.language = language;
-        this.features = {}; // Grammatical feature types (definitions) that are supported by a specific language
+        this.features = {}; // Grammatical feature types (definitions) that are supported by a specific language.
         this.endings = [];
         this.footnotes = {};
     };
 
+    /**
+     * Creates and initializes a new FeatureType objects. It is stored in the 'features' object of this dataset.
+     * This method is chainable.
+     * @param {types} type - A type of a feature, from an allowed types list (see 'types' object).
+     * @param {string[] | string[][]} allowedValues - Allowed values fo this type. A sequence of items defines default.
+     * sorting and grouping order. See FeatureType constrictor for more details.
+     * @returns {FeatureType} A newly created FeatureType.
+     */
     defineFeatureType(type, allowedValues) {
         "use strict";
         this.features[type] = new FeatureType(type, allowedValues, this.language);

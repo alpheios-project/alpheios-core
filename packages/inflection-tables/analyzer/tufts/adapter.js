@@ -4,7 +4,7 @@ import {Service} from "../analyzer.js";
 
 import * as TuftsLatin from './lang/latin.js';
 
-export {transform};
+export {adapter};
 
 let maService = new Service('Tufts');
 // Set a language conversion map for this specific service
@@ -12,13 +12,14 @@ maService.languages.add('lat', Alpheios.languages.latin);
 // Load Latin language data for this specific service
 maService.setLanguageData(TuftsLatin.data);
 
+let adapter = {};
 
 /**
  * A function that maps a morphological service's specific data types and values into an inflection library standard.
  * @param {object} jsonObj - A JSON data from a Morphological Analyzer.
  * @returns {Homonym} A library standard Homonym object.
  */
-let transform = function(jsonObj) {
+adapter.transform = function(jsonObj) {
     "use strict";
     let lexemes = [];
     for (let lexeme of jsonObj.RDF.Annotation.Body) {

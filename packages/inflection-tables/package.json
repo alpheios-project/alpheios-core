@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "rollup -c",
+    "build": "node build.js",
     "buildtemplates": "handlebars presenter/views/ -f ./presenter/views/views.js -e hbs",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
@@ -27,6 +27,10 @@
     "babyparse": "^0.4.6",
     "jest": "^20.0.4",
     "rollup": "^0.47.2",
+    "rollup-plugin-commonjs": "^8.2.0",
+    "rollup-plugin-handlebars-plus": "^0.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-string": "^2.0.2",
     "xmldom": "^0.1.27",
     "xmltojson": "^1.3.5"
   },
