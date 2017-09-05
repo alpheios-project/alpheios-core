@@ -239,7 +239,7 @@ class FeatureType {
      */
     set order(values) {
         "use strict";
-        if (!values) {
+        if (!values || (Array.isArray(values) && values.length === 0)) {
             throw new Error("A non-empty list of values should be provided.");
         }
 
@@ -252,13 +252,29 @@ class FeatureType {
             if (Array.isArray(value)) {
                 for (let element of value) {
                     if (!this.hasOwnProperty(element.value)) {
-                        throw new Error("Trying to order a '" + element.value + "' value that a '" + this.type + "' type is missing.");
+                        throw new Error('Trying to order an element with "' + element.value + '" value that is not stored in a "' + this.type + '" type.');
+                    }
+                    
+                    if (element.type !== this.type) {
+                        throw new Error('Trying to order an element with type "' + element.type + '" that is different from "' + this.type + '".')
+                    }
+
+                    if (element.language !== this.language) {
+                        throw new Error('Trying to order an element with language "' + element.language + '" that is different from "' + this.language + '".')
                     }
                 }
             }
             else {
                 if (!this.hasOwnProperty(value.value)) {
-                    throw new Error("Trying to order a '" + value.value + "' value that a '" + this.type + "' type is missing.");
+                    throw new Error('Trying to order an element with "' + value.value + '" value that is not stored in a "' + this.type + '" type.');
+                }
+
+                if (value.type !== this.type) {
+                    throw new Error('Trying to order an element with type "' + value.type + '" that is different from "' + this.type + '".')
+                }
+
+                if (value.language !== this.language) {
+                    throw new Error('Trying to order an element with language "' + value.language + '" that is different from "' + this.language + '".')
                 }
             }
         }
@@ -298,7 +314,8 @@ class Importer {
     }
 
     /**
-     * Sets mapping between external imported value and one or more library standard values
+     * Sets mapping between external imported value and one or more library standard values. If an importedValue
+     * is already in a hash table, old libraryValue will be overwritten with the new one.
      * @param {string} importedValue - External value
      * @param {Feature | Feature[]} libraryValue - Library standard value
      */

@@ -200,7 +200,7 @@ describe('FeatureType object', () => {
 
     });
 
-    test('addImporter method method with no value should throw an exception', () => {
+    test('addImporter method with no value should throw an exception', () => {
         "use strict";
 
         expect(() => featureType.addImporter()).toThrowError(/non-empty/);
@@ -221,45 +221,120 @@ describe('FeatureType object', () => {
 
     });
 
+    test('order setter should change an order of items properly', () => {
+        "use strict";
+
+        let f1 = new t.Feature("first", t.types.declension, t.languages.latin);
+        let f2 = new t.Feature("second", t.types.declension, t.languages.latin);
+        let f3 = new t.Feature("third", t.types.declension, t.languages.latin);
+        let f4 = new t.Feature("fourth", t.types.declension, t.languages.latin);
+        featureType.order = [[f4, f2], f3, f1];
+        expect(featureType).toEqual(expect.objectContaining({
+            "_orderIndex": [["fourth", "second"], "third", "first"],
+            "_orderLookup": {"first": 2, "fourth": 0, "second": 0, "third": 1}
+        }));
+
+    });
+
+    test('order setter with no argument should throw an exception', () => {
+        "use strict";
+
+        expect(() => featureType.order = undefined).toThrowError(/non-empty/);
+
+    });
+
+    test('order setter with an empty array argument should throw an exception', () => {
+        "use strict";
+
+        expect(() => featureType.order = []).toThrowError(/non-empty/);
+
+    });
+
+    test('order setter with an argument(s) of mismatching type should throw an exception', () => {
+        "use strict";
+
+        let f1 = new t.Feature("first", t.types.gender, t.languages.latin);
+        expect(() => featureType.order = [f1]).toThrowError(/is different/);
+
+    });
+
+    test('order setter with an argument(s) of mismatching language should throw an exception', () => {
+        "use strict";
+
+        let f1 = new t.Feature("first", t.types.declension, t.languages.greek);
+        expect(() => featureType.order = [f1]).toThrowError(/is different/);
+
+    });
+
+    test('order setter with an argument(s) of values that are not stored should throw an exception', () => {
+        "use strict";
+
+        let f1 = new t.Feature("fifth", t.types.declension, t.languages.latin);
+        expect(() => featureType.order = [f1]).toThrowError(/not stored/);
+
+    });
+
     afterAll(() => {
         // Clean a test environment up
         featureType = undefined;
     });
 });
 
-/*describe('LanguageDataset object', () => {
+describe('Importer object', () => {
     "use strict";
 
-    let languageDataset;
+    let importer;
 
     beforeAll(() => {
         // Create a test environment
-        languageDataset = new t.LanguageDataset(t.languages.latin);
+        importer = new t.Importer();
     });
 
     test('Should be initialized properly', () => {
         "use strict";
 
-        expect(languageDataset).toEqual({
-            "endings": [],
-            "features": {},
-            "footnotes": {},
-            "language": t.languages.latin
+        expect(importer).toEqual({
+            hash: {}
         });
 
     });
 
-    test('Should throw an exception if initialized incorrectly', () => {
+    test('map method should create proper mapping', () => {
+        "use strict";
+
+        importer.map('value1', 'valueOne').map('value2', 'valueTwo');
+        expect(importer).toEqual({"hash": {"value1": "valueOne", "value2": "valueTwo"}});
+
+    });
+
+    test('map method should overwrite old values', () => {
+        "use strict";
+
+        importer.map('value1', 'valueOne').map('value2', 'valueTwo');
+        importer.map('value1', 'newValueOne');
+        expect(importer).toEqual({"hash": {"value1": "newValueOne", "value2": "valueTwo"}});
+
+    });
+
+    test('has method should check if value is in a map properly', () => {
+        "use strict";
+
+        importer.map('value1', 'valueOne').map('value2', 'valueTwo');
+        expect(importer.has('value2')).toBeTruthy();
+
+    });
+
+    test('map method should add proper mapping', () => {
         "use strict";
 
         expect(() => {
-            new t.LanguageDataset('incorrect value');
+            new t.Importer('incorrect value');
         }).toThrow();
 
     });
 
     afterAll(() => {
         // Clean a test environment up
-        languageDataset = undefined;
+        importer = undefined;
     });
-});*/
+});

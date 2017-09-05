@@ -23,7 +23,7 @@ let featureType = new Lib.FeatureType(Lib.types.declension, ['first', ['second',
 
 
 let result;
-Lib.loadData("/tests/data/latin_noun_cupidinibus.json")
+Lib.loadData("tests/data/latin_noun_cupidinibus.json")
     .then(json => {
         json = JSON.parse(json);
 
