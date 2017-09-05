@@ -2430,8 +2430,8 @@ dataSet.loadData = function loadData$$1() {
 
 
     return new Promise((resolve, reject) => {
-        let suffixRequest = loadData("/lib/lang/latin/data/noun/suffixes.csv");
-        let footnoteRequest = loadData("/lib/lang/latin/data/noun/footnotes.csv");
+        let suffixRequest = loadData("lib/lang/latin/data/noun/suffixes.csv");
+        let footnoteRequest = loadData("lib/lang/latin/data/noun/footnotes.csv");
 
         let that = this;
         Promise.all([suffixRequest, footnoteRequest]).then(values => {

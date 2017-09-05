@@ -88,8 +88,8 @@ dataSet.loadData = function loadData() {
 
 
     return new Promise((resolve, reject) => {
-        let suffixRequest = Lib.loadData("/lib/lang/latin/data/noun/suffixes.csv");
-        let footnoteRequest = Lib.loadData("/lib/lang/latin/data/noun/footnotes.csv");
+        let suffixRequest = Lib.loadData("lib/lang/latin/data/noun/suffixes.csv");
+        let footnoteRequest = Lib.loadData("lib/lang/latin/data/noun/footnotes.csv");
 
         let that = this;
         Promise.all([suffixRequest, footnoteRequest]).then(values => {
