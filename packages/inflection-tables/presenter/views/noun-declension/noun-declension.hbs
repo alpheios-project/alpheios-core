@@ -1,5 +1,5 @@
 <table class="inflection-table">
-    {{#each endings}}
+    {{#each suffixes}}
         {{#if @first}}
             <!-- Gender -->
             {{#each data}}
@@ -40,7 +40,7 @@
         {{/each}}
         {{/if}}
     {{/each}}
-    {{#each endings}}
+    {{#each suffixes}}
         <!-- Gender -->
         <tr class="inflection-table__row"><td class="inflection-table__cell" colspan="31">{{value}}</td></tr>
         {{#each data}}
@@ -55,8 +55,8 @@
                             <!-- Type -->
                             <td class="inflection-table__cell">
                                 {{#each data}}
-                                    <!-- Endings -->
-                                    <a class="inflection-table__ending" title="{{ending}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}">{{ending}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}
+                                    <!-- suffixes -->
+                                    <a class="inflection-table__suffix" title="{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}">{{suffix}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}
                                 {{/each}}
                             </td>
                         {{/each}}

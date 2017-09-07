@@ -71,7 +71,7 @@ dataSet.addSuffixes = function addSuffixes(data) {
             });
             features.push(...indexes);
         }
-        this.addEnding(data[i][0], ...features);
+        this.addSuffix(data[i][0], ...features);
     }
 };
 
@@ -84,8 +84,6 @@ dataSet.addFootnotes = function addFootnotes(data) {
 
 dataSet.loadData = function loadData() {
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
-    console.log('Suffixes ', suffixes);
-
 
     return new Promise((resolve, reject) => {
         let suffixRequest = Lib.loadData("lib/lang/latin/data/noun/suffixes.csv");
@@ -114,7 +112,7 @@ dataSet.loadData = function loadData() {
 /**
  * Determines whether an ending will match inflections or not and what type of match that will be (exact, partial, etc.)
  * @param {Inflection[]} inflections - Inflections that are returned by a morphological service.
- * @param {Ending} ending - An ending we need to match inflections against.
+ * @param {Suffix} ending - An ending we need to match inflections against.
  * @returns {boolean} Whether an ending is a match for inflections provided or not.
  */
 dataSet.match = function match(inflections, ending) {

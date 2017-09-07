@@ -2,7 +2,7 @@
  * Shared data structures and functions
  */
 export {Feature, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
-    Ending, ResultSet, loadData};
+    Suffix, ResultSet, loadData};
 
 
 // Should have no spaces in values in order to be used in HTML templates
@@ -303,7 +303,7 @@ class FeatureType {
 }
 
 /**
- * This is a hash table that maps values imported from an external file or service into library standard values
+ * This is a hash table that maps values to be imported from an external file or service to library standard values.
  */
 class Importer {
     constructor() {
@@ -318,10 +318,23 @@ class Importer {
      * @param {Feature | Feature[]} libraryValue - Library standard value
      */
     map(importedValue, libraryValue) {
+        if (!importedValue) {
+            throw new Error('Imported value should not be empty.')
+        }
+
+        if (!libraryValue) {
+            throw new Error('Library value should not be empty.')
+        }
+
         this.hash[importedValue] = libraryValue;
         return this;
     }
 
+    /**
+     * Checks if value is in a map.
+     * @param {string} importedValue - A value to test.
+     * @returns {boolean} - Tru if value is in a map, false otherwise.
+     */
     has(importedValue) {
         return this.hash.hasOwnProperty(importedValue);
     }
@@ -336,15 +349,13 @@ class Importer {
             return this.hash[importedValue];
         }
         else {
-            console.error('Cannot find a library value for "' + importedValue + '" unknown value.');
-            // TODO: throw an error?
-
+            throw new Error('A value "' + importedValue + '" is not found in the importer.');
         }
     }
 }
 
 /*
- Hierarchical structure:
+ Hierarchical structure of return value of a morphological analyzer:
 
  Homonym (a group of words that are written the same way, https://en.wikipedia.org/wiki/Homonym)
     Lexeme 1 (a unit of lexical meaning, https://en.wikipedia.org/wiki/Lexeme)
@@ -363,71 +374,198 @@ class Importer {
             Suffix
  */
 
+/**
+ * Represents an inflection of a word
+ */
 class Inflection {
+
+    /**
+     * Initializes an Inflection object.
+     * @param {string} stem - A stem of a word.
+     * @param {string} suffix - A word's suffix.
+     * @param {string} language - A word's language.
+     */
     constructor(stem, suffix, language) {
         "use strict";
+
+        if (!stem) {
+            throw new Error('Stem should not be empty.');
+        }
+
+        if (!suffix) {
+            throw new Error('Suffix should not be empty.');
+        }
+
+        if (!language) {
+            throw new Error('Langauge should not be empty.');
+        }
+
+        if (!languages.isAllowed(language)) {
+            throw new Error('Language "' + language + '" is not supported.');
+        }
+
         this.stem = stem;
         this.suffix = suffix;
         this.language = language;
     }
 
     /**
-     * Data type can be an array or values
-     * @param dataType Feature | Array of Features
+     * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
+     * an array of Feature objects will be provided.
+     * Values are taken from features and stored in a 'feature.type' property as an array of values.
+     * @param {Feature | Feature[]} data
      */
-    set feature(dataType) {
+    set feature(data) {
         "use strict";
-        // TODO: Check if dataType's language matches those of an inflection
-        let feature = Feature.create(dataType);
-        this[feature.type] = feature.value;
+        if (!data) {
+            throw new Error('Inflection feature data cannot be empty.');
+        }
+
+        if (!Array.isArray(data)) {
+            data = [data];
+        }
+
+        let type = data[0].type;
+        this[type] = [];
+        for (let element of data) {
+            if (!(element instanceof Feature)) {
+                throw new Error('Inflection feature data must be a Feature object.');
+            }
+
+            if (element.language !== this.language) {
+                throw new Error('Language "' + element.language + '" of a feature does not match a language "'
+                + this.language + '" of an Inflection object.');
+            }
+
+            this[type].push(element.value);
+        }
     }
 }
 
+/**
+ * Lemma, a canonical form of a word.
+ */
 class Lemma {
+    /**
+     * Initializes a Lemma object.
+     * @param {string} word - A word.
+     * @param {string} language - A language of a word.
+     */
     constructor(word, language) {
         "use strict";
+
+        if (!word) {
+            throw new Error('Word should not be empty.');
+        }
+
+        if (!language) {
+            throw new Error('Langauge should not be empty.');
+        }
+
+        if (!languages.isAllowed(language)) {
+            throw new Error('Language "' + language + '" is not supported.');
+        }
+
         this.word = word;
         this.language = language;
     }
 }
 
+/**
+ * A basic unit of lexical meaning. Contains a Lemma object and one or more Inflection objects.
+ */
 class Lexeme {
+    /**
+     * Initializes a Lexeme object.
+     * @param {Lemma} lemma - A lemma object.
+     * @param {Inflection[]} inflections - An array of inflections.
+     */
     constructor(lemma, inflections) {
         "use strict";
+        if (!lemma) {
+            throw new Error('Lemma should not be empty.');
+        }
+
+        if (!(lemma instanceof Lemma)) {
+            throw new Error('Lemma should be of Lemma object type.');
+        }
+
+        if (!inflections) {
+            throw new Error('Inflections data should not be empty.');
+        }
+
+        if (!Array.isArray(inflections)) {
+            throw new Error('Inflection data should be provided in an array.');
+        }
+
+        for (let inflection of inflections) {
+            if (!(inflection instanceof Inflection)) {
+                throw new Error('All inflection data should be of Inflection object type.');
+            }
+        }
+
         this.lemma = lemma;
         this.inflections = inflections;
     }
 }
 
+/**
+ * A group of similar words. Contains one or more Lexeme objects.
+ */
 class Homonym {
+    /**
+     * Initializes a Homonym object.
+     * @param {Lexeme[]} lexemes - An array of Lexeme objects.
+     */
     constructor (lexemes) {
         "use strict";
+        if (!lexemes) {
+            throw new Error('Lexemes data should not be empty.');
+        }
+
+        if (!Array.isArray(lexemes)) {
+            throw new Error('Lexeme data should be provided in an array.');
+        }
+
+        for (let lexeme of lexemes) {
+            if (!(lexeme instanceof Lexeme)) {
+                throw new Error('All lexeme data should be of Lexeme object type.');
+            }
+        }
+        
         this.lexemes = lexemes;
     }
 }
 
-
+/**
+ * Stores inflection language data
+ */
 class LanguageDataset {
     /**
      * Initializes a LanguageDataset.
-     * @param {languages} language - A language of a dataset, from an allowed languages list (see 'languages' object).
+     * @param {string} language - A language of a data set, from an allowed languages list (see 'languages' object).
      */
     constructor(language) {
         "use strict";
-        if (!languages.hasOwnProperty(language)) {
+        if (!language) {
+            // Language is not supported
+            throw new Error('Language data cannot be empty.');
+        }
+
+        if (!languages.isAllowed(language)) {
             // Language is not supported
             throw new Error('Language "' + language + '" is not supported.');
         }
         this.language = language;
-        this.features = {}; // Grammatical feature types (definitions) that are supported by a specific language.
-        this.endings = [];
-        this.footnotes = {};
+        this.features = {}; // Grammatical feature types (definitions) within supported by a specific language.
+        this.suffixes = []; // An array of suffixes.
+        this.footnotes = {}; // Footnotes
     };
 
     /**
      * Creates and initializes a new FeatureType objects. It is stored in the 'features' object of this dataset.
      * This method is chainable.
-     * @param {types} type - A type of a feature, from an allowed types list (see 'types' object).
+     * @param {string} type - A type of a feature, from an allowed types list (see 'types' object).
      * @param {string[] | string[][]} allowedValues - Allowed values fo this type. A sequence of items defines default.
      * sorting and grouping order. See FeatureType constrictor for more details.
      * @returns {FeatureType} A newly created FeatureType.
@@ -443,12 +581,12 @@ class LanguageDataset {
      * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
      * 'feminine' genders
      *
-     * @param {string} ending
+     * @param {string} suffix
      * @param {Feature[]} featureTypes
      */
-    addEnding(ending, ...featureTypes) {
+    addSuffix(suffix, ...featureTypes) {
         // TODO: implement run-time error checking
-        let endingItem = new Ending(ending);
+        let suffixItem = new Suffix(suffix);
 
         // Build all possible combinations of features
         let multiValueFeatures = [];
@@ -457,11 +595,11 @@ class LanguageDataset {
         // Go through all features provided
         for (let feature of featureTypes) {
 
-            // If this is a footnote. Footnotes should go in flat array, not in a list
+            // If this is a footnote. Footnotes should go in a flat array
             // because we don't need to split by them
             if (feature.type === types.footnote) {
-                endingItem[types.footnote] = endingItem[types.footnote] || [];
-                endingItem[types.footnote].push(feature.value);
+                suffixItem[types.footnote] = suffixItem[types.footnote] || [];
+                suffixItem[types.footnote].push(feature.value);
                 continue;
             }
 
@@ -469,7 +607,7 @@ class LanguageDataset {
             if (Array.isArray(feature)) {
 
                 if (feature.length > 0) {
-                    // Store all multi-value features to create a separate copy of an ending for each of them
+                    // Store all multi-value features to create a separate copy of a a Suffix object for each of them
                     multiValueFeatures.push(feature);
                 }
                 else {
@@ -478,23 +616,38 @@ class LanguageDataset {
                 }
             }
             else {
-                endingItem.features[feature.type] = feature.value;
+                suffixItem.features[feature.type] = feature.value;
             }
         }
 
-        // Create a copy of an Ending object for each multi-value item
+        // Create a copy of an Suffix object for each multi-value item
         if (multiValueFeatures.length > 0) {
             for (let featureValues of multiValueFeatures) {
-                let endingItems = endingItem.split(featureValues);
-                this.endings = this.endings.concat(endingItems);
+                let endingItems = suffixItem.split(featureValues);
+                this.suffixes = this.suffixes.concat(endingItems);
             }
         }
         else {
-            this.endings.push(endingItem);
+            this.suffixes.push(suffixItem);
         }
     };
 
+    /**
+     * Stores a footnote item.
+     * @param {number} index - A footnote's index.
+     * @param {string} text - A footnote's text.
+     */
     addFootnote(index, text) {
+        "use strict";
+
+        if (!index) {
+            throw new Error('Footnote index data should not be empty.');
+        }
+
+        if (!text) {
+            throw new Error('Footnote text data should not be empty.');
+        }
+
         this.footnotes[index] = text;
     };
 
@@ -510,12 +663,12 @@ class LanguageDataset {
                 inflections.push(inflection);
             }
         }
-        result.endings = this.endings.filter(this['match'].bind(this, inflections));
+        result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
 
         // Create a set so all footnote indexes be unique
         let footnotesIndex = new Set();
-        // Scan all selected endings to build a unique set of footnote indexes
-        for (let ending of result.endings) {
+        // Scan all selected suffixes to build a unique set of footnote indexes
+        for (let ending of result.suffixes) {
             if (ending.hasOwnProperty(types.footnote)) {
                 // Footnote indexes are stored in an array
                 for (let index of ending[types.footnote]) {
@@ -532,34 +685,38 @@ class LanguageDataset {
 
         return result;
     }
-
-    /**
-     * This is a simple test function for testing tools verification
-     * @returns {boolean}
-     */
-    test() {
-        "use strict";
-        return true;
-    }
 }
 
 /**
- * Ending is an ending of a word with none or any grammatical features associated with it.
+ * Suffix is an ending of a word with none or any grammatical features associated with it.
  * Features are stored in properties whose names are type of a grammatical feature (i.e. case, gender, etc.)
  * Each feature can have a single or multiple values associated with it (i.e. gender can be either 'masculine',
  * a single value, or 'masculine' and 'feminine'. That's why all values are stored in an array.
  */
-class Ending {
-    constructor(ending) {
+class Suffix {
+    /**
+     * Initializes a Suffix object.
+     * @param {string} suffix
+     */
+    constructor(suffix) {
         "use strict";
-        this.ending = ending;
+
+        if (!suffix) {
+            throw new Error('Suffix should not be empty.')
+        }
+        this.suffix = suffix;
         this.features = {};
         this.featureGroups = {};
     }
 
+    /**
+     * Returns a copy of itself. Used in splitting suffixes with multi-value features.
+     * @returns {Suffix}
+     */
     clone() {
         "use strict";
-        let clone = new Ending(this.ending);
+
+        let clone = new Suffix(this.suffix);
         for (const key in this.features) {
             if (this.features.hasOwnProperty(key)) {
                 clone.features[key] = this.features[key];
@@ -574,58 +731,36 @@ class Ending {
     };
 
     /**
-     * Splits an ending that has multiple values of one or more grammatical features into an array of endings with
-     * each ending having only a single value of those grammatical features.
-     * @param {Feature[]} featureValues - Multiple grammatical feature values.
-     * @returns {Ending[]} - An array of endings.
-     */
-    split(featureValues) {
-        "use strict";
-        let copy = this.clone();
-        const type = featureValues[0].type;
-        let values = [];
-        featureValues.forEach(element => values.push(element.value));
-        copy.features[type] = featureValues[0].value;
-        copy.featureGroups[type] = values;
-        let endingItems = [copy];
-        for (let i = 1; i < featureValues.length; i++) {
-            copy = this.clone();
-            copy.features[type] = featureValues[i].value;
-            copy.featureGroups[type] = values;
-            endingItems.push(copy);
-        }
-        return endingItems;
-    };
-
-    /**
-     * Checks if ending has a feature that is a match to the one provided.
-     * @param featureType - A feature type we need to match with the ones stored inside the ending
-     * @param featureValue - A feature value we need to match with the ones stored inside the ending
+     * Checks if suffix has a feature that is a match to the one provided.
+     * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
+     * @param {string[]} featureValues - A list of feature values we need to match with the ones stored inside the suffix
      * @returns {boolean} - If provided feature is a match or not
      */
-    featureMatch(featureType, featureValue) {
+    featureMatch(featureType, featureValues) {
         "use strict";
         if (this.features.hasOwnProperty(featureType)) {
-            if (featureValue === this.features[featureType]) {
-                return true;
+            for (let value of featureValues) {
+                if (value === this.features[featureType]) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     /**
-     * Find feature groups in Ending.featureGroups that are the same between endings provided
-     * @param endings
+     * Find feature groups in Suffix.featureGroups that are the same between suffixes provided
+     * @param suffixes
      */
-    static getCommonGroups(endings) {
+    static getCommonGroups(suffixes) {
         "use strict";
 
-        let features = Object.keys(endings[0].featureGroups);
+        let features = Object.keys(suffixes[0].featureGroups);
 
         let commonGroups = features.filter( feature => {
             let result = true;
-            for (let i=1; i<endings.length; i++) {
-                result = result && endings[i].features.hasOwnProperty(feature);
+            for (let i=1; i<suffixes.length; i++) {
+                result = result && suffixes[i].features.hasOwnProperty(feature);
             }
             return result;
         });
@@ -633,24 +768,24 @@ class Ending {
     }
 
     /**
-     * Finds out if an ending is in the same group with some other ending. The other ending is provided as a function argument.
-     * Two endings are considered to be in the same group if they are:
+     * Finds out if an suffix is in the same group with some other suffix. The other suffix is provided as a function argument.
+     * Two suffixes are considered to be in the same group if they are:
      * a. Have at least one common group in featureGroups;
-     * b. Have the same ending
+     * b. Have the same suffix
      * c. Have values of all features the same except for those that belong to a common group(s)
      * d. Values of the common group features must be complementary. Here is an example:
-     * Let's say a 'gender' group can have values such as 'masculine' and 'feminine'. Then endings will be combined
-     * only if gender value of one ending is 'masculine' and the other value is 'feminine'. If both endings have the same
+     * Let's say a 'gender' group can have values such as 'masculine' and 'feminine'. Then suffixes will be combined
+     * only if gender value of one suffix is 'masculine' and the other value is 'feminine'. If both suffixes have the same
      * either 'masculine' or 'feminine' value, they sill not be combined as are not being complementary.
-     * @param {Ending} ending - An other ending that we compare this ending with.
-     * @returns {boolean} - True if both endings are in the same group, false otherwise.
+     * @param {Suffix} suffix - An other suffix that we compare this suffix with.
+     * @returns {boolean} - True if both suffixes are in the same group, false otherwise.
      */
-    isInSameGroupWith(ending) {
+    isInSameGroupWith(suffix) {
         "use strict";
 
-        let commonGroups = Ending.getCommonGroups([this, ending]);
+        let commonGroups = Suffix.getCommonGroups([this, suffix]);
         if (commonGroups.length < 1) {
-            // If elements do not have common groups in Ending.featureGroups then they are not in the same group
+            // If elements do not have common groups in Suffix.featureGroups then they are not in the same group
             return false;
         }
 
@@ -658,8 +793,8 @@ class Ending {
         commonGroups.forEach(feature => commonValues[feature] = new Set([this.features[feature]]));
 
         let result = true;
-        result = result && this.ending === ending.ending;
-        // If endings does not match don't check any further
+        result = result && this.suffix === suffix.suffix;
+        // If suffixes does not match don't check any further
         if (!result) {
             return false;
         }
@@ -667,12 +802,12 @@ class Ending {
         // Check all features to be a match, except those that are possible group values
         for (let feature of Object.keys(this.features)) {
             if (commonGroups.indexOf(feature)>=0) {
-                commonValues[feature].add(ending.features[feature]);
+                commonValues[feature].add(suffix.features[feature]);
 
                 // Do not compare common groups
                 continue;
             }
-            result = result && this.features[feature] === ending.features[feature];
+            result = result && this.features[feature] === suffix.features[feature];
             // If feature mismatch discovered, do not check any further
             if (!result) {
                 return false;
@@ -687,14 +822,39 @@ class Ending {
     }
 
     /**
-     * Combines endings that are in the same group together.
-     * @param {Ending[]} endings - An array of endings to be combined.
-     * @param {function} mergeFunction - A function that will merge two endings. It is presentation specific and is
-     * define in a Presenter's View module. A function has two parameters each of Ending type. It returns a single
-     * Ending object.
-     * @returns {Ending[]} An array of endings with some items possibly combined together.
+     * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
+     * with each Suffix object having only a single value of those grammatical features.
+     * @param {Feature[]} featureValues - Multiple grammatical feature values.
+     * @returns {Suffix[]} - An array of suffixes.
      */
-    static combine(endings, mergeFunction) {
+    split(featureValues) {
+        "use strict";
+
+        let copy = this.clone();
+        const type = featureValues[0].type;
+        let values = [];
+        featureValues.forEach(element => values.push(element.value));
+        copy.features[type] = featureValues[0].value;
+        copy.featureGroups[type] = values;
+        let suffixItems = [copy];
+        for (let i = 1; i < featureValues.length; i++) {
+            copy = this.clone();
+            copy.features[type] = featureValues[i].value;
+            copy.featureGroups[type] = values;
+            suffixItems.push(copy);
+        }
+        return suffixItems;
+    };
+
+    /**
+     * Combines suffixes that are in the same group together.
+     * @param {Suffix[]} suffixes - An array of suffixes to be combined.
+     * @param {function} mergeFunction - A function that will merge two suffixes. It is presentation specific and is
+     * define in a Presenter's View module. A function has two parameters each of Suffix type. It returns a single
+     * Suffix object.
+     * @returns {Suffix[]} An array of suffixes with some items possibly combined together.
+     */
+    static combine(suffixes, mergeFunction) {
         "use strict";
 
         let matchFound = false;
@@ -704,42 +864,51 @@ class Ending {
             matchFound = false;
 
             /*
-            Go through an array of endings end compare each ending with each other (two-way compare) one time. \
-            If items are in the same group, merge two endings, break out of a loop,
-            and remove one matching ending (the second one) from an array.
+            Go through an array of suffixes end compare each suffix with each other (two-way compare) one time. \
+            If items are in the same group, merge two suffixes, break out of a loop,
+            and remove one matching suffix (the second one) from an array.
             Then repeat on a modified array until no further matches found.
              */
-            for (let i=0; i<endings.length; i++) {
+            for (let i=0; i<suffixes.length; i++) {
                 if (matchFound) {
                     continue;
                 }
-                for (let j=i+1; j < endings.length; j++) {
-                    if (endings[i].isInSameGroupWith(endings[j])) {
+                for (let j=i+1; j < suffixes.length; j++) {
+                    if (suffixes[i].isInSameGroupWith(suffixes[j])) {
                         matchIdx = j;
                         matchFound = true;
-                        mergeFunction(endings[i], endings[j]);
+                        mergeFunction(suffixes[i], suffixes[j]);
                     }
                 }
             }
 
             if (matchFound) {
-                endings.splice(matchIdx, 1);
+                suffixes.splice(matchIdx, 1);
             }
         }
         while (matchFound);
-        return endings;
+        return suffixes;
     }
 }
 
-// Return value for inflection queries
+/**
+ * A return value for inflection queries
+ */
 class ResultSet {
     constructor() {
         "use strict";
-        this.endings = [];
+        this.suffixes = [];
         this.footnotes = [];
     }
 }
 
+/**
+ * Load text data form an external fil with an asynchronous XHR request.
+ * @param {string} filePath - A path to a file we need to load.
+ * @returns {Promise} - A promise that will be resolved with either
+ * file content (a string) in case of success of with a status message
+ * in case of failure.
+ */
 let loadData = function loadData(filePath) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();

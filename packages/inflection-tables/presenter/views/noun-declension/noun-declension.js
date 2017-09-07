@@ -15,7 +15,7 @@ let templateName = 'noun-declension/noun-declension';
  * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
  * All feature types has a default sort order. This order is defined by a sequence of feature values provided
  * as arguments to each feature type constructor. However, this can be overriden here, as shown by the 'gender'
- * example. If endings with several values must be combines, such values can be provided within an array,
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
  * as shown by 'masculine' and 'feminine' values.
  */
 let genderFeature = LibLatin.genders;
@@ -23,7 +23,7 @@ genderFeature.order = [[LibLatin.genders.masculine, LibLatin.genders.feminine], 
 let featureOrder = [LibLatin.numbers, LibLatin.cases, LibLatin.declensions, genderFeature, LibLatin.types];
 
 /**
- * By what feature (multiple features not supported yet) should endings be combined within a table cell. If this is
+ * By what feature (multiple features not supported yet) should suffixes be combined within a table cell. If this is
  * set to 'gender', and there are ending that has an 'gender' feature group, and their 'gender' values are not the
  * same and within group values, those ending records will be combined into one
  */
@@ -34,8 +34,8 @@ let deduplicateBy = LibLatin.genders;
  * A compare function that can be used to sort ending according to specific requirements of the current view.
  * This function is for use with Array.prototype.sort().
  * @param {FeatureType[]} featureOrder
- * @param {Ending} a
- * @param {Ending} b
+ * @param {Suffix} a
+ * @param {Suffix} b
  */
 let compare = function compare(featureOrder, a, b) {
     "use strict";
@@ -73,7 +73,7 @@ let compare = function compare(featureOrder, a, b) {
  * @param {FeatureType} featureType - a grammatical feature type we need to filter on
  * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
  * this ending should have
- * @param {Ending} ending - an ending we need to filter out
+ * @param {Suffix} ending - an ending we need to filter out
  * @returns {boolean}
  */
 let filter = function filter(featureType, featureValues, ending) {
@@ -93,13 +93,13 @@ let filter = function filter(featureType, featureValues, ending) {
 };
 
 /**
- * This function provide a view-specific logic that is used to merge two endings together when they are combined.
- * @param {Ending} endingA - A first of two endings to merge (to be returned).
- * @param {Ending} endingB - A second ending to merge (to be discarded).
- * @returns {Ending} A modified value of ending A.
+ * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
+ * @param {Suffix} endingA - A first of two suffixes to merge (to be returned).
+ * @param {Suffix} endingB - A second ending to merge (to be discarded).
+ * @returns {Suffix} A modified value of ending A.
  */
 let merge = function merge(endingA, endingB) {
-    let commonGroups = Lib.Ending.getCommonGroups([endingA, endingB]);
+    let commonGroups = Lib.Suffix.getCommonGroups([endingA, endingB]);
     for (let type of commonGroups) {
         // Combine values using a comma separator. Can do anything else if we need to.
         endingA.features[type] = endingA.features[type] + ', ' + endingB.features[type];
@@ -108,13 +108,13 @@ let merge = function merge(endingA, endingB) {
 };
 
 /**
- * A recursive function that organizes endings by features from a groupFeatures list into a multi-dimensional
+ * A recursive function that organizes suffixes by features from a groupFeatures list into a multi-dimensional
  * array. Each of levels of this array corresponds to a feature from a groupFeatures list.
- * @param {Ending[]} endings - A list of endings.
+ * @param {Suffix[]} endings - A list of suffixes.
  * @param {FeatureType[]} groupFeatures - A list of feature types to be used for grouping.
- * @param {function} mergeFunction - A function that merges two endings together.
+ * @param {function} mergeFunction - A function that merges two suffixes together.
  * @param {number} currentLevel - A recursion level, used to stop recursion.
- * @returns {Ending[]} Endings grouped into a multi-dimensional array.
+ * @returns {Suffix[]} Endings grouped into a multi-dimensional array.
  */
 let groupByFeature = function groupByFeature(endings, groupFeatures, mergeFunction, currentLevel = 0) {
     let feature = groupFeatures[currentLevel];
@@ -131,9 +131,9 @@ let groupByFeature = function groupByFeature(endings, groupFeatures, mergeFuncti
         }
         else {
             // This is the last level
-            // Split result has a list of endings in a table cell. We can now combine duplicated items if we want
+            // Split result has a list of suffixes in a table cell. We can now combine duplicated items if we want
             if (selected.length >0) {
-                selected = Lib.Ending.combine(selected, mergeFunction);
+                selected = Lib.Suffix.combine(selected, mergeFunction);
             }
 
         }
@@ -151,13 +151,13 @@ let groupByFeature = function groupByFeature(endings, groupFeatures, mergeFuncti
 let render = function data(resultSet) {
     "use strict";
 
-    // We can sort endings if we need to
-    //let sorted = resultSet.endings.sort(compare.bind(this, featureOrder));
+    // We can sort suffixes if we need to
+    //let sorted = resultSet.suffixes.sort(compare.bind(this, featureOrder));
 
     // Create data structure for a template
     let displayData = {};
 
-    displayData.endings = groupByFeature(resultSet.endings, featureOrder, merge);
+    displayData.suffixes = groupByFeature(resultSet.suffixes, featureOrder, merge);
     displayData.footnotes = resultSet.footnotes;
 
     let compiled = Handlebars.compile(template);
