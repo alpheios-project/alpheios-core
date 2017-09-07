@@ -84,38 +84,20 @@ dataSet.addFootnotes = function addFootnotes(data) {
 
 dataSet.loadData = function loadData() {
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
-
-    return new Promise((resolve, reject) => {
-        let suffixRequest = Lib.loadData("lib/lang/latin/data/noun/suffixes.csv");
-        let footnoteRequest = Lib.loadData("lib/lang/latin/data/noun/footnotes.csv");
-
-        let that = this;
-        Promise.all([suffixRequest, footnoteRequest]).then(values => {
-            let suffixes, footnotes;
-            [suffixes, footnotes] = values;
-
-            suffixes = papaparse.parse(suffixes, {});
-            that.addSuffixes(suffixes.data);
-
-            footnotes = papaparse.parse(footnotes, {});
-            that.addFootnotes(footnotes.data);
-
-            resolve();
-        }).catch(reason => {
-            reject(reason);
-        });
-    });
+    this.addSuffixes(suffixes.data);
+    let footnotes = papaparse.parse(nounFootnotesCSV, {});
+    this.addFootnotes(footnotes.data);
 };
 
 
-// TODO: Implement match type. Add some real matching rules.
 /**
- * Determines whether an ending will match inflections or not and what type of match that will be (exact, partial, etc.)
- * @param {Inflection[]} inflections - Inflections that are returned by a morphological service.
- * @param {Suffix} ending - An ending we need to match inflections against.
- * @returns {boolean} Whether an ending is a match for inflections provided or not.
+ * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
+ * @param {Inflection[]} inflections - An array of Inflection objects to be matched against a suffix.
+ * @param {Suffix} suffix - A suffix to be matched with inflections.
+ * @returns {Suffix | undefined} If a match is found, returns a Suffix object modified with some
+ * additional information about a match. If no matches found, returns undefined.
  */
-dataSet.match = function match(inflections, ending) {
+dataSet.matcher = function match(inflections, suffix) {
     "use strict";
     // All of those features must match between an inflection and an ending
     let obligatoryMatches = [Lib.types.part];
@@ -123,22 +105,78 @@ dataSet.match = function match(inflections, ending) {
     // Any of those features must match between an inflection and an ending
     let optionalMatches = [Lib.types.grmCase, Lib.types.declension, Lib.types.gender, Lib.types.number];
 
-    let matchFound = false;
 
-    // TODO: filter out features of wrong type
+    let bestMatchData; // Information about the best match found
+
+    /*
+     There can be a one-to-one full match between an inflection and a suffix (except when suffix has multiple values?)
+     But there could be multiple partial matches. So we should try to find the best match possible and return it.
+     A fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
+     */
     for (let inflection of inflections) {
+        let matchData = new Lib.MatchData(); // Create a match profile
+        let matchedFeatures = new Set();
+
+        if (inflection.suffix === suffix.suffix) {
+           matchData.suffixMatch = true;
+        }
+
+        let matchFound = true; // Let's see if it will keep this way
         for (let feature of  obligatoryMatches) {
-            if (!ending.featureMatch(feature, inflection[feature])) {
-                return false;
+            let featureMatch = !!suffix.featureMatch(feature, inflection[feature]);
+            matchFound = matchFound && featureMatch;
+
+            if (featureMatch) {
+                // Inflection's value of this feature is matching the on of the suffix
+                matchedFeatures.add(feature);
+            }
+            else {
+                // Obligatory match is not found, there is no reason to check other items
+                break;
             }
         }
-        for (let feature of optionalMatches) {
-            if (ending.featureMatch(feature, inflection[feature])) {
-                matchFound = true;
-                return matchFound;
+
+        if (matchFound) {
+            // If obligatory match requirement is fulfilled we can check features with optional
+            // match requirements to see if it's a full match
+            matchData.fullFeatureMatch = true; // Will it keep this way?
+            for (let feature of optionalMatches) {
+                let matchedValue = suffix.featureMatch(feature, inflection[feature]);
+                matchData.fullFeatureMatch = matchData.fullFeatureMatch && !!matchedValue;
+                if (matchedValue) {
+                    matchedFeatures.add(feature);
+                }
+            }
+        }
+
+        if (matchFound) {
+            matchData.matchedFeatures = Array.from(matchedFeatures);
+            if (!bestMatchData) {
+                // If no match data is saved yet, store the current one as the best match
+                bestMatchData = matchData;
+                continue;
+            }
+
+            // Store match data only if a current one is better than the previous best match.
+            if (bestMatchData.fullFeatureMatch === false) {
+
+                if (matchData.fullFeatureMatch === true) {
+                    // If a full match is found, it will always replace a partial match.
+                    bestMatchData = matchData;
+                }
+                else if (matchData.matchedFeatures.length > bestMatchData.matchedFeatures.length) {
+                    bestMatchData = matchData;
+                }
             }
         }
     }
-    return matchFound;
+    if (bestMatchData) {
+        // Some match is found
+        suffix.match = bestMatchData;
+        return suffix;
+    }
+    else {
+        return undefined;
+    }
 };
 

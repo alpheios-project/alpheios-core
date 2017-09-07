@@ -10,7 +10,7 @@
 // Should have no spaces in values in order to be used in HTML templates
 const types = {
     word: 'word',
-    part: 'partOfSpeech', // Part of speech
+    part: 'part of speech', // Part of speech
     number: 'number',
     grmCase: 'case',
     declension: 'declension',
@@ -660,20 +660,22 @@ class LanguageDataset {
 
         // Find partial matches first, and then full among them
 
+        // TODO: do we ever need lemmas?
         for (let lexema of homonym.lexemes) {
             for (let inflection of lexema.inflections) {
                 inflections.push(inflection);
             }
         }
-        result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
+        //result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
+        result.suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflections), []);
 
         // Create a set so all footnote indexes be unique
         let footnotesIndex = new Set();
         // Scan all selected suffixes to build a unique set of footnote indexes
-        for (let ending of result.suffixes) {
-            if (ending.hasOwnProperty(types.footnote)) {
+        for (let suffix of result.suffixes) {
+            if (suffix.hasOwnProperty(types.footnote)) {
                 // Footnote indexes are stored in an array
-                for (let index of ending[types.footnote]) {
+                for (let index of suffix[types.footnote]) {
                     footnotesIndex.add(index);
                 }
             }
@@ -686,6 +688,14 @@ class LanguageDataset {
         result.footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
 
         return result;
+    }
+
+    reducer(inflections, accumulator, suffix) {
+        let result = this.matcher(inflections, suffix);
+        if (result) {
+            accumulator.push(result);
+        }
+        return accumulator;
     }
 }
 
@@ -729,6 +739,10 @@ class Suffix {
                 clone.featureGroups[key] = this.featureGroups[key];
             }
         }
+
+        if (this.hasOwnProperty(types.footnote)) {
+            clone[types.footnote] = this[types.footnote];
+        }
         return clone;
     };
 
@@ -736,18 +750,19 @@ class Suffix {
      * Checks if suffix has a feature that is a match to the one provided.
      * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
      * @param {string[]} featureValues - A list of feature values we need to match with the ones stored inside the suffix
-     * @returns {boolean} - If provided feature is a match or not
+     * @returns {string | undefined} - If provided feature is a match, returns a first feature that matched.
+     * If no match found, return undefined.
      */
     featureMatch(featureType, featureValues) {
         "use strict";
         if (this.features.hasOwnProperty(featureType)) {
             for (let value of featureValues) {
                 if (value === this.features[featureType]) {
-                    return true;
+                    return value;
                 }
             }
         }
-        return false;
+        return undefined;
     }
 
     /**
@@ -894,6 +909,17 @@ class Suffix {
 }
 
 /**
+ * Detailed information about a match type
+ */
+class MatchData {
+    constructor() {
+        this.suffixMatch = false;
+        this.fullFeatureMatch = false;
+        this.matchedFeatures = [];
+    }
+}
+
+/**
  * A return value for inflection queries
  */
 class ResultSet {
@@ -903,23 +929,6 @@ class ResultSet {
         this.footnotes = [];
     }
 }
-
-/**
- * Load text data form an external fil with an asynchronous XHR request.
- * @param {string} filePath - A path to a file we need to load.
- * @returns {Promise} - A promise that will be resolved with either
- * file content (a string) in case of success of with a status message
- * in case of failure.
- */
-let loadData = function loadData(filePath) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", filePath);
-        xhr.onload = () => resolve(xhr.responseText);
-        xhr.onerror = () => reject(xhr.statusText);
-        xhr.send();
-    });
-};
 
 /*
  Definition of objects that are passed between morphology analysis adapters and inflection tables library
@@ -1003,6 +1012,8 @@ class LanguageData {
 }
 
 var nounSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st,feminine,regular,\r\nē,singular,nominative,1st,feminine,irregular,\r\nēs,singular,nominative,1st,feminine,irregular,\r\nā,singular,nominative,1st,feminine,irregular,7\r\nus,singular,nominative,2nd,masculine feminine,regular,\r\ner,singular,nominative,2nd,masculine feminine,regular,\r\nir,singular,nominative,2nd,masculine feminine,regular,\r\n-,singular,nominative,2nd,masculine feminine,irregular,\r\nos,singular,nominative,2nd,masculine feminine,irregular,1\r\nōs,singular,nominative,2nd,masculine feminine,irregular,\r\nō,singular,nominative,2nd,masculine feminine,irregular,7\r\num,singular,nominative,2nd,neuter,regular,\r\nus,singular,nominative,2nd,neuter,irregular,10\r\non,singular,nominative,2nd,neuter,irregular,7\r\n-,singular,nominative,3rd,masculine feminine,regular,\r\nos,singular,nominative,3rd,masculine feminine,irregular,\r\nōn,singular,nominative,3rd,masculine feminine,irregular,7\r\n-,singular,nominative,3rd,neuter,regular,\r\nus,singular,nominative,4th,masculine feminine,regular,\r\nū,singular,nominative,4th,neuter,regular,\r\nēs,singular,nominative,5th,feminine,regular,\r\nae,singular,genitive,1st,feminine,regular,\r\nāī,singular,genitive,1st,feminine,irregular,1\r\nās,singular,genitive,1st,feminine,irregular,2\r\nēs,singular,genitive,1st,feminine,irregular,7\r\nī,singular,genitive,2nd,masculine feminine,regular,\r\nō,singular,genitive,2nd,masculine feminine,irregular,7\r\nī,singular,genitive,2nd,neuter,regular,\r\nis,singular,genitive,3rd,masculine feminine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nūs,singular,genitive,4th,masculine feminine,regular,\r\nuis,singular,genitive,4th,masculine feminine,irregular,1\r\nuos,singular,genitive,4th,masculine feminine,irregular,1\r\nī,singular,genitive,4th,masculine feminine,irregular,15\r\nūs,singular,genitive,4th,neuter,regular,\r\nēī,singular,genitive,5th,feminine,regular,\r\neī,singular,genitive,5th,feminine,regular,\r\nī,singular,genitive,5th,feminine,irregular,\r\nē,singular,genitive,5th,feminine,irregular,\r\nēs,singular,genitive,5th,feminine,irregular,6\r\nae,singular,dative,1st,feminine,regular,\r\nāī,singular,dative,1st,feminine,irregular,1\r\nō,singular,dative,2nd,masculine feminine,regular,\r\nō,singular,dative,2nd,neuter,regular,\r\nī,singular,dative,3rd,masculine feminine,regular,\r\ne,singular,dative,3rd,masculine feminine,irregular,17\r\nī,singular,dative,3rd,neuter,regular,\r\nūī,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,neuter,regular,\r\nēī,singular,dative,5th,feminine,regular,\r\neī,singular,dative,5th,feminine,regular,\r\nī,singular,dative,5th,feminine,irregular,\r\nē,singular,dative,5th,feminine,irregular,6\r\nam,singular,accusative,1st,feminine,regular,\r\nēn,singular,accusative,1st,feminine,irregular,\r\nān,singular,accusative,1st,feminine,irregular,7\r\num,singular,accusative,2nd,masculine feminine,regular,\r\nom,singular,accusative,2nd,masculine feminine,irregular,1\r\nōn,singular,accusative,2nd,masculine feminine,irregular,7\r\num,singular,accusative,2nd,neuter,regular,\r\nus,singular,accusative,2nd,neuter,irregular,10\r\non,singular,accusative,2nd,neuter,irregular,7\r\nem,singular,accusative,3rd,masculine feminine,regular,\r\nim,singular,accusative,3rd,masculine feminine,irregular,11\r\na,singular,accusative,3rd,masculine feminine,irregular,7\r\n-,singular,accusative,3rd,neuter,regular,\r\num,singular,accusative,4th,masculine feminine,regular,\r\nū,singular,accusative,4th,neuter,regular,\r\nem,singular,accusative,5th,feminine,regular,\r\nā,singular,ablative,1st,feminine,regular,\r\nād,singular,ablative,1st,feminine,irregular,5\r\nē,singular,ablative,1st,feminine,irregular,7\r\nō,singular,ablative,2nd,masculine feminine,regular,\r\nōd,singular,ablative,2nd,masculine feminine,irregular,1\r\nō,singular,ablative,2nd,neuter,regular,\r\ne,singular,ablative,3rd,masculine feminine,regular,\r\nī,singular,ablative,3rd,masculine feminine,irregular,11\r\ne,singular,ablative,3rd,neuter,regular,\r\nī,singular,ablative,3rd,neuter,irregular,11\r\nū,singular,ablative,4th,masculine feminine,regular,\r\nūd,singular,ablative,4th,masculine feminine,irregular,1\r\nū,singular,ablative,4th,neuter,regular,\r\nē,singular,ablative,5th,feminine,regular,\r\nae,singular,locative,1st,feminine,regular,\r\nō,singular,locative,2nd,masculine feminine,regular,\r\nō,singular,locative,2nd,neuter,regular,\r\ne,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\nū,singular,locative,4th,masculine feminine,regular,\r\nū,singular,locative,4th,neuter,regular,\r\nē,singular,locative,5th,feminine,regular,\r\na,singular,vocative,1st,feminine,regular,\r\nē,singular,vocative,1st,feminine,irregular,\r\nā,singular,vocative,1st,feminine,irregular,7\r\ne,singular,vocative,2nd,masculine feminine,regular,\r\ner,singular,vocative,2nd,masculine feminine,regular,\r\nir,singular,vocative,2nd,masculine feminine,regular,\r\n-,singular,vocative,2nd,masculine feminine,irregular,\r\nī,singular,vocative,2nd,masculine feminine,irregular,8\r\nōs,singular,vocative,2nd,masculine feminine,irregular,\r\ne,singular,vocative,2nd,masculine feminine,irregular,7\r\num,singular,vocative,2nd,neuter,regular,\r\non,singular,vocative,2nd,neuter,irregular,7\r\n-,singular,vocative,3rd,masculine feminine,regular,\r\n-,singular,vocative,3rd,neuter,regular,\r\nus,singular,vocative,4th,masculine feminine,regular,\r\nū,singular,vocative,4th,neuter,regular,\r\nēs,singular,vocative,5th,feminine,regular,\r\nae,plural,nominative,1st,feminine,regular,\r\nī,plural,nominative,2nd,masculine feminine,regular,\r\noe,plural,nominative,2nd,masculine feminine,irregular,7 9\r\na,plural,nominative,2nd,neuter,regular,\r\nēs,plural,nominative,3rd,masculine feminine,regular,\r\nes,plural,nominative,3rd,masculine feminine,irregular,7\r\na,plural,nominative,3rd,neuter,regular,\r\nia,plural,nominative,3rd,neuter,irregular,11\r\nūs,plural,nominative,4th,masculine feminine,regular,\r\nua,plural,nominative,4th,neuter,regular,\r\nēs,plural,nominative,5th,feminine,regular,\r\nārum,plural,genitive,1st,feminine,regular,\r\num,plural,genitive,1st,feminine,irregular,3\r\nōrum,plural,genitive,2nd,masculine feminine,regular,\r\num,plural,genitive,2nd,masculine feminine,irregular,\r\nom,plural,genitive,2nd,masculine feminine,irregular,8\r\nōrum,plural,genitive,2nd,neuter,regular,\r\num,plural,genitive,2nd,neuter,irregular,\r\num,plural,genitive,3rd,masculine feminine,regular,\r\nium,plural,genitive,3rd,masculine feminine,irregular,11\r\nōn,plural,genitive,3rd,masculine feminine,irregular,7\r\num,plural,genitive,3rd,neuter,regular,\r\nium,plural,genitive,3rd,neuter,irregular,11\r\nuum,plural,genitive,4th,masculine feminine,regular,\r\num,plural,genitive,4th,masculine feminine,irregular,16\r\nuom,plural,genitive,4th,masculine feminine,irregular,1\r\nuum,plural,genitive,4th,neuter,regular,\r\nērum,plural,genitive,5th,feminine,regular,\r\nīs,plural,dative,1st,feminine,regular,\r\nābus,plural,dative,1st,feminine,irregular,4\r\neis,plural,dative,1st,feminine,irregular,6\r\nīs,plural,dative,2nd,masculine feminine,regular,\r\nīs,plural,dative,2nd,neuter,regular,\r\nibus,plural,dative,3rd,masculine feminine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nibus,plural,dative,4th,masculine feminine,regular,\r\nubus,plural,dative,4th,masculine feminine,irregular,14\r\nibus,plural,dative,4th,neuter,regular,\r\nēbus,plural,dative,5th,feminine,regular,\r\nās,plural,accusative,1st,feminine,regular,\r\nōs,plural,accusative,2nd,masculine feminine,regular,\r\na,plural,accusative,2nd,neuter,regular,\r\nēs,plural,accusative,3rd,masculine feminine,regular,\r\nīs,plural,accusative,3rd,masculine feminine,irregular,11\r\nas,plural,accusative,3rd,masculine feminine,irregular,7\r\na,plural,accusative,3rd,neuter,regular,\r\nia,plural,accusative,3rd,neuter,irregular,11\r\nūs,plural,accusative,4th,masculine feminine,regular,\r\nua,plural,accusative,4th,neuter,regular,\r\nēs,plural,accusative,5th,feminine,regular,\r\nīs,plural,ablative,1st,feminine,regular,\r\nābus,plural,ablative,1st,feminine,irregular,4\r\neis,plural,ablative,1st,feminine,irregular,6\r\nīs,plural,ablative,2nd,masculine feminine,regular,\r\nīs,plural,ablative,2nd,neuter,regular,\r\nibus,plural,ablative,3rd,masculine feminine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nibus,plural,ablative,4th,masculine feminine,regular,\r\nubus,plural,ablative,4th,masculine feminine,irregular,14\r\nibus,plural,ablative,4th,neuter,regular,\r\nēbus,plural,ablative,5th,feminine,regular,\r\nīs,plural,locative,1st,feminine,regular,\r\nīs,plural,locative,2nd,masculine feminine,regular,\r\nīs,plural,locative,2nd,neuter,regular,\r\nibus,plural,locative,3rd,masculine feminine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nibus,plural,locative,4th,masculine feminine,regular,\r\nibus,plural,locative,4th,neuter,regular,\r\nēbus,plural,locative,5th,feminine,regular,\r\nae,plural,vocative,1st,feminine,regular,\r\nī,plural,vocative,2nd,masculine feminine,regular,\r\na,plural,vocative,2nd,neuter,regular,\r\nēs,plural,vocative,3rd,masculine feminine,regular,\r\na,plural,vocative,3rd,neuter,regular,\r\nia,plural,vocative,3rd,neuter,irregular,11\r\nūs,plural,vocative,4th,masculine feminine,regular,\r\nua,plural,vocative,4th,neuter,regular,\r\nēs,plural,vocative,5th,feminine,regular,";
+
+var nounFootnotesCSV = "Index,Text\r\n1,archaic (final s and m of os and om may be omitted in inscriptions)\r\n2,only in familiās\r\n3,especially in Greek patronymics and compounds in -gena and -cola.\r\n4,always in deābus and filiābus; rarely with other words to distinguish the female\r\n5,archaic\r\n6,rare\r\n7,\"may occur in words of Greek origin. The forms of many Greek nouns vary among the first, second and third declensions.\"\r\n8,proper names in ius and filius and genius\r\n9,poetic\r\n10,\"only pelagus, vīrus, and sometimes vulgus\"\r\n11,may occur with i-stems\r\n12,several nouns (most commonly domus) show forms of both second and fourth declensions\r\n13,\"some nouns also have forms from the first declension (eg materia, saevitia) or the third declension (eg requiēs, satiēs, plēbēs, famēs)\"\r\n14,\"Always in partus and tribus, usually in artus and lacus, sometimes in other words, eg portus and specus\"\r\n15,Often in names of plants and trees and in nouns ending in -tus\r\n16,When pronounced as one syllable\r\n17,early\r\n18,dies and meridies are masculine";
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -2659,38 +2670,20 @@ dataSet.addFootnotes = function addFootnotes(data) {
 
 dataSet.loadData = function loadData$$1() {
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
-
-    return new Promise((resolve, reject) => {
-        let suffixRequest = loadData("lib/lang/latin/data/noun/suffixes.csv");
-        let footnoteRequest = loadData("lib/lang/latin/data/noun/footnotes.csv");
-
-        let that = this;
-        Promise.all([suffixRequest, footnoteRequest]).then(values => {
-            let suffixes, footnotes;
-            [suffixes, footnotes] = values;
-
-            suffixes = papaparse.parse(suffixes, {});
-            that.addSuffixes(suffixes.data);
-
-            footnotes = papaparse.parse(footnotes, {});
-            that.addFootnotes(footnotes.data);
-
-            resolve();
-        }).catch(reason => {
-            reject(reason);
-        });
-    });
+    this.addSuffixes(suffixes.data);
+    let footnotes = papaparse.parse(nounFootnotesCSV, {});
+    this.addFootnotes(footnotes.data);
 };
 
 
-// TODO: Implement match type. Add some real matching rules.
 /**
- * Determines whether an ending will match inflections or not and what type of match that will be (exact, partial, etc.)
- * @param {Inflection[]} inflections - Inflections that are returned by a morphological service.
- * @param {Suffix} ending - An ending we need to match inflections against.
- * @returns {boolean} Whether an ending is a match for inflections provided or not.
+ * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
+ * @param {Inflection[]} inflections - An array of Inflection objects to be matched against a suffix.
+ * @param {Suffix} suffix - A suffix to be matched with inflections.
+ * @returns {Suffix | undefined} If a match is found, returns a Suffix object modified with some
+ * additional information about a match. If no matches found, returns undefined.
  */
-dataSet.match = function match(inflections, ending) {
+dataSet.matcher = function match(inflections, suffix) {
     "use strict";
     // All of those features must match between an inflection and an ending
     let obligatoryMatches = [types.part];
@@ -2698,23 +2691,79 @@ dataSet.match = function match(inflections, ending) {
     // Any of those features must match between an inflection and an ending
     let optionalMatches = [types.grmCase, types.declension, types.gender, types.number];
 
-    let matchFound = false;
 
-    // TODO: filter out features of wrong type
+    let bestMatchData; // Information about the best match found
+
+    /*
+     There can be a one-to-one full match between an inflection and a suffix (except when suffix has multiple values?)
+     But there could be multiple partial matches. So we should try to find the best match possible and return it.
+     A fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
+     */
     for (let inflection of inflections) {
+        let matchData = new MatchData(); // Create a match profile
+        let matchedFeatures = new Set();
+
+        if (inflection.suffix === suffix.suffix) {
+           matchData.suffixMatch = true;
+        }
+
+        let matchFound = true; // Let's see if it will keep this way
         for (let feature of  obligatoryMatches) {
-            if (!ending.featureMatch(feature, inflection[feature])) {
-                return false;
+            let featureMatch = !!suffix.featureMatch(feature, inflection[feature]);
+            matchFound = matchFound && featureMatch;
+
+            if (featureMatch) {
+                // Inflection's value of this feature is matching the on of the suffix
+                matchedFeatures.add(feature);
+            }
+            else {
+                // Obligatory match is not found, there is no reason to check other items
+                break;
             }
         }
-        for (let feature of optionalMatches) {
-            if (ending.featureMatch(feature, inflection[feature])) {
-                matchFound = true;
-                return matchFound;
+
+        if (matchFound) {
+            // If obligatory match requirement is fulfilled we can check features with optional
+            // match requirements to see if it's a full match
+            matchData.fullFeatureMatch = true; // Will it keep this way?
+            for (let feature of optionalMatches) {
+                let matchedValue = suffix.featureMatch(feature, inflection[feature]);
+                matchData.fullFeatureMatch = matchData.fullFeatureMatch && !!matchedValue;
+                if (matchedValue) {
+                    matchedFeatures.add(feature);
+                }
+            }
+        }
+
+        if (matchFound) {
+            matchData.matchedFeatures = Array.from(matchedFeatures);
+            if (!bestMatchData) {
+                // If no match data is saved yet, store the current one as the best match
+                bestMatchData = matchData;
+                continue;
+            }
+
+            // Store match data only if a current one is better than the previous best match.
+            if (bestMatchData.fullFeatureMatch === false) {
+
+                if (matchData.fullFeatureMatch === true) {
+                    // If a full match is found, it will always replace a partial match.
+                    bestMatchData = matchData;
+                }
+                else if (matchData.matchedFeatures.length > bestMatchData.matchedFeatures.length) {
+                    bestMatchData = matchData;
+                }
             }
         }
     }
-    return matchFound;
+    if (bestMatchData) {
+        // Some match is found
+        suffix.match = bestMatchData;
+        return suffix;
+    }
+    else {
+        return undefined;
+    }
 };
 
 let data = new LanguageData(languages.latin);

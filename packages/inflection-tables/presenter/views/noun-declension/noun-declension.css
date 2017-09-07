@@ -30,3 +30,16 @@ strong {
 .inflection-table__suffix {
     cursor: pointer;
 }
+
+.inflection-table__suffix--suffix-match {
+    background-color: rgb(188, 230, 240);
+}
+
+.inflection-table__suffix--full-feature-match {
+    background-color: lightgray;
+}
+
+.inflection-table__suffix--suffix-match.inflection-table__suffix--full-feature-match {
+    background-color: rgb(255, 238, 119);
+    font-weight: 700;
+}

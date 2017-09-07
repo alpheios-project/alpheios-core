@@ -2,13 +2,13 @@
  * Shared data structures and functions
  */
 export {Feature, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
-    Suffix, ResultSet, loadData};
+    Suffix, MatchData, ResultSet, loadData};
 
 
 // Should have no spaces in values in order to be used in HTML templates
 const types = {
     word: 'word',
-    part: 'partOfSpeech', // Part of speech
+    part: 'part of speech', // Part of speech
     number: 'number',
     grmCase: 'case',
     declension: 'declension',
@@ -658,20 +658,22 @@ class LanguageDataset {
 
         // Find partial matches first, and then full among them
 
+        // TODO: do we ever need lemmas?
         for (let lexema of homonym.lexemes) {
             for (let inflection of lexema.inflections) {
                 inflections.push(inflection);
             }
         }
-        result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
+        //result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
+        result.suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflections), []);
 
         // Create a set so all footnote indexes be unique
         let footnotesIndex = new Set();
         // Scan all selected suffixes to build a unique set of footnote indexes
-        for (let ending of result.suffixes) {
-            if (ending.hasOwnProperty(types.footnote)) {
+        for (let suffix of result.suffixes) {
+            if (suffix.hasOwnProperty(types.footnote)) {
                 // Footnote indexes are stored in an array
-                for (let index of ending[types.footnote]) {
+                for (let index of suffix[types.footnote]) {
                     footnotesIndex.add(index);
                 }
             }
@@ -684,6 +686,14 @@ class LanguageDataset {
         result.footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
 
         return result;
+    }
+
+    reducer(inflections, accumulator, suffix) {
+        let result = this.matcher(inflections, suffix);
+        if (result) {
+            accumulator.push(result);
+        }
+        return accumulator;
     }
 }
 
@@ -727,6 +737,10 @@ class Suffix {
                 clone.featureGroups[key] = this.featureGroups[key];
             }
         }
+
+        if (this.hasOwnProperty(types.footnote)) {
+            clone[types.footnote] = this[types.footnote];
+        }
         return clone;
     };
 
@@ -734,18 +748,19 @@ class Suffix {
      * Checks if suffix has a feature that is a match to the one provided.
      * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
      * @param {string[]} featureValues - A list of feature values we need to match with the ones stored inside the suffix
-     * @returns {boolean} - If provided feature is a match or not
+     * @returns {string | undefined} - If provided feature is a match, returns a first feature that matched.
+     * If no match found, return undefined.
      */
     featureMatch(featureType, featureValues) {
         "use strict";
         if (this.features.hasOwnProperty(featureType)) {
             for (let value of featureValues) {
                 if (value === this.features[featureType]) {
-                    return true;
+                    return value;
                 }
             }
         }
-        return false;
+        return undefined;
     }
 
     /**
@@ -888,6 +903,17 @@ class Suffix {
         }
         while (matchFound);
         return suffixes;
+    }
+}
+
+/**
+ * Detailed information about a match type
+ */
+class MatchData {
+    constructor() {
+        this.suffixMatch = false;
+        this.fullFeatureMatch = false;
+        this.matchedFeatures = [];
     }
 }
 

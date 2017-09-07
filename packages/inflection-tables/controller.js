@@ -19,8 +19,6 @@ let show = function show(html, whereSel) {
 
 
 console.log('Sequence started');
-let featureType = new Lib.FeatureType(Lib.types.declension, ['first', ['second', 'third'], 'fourth'], Lib.languages.latin);
-
 
 let result;
 Lib.loadData("tests/data/latin_noun_cupidinibus.json")
@@ -30,8 +28,8 @@ Lib.loadData("tests/data/latin_noun_cupidinibus.json")
         // Transform Morphological Analyzer's response into a library standard Homonym object
         result = Tufts.adapter.transform(json);
 
-        return dataSet.loadData();
-    }).then(function() {
+       dataSet.loadData();
+
         // Get matching suffixes from an inflection library
         let suffixes = langData.getSuffixes(result);
 
@@ -45,6 +43,4 @@ Lib.loadData("tests/data/latin_noun_cupidinibus.json")
     }).catch(error => {
         console.error(error);
     });
-
-console.log('Sequence finished');
 
