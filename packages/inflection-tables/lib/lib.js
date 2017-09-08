@@ -315,7 +315,7 @@ class Importer {
      * Sets mapping between external imported value and one or more library standard values. If an importedValue
      * is already in a hash table, old libraryValue will be overwritten with the new one.
      * @param {string} importedValue - External value
-     * @param {Feature | Feature[]} libraryValue - Library standard value
+     * @param {Object | Object[] | string | string[]} libraryValue - Library standard value
      */
     map(importedValue, libraryValue) {
         if (!importedValue) {
@@ -341,8 +341,8 @@ class Importer {
 
     /**
      * Returns one or more library standard values that match an external value
-     * @param importedValue - External value
-     * @returns {Feature | Feature[]} One or more of library standard values
+     * @param {string} importedValue - External value
+     * @returns {Object | string} One or more of library standard values
      */
     get(importedValue) {
         if (this.has(importedValue)) {
@@ -382,18 +382,13 @@ class Inflection {
     /**
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
-     * @param {string} suffix - A word's suffix.
      * @param {string} language - A word's language.
      */
-    constructor(stem, suffix, language) {
+    constructor(stem, language) {
         "use strict";
 
         if (!stem) {
             throw new Error('Stem should not be empty.');
-        }
-
-        if (!suffix) {
-            throw new Error('Suffix should not be empty.');
         }
 
         if (!language) {
@@ -405,8 +400,10 @@ class Inflection {
         }
 
         this.stem = stem;
-        this.suffix = suffix;
         this.language = language;
+
+        // Suffix may not be present in every word. If missing, it will set to null.
+        this.suffix = null;
     }
 
     /**
@@ -581,12 +578,12 @@ class LanguageDataset {
      * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
      * 'feminine' genders
      *
-     * @param {string} suffix
+     * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
      * @param {Feature[]} featureTypes
      */
-    addSuffix(suffix, ...featureTypes) {
+    addSuffix(suffixValue, ...featureTypes) {
         // TODO: implement run-time error checking
-        let suffixItem = new Suffix(suffix);
+        let suffixItem = new Suffix(suffixValue);
 
         // Build all possible combinations of features
         let multiValueFeatures = [];
@@ -706,15 +703,15 @@ class LanguageDataset {
 class Suffix {
     /**
      * Initializes a Suffix object.
-     * @param {string} suffix
+     * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
      */
-    constructor(suffix) {
+    constructor(suffixValue) {
         "use strict";
 
-        if (!suffix) {
+        if (suffixValue === undefined) {
             throw new Error('Suffix should not be empty.')
         }
-        this.suffix = suffix;
+        this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
     }
@@ -726,7 +723,8 @@ class Suffix {
     clone() {
         "use strict";
 
-        let clone = new Suffix(this.suffix);
+        // TODO: do all-feature two-level cloning
+        let clone = new Suffix(this.value);
         for (const key in this.features) {
             if (this.features.hasOwnProperty(key)) {
                 clone.features[key] = this.features[key];
@@ -808,7 +806,7 @@ class Suffix {
         commonGroups.forEach(feature => commonValues[feature] = new Set([this.features[feature]]));
 
         let result = true;
-        result = result && this.suffix === suffix.suffix;
+        result = result && this.value === suffix.value;
         // If suffixes does not match don't check any further
         if (!result) {
             return false;
@@ -911,9 +909,9 @@ class Suffix {
  */
 class MatchData {
     constructor() {
-        this.suffixMatch = false;
-        this.fullFeatureMatch = false;
-        this.matchedFeatures = [];
+        this.suffixMatch = false; // When two suffixes are the same
+        this.fullMatch = false; // When two suffixes and all grammatical features, including part of speech, are the same
+        this.matchedFeatures = []; // How many features matches
     }
 }
 
@@ -923,6 +921,7 @@ class MatchData {
 class ResultSet {
     constructor() {
         "use strict";
+        this.word = undefined;
         this.suffixes = [];
         this.footnotes = [];
     }

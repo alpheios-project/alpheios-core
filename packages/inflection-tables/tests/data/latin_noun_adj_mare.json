@@ -1,0 +1,364 @@
+{
+  "RDF": {
+    "Annotation": {
+      "about": "urn:TuftsMorphologyService:mare:morpheuslat",
+      "creator": {
+        "Agent": {
+          "about": "org.perseus:tools:morpheus.v1"
+        }
+      },
+      "created": {
+        "$": "2017-09-08T06:59:48.639180"
+      },
+      "hasTarget": {
+        "Description": {
+          "about": "urn:word:mare"
+        }
+      },
+      "title": {},
+      "hasBody": [
+        {
+          "resource": "urn:uuid:idm140446402389888"
+        },
+        {
+          "resource": "urn:uuid:idm140446402332400"
+        },
+        {
+          "resource": "urn:uuid:idm140446402303648"
+        }
+      ],
+      "Body": [
+        {
+          "about": "urn:uuid:idm140446402389888",
+          "type": {
+            "resource": "cnt:ContentAsXML"
+          },
+          "rest": {
+            "entry": {
+              "uri": "http://data.perseus.org/collections/urn:cite:perseus:latlexent.lex34070.1",
+              "dict": {
+                "hdwd": {
+                  "lang": "lat",
+                  "$": "mare"
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "3rd"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              "infl": [
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "mar"
+                    },
+                    "suff": {
+                      "$": "e"
+                    }
+                  },
+                  "pofs": {
+                    "order": 3,
+                    "$": "noun"
+                  },
+                  "decl": {
+                    "$": "3rd"
+                  },
+                  "case": {
+                    "order": 3,
+                    "$": "ablative"
+                  },
+                  "gend": {
+                    "$": "neuter"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "stemtype": {
+                    "$": "is_is"
+                  }
+                },
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "mar"
+                    },
+                    "suff": {
+                      "$": "e"
+                    }
+                  },
+                  "pofs": {
+                    "order": 3,
+                    "$": "noun"
+                  },
+                  "decl": {
+                    "$": "3rd"
+                  },
+                  "case": {
+                    "order": 7,
+                    "$": "nominative"
+                  },
+                  "gend": {
+                    "$": "neuter"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "stemtype": {
+                    "$": "is_is"
+                  }
+                },
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "mar"
+                    },
+                    "suff": {
+                      "$": "e"
+                    }
+                  },
+                  "pofs": {
+                    "order": 3,
+                    "$": "noun"
+                  },
+                  "decl": {
+                    "$": "3rd"
+                  },
+                  "case": {
+                    "order": 1,
+                    "$": "vocative"
+                  },
+                  "gend": {
+                    "$": "neuter"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "stemtype": {
+                    "$": "is_is"
+                  }
+                },
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "mar"
+                    },
+                    "suff": {
+                      "$": "e"
+                    }
+                  },
+                  "pofs": {
+                    "order": 3,
+                    "$": "noun"
+                  },
+                  "decl": {
+                    "$": "3rd"
+                  },
+                  "case": {
+                    "order": 4,
+                    "$": "accusative"
+                  },
+                  "gend": {
+                    "$": "neuter"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "stemtype": {
+                    "$": "is_is"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "about": "urn:uuid:idm140446402332400",
+          "type": {
+            "resource": "cnt:ContentAsXML"
+          },
+          "rest": {
+            "entry": {
+              "uri": "http://data.perseus.org/collections/urn:cite:perseus:latlexent.lex34118.1",
+              "dict": {
+                "hdwd": {
+                  "lang": "lat",
+                  "$": "marum"
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              "infl": {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mar"
+                  },
+                  "suff": {
+                    "$": "e"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "stemtype": {
+                  "$": "us_i"
+                }
+              }
+            }
+          }
+        },
+        {
+          "about": "urn:uuid:idm140446402303648",
+          "type": {
+            "resource": "cnt:ContentAsXML"
+          },
+          "rest": {
+            "entry": {
+              "uri": "http://data.perseus.org/collections/urn:cite:perseus:latlexent.lex34119.1",
+              "dict": {
+                "hdwd": {
+                  "lang": "lat",
+                  "$": "mas"
+                },
+                "pofs": {
+                  "order": 2,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "3rd"
+                }
+              },
+              "infl": [
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "mare"
+                    }
+                  },
+                  "pofs": {
+                    "order": 2,
+                    "$": "adjective"
+                  },
+                  "decl": {
+                    "$": "3rd"
+                  },
+                  "case": {
+                    "order": 3,
+                    "$": "ablative"
+                  },
+                  "gend": {
+                    "$": "masculine"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "stemtype": {
+                    "$": "irreg_adj3"
+                  },
+                  "morph": {
+                    "$": "indeclform"
+                  }
+                },
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "mare"
+                    }
+                  },
+                  "pofs": {
+                    "order": 2,
+                    "$": "adjective"
+                  },
+                  "decl": {
+                    "$": "3rd"
+                  },
+                  "case": {
+                    "order": 3,
+                    "$": "ablative"
+                  },
+                  "gend": {
+                    "$": "feminine"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "stemtype": {
+                    "$": "irreg_adj3"
+                  },
+                  "morph": {
+                    "$": "indeclform"
+                  }
+                },
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "mare"
+                    }
+                  },
+                  "pofs": {
+                    "order": 2,
+                    "$": "adjective"
+                  },
+                  "decl": {
+                    "$": "3rd"
+                  },
+                  "case": {
+                    "order": 3,
+                    "$": "ablative"
+                  },
+                  "gend": {
+                    "$": "neuter"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "stemtype": {
+                    "$": "irreg_adj3"
+                  },
+                  "morph": {
+                    "$": "indeclform"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

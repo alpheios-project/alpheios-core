@@ -317,7 +317,7 @@ class Importer {
      * Sets mapping between external imported value and one or more library standard values. If an importedValue
      * is already in a hash table, old libraryValue will be overwritten with the new one.
      * @param {string} importedValue - External value
-     * @param {Feature | Feature[]} libraryValue - Library standard value
+     * @param {Object | Object[] | string | string[]} libraryValue - Library standard value
      */
     map(importedValue, libraryValue) {
         if (!importedValue) {
@@ -343,8 +343,8 @@ class Importer {
 
     /**
      * Returns one or more library standard values that match an external value
-     * @param importedValue - External value
-     * @returns {Feature | Feature[]} One or more of library standard values
+     * @param {string} importedValue - External value
+     * @returns {Object | string} One or more of library standard values
      */
     get(importedValue) {
         if (this.has(importedValue)) {
@@ -384,18 +384,13 @@ class Inflection {
     /**
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
-     * @param {string} suffix - A word's suffix.
      * @param {string} language - A word's language.
      */
-    constructor(stem, suffix, language) {
+    constructor(stem, language) {
         "use strict";
 
         if (!stem) {
             throw new Error('Stem should not be empty.');
-        }
-
-        if (!suffix) {
-            throw new Error('Suffix should not be empty.');
         }
 
         if (!language) {
@@ -407,8 +402,10 @@ class Inflection {
         }
 
         this.stem = stem;
-        this.suffix = suffix;
         this.language = language;
+
+        // Suffix may not be present in every word. If missing, it will set to null.
+        this.suffix = null;
     }
 
     /**
@@ -583,12 +580,12 @@ class LanguageDataset {
      * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
      * 'feminine' genders
      *
-     * @param {string} suffix
+     * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
      * @param {Feature[]} featureTypes
      */
-    addSuffix(suffix, ...featureTypes) {
+    addSuffix(suffixValue, ...featureTypes) {
         // TODO: implement run-time error checking
-        let suffixItem = new Suffix(suffix);
+        let suffixItem = new Suffix(suffixValue);
 
         // Build all possible combinations of features
         let multiValueFeatures = [];
@@ -708,15 +705,15 @@ class LanguageDataset {
 class Suffix {
     /**
      * Initializes a Suffix object.
-     * @param {string} suffix
+     * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
      */
-    constructor(suffix) {
+    constructor(suffixValue) {
         "use strict";
 
-        if (!suffix) {
+        if (suffixValue === undefined) {
             throw new Error('Suffix should not be empty.')
         }
-        this.suffix = suffix;
+        this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
     }
@@ -728,7 +725,8 @@ class Suffix {
     clone() {
         "use strict";
 
-        let clone = new Suffix(this.suffix);
+        // TODO: do all-feature two-level cloning
+        let clone = new Suffix(this.value);
         for (const key in this.features) {
             if (this.features.hasOwnProperty(key)) {
                 clone.features[key] = this.features[key];
@@ -810,7 +808,7 @@ class Suffix {
         commonGroups.forEach(feature => commonValues[feature] = new Set([this.features[feature]]));
 
         let result = true;
-        result = result && this.suffix === suffix.suffix;
+        result = result && this.value === suffix.value;
         // If suffixes does not match don't check any further
         if (!result) {
             return false;
@@ -913,9 +911,9 @@ class Suffix {
  */
 class MatchData {
     constructor() {
-        this.suffixMatch = false;
-        this.fullFeatureMatch = false;
-        this.matchedFeatures = [];
+        this.suffixMatch = false; // When two suffixes are the same
+        this.fullMatch = false; // When two suffixes and all grammatical features, including part of speech, are the same
+        this.matchedFeatures = []; // How many features matches
     }
 }
 
@@ -925,6 +923,7 @@ class MatchData {
 class ResultSet {
     constructor() {
         "use strict";
+        this.word = undefined;
         this.suffixes = [];
         this.footnotes = [];
     }
@@ -956,17 +955,8 @@ class Service {
 
         this.name = name;
 
-        this.languages = {
-            add(providerValue, alpheiosValue) {
-                "use strict";
-                this[providerValue] = alpheiosValue;
-            },
-
-            getFrom(providerValue) {
-                "use strict";
-                return this[providerValue];
-            }
-        };
+        this.languages = {};
+        this.languages.importer = new Importer();
     }
 
     setLanguageData(data) {
@@ -2630,7 +2620,7 @@ let dataSet = new LanguageDataset(language);
  analyzer's language modules as well.
  */
 const importerName = 'csv';
-const parts = dataSet.defineFeatureType(types.part, ['noun']);
+const parts = dataSet.defineFeatureType(types.part, ['noun', 'adjective']);
 const numbers = dataSet.defineFeatureType(types.number, ['singular', 'plural']);
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
@@ -2666,8 +2656,17 @@ const footnotes = dataSet.defineFeatureType(types.footnote, []);
 // endregion Definition of grammatical features
 
 dataSet.addSuffixes = function addSuffixes(data) {
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+    let noSuffixValue = '-';
+
     // First row are headers
     for (let i = 1; i < data.length; i++) {
+        let suffix = data[i][0];
+        // Handle special suffix values
+        if (suffix === noSuffixValue) {
+            suffix = null;
+        }
+
         let features = [parts.noun, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
             declensions.importer.csv.get(data[i][3]), genders.importer.csv.get(data[i][4]), types$1.importer.csv.get(data[i][5])];
         if (data[i][6]) {
@@ -2678,7 +2677,7 @@ dataSet.addSuffixes = function addSuffixes(data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(data[i][0], ...features);
+        this.addSuffix(suffix, ...features);
     }
 };
 
@@ -2701,8 +2700,8 @@ dataSet.loadData = function loadData$$1() {
  * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
  * @param {Inflection[]} inflections - An array of Inflection objects to be matched against a suffix.
  * @param {Suffix} suffix - A suffix to be matched with inflections.
- * @returns {Suffix | undefined} If a match is found, returns a Suffix object modified with some
- * additional information about a match. If no matches found, returns undefined.
+ * @returns {Suffix | null} If a match is found, returns a Suffix object modified with some
+ * additional information about a match. If no matches found, returns null.
  */
 dataSet.matcher = function match(inflections, suffix) {
     "use strict";
@@ -2711,79 +2710,97 @@ dataSet.matcher = function match(inflections, suffix) {
 
     // Any of those features must match between an inflection and an ending
     let optionalMatches = [types.grmCase, types.declension, types.gender, types.number];
-
-
-    let bestMatchData; // Information about the best match found
+    let bestMatchData = null; // Information about the best match we would be able to find
 
     /*
-     There can be a one-to-one full match between an inflection and a suffix (except when suffix has multiple values?)
+     There can be only one full match between an inflection and a suffix (except when suffix has multiple values?)
      But there could be multiple partial matches. So we should try to find the best match possible and return it.
      A fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
      */
     for (let inflection of inflections) {
         let matchData = new MatchData(); // Create a match profile
-        let matchedFeatures = new Set();
 
-        if (inflection.suffix === suffix.suffix) {
+        if (inflection.suffix === suffix.value) {
            matchData.suffixMatch = true;
         }
 
-        let matchFound = true; // Let's see if it will keep this way
+        // Check obligatory matches
         for (let feature of  obligatoryMatches) {
-            let featureMatch = !!suffix.featureMatch(feature, inflection[feature]);
-            matchFound = matchFound && featureMatch;
+            let featureMatch = suffix.featureMatch(feature, inflection[feature]);
+            //matchFound = matchFound && featureMatch;
 
-            if (featureMatch) {
-                // Inflection's value of this feature is matching the on of the suffix
-                matchedFeatures.add(feature);
-            }
-            else {
-                // Obligatory match is not found, there is no reason to check other items
+            if (!featureMatch) {
+                // If an obligatory match is not found, there is no reason to check other items
                 break;
             }
+            // Inflection's value of this feature is matching the one of the suffix
+            matchData.matchedFeatures.push(feature);
         }
 
-        if (matchFound) {
-            // If obligatory match requirement is fulfilled we can check features with optional
-            // match requirements to see if it's a full match
-            matchData.fullFeatureMatch = true; // Will it keep this way?
-            for (let feature of optionalMatches) {
-                let matchedValue = suffix.featureMatch(feature, inflection[feature]);
-                matchData.fullFeatureMatch = matchData.fullFeatureMatch && !!matchedValue;
-                if (matchedValue) {
-                    matchedFeatures.add(feature);
-                }
+        if (matchData.matchedFeatures.length < obligatoryMatches.length) {
+            // Not all obligatory matches are found, this is not a match
+            break;
+        }
+
+        // Check optional matches now
+        for (let feature of optionalMatches) {
+            let matchedValue = suffix.featureMatch(feature, inflection[feature]);
+            if (matchedValue) {
+                matchData.matchedFeatures.push(feature);
             }
         }
 
-        if (matchFound) {
-            matchData.matchedFeatures = Array.from(matchedFeatures);
-            if (!bestMatchData) {
-                // If no match data is saved yet, store the current one as the best match
-                bestMatchData = matchData;
-                continue;
-            }
+        if (matchData.suffixMatch && (matchData.matchedFeatures.length === obligatoryMatches.length + optionalMatches.length)) {
+            // This is a full match
+            matchData.fullMatch = true;
 
-            // Store match data only if a current one is better than the previous best match.
-            if (bestMatchData.fullFeatureMatch === false) {
-
-                if (matchData.fullFeatureMatch === true) {
-                    // If a full match is found, it will always replace a partial match.
-                    bestMatchData = matchData;
-                }
-                else if (matchData.matchedFeatures.length > bestMatchData.matchedFeatures.length) {
-                    bestMatchData = matchData;
-                }
-            }
+            // There can be only one full match, no need to search any further
+            suffix.match = matchData;
+            return suffix;
         }
+        bestMatchData = this.bestMatch(bestMatchData, matchData);
     }
     if (bestMatchData) {
-        // Some match is found
+        // There is some match found
         suffix.match = bestMatchData;
         return suffix;
     }
+    return null;
+};
+
+/**
+ * Decides whether matchA is 'better' (i.e. has more items matched) than matchB or not
+ * @param {MatchData} matchA
+ * @param {MatchData} matchB
+ * @returns {MatchData} A best of two matches
+ */
+dataSet.bestMatch = function bestMatch(matchA, matchB) {
+    // If one of the arguments is not set, return the other one
+    if (!matchA && matchB) {
+        return matchB;
+    }
+
+    if (!matchB && matchA) {
+        return matchA;
+    }
+
+    // Suffix match has a priority
+    if (matchA.suffixMatch !== matchB.suffixMatch) {
+        if (matchA.suffixMatch > matchB.suffixMatch) {
+            return matchA;
+        }
+        else {
+            return matchB;
+        }
+    }
+
+    // If same on suffix matche, compare by how many features matched
+    if (matchA.matchedFeatures.length >= matchB.matchedFeatures.length) {
+        // Arbitrarily return matchA if matches are the same
+        return matchA;
+    }
     else {
-        return undefined;
+        return matchB;
     }
 };
 
@@ -2797,7 +2814,8 @@ data.addFeature(typeName).add(providerValueName, LibValueName);
 Types and values that are unknown (undefined) will be skipped during parsing.
  */
 data.addFeature(types.part).importer
-    .map('noun', parts.noun);
+    .map('noun', parts.noun)
+    .map('adjective', parts.adjective);
 
 data.addFeature(types.grmCase).importer
     .map('nominative', cases.nominative)
@@ -2827,7 +2845,7 @@ data.addFeature(types.gender).importer
 
 let maService = new Service('Tufts');
 // Set a language conversion map for this specific service
-maService.languages.add('lat', languages.latin);
+maService.languages.importer.map('lat', languages.latin);
 // Load Latin language data for this specific service
 maService.setLanguageData(data);
 
@@ -2842,15 +2860,25 @@ adapter.transform = function(jsonObj) {
     "use strict";
     let lexemes = [];
     for (let lexeme of jsonObj.RDF.Annotation.Body) {
-        let lemma = new Lemma(lexeme.rest.entry.dict.hdwd.$, maService.languages.getFrom(lexeme.rest.entry.dict.hdwd.lang));
+        let lemma = new Lemma(lexeme.rest.entry.dict.hdwd.$, maService.languages.importer.get(lexeme.rest.entry.dict.hdwd.lang));
+
         let inflections = [];
-        for (let data$$1 of lexeme.rest.entry.infl) {
-            let inflection = new Inflection(data$$1.term.stem.$, data$$1.term.suff.$, maService.languages.getFrom(lexeme.rest.entry.dict.hdwd.lang));
-            inflection.feature = maService.latin[types.part].get(data$$1.pofs.$);
-            inflection.feature = maService.latin[types.grmCase].get(data$$1.case.$);
-            inflection.feature = maService.latin[types.declension].get(data$$1.decl.$);
-            inflection.feature = maService.latin[types.number].get(data$$1.num.$);
-            inflection.feature = maService.latin[types.gender].get(data$$1.gend.$);
+        let inflectionsJSON = lexeme.rest.entry.infl;
+        if (!Array.isArray(inflectionsJSON)) {
+            // Inflection is a single object, not an array of objects. Convert it to an array for uniformity.
+            inflectionsJSON = [inflectionsJSON];
+        }
+        for (let inflectionJSON of inflectionsJSON) {
+            let inflection = new Inflection(inflectionJSON.term.stem.$, maService.languages.importer.get(lexeme.rest.entry.dict.hdwd.lang));
+            if (inflectionJSON.term.suff) {
+                // Set suffix if provided by a morphological analyzer
+                inflection.suffix = inflectionJSON.term.suff.$;
+            }
+            inflection.feature = maService.latin[types.part].get(inflectionJSON.pofs.$);
+            inflection.feature = maService.latin[types.grmCase].get(inflectionJSON.case.$);
+            inflection.feature = maService.latin[types.declension].get(inflectionJSON.decl.$);
+            inflection.feature = maService.latin[types.number].get(inflectionJSON.num.$);
+            inflection.feature = maService.latin[types.gender].get(inflectionJSON.gend.$);
             inflections.push(inflection);
         }
         lexemes.push(new Lexeme(lemma, inflections));
@@ -7686,7 +7714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 var Handlebars = unwrapExports(handlebarsV4_0_10);
 
-var template = "<table class=\"inflection-table\">\r\n    {{#each suffixes}}\r\n        {{#if @first}}\r\n            <!-- Gender -->\r\n            {{#each data}}\r\n                {{#if @first}}\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Declension Stem</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        <td class=\"inflection-table__cell\"  colspan=\"4\">{{value}}</td>\r\n                    {{/each}}\r\n                </tr>\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Gender</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        {{#each data}}\r\n                            <!-- Gender -->\r\n                            <td class=\"inflection-table__cell\" colspan=\"2\">{{value}}</td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                </tr>\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Type</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        {{#each data}}\r\n                            <!-- Gender -->\r\n                            <td class=\"inflection-table__cell\" colspan=\"2\">\r\n                                {{#each data}}\r\n                                    <!-- Type -->\r\n                                    {{value}}{{#unless @last}}&nbsp;|&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                </tr>\r\n                {{/if}}\r\n        {{/each}}\r\n        {{/if}}\r\n    {{/each}}\r\n    {{#each suffixes}}\r\n        <!-- Gender -->\r\n        <tr class=\"inflection-table__row\"><td class=\"inflection-table__cell\" colspan=\"31\">{{value}}</td></tr>\r\n        {{#each data}}\r\n            <!-- Case -->\r\n            <tr class=\"inflection-table__row\">\r\n                <td class=\"inflection-table__cell inflection-table__cell--case-title\">{{value}}</td>\r\n                {{#each data}}\r\n                    <!-- Declension -->\r\n                    {{#each data}}\r\n                        <!-- Gender -->\r\n                        {{#each data}}\r\n                            <!-- Type -->\r\n                            <td class=\"inflection-table__cell\">\r\n                                {{#each data}}\r\n                                    <!-- suffixes -->\r\n                                    <a class=\"inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullFeatureMatch}} inflection-table__suffix--full-feature-match{{/if}}\" title=\"{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}\">{{suffix}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                {{/each}}\r\n            </tr>\r\n        {{/each}}\r\n    {{/each}}\r\n</table>\r\n\r\n<br>\r\n<br>\r\n{{#each footnotes}}\r\n    <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n{{/each}}";
+var template = "<h2>{{word}}</h2>\r\n\r\n<p>Hover over the suffix to see its grammar features</p>\r\n<table class=\"inflection-table\">\r\n    {{#each suffixes}}\r\n        {{#if @first}}\r\n            <!-- Gender -->\r\n            {{#each data}}\r\n                {{#if @first}}\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Declension Stem</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        <td class=\"inflection-table__cell\"  colspan=\"4\">{{value}}</td>\r\n                    {{/each}}\r\n                </tr>\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Gender</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        {{#each data}}\r\n                            <!-- Gender -->\r\n                            <td class=\"inflection-table__cell\" colspan=\"2\">{{value}}</td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                </tr>\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Type</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        {{#each data}}\r\n                            <!-- Gender -->\r\n                            <td class=\"inflection-table__cell\" colspan=\"2\">\r\n                                {{#each data}}\r\n                                    <!-- Type -->\r\n                                    {{value}}{{#unless @last}}&nbsp;|&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                </tr>\r\n                {{/if}}\r\n        {{/each}}\r\n        {{/if}}\r\n    {{/each}}\r\n    {{#each suffixes}}\r\n        <!-- Gender -->\r\n        <tr class=\"inflection-table__row\"><td class=\"inflection-table__cell\" colspan=\"31\">{{value}}</td></tr>\r\n        {{#each data}}\r\n            <!-- Case -->\r\n            <tr class=\"inflection-table__row\">\r\n                <td class=\"inflection-table__cell inflection-table__cell--case-title\">{{value}}</td>\r\n                {{#each data}}\r\n                    <!-- Declension -->\r\n                    {{#each data}}\r\n                        <!-- Gender -->\r\n                        {{#each data}}\r\n                            <!-- Type -->\r\n                            <td class=\"inflection-table__cell\">\r\n                                {{#each data}}\r\n                                    <!-- suffixes -->\r\n                                    <a class=\"inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullMatch}} inflection-table__suffix--full-feature-match{{/if}}\" title=\"{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.suffixMatch}}, suffix match{{/if}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}\">{{value}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                {{/each}}\r\n            </tr>\r\n        {{/each}}\r\n    {{/each}}\r\n</table>\r\n\r\n<br>\r\n<br>\r\n{{#each footnotes}}\r\n    <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n{{/each}}";
 
 /**
  * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
@@ -7777,6 +7805,21 @@ let groupByFeature = function groupByFeature(endings, groupFeatures, mergeFuncti
 };
 
 /**
+ * Formats results according to requirements of the view.
+ * @param {ResultSet} resultSet - A results that needs to be displayed.
+ * @returns {ResultSet} Formatted result.
+ */
+let format = function format(resultSet) {
+    let formatted = resultSet;
+    for (let suffix of formatted.suffixes) {
+        if (suffix.value === null) {
+            suffix.value = '-';
+        }
+    }
+    return formatted;
+};
+
+/**
  * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table.
  * @param {ResultSet} resultSet - A result set from inflection tables library.
  * @returns {string} HTML code representing an inflection table.
@@ -7790,7 +7833,9 @@ let render$1 = function data(resultSet) {
     // Create data structure for a template
     let displayData = {};
 
-    displayData.suffixes = groupByFeature(resultSet.suffixes, featureOrder, merge);
+    displayData.word = resultSet.word;
+    let formatted = format(resultSet);
+    displayData.suffixes = groupByFeature(formatted.suffixes, featureOrder, merge);
     displayData.footnotes = resultSet.footnotes;
 
     let compiled = Handlebars.compile(template);
@@ -7811,41 +7856,57 @@ let render = function render(resultSet) {
 // Import shared language data
 // Load Latin language data
 let langData = dataSet;
+// Prepare lang data for first use
+dataSet.loadData();
 
 
-// Inserts rendered view to the specific element of the web page
-let show = function show(html, whereSel) {
-    "use strict";
-    let selector = document.querySelector(whereSel);
-    selector.innerHTML = html;
-};
+// region Test selector
+let testCases = [
+    {word: "cupidinibus", value: "latin_noun_cupidinibus"},
+    {word: "mare", value: "latin_noun_adj_mare"}
+];
+let selectList = document.querySelector("#test-selector");
+
+for (const testCase of testCases) {
+    let option = document.createElement("option");
+    option.value = testCase.value;
+    option.text = testCase.word;
+    selectList.appendChild(option);
+}
+
+selectList.addEventListener('change', (event) => {
+    if (event.target.value !== 'select') {
+        show(event.target.selectedOptions[0].innerHTML, event.target.value);
+    }
+});
 
 
-console.log('Sequence started');
+let show = function show(word, fileNameBase) {
+    console.log('Show started');
 
-let result;
-loadData("tests/data/latin_noun_cupidinibus.json")
-    .then(json => {
-        json = JSON.parse(json);
+    let dir = 'tests/data/';
+    let extension = '.json';
+    loadData(dir + fileNameBase + extension)
+        .then(json => {
+            json = JSON.parse(json);
 
-        // Transform Morphological Analyzer's response into a library standard Homonym object
-        result = adapter.transform(json);
+            // Transform Morphological Analyzer's response into a library standard Homonym object
+            let result = adapter.transform(json);
 
-       dataSet.loadData();
+            // Get matching suffixes from an inflection library
+            let suffixes = langData.getSuffixes(result);
+            suffixes.word = word;
 
-        // Get matching suffixes from an inflection library
-        let suffixes = langData.getSuffixes(result);
+            // Insert rendered view to a page
+            document.querySelector('#id-inflections-table').innerHTML = render(suffixes);
 
-        // Make Presenter build a view's HTML
-        let html = render(suffixes);
-
-        // Insert rendered view to a page
-        show(html, '#id-inflections-table');
-
-        console.log('Sequence finished');
-    }).catch(error => {
+            console.log('Show finished');
+        }).catch(error => {
         console.error(error);
     });
+};
+
+// endregion Test selector
 
 })));
 //# sourceMappingURL=inflection-tables.js.map

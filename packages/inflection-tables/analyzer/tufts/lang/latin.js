@@ -13,7 +13,8 @@ data.addFeature(typeName).add(providerValueName, LibValueName);
 Types and values that are unknown (undefined) will be skipped during parsing.
  */
 data.addFeature(Lib.types.part).importer
-    .map('noun', Latin.parts.noun);
+    .map('noun', Latin.parts.noun)
+    .map('adjective', Latin.parts.adjective);
 
 data.addFeature(Lib.types.grmCase).importer
     .map('nominative', Latin.cases.nominative)

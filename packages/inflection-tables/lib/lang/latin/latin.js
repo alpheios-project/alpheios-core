@@ -23,7 +23,7 @@ let dataSet = new Lib.LanguageDataset(language);
  analyzer's language modules as well.
  */
 const importerName = 'csv';
-const parts = dataSet.defineFeatureType(Lib.types.part, ['noun']);
+const parts = dataSet.defineFeatureType(Lib.types.part, ['noun', 'adjective']);
 const numbers = dataSet.defineFeatureType(Lib.types.number, ['singular', 'plural']);
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
@@ -59,8 +59,17 @@ const footnotes = dataSet.defineFeatureType(Lib.types.footnote, []);
 // endregion Definition of grammatical features
 
 dataSet.addSuffixes = function addSuffixes(data) {
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+    let noSuffixValue = '-';
+
     // First row are headers
     for (let i = 1; i < data.length; i++) {
+        let suffix = data[i][0];
+        // Handle special suffix values
+        if (suffix === noSuffixValue) {
+            suffix = null;
+        }
+
         let features = [parts.noun, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
             declensions.importer.csv.get(data[i][3]), genders.importer.csv.get(data[i][4]), types.importer.csv.get(data[i][5])];
         if (data[i][6]) {
@@ -71,7 +80,7 @@ dataSet.addSuffixes = function addSuffixes(data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(data[i][0], ...features);
+        this.addSuffix(suffix, ...features);
     }
 };
 
@@ -94,8 +103,8 @@ dataSet.loadData = function loadData() {
  * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
  * @param {Inflection[]} inflections - An array of Inflection objects to be matched against a suffix.
  * @param {Suffix} suffix - A suffix to be matched with inflections.
- * @returns {Suffix | undefined} If a match is found, returns a Suffix object modified with some
- * additional information about a match. If no matches found, returns undefined.
+ * @returns {Suffix | null} If a match is found, returns a Suffix object modified with some
+ * additional information about a match. If no matches found, returns null.
  */
 dataSet.matcher = function match(inflections, suffix) {
     "use strict";
@@ -104,79 +113,97 @@ dataSet.matcher = function match(inflections, suffix) {
 
     // Any of those features must match between an inflection and an ending
     let optionalMatches = [Lib.types.grmCase, Lib.types.declension, Lib.types.gender, Lib.types.number];
-
-
-    let bestMatchData; // Information about the best match found
+    let bestMatchData = null; // Information about the best match we would be able to find
 
     /*
-     There can be a one-to-one full match between an inflection and a suffix (except when suffix has multiple values?)
+     There can be only one full match between an inflection and a suffix (except when suffix has multiple values?)
      But there could be multiple partial matches. So we should try to find the best match possible and return it.
      A fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
      */
     for (let inflection of inflections) {
         let matchData = new Lib.MatchData(); // Create a match profile
-        let matchedFeatures = new Set();
 
-        if (inflection.suffix === suffix.suffix) {
+        if (inflection.suffix === suffix.value) {
            matchData.suffixMatch = true;
         }
 
-        let matchFound = true; // Let's see if it will keep this way
+        // Check obligatory matches
         for (let feature of  obligatoryMatches) {
-            let featureMatch = !!suffix.featureMatch(feature, inflection[feature]);
-            matchFound = matchFound && featureMatch;
+            let featureMatch = suffix.featureMatch(feature, inflection[feature]);
+            //matchFound = matchFound && featureMatch;
 
-            if (featureMatch) {
-                // Inflection's value of this feature is matching the on of the suffix
-                matchedFeatures.add(feature);
-            }
-            else {
-                // Obligatory match is not found, there is no reason to check other items
+            if (!featureMatch) {
+                // If an obligatory match is not found, there is no reason to check other items
                 break;
             }
+            // Inflection's value of this feature is matching the one of the suffix
+            matchData.matchedFeatures.push(feature);
         }
 
-        if (matchFound) {
-            // If obligatory match requirement is fulfilled we can check features with optional
-            // match requirements to see if it's a full match
-            matchData.fullFeatureMatch = true; // Will it keep this way?
-            for (let feature of optionalMatches) {
-                let matchedValue = suffix.featureMatch(feature, inflection[feature]);
-                matchData.fullFeatureMatch = matchData.fullFeatureMatch && !!matchedValue;
-                if (matchedValue) {
-                    matchedFeatures.add(feature);
-                }
+        if (matchData.matchedFeatures.length < obligatoryMatches.length) {
+            // Not all obligatory matches are found, this is not a match
+            break;
+        }
+
+        // Check optional matches now
+        for (let feature of optionalMatches) {
+            let matchedValue = suffix.featureMatch(feature, inflection[feature]);
+            if (matchedValue) {
+                matchData.matchedFeatures.push(feature);
             }
         }
 
-        if (matchFound) {
-            matchData.matchedFeatures = Array.from(matchedFeatures);
-            if (!bestMatchData) {
-                // If no match data is saved yet, store the current one as the best match
-                bestMatchData = matchData;
-                continue;
-            }
+        if (matchData.suffixMatch && (matchData.matchedFeatures.length === obligatoryMatches.length + optionalMatches.length)) {
+            // This is a full match
+            matchData.fullMatch = true;
 
-            // Store match data only if a current one is better than the previous best match.
-            if (bestMatchData.fullFeatureMatch === false) {
-
-                if (matchData.fullFeatureMatch === true) {
-                    // If a full match is found, it will always replace a partial match.
-                    bestMatchData = matchData;
-                }
-                else if (matchData.matchedFeatures.length > bestMatchData.matchedFeatures.length) {
-                    bestMatchData = matchData;
-                }
-            }
+            // There can be only one full match, no need to search any further
+            suffix.match = matchData;
+            return suffix;
         }
+        bestMatchData = this.bestMatch(bestMatchData, matchData);
     }
     if (bestMatchData) {
-        // Some match is found
+        // There is some match found
         suffix.match = bestMatchData;
         return suffix;
     }
+    return null;
+};
+
+/**
+ * Decides whether matchA is 'better' (i.e. has more items matched) than matchB or not
+ * @param {MatchData} matchA
+ * @param {MatchData} matchB
+ * @returns {MatchData} A best of two matches
+ */
+dataSet.bestMatch = function bestMatch(matchA, matchB) {
+    // If one of the arguments is not set, return the other one
+    if (!matchA && matchB) {
+        return matchB;
+    }
+
+    if (!matchB && matchA) {
+        return matchA;
+    }
+
+    // Suffix match has a priority
+    if (matchA.suffixMatch !== matchB.suffixMatch) {
+        if (matchA.suffixMatch > matchB.suffixMatch) {
+            return matchA;
+        }
+        else {
+            return matchB;
+        }
+    }
+
+    // If same on suffix matche, compare by how many features matched
+    if (matchA.matchedFeatures.length >= matchB.matchedFeatures.length) {
+        // Arbitrarily return matchA if matches are the same
+        return matchA;
+    }
     else {
-        return undefined;
+        return matchB;
     }
 };
 

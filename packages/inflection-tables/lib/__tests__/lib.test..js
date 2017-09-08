@@ -360,7 +360,7 @@ describe('Inflection object', () => {
 
     beforeAll(() => {
         // Create a test environment
-        inflection = new t.Inflection('stem', 'suffix', t.languages.greek);
+        inflection = new t.Inflection('stem', t.languages.greek);
     });
 
     test('Should be initialized properly', () => {
@@ -368,7 +368,7 @@ describe('Inflection object', () => {
 
         expect(inflection).toEqual({
             stem: 'stem',
-            suffix: 'suffix',
+            suffix: null,
             language: t.languages.greek
         });
 
@@ -377,14 +377,14 @@ describe('Inflection object', () => {
     test('Should not allow empty arguments', () => {
         "use strict";
 
-        expect(() => new t.Inflection('stem', 'suffix', '')).toThrowError(/empty/);
+        expect(() => new t.Inflection('stem', '')).toThrowError(/empty/);
 
     });
 
     test('Should not allow unsupported languages', () => {
         "use strict";
 
-        expect(() => new t.Inflection('stem', 'suffix', 'egyptian')).toThrowError(/not supported/);
+        expect(() => new t.Inflection('stem', 'egyptian')).toThrowError(/not supported/);
 
     });
 
@@ -535,8 +535,8 @@ describe('Lexeme object', () => {
         lexeme = new t.Lexeme(
             new t.Lemma('word', t.languages.greek),
             [
-                new t.Inflection('stem1', 'suffix1', t.languages.greek),
-                new t.Inflection('stem2', 'suffix2', t.languages.greek),
+                new t.Inflection('stem1', t.languages.greek),
+                new t.Inflection('stem2', t.languages.greek),
             ]
         );
     });
@@ -550,8 +550,8 @@ describe('Lexeme object', () => {
                 language: t.languages.greek
             },
             inflections: [
-                {stem: 'stem1', suffix: 'suffix1', language: t.languages.greek},
-                {stem: 'stem2', suffix: 'suffix2', language: t.languages.greek}
+                {stem: 'stem1', suffix: null, language: t.languages.greek},
+                {stem: 'stem2', suffix: null, language: t.languages.greek}
             ]
 
         });
@@ -597,15 +597,15 @@ describe('Homonym object', () => {
             new t.Lexeme(
                 new t.Lemma('word1', t.languages.greek),
                 [
-                    new t.Inflection('stem1', 'suffix1', t.languages.greek),
-                    new t.Inflection('stem2', 'suffix2', t.languages.greek),
+                    new t.Inflection('stem1', t.languages.greek),
+                    new t.Inflection('stem2', t.languages.greek),
                 ]
             ),
             new t.Lexeme(
                 new t.Lemma('word2', t.languages.greek),
                 [
-                    new t.Inflection('stem3', 'suffix3', t.languages.greek),
-                    new t.Inflection('stem4', 'suffix4', t.languages.greek),
+                    new t.Inflection('stem3', t.languages.greek),
+                    new t.Inflection('stem4', t.languages.greek),
                 ]
             )
         ]);
@@ -623,8 +623,8 @@ describe('Homonym object', () => {
                         language: t.languages.greek
                     },
                     inflections: [
-                        {stem: 'stem1', suffix: 'suffix1', language: t.languages.greek},
-                        {stem: 'stem2', suffix: 'suffix2', language: t.languages.greek}
+                        {stem: 'stem1', suffix: null, language: t.languages.greek},
+                        {stem: 'stem2', suffix: null, language: t.languages.greek}
                     ]
                 },
                 {
@@ -633,8 +633,8 @@ describe('Homonym object', () => {
                         language: t.languages.greek
                     },
                     inflections: [
-                        {stem: 'stem3', suffix: 'suffix3', language: t.languages.greek},
-                        {stem: 'stem4', suffix: 'suffix4', language: t.languages.greek}
+                        {stem: 'stem3', suffix: null, language: t.languages.greek},
+                        {stem: 'stem4', suffix: null, language: t.languages.greek}
                     ]
                 }
             ]
@@ -761,7 +761,7 @@ describe('Suffix object', () => {
         "use strict";
 
         expect(suffix).toEqual({
-            suffix: 'suffixtext',
+            value: 'suffixtext',
             features: {},
             featureGroups: {}
         });

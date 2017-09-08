@@ -8,39 +8,57 @@ import * as Presenter from "./presenter/presenter.js";
 import * as ModuleNS from './lib/lang/latin/latin.js';
 import {dataSet} from "./lib/lang/latin/latin";
 let langData = ModuleNS.dataSet;
+// Prepare lang data for first use
+dataSet.loadData();
 
 
-// Inserts rendered view to the specific element of the web page
-let show = function show(html, whereSel) {
-    "use strict";
-    let selector = document.querySelector(whereSel);
-    selector.innerHTML = html;
-};
+// region Test selector
+let testCases = [
+    {word: "cupidinibus", value: "latin_noun_cupidinibus"},
+    {word: "mare", value: "latin_noun_adj_mare"}
+];
+let selectList = document.querySelector("#test-selector");
+
+for (const testCase of testCases) {
+    let option = document.createElement("option");
+    option.value = testCase.value;
+    option.text = testCase.word;
+    selectList.appendChild(option);
+}
+
+selectList.addEventListener('change', (event) => {
+    if (event.target.value !== 'select') {
+        show(event.target.selectedOptions[0].innerHTML, event.target.value);
+    }
+});
 
 
-console.log('Sequence started');
+let show = function show(word, fileNameBase) {
+    console.log('Show started');
 
-let result;
-Lib.loadData("tests/data/latin_noun_cupidinibus.json")
-    .then(json => {
-        json = JSON.parse(json);
+    let dir = 'tests/data/';
+    let extension = '.json';
+    Lib.loadData(dir + fileNameBase + extension)
+        .then(json => {
+            json = JSON.parse(json);
 
-        // Transform Morphological Analyzer's response into a library standard Homonym object
-        result = Tufts.adapter.transform(json);
+            // Transform Morphological Analyzer's response into a library standard Homonym object
+            let result = Tufts.adapter.transform(json);
 
-       dataSet.loadData();
+            // Get matching suffixes from an inflection library
+            let suffixes = langData.getSuffixes(result);
+            suffixes.word = word;
 
-        // Get matching suffixes from an inflection library
-        let suffixes = langData.getSuffixes(result);
+            // Insert rendered view to a page
+            document.querySelector('#id-inflections-table').innerHTML = Presenter.render(suffixes);
 
-        // Make Presenter build a view's HTML
-        let html = Presenter.render(suffixes);
-
-        // Insert rendered view to a page
-        show(html, '#id-inflections-table');
-
-        console.log('Sequence finished');
-    }).catch(error => {
+            console.log('Show finished');
+        }).catch(error => {
         console.error(error);
     });
+};
+
+// endregion Test selector
+
+
 

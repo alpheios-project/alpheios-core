@@ -144,6 +144,21 @@ let groupByFeature = function groupByFeature(endings, groupFeatures, mergeFuncti
 };
 
 /**
+ * Formats results according to requirements of the view.
+ * @param {ResultSet} resultSet - A results that needs to be displayed.
+ * @returns {ResultSet} Formatted result.
+ */
+let format = function format(resultSet) {
+    let formatted = resultSet;
+    for (let suffix of formatted.suffixes) {
+        if (suffix.value === null) {
+            suffix.value = '-';
+        }
+    }
+    return formatted;
+};
+
+/**
  * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table.
  * @param {ResultSet} resultSet - A result set from inflection tables library.
  * @returns {string} HTML code representing an inflection table.
@@ -157,7 +172,9 @@ let render = function data(resultSet) {
     // Create data structure for a template
     let displayData = {};
 
-    displayData.suffixes = groupByFeature(resultSet.suffixes, featureOrder, merge);
+    displayData.word = resultSet.word;
+    let formatted = format(resultSet);
+    displayData.suffixes = groupByFeature(formatted.suffixes, featureOrder, merge);
     displayData.footnotes = resultSet.footnotes;
 
     let compiled = Handlebars.compile(template);

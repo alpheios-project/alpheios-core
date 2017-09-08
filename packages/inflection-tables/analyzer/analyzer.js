@@ -10,17 +10,8 @@ class Service {
 
         this.name = name;
 
-        this.languages = {
-            add(providerValue, alpheiosValue) {
-                "use strict";
-                this[providerValue] = alpheiosValue;
-            },
-
-            getFrom(providerValue) {
-                "use strict";
-                return this[providerValue];
-            }
-        }
+        this.languages = {};
+        this.languages.importer = new Lib.Importer();
     }
 
     setLanguageData(data) {

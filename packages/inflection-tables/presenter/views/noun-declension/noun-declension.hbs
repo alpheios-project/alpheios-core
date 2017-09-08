@@ -1,3 +1,6 @@
+<h2>{{word}}</h2>
+
+<p>Hover over the suffix to see its grammar features</p>
 <table class="inflection-table">
     {{#each suffixes}}
         {{#if @first}}
@@ -56,7 +59,7 @@
                             <td class="inflection-table__cell">
                                 {{#each data}}
                                     <!-- suffixes -->
-                                    <a class="inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullFeatureMatch}} inflection-table__suffix--full-feature-match{{/if}}" title="{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}">{{suffix}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}
+                                    <a class="inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullMatch}} inflection-table__suffix--full-feature-match{{/if}}" title="{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.suffixMatch}}, suffix match{{/if}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}">{{value}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}
                                 {{/each}}
                             </td>
                         {{/each}}
