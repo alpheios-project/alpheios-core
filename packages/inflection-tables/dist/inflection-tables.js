@@ -558,7 +558,7 @@ class LanguageDataset {
         this.language = language;
         this.features = {}; // Grammatical feature types (definitions) within supported by a specific language.
         this.suffixes = []; // An array of suffixes.
-        this.footnotes = {}; // Footnotes
+        this.footnotes = []; // Footnotes
     };
 
     /**
@@ -581,9 +581,9 @@ class LanguageDataset {
      * 'feminine' genders
      *
      * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
-     * @param {Feature[]} featureTypes
+     * @param {Feature[]} featureValue
      */
-    addSuffix(suffixValue, ...featureTypes) {
+    addSuffix(suffixValue, ...featureValue) {
         // TODO: implement run-time error checking
         let suffixItem = new Suffix(suffixValue);
 
@@ -592,7 +592,7 @@ class LanguageDataset {
 
 
         // Go through all features provided
-        for (let feature of featureTypes) {
+        for (let feature of featureValue) {
 
             // If this is a footnote. Footnotes should go in a flat array
             // because we don't need to split by them
@@ -606,8 +606,9 @@ class LanguageDataset {
             if (Array.isArray(feature)) {
 
                 if (feature.length > 0) {
+                    let type = feature[0].type;
                     // Store all multi-value features to create a separate copy of a a Suffix object for each of them
-                    multiValueFeatures.push(feature);
+                    multiValueFeatures.push({type: type, features: feature});
                 }
                 else {
                     // Array is empty
@@ -621,8 +622,8 @@ class LanguageDataset {
 
         // Create a copy of an Suffix object for each multi-value item
         if (multiValueFeatures.length > 0) {
-            for (let featureValues of multiValueFeatures) {
-                let endingItems = suffixItem.split(featureValues);
+            for (let featureGroup of multiValueFeatures) {
+                let endingItems = suffixItem.split(featureGroup.type, featureGroup.features);
                 this.suffixes = this.suffixes.concat(endingItems);
             }
         }
@@ -633,10 +634,11 @@ class LanguageDataset {
 
     /**
      * Stores a footnote item.
+     * @param {Feature} partOfSpeech - A part of speech this footnote belongs to
      * @param {number} index - A footnote's index.
      * @param {string} text - A footnote's text.
      */
-    addFootnote(index, text) {
+    addFootnote(partOfSpeech, index, text) {
         "use strict";
 
         if (!index) {
@@ -647,42 +649,67 @@ class LanguageDataset {
             throw new Error('Footnote text data should not be empty.');
         }
 
-        this.footnotes[index] = text;
+        let footnote = new Footnonte(index, text, partOfSpeech.value);
+        footnote.index = index;
+
+        this.footnotes.push(footnote);
     };
 
     getSuffixes(homonym) {
         "use strict";
         let result = new ResultSet();
-        let inflections = [];
+        let inflections = {};
 
         // Find partial matches first, and then full among them
 
         // TODO: do we ever need lemmas?
         for (let lexema of homonym.lexemes) {
             for (let inflection of lexema.inflections) {
-                inflections.push(inflection);
-            }
-        }
-        //result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
-        result.suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflections), []);
-
-        // Create a set so all footnote indexes be unique
-        let footnotesIndex = new Set();
-        // Scan all selected suffixes to build a unique set of footnote indexes
-        for (let suffix of result.suffixes) {
-            if (suffix.hasOwnProperty(types.footnote)) {
-                // Footnote indexes are stored in an array
-                for (let index of suffix[types.footnote]) {
-                    footnotesIndex.add(index);
+                // Group inflections by a part of speech
+                let partOfSpeech = inflection[types.part];
+                if (!partOfSpeech) {
+                    throw new Error("Part of speech data is missing in an inflection.");
                 }
+
+                if (!inflections.hasOwnProperty(partOfSpeech)) {
+                    inflections[partOfSpeech] = [];
+                }
+                inflections[partOfSpeech].push(inflection);
             }
         }
-        // Add footnote indexes and their texts to a result
-        for (let index of footnotesIndex) {
-            result.footnotes.push({index: index, text: this.footnotes[index]});
+
+        // Scan for matches for all parts of speech separately
+        for (const partOfSpeech in inflections) {
+            if (inflections.hasOwnProperty(partOfSpeech)) {
+                let inflectionsGroup = inflections[partOfSpeech];
+
+                result[types.part].push(partOfSpeech);
+                result[partOfSpeech] = {};
+                result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), []);
+                result[partOfSpeech].footnotes = [];
+
+                // Create a set so all footnote indexes be unique
+                let footnotesIndex = new Set();
+                // Scan all selected suffixes to build a unique set of footnote indexes
+                for (let suffix of result[partOfSpeech].suffixes) {
+                    if (suffix.hasOwnProperty(types.footnote)) {
+                        // Footnote indexes are stored in an array
+                        for (let index of suffix[types.footnote]) {
+                            footnotesIndex.add(index);
+                        }
+                    }
+                }
+                // Add footnote indexes and their texts to a result
+                for (let index of footnotesIndex) {
+                    let footnote = this.footnotes.find(footnoteElement =>
+                        footnoteElement.index === index && footnoteElement[types.part] === partOfSpeech
+                    );
+                    result[partOfSpeech].footnotes.push({index: index, text: footnote.text});
+                }
+                // Sort footnotes according to their index numbers
+                result[partOfSpeech].footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
+            }
         }
-        // Sort footnotes according to their index numbers
-        result.footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
 
         return result;
     }
@@ -839,23 +866,23 @@ class Suffix {
     /**
      * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
      * with each Suffix object having only a single value of those grammatical features.
+     * @param {string} featureType - A type of a feature
      * @param {Feature[]} featureValues - Multiple grammatical feature values.
      * @returns {Suffix[]} - An array of suffixes.
      */
-    split(featureValues) {
+    split(featureType, featureValues) {
         "use strict";
 
         let copy = this.clone();
-        const type = featureValues[0].type;
         let values = [];
         featureValues.forEach(element => values.push(element.value));
-        copy.features[type] = featureValues[0].value;
-        copy.featureGroups[type] = values;
+        copy.features[featureType] = featureValues[0].value;
+        copy.featureGroups[featureType] = values;
         let suffixItems = [copy];
         for (let i = 1; i < featureValues.length; i++) {
             copy = this.clone();
-            copy.features[type] = featureValues[i].value;
-            copy.featureGroups[type] = values;
+            copy.features[featureType] = featureValues[i].value;
+            copy.featureGroups[featureType] = values;
             suffixItems.push(copy);
         }
         return suffixItems;
@@ -906,6 +933,15 @@ class Suffix {
     }
 }
 
+
+class Footnonte {
+    constructor(index, text, partOfSpeech) {
+        this.index = index;
+        this.text = text;
+        this[types.part] = partOfSpeech;
+    }
+}
+
 /**
  * Detailed information about a match type
  */
@@ -924,8 +960,7 @@ class ResultSet {
     constructor() {
         "use strict";
         this.word = undefined;
-        this.suffixes = [];
-        this.footnotes = [];
+        this[types.part] = [];
     }
 }
 
@@ -1021,6 +1056,10 @@ class LanguageData {
 var nounSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st,feminine,regular,\r\nē,singular,nominative,1st,feminine,irregular,\r\nēs,singular,nominative,1st,feminine,irregular,\r\nā,singular,nominative,1st,feminine,irregular,7\r\nus,singular,nominative,2nd,masculine feminine,regular,\r\ner,singular,nominative,2nd,masculine feminine,regular,\r\nir,singular,nominative,2nd,masculine feminine,regular,\r\n-,singular,nominative,2nd,masculine feminine,irregular,\r\nos,singular,nominative,2nd,masculine feminine,irregular,1\r\nōs,singular,nominative,2nd,masculine feminine,irregular,\r\nō,singular,nominative,2nd,masculine feminine,irregular,7\r\num,singular,nominative,2nd,neuter,regular,\r\nus,singular,nominative,2nd,neuter,irregular,10\r\non,singular,nominative,2nd,neuter,irregular,7\r\n-,singular,nominative,3rd,masculine feminine,regular,\r\nos,singular,nominative,3rd,masculine feminine,irregular,\r\nōn,singular,nominative,3rd,masculine feminine,irregular,7\r\n-,singular,nominative,3rd,neuter,regular,\r\nus,singular,nominative,4th,masculine feminine,regular,\r\nū,singular,nominative,4th,neuter,regular,\r\nēs,singular,nominative,5th,feminine,regular,\r\nae,singular,genitive,1st,feminine,regular,\r\nāī,singular,genitive,1st,feminine,irregular,1\r\nās,singular,genitive,1st,feminine,irregular,2\r\nēs,singular,genitive,1st,feminine,irregular,7\r\nī,singular,genitive,2nd,masculine feminine,regular,\r\nō,singular,genitive,2nd,masculine feminine,irregular,7\r\nī,singular,genitive,2nd,neuter,regular,\r\nis,singular,genitive,3rd,masculine feminine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nūs,singular,genitive,4th,masculine feminine,regular,\r\nuis,singular,genitive,4th,masculine feminine,irregular,1\r\nuos,singular,genitive,4th,masculine feminine,irregular,1\r\nī,singular,genitive,4th,masculine feminine,irregular,15\r\nūs,singular,genitive,4th,neuter,regular,\r\nēī,singular,genitive,5th,feminine,regular,\r\neī,singular,genitive,5th,feminine,regular,\r\nī,singular,genitive,5th,feminine,irregular,\r\nē,singular,genitive,5th,feminine,irregular,\r\nēs,singular,genitive,5th,feminine,irregular,6\r\nae,singular,dative,1st,feminine,regular,\r\nāī,singular,dative,1st,feminine,irregular,1\r\nō,singular,dative,2nd,masculine feminine,regular,\r\nō,singular,dative,2nd,neuter,regular,\r\nī,singular,dative,3rd,masculine feminine,regular,\r\ne,singular,dative,3rd,masculine feminine,irregular,17\r\nī,singular,dative,3rd,neuter,regular,\r\nūī,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,neuter,regular,\r\nēī,singular,dative,5th,feminine,regular,\r\neī,singular,dative,5th,feminine,regular,\r\nī,singular,dative,5th,feminine,irregular,\r\nē,singular,dative,5th,feminine,irregular,6\r\nam,singular,accusative,1st,feminine,regular,\r\nēn,singular,accusative,1st,feminine,irregular,\r\nān,singular,accusative,1st,feminine,irregular,7\r\num,singular,accusative,2nd,masculine feminine,regular,\r\nom,singular,accusative,2nd,masculine feminine,irregular,1\r\nōn,singular,accusative,2nd,masculine feminine,irregular,7\r\num,singular,accusative,2nd,neuter,regular,\r\nus,singular,accusative,2nd,neuter,irregular,10\r\non,singular,accusative,2nd,neuter,irregular,7\r\nem,singular,accusative,3rd,masculine feminine,regular,\r\nim,singular,accusative,3rd,masculine feminine,irregular,11\r\na,singular,accusative,3rd,masculine feminine,irregular,7\r\n-,singular,accusative,3rd,neuter,regular,\r\num,singular,accusative,4th,masculine feminine,regular,\r\nū,singular,accusative,4th,neuter,regular,\r\nem,singular,accusative,5th,feminine,regular,\r\nā,singular,ablative,1st,feminine,regular,\r\nād,singular,ablative,1st,feminine,irregular,5\r\nē,singular,ablative,1st,feminine,irregular,7\r\nō,singular,ablative,2nd,masculine feminine,regular,\r\nōd,singular,ablative,2nd,masculine feminine,irregular,1\r\nō,singular,ablative,2nd,neuter,regular,\r\ne,singular,ablative,3rd,masculine feminine,regular,\r\nī,singular,ablative,3rd,masculine feminine,irregular,11\r\ne,singular,ablative,3rd,neuter,regular,\r\nī,singular,ablative,3rd,neuter,irregular,11\r\nū,singular,ablative,4th,masculine feminine,regular,\r\nūd,singular,ablative,4th,masculine feminine,irregular,1\r\nū,singular,ablative,4th,neuter,regular,\r\nē,singular,ablative,5th,feminine,regular,\r\nae,singular,locative,1st,feminine,regular,\r\nō,singular,locative,2nd,masculine feminine,regular,\r\nō,singular,locative,2nd,neuter,regular,\r\ne,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\nū,singular,locative,4th,masculine feminine,regular,\r\nū,singular,locative,4th,neuter,regular,\r\nē,singular,locative,5th,feminine,regular,\r\na,singular,vocative,1st,feminine,regular,\r\nē,singular,vocative,1st,feminine,irregular,\r\nā,singular,vocative,1st,feminine,irregular,7\r\ne,singular,vocative,2nd,masculine feminine,regular,\r\ner,singular,vocative,2nd,masculine feminine,regular,\r\nir,singular,vocative,2nd,masculine feminine,regular,\r\n-,singular,vocative,2nd,masculine feminine,irregular,\r\nī,singular,vocative,2nd,masculine feminine,irregular,8\r\nōs,singular,vocative,2nd,masculine feminine,irregular,\r\ne,singular,vocative,2nd,masculine feminine,irregular,7\r\num,singular,vocative,2nd,neuter,regular,\r\non,singular,vocative,2nd,neuter,irregular,7\r\n-,singular,vocative,3rd,masculine feminine,regular,\r\n-,singular,vocative,3rd,neuter,regular,\r\nus,singular,vocative,4th,masculine feminine,regular,\r\nū,singular,vocative,4th,neuter,regular,\r\nēs,singular,vocative,5th,feminine,regular,\r\nae,plural,nominative,1st,feminine,regular,\r\nī,plural,nominative,2nd,masculine feminine,regular,\r\noe,plural,nominative,2nd,masculine feminine,irregular,7 9\r\na,plural,nominative,2nd,neuter,regular,\r\nēs,plural,nominative,3rd,masculine feminine,regular,\r\nes,plural,nominative,3rd,masculine feminine,irregular,7\r\na,plural,nominative,3rd,neuter,regular,\r\nia,plural,nominative,3rd,neuter,irregular,11\r\nūs,plural,nominative,4th,masculine feminine,regular,\r\nua,plural,nominative,4th,neuter,regular,\r\nēs,plural,nominative,5th,feminine,regular,\r\nārum,plural,genitive,1st,feminine,regular,\r\num,plural,genitive,1st,feminine,irregular,3\r\nōrum,plural,genitive,2nd,masculine feminine,regular,\r\num,plural,genitive,2nd,masculine feminine,irregular,\r\nom,plural,genitive,2nd,masculine feminine,irregular,8\r\nōrum,plural,genitive,2nd,neuter,regular,\r\num,plural,genitive,2nd,neuter,irregular,\r\num,plural,genitive,3rd,masculine feminine,regular,\r\nium,plural,genitive,3rd,masculine feminine,irregular,11\r\nōn,plural,genitive,3rd,masculine feminine,irregular,7\r\num,plural,genitive,3rd,neuter,regular,\r\nium,plural,genitive,3rd,neuter,irregular,11\r\nuum,plural,genitive,4th,masculine feminine,regular,\r\num,plural,genitive,4th,masculine feminine,irregular,16\r\nuom,plural,genitive,4th,masculine feminine,irregular,1\r\nuum,plural,genitive,4th,neuter,regular,\r\nērum,plural,genitive,5th,feminine,regular,\r\nīs,plural,dative,1st,feminine,regular,\r\nābus,plural,dative,1st,feminine,irregular,4\r\neis,plural,dative,1st,feminine,irregular,6\r\nīs,plural,dative,2nd,masculine feminine,regular,\r\nīs,plural,dative,2nd,neuter,regular,\r\nibus,plural,dative,3rd,masculine feminine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nibus,plural,dative,4th,masculine feminine,regular,\r\nubus,plural,dative,4th,masculine feminine,irregular,14\r\nibus,plural,dative,4th,neuter,regular,\r\nēbus,plural,dative,5th,feminine,regular,\r\nās,plural,accusative,1st,feminine,regular,\r\nōs,plural,accusative,2nd,masculine feminine,regular,\r\na,plural,accusative,2nd,neuter,regular,\r\nēs,plural,accusative,3rd,masculine feminine,regular,\r\nīs,plural,accusative,3rd,masculine feminine,irregular,11\r\nas,plural,accusative,3rd,masculine feminine,irregular,7\r\na,plural,accusative,3rd,neuter,regular,\r\nia,plural,accusative,3rd,neuter,irregular,11\r\nūs,plural,accusative,4th,masculine feminine,regular,\r\nua,plural,accusative,4th,neuter,regular,\r\nēs,plural,accusative,5th,feminine,regular,\r\nīs,plural,ablative,1st,feminine,regular,\r\nābus,plural,ablative,1st,feminine,irregular,4\r\neis,plural,ablative,1st,feminine,irregular,6\r\nīs,plural,ablative,2nd,masculine feminine,regular,\r\nīs,plural,ablative,2nd,neuter,regular,\r\nibus,plural,ablative,3rd,masculine feminine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nibus,plural,ablative,4th,masculine feminine,regular,\r\nubus,plural,ablative,4th,masculine feminine,irregular,14\r\nibus,plural,ablative,4th,neuter,regular,\r\nēbus,plural,ablative,5th,feminine,regular,\r\nīs,plural,locative,1st,feminine,regular,\r\nīs,plural,locative,2nd,masculine feminine,regular,\r\nīs,plural,locative,2nd,neuter,regular,\r\nibus,plural,locative,3rd,masculine feminine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nibus,plural,locative,4th,masculine feminine,regular,\r\nibus,plural,locative,4th,neuter,regular,\r\nēbus,plural,locative,5th,feminine,regular,\r\nae,plural,vocative,1st,feminine,regular,\r\nī,plural,vocative,2nd,masculine feminine,regular,\r\na,plural,vocative,2nd,neuter,regular,\r\nēs,plural,vocative,3rd,masculine feminine,regular,\r\na,plural,vocative,3rd,neuter,regular,\r\nia,plural,vocative,3rd,neuter,irregular,11\r\nūs,plural,vocative,4th,masculine feminine,regular,\r\nua,plural,vocative,4th,neuter,regular,\r\nēs,plural,vocative,5th,feminine,regular,";
 
 var nounFootnotesCSV = "Index,Text\r\n1,archaic (final s and m of os and om may be omitted in inscriptions)\r\n2,only in familiās\r\n3,especially in Greek patronymics and compounds in -gena and -cola.\r\n4,always in deābus and filiābus; rarely with other words to distinguish the female\r\n5,archaic\r\n6,rare\r\n7,\"may occur in words of Greek origin. The forms of many Greek nouns vary among the first, second and third declensions.\"\r\n8,proper names in ius and filius and genius\r\n9,poetic\r\n10,\"only pelagus, vīrus, and sometimes vulgus\"\r\n11,may occur with i-stems\r\n12,several nouns (most commonly domus) show forms of both second and fourth declensions\r\n13,\"some nouns also have forms from the first declension (eg materia, saevitia) or the third declension (eg requiēs, satiēs, plēbēs, famēs)\"\r\n14,\"Always in partus and tribus, usually in artus and lacus, sometimes in other words, eg portus and specus\"\r\n15,Often in names of plants and trees and in nouns ending in -tus\r\n16,When pronounced as one syllable\r\n17,early\r\n18,dies and meridies are masculine";
+
+var adjectiveSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,";
+
+var adjectiveFootnotesCSV = "Index,Text\r\n1,\"Adjectives agree with the noun they modify in gender, number and case.\"\r\n2,Adjectives are inflected according to either\r\n3,\"Only nullus, sōlus, alius (alia, aliud), tōtus, ūllus, ūnus, alter, neuter (neutra,\r\n            neutrum) and uter (utra, utrum).\"\r\n4,In a few adjectives of Greek origin.\r\n5,\"The \"\"two-ending\"\" adjectives use \"\"-is\"\", for both masculine and feminine nominative\r\n            singular.\"\r\n6,\"The \"\"one-ending\"\" adjectives use the same consonant ending for all three genders in the\r\n            nominative singular and the neuter accusative and vocative singular.\"\r\n7,\"An ablative singular in \"\"e\"\" is common in one-ending adjectives, but is usually confined to\r\n            poetry in three and two-ending adjectives.\"\r\n8,\"In comparatives, poetry and some one-ending adjectives.\"\r\n9,Chiefly in comparatives.";
 
 function unwrapExports (x) {
 	return x && x.__esModule ? x['default'] : x;
@@ -2638,6 +2677,7 @@ const declensions = dataSet.defineFeatureType(types.declension, ['first', 'secon
 declensions.addImporter(importerName)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
+    .map('1st 2nd', [declensions.first, declensions.second])
     .map('3rd', declensions.third)
     .map('4th', declensions.fourth)
     .map('5th', declensions.fifth);
@@ -2655,7 +2695,7 @@ const footnotes = dataSet.defineFeatureType(types.footnote, []);
 
 // endregion Definition of grammatical features
 
-dataSet.addSuffixes = function addSuffixes(data) {
+dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-';
 
@@ -2667,7 +2707,7 @@ dataSet.addSuffixes = function addSuffixes(data) {
             suffix = null;
         }
 
-        let features = [parts.noun, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
+        let features = [partOfSpeech, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
             declensions.importer.csv.get(data[i][3]), genders.importer.csv.get(data[i][4]), types$1.importer.csv.get(data[i][5])];
         if (data[i][6]) {
             // There can be multiple footnote indexes separated by spaces
@@ -2681,18 +2721,27 @@ dataSet.addSuffixes = function addSuffixes(data) {
     }
 };
 
-dataSet.addFootnotes = function addFootnotes(data) {
+dataSet.addFootnotes = function addFootnotes(partOfSpeech, data) {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-        this.addFootnote(data[i][0], data[i][1]);
+        this.addFootnote(partOfSpeech, data[i][0], data[i][1]);
     }
 };
 
 dataSet.loadData = function loadData$$1() {
+    // Nouns
+    let partOfSpeech = parts.noun;
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
-    this.addSuffixes(suffixes.data);
+    this.addSuffixes(partOfSpeech, suffixes.data);
     let footnotes = papaparse.parse(nounFootnotesCSV, {});
-    this.addFootnotes(footnotes.data);
+    this.addFootnotes(partOfSpeech, footnotes.data);
+
+    // Adjectives
+    partOfSpeech = parts.adjective;
+    suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
+    this.addSuffixes(partOfSpeech, suffixes.data);
+    footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
 };
 
 
@@ -7714,7 +7763,314 @@ return /******/ (function(modules) { // webpackBootstrap
 
 var Handlebars = unwrapExports(handlebarsV4_0_10);
 
-var template = "<h2>{{word}}</h2>\r\n\r\n<p>Hover over the suffix to see its grammar features</p>\r\n<table class=\"inflection-table\">\r\n    {{#each suffixes}}\r\n        {{#if @first}}\r\n            <!-- Gender -->\r\n            {{#each data}}\r\n                {{#if @first}}\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Declension Stem</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        <td class=\"inflection-table__cell\"  colspan=\"4\">{{value}}</td>\r\n                    {{/each}}\r\n                </tr>\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Gender</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        {{#each data}}\r\n                            <!-- Gender -->\r\n                            <td class=\"inflection-table__cell\" colspan=\"2\">{{value}}</td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                </tr>\r\n                <tr class=\"inflection-table__row\">\r\n                    <td class=\"inflection-table__cell\">Type</td>\r\n                    {{#each data}}\r\n                        <!-- Declension -->\r\n                        {{#each data}}\r\n                            <!-- Gender -->\r\n                            <td class=\"inflection-table__cell\" colspan=\"2\">\r\n                                {{#each data}}\r\n                                    <!-- Type -->\r\n                                    {{value}}{{#unless @last}}&nbsp;|&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                </tr>\r\n                {{/if}}\r\n        {{/each}}\r\n        {{/if}}\r\n    {{/each}}\r\n    {{#each suffixes}}\r\n        <!-- Gender -->\r\n        <tr class=\"inflection-table__row\"><td class=\"inflection-table__cell\" colspan=\"31\">{{value}}</td></tr>\r\n        {{#each data}}\r\n            <!-- Case -->\r\n            <tr class=\"inflection-table__row\">\r\n                <td class=\"inflection-table__cell inflection-table__cell--case-title\">{{value}}</td>\r\n                {{#each data}}\r\n                    <!-- Declension -->\r\n                    {{#each data}}\r\n                        <!-- Gender -->\r\n                        {{#each data}}\r\n                            <!-- Type -->\r\n                            <td class=\"inflection-table__cell\">\r\n                                {{#each data}}\r\n                                    <!-- suffixes -->\r\n                                    <a class=\"inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullMatch}} inflection-table__suffix--full-feature-match{{/if}}\" title=\"{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.suffixMatch}}, suffix match{{/if}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}\">{{value}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/each}}\r\n                    {{/each}}\r\n                {{/each}}\r\n            </tr>\r\n        {{/each}}\r\n    {{/each}}\r\n</table>\r\n\r\n<br>\r\n<br>\r\n{{#each footnotes}}\r\n    <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n{{/each}}";
+//export {View};
+
+class View {
+    /**
+     * A compare function that can be used to sort ending according to specific requirements of the current view.
+     * This function is for use with Array.prototype.sort().
+     * @param {FeatureType[]} featureOrder
+     * @param {Suffix} a
+     * @param {Suffix} b
+     */
+    compare(featureOrder, a, b) {
+        "use strict";
+
+        // Set custom sort order if necessary
+        // Custom sort order for each declension
+        //LibLatin.genders.order = [LibLatin.genders.feminine];
+
+
+        for (let [index, feature] of this.featureOrder.entries()) {
+            let featureTypeA = a.features[feature.type],
+                featureTypeB = b.features[feature.type];
+
+            if (feature.orderLookup[featureTypeA] > feature.orderLookup[featureTypeB]) {
+                return 1;
+            }
+            else if (feature.orderLookup[featureTypeA] < feature.orderLookup[featureTypeB]) {
+                return -1;
+            }
+            /*
+             If values on this level are equal, continue comparing using values of the next level.
+             If we are at the last level of comparison (defined by featureOrder) and elements are equal, return 0.
+             */
+            else if (index === this.featureOrder.length - 1) {
+                // This is the last sort order item
+                return 0;
+            }
+        }
+
+    }
+
+    /**
+     * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
+     * This function is for use with Array.prototype.filter().
+     * @param {FeatureType} featureType - a grammatical feature type we need to filter on
+     * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
+     * this ending should have
+     * @param {Suffix} suffix - an ending we need to filter out
+     * @returns {boolean}
+     */
+    filter(featureType, featureValues, suffix) {
+        "use strict";
+
+        // If not an array, convert it to array for uniformity
+        if (!Array.isArray(featureValues)) {
+            featureValues = [featureValues];
+        }
+        for (const value of featureValues) {
+            if (suffix.features[featureType] === value) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    filterByFeature(features, suffixMatch, suffix) {
+        "use strict";
+
+        let result = true;
+        for (let feature of features) {
+            let featureValues = feature.value;
+            let featureType = feature.type;
+            if (!Array.isArray(featureValues)) {
+                featureValues = [featureValues];
+            }
+            result = result && featureValues.includes(suffix.features[featureType]);
+        }
+        // Whether to check for a suffix match
+        if (suffixMatch) {
+            result = result && suffix.match.suffixMatch;
+        }
+
+        return result;
+    }
+
+    /**
+     * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
+     * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
+     * @param {Suffix} suffixB - A second ending to merge (to be discarded).
+     * @returns {Suffix} A modified value of ending A.
+     */
+    merge(suffixA, suffixB) {
+        let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
+        for (let type of commonGroups) {
+            // Combine values using a comma separator. Can do anything else if we need to.
+            suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
+        }
+        return suffixA;
+    }
+
+    /**
+     * A recursive function that organizes suffixes by features from a groupFeatures list into a multi-dimensional
+     * array. Each of levels of this array corresponds to a feature from a groupFeatures list.
+     * @param {Suffix[]} suffixes - A list of suffixes.
+     * @param {FeatureType[]} groupFeatures - A list of feature types to be used for grouping.
+     * @param {function} mergeFunction - A function that merges two suffixes together.
+     * @param {Feature[]} featureValues - A list of feature values for the current level
+     * @param {number} currentLevel - A recursion level, used to stop recursion.
+     * @returns {Suffix[]} Endings grouped into a multi-dimensional array.
+     */
+    groupByFeature(suffixes, groupFeatures, mergeFunction, featureValues = [], currentLevel = 0) {
+        let feature = groupFeatures[currentLevel];
+        let grouped = [];
+        let currentFeatures = featureValues.slice();
+
+        for (const featureValue of feature.orderIndex) {
+            currentFeatures.push(feature.get(featureValue));
+            let empty = !suffixes.find(element => {
+                if (element.features[feature.type] === featureValue) {
+                    return element;
+                }
+            });
+
+            let featureValuesList = currentFeatures.map(feature => feature.value);
+            let rowValues = undefined;
+            let columnValues = undefined;
+            if (currentLevel === groupFeatures.length - 1) {
+                rowValues = featureValuesList[0] + ' ' + featureValuesList[1];
+                columnValues = featureValuesList[2] + ' ' + featureValuesList[3] + ' ' + featureValuesList[4];
+            }
+
+            let result = {
+                type: feature.type,
+                value: featureValue,
+                tableGroup: feature.tableGroup,
+                tableGroupSel: feature.tableGroupSel,
+                empty: empty.toString(),
+                rowValues: rowValues,
+                columnValues: columnValues,
+                featureValues: currentFeatures.map(feature => feature.value).join(', ')
+            };
+            let selected = suffixes.filter(this.filter.bind(this, feature.type, featureValue));
+            if (currentLevel < groupFeatures.length - 1) {
+                // Split more
+                featureValues.push(feature.get(featureValue));
+                selected = this.groupByFeature(selected, groupFeatures, mergeFunction, featureValues, currentLevel + 1);
+            }
+            else {
+                // This is the last level
+                // Split result has a list of suffixes in a table cell. We can now combine duplicated items if we want
+                if (selected.length > 0) {
+                    selected = Suffix.combine(selected, mergeFunction);
+                }
+
+                if (selected.length === 0) {
+                    // No suffixes in this column
+                    result.empty = 'true'; // For a template output
+                }
+                else {
+                    result.empty = 'false';
+                }
+
+                result.suffixMatch = 'false';
+                for (let element of selected) {
+                    if (element.match.suffixMatch) {
+                        result.suffixMatch = 'true';
+                        break;
+                    }
+                }
+
+            }
+            result.data = selected;
+            grouped.push(result);
+
+            currentFeatures.pop();
+        }
+        featureValues.pop();
+        return grouped;
+    }
+
+    addHeaders(displayData, suffixes) {
+        displayData.headers = [[], [], []];
+
+        // Set left column data
+        displayData.headers[0].push({
+            title: this.featureOrder[2].type
+        });
+        displayData.headers[1].push({
+            title: this.featureOrder[3].type
+        });
+        displayData.headers[2].push({
+            title: this.featureOrder[4].type
+        });
+
+        let columnsEmptyTotal = 0;
+
+        for (let featureValue2 of this.featureOrder[2].orderIndex) {
+            // Declensions
+            let columnsEmpty2 = 0;
+            let suffixMatch2 = false;
+
+            let header2 = {
+                title: featureValue2,
+                size: this.featureOrder[3].orderIndex.length * this.featureOrder[4].orderIndex.length
+            };
+
+            for (let featureValue3 of this.featureOrder[3].orderIndex) {
+                // Genders
+                let header3 = {
+                    title: featureValue3,
+                    size: this.featureOrder[4].orderIndex.length
+                };
+
+                let columnsEmpty3 = 0;
+                let suffixMatch3 = false;
+
+                for (let featureValue4 of this.featureOrder[4].orderIndex) {
+                    // Types
+                    let empty = !suffixes.find(this.filterByFeature.bind(this, [
+                        new Feature(featureValue2, 'declension', languages.latin),
+                        new Feature(featureValue3, 'gender', languages.latin),
+                        new Feature(featureValue4, 'type', languages.latin)
+                    ], false));
+
+                    let suffixMatch = !!suffixes.find(this.filterByFeature.bind(this, [
+                        new Feature(featureValue2, 'declension', languages.latin),
+                        new Feature(featureValue3, 'gender', languages.latin),
+                        new Feature(featureValue4, 'type', languages.latin)
+                    ], true));
+
+                    if (empty) {
+                        columnsEmpty2++;
+                        columnsEmpty3++;
+                        columnsEmptyTotal++;
+                    }
+                    suffixMatch2 = suffixMatch2 || suffixMatch;
+                    suffixMatch3 = suffixMatch3 || suffixMatch;
+
+                    displayData.headers[2].push({
+                        headerLevel: 3,
+                        title: featureValue4,
+                        size: 1,
+                        empty: empty,
+                        columnsEmpty: 0,
+                        columnsTotal: 1,
+                        suffixMatch: suffixMatch,
+                        featureValues: featureValue2 + ' ' + featureValue3 + ' ' + featureValue4
+                    });
+                }
+
+                header3.headerLevel = 2;
+                header3.columnsTotal = this.featureOrder[4].orderIndex.length;
+                header3.columnsEmpty = columnsEmpty3;
+                if (columnsEmpty3 === header3.columnsTotal) {
+                    header3.empty = true;
+                }
+                header3.suffixMatch = suffixMatch3;
+                header3.featureValues = featureValue2 + ' ' + featureValue3;
+
+                displayData.headers[1].push(header3);
+            }
+
+            header2.headerLevel = 1;
+            header2.columnsTotal = this.featureOrder[3].orderIndex.length * this.featureOrder[4].orderIndex.length;
+            header2.columnsEmpty = columnsEmpty2;
+            if (columnsEmpty2 === header2.columnsTotal) {
+                header2.empty = true;
+            }
+            header2.suffixMatch = suffixMatch2;
+            header2.featureValues = featureValue2;
+
+            displayData.headers[0].push(header2);
+        }
+    }
+
+    /**
+     * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table.
+     * @param {ResultSet} resultSet - A result set from inflection tables library.
+     * @returns {string} HTML code representing an inflection table.
+     */
+    render(resultSet) {
+        "use strict";
+
+        // We can sort suffixes if we need to
+        //let sorted = resultSet.suffixes.sort(compare.bind(this, featureOrder));
+
+        // Create data structure for a template
+        let displayData = {};
+
+        displayData.word = resultSet.word;
+        let selection = resultSet[this.partOfSpeech];
+        displayData.suffixes = this.groupByFeature(selection.suffixes, this.featureOrder, this.merge);
+        this.addHeaders(displayData, selection.suffixes);
+        displayData.footnotes = selection.footnotes;
+
+        let compiled = Handlebars.compile(this.template);
+
+        return compiled(displayData);
+    }
+}
+
+var template = "<h2>{{word}}</h2>\r\n\r\n<h3>Noun declension</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn hidden\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-declensions\" class=\"switch-btn hidden\">Hide declensions with no suffix matches</button><button id=\"show-no-suffix-declensions\" class=\"switch-btn\">Show declensions with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>\r\n<table class=\"inflection-table\">\r\n\r\n    {{#each headers}}\r\n        <tr class=\"inflection-table__row\">\r\n            {{#each this}}\r\n                <th class=\"inflection-table__cell\" data-header-level=\"{{headerLevel}}\" data-empty=\"{{empty}}\" data-columns-empty=\"{{columnsEmpty}}\"  data-columns-total=\"{{columnsTotal}}\" data-suffix-match=\"{{suffixMatch}}\" data-column-values=\"{{featureValues}}\" colspan=\"{{size}}\">{{title}}</th>\r\n            {{/each}}\r\n        </tr>\r\n    {{/each}}\r\n\r\n    {{#each suffixes}}\r\n        <!-- Gender -->\r\n        <tr class=\"inflection-table__row\"><td class=\"inflection-table__cell\" colspan=\"31\">{{value}}</td></tr>\r\n        {{#each data}}\r\n            <!-- Case -->\r\n            <tr class=\"inflection-table__row\">\r\n                <td class=\"inflection-table__cell inflection-table__cell--case-title\">{{value}}</td>\r\n                {{#each data}}\r\n                    <!-- Declension -->\r\n                    {{#each data}}\r\n                        <!-- Gender -->\r\n                        {{#each data}}\r\n                            <!-- Type -->\r\n                        {{#if header}}\r\n                            <td class=\"inflection-table__cell\">{{headerTitle}}</td>\r\n                        {{else}}\r\n                            <td class=\"inflection-table__cell\" data-row-values=\"{{rowValues}}\" data-column-values=\"{{columnValues}}\" data-table-group=\"{{tableGroup}}\" data-table-group-sel=\"{{tableGroupSel}}\" data-empty=\"{{empty}}\" data-suffix-match=\"{{suffixMatch}}\" data-feature-values=\"{{featureValues}}\">\r\n                                {{#each data}}\r\n                                    <!-- suffixes -->\r\n                                    <a class=\"inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullMatch}} inflection-table__suffix--full-feature-match{{/if}}\" title=\"{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.suffixMatch}}, suffix match{{/if}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}\">{{#if value}}{{value}}{{else}}-{{/if}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/if}}\r\n                        {{/each}}\r\n                    {{/each}}\r\n                {{/each}}\r\n            </tr>\r\n        {{/each}}\r\n    {{/each}}\r\n</table>\r\n\r\n<br>\r\n<br>\r\n{{#each footnotes}}\r\n    <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n{{/each}}";
+
+let view = new View();
+view.id = 'nounDeclension';
+view.name = 'noun declension';
+view.partOfSpeech = parts.noun.value;
+view.template = template;
 
 /**
  * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
@@ -7724,134 +8080,234 @@ var template = "<h2>{{word}}</h2>\r\n\r\n<p>Hover over the suffix to see its gra
  * example. If suffixes with several values must be combines, such values can be provided within an array,
  * as shown by 'masculine' and 'feminine' values.
  */
-let genderFeature = genders;
-genderFeature.order = [[genders.masculine, genders.feminine], genders.neuter];
-let featureOrder = [numbers, cases, declensions, genderFeature, types$1];
+let numbers$1 = new FeatureType(types.number, ['singular', 'plural'], languages.latin);
+numbers$1.tableGroup = 'row';
+numbers$1.tableGroupSel = "number";
+
+let cases$1 = new FeatureType(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
+cases$1.tableGroup = 'row';
+cases$1.tableGroupSel = "number-cases";
+
+let declensions$1 = new FeatureType(types.declension, ['first', 'second', 'third', 'fourth', 'fifth'], languages.latin);
+declensions$1.tableGroup = 'column';
+declensions$1.tableGroupSel = 'declension';
+
+let genders$1 = new FeatureType(types.gender, [['masculine', 'feminine'], 'neuter'], languages.latin);
+genders$1.tableGroup = 'column';
+genders$1.tableGroupSel = 'declension-gender';
+
+let types$2 = new FeatureType(types.type, ['regular', 'irregular'], languages.latin);
+types$2.tableGroup = 'column';
+types$2.tableGroupSel = 'declension-gender-type';
+
+view.featureOrder = [numbers$1, cases$1, declensions$1, genders$1, types$2];
+
+var template$1 = "<h2>{{word}}</h2>\r\n\r\n<h3>Adjective declension</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn hidden\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-declensions\" class=\"switch-btn hidden\">Hide declensions with no suffix matches</button><button id=\"show-no-suffix-declensions\" class=\"switch-btn\">Show declensions with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>\r\n<table class=\"inflection-table\">\r\n\r\n    {{#each headers}}\r\n        <tr class=\"inflection-table__row\">\r\n            {{#each this}}\r\n                <th class=\"inflection-table__cell\" data-header-level=\"{{headerLevel}}\" data-empty=\"{{empty}}\" data-columns-empty=\"{{columnsEmpty}}\"  data-columns-total=\"{{columnsTotal}}\" data-suffix-match=\"{{suffixMatch}}\" data-column-values=\"{{featureValues}}\" colspan=\"{{size}}\">{{title}}</th>\r\n            {{/each}}\r\n        </tr>\r\n    {{/each}}\r\n\r\n    {{#each suffixes}}\r\n        <!-- Gender -->\r\n        <tr class=\"inflection-table__row\"><td class=\"inflection-table__cell\" colspan=\"31\">{{value}}</td></tr>\r\n        {{#each data}}\r\n            <!-- Case -->\r\n            <tr class=\"inflection-table__row\">\r\n                <td class=\"inflection-table__cell inflection-table__cell--case-title\">{{value}}</td>\r\n                {{#each data}}\r\n                    <!-- Declension -->\r\n                    {{#each data}}\r\n                        <!-- Gender -->\r\n                        {{#each data}}\r\n                            <!-- Type -->\r\n                            {{#if header}}\r\n                                <td class=\"inflection-table__cell\">{{headerTitle}}</td>\r\n                            {{else}}\r\n                                <td class=\"inflection-table__cell\" data-header-3=\"{{header3}}\" data-table-group=\"{{tableGroup}}\" data-table-group-sel=\"{{tableGroupSel}}\" data-empty=\"{{empty}}\" data-suffix-match=\"{{suffixMatch}}\" data-feature-values=\"{{featureValues}}\">\r\n                                    {{#each data}}\r\n                                        <!-- suffixes -->\r\n                                        <a class=\"inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullMatch}} inflection-table__suffix--full-feature-match{{/if}}\" title=\"{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.suffixMatch}}, suffix match{{/if}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}\">{{#if value}}{{value}}{{else}}-{{/if}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n                                    {{/each}}\r\n                                </td>\r\n                            {{/if}}\r\n                        {{/each}}\r\n                    {{/each}}\r\n                {{/each}}\r\n            </tr>\r\n        {{/each}}\r\n    {{/each}}\r\n</table>\r\n\r\n<br>\r\n<br>\r\n{{#each footnotes}}\r\n    <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n{{/each}}";
+
+let view$1 = new View();
+view$1.id = 'adjectiveDeclension';
+view$1.name = 'adjective declension';
+view$1.partOfSpeech = parts.adjective.value;
+view$1.template = template$1;
 
 /**
- * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
- * This function is for use with Array.prototype.filter().
- * @param {FeatureType} featureType - a grammatical feature type we need to filter on
- * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
- * this ending should have
- * @param {Suffix} ending - an ending we need to filter out
- * @returns {boolean}
+ * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
+ * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
+ * All feature types has a default sort order. This order is defined by a sequence of feature values provided
+ * as arguments to each feature type constructor. However, this can be overriden here, as shown by the 'gender'
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
+ * as shown by 'masculine' and 'feminine' values.
  */
-let filter = function filter(featureType, featureValues, ending) {
-    "use strict";
+let numbers$2 = new FeatureType(types.number, ['singular', 'plural'], languages.latin);
+numbers$2.tableGroup = 'row';
+numbers$2.tableGroupSel = "number";
 
-    // If not an array, convert it to array for uniformity
-    if (!Array.isArray(featureValues)) {
-        featureValues = [featureValues];
-    }
-    for (const value of featureValues) {
-        if (ending.features[featureType] === value) {
-            return true;
-        }
-    }
+let cases$2 = new FeatureType(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
+cases$2.tableGroup = 'row';
+cases$2.tableGroupSel = "number-cases";
 
-    return false;
-};
+let declensions$2 = new FeatureType(types.declension, ['first', 'second', 'third'], languages.latin);
+declensions$2.tableGroup = 'column';
+declensions$2.tableGroupSel = 'declension';
 
-/**
- * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
- * @param {Suffix} endingA - A first of two suffixes to merge (to be returned).
- * @param {Suffix} endingB - A second ending to merge (to be discarded).
- * @returns {Suffix} A modified value of ending A.
- */
-let merge = function merge(endingA, endingB) {
-    let commonGroups = Suffix.getCommonGroups([endingA, endingB]);
-    for (let type of commonGroups) {
-        // Combine values using a comma separator. Can do anything else if we need to.
-        endingA.features[type] = endingA.features[type] + ', ' + endingB.features[type];
-    }
-    return endingA;
-};
+let genders$2 = new FeatureType(types.gender, ['masculine', 'feminine', 'neuter'], languages.latin);
+genders$2.tableGroup = 'column';
+genders$2.tableGroupSel = 'declension-gender';
 
-/**
- * A recursive function that organizes suffixes by features from a groupFeatures list into a multi-dimensional
- * array. Each of levels of this array corresponds to a feature from a groupFeatures list.
- * @param {Suffix[]} endings - A list of suffixes.
- * @param {FeatureType[]} groupFeatures - A list of feature types to be used for grouping.
- * @param {function} mergeFunction - A function that merges two suffixes together.
- * @param {number} currentLevel - A recursion level, used to stop recursion.
- * @returns {Suffix[]} Endings grouped into a multi-dimensional array.
- */
-let groupByFeature = function groupByFeature(endings, groupFeatures, mergeFunction, currentLevel = 0) {
-    let feature = groupFeatures[currentLevel];
-    let grouped = [];
-    for (const featureValue of feature.orderIndex) {
-        let result = {
-            type: feature.type,
-            value: featureValue
-        };
-        let selected = endings.filter(filter.bind(this, feature.type, featureValue));
-        if (currentLevel < groupFeatures.length - 1) {
-            // Split more
-            selected = groupByFeature(selected, groupFeatures, mergeFunction, currentLevel + 1);
-        }
-        else {
-            // This is the last level
-            // Split result has a list of suffixes in a table cell. We can now combine duplicated items if we want
-            if (selected.length >0) {
-                selected = Suffix.combine(selected, mergeFunction);
-            }
+let types$3 = new FeatureType(types.type, ['regular', 'irregular'], languages.latin);
+types$3.tableGroup = 'column';
+types$3.tableGroupSel = 'declension-gender-type';
 
-        }
-        result.data = selected;
-        grouped.push(result);
-    }
-    return grouped;
-};
-
-/**
- * Formats results according to requirements of the view.
- * @param {ResultSet} resultSet - A results that needs to be displayed.
- * @returns {ResultSet} Formatted result.
- */
-let format = function format(resultSet) {
-    let formatted = resultSet;
-    for (let suffix of formatted.suffixes) {
-        if (suffix.value === null) {
-            suffix.value = '-';
-        }
-    }
-    return formatted;
-};
-
-/**
- * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table.
- * @param {ResultSet} resultSet - A result set from inflection tables library.
- * @returns {string} HTML code representing an inflection table.
- */
-let render$1 = function data(resultSet) {
-    "use strict";
-
-    // We can sort suffixes if we need to
-    //let sorted = resultSet.suffixes.sort(compare.bind(this, featureOrder));
-
-    // Create data structure for a template
-    let displayData = {};
-
-    displayData.word = resultSet.word;
-    let formatted = format(resultSet);
-    displayData.suffixes = groupByFeature(formatted.suffixes, featureOrder, merge);
-    displayData.footnotes = resultSet.footnotes;
-
-    let compiled = Handlebars.compile(template);
-
-    return compiled(displayData);
-};
+view$1.featureOrder = [numbers$2, cases$2, declensions$2, genders$2, types$3];
 
 /**
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
  * directory under /presenter/views/view-name
  */
-let render = function render(resultSet) {
-    "use strict";
+class Presenter {
+    constructor() {
+        this.hiddenClass = 'hidden';
+        this.emptyColumnClass = 'empty-row-column';
+        this.noSuffixColumnClass ='no-suffix-column';
+        this.showEmptyColumnSel = '#show-empty-columns';
+        this.hideEmptyColumnSel = '#hide-empty-columns';
+        this.showNoSuffixDeclensionsSel = '#show-no-suffix-declensions';
+        this.hideNoSuffixDeclensionsSel = '#hide-no-suffix-declensions';
+        this.highlightedClass = 'highlighted-cell';
 
-    return render$1(resultSet);
-};
+        this.views = {
+            nounDeclension: view,
+            adjectiveDeclension: view$1
+        };
+    }
+
+
+    render(selector, resultSet) {
+        "use strict";
+
+        let views = this.getViews(resultSet[types.part]);
+        // Show a default view
+        this.showView(views[0], selector, resultSet);
+
+        document.querySelector("#view-switcher").innerHTML = '';
+        if (views.length > 1) {
+            let selectList = document.createElement('select');
+            for (const view$$1 of views) {
+                let option = document.createElement("option");
+                option.value = view$$1.id;
+                option.text = view$$1.name;
+                selectList.appendChild(option);
+            }
+            selectList.addEventListener('change', event => {
+                let viewID = event.target.value;
+                console.log(viewID);
+                this.showView(this.views[viewID], selector, resultSet);
+            });
+            document.querySelector("#view-switcher").appendChild(selectList);
+        }
+    }
+
+    getViews(partsOfSpeech) {
+        let views = [];
+        if (partsOfSpeech.includes('noun')) {
+            views.push(this.views.nounDeclension);
+        }
+        if (partsOfSpeech.includes('adjective')) {
+            views.push(this.views.adjectiveDeclension);
+        }
+        return views;
+    }
+
+    showView(view$$1, selector, resultSet) {
+        document.querySelector(selector).innerHTML = view$$1.render(resultSet);
+
+        this.hideEmptyColumns();
+        this.hideNoSuffixDeclensions();
+
+        document.querySelector(this.hideEmptyColumnSel).addEventListener('click', this.hideEmptyColumns.bind(this));
+        document.querySelector(this.showEmptyColumnSel).addEventListener('click', this.showEmptyColumns.bind(this));
+
+        document.querySelector(this.hideNoSuffixDeclensionsSel).addEventListener('click', this.hideNoSuffixDeclensions.bind(this));
+        document.querySelector(this.showNoSuffixDeclensionsSel).addEventListener('click', this.showNoSuffixDeclensions.bind(this));
+
+        document.querySelectorAll('td[data-feature-values]').forEach(element => {
+            element.addEventListener('mouseenter', this.cellMouseOver.bind(this));
+            element.addEventListener('mouseleave', this.cellMouseOut.bind(this));
+        });
+    }
+
+    hideEmptyColumns() {
+        let emptyRows = document.querySelectorAll('th[data-header-level="3"][data-empty="true"]');
+        for (let row of emptyRows) {
+            let columnSel = row.dataset.columnValues;
+            let rowCells = document.querySelectorAll('td[data-column-values="' + columnSel + '"]');
+            for (let cell of rowCells) {
+                cell.classList.add(this.emptyColumnClass);
+            }
+        }
+
+        let headers = document.querySelectorAll('th');
+        for (let header of headers) {
+            if (header.dataset.empty === 'true') {
+                header.classList.add(this.emptyColumnClass);
+            }
+            else if (header.dataset.columnsEmpty > 0) {
+                header.setAttribute('colspan', header.dataset.columnsTotal - header.dataset.columnsEmpty);
+            }
+        }
+
+        document.querySelector(this.showEmptyColumnSel).classList.remove(this.hiddenClass);
+        document.querySelector(this.hideEmptyColumnSel).classList.add(this.hiddenClass);
+    }
+
+    showEmptyColumns() {
+        document.querySelectorAll('.' + this.emptyColumnClass)
+            .forEach(element => { element.classList.remove(this.emptyColumnClass); });
+
+        let headers = document.querySelectorAll('th');
+        for (let header of headers) {
+            if (header.dataset.columnsEmpty > 0) {
+                header.setAttribute('colspan', header.dataset.columnsTotal);
+            }
+        }
+
+        document.querySelector(this.showEmptyColumnSel).classList.add(this.hiddenClass);
+        document.querySelector(this.hideEmptyColumnSel).classList.remove(this.hiddenClass);
+    }
+
+    hideNoSuffixDeclensions() {
+        let noSuffixRows = document.querySelectorAll('th[data-header-level="1"][data-suffix-match="false"]');
+        for (let row of noSuffixRows) {
+            let headerSel = row.dataset.columnValues;
+            let cells = document.querySelectorAll('td[data-suffix-match="false"]');
+            for (let cell of cells) {
+                let cellValue = cell.dataset.featureValues;
+                if (cellValue.includes(headerSel)) {
+                    cell.classList.add(this.noSuffixColumnClass);
+                }
+            }
+
+            cells = document.querySelectorAll('th[data-suffix-match="false"]');
+            for (let cell of cells) {
+                let cellValue = cell.dataset.columnValues;
+                if (cellValue.includes(headerSel)) {
+                    cell.classList.add(this.noSuffixColumnClass);
+                }
+            }
+        }
+
+        document.querySelector(this.showNoSuffixDeclensionsSel).classList.remove(this.hiddenClass);
+        document.querySelector(this.hideNoSuffixDeclensionsSel).classList.add(this.hiddenClass);
+    }
+
+    showNoSuffixDeclensions() {
+        document.querySelectorAll('.' + this.noSuffixColumnClass)
+            .forEach(element => { element.classList.remove(this.noSuffixColumnClass); });
+
+        document.querySelector(this.showNoSuffixDeclensionsSel).classList.add(this.hiddenClass);
+        document.querySelector(this.hideNoSuffixDeclensionsSel).classList.remove(this.hiddenClass);
+    }
+
+    cellMouseOver(event) {
+        let rowValues = event.target.dataset.rowValues;
+        let columnValues = event.target.dataset.columnValues;
+        let cells = document.querySelectorAll('td[data-row-values][data-column-values]');
+        for (let cell of cells) {
+            let cellRowValues = cell.dataset.rowValues;
+            let cellColumnValues = cell.dataset.columnValues;
+            if (cellRowValues.includes(rowValues) || cellColumnValues.includes(columnValues)) {
+                cell.classList.add(this.highlightedClass);
+            }
+        }
+    }
+
+    cellMouseOut(event) {
+        let highlightedClass = this.highlightedClass;
+        document.querySelectorAll('.' + highlightedClass).forEach(element => {element.classList.remove(highlightedClass);});
+    }
+}
+
+let presenter = new Presenter();
 
 // Import shared language data
 // Load Latin language data
@@ -7874,7 +8330,7 @@ for (const testCase of testCases) {
     selectList.appendChild(option);
 }
 
-selectList.addEventListener('change', (event) => {
+selectList.addEventListener('change', event => {
     if (event.target.value !== 'select') {
         show(event.target.selectedOptions[0].innerHTML, event.target.value);
     }
@@ -7894,11 +8350,11 @@ let show = function show(word, fileNameBase) {
             let result = adapter.transform(json);
 
             // Get matching suffixes from an inflection library
-            let suffixes = langData.getSuffixes(result);
-            suffixes.word = word;
+            let resultSet = langData.getSuffixes(result);
+            resultSet.word = word;
 
             // Insert rendered view to a page
-            document.querySelector('#id-inflections-table').innerHTML = render(suffixes);
+            presenter.render('#id-inflections-table', resultSet);
 
             console.log('Show finished');
         }).catch(error => {

@@ -1,0 +1,106 @@
+Ending,Number,Case,Declension,Gender,Type,Footnote
+a,singular,nominative,1st 2nd,feminine,regular,
+us,singular,nominative,1st 2nd,masculine,regular,
+um,singular,nominative,1st 2nd,neuter,regular,
+is,singular,nominative,3rd,feminine,regular,
+-,singular,nominative,3rd,feminine,irregular,6
+-,singular,nominative,3rd,masculine,regular,
+is,singular,nominative,3rd,masculine,irregular,5
+e,singular,nominative,3rd,neuter,regular,
+-,singular,nominative,3rd,neuter,irregular,6
+ae,singular,genitive,1st 2nd,feminine,regular,
+īus,singular,genitive,1st 2nd,feminine,irregular,3
+ī,singular,genitive,1st 2nd,masculine,regular,
+īus,singular,genitive,1st 2nd,masculine,irregular,3
+ī,singular,genitive,1st 2nd,neuter,regular,
+īus,singular,genitive,1st 2nd,neuter,irregular,3
+is,singular,genitive,3rd,feminine,regular,
+is,singular,genitive,3rd,masculine,regular,
+is,singular,genitive,3rd,neuter,regular,
+ae,singular,dative,1st 2nd,feminine,regular,
+ī,singular,dative,1st 2nd,feminine,irregular,3
+ō,singular,dative,1st 2nd,masculine,regular,
+ī,singular,dative,1st 2nd,masculine,irregular,3
+ō,singular,dative,1st 2nd,neuter,regular,
+ī,singular,dative,1st 2nd,neuter,irregular,3
+ī,singular,dative,3rd,feminine,regular,
+ī,singular,dative,3rd,masculine,regular,
+ī,singular,dative,3rd,neuter,regular,
+am,singular,accusative,1st 2nd,feminine,regular,
+um,singular,accusative,1st 2nd,masculine,regular,
+um,singular,accusative,1st 2nd,neuter,regular,
+em,singular,accusative,3rd,feminine,regular,
+em,singular,accusative,3rd,masculine,regular,
+e,singular,accusative,3rd,neuter,regular,
+-,singular,accusative,3rd,neuter,irregular,6
+ā,singular,ablative,1st 2nd,feminine,regular,
+ō,singular,ablative,1st 2nd,feminine,irregular,4
+ō,singular,ablative,1st 2nd,masculine,regular,
+ō,singular,ablative,1st 2nd,neuter,regular,
+ī,singular,ablative,3rd,feminine,regular,
+e,singular,ablative,3rd,feminine,irregular,7
+ī,singular,ablative,3rd,masculine,regular,
+e,singular,ablative,3rd,masculine,irregular,7
+ī,singular,ablative,3rd,neuter,regular,
+ae,singular,locative,1st 2nd,feminine,regular,
+ī,singular,locative,1st 2nd,masculine,regular,
+ī,singular,locative,1st 2nd,neuter,regular,
+ī,singular,locative,3rd,feminine,regular,
+e,singular,locative,3rd,feminine,irregular,7
+ī,singular,locative,3rd,masculine,regular,
+ī,singular,locative,3rd,neuter,regular,
+a,singular,vocative,1st 2nd,feminine,regular,
+e,singular,vocative,1st 2nd,masculine,regular,
+ī,singular,vocative,1st 2nd,masculine,irregular,
+um,singular,vocative,1st 2nd,neuter,regular,
+is,singular,vocative,3rd,feminine,regular,
+-,singular,vocative,3rd,masculine,regular,
+e,singular,vocative,3rd,neuter,regular,
+-,singular,vocative,3rd,neuter,irregular,6
+ae,plural,nominative,1st 2nd,feminine,regular,
+ī,plural,nominative,1st 2nd,masculine,regular,
+a,plural,nominative,1st 2nd,neuter,regular,
+ēs,plural,nominative,3rd,feminine,regular,
+ēs,plural,nominative,3rd,masculine,regular,
+ia,plural,nominative,3rd,neuter,regular,
+ārum,plural,genitive,1st 2nd,feminine,regular,
+ōrum,plural,genitive,1st 2nd,masculine,regular,
+ōrum,plural,genitive,1st 2nd,neuter,regular,
+ium,plural,genitive,3rd,feminine,regular,
+um,plural,genitive,3rd,feminine,irregular,8
+ium,plural,genitive,3rd,masculine,regular,
+um,plural,genitive,3rd,masculine,irregular,8
+ium,plural,genitive,3rd,neuter,regular,
+um,plural,genitive,3rd,neuter,irregular,8
+īs,plural,dative,1st 2nd,feminine,regular,
+īs,plural,dative,1st 2nd,masculine,regular,
+īs,plural,dative,1st 2nd,neuter,regular,
+ibus,plural,dative,3rd,feminine,regular,
+ibus,plural,dative,3rd,masculine,regular,
+ibus,plural,dative,3rd,neuter,regular,
+ās,plural,accusative,1st 2nd,feminine,regular,
+ōs,plural,accusative,1st 2nd,masculine,regular,
+a,plural,accusative,1st 2nd,neuter,regular,
+īs,plural,accusative,3rd,feminine,regular,
+ēs,plural,accusative,3rd,feminine,irregular,9
+īs,plural,accusative,3rd,masculine,regular,
+ēs,plural,accusative,3rd,masculine,irregular,9
+ia,plural,accusative,3rd,neuter,regular,
+īs,plural,ablative,1st 2nd,feminine,regular,
+īs,plural,ablative,1st 2nd,masculine,regular,
+īs,plural,ablative,1st 2nd,neuter,regular,
+ibus,plural,ablative,3rd,feminine,regular,
+ibus,plural,ablative,3rd,masculine,regular,
+ibus,plural,ablative,3rd,neuter,regular,
+īs,plural,locative,1st 2nd,feminine,regular,
+īs,plural,locative,1st 2nd,masculine,regular,
+īs,plural,locative,1st 2nd,neuter,regular,
+ibus,plural,locative,3rd,feminine,regular,
+ibus,plural,locative,3rd,masculine,regular,
+ibus,plural,locative,3rd,neuter,regular,
+ae,plural,vocative,1st 2nd,feminine,regular,
+ī,plural,vocative,1st 2nd,masculine,regular,
+a,plural,vocative,1st 2nd,neuter,regular,
+ēs,plural,vocative,3rd,feminine,regular,
+ēs,plural,vocative,3rd,masculine,regular,
+ia,plural,vocative,3rd,neuter,regular,

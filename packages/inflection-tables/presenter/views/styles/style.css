@@ -13,13 +13,13 @@ strong {
 }
 
 .inflection-table__cell {
-    border-left: 1px solid #000;
+    border-right: 1px solid #000;
     border-top: 1px solid #000;
     padding: 2px 5px;
 }
 
-.inflection-table__cell:last-child {
-    border-right: 1px solid #000;
+.inflection-table__cell:first-child {
+    border-left: 1px solid #000;
 }
 
 .inflection-table__cell--case-title {
@@ -42,4 +42,34 @@ strong {
 .inflection-table__suffix--suffix-match.inflection-table__suffix--full-feature-match {
     background-color: rgb(255, 238, 119);
     font-weight: 700;
+}
+
+.hidden {
+    display: none;
+}
+
+.empty-row-column {
+    display: none;
+}
+
+.no-suffix-column {
+    display: none;
+}
+
+.switch-btn {
+    background: dimgray;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.switch-btn.hidden {
+    display: none;
+}
+
+.highlighted-cell {
+    background: lightgray;
 }

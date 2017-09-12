@@ -558,7 +558,7 @@ class LanguageDataset {
         this.language = language;
         this.features = {}; // Grammatical feature types (definitions) within supported by a specific language.
         this.suffixes = []; // An array of suffixes.
-        this.footnotes = {}; // Footnotes
+        this.footnotes = []; // Footnotes
     };
 
     /**
@@ -581,9 +581,9 @@ class LanguageDataset {
      * 'feminine' genders
      *
      * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
-     * @param {Feature[]} featureTypes
+     * @param {Feature[]} featureValue
      */
-    addSuffix(suffixValue, ...featureTypes) {
+    addSuffix(suffixValue, ...featureValue) {
         // TODO: implement run-time error checking
         let suffixItem = new Suffix(suffixValue);
 
@@ -592,7 +592,7 @@ class LanguageDataset {
 
 
         // Go through all features provided
-        for (let feature of featureTypes) {
+        for (let feature of featureValue) {
 
             // If this is a footnote. Footnotes should go in a flat array
             // because we don't need to split by them
@@ -606,8 +606,9 @@ class LanguageDataset {
             if (Array.isArray(feature)) {
 
                 if (feature.length > 0) {
+                    let type = feature[0].type;
                     // Store all multi-value features to create a separate copy of a a Suffix object for each of them
-                    multiValueFeatures.push(feature);
+                    multiValueFeatures.push({type: type, features: feature});
                 }
                 else {
                     // Array is empty
@@ -621,8 +622,8 @@ class LanguageDataset {
 
         // Create a copy of an Suffix object for each multi-value item
         if (multiValueFeatures.length > 0) {
-            for (let featureValues of multiValueFeatures) {
-                let endingItems = suffixItem.split(featureValues);
+            for (let featureGroup of multiValueFeatures) {
+                let endingItems = suffixItem.split(featureGroup.type, featureGroup.features);
                 this.suffixes = this.suffixes.concat(endingItems);
             }
         }
@@ -633,10 +634,11 @@ class LanguageDataset {
 
     /**
      * Stores a footnote item.
+     * @param {Feature} partOfSpeech - A part of speech this footnote belongs to
      * @param {number} index - A footnote's index.
      * @param {string} text - A footnote's text.
      */
-    addFootnote(index, text) {
+    addFootnote(partOfSpeech, index, text) {
         "use strict";
 
         if (!index) {
@@ -647,42 +649,67 @@ class LanguageDataset {
             throw new Error('Footnote text data should not be empty.');
         }
 
-        this.footnotes[index] = text;
+        let footnote = new Footnonte(index, text, partOfSpeech.value);
+        footnote.index = index;
+
+        this.footnotes.push(footnote);
     };
 
     getSuffixes(homonym) {
         "use strict";
         let result = new ResultSet();
-        let inflections = [];
+        let inflections = {};
 
         // Find partial matches first, and then full among them
 
         // TODO: do we ever need lemmas?
         for (let lexema of homonym.lexemes) {
             for (let inflection of lexema.inflections) {
-                inflections.push(inflection);
-            }
-        }
-        //result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
-        result.suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflections), []);
-
-        // Create a set so all footnote indexes be unique
-        let footnotesIndex = new Set();
-        // Scan all selected suffixes to build a unique set of footnote indexes
-        for (let suffix of result.suffixes) {
-            if (suffix.hasOwnProperty(types.footnote)) {
-                // Footnote indexes are stored in an array
-                for (let index of suffix[types.footnote]) {
-                    footnotesIndex.add(index);
+                // Group inflections by a part of speech
+                let partOfSpeech = inflection[types.part];
+                if (!partOfSpeech) {
+                    throw new Error("Part of speech data is missing in an inflection.");
                 }
+
+                if (!inflections.hasOwnProperty(partOfSpeech)) {
+                    inflections[partOfSpeech] = [];
+                }
+                inflections[partOfSpeech].push(inflection);
             }
         }
-        // Add footnote indexes and their texts to a result
-        for (let index of footnotesIndex) {
-            result.footnotes.push({index: index, text: this.footnotes[index]});
+
+        // Scan for matches for all parts of speech separately
+        for (const partOfSpeech in inflections) {
+            if (inflections.hasOwnProperty(partOfSpeech)) {
+                let inflectionsGroup = inflections[partOfSpeech];
+
+                result[types.part].push(partOfSpeech);
+                result[partOfSpeech] = {};
+                result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), []);
+                result[partOfSpeech].footnotes = [];
+
+                // Create a set so all footnote indexes be unique
+                let footnotesIndex = new Set();
+                // Scan all selected suffixes to build a unique set of footnote indexes
+                for (let suffix of result[partOfSpeech].suffixes) {
+                    if (suffix.hasOwnProperty(types.footnote)) {
+                        // Footnote indexes are stored in an array
+                        for (let index of suffix[types.footnote]) {
+                            footnotesIndex.add(index);
+                        }
+                    }
+                }
+                // Add footnote indexes and their texts to a result
+                for (let index of footnotesIndex) {
+                    let footnote = this.footnotes.find(footnoteElement =>
+                        footnoteElement.index === index && footnoteElement[types.part] === partOfSpeech
+                    );
+                    result[partOfSpeech].footnotes.push({index: index, text: footnote.text});
+                }
+                // Sort footnotes according to their index numbers
+                result[partOfSpeech].footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
+            }
         }
-        // Sort footnotes according to their index numbers
-        result.footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
 
         return result;
     }
@@ -839,23 +866,23 @@ class Suffix {
     /**
      * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
      * with each Suffix object having only a single value of those grammatical features.
+     * @param {string} featureType - A type of a feature
      * @param {Feature[]} featureValues - Multiple grammatical feature values.
      * @returns {Suffix[]} - An array of suffixes.
      */
-    split(featureValues) {
+    split(featureType, featureValues) {
         "use strict";
 
         let copy = this.clone();
-        const type = featureValues[0].type;
         let values = [];
         featureValues.forEach(element => values.push(element.value));
-        copy.features[type] = featureValues[0].value;
-        copy.featureGroups[type] = values;
+        copy.features[featureType] = featureValues[0].value;
+        copy.featureGroups[featureType] = values;
         let suffixItems = [copy];
         for (let i = 1; i < featureValues.length; i++) {
             copy = this.clone();
-            copy.features[type] = featureValues[i].value;
-            copy.featureGroups[type] = values;
+            copy.features[featureType] = featureValues[i].value;
+            copy.featureGroups[featureType] = values;
             suffixItems.push(copy);
         }
         return suffixItems;
@@ -906,6 +933,15 @@ class Suffix {
     }
 }
 
+
+class Footnonte {
+    constructor(index, text, partOfSpeech) {
+        this.index = index;
+        this.text = text;
+        this[types.part] = partOfSpeech;
+    }
+}
+
 /**
  * Detailed information about a match type
  */
@@ -924,8 +960,7 @@ class ResultSet {
     constructor() {
         "use strict";
         this.word = undefined;
-        this.suffixes = [];
-        this.footnotes = [];
+        this[types.part] = [];
     }
 }
 
@@ -1004,6 +1039,10 @@ class LanguageData {
 var nounSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st,feminine,regular,\r\nē,singular,nominative,1st,feminine,irregular,\r\nēs,singular,nominative,1st,feminine,irregular,\r\nā,singular,nominative,1st,feminine,irregular,7\r\nus,singular,nominative,2nd,masculine feminine,regular,\r\ner,singular,nominative,2nd,masculine feminine,regular,\r\nir,singular,nominative,2nd,masculine feminine,regular,\r\n-,singular,nominative,2nd,masculine feminine,irregular,\r\nos,singular,nominative,2nd,masculine feminine,irregular,1\r\nōs,singular,nominative,2nd,masculine feminine,irregular,\r\nō,singular,nominative,2nd,masculine feminine,irregular,7\r\num,singular,nominative,2nd,neuter,regular,\r\nus,singular,nominative,2nd,neuter,irregular,10\r\non,singular,nominative,2nd,neuter,irregular,7\r\n-,singular,nominative,3rd,masculine feminine,regular,\r\nos,singular,nominative,3rd,masculine feminine,irregular,\r\nōn,singular,nominative,3rd,masculine feminine,irregular,7\r\n-,singular,nominative,3rd,neuter,regular,\r\nus,singular,nominative,4th,masculine feminine,regular,\r\nū,singular,nominative,4th,neuter,regular,\r\nēs,singular,nominative,5th,feminine,regular,\r\nae,singular,genitive,1st,feminine,regular,\r\nāī,singular,genitive,1st,feminine,irregular,1\r\nās,singular,genitive,1st,feminine,irregular,2\r\nēs,singular,genitive,1st,feminine,irregular,7\r\nī,singular,genitive,2nd,masculine feminine,regular,\r\nō,singular,genitive,2nd,masculine feminine,irregular,7\r\nī,singular,genitive,2nd,neuter,regular,\r\nis,singular,genitive,3rd,masculine feminine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nūs,singular,genitive,4th,masculine feminine,regular,\r\nuis,singular,genitive,4th,masculine feminine,irregular,1\r\nuos,singular,genitive,4th,masculine feminine,irregular,1\r\nī,singular,genitive,4th,masculine feminine,irregular,15\r\nūs,singular,genitive,4th,neuter,regular,\r\nēī,singular,genitive,5th,feminine,regular,\r\neī,singular,genitive,5th,feminine,regular,\r\nī,singular,genitive,5th,feminine,irregular,\r\nē,singular,genitive,5th,feminine,irregular,\r\nēs,singular,genitive,5th,feminine,irregular,6\r\nae,singular,dative,1st,feminine,regular,\r\nāī,singular,dative,1st,feminine,irregular,1\r\nō,singular,dative,2nd,masculine feminine,regular,\r\nō,singular,dative,2nd,neuter,regular,\r\nī,singular,dative,3rd,masculine feminine,regular,\r\ne,singular,dative,3rd,masculine feminine,irregular,17\r\nī,singular,dative,3rd,neuter,regular,\r\nūī,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,neuter,regular,\r\nēī,singular,dative,5th,feminine,regular,\r\neī,singular,dative,5th,feminine,regular,\r\nī,singular,dative,5th,feminine,irregular,\r\nē,singular,dative,5th,feminine,irregular,6\r\nam,singular,accusative,1st,feminine,regular,\r\nēn,singular,accusative,1st,feminine,irregular,\r\nān,singular,accusative,1st,feminine,irregular,7\r\num,singular,accusative,2nd,masculine feminine,regular,\r\nom,singular,accusative,2nd,masculine feminine,irregular,1\r\nōn,singular,accusative,2nd,masculine feminine,irregular,7\r\num,singular,accusative,2nd,neuter,regular,\r\nus,singular,accusative,2nd,neuter,irregular,10\r\non,singular,accusative,2nd,neuter,irregular,7\r\nem,singular,accusative,3rd,masculine feminine,regular,\r\nim,singular,accusative,3rd,masculine feminine,irregular,11\r\na,singular,accusative,3rd,masculine feminine,irregular,7\r\n-,singular,accusative,3rd,neuter,regular,\r\num,singular,accusative,4th,masculine feminine,regular,\r\nū,singular,accusative,4th,neuter,regular,\r\nem,singular,accusative,5th,feminine,regular,\r\nā,singular,ablative,1st,feminine,regular,\r\nād,singular,ablative,1st,feminine,irregular,5\r\nē,singular,ablative,1st,feminine,irregular,7\r\nō,singular,ablative,2nd,masculine feminine,regular,\r\nōd,singular,ablative,2nd,masculine feminine,irregular,1\r\nō,singular,ablative,2nd,neuter,regular,\r\ne,singular,ablative,3rd,masculine feminine,regular,\r\nī,singular,ablative,3rd,masculine feminine,irregular,11\r\ne,singular,ablative,3rd,neuter,regular,\r\nī,singular,ablative,3rd,neuter,irregular,11\r\nū,singular,ablative,4th,masculine feminine,regular,\r\nūd,singular,ablative,4th,masculine feminine,irregular,1\r\nū,singular,ablative,4th,neuter,regular,\r\nē,singular,ablative,5th,feminine,regular,\r\nae,singular,locative,1st,feminine,regular,\r\nō,singular,locative,2nd,masculine feminine,regular,\r\nō,singular,locative,2nd,neuter,regular,\r\ne,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\nū,singular,locative,4th,masculine feminine,regular,\r\nū,singular,locative,4th,neuter,regular,\r\nē,singular,locative,5th,feminine,regular,\r\na,singular,vocative,1st,feminine,regular,\r\nē,singular,vocative,1st,feminine,irregular,\r\nā,singular,vocative,1st,feminine,irregular,7\r\ne,singular,vocative,2nd,masculine feminine,regular,\r\ner,singular,vocative,2nd,masculine feminine,regular,\r\nir,singular,vocative,2nd,masculine feminine,regular,\r\n-,singular,vocative,2nd,masculine feminine,irregular,\r\nī,singular,vocative,2nd,masculine feminine,irregular,8\r\nōs,singular,vocative,2nd,masculine feminine,irregular,\r\ne,singular,vocative,2nd,masculine feminine,irregular,7\r\num,singular,vocative,2nd,neuter,regular,\r\non,singular,vocative,2nd,neuter,irregular,7\r\n-,singular,vocative,3rd,masculine feminine,regular,\r\n-,singular,vocative,3rd,neuter,regular,\r\nus,singular,vocative,4th,masculine feminine,regular,\r\nū,singular,vocative,4th,neuter,regular,\r\nēs,singular,vocative,5th,feminine,regular,\r\nae,plural,nominative,1st,feminine,regular,\r\nī,plural,nominative,2nd,masculine feminine,regular,\r\noe,plural,nominative,2nd,masculine feminine,irregular,7 9\r\na,plural,nominative,2nd,neuter,regular,\r\nēs,plural,nominative,3rd,masculine feminine,regular,\r\nes,plural,nominative,3rd,masculine feminine,irregular,7\r\na,plural,nominative,3rd,neuter,regular,\r\nia,plural,nominative,3rd,neuter,irregular,11\r\nūs,plural,nominative,4th,masculine feminine,regular,\r\nua,plural,nominative,4th,neuter,regular,\r\nēs,plural,nominative,5th,feminine,regular,\r\nārum,plural,genitive,1st,feminine,regular,\r\num,plural,genitive,1st,feminine,irregular,3\r\nōrum,plural,genitive,2nd,masculine feminine,regular,\r\num,plural,genitive,2nd,masculine feminine,irregular,\r\nom,plural,genitive,2nd,masculine feminine,irregular,8\r\nōrum,plural,genitive,2nd,neuter,regular,\r\num,plural,genitive,2nd,neuter,irregular,\r\num,plural,genitive,3rd,masculine feminine,regular,\r\nium,plural,genitive,3rd,masculine feminine,irregular,11\r\nōn,plural,genitive,3rd,masculine feminine,irregular,7\r\num,plural,genitive,3rd,neuter,regular,\r\nium,plural,genitive,3rd,neuter,irregular,11\r\nuum,plural,genitive,4th,masculine feminine,regular,\r\num,plural,genitive,4th,masculine feminine,irregular,16\r\nuom,plural,genitive,4th,masculine feminine,irregular,1\r\nuum,plural,genitive,4th,neuter,regular,\r\nērum,plural,genitive,5th,feminine,regular,\r\nīs,plural,dative,1st,feminine,regular,\r\nābus,plural,dative,1st,feminine,irregular,4\r\neis,plural,dative,1st,feminine,irregular,6\r\nīs,plural,dative,2nd,masculine feminine,regular,\r\nīs,plural,dative,2nd,neuter,regular,\r\nibus,plural,dative,3rd,masculine feminine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nibus,plural,dative,4th,masculine feminine,regular,\r\nubus,plural,dative,4th,masculine feminine,irregular,14\r\nibus,plural,dative,4th,neuter,regular,\r\nēbus,plural,dative,5th,feminine,regular,\r\nās,plural,accusative,1st,feminine,regular,\r\nōs,plural,accusative,2nd,masculine feminine,regular,\r\na,plural,accusative,2nd,neuter,regular,\r\nēs,plural,accusative,3rd,masculine feminine,regular,\r\nīs,plural,accusative,3rd,masculine feminine,irregular,11\r\nas,plural,accusative,3rd,masculine feminine,irregular,7\r\na,plural,accusative,3rd,neuter,regular,\r\nia,plural,accusative,3rd,neuter,irregular,11\r\nūs,plural,accusative,4th,masculine feminine,regular,\r\nua,plural,accusative,4th,neuter,regular,\r\nēs,plural,accusative,5th,feminine,regular,\r\nīs,plural,ablative,1st,feminine,regular,\r\nābus,plural,ablative,1st,feminine,irregular,4\r\neis,plural,ablative,1st,feminine,irregular,6\r\nīs,plural,ablative,2nd,masculine feminine,regular,\r\nīs,plural,ablative,2nd,neuter,regular,\r\nibus,plural,ablative,3rd,masculine feminine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nibus,plural,ablative,4th,masculine feminine,regular,\r\nubus,plural,ablative,4th,masculine feminine,irregular,14\r\nibus,plural,ablative,4th,neuter,regular,\r\nēbus,plural,ablative,5th,feminine,regular,\r\nīs,plural,locative,1st,feminine,regular,\r\nīs,plural,locative,2nd,masculine feminine,regular,\r\nīs,plural,locative,2nd,neuter,regular,\r\nibus,plural,locative,3rd,masculine feminine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nibus,plural,locative,4th,masculine feminine,regular,\r\nibus,plural,locative,4th,neuter,regular,\r\nēbus,plural,locative,5th,feminine,regular,\r\nae,plural,vocative,1st,feminine,regular,\r\nī,plural,vocative,2nd,masculine feminine,regular,\r\na,plural,vocative,2nd,neuter,regular,\r\nēs,plural,vocative,3rd,masculine feminine,regular,\r\na,plural,vocative,3rd,neuter,regular,\r\nia,plural,vocative,3rd,neuter,irregular,11\r\nūs,plural,vocative,4th,masculine feminine,regular,\r\nua,plural,vocative,4th,neuter,regular,\r\nēs,plural,vocative,5th,feminine,regular,";
 
 var nounFootnotesCSV = "Index,Text\r\n1,archaic (final s and m of os and om may be omitted in inscriptions)\r\n2,only in familiās\r\n3,especially in Greek patronymics and compounds in -gena and -cola.\r\n4,always in deābus and filiābus; rarely with other words to distinguish the female\r\n5,archaic\r\n6,rare\r\n7,\"may occur in words of Greek origin. The forms of many Greek nouns vary among the first, second and third declensions.\"\r\n8,proper names in ius and filius and genius\r\n9,poetic\r\n10,\"only pelagus, vīrus, and sometimes vulgus\"\r\n11,may occur with i-stems\r\n12,several nouns (most commonly domus) show forms of both second and fourth declensions\r\n13,\"some nouns also have forms from the first declension (eg materia, saevitia) or the third declension (eg requiēs, satiēs, plēbēs, famēs)\"\r\n14,\"Always in partus and tribus, usually in artus and lacus, sometimes in other words, eg portus and specus\"\r\n15,Often in names of plants and trees and in nouns ending in -tus\r\n16,When pronounced as one syllable\r\n17,early\r\n18,dies and meridies are masculine";
+
+var adjectiveSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,";
+
+var adjectiveFootnotesCSV = "Index,Text\r\n1,\"Adjectives agree with the noun they modify in gender, number and case.\"\r\n2,Adjectives are inflected according to either\r\n3,\"Only nullus, sōlus, alius (alia, aliud), tōtus, ūllus, ūnus, alter, neuter (neutra,\r\n            neutrum) and uter (utra, utrum).\"\r\n4,In a few adjectives of Greek origin.\r\n5,\"The \"\"two-ending\"\" adjectives use \"\"-is\"\", for both masculine and feminine nominative\r\n            singular.\"\r\n6,\"The \"\"one-ending\"\" adjectives use the same consonant ending for all three genders in the\r\n            nominative singular and the neuter accusative and vocative singular.\"\r\n7,\"An ablative singular in \"\"e\"\" is common in one-ending adjectives, but is usually confined to\r\n            poetry in three and two-ending adjectives.\"\r\n8,\"In comparatives, poetry and some one-ending adjectives.\"\r\n9,Chiefly in comparatives.";
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -2617,6 +2656,7 @@ const declensions = dataSet.defineFeatureType(types.declension, ['first', 'secon
 declensions.addImporter(importerName)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
+    .map('1st 2nd', [declensions.first, declensions.second])
     .map('3rd', declensions.third)
     .map('4th', declensions.fourth)
     .map('5th', declensions.fifth);
@@ -2634,7 +2674,7 @@ const footnotes = dataSet.defineFeatureType(types.footnote, []);
 
 // endregion Definition of grammatical features
 
-dataSet.addSuffixes = function addSuffixes(data) {
+dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-';
 
@@ -2646,7 +2686,7 @@ dataSet.addSuffixes = function addSuffixes(data) {
             suffix = null;
         }
 
-        let features = [parts.noun, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
+        let features = [partOfSpeech, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
             declensions.importer.csv.get(data[i][3]), genders.importer.csv.get(data[i][4]), types$1.importer.csv.get(data[i][5])];
         if (data[i][6]) {
             // There can be multiple footnote indexes separated by spaces
@@ -2660,18 +2700,27 @@ dataSet.addSuffixes = function addSuffixes(data) {
     }
 };
 
-dataSet.addFootnotes = function addFootnotes(data) {
+dataSet.addFootnotes = function addFootnotes(partOfSpeech, data) {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-        this.addFootnote(data[i][0], data[i][1]);
+        this.addFootnote(partOfSpeech, data[i][0], data[i][1]);
     }
 };
 
 dataSet.loadData = function loadData$$1() {
+    // Nouns
+    let partOfSpeech = parts.noun;
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
-    this.addSuffixes(suffixes.data);
+    this.addSuffixes(partOfSpeech, suffixes.data);
     let footnotes = papaparse.parse(nounFootnotesCSV, {});
-    this.addFootnotes(footnotes.data);
+    this.addFootnotes(partOfSpeech, footnotes.data);
+
+    // Adjectives
+    partOfSpeech = parts.adjective;
+    suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
+    this.addSuffixes(partOfSpeech, suffixes.data);
+    footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
 };
 
 

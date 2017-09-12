@@ -556,7 +556,7 @@ class LanguageDataset {
         this.language = language;
         this.features = {}; // Grammatical feature types (definitions) within supported by a specific language.
         this.suffixes = []; // An array of suffixes.
-        this.footnotes = {}; // Footnotes
+        this.footnotes = []; // Footnotes
     };
 
     /**
@@ -579,9 +579,9 @@ class LanguageDataset {
      * 'feminine' genders
      *
      * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
-     * @param {Feature[]} featureTypes
+     * @param {Feature[]} featureValue
      */
-    addSuffix(suffixValue, ...featureTypes) {
+    addSuffix(suffixValue, ...featureValue) {
         // TODO: implement run-time error checking
         let suffixItem = new Suffix(suffixValue);
 
@@ -590,7 +590,7 @@ class LanguageDataset {
 
 
         // Go through all features provided
-        for (let feature of featureTypes) {
+        for (let feature of featureValue) {
 
             // If this is a footnote. Footnotes should go in a flat array
             // because we don't need to split by them
@@ -604,8 +604,9 @@ class LanguageDataset {
             if (Array.isArray(feature)) {
 
                 if (feature.length > 0) {
+                    let type = feature[0].type;
                     // Store all multi-value features to create a separate copy of a a Suffix object for each of them
-                    multiValueFeatures.push(feature);
+                    multiValueFeatures.push({type: type, features: feature});
                 }
                 else {
                     // Array is empty
@@ -619,8 +620,8 @@ class LanguageDataset {
 
         // Create a copy of an Suffix object for each multi-value item
         if (multiValueFeatures.length > 0) {
-            for (let featureValues of multiValueFeatures) {
-                let endingItems = suffixItem.split(featureValues);
+            for (let featureGroup of multiValueFeatures) {
+                let endingItems = suffixItem.split(featureGroup.type, featureGroup.features);
                 this.suffixes = this.suffixes.concat(endingItems);
             }
         }
@@ -631,10 +632,11 @@ class LanguageDataset {
 
     /**
      * Stores a footnote item.
+     * @param {Feature} partOfSpeech - A part of speech this footnote belongs to
      * @param {number} index - A footnote's index.
      * @param {string} text - A footnote's text.
      */
-    addFootnote(index, text) {
+    addFootnote(partOfSpeech, index, text) {
         "use strict";
 
         if (!index) {
@@ -645,42 +647,67 @@ class LanguageDataset {
             throw new Error('Footnote text data should not be empty.');
         }
 
-        this.footnotes[index] = text;
+        let footnote = new Footnonte(index, text, partOfSpeech.value);
+        footnote.index = index;
+
+        this.footnotes.push(footnote);
     };
 
     getSuffixes(homonym) {
         "use strict";
         let result = new ResultSet();
-        let inflections = [];
+        let inflections = {};
 
         // Find partial matches first, and then full among them
 
         // TODO: do we ever need lemmas?
         for (let lexema of homonym.lexemes) {
             for (let inflection of lexema.inflections) {
-                inflections.push(inflection);
-            }
-        }
-        //result.suffixes = this.suffixes.filter(this['match'].bind(this, inflections));
-        result.suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflections), []);
-
-        // Create a set so all footnote indexes be unique
-        let footnotesIndex = new Set();
-        // Scan all selected suffixes to build a unique set of footnote indexes
-        for (let suffix of result.suffixes) {
-            if (suffix.hasOwnProperty(types.footnote)) {
-                // Footnote indexes are stored in an array
-                for (let index of suffix[types.footnote]) {
-                    footnotesIndex.add(index);
+                // Group inflections by a part of speech
+                let partOfSpeech = inflection[types.part];
+                if (!partOfSpeech) {
+                    throw new Error("Part of speech data is missing in an inflection.");
                 }
+
+                if (!inflections.hasOwnProperty(partOfSpeech)) {
+                    inflections[partOfSpeech] = [];
+                }
+                inflections[partOfSpeech].push(inflection);
             }
         }
-        // Add footnote indexes and their texts to a result
-        for (let index of footnotesIndex) {
-            result.footnotes.push({index: index, text: this.footnotes[index]});
+
+        // Scan for matches for all parts of speech separately
+        for (const partOfSpeech in inflections) {
+            if (inflections.hasOwnProperty(partOfSpeech)) {
+                let inflectionsGroup = inflections[partOfSpeech];
+
+                result[types.part].push(partOfSpeech);
+                result[partOfSpeech] = {};
+                result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), []);
+                result[partOfSpeech].footnotes = [];
+
+                // Create a set so all footnote indexes be unique
+                let footnotesIndex = new Set();
+                // Scan all selected suffixes to build a unique set of footnote indexes
+                for (let suffix of result[partOfSpeech].suffixes) {
+                    if (suffix.hasOwnProperty(types.footnote)) {
+                        // Footnote indexes are stored in an array
+                        for (let index of suffix[types.footnote]) {
+                            footnotesIndex.add(index);
+                        }
+                    }
+                }
+                // Add footnote indexes and their texts to a result
+                for (let index of footnotesIndex) {
+                    let footnote = this.footnotes.find(footnoteElement =>
+                        footnoteElement.index === index && footnoteElement[types.part] === partOfSpeech
+                    );
+                    result[partOfSpeech].footnotes.push({index: index, text: footnote.text});
+                }
+                // Sort footnotes according to their index numbers
+                result[partOfSpeech].footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
+            }
         }
-        // Sort footnotes according to their index numbers
-        result.footnotes.sort( (a, b) => parseInt(a.index) - parseInt(b.index) );
 
         return result;
     }
@@ -837,23 +864,23 @@ class Suffix {
     /**
      * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
      * with each Suffix object having only a single value of those grammatical features.
+     * @param {string} featureType - A type of a feature
      * @param {Feature[]} featureValues - Multiple grammatical feature values.
      * @returns {Suffix[]} - An array of suffixes.
      */
-    split(featureValues) {
+    split(featureType, featureValues) {
         "use strict";
 
         let copy = this.clone();
-        const type = featureValues[0].type;
         let values = [];
         featureValues.forEach(element => values.push(element.value));
-        copy.features[type] = featureValues[0].value;
-        copy.featureGroups[type] = values;
+        copy.features[featureType] = featureValues[0].value;
+        copy.featureGroups[featureType] = values;
         let suffixItems = [copy];
         for (let i = 1; i < featureValues.length; i++) {
             copy = this.clone();
-            copy.features[type] = featureValues[i].value;
-            copy.featureGroups[type] = values;
+            copy.features[featureType] = featureValues[i].value;
+            copy.featureGroups[featureType] = values;
             suffixItems.push(copy);
         }
         return suffixItems;
@@ -904,6 +931,15 @@ class Suffix {
     }
 }
 
+
+class Footnonte {
+    constructor(index, text, partOfSpeech) {
+        this.index = index;
+        this.text = text;
+        this[types.part] = partOfSpeech;
+    }
+}
+
 /**
  * Detailed information about a match type
  */
@@ -922,8 +958,7 @@ class ResultSet {
     constructor() {
         "use strict";
         this.word = undefined;
-        this.suffixes = [];
-        this.footnotes = [];
+        this[types.part] = [];
     }
 }
 

@@ -2,7 +2,7 @@
 // Import shared language data
 import * as Lib from "./lib/lib.js";
 import * as Tufts from "./analyzer/tufts/adapter.js";
-import * as Presenter from "./presenter/presenter.js";
+import presenter from "./presenter/presenter.js";
 
 // Load Latin language data
 import * as ModuleNS from './lib/lang/latin/latin.js';
@@ -26,7 +26,7 @@ for (const testCase of testCases) {
     selectList.appendChild(option);
 }
 
-selectList.addEventListener('change', (event) => {
+selectList.addEventListener('change', event => {
     if (event.target.value !== 'select') {
         show(event.target.selectedOptions[0].innerHTML, event.target.value);
     }
@@ -46,11 +46,11 @@ let show = function show(word, fileNameBase) {
             let result = Tufts.adapter.transform(json);
 
             // Get matching suffixes from an inflection library
-            let suffixes = langData.getSuffixes(result);
-            suffixes.word = word;
+            let resultSet = langData.getSuffixes(result);
+            resultSet.word = word;
 
             // Insert rendered view to a page
-            document.querySelector('#id-inflections-table').innerHTML = Presenter.render(suffixes);
+            presenter.render('#id-inflections-table', resultSet);
 
             console.log('Show finished');
         }).catch(error => {

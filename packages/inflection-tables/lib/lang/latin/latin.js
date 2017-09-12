@@ -5,6 +5,8 @@ export {language, parts, numbers, cases, declensions, genders, types, dataSet};
 import * as Lib from "../../lib.js";
 import nounSuffixesCSV from './data/noun/suffixes.csv';
 import nounFootnotesCSV from './data/noun/footnotes.csv';
+import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
+import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 
 /*
 CommonJS module below should be used exactly as specified, or it will result in incorrect import due to the bug in
@@ -41,6 +43,7 @@ const declensions = dataSet.defineFeatureType(Lib.types.declension, ['first', 's
 declensions.addImporter(importerName)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
+    .map('1st 2nd', [declensions.first, declensions.second])
     .map('3rd', declensions.third)
     .map('4th', declensions.fourth)
     .map('5th', declensions.fifth);
@@ -58,7 +61,7 @@ const footnotes = dataSet.defineFeatureType(Lib.types.footnote, []);
 
 // endregion Definition of grammatical features
 
-dataSet.addSuffixes = function addSuffixes(data) {
+dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-';
 
@@ -70,7 +73,7 @@ dataSet.addSuffixes = function addSuffixes(data) {
             suffix = null;
         }
 
-        let features = [parts.noun, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
+        let features = [partOfSpeech, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
             declensions.importer.csv.get(data[i][3]), genders.importer.csv.get(data[i][4]), types.importer.csv.get(data[i][5])];
         if (data[i][6]) {
             // There can be multiple footnote indexes separated by spaces
@@ -84,18 +87,27 @@ dataSet.addSuffixes = function addSuffixes(data) {
     }
 };
 
-dataSet.addFootnotes = function addFootnotes(data) {
+dataSet.addFootnotes = function addFootnotes(partOfSpeech, data) {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-        this.addFootnote(data[i][0], data[i][1]);
+        this.addFootnote(partOfSpeech, data[i][0], data[i][1]);
     }
 };
 
 dataSet.loadData = function loadData() {
+    // Nouns
+    let partOfSpeech = parts.noun;
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
-    this.addSuffixes(suffixes.data);
+    this.addSuffixes(partOfSpeech, suffixes.data);
     let footnotes = papaparse.parse(nounFootnotesCSV, {});
-    this.addFootnotes(footnotes.data);
+    this.addFootnotes(partOfSpeech, footnotes.data);
+
+    // Adjectives
+    partOfSpeech = parts.adjective;
+    suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
+    this.addSuffixes(partOfSpeech, suffixes.data);
+    footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
 };
 
 
