@@ -8369,14 +8369,17 @@ class Table {
         this.narrowView = {
             groups: [],
             groupNum: this.features.firstColumnFeature.size,
-            groupSize: this.columns.length / this.features.firstColumnFeature.size // Default group size
+            groupSize: this.columns.length / this.features.firstColumnFeature.size, // Default group size
+            nodes: document.createElement('div')
         };
+        this.narrowView.nodes.classList.add('narrow-view-container');
         for (let i = 0; i < this.narrowView.groupNum; i++) {
             this.narrowView.groups.push({
                 groupSize: this.narrowView.groupSize, // Default group size
                 nodes: document.createElement('div')
             });
             this.narrowView.groups[i].nodes.classList.add('infl-table', 'narrow');
+            this.narrowView.nodes.appendChild(this.narrowView.groups[i].nodes);
         }
     }
 
@@ -8661,8 +8664,8 @@ class Table {
                     }
                 }
                 group.nodes.classList.remove(classHidden);
-                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 12vw)';
-                group.nodes.style.width = (colNum + 1) * 12 + 'vw';
+                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 100px)';
+                group.nodes.style.width = (colNum + 1) * 100 + 'px';
             }
             else {
                 // This group is hidden
@@ -8865,9 +8868,10 @@ class View {
         // Insert a wide view
         this.container.appendChild(this.table.wideView.nodes);
         // Insert narrow views
-        for (let group of this.table.narrowView.groups) {
+        this.container.appendChild(this.table.narrowView.nodes);
+        /*for (let group of this.table.narrowView.groups) {
             this.container.appendChild(group.nodes);
-        }
+        }*/
         this.container.appendChild(this.footnotes.nodes);
 
         this.pageHeader.nodes.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));

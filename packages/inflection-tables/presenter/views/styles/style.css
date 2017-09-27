@@ -60,15 +60,20 @@ strong {
     grid-template-columns: repeat(21, 1fr); /* Default value, will be redefined in JS if necessary */
 }
 
-
 .infl-table.narrow {
     /* Data flow order: declension - number- case - gender - type*/
     grid-auto-flow: row;
     grid-template-columns: repeat(6, 1fr); /* Default value, will be redefined in JS if necessary */
+    margin-bottom: 0;
 }
 
 .infl-table.hidden {
     display: none;
+}
+
+.narrow-view-container {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .infl-cell {
