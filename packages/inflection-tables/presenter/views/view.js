@@ -862,8 +862,8 @@ class Table {
                     }
                 }
                 group.nodes.classList.remove(classHidden);
-                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 15vw)';
-                group.nodes.style.width = (colNum + 1) * 15 + 'vw';
+                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 12vw)';
+                group.nodes.style.width = (colNum + 1) * 12 + 'vw';
             }
             else {
                 // This group is hidden
