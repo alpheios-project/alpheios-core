@@ -1,0 +1,4370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="la">
+    <stem-table>
+	    <stem conj="1st">ā</stem>
+        <stem conj="2nd">ē</stem>
+        <stem conj="3rd">e</stem>
+        <stem conj="4th">i</stem>
+    </stem-table>
+    <order-table>
+        <order-item attname="tense" order="1">present</order-item>
+        <order-item attname="tense" order="2">imperfect</order-item>
+        <order-item attname="tense" order="3">future</order-item>
+        <order-item attname="tense" order="4" footnote="Footnote-3">perfect</order-item>
+        <order-item attname="tense" order="5" footnote="Footnote-2">pluperfect</order-item>
+        <order-item attname="tense" order="6" footnote="Footnote-2">future_perfect</order-item>
+        <order-item attname="mood" order="1">indicative</order-item>
+        <order-item attname="mood" order="2">subjunctive</order-item>
+        <order-item attname="voice" order="1">active</order-item>
+        <order-item attname="voice" order="2">passive</order-item>
+        <order-item attname="conj" order="1">1st</order-item>
+        <order-item attname="conj" order="2">2nd</order-item>
+        <order-item attname="conj" order="3" footnote="Footnote-1">3rd</order-item>
+        <order-item attname="conj" order="4" footnote="Footnote-7">4th</order-item>
+        <order-item attname="pers" order="1">1st</order-item>
+        <order-item attname="pers" order="2">2nd</order-item>
+        <order-item attname="pers" order="3">3rd</order-item>
+        <order-item attname="num" order="1">singular</order-item>
+        <order-item attname="num" order="2">plural</order-item>
+    </order-table>
+    <infl-endings>
+    <!--First Present Active-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st"  
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">at</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">em</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">et</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive"
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ent</infl-ending></infl-ending-set>
+<!--2nd Present Active-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">eō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ent</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">eam</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">eās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">eat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">eāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">eātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">eant</infl-ending></infl-ending-set>
+<!-- 3rd Present Active-->       
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">ō</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="2nd"><infl-ending type="regular">is</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">it</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">imus</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">itis</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">unt</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">am</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="2nd"><infl-ending type="regular">ās</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">at</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">āmus</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">ātis</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">ant</infl-ending></infl-ending-set>
+<!-- 4th Present Active-->       
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">iō</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="2nd"><infl-ending type="regular">īs</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">it</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">īmus</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">ītis</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">iunt</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">iam</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="2nd"><infl-ending type="regular">iās</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">iat</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">iāmus</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">iāatis</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="active"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">iant</infl-ending></infl-ending-set>        
+<!--First Imperfect Active-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ābam</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ābas</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ābat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ābāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ābātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ābant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ārem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ārēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">āret</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ārēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ārētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ārent</infl-ending></infl-ending-set>
+<!--2nd Imperfect Active-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ēbam</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ēbās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēbat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēbāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēbātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ēbant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ērem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ērēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēret</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ērēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ērētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ērēnt</infl-ending></infl-ending-set>
+<!--3rd Imperfect Active-->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ēbas</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ēbāt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēbat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēbāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēbātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ēbant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">erem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">erēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">eret</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">erēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">erētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">erent</infl-ending></infl-ending-set>
+<!--4th Imperfect Active-->
+        <infl-ending-set 
+            conj="4th"
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">iēbam</infl-ending>
+            <infl-ending type="irregular" footnote="Footnote-2">ībam</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">iēbas</infl-ending>
+            <infl-ending type="irregular">ības</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">iēbat</infl-ending>
+            <infl-ending type="irregular">ībat</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">iēbāmus</infl-ending>
+            <infl-ending type="irregular">ībāmus</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">iēbātis</infl-ending>
+            <infl-ending type="irregular">ībātis</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">iēbant</infl-ending>
+            <infl-ending type="irregular">ībant</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">īrem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">īrēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">īret</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">īrēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">īrētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">īrēnt</infl-ending></infl-ending-set>
+<!--First Future Active-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ābo</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ābis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ābit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ābimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ābitis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ābunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+<!--2nd future active-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ēbō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ēbis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēbit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēbimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēbitis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ēbunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular"></infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+<!--Third future active -->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">am</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">et</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ent</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+<!--4th future active -->
+        <infl-ending-set 
+            conj="4th"
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">iam</infl-ending>
+            <infl-ending type="irregular" footnote="Footnote-2">ībō</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">iēs</infl-ending>
+            <infl-ending type="irregular">ībis</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">iet</infl-ending>
+            <infl-ending type="irregular">ībit</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">iēmus</infl-ending>
+            <infl-ending type="irregular">ībimus</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">iētis</infl-ending>
+            <infl-ending type="irregular">ībitis</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ient</infl-ending>
+            <infl-ending type="irregular">ībunt</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+<!--First Perfect Active-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">āvī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">āvistī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">āvit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āvimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">āvistis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="3rd">
+                <infl-ending type="regular">āvērunt</infl-ending>
+                <infl-ending type="irregular" footnote="Footnote-6">āvēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">āverim</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">āveris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">āverit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āverimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">āveritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">āverint</infl-ending></infl-ending-set>
+<!--2nd Perfect Active-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">vī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">vistī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">vit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">vimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">vistis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">vērunt</infl-ending>
+            <infl-ending type="irregular" footnote="Footnote-6">vēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">verim</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">veris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">verit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">verimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">veritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">verint</infl-ending></infl-ending-set>
+<!--Third Perfect Active-->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">istī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">it</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">imus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">istis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ērunt</infl-ending>
+            <infl-ending type="irregular" footnote="Footnote-6">ēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">erim</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">eris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">erit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">erimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">eritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">erint</infl-ending></infl-ending-set>
+<!--4th Perfect Active-->
+        <infl-ending-set 
+            conj="4th"
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">īvi</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">īvistī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">īvit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">īvimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">īvistis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">īvērunt</infl-ending>
+            <infl-ending type="irregular" footnote="Footnote-6">īvēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">īverim</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">iveris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">īverit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">īverimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">īveritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">īverint</infl-ending></infl-ending-set>
+<!--First Pluperfect Active-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">āveram</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">āverās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">āverat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āverāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">āverātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">āverant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">āvissem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">āvissēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">āvisset</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āvissēm</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">āvissēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">āvisset</infl-ending></infl-ending-set>
+<!--2nd Pluperfect Active-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">veram</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">verās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">verat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">verāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">verātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">verant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">vissem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">vissēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">visset</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">vissēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">vissētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">vissent</infl-ending></infl-ending-set>
+<!--Third Pluperfect Active-->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">eram</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">erās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">erat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">erāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">erātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">erant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">issem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">issēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">isset</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">issēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">issētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">issent</infl-ending></infl-ending-set>
+<!--4th Pluperfect Active-->
+        <infl-ending-set 
+            conj="4th"
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">īveram</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">īverās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">īverat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">īverāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">īverātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">īverant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">īvissem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">īvissēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">īvisset</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">īvissēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">īvissētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">īvissent</infl-ending></infl-ending-set>
+<!--First future_perfect Active-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">āverō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">āveris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">āverit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āverimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">āveritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">āverint</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+<!--2nd future_perfect active-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">verō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect"  
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">vēris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">vērit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">vērimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">vēritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">vērint</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+<!--Third future_perfect active -->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">erō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">eris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">erit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">erimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">eritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">erint</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+<!--4th future_perfect active -->
+        <infl-ending-set 
+            conj="4th"
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">īverō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">īveris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">īverit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">īverimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">īveritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">īverint</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="active" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+<!--First Present Passive-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">or</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st"  
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">āris</infl-ending>
+                <infl-ending type="irregular" footnote="Footnote-5">āre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ātur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">āminiī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">antur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">er</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ēris</infl-ending>
+                <infl-ending type="regular">ēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">entur</infl-ending></infl-ending-set>
+<!--2nd Present Passive-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">eor</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ēris</infl-ending>
+                <infl-ending type="regular">ēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēmini</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">entur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ear</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">eāris</infl-ending>
+                <infl-ending type="regular">eāre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">eātur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">eāmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="present" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">eāminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="present" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">eantur</infl-ending></infl-ending-set>
+<!-- 3rd Present Passive -->       
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">or</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="2nd">
+                <infl-ending type="regular">eris</infl-ending>
+                <infl-ending type="regular">ere</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">itur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">imur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">iminī</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">untur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">ar</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="2nd">
+                <infl-ending type="regular">āris</infl-ending>
+                <infl-ending type="regular">āre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">ātur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">āmur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">āminī</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="3rd"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">antur</infl-ending></infl-ending-set>
+<!-- 4th Present Passive -->       
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">ior</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="2nd">
+                <infl-ending type="regular">īris</infl-ending>
+                <infl-ending type="regular">īre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">ītur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">īmur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">īminī</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="indicative"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">iuntur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="1st"><infl-ending type="regular">iar</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="2nd">
+                <infl-ending type="regular">iāris</infl-ending>
+                <infl-ending type="regular">iāre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="singular"
+            pers="3rd"><infl-ending type="regular">iātur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="1st"><infl-ending type="regular">iāmur</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="2nd"><infl-ending type="regular">iāminī</infl-ending></infl-ending-set>
+        <infl-ending-set
+            conj="4th"
+            voice="passive"
+            mood="subjunctive"
+            tense="present"
+            num="plural"
+            pers="3rd"><infl-ending type="regular">iantur</infl-ending></infl-ending-set>        
+<!--First imperfect Passive-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ābar</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ābāaris</infl-ending>
+                <infl-ending type="regular">ābāre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ābātur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ābāmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ābāminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ābantur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ārer</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect"
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ārēris</infl-ending>
+                <infl-ending type="regular">ārēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ārētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ārēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ārēminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ārentur</infl-ending></infl-ending-set>
+<!--2nd imperfect passive-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ēbar</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ēbāris</infl-ending>
+                <infl-ending type="regular">ēbāre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēbātur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēbāmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēbāmini</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ēbantur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ērer</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ērēris</infl-ending>
+                <infl-ending type="regular">ērēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ērētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ērēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ērēminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ērentur</infl-ending></infl-ending-set>
+<!--Third imperfect Passive-->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ēbar</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ēbāris</infl-ending>
+                <infl-ending type="regular">ēbāre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēbatur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēbāmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēbāminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ēbantur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">erer</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect"
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">erēris</infl-ending>
+                <infl-ending type="regular">erēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">erētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">erēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">erēminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">erentur</infl-ending></infl-ending-set>
+<!--4th imperfect pasive-->
+        <infl-ending-set 
+            conj="4th"
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">iēbar</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">iēbāris</infl-ending>
+            <infl-ending type="regular">iēbāre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">iēbātur</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">iēbāmur</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">iēbāminī</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">iēbantur</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">īrer</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">īrēris</infl-ending>
+                <infl-ending type="regular">īrēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">īrētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">īrēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="imperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">īrēminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="imperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">īrentur</infl-ending></infl-ending-set>
+<!--First Future Passive-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ābor</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">āberis</infl-ending>
+            <infl-ending type="irregular">ābere</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ābitur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ābimur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ābiminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ābuntur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+<!--2nd Future Passive-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ēbor</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd">
+                <infl-ending type="regular">ēberis</infl-ending>
+                <infl-ending type="regular">ēbere</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ēbitur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēbimur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēbiminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ēbuntur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+<!--Third future passive -->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ar</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ēris</infl-ending>
+            <infl-ending type="irregular">ēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ēminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">entur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+        <!--4th future passive -->
+        <infl-ending-set 
+            conj="4th"
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">iar</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">iēris</infl-ending>
+            <infl-ending type="irregular">īēre</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">iētur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">iēmur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">iēminī</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ientur</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future" 
+            num="plural" 
+            pers="3rd"/>
+<!--First Perfect Passive-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">ātus sum</infl-ending>
+            <infl-ending type="regular">ātus fui</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ātus es</infl-ending>
+            <infl-ending type="regular">ātus fuisti</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect"
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">ātus est</infl-ending>
+            <infl-ending type="regular">ātus fuit</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">āti sumus</infl-ending>
+            <infl-ending type="irregular">āti fuimus</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">āti estis</infl-ending>
+            <infl-ending type="irregular">āti fuistis</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">āti sunt</infl-ending>
+            <infl-ending type="irregular">āti fuerunt</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">ātus sim</infl-ending>
+            <infl-ending type="irregular">ātus fuerim</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect"
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ātus sis</infl-ending>
+            <infl-ending type="irregular">ātus fueris</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">ātus sit</infl-ending>
+            <infl-ending type="regular">ātus fuerit</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">āti sīmus</infl-ending>
+            <infl-ending type="irregular">āti fuerimus</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">āti sītis</infl-ending>
+            <infl-ending type="irregular">āti fueritis</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">āti sint</infl-ending>
+            <infl-ending type="irregular">āti fuerint</infl-ending>
+        </infl-ending-set>
+<!--2nd Perfect Passive-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">itus sum</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">itus es</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">itus est</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">itī sumus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">itī estis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">itī sunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">itus sim</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">itus sīs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">itus sit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">itī sīmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">itī sītis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">itī sint</infl-ending></infl-ending-set>
+<!--Third Perfect Passive-->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">us sum</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">us es</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">us est</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ī sumus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ī estis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect"
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ī sunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">us sim</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">us sīs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">us sit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">us sīmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">us sītis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">us sint</infl-ending></infl-ending-set>
+<!--4th Perfect Passive-->
+        <infl-ending-set 
+            conj="4th"
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">ītus sum</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ītus es</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">ītus est</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">ītī sumus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">īti estis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">īti sunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ītus sim</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ītus sīs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ītus sit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ītī sīmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">īti sītis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">īti sint</infl-ending></infl-ending-set>
+<!--First Pluperfect Passive-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">ātus eram</infl-ending>
+            <infl-ending type="irregular">ātus fueram</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ātus eras</infl-ending>
+            <infl-ending type="irregular">ātus fueras</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">ātus erat</infl-ending>
+            <infl-ending type="irregular">ātus fuerat</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">ātī erāmus</infl-ending>
+            <infl-ending type="irregular">ātī fueramus</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">ātī erātis</infl-ending>
+            <infl-ending type="irregular">ātī fueratis</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ātī erant</infl-ending>
+            <infl-ending type="irregular">ātī fuerant</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">ātus essem</infl-ending>
+            <infl-ending type="irregular">ātus fuissem</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect"
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ātus esses</infl-ending>
+            <infl-ending type="irregular">ātus fuissēs</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">ātus esset</infl-ending>
+            <infl-ending type="irregular">ātus fuisset</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">āti essēmus</infl-ending>
+            <infl-ending type="irregular">āti fuissēmus</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">āti essētis</infl-ending>
+            <infl-ending type="regular">āti fuissētis</infl-ending>
+        </infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">āti essent</infl-ending>
+            <infl-ending type="regular">āti fuissent</infl-ending>
+        </infl-ending-set>
+<!--2nd Pluperfect Passive-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">itus eram</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">itus erās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">itus erat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">itī erāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">itī erātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">itī erant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">itus essem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">itus essēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">itus esset</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">itī essēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">īti essētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">īti essent</infl-ending></infl-ending-set>
+<!--Third Pluperfect Passive-->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">us eram</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">us erās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">us erat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ī erāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ī erātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect"
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ī erant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">us essem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect"
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">us essēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">us esset</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ī essēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ī essētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ī essent</infl-ending></infl-ending-set>
+<!--4th Pluperfect Passive-->
+        <infl-ending-set 
+            conj="4th"
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">ītus eram</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ītus erās</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">ītus erat</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">ītī erāmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">īti erātis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ītī erant</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ītus essem</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ītus essēs</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ītus esset</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ītī essēmus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="pluperfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">īti essētis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="pluperfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">īti essent</infl-ending></infl-ending-set>
+<!--First future_perfect Passive-->
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">ātus erō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">ātus eris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">ātus erit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">āti erimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">āti eritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">āti erunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="1st" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+<!--2nd future_perfect passive-->
+        <infl-ending-set 
+            conj="2nd"
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">itus erō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect"  
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">itus eris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">itus erit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"><infl-ending type="regular">itī erimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">itī eritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">itī erunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="2nd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+<!--Third future_perfect passive -->
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"><infl-ending type="regular">us erō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"><infl-ending type="regular">us eris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="singular" 
+            pers="3rd"><infl-ending type="regular">us erit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="1st"><infl-ending type="regular">ī erimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"><infl-ending type="regular">ī eritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect"
+            num="plural" 
+            pers="3rd"><infl-ending type="regular">ī erunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect"
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="3rd" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+<!--4th future_perfect passive -->
+        <infl-ending-set 
+            conj="4th"
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st">
+            <infl-ending type="regular">ītus erō</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd">
+            <infl-ending type="regular">ītus eris</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd">
+            <infl-ending type="regular">ītus erit</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st">
+            <infl-ending type="regular">ītī erimus</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd">
+            <infl-ending type="regular">ītī eritis</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="indicative" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd">
+            <infl-ending type="regular">ītī erunt</infl-ending></infl-ending-set>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="singular" 
+            pers="3rd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="1st"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive"
+            tense="future_perfect" 
+            num="plural" 
+            pers="2nd"/>
+        <infl-ending-set 
+            conj="4th" 
+            voice="passive" 
+            mood="subjunctive" 
+            tense="future_perfect" 
+            num="plural" 
+            pers="3rd"/>
+    </infl-endings>
+    <footnotes>
+        <footnote id="Footnote-1">Verbs of the Third Conjugation ending in io, retain the i before a, o, u and long e and before short e in the
+            future tense, participles, gerund and gerundive, giving them in these forms the appearance of a fourth counjugation
+            verb.</footnote>
+        <footnote id="Footnote-2">Chiefly in poetry.</footnote>
+        <footnote id="Footnote-3">In tenses based on the perfect stem (the perfect, pluperfect and future perfect of the Active voice)
+            a v between two vowels is often lost with contraction of the two vowels, thus āvī to ā, ēvī to ē, ōvi to ō.
+            Perfects in īvī often omit the v but rarely contract the vowels, except before ss or st, and sometimes in
+            the third person. In addition to the use of v or u, the Active perfect stem can also be formed in a number of other
+            ways, such as the addition of s to the root (eg carpsi), reduplication of the root (eg cecidi from cado),
+            and simple lengthening of the vowel (eg vidī from video or legī from lego). </footnote>
+        <footnote id="Footnote-4">Dic, duc, fac, and fer lack a final vowel in the imperative
+            in classical Latin. The singular imperative of the verb sciō
+            is always scītō, and the plural is usually scītōte.</footnote>
+        <footnote id="Footnote-5">Common in epic poetry.</footnote>
+        <footnote id="Footnote-6">Present in early Latin but chiefly confined to popular use until Livy and later writers.</footnote>
+        <footnote id="Footnote-7">The verb fīō is a 4th conjugation verb that is irregular in 
+            only two forms: the present infinitive fierī and the imperfect subjunctive fierem.</footnote>
+        
+    </footnotes>
+</infl-data>

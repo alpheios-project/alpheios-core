@@ -113,6 +113,22 @@ class Feature {
 
         return new Feature(value, type, language);
     }
+
+    isEqual(feature) {
+        if (Array.isArray(feature.value)) {
+            if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
+                return false;
+            }
+            let equal = this.type===feature.type && this.language===feature.language;
+            equal = equal && this.value.every(function(element, index) {
+                return element === feature.value[index];
+            });
+            return equal;
+        }
+        else {
+            return this.value===feature.value && this.type===feature.type && this.language===feature.language;   
+        }
+    }
 }
 
 /**
@@ -173,8 +189,8 @@ class FeatureType {
     };
 
     /**
-     * Return a Feature with an arbitrary value. This can be especially useful for features that do not set
-     * a list of predefined values, such as footnotes.
+     * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
+     * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
      * @param value
      * @returns {Feature}
      */
@@ -211,6 +227,28 @@ class FeatureType {
     get orderIndex() {
         "use strict";
         return this._orderIndex;
+    }
+
+    /**
+     * Return copies of all feature values in a sorted array
+     */
+    get orderValues() {
+        "use strict";
+        let values = [];
+        for (let value of this._orderIndex) {
+            if (Array.isArray(value)) {
+                let features = [];
+                for (let feature of value) {
+                    features.push(this[feature]);
+                }
+                values.push(Feature.create(features));
+            }
+            else {
+                values.push(Feature.create(this[value]));
+            }
+
+        }
+        return values;
     }
 
     /**

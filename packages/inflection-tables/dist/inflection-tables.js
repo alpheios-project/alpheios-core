@@ -115,6 +115,22 @@ class Feature {
 
         return new Feature(value, type, language);
     }
+
+    isEqual(feature) {
+        if (Array.isArray(feature.value)) {
+            if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
+                return false;
+            }
+            let equal = this.type===feature.type && this.language===feature.language;
+            equal = equal && this.value.every(function(element, index) {
+                return element === feature.value[index];
+            });
+            return equal;
+        }
+        else {
+            return this.value===feature.value && this.type===feature.type && this.language===feature.language;   
+        }
+    }
 }
 
 /**
@@ -175,8 +191,8 @@ class FeatureType {
     };
 
     /**
-     * Return a Feature with an arbitrary value. This can be especially useful for features that do not set
-     * a list of predefined values, such as footnotes.
+     * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
+     * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
      * @param value
      * @returns {Feature}
      */
@@ -213,6 +229,28 @@ class FeatureType {
     get orderIndex() {
         "use strict";
         return this._orderIndex;
+    }
+
+    /**
+     * Return copies of all feature values in a sorted array
+     */
+    get orderValues() {
+        "use strict";
+        let values = [];
+        for (let value of this._orderIndex) {
+            if (Array.isArray(value)) {
+                let features = [];
+                for (let feature of value) {
+                    features.push(this[feature]);
+                }
+                values.push(Feature.create(features));
+            }
+            else {
+                values.push(Feature.create(this[value]));
+            }
+
+        }
+        return values;
     }
 
     /**
@@ -7763,9 +7801,948 @@ return /******/ (function(modules) { // webpackBootstrap
 
 var Handlebars = unwrapExports(handlebarsV4_0_10);
 
-//export {View};
+let widthClassBase = 'infl-cell--sp';
+let highlightClass = 'infl-cell--hl';
+let classHidden = 'hidden';
+
+/**
+ * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
+ * This function is for use with Array.prototype.filter().
+ * @param {FeatureType} featureType - a grammatical feature type we need to filter on
+ * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
+ * this ending should have
+ * @param {Suffix} suffix - an ending we need to filter out
+ * @returns {boolean}
+ */
+let filter = function(featureType, featureValues, suffix) {
+    "use strict";
+
+    // If not an array, convert it to array for uniformity
+    if (!Array.isArray(featureValues)) {
+        featureValues = [featureValues];
+    }
+    for (const value of featureValues) {
+        if (suffix.features[featureType] === value) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+/**
+ * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
+ * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
+ * @param {Suffix} suffixB - A second ending to merge (to be discarded).
+ * @returns {Suffix} A modified value of ending A.
+ */
+let merge = function(suffixA, suffixB) {
+    let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
+    for (let type of commonGroups) {
+        // Combine values using a comma separator. Can do anything else if we need to.
+        suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
+    }
+    return suffixA;
+};
+
+class Cell {
+    constructor() {
+        this.wNode = undefined; // A wide view node
+        this.nNode = undefined; // A narrow view node
+
+        this.empty = false;
+        this.suffixMatches = false;
+
+        this.column = undefined; // A column this cell belongs to
+        this.row = undefined; // A row this cell belongs to
+
+        this.zeroWidthClass = widthClassBase + 0;
+        this.initialWidthClass = widthClassBase + 1;
+
+        this._index = undefined;
+    }
+
+    set node(node) {
+        this.wNode = node;
+        this.nNode = node.cloneNode(true);
+    }
+
+    get wvNode() {
+        return this.wNode;
+    }
+
+    get nvNode() {
+        return this.nNode;
+    }
+
+    set index(index) {
+        this._index = index;
+        this.wNode.dataset.index = this._index;
+        this.nNode.dataset.index = this._index;
+    }
+
+    addEventListener(type, listener) {
+        this.wNode.addEventListener(type, listener);
+        this.nNode.addEventListener(type, listener);
+    }
+
+    hide() {
+        this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
+        this.nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
+    }
+
+    show() {
+        this.wNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
+        this.nNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
+    }
+
+    highlight() {
+        this.wNode.classList.add(highlightClass);
+        this.nNode.classList.add(highlightClass);
+    }
+
+    clearHighlighting() {
+        this.wNode.classList.remove(highlightClass);
+        this.nNode.classList.remove(highlightClass);
+    }
+
+    highlightRowAndColumn() {
+        this.column.highlight();
+        this.row.highlight();
+    }
+
+    clearRowAndColumnHighlighting() {
+        this.column.clearHighlighting();
+        this.row.clearHighlighting();
+    }
+}
+
+class TitleCell {
+    constructor(node, nvGroupSize) {
+        this.wNode = node; // A wide view node
+        this.nvGroupSize = nvGroupSize;
+        this.nNodes = []; // Narrow nodes, one for each group
+        for (let i = 0; i < nvGroupSize; i++) {
+            this.nNodes.push(node.cloneNode(true));
+        }
+
+        this.parent = undefined;
+
+        this.zeroWidthClass = widthClassBase + 0;
+        this.initialWidthClass = widthClassBase + 1;
+    }
+
+    get wvNode() {
+        return this.wNode;
+    }
+
+    getNvNode(index) {
+        return this.nNodes[index];
+    }
+
+    clone() {
+        let clone = new TitleCell(this.nvGroupSize);
+        //clone.node = this.node.cloneNode(true);
+        if (this.parent) {
+            clone.parent = this.parent.clone();
+        }
+        return clone;
+    }
+
+    hide() {
+        this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
+        for (let nNode of this.nNodes) {
+            nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
+        }
+    }
+
+    show() {
+        this.wNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
+        for (let nNode of this.nNodes) {
+            nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
+        }
+    }
+
+    highlight() {
+        this.wNode.classList.add(highlightClass);
+        for (let nNode of this.nNodes) {
+            nNode.classList.add(highlightClass);
+        }
+    }
+
+    clearHighlighting() {
+        this.wNode.classList.remove(highlightClass);
+        for (let nNode of this.nNodes) {
+            nNode.classList.remove(highlightClass);
+        }
+    }
+}
+
+
+class HeaderCell {
+    constructor(span) {
+        this.wNode = undefined; // A wide view node
+        this.nNode = undefined; // A narrow view node
+
+        this.parent = undefined;
+        this.child = undefined;
+
+        this.span = span;
+
+        this.columns = [];
+    }
+
+    set node(node) {
+        this.wNode = node;
+        this.nNode = node.cloneNode(true);
+    }
+
+    get wvNode() {
+        return this.wNode;
+    }
+
+    get nvNode() {
+        return this.nNode;
+    }
+
+    addColumn(column) {
+        this.columns = this.columns.concat([column]);
+
+        if (this.parent) {
+            this.parent.addColumn(column);
+        }
+    }
+
+    changeSpan(value) {
+        let currentWidthClass = widthClassBase + this.span;
+        this.span += value;
+        let newWidthClass = widthClassBase + this.span;
+        this.wNode.classList.replace(currentWidthClass, newWidthClass);
+        this.nNode.classList.replace(currentWidthClass, newWidthClass);
+
+        if (this.parent) {
+            this.parent.changeSpan(value);
+        }
+    }
+
+    /**
+     * Some columns were hidden or shown
+     */
+    columnStateChange() {
+        let visibleColumns = 0;
+        for (let column of this.columns) {
+            if (!column.hidden) {
+                visibleColumns++;
+            }
+        }
+        if (this.span !== visibleColumns) {
+            // Number of visible columns has changed
+            let change = visibleColumns - this.span;
+            this.changeSpan(change);
+        }
+
+        // Notify parents and children
+        if (this.child) {
+            this.child.columnStateChange();
+        }
+        if (this.parent) {
+            this.parent.columnStateChange();
+        }
+    }
+
+    highlight() {
+        this.wNode.classList.add(highlightClass);
+        this.nNode.classList.add(highlightClass);
+        
+        if (this.parent) {
+            this.parent.highlight();
+        }
+    }
+    
+    clearHighlighting() {
+        this.wNode.classList.remove(highlightClass);
+        this.nNode.classList.remove(highlightClass);
+        
+        if (this.parent) {
+            this.parent.clearHighlighting();
+        }
+    }
+}
+
+class FeatureGroup {
+    constructor() {
+        this.subgroups = []; // Each value of the feature
+        this.cells = []; // All cells within this group and below
+        this.parent = undefined;
+        this.header = undefined;
+    }
+
+    hide() {
+        for (let element of this.elements) {
+            element.node.style.background = 'red';
+        }
+    }
+}
+
+class Column {
+    constructor(cells) {
+        if (!cells) {
+            cells = [];
+        }
+        this.cells = cells;
+        this._headerCell = undefined;
+        this.hidden = false;
+        this.isEmpty = this.cells.every(cell => cell.empty);
+        this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches);
+        
+        for (let cell of this.cells) {
+            cell.column = this;
+        }
+    }
+
+    set headerCell(headerCell) {
+        this._headerCell = headerCell;
+        headerCell.addColumn(this);
+    }
+
+    get length() {
+        return this.cells.length;
+    }
+
+    hide() {
+        this.hidden = true;
+
+        for (let cell of this.cells) {
+            cell.hide();
+        }
+        this._headerCell.columnStateChange();
+    }
+
+    show() {
+        this.hidden = false;
+
+        for (let cell of this.cells) {
+            cell.show();
+        }
+        this._headerCell.columnStateChange();
+    }
+
+    highlight() {
+        for (let cell of this.cells) {
+            cell.highlight();
+        }
+        this._headerCell.highlight();
+    }
+
+    clearHighlighting() {
+        for (let cell of this.cells) {
+            cell.clearHighlighting();
+        }
+        this._headerCell.clearHighlighting();
+    }
+}
+
+class Row {
+    constructor(cells) {
+        if (!cells) {
+            cells = [];
+        }
+        this.cells = cells;
+        this.titleCell = undefined;
+
+        for (let cell of this.cells) {
+            cell.row = this;
+        }
+    }
+
+    add(cell) {
+        cell.row = this;
+        this.cells.push(cell);
+    }
+
+    get length() {
+        return this.cells.length;
+    }
+
+    highlight() {
+        for (let cell of this.cells) {
+            cell.highlight();
+        }
+        if (this.titleCell) {
+            this.titleCell.highlight();
+        }
+    }
+
+    clearHighlighting() {
+        for (let cell of this.cells) {
+            cell.clearHighlighting();
+        }
+        if (this.titleCell) {
+            this.titleCell.clearHighlighting();
+        }
+    }
+}
+
+class GroupingFeature {
+    constructor(type, values, language) {
+        this._feature = new FeatureType(type, values, language);
+        this.isColumn = false;
+        this.isRow = false;
+    }
+
+    clone() {
+        let clone = new GroupingFeature(this._feature.type, this._feature.values, this._feature.language);
+        clone.isColumn = this.isColumn;
+        clone.isRow = this.isRow;
+        return clone;
+    }
+
+    get feature() {
+        return this._feature;
+    }
+
+    get type() {
+        return this._feature.type;
+    }
+
+    setColumnGroupType() {
+        this.isColumn = true;
+        this.isRow = false;
+    }
+
+    setRowGroupType() {
+        this.isColumn = false;
+        this.isRow = true;
+    }
+
+    get(value) {
+        let feature = this._feature.get(value);
+        feature.isColumn = this.isColumn;
+        feature.isRow = this.isRow;
+        return feature;
+    }
+
+    get size() {
+        return this._feature.orderIndex.length;
+    }
+
+    get orderIndex() {
+        return this._feature.orderIndex;
+    }
+
+    get orderValues() {
+        let values = [];
+        for (let value of this._feature.orderValues) {
+            // Modify some properties here
+            values.push(value);
+        }
+        return values;
+    }
+
+    isSameType(groupingFeature) {
+        return this._feature.type === groupingFeature.feature.type;
+    }
+}
+
+class GroupingFeatures {
+    constructor(features) {
+        this._features = features;
+        this._columnFeatures = [];
+        this._rowFeatures = [];
+
+        for (let feature of features) {
+            if (feature.isColumn) {
+                this._columnFeatures.push(feature);
+            }
+            if (feature.isRow) {
+                this._rowFeatures.push(feature);
+            }
+        }
+
+        for (let feature of features) {
+            if (feature.isColumn) {
+                this.firstColumnFeature = feature;
+                break;
+            }
+        }
+
+        for (let feature of features) {
+            if (feature.isColumn) {
+                this.lastColumnFeature = feature;
+            }
+        }
+
+        for (let feature of features) {
+            if (feature.isRow) {
+                this.firstRowFeature = feature;
+                break;
+            }
+        }
+        for (let feature of features) {
+            if (feature.isRow) {
+                this.lastRowFeature = feature;
+            }
+        }
+    }
+
+    get items() {
+        return this._features;
+    }
+
+    get columnFeatures() {
+        return this._columnFeatures;
+    }
+
+    get rowFeatures() {
+        return this._rowFeatures;
+    }
+
+    get length() {
+        return this._features.length;
+    }
+}
+
+class Table {
+    constructor(suffixes, groupingFeatures, headerCellTemplate, cellTemplate) {
+        this.suffixes = suffixes;
+        this.features = new GroupingFeatures(groupingFeatures);
+
+        this.cells = [];
+        this.columns = [];
+        this.rows = [];
+
+        this.headers = [];
+
+        this.templates = {
+            headerCell: headerCellTemplate,
+            cell: cellTemplate
+        };
+
+        this.emptyColumnsHidden = false;
+        this.suffixMatchesHidden = false;
+
+        // Tree contains elements grouped by features according to groupingFeatures order
+        //this.tree = new Tree();
+
+        // Holds all cell node HTML children
+        this.docFragment = document.createDocumentFragment();
+
+
+
+        this.titleCells = {};
+
+        // Temporary wrapper to hold cell's generated HTML
+        this.cellWrapper = document.createElement('div');
+
+        this.tree = this.groupByFeature(this.suffixes);
+
+        // Additional cell initialization
+        for (let [index, cell] of this.cells.entries()) {
+            // Store index value to reference back to the cell
+            cell.index = index;
+        }
+
+        this.getHeaders();
+
+        // Construct columns
+        this.columns = this.getColumns();
+        for (let [index, column] of this.columns.entries()) {
+            column.headerCell = this.headers[this.headers.length-1].cells[index];
+        }
+
+        // Construct rows
+        this.columnNum = this.columns.length;
+        this.rowNum = this.columns[0].length;
+        for (let rowIndex = 0; rowIndex < this.rowNum; rowIndex++) {
+            this.rows[rowIndex] = new Row();
+            this.rows[rowIndex].titleCell = this.columns[0].cells[rowIndex].titleCell;
+            for (let columnIndex = 0; columnIndex < this.columnNum; columnIndex++) {
+                this.rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex]);
+            }
+        }
+
+        this.wideView = {
+            nodes: document.createElement('div')
+        };
+        this.wideView.nodes.classList.add('infl-table', 'wide');
+
+        this.narrowView = {
+            groups: [],
+            groupNum: this.features.firstColumnFeature.size,
+            groupSize: this.columns.length / this.features.firstColumnFeature.size // Default group size
+        };
+        for (let i = 0; i < this.narrowView.groupNum; i++) {
+            this.narrowView.groups.push({
+                groupSize: this.narrowView.groupSize, // Default group size
+                nodes: document.createElement('div')
+            });
+            this.narrowView.groups[i].nodes.classList.add('infl-table', 'narrow');
+        }
+    }
+
+    select(features) {
+        let group = new FeatureGroup();
+        group.elements = this.tree.elements.filter(element => {
+            for (let feature of features) {
+                let found = false;
+                for (let elementFeature of element.features) {
+                    if (elementFeature.isEqual(feature)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    return false;
+                }
+            }
+            return true;
+        });
+        return group;
+    }
+
+    groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
+        let group = new FeatureGroup();
+        group.feature = this.features.items[currentLevel];
+
+        // Iterate over each value of the feature
+        for (const featureValue of group.feature.orderValues) {
+            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === group.feature.type) {
+                // Remove previously inserted feature of the same type
+                featureTrail.pop();
+            }
+            featureTrail.push(featureValue);
+
+            // Suffixes that are selected for current combination of feature values
+            let selectedSuffixes = suffixes.filter(filter.bind(this, group.feature.type, featureValue.value));
+
+            if (currentLevel < this.features.length - 1) {
+                // Divide to further groups
+                let subGroup = this.groupByFeature(selectedSuffixes, featureTrail, currentLevel + 1);
+                group.subgroups.push(subGroup);
+                group.cells = group.cells.concat(subGroup.cells);
+            }
+            else {
+                // This is the last level. This represent a cell with suffixes
+                // Split result has a list of suffixes in a table cell. We can now combine duplicated items if we want
+                if (selectedSuffixes.length > 0) {
+                    selectedSuffixes = Suffix.combine(selectedSuffixes, merge);
+                }
+
+                let cell = new Cell();
+                cell.suffixes = selectedSuffixes;
+                cell.features = featureTrail.slice();
+
+                if (selectedSuffixes.length === 0) {
+                    cell.empty = true;
+                }
+
+                cell.suffixMatches = !!selectedSuffixes.find(element => element.match.suffixMatch);
+
+                // Render HTML
+                this.cellWrapper.innerHTML = this.templates.cell(cell);
+                let element = this.cellWrapper.childNodes[0];
+                this.docFragment.appendChild(element);
+                cell.node = element;
+
+                group.subgroups.push(cell);
+                group.cells.push(cell);
+                this.cells.push(cell);
+            }
+        }
+        featureTrail.pop();
+        return group;
+    }
+
+    getColumns(tree = this.tree, columns = [], currentLevel = 0) {
+        let currentFeature = this.features.items[currentLevel];
+
+        let groups = [];
+        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+            let cellGroup = tree.subgroups[index];
+
+            // Iterate until the last row feature
+            if (!currentFeature.isSameType(this.features.lastRowFeature)) {
+                let currentResult = this.getColumns(cellGroup, columns, currentLevel + 1);
+                if (currentFeature.isRow) {
+                    // TODO: Avoid creating extra cells
+                    let titleCellNode = document.createElement('div');
+                    titleCellNode.classList.add(...currentFeature.groupTitleStyles);
+                    titleCellNode.innerHTML = featureValue;
+                    let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
+
+                    let group = {
+                        titleText: featureValue,
+                        groups: currentResult,
+                        titleCell: titleCell
+                    };
+                    group.groups[0].titleCell.parent = titleCell;
+                    groups.push(group);
+                }
+                else if (currentFeature.isSameType(this.features.lastColumnFeature)) {
+                    let column = new Column(cellGroup.cells);
+                    column.groups = currentResult;
+                    column.header = featureValue;
+                    columns.push(column);
+                }
+            }
+            else {
+                // Last level
+                let titleCellNode = document.createElement('div');
+                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
+                titleCellNode.innerHTML = featureValue;
+
+                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
+                cellGroup.titleCell = titleCell;
+                let group = {
+                    titleText: featureValue,
+                    cell: cellGroup,
+                    titleCell: titleCell
+                };
+                groups.push(group);
+            }
+        }
+        if (currentFeature.isRow) {
+            return groups;
+        }
+        return columns;
+    }
+
+    getHeaders(tree = this.tree, currentLevel = 0) {
+        let currentFeature = this.features.columnFeatures[currentLevel];
+
+        let cells = [];
+        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+            let cellGroup = tree.subgroups[index];
+
+            // Iterate until the last row feature
+            if (currentLevel < this.features.columnFeatures.length - 1) {
+                let subCells = this.getHeaders(cellGroup, currentLevel + 1);
+
+                // Last level
+                let columnSpan = 0;
+                for (let cell of subCells) {
+                    columnSpan += cell.span;
+                }
+
+
+                let headerCell = new HeaderCell(columnSpan);
+                headerCell.feature = currentFeature;
+                headerCell.value = featureValue;
+                headerCell.titleText = currentFeature.groupTitle;
+
+                this.cellWrapper.innerHTML = this.templates.headerCell(headerCell);
+                let element = this.cellWrapper.childNodes[0];
+                this.docFragment.appendChild(element);
+                headerCell.node = element;
+
+                headerCell.children = subCells;
+                for (let cell of subCells) {
+                    cell.parent = headerCell;
+                }
+
+                let titleCellNode = document.createElement('div');
+                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
+                titleCellNode.innerHTML = currentFeature.groupTitle;
+                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
+
+                if (!this.headers[currentLevel]) {
+                    this.headers[currentLevel] = new Row();
+                }
+                this.headers[currentLevel].titleCell = titleCell;
+
+                this.headers[currentLevel].add(headerCell);
+                cells.push(headerCell);
+            }
+            else {
+                // Last level
+                let columnSpan = 1;
+                let headerCell = new HeaderCell(columnSpan);
+                headerCell.feature = currentFeature;
+                headerCell.value = featureValue;
+                headerCell.titleText = currentFeature.groupTitle;
+
+                this.cellWrapper.innerHTML = this.templates.headerCell(headerCell);
+                let element = this.cellWrapper.childNodes[0];
+                this.docFragment.appendChild(element);
+                headerCell.node = element;
+
+                if (!this.headers[currentLevel]) {
+                    this.headers[currentLevel] = new Row();
+                }
+
+                this.headers[currentLevel].add(headerCell);
+
+                let titleCellNode = document.createElement('div');
+                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
+                titleCellNode.innerHTML = currentFeature.groupTitle;
+                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
+                titleCell.node = titleCellNode;
+
+                this.headers[currentLevel].titleCell = titleCell;
+                cells.push(headerCell);
+            }
+        }
+        return cells;
+    }
+
+    renderViews() {
+
+        // Regular (wide) view
+        // Clean any previously inserted nodes
+        this.wideView.nodes.innerHTML = '';
+
+        // Calculate a number of visible columns
+        let colNum = 0;
+        for (let [index, row] of this.rows.entries()) {
+            // Count a number of non-hidden columns
+            if (index === 0) {
+                for (let cell of row.cells) {
+                    if (!cell.column.hidden) {
+                        colNum++;
+                    }
+                }
+            }
+        }
+
+
+        for (let row of this.headers) {
+            this.wideView.nodes.appendChild(row.titleCell.wvNode);
+            for (let cell of row.cells) {
+                this.wideView.nodes.appendChild(cell.wvNode);
+            }
+        }
+
+        for (let row of this.rows) {
+            if (row.titleCell.parent) {
+                this.wideView.nodes.appendChild(row.titleCell.parent.wvNode);
+            }
+            this.wideView.nodes.appendChild(row.titleCell.wvNode);
+            for (let cell of row.cells) {
+                this.wideView.nodes.appendChild(cell.wvNode);
+            }
+        }
+        this.wideView.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 1fr)';
+
+
+        // Narrow view
+        for (let [groupIndex, group] of this.narrowView.groups.entries()) {
+            // Clean any previously inserted nodes
+            group.nodes.innerHTML = '';
+
+            // Calculate a number of visible columns
+            let colNum = 0;
+            for (let [index, row] of this.rows.entries()) {
+                for (let i = groupIndex * this.narrowView.groupSize; i < (groupIndex + 1) * this.narrowView.groupSize; i++) {
+                    if (index === 0) {
+                        if (!row.cells[i].column.hidden) {
+                            colNum++;
+                        }
+                    }
+                }
+            }
+
+            if (colNum) {
+                // This group is visible
+                for (let row of this.headers) {
+                    group.nodes.appendChild(row.titleCell.getNvNode(groupIndex));
+                    let headerCellNum = row.cells.length / this.narrowView.groupNum;
+                    for (let i = groupIndex * headerCellNum; i < (groupIndex + 1) * headerCellNum; i++) {
+                        group.nodes.appendChild(row.cells[i].nvNode);
+                    }
+                }
+
+                for (let [index, row] of this.rows.entries()) {
+                    if (row.titleCell.parent) {
+                        group.nodes.appendChild(row.titleCell.parent.getNvNode(groupIndex));
+                    }
+                    group.nodes.appendChild(row.titleCell.getNvNode(groupIndex));
+                    for (let i = groupIndex * this.narrowView.groupSize; i < (groupIndex + 1) * this.narrowView.groupSize; i++) {
+                        group.nodes.appendChild(row.cells[i].nvNode);
+                    }
+                }
+                group.nodes.classList.remove(classHidden);
+                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 15vw)';
+                group.nodes.style.width = (colNum + 1) * 15 + 'vw';
+            }
+            else {
+                // This group is hidden
+                group.nodes.classList.add(classHidden);
+            }
+
+
+        }
+
+        for (let cell of this.cells) {
+            cell.addEventListener('mouseenter', this.highlightRowAndColumn.bind(this));
+            cell.addEventListener('mouseleave', this.removeRowAndColumnHighlighting.bind(this));
+        }
+    }
+
+    highlightRowAndColumn(event) {
+        let index = event.currentTarget.dataset.index;
+        this.cells[index].highlightRowAndColumn();
+    }
+
+    removeRowAndColumnHighlighting(event) {
+        let index = event.currentTarget.dataset.index;
+        this.cells[index].clearRowAndColumnHighlighting();
+    }
+
+    hideEmptyColumns() {
+        for (let column of this.columns) {
+            if (column.isEmpty) {
+                column.hide();
+            }
+        }
+        this.emptyColumnsHidden = true;
+    }
+
+    showEmptyColumns() {
+        for (let column of this.columns) {
+            if (column.hidden) {
+                column.show();
+            }
+        }
+        this.emptyColumnsHidden = false;
+    }
+
+    hideNoSuffixDeclensions() {
+        for (let headerCell of this.headers[0].cells) {
+            let matches = !!headerCell.columns.find(column => column.suffixMatches);
+            if (!matches) {
+                for (let column of headerCell.columns) {
+                    column.hide();
+                }
+            }
+        }
+        this.suffixMatchesHidden = true;
+    }
+
+    showNoSuffixDeclensions() {
+        for (let column of this.columns) {
+            column.show();
+        }
+        if (this.emptyColumnsHidden) {
+            this.hideEmptyColumns();
+        }
+        this.suffixMatchesHidden = false;
+    }
+}
 
 class View {
+
+    constructor() {
+        this.pageHeader = {};
+        this.table = {};
+
+        // An HTML element where view is rendered
+        this.container = undefined;
+
+        this.nodes = {
+
+        };
+    }
+
     /**
      * A compare function that can be used to sort ending according to specific requirements of the current view.
      * This function is for use with Array.prototype.sort().
@@ -7793,7 +8770,7 @@ class View {
             }
             /*
              If values on this level are equal, continue comparing using values of the next level.
-             If we are at the last level of comparison (defined by featureOrder) and elements are equal, return 0.
+             If we are at the last level of comparison (defined by featureOrder) and children are equal, return 0.
              */
             else if (index === this.featureOrder.length - 1) {
                 // This is the last sort order item
@@ -7849,228 +8826,104 @@ class View {
     }
 
     /**
-     * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
-     * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
-     * @param {Suffix} suffixB - A second ending to merge (to be discarded).
-     * @returns {Suffix} A modified value of ending A.
-     */
-    merge(suffixA, suffixB) {
-        let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
-        for (let type of commonGroups) {
-            // Combine values using a comma separator. Can do anything else if we need to.
-            suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
-        }
-        return suffixA;
-    }
-
-    /**
-     * A recursive function that organizes suffixes by features from a groupFeatures list into a multi-dimensional
-     * array. Each of levels of this array corresponds to a feature from a groupFeatures list.
-     * @param {Suffix[]} suffixes - A list of suffixes.
-     * @param {FeatureType[]} groupFeatures - A list of feature types to be used for grouping.
-     * @param {function} mergeFunction - A function that merges two suffixes together.
-     * @param {Feature[]} featureValues - A list of feature values for the current level
-     * @param {number} currentLevel - A recursion level, used to stop recursion.
-     * @returns {Suffix[]} Endings grouped into a multi-dimensional array.
-     */
-    groupByFeature(suffixes, groupFeatures, mergeFunction, featureValues = [], currentLevel = 0) {
-        let feature = groupFeatures[currentLevel];
-        let grouped = [];
-        let currentFeatures = featureValues.slice();
-
-        for (const featureValue of feature.orderIndex) {
-            currentFeatures.push(feature.get(featureValue));
-            let empty = !suffixes.find(element => {
-                if (element.features[feature.type] === featureValue) {
-                    return element;
-                }
-            });
-
-            let featureValuesList = currentFeatures.map(feature => feature.value);
-            let rowValues = undefined;
-            let columnValues = undefined;
-            if (currentLevel === groupFeatures.length - 1) {
-                rowValues = featureValuesList[0] + ' ' + featureValuesList[1];
-                columnValues = featureValuesList[2] + ' ' + featureValuesList[3] + ' ' + featureValuesList[4];
-            }
-
-            let result = {
-                type: feature.type,
-                value: featureValue,
-                tableGroup: feature.tableGroup,
-                tableGroupSel: feature.tableGroupSel,
-                empty: empty.toString(),
-                rowValues: rowValues,
-                columnValues: columnValues,
-                featureValues: currentFeatures.map(feature => feature.value).join(', ')
-            };
-            let selected = suffixes.filter(this.filter.bind(this, feature.type, featureValue));
-            if (currentLevel < groupFeatures.length - 1) {
-                // Split more
-                featureValues.push(feature.get(featureValue));
-                selected = this.groupByFeature(selected, groupFeatures, mergeFunction, featureValues, currentLevel + 1);
-            }
-            else {
-                // This is the last level
-                // Split result has a list of suffixes in a table cell. We can now combine duplicated items if we want
-                if (selected.length > 0) {
-                    selected = Suffix.combine(selected, mergeFunction);
-                }
-
-                if (selected.length === 0) {
-                    // No suffixes in this column
-                    result.empty = 'true'; // For a template output
-                }
-                else {
-                    result.empty = 'false';
-                }
-
-                result.suffixMatch = 'false';
-                for (let element of selected) {
-                    if (element.match.suffixMatch) {
-                        result.suffixMatch = 'true';
-                        break;
-                    }
-                }
-
-            }
-            result.data = selected;
-            grouped.push(result);
-
-            currentFeatures.pop();
-        }
-        featureValues.pop();
-        return grouped;
-    }
-
-    addHeaders(displayData, suffixes) {
-        displayData.headers = [[], [], []];
-
-        // Set left column data
-        displayData.headers[0].push({
-            title: this.featureOrder[2].type
-        });
-        displayData.headers[1].push({
-            title: this.featureOrder[3].type
-        });
-        displayData.headers[2].push({
-            title: this.featureOrder[4].type
-        });
-
-        let columnsEmptyTotal = 0;
-
-        for (let featureValue2 of this.featureOrder[2].orderIndex) {
-            // Declensions
-            let columnsEmpty2 = 0;
-            let suffixMatch2 = false;
-
-            let header2 = {
-                title: featureValue2,
-                size: this.featureOrder[3].orderIndex.length * this.featureOrder[4].orderIndex.length
-            };
-
-            for (let featureValue3 of this.featureOrder[3].orderIndex) {
-                // Genders
-                let header3 = {
-                    title: featureValue3,
-                    size: this.featureOrder[4].orderIndex.length
-                };
-
-                let columnsEmpty3 = 0;
-                let suffixMatch3 = false;
-
-                for (let featureValue4 of this.featureOrder[4].orderIndex) {
-                    // Types
-                    let empty = !suffixes.find(this.filterByFeature.bind(this, [
-                        new Feature(featureValue2, 'declension', languages.latin),
-                        new Feature(featureValue3, 'gender', languages.latin),
-                        new Feature(featureValue4, 'type', languages.latin)
-                    ], false));
-
-                    let suffixMatch = !!suffixes.find(this.filterByFeature.bind(this, [
-                        new Feature(featureValue2, 'declension', languages.latin),
-                        new Feature(featureValue3, 'gender', languages.latin),
-                        new Feature(featureValue4, 'type', languages.latin)
-                    ], true));
-
-                    if (empty) {
-                        columnsEmpty2++;
-                        columnsEmpty3++;
-                        columnsEmptyTotal++;
-                    }
-                    suffixMatch2 = suffixMatch2 || suffixMatch;
-                    suffixMatch3 = suffixMatch3 || suffixMatch;
-
-                    displayData.headers[2].push({
-                        headerLevel: 3,
-                        title: featureValue4,
-                        size: 1,
-                        empty: empty,
-                        columnsEmpty: 0,
-                        columnsTotal: 1,
-                        suffixMatch: suffixMatch,
-                        featureValues: featureValue2 + ' ' + featureValue3 + ' ' + featureValue4
-                    });
-                }
-
-                header3.headerLevel = 2;
-                header3.columnsTotal = this.featureOrder[4].orderIndex.length;
-                header3.columnsEmpty = columnsEmpty3;
-                if (columnsEmpty3 === header3.columnsTotal) {
-                    header3.empty = true;
-                }
-                header3.suffixMatch = suffixMatch3;
-                header3.featureValues = featureValue2 + ' ' + featureValue3;
-
-                displayData.headers[1].push(header3);
-            }
-
-            header2.headerLevel = 1;
-            header2.columnsTotal = this.featureOrder[3].orderIndex.length * this.featureOrder[4].orderIndex.length;
-            header2.columnsEmpty = columnsEmpty2;
-            if (columnsEmpty2 === header2.columnsTotal) {
-                header2.empty = true;
-            }
-            header2.suffixMatch = suffixMatch2;
-            header2.featureValues = featureValue2;
-
-            displayData.headers[0].push(header2);
-        }
-    }
-
-    /**
      * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table.
      * @param {ResultSet} resultSet - A result set from inflection tables library.
      * @returns {string} HTML code representing an inflection table.
      */
-    render(resultSet) {
+    render(container, resultSet) {
         "use strict";
 
-        // We can sort suffixes if we need to
-        //let sorted = resultSet.suffixes.sort(compare.bind(this, featureOrder));
-
+        this.container = container;
         // Create data structure for a template
-        let displayData = {};
+        this.displayData = {};
 
-        displayData.word = resultSet.word;
+        this.displayData.word = resultSet.word;
+        this.displayData.title = this.title;
         let selection = resultSet[this.partOfSpeech];
-        displayData.suffixes = this.groupByFeature(selection.suffixes, this.featureOrder, this.merge);
-        this.addHeaders(displayData, selection.suffixes);
-        displayData.footnotes = selection.footnotes;
 
-        let compiled = Handlebars.compile(this.template);
+        this.displayData.footnotes = selection.footnotes;
 
-        return compiled(displayData);
+        this.pageHeader.nodes = document.createElement('div');
+        this.pageHeader.nodes.innerHTML = this.pageHeaderTemplate(this.displayData);
+        this.footnotes = { nodes: document.createElement('div') };
+        this.footnotes.nodes.innerHTML = this.footnotesTemplate(this.displayData);
+
+        this.table = new Table(selection.suffixes, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate);
+
+        this.display();
+    }
+
+    display() {
+
+        this.table.renderViews();
+        // Clear the container
+        this.container.innerHTML = '';
+
+        this.container.appendChild(this.pageHeader.nodes);
+
+
+        // Insert a wide view
+        this.container.appendChild(this.table.wideView.nodes);
+        // Insert narrow views
+        for (let group of this.table.narrowView.groups) {
+            this.container.appendChild(group.nodes);
+        }
+        this.container.appendChild(this.footnotes.nodes);
+
+        this.pageHeader.nodes.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));
+        this.pageHeader.nodes.querySelector('#show-empty-columns').addEventListener('click', this.showEmptyColumns.bind(this));
+
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').addEventListener('click', this.hideNoSuffixDeclensions.bind(this));
+        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').addEventListener('click', this.showNoSuffixDeclensions.bind(this));
+    }
+
+
+    hideEmptyColumns() {
+        this.table.hideEmptyColumns();
+        this.display();
+        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.add(classHidden);
+        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.remove(classHidden);
+    }
+
+    showEmptyColumns() {
+        this.table.showEmptyColumns();
+        this.display();
+        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.add(classHidden);
+        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.remove(classHidden);
+    }
+
+    hideNoSuffixDeclensions() {
+        this.table.hideNoSuffixDeclensions();
+        this.display();
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').classList.add(classHidden);
+        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').classList.remove(classHidden);
+    }
+
+    showNoSuffixDeclensions() {
+        this.table.showNoSuffixDeclensions();
+        this.display();
+        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').classList.add(classHidden);
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').classList.remove(classHidden);
     }
 }
 
-var template = "<h2>{{word}}</h2>\r\n\r\n<h3>Noun declension</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn hidden\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-declensions\" class=\"switch-btn hidden\">Hide declensions with no suffix matches</button><button id=\"show-no-suffix-declensions\" class=\"switch-btn\">Show declensions with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>\r\n<table class=\"inflection-table\">\r\n\r\n    {{#each headers}}\r\n        <tr class=\"inflection-table__row\">\r\n            {{#each this}}\r\n                <th class=\"inflection-table__cell\" data-header-level=\"{{headerLevel}}\" data-empty=\"{{empty}}\" data-columns-empty=\"{{columnsEmpty}}\"  data-columns-total=\"{{columnsTotal}}\" data-suffix-match=\"{{suffixMatch}}\" data-column-values=\"{{featureValues}}\" colspan=\"{{size}}\">{{title}}</th>\r\n            {{/each}}\r\n        </tr>\r\n    {{/each}}\r\n\r\n    {{#each suffixes}}\r\n        <!-- Gender -->\r\n        <tr class=\"inflection-table__row\"><td class=\"inflection-table__cell\" colspan=\"31\">{{value}}</td></tr>\r\n        {{#each data}}\r\n            <!-- Case -->\r\n            <tr class=\"inflection-table__row\">\r\n                <td class=\"inflection-table__cell inflection-table__cell--case-title\">{{value}}</td>\r\n                {{#each data}}\r\n                    <!-- Declension -->\r\n                    {{#each data}}\r\n                        <!-- Gender -->\r\n                        {{#each data}}\r\n                            <!-- Type -->\r\n                        {{#if header}}\r\n                            <td class=\"inflection-table__cell\">{{headerTitle}}</td>\r\n                        {{else}}\r\n                            <td class=\"inflection-table__cell\" data-row-values=\"{{rowValues}}\" data-column-values=\"{{columnValues}}\" data-table-group=\"{{tableGroup}}\" data-table-group-sel=\"{{tableGroupSel}}\" data-empty=\"{{empty}}\" data-suffix-match=\"{{suffixMatch}}\" data-feature-values=\"{{featureValues}}\">\r\n                                {{#each data}}\r\n                                    <!-- suffixes -->\r\n                                    <a class=\"inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullMatch}} inflection-table__suffix--full-feature-match{{/if}}\" title=\"{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.suffixMatch}}, suffix match{{/if}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}\">{{#if value}}{{value}}{{else}}-{{/if}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n                                {{/each}}\r\n                            </td>\r\n                        {{/if}}\r\n                        {{/each}}\r\n                    {{/each}}\r\n                {{/each}}\r\n            </tr>\r\n        {{/each}}\r\n    {{/each}}\r\n</table>\r\n\r\n<br>\r\n<br>\r\n{{#each footnotes}}\r\n    <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n{{/each}}";
+var pageHeaderTemplate = "<h2>{{word}}</h2>\r\n\r\n<h3>{{title}}</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn hidden\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-declensions\" class=\"switch-btn\">Hide declensions with no suffix matches</button><button id=\"show-no-suffix-declensions\" class=\"switch-btn hidden\">Show declensions with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>";
+
+var headerCellTemplate = "<div class=\"infl-cell infl-cell--hdr infl-cell--sp{{span}}\"\r\n     data-role=\"column-title\"\r\n     data-type=\"{{type}}\"\r\n     data-value=\"{{value}}\"\r\n     data-header-row=\"{{headerRowNum}}\"\r\n     data-column-span=\"{{span}}\"\r\n     data-suffix-matches=\"{{suffixMatches}}\"\r\n     data-column-values=\"{{columnValues}}\">\r\n    {{value}}\r\n</div>";
+
+var suffixCellTemplate = "<div class=\"infl-cell infl-cell--sp1\"\r\n     data-role=\"suffix-cell\"\r\n     data-empty=\"{{empty}}\"\r\n     data-suffix-matches=\"{{suffixMatches}}\"\r\n     data-row-values=\"{{rowValues}}\"\r\n     data-column-values=\"{{columnValues}}\">\r\n{{#each suffixes}}\r\n    <a class=\"infl-suff{{#if match.suffixMatch}} infl-suff--suffix-match{{/if}}{{#if match.fullMatch}} infl-suff--full-feature-match{{/if}}\">{{#if value}}{{value}}{{else}}-{{/if}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n{{/each}}\r\n</div>";
+
+var footnotesTemplate = "<div id=\"inlection-table-footer\" >\r\n    {{#each footnotes}}\r\n        <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n    {{/each}}\r\n</div>";
 
 let view = new View();
 view.id = 'nounDeclension';
 view.name = 'noun declension';
+view.title = 'Noun declension';
 view.partOfSpeech = parts.noun.value;
-view.template = template;
+view.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view.footnotesTemplate = Handlebars.compile(footnotesTemplate);
 
 /**
  * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
@@ -8079,36 +8932,44 @@ view.template = template;
  * as arguments to each feature type constructor. However, this can be overriden here, as shown by the 'gender'
  * example. If suffixes with several values must be combines, such values can be provided within an array,
  * as shown by 'masculine' and 'feminine' values.
+ *
  */
-let numbers$1 = new FeatureType(types.number, ['singular', 'plural'], languages.latin);
-numbers$1.tableGroup = 'row';
-numbers$1.tableGroupSel = "number";
+let numbers$1 = new GroupingFeature(types.number, ['singular', 'plural'], languages.latin);
+numbers$1.setRowGroupType();
+numbers$1.groupTitle = 'Number';
+numbers$1.groupTitleStyles = ['infl-cell', 'infl-cell--fw'];
 
-let cases$1 = new FeatureType(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
-cases$1.tableGroup = 'row';
-cases$1.tableGroupSel = "number-cases";
+let cases$1 = new GroupingFeature(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
+cases$1.setRowGroupType();
+cases$1.groupTitle = 'Case';
+cases$1.groupTitleStyles = ['infl-cell'];
 
-let declensions$1 = new FeatureType(types.declension, ['first', 'second', 'third', 'fourth', 'fifth'], languages.latin);
-declensions$1.tableGroup = 'column';
-declensions$1.tableGroupSel = 'declension';
+let declensions$1 = new GroupingFeature(types.declension, ['first', 'second', 'third', 'fourth', 'fifth'], languages.latin);
+declensions$1.setColumnGroupType();
+declensions$1.groupTitle = 'Declension';
+declensions$1.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
 
-let genders$1 = new FeatureType(types.gender, [['masculine', 'feminine'], 'neuter'], languages.latin);
-genders$1.tableGroup = 'column';
-genders$1.tableGroupSel = 'declension-gender';
+let genders$1 = new GroupingFeature(types.gender, [['masculine', 'feminine'], 'neuter'], languages.latin);
+genders$1.setColumnGroupType();
+genders$1.groupTitle = 'Gender';
+genders$1.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
 
-let types$2 = new FeatureType(types.type, ['regular', 'irregular'], languages.latin);
-types$2.tableGroup = 'column';
-types$2.tableGroupSel = 'declension-gender-type';
+let types$2 = new GroupingFeature(types.type, ['regular', 'irregular'], languages.latin);
+types$2.setColumnGroupType();
+types$2.groupTitle = 'Type';
+types$2.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
 
-view.featureOrder = [numbers$1, cases$1, declensions$1, genders$1, types$2];
-
-var template$1 = "<h2>{{word}}</h2>\r\n\r\n<h3>Adjective declension</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn hidden\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-declensions\" class=\"switch-btn hidden\">Hide declensions with no suffix matches</button><button id=\"show-no-suffix-declensions\" class=\"switch-btn\">Show declensions with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>\r\n<table class=\"inflection-table\">\r\n\r\n    {{#each headers}}\r\n        <tr class=\"inflection-table__row\">\r\n            {{#each this}}\r\n                <th class=\"inflection-table__cell\" data-header-level=\"{{headerLevel}}\" data-empty=\"{{empty}}\" data-columns-empty=\"{{columnsEmpty}}\"  data-columns-total=\"{{columnsTotal}}\" data-suffix-match=\"{{suffixMatch}}\" data-column-values=\"{{featureValues}}\" colspan=\"{{size}}\">{{title}}</th>\r\n            {{/each}}\r\n        </tr>\r\n    {{/each}}\r\n\r\n    {{#each suffixes}}\r\n        <!-- Gender -->\r\n        <tr class=\"inflection-table__row\"><td class=\"inflection-table__cell\" colspan=\"31\">{{value}}</td></tr>\r\n        {{#each data}}\r\n            <!-- Case -->\r\n            <tr class=\"inflection-table__row\">\r\n                <td class=\"inflection-table__cell inflection-table__cell--case-title\">{{value}}</td>\r\n                {{#each data}}\r\n                    <!-- Declension -->\r\n                    {{#each data}}\r\n                        <!-- Gender -->\r\n                        {{#each data}}\r\n                            <!-- Type -->\r\n                            {{#if header}}\r\n                                <td class=\"inflection-table__cell\">{{headerTitle}}</td>\r\n                            {{else}}\r\n                                <td class=\"inflection-table__cell\" data-header-3=\"{{header3}}\" data-table-group=\"{{tableGroup}}\" data-table-group-sel=\"{{tableGroupSel}}\" data-empty=\"{{empty}}\" data-suffix-match=\"{{suffixMatch}}\" data-feature-values=\"{{featureValues}}\">\r\n                                    {{#each data}}\r\n                                        <!-- suffixes -->\r\n                                        <a class=\"inflection-table__suffix{{#if match.suffixMatch}} inflection-table__suffix--suffix-match{{/if}}{{#if match.fullMatch}} inflection-table__suffix--full-feature-match{{/if}}\" title=\"{{suffix}}, pos: {{features.partOfSpeech}}, num: {{features.number}}, case: {{features.case}}, decl: {{features.declension}}, gend: {{features.gender}}, type: {{features.type}}{{#if match.suffixMatch}}, suffix match{{/if}}{{#if match.matchedFeatures.length}}, features matched: {{match.matchedFeatures}}{{/if}}\">{{#if value}}{{value}}{{else}}-{{/if}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n                                    {{/each}}\r\n                                </td>\r\n                            {{/if}}\r\n                        {{/each}}\r\n                    {{/each}}\r\n                {{/each}}\r\n            </tr>\r\n        {{/each}}\r\n    {{/each}}\r\n</table>\r\n\r\n<br>\r\n<br>\r\n{{#each footnotes}}\r\n    <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n{{/each}}";
+view.groupingFeatures = [declensions$1, genders$1, types$2, numbers$1, cases$1];
 
 let view$1 = new View();
 view$1.id = 'adjectiveDeclension';
 view$1.name = 'adjective declension';
+view$1.title = 'Adjective declension';
 view$1.partOfSpeech = parts.adjective.value;
-view$1.template = template$1;
+view$1.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view$1.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view$1.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view$1.footnotesTemplate = Handlebars.compile(footnotesTemplate);
 
 /**
  * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
@@ -8117,28 +8978,34 @@ view$1.template = template$1;
  * as arguments to each feature type constructor. However, this can be overriden here, as shown by the 'gender'
  * example. If suffixes with several values must be combines, such values can be provided within an array,
  * as shown by 'masculine' and 'feminine' values.
+ *
  */
-let numbers$2 = new FeatureType(types.number, ['singular', 'plural'], languages.latin);
-numbers$2.tableGroup = 'row';
-numbers$2.tableGroupSel = "number";
+let numbers$2 = new GroupingFeature(types.number, ['singular', 'plural'], languages.latin);
+numbers$2.setRowGroupType();
+numbers$2.groupTitle = 'Number';
+numbers$2.groupTitleStyles = ['infl-cell', 'infl-cell--fw'];
 
-let cases$2 = new FeatureType(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
-cases$2.tableGroup = 'row';
-cases$2.tableGroupSel = "number-cases";
+let cases$2 = new GroupingFeature(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
+cases$2.setRowGroupType();
+cases$2.groupTitle = 'Case';
+cases$2.groupTitleStyles = ['infl-cell'];
 
-let declensions$2 = new FeatureType(types.declension, ['first', 'second', 'third'], languages.latin);
-declensions$2.tableGroup = 'column';
-declensions$2.tableGroupSel = 'declension';
+let declensions$2 = new GroupingFeature(types.declension, ['first', 'second', 'third'], languages.latin);
+declensions$2.setColumnGroupType();
+declensions$2.groupTitle = 'Declension';
+declensions$2.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
 
-let genders$2 = new FeatureType(types.gender, ['masculine', 'feminine', 'neuter'], languages.latin);
-genders$2.tableGroup = 'column';
-genders$2.tableGroupSel = 'declension-gender';
+let genders$2 = new GroupingFeature(types.gender, ['masculine', 'feminine', 'neuter'], languages.latin);
+genders$2.setColumnGroupType();
+genders$2.groupTitle = 'Gender';
+genders$2.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
 
-let types$3 = new FeatureType(types.type, ['regular', 'irregular'], languages.latin);
-types$3.tableGroup = 'column';
-types$3.tableGroupSel = 'declension-gender-type';
+let types$3 = new GroupingFeature(types.type, ['regular', 'irregular'], languages.latin);
+types$3.setColumnGroupType();
+types$3.groupTitle = 'Type';
+types$3.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
 
-view$1.featureOrder = [numbers$2, cases$2, declensions$2, genders$2, types$3];
+view$1.groupingFeatures = [declensions$2, genders$2, types$3, numbers$2, cases$2];
 
 /**
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
@@ -8146,7 +9013,7 @@ view$1.featureOrder = [numbers$2, cases$2, declensions$2, genders$2, types$3];
  */
 class Presenter {
     constructor() {
-        this.hiddenClass = 'hidden';
+        this.zeroWidthClass = 'hidden';
         this.emptyColumnClass = 'empty-row-column';
         this.noSuffixColumnClass ='no-suffix-column';
         this.showEmptyColumnSel = '#show-empty-columns';
@@ -8159,6 +9026,8 @@ class Presenter {
             nounDeclension: view,
             adjectiveDeclension: view$1
         };
+
+        this.activeView = undefined;
     }
 
 
@@ -8167,7 +9036,7 @@ class Presenter {
 
         let views = this.getViews(resultSet[types.part]);
         // Show a default view
-        this.showView(views[0], selector, resultSet);
+        views[0].render(document.querySelector(selector), resultSet);
 
         document.querySelector("#view-switcher").innerHTML = '';
         if (views.length > 1) {
@@ -8180,8 +9049,7 @@ class Presenter {
             }
             selectList.addEventListener('change', event => {
                 let viewID = event.target.value;
-                console.log(viewID);
-                this.showView(this.views[viewID], selector, resultSet);
+                this.views[viewID].render(document.querySelector(selector), resultSet);
             });
             document.querySelector("#view-switcher").appendChild(selectList);
         }
@@ -8196,114 +9064,6 @@ class Presenter {
             views.push(this.views.adjectiveDeclension);
         }
         return views;
-    }
-
-    showView(view$$1, selector, resultSet) {
-        document.querySelector(selector).innerHTML = view$$1.render(resultSet);
-
-        this.hideEmptyColumns();
-        this.hideNoSuffixDeclensions();
-
-        document.querySelector(this.hideEmptyColumnSel).addEventListener('click', this.hideEmptyColumns.bind(this));
-        document.querySelector(this.showEmptyColumnSel).addEventListener('click', this.showEmptyColumns.bind(this));
-
-        document.querySelector(this.hideNoSuffixDeclensionsSel).addEventListener('click', this.hideNoSuffixDeclensions.bind(this));
-        document.querySelector(this.showNoSuffixDeclensionsSel).addEventListener('click', this.showNoSuffixDeclensions.bind(this));
-
-        document.querySelectorAll('td[data-feature-values]').forEach(element => {
-            element.addEventListener('mouseenter', this.cellMouseOver.bind(this));
-            element.addEventListener('mouseleave', this.cellMouseOut.bind(this));
-        });
-    }
-
-    hideEmptyColumns() {
-        let emptyRows = document.querySelectorAll('th[data-header-level="3"][data-empty="true"]');
-        for (let row of emptyRows) {
-            let columnSel = row.dataset.columnValues;
-            let rowCells = document.querySelectorAll('td[data-column-values="' + columnSel + '"]');
-            for (let cell of rowCells) {
-                cell.classList.add(this.emptyColumnClass);
-            }
-        }
-
-        let headers = document.querySelectorAll('th');
-        for (let header of headers) {
-            if (header.dataset.empty === 'true') {
-                header.classList.add(this.emptyColumnClass);
-            }
-            else if (header.dataset.columnsEmpty > 0) {
-                header.setAttribute('colspan', header.dataset.columnsTotal - header.dataset.columnsEmpty);
-            }
-        }
-
-        document.querySelector(this.showEmptyColumnSel).classList.remove(this.hiddenClass);
-        document.querySelector(this.hideEmptyColumnSel).classList.add(this.hiddenClass);
-    }
-
-    showEmptyColumns() {
-        document.querySelectorAll('.' + this.emptyColumnClass)
-            .forEach(element => { element.classList.remove(this.emptyColumnClass); });
-
-        let headers = document.querySelectorAll('th');
-        for (let header of headers) {
-            if (header.dataset.columnsEmpty > 0) {
-                header.setAttribute('colspan', header.dataset.columnsTotal);
-            }
-        }
-
-        document.querySelector(this.showEmptyColumnSel).classList.add(this.hiddenClass);
-        document.querySelector(this.hideEmptyColumnSel).classList.remove(this.hiddenClass);
-    }
-
-    hideNoSuffixDeclensions() {
-        let noSuffixRows = document.querySelectorAll('th[data-header-level="1"][data-suffix-match="false"]');
-        for (let row of noSuffixRows) {
-            let headerSel = row.dataset.columnValues;
-            let cells = document.querySelectorAll('td[data-suffix-match="false"]');
-            for (let cell of cells) {
-                let cellValue = cell.dataset.featureValues;
-                if (cellValue.includes(headerSel)) {
-                    cell.classList.add(this.noSuffixColumnClass);
-                }
-            }
-
-            cells = document.querySelectorAll('th[data-suffix-match="false"]');
-            for (let cell of cells) {
-                let cellValue = cell.dataset.columnValues;
-                if (cellValue.includes(headerSel)) {
-                    cell.classList.add(this.noSuffixColumnClass);
-                }
-            }
-        }
-
-        document.querySelector(this.showNoSuffixDeclensionsSel).classList.remove(this.hiddenClass);
-        document.querySelector(this.hideNoSuffixDeclensionsSel).classList.add(this.hiddenClass);
-    }
-
-    showNoSuffixDeclensions() {
-        document.querySelectorAll('.' + this.noSuffixColumnClass)
-            .forEach(element => { element.classList.remove(this.noSuffixColumnClass); });
-
-        document.querySelector(this.showNoSuffixDeclensionsSel).classList.add(this.hiddenClass);
-        document.querySelector(this.hideNoSuffixDeclensionsSel).classList.remove(this.hiddenClass);
-    }
-
-    cellMouseOver(event) {
-        let rowValues = event.target.dataset.rowValues;
-        let columnValues = event.target.dataset.columnValues;
-        let cells = document.querySelectorAll('td[data-row-values][data-column-values]');
-        for (let cell of cells) {
-            let cellRowValues = cell.dataset.rowValues;
-            let cellColumnValues = cell.dataset.columnValues;
-            if (cellRowValues.includes(rowValues) || cellColumnValues.includes(columnValues)) {
-                cell.classList.add(this.highlightedClass);
-            }
-        }
-    }
-
-    cellMouseOut(event) {
-        let highlightedClass = this.highlightedClass;
-        document.querySelectorAll('.' + highlightedClass).forEach(element => {element.classList.remove(highlightedClass);});
     }
 }
 

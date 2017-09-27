@@ -2,12 +2,6 @@ strong {
     font-weight: 700;
 }
 
-.inflection-table {
-    /*font-family: 'Source Sans Pro', sans-serif;*/
-    font-size: 12px;
-    border-collapse: collapse;
-}
-
 .inflection-table tr:last-child {
     border-bottom: 1px solid #000;
 }
@@ -25,27 +19,6 @@ strong {
 .inflection-table__cell--case-title {
     padding-left: 20px;
     font-style: italic;
-}
-
-.inflection-table__suffix {
-    cursor: pointer;
-}
-
-.inflection-table__suffix--suffix-match {
-    background-color: rgb(188, 230, 240);
-}
-
-.inflection-table__suffix--full-feature-match {
-    background-color: lightgray;
-}
-
-.inflection-table__suffix--suffix-match.inflection-table__suffix--full-feature-match {
-    background-color: rgb(255, 238, 119);
-    font-weight: 700;
-}
-
-.hidden {
-    display: none;
 }
 
 .empty-row-column {
@@ -72,4 +45,120 @@ strong {
 
 .highlighted-cell {
     background: lightgray;
+}
+
+.infl-table {
+    display: grid;
+    border-left: 1px solid #111;
+    border-bottom: 1px solid #111;
+    margin-bottom: 50px;
+}
+
+.infl-table.wide {
+    /* Data flow order: number- case - declension - gender - type*/
+    grid-auto-flow: row;
+    grid-template-columns: repeat(21, 1fr); /* Default value, will be redefined in JS if necessary */
+}
+
+
+.infl-table.narrow {
+    /* Data flow order: declension - number- case - gender - type*/
+    grid-auto-flow: row;
+    grid-template-columns: repeat(6, 1fr); /* Default value, will be redefined in JS if necessary */
+}
+
+.infl-table.hidden {
+    display: none;
+}
+
+.infl-cell {
+    font-size: 12px;
+    padding: 2px 5px;
+    border-right: 1px solid #111;
+    border-top: 1px solid #111;
+}
+
+.infl-cell--hdr {
+    font-weight: 700;
+}
+
+.infl-cell--fw {
+    grid-column: 1 / -1;
+}
+
+.infl-cell.infl-cell--sep {
+    height: 50px;
+}
+
+.infl-cell--sp0 {
+    display: none;
+}
+
+.infl-cell--sp1 {
+    grid-column-end: span 1;
+}
+
+.infl-cell--sp2 {
+    grid-column-end: span 2;
+}
+
+.infl-cell--sp3 {
+    grid-column-end: span 3;
+}
+
+.infl-cell--sp4 {
+    grid-column-end: span 4;
+}
+
+.infl-cell--sp5 {
+    grid-column-end: span 5;
+}
+
+.infl-cell--sp6 {
+    grid-column-end: span 6;
+}
+
+.infl-cell--sp7 {
+    grid-column-end: span 7;
+}
+
+.infl-cell--sp8 {
+    grid-column-end: span 8;
+}
+
+.infl-cell--sp9 {
+    grid-column-end: span 9;
+}
+
+.infl-cell--sp10 {
+    grid-column-end: span 10;
+}
+
+.infl-cell--sp11 {
+    grid-column-end: span 11;
+}
+
+.infl-cell--sp12 {
+    grid-column-end: span 12;
+}
+
+.infl-cell--hl {
+    background: lightgray;
+}
+
+.infl-suff {
+    cursor: pointer;
+}
+
+.infl-suff--suffix-match {
+    background-color: rgb(188, 230, 240);
+}
+
+.infl-suff--full-feature-match {
+    background-color: lightgray;
+}
+
+.infl-suff--suffix-match.infl-suff--full-feature-match {
+    background-color: rgb(255, 238, 119);
+    font-weight: 700;
 }
