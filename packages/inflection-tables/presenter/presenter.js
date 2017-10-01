@@ -3,52 +3,100 @@
  * directory under /presenter/views/view-name
  */
 import * as Lib from '../lib/lib';
+import * as L10n from './l10n/l10n.js';
 import nounDeclensionView from "./views/noun-declension/view.js";
 import adjectiveDeclensionView from "./views/adj-declension/view.js";
 
 
 class Presenter {
-    constructor() {
+    constructor(selector, resultSet, locale) {
+        this.targetSelector = selector;
+        this.container = document.querySelector(this.targetSelector);
+        this.resultSet = resultSet;
         this.zeroWidthClass = 'hidden';
-        this.emptyColumnClass = 'empty-row-column';
-        this.noSuffixColumnClass ='no-suffix-column';
-        this.showEmptyColumnSel = '#show-empty-columns';
-        this.hideEmptyColumnSel = '#hide-empty-columns';
-        this.showNoSuffixDeclensionsSel = '#show-no-suffix-declensions';
-        this.hideNoSuffixDeclensionsSel = '#hide-no-suffix-declensions';
-        this.highlightedClass = 'highlighted-cell';
 
         this.views = {
             nounDeclension: nounDeclensionView,
             adjectiveDeclension: adjectiveDeclensionView
         };
 
-        this.activeView = undefined;
+        this.defaultViewID = 'nounDeclension';
+        this.activeViewID = undefined;
+
+        this.locale = locale; // This is a default locale
+        this.l10n = L10n.l10n;
+
+        return this;
+    }
+
+    setLocale(locale) {
+        this.locale = locale;
+        this.views[this.activeViewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
     }
 
 
-    render(selector, resultSet) {
+    render() {
         "use strict";
 
-        let views = this.getViews(resultSet[Lib.types.part]);
         // Show a default view
-        views[0].render(document.querySelector(selector), resultSet);
+        this.views[this.defaultViewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeViewID = this.defaultViewID;
 
-        document.querySelector("#view-switcher").innerHTML = '';
+        this.appendViewSelector("#view-switcher");
+        this.appendLocaleSelector("#locale-selector");
+    }
+
+    appendViewSelector(targetSelector) {
+        let views = this.getViews(this.resultSet[Lib.types.part]);
         if (views.length > 1) {
-            let selectList = document.createElement('select');
+            let id = 'view-selector-list';
+            let viewContainer = document.querySelector(targetSelector);
+            viewContainer.innerHTML = '';
+            let viewLabel = document.createElement('label');
+            viewLabel.setAttribute('for', id);
+            viewLabel.innerHTML = "View:&nbsp;";
+            let viewList = document.createElement('select');
             for (const view of views) {
                 let option = document.createElement("option");
                 option.value = view.id;
                 option.text = view.name;
-                selectList.appendChild(option);
+                viewList.appendChild(option);
             }
-            selectList.addEventListener('change', event => {
-                let viewID = event.target.value;
-                this.views[viewID].render(document.querySelector(selector), resultSet);
-            });
-            document.querySelector("#view-switcher").appendChild(selectList);
+            viewList.addEventListener('change', this.viewSelectorEventListener.bind(this));
+            viewContainer.appendChild(viewLabel);
+            viewContainer.appendChild(viewList);
         }
+    }
+
+    viewSelectorEventListener(event) {
+        let viewID = event.target.value;
+        this.views[viewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeViewID = viewID;
+    }
+
+    appendLocaleSelector(targetSelector) {
+        let id = 'locale-selector-list';
+        let locale = document.querySelector(targetSelector);
+        locale.innerHTML = ''; // Erase whatever was there
+        let localeLabel = document.createElement('label');
+        localeLabel.setAttribute('for', id);
+        localeLabel.innerHTML = "Locale:&nbsp;";
+        let localeList = document.createElement('select');
+        localeList.id = id;
+        for (let locale of this.l10n.locales) {
+            let option = document.createElement("option");
+            option.value = locale;
+            option.text = locale;
+            localeList.appendChild(option);
+        }
+        localeList.addEventListener('change', this.localeSelectorEventListener.bind(this));
+        locale.appendChild(localeLabel);
+        locale.appendChild(localeList);
+    }
+
+    localeSelectorEventListener() {
+        let locale = event.target.value;
+        this.setLocale(locale);
     }
 
     getViews(partsOfSpeech) {
@@ -63,6 +111,4 @@ class Presenter {
     }
 }
 
-let presenter = new Presenter();
-
-export default presenter;
+export default Presenter;

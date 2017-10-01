@@ -1086,11 +1086,12 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var papaparse = createCommonjsModule(function (module) {
+var papaparse = createCommonjsModule(function (module, exports) {
 /*!
 	Papa Parse
-	v4.3.2
+	v4.3.6
 	https://github.com/mholt/PapaParse
+	License: MIT
 */
 (function(root, factory)
 {
@@ -1099,17 +1100,11 @@ var papaparse = createCommonjsModule(function (module) {
 		// AMD. Register as an anonymous module.
 		undefined([], factory);
 	}
-	else if ('object' === 'object' && module.exports)
-	{
+	else {
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like environments that support module.exports,
 		// like Node.
 		module.exports = factory();
-	}
-	else
-	{
-		// Browser globals (root is window)
-		root.Papa = factory();
 	}
 }(this, function()
 {
@@ -1124,8 +1119,8 @@ var papaparse = createCommonjsModule(function (module) {
 		if (typeof window !== 'undefined') { return window; }
 		if (typeof global !== 'undefined') { return global; }
 
-        // When running tests none of the above have been defined
-        return {};
+		// When running tests none of the above have been defined
+		return {};
 	})();
 
 
@@ -1282,13 +1277,13 @@ var papaparse = createCommonjsModule(function (module) {
 	function CsvToJson(_input, _config)
 	{
 		_config = _config || {};
-        var dynamicTyping = _config.dynamicTyping || false;
-        if (isFunction(dynamicTyping)) {
-            _config.dynamicTypingFunction = dynamicTyping;
-            // Will be filled on first row call
-            dynamicTyping = {};
-        }
-        _config.dynamicTyping = dynamicTyping;
+		var dynamicTyping = _config.dynamicTyping || false;
+		if (isFunction(dynamicTyping)) {
+			_config.dynamicTypingFunction = dynamicTyping;
+			// Will be filled on first row call
+			dynamicTyping = {};
+		}
+		_config.dynamicTyping = dynamicTyping;
 
 		if (_config.worker && Papa.WORKERS_SUPPORTED)
 		{
@@ -1732,8 +1727,8 @@ var papaparse = createCommonjsModule(function (module) {
 		{
 			var contentRange = xhr.getResponseHeader('Content-Range');
 			if (contentRange === null) { // no content range, then finish!
-        			return -1;
-            		}
+					return -1;
+					}
 			return parseInt(contentRange.substr(contentRange.lastIndexOf('/') + 1));
 		}
 	}
@@ -1918,7 +1913,7 @@ var papaparse = createCommonjsModule(function (module) {
 		var _input;				// The input being parsed
 		var _parser;			// The core parser being used
 		var _paused = false;	// Whether we are paused or not
-		var _aborted = false;   // Whether the parser has aborted or not
+		var _aborted = false;	// Whether the parser has aborted or not
 		var _delimiterError;	// Temporary state between delimiter detection and processing results
 		var _fields = [];		// Fields are from the header row of the input, if there is one
 		var _results = {		// The last results returned from the parser
@@ -1966,7 +1961,7 @@ var papaparse = createCommonjsModule(function (module) {
 			_delimiterError = false;
 			if (!_config.delimiter)
 			{
-				var delimGuess = guessDelimiter(input, _config.newline);
+				var delimGuess = guessDelimiter(input, _config.newline, _config.skipEmptyLines);
 				if (delimGuess.successful)
 					_config.delimiter = delimGuess.bestDelimiter;
 				else
@@ -2062,13 +2057,13 @@ var papaparse = createCommonjsModule(function (module) {
 			_results.data.splice(0, 1);
 		}
 
-        function shouldApplyDynamicTyping(field) {
-            // Cache function values to avoid calling it for each row
-            if (_config.dynamicTypingFunction && _config.dynamicTyping[field] === undefined) {
-                _config.dynamicTyping[field] = _config.dynamicTypingFunction(field);
-            }
-            return (_config.dynamicTyping[field] || _config.dynamicTyping) === true
-        }
+		function shouldApplyDynamicTyping(field) {
+			// Cache function values to avoid calling it for each row
+			if (_config.dynamicTypingFunction && _config.dynamicTyping[field] === undefined) {
+				_config.dynamicTyping[field] = _config.dynamicTypingFunction(field);
+			}
+			return (_config.dynamicTyping[field] || _config.dynamicTyping) === true
+		}
 
 		function parseDynamic(field, value)
 		{
@@ -2128,7 +2123,7 @@ var papaparse = createCommonjsModule(function (module) {
 			return _results;
 		}
 
-		function guessDelimiter(input, newline)
+		function guessDelimiter(input, newline, skipEmptyLines)
 		{
 			var delimChoices = [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP];
 			var bestDelim, bestDelta, fieldCountPrevRow;
@@ -2136,7 +2131,7 @@ var papaparse = createCommonjsModule(function (module) {
 			for (var i = 0; i < delimChoices.length; i++)
 			{
 				var delim = delimChoices[i];
-				var delta = 0, avgFieldCount = 0;
+				var delta = 0, avgFieldCount = 0, emptyLinesCount = 0;
 				fieldCountPrevRow = undefined;
 
 				var preview = new Parser({
@@ -2147,6 +2142,10 @@ var papaparse = createCommonjsModule(function (module) {
 
 				for (var j = 0; j < preview.data.length; j++)
 				{
+					if (skipEmptyLines && preview.data[j].length === 1 && preview.data[j][0].length === 0) {
+						emptyLinesCount++;
+						continue
+					}
 					var fieldCount = preview.data[j].length;
 					avgFieldCount += fieldCount;
 
@@ -2163,7 +2162,7 @@ var papaparse = createCommonjsModule(function (module) {
 				}
 
 				if (preview.data.length > 0)
-					avgFieldCount /= preview.data.length;
+					avgFieldCount /= (preview.data.length - emptyLinesCount);
 
 				if ((typeof bestDelta === 'undefined' || delta < bestDelta)
 					&& avgFieldCount > 1.99)
@@ -2334,6 +2333,7 @@ var papaparse = createCommonjsModule(function (module) {
 						// Find closing quote
 						var quoteSearch = input.indexOf(quoteChar, quoteSearch+1);
 
+						//No other quotes are found - no other delimiters
 						if (quoteSearch === -1)
 						{
 							if (!ignoreLastRow) {
@@ -2349,9 +2349,9 @@ var papaparse = createCommonjsModule(function (module) {
 							return finish();
 						}
 
+						// Closing quote at EOF
 						if (quoteSearch === inputLen-1)
 						{
-							// Closing quote at EOF
 							var value = input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar);
 							return finish(value);
 						}
@@ -2363,9 +2363,9 @@ var papaparse = createCommonjsModule(function (module) {
 							continue;
 						}
 
+						// Closing quote followed by delimiter
 						if (input[quoteSearch+1] === delim)
 						{
-							// Closing quote followed by delimiter
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
 							cursor = quoteSearch + 1 + delimLen;
 							nextDelim = input.indexOf(delim, cursor);
@@ -2373,9 +2373,9 @@ var papaparse = createCommonjsModule(function (module) {
 							break;
 						}
 
+						// Closing quote followed by newline
 						if (input.substr(quoteSearch+1, newlineLen) === newline)
 						{
-							// Closing quote followed by newline
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
 							saveRow(quoteSearch + 1 + newlineLen);
 							nextDelim = input.indexOf(delim, cursor);	// because we may have skipped the nextDelim in the quoted field
@@ -2392,6 +2392,20 @@ var papaparse = createCommonjsModule(function (module) {
 
 							break;
 						}
+
+
+						// Checks for valid closing quotes are complete (escaped quotes or quote followed by EOF/delimiter/newline) -- assume these quotes are part of an invalid text string
+						errors.push({
+							type: 'Quotes',
+							code: 'InvalidQuotes',
+							message: 'Trailing quote on quoted field is malformed',
+							row: data.length,	// row has yet to be inserted
+							index: cursor
+						});
+
+						quoteSearch++;
+						continue;
+
 					}
 
 					continue;
@@ -2661,10 +2675,6 @@ var papaparse = createCommonjsModule(function (module) {
 /*
  * Latin language data module
  */
-/*
-CommonJS module below should be used exactly as specified, or it will result in incorrect import due to the bug in
-rollup-plugin-commonjs, see https://github.com/rollup/rollup-plugin-commonjs/issues/200
-*/
 // A language of this module
 const language = languages.latin;
 // Create a language data set that will keep all language-related information

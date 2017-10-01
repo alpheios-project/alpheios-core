@@ -7,12 +7,7 @@ import nounSuffixesCSV from './data/noun/suffixes.csv';
 import nounFootnotesCSV from './data/noun/footnotes.csv';
 import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
-
-/*
-CommonJS module below should be used exactly as specified, or it will result in incorrect import due to the bug in
-rollup-plugin-commonjs, see https://github.com/rollup/rollup-plugin-commonjs/issues/200
-*/
-import papaparse from "../../support/papaparse-4.3.2/papaparse.js";
+import papaparse from "papaparse";
 
 // A language of this module
 const language = Lib.languages.latin;

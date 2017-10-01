@@ -1,10 +1,15 @@
 import * as Lib from "../../lib/lib.js";
 import Handlebars from "../support/handlebars-4.0.10/handlebars-v4.0.10";  // CommonJS module
+//import Handlebars from "handlebars";
+//import IntlMessageFormat from 'intl-messageformat';
 export {GroupingFeature, View};
 
 let widthClassBase = 'infl-cell--sp';
 let highlightClass = 'infl-cell--hl';
 let classHidden = 'hidden';
+
+//import * as IntlMessageFormat from '../support/intl-messageformat-2.1.0/dist/intl-messageformat-with-locales';
+//import IntlMessageFormat from 'intl-messageformat';
 
 /**
  * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
@@ -141,14 +146,14 @@ class TitleCell {
         return this.nNodes[index];
     }
 
-    clone() {
+    /*clone() {
         let clone = new TitleCell(this.nvGroupSize);
         //clone.node = this.node.cloneNode(true);
         if (this.parent) {
             clone.parent = this.parent.clone();
         }
         return clone;
-    }
+    }*/
 
     hide() {
         this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
@@ -504,7 +509,7 @@ class GroupingFeatures {
 }
 
 class Table {
-    constructor(suffixes, groupingFeatures, headerCellTemplate, cellTemplate) {
+    constructor(suffixes, groupingFeatures, headerCellTemplate, cellTemplate, messages) {
         this.suffixes = suffixes;
         this.features = new GroupingFeatures(groupingFeatures);
 
@@ -518,6 +523,8 @@ class Table {
             headerCell: headerCellTemplate,
             cell: cellTemplate
         };
+
+        this.messages = messages;
 
         this.emptyColumnsHidden = false;
         this.suffixMatchesHidden = false;
@@ -746,7 +753,7 @@ class Table {
 
                 let titleCellNode = document.createElement('div');
                 titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = currentFeature.groupTitle;
+                titleCellNode.innerHTML = this.messages.get(currentFeature.groupTitle);
                 let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
 
                 if (!this.headers[currentLevel]) {
@@ -778,7 +785,7 @@ class Table {
 
                 let titleCellNode = document.createElement('div');
                 titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = currentFeature.groupTitle;
+                titleCellNode.innerHTML = this.messages.get(currentFeature.groupTitle);
                 let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
                 titleCell.node = titleCellNode;
 
@@ -1034,8 +1041,10 @@ class View {
      * @param {ResultSet} resultSet - A result set from inflection tables library.
      * @returns {string} HTML code representing an inflection table.
      */
-    render(container, resultSet) {
+    render(container, resultSet, messages) {
         "use strict";
+
+        this.messages = messages;
 
         this.container = container;
         // Create data structure for a template
@@ -1052,7 +1061,8 @@ class View {
         this.footnotes = { nodes: document.createElement('div') };
         this.footnotes.nodes.innerHTML = this.footnotesTemplate(this.displayData);
 
-        this.table = new Table(selection.suffixes, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate);
+
+        this.table = new Table(selection.suffixes, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate, messages);
 
         this.display();
     }

@@ -2,7 +2,7 @@
 // Import shared language data
 import * as Lib from "./lib/lib.js";
 import * as Tufts from "./analyzer/tufts/adapter.js";
-import presenter from "./presenter/presenter.js";
+import Presenter from "./presenter/presenter.js";
 
 // Load Latin language data
 import * as ModuleNS from './lib/lang/latin/latin.js';
@@ -50,7 +50,7 @@ let show = function show(word, fileNameBase) {
             resultSet.word = word;
 
             // Insert rendered view to a page
-            presenter.render('#id-inflections-table', resultSet);
+            let presenter = new Presenter('#id-inflections-table', resultSet, 'en-US').render();
 
             console.log('Show finished');
         }).catch(error => {

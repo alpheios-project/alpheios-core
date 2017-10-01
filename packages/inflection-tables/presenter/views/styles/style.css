@@ -2,31 +2,12 @@ strong {
     font-weight: 700;
 }
 
-.inflection-table tr:last-child {
-    border-bottom: 1px solid #000;
+.infl-form-control {
+    margin-bottom: 15px;
 }
 
-.inflection-table__cell {
-    border-right: 1px solid #000;
-    border-top: 1px solid #000;
+.infl-form-control select {
     padding: 2px 5px;
-}
-
-.inflection-table__cell:first-child {
-    border-left: 1px solid #000;
-}
-
-.inflection-table__cell--case-title {
-    padding-left: 20px;
-    font-style: italic;
-}
-
-.empty-row-column {
-    display: none;
-}
-
-.no-suffix-column {
-    display: none;
 }
 
 .switch-btn {
@@ -41,10 +22,6 @@ strong {
 
 .switch-btn.hidden {
     display: none;
-}
-
-.highlighted-cell {
-    background: lightgray;
 }
 
 .infl-table {
