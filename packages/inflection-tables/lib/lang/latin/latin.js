@@ -1,12 +1,14 @@
 /*
  * Latin language data module
  */
-export {language, parts, numbers, cases, declensions, genders, types, dataSet};
+export {language, parts, numbers, cases, declensions, genders, types, conjugations, tenses, voices, moods, persons, dataSet};
 import * as Lib from "../../lib.js";
 import nounSuffixesCSV from './data/noun/suffixes.csv';
 import nounFootnotesCSV from './data/noun/footnotes.csv';
 import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
+import verbSuffixesCSV from './data/verb/suffixes.csv';
+import verbFootnotesCSV from './data/verb/footnotes.csv';
 import papaparse from "papaparse";
 
 // A language of this module
@@ -20,7 +22,7 @@ let dataSet = new Lib.LanguageDataset(language);
  analyzer's language modules as well.
  */
 const importerName = 'csv';
-const parts = dataSet.defineFeatureType(Lib.types.part, ['noun', 'adjective']);
+const parts = dataSet.defineFeatureType(Lib.types.part, ['noun', 'adjective', 'verb']);
 const numbers = dataSet.defineFeatureType(Lib.types.number, ['singular', 'plural']);
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
@@ -52,11 +54,39 @@ const types = dataSet.defineFeatureType(Lib.types.type, ['regular', 'irregular']
 types.addImporter(importerName)
     .map('regular', types.regular)
     .map('irregular', types.irregular);
+const conjugations = dataSet.defineFeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
+conjugations.addImporter(importerName)
+    .map('1st', conjugations.first)
+    .map('2nd', conjugations.second)
+    .map('3rd', conjugations.third)
+    .map('4th', conjugations.fourth);
+const tenses = dataSet.defineFeatureType(Lib.types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
+tenses.addImporter(importerName)
+    .map('present', tenses.present)
+    .map('imperfect', tenses.imperfect)
+    .map('future', tenses.future)
+    .map('perfect', tenses.perfect)
+    .map('pluperfect', tenses.pluperfect)
+    .map('future_perfect', tenses['future perfect']);
+const voices = dataSet.defineFeatureType(Lib.types.voice, ['passive', 'active']);
+voices.addImporter(importerName)
+    .map('passive', voices.passive)
+    .map('active', voices.active);
+const moods = dataSet.defineFeatureType(Lib.types.mood, ['indicative', 'subjunctive']);
+moods.addImporter(importerName)
+    .map('indicative', moods.indicative)
+    .map('subjunctive', moods.subjunctive);
+const persons = dataSet.defineFeatureType(Lib.types.person, ['first', 'second', 'third']);
+persons.addImporter(importerName)
+    .map('1st', persons.first)
+    .map('2nd', persons.second)
+    .map('3rd', persons.third);
 const footnotes = dataSet.defineFeatureType(Lib.types.footnote, []);
 
 // endregion Definition of grammatical features
 
-dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
+// For noun and adjectives
+dataSet.addSuffixes = function(partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-';
 
@@ -68,8 +98,12 @@ dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
             suffix = null;
         }
 
-        let features = [partOfSpeech, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
-            declensions.importer.csv.get(data[i][3]), genders.importer.csv.get(data[i][4]), types.importer.csv.get(data[i][5])];
+        let features = [partOfSpeech,
+            numbers.importer.csv.get(data[i][1]),
+            cases.importer.csv.get(data[i][2]),
+            declensions.importer.csv.get(data[i][3]),
+            genders.importer.csv.get(data[i][4]),
+            types.importer.csv.get(data[i][5])];
         if (data[i][6]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
@@ -82,14 +116,53 @@ dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
     }
 };
 
-dataSet.addFootnotes = function addFootnotes(partOfSpeech, data) {
+// For verbs
+dataSet.addVerbSuffixes = function(partOfSpeech, data) {
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+    let noSuffixValue = '-';
+
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+        let suffix = data[i][0];
+        // Handle special suffix values
+        if (suffix === noSuffixValue) {
+            suffix = null;
+        }
+
+        let features = [partOfSpeech,
+            conjugations.importer.csv.get(data[i][1]),
+            voices.importer.csv.get(data[i][2]),
+            moods.importer.csv.get(data[i][3]),
+            tenses.importer.csv.get(data[i][4]),
+            numbers.importer.csv.get(data[i][5]),
+            persons.importer.csv.get(data[i][6])];
+
+        let grammarType = data[i][7];
+        // Type information can be empty if no ending is provided
+        if (grammarType) {
+            features.push(types.importer.csv.get(grammarType));
+        }
+        // Footnotes
+        if (data[i][8]) {
+            // There can be multiple footnote indexes separated by spaces
+            let language = this.language;
+            let indexes = data[i][8].split(' ').map(function(index) {
+                return footnotes.get(index);
+            });
+            features.push(...indexes);
+        }
+        this.addSuffix(suffix, ...features);
+    }
+};
+
+dataSet.addFootnotes = function(partOfSpeech, data) {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
         this.addFootnote(partOfSpeech, data[i][0], data[i][1]);
     }
 };
 
-dataSet.loadData = function loadData() {
+dataSet.loadData = function() {
     // Nouns
     let partOfSpeech = parts.noun;
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
@@ -103,6 +176,13 @@ dataSet.loadData = function loadData() {
     this.addSuffixes(partOfSpeech, suffixes.data);
     footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
     this.addFootnotes(partOfSpeech, footnotes.data);
+
+    // Verbs
+    partOfSpeech = parts.verb;
+    suffixes = papaparse.parse(verbSuffixesCSV, {});
+    this.addVerbSuffixes(partOfSpeech, suffixes.data);
+    footnotes = papaparse.parse(verbFootnotesCSV, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
 };
 
 
@@ -113,7 +193,7 @@ dataSet.loadData = function loadData() {
  * @returns {Suffix | null} If a match is found, returns a Suffix object modified with some
  * additional information about a match. If no matches found, returns null.
  */
-dataSet.matcher = function match(inflections, suffix) {
+dataSet.matcher = function(inflections, suffix) {
     "use strict";
     // All of those features must match between an inflection and an ending
     let obligatoryMatches = [Lib.types.part];
@@ -184,7 +264,7 @@ dataSet.matcher = function match(inflections, suffix) {
  * @param {MatchData} matchB
  * @returns {MatchData} A best of two matches
  */
-dataSet.bestMatch = function bestMatch(matchA, matchB) {
+dataSet.bestMatch = function(matchA, matchB) {
     // If one of the arguments is not set, return the other one
     if (!matchA && matchB) {
         return matchB;

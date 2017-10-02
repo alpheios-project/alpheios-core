@@ -1,15 +1,25 @@
 import * as Lib from "../../lib/lib.js";
 import Handlebars from "../support/handlebars-4.0.10/handlebars-v4.0.10";  // CommonJS module
-//import Handlebars from "handlebars";
-//import IntlMessageFormat from 'intl-messageformat';
-export {GroupingFeature, View};
+export {groupType, groupTitleLocation, GroupingFeature, GroupingFeatures, View};
 
-let widthClassBase = 'infl-cell--sp';
-let highlightClass = 'infl-cell--hl';
-let classHidden = 'hidden';
+let groupType = {
+    column: 'column', // Groups suffixes into columns
+    row: 'row' // Groups suffixes into rows
+};
 
-//import * as IntlMessageFormat from '../support/intl-messageformat-2.1.0/dist/intl-messageformat-with-locales';
-//import IntlMessageFormat from 'intl-messageformat';
+let groupTitleLocation = {
+    column: 'column', // Group title is located in a (left-side) column
+    row: 'row' // Group title is located within a row
+};
+
+let classNames = {
+    cell: 'infl-cell',
+    widthPrefix: 'infl-cell--sp',
+    fullWidth: 'infl-cell--fw',
+    header: 'infl-cell--hdr',
+    highlight: 'infl-cell--hl',
+    hidden: 'hidden'
+};
 
 /**
  * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
@@ -62,8 +72,8 @@ class Cell {
         this.column = undefined; // A column this cell belongs to
         this.row = undefined; // A row this cell belongs to
 
-        this.zeroWidthClass = widthClassBase + 0;
-        this.initialWidthClass = widthClassBase + 1;
+        this.zeroWidthClass = classNames.widthPrefix + 0;
+        this.initialWidthClass = classNames.widthPrefix + 1;
 
         this._index = undefined;
     }
@@ -103,13 +113,13 @@ class Cell {
     }
 
     highlight() {
-        this.wNode.classList.add(highlightClass);
-        this.nNode.classList.add(highlightClass);
+        this.wNode.classList.add(classNames.highlight);
+        this.nNode.classList.add(classNames.highlight);
     }
 
     clearHighlighting() {
-        this.wNode.classList.remove(highlightClass);
-        this.nNode.classList.remove(highlightClass);
+        this.wNode.classList.remove(classNames.highlight);
+        this.nNode.classList.remove(classNames.highlight);
     }
 
     highlightRowAndColumn() {
@@ -134,8 +144,8 @@ class TitleCell {
 
         this.parent = undefined;
 
-        this.zeroWidthClass = widthClassBase + 0;
-        this.initialWidthClass = widthClassBase + 1;
+        this.zeroWidthClass = classNames.widthPrefix + 0;
+        this.initialWidthClass = classNames.widthPrefix + 1;
     }
 
     get wvNode() {
@@ -146,14 +156,19 @@ class TitleCell {
         return this.nNodes[index];
     }
 
-    /*clone() {
-        let clone = new TitleCell(this.nvGroupSize);
-        //clone.node = this.node.cloneNode(true);
+    static placeholder(width = 1) {
+        let placeholder = document.createElement('div');
+        placeholder.classList.add(classNames.cell, classNames.widthPrefix + width);
+        return placeholder;
+    }
+
+    get hierarchyList() {
+        let parentCells = [];
         if (this.parent) {
-            clone.parent = this.parent.clone();
+            parentCells = this.parent.hierarchyList;
         }
-        return clone;
-    }*/
+        return parentCells.concat(this);
+    }
 
     hide() {
         this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
@@ -170,16 +185,16 @@ class TitleCell {
     }
 
     highlight() {
-        this.wNode.classList.add(highlightClass);
+        this.wNode.classList.add(classNames.highlight);
         for (let nNode of this.nNodes) {
-            nNode.classList.add(highlightClass);
+            nNode.classList.add(classNames.highlight);
         }
     }
 
     clearHighlighting() {
-        this.wNode.classList.remove(highlightClass);
+        this.wNode.classList.remove(classNames.highlight);
         for (let nNode of this.nNodes) {
-            nNode.classList.remove(highlightClass);
+            nNode.classList.remove(classNames.highlight);
         }
     }
 }
@@ -220,9 +235,9 @@ class HeaderCell {
     }
 
     changeSpan(value) {
-        let currentWidthClass = widthClassBase + this.span;
+        let currentWidthClass = classNames.widthPrefix + this.span;
         this.span += value;
-        let newWidthClass = widthClassBase + this.span;
+        let newWidthClass = classNames.widthPrefix + this.span;
         this.wNode.classList.replace(currentWidthClass, newWidthClass);
         this.nNode.classList.replace(currentWidthClass, newWidthClass);
 
@@ -257,8 +272,8 @@ class HeaderCell {
     }
 
     highlight() {
-        this.wNode.classList.add(highlightClass);
-        this.nNode.classList.add(highlightClass);
+        this.wNode.classList.add(classNames.highlight);
+        this.nNode.classList.add(classNames.highlight);
         
         if (this.parent) {
             this.parent.highlight();
@@ -266,8 +281,8 @@ class HeaderCell {
     }
     
     clearHighlighting() {
-        this.wNode.classList.remove(highlightClass);
-        this.nNode.classList.remove(highlightClass);
+        this.wNode.classList.remove(classNames.highlight);
+        this.nNode.classList.remove(classNames.highlight);
         
         if (this.parent) {
             this.parent.clearHighlighting();
@@ -390,16 +405,22 @@ class Row {
 }
 
 class GroupingFeature {
-    constructor(type, values, language) {
+    constructor(type, values, language, groupType, titleMessageID, titleLocation) {
         this._feature = new Lib.FeatureType(type, values, language);
-        this.isColumn = false;
-        this.isRow = false;
+
+        this._groupType = groupType;
+        this.groupTitle = titleMessageID;
+        this._titleLocation = titleLocation;
+
+        /*this.isColumn = false;
+        this.isRow = false;*/
     }
 
     clone() {
         let clone = new GroupingFeature(this._feature.type, this._feature.values, this._feature.language);
-        clone.isColumn = this.isColumn;
-        clone.isRow = this.isRow;
+        clone._groupType = this._groupType;
+        clone.groupTitle = this.groupTitle;
+        clone._titleLocation = this._titleLocation;
         return clone;
     }
 
@@ -411,21 +432,16 @@ class GroupingFeature {
         return this._feature.type;
     }
 
-    setColumnGroupType() {
-        this.isColumn = true;
-        this.isRow = false;
+    get isColumnGroup() {
+        return this._groupType === groupType.column;
     }
 
-    setRowGroupType() {
-        this.isColumn = false;
-        this.isRow = true;
+    get isRowGroup() {
+        return this._groupType === groupType.row;
     }
 
-    get(value) {
-        let feature = this._feature.get(value);
-        feature.isColumn = this.isColumn;
-        feature.isRow = this.isRow;
-        return feature;
+    get isTitleInColumn() {
+        return this._titleLocation === groupTitleLocation.column;
     }
 
     get size() {
@@ -448,6 +464,26 @@ class GroupingFeature {
     isSameType(groupingFeature) {
         return this._feature.type === groupingFeature.feature.type;
     }
+
+    createTitleCell(text, nvGroupSize) {
+        let titleCellNode = document.createElement('div');
+        titleCellNode.classList.add(classNames.cell);
+        if (this.isColumnGroup) {
+            titleCellNode.classList.add(classNames.header);
+        }
+        if (this.isRowGroup && this._titleLocation === groupTitleLocation.row) {
+            // This cell is taking entire row
+            titleCellNode.classList.add(classNames.fullWidth);
+        }
+        if (this.groupTitleStyles) {
+            titleCellNode.classList.add(...this.groupTitleStyles);
+        }
+
+        titleCellNode.innerHTML = text;
+        let titleCell = new TitleCell(titleCellNode, nvGroupSize);
+        titleCell.node = titleCellNode;
+        return titleCell;
+    }
 }
 
 class GroupingFeatures {
@@ -457,36 +493,43 @@ class GroupingFeatures {
         this._rowFeatures = [];
 
         for (let feature of features) {
-            if (feature.isColumn) {
+            if (feature.isColumnGroup) {
                 this._columnFeatures.push(feature);
             }
-            if (feature.isRow) {
+            if (feature.isRowGroup) {
                 this._rowFeatures.push(feature);
             }
         }
 
         for (let feature of features) {
-            if (feature.isColumn) {
+            if (feature.isColumnGroup) {
                 this.firstColumnFeature = feature;
                 break;
             }
         }
 
         for (let feature of features) {
-            if (feature.isColumn) {
+            if (feature.isColumnGroup) {
                 this.lastColumnFeature = feature;
             }
         }
 
         for (let feature of features) {
-            if (feature.isRow) {
+            if (feature.isRowGroup) {
                 this.firstRowFeature = feature;
                 break;
             }
         }
         for (let feature of features) {
-            if (feature.isRow) {
+            if (feature.isRowGroup) {
                 this.lastRowFeature = feature;
+            }
+        }
+
+        this.titleColumnsQuantity = 0;
+        for (let feature of features) {
+            if (feature.isTitleInColumn) {
+                this.titleColumnsQuantity++;
             }
         }
     }
@@ -509,7 +552,7 @@ class GroupingFeatures {
 }
 
 class Table {
-    constructor(suffixes, groupingFeatures, headerCellTemplate, cellTemplate, messages) {
+    constructor(suffixes, rowTitleColumnsQty, groupingFeatures, headerCellTemplate, cellTemplate, messages) {
         this.suffixes = suffixes;
         this.features = new GroupingFeatures(groupingFeatures);
 
@@ -524,6 +567,7 @@ class Table {
             cell: cellTemplate
         };
 
+        this.rowTitleColumnsQty = rowTitleColumnsQty;
         this.messages = messages;
 
         this.emptyColumnsHidden = false;
@@ -550,10 +594,10 @@ class Table {
             cell.index = index;
         }
 
-        this.getHeaders();
+        this.headers = this.constructHeaders();
 
         // Construct columns
-        this.columns = this.getColumns();
+        this.columns = this.constructColumns();
         for (let [index, column] of this.columns.entries()) {
             column.headerCell = this.headers[this.headers.length-1].cells[index];
         }
@@ -664,7 +708,7 @@ class Table {
         return group;
     }
 
-    getColumns(tree = this.tree, columns = [], currentLevel = 0) {
+    constructColumns(tree = this.tree, columns = [], currentLevel = 0) {
         let currentFeature = this.features.items[currentLevel];
 
         let groups = [];
@@ -673,20 +717,15 @@ class Table {
 
             // Iterate until the last row feature
             if (!currentFeature.isSameType(this.features.lastRowFeature)) {
-                let currentResult = this.getColumns(cellGroup, columns, currentLevel + 1);
-                if (currentFeature.isRow) {
+                let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1);
+                if (currentFeature.isRowGroup) {
                     // TODO: Avoid creating extra cells
-                    let titleCellNode = document.createElement('div');
-                    titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                    titleCellNode.innerHTML = featureValue;
-                    let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-
                     let group = {
                         titleText: featureValue,
                         groups: currentResult,
-                        titleCell: titleCell
+                        titleCell: currentFeature.createTitleCell(featureValue, this.features.firstColumnFeature.size)
                     };
-                    group.groups[0].titleCell.parent = titleCell;
+                    group.groups[0].titleCell.parent = group.titleCell;
                     groups.push(group);
                 }
                 else if (currentFeature.isSameType(this.features.lastColumnFeature)) {
@@ -698,27 +737,22 @@ class Table {
             }
             else {
                 // Last level
-                let titleCellNode = document.createElement('div');
-                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = featureValue;
-
-                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-                cellGroup.titleCell = titleCell;
+                cellGroup.titleCell = currentFeature.createTitleCell(featureValue, this.features.firstColumnFeature.size);
                 let group = {
                     titleText: featureValue,
                     cell: cellGroup,
-                    titleCell: titleCell
+                    titleCell: cellGroup.titleCell
                 };
                 groups.push(group);
             }
         }
-        if (currentFeature.isRow) {
+        if (currentFeature.isRowGroup) {
             return groups;
         }
         return columns;
     }
 
-    getHeaders(tree = this.tree, currentLevel = 0) {
+    constructHeaders(tree = this.tree, tableHeaders = [], currentLevel = 0) {
         let currentFeature = this.features.columnFeatures[currentLevel];
 
         let cells = [];
@@ -727,7 +761,7 @@ class Table {
 
             // Iterate until the last row feature
             if (currentLevel < this.features.columnFeatures.length - 1) {
-                let subCells = this.getHeaders(cellGroup, currentLevel + 1);
+                let subCells = this.constructHeaders(cellGroup, tableHeaders, currentLevel + 1);
 
                 // Last level
                 let columnSpan = 0;
@@ -751,17 +785,13 @@ class Table {
                     cell.parent = headerCell;
                 }
 
-                let titleCellNode = document.createElement('div');
-                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = this.messages.get(currentFeature.groupTitle);
-                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-
-                if (!this.headers[currentLevel]) {
-                    this.headers[currentLevel] = new Row();
+                if (!tableHeaders[currentLevel]) {
+                    tableHeaders[currentLevel] = new Row();
                 }
-                this.headers[currentLevel].titleCell = titleCell;
+                tableHeaders[currentLevel].titleCell = currentFeature.createTitleCell(
+                    this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
 
-                this.headers[currentLevel].add(headerCell);
+                tableHeaders[currentLevel].add(headerCell);
                 cells.push(headerCell);
             }
             else {
@@ -777,23 +807,22 @@ class Table {
                 this.docFragment.appendChild(element);
                 headerCell.node = element;
 
-                if (!this.headers[currentLevel]) {
-                    this.headers[currentLevel] = new Row();
+                if (!tableHeaders[currentLevel]) {
+                    tableHeaders[currentLevel] = new Row();
                 }
 
-                this.headers[currentLevel].add(headerCell);
-
-                let titleCellNode = document.createElement('div');
-                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = this.messages.get(currentFeature.groupTitle);
-                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-                titleCell.node = titleCellNode;
-
-                this.headers[currentLevel].titleCell = titleCell;
+                tableHeaders[currentLevel].add(headerCell);
+                tableHeaders[currentLevel].titleCell = currentFeature.createTitleCell(
+                    this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
                 cells.push(headerCell);
             }
         }
-        return cells;
+        if (currentLevel === 0) {
+            return tableHeaders;
+        }
+        else {
+            return cells;
+        }
     }
 
     renderViews() {
@@ -804,14 +833,10 @@ class Table {
 
         // Calculate a number of visible columns
         let colNum = 0;
-        for (let [index, row] of this.rows.entries()) {
-            // Count a number of non-hidden columns
-            if (index === 0) {
-                for (let cell of row.cells) {
-                    if (!cell.column.hidden) {
-                        colNum++;
-                    }
-                }
+        let firstRow = this.rows[0];
+        for (let cell of firstRow.cells) {
+            if (!cell.column.hidden) {
+                colNum++;
             }
         }
 
@@ -824,15 +849,19 @@ class Table {
         }
 
         for (let row of this.rows) {
-            if (row.titleCell.parent) {
-                this.wideView.nodes.appendChild(row.titleCell.parent.wvNode);
+            let titleCells = row.titleCell.hierarchyList;
+            if (titleCells.length < this.features.titleColumnsQuantity) {
+                this.wideView.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
             }
-            this.wideView.nodes.appendChild(row.titleCell.wvNode);
+            for (let titleCell of titleCells) {
+                this.wideView.nodes.appendChild(titleCell.wvNode);
+            }
+
             for (let cell of row.cells) {
                 this.wideView.nodes.appendChild(cell.wvNode);
             }
         }
-        this.wideView.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 1fr)';
+        this.wideView.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + this.features.titleColumnsQuantity) + ', 1fr)';
 
 
         // Narrow view
@@ -842,13 +871,10 @@ class Table {
 
             // Calculate a number of visible columns
             let colNum = 0;
-            for (let [index, row] of this.rows.entries()) {
-                for (let i = groupIndex * this.narrowView.groupSize; i < (groupIndex + 1) * this.narrowView.groupSize; i++) {
-                    if (index === 0) {
-                        if (!row.cells[i].column.hidden) {
-                            colNum++;
-                        }
-                    }
+            let firstRow = this.rows[0];
+            for (let i = groupIndex * this.narrowView.groupSize; i < ((groupIndex + 1) * this.narrowView.groupSize); i++) {
+                if (!firstRow.cells[i].column.hidden) {
+                    colNum++;
                 }
             }
 
@@ -862,22 +888,26 @@ class Table {
                     }
                 }
 
-                for (let [index, row] of this.rows.entries()) {
-                    if (row.titleCell.parent) {
-                        group.nodes.appendChild(row.titleCell.parent.getNvNode(groupIndex));
+                for (let row of this.rows) {
+                    let titleCells = row.titleCell.hierarchyList;
+                    if (titleCells.length < this.features.titleColumnsQuantity) {
+                        group.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
                     }
-                    group.nodes.appendChild(row.titleCell.getNvNode(groupIndex));
+                    for (let titleCell of titleCells) {
+                        group.nodes.appendChild(titleCell.getNvNode(groupIndex));
+                    }
+
                     for (let i = groupIndex * this.narrowView.groupSize; i < (groupIndex + 1) * this.narrowView.groupSize; i++) {
                         group.nodes.appendChild(row.cells[i].nvNode);
                     }
                 }
-                group.nodes.classList.remove(classHidden);
-                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 100px)';
-                group.nodes.style.width = (colNum + 1) * 100 + 'px';
+                group.nodes.classList.remove(classNames.hidden);
+                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + this.features.titleColumnsQuantity) + ', 100px)';
+                group.nodes.style.width = (colNum + this.features.titleColumnsQuantity) * 100 + 'px';
             }
             else {
                 // This group is hidden
-                group.nodes.classList.add(classHidden);
+                group.nodes.classList.add(classNames.hidden);
             }
 
 
@@ -917,7 +947,7 @@ class Table {
         this.emptyColumnsHidden = false;
     }
 
-    hideNoSuffixDeclensions() {
+    hideNoSuffixGroups() {
         for (let headerCell of this.headers[0].cells) {
             let matches = !!headerCell.columns.find(column => column.suffixMatches);
             if (!matches) {
@@ -929,7 +959,7 @@ class Table {
         this.suffixMatchesHidden = true;
     }
 
-    showNoSuffixDeclensions() {
+    showNoSuffixGroups() {
         for (let column of this.columns) {
             column.show();
         }
@@ -1062,7 +1092,7 @@ class View {
         this.footnotes.nodes.innerHTML = this.footnotesTemplate(this.displayData);
 
 
-        this.table = new Table(selection.suffixes, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate, messages);
+        this.table = new Table(selection.suffixes, this.rowTitleColumnsQty, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate, messages);
 
         this.display();
     }
@@ -1088,36 +1118,36 @@ class View {
         this.pageHeader.nodes.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));
         this.pageHeader.nodes.querySelector('#show-empty-columns').addEventListener('click', this.showEmptyColumns.bind(this));
 
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').addEventListener('click', this.hideNoSuffixDeclensions.bind(this));
-        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').addEventListener('click', this.showNoSuffixDeclensions.bind(this));
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').addEventListener('click', this.hideNoSuffixGroups.bind(this));
+        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').addEventListener('click', this.showNoSuffixGroups.bind(this));
     }
 
 
     hideEmptyColumns() {
         this.table.hideEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.remove(classNames.hidden);
     }
 
     showEmptyColumns() {
         this.table.showEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.remove(classNames.hidden);
     }
 
-    hideNoSuffixDeclensions() {
-        this.table.hideNoSuffixDeclensions();
+    hideNoSuffixGroups() {
+        this.table.hideNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.remove(classNames.hidden);
     }
 
-    showNoSuffixDeclensions() {
-        this.table.showNoSuffixDeclensions();
+    showNoSuffixGroups() {
+        this.table.showNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.remove(classNames.hidden);
     }
 }

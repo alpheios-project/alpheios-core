@@ -22,13 +22,21 @@ let adapter = {};
 adapter.transform = function(jsonObj) {
     "use strict";
     let lexemes = [];
-    for (let lexeme of jsonObj.RDF.Annotation.Body) {
+    let annotationBody = jsonObj.RDF.Annotation.Body;
+    if (!Array.isArray(annotationBody)) {
+        /*
+        If only one lexeme is returned, Annotation Body will not be an array but rather a single object.
+        Let's convert it to an array so we can work with it in a uniformal way.
+         */
+        annotationBody = [annotationBody];
+    }
+    for (let lexeme of annotationBody) {
         let lemma = new Lib.Lemma(lexeme.rest.entry.dict.hdwd.$, maService.languages.importer.get(lexeme.rest.entry.dict.hdwd.lang));
 
         let inflections = [];
         let inflectionsJSON = lexeme.rest.entry.infl;
         if (!Array.isArray(inflectionsJSON)) {
-            // Inflection is a single object, not an array of objects. Convert it to an array for uniformity.
+            // If only one inflection returned, it is a single object, not an array of objects. Convert it to an array for uniformity.
             inflectionsJSON = [inflectionsJSON];
         }
         for (let inflectionJSON of inflectionsJSON) {
@@ -37,11 +45,48 @@ adapter.transform = function(jsonObj) {
                 // Set suffix if provided by a morphological analyzer
                 inflection.suffix = inflectionJSON.term.suff.$;
             }
-            inflection.feature = maService.latin[Lib.types.part].get(inflectionJSON.pofs.$);
-            inflection.feature = maService.latin[Lib.types.grmCase].get(inflectionJSON.case.$);
-            inflection.feature = maService.latin[Lib.types.declension].get(inflectionJSON.decl.$);
-            inflection.feature = maService.latin[Lib.types.number].get(inflectionJSON.num.$);
-            inflection.feature = maService.latin[Lib.types.gender].get(inflectionJSON.gend.$);
+
+            // Parse whatever grammatical features we're interested in
+            if (inflectionJSON.pofs) {
+                inflection.feature = maService.latin[Lib.types.part].get(inflectionJSON.pofs.$);
+            }
+
+            if (inflectionJSON.case) {
+                inflection.feature = maService.latin[Lib.types.grmCase].get(inflectionJSON.case.$);
+            }
+
+            if (inflectionJSON.decl) {
+                inflection.feature = maService.latin[Lib.types.declension].get(inflectionJSON.decl.$);
+            }
+
+            if (inflectionJSON.num) {
+                inflection.feature = maService.latin[Lib.types.number].get(inflectionJSON.num.$);
+            }
+
+            if (inflectionJSON.gend) {
+                inflection.feature = maService.latin[Lib.types.gender].get(inflectionJSON.gend.$);
+            }
+
+            if (inflectionJSON.conj) {
+                inflection.feature = maService.latin[Lib.types.conjugation].get(inflectionJSON.conj.$);
+            }
+
+            if (inflectionJSON.tense) {
+                inflection.feature = maService.latin[Lib.types.tense].get(inflectionJSON.tense.$);
+            }
+
+            if (inflectionJSON.voice) {
+                inflection.feature = maService.latin[Lib.types.voice].get(inflectionJSON.voice.$);
+            }
+
+            if (inflectionJSON.mood) {
+                inflection.feature = maService.latin[Lib.types.mood].get(inflectionJSON.mood.$);
+            }
+
+            if (inflectionJSON.pers) {
+                inflection.feature = maService.latin[Lib.types.person].get(inflectionJSON.pers.$);
+            }
+
             inflections.push(inflection);
         }
         lexemes.push(new Lib.Lexeme(lemma, inflections));

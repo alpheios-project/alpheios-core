@@ -1,0 +1,1120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="la">
+  <stem-table>
+      <stem conj="1st">ā</stem>
+      <stem conj="2nd">ē</stem>
+      <stem conj="3rd">e</stem>
+      <stem conj="4th">i</stem>
+  </stem-table>
+  <order-table>
+    <order-item attname="tense" order="1">present</order-item>
+    <order-item attname="tense" order="2">perfect</order-item>
+    <order-item attname="tense" order="3">future</order-item>
+    <order-item attname="voice" order="1">active</order-item>
+    <order-item attname="voice" order="2">passive</order-item>
+    <order-item attname="mood" order="1">imperative</order-item>      
+    <order-item attname="mood" order="2">infinitive</order-item>
+    <order-item attname="mood" order="3">verb_participle</order-item>
+    <order-item attname="mood" order="4">gerundive</order-item>
+    <order-item attname="mood" order="5">supine</order-item>
+    <order-item attname="conj" order="1">1st</order-item>
+    <order-item attname="conj" order="2">2nd</order-item>
+    <order-item attname="conj" order="3" footnote="Footnote-1">3rd</order-item>
+    <order-item attname="conj" order="4" footnote="Footnote-2">4th</order-item>
+    <order-item attname="pers" order="1">1st</order-item>
+    <order-item attname="pers" order="2">2nd</order-item>
+    <order-item attname="pers" order="3">3rd</order-item>
+    <order-item attname="num" order="1">singular</order-item>
+    <order-item attname="num" order="2">plural</order-item>
+    <order-item attname="case" order="1">nominative</order-item>     
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">ablative</order-item>
+    <order-item attname="case" order="6">locative</order-item>
+    <order-item attname="case" order="7">vocative</order-item>
+  </order-table>
+  <infl-endings>       
+    <!-- Imperative -->
+    <!-- 1st imperative present -->
+    <infl-ending-set
+        conj="1st"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular" footnote="Footnote-3">ā</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">āte</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">āre</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">āminī</infl-ending>
+    </infl-ending-set>
+    <!-- 2nd imperative present -->
+    <infl-ending-set
+        conj="2nd"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular" footnote="Footnote-3">ē</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ēte</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ēre</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ēminī</infl-ending>
+    </infl-ending-set>
+    <!-- 3rd imperative present -->
+    <infl-ending-set
+        conj="3rd"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular" footnote="Footnote-3">e</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">īte</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ere</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">iminī</infl-ending>
+    </infl-ending-set>
+    <!-- 4th imperative present -->
+    <infl-ending-set
+        conj="4th"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular" footnote="Footnote-3">ī</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="active"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">īte</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">īre</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="passive"
+        mood="imperative"
+        tense="present"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">īminī</infl-ending>
+    </infl-ending-set>
+    <!-- 1st imperative future -->
+    <infl-ending-set
+        conj="1st"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ātō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd">
+        <infl-ending type="regular">ātō</infl-ending>
+    </infl-ending-set>        
+    <infl-ending-set
+        conj="1st"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ātote</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">antō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ātōr</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd"/>
+    <infl-ending-set
+        conj="1st"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ātor</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="1st"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">amantor</infl-ending>
+    </infl-ending-set>        
+    <!-- 2nd imperative future -->
+    <infl-ending-set
+        conj="2nd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ētō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd">
+        <infl-ending type="regular">ētō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ētōte</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">entō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ētor</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd"/>
+    <infl-ending-set
+        conj="2nd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ētor</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">entor</infl-ending>
+    </infl-ending-set>
+    <!-- 3rd imperative future -->
+    <infl-ending-set
+        conj="3rd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">itō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd">
+        <infl-ending type="regular">itō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">itōte</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">untō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">itor</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd"/>
+    <infl-ending-set
+        conj="3rd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">itor</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="3rd"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">untor</infl-ending>
+    </infl-ending-set>
+    <!-- 4th imperative future -->
+    <infl-ending-set
+        conj="4th"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ītō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd">
+        <infl-ending type="regular">ītō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ītōte</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="active"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">iuntō</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="2nd">
+        <infl-ending type="regular">ītor</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="singular"
+        pers="3rd"/>
+    <infl-ending-set
+        conj="4th"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="2nd">
+        <infl-ending type="regular">ītor</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="4th"
+        voice="passive"
+        mood="imperative"
+        tense="future"
+        num="plural"
+        pers="3rd">
+        <infl-ending type="regular">iuntor</infl-ending>
+    </infl-ending-set>
+    <!-- Infinitive -->
+    <infl-ending-set
+        conj="1st"
+        voice="active"
+        mood="infinitive"
+        tense="present">
+        <infl-ending type="regular">āre</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+        conj="2nd"
+        voice="active"
+        mood="infinitive"
+        tense="present">
+        <infl-ending type="regular">ēre</infl-ending>
+    </infl-ending-set>          
+    <infl-ending-set
+        conj="3rd"
+        voice="active"
+        mood="infinitive"
+        tense="present">
+        <infl-ending type="regular">ere</infl-ending>
+    </infl-ending-set>          
+    <infl-ending-set
+        conj="4th"
+        voice="active"
+        mood="infinitive"
+        tense="present">
+        <infl-ending type="regular">īre</infl-ending>
+    </infl-ending-set>          
+    <infl-ending-set
+          conj="1st"
+          voice="active"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">āvisse</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">visse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">isse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">īvisse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">āturus esse</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">tūrus esse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">tūrus esse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">ītūrus esse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          mood="infinitive"
+          tense="present">
+          <infl-ending type="regular">ārī</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          mood="infinitive"
+          tense="present">
+          <infl-ending type="regular">ērī</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          mood="infinitive"
+          tense="present">
+          <infl-ending type="regular">ī</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          mood="infinitive"
+          tense="present">
+          <infl-ending type="regular">īrī</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">āus esse</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">itus esse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">tus esse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          mood="infinitive"
+          tense="perfect">
+          <infl-ending type="regular">ītus esse</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">ātum īrī</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">itum īrī</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">tum īri</infl-ending>
+      </infl-ending-set>          
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          mood="infinitive"
+          tense="future">
+          <infl-ending type="regular">ītum īrī</infl-ending>
+      </infl-ending-set>          
+      <!-- verb_participles -->
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          mood="verb_participle"
+          tense="present">
+          <infl-ending type="regular">āns</infl-ending>
+          <infl-ending type="irregular">antis</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          mood="verb_participle"
+          tense="present">
+          <infl-ending type="regular">ēns</infl-ending>
+          <infl-ending type="irregular">ventis</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          mood="verb_participle"
+          tense="present">
+          <infl-ending type="regular">ēns</infl-ending>
+          <infl-ending type="irregular">entis</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          mood="verb_participle"
+          tense="present">
+          <infl-ending type="regular">iēns</infl-ending>
+          <infl-ending type="irregular">ientis</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          mood="verb_participle"
+          tense="perfect"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          mood="verb_participle"
+          tense="perfect"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          mood="verb_participle"
+          tense="perfect"/>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          mood="verb_participle"
+          tense="perfect"/>      
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">ātūrus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">tūrus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">tūrus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">ītūrus esse</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          mood="verb_participle"
+          tense="present"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          mood="verb_participle"
+          tense="present"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          mood="verb_participle"
+          tense="present"/>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          mood="verb_participle"
+          tense="present"/>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          mood="verb_participle"
+          tense="perfect">
+          <infl-ending type="regular">ātus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          mood="verb_participle"
+          tense="perfect">
+          <infl-ending type="regular">itus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          mood="verb_participle"
+          tense="perfect">
+          <infl-ending type="regular">tus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          mood="verb_participle"
+          tense="perfect">
+          <infl-ending type="regular">ītus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">andus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">endus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">endus</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          mood="verb_participle"
+          tense="future">
+          <infl-ending type="regular">iendus</infl-ending>
+          <infl-ending type="irregular">a</infl-ending>
+          <infl-ending type="irregular">um</infl-ending>
+      </infl-ending-set>
+    <!-- Gerundive -->
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          case="genitive"
+          mood="gerundive">
+          <infl-ending type="regular">andī</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          case="genitive"
+          mood="gerundive">
+          <infl-ending type="regular">endī</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          case="genitive"
+          mood="gerundive">
+          <infl-ending type="regular">endī</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          case="genitive"
+          mood="gerundive">
+          <infl-ending type="regular">iendī</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          case="dative"
+          mood="gerundive">
+          <infl-ending type="regular">andō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          case="dative"
+          mood="gerundive">
+          <infl-ending type="regular">endō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          case="dative"
+          mood="gerundive">
+          <infl-ending type="regular">endō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          case="dative"
+          mood="gerundive">
+          <infl-ending type="regular">iendō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          case="accusative"
+          mood="gerundive">
+          <infl-ending type="regular">andum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          case="accusative"
+          mood="gerundive">
+          <infl-ending type="regular">endum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          case="accusative"
+          mood="gerundive">
+          <infl-ending type="regular">endum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          case="accusative"
+          mood="gerundive">
+          <infl-ending type="regular">iendum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          case="ablative"
+          mood="gerundive">
+          <infl-ending type="regular">andō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          case="ablative"
+          mood="gerundive">
+          <infl-ending type="regular">endō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          case="ablative"
+          mood="gerundive">
+          <infl-ending type="regular">endō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          case="ablative"
+          mood="gerundive">
+          <infl-ending type="regular">iendō</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          case="genitive"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          case="genitive"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          case="genitive"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          case="genitive"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          case="dative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          case="dative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          case="dative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          case="dative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          case="accusative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          case="accusative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          case="accusative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          case="accusative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          case="ablative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          case="ablative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          case="ablative"
+          mood="gerundive"/>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          case="ablative"
+          mood="gerundive"/>     
+      <!-- Supine -->
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          case="accusative"
+          mood="supine">
+          <infl-ending type="regular">ātum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          case="accusative"
+          mood="supine">
+          <infl-ending type="regular">itum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          case="accusative"
+          mood="supine">
+          <infl-ending type="regular">tum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          case="accusative"
+          mood="supine">
+          <infl-ending type="regular">ītum</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="active"
+          case="ablative"
+          mood="supine">
+          <infl-ending type="regular">ātū</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="2nd"
+          voice="active"
+          case="ablative"
+          mood="supine">
+          <infl-ending type="regular">itū</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="3rd"
+          voice="active"
+          case="ablative"
+          mood="supine">
+          <infl-ending type="regular">tū</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="4th"
+          voice="active"
+          case="ablative"
+          mood="supine">
+          <infl-ending type="regular">ītū</infl-ending>
+      </infl-ending-set>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          case="accusative"
+          mood="supine"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          case="accusative"
+          mood="supine"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          case="accusative"
+          mood="supine"/>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          case="accusative"
+          mood="supine"/>
+      <infl-ending-set
+          conj="1st"
+          voice="passive"
+          case="ablative"
+          mood="supine"/>
+      <infl-ending-set
+          conj="2nd"
+          voice="passive"
+          case="ablative"
+          mood="supine"/>
+      <infl-ending-set
+          conj="3rd"
+          voice="passive"
+          case="ablative"
+          mood="supine"/>
+      <infl-ending-set
+          conj="4th"
+          voice="passive"
+          case="ablative"
+          mood="supine"/>           
+  </infl-endings>
+  <footnotes>
+    <footnote id="Footnote-1">Verbs of the Third Conjugation ending in io, retain the i before a, o, u and long e and before short e in the
+        future tense, participles, gerund and gerundive, giving them in these forms the appearance of a fourth counjugation
+        verb.</footnote>
+    <footnote id="Footnote-2">The verb fīō is a 4th conjugation verb that is irregular in 
+          only two forms: the present infinitive fierī and the imperfect subjunctive fierem.</footnote>
+    <footnote id="Footnote-3">Dic, duc, fac, and fer lack a final vowel in the imperative
+          in classical Latin. The singular imperative of the verb sciō
+          is always scītō, and the plural is usually scītōte.</footnote>  
+  </footnotes>
+</infl-data>

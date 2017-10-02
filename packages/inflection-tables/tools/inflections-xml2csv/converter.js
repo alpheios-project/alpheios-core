@@ -151,7 +151,7 @@ const latin = {
         suffixes: {
             outputFN: 'suffixes.csv',
             get outputPath() {
-                return path.join(__dirname, latin.outputBaseDir, latin.adjective.outputSubDir, this.outputFN)
+                return path.join(__dirname, latin.outputBaseDir, latin.verb.outputSubDir, this.outputFN)
             },
             get (json) {
                 "use strict";
@@ -162,23 +162,41 @@ const latin = {
                 for (const group of data) {
 
                     // Iterate over group's individual items
-                    for (const suffix of group['infl-ending']) {
-                        let footnote = '';
-                        if (suffix['_attr'].hasOwnProperty('footnote')) {
-                            // There can be multiple footnotes separated by spaces
-                            footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value']);
-                        }
-                        result.push({
-                            ['Ending']: suffix['_text'],
-                            ['Number']: group['_attr']['num']['_value'],
-                            ['Case']: group['_attr']['case']['_value'],
-                            ['Declension']: group['_attr']['decl']['_value'],
-                            ['Gender']: group['_attr']['gend']['_value'],
-                            ['Type']: suffix['_attr']['type']['_value'],
-                            ['Footnote']: footnote
-                        })
+                    if (group['infl-ending']) {
+                        for (const suffix of group['infl-ending']) {
+                            let footnote = '';
+                            if (suffix['_attr'].hasOwnProperty('footnote')) {
+                                // There can be multiple footnotes separated by spaces
+                                footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value']);
+                            }
+                            result.push({
+                                ['Ending']: suffix['_text'],
+                                ['Conjugation']: group['_attr']['conj']['_value'],
+                                ['Voice']: group['_attr']['voice']['_value'],
+                                ['Mood']: group['_attr']['mood']['_value'],
+                                ['Tense']: group['_attr']['tense']['_value'],
+                                ['Number']: group['_attr']['num']['_value'],
+                                ['Person']: group['_attr']['pers']['_value'],
+                                ['Type']: suffix['_attr']['type']['_value'],
+                                ['Footnote']: footnote
+                            })
 
+                        }
                     }
+                    else {
+                        // There is no ending defined for this group.
+                        result.push({
+                            ['Ending']: '',
+                            ['Conjugation']: group['_attr']['conj']['_value'],
+                            ['Voice']: group['_attr']['voice']['_value'],
+                            ['Mood']: group['_attr']['mood']['_value'],
+                            ['Tense']: group['_attr']['tense']['_value'],
+                            ['Number']: group['_attr']['num']['_value'],
+                            ['Person']: group['_attr']['pers']['_value'],
+                            ['Footnote']: ''
+                        })
+                    }
+
                 }
                 return csvParser.unparse(result);
             }
@@ -187,12 +205,11 @@ const latin = {
         footnotes: {
             outputFN: 'footnotes.csv',
             get outputPath() {
-                return path.join(__dirname, latin.outputBaseDir, latin.adjective.outputSubDir, this.outputFN)
+                return path.join(__dirname, latin.outputBaseDir, latin.verb.outputSubDir, this.outputFN)
             },
             normalizeIndex(index) {
                 // There can be multiple footnotes separated by spaces
-                let t = index.replace(/[^\d\s]/g, '');
-                return t;
+                return index.replace(/[^\d\s]/g, '');
             },
             get (json) {
                 "use strict";
@@ -202,9 +219,11 @@ const latin = {
 
                 // Skip the first item
                 for (let i = 1; i < data.length; i++) {
+                    let text = data[i]['_text'];
+                    text = text.replace(/\s+/g, ' '); // Replace multiple whitespace characters with a single space
                     result.push({
                         ['Index']: this.normalizeIndex(data[i]['_attr'].id['_value']),
-                        ['Text']: data[i]['_text']
+                        ['Text']: text
                     })
                 }
                 return csvParser.unparse(result);
@@ -236,7 +255,14 @@ try {
     json = xmlToJSON.parseString(data);
     writeData(latin.noun.suffixes.get(json), latin.adjective.suffixes.outputPath);
     // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
-    //writeData(latin.noun.footnotes.get(json), latin.adjective.footnotes.outputPath);
+    //writeData(latin.adjective.footnotes.get(json), latin.adjective.footnotes.outputPath);
+
+    // Verbs
+    data = readFile(path.join(__dirname, inputDir, latin.verb.inputFN));
+    json = xmlToJSON.parseString(data);
+    writeData(latin.verb.suffixes.get(json), latin.verb.suffixes.outputPath);
+    // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
+    writeData(latin.verb.footnotes.get(json), latin.verb.footnotes.outputPath);
 
 } catch (e) {
     console.log('Error:', e.stack);

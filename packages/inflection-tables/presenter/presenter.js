@@ -4,24 +4,42 @@
  */
 import * as Lib from '../lib/lib';
 import * as L10n from './l10n/l10n.js';
-import nounDeclensionView from "./views/noun-declension/view.js";
-import adjectiveDeclensionView from "./views/adj-declension/view.js";
+import nounDeclensionView from "./views/noun/noun";
+import adjectiveDeclensionView from "./views/adjective/adjective";
+import verbVoiceConjugationMoodView from "./views/verb/voice-conjugation-mood";
+import verbVoiceMoodConjugationView from "./views/verb/voice-mood-conjugation";
+import verbConjugationVoiceMoodView from "./views/verb/conjugation-voice-mood";
+import verbConjugationMoodVoiceView from "./views/verb/conjugation-mood-voice";
+import verbMoodVoiceConjugationView from "./views/verb/mood-voice-conjugation";
+import verbMoodConjugationVoiceView from "./views/verb/mood-conjugation-voice";
 
 
 class Presenter {
     constructor(selector, resultSet, locale) {
+        "use strict";
+
         this.targetSelector = selector;
         this.container = document.querySelector(this.targetSelector);
         this.resultSet = resultSet;
         this.zeroWidthClass = 'hidden';
 
-        this.views = {
+        // All views registered by the Presenter
+        this.registeredViews = {
             nounDeclension: nounDeclensionView,
-            adjectiveDeclension: adjectiveDeclensionView
+            adjectiveDeclension: adjectiveDeclensionView,
+            verbVoiceConjugationMood: verbVoiceConjugationMoodView,
+            verbVoiceMoodConjugation: verbVoiceMoodConjugationView,
+            verbConjugationVoiceMood: verbConjugationVoiceMoodView,
+            verbConjugationMoodVoice: verbConjugationMoodVoiceView,
+            verbMoodVoiceConjugation: verbMoodVoiceConjugationView,
+            verbMoodConjugationVoice: verbMoodConjugationVoiceView
         };
 
-        this.defaultViewID = 'nounDeclension';
-        this.activeViewID = undefined;
+        // Views available for parts of speech that are present in a Result Set
+        this.availableViews = this.getViews(this.resultSet[Lib.types.part]);
+
+        this.defaultView = this.availableViews[0];
+        this.activeView = undefined;
 
         this.locale = locale; // This is a default locale
         this.l10n = L10n.l10n;
@@ -31,7 +49,7 @@ class Presenter {
 
     setLocale(locale) {
         this.locale = locale;
-        this.views[this.activeViewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
     }
 
 
@@ -39,16 +57,15 @@ class Presenter {
         "use strict";
 
         // Show a default view
-        this.views[this.defaultViewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
-        this.activeViewID = this.defaultViewID;
+        this.defaultView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView = this.defaultView;
 
         this.appendViewSelector("#view-switcher");
         this.appendLocaleSelector("#locale-selector");
     }
 
     appendViewSelector(targetSelector) {
-        let views = this.getViews(this.resultSet[Lib.types.part]);
-        if (views.length > 1) {
+        if (this.availableViews.length > 1) {
             let id = 'view-selector-list';
             let viewContainer = document.querySelector(targetSelector);
             viewContainer.innerHTML = '';
@@ -56,7 +73,7 @@ class Presenter {
             viewLabel.setAttribute('for', id);
             viewLabel.innerHTML = "View:&nbsp;";
             let viewList = document.createElement('select');
-            for (const view of views) {
+            for (const view of this.availableViews) {
                 let option = document.createElement("option");
                 option.value = view.id;
                 option.text = view.name;
@@ -70,8 +87,9 @@ class Presenter {
 
     viewSelectorEventListener(event) {
         let viewID = event.target.value;
-        this.views[viewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
-        this.activeViewID = viewID;
+        let view = this.registeredViews[viewID];
+        this.registeredViews[viewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView = this.registeredViews[viewID];
     }
 
     appendLocaleSelector(targetSelector) {
@@ -100,12 +118,21 @@ class Presenter {
     }
 
     getViews(partsOfSpeech) {
+        // First view in a returned array will be a default one
         let views = [];
         if (partsOfSpeech.includes('noun')) {
-            views.push(this.views.nounDeclension);
+            views.push(this.registeredViews.nounDeclension);
         }
         if (partsOfSpeech.includes('adjective')) {
-            views.push(this.views.adjectiveDeclension);
+            views.push(this.registeredViews.adjectiveDeclension);
+        }
+        if (partsOfSpeech.includes('verb')) {
+            views.push(this.registeredViews.verbVoiceConjugationMood);
+            views.push(this.registeredViews.verbVoiceMoodConjugation);
+            views.push(this.registeredViews.verbConjugationVoiceMood);
+            views.push(this.registeredViews.verbConjugationMoodVoice);
+            views.push(this.registeredViews.verbMoodVoiceConjugation);
+            views.push(this.registeredViews.verbMoodConjugationVoice);
         }
         return views;
     }

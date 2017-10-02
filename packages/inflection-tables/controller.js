@@ -14,15 +14,16 @@ dataSet.loadData();
 
 // region Test selector
 let testCases = [
-    {word: "cupidinibus", value: "latin_noun_cupidinibus"},
-    {word: "mare", value: "latin_noun_adj_mare"}
+    {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun"},
+    {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective"},
+    {word: "cepit", value: "latin_verb_cepit", type: "regular verb"}
 ];
 let selectList = document.querySelector("#test-selector");
 
 for (const testCase of testCases) {
     let option = document.createElement("option");
     option.value = testCase.value;
-    option.text = testCase.word;
+    option.text = testCase.word + ' (' + testCase.type + ')';
     selectList.appendChild(option);
 }
 

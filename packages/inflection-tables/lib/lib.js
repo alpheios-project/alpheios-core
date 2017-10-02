@@ -14,6 +14,11 @@ const types = {
     declension: 'declension',
     gender: 'gender',
     type: 'type',
+    conjugation: 'conjugation',
+    tense: 'tense',
+    voice: 'voice',
+    mood: 'mood',
+    person: 'person',
     frequency: 'frequency', // How frequent this word is
     meaning: 'meaning', // Meaning of a word
     source: 'source', // Source of word definition

@@ -7,7 +7,7 @@ const string = require('rollup-plugin-string');
 const defaultPlugins = [
     string({
         // Required to be specified
-        include: ['presenter/views/**/*.hbs', 'lib/lang/**/*.csv'],
+        include: ['presenter/templates/**/*.hbs', 'lib/lang/**/*.csv'],
 
         // Undefined by default
         //exclude: ['**/index.html']

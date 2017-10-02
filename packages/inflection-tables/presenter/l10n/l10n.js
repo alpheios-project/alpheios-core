@@ -18,6 +18,11 @@ class MessageBundle {
         if (this[messageID]) {
             return this[messageID].format(options);
         }
+        else {
+            // If message with the ID provided is not in translation data, generate a warning.
+            return `Not in translation data: "${messageID}"`;
+            console.warn(`"${messageID}" does not exist in translation data.`);
+        }
     }
 }
 

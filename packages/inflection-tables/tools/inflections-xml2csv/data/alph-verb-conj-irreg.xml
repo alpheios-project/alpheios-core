@@ -1,0 +1,3232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="../../../schemas/verb_conj_irreg.xsd"
+    xml:lang="la">
+  <order-table>
+    <order-item attname="tense" order="1">present</order-item>
+    <order-item attname="tense" order="2">imperfect</order-item>
+    <order-item attname="tense" order="3">future</order-item>
+    <order-item attname="tense" order="4">perfect</order-item>
+    <order-item attname="tense" order="5">pluperfect</order-item>
+    <order-item attname="tense" order="6">future_perfect</order-item>
+    <order-item attname="mood" order="1">indicative</order-item>
+    <order-item attname="mood" order="2">subjunctive</order-item>
+    <order-item attname="mood" order="3">imperative</order-item>      
+    <order-item attname="mood" order="4">infinitive</order-item>
+    <order-item attname="mood" order="5">verb_participle</order-item>
+    <order-item attname="mood" order="6">gerundive</order-item>
+    <order-item attname="mood" order="7">supine</order-item>
+    <order-item attname="voice" order="1">active</order-item>
+    <order-item attname="voice" order="2">passive</order-item>
+    <order-item attname="pers" order="1">1st</order-item>
+    <order-item attname="pers" order="2">2nd</order-item>
+    <order-item attname="pers" order="3">3rd</order-item>
+    <order-item attname="num" order="1">singular</order-item>
+    <order-item attname="num" order="2">plural</order-item>
+    <order-item attname="case" order="1">nominative</order-item>     
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">ablative</order-item>
+    <order-item attname="case" order="6">locative</order-item>
+    <order-item attname="case" order="7">vocative</order-item>
+  </order-table>
+  <conjugation>
+    <hdwd-set>
+      <hdwd source="whitaker">sum, esse, fui, futurus</hdwd>
+    </hdwd-set>
+    <!-- Present --> 
+    <infl-form-set
+        mood="indicative" 
+        num="singular" 
+        pers="1st" 
+        tense="present" >
+      <infl-form type="regular">sum</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">es</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">est</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">sumus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">estis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">sunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">sim</infl-form>
+      <infl-form footnote="Footnote-1" type="irregular">siem</infl-form>
+      <infl-form footnote="Footnote-1" type="irregular">fuam</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">sīs</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">siēs</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">fuās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">sit</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">siet</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">fuat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">sīmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">sītis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">sint</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">sient</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">fuant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="2nd"
+      tense="present">
+      <infl-form type="regular">es</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="3rd"
+      tense="present"/>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="2nd"
+      tense="present">
+      <infl-form type="regular">este</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="3rd"
+      tense="present"/>
+    <infl-form-set
+      mood="infinitive"
+      tense="present">
+      <infl-form type="regular">esse</infl-form>
+    </infl-form-set>    
+    <!-- Imperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">eram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">erās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">erat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">erāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">erātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">erant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">essem</infl-form>
+      <infl-form footnote="Footnote-2" type="irregular">forem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">essēs</infl-form>
+      <infl-form type="irregular" footnote="Footnote-2">forēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">esset</infl-form>
+      <infl-form type="irregular" footnote="Footnote-2">foret</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">essēmus</infl-form>
+      <infl-form type="irregular" footnote="Footnote-2">forēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">essētis</infl-form>
+      <infl-form type="irregular" footnote="Footnote-2">forētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">essent</infl-form>
+      <infl-form type="irregular" footnote="Footnote-2">forent</infl-form>
+    </infl-form-set>
+    <!-- Future -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">erō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">eris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">erit</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">escit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">erimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">eritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">erunt</infl-form>
+      <infl-form type="irregular" footnote="Footnote-1">escunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="2nd"
+      tense="future">
+      <infl-form type="regular">estō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="3rd"
+      tense="future">
+      <infl-form type="regular">estō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="2nd"
+      tense="future">
+      <infl-form type="regular">estōte</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="3rd"
+      tense="future">
+      <infl-form type="regular">suntō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="future">
+      <infl-form type="regular">futūrus esse</infl-form>
+      <infl-form type="irregular">fore</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="future">
+      <infl-form type="regular">futūrus</infl-form>
+      <infl-form type="irregular">-a</infl-form>
+      <infl-form type="irregular">-um</infl-form>
+    </infl-form-set>
+    <!-- Perfect -->    
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">fuī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">fuistī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">fuit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">fuimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">fuistis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">fuērunt</infl-form>
+      <infl-form type="irregular">fuēre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">fuerim</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">fueris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">fuerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">fuerimus</infl-form>
+      <infl-form type="irregular">fūvimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">fueritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">fuerint</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="perfect">
+      <infl-form type="regular">fuisse</infl-form>
+    </infl-form-set>
+    <!-- Pluperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">fueram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuerās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuerat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuerāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuerātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuerant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuissem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuissēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuisset</infl-form>
+      <infl-form type="irregular">fūvisset</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuissēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuissētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">fuissent</infl-form>
+    </infl-form-set>
+    <!-- future_perfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">fuerō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">fueris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">fuerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">fuerimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">fueritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">fuerint</infl-form>
+    </infl-form-set>    
+  </conjugation>  
+  <conjugation> 
+  <!-- ferō -->  
+    <hdwd-set>
+      <hdwd source="whitaker">fero, ferre, tuli, latus</hdwd>
+    </hdwd-set>
+    <!-- Present --> 
+    <infl-form-set
+        mood="indicative" 
+        num="singular" 
+        pers="1st" 
+        tense="present"
+        voice="active">
+      <infl-form type="regular">ferō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">fers</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">fert</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">ferimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">fertis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">ferunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">feram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" 
+      voice="active">
+      <infl-form type="regular">ferās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">ferat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="present"
+      voice="active">
+      <infl-form type="regular">ferāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" 
+      voice="active">
+      <infl-form type="regular">ferātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" 
+      voice="active">
+      <infl-form type="regular">ferant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="2nd"
+      tense="present"
+      voice="active">
+      <infl-form type="regular">fer</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="2nd"
+      tense="present"
+      voice="active">
+      <infl-form type="regular">ferte</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="present"
+      voice="active">
+      <infl-form type="regular" footnote="Footnote-3">ferre</infl-form>
+    </infl-form-set>
+    <!-- Present Passive -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">feror</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">ferris</infl-form>
+      <infl-form type="irregular">ferre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">fertur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">ferimur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">feriminī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">feruntur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">ferar</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" 
+      voice="passive">
+      <infl-form type="regular">ferāris</infl-form>
+      <infl-form type="irregular">ferāre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">ferātur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">ferāmur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" 
+      voice="passive">
+      <infl-form type="regular">ferāminī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" 
+      voice="passive">
+      <infl-form type="regular">ferantur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="2nd"
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">ferre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="2nd"
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">feriminī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="present"
+      voice="passive">
+      <infl-form type="regular">ferrī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="present"
+      voice="active">
+      <infl-form type="regular">ferēns</infl-form>
+      <infl-form type="irregular">-entis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="present"
+      voice="passive"/>      
+    <!-- Imperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect"
+      voice="active">
+      <infl-form type="regular">ferēbam</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect"
+      voice="active">
+      <infl-form type="regular">ferēbās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect"
+      voice="active">
+      <infl-form type="regular">ferēbat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect"
+      voice="active">
+      <infl-form type="regular">ferēbāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" 
+      voice="active">
+      <infl-form type="regular">ferēbātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" 
+      voice="active">
+      <infl-form type="regular">ferēbant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" 
+      voice="active">
+      <infl-form type="regular" footnote="Footnote-3">ferrem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" 
+      voice="active">
+      <infl-form type="regular">ferrēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect"
+      voice="active">
+      <infl-form type="regular">ferret</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect"
+      voice="active">
+      <infl-form type="regular">ferrēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" 
+      voice="active">
+      <infl-form type="regular">ferrētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect"
+      voice="active">
+      <infl-form type="regular">ferrent</infl-form>
+    </infl-form-set>
+    <!-- Imperfect Passive -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect"
+      voice="passive">
+      <infl-form type="regular">ferēbar</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect"
+      voice="passive">
+      <infl-form type="regular">ferēbāris</infl-form>
+      <infl-form type="irregular">ferēbāre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect"
+      voice="passive">
+      <infl-form type="regular">ferēbātur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect"
+      voice="passive">
+      <infl-form type="regular">ferēbāmur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" 
+      voice="passive">
+      <infl-form type="regular">ferēbāminī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" 
+      voice="passive">
+      <infl-form type="regular">ferēbantur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" 
+      voice="passive">
+      <infl-form type="regular">ferrer</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" 
+      voice="passive">
+      <infl-form type="regular">ferrēris</infl-form>
+      <infl-form type="irregular">ferrēre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect"
+      voice="passive">
+      <infl-form type="regular">ferrētur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect"
+      voice="passive">
+      <infl-form type="regular">ferrēmur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" 
+      voice="passive">
+      <infl-form type="regular">ferrēminī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect"
+      voice="passive">
+      <infl-form type="regular">ferrentur</infl-form>
+    </infl-form-set>
+    <!-- Future -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future" 
+      voice="active">
+      <infl-form type="regular">feram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future" 
+      voice="active">
+      <infl-form type="regular">ferēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future" 
+      voice="active">
+      <infl-form type="regular">feret</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future"
+      voice="active">
+      <infl-form type="regular">ferēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future" 
+      voice="active">
+      <infl-form type="regular">ferētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future"
+      voice="active">
+      <infl-form type="regular">ferent</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future" 
+      voice="passive">
+      <infl-form type="regular">ferar</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future" 
+      voice="passive">
+      <infl-form type="regular">ferēris</infl-form>
+      <infl-form type="irregular">ferēre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future" 
+      voice="passive">
+      <infl-form type="regular">ferētur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future"
+      voice="passive">
+      <infl-form type="regular">ferēmur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future" 
+      voice="passive">
+      <infl-form type="regular">ferēminī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future"
+      voice="passive">
+      <infl-form type="regular">ferentur</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="2nd"
+      tense="future"
+      voice="active">
+      <infl-form type="regular">fertō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="3rd"
+      tense="future"
+      voice="active">
+      <infl-form type="regular">fertōte</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="2nd"
+      tense="future"
+      voice="active">
+      <infl-form type="regular">fertō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="3rd"
+      tense="future"
+      voice="active">
+      <infl-form type="regular">feruntō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="2nd"
+      tense="future"
+      voice="passive">
+      <infl-form type="regular">fertor</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="3rd"
+      tense="future"
+      voice="passive"/>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="2nd"
+      tense="future"
+      voice="passive">
+      <infl-form type="regular">fertor</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="3rd"
+      tense="future"
+      voice="passive">
+      <infl-form type="regular">feruntor</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="future"
+      voice="active">
+      <infl-form type="regular">latūrus esse</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="future"
+      voice="passive">
+      <infl-form type="regular">latūm īrī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="future"
+      voice="active">
+      <infl-form type="regular">latūrus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="future"
+      voice="passive">
+      <infl-form type="regular" footnote="Footnote-4">ferundus</infl-form>
+    </infl-form-set>      
+    <!-- Perfect -->    
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tulī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tulistī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tulit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tulimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" 
+      voice="active">
+      <infl-form type="regular">tulistis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" 
+      voice="active">
+      <infl-form type="regular">tulērunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" 
+      voice="active">
+      <infl-form type="regular">tulerim</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tulerīs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tulerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" 
+      voice="active">
+      <infl-form type="regular">tulerimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tuleritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" 
+      voice="active">
+      <infl-form type="regular">tulerint</infl-form>
+    </infl-form-set>
+    <!-- Perfect Passive -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) sum</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) es</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) est</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) sumus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) estis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) sunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" 
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) sim</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) sīs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um)sit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) sīmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) sītis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a)sint</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="perfect"
+      voice="active">
+      <infl-form type="regular">tulisse</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular">lātus esse</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="perfect"
+      voice="active"/>
+    <infl-form-set
+      mood="verb_participle"
+      tense="perfect"
+      voice="passive">
+      <infl-form type="regular" footnote="Footnote-8">lātus, -ta, -tum</infl-form>
+    </infl-form-set>
+    <!-- Pluperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" 
+      voice="active">
+      <infl-form type="regular">tuleram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect"
+      voice="active">
+      <infl-form type="regular">tulerās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" 
+      voice="active">
+      <infl-form type="regular">tulerat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect"
+      voice="active">
+      <infl-form type="regular">tulerāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" 
+      voice="active">
+      <infl-form type="regular">tulerātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect"
+      voice="active">
+      <infl-form type="regular">tulerant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" 
+      voice="active">
+      <infl-form type="regular">tulissem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" 
+      voice="active">
+      <infl-form type="regular">tulissēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect"
+      voice="active">
+      <infl-form type="regular">tulisset</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" 
+      voice="active">
+      <infl-form type="regular">tulissēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect"
+      voice="active">
+      <infl-form type="regular">tulissētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" 
+      voice="active">
+      <infl-form type="regular">tulissent</infl-form>
+    </infl-form-set>
+    <!-- Pluperfect Passive -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" 
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) eram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) erās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" 
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) erat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect"
+      voice="passive">
+      <infl-form type="regular">latī (-ae, a) erāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, a) erātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect"
+      voice="passive">
+      <infl-form type="regular">latī (-ae, a) erant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" 
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) essem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" 
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) essēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) esset</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) essēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect"
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) essētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) essent</infl-form>
+    </infl-form-set>
+    <!-- future_perfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future_perfect"
+      voice="active">
+      <infl-form type="regular">tulerō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future_perfect"
+      voice="active">
+      <infl-form type="regular">tuleris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future_perfect" 
+      voice="active">
+      <infl-form type="regular">tulerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future_perfect" 
+      voice="active">
+      <infl-form type="regular">tulerimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future_perfect"
+      voice="active">
+      <infl-form type="regular">tuleritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future_perfect" 
+      voice="active">
+      <infl-form type="regular">tulerint</infl-form>
+    </infl-form-set> 
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future_perfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) erō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future_perfect"
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) eris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future_perfect" 
+      voice="passive">
+      <infl-form type="regular">lātus (-a, -um) erit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future_perfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) erimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future_perfect"
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) ēritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future_perfect" 
+      voice="passive">
+      <infl-form type="regular">latī (-ae, -a) ērunt</infl-form>
+    </infl-form-set>    
+    <!-- Gerundive -->
+    <infl-form-set
+      mood="gerundive"
+      case="genitive">
+      <infl-form type="regular" footnote="Footnote-5">ferendī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="gerundive"
+      case="dative">
+      <infl-form type="regular">ferendō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="gerundive"
+      case="accusative">
+      <infl-form type="regular">ferendum</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="gerundive"
+      case="ablative">
+      <infl-form type="regular">ferendō</infl-form>
+    </infl-form-set>
+    <!-- Supine -->
+    <infl-form-set
+      mood="supine"
+      case="accusative">
+      <infl-form type="regular" footnote="Footnote-5">lātum</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="supine"
+      case="dative">
+      <infl-form type="regular">lātū</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="supine"
+      case="ablative">
+      <infl-form type="regular">lātū</infl-form>
+    </infl-form-set>
+  </conjugation>
+  <conjugation footnote="Footnote-6">
+    <!-- volo, velle, volui -->
+    <hdwd-set>
+      <hdwd source="whitaker">volo, velle, volui, -</hdwd>
+    </hdwd-set>
+    <!-- Present --> 
+    <infl-form-set
+        mood="indicative" 
+        num="singular" 
+        pers="1st" 
+        tense="present" >
+      <infl-form type="regular">volō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">vīs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">vult</infl-form>
+      <infl-form type="irregular" footnote="Footnote-7">volt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">volumus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">vultis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">volunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">velim</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">velīs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">velit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">velīmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">velītis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">velint</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="present">
+      <infl-form type="regular">velle</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="present">
+      <infl-form type="regular">volēns</infl-form>
+      <infl-form type="irregular">-entis</infl-form>
+    </infl-form-set>    
+    <!-- Imperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">volēbam</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">volēbās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">volēbat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">volēbāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">volēbātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">volēbant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">vellem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">vellēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">vellet</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">vellēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">vellētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">vellent</infl-form>
+    </infl-form-set>
+    <!-- Future -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">volam</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">volēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">volet</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">volēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">volētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">volent</infl-form>
+    </infl-form-set>
+    <!-- Perfect -->    
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">voluī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">voluistī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">voluit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">voluimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">voluistis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">voluērunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">voluerim</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">voluerīs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">voluerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">voluerīmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">voluerītis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">voluerint</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="perfect">
+      <infl-form type="regular">voluisse</infl-form>
+    </infl-form-set>
+    <!-- Pluperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">volueram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluerās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluerat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluerāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluerātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluerant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluissem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluissēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluisset</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluissēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluissētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">voluissent</infl-form>
+    </infl-form-set>
+    <!-- future_perfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">voluerō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">volueris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">voluerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">voluerimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">volueritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">voluerunt</infl-form>
+    </infl-form-set>    
+  </conjugation>
+  <conjugation footnote="Footnote-9">
+    <!-- eo, ire, ivi(ii), itus -->
+    <hdwd-set>
+      <hdwd source="whitaker">eo, ire, ivi(ii), itus</hdwd>
+    </hdwd-set>
+    <!-- Present --> 
+    <infl-form-set
+        mood="indicative" 
+        num="singular" 
+        pers="1st" 
+        tense="present" >
+      <infl-form type="regular">eō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">īs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">it</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">īmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">ītis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">eunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">eam</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">eās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">eat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">eāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">eātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">eant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      tense="present"
+      num="singular"
+      pers="2nd">
+      <infl-form type="regular">ī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      tense="present"
+      num="singular"
+      pers="3rd"/>
+    <infl-form-set
+      mood="imperative"
+      tense="present"
+      num="plural"
+      pers="2nd">
+      <infl-form type="regular">īte</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      tense="present"
+      num="plural"
+      pers="3rd"/>
+    <infl-form-set
+      mood="infinitive"
+      tense="present">
+      <infl-form type="regular">īre</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="present">
+      <infl-form type="regular">iēns</infl-form>
+      <infl-form type="irregular">euntis</infl-form>
+    </infl-form-set>    
+    <!-- Imperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">ībam</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">ības</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">ībat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">ībāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">ībātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">ībant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">īrem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">īrēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">īret</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">īrēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">īrētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">īrent</infl-form>
+    </infl-form-set>
+    <!-- Future -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">ībō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">ībis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">ībit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">ībimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">ībitis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">ībunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="singular"
+      pers="2nd"
+      tense="future">
+      <infl-form type="regular">ītō</infl-form>
+     </infl-form-set>
+     <infl-form-set
+        mood="imperative"
+        num="singular"
+        pers="3rd"
+        tense="future">
+        <infl-form type="regular">ītō</infl-form>
+     </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="2nd"
+      tense="future">
+      <infl-form type="regular">ītōte</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="imperative"
+      num="plural"
+      pers="3rd"
+      tense="future">
+      <infl-form type="regular">euntō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="future">
+      <infl-form type="regular">itūrus esse</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="future">
+      <infl-form type="regular">itūrus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="verb_participle"
+      tense="future"
+      voice="passive">
+      <infl-form type="regular" footnote="Footnote-4">eundum</infl-form>
+    </infl-form-set>
+    <!-- Perfect -->    
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular" footnote="Footnote-10">iī</infl-form>
+      <infl-form type="irregular" footnote="Footnote-11">īvī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">īstī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">iit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">iimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">īstis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">iērunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">ierim</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">ierīs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">ierit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">ierīmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">ierītis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">ierint</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="perfect">
+      <infl-form type="regular" footnote="Footnote-10">īsse</infl-form>
+      <infl-form type="irregular">īvisse</infl-form>
+    </infl-form-set>
+    <!-- Pluperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">ieram</infl-form>
+      <infl-form type="irregular">īveram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">ierās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">ierat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">ierāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">ierātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">ierant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">īssem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">īssēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">īsset</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">īssēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">īssētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">īssent</infl-form>
+    </infl-form-set>
+    <!-- future_perfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">ierō</infl-form>
+      <infl-form type="regular">īverō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">ieris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">ierit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">ierimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">ieritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">ierunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="gerundive"
+      case="genitive">
+      <infl-form type="regular" footnote="Footnote-5">eundī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="gerundive"
+      case="dative">
+      <infl-form type="regular">eundō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="gerundive"
+      case="accusative">
+      <infl-form type="regular">eundum</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="gerundive"
+      case="ablative">
+      <infl-form type="regular">eundō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="supine"
+      case="accusative">
+      <infl-form type="regular" footnote="Footnote-5">itum</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="supine"
+      case="ablative">
+      <infl-form type="regular">itū</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="supine"
+      case="dative">
+      <infl-form type="regular">itū</infl-form>
+    </infl-form-set>
+  </conjugation>
+  <conjugation>
+    <hdwd-set>
+      <hdwd source="whitaker">possum, posse, potui, -</hdwd>
+    </hdwd-set>
+    <!-- Present --> 
+    <infl-form-set
+        mood="indicative" 
+        num="singular" 
+        pers="1st" 
+        tense="present" >
+      <infl-form type="regular">possum</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">potis, -e sum</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">potes</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">potis, -e es</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">potest</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">potis, -e est</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">possumus</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">potes, -ia sumus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">potestis</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">potes, -ia estis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">possunt</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">potes, -ia sunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">possim</infl-form>
+      <infl-form footnote="Footnote-12" type="irregular">possiem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">possīs</infl-form>
+      <infl-form type="irregular">possiēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">possit</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">postisit</infl-form>
+      <infl-form type="irregular">possiet</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="present" >
+      <infl-form type="regular">possīmus</infl-form>
+      <infl-form type="irregular">possiemus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="present" >
+      <infl-form type="regular">possītis</infl-form>
+      <infl-form type="irregular">possietis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="present" >
+      <infl-form type="regular">possint</infl-form>
+      <infl-form type="irregular">possient</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="present">
+      <infl-form type="regular">posse</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">potesse</infl-form>
+    </infl-form-set>    
+    <infl-form-set
+      mood="verb_participle"
+      tense="present">
+      <infl-form type="regular">potēns</infl-form>
+    </infl-form-set>
+    <!-- Imperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">poteram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">poterās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">poterat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">poterāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">poterātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">poterant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">possem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">possēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">posset</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="imperfect" >
+      <infl-form type="regular">possēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="imperfect" >
+      <infl-form type="regular">possētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="imperfect" >
+      <infl-form type="regular">possent</infl-form>
+    </infl-form-set>
+    <!-- Future -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">poterō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">poteris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">poterit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future" >
+      <infl-form type="regular">poterimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future" >
+      <infl-form type="regular">poteritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future" >
+      <infl-form type="regular">poterunt</infl-form>
+      <infl-form type="irregular" footnote="Footnote-12">poterint</infl-form>
+    </infl-form-set>
+    <!-- Perfect -->    
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">potuī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">potuistī</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">potuit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">potuimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">potuistis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">potuērunt</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">potuerim</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">potuerīs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">potuerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="perfect" >
+      <infl-form type="regular">potuerīmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="perfect" >
+      <infl-form type="regular">potuerītis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="perfect" >
+      <infl-form type="regular">potuerint</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="infinitive"
+      tense="perfect">
+      <infl-form type="regular">potuisse</infl-form>
+    </infl-form-set>
+    <!-- Pluperfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">potueram</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuerās</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuerat</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuerāmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuerātis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuerant</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuissem</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuissēs</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="singular" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuisset</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="1st" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuissēmus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="2nd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuissētis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="subjunctive" 
+      num="plural" 
+      pers="3rd" 
+      tense="pluperfect" >
+      <infl-form type="regular">potuissent</infl-form>
+    </infl-form-set>
+    <!-- future_perfect -->
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">potuerō</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">potueris</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="singular" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">potuerit</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="1st" 
+      tense="future_perfect" >
+      <infl-form type="regular">potuerimus</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="2nd" 
+      tense="future_perfect" >
+      <infl-form type="regular">potueritis</infl-form>
+    </infl-form-set>
+    <infl-form-set
+      mood="indicative" 
+      num="plural" 
+      pers="3rd" 
+      tense="future_perfect" >
+      <infl-form type="regular">potuerint</infl-form>
+    </infl-form-set>    
+  </conjugation>
+  <footnotes>
+    <footnote id="Footnote-1">Old forms.</footnote>
+    <footnote id="Footnote-2">Alternate forms.</footnote>
+    <footnote id="Footnote-3">The original forms of ferrem and ferre are fer-sēm and fer-se, respectively.</footnote>
+    <footnote id="Footnote-4">Gerundive (Future Passive Participle)</footnote>
+    <footnote id="Footnote-5">singular</footnote>
+    <footnote id="Footnote-6">
+      The verbs nōlō and malō are compounds of volo. They therefore attach nō- or mā- to the beginning of each verb, in place of vo- or vu-. 
+      Exceptions to this are found in the present tense:
+      nōlō        nōlumus     mālō        mālumus
+      nōn vīs     nōn vultis  māvīs       māvultis
+      nōn vult    nōlunt      māvult      mālunt
+      In addition, nōlō is the only verb of the three that has present and future tense imperative forms of the verb: 
+      nōlī, nōlīte, and nōlītō, nōlītōte, respectively.
+    </footnote>
+    <footnote id="Footnote-7">An earlier form.</footnote>
+    <footnote id="Footnote-8">
+      The perfect passive participle ending will change according to its subject's gender, number and case. 
+      Endings shown here are the masculine, feminine and neuter nominative singular.</footnote>
+    <footnote id="Footnote-9">A passive form of the verb that is used impersonally is itum est.</footnote>
+    <footnote id="Footnote-10">
+      While the perfect form of this verb is regular, ii usually contracts to i when it is followed by an s. 
+      Thus, īstī, īstis and īsse</footnote>
+    <footnote id="Footnote-11">It is rare that the “v” appear as a form.</footnote>
+    <footnote id="Footnote-12">Used by early writers.</footnote>
+  </footnotes>
+</infl-data>
+

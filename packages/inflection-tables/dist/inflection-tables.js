@@ -16,6 +16,11 @@ const types = {
     declension: 'declension',
     gender: 'gender',
     type: 'type',
+    conjugation: 'conjugation',
+    tense: 'tense',
+    voice: 'voice',
+    mood: 'mood',
+    person: 'person',
     frequency: 'frequency', // How frequent this word is
     meaning: 'meaning', // Meaning of a word
     source: 'source', // Source of word definition
@@ -1098,6 +1103,10 @@ var nounFootnotesCSV = "Index,Text\r\n1,archaic (final s and m of os and om may 
 var adjectiveSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,";
 
 var adjectiveFootnotesCSV = "Index,Text\r\n1,\"Adjectives agree with the noun they modify in gender, number and case.\"\r\n2,Adjectives are inflected according to either\r\n3,\"Only nullus, sōlus, alius (alia, aliud), tōtus, ūllus, ūnus, alter, neuter (neutra,\r\n            neutrum) and uter (utra, utrum).\"\r\n4,In a few adjectives of Greek origin.\r\n5,\"The \"\"two-ending\"\" adjectives use \"\"-is\"\", for both masculine and feminine nominative\r\n            singular.\"\r\n6,\"The \"\"one-ending\"\" adjectives use the same consonant ending for all three genders in the\r\n            nominative singular and the neuter accusative and vocative singular.\"\r\n7,\"An ablative singular in \"\"e\"\" is common in one-ending adjectives, but is usually confined to\r\n            poetry in three and two-ending adjectives.\"\r\n8,\"In comparatives, poetry and some one-ending adjectives.\"\r\n9,Chiefly in comparatives.";
+
+var verbSuffixesCSV = "Ending,Conjugation,Voice,Mood,Tense,Number,Person,Type,Footnote\r\nō,1st,active,indicative,present,singular,1st,regular,\r\nās,1st,active,indicative,present,singular,2nd,regular,\r\nat,1st,active,indicative,present,singular,3rd,regular,\r\nāmus,1st,active,indicative,present,plural,1st,regular,\r\nātis,1st,active,indicative,present,plural,2nd,regular,\r\nant,1st,active,indicative,present,plural,3rd,regular,\r\nem,1st,active,subjunctive,present,singular,1st,regular,\r\nēs,1st,active,subjunctive,present,singular,2nd,regular,\r\net,1st,active,subjunctive,present,singular,3rd,regular,\r\nēmus,1st,active,subjunctive,present,plural,1st,regular,\r\nētis,1st,active,subjunctive,present,plural,2nd,regular,\r\nent,1st,active,subjunctive,present,plural,3rd,regular,\r\neō,2nd,active,indicative,present,singular,1st,regular,\r\nēs,2nd,active,indicative,present,singular,2nd,regular,\r\nēt,2nd,active,indicative,present,singular,3rd,regular,\r\nēmus,2nd,active,indicative,present,plural,1st,regular,\r\nētis,2nd,active,indicative,present,plural,2nd,regular,\r\nent,2nd,active,indicative,present,plural,3rd,regular,\r\neam,2nd,active,subjunctive,present,singular,1st,regular,\r\neās,2nd,active,subjunctive,present,singular,2nd,regular,\r\neat,2nd,active,subjunctive,present,singular,3rd,regular,\r\neāmus,2nd,active,subjunctive,present,plural,1st,regular,\r\neātis,2nd,active,subjunctive,present,plural,2nd,regular,\r\neant,2nd,active,subjunctive,present,plural,3rd,regular,\r\nō,3rd,active,indicative,present,singular,1st,regular,\r\nis,3rd,active,indicative,present,singular,2nd,regular,\r\nit,3rd,active,indicative,present,singular,3rd,regular,\r\nimus,3rd,active,indicative,present,plural,1st,regular,\r\nitis,3rd,active,indicative,present,plural,2nd,regular,\r\nunt,3rd,active,indicative,present,plural,3rd,regular,\r\nam,3rd,active,subjunctive,present,singular,1st,regular,\r\nās,3rd,active,subjunctive,present,singular,2nd,regular,\r\nat,3rd,active,subjunctive,present,singular,3rd,regular,\r\nāmus,3rd,active,subjunctive,present,plural,1st,regular,\r\nātis,3rd,active,subjunctive,present,plural,2nd,regular,\r\nant,3rd,active,subjunctive,present,plural,3rd,regular,\r\niō,4th,active,indicative,present,singular,1st,regular,\r\nīs,4th,active,indicative,present,singular,2nd,regular,\r\nit,4th,active,indicative,present,singular,3rd,regular,\r\nīmus,4th,active,indicative,present,plural,1st,regular,\r\nītis,4th,active,indicative,present,plural,2nd,regular,\r\niunt,4th,active,indicative,present,plural,3rd,regular,\r\niam,4th,active,subjunctive,present,singular,1st,regular,\r\niās,4th,active,subjunctive,present,singular,2nd,regular,\r\niat,4th,active,subjunctive,present,singular,3rd,regular,\r\niāmus,4th,active,subjunctive,present,plural,1st,regular,\r\niāatis,4th,active,subjunctive,present,plural,2nd,regular,\r\niant,4th,active,subjunctive,present,plural,3rd,regular,\r\nābam,1st,active,indicative,imperfect,singular,1st,regular,\r\nābas,1st,active,indicative,imperfect,singular,2nd,regular,\r\nābat,1st,active,indicative,imperfect,singular,3rd,regular,\r\nābāmus,1st,active,indicative,imperfect,plural,1st,regular,\r\nābātis,1st,active,indicative,imperfect,plural,2nd,regular,\r\nābant,1st,active,indicative,imperfect,plural,3rd,regular,\r\nārem,1st,active,subjunctive,imperfect,singular,1st,regular,\r\nārēs,1st,active,subjunctive,imperfect,singular,2nd,regular,\r\nāret,1st,active,subjunctive,imperfect,singular,3rd,regular,\r\nārēmus,1st,active,subjunctive,imperfect,plural,1st,regular,\r\nārētis,1st,active,subjunctive,imperfect,plural,2nd,regular,\r\nārent,1st,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbam,2nd,active,indicative,imperfect,singular,1st,regular,\r\nēbās,2nd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,2nd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,2nd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,2nd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,2nd,active,indicative,imperfect,plural,3rd,regular,\r\nērem,2nd,active,subjunctive,imperfect,singular,1st,regular,\r\nērēs,2nd,active,subjunctive,imperfect,singular,2nd,regular,\r\nēret,2nd,active,subjunctive,imperfect,singular,3rd,regular,\r\nērēmus,2nd,active,subjunctive,imperfect,plural,1st,regular,\r\nērētis,2nd,active,subjunctive,imperfect,plural,2nd,regular,\r\nērēnt,2nd,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbas,3rd,active,indicative,imperfect,singular,1st,regular,\r\nēbāt,3rd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,3rd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,3rd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,3rd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,3rd,active,indicative,imperfect,plural,3rd,regular,\r\nerem,3rd,active,subjunctive,imperfect,singular,1st,regular,\r\nerēs,3rd,active,subjunctive,imperfect,singular,2nd,regular,\r\neret,3rd,active,subjunctive,imperfect,singular,3rd,regular,\r\nerēmus,3rd,active,subjunctive,imperfect,plural,1st,regular,\r\nerētis,3rd,active,subjunctive,imperfect,plural,2nd,regular,\r\nerent,3rd,active,subjunctive,imperfect,plural,3rd,regular,\r\niēbam,4th,active,indicative,imperfect,singular,1st,regular,\r\nībam,4th,active,indicative,imperfect,singular,1st,irregular,2\r\niēbas,4th,active,indicative,imperfect,singular,2nd,regular,\r\nības,4th,active,indicative,imperfect,singular,2nd,irregular,\r\niēbat,4th,active,indicative,imperfect,singular,3rd,regular,\r\nībat,4th,active,indicative,imperfect,singular,3rd,irregular,\r\niēbāmus,4th,active,indicative,imperfect,plural,1st,regular,\r\nībāmus,4th,active,indicative,imperfect,plural,1st,irregular,\r\niēbātis,4th,active,indicative,imperfect,plural,2nd,regular,\r\nībātis,4th,active,indicative,imperfect,plural,2nd,irregular,\r\niēbant,4th,active,indicative,imperfect,plural,3rd,regular,\r\nībant,4th,active,indicative,imperfect,plural,3rd,irregular,\r\nīrem,4th,active,subjunctive,imperfect,singular,1st,regular,\r\nīrēs,4th,active,subjunctive,imperfect,singular,2nd,regular,\r\nīret,4th,active,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmus,4th,active,subjunctive,imperfect,plural,1st,regular,\r\nīrētis,4th,active,subjunctive,imperfect,plural,2nd,regular,\r\nīrēnt,4th,active,subjunctive,imperfect,plural,3rd,regular,\r\nābo,1st,active,indicative,future,singular,1st,regular,\r\nābis,1st,active,indicative,future,singular,2nd,regular,\r\nābit,1st,active,indicative,future,singular,3rd,regular,\r\nābimus,1st,active,indicative,future,plural,1st,regular,\r\nābitis,1st,active,indicative,future,plural,2nd,regular,\r\nābunt,1st,active,indicative,future,plural,3rd,regular,\r\n,1st,active,subjunctive,future,singular,1st,,\r\n,1st,active,subjunctive,future,singular,2nd,,\r\n,1st,active,subjunctive,future,singular,3rd,,\r\n,1st,active,subjunctive,future,plural,1st,,\r\n,1st,active,subjunctive,future,plural,2nd,,\r\n,1st,active,subjunctive,future,plural,3rd,,\r\nēbō,2nd,active,indicative,future,singular,1st,regular,\r\nēbis,2nd,active,indicative,future,singular,2nd,regular,\r\nēbit,2nd,active,indicative,future,singular,3rd,regular,\r\nēbimus,2nd,active,indicative,future,plural,1st,regular,\r\nēbitis,2nd,active,indicative,future,plural,2nd,regular,\r\nēbunt,2nd,active,indicative,future,plural,3rd,regular,\r\n,2nd,active,subjunctive,future,singular,1st,regular,\r\n,2nd,active,subjunctive,future,singular,2nd,,\r\n,2nd,active,subjunctive,future,singular,3rd,,\r\n,2nd,active,subjunctive,future,plural,1st,,\r\n,2nd,active,subjunctive,future,plural,2nd,,\r\n,2nd,active,subjunctive,future,plural,3rd,,\r\nam,3rd,active,indicative,future,singular,1st,regular,\r\nēs,3rd,active,indicative,future,singular,2nd,regular,\r\net,3rd,active,indicative,future,singular,3rd,regular,\r\nēmus,3rd,active,indicative,future,plural,1st,regular,\r\nētis,3rd,active,indicative,future,plural,2nd,regular,\r\nent,3rd,active,indicative,future,plural,3rd,regular,\r\n,3rd,active,subjunctive,future,singular,1st,,\r\n,3rd,active,subjunctive,future,singular,2nd,,\r\n,3rd,active,subjunctive,future,singular,3rd,,\r\n,3rd,active,subjunctive,future,plural,1st,,\r\n,3rd,active,subjunctive,future,plural,2nd,,\r\n,3rd,active,subjunctive,future,plural,3rd,,\r\niam,4th,active,indicative,future,singular,1st,regular,\r\nībō,4th,active,indicative,future,singular,1st,irregular,2\r\niēs,4th,active,indicative,future,singular,2nd,regular,\r\nībis,4th,active,indicative,future,singular,2nd,irregular,\r\niet,4th,active,indicative,future,singular,3rd,regular,\r\nībit,4th,active,indicative,future,singular,3rd,irregular,\r\niēmus,4th,active,indicative,future,plural,1st,regular,\r\nībimus,4th,active,indicative,future,plural,1st,irregular,\r\niētis,4th,active,indicative,future,plural,2nd,regular,\r\nībitis,4th,active,indicative,future,plural,2nd,irregular,\r\nient,4th,active,indicative,future,plural,3rd,regular,\r\nībunt,4th,active,indicative,future,plural,3rd,irregular,\r\n,4th,active,subjunctive,future,singular,1st,,\r\n,4th,active,subjunctive,future,singular,2nd,,\r\n,4th,active,subjunctive,future,singular,3rd,,\r\n,4th,active,subjunctive,future,plural,1st,,\r\n,4th,active,subjunctive,future,plural,2nd,,\r\n,4th,active,subjunctive,future,plural,3rd,,\r\nāvī,1st,active,indicative,perfect,singular,1st,regular,\r\nāvistī,1st,active,indicative,perfect,singular,2nd,regular,\r\nāvit,1st,active,indicative,perfect,singular,3rd,regular,\r\nāvimus,1st,active,indicative,perfect,plural,1st,regular,\r\nāvistis,1st,active,indicative,perfect,plural,2nd,regular,\r\nāvērunt,1st,active,indicative,perfect,plural,3rd,regular,\r\nāvēre,1st,active,indicative,perfect,plural,3rd,irregular,6\r\nāverim,1st,active,subjunctive,perfect,singular,1st,regular,\r\nāveris,1st,active,subjunctive,perfect,singular,2nd,regular,\r\nāverit,1st,active,subjunctive,perfect,singular,3rd,regular,\r\nāverimus,1st,active,subjunctive,perfect,plural,1st,regular,\r\nāveritis,1st,active,subjunctive,perfect,plural,2nd,regular,\r\nāverint,1st,active,subjunctive,perfect,plural,3rd,regular,\r\nvī,2nd,active,indicative,perfect,singular,1st,regular,\r\nvistī,2nd,active,indicative,perfect,singular,2nd,regular,\r\nvit,2nd,active,indicative,perfect,singular,3rd,regular,\r\nvimus,2nd,active,indicative,perfect,plural,1st,regular,\r\nvistis,2nd,active,indicative,perfect,plural,2nd,regular,\r\nvērunt,2nd,active,indicative,perfect,plural,3rd,regular,\r\nvēre,2nd,active,indicative,perfect,plural,3rd,irregular,6\r\nverim,2nd,active,subjunctive,perfect,singular,1st,regular,\r\nveris,2nd,active,subjunctive,perfect,singular,2nd,regular,\r\nverit,2nd,active,subjunctive,perfect,singular,3rd,regular,\r\nverimus,2nd,active,subjunctive,perfect,plural,1st,regular,\r\nveritis,2nd,active,subjunctive,perfect,plural,2nd,regular,\r\nverint,2nd,active,subjunctive,perfect,plural,3rd,regular,\r\nī,3rd,active,indicative,perfect,singular,1st,regular,\r\nistī,3rd,active,indicative,perfect,singular,2nd,regular,\r\nit,3rd,active,indicative,perfect,singular,3rd,regular,\r\nimus,3rd,active,indicative,perfect,plural,1st,regular,\r\nistis,3rd,active,indicative,perfect,plural,2nd,regular,\r\nērunt,3rd,active,indicative,perfect,plural,3rd,regular,\r\nēre,3rd,active,indicative,perfect,plural,3rd,irregular,6\r\nerim,3rd,active,subjunctive,perfect,singular,1st,regular,\r\neris,3rd,active,subjunctive,perfect,singular,2nd,regular,\r\nerit,3rd,active,subjunctive,perfect,singular,3rd,regular,\r\nerimus,3rd,active,subjunctive,perfect,plural,1st,regular,\r\neritis,3rd,active,subjunctive,perfect,plural,2nd,regular,\r\nerint,3rd,active,subjunctive,perfect,plural,3rd,regular,\r\nīvi,4th,active,indicative,perfect,singular,1st,regular,\r\nīvistī,4th,active,indicative,perfect,singular,2nd,regular,\r\nīvit,4th,active,indicative,perfect,singular,3rd,regular,\r\nīvimus,4th,active,indicative,perfect,plural,1st,regular,\r\nīvistis,4th,active,indicative,perfect,plural,2nd,regular,\r\nīvērunt,4th,active,indicative,perfect,plural,3rd,regular,\r\nīvēre,4th,active,indicative,perfect,plural,3rd,irregular,6\r\nīverim,4th,active,subjunctive,perfect,singular,1st,regular,\r\niveris,4th,active,subjunctive,perfect,singular,2nd,regular,\r\nīverit,4th,active,subjunctive,perfect,singular,3rd,regular,\r\nīverimus,4th,active,subjunctive,perfect,plural,1st,regular,\r\nīveritis,4th,active,subjunctive,perfect,plural,2nd,regular,\r\nīverint,4th,active,subjunctive,perfect,plural,3rd,regular,\r\nāveram,1st,active,indicative,pluperfect,singular,1st,regular,\r\nāverās,1st,active,indicative,pluperfect,singular,2nd,regular,\r\nāverat,1st,active,indicative,pluperfect,singular,3rd,regular,\r\nāverāmus,1st,active,indicative,pluperfect,plural,1st,regular,\r\nāverātis,1st,active,indicative,pluperfect,plural,2nd,regular,\r\nāverant,1st,active,indicative,pluperfect,plural,3rd,regular,\r\nāvissem,1st,active,subjunctive,pluperfect,singular,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,singular,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,singular,3rd,regular,\r\nāvissēm,1st,active,subjunctive,pluperfect,plural,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,plural,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,plural,3rd,regular,\r\nveram,2nd,active,indicative,pluperfect,singular,1st,regular,\r\nverās,2nd,active,indicative,pluperfect,singular,2nd,regular,\r\nverat,2nd,active,indicative,pluperfect,singular,3rd,regular,\r\nverāmus,2nd,active,indicative,pluperfect,plural,1st,regular,\r\nverātis,2nd,active,indicative,pluperfect,plural,2nd,regular,\r\nverant,2nd,active,indicative,pluperfect,plural,3rd,regular,\r\nvissem,2nd,active,subjunctive,pluperfect,singular,1st,regular,\r\nvissēs,2nd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nvisset,2nd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nvissēmus,2nd,active,subjunctive,pluperfect,plural,1st,regular,\r\nvissētis,2nd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nvissent,2nd,active,subjunctive,pluperfect,plural,3rd,regular,\r\neram,3rd,active,indicative,pluperfect,singular,1st,regular,\r\nerās,3rd,active,indicative,pluperfect,singular,2nd,regular,\r\nerat,3rd,active,indicative,pluperfect,singular,3rd,regular,\r\nerāmus,3rd,active,indicative,pluperfect,plural,1st,regular,\r\nerātis,3rd,active,indicative,pluperfect,plural,2nd,regular,\r\nerant,3rd,active,indicative,pluperfect,plural,3rd,regular,\r\nissem,3rd,active,subjunctive,pluperfect,singular,1st,regular,\r\nissēs,3rd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nisset,3rd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nissēmus,3rd,active,subjunctive,pluperfect,plural,1st,regular,\r\nissētis,3rd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nissent,3rd,active,subjunctive,pluperfect,plural,3rd,regular,\r\nīveram,4th,active,indicative,pluperfect,singular,1st,regular,\r\nīverās,4th,active,indicative,pluperfect,singular,2nd,regular,\r\nīverat,4th,active,indicative,pluperfect,singular,3rd,regular,\r\nīverāmus,4th,active,indicative,pluperfect,plural,1st,regular,\r\nīverātis,4th,active,indicative,pluperfect,plural,2nd,regular,\r\nīverant,4th,active,indicative,pluperfect,plural,3rd,regular,\r\nīvissem,4th,active,subjunctive,pluperfect,singular,1st,regular,\r\nīvissēs,4th,active,subjunctive,pluperfect,singular,2nd,regular,\r\nīvisset,4th,active,subjunctive,pluperfect,singular,3rd,regular,\r\nīvissēmus,4th,active,subjunctive,pluperfect,plural,1st,regular,\r\nīvissētis,4th,active,subjunctive,pluperfect,plural,2nd,regular,\r\nīvissent,4th,active,subjunctive,pluperfect,plural,3rd,regular,\r\nāverō,1st,active,indicative,future_perfect,singular,1st,regular,\r\nāveris,1st,active,indicative,future_perfect,singular,2nd,regular,\r\nāverit,1st,active,indicative,future_perfect,singular,3rd,regular,\r\nāverimus,1st,active,indicative,future_perfect,plural,1st,regular,\r\nāveritis,1st,active,indicative,future_perfect,plural,2nd,regular,\r\nāverint,1st,active,indicative,future_perfect,plural,3rd,regular,\r\n,1st,active,subjunctive,future_perfect,singular,1st,,\r\n,1st,active,subjunctive,future_perfect,singular,2nd,,\r\n,1st,active,subjunctive,future_perfect,singular,3rd,,\r\n,1st,active,subjunctive,future_perfect,plural,1st,,\r\n,1st,active,subjunctive,future_perfect,plural,2nd,,\r\n,1st,active,subjunctive,future_perfect,plural,3rd,,\r\nverō,2nd,active,indicative,future_perfect,singular,1st,regular,\r\nvēris,2nd,active,indicative,future_perfect,singular,2nd,regular,\r\nvērit,2nd,active,indicative,future_perfect,singular,3rd,regular,\r\nvērimus,2nd,active,indicative,future_perfect,plural,1st,regular,\r\nvēritis,2nd,active,indicative,future_perfect,plural,2nd,regular,\r\nvērint,2nd,active,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,active,subjunctive,future_perfect,singular,1st,,\r\n,2nd,active,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,active,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,active,subjunctive,future_perfect,plural,1st,,\r\n,2nd,active,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,active,subjunctive,future_perfect,plural,3rd,,\r\nerō,3rd,active,indicative,future_perfect,singular,1st,regular,\r\neris,3rd,active,indicative,future_perfect,singular,2nd,regular,\r\nerit,3rd,active,indicative,future_perfect,singular,3rd,regular,\r\nerimus,3rd,active,indicative,future_perfect,plural,1st,regular,\r\neritis,3rd,active,indicative,future_perfect,plural,2nd,regular,\r\nerint,3rd,active,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,active,subjunctive,future_perfect,singular,1st,,\r\n,3rd,active,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,active,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,active,subjunctive,future_perfect,plural,1st,,\r\n,3rd,active,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,active,subjunctive,future_perfect,plural,3rd,,\r\nīverō,4th,active,indicative,future_perfect,singular,1st,regular,\r\nīveris,4th,active,indicative,future_perfect,singular,2nd,regular,\r\nīverit,4th,active,indicative,future_perfect,singular,3rd,regular,\r\nīverimus,4th,active,indicative,future_perfect,plural,1st,regular,\r\nīveritis,4th,active,indicative,future_perfect,plural,2nd,regular,\r\nīverint,4th,active,indicative,future_perfect,plural,3rd,regular,\r\n,4th,active,subjunctive,future_perfect,singular,1st,,\r\n,4th,active,subjunctive,future_perfect,singular,2nd,,\r\n,4th,active,subjunctive,future_perfect,singular,3rd,,\r\n,4th,active,subjunctive,future_perfect,plural,1st,,\r\n,4th,active,subjunctive,future_perfect,plural,2nd,,\r\n,4th,active,subjunctive,future_perfect,plural,3rd,,\r\nor,1st,passive,indicative,present,singular,1st,regular,\r\nāris,1st,passive,indicative,present,singular,2nd,regular,\r\nāre,1st,passive,indicative,present,singular,2nd,irregular,5\r\nātur,1st,passive,indicative,present,singular,3rd,regular,\r\nāmur,1st,passive,indicative,present,plural,1st,regular,\r\nāminiī,1st,passive,indicative,present,plural,2nd,regular,\r\nantur,1st,passive,indicative,present,plural,3rd,regular,\r\ner,1st,passive,subjunctive,present,singular,1st,regular,\r\nēris,1st,passive,subjunctive,present,singular,2nd,regular,\r\nēre,1st,passive,subjunctive,present,singular,2nd,regular,\r\nētur,1st,passive,subjunctive,present,singular,3rd,regular,\r\nēmur,1st,passive,subjunctive,present,plural,1st,regular,\r\nēminī,1st,passive,subjunctive,present,plural,2nd,regular,\r\nentur,1st,passive,subjunctive,present,plural,3rd,regular,\r\neor,2nd,passive,indicative,present,singular,1st,regular,\r\nēris,2nd,passive,indicative,present,singular,2nd,regular,\r\nēre,2nd,passive,indicative,present,singular,2nd,regular,\r\nētur,2nd,passive,indicative,present,singular,3rd,regular,\r\nēmur,2nd,passive,indicative,present,plural,1st,regular,\r\nēmini,2nd,passive,indicative,present,plural,2nd,regular,\r\nentur,2nd,passive,indicative,present,plural,3rd,regular,\r\near,2nd,passive,subjunctive,present,singular,1st,regular,\r\neāris,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neāre,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neātur,2nd,passive,subjunctive,present,singular,3rd,regular,\r\neāmur,2nd,passive,subjunctive,present,plural,1st,regular,\r\neāminī,2nd,passive,subjunctive,present,plural,2nd,regular,\r\neantur,2nd,passive,subjunctive,present,plural,3rd,regular,\r\nor,3rd,passive,indicative,present,singular,1st,regular,\r\neris,3rd,passive,indicative,present,singular,2nd,regular,\r\nere,3rd,passive,indicative,present,singular,2nd,regular,\r\nitur,3rd,passive,indicative,present,singular,3rd,regular,\r\nimur,3rd,passive,indicative,present,plural,1st,regular,\r\niminī,3rd,passive,indicative,present,plural,2nd,regular,\r\nuntur,3rd,passive,indicative,present,plural,3rd,regular,\r\nar,3rd,passive,subjunctive,present,singular,1st,regular,\r\nāris,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nāre,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nātur,3rd,passive,subjunctive,present,singular,3rd,regular,\r\nāmur,3rd,passive,subjunctive,present,plural,1st,regular,\r\nāminī,3rd,passive,subjunctive,present,plural,2nd,regular,\r\nantur,3rd,passive,subjunctive,present,plural,3rd,regular,\r\nior,4th,passive,indicative,present,singular,1st,regular,\r\nīris,4th,passive,indicative,present,singular,2nd,regular,\r\nīre,4th,passive,indicative,present,singular,2nd,regular,\r\nītur,4th,passive,indicative,present,singular,3rd,regular,\r\nīmur,4th,passive,indicative,present,plural,1st,regular,\r\nīminī,4th,passive,indicative,present,plural,2nd,regular,\r\niuntur,4th,passive,indicative,present,plural,3rd,regular,\r\niar,4th,passive,subjunctive,present,singular,1st,regular,\r\niāris,4th,passive,subjunctive,present,singular,2nd,regular,\r\niāre,4th,passive,subjunctive,present,singular,2nd,regular,\r\niātur,4th,passive,subjunctive,present,singular,3rd,regular,\r\niāmur,4th,passive,subjunctive,present,plural,1st,regular,\r\niāminī,4th,passive,subjunctive,present,plural,2nd,regular,\r\niantur,4th,passive,subjunctive,present,plural,3rd,regular,\r\nābar,1st,passive,indicative,imperfect,singular,1st,regular,\r\nābāaris,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābāre,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābātur,1st,passive,indicative,imperfect,singular,3rd,regular,\r\nābāmur,1st,passive,indicative,imperfect,plural,1st,regular,\r\nābāminī,1st,passive,indicative,imperfect,plural,2nd,regular,\r\nābantur,1st,passive,indicative,imperfect,plural,3rd,regular,\r\nārer,1st,passive,subjunctive,imperfect,singular,1st,regular,\r\nārēris,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārēre,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārētur,1st,passive,subjunctive,imperfect,singular,3rd,regular,\r\nārēmur,1st,passive,subjunctive,imperfect,plural,1st,regular,\r\nārēminī,1st,passive,subjunctive,imperfect,plural,2nd,regular,\r\nārentur,1st,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,2nd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbātur,2nd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,2nd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāmini,2nd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,2nd,passive,indicative,imperfect,plural,3rd,regular,\r\nērer,2nd,passive,subjunctive,imperfect,singular,1st,regular,\r\nērēris,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērēre,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērētur,2nd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nērēmur,2nd,passive,subjunctive,imperfect,plural,1st,regular,\r\nērēminī,2nd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nērentur,2nd,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,3rd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbatur,3rd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,3rd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāminī,3rd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,3rd,passive,indicative,imperfect,plural,3rd,regular,\r\nerer,3rd,passive,subjunctive,imperfect,singular,1st,regular,\r\nerēris,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerēre,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerētur,3rd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nerēmur,3rd,passive,subjunctive,imperfect,plural,1st,regular,\r\nerēminī,3rd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nerentur,3rd,passive,subjunctive,imperfect,plural,3rd,regular,\r\niēbar,4th,passive,indicative,imperfect,singular,1st,regular,\r\niēbāris,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbāre,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbātur,4th,passive,indicative,imperfect,singular,3rd,regular,\r\niēbāmur,4th,passive,indicative,imperfect,plural,1st,regular,\r\niēbāminī,4th,passive,indicative,imperfect,plural,2nd,regular,\r\niēbantur,4th,passive,indicative,imperfect,plural,3rd,regular,\r\nīrer,4th,passive,subjunctive,imperfect,singular,1st,regular,\r\nīrēris,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrēre,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrētur,4th,passive,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmur,4th,passive,subjunctive,imperfect,plural,1st,regular,\r\nīrēminī,4th,passive,subjunctive,imperfect,plural,2nd,regular,\r\nīrentur,4th,passive,subjunctive,imperfect,plural,3rd,regular,\r\nābor,1st,passive,indicative,future,singular,1st,regular,\r\nāberis,1st,passive,indicative,future,singular,2nd,regular,\r\nābere,1st,passive,indicative,future,singular,2nd,irregular,\r\nābitur,1st,passive,indicative,future,singular,3rd,regular,\r\nābimur,1st,passive,indicative,future,plural,1st,regular,\r\nābiminī,1st,passive,indicative,future,plural,2nd,regular,\r\nābuntur,1st,passive,indicative,future,plural,3rd,regular,\r\n,1st,passive,subjunctive,future,singular,1st,,\r\n,1st,passive,subjunctive,future,singular,2nd,,\r\n,1st,passive,subjunctive,future,singular,3rd,,\r\n,1st,passive,subjunctive,future,plural,1st,,\r\n,1st,passive,subjunctive,future,plural,2nd,,\r\n,1st,passive,subjunctive,future,plural,3rd,,\r\nēbor,2nd,passive,indicative,future,singular,1st,regular,\r\nēberis,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbere,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbitur,2nd,passive,indicative,future,singular,3rd,regular,\r\nēbimur,2nd,passive,indicative,future,plural,1st,regular,\r\nēbiminī,2nd,passive,indicative,future,plural,2nd,regular,\r\nēbuntur,2nd,passive,indicative,future,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future,singular,1st,,\r\n,2nd,passive,subjunctive,future,singular,2nd,,\r\n,2nd,passive,subjunctive,future,singular,3rd,,\r\n,2nd,passive,subjunctive,future,plural,1st,,\r\n,2nd,passive,subjunctive,future,plural,2nd,,\r\n,2nd,passive,subjunctive,future,plural,3rd,,\r\nar,3rd,passive,indicative,future,singular,1st,regular,\r\nēris,3rd,passive,indicative,future,singular,2nd,regular,\r\nēre,3rd,passive,indicative,future,singular,2nd,irregular,\r\nētur,3rd,passive,indicative,future,singular,3rd,regular,\r\nēmur,3rd,passive,indicative,future,plural,1st,regular,\r\nēminī,3rd,passive,indicative,future,plural,2nd,regular,\r\nentur,3rd,passive,indicative,future,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future,singular,1st,,\r\n,3rd,passive,subjunctive,future,singular,2nd,,\r\n,3rd,passive,subjunctive,future,singular,3rd,,\r\n,3rd,passive,subjunctive,future,plural,1st,,\r\n,3rd,passive,subjunctive,future,plural,2nd,,\r\n,3rd,passive,subjunctive,future,plural,3rd,,\r\niar,4th,passive,indicative,future,singular,1st,regular,\r\niēris,4th,passive,indicative,future,singular,2nd,regular,\r\nīēre,4th,passive,indicative,future,singular,2nd,irregular,\r\niētur,4th,passive,indicative,future,singular,3rd,regular,\r\niēmur,4th,passive,indicative,future,plural,1st,regular,\r\niēminī,4th,passive,indicative,future,plural,2nd,regular,\r\nientur,4th,passive,indicative,future,plural,3rd,regular,\r\n,4th,passive,subjunctive,future,singular,1st,,\r\n,4th,passive,subjunctive,future,singular,2nd,,\r\n,4th,passive,subjunctive,future,singular,3rd,,\r\n,4th,passive,subjunctive,future,plural,1st,,\r\n,4th,passive,subjunctive,future,plural,2nd,,\r\n,4th,passive,subjunctive,future,plural,3rd,,\r\nātus sum,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus fui,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus es,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus fuisti,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus est,1st,passive,indicative,perfect,singular,3rd,regular,\r\nātus fuit,1st,passive,indicative,perfect,singular,3rd,regular,\r\nāti sumus,1st,passive,indicative,perfect,plural,1st,regular,\r\nāti fuimus,1st,passive,indicative,perfect,plural,1st,irregular,\r\nāti estis,1st,passive,indicative,perfect,plural,2nd,regular,\r\nāti fuistis,1st,passive,indicative,perfect,plural,2nd,irregular,\r\nāti sunt,1st,passive,indicative,perfect,plural,3rd,regular,\r\nāti fuerunt,1st,passive,indicative,perfect,plural,3rd,irregular,\r\nātus sim,1st,passive,subjunctive,perfect,singular,1st,regular,\r\nātus fuerim,1st,passive,subjunctive,perfect,singular,1st,irregular,\r\nātus sis,1st,passive,subjunctive,perfect,singular,2nd,regular,\r\nātus fueris,1st,passive,subjunctive,perfect,singular,2nd,irregular,\r\nātus sit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nātus fuerit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nāti sīmus,1st,passive,subjunctive,perfect,plural,1st,regular,\r\nāti fuerimus,1st,passive,subjunctive,perfect,plural,1st,irregular,\r\nāti sītis,1st,passive,subjunctive,perfect,plural,2nd,regular,\r\nāti fueritis,1st,passive,subjunctive,perfect,plural,2nd,irregular,\r\nāti sint,1st,passive,subjunctive,perfect,plural,3rd,regular,\r\nāti fuerint,1st,passive,subjunctive,perfect,plural,3rd,irregular,\r\nitus sum,2nd,passive,indicative,perfect,singular,1st,regular,\r\nitus es,2nd,passive,indicative,perfect,singular,2nd,regular,\r\nitus est,2nd,passive,indicative,perfect,singular,3rd,regular,\r\nitī sumus,2nd,passive,indicative,perfect,plural,1st,regular,\r\nitī estis,2nd,passive,indicative,perfect,plural,2nd,regular,\r\nitī sunt,2nd,passive,indicative,perfect,plural,3rd,regular,\r\nitus sim,2nd,passive,subjunctive,perfect,singular,1st,regular,\r\nitus sīs,2nd,passive,subjunctive,perfect,singular,2nd,regular,\r\nitus sit,2nd,passive,subjunctive,perfect,singular,3rd,regular,\r\nitī sīmus,2nd,passive,subjunctive,perfect,plural,1st,regular,\r\nitī sītis,2nd,passive,subjunctive,perfect,plural,2nd,regular,\r\nitī sint,2nd,passive,subjunctive,perfect,plural,3rd,regular,\r\nus sum,3rd,passive,indicative,perfect,singular,1st,regular,\r\nus es,3rd,passive,indicative,perfect,singular,2nd,regular,\r\nus est,3rd,passive,indicative,perfect,singular,3rd,regular,\r\nī sumus,3rd,passive,indicative,perfect,plural,1st,regular,\r\nī estis,3rd,passive,indicative,perfect,plural,2nd,regular,\r\nī sunt,3rd,passive,indicative,perfect,plural,3rd,regular,\r\nus sim,3rd,passive,subjunctive,perfect,singular,1st,regular,\r\nus sīs,3rd,passive,subjunctive,perfect,singular,2nd,regular,\r\nus sit,3rd,passive,subjunctive,perfect,singular,3rd,regular,\r\nus sīmus,3rd,passive,subjunctive,perfect,plural,1st,regular,\r\nus sītis,3rd,passive,subjunctive,perfect,plural,2nd,regular,\r\nus sint,3rd,passive,subjunctive,perfect,plural,3rd,regular,\r\nītus sum,4th,passive,indicative,perfect,singular,1st,regular,\r\nītus es,4th,passive,indicative,perfect,singular,2nd,regular,\r\nītus est,4th,passive,indicative,perfect,singular,3rd,regular,\r\nītī sumus,4th,passive,indicative,perfect,plural,1st,regular,\r\nīti estis,4th,passive,indicative,perfect,plural,2nd,regular,\r\nīti sunt,4th,passive,indicative,perfect,plural,3rd,regular,\r\nītus sim,4th,passive,subjunctive,perfect,singular,1st,regular,\r\nītus sīs,4th,passive,subjunctive,perfect,singular,2nd,regular,\r\nītus sit,4th,passive,subjunctive,perfect,singular,3rd,regular,\r\nītī sīmus,4th,passive,subjunctive,perfect,plural,1st,regular,\r\nīti sītis,4th,passive,subjunctive,perfect,plural,2nd,regular,\r\nīti sint,4th,passive,subjunctive,perfect,plural,3rd,regular,\r\nātus eram,1st,passive,indicative,pluperfect,singular,1st,regular,\r\nātus fueram,1st,passive,indicative,pluperfect,singular,1st,irregular,\r\nātus eras,1st,passive,indicative,pluperfect,singular,2nd,regular,\r\nātus fueras,1st,passive,indicative,pluperfect,singular,2nd,irregular,\r\nātus erat,1st,passive,indicative,pluperfect,singular,3rd,regular,\r\nātus fuerat,1st,passive,indicative,pluperfect,singular,3rd,irregular,\r\nātī erāmus,1st,passive,indicative,pluperfect,plural,1st,regular,\r\nātī fueramus,1st,passive,indicative,pluperfect,plural,1st,irregular,\r\nātī erātis,1st,passive,indicative,pluperfect,plural,2nd,regular,\r\nātī fueratis,1st,passive,indicative,pluperfect,plural,2nd,irregular,\r\nātī erant,1st,passive,indicative,pluperfect,plural,3rd,regular,\r\nātī fuerant,1st,passive,indicative,pluperfect,plural,3rd,irregular,\r\nātus essem,1st,passive,subjunctive,pluperfect,singular,1st,regular,\r\nātus fuissem,1st,passive,subjunctive,pluperfect,singular,1st,irregular,\r\nātus esses,1st,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nātus fuissēs,1st,passive,subjunctive,pluperfect,singular,2nd,irregular,\r\nātus esset,1st,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nātus fuisset,1st,passive,subjunctive,pluperfect,singular,3rd,irregular,\r\nāti essēmus,1st,passive,subjunctive,pluperfect,plural,1st,regular,\r\nāti fuissēmus,1st,passive,subjunctive,pluperfect,plural,1st,irregular,\r\nāti essētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti fuissētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti essent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nāti fuissent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nitus eram,2nd,passive,indicative,pluperfect,singular,1st,regular,\r\nitus erās,2nd,passive,indicative,pluperfect,singular,2nd,regular,\r\nitus erat,2nd,passive,indicative,pluperfect,singular,3rd,regular,\r\nitī erāmus,2nd,passive,indicative,pluperfect,plural,1st,regular,\r\nitī erātis,2nd,passive,indicative,pluperfect,plural,2nd,regular,\r\nitī erant,2nd,passive,indicative,pluperfect,plural,3rd,regular,\r\nitus essem,2nd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nitus essēs,2nd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nitus esset,2nd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nitī essēmus,2nd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,2nd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,2nd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nus eram,3rd,passive,indicative,pluperfect,singular,1st,regular,\r\nus erās,3rd,passive,indicative,pluperfect,singular,2nd,regular,\r\nus erat,3rd,passive,indicative,pluperfect,singular,3rd,regular,\r\nī erāmus,3rd,passive,indicative,pluperfect,plural,1st,regular,\r\nī erātis,3rd,passive,indicative,pluperfect,plural,2nd,regular,\r\nī erant,3rd,passive,indicative,pluperfect,plural,3rd,regular,\r\nus essem,3rd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nus essēs,3rd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nus esset,3rd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nī essēmus,3rd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nī essētis,3rd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nī essent,3rd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nītus eram,4th,passive,indicative,pluperfect,singular,1st,regular,\r\nītus erās,4th,passive,indicative,pluperfect,singular,2nd,regular,\r\nītus erat,4th,passive,indicative,pluperfect,singular,3rd,regular,\r\nītī erāmus,4th,passive,indicative,pluperfect,plural,1st,regular,\r\nīti erātis,4th,passive,indicative,pluperfect,plural,2nd,regular,\r\nītī erant,4th,passive,indicative,pluperfect,plural,3rd,regular,\r\nītus essem,4th,passive,subjunctive,pluperfect,singular,1st,regular,\r\nītus essēs,4th,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nītus esset,4th,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nītī essēmus,4th,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,4th,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,4th,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nātus erō,1st,passive,indicative,future_perfect,singular,1st,regular,\r\nātus eris,1st,passive,indicative,future_perfect,singular,2nd,regular,\r\nātus erit,1st,passive,indicative,future_perfect,singular,3rd,regular,\r\nāti erimus,1st,passive,indicative,future_perfect,plural,1st,regular,\r\nāti eritis,1st,passive,indicative,future_perfect,plural,2nd,regular,\r\nāti erunt,1st,passive,indicative,future_perfect,plural,3rd,regular,\r\n,1st,passive,subjunctive,future_perfect,singular,1st,,\r\n,1st,passive,subjunctive,future_perfect,singular,2nd,,\r\n,1st,passive,subjunctive,future_perfect,singular,3rd,,\r\n,1st,passive,subjunctive,future_perfect,plural,1st,,\r\n,1st,passive,subjunctive,future_perfect,plural,2nd,,\r\n,1st,passive,subjunctive,future_perfect,plural,3rd,,\r\nitus erō,2nd,passive,indicative,future_perfect,singular,1st,regular,\r\nitus eris,2nd,passive,indicative,future_perfect,singular,2nd,regular,\r\nitus erit,2nd,passive,indicative,future_perfect,singular,3rd,regular,\r\nitī erimus,2nd,passive,indicative,future_perfect,plural,1st,regular,\r\nitī eritis,2nd,passive,indicative,future_perfect,plural,2nd,regular,\r\nitī erunt,2nd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future_perfect,singular,1st,,\r\n,2nd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,1st,,\r\n,2nd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,3rd,,\r\nus erō,3rd,passive,indicative,future_perfect,singular,1st,regular,\r\nus eris,3rd,passive,indicative,future_perfect,singular,2nd,regular,\r\nus erit,3rd,passive,indicative,future_perfect,singular,3rd,regular,\r\nī erimus,3rd,passive,indicative,future_perfect,plural,1st,regular,\r\nī eritis,3rd,passive,indicative,future_perfect,plural,2nd,regular,\r\nī erunt,3rd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future_perfect,singular,1st,,\r\n,3rd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,1st,,\r\n,3rd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,3rd,,\r\nītus erō,4th,passive,indicative,future_perfect,singular,1st,regular,\r\nītus eris,4th,passive,indicative,future_perfect,singular,2nd,regular,\r\nītus erit,4th,passive,indicative,future_perfect,singular,3rd,regular,\r\nītī erimus,4th,passive,indicative,future_perfect,plural,1st,regular,\r\nītī eritis,4th,passive,indicative,future_perfect,plural,2nd,regular,\r\nītī erunt,4th,passive,indicative,future_perfect,plural,3rd,regular,\r\n,4th,passive,subjunctive,future_perfect,singular,1st,,\r\n,4th,passive,subjunctive,future_perfect,singular,2nd,,\r\n,4th,passive,subjunctive,future_perfect,singular,3rd,,\r\n,4th,passive,subjunctive,future_perfect,plural,1st,,\r\n,4th,passive,subjunctive,future_perfect,plural,2nd,,\r\n,4th,passive,subjunctive,future_perfect,plural,3rd,,";
+
+var verbFootnotesCSV = "Index,Text\r\n2,Chiefly in poetry.\r\n3,\"In tenses based on the perfect stem (the perfect, pluperfect and future perfect of the Active voice) a v between two vowels is often lost with contraction of the two vowels, thus āvī to ā, ēvī to ē, ōvi to ō. Perfects in īvī often omit the v but rarely contract the vowels, except before ss or st, and sometimes in the third person. In addition to the use of v or u, the Active perfect stem can also be formed in a number of other ways, such as the addition of s to the root (eg carpsi), reduplication of the root (eg cecidi from cado), and simple lengthening of the vowel (eg vidī from video or legī from lego).\"\r\n4,\"Dic, duc, fac, and fer lack a final vowel in the imperative in classical Latin. The singular imperative of the verb sciō is always scītō, and the plural is usually scītōte.\"\r\n5,Common in epic poetry.\r\n6,Present in early Latin but chiefly confined to popular use until Livy and later writers.\r\n7,The verb fīō is a 4th conjugation verb that is irregular in only two forms: the present infinitive fierī and the imperfect subjunctive fierem.";
 
 function unwrapExports (x) {
 	return x && x.__esModule ? x['default'] : x;
@@ -2707,7 +2716,7 @@ let dataSet = new LanguageDataset(language);
  analyzer's language modules as well.
  */
 const importerName = 'csv';
-const parts = dataSet.defineFeatureType(types.part, ['noun', 'adjective']);
+const parts = dataSet.defineFeatureType(types.part, ['noun', 'adjective', 'verb']);
 const numbers = dataSet.defineFeatureType(types.number, ['singular', 'plural']);
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
@@ -2739,11 +2748,39 @@ const types$1 = dataSet.defineFeatureType(types.type, ['regular', 'irregular']);
 types$1.addImporter(importerName)
     .map('regular', types$1.regular)
     .map('irregular', types$1.irregular);
+const conjugations = dataSet.defineFeatureType(types.conjugation, ['first', 'second', 'third', 'fourth']);
+conjugations.addImporter(importerName)
+    .map('1st', conjugations.first)
+    .map('2nd', conjugations.second)
+    .map('3rd', conjugations.third)
+    .map('4th', conjugations.fourth);
+const tenses = dataSet.defineFeatureType(types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
+tenses.addImporter(importerName)
+    .map('present', tenses.present)
+    .map('imperfect', tenses.imperfect)
+    .map('future', tenses.future)
+    .map('perfect', tenses.perfect)
+    .map('pluperfect', tenses.pluperfect)
+    .map('future_perfect', tenses['future perfect']);
+const voices = dataSet.defineFeatureType(types.voice, ['passive', 'active']);
+voices.addImporter(importerName)
+    .map('passive', voices.passive)
+    .map('active', voices.active);
+const moods = dataSet.defineFeatureType(types.mood, ['indicative', 'subjunctive']);
+moods.addImporter(importerName)
+    .map('indicative', moods.indicative)
+    .map('subjunctive', moods.subjunctive);
+const persons = dataSet.defineFeatureType(types.person, ['first', 'second', 'third']);
+persons.addImporter(importerName)
+    .map('1st', persons.first)
+    .map('2nd', persons.second)
+    .map('3rd', persons.third);
 const footnotes = dataSet.defineFeatureType(types.footnote, []);
 
 // endregion Definition of grammatical features
 
-dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
+// For noun and adjectives
+dataSet.addSuffixes = function(partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-';
 
@@ -2755,8 +2792,12 @@ dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
             suffix = null;
         }
 
-        let features = [partOfSpeech, numbers.importer.csv.get(data[i][1]), cases.importer.csv.get(data[i][2]),
-            declensions.importer.csv.get(data[i][3]), genders.importer.csv.get(data[i][4]), types$1.importer.csv.get(data[i][5])];
+        let features = [partOfSpeech,
+            numbers.importer.csv.get(data[i][1]),
+            cases.importer.csv.get(data[i][2]),
+            declensions.importer.csv.get(data[i][3]),
+            genders.importer.csv.get(data[i][4]),
+            types$1.importer.csv.get(data[i][5])];
         if (data[i][6]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
@@ -2769,14 +2810,53 @@ dataSet.addSuffixes = function addSuffixes(partOfSpeech, data) {
     }
 };
 
-dataSet.addFootnotes = function addFootnotes(partOfSpeech, data) {
+// For verbs
+dataSet.addVerbSuffixes = function(partOfSpeech, data) {
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+    let noSuffixValue = '-';
+
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+        let suffix = data[i][0];
+        // Handle special suffix values
+        if (suffix === noSuffixValue) {
+            suffix = null;
+        }
+
+        let features = [partOfSpeech,
+            conjugations.importer.csv.get(data[i][1]),
+            voices.importer.csv.get(data[i][2]),
+            moods.importer.csv.get(data[i][3]),
+            tenses.importer.csv.get(data[i][4]),
+            numbers.importer.csv.get(data[i][5]),
+            persons.importer.csv.get(data[i][6])];
+
+        let grammarType = data[i][7];
+        // Type information can be empty if no ending is provided
+        if (grammarType) {
+            features.push(types$1.importer.csv.get(grammarType));
+        }
+        // Footnotes
+        if (data[i][8]) {
+            // There can be multiple footnote indexes separated by spaces
+            let language = this.language;
+            let indexes = data[i][8].split(' ').map(function(index) {
+                return footnotes.get(index);
+            });
+            features.push(...indexes);
+        }
+        this.addSuffix(suffix, ...features);
+    }
+};
+
+dataSet.addFootnotes = function(partOfSpeech, data) {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
         this.addFootnote(partOfSpeech, data[i][0], data[i][1]);
     }
 };
 
-dataSet.loadData = function loadData$$1() {
+dataSet.loadData = function() {
     // Nouns
     let partOfSpeech = parts.noun;
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
@@ -2790,6 +2870,13 @@ dataSet.loadData = function loadData$$1() {
     this.addSuffixes(partOfSpeech, suffixes.data);
     footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
     this.addFootnotes(partOfSpeech, footnotes.data);
+
+    // Verbs
+    partOfSpeech = parts.verb;
+    suffixes = papaparse.parse(verbSuffixesCSV, {});
+    this.addVerbSuffixes(partOfSpeech, suffixes.data);
+    footnotes = papaparse.parse(verbFootnotesCSV, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
 };
 
 
@@ -2800,7 +2887,7 @@ dataSet.loadData = function loadData$$1() {
  * @returns {Suffix | null} If a match is found, returns a Suffix object modified with some
  * additional information about a match. If no matches found, returns null.
  */
-dataSet.matcher = function match(inflections, suffix) {
+dataSet.matcher = function(inflections, suffix) {
     "use strict";
     // All of those features must match between an inflection and an ending
     let obligatoryMatches = [types.part];
@@ -2871,7 +2958,7 @@ dataSet.matcher = function match(inflections, suffix) {
  * @param {MatchData} matchB
  * @returns {MatchData} A best of two matches
  */
-dataSet.bestMatch = function bestMatch(matchA, matchB) {
+dataSet.bestMatch = function(matchA, matchB) {
     // If one of the arguments is not set, return the other one
     if (!matchA && matchB) {
         return matchB;
@@ -2912,7 +2999,8 @@ Types and values that are unknown (undefined) will be skipped during parsing.
  */
 data.addFeature(types.part).importer
     .map('noun', parts.noun)
-    .map('adjective', parts.adjective);
+    .map('adjective', parts.adjective)
+    .map('verb', parts.verb);
 
 data.addFeature(types.grmCase).importer
     .map('nominative', cases.nominative)
@@ -2940,6 +3028,33 @@ data.addFeature(types.gender).importer
     .map('neuter', genders.neuter)
     .map('common', [genders.masculine, genders.feminine]);
 
+data.addFeature(types.conjugation).importer
+    .map('1st', conjugations.first)
+    .map('2nd', conjugations.second)
+    .map('3rd', conjugations.third)
+    .map('4th', conjugations.fourth);
+
+data.addFeature(types.tense).importer
+    .map('present', tenses.present)
+    .map('imperfect', tenses.imperfect)
+    .map('future', tenses.future)
+    .map('perfect', tenses.perfect)
+    .map('pluperfect', tenses.pluperfect)
+    .map('future_perfect', tenses['future perfect']);
+
+data.addFeature(types.voice).importer
+    .map('active', voices.active)
+    .map('passive', voices.passive);
+
+data.addFeature(types.mood).importer
+    .map('indicative', moods.indicative)
+    .map('subjunctive', moods.subjunctive);
+
+data.addFeature(types.person).importer
+    .map('1st', persons.first)
+    .map('2nd', persons.second)
+    .map('3rd', persons.third);
+
 let maService = new Service('Tufts');
 // Set a language conversion map for this specific service
 maService.languages.importer.map('lat', languages.latin);
@@ -2956,13 +3071,21 @@ let adapter = {};
 adapter.transform = function(jsonObj) {
     "use strict";
     let lexemes = [];
-    for (let lexeme of jsonObj.RDF.Annotation.Body) {
+    let annotationBody = jsonObj.RDF.Annotation.Body;
+    if (!Array.isArray(annotationBody)) {
+        /*
+        If only one lexeme is returned, Annotation Body will not be an array but rather a single object.
+        Let's convert it to an array so we can work with it in a uniformal way.
+         */
+        annotationBody = [annotationBody];
+    }
+    for (let lexeme of annotationBody) {
         let lemma = new Lemma(lexeme.rest.entry.dict.hdwd.$, maService.languages.importer.get(lexeme.rest.entry.dict.hdwd.lang));
 
         let inflections = [];
         let inflectionsJSON = lexeme.rest.entry.infl;
         if (!Array.isArray(inflectionsJSON)) {
-            // Inflection is a single object, not an array of objects. Convert it to an array for uniformity.
+            // If only one inflection returned, it is a single object, not an array of objects. Convert it to an array for uniformity.
             inflectionsJSON = [inflectionsJSON];
         }
         for (let inflectionJSON of inflectionsJSON) {
@@ -2971,11 +3094,48 @@ adapter.transform = function(jsonObj) {
                 // Set suffix if provided by a morphological analyzer
                 inflection.suffix = inflectionJSON.term.suff.$;
             }
-            inflection.feature = maService.latin[types.part].get(inflectionJSON.pofs.$);
-            inflection.feature = maService.latin[types.grmCase].get(inflectionJSON.case.$);
-            inflection.feature = maService.latin[types.declension].get(inflectionJSON.decl.$);
-            inflection.feature = maService.latin[types.number].get(inflectionJSON.num.$);
-            inflection.feature = maService.latin[types.gender].get(inflectionJSON.gend.$);
+
+            // Parse whatever grammatical features we're interested in
+            if (inflectionJSON.pofs) {
+                inflection.feature = maService.latin[types.part].get(inflectionJSON.pofs.$);
+            }
+
+            if (inflectionJSON.case) {
+                inflection.feature = maService.latin[types.grmCase].get(inflectionJSON.case.$);
+            }
+
+            if (inflectionJSON.decl) {
+                inflection.feature = maService.latin[types.declension].get(inflectionJSON.decl.$);
+            }
+
+            if (inflectionJSON.num) {
+                inflection.feature = maService.latin[types.number].get(inflectionJSON.num.$);
+            }
+
+            if (inflectionJSON.gend) {
+                inflection.feature = maService.latin[types.gender].get(inflectionJSON.gend.$);
+            }
+
+            if (inflectionJSON.conj) {
+                inflection.feature = maService.latin[types.conjugation].get(inflectionJSON.conj.$);
+            }
+
+            if (inflectionJSON.tense) {
+                inflection.feature = maService.latin[types.tense].get(inflectionJSON.tense.$);
+            }
+
+            if (inflectionJSON.voice) {
+                inflection.feature = maService.latin[types.voice].get(inflectionJSON.voice.$);
+            }
+
+            if (inflectionJSON.mood) {
+                inflection.feature = maService.latin[types.mood].get(inflectionJSON.mood.$);
+            }
+
+            if (inflectionJSON.pers) {
+                inflection.feature = maService.latin[types.person].get(inflectionJSON.pers.$);
+            }
+
             inflections.push(inflection);
         }
         lexemes.push(new Lexeme(lemma, inflections));
@@ -2988,7 +3148,11 @@ let messages = {
     Case: 'Case',
     Declension: 'Declension',
     Gender: 'Gender',
-    Type: 'Type'
+    Type: 'Type',
+    Voice: 'Voice',
+    'Conjugation Stem': 'Conjugation Stem',
+    Mood: 'Mood',
+    Person: 'Person'
 };
 
 let messages$1 = {
@@ -2996,7 +3160,11 @@ let messages$1 = {
     Case: 'Case (GB)',
     Declension: 'Declension (GB)',
     Gender: 'Gender (GB)',
-    Type: 'Type (GB)'
+    Type: 'Type (GB)',
+    Voice: 'Voice (GB)',
+    'Conjugation Stem': 'Conjugation Stem (GB)',
+    Mood: 'Mood (GB)',
+    Person: 'Person (GB)'
 };
 
 /*
@@ -4896,6 +5064,11 @@ class MessageBundle {
     get(messageID, options = undefined) {
         if (this[messageID]) {
             return this[messageID].format(options);
+        }
+        else {
+            // If message with the ID provided is not in translation data, generate a warning.
+            return `Not in translation data: "${messageID}"`;
+            console.warn(`"${messageID}" does not exist in translation data.`);
         }
     }
 }
@@ -9754,12 +9927,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 var Handlebars = unwrapExports(handlebarsV4_0_10);
 
-let widthClassBase = 'infl-cell--sp';
-let highlightClass = 'infl-cell--hl';
-let classHidden = 'hidden';
+let groupType = {
+    column: 'column', // Groups suffixes into columns
+    row: 'row' // Groups suffixes into rows
+};
 
-//import * as IntlMessageFormat from '../support/intl-messageformat-2.1.0/dist/intl-messageformat-with-locales';
-//import IntlMessageFormat from 'intl-messageformat';
+let groupTitleLocation = {
+    column: 'column', // Group title is located in a (left-side) column
+    row: 'row' // Group title is located within a row
+};
+
+let classNames = {
+    cell: 'infl-cell',
+    widthPrefix: 'infl-cell--sp',
+    fullWidth: 'infl-cell--fw',
+    header: 'infl-cell--hdr',
+    highlight: 'infl-cell--hl',
+    hidden: 'hidden'
+};
 
 /**
  * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
@@ -9812,8 +9997,8 @@ class Cell {
         this.column = undefined; // A column this cell belongs to
         this.row = undefined; // A row this cell belongs to
 
-        this.zeroWidthClass = widthClassBase + 0;
-        this.initialWidthClass = widthClassBase + 1;
+        this.zeroWidthClass = classNames.widthPrefix + 0;
+        this.initialWidthClass = classNames.widthPrefix + 1;
 
         this._index = undefined;
     }
@@ -9853,13 +10038,13 @@ class Cell {
     }
 
     highlight() {
-        this.wNode.classList.add(highlightClass);
-        this.nNode.classList.add(highlightClass);
+        this.wNode.classList.add(classNames.highlight);
+        this.nNode.classList.add(classNames.highlight);
     }
 
     clearHighlighting() {
-        this.wNode.classList.remove(highlightClass);
-        this.nNode.classList.remove(highlightClass);
+        this.wNode.classList.remove(classNames.highlight);
+        this.nNode.classList.remove(classNames.highlight);
     }
 
     highlightRowAndColumn() {
@@ -9884,8 +10069,8 @@ class TitleCell {
 
         this.parent = undefined;
 
-        this.zeroWidthClass = widthClassBase + 0;
-        this.initialWidthClass = widthClassBase + 1;
+        this.zeroWidthClass = classNames.widthPrefix + 0;
+        this.initialWidthClass = classNames.widthPrefix + 1;
     }
 
     get wvNode() {
@@ -9896,14 +10081,19 @@ class TitleCell {
         return this.nNodes[index];
     }
 
-    /*clone() {
-        let clone = new TitleCell(this.nvGroupSize);
-        //clone.node = this.node.cloneNode(true);
+    static placeholder(width = 1) {
+        let placeholder = document.createElement('div');
+        placeholder.classList.add(classNames.cell, classNames.widthPrefix + width);
+        return placeholder;
+    }
+
+    get hierarchyList() {
+        let parentCells = [];
         if (this.parent) {
-            clone.parent = this.parent.clone();
+            parentCells = this.parent.hierarchyList;
         }
-        return clone;
-    }*/
+        return parentCells.concat(this);
+    }
 
     hide() {
         this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
@@ -9920,16 +10110,16 @@ class TitleCell {
     }
 
     highlight() {
-        this.wNode.classList.add(highlightClass);
+        this.wNode.classList.add(classNames.highlight);
         for (let nNode of this.nNodes) {
-            nNode.classList.add(highlightClass);
+            nNode.classList.add(classNames.highlight);
         }
     }
 
     clearHighlighting() {
-        this.wNode.classList.remove(highlightClass);
+        this.wNode.classList.remove(classNames.highlight);
         for (let nNode of this.nNodes) {
-            nNode.classList.remove(highlightClass);
+            nNode.classList.remove(classNames.highlight);
         }
     }
 }
@@ -9970,9 +10160,9 @@ class HeaderCell {
     }
 
     changeSpan(value) {
-        let currentWidthClass = widthClassBase + this.span;
+        let currentWidthClass = classNames.widthPrefix + this.span;
         this.span += value;
-        let newWidthClass = widthClassBase + this.span;
+        let newWidthClass = classNames.widthPrefix + this.span;
         this.wNode.classList.replace(currentWidthClass, newWidthClass);
         this.nNode.classList.replace(currentWidthClass, newWidthClass);
 
@@ -10007,8 +10197,8 @@ class HeaderCell {
     }
 
     highlight() {
-        this.wNode.classList.add(highlightClass);
-        this.nNode.classList.add(highlightClass);
+        this.wNode.classList.add(classNames.highlight);
+        this.nNode.classList.add(classNames.highlight);
         
         if (this.parent) {
             this.parent.highlight();
@@ -10016,8 +10206,8 @@ class HeaderCell {
     }
     
     clearHighlighting() {
-        this.wNode.classList.remove(highlightClass);
-        this.nNode.classList.remove(highlightClass);
+        this.wNode.classList.remove(classNames.highlight);
+        this.nNode.classList.remove(classNames.highlight);
         
         if (this.parent) {
             this.parent.clearHighlighting();
@@ -10140,16 +10330,22 @@ class Row {
 }
 
 class GroupingFeature {
-    constructor(type, values, language) {
+    constructor(type, values, language, groupType, titleMessageID, titleLocation) {
         this._feature = new FeatureType(type, values, language);
-        this.isColumn = false;
-        this.isRow = false;
+
+        this._groupType = groupType;
+        this.groupTitle = titleMessageID;
+        this._titleLocation = titleLocation;
+
+        /*this.isColumn = false;
+        this.isRow = false;*/
     }
 
     clone() {
         let clone = new GroupingFeature(this._feature.type, this._feature.values, this._feature.language);
-        clone.isColumn = this.isColumn;
-        clone.isRow = this.isRow;
+        clone._groupType = this._groupType;
+        clone.groupTitle = this.groupTitle;
+        clone._titleLocation = this._titleLocation;
         return clone;
     }
 
@@ -10161,21 +10357,16 @@ class GroupingFeature {
         return this._feature.type;
     }
 
-    setColumnGroupType() {
-        this.isColumn = true;
-        this.isRow = false;
+    get isColumnGroup() {
+        return this._groupType === groupType.column;
     }
 
-    setRowGroupType() {
-        this.isColumn = false;
-        this.isRow = true;
+    get isRowGroup() {
+        return this._groupType === groupType.row;
     }
 
-    get(value) {
-        let feature = this._feature.get(value);
-        feature.isColumn = this.isColumn;
-        feature.isRow = this.isRow;
-        return feature;
+    get isTitleInColumn() {
+        return this._titleLocation === groupTitleLocation.column;
     }
 
     get size() {
@@ -10198,6 +10389,26 @@ class GroupingFeature {
     isSameType(groupingFeature) {
         return this._feature.type === groupingFeature.feature.type;
     }
+
+    createTitleCell(text, nvGroupSize) {
+        let titleCellNode = document.createElement('div');
+        titleCellNode.classList.add(classNames.cell);
+        if (this.isColumnGroup) {
+            titleCellNode.classList.add(classNames.header);
+        }
+        if (this.isRowGroup && this._titleLocation === groupTitleLocation.row) {
+            // This cell is taking entire row
+            titleCellNode.classList.add(classNames.fullWidth);
+        }
+        if (this.groupTitleStyles) {
+            titleCellNode.classList.add(...this.groupTitleStyles);
+        }
+
+        titleCellNode.innerHTML = text;
+        let titleCell = new TitleCell(titleCellNode, nvGroupSize);
+        titleCell.node = titleCellNode;
+        return titleCell;
+    }
 }
 
 class GroupingFeatures {
@@ -10207,36 +10418,43 @@ class GroupingFeatures {
         this._rowFeatures = [];
 
         for (let feature of features) {
-            if (feature.isColumn) {
+            if (feature.isColumnGroup) {
                 this._columnFeatures.push(feature);
             }
-            if (feature.isRow) {
+            if (feature.isRowGroup) {
                 this._rowFeatures.push(feature);
             }
         }
 
         for (let feature of features) {
-            if (feature.isColumn) {
+            if (feature.isColumnGroup) {
                 this.firstColumnFeature = feature;
                 break;
             }
         }
 
         for (let feature of features) {
-            if (feature.isColumn) {
+            if (feature.isColumnGroup) {
                 this.lastColumnFeature = feature;
             }
         }
 
         for (let feature of features) {
-            if (feature.isRow) {
+            if (feature.isRowGroup) {
                 this.firstRowFeature = feature;
                 break;
             }
         }
         for (let feature of features) {
-            if (feature.isRow) {
+            if (feature.isRowGroup) {
                 this.lastRowFeature = feature;
+            }
+        }
+
+        this.titleColumnsQuantity = 0;
+        for (let feature of features) {
+            if (feature.isTitleInColumn) {
+                this.titleColumnsQuantity++;
             }
         }
     }
@@ -10259,7 +10477,7 @@ class GroupingFeatures {
 }
 
 class Table {
-    constructor(suffixes, groupingFeatures, headerCellTemplate, cellTemplate, messages) {
+    constructor(suffixes, rowTitleColumnsQty, groupingFeatures, headerCellTemplate, cellTemplate, messages) {
         this.suffixes = suffixes;
         this.features = new GroupingFeatures(groupingFeatures);
 
@@ -10274,6 +10492,7 @@ class Table {
             cell: cellTemplate
         };
 
+        this.rowTitleColumnsQty = rowTitleColumnsQty;
         this.messages = messages;
 
         this.emptyColumnsHidden = false;
@@ -10300,10 +10519,10 @@ class Table {
             cell.index = index;
         }
 
-        this.getHeaders();
+        this.headers = this.constructHeaders();
 
         // Construct columns
-        this.columns = this.getColumns();
+        this.columns = this.constructColumns();
         for (let [index, column] of this.columns.entries()) {
             column.headerCell = this.headers[this.headers.length-1].cells[index];
         }
@@ -10414,7 +10633,7 @@ class Table {
         return group;
     }
 
-    getColumns(tree = this.tree, columns = [], currentLevel = 0) {
+    constructColumns(tree = this.tree, columns = [], currentLevel = 0) {
         let currentFeature = this.features.items[currentLevel];
 
         let groups = [];
@@ -10423,20 +10642,15 @@ class Table {
 
             // Iterate until the last row feature
             if (!currentFeature.isSameType(this.features.lastRowFeature)) {
-                let currentResult = this.getColumns(cellGroup, columns, currentLevel + 1);
-                if (currentFeature.isRow) {
+                let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1);
+                if (currentFeature.isRowGroup) {
                     // TODO: Avoid creating extra cells
-                    let titleCellNode = document.createElement('div');
-                    titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                    titleCellNode.innerHTML = featureValue;
-                    let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-
                     let group = {
                         titleText: featureValue,
                         groups: currentResult,
-                        titleCell: titleCell
+                        titleCell: currentFeature.createTitleCell(featureValue, this.features.firstColumnFeature.size)
                     };
-                    group.groups[0].titleCell.parent = titleCell;
+                    group.groups[0].titleCell.parent = group.titleCell;
                     groups.push(group);
                 }
                 else if (currentFeature.isSameType(this.features.lastColumnFeature)) {
@@ -10448,27 +10662,22 @@ class Table {
             }
             else {
                 // Last level
-                let titleCellNode = document.createElement('div');
-                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = featureValue;
-
-                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-                cellGroup.titleCell = titleCell;
+                cellGroup.titleCell = currentFeature.createTitleCell(featureValue, this.features.firstColumnFeature.size);
                 let group = {
                     titleText: featureValue,
                     cell: cellGroup,
-                    titleCell: titleCell
+                    titleCell: cellGroup.titleCell
                 };
                 groups.push(group);
             }
         }
-        if (currentFeature.isRow) {
+        if (currentFeature.isRowGroup) {
             return groups;
         }
         return columns;
     }
 
-    getHeaders(tree = this.tree, currentLevel = 0) {
+    constructHeaders(tree = this.tree, tableHeaders = [], currentLevel = 0) {
         let currentFeature = this.features.columnFeatures[currentLevel];
 
         let cells = [];
@@ -10477,7 +10686,7 @@ class Table {
 
             // Iterate until the last row feature
             if (currentLevel < this.features.columnFeatures.length - 1) {
-                let subCells = this.getHeaders(cellGroup, currentLevel + 1);
+                let subCells = this.constructHeaders(cellGroup, tableHeaders, currentLevel + 1);
 
                 // Last level
                 let columnSpan = 0;
@@ -10501,17 +10710,13 @@ class Table {
                     cell.parent = headerCell;
                 }
 
-                let titleCellNode = document.createElement('div');
-                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = this.messages.get(currentFeature.groupTitle);
-                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-
-                if (!this.headers[currentLevel]) {
-                    this.headers[currentLevel] = new Row();
+                if (!tableHeaders[currentLevel]) {
+                    tableHeaders[currentLevel] = new Row();
                 }
-                this.headers[currentLevel].titleCell = titleCell;
+                tableHeaders[currentLevel].titleCell = currentFeature.createTitleCell(
+                    this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
 
-                this.headers[currentLevel].add(headerCell);
+                tableHeaders[currentLevel].add(headerCell);
                 cells.push(headerCell);
             }
             else {
@@ -10527,23 +10732,22 @@ class Table {
                 this.docFragment.appendChild(element);
                 headerCell.node = element;
 
-                if (!this.headers[currentLevel]) {
-                    this.headers[currentLevel] = new Row();
+                if (!tableHeaders[currentLevel]) {
+                    tableHeaders[currentLevel] = new Row();
                 }
 
-                this.headers[currentLevel].add(headerCell);
-
-                let titleCellNode = document.createElement('div');
-                titleCellNode.classList.add(...currentFeature.groupTitleStyles);
-                titleCellNode.innerHTML = this.messages.get(currentFeature.groupTitle);
-                let titleCell = new TitleCell(titleCellNode, this.features.firstColumnFeature.size);
-                titleCell.node = titleCellNode;
-
-                this.headers[currentLevel].titleCell = titleCell;
+                tableHeaders[currentLevel].add(headerCell);
+                tableHeaders[currentLevel].titleCell = currentFeature.createTitleCell(
+                    this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
                 cells.push(headerCell);
             }
         }
-        return cells;
+        if (currentLevel === 0) {
+            return tableHeaders;
+        }
+        else {
+            return cells;
+        }
     }
 
     renderViews() {
@@ -10554,14 +10758,10 @@ class Table {
 
         // Calculate a number of visible columns
         let colNum = 0;
-        for (let [index, row] of this.rows.entries()) {
-            // Count a number of non-hidden columns
-            if (index === 0) {
-                for (let cell of row.cells) {
-                    if (!cell.column.hidden) {
-                        colNum++;
-                    }
-                }
+        let firstRow = this.rows[0];
+        for (let cell of firstRow.cells) {
+            if (!cell.column.hidden) {
+                colNum++;
             }
         }
 
@@ -10574,15 +10774,19 @@ class Table {
         }
 
         for (let row of this.rows) {
-            if (row.titleCell.parent) {
-                this.wideView.nodes.appendChild(row.titleCell.parent.wvNode);
+            let titleCells = row.titleCell.hierarchyList;
+            if (titleCells.length < this.features.titleColumnsQuantity) {
+                this.wideView.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
             }
-            this.wideView.nodes.appendChild(row.titleCell.wvNode);
+            for (let titleCell of titleCells) {
+                this.wideView.nodes.appendChild(titleCell.wvNode);
+            }
+
             for (let cell of row.cells) {
                 this.wideView.nodes.appendChild(cell.wvNode);
             }
         }
-        this.wideView.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 1fr)';
+        this.wideView.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + this.features.titleColumnsQuantity) + ', 1fr)';
 
 
         // Narrow view
@@ -10592,13 +10796,10 @@ class Table {
 
             // Calculate a number of visible columns
             let colNum = 0;
-            for (let [index, row] of this.rows.entries()) {
-                for (let i = groupIndex * this.narrowView.groupSize; i < (groupIndex + 1) * this.narrowView.groupSize; i++) {
-                    if (index === 0) {
-                        if (!row.cells[i].column.hidden) {
-                            colNum++;
-                        }
-                    }
+            let firstRow = this.rows[0];
+            for (let i = groupIndex * this.narrowView.groupSize; i < ((groupIndex + 1) * this.narrowView.groupSize); i++) {
+                if (!firstRow.cells[i].column.hidden) {
+                    colNum++;
                 }
             }
 
@@ -10612,22 +10813,26 @@ class Table {
                     }
                 }
 
-                for (let [index, row] of this.rows.entries()) {
-                    if (row.titleCell.parent) {
-                        group.nodes.appendChild(row.titleCell.parent.getNvNode(groupIndex));
+                for (let row of this.rows) {
+                    let titleCells = row.titleCell.hierarchyList;
+                    if (titleCells.length < this.features.titleColumnsQuantity) {
+                        group.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
                     }
-                    group.nodes.appendChild(row.titleCell.getNvNode(groupIndex));
+                    for (let titleCell of titleCells) {
+                        group.nodes.appendChild(titleCell.getNvNode(groupIndex));
+                    }
+
                     for (let i = groupIndex * this.narrowView.groupSize; i < (groupIndex + 1) * this.narrowView.groupSize; i++) {
                         group.nodes.appendChild(row.cells[i].nvNode);
                     }
                 }
-                group.nodes.classList.remove(classHidden);
-                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + 1) + ', 100px)';
-                group.nodes.style.width = (colNum + 1) * 100 + 'px';
+                group.nodes.classList.remove(classNames.hidden);
+                group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + this.features.titleColumnsQuantity) + ', 100px)';
+                group.nodes.style.width = (colNum + this.features.titleColumnsQuantity) * 100 + 'px';
             }
             else {
                 // This group is hidden
-                group.nodes.classList.add(classHidden);
+                group.nodes.classList.add(classNames.hidden);
             }
 
 
@@ -10667,7 +10872,7 @@ class Table {
         this.emptyColumnsHidden = false;
     }
 
-    hideNoSuffixDeclensions() {
+    hideNoSuffixGroups() {
         for (let headerCell of this.headers[0].cells) {
             let matches = !!headerCell.columns.find(column => column.suffixMatches);
             if (!matches) {
@@ -10679,7 +10884,7 @@ class Table {
         this.suffixMatchesHidden = true;
     }
 
-    showNoSuffixDeclensions() {
+    showNoSuffixGroups() {
         for (let column of this.columns) {
             column.show();
         }
@@ -10812,7 +11017,7 @@ class View {
         this.footnotes.nodes.innerHTML = this.footnotesTemplate(this.displayData);
 
 
-        this.table = new Table(selection.suffixes, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate, messages);
+        this.table = new Table(selection.suffixes, this.rowTitleColumnsQty, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate, messages);
 
         this.display();
     }
@@ -10838,41 +11043,41 @@ class View {
         this.pageHeader.nodes.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));
         this.pageHeader.nodes.querySelector('#show-empty-columns').addEventListener('click', this.showEmptyColumns.bind(this));
 
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').addEventListener('click', this.hideNoSuffixDeclensions.bind(this));
-        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').addEventListener('click', this.showNoSuffixDeclensions.bind(this));
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').addEventListener('click', this.hideNoSuffixGroups.bind(this));
+        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').addEventListener('click', this.showNoSuffixGroups.bind(this));
     }
 
 
     hideEmptyColumns() {
         this.table.hideEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.remove(classNames.hidden);
     }
 
     showEmptyColumns() {
         this.table.showEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.remove(classNames.hidden);
     }
 
-    hideNoSuffixDeclensions() {
-        this.table.hideNoSuffixDeclensions();
+    hideNoSuffixGroups() {
+        this.table.hideNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.remove(classNames.hidden);
     }
 
-    showNoSuffixDeclensions() {
-        this.table.showNoSuffixDeclensions();
+    showNoSuffixGroups() {
+        this.table.showNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-no-suffix-declensions').classList.add(classHidden);
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-declensions').classList.remove(classHidden);
+        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.add(classNames.hidden);
+        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.remove(classNames.hidden);
     }
 }
 
-var pageHeaderTemplate = "<h2>{{word}}</h2>\r\n\r\n<h3>{{title}}</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn hidden\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-declensions\" class=\"switch-btn\">Hide declensions with no suffix matches</button><button id=\"show-no-suffix-declensions\" class=\"switch-btn hidden\">Show declensions with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>";
+var pageHeaderTemplate = "<h2>{{word}}</h2>\r\n\r\n<h3>{{title}}</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn hidden\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-groups\" class=\"switch-btn\">Hide top-level groups with no suffix matches</button><button id=\"show-no-suffix-groups\" class=\"switch-btn hidden\">Show top-level groups with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>";
 
 var headerCellTemplate = "<div class=\"infl-cell infl-cell--hdr infl-cell--sp{{span}}\"\r\n     data-role=\"column-title\"\r\n     data-type=\"{{type}}\"\r\n     data-value=\"{{value}}\"\r\n     data-header-row=\"{{headerRowNum}}\"\r\n     data-column-span=\"{{span}}\"\r\n     data-suffix-matches=\"{{suffixMatches}}\"\r\n     data-column-values=\"{{columnValues}}\">\r\n    {{value}}\r\n</div>";
 
@@ -10894,35 +11099,50 @@ view.footnotesTemplate = Handlebars.compile(footnotesTemplate);
  * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
  * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
  * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overriden here, as shown by the 'gender'
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
  * example. If suffixes with several values must be combines, such values can be provided within an array,
  * as shown by 'masculine' and 'feminine' values.
  *
  */
-let numbers$1 = new GroupingFeature(types.number, ['singular', 'plural'], languages.latin);
-numbers$1.setRowGroupType();
-numbers$1.groupTitle = 'Number';
-numbers$1.groupTitleStyles = ['infl-cell', 'infl-cell--fw'];
+let numbers$1 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.row);
 
-let cases$1 = new GroupingFeature(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
-cases$1.setRowGroupType();
-cases$1.groupTitle = 'Case';
-cases$1.groupTitleStyles = ['infl-cell'];
+let cases$1 = new GroupingFeature(
+    types.grmCase,
+    ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
+    languages.latin,
+    groupType.row,
+    'Case',
+    groupTitleLocation.column);
 
-let declensions$1 = new GroupingFeature(types.declension, ['first', 'second', 'third', 'fourth', 'fifth'], languages.latin);
-declensions$1.setColumnGroupType();
-declensions$1.groupTitle = 'Declension';
-declensions$1.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
+let declensions$1 = new GroupingFeature(
+    types.declension,
+    ['first', 'second', 'third', 'fourth', 'fifth'],
+    languages.latin,
+    groupType.column,
+    'Declension',
+    groupTitleLocation.row);
 
-let genders$1 = new GroupingFeature(types.gender, [['masculine', 'feminine'], 'neuter'], languages.latin);
-genders$1.setColumnGroupType();
-genders$1.groupTitle = 'Gender';
-genders$1.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
+let genders$1 = new GroupingFeature(
+    types.gender,
+    [['masculine', 'feminine'], 'neuter'],
+    languages.latin,
+    groupType.column,
+    'Gender',
+    groupTitleLocation.row);
 
-let types$2 = new GroupingFeature(types.type, ['regular', 'irregular'], languages.latin);
-types$2.setColumnGroupType();
-types$2.groupTitle = 'Type';
-types$2.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
+let types$2 = new GroupingFeature(
+    types.type,
+    ['regular', 'irregular'],
+    languages.latin,
+    groupType.column,
+    'Type',
+    groupTitleLocation.row);
 
 view.groupingFeatures = [declensions$1, genders$1, types$2, numbers$1, cases$1];
 
@@ -10940,37 +11160,484 @@ view$1.footnotesTemplate = Handlebars.compile(footnotesTemplate);
  * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
  * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
  * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overriden here, as shown by the 'gender'
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
  * example. If suffixes with several values must be combines, such values can be provided within an array,
  * as shown by 'masculine' and 'feminine' values.
  *
  */
-let numbers$2 = new GroupingFeature(types.number, ['singular', 'plural'], languages.latin);
-numbers$2.setRowGroupType();
-numbers$2.groupTitle = 'Number';
-numbers$2.groupTitleStyles = ['infl-cell', 'infl-cell--fw'];
+let numbers$2 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.row);
 
-let cases$2 = new GroupingFeature(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'], languages.latin);
-cases$2.setRowGroupType();
-cases$2.groupTitle = 'Case';
-cases$2.groupTitleStyles = ['infl-cell'];
+let cases$2 = new GroupingFeature(
+    types.grmCase,
+    ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
+    languages.latin,
+    groupType.row,
+    'Case',
+    groupTitleLocation.column);
 
-let declensions$2 = new GroupingFeature(types.declension, ['first', 'second', 'third'], languages.latin);
-declensions$2.setColumnGroupType();
-declensions$2.groupTitle = 'Declension';
-declensions$2.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
+let declensions$2 = new GroupingFeature(
+    types.declension,
+    ['first', 'second', 'third'],
+    languages.latin,
+    groupType.column,
+    'Declension',
+    groupTitleLocation.row);
 
-let genders$2 = new GroupingFeature(types.gender, ['masculine', 'feminine', 'neuter'], languages.latin);
-genders$2.setColumnGroupType();
-genders$2.groupTitle = 'Gender';
-genders$2.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
+let genders$2 = new GroupingFeature(
+    types.gender,
+    ['masculine', 'feminine', 'neuter'],
+    languages.latin,
+    groupType.column,
+    'Gender',
+    groupTitleLocation.row);
 
-let types$3 = new GroupingFeature(types.type, ['regular', 'irregular'], languages.latin);
-types$3.setColumnGroupType();
-types$3.groupTitle = 'Type';
-types$3.groupTitleStyles = ['infl-cell', 'infl-cell--hdr'];
+let types$3 = new GroupingFeature(
+    types.type,
+    ['regular', 'irregular'],
+    languages.latin,
+    groupType.column,
+    'Type',
+    groupTitleLocation.row);
 
 view$1.groupingFeatures = [declensions$2, genders$2, types$3, numbers$2, cases$2];
+
+let view$2 = new View();
+view$2.id = 'verbVoiceConjugationMood';
+view$2.name = 'verb voice-conjugation-mood';
+view$2.title = 'Voice-Conjugation-Mood';
+view$2.partOfSpeech = parts.verb.value;
+view$2.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view$2.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view$2.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view$2.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+
+/**
+ * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
+ * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
+ * All feature types has a default sort order. This order is defined by a sequence of feature values provided
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
+ * as shown by 'masculine' and 'feminine' values.
+ *
+ */
+let tenses$1 = new GroupingFeature(
+    types.tense,
+    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
+    languages.latin,
+    groupType.row,
+    'Tense',
+    groupTitleLocation.row);
+
+let numbers$3 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.column);
+
+let persons$1 = new GroupingFeature(
+    types.person,
+    ['first', 'second', 'third'],
+    languages.latin,
+    groupType.row,
+    'Person',
+    groupTitleLocation.column);
+
+let voices$1 = new GroupingFeature(
+    types.voice,
+    ['active', 'passive'],
+    languages.latin,
+    groupType.column,
+    'Voice',
+    groupTitleLocation.row);
+voices$1.groupTitleStyles = ['infl-cell--sp2'];
+
+let conjugations$1 = new GroupingFeature(
+    types.conjugation,
+    ['first', 'second', 'third', 'fourth'],
+    languages.latin,
+    groupType.column,
+    'Conjugation Stem',
+    groupTitleLocation.row);
+conjugations$1.groupTitleStyles = ['infl-cell--sp2'];
+
+let moods$1 = new GroupingFeature(
+    types.mood,
+    ['indicative', 'subjunctive'],
+    languages.latin,
+    groupType.column,
+    'Mood',
+    groupTitleLocation.row);
+moods$1.groupTitleStyles = ['infl-cell--sp2'];
+
+view$2.groupingFeatures = [voices$1, conjugations$1, moods$1, tenses$1, numbers$3, persons$1];
+
+let view$3 = new View();
+view$3.id = 'verbVoiceMoodConjugation';
+view$3.name = 'verb voice-mood-conjugation';
+view$3.title = 'Voice-Mood-Conjugation';
+view$3.partOfSpeech = parts.verb.value;
+view$3.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view$3.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view$3.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view$3.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+
+/**
+ * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
+ * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
+ * All feature types has a default sort order. This order is defined by a sequence of feature values provided
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
+ * as shown by 'masculine' and 'feminine' values.
+ *
+ */
+let tenses$2 = new GroupingFeature(
+    types.tense,
+    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
+    languages.latin,
+    groupType.row,
+    'Tense',
+    groupTitleLocation.row);
+
+let numbers$4 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.column);
+
+let persons$2 = new GroupingFeature(
+    types.person,
+    ['first', 'second', 'third'],
+    languages.latin,
+    groupType.row,
+    'Person',
+    groupTitleLocation.column);
+
+let voices$2 = new GroupingFeature(
+    types.voice,
+    ['active', 'passive'],
+    languages.latin,
+    groupType.column,
+    'Voice',
+    groupTitleLocation.row);
+voices$2.groupTitleStyles = ['infl-cell--sp2'];
+
+let conjugations$2 = new GroupingFeature(
+    types.conjugation,
+    ['first', 'second', 'third', 'fourth'],
+    languages.latin,
+    groupType.column,
+    'Conjugation Stem',
+    groupTitleLocation.row);
+conjugations$2.groupTitleStyles = ['infl-cell--sp2'];
+
+let moods$2 = new GroupingFeature(
+    types.mood,
+    ['indicative', 'subjunctive'],
+    languages.latin,
+    groupType.column,
+    'Mood',
+    groupTitleLocation.row);
+moods$2.groupTitleStyles = ['infl-cell--sp2'];
+
+view$3.groupingFeatures = [voices$2, moods$2, conjugations$2, tenses$2, numbers$4, persons$2];
+
+let view$4 = new View();
+view$4.id = 'verbConjugationVoiceMood';
+view$4.name = 'verb conjugation-voice-mood';
+view$4.title = 'Conjugation-Voice-Mood';
+view$4.partOfSpeech = parts.verb.value;
+view$4.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view$4.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view$4.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view$4.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+
+/**
+ * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
+ * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
+ * All feature types has a default sort order. This order is defined by a sequence of feature values provided
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
+ * as shown by 'masculine' and 'feminine' values.
+ *
+ */
+let tenses$3 = new GroupingFeature(
+    types.tense,
+    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
+    languages.latin,
+    groupType.row,
+    'Tense',
+    groupTitleLocation.row);
+
+let numbers$5 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.column);
+
+let persons$3 = new GroupingFeature(
+    types.person,
+    ['first', 'second', 'third'],
+    languages.latin,
+    groupType.row,
+    'Person',
+    groupTitleLocation.column);
+
+let voices$3 = new GroupingFeature(
+    types.voice,
+    ['active', 'passive'],
+    languages.latin,
+    groupType.column,
+    'Voice',
+    groupTitleLocation.row);
+voices$3.groupTitleStyles = ['infl-cell--sp2'];
+
+let conjugations$3 = new GroupingFeature(
+    types.conjugation,
+    ['first', 'second', 'third', 'fourth'],
+    languages.latin,
+    groupType.column,
+    'Conjugation Stem',
+    groupTitleLocation.row);
+conjugations$3.groupTitleStyles = ['infl-cell--sp2'];
+
+let moods$3 = new GroupingFeature(
+    types.mood,
+    ['indicative', 'subjunctive'],
+    languages.latin,
+    groupType.column,
+    'Mood',
+    groupTitleLocation.row);
+moods$3.groupTitleStyles = ['infl-cell--sp2'];
+
+view$4.groupingFeatures = [conjugations$3, voices$3, moods$3, tenses$3, numbers$5, persons$3];
+
+let view$5 = new View();
+view$5.id = 'verbConjugationMoodVoice';
+view$5.name = 'verb conjugation-mood-voice';
+view$5.title = 'Conjugation-Mood-Voice';
+view$5.partOfSpeech = parts.verb.value;
+view$5.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view$5.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view$5.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view$5.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+
+/**
+ * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
+ * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
+ * All feature types has a default sort order. This order is defined by a sequence of feature values provided
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
+ * as shown by 'masculine' and 'feminine' values.
+ *
+ */
+let tenses$4 = new GroupingFeature(
+    types.tense,
+    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
+    languages.latin,
+    groupType.row,
+    'Tense',
+    groupTitleLocation.row);
+
+let numbers$6 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.column);
+
+let persons$4 = new GroupingFeature(
+    types.person,
+    ['first', 'second', 'third'],
+    languages.latin,
+    groupType.row,
+    'Person',
+    groupTitleLocation.column);
+
+let voices$4 = new GroupingFeature(
+    types.voice,
+    ['active', 'passive'],
+    languages.latin,
+    groupType.column,
+    'Voice',
+    groupTitleLocation.row);
+voices$4.groupTitleStyles = ['infl-cell--sp2'];
+
+let conjugations$4 = new GroupingFeature(
+    types.conjugation,
+    ['first', 'second', 'third', 'fourth'],
+    languages.latin,
+    groupType.column,
+    'Conjugation Stem',
+    groupTitleLocation.row);
+conjugations$4.groupTitleStyles = ['infl-cell--sp2'];
+
+let moods$4 = new GroupingFeature(
+    types.mood,
+    ['indicative', 'subjunctive'],
+    languages.latin,
+    groupType.column,
+    'Mood',
+    groupTitleLocation.row);
+moods$4.groupTitleStyles = ['infl-cell--sp2'];
+
+view$5.groupingFeatures = [conjugations$4, moods$4, voices$4, tenses$4, numbers$6, persons$4];
+
+let view$6 = new View();
+view$6.id = 'verbMoodVoiceConjugation';
+view$6.name = 'verb mood-voice-conjugation';
+view$6.title = 'Mood-Voice-Conjugation';
+view$6.partOfSpeech = parts.verb.value;
+view$6.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view$6.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view$6.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view$6.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+
+/**
+ * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
+ * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
+ * All feature types has a default sort order. This order is defined by a sequence of feature values provided
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
+ * as shown by 'masculine' and 'feminine' values.
+ *
+ */
+let tenses$5 = new GroupingFeature(
+    types.tense,
+    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
+    languages.latin,
+    groupType.row,
+    'Tense',
+    groupTitleLocation.row);
+
+let numbers$7 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.column);
+
+let persons$5 = new GroupingFeature(
+    types.person,
+    ['first', 'second', 'third'],
+    languages.latin,
+    groupType.row,
+    'Person',
+    groupTitleLocation.column);
+
+let voices$5 = new GroupingFeature(
+    types.voice,
+    ['active', 'passive'],
+    languages.latin,
+    groupType.column,
+    'Voice',
+    groupTitleLocation.row);
+voices$5.groupTitleStyles = ['infl-cell--sp2'];
+
+let conjugations$5 = new GroupingFeature(
+    types.conjugation,
+    ['first', 'second', 'third', 'fourth'],
+    languages.latin,
+    groupType.column,
+    'Conjugation Stem',
+    groupTitleLocation.row);
+conjugations$5.groupTitleStyles = ['infl-cell--sp2'];
+
+let moods$5 = new GroupingFeature(
+    types.mood,
+    ['indicative', 'subjunctive'],
+    languages.latin,
+    groupType.column,
+    'Mood',
+    groupTitleLocation.row);
+moods$5.groupTitleStyles = ['infl-cell--sp2'];
+
+view$6.groupingFeatures = [moods$5, voices$5, conjugations$5, tenses$5, numbers$7, persons$5];
+
+let view$7 = new View();
+view$7.id = 'verbMoodConjugationVoice';
+view$7.name = 'verb mood-conjugation-voice';
+view$7.title = 'Mood-Conjugation-Voice';
+view$7.partOfSpeech = parts.verb.value;
+view$7.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
+view$7.headerCellTemplate = Handlebars.compile(headerCellTemplate);
+view$7.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
+view$7.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+
+/**
+ * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
+ * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
+ * All feature types has a default sort order. This order is defined by a sequence of feature values provided
+ * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
+ * example. If suffixes with several values must be combines, such values can be provided within an array,
+ * as shown by 'masculine' and 'feminine' values.
+ *
+ */
+let tenses$6 = new GroupingFeature(
+    types.tense,
+    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
+    languages.latin,
+    groupType.row,
+    'Tense',
+    groupTitleLocation.row);
+
+let numbers$8 = new GroupingFeature(
+    types.number,
+    ['singular', 'plural'],
+    languages.latin,
+    groupType.row,
+    'Number',
+    groupTitleLocation.column);
+
+let persons$6 = new GroupingFeature(
+    types.person,
+    ['first', 'second', 'third'],
+    languages.latin,
+    groupType.row,
+    'Person',
+    groupTitleLocation.column);
+
+let voices$6 = new GroupingFeature(
+    types.voice,
+    ['active', 'passive'],
+    languages.latin,
+    groupType.column,
+    'Voice',
+    groupTitleLocation.row);
+voices$6.groupTitleStyles = ['infl-cell--sp2'];
+
+let conjugations$6 = new GroupingFeature(
+    types.conjugation,
+    ['first', 'second', 'third', 'fourth'],
+    languages.latin,
+    groupType.column,
+    'Conjugation Stem',
+    groupTitleLocation.row);
+conjugations$6.groupTitleStyles = ['infl-cell--sp2'];
+
+let moods$6 = new GroupingFeature(
+    types.mood,
+    ['indicative', 'subjunctive'],
+    languages.latin,
+    groupType.column,
+    'Mood',
+    groupTitleLocation.row);
+moods$6.groupTitleStyles = ['infl-cell--sp2'];
+
+view$7.groupingFeatures = [moods$6, conjugations$6, voices$6, tenses$6, numbers$8, persons$6];
 
 /**
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
@@ -10978,18 +11645,30 @@ view$1.groupingFeatures = [declensions$2, genders$2, types$3, numbers$2, cases$2
  */
 class Presenter {
     constructor(selector, resultSet, locale) {
+        "use strict";
+
         this.targetSelector = selector;
         this.container = document.querySelector(this.targetSelector);
         this.resultSet = resultSet;
         this.zeroWidthClass = 'hidden';
 
-        this.views = {
+        // All views registered by the Presenter
+        this.registeredViews = {
             nounDeclension: view,
-            adjectiveDeclension: view$1
+            adjectiveDeclension: view$1,
+            verbVoiceConjugationMood: view$2,
+            verbVoiceMoodConjugation: view$3,
+            verbConjugationVoiceMood: view$4,
+            verbConjugationMoodVoice: view$5,
+            verbMoodVoiceConjugation: view$6,
+            verbMoodConjugationVoice: view$7
         };
 
-        this.defaultViewID = 'nounDeclension';
-        this.activeViewID = undefined;
+        // Views available for parts of speech that are present in a Result Set
+        this.availableViews = this.getViews(this.resultSet[types.part]);
+
+        this.defaultView = this.availableViews[0];
+        this.activeView = undefined;
 
         this.locale = locale; // This is a default locale
         this.l10n = l10n;
@@ -10999,7 +11678,7 @@ class Presenter {
 
     setLocale(locale) {
         this.locale = locale;
-        this.views[this.activeViewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
     }
 
 
@@ -11007,16 +11686,15 @@ class Presenter {
         "use strict";
 
         // Show a default view
-        this.views[this.defaultViewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
-        this.activeViewID = this.defaultViewID;
+        this.defaultView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView = this.defaultView;
 
         this.appendViewSelector("#view-switcher");
         this.appendLocaleSelector("#locale-selector");
     }
 
     appendViewSelector(targetSelector) {
-        let views = this.getViews(this.resultSet[types.part]);
-        if (views.length > 1) {
+        if (this.availableViews.length > 1) {
             let id = 'view-selector-list';
             let viewContainer = document.querySelector(targetSelector);
             viewContainer.innerHTML = '';
@@ -11024,7 +11702,7 @@ class Presenter {
             viewLabel.setAttribute('for', id);
             viewLabel.innerHTML = "View:&nbsp;";
             let viewList = document.createElement('select');
-            for (const view$$1 of views) {
+            for (const view$$1 of this.availableViews) {
                 let option = document.createElement("option");
                 option.value = view$$1.id;
                 option.text = view$$1.name;
@@ -11038,8 +11716,9 @@ class Presenter {
 
     viewSelectorEventListener(event) {
         let viewID = event.target.value;
-        this.views[viewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
-        this.activeViewID = viewID;
+        let view$$1 = this.registeredViews[viewID];
+        this.registeredViews[viewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView = this.registeredViews[viewID];
     }
 
     appendLocaleSelector(targetSelector) {
@@ -11068,12 +11747,21 @@ class Presenter {
     }
 
     getViews(partsOfSpeech) {
+        // First view in a returned array will be a default one
         let views = [];
         if (partsOfSpeech.includes('noun')) {
-            views.push(this.views.nounDeclension);
+            views.push(this.registeredViews.nounDeclension);
         }
         if (partsOfSpeech.includes('adjective')) {
-            views.push(this.views.adjectiveDeclension);
+            views.push(this.registeredViews.adjectiveDeclension);
+        }
+        if (partsOfSpeech.includes('verb')) {
+            views.push(this.registeredViews.verbVoiceConjugationMood);
+            views.push(this.registeredViews.verbVoiceMoodConjugation);
+            views.push(this.registeredViews.verbConjugationVoiceMood);
+            views.push(this.registeredViews.verbConjugationMoodVoice);
+            views.push(this.registeredViews.verbMoodVoiceConjugation);
+            views.push(this.registeredViews.verbMoodConjugationVoice);
         }
         return views;
     }
@@ -11088,15 +11776,16 @@ dataSet.loadData();
 
 // region Test selector
 let testCases = [
-    {word: "cupidinibus", value: "latin_noun_cupidinibus"},
-    {word: "mare", value: "latin_noun_adj_mare"}
+    {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun"},
+    {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective"},
+    {word: "cepit", value: "latin_verb_cepit", type: "regular verb"}
 ];
 let selectList = document.querySelector("#test-selector");
 
 for (const testCase of testCases) {
     let option = document.createElement("option");
     option.value = testCase.value;
-    option.text = testCase.word;
+    option.text = testCase.word + ' (' + testCase.type + ')';
     selectList.appendChild(option);
 }
 
