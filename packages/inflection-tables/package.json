@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest",
     "build": "node build.js",
+    "buildextension": "node build-extension.js",
     "buildtemplates": "handlebars presenter/views/ -f ./presenter/views/views.js -e hbs",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
@@ -31,10 +32,12 @@
     "papaparse": "^4.3.6",
     "rollup": "^0.47.6",
     "rollup-plugin-commonjs": "^8.2.1",
-    "rollup-plugin-handlebars-plus": "^0.2.1",
+    "rollup-plugin-handlebars-plus": "^0.2.2",
     "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-string": "^2.0.2",
     "the-answer": "^1.0.0",
+    "vue": "^2.4.4",
     "xmldom": "^0.1.27",
     "xmltojson": "^1.3.5"
   },
