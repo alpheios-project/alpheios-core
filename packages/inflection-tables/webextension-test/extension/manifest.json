@@ -8,7 +8,9 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "webextension-polyfill-0.1.2/browser-polyfill.js",
+      "background.js"]
   },
 
   "page_action": {

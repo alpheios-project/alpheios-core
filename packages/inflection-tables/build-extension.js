@@ -107,18 +107,3 @@ rollup.rollup({
     "use strict";
     console.error(reason);
 });
-
-rollup.rollup({
-    entry: 'webextension-test/src/extension.js',
-    moduleName: 'InflectionTables',
-    plugins: defaultPlugins
-}).then(bundle => {
-    bundle.write({
-        format: 'es',
-        dest: 'webextension-test/chrome/extension-bundle.js',
-        sourceMap: false
-    })
-}).catch(reason => {
-    "use strict";
-    console.error(reason);
-});
