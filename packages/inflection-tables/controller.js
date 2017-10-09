@@ -8,11 +8,10 @@ import Presenter from "./presenter/presenter.js";
 import * as ModuleNS from './lib/lang/latin/latin.js';
 import {dataSet} from "./lib/lang/latin/latin";
 let langData = ModuleNS.dataSet;
-// Prepare lang data for first use
+// Prepare lang data for the first use
 dataSet.loadData();
 
 
-// region Test selector
 let testCases = [
     {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun"},
     {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective"},
@@ -58,8 +57,3 @@ let show = function show(word, fileNameBase) {
         console.error(error);
     });
 };
-
-// endregion Test selector
-
-
-

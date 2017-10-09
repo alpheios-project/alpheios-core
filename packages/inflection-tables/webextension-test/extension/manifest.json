@@ -9,7 +9,7 @@
 
   "background": {
     "scripts": [
-      "webextension-polyfill-0.1.2/browser-polyfill.js",
+      "webextension-polyfill-0.1.2-fixed/browser-polyfill.js",
       "background.js"]
   },
 

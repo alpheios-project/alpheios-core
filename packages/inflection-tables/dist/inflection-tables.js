@@ -53,8 +53,8 @@ class Feature {
      * Initializes a Feature object
      * @param {string | string[]} value - A single feature value or, if this feature could have multiple
      * values, an array of values.
-     * @param {types} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {languages} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor (value, type, language) {
         if (!types.isAllowed(type)) {
@@ -776,8 +776,9 @@ class Suffix {
     /**
      * Initializes a Suffix object.
      * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
+     * @param {MatchData} match - An information about what matches were found for this suffix (optional).
      */
-    constructor(suffixValue) {
+    constructor(suffixValue, match) {
         "use strict";
 
         if (suffixValue === undefined) {
@@ -786,6 +787,7 @@ class Suffix {
         this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
+        this.match = match;
     }
 
     /**
@@ -986,13 +988,13 @@ class Footnonte {
 }
 
 /**
- * Detailed information about a match type
+ * Detailed information about a match type.
  */
 class MatchData {
     constructor() {
-        this.suffixMatch = false; // When two suffixes are the same
-        this.fullMatch = false; // When two suffixes and all grammatical features, including part of speech, are the same
-        this.matchedFeatures = []; // How many features matches
+        this.suffixMatch = false; // Whether two suffixes are the same.
+        this.fullMatch = false; // Whether two suffixes and all grammatical features, including part of speech, are the same.
+        this.matchedFeatures = []; // How many features matches each other.
     }
 }
 
@@ -1107,10 +1109,6 @@ var adjectiveFootnotesCSV = "Index,Text\r\n1,\"Adjectives agree with the noun th
 var verbSuffixesCSV = "Ending,Conjugation,Voice,Mood,Tense,Number,Person,Type,Footnote\r\nō,1st,active,indicative,present,singular,1st,regular,\r\nās,1st,active,indicative,present,singular,2nd,regular,\r\nat,1st,active,indicative,present,singular,3rd,regular,\r\nāmus,1st,active,indicative,present,plural,1st,regular,\r\nātis,1st,active,indicative,present,plural,2nd,regular,\r\nant,1st,active,indicative,present,plural,3rd,regular,\r\nem,1st,active,subjunctive,present,singular,1st,regular,\r\nēs,1st,active,subjunctive,present,singular,2nd,regular,\r\net,1st,active,subjunctive,present,singular,3rd,regular,\r\nēmus,1st,active,subjunctive,present,plural,1st,regular,\r\nētis,1st,active,subjunctive,present,plural,2nd,regular,\r\nent,1st,active,subjunctive,present,plural,3rd,regular,\r\neō,2nd,active,indicative,present,singular,1st,regular,\r\nēs,2nd,active,indicative,present,singular,2nd,regular,\r\nēt,2nd,active,indicative,present,singular,3rd,regular,\r\nēmus,2nd,active,indicative,present,plural,1st,regular,\r\nētis,2nd,active,indicative,present,plural,2nd,regular,\r\nent,2nd,active,indicative,present,plural,3rd,regular,\r\neam,2nd,active,subjunctive,present,singular,1st,regular,\r\neās,2nd,active,subjunctive,present,singular,2nd,regular,\r\neat,2nd,active,subjunctive,present,singular,3rd,regular,\r\neāmus,2nd,active,subjunctive,present,plural,1st,regular,\r\neātis,2nd,active,subjunctive,present,plural,2nd,regular,\r\neant,2nd,active,subjunctive,present,plural,3rd,regular,\r\nō,3rd,active,indicative,present,singular,1st,regular,\r\nis,3rd,active,indicative,present,singular,2nd,regular,\r\nit,3rd,active,indicative,present,singular,3rd,regular,\r\nimus,3rd,active,indicative,present,plural,1st,regular,\r\nitis,3rd,active,indicative,present,plural,2nd,regular,\r\nunt,3rd,active,indicative,present,plural,3rd,regular,\r\nam,3rd,active,subjunctive,present,singular,1st,regular,\r\nās,3rd,active,subjunctive,present,singular,2nd,regular,\r\nat,3rd,active,subjunctive,present,singular,3rd,regular,\r\nāmus,3rd,active,subjunctive,present,plural,1st,regular,\r\nātis,3rd,active,subjunctive,present,plural,2nd,regular,\r\nant,3rd,active,subjunctive,present,plural,3rd,regular,\r\niō,4th,active,indicative,present,singular,1st,regular,\r\nīs,4th,active,indicative,present,singular,2nd,regular,\r\nit,4th,active,indicative,present,singular,3rd,regular,\r\nīmus,4th,active,indicative,present,plural,1st,regular,\r\nītis,4th,active,indicative,present,plural,2nd,regular,\r\niunt,4th,active,indicative,present,plural,3rd,regular,\r\niam,4th,active,subjunctive,present,singular,1st,regular,\r\niās,4th,active,subjunctive,present,singular,2nd,regular,\r\niat,4th,active,subjunctive,present,singular,3rd,regular,\r\niāmus,4th,active,subjunctive,present,plural,1st,regular,\r\niāatis,4th,active,subjunctive,present,plural,2nd,regular,\r\niant,4th,active,subjunctive,present,plural,3rd,regular,\r\nābam,1st,active,indicative,imperfect,singular,1st,regular,\r\nābas,1st,active,indicative,imperfect,singular,2nd,regular,\r\nābat,1st,active,indicative,imperfect,singular,3rd,regular,\r\nābāmus,1st,active,indicative,imperfect,plural,1st,regular,\r\nābātis,1st,active,indicative,imperfect,plural,2nd,regular,\r\nābant,1st,active,indicative,imperfect,plural,3rd,regular,\r\nārem,1st,active,subjunctive,imperfect,singular,1st,regular,\r\nārēs,1st,active,subjunctive,imperfect,singular,2nd,regular,\r\nāret,1st,active,subjunctive,imperfect,singular,3rd,regular,\r\nārēmus,1st,active,subjunctive,imperfect,plural,1st,regular,\r\nārētis,1st,active,subjunctive,imperfect,plural,2nd,regular,\r\nārent,1st,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbam,2nd,active,indicative,imperfect,singular,1st,regular,\r\nēbās,2nd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,2nd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,2nd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,2nd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,2nd,active,indicative,imperfect,plural,3rd,regular,\r\nērem,2nd,active,subjunctive,imperfect,singular,1st,regular,\r\nērēs,2nd,active,subjunctive,imperfect,singular,2nd,regular,\r\nēret,2nd,active,subjunctive,imperfect,singular,3rd,regular,\r\nērēmus,2nd,active,subjunctive,imperfect,plural,1st,regular,\r\nērētis,2nd,active,subjunctive,imperfect,plural,2nd,regular,\r\nērēnt,2nd,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbas,3rd,active,indicative,imperfect,singular,1st,regular,\r\nēbāt,3rd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,3rd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,3rd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,3rd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,3rd,active,indicative,imperfect,plural,3rd,regular,\r\nerem,3rd,active,subjunctive,imperfect,singular,1st,regular,\r\nerēs,3rd,active,subjunctive,imperfect,singular,2nd,regular,\r\neret,3rd,active,subjunctive,imperfect,singular,3rd,regular,\r\nerēmus,3rd,active,subjunctive,imperfect,plural,1st,regular,\r\nerētis,3rd,active,subjunctive,imperfect,plural,2nd,regular,\r\nerent,3rd,active,subjunctive,imperfect,plural,3rd,regular,\r\niēbam,4th,active,indicative,imperfect,singular,1st,regular,\r\nībam,4th,active,indicative,imperfect,singular,1st,irregular,2\r\niēbas,4th,active,indicative,imperfect,singular,2nd,regular,\r\nības,4th,active,indicative,imperfect,singular,2nd,irregular,\r\niēbat,4th,active,indicative,imperfect,singular,3rd,regular,\r\nībat,4th,active,indicative,imperfect,singular,3rd,irregular,\r\niēbāmus,4th,active,indicative,imperfect,plural,1st,regular,\r\nībāmus,4th,active,indicative,imperfect,plural,1st,irregular,\r\niēbātis,4th,active,indicative,imperfect,plural,2nd,regular,\r\nībātis,4th,active,indicative,imperfect,plural,2nd,irregular,\r\niēbant,4th,active,indicative,imperfect,plural,3rd,regular,\r\nībant,4th,active,indicative,imperfect,plural,3rd,irregular,\r\nīrem,4th,active,subjunctive,imperfect,singular,1st,regular,\r\nīrēs,4th,active,subjunctive,imperfect,singular,2nd,regular,\r\nīret,4th,active,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmus,4th,active,subjunctive,imperfect,plural,1st,regular,\r\nīrētis,4th,active,subjunctive,imperfect,plural,2nd,regular,\r\nīrēnt,4th,active,subjunctive,imperfect,plural,3rd,regular,\r\nābo,1st,active,indicative,future,singular,1st,regular,\r\nābis,1st,active,indicative,future,singular,2nd,regular,\r\nābit,1st,active,indicative,future,singular,3rd,regular,\r\nābimus,1st,active,indicative,future,plural,1st,regular,\r\nābitis,1st,active,indicative,future,plural,2nd,regular,\r\nābunt,1st,active,indicative,future,plural,3rd,regular,\r\n,1st,active,subjunctive,future,singular,1st,,\r\n,1st,active,subjunctive,future,singular,2nd,,\r\n,1st,active,subjunctive,future,singular,3rd,,\r\n,1st,active,subjunctive,future,plural,1st,,\r\n,1st,active,subjunctive,future,plural,2nd,,\r\n,1st,active,subjunctive,future,plural,3rd,,\r\nēbō,2nd,active,indicative,future,singular,1st,regular,\r\nēbis,2nd,active,indicative,future,singular,2nd,regular,\r\nēbit,2nd,active,indicative,future,singular,3rd,regular,\r\nēbimus,2nd,active,indicative,future,plural,1st,regular,\r\nēbitis,2nd,active,indicative,future,plural,2nd,regular,\r\nēbunt,2nd,active,indicative,future,plural,3rd,regular,\r\n,2nd,active,subjunctive,future,singular,1st,regular,\r\n,2nd,active,subjunctive,future,singular,2nd,,\r\n,2nd,active,subjunctive,future,singular,3rd,,\r\n,2nd,active,subjunctive,future,plural,1st,,\r\n,2nd,active,subjunctive,future,plural,2nd,,\r\n,2nd,active,subjunctive,future,plural,3rd,,\r\nam,3rd,active,indicative,future,singular,1st,regular,\r\nēs,3rd,active,indicative,future,singular,2nd,regular,\r\net,3rd,active,indicative,future,singular,3rd,regular,\r\nēmus,3rd,active,indicative,future,plural,1st,regular,\r\nētis,3rd,active,indicative,future,plural,2nd,regular,\r\nent,3rd,active,indicative,future,plural,3rd,regular,\r\n,3rd,active,subjunctive,future,singular,1st,,\r\n,3rd,active,subjunctive,future,singular,2nd,,\r\n,3rd,active,subjunctive,future,singular,3rd,,\r\n,3rd,active,subjunctive,future,plural,1st,,\r\n,3rd,active,subjunctive,future,plural,2nd,,\r\n,3rd,active,subjunctive,future,plural,3rd,,\r\niam,4th,active,indicative,future,singular,1st,regular,\r\nībō,4th,active,indicative,future,singular,1st,irregular,2\r\niēs,4th,active,indicative,future,singular,2nd,regular,\r\nībis,4th,active,indicative,future,singular,2nd,irregular,\r\niet,4th,active,indicative,future,singular,3rd,regular,\r\nībit,4th,active,indicative,future,singular,3rd,irregular,\r\niēmus,4th,active,indicative,future,plural,1st,regular,\r\nībimus,4th,active,indicative,future,plural,1st,irregular,\r\niētis,4th,active,indicative,future,plural,2nd,regular,\r\nībitis,4th,active,indicative,future,plural,2nd,irregular,\r\nient,4th,active,indicative,future,plural,3rd,regular,\r\nībunt,4th,active,indicative,future,plural,3rd,irregular,\r\n,4th,active,subjunctive,future,singular,1st,,\r\n,4th,active,subjunctive,future,singular,2nd,,\r\n,4th,active,subjunctive,future,singular,3rd,,\r\n,4th,active,subjunctive,future,plural,1st,,\r\n,4th,active,subjunctive,future,plural,2nd,,\r\n,4th,active,subjunctive,future,plural,3rd,,\r\nāvī,1st,active,indicative,perfect,singular,1st,regular,\r\nāvistī,1st,active,indicative,perfect,singular,2nd,regular,\r\nāvit,1st,active,indicative,perfect,singular,3rd,regular,\r\nāvimus,1st,active,indicative,perfect,plural,1st,regular,\r\nāvistis,1st,active,indicative,perfect,plural,2nd,regular,\r\nāvērunt,1st,active,indicative,perfect,plural,3rd,regular,\r\nāvēre,1st,active,indicative,perfect,plural,3rd,irregular,6\r\nāverim,1st,active,subjunctive,perfect,singular,1st,regular,\r\nāveris,1st,active,subjunctive,perfect,singular,2nd,regular,\r\nāverit,1st,active,subjunctive,perfect,singular,3rd,regular,\r\nāverimus,1st,active,subjunctive,perfect,plural,1st,regular,\r\nāveritis,1st,active,subjunctive,perfect,plural,2nd,regular,\r\nāverint,1st,active,subjunctive,perfect,plural,3rd,regular,\r\nvī,2nd,active,indicative,perfect,singular,1st,regular,\r\nvistī,2nd,active,indicative,perfect,singular,2nd,regular,\r\nvit,2nd,active,indicative,perfect,singular,3rd,regular,\r\nvimus,2nd,active,indicative,perfect,plural,1st,regular,\r\nvistis,2nd,active,indicative,perfect,plural,2nd,regular,\r\nvērunt,2nd,active,indicative,perfect,plural,3rd,regular,\r\nvēre,2nd,active,indicative,perfect,plural,3rd,irregular,6\r\nverim,2nd,active,subjunctive,perfect,singular,1st,regular,\r\nveris,2nd,active,subjunctive,perfect,singular,2nd,regular,\r\nverit,2nd,active,subjunctive,perfect,singular,3rd,regular,\r\nverimus,2nd,active,subjunctive,perfect,plural,1st,regular,\r\nveritis,2nd,active,subjunctive,perfect,plural,2nd,regular,\r\nverint,2nd,active,subjunctive,perfect,plural,3rd,regular,\r\nī,3rd,active,indicative,perfect,singular,1st,regular,\r\nistī,3rd,active,indicative,perfect,singular,2nd,regular,\r\nit,3rd,active,indicative,perfect,singular,3rd,regular,\r\nimus,3rd,active,indicative,perfect,plural,1st,regular,\r\nistis,3rd,active,indicative,perfect,plural,2nd,regular,\r\nērunt,3rd,active,indicative,perfect,plural,3rd,regular,\r\nēre,3rd,active,indicative,perfect,plural,3rd,irregular,6\r\nerim,3rd,active,subjunctive,perfect,singular,1st,regular,\r\neris,3rd,active,subjunctive,perfect,singular,2nd,regular,\r\nerit,3rd,active,subjunctive,perfect,singular,3rd,regular,\r\nerimus,3rd,active,subjunctive,perfect,plural,1st,regular,\r\neritis,3rd,active,subjunctive,perfect,plural,2nd,regular,\r\nerint,3rd,active,subjunctive,perfect,plural,3rd,regular,\r\nīvi,4th,active,indicative,perfect,singular,1st,regular,\r\nīvistī,4th,active,indicative,perfect,singular,2nd,regular,\r\nīvit,4th,active,indicative,perfect,singular,3rd,regular,\r\nīvimus,4th,active,indicative,perfect,plural,1st,regular,\r\nīvistis,4th,active,indicative,perfect,plural,2nd,regular,\r\nīvērunt,4th,active,indicative,perfect,plural,3rd,regular,\r\nīvēre,4th,active,indicative,perfect,plural,3rd,irregular,6\r\nīverim,4th,active,subjunctive,perfect,singular,1st,regular,\r\niveris,4th,active,subjunctive,perfect,singular,2nd,regular,\r\nīverit,4th,active,subjunctive,perfect,singular,3rd,regular,\r\nīverimus,4th,active,subjunctive,perfect,plural,1st,regular,\r\nīveritis,4th,active,subjunctive,perfect,plural,2nd,regular,\r\nīverint,4th,active,subjunctive,perfect,plural,3rd,regular,\r\nāveram,1st,active,indicative,pluperfect,singular,1st,regular,\r\nāverās,1st,active,indicative,pluperfect,singular,2nd,regular,\r\nāverat,1st,active,indicative,pluperfect,singular,3rd,regular,\r\nāverāmus,1st,active,indicative,pluperfect,plural,1st,regular,\r\nāverātis,1st,active,indicative,pluperfect,plural,2nd,regular,\r\nāverant,1st,active,indicative,pluperfect,plural,3rd,regular,\r\nāvissem,1st,active,subjunctive,pluperfect,singular,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,singular,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,singular,3rd,regular,\r\nāvissēm,1st,active,subjunctive,pluperfect,plural,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,plural,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,plural,3rd,regular,\r\nveram,2nd,active,indicative,pluperfect,singular,1st,regular,\r\nverās,2nd,active,indicative,pluperfect,singular,2nd,regular,\r\nverat,2nd,active,indicative,pluperfect,singular,3rd,regular,\r\nverāmus,2nd,active,indicative,pluperfect,plural,1st,regular,\r\nverātis,2nd,active,indicative,pluperfect,plural,2nd,regular,\r\nverant,2nd,active,indicative,pluperfect,plural,3rd,regular,\r\nvissem,2nd,active,subjunctive,pluperfect,singular,1st,regular,\r\nvissēs,2nd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nvisset,2nd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nvissēmus,2nd,active,subjunctive,pluperfect,plural,1st,regular,\r\nvissētis,2nd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nvissent,2nd,active,subjunctive,pluperfect,plural,3rd,regular,\r\neram,3rd,active,indicative,pluperfect,singular,1st,regular,\r\nerās,3rd,active,indicative,pluperfect,singular,2nd,regular,\r\nerat,3rd,active,indicative,pluperfect,singular,3rd,regular,\r\nerāmus,3rd,active,indicative,pluperfect,plural,1st,regular,\r\nerātis,3rd,active,indicative,pluperfect,plural,2nd,regular,\r\nerant,3rd,active,indicative,pluperfect,plural,3rd,regular,\r\nissem,3rd,active,subjunctive,pluperfect,singular,1st,regular,\r\nissēs,3rd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nisset,3rd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nissēmus,3rd,active,subjunctive,pluperfect,plural,1st,regular,\r\nissētis,3rd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nissent,3rd,active,subjunctive,pluperfect,plural,3rd,regular,\r\nīveram,4th,active,indicative,pluperfect,singular,1st,regular,\r\nīverās,4th,active,indicative,pluperfect,singular,2nd,regular,\r\nīverat,4th,active,indicative,pluperfect,singular,3rd,regular,\r\nīverāmus,4th,active,indicative,pluperfect,plural,1st,regular,\r\nīverātis,4th,active,indicative,pluperfect,plural,2nd,regular,\r\nīverant,4th,active,indicative,pluperfect,plural,3rd,regular,\r\nīvissem,4th,active,subjunctive,pluperfect,singular,1st,regular,\r\nīvissēs,4th,active,subjunctive,pluperfect,singular,2nd,regular,\r\nīvisset,4th,active,subjunctive,pluperfect,singular,3rd,regular,\r\nīvissēmus,4th,active,subjunctive,pluperfect,plural,1st,regular,\r\nīvissētis,4th,active,subjunctive,pluperfect,plural,2nd,regular,\r\nīvissent,4th,active,subjunctive,pluperfect,plural,3rd,regular,\r\nāverō,1st,active,indicative,future_perfect,singular,1st,regular,\r\nāveris,1st,active,indicative,future_perfect,singular,2nd,regular,\r\nāverit,1st,active,indicative,future_perfect,singular,3rd,regular,\r\nāverimus,1st,active,indicative,future_perfect,plural,1st,regular,\r\nāveritis,1st,active,indicative,future_perfect,plural,2nd,regular,\r\nāverint,1st,active,indicative,future_perfect,plural,3rd,regular,\r\n,1st,active,subjunctive,future_perfect,singular,1st,,\r\n,1st,active,subjunctive,future_perfect,singular,2nd,,\r\n,1st,active,subjunctive,future_perfect,singular,3rd,,\r\n,1st,active,subjunctive,future_perfect,plural,1st,,\r\n,1st,active,subjunctive,future_perfect,plural,2nd,,\r\n,1st,active,subjunctive,future_perfect,plural,3rd,,\r\nverō,2nd,active,indicative,future_perfect,singular,1st,regular,\r\nvēris,2nd,active,indicative,future_perfect,singular,2nd,regular,\r\nvērit,2nd,active,indicative,future_perfect,singular,3rd,regular,\r\nvērimus,2nd,active,indicative,future_perfect,plural,1st,regular,\r\nvēritis,2nd,active,indicative,future_perfect,plural,2nd,regular,\r\nvērint,2nd,active,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,active,subjunctive,future_perfect,singular,1st,,\r\n,2nd,active,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,active,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,active,subjunctive,future_perfect,plural,1st,,\r\n,2nd,active,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,active,subjunctive,future_perfect,plural,3rd,,\r\nerō,3rd,active,indicative,future_perfect,singular,1st,regular,\r\neris,3rd,active,indicative,future_perfect,singular,2nd,regular,\r\nerit,3rd,active,indicative,future_perfect,singular,3rd,regular,\r\nerimus,3rd,active,indicative,future_perfect,plural,1st,regular,\r\neritis,3rd,active,indicative,future_perfect,plural,2nd,regular,\r\nerint,3rd,active,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,active,subjunctive,future_perfect,singular,1st,,\r\n,3rd,active,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,active,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,active,subjunctive,future_perfect,plural,1st,,\r\n,3rd,active,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,active,subjunctive,future_perfect,plural,3rd,,\r\nīverō,4th,active,indicative,future_perfect,singular,1st,regular,\r\nīveris,4th,active,indicative,future_perfect,singular,2nd,regular,\r\nīverit,4th,active,indicative,future_perfect,singular,3rd,regular,\r\nīverimus,4th,active,indicative,future_perfect,plural,1st,regular,\r\nīveritis,4th,active,indicative,future_perfect,plural,2nd,regular,\r\nīverint,4th,active,indicative,future_perfect,plural,3rd,regular,\r\n,4th,active,subjunctive,future_perfect,singular,1st,,\r\n,4th,active,subjunctive,future_perfect,singular,2nd,,\r\n,4th,active,subjunctive,future_perfect,singular,3rd,,\r\n,4th,active,subjunctive,future_perfect,plural,1st,,\r\n,4th,active,subjunctive,future_perfect,plural,2nd,,\r\n,4th,active,subjunctive,future_perfect,plural,3rd,,\r\nor,1st,passive,indicative,present,singular,1st,regular,\r\nāris,1st,passive,indicative,present,singular,2nd,regular,\r\nāre,1st,passive,indicative,present,singular,2nd,irregular,5\r\nātur,1st,passive,indicative,present,singular,3rd,regular,\r\nāmur,1st,passive,indicative,present,plural,1st,regular,\r\nāminiī,1st,passive,indicative,present,plural,2nd,regular,\r\nantur,1st,passive,indicative,present,plural,3rd,regular,\r\ner,1st,passive,subjunctive,present,singular,1st,regular,\r\nēris,1st,passive,subjunctive,present,singular,2nd,regular,\r\nēre,1st,passive,subjunctive,present,singular,2nd,regular,\r\nētur,1st,passive,subjunctive,present,singular,3rd,regular,\r\nēmur,1st,passive,subjunctive,present,plural,1st,regular,\r\nēminī,1st,passive,subjunctive,present,plural,2nd,regular,\r\nentur,1st,passive,subjunctive,present,plural,3rd,regular,\r\neor,2nd,passive,indicative,present,singular,1st,regular,\r\nēris,2nd,passive,indicative,present,singular,2nd,regular,\r\nēre,2nd,passive,indicative,present,singular,2nd,regular,\r\nētur,2nd,passive,indicative,present,singular,3rd,regular,\r\nēmur,2nd,passive,indicative,present,plural,1st,regular,\r\nēmini,2nd,passive,indicative,present,plural,2nd,regular,\r\nentur,2nd,passive,indicative,present,plural,3rd,regular,\r\near,2nd,passive,subjunctive,present,singular,1st,regular,\r\neāris,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neāre,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neātur,2nd,passive,subjunctive,present,singular,3rd,regular,\r\neāmur,2nd,passive,subjunctive,present,plural,1st,regular,\r\neāminī,2nd,passive,subjunctive,present,plural,2nd,regular,\r\neantur,2nd,passive,subjunctive,present,plural,3rd,regular,\r\nor,3rd,passive,indicative,present,singular,1st,regular,\r\neris,3rd,passive,indicative,present,singular,2nd,regular,\r\nere,3rd,passive,indicative,present,singular,2nd,regular,\r\nitur,3rd,passive,indicative,present,singular,3rd,regular,\r\nimur,3rd,passive,indicative,present,plural,1st,regular,\r\niminī,3rd,passive,indicative,present,plural,2nd,regular,\r\nuntur,3rd,passive,indicative,present,plural,3rd,regular,\r\nar,3rd,passive,subjunctive,present,singular,1st,regular,\r\nāris,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nāre,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nātur,3rd,passive,subjunctive,present,singular,3rd,regular,\r\nāmur,3rd,passive,subjunctive,present,plural,1st,regular,\r\nāminī,3rd,passive,subjunctive,present,plural,2nd,regular,\r\nantur,3rd,passive,subjunctive,present,plural,3rd,regular,\r\nior,4th,passive,indicative,present,singular,1st,regular,\r\nīris,4th,passive,indicative,present,singular,2nd,regular,\r\nīre,4th,passive,indicative,present,singular,2nd,regular,\r\nītur,4th,passive,indicative,present,singular,3rd,regular,\r\nīmur,4th,passive,indicative,present,plural,1st,regular,\r\nīminī,4th,passive,indicative,present,plural,2nd,regular,\r\niuntur,4th,passive,indicative,present,plural,3rd,regular,\r\niar,4th,passive,subjunctive,present,singular,1st,regular,\r\niāris,4th,passive,subjunctive,present,singular,2nd,regular,\r\niāre,4th,passive,subjunctive,present,singular,2nd,regular,\r\niātur,4th,passive,subjunctive,present,singular,3rd,regular,\r\niāmur,4th,passive,subjunctive,present,plural,1st,regular,\r\niāminī,4th,passive,subjunctive,present,plural,2nd,regular,\r\niantur,4th,passive,subjunctive,present,plural,3rd,regular,\r\nābar,1st,passive,indicative,imperfect,singular,1st,regular,\r\nābāaris,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābāre,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābātur,1st,passive,indicative,imperfect,singular,3rd,regular,\r\nābāmur,1st,passive,indicative,imperfect,plural,1st,regular,\r\nābāminī,1st,passive,indicative,imperfect,plural,2nd,regular,\r\nābantur,1st,passive,indicative,imperfect,plural,3rd,regular,\r\nārer,1st,passive,subjunctive,imperfect,singular,1st,regular,\r\nārēris,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārēre,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārētur,1st,passive,subjunctive,imperfect,singular,3rd,regular,\r\nārēmur,1st,passive,subjunctive,imperfect,plural,1st,regular,\r\nārēminī,1st,passive,subjunctive,imperfect,plural,2nd,regular,\r\nārentur,1st,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,2nd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbātur,2nd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,2nd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāmini,2nd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,2nd,passive,indicative,imperfect,plural,3rd,regular,\r\nērer,2nd,passive,subjunctive,imperfect,singular,1st,regular,\r\nērēris,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērēre,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērētur,2nd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nērēmur,2nd,passive,subjunctive,imperfect,plural,1st,regular,\r\nērēminī,2nd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nērentur,2nd,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,3rd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbatur,3rd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,3rd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāminī,3rd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,3rd,passive,indicative,imperfect,plural,3rd,regular,\r\nerer,3rd,passive,subjunctive,imperfect,singular,1st,regular,\r\nerēris,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerēre,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerētur,3rd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nerēmur,3rd,passive,subjunctive,imperfect,plural,1st,regular,\r\nerēminī,3rd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nerentur,3rd,passive,subjunctive,imperfect,plural,3rd,regular,\r\niēbar,4th,passive,indicative,imperfect,singular,1st,regular,\r\niēbāris,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbāre,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbātur,4th,passive,indicative,imperfect,singular,3rd,regular,\r\niēbāmur,4th,passive,indicative,imperfect,plural,1st,regular,\r\niēbāminī,4th,passive,indicative,imperfect,plural,2nd,regular,\r\niēbantur,4th,passive,indicative,imperfect,plural,3rd,regular,\r\nīrer,4th,passive,subjunctive,imperfect,singular,1st,regular,\r\nīrēris,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrēre,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrētur,4th,passive,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmur,4th,passive,subjunctive,imperfect,plural,1st,regular,\r\nīrēminī,4th,passive,subjunctive,imperfect,plural,2nd,regular,\r\nīrentur,4th,passive,subjunctive,imperfect,plural,3rd,regular,\r\nābor,1st,passive,indicative,future,singular,1st,regular,\r\nāberis,1st,passive,indicative,future,singular,2nd,regular,\r\nābere,1st,passive,indicative,future,singular,2nd,irregular,\r\nābitur,1st,passive,indicative,future,singular,3rd,regular,\r\nābimur,1st,passive,indicative,future,plural,1st,regular,\r\nābiminī,1st,passive,indicative,future,plural,2nd,regular,\r\nābuntur,1st,passive,indicative,future,plural,3rd,regular,\r\n,1st,passive,subjunctive,future,singular,1st,,\r\n,1st,passive,subjunctive,future,singular,2nd,,\r\n,1st,passive,subjunctive,future,singular,3rd,,\r\n,1st,passive,subjunctive,future,plural,1st,,\r\n,1st,passive,subjunctive,future,plural,2nd,,\r\n,1st,passive,subjunctive,future,plural,3rd,,\r\nēbor,2nd,passive,indicative,future,singular,1st,regular,\r\nēberis,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbere,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbitur,2nd,passive,indicative,future,singular,3rd,regular,\r\nēbimur,2nd,passive,indicative,future,plural,1st,regular,\r\nēbiminī,2nd,passive,indicative,future,plural,2nd,regular,\r\nēbuntur,2nd,passive,indicative,future,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future,singular,1st,,\r\n,2nd,passive,subjunctive,future,singular,2nd,,\r\n,2nd,passive,subjunctive,future,singular,3rd,,\r\n,2nd,passive,subjunctive,future,plural,1st,,\r\n,2nd,passive,subjunctive,future,plural,2nd,,\r\n,2nd,passive,subjunctive,future,plural,3rd,,\r\nar,3rd,passive,indicative,future,singular,1st,regular,\r\nēris,3rd,passive,indicative,future,singular,2nd,regular,\r\nēre,3rd,passive,indicative,future,singular,2nd,irregular,\r\nētur,3rd,passive,indicative,future,singular,3rd,regular,\r\nēmur,3rd,passive,indicative,future,plural,1st,regular,\r\nēminī,3rd,passive,indicative,future,plural,2nd,regular,\r\nentur,3rd,passive,indicative,future,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future,singular,1st,,\r\n,3rd,passive,subjunctive,future,singular,2nd,,\r\n,3rd,passive,subjunctive,future,singular,3rd,,\r\n,3rd,passive,subjunctive,future,plural,1st,,\r\n,3rd,passive,subjunctive,future,plural,2nd,,\r\n,3rd,passive,subjunctive,future,plural,3rd,,\r\niar,4th,passive,indicative,future,singular,1st,regular,\r\niēris,4th,passive,indicative,future,singular,2nd,regular,\r\nīēre,4th,passive,indicative,future,singular,2nd,irregular,\r\niētur,4th,passive,indicative,future,singular,3rd,regular,\r\niēmur,4th,passive,indicative,future,plural,1st,regular,\r\niēminī,4th,passive,indicative,future,plural,2nd,regular,\r\nientur,4th,passive,indicative,future,plural,3rd,regular,\r\n,4th,passive,subjunctive,future,singular,1st,,\r\n,4th,passive,subjunctive,future,singular,2nd,,\r\n,4th,passive,subjunctive,future,singular,3rd,,\r\n,4th,passive,subjunctive,future,plural,1st,,\r\n,4th,passive,subjunctive,future,plural,2nd,,\r\n,4th,passive,subjunctive,future,plural,3rd,,\r\nātus sum,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus fui,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus es,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus fuisti,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus est,1st,passive,indicative,perfect,singular,3rd,regular,\r\nātus fuit,1st,passive,indicative,perfect,singular,3rd,regular,\r\nāti sumus,1st,passive,indicative,perfect,plural,1st,regular,\r\nāti fuimus,1st,passive,indicative,perfect,plural,1st,irregular,\r\nāti estis,1st,passive,indicative,perfect,plural,2nd,regular,\r\nāti fuistis,1st,passive,indicative,perfect,plural,2nd,irregular,\r\nāti sunt,1st,passive,indicative,perfect,plural,3rd,regular,\r\nāti fuerunt,1st,passive,indicative,perfect,plural,3rd,irregular,\r\nātus sim,1st,passive,subjunctive,perfect,singular,1st,regular,\r\nātus fuerim,1st,passive,subjunctive,perfect,singular,1st,irregular,\r\nātus sis,1st,passive,subjunctive,perfect,singular,2nd,regular,\r\nātus fueris,1st,passive,subjunctive,perfect,singular,2nd,irregular,\r\nātus sit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nātus fuerit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nāti sīmus,1st,passive,subjunctive,perfect,plural,1st,regular,\r\nāti fuerimus,1st,passive,subjunctive,perfect,plural,1st,irregular,\r\nāti sītis,1st,passive,subjunctive,perfect,plural,2nd,regular,\r\nāti fueritis,1st,passive,subjunctive,perfect,plural,2nd,irregular,\r\nāti sint,1st,passive,subjunctive,perfect,plural,3rd,regular,\r\nāti fuerint,1st,passive,subjunctive,perfect,plural,3rd,irregular,\r\nitus sum,2nd,passive,indicative,perfect,singular,1st,regular,\r\nitus es,2nd,passive,indicative,perfect,singular,2nd,regular,\r\nitus est,2nd,passive,indicative,perfect,singular,3rd,regular,\r\nitī sumus,2nd,passive,indicative,perfect,plural,1st,regular,\r\nitī estis,2nd,passive,indicative,perfect,plural,2nd,regular,\r\nitī sunt,2nd,passive,indicative,perfect,plural,3rd,regular,\r\nitus sim,2nd,passive,subjunctive,perfect,singular,1st,regular,\r\nitus sīs,2nd,passive,subjunctive,perfect,singular,2nd,regular,\r\nitus sit,2nd,passive,subjunctive,perfect,singular,3rd,regular,\r\nitī sīmus,2nd,passive,subjunctive,perfect,plural,1st,regular,\r\nitī sītis,2nd,passive,subjunctive,perfect,plural,2nd,regular,\r\nitī sint,2nd,passive,subjunctive,perfect,plural,3rd,regular,\r\nus sum,3rd,passive,indicative,perfect,singular,1st,regular,\r\nus es,3rd,passive,indicative,perfect,singular,2nd,regular,\r\nus est,3rd,passive,indicative,perfect,singular,3rd,regular,\r\nī sumus,3rd,passive,indicative,perfect,plural,1st,regular,\r\nī estis,3rd,passive,indicative,perfect,plural,2nd,regular,\r\nī sunt,3rd,passive,indicative,perfect,plural,3rd,regular,\r\nus sim,3rd,passive,subjunctive,perfect,singular,1st,regular,\r\nus sīs,3rd,passive,subjunctive,perfect,singular,2nd,regular,\r\nus sit,3rd,passive,subjunctive,perfect,singular,3rd,regular,\r\nus sīmus,3rd,passive,subjunctive,perfect,plural,1st,regular,\r\nus sītis,3rd,passive,subjunctive,perfect,plural,2nd,regular,\r\nus sint,3rd,passive,subjunctive,perfect,plural,3rd,regular,\r\nītus sum,4th,passive,indicative,perfect,singular,1st,regular,\r\nītus es,4th,passive,indicative,perfect,singular,2nd,regular,\r\nītus est,4th,passive,indicative,perfect,singular,3rd,regular,\r\nītī sumus,4th,passive,indicative,perfect,plural,1st,regular,\r\nīti estis,4th,passive,indicative,perfect,plural,2nd,regular,\r\nīti sunt,4th,passive,indicative,perfect,plural,3rd,regular,\r\nītus sim,4th,passive,subjunctive,perfect,singular,1st,regular,\r\nītus sīs,4th,passive,subjunctive,perfect,singular,2nd,regular,\r\nītus sit,4th,passive,subjunctive,perfect,singular,3rd,regular,\r\nītī sīmus,4th,passive,subjunctive,perfect,plural,1st,regular,\r\nīti sītis,4th,passive,subjunctive,perfect,plural,2nd,regular,\r\nīti sint,4th,passive,subjunctive,perfect,plural,3rd,regular,\r\nātus eram,1st,passive,indicative,pluperfect,singular,1st,regular,\r\nātus fueram,1st,passive,indicative,pluperfect,singular,1st,irregular,\r\nātus eras,1st,passive,indicative,pluperfect,singular,2nd,regular,\r\nātus fueras,1st,passive,indicative,pluperfect,singular,2nd,irregular,\r\nātus erat,1st,passive,indicative,pluperfect,singular,3rd,regular,\r\nātus fuerat,1st,passive,indicative,pluperfect,singular,3rd,irregular,\r\nātī erāmus,1st,passive,indicative,pluperfect,plural,1st,regular,\r\nātī fueramus,1st,passive,indicative,pluperfect,plural,1st,irregular,\r\nātī erātis,1st,passive,indicative,pluperfect,plural,2nd,regular,\r\nātī fueratis,1st,passive,indicative,pluperfect,plural,2nd,irregular,\r\nātī erant,1st,passive,indicative,pluperfect,plural,3rd,regular,\r\nātī fuerant,1st,passive,indicative,pluperfect,plural,3rd,irregular,\r\nātus essem,1st,passive,subjunctive,pluperfect,singular,1st,regular,\r\nātus fuissem,1st,passive,subjunctive,pluperfect,singular,1st,irregular,\r\nātus esses,1st,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nātus fuissēs,1st,passive,subjunctive,pluperfect,singular,2nd,irregular,\r\nātus esset,1st,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nātus fuisset,1st,passive,subjunctive,pluperfect,singular,3rd,irregular,\r\nāti essēmus,1st,passive,subjunctive,pluperfect,plural,1st,regular,\r\nāti fuissēmus,1st,passive,subjunctive,pluperfect,plural,1st,irregular,\r\nāti essētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti fuissētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti essent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nāti fuissent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nitus eram,2nd,passive,indicative,pluperfect,singular,1st,regular,\r\nitus erās,2nd,passive,indicative,pluperfect,singular,2nd,regular,\r\nitus erat,2nd,passive,indicative,pluperfect,singular,3rd,regular,\r\nitī erāmus,2nd,passive,indicative,pluperfect,plural,1st,regular,\r\nitī erātis,2nd,passive,indicative,pluperfect,plural,2nd,regular,\r\nitī erant,2nd,passive,indicative,pluperfect,plural,3rd,regular,\r\nitus essem,2nd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nitus essēs,2nd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nitus esset,2nd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nitī essēmus,2nd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,2nd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,2nd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nus eram,3rd,passive,indicative,pluperfect,singular,1st,regular,\r\nus erās,3rd,passive,indicative,pluperfect,singular,2nd,regular,\r\nus erat,3rd,passive,indicative,pluperfect,singular,3rd,regular,\r\nī erāmus,3rd,passive,indicative,pluperfect,plural,1st,regular,\r\nī erātis,3rd,passive,indicative,pluperfect,plural,2nd,regular,\r\nī erant,3rd,passive,indicative,pluperfect,plural,3rd,regular,\r\nus essem,3rd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nus essēs,3rd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nus esset,3rd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nī essēmus,3rd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nī essētis,3rd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nī essent,3rd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nītus eram,4th,passive,indicative,pluperfect,singular,1st,regular,\r\nītus erās,4th,passive,indicative,pluperfect,singular,2nd,regular,\r\nītus erat,4th,passive,indicative,pluperfect,singular,3rd,regular,\r\nītī erāmus,4th,passive,indicative,pluperfect,plural,1st,regular,\r\nīti erātis,4th,passive,indicative,pluperfect,plural,2nd,regular,\r\nītī erant,4th,passive,indicative,pluperfect,plural,3rd,regular,\r\nītus essem,4th,passive,subjunctive,pluperfect,singular,1st,regular,\r\nītus essēs,4th,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nītus esset,4th,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nītī essēmus,4th,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,4th,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,4th,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nātus erō,1st,passive,indicative,future_perfect,singular,1st,regular,\r\nātus eris,1st,passive,indicative,future_perfect,singular,2nd,regular,\r\nātus erit,1st,passive,indicative,future_perfect,singular,3rd,regular,\r\nāti erimus,1st,passive,indicative,future_perfect,plural,1st,regular,\r\nāti eritis,1st,passive,indicative,future_perfect,plural,2nd,regular,\r\nāti erunt,1st,passive,indicative,future_perfect,plural,3rd,regular,\r\n,1st,passive,subjunctive,future_perfect,singular,1st,,\r\n,1st,passive,subjunctive,future_perfect,singular,2nd,,\r\n,1st,passive,subjunctive,future_perfect,singular,3rd,,\r\n,1st,passive,subjunctive,future_perfect,plural,1st,,\r\n,1st,passive,subjunctive,future_perfect,plural,2nd,,\r\n,1st,passive,subjunctive,future_perfect,plural,3rd,,\r\nitus erō,2nd,passive,indicative,future_perfect,singular,1st,regular,\r\nitus eris,2nd,passive,indicative,future_perfect,singular,2nd,regular,\r\nitus erit,2nd,passive,indicative,future_perfect,singular,3rd,regular,\r\nitī erimus,2nd,passive,indicative,future_perfect,plural,1st,regular,\r\nitī eritis,2nd,passive,indicative,future_perfect,plural,2nd,regular,\r\nitī erunt,2nd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future_perfect,singular,1st,,\r\n,2nd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,1st,,\r\n,2nd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,3rd,,\r\nus erō,3rd,passive,indicative,future_perfect,singular,1st,regular,\r\nus eris,3rd,passive,indicative,future_perfect,singular,2nd,regular,\r\nus erit,3rd,passive,indicative,future_perfect,singular,3rd,regular,\r\nī erimus,3rd,passive,indicative,future_perfect,plural,1st,regular,\r\nī eritis,3rd,passive,indicative,future_perfect,plural,2nd,regular,\r\nī erunt,3rd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future_perfect,singular,1st,,\r\n,3rd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,1st,,\r\n,3rd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,3rd,,\r\nītus erō,4th,passive,indicative,future_perfect,singular,1st,regular,\r\nītus eris,4th,passive,indicative,future_perfect,singular,2nd,regular,\r\nītus erit,4th,passive,indicative,future_perfect,singular,3rd,regular,\r\nītī erimus,4th,passive,indicative,future_perfect,plural,1st,regular,\r\nītī eritis,4th,passive,indicative,future_perfect,plural,2nd,regular,\r\nītī erunt,4th,passive,indicative,future_perfect,plural,3rd,regular,\r\n,4th,passive,subjunctive,future_perfect,singular,1st,,\r\n,4th,passive,subjunctive,future_perfect,singular,2nd,,\r\n,4th,passive,subjunctive,future_perfect,singular,3rd,,\r\n,4th,passive,subjunctive,future_perfect,plural,1st,,\r\n,4th,passive,subjunctive,future_perfect,plural,2nd,,\r\n,4th,passive,subjunctive,future_perfect,plural,3rd,,";
 
 var verbFootnotesCSV = "Index,Text\r\n2,Chiefly in poetry.\r\n3,\"In tenses based on the perfect stem (the perfect, pluperfect and future perfect of the Active voice) a v between two vowels is often lost with contraction of the two vowels, thus āvī to ā, ēvī to ē, ōvi to ō. Perfects in īvī often omit the v but rarely contract the vowels, except before ss or st, and sometimes in the third person. In addition to the use of v or u, the Active perfect stem can also be formed in a number of other ways, such as the addition of s to the root (eg carpsi), reduplication of the root (eg cecidi from cado), and simple lengthening of the vowel (eg vidī from video or legī from lego).\"\r\n4,\"Dic, duc, fac, and fer lack a final vowel in the imperative in classical Latin. The singular imperative of the verb sciō is always scītō, and the plural is usually scītōte.\"\r\n5,Common in epic poetry.\r\n6,Present in early Latin but chiefly confined to popular use until Livy and later writers.\r\n7,The verb fīō is a 4th conjugation verb that is irregular in only two forms: the present infinitive fierī and the imperfect subjunctive fierem.";
-
-function unwrapExports (x) {
-	return x && x.__esModule ? x['default'] : x;
-}
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -5050,8 +5048,26 @@ var defaultLocale = {"locale":"en","pluralRuleFunction":function (n,ord){var s=S
 MessageFormat.__addLocaleData(defaultLocale);
 MessageFormat.defaultLocale = 'en';
 
+/**
+ * Combines messages with the same locale code.
+ */
 class MessageBundle {
+
+    /**
+     * Creates a message bundle (a list of messages) for a locale.
+     * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
+     * @param {Object[]} messages - Messages for a locale.
+     * @param {string} messages[].id - Message ID, used for message reference.
+     * @param {string} messages[].text - Message text.
+     */
     constructor(locale, messages$$1) {
+        if (!locale) {
+            throw new Error('Locale data is missing');
+        }
+        if (!messages$$1) {
+            throw new Error('Messages data is missing');
+        }
+
         this._locale = locale;
 
         for (let messageID in messages$$1) {
@@ -5061,6 +5077,12 @@ class MessageBundle {
         }
     }
 
+    /**
+     * Returns a (formatted) message for a message ID provided.
+     * @param messageID - An ID of a message.
+     * @param options - Options that can be used for message formatting.
+     * @returns {string} A formatted message. If message not found, returns a message that contains an error text.
+     */
     get(messageID, options = undefined) {
         if (this[messageID]) {
             return this[messageID].format(options);
@@ -5068,4874 +5090,64 @@ class MessageBundle {
         else {
             // If message with the ID provided is not in translation data, generate a warning.
             return `Not in translation data: "${messageID}"`;
-            console.warn(`"${messageID}" does not exist in translation data.`);
         }
     }
 }
 
+/**
+ * Combines several message bundle for different locales.
+ */
 class L10n {
+
+    /**
+     * Creates an empty object.
+     * @returns {L10n} Returns a reference to self for chaining.
+     */
     constructor() {
         this._locales = {};
         this._localeList = [];
         return this;
     }
 
+    /**
+     * Adds a message bundle to the storage.
+     * @param {string} locale - A locale code for a message bundle. IETF language tag format is recommended.
+     * @param {Object[]} messages - Messages for a locale.
+     * @param {string} messages[].id - Message ID, used for message reference.
+     * @param {string} messages[].text - Message text.
+     * @returns {L10n} Returns a reference to self for chaining.
+     */
     add(locale, messages$$1) {
+        let bundle = new MessageBundle(locale, messages$$1); // Will throw an error if arguments are incorrect
+
         this._localeList.push(locale);
-        this._locales[locale] = new MessageBundle(locale, messages$$1);
+        this._locales[locale] = bundle;
         return this;
     }
 
+    /**
+     * Returns a message bundle for a locale.
+     * @param {string} locale - A locale code for a message bundle. IETF language tag format is recommended.
+     * @returns {MessageBundle} A message bundle for a locale.
+     */
     messages(locale) {
-        if (this._locales[locale]) {
-            return this._locales[locale];
+        if (!this._locales[locale]) {
+            throw new Error('Locale "' + locale + '" is not found.');
         }
+        return this._locales[locale];
     }
 
+    /**
+     * Returns a list of available locale codes.
+     * @returns {string[]} Array of local codes.
+     */
     get locales() {
         return this._localeList;
     }
 }
 
+// Initialize a global L10n object.
 let l10n = new L10n().add('en-US', messages).add('en-GB', messages$1);
-
-var handlebarsV4_0_10 = createCommonjsModule(function (module, exports) {
-/**!
-
- @license
- handlebars v4.0.10
-
-Copyright (C) 2011-2016 by Yehuda Katz
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-*/
-(function webpackUniversalModuleDefinition(root, factory) {
-	module.exports = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
-
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
-
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-
-
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-
-	var _handlebarsRuntime = __webpack_require__(2);
-
-	var _handlebarsRuntime2 = _interopRequireDefault(_handlebarsRuntime);
-
-	// Compiler imports
-
-	var _handlebarsCompilerAst = __webpack_require__(35);
-
-	var _handlebarsCompilerAst2 = _interopRequireDefault(_handlebarsCompilerAst);
-
-	var _handlebarsCompilerBase = __webpack_require__(36);
-
-	var _handlebarsCompilerCompiler = __webpack_require__(41);
-
-	var _handlebarsCompilerJavascriptCompiler = __webpack_require__(42);
-
-	var _handlebarsCompilerJavascriptCompiler2 = _interopRequireDefault(_handlebarsCompilerJavascriptCompiler);
-
-	var _handlebarsCompilerVisitor = __webpack_require__(39);
-
-	var _handlebarsCompilerVisitor2 = _interopRequireDefault(_handlebarsCompilerVisitor);
-
-	var _handlebarsNoConflict = __webpack_require__(34);
-
-	var _handlebarsNoConflict2 = _interopRequireDefault(_handlebarsNoConflict);
-
-	var _create = _handlebarsRuntime2['default'].create;
-	function create() {
-	  var hb = _create();
-
-	  hb.compile = function (input, options) {
-	    return _handlebarsCompilerCompiler.compile(input, options, hb);
-	  };
-	  hb.precompile = function (input, options) {
-	    return _handlebarsCompilerCompiler.precompile(input, options, hb);
-	  };
-
-	  hb.AST = _handlebarsCompilerAst2['default'];
-	  hb.Compiler = _handlebarsCompilerCompiler.Compiler;
-	  hb.JavaScriptCompiler = _handlebarsCompilerJavascriptCompiler2['default'];
-	  hb.Parser = _handlebarsCompilerBase.parser;
-	  hb.parse = _handlebarsCompilerBase.parse;
-
-	  return hb;
-	}
-
-	var inst = create();
-	inst.create = create;
-
-	_handlebarsNoConflict2['default'](inst);
-
-	inst.Visitor = _handlebarsCompilerVisitor2['default'];
-
-	inst['default'] = inst;
-
-	exports['default'] = inst;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	exports["default"] = function (obj) {
-	  return obj && obj.__esModule ? obj : {
-	    "default": obj
-	  };
-	};
-
-	exports.__esModule = true;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(3)['default'];
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-
-	var _handlebarsBase = __webpack_require__(4);
-
-	var base = _interopRequireWildcard(_handlebarsBase);
-
-	// Each of these augment the Handlebars object. No need to setup here.
-	// (This is done to easily share code between commonjs and browse envs)
-
-	var _handlebarsSafeString = __webpack_require__(21);
-
-	var _handlebarsSafeString2 = _interopRequireDefault(_handlebarsSafeString);
-
-	var _handlebarsException = __webpack_require__(6);
-
-	var _handlebarsException2 = _interopRequireDefault(_handlebarsException);
-
-	var _handlebarsUtils = __webpack_require__(5);
-
-	var Utils = _interopRequireWildcard(_handlebarsUtils);
-
-	var _handlebarsRuntime = __webpack_require__(22);
-
-	var runtime = _interopRequireWildcard(_handlebarsRuntime);
-
-	var _handlebarsNoConflict = __webpack_require__(34);
-
-	var _handlebarsNoConflict2 = _interopRequireDefault(_handlebarsNoConflict);
-
-	// For compatibility and usage outside of module systems, make the Handlebars object a namespace
-	function create() {
-	  var hb = new base.HandlebarsEnvironment();
-
-	  Utils.extend(hb, base);
-	  hb.SafeString = _handlebarsSafeString2['default'];
-	  hb.Exception = _handlebarsException2['default'];
-	  hb.Utils = Utils;
-	  hb.escapeExpression = Utils.escapeExpression;
-
-	  hb.VM = runtime;
-	  hb.template = function (spec) {
-	    return runtime.template(spec, hb);
-	  };
-
-	  return hb;
-	}
-
-	var inst = create();
-	inst.create = create;
-
-	_handlebarsNoConflict2['default'](inst);
-
-	inst['default'] = inst;
-
-	exports['default'] = inst;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	exports["default"] = function (obj) {
-	  if (obj && obj.__esModule) {
-	    return obj;
-	  } else {
-	    var newObj = {};
-
-	    if (obj != null) {
-	      for (var key in obj) {
-	        if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-	      }
-	    }
-
-	    newObj["default"] = obj;
-	    return newObj;
-	  }
-	};
-
-	exports.__esModule = true;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-	exports.HandlebarsEnvironment = HandlebarsEnvironment;
-
-	var _utils = __webpack_require__(5);
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	var _helpers = __webpack_require__(10);
-
-	var _decorators = __webpack_require__(18);
-
-	var _logger = __webpack_require__(20);
-
-	var _logger2 = _interopRequireDefault(_logger);
-
-	var VERSION = '4.0.10';
-	exports.VERSION = VERSION;
-	var COMPILER_REVISION = 7;
-
-	exports.COMPILER_REVISION = COMPILER_REVISION;
-	var REVISION_CHANGES = {
-	  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
-	  2: '== 1.0.0-rc.3',
-	  3: '== 1.0.0-rc.4',
-	  4: '== 1.x.x',
-	  5: '== 2.0.0-alpha.x',
-	  6: '>= 2.0.0-beta.1',
-	  7: '>= 4.0.0'
-	};
-
-	exports.REVISION_CHANGES = REVISION_CHANGES;
-	var objectType = '[object Object]';
-
-	function HandlebarsEnvironment(helpers, partials, decorators) {
-	  this.helpers = helpers || {};
-	  this.partials = partials || {};
-	  this.decorators = decorators || {};
-
-	  _helpers.registerDefaultHelpers(this);
-	  _decorators.registerDefaultDecorators(this);
-	}
-
-	HandlebarsEnvironment.prototype = {
-	  constructor: HandlebarsEnvironment,
-
-	  logger: _logger2['default'],
-	  log: _logger2['default'].log,
-
-	  registerHelper: function registerHelper(name, fn) {
-	    if (_utils.toString.call(name) === objectType) {
-	      if (fn) {
-	        throw new _exception2['default']('Arg not supported with multiple helpers');
-	      }
-	      _utils.extend(this.helpers, name);
-	    } else {
-	      this.helpers[name] = fn;
-	    }
-	  },
-	  unregisterHelper: function unregisterHelper(name) {
-	    delete this.helpers[name];
-	  },
-
-	  registerPartial: function registerPartial(name, partial) {
-	    if (_utils.toString.call(name) === objectType) {
-	      _utils.extend(this.partials, name);
-	    } else {
-	      if (typeof partial === 'undefined') {
-	        throw new _exception2['default']('Attempting to register a partial called "' + name + '" as undefined');
-	      }
-	      this.partials[name] = partial;
-	    }
-	  },
-	  unregisterPartial: function unregisterPartial(name) {
-	    delete this.partials[name];
-	  },
-
-	  registerDecorator: function registerDecorator(name, fn) {
-	    if (_utils.toString.call(name) === objectType) {
-	      if (fn) {
-	        throw new _exception2['default']('Arg not supported with multiple decorators');
-	      }
-	      _utils.extend(this.decorators, name);
-	    } else {
-	      this.decorators[name] = fn;
-	    }
-	  },
-	  unregisterDecorator: function unregisterDecorator(name) {
-	    delete this.decorators[name];
-	  }
-	};
-
-	var log = _logger2['default'].log;
-
-	exports.log = log;
-	exports.createFrame = _utils.createFrame;
-	exports.logger = _logger2['default'];
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	exports.extend = extend;
-	exports.indexOf = indexOf;
-	exports.escapeExpression = escapeExpression;
-	exports.isEmpty = isEmpty;
-	exports.createFrame = createFrame;
-	exports.blockParams = blockParams;
-	exports.appendContextPath = appendContextPath;
-	var escape = {
-	  '&': '&amp;',
-	  '<': '&lt;',
-	  '>': '&gt;',
-	  '"': '&quot;',
-	  "'": '&#x27;',
-	  '`': '&#x60;',
-	  '=': '&#x3D;'
-	};
-
-	var badChars = /[&<>"'`=]/g,
-	    possible = /[&<>"'`=]/;
-
-	function escapeChar(chr) {
-	  return escape[chr];
-	}
-
-	function extend(obj /* , ...source */) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    for (var key in arguments[i]) {
-	      if (Object.prototype.hasOwnProperty.call(arguments[i], key)) {
-	        obj[key] = arguments[i][key];
-	      }
-	    }
-	  }
-
-	  return obj;
-	}
-
-	var toString = Object.prototype.toString;
-
-	exports.toString = toString;
-	// Sourced from lodash
-	// https://github.com/bestiejs/lodash/blob/master/LICENSE.txt
-	/* eslint-disable func-style */
-	var isFunction = function isFunction(value) {
-	  return typeof value === 'function';
-	};
-	// fallback for older versions of Chrome and Safari
-	/* istanbul ignore next */
-	if (isFunction(/x/)) {
-	  exports.isFunction = isFunction = function (value) {
-	    return typeof value === 'function' && toString.call(value) === '[object Function]';
-	  };
-	}
-	exports.isFunction = isFunction;
-
-	/* eslint-enable func-style */
-
-	/* istanbul ignore next */
-	var isArray = Array.isArray || function (value) {
-	  return value && typeof value === 'object' ? toString.call(value) === '[object Array]' : false;
-	};
-
-	exports.isArray = isArray;
-	// Older IE versions do not directly support indexOf so we must implement our own, sadly.
-
-	function indexOf(array, value) {
-	  for (var i = 0, len = array.length; i < len; i++) {
-	    if (array[i] === value) {
-	      return i;
-	    }
-	  }
-	  return -1;
-	}
-
-	function escapeExpression(string) {
-	  if (typeof string !== 'string') {
-	    // don't escape SafeStrings, since they're already safe
-	    if (string && string.toHTML) {
-	      return string.toHTML();
-	    } else if (string == null) {
-	      return '';
-	    } else if (!string) {
-	      return string + '';
-	    }
-
-	    // Force a string conversion as this will be done by the append regardless and
-	    // the regex test will do this transparently behind the scenes, causing issues if
-	    // an object's to string has escaped characters in it.
-	    string = '' + string;
-	  }
-
-	  if (!possible.test(string)) {
-	    return string;
-	  }
-	  return string.replace(badChars, escapeChar);
-	}
-
-	function isEmpty(value) {
-	  if (!value && value !== 0) {
-	    return true;
-	  } else if (isArray(value) && value.length === 0) {
-	    return true;
-	  } else {
-	    return false;
-	  }
-	}
-
-	function createFrame(object) {
-	  var frame = extend({}, object);
-	  frame._parent = object;
-	  return frame;
-	}
-
-	function blockParams(params, ids) {
-	  params.path = ids;
-	  return params;
-	}
-
-	function appendContextPath(contextPath, id) {
-	  return (contextPath ? contextPath + '.' : '') + id;
-	}
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _Object$defineProperty = __webpack_require__(7)['default'];
-
-	exports.__esModule = true;
-
-	var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
-
-	function Exception(message, node) {
-	  var loc = node && node.loc,
-	      line = undefined,
-	      column = undefined;
-	  if (loc) {
-	    line = loc.start.line;
-	    column = loc.start.column;
-
-	    message += ' - ' + line + ':' + column;
-	  }
-
-	  var tmp = Error.prototype.constructor.call(this, message);
-
-	  // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
-	  for (var idx = 0; idx < errorProps.length; idx++) {
-	    this[errorProps[idx]] = tmp[errorProps[idx]];
-	  }
-
-	  /* istanbul ignore else */
-	  if (Error.captureStackTrace) {
-	    Error.captureStackTrace(this, Exception);
-	  }
-
-	  try {
-	    if (loc) {
-	      this.lineNumber = line;
-
-	      // Work around issue under safari where we can't directly set the column value
-	      /* istanbul ignore next */
-	      if (_Object$defineProperty) {
-	        Object.defineProperty(this, 'column', {
-	          value: column,
-	          enumerable: true
-	        });
-	      } else {
-	        this.column = column;
-	      }
-	    }
-	  } catch (nop) {
-	    /* Ignore if the browser is very particular */
-	  }
-	}
-
-	Exception.prototype = new Error();
-
-	exports['default'] = Exception;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(8), __esModule: true };
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(9);
-	module.exports = function defineProperty(it, key, desc){
-	  return $.setDesc(it, key, desc);
-	};
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-	var $Object = Object;
-	module.exports = {
-	  create:     $Object.create,
-	  getProto:   $Object.getPrototypeOf,
-	  isEnum:     {}.propertyIsEnumerable,
-	  getDesc:    $Object.getOwnPropertyDescriptor,
-	  setDesc:    $Object.defineProperty,
-	  setDescs:   $Object.defineProperties,
-	  getKeys:    $Object.keys,
-	  getNames:   $Object.getOwnPropertyNames,
-	  getSymbols: $Object.getOwnPropertySymbols,
-	  each:       [].forEach
-	};
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-	exports.registerDefaultHelpers = registerDefaultHelpers;
-
-	var _helpersBlockHelperMissing = __webpack_require__(11);
-
-	var _helpersBlockHelperMissing2 = _interopRequireDefault(_helpersBlockHelperMissing);
-
-	var _helpersEach = __webpack_require__(12);
-
-	var _helpersEach2 = _interopRequireDefault(_helpersEach);
-
-	var _helpersHelperMissing = __webpack_require__(13);
-
-	var _helpersHelperMissing2 = _interopRequireDefault(_helpersHelperMissing);
-
-	var _helpersIf = __webpack_require__(14);
-
-	var _helpersIf2 = _interopRequireDefault(_helpersIf);
-
-	var _helpersLog = __webpack_require__(15);
-
-	var _helpersLog2 = _interopRequireDefault(_helpersLog);
-
-	var _helpersLookup = __webpack_require__(16);
-
-	var _helpersLookup2 = _interopRequireDefault(_helpersLookup);
-
-	var _helpersWith = __webpack_require__(17);
-
-	var _helpersWith2 = _interopRequireDefault(_helpersWith);
-
-	function registerDefaultHelpers(instance) {
-	  _helpersBlockHelperMissing2['default'](instance);
-	  _helpersEach2['default'](instance);
-	  _helpersHelperMissing2['default'](instance);
-	  _helpersIf2['default'](instance);
-	  _helpersLog2['default'](instance);
-	  _helpersLookup2['default'](instance);
-	  _helpersWith2['default'](instance);
-	}
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _utils = __webpack_require__(5);
-
-	exports['default'] = function (instance) {
-	  instance.registerHelper('blockHelperMissing', function (context, options) {
-	    var inverse = options.inverse,
-	        fn = options.fn;
-
-	    if (context === true) {
-	      return fn(this);
-	    } else if (context === false || context == null) {
-	      return inverse(this);
-	    } else if (_utils.isArray(context)) {
-	      if (context.length > 0) {
-	        if (options.ids) {
-	          options.ids = [options.name];
-	        }
-
-	        return instance.helpers.each(context, options);
-	      } else {
-	        return inverse(this);
-	      }
-	    } else {
-	      if (options.data && options.ids) {
-	        var data = _utils.createFrame(options.data);
-	        data.contextPath = _utils.appendContextPath(options.data.contextPath, options.name);
-	        options = { data: data };
-	      }
-
-	      return fn(context, options);
-	    }
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-
-	var _utils = __webpack_require__(5);
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	exports['default'] = function (instance) {
-	  instance.registerHelper('each', function (context, options) {
-	    if (!options) {
-	      throw new _exception2['default']('Must pass iterator to #each');
-	    }
-
-	    var fn = options.fn,
-	        inverse = options.inverse,
-	        i = 0,
-	        ret = '',
-	        data = undefined,
-	        contextPath = undefined;
-
-	    if (options.data && options.ids) {
-	      contextPath = _utils.appendContextPath(options.data.contextPath, options.ids[0]) + '.';
-	    }
-
-	    if (_utils.isFunction(context)) {
-	      context = context.call(this);
-	    }
-
-	    if (options.data) {
-	      data = _utils.createFrame(options.data);
-	    }
-
-	    function execIteration(field, index, last) {
-	      if (data) {
-	        data.key = field;
-	        data.index = index;
-	        data.first = index === 0;
-	        data.last = !!last;
-
-	        if (contextPath) {
-	          data.contextPath = contextPath + field;
-	        }
-	      }
-
-	      ret = ret + fn(context[field], {
-	        data: data,
-	        blockParams: _utils.blockParams([context[field], field], [contextPath + field, null])
-	      });
-	    }
-
-	    if (context && typeof context === 'object') {
-	      if (_utils.isArray(context)) {
-	        for (var j = context.length; i < j; i++) {
-	          if (i in context) {
-	            execIteration(i, i, i === context.length - 1);
-	          }
-	        }
-	      } else {
-	        var priorKey = undefined;
-
-	        for (var key in context) {
-	          if (context.hasOwnProperty(key)) {
-	            // We're running the iterations one step out of sync so we can detect
-	            // the last iteration without have to scan the object twice and create
-	            // an itermediate keys array.
-	            if (priorKey !== undefined) {
-	              execIteration(priorKey, i - 1);
-	            }
-	            priorKey = key;
-	            i++;
-	          }
-	        }
-	        if (priorKey !== undefined) {
-	          execIteration(priorKey, i - 1, true);
-	        }
-	      }
-	    }
-
-	    if (i === 0) {
-	      ret = inverse(this);
-	    }
-
-	    return ret;
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	exports['default'] = function (instance) {
-	  instance.registerHelper('helperMissing', function () /* [args, ]options */{
-	    if (arguments.length === 1) {
-	      // A missing field in a {{foo}} construct.
-	      return undefined;
-	    } else {
-	      // Someone is actually trying to call something, blow up.
-	      throw new _exception2['default']('Missing helper: "' + arguments[arguments.length - 1].name + '"');
-	    }
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _utils = __webpack_require__(5);
-
-	exports['default'] = function (instance) {
-	  instance.registerHelper('if', function (conditional, options) {
-	    if (_utils.isFunction(conditional)) {
-	      conditional = conditional.call(this);
-	    }
-
-	    // Default behavior is to render the positive path if the value is truthy and not empty.
-	    // The `includeZero` option may be set to treat the condtional as purely not empty based on the
-	    // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
-	    if (!options.hash.includeZero && !conditional || _utils.isEmpty(conditional)) {
-	      return options.inverse(this);
-	    } else {
-	      return options.fn(this);
-	    }
-	  });
-
-	  instance.registerHelper('unless', function (conditional, options) {
-	    return instance.helpers['if'].call(this, conditional, { fn: options.inverse, inverse: options.fn, hash: options.hash });
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	exports['default'] = function (instance) {
-	  instance.registerHelper('log', function () /* message, options */{
-	    var args = [undefined],
-	        options = arguments[arguments.length - 1];
-	    for (var i = 0; i < arguments.length - 1; i++) {
-	      args.push(arguments[i]);
-	    }
-
-	    var level = 1;
-	    if (options.hash.level != null) {
-	      level = options.hash.level;
-	    } else if (options.data && options.data.level != null) {
-	      level = options.data.level;
-	    }
-	    args[0] = level;
-
-	    instance.log.apply(instance, args);
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	exports['default'] = function (instance) {
-	  instance.registerHelper('lookup', function (obj, field) {
-	    return obj && obj[field];
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _utils = __webpack_require__(5);
-
-	exports['default'] = function (instance) {
-	  instance.registerHelper('with', function (context, options) {
-	    if (_utils.isFunction(context)) {
-	      context = context.call(this);
-	    }
-
-	    var fn = options.fn;
-
-	    if (!_utils.isEmpty(context)) {
-	      var data = options.data;
-	      if (options.data && options.ids) {
-	        data = _utils.createFrame(options.data);
-	        data.contextPath = _utils.appendContextPath(options.data.contextPath, options.ids[0]);
-	      }
-
-	      return fn(context, {
-	        data: data,
-	        blockParams: _utils.blockParams([context], [data && data.contextPath])
-	      });
-	    } else {
-	      return options.inverse(this);
-	    }
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-	exports.registerDefaultDecorators = registerDefaultDecorators;
-
-	var _decoratorsInline = __webpack_require__(19);
-
-	var _decoratorsInline2 = _interopRequireDefault(_decoratorsInline);
-
-	function registerDefaultDecorators(instance) {
-	  _decoratorsInline2['default'](instance);
-	}
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _utils = __webpack_require__(5);
-
-	exports['default'] = function (instance) {
-	  instance.registerDecorator('inline', function (fn, props, container, options) {
-	    var ret = fn;
-	    if (!props.partials) {
-	      props.partials = {};
-	      ret = function (context, options) {
-	        // Create a new partials stack frame prior to exec.
-	        var original = container.partials;
-	        container.partials = _utils.extend({}, original, props.partials);
-	        var ret = fn(context, options);
-	        container.partials = original;
-	        return ret;
-	      };
-	    }
-
-	    props.partials[options.args[0]] = options.fn;
-
-	    return ret;
-	  });
-	};
-
-	module.exports = exports['default'];
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _utils = __webpack_require__(5);
-
-	var logger = {
-	  methodMap: ['debug', 'info', 'warn', 'error'],
-	  level: 'info',
-
-	  // Maps a given level value to the `methodMap` indexes above.
-	  lookupLevel: function lookupLevel(level) {
-	    if (typeof level === 'string') {
-	      var levelMap = _utils.indexOf(logger.methodMap, level.toLowerCase());
-	      if (levelMap >= 0) {
-	        level = levelMap;
-	      } else {
-	        level = parseInt(level, 10);
-	      }
-	    }
-
-	    return level;
-	  },
-
-	  // Can be overridden in the host environment
-	  log: function log(level) {
-	    level = logger.lookupLevel(level);
-
-	    if (typeof console !== 'undefined' && logger.lookupLevel(logger.level) <= level) {
-	      var method = logger.methodMap[level];
-	      if (!console[method]) {
-	        // eslint-disable-line no-console
-	        method = 'log';
-	      }
-
-	      for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        message[_key - 1] = arguments[_key];
-	      }
-
-	      console[method].apply(console, message); // eslint-disable-line no-console
-	    }
-	  }
-	};
-
-	exports['default'] = logger;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-	// Build out our basic SafeString type
-	'use strict';
-
-	exports.__esModule = true;
-	function SafeString(string) {
-	  this.string = string;
-	}
-
-	SafeString.prototype.toString = SafeString.prototype.toHTML = function () {
-	  return '' + this.string;
-	};
-
-	exports['default'] = SafeString;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _Object$seal = __webpack_require__(23)['default'];
-
-	var _interopRequireWildcard = __webpack_require__(3)['default'];
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-	exports.checkRevision = checkRevision;
-	exports.template = template;
-	exports.wrapProgram = wrapProgram;
-	exports.resolvePartial = resolvePartial;
-	exports.invokePartial = invokePartial;
-	exports.noop = noop;
-
-	var _utils = __webpack_require__(5);
-
-	var Utils = _interopRequireWildcard(_utils);
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	var _base = __webpack_require__(4);
-
-	function checkRevision(compilerInfo) {
-	  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
-	      currentRevision = _base.COMPILER_REVISION;
-
-	  if (compilerRevision !== currentRevision) {
-	    if (compilerRevision < currentRevision) {
-	      var runtimeVersions = _base.REVISION_CHANGES[currentRevision],
-	          compilerVersions = _base.REVISION_CHANGES[compilerRevision];
-	      throw new _exception2['default']('Template was precompiled with an older version of Handlebars than the current runtime. ' + 'Please update your precompiler to a newer version (' + runtimeVersions + ') or downgrade your runtime to an older version (' + compilerVersions + ').');
-	    } else {
-	      // Use the embedded version info since the runtime doesn't know about this revision yet
-	      throw new _exception2['default']('Template was precompiled with a newer version of Handlebars than the current runtime. ' + 'Please update your runtime to a newer version (' + compilerInfo[1] + ').');
-	    }
-	  }
-	}
-
-	function template(templateSpec, env) {
-	  /* istanbul ignore next */
-	  if (!env) {
-	    throw new _exception2['default']('No environment passed to template');
-	  }
-	  if (!templateSpec || !templateSpec.main) {
-	    throw new _exception2['default']('Unknown template object: ' + typeof templateSpec);
-	  }
-
-	  templateSpec.main.decorator = templateSpec.main_d;
-
-	  // Note: Using env.VM references rather than local var references throughout this section to allow
-	  // for external users to override these as psuedo-supported APIs.
-	  env.VM.checkRevision(templateSpec.compiler);
-
-	  function invokePartialWrapper(partial, context, options) {
-	    if (options.hash) {
-	      context = Utils.extend({}, context, options.hash);
-	      if (options.ids) {
-	        options.ids[0] = true;
-	      }
-	    }
-
-	    partial = env.VM.resolvePartial.call(this, partial, context, options);
-	    var result = env.VM.invokePartial.call(this, partial, context, options);
-
-	    if (result == null && env.compile) {
-	      options.partials[options.name] = env.compile(partial, templateSpec.compilerOptions, env);
-	      result = options.partials[options.name](context, options);
-	    }
-	    if (result != null) {
-	      if (options.indent) {
-	        var lines = result.split('\n');
-	        for (var i = 0, l = lines.length; i < l; i++) {
-	          if (!lines[i] && i + 1 === l) {
-	            break;
-	          }
-
-	          lines[i] = options.indent + lines[i];
-	        }
-	        result = lines.join('\n');
-	      }
-	      return result;
-	    } else {
-	      throw new _exception2['default']('The partial ' + options.name + ' could not be compiled when running in runtime-only mode');
-	    }
-	  }
-
-	  // Just add water
-	  var container = {
-	    strict: function strict(obj, name) {
-	      if (!(name in obj)) {
-	        throw new _exception2['default']('"' + name + '" not defined in ' + obj);
-	      }
-	      return obj[name];
-	    },
-	    lookup: function lookup(depths, name) {
-	      var len = depths.length;
-	      for (var i = 0; i < len; i++) {
-	        if (depths[i] && depths[i][name] != null) {
-	          return depths[i][name];
-	        }
-	      }
-	    },
-	    lambda: function lambda(current, context) {
-	      return typeof current === 'function' ? current.call(context) : current;
-	    },
-
-	    escapeExpression: Utils.escapeExpression,
-	    invokePartial: invokePartialWrapper,
-
-	    fn: function fn(i) {
-	      var ret = templateSpec[i];
-	      ret.decorator = templateSpec[i + '_d'];
-	      return ret;
-	    },
-
-	    programs: [],
-	    program: function program(i, data, declaredBlockParams, blockParams, depths) {
-	      var programWrapper = this.programs[i],
-	          fn = this.fn(i);
-	      if (data || depths || blockParams || declaredBlockParams) {
-	        programWrapper = wrapProgram(this, i, fn, data, declaredBlockParams, blockParams, depths);
-	      } else if (!programWrapper) {
-	        programWrapper = this.programs[i] = wrapProgram(this, i, fn);
-	      }
-	      return programWrapper;
-	    },
-
-	    data: function data(value, depth) {
-	      while (value && depth--) {
-	        value = value._parent;
-	      }
-	      return value;
-	    },
-	    merge: function merge(param, common) {
-	      var obj = param || common;
-
-	      if (param && common && param !== common) {
-	        obj = Utils.extend({}, common, param);
-	      }
-
-	      return obj;
-	    },
-	    // An empty object to use as replacement for null-contexts
-	    nullContext: _Object$seal({}),
-
-	    noop: env.VM.noop,
-	    compilerInfo: templateSpec.compiler
-	  };
-
-	  function ret(context) {
-	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	    var data = options.data;
-
-	    ret._setup(options);
-	    if (!options.partial && templateSpec.useData) {
-	      data = initData(context, data);
-	    }
-	    var depths = undefined,
-	        blockParams = templateSpec.useBlockParams ? [] : undefined;
-	    if (templateSpec.useDepths) {
-	      if (options.depths) {
-	        depths = context != options.depths[0] ? [context].concat(options.depths) : options.depths;
-	      } else {
-	        depths = [context];
-	      }
-	    }
-
-	    function main(context /*, options*/) {
-	      return '' + templateSpec.main(container, context, container.helpers, container.partials, data, blockParams, depths);
-	    }
-	    main = executeDecorators(templateSpec.main, main, container, options.depths || [], data, blockParams);
-	    return main(context, options);
-	  }
-	  ret.isTop = true;
-
-	  ret._setup = function (options) {
-	    if (!options.partial) {
-	      container.helpers = container.merge(options.helpers, env.helpers);
-
-	      if (templateSpec.usePartial) {
-	        container.partials = container.merge(options.partials, env.partials);
-	      }
-	      if (templateSpec.usePartial || templateSpec.useDecorators) {
-	        container.decorators = container.merge(options.decorators, env.decorators);
-	      }
-	    } else {
-	      container.helpers = options.helpers;
-	      container.partials = options.partials;
-	      container.decorators = options.decorators;
-	    }
-	  };
-
-	  ret._child = function (i, data, blockParams, depths) {
-	    if (templateSpec.useBlockParams && !blockParams) {
-	      throw new _exception2['default']('must pass block params');
-	    }
-	    if (templateSpec.useDepths && !depths) {
-	      throw new _exception2['default']('must pass parent depths');
-	    }
-
-	    return wrapProgram(container, i, templateSpec[i], data, 0, blockParams, depths);
-	  };
-	  return ret;
-	}
-
-	function wrapProgram(container, i, fn, data, declaredBlockParams, blockParams, depths) {
-	  function prog(context) {
-	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	    var currentDepths = depths;
-	    if (depths && context != depths[0] && !(context === container.nullContext && depths[0] === null)) {
-	      currentDepths = [context].concat(depths);
-	    }
-
-	    return fn(container, context, container.helpers, container.partials, options.data || data, blockParams && [options.blockParams].concat(blockParams), currentDepths);
-	  }
-
-	  prog = executeDecorators(fn, prog, container, depths, data, blockParams);
-
-	  prog.program = i;
-	  prog.depth = depths ? depths.length : 0;
-	  prog.blockParams = declaredBlockParams || 0;
-	  return prog;
-	}
-
-	function resolvePartial(partial, context, options) {
-	  if (!partial) {
-	    if (options.name === '@partial-block') {
-	      partial = options.data['partial-block'];
-	    } else {
-	      partial = options.partials[options.name];
-	    }
-	  } else if (!partial.call && !options.name) {
-	    // This is a dynamic partial that returned a string
-	    options.name = partial;
-	    partial = options.partials[partial];
-	  }
-	  return partial;
-	}
-
-	function invokePartial(partial, context, options) {
-	  // Use the current closure context to save the partial-block if this partial
-	  var currentPartialBlock = options.data && options.data['partial-block'];
-	  options.partial = true;
-	  if (options.ids) {
-	    options.data.contextPath = options.ids[0] || options.data.contextPath;
-	  }
-
-	  var partialBlock = undefined;
-	  if (options.fn && options.fn !== noop) {
-	    (function () {
-	      options.data = _base.createFrame(options.data);
-	      // Wrapper function to get access to currentPartialBlock from the closure
-	      var fn = options.fn;
-	      partialBlock = options.data['partial-block'] = function partialBlockWrapper(context) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	        // Restore the partial-block from the closure for the execution of the block
-	        // i.e. the part inside the block of the partial call.
-	        options.data = _base.createFrame(options.data);
-	        options.data['partial-block'] = currentPartialBlock;
-	        return fn(context, options);
-	      };
-	      if (fn.partials) {
-	        options.partials = Utils.extend({}, options.partials, fn.partials);
-	      }
-	    })();
-	  }
-
-	  if (partial === undefined && partialBlock) {
-	    partial = partialBlock;
-	  }
-
-	  if (partial === undefined) {
-	    throw new _exception2['default']('The partial ' + options.name + ' could not be found');
-	  } else if (partial instanceof Function) {
-	    return partial(context, options);
-	  }
-	}
-
-	function noop() {
-	  return '';
-	}
-
-	function initData(context, data) {
-	  if (!data || !('root' in data)) {
-	    data = data ? _base.createFrame(data) : {};
-	    data.root = context;
-	  }
-	  return data;
-	}
-
-	function executeDecorators(fn, prog, container, depths, data, blockParams) {
-	  if (fn.decorator) {
-	    var props = {};
-	    prog = fn.decorator(prog, props, container, depths && depths[0], data, blockParams, depths);
-	    Utils.extend(prog, props);
-	  }
-	  return prog;
-	}
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(24), __esModule: true };
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(25);
-	module.exports = __webpack_require__(30).Object.seal;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// 19.1.2.17 Object.seal(O)
-	var isObject = __webpack_require__(26);
-
-	__webpack_require__(27)('seal', function($seal){
-	  return function seal(it){
-	    return $seal && isObject(it) ? $seal(it) : it;
-	  };
-	});
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-	module.exports = function(it){
-	  return typeof it === 'object' ? it !== null : typeof it === 'function';
-	};
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// most Object methods by ES6 should accept primitives
-	var $export = __webpack_require__(28)
-	  , core    = __webpack_require__(30)
-	  , fails   = __webpack_require__(33);
-	module.exports = function(KEY, exec){
-	  var fn  = (core.Object || {})[KEY] || Object[KEY]
-	    , exp = {};
-	  exp[KEY] = exec(fn);
-	  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
-	};
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var global    = __webpack_require__(29)
-	  , core      = __webpack_require__(30)
-	  , ctx       = __webpack_require__(31)
-	  , PROTOTYPE = 'prototype';
-
-	var $export = function(type, name, source){
-	  var IS_FORCED = type & $export.F
-	    , IS_GLOBAL = type & $export.G
-	    , IS_STATIC = type & $export.S
-	    , IS_PROTO  = type & $export.P
-	    , IS_BIND   = type & $export.B
-	    , IS_WRAP   = type & $export.W
-	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
-	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
-	    , key, own, out;
-	  if(IS_GLOBAL)source = name;
-	  for(key in source){
-	    // contains in native
-	    own = !IS_FORCED && target && key in target;
-	    if(own && key in exports)continue;
-	    // export native or passed
-	    out = own ? target[key] : source[key];
-	    // prevent global pollution for namespaces
-	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-	    // bind timers to global for call from export context
-	    : IS_BIND && own ? ctx(out, global)
-	    // wrap global constructors for prevent change them in library
-	    : IS_WRAP && target[key] == out ? (function(C){
-	      var F = function(param){
-	        return this instanceof C ? new C(param) : C(param);
-	      };
-	      F[PROTOTYPE] = C[PROTOTYPE];
-	      return F;
-	    // make static versions for prototype methods
-	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-	    if(IS_PROTO)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
-	  }
-	};
-	// type bitmap
-	$export.F = 1;  // forced
-	$export.G = 2;  // global
-	$export.S = 4;  // static
-	$export.P = 8;  // proto
-	$export.B = 16; // bind
-	$export.W = 32; // wrap
-	module.exports = $export;
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-	var global = module.exports = typeof window != 'undefined' && window.Math == Math
-	  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
-	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-	var core = module.exports = {version: '1.2.6'};
-	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// optional / simple context binding
-	var aFunction = __webpack_require__(32);
-	module.exports = function(fn, that, length){
-	  aFunction(fn);
-	  if(that === undefined)return fn;
-	  switch(length){
-	    case 1: return function(a){
-	      return fn.call(that, a);
-	    };
-	    case 2: return function(a, b){
-	      return fn.call(that, a, b);
-	    };
-	    case 3: return function(a, b, c){
-	      return fn.call(that, a, b, c);
-	    };
-	  }
-	  return function(/* ...args */){
-	    return fn.apply(that, arguments);
-	  };
-	};
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-	module.exports = function(it){
-	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
-	  return it;
-	};
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-	module.exports = function(exec){
-	  try {
-	    return !!exec();
-	  } catch(e){
-	    return true;
-	  }
-	};
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
-	'use strict';
-
-	exports.__esModule = true;
-
-	exports['default'] = function (Handlebars) {
-	  /* istanbul ignore next */
-	  var root = typeof global !== 'undefined' ? global : window,
-	      $Handlebars = root.Handlebars;
-	  /* istanbul ignore next */
-	  Handlebars.noConflict = function () {
-	    if (root.Handlebars === Handlebars) {
-	      root.Handlebars = $Handlebars;
-	    }
-	    return Handlebars;
-	  };
-	};
-
-	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())));
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	var AST = {
-	  // Public API used to evaluate derived attributes regarding AST nodes
-	  helpers: {
-	    // a mustache is definitely a helper if:
-	    // * it is an eligible helper, and
-	    // * it has at least one parameter or hash segment
-	    helperExpression: function helperExpression(node) {
-	      return node.type === 'SubExpression' || (node.type === 'MustacheStatement' || node.type === 'BlockStatement') && !!(node.params && node.params.length || node.hash);
-	    },
-
-	    scopedId: function scopedId(path) {
-	      return (/^\.|this\b/.test(path.original)
-	      );
-	    },
-
-	    // an ID is simple if it only has one part, and that part is not
-	    // `..` or `this`.
-	    simpleId: function simpleId(path) {
-	      return path.parts.length === 1 && !AST.helpers.scopedId(path) && !path.depth;
-	    }
-	  }
-	};
-
-	// Must be exported as an object rather than the root of the module as the jison lexer
-	// must modify the object to operate properly.
-	exports['default'] = AST;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	var _interopRequireWildcard = __webpack_require__(3)['default'];
-
-	exports.__esModule = true;
-	exports.parse = parse;
-
-	var _parser = __webpack_require__(37);
-
-	var _parser2 = _interopRequireDefault(_parser);
-
-	var _whitespaceControl = __webpack_require__(38);
-
-	var _whitespaceControl2 = _interopRequireDefault(_whitespaceControl);
-
-	var _helpers = __webpack_require__(40);
-
-	var Helpers = _interopRequireWildcard(_helpers);
-
-	var _utils = __webpack_require__(5);
-
-	exports.parser = _parser2['default'];
-
-	var yy = {};
-	_utils.extend(yy, Helpers);
-
-	function parse(input, options) {
-	  // Just return if an already-compiled AST was passed in.
-	  if (input.type === 'Program') {
-	    return input;
-	  }
-
-	  _parser2['default'].yy = yy;
-
-	  // Altering the shared object here, but this is ok as parser is a sync operation
-	  yy.locInfo = function (locInfo) {
-	    return new yy.SourceLocation(options && options.srcName, locInfo);
-	  };
-
-	  var strip = new _whitespaceControl2['default'](options);
-	  return strip.accept(_parser2['default'].parse(input));
-	}
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports) {
-
-	// File ignored in coverage tests via setting in .istanbul.yml
-	/* Jison generated parser */
-	"use strict";
-
-	exports.__esModule = true;
-	var handlebars = (function () {
-	    var parser = { trace: function trace() {},
-	        yy: {},
-	        symbols_: { "error": 2, "root": 3, "program": 4, "EOF": 5, "program_repetition0": 6, "statement": 7, "mustache": 8, "block": 9, "rawBlock": 10, "partial": 11, "partialBlock": 12, "content": 13, "COMMENT": 14, "CONTENT": 15, "openRawBlock": 16, "rawBlock_repetition_plus0": 17, "END_RAW_BLOCK": 18, "OPEN_RAW_BLOCK": 19, "helperName": 20, "openRawBlock_repetition0": 21, "openRawBlock_option0": 22, "CLOSE_RAW_BLOCK": 23, "openBlock": 24, "block_option0": 25, "closeBlock": 26, "openInverse": 27, "block_option1": 28, "OPEN_BLOCK": 29, "openBlock_repetition0": 30, "openBlock_option0": 31, "openBlock_option1": 32, "CLOSE": 33, "OPEN_INVERSE": 34, "openInverse_repetition0": 35, "openInverse_option0": 36, "openInverse_option1": 37, "openInverseChain": 38, "OPEN_INVERSE_CHAIN": 39, "openInverseChain_repetition0": 40, "openInverseChain_option0": 41, "openInverseChain_option1": 42, "inverseAndProgram": 43, "INVERSE": 44, "inverseChain": 45, "inverseChain_option0": 46, "OPEN_ENDBLOCK": 47, "OPEN": 48, "mustache_repetition0": 49, "mustache_option0": 50, "OPEN_UNESCAPED": 51, "mustache_repetition1": 52, "mustache_option1": 53, "CLOSE_UNESCAPED": 54, "OPEN_PARTIAL": 55, "partialName": 56, "partial_repetition0": 57, "partial_option0": 58, "openPartialBlock": 59, "OPEN_PARTIAL_BLOCK": 60, "openPartialBlock_repetition0": 61, "openPartialBlock_option0": 62, "param": 63, "sexpr": 64, "OPEN_SEXPR": 65, "sexpr_repetition0": 66, "sexpr_option0": 67, "CLOSE_SEXPR": 68, "hash": 69, "hash_repetition_plus0": 70, "hashSegment": 71, "ID": 72, "EQUALS": 73, "blockParams": 74, "OPEN_BLOCK_PARAMS": 75, "blockParams_repetition_plus0": 76, "CLOSE_BLOCK_PARAMS": 77, "path": 78, "dataName": 79, "STRING": 80, "NUMBER": 81, "BOOLEAN": 82, "UNDEFINED": 83, "NULL": 84, "DATA": 85, "pathSegments": 86, "SEP": 87, "$accept": 0, "$end": 1 },
-	        terminals_: { 2: "error", 5: "EOF", 14: "COMMENT", 15: "CONTENT", 18: "END_RAW_BLOCK", 19: "OPEN_RAW_BLOCK", 23: "CLOSE_RAW_BLOCK", 29: "OPEN_BLOCK", 33: "CLOSE", 34: "OPEN_INVERSE", 39: "OPEN_INVERSE_CHAIN", 44: "INVERSE", 47: "OPEN_ENDBLOCK", 48: "OPEN", 51: "OPEN_UNESCAPED", 54: "CLOSE_UNESCAPED", 55: "OPEN_PARTIAL", 60: "OPEN_PARTIAL_BLOCK", 65: "OPEN_SEXPR", 68: "CLOSE_SEXPR", 72: "ID", 73: "EQUALS", 75: "OPEN_BLOCK_PARAMS", 77: "CLOSE_BLOCK_PARAMS", 80: "STRING", 81: "NUMBER", 82: "BOOLEAN", 83: "UNDEFINED", 84: "NULL", 85: "DATA", 87: "SEP" },
-	        productions_: [0, [3, 2], [4, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [13, 1], [10, 3], [16, 5], [9, 4], [9, 4], [24, 6], [27, 6], [38, 6], [43, 2], [45, 3], [45, 1], [26, 3], [8, 5], [8, 5], [11, 5], [12, 3], [59, 5], [63, 1], [63, 1], [64, 5], [69, 1], [71, 3], [74, 3], [20, 1], [20, 1], [20, 1], [20, 1], [20, 1], [20, 1], [20, 1], [56, 1], [56, 1], [79, 2], [78, 1], [86, 3], [86, 1], [6, 0], [6, 2], [17, 1], [17, 2], [21, 0], [21, 2], [22, 0], [22, 1], [25, 0], [25, 1], [28, 0], [28, 1], [30, 0], [30, 2], [31, 0], [31, 1], [32, 0], [32, 1], [35, 0], [35, 2], [36, 0], [36, 1], [37, 0], [37, 1], [40, 0], [40, 2], [41, 0], [41, 1], [42, 0], [42, 1], [46, 0], [46, 1], [49, 0], [49, 2], [50, 0], [50, 1], [52, 0], [52, 2], [53, 0], [53, 1], [57, 0], [57, 2], [58, 0], [58, 1], [61, 0], [61, 2], [62, 0], [62, 1], [66, 0], [66, 2], [67, 0], [67, 1], [70, 1], [70, 2], [76, 1], [76, 2]],
-	        performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate, $$, _$
-	        /**/) {
-
-	            var $0 = $$.length - 1;
-	            switch (yystate) {
-	                case 1:
-	                    return $$[$0 - 1];
-	                    break;
-	                case 2:
-	                    this.$ = yy.prepareProgram($$[$0]);
-	                    break;
-	                case 3:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 4:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 5:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 6:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 7:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 8:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 9:
-	                    this.$ = {
-	                        type: 'CommentStatement',
-	                        value: yy.stripComment($$[$0]),
-	                        strip: yy.stripFlags($$[$0], $$[$0]),
-	                        loc: yy.locInfo(this._$)
-	                    };
-
-	                    break;
-	                case 10:
-	                    this.$ = {
-	                        type: 'ContentStatement',
-	                        original: $$[$0],
-	                        value: $$[$0],
-	                        loc: yy.locInfo(this._$)
-	                    };
-
-	                    break;
-	                case 11:
-	                    this.$ = yy.prepareRawBlock($$[$0 - 2], $$[$0 - 1], $$[$0], this._$);
-	                    break;
-	                case 12:
-	                    this.$ = { path: $$[$0 - 3], params: $$[$0 - 2], hash: $$[$0 - 1] };
-	                    break;
-	                case 13:
-	                    this.$ = yy.prepareBlock($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0], false, this._$);
-	                    break;
-	                case 14:
-	                    this.$ = yy.prepareBlock($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0], true, this._$);
-	                    break;
-	                case 15:
-	                    this.$ = { open: $$[$0 - 5], path: $$[$0 - 4], params: $$[$0 - 3], hash: $$[$0 - 2], blockParams: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 5], $$[$0]) };
-	                    break;
-	                case 16:
-	                    this.$ = { path: $$[$0 - 4], params: $$[$0 - 3], hash: $$[$0 - 2], blockParams: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 5], $$[$0]) };
-	                    break;
-	                case 17:
-	                    this.$ = { path: $$[$0 - 4], params: $$[$0 - 3], hash: $$[$0 - 2], blockParams: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 5], $$[$0]) };
-	                    break;
-	                case 18:
-	                    this.$ = { strip: yy.stripFlags($$[$0 - 1], $$[$0 - 1]), program: $$[$0] };
-	                    break;
-	                case 19:
-	                    var inverse = yy.prepareBlock($$[$0 - 2], $$[$0 - 1], $$[$0], $$[$0], false, this._$),
-	                        program = yy.prepareProgram([inverse], $$[$0 - 1].loc);
-	                    program.chained = true;
-
-	                    this.$ = { strip: $$[$0 - 2].strip, program: program, chain: true };
-
-	                    break;
-	                case 20:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 21:
-	                    this.$ = { path: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 2], $$[$0]) };
-	                    break;
-	                case 22:
-	                    this.$ = yy.prepareMustache($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0 - 4], yy.stripFlags($$[$0 - 4], $$[$0]), this._$);
-	                    break;
-	                case 23:
-	                    this.$ = yy.prepareMustache($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0 - 4], yy.stripFlags($$[$0 - 4], $$[$0]), this._$);
-	                    break;
-	                case 24:
-	                    this.$ = {
-	                        type: 'PartialStatement',
-	                        name: $$[$0 - 3],
-	                        params: $$[$0 - 2],
-	                        hash: $$[$0 - 1],
-	                        indent: '',
-	                        strip: yy.stripFlags($$[$0 - 4], $$[$0]),
-	                        loc: yy.locInfo(this._$)
-	                    };
-
-	                    break;
-	                case 25:
-	                    this.$ = yy.preparePartialBlock($$[$0 - 2], $$[$0 - 1], $$[$0], this._$);
-	                    break;
-	                case 26:
-	                    this.$ = { path: $$[$0 - 3], params: $$[$0 - 2], hash: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 4], $$[$0]) };
-	                    break;
-	                case 27:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 28:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 29:
-	                    this.$ = {
-	                        type: 'SubExpression',
-	                        path: $$[$0 - 3],
-	                        params: $$[$0 - 2],
-	                        hash: $$[$0 - 1],
-	                        loc: yy.locInfo(this._$)
-	                    };
-
-	                    break;
-	                case 30:
-	                    this.$ = { type: 'Hash', pairs: $$[$0], loc: yy.locInfo(this._$) };
-	                    break;
-	                case 31:
-	                    this.$ = { type: 'HashPair', key: yy.id($$[$0 - 2]), value: $$[$0], loc: yy.locInfo(this._$) };
-	                    break;
-	                case 32:
-	                    this.$ = yy.id($$[$0 - 1]);
-	                    break;
-	                case 33:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 34:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 35:
-	                    this.$ = { type: 'StringLiteral', value: $$[$0], original: $$[$0], loc: yy.locInfo(this._$) };
-	                    break;
-	                case 36:
-	                    this.$ = { type: 'NumberLiteral', value: Number($$[$0]), original: Number($$[$0]), loc: yy.locInfo(this._$) };
-	                    break;
-	                case 37:
-	                    this.$ = { type: 'BooleanLiteral', value: $$[$0] === 'true', original: $$[$0] === 'true', loc: yy.locInfo(this._$) };
-	                    break;
-	                case 38:
-	                    this.$ = { type: 'UndefinedLiteral', original: undefined, value: undefined, loc: yy.locInfo(this._$) };
-	                    break;
-	                case 39:
-	                    this.$ = { type: 'NullLiteral', original: null, value: null, loc: yy.locInfo(this._$) };
-	                    break;
-	                case 40:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 41:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 42:
-	                    this.$ = yy.preparePath(true, $$[$0], this._$);
-	                    break;
-	                case 43:
-	                    this.$ = yy.preparePath(false, $$[$0], this._$);
-	                    break;
-	                case 44:
-	                    $$[$0 - 2].push({ part: yy.id($$[$0]), original: $$[$0], separator: $$[$0 - 1] });this.$ = $$[$0 - 2];
-	                    break;
-	                case 45:
-	                    this.$ = [{ part: yy.id($$[$0]), original: $$[$0] }];
-	                    break;
-	                case 46:
-	                    this.$ = [];
-	                    break;
-	                case 47:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 48:
-	                    this.$ = [$$[$0]];
-	                    break;
-	                case 49:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 50:
-	                    this.$ = [];
-	                    break;
-	                case 51:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 58:
-	                    this.$ = [];
-	                    break;
-	                case 59:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 64:
-	                    this.$ = [];
-	                    break;
-	                case 65:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 70:
-	                    this.$ = [];
-	                    break;
-	                case 71:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 78:
-	                    this.$ = [];
-	                    break;
-	                case 79:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 82:
-	                    this.$ = [];
-	                    break;
-	                case 83:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 86:
-	                    this.$ = [];
-	                    break;
-	                case 87:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 90:
-	                    this.$ = [];
-	                    break;
-	                case 91:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 94:
-	                    this.$ = [];
-	                    break;
-	                case 95:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 98:
-	                    this.$ = [$$[$0]];
-	                    break;
-	                case 99:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 100:
-	                    this.$ = [$$[$0]];
-	                    break;
-	                case 101:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	            }
-	        },
-	        table: [{ 3: 1, 4: 2, 5: [2, 46], 6: 3, 14: [2, 46], 15: [2, 46], 19: [2, 46], 29: [2, 46], 34: [2, 46], 48: [2, 46], 51: [2, 46], 55: [2, 46], 60: [2, 46] }, { 1: [3] }, { 5: [1, 4] }, { 5: [2, 2], 7: 5, 8: 6, 9: 7, 10: 8, 11: 9, 12: 10, 13: 11, 14: [1, 12], 15: [1, 20], 16: 17, 19: [1, 23], 24: 15, 27: 16, 29: [1, 21], 34: [1, 22], 39: [2, 2], 44: [2, 2], 47: [2, 2], 48: [1, 13], 51: [1, 14], 55: [1, 18], 59: 19, 60: [1, 24] }, { 1: [2, 1] }, { 5: [2, 47], 14: [2, 47], 15: [2, 47], 19: [2, 47], 29: [2, 47], 34: [2, 47], 39: [2, 47], 44: [2, 47], 47: [2, 47], 48: [2, 47], 51: [2, 47], 55: [2, 47], 60: [2, 47] }, { 5: [2, 3], 14: [2, 3], 15: [2, 3], 19: [2, 3], 29: [2, 3], 34: [2, 3], 39: [2, 3], 44: [2, 3], 47: [2, 3], 48: [2, 3], 51: [2, 3], 55: [2, 3], 60: [2, 3] }, { 5: [2, 4], 14: [2, 4], 15: [2, 4], 19: [2, 4], 29: [2, 4], 34: [2, 4], 39: [2, 4], 44: [2, 4], 47: [2, 4], 48: [2, 4], 51: [2, 4], 55: [2, 4], 60: [2, 4] }, { 5: [2, 5], 14: [2, 5], 15: [2, 5], 19: [2, 5], 29: [2, 5], 34: [2, 5], 39: [2, 5], 44: [2, 5], 47: [2, 5], 48: [2, 5], 51: [2, 5], 55: [2, 5], 60: [2, 5] }, { 5: [2, 6], 14: [2, 6], 15: [2, 6], 19: [2, 6], 29: [2, 6], 34: [2, 6], 39: [2, 6], 44: [2, 6], 47: [2, 6], 48: [2, 6], 51: [2, 6], 55: [2, 6], 60: [2, 6] }, { 5: [2, 7], 14: [2, 7], 15: [2, 7], 19: [2, 7], 29: [2, 7], 34: [2, 7], 39: [2, 7], 44: [2, 7], 47: [2, 7], 48: [2, 7], 51: [2, 7], 55: [2, 7], 60: [2, 7] }, { 5: [2, 8], 14: [2, 8], 15: [2, 8], 19: [2, 8], 29: [2, 8], 34: [2, 8], 39: [2, 8], 44: [2, 8], 47: [2, 8], 48: [2, 8], 51: [2, 8], 55: [2, 8], 60: [2, 8] }, { 5: [2, 9], 14: [2, 9], 15: [2, 9], 19: [2, 9], 29: [2, 9], 34: [2, 9], 39: [2, 9], 44: [2, 9], 47: [2, 9], 48: [2, 9], 51: [2, 9], 55: [2, 9], 60: [2, 9] }, { 20: 25, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 36, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 4: 37, 6: 3, 14: [2, 46], 15: [2, 46], 19: [2, 46], 29: [2, 46], 34: [2, 46], 39: [2, 46], 44: [2, 46], 47: [2, 46], 48: [2, 46], 51: [2, 46], 55: [2, 46], 60: [2, 46] }, { 4: 38, 6: 3, 14: [2, 46], 15: [2, 46], 19: [2, 46], 29: [2, 46], 34: [2, 46], 44: [2, 46], 47: [2, 46], 48: [2, 46], 51: [2, 46], 55: [2, 46], 60: [2, 46] }, { 13: 40, 15: [1, 20], 17: 39 }, { 20: 42, 56: 41, 64: 43, 65: [1, 44], 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 4: 45, 6: 3, 14: [2, 46], 15: [2, 46], 19: [2, 46], 29: [2, 46], 34: [2, 46], 47: [2, 46], 48: [2, 46], 51: [2, 46], 55: [2, 46], 60: [2, 46] }, { 5: [2, 10], 14: [2, 10], 15: [2, 10], 18: [2, 10], 19: [2, 10], 29: [2, 10], 34: [2, 10], 39: [2, 10], 44: [2, 10], 47: [2, 10], 48: [2, 10], 51: [2, 10], 55: [2, 10], 60: [2, 10] }, { 20: 46, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 47, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 48, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 42, 56: 49, 64: 43, 65: [1, 44], 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 33: [2, 78], 49: 50, 65: [2, 78], 72: [2, 78], 80: [2, 78], 81: [2, 78], 82: [2, 78], 83: [2, 78], 84: [2, 78], 85: [2, 78] }, { 23: [2, 33], 33: [2, 33], 54: [2, 33], 65: [2, 33], 68: [2, 33], 72: [2, 33], 75: [2, 33], 80: [2, 33], 81: [2, 33], 82: [2, 33], 83: [2, 33], 84: [2, 33], 85: [2, 33] }, { 23: [2, 34], 33: [2, 34], 54: [2, 34], 65: [2, 34], 68: [2, 34], 72: [2, 34], 75: [2, 34], 80: [2, 34], 81: [2, 34], 82: [2, 34], 83: [2, 34], 84: [2, 34], 85: [2, 34] }, { 23: [2, 35], 33: [2, 35], 54: [2, 35], 65: [2, 35], 68: [2, 35], 72: [2, 35], 75: [2, 35], 80: [2, 35], 81: [2, 35], 82: [2, 35], 83: [2, 35], 84: [2, 35], 85: [2, 35] }, { 23: [2, 36], 33: [2, 36], 54: [2, 36], 65: [2, 36], 68: [2, 36], 72: [2, 36], 75: [2, 36], 80: [2, 36], 81: [2, 36], 82: [2, 36], 83: [2, 36], 84: [2, 36], 85: [2, 36] }, { 23: [2, 37], 33: [2, 37], 54: [2, 37], 65: [2, 37], 68: [2, 37], 72: [2, 37], 75: [2, 37], 80: [2, 37], 81: [2, 37], 82: [2, 37], 83: [2, 37], 84: [2, 37], 85: [2, 37] }, { 23: [2, 38], 33: [2, 38], 54: [2, 38], 65: [2, 38], 68: [2, 38], 72: [2, 38], 75: [2, 38], 80: [2, 38], 81: [2, 38], 82: [2, 38], 83: [2, 38], 84: [2, 38], 85: [2, 38] }, { 23: [2, 39], 33: [2, 39], 54: [2, 39], 65: [2, 39], 68: [2, 39], 72: [2, 39], 75: [2, 39], 80: [2, 39], 81: [2, 39], 82: [2, 39], 83: [2, 39], 84: [2, 39], 85: [2, 39] }, { 23: [2, 43], 33: [2, 43], 54: [2, 43], 65: [2, 43], 68: [2, 43], 72: [2, 43], 75: [2, 43], 80: [2, 43], 81: [2, 43], 82: [2, 43], 83: [2, 43], 84: [2, 43], 85: [2, 43], 87: [1, 51] }, { 72: [1, 35], 86: 52 }, { 23: [2, 45], 33: [2, 45], 54: [2, 45], 65: [2, 45], 68: [2, 45], 72: [2, 45], 75: [2, 45], 80: [2, 45], 81: [2, 45], 82: [2, 45], 83: [2, 45], 84: [2, 45], 85: [2, 45], 87: [2, 45] }, { 52: 53, 54: [2, 82], 65: [2, 82], 72: [2, 82], 80: [2, 82], 81: [2, 82], 82: [2, 82], 83: [2, 82], 84: [2, 82], 85: [2, 82] }, { 25: 54, 38: 56, 39: [1, 58], 43: 57, 44: [1, 59], 45: 55, 47: [2, 54] }, { 28: 60, 43: 61, 44: [1, 59], 47: [2, 56] }, { 13: 63, 15: [1, 20], 18: [1, 62] }, { 15: [2, 48], 18: [2, 48] }, { 33: [2, 86], 57: 64, 65: [2, 86], 72: [2, 86], 80: [2, 86], 81: [2, 86], 82: [2, 86], 83: [2, 86], 84: [2, 86], 85: [2, 86] }, { 33: [2, 40], 65: [2, 40], 72: [2, 40], 80: [2, 40], 81: [2, 40], 82: [2, 40], 83: [2, 40], 84: [2, 40], 85: [2, 40] }, { 33: [2, 41], 65: [2, 41], 72: [2, 41], 80: [2, 41], 81: [2, 41], 82: [2, 41], 83: [2, 41], 84: [2, 41], 85: [2, 41] }, { 20: 65, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 26: 66, 47: [1, 67] }, { 30: 68, 33: [2, 58], 65: [2, 58], 72: [2, 58], 75: [2, 58], 80: [2, 58], 81: [2, 58], 82: [2, 58], 83: [2, 58], 84: [2, 58], 85: [2, 58] }, { 33: [2, 64], 35: 69, 65: [2, 64], 72: [2, 64], 75: [2, 64], 80: [2, 64], 81: [2, 64], 82: [2, 64], 83: [2, 64], 84: [2, 64], 85: [2, 64] }, { 21: 70, 23: [2, 50], 65: [2, 50], 72: [2, 50], 80: [2, 50], 81: [2, 50], 82: [2, 50], 83: [2, 50], 84: [2, 50], 85: [2, 50] }, { 33: [2, 90], 61: 71, 65: [2, 90], 72: [2, 90], 80: [2, 90], 81: [2, 90], 82: [2, 90], 83: [2, 90], 84: [2, 90], 85: [2, 90] }, { 20: 75, 33: [2, 80], 50: 72, 63: 73, 64: 76, 65: [1, 44], 69: 74, 70: 77, 71: 78, 72: [1, 79], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 72: [1, 80] }, { 23: [2, 42], 33: [2, 42], 54: [2, 42], 65: [2, 42], 68: [2, 42], 72: [2, 42], 75: [2, 42], 80: [2, 42], 81: [2, 42], 82: [2, 42], 83: [2, 42], 84: [2, 42], 85: [2, 42], 87: [1, 51] }, { 20: 75, 53: 81, 54: [2, 84], 63: 82, 64: 76, 65: [1, 44], 69: 83, 70: 77, 71: 78, 72: [1, 79], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 26: 84, 47: [1, 67] }, { 47: [2, 55] }, { 4: 85, 6: 3, 14: [2, 46], 15: [2, 46], 19: [2, 46], 29: [2, 46], 34: [2, 46], 39: [2, 46], 44: [2, 46], 47: [2, 46], 48: [2, 46], 51: [2, 46], 55: [2, 46], 60: [2, 46] }, { 47: [2, 20] }, { 20: 86, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 4: 87, 6: 3, 14: [2, 46], 15: [2, 46], 19: [2, 46], 29: [2, 46], 34: [2, 46], 47: [2, 46], 48: [2, 46], 51: [2, 46], 55: [2, 46], 60: [2, 46] }, { 26: 88, 47: [1, 67] }, { 47: [2, 57] }, { 5: [2, 11], 14: [2, 11], 15: [2, 11], 19: [2, 11], 29: [2, 11], 34: [2, 11], 39: [2, 11], 44: [2, 11], 47: [2, 11], 48: [2, 11], 51: [2, 11], 55: [2, 11], 60: [2, 11] }, { 15: [2, 49], 18: [2, 49] }, { 20: 75, 33: [2, 88], 58: 89, 63: 90, 64: 76, 65: [1, 44], 69: 91, 70: 77, 71: 78, 72: [1, 79], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 65: [2, 94], 66: 92, 68: [2, 94], 72: [2, 94], 80: [2, 94], 81: [2, 94], 82: [2, 94], 83: [2, 94], 84: [2, 94], 85: [2, 94] }, { 5: [2, 25], 14: [2, 25], 15: [2, 25], 19: [2, 25], 29: [2, 25], 34: [2, 25], 39: [2, 25], 44: [2, 25], 47: [2, 25], 48: [2, 25], 51: [2, 25], 55: [2, 25], 60: [2, 25] }, { 20: 93, 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 75, 31: 94, 33: [2, 60], 63: 95, 64: 76, 65: [1, 44], 69: 96, 70: 77, 71: 78, 72: [1, 79], 75: [2, 60], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 75, 33: [2, 66], 36: 97, 63: 98, 64: 76, 65: [1, 44], 69: 99, 70: 77, 71: 78, 72: [1, 79], 75: [2, 66], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 75, 22: 100, 23: [2, 52], 63: 101, 64: 76, 65: [1, 44], 69: 102, 70: 77, 71: 78, 72: [1, 79], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 20: 75, 33: [2, 92], 62: 103, 63: 104, 64: 76, 65: [1, 44], 69: 105, 70: 77, 71: 78, 72: [1, 79], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 33: [1, 106] }, { 33: [2, 79], 65: [2, 79], 72: [2, 79], 80: [2, 79], 81: [2, 79], 82: [2, 79], 83: [2, 79], 84: [2, 79], 85: [2, 79] }, { 33: [2, 81] }, { 23: [2, 27], 33: [2, 27], 54: [2, 27], 65: [2, 27], 68: [2, 27], 72: [2, 27], 75: [2, 27], 80: [2, 27], 81: [2, 27], 82: [2, 27], 83: [2, 27], 84: [2, 27], 85: [2, 27] }, { 23: [2, 28], 33: [2, 28], 54: [2, 28], 65: [2, 28], 68: [2, 28], 72: [2, 28], 75: [2, 28], 80: [2, 28], 81: [2, 28], 82: [2, 28], 83: [2, 28], 84: [2, 28], 85: [2, 28] }, { 23: [2, 30], 33: [2, 30], 54: [2, 30], 68: [2, 30], 71: 107, 72: [1, 108], 75: [2, 30] }, { 23: [2, 98], 33: [2, 98], 54: [2, 98], 68: [2, 98], 72: [2, 98], 75: [2, 98] }, { 23: [2, 45], 33: [2, 45], 54: [2, 45], 65: [2, 45], 68: [2, 45], 72: [2, 45], 73: [1, 109], 75: [2, 45], 80: [2, 45], 81: [2, 45], 82: [2, 45], 83: [2, 45], 84: [2, 45], 85: [2, 45], 87: [2, 45] }, { 23: [2, 44], 33: [2, 44], 54: [2, 44], 65: [2, 44], 68: [2, 44], 72: [2, 44], 75: [2, 44], 80: [2, 44], 81: [2, 44], 82: [2, 44], 83: [2, 44], 84: [2, 44], 85: [2, 44], 87: [2, 44] }, { 54: [1, 110] }, { 54: [2, 83], 65: [2, 83], 72: [2, 83], 80: [2, 83], 81: [2, 83], 82: [2, 83], 83: [2, 83], 84: [2, 83], 85: [2, 83] }, { 54: [2, 85] }, { 5: [2, 13], 14: [2, 13], 15: [2, 13], 19: [2, 13], 29: [2, 13], 34: [2, 13], 39: [2, 13], 44: [2, 13], 47: [2, 13], 48: [2, 13], 51: [2, 13], 55: [2, 13], 60: [2, 13] }, { 38: 56, 39: [1, 58], 43: 57, 44: [1, 59], 45: 112, 46: 111, 47: [2, 76] }, { 33: [2, 70], 40: 113, 65: [2, 70], 72: [2, 70], 75: [2, 70], 80: [2, 70], 81: [2, 70], 82: [2, 70], 83: [2, 70], 84: [2, 70], 85: [2, 70] }, { 47: [2, 18] }, { 5: [2, 14], 14: [2, 14], 15: [2, 14], 19: [2, 14], 29: [2, 14], 34: [2, 14], 39: [2, 14], 44: [2, 14], 47: [2, 14], 48: [2, 14], 51: [2, 14], 55: [2, 14], 60: [2, 14] }, { 33: [1, 114] }, { 33: [2, 87], 65: [2, 87], 72: [2, 87], 80: [2, 87], 81: [2, 87], 82: [2, 87], 83: [2, 87], 84: [2, 87], 85: [2, 87] }, { 33: [2, 89] }, { 20: 75, 63: 116, 64: 76, 65: [1, 44], 67: 115, 68: [2, 96], 69: 117, 70: 77, 71: 78, 72: [1, 79], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 33: [1, 118] }, { 32: 119, 33: [2, 62], 74: 120, 75: [1, 121] }, { 33: [2, 59], 65: [2, 59], 72: [2, 59], 75: [2, 59], 80: [2, 59], 81: [2, 59], 82: [2, 59], 83: [2, 59], 84: [2, 59], 85: [2, 59] }, { 33: [2, 61], 75: [2, 61] }, { 33: [2, 68], 37: 122, 74: 123, 75: [1, 121] }, { 33: [2, 65], 65: [2, 65], 72: [2, 65], 75: [2, 65], 80: [2, 65], 81: [2, 65], 82: [2, 65], 83: [2, 65], 84: [2, 65], 85: [2, 65] }, { 33: [2, 67], 75: [2, 67] }, { 23: [1, 124] }, { 23: [2, 51], 65: [2, 51], 72: [2, 51], 80: [2, 51], 81: [2, 51], 82: [2, 51], 83: [2, 51], 84: [2, 51], 85: [2, 51] }, { 23: [2, 53] }, { 33: [1, 125] }, { 33: [2, 91], 65: [2, 91], 72: [2, 91], 80: [2, 91], 81: [2, 91], 82: [2, 91], 83: [2, 91], 84: [2, 91], 85: [2, 91] }, { 33: [2, 93] }, { 5: [2, 22], 14: [2, 22], 15: [2, 22], 19: [2, 22], 29: [2, 22], 34: [2, 22], 39: [2, 22], 44: [2, 22], 47: [2, 22], 48: [2, 22], 51: [2, 22], 55: [2, 22], 60: [2, 22] }, { 23: [2, 99], 33: [2, 99], 54: [2, 99], 68: [2, 99], 72: [2, 99], 75: [2, 99] }, { 73: [1, 109] }, { 20: 75, 63: 126, 64: 76, 65: [1, 44], 72: [1, 35], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 5: [2, 23], 14: [2, 23], 15: [2, 23], 19: [2, 23], 29: [2, 23], 34: [2, 23], 39: [2, 23], 44: [2, 23], 47: [2, 23], 48: [2, 23], 51: [2, 23], 55: [2, 23], 60: [2, 23] }, { 47: [2, 19] }, { 47: [2, 77] }, { 20: 75, 33: [2, 72], 41: 127, 63: 128, 64: 76, 65: [1, 44], 69: 129, 70: 77, 71: 78, 72: [1, 79], 75: [2, 72], 78: 26, 79: 27, 80: [1, 28], 81: [1, 29], 82: [1, 30], 83: [1, 31], 84: [1, 32], 85: [1, 34], 86: 33 }, { 5: [2, 24], 14: [2, 24], 15: [2, 24], 19: [2, 24], 29: [2, 24], 34: [2, 24], 39: [2, 24], 44: [2, 24], 47: [2, 24], 48: [2, 24], 51: [2, 24], 55: [2, 24], 60: [2, 24] }, { 68: [1, 130] }, { 65: [2, 95], 68: [2, 95], 72: [2, 95], 80: [2, 95], 81: [2, 95], 82: [2, 95], 83: [2, 95], 84: [2, 95], 85: [2, 95] }, { 68: [2, 97] }, { 5: [2, 21], 14: [2, 21], 15: [2, 21], 19: [2, 21], 29: [2, 21], 34: [2, 21], 39: [2, 21], 44: [2, 21], 47: [2, 21], 48: [2, 21], 51: [2, 21], 55: [2, 21], 60: [2, 21] }, { 33: [1, 131] }, { 33: [2, 63] }, { 72: [1, 133], 76: 132 }, { 33: [1, 134] }, { 33: [2, 69] }, { 15: [2, 12] }, { 14: [2, 26], 15: [2, 26], 19: [2, 26], 29: [2, 26], 34: [2, 26], 47: [2, 26], 48: [2, 26], 51: [2, 26], 55: [2, 26], 60: [2, 26] }, { 23: [2, 31], 33: [2, 31], 54: [2, 31], 68: [2, 31], 72: [2, 31], 75: [2, 31] }, { 33: [2, 74], 42: 135, 74: 136, 75: [1, 121] }, { 33: [2, 71], 65: [2, 71], 72: [2, 71], 75: [2, 71], 80: [2, 71], 81: [2, 71], 82: [2, 71], 83: [2, 71], 84: [2, 71], 85: [2, 71] }, { 33: [2, 73], 75: [2, 73] }, { 23: [2, 29], 33: [2, 29], 54: [2, 29], 65: [2, 29], 68: [2, 29], 72: [2, 29], 75: [2, 29], 80: [2, 29], 81: [2, 29], 82: [2, 29], 83: [2, 29], 84: [2, 29], 85: [2, 29] }, { 14: [2, 15], 15: [2, 15], 19: [2, 15], 29: [2, 15], 34: [2, 15], 39: [2, 15], 44: [2, 15], 47: [2, 15], 48: [2, 15], 51: [2, 15], 55: [2, 15], 60: [2, 15] }, { 72: [1, 138], 77: [1, 137] }, { 72: [2, 100], 77: [2, 100] }, { 14: [2, 16], 15: [2, 16], 19: [2, 16], 29: [2, 16], 34: [2, 16], 44: [2, 16], 47: [2, 16], 48: [2, 16], 51: [2, 16], 55: [2, 16], 60: [2, 16] }, { 33: [1, 139] }, { 33: [2, 75] }, { 33: [2, 32] }, { 72: [2, 101], 77: [2, 101] }, { 14: [2, 17], 15: [2, 17], 19: [2, 17], 29: [2, 17], 34: [2, 17], 39: [2, 17], 44: [2, 17], 47: [2, 17], 48: [2, 17], 51: [2, 17], 55: [2, 17], 60: [2, 17] }],
-	        defaultActions: { 4: [2, 1], 55: [2, 55], 57: [2, 20], 61: [2, 57], 74: [2, 81], 83: [2, 85], 87: [2, 18], 91: [2, 89], 102: [2, 53], 105: [2, 93], 111: [2, 19], 112: [2, 77], 117: [2, 97], 120: [2, 63], 123: [2, 69], 124: [2, 12], 136: [2, 75], 137: [2, 32] },
-	        parseError: function parseError(str, hash) {
-	            throw new Error(str);
-	        },
-	        parse: function parse(input) {
-	            var self = this,
-	                stack = [0],
-	                vstack = [null],
-	                lstack = [],
-	                table = this.table,
-	                yytext = "",
-	                yylineno = 0,
-	                yyleng = 0,
-	                recovering = 0,
-	                TERROR = 2,
-	                EOF = 1;
-	            this.lexer.setInput(input);
-	            this.lexer.yy = this.yy;
-	            this.yy.lexer = this.lexer;
-	            this.yy.parser = this;
-	            if (typeof this.lexer.yylloc == "undefined") this.lexer.yylloc = {};
-	            var yyloc = this.lexer.yylloc;
-	            lstack.push(yyloc);
-	            var ranges = this.lexer.options && this.lexer.options.ranges;
-	            if (typeof this.yy.parseError === "function") this.parseError = this.yy.parseError;
-	            function lex() {
-	                var token;
-	                token = self.lexer.lex() || 1;
-	                if (typeof token !== "number") {
-	                    token = self.symbols_[token] || token;
-	                }
-	                return token;
-	            }
-	            var symbol,
-	                preErrorSymbol,
-	                state,
-	                action,
-	                a,
-	                r,
-	                yyval = {},
-	                p,
-	                len,
-	                newState,
-	                expected;
-	            while (true) {
-	                state = stack[stack.length - 1];
-	                if (this.defaultActions[state]) {
-	                    action = this.defaultActions[state];
-	                } else {
-	                    if (symbol === null || typeof symbol == "undefined") {
-	                        symbol = lex();
-	                    }
-	                    action = table[state] && table[state][symbol];
-	                }
-	                if (typeof action === "undefined" || !action.length || !action[0]) {
-	                    var errStr = "";
-	                    if (!recovering) {
-	                        expected = [];
-	                        for (p in table[state]) if (this.terminals_[p] && p > 2) {
-	                            expected.push("'" + this.terminals_[p] + "'");
-	                        }
-	                        if (this.lexer.showPosition) {
-	                            errStr = "Parse error on line " + (yylineno + 1) + ":\n" + this.lexer.showPosition() + "\nExpecting " + expected.join(", ") + ", got '" + (this.terminals_[symbol] || symbol) + "'";
-	                        } else {
-	                            errStr = "Parse error on line " + (yylineno + 1) + ": Unexpected " + (symbol == 1 ? "end of input" : "'" + (this.terminals_[symbol] || symbol) + "'");
-	                        }
-	                        this.parseError(errStr, { text: this.lexer.match, token: this.terminals_[symbol] || symbol, line: this.lexer.yylineno, loc: yyloc, expected: expected });
-	                    }
-	                }
-	                if (action[0] instanceof Array && action.length > 1) {
-	                    throw new Error("Parse Error: multiple actions possible at state: " + state + ", token: " + symbol);
-	                }
-	                switch (action[0]) {
-	                    case 1:
-	                        stack.push(symbol);
-	                        vstack.push(this.lexer.yytext);
-	                        lstack.push(this.lexer.yylloc);
-	                        stack.push(action[1]);
-	                        symbol = null;
-	                        if (!preErrorSymbol) {
-	                            yyleng = this.lexer.yyleng;
-	                            yytext = this.lexer.yytext;
-	                            yylineno = this.lexer.yylineno;
-	                            yyloc = this.lexer.yylloc;
-	                            if (recovering > 0) recovering--;
-	                        } else {
-	                            symbol = preErrorSymbol;
-	                            preErrorSymbol = null;
-	                        }
-	                        break;
-	                    case 2:
-	                        len = this.productions_[action[1]][1];
-	                        yyval.$ = vstack[vstack.length - len];
-	                        yyval._$ = { first_line: lstack[lstack.length - (len || 1)].first_line, last_line: lstack[lstack.length - 1].last_line, first_column: lstack[lstack.length - (len || 1)].first_column, last_column: lstack[lstack.length - 1].last_column };
-	                        if (ranges) {
-	                            yyval._$.range = [lstack[lstack.length - (len || 1)].range[0], lstack[lstack.length - 1].range[1]];
-	                        }
-	                        r = this.performAction.call(yyval, yytext, yyleng, yylineno, this.yy, action[1], vstack, lstack);
-	                        if (typeof r !== "undefined") {
-	                            return r;
-	                        }
-	                        if (len) {
-	                            stack = stack.slice(0, -1 * len * 2);
-	                            vstack = vstack.slice(0, -1 * len);
-	                            lstack = lstack.slice(0, -1 * len);
-	                        }
-	                        stack.push(this.productions_[action[1]][0]);
-	                        vstack.push(yyval.$);
-	                        lstack.push(yyval._$);
-	                        newState = table[stack[stack.length - 2]][stack[stack.length - 1]];
-	                        stack.push(newState);
-	                        break;
-	                    case 3:
-	                        return true;
-	                }
-	            }
-	            return true;
-	        }
-	    };
-	    /* Jison generated lexer */
-	    var lexer = (function () {
-	        var lexer = { EOF: 1,
-	            parseError: function parseError(str, hash) {
-	                if (this.yy.parser) {
-	                    this.yy.parser.parseError(str, hash);
-	                } else {
-	                    throw new Error(str);
-	                }
-	            },
-	            setInput: function setInput(input) {
-	                this._input = input;
-	                this._more = this._less = this.done = false;
-	                this.yylineno = this.yyleng = 0;
-	                this.yytext = this.matched = this.match = '';
-	                this.conditionStack = ['INITIAL'];
-	                this.yylloc = { first_line: 1, first_column: 0, last_line: 1, last_column: 0 };
-	                if (this.options.ranges) this.yylloc.range = [0, 0];
-	                this.offset = 0;
-	                return this;
-	            },
-	            input: function input() {
-	                var ch = this._input[0];
-	                this.yytext += ch;
-	                this.yyleng++;
-	                this.offset++;
-	                this.match += ch;
-	                this.matched += ch;
-	                var lines = ch.match(/(?:\r\n?|\n).*/g);
-	                if (lines) {
-	                    this.yylineno++;
-	                    this.yylloc.last_line++;
-	                } else {
-	                    this.yylloc.last_column++;
-	                }
-	                if (this.options.ranges) this.yylloc.range[1]++;
-
-	                this._input = this._input.slice(1);
-	                return ch;
-	            },
-	            unput: function unput(ch) {
-	                var len = ch.length;
-	                var lines = ch.split(/(?:\r\n?|\n)/g);
-
-	                this._input = ch + this._input;
-	                this.yytext = this.yytext.substr(0, this.yytext.length - len - 1);
-	                //this.yyleng -= len;
-	                this.offset -= len;
-	                var oldLines = this.match.split(/(?:\r\n?|\n)/g);
-	                this.match = this.match.substr(0, this.match.length - 1);
-	                this.matched = this.matched.substr(0, this.matched.length - 1);
-
-	                if (lines.length - 1) this.yylineno -= lines.length - 1;
-	                var r = this.yylloc.range;
-
-	                this.yylloc = { first_line: this.yylloc.first_line,
-	                    last_line: this.yylineno + 1,
-	                    first_column: this.yylloc.first_column,
-	                    last_column: lines ? (lines.length === oldLines.length ? this.yylloc.first_column : 0) + oldLines[oldLines.length - lines.length].length - lines[0].length : this.yylloc.first_column - len
-	                };
-
-	                if (this.options.ranges) {
-	                    this.yylloc.range = [r[0], r[0] + this.yyleng - len];
-	                }
-	                return this;
-	            },
-	            more: function more() {
-	                this._more = true;
-	                return this;
-	            },
-	            less: function less(n) {
-	                this.unput(this.match.slice(n));
-	            },
-	            pastInput: function pastInput() {
-	                var past = this.matched.substr(0, this.matched.length - this.match.length);
-	                return (past.length > 20 ? '...' : '') + past.substr(-20).replace(/\n/g, "");
-	            },
-	            upcomingInput: function upcomingInput() {
-	                var next = this.match;
-	                if (next.length < 20) {
-	                    next += this._input.substr(0, 20 - next.length);
-	                }
-	                return (next.substr(0, 20) + (next.length > 20 ? '...' : '')).replace(/\n/g, "");
-	            },
-	            showPosition: function showPosition() {
-	                var pre = this.pastInput();
-	                var c = new Array(pre.length + 1).join("-");
-	                return pre + this.upcomingInput() + "\n" + c + "^";
-	            },
-	            next: function next() {
-	                if (this.done) {
-	                    return this.EOF;
-	                }
-	                if (!this._input) this.done = true;
-
-	                var token, match, tempMatch, index, col, lines;
-	                if (!this._more) {
-	                    this.yytext = '';
-	                    this.match = '';
-	                }
-	                var rules = this._currentRules();
-	                for (var i = 0; i < rules.length; i++) {
-	                    tempMatch = this._input.match(this.rules[rules[i]]);
-	                    if (tempMatch && (!match || tempMatch[0].length > match[0].length)) {
-	                        match = tempMatch;
-	                        index = i;
-	                        if (!this.options.flex) break;
-	                    }
-	                }
-	                if (match) {
-	                    lines = match[0].match(/(?:\r\n?|\n).*/g);
-	                    if (lines) this.yylineno += lines.length;
-	                    this.yylloc = { first_line: this.yylloc.last_line,
-	                        last_line: this.yylineno + 1,
-	                        first_column: this.yylloc.last_column,
-	                        last_column: lines ? lines[lines.length - 1].length - lines[lines.length - 1].match(/\r?\n?/)[0].length : this.yylloc.last_column + match[0].length };
-	                    this.yytext += match[0];
-	                    this.match += match[0];
-	                    this.matches = match;
-	                    this.yyleng = this.yytext.length;
-	                    if (this.options.ranges) {
-	                        this.yylloc.range = [this.offset, this.offset += this.yyleng];
-	                    }
-	                    this._more = false;
-	                    this._input = this._input.slice(match[0].length);
-	                    this.matched += match[0];
-	                    token = this.performAction.call(this, this.yy, this, rules[index], this.conditionStack[this.conditionStack.length - 1]);
-	                    if (this.done && this._input) this.done = false;
-	                    if (token) return token;else return;
-	                }
-	                if (this._input === "") {
-	                    return this.EOF;
-	                } else {
-	                    return this.parseError('Lexical error on line ' + (this.yylineno + 1) + '. Unrecognized text.\n' + this.showPosition(), { text: "", token: null, line: this.yylineno });
-	                }
-	            },
-	            lex: function lex() {
-	                var r = this.next();
-	                if (typeof r !== 'undefined') {
-	                    return r;
-	                } else {
-	                    return this.lex();
-	                }
-	            },
-	            begin: function begin(condition) {
-	                this.conditionStack.push(condition);
-	            },
-	            popState: function popState() {
-	                return this.conditionStack.pop();
-	            },
-	            _currentRules: function _currentRules() {
-	                return this.conditions[this.conditionStack[this.conditionStack.length - 1]].rules;
-	            },
-	            topState: function topState() {
-	                return this.conditionStack[this.conditionStack.length - 2];
-	            },
-	            pushState: function begin(condition) {
-	                this.begin(condition);
-	            } };
-	        lexer.options = {};
-	        lexer.performAction = function anonymous(yy, yy_, $avoiding_name_collisions, YY_START
-	        /**/) {
-
-	            function strip(start, end) {
-	                return yy_.yytext = yy_.yytext.substr(start, yy_.yyleng - end);
-	            }
-
-	            var YYSTATE = YY_START;
-	            switch ($avoiding_name_collisions) {
-	                case 0:
-	                    if (yy_.yytext.slice(-2) === "\\\\") {
-	                        strip(0, 1);
-	                        this.begin("mu");
-	                    } else if (yy_.yytext.slice(-1) === "\\") {
-	                        strip(0, 1);
-	                        this.begin("emu");
-	                    } else {
-	                        this.begin("mu");
-	                    }
-	                    if (yy_.yytext) return 15;
-
-	                    break;
-	                case 1:
-	                    return 15;
-	                    break;
-	                case 2:
-	                    this.popState();
-	                    return 15;
-
-	                    break;
-	                case 3:
-	                    this.begin('raw');return 15;
-	                    break;
-	                case 4:
-	                    this.popState();
-	                    // Should be using `this.topState()` below, but it currently
-	                    // returns the second top instead of the first top. Opened an
-	                    // issue about it at https://github.com/zaach/jison/issues/291
-	                    if (this.conditionStack[this.conditionStack.length - 1] === 'raw') {
-	                        return 15;
-	                    } else {
-	                        yy_.yytext = yy_.yytext.substr(5, yy_.yyleng - 9);
-	                        return 'END_RAW_BLOCK';
-	                    }
-
-	                    break;
-	                case 5:
-	                    return 15;
-	                    break;
-	                case 6:
-	                    this.popState();
-	                    return 14;
-
-	                    break;
-	                case 7:
-	                    return 65;
-	                    break;
-	                case 8:
-	                    return 68;
-	                    break;
-	                case 9:
-	                    return 19;
-	                    break;
-	                case 10:
-	                    this.popState();
-	                    this.begin('raw');
-	                    return 23;
-
-	                    break;
-	                case 11:
-	                    return 55;
-	                    break;
-	                case 12:
-	                    return 60;
-	                    break;
-	                case 13:
-	                    return 29;
-	                    break;
-	                case 14:
-	                    return 47;
-	                    break;
-	                case 15:
-	                    this.popState();return 44;
-	                    break;
-	                case 16:
-	                    this.popState();return 44;
-	                    break;
-	                case 17:
-	                    return 34;
-	                    break;
-	                case 18:
-	                    return 39;
-	                    break;
-	                case 19:
-	                    return 51;
-	                    break;
-	                case 20:
-	                    return 48;
-	                    break;
-	                case 21:
-	                    this.unput(yy_.yytext);
-	                    this.popState();
-	                    this.begin('com');
-
-	                    break;
-	                case 22:
-	                    this.popState();
-	                    return 14;
-
-	                    break;
-	                case 23:
-	                    return 48;
-	                    break;
-	                case 24:
-	                    return 73;
-	                    break;
-	                case 25:
-	                    return 72;
-	                    break;
-	                case 26:
-	                    return 72;
-	                    break;
-	                case 27:
-	                    return 87;
-	                    break;
-	                case 28:
-	                    // ignore whitespace
-	                    break;
-	                case 29:
-	                    this.popState();return 54;
-	                    break;
-	                case 30:
-	                    this.popState();return 33;
-	                    break;
-	                case 31:
-	                    yy_.yytext = strip(1, 2).replace(/\\"/g, '"');return 80;
-	                    break;
-	                case 32:
-	                    yy_.yytext = strip(1, 2).replace(/\\'/g, "'");return 80;
-	                    break;
-	                case 33:
-	                    return 85;
-	                    break;
-	                case 34:
-	                    return 82;
-	                    break;
-	                case 35:
-	                    return 82;
-	                    break;
-	                case 36:
-	                    return 83;
-	                    break;
-	                case 37:
-	                    return 84;
-	                    break;
-	                case 38:
-	                    return 81;
-	                    break;
-	                case 39:
-	                    return 75;
-	                    break;
-	                case 40:
-	                    return 77;
-	                    break;
-	                case 41:
-	                    return 72;
-	                    break;
-	                case 42:
-	                    yy_.yytext = yy_.yytext.replace(/\\([\\\]])/g, '$1');return 72;
-	                    break;
-	                case 43:
-	                    return 'INVALID';
-	                    break;
-	                case 44:
-	                    return 5;
-	                    break;
-	            }
-	        };
-	        lexer.rules = [/^(?:[^\x00]*?(?=(\{\{)))/, /^(?:[^\x00]+)/, /^(?:[^\x00]{2,}?(?=(\{\{|\\\{\{|\\\\\{\{|$)))/, /^(?:\{\{\{\{(?=[^\/]))/, /^(?:\{\{\{\{\/[^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=[=}\s\/.])\}\}\}\})/, /^(?:[^\x00]*?(?=(\{\{\{\{)))/, /^(?:[\s\S]*?--(~)?\}\})/, /^(?:\()/, /^(?:\))/, /^(?:\{\{\{\{)/, /^(?:\}\}\}\})/, /^(?:\{\{(~)?>)/, /^(?:\{\{(~)?#>)/, /^(?:\{\{(~)?#\*?)/, /^(?:\{\{(~)?\/)/, /^(?:\{\{(~)?\^\s*(~)?\}\})/, /^(?:\{\{(~)?\s*else\s*(~)?\}\})/, /^(?:\{\{(~)?\^)/, /^(?:\{\{(~)?\s*else\b)/, /^(?:\{\{(~)?\{)/, /^(?:\{\{(~)?&)/, /^(?:\{\{(~)?!--)/, /^(?:\{\{(~)?![\s\S]*?\}\})/, /^(?:\{\{(~)?\*?)/, /^(?:=)/, /^(?:\.\.)/, /^(?:\.(?=([=~}\s\/.)|])))/, /^(?:[\/.])/, /^(?:\s+)/, /^(?:\}(~)?\}\})/, /^(?:(~)?\}\})/, /^(?:"(\\["]|[^"])*")/, /^(?:'(\\[']|[^'])*')/, /^(?:@)/, /^(?:true(?=([~}\s)])))/, /^(?:false(?=([~}\s)])))/, /^(?:undefined(?=([~}\s)])))/, /^(?:null(?=([~}\s)])))/, /^(?:-?[0-9]+(?:\.[0-9]+)?(?=([~}\s)])))/, /^(?:as\s+\|)/, /^(?:\|)/, /^(?:([^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=([=~}\s\/.)|]))))/, /^(?:\[(\\\]|[^\]])*\])/, /^(?:.)/, /^(?:$)/];
-	        lexer.conditions = { "mu": { "rules": [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44], "inclusive": false }, "emu": { "rules": [2], "inclusive": false }, "com": { "rules": [6], "inclusive": false }, "raw": { "rules": [3, 4, 5], "inclusive": false }, "INITIAL": { "rules": [0, 1, 44], "inclusive": true } };
-	        return lexer;
-	    })();
-	    parser.lexer = lexer;
-	    function Parser() {
-	        this.yy = {};
-	    }Parser.prototype = parser;parser.Parser = Parser;
-	    return new Parser();
-	})();exports["default"] = handlebars;
-	module.exports = exports["default"];
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-
-	var _visitor = __webpack_require__(39);
-
-	var _visitor2 = _interopRequireDefault(_visitor);
-
-	function WhitespaceControl() {
-	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-	  this.options = options;
-	}
-	WhitespaceControl.prototype = new _visitor2['default']();
-
-	WhitespaceControl.prototype.Program = function (program) {
-	  var doStandalone = !this.options.ignoreStandalone;
-
-	  var isRoot = !this.isRootSeen;
-	  this.isRootSeen = true;
-
-	  var body = program.body;
-	  for (var i = 0, l = body.length; i < l; i++) {
-	    var current = body[i],
-	        strip = this.accept(current);
-
-	    if (!strip) {
-	      continue;
-	    }
-
-	    var _isPrevWhitespace = isPrevWhitespace(body, i, isRoot),
-	        _isNextWhitespace = isNextWhitespace(body, i, isRoot),
-	        openStandalone = strip.openStandalone && _isPrevWhitespace,
-	        closeStandalone = strip.closeStandalone && _isNextWhitespace,
-	        inlineStandalone = strip.inlineStandalone && _isPrevWhitespace && _isNextWhitespace;
-
-	    if (strip.close) {
-	      omitRight(body, i, true);
-	    }
-	    if (strip.open) {
-	      omitLeft(body, i, true);
-	    }
-
-	    if (doStandalone && inlineStandalone) {
-	      omitRight(body, i);
-
-	      if (omitLeft(body, i)) {
-	        // If we are on a standalone node, save the indent info for partials
-	        if (current.type === 'PartialStatement') {
-	          // Pull out the whitespace from the final line
-	          current.indent = /([ \t]+$)/.exec(body[i - 1].original)[1];
-	        }
-	      }
-	    }
-	    if (doStandalone && openStandalone) {
-	      omitRight((current.program || current.inverse).body);
-
-	      // Strip out the previous content node if it's whitespace only
-	      omitLeft(body, i);
-	    }
-	    if (doStandalone && closeStandalone) {
-	      // Always strip the next node
-	      omitRight(body, i);
-
-	      omitLeft((current.inverse || current.program).body);
-	    }
-	  }
-
-	  return program;
-	};
-
-	WhitespaceControl.prototype.BlockStatement = WhitespaceControl.prototype.DecoratorBlock = WhitespaceControl.prototype.PartialBlockStatement = function (block) {
-	  this.accept(block.program);
-	  this.accept(block.inverse);
-
-	  // Find the inverse program that is involed with whitespace stripping.
-	  var program = block.program || block.inverse,
-	      inverse = block.program && block.inverse,
-	      firstInverse = inverse,
-	      lastInverse = inverse;
-
-	  if (inverse && inverse.chained) {
-	    firstInverse = inverse.body[0].program;
-
-	    // Walk the inverse chain to find the last inverse that is actually in the chain.
-	    while (lastInverse.chained) {
-	      lastInverse = lastInverse.body[lastInverse.body.length - 1].program;
-	    }
-	  }
-
-	  var strip = {
-	    open: block.openStrip.open,
-	    close: block.closeStrip.close,
-
-	    // Determine the standalone candiacy. Basically flag our content as being possibly standalone
-	    // so our parent can determine if we actually are standalone
-	    openStandalone: isNextWhitespace(program.body),
-	    closeStandalone: isPrevWhitespace((firstInverse || program).body)
-	  };
-
-	  if (block.openStrip.close) {
-	    omitRight(program.body, null, true);
-	  }
-
-	  if (inverse) {
-	    var inverseStrip = block.inverseStrip;
-
-	    if (inverseStrip.open) {
-	      omitLeft(program.body, null, true);
-	    }
-
-	    if (inverseStrip.close) {
-	      omitRight(firstInverse.body, null, true);
-	    }
-	    if (block.closeStrip.open) {
-	      omitLeft(lastInverse.body, null, true);
-	    }
-
-	    // Find standalone else statments
-	    if (!this.options.ignoreStandalone && isPrevWhitespace(program.body) && isNextWhitespace(firstInverse.body)) {
-	      omitLeft(program.body);
-	      omitRight(firstInverse.body);
-	    }
-	  } else if (block.closeStrip.open) {
-	    omitLeft(program.body, null, true);
-	  }
-
-	  return strip;
-	};
-
-	WhitespaceControl.prototype.Decorator = WhitespaceControl.prototype.MustacheStatement = function (mustache) {
-	  return mustache.strip;
-	};
-
-	WhitespaceControl.prototype.PartialStatement = WhitespaceControl.prototype.CommentStatement = function (node) {
-	  /* istanbul ignore next */
-	  var strip = node.strip || {};
-	  return {
-	    inlineStandalone: true,
-	    open: strip.open,
-	    close: strip.close
-	  };
-	};
-
-	function isPrevWhitespace(body, i, isRoot) {
-	  if (i === undefined) {
-	    i = body.length;
-	  }
-
-	  // Nodes that end with newlines are considered whitespace (but are special
-	  // cased for strip operations)
-	  var prev = body[i - 1],
-	      sibling = body[i - 2];
-	  if (!prev) {
-	    return isRoot;
-	  }
-
-	  if (prev.type === 'ContentStatement') {
-	    return (sibling || !isRoot ? /\r?\n\s*?$/ : /(^|\r?\n)\s*?$/).test(prev.original);
-	  }
-	}
-	function isNextWhitespace(body, i, isRoot) {
-	  if (i === undefined) {
-	    i = -1;
-	  }
-
-	  var next = body[i + 1],
-	      sibling = body[i + 2];
-	  if (!next) {
-	    return isRoot;
-	  }
-
-	  if (next.type === 'ContentStatement') {
-	    return (sibling || !isRoot ? /^\s*?\r?\n/ : /^\s*?(\r?\n|$)/).test(next.original);
-	  }
-	}
-
-	// Marks the node to the right of the position as omitted.
-	// I.e. {{foo}}' ' will mark the ' ' node as omitted.
-	//
-	// If i is undefined, then the first child will be marked as such.
-	//
-	// If mulitple is truthy then all whitespace will be stripped out until non-whitespace
-	// content is met.
-	function omitRight(body, i, multiple) {
-	  var current = body[i == null ? 0 : i + 1];
-	  if (!current || current.type !== 'ContentStatement' || !multiple && current.rightStripped) {
-	    return;
-	  }
-
-	  var original = current.value;
-	  current.value = current.value.replace(multiple ? /^\s+/ : /^[ \t]*\r?\n?/, '');
-	  current.rightStripped = current.value !== original;
-	}
-
-	// Marks the node to the left of the position as omitted.
-	// I.e. ' '{{foo}} will mark the ' ' node as omitted.
-	//
-	// If i is undefined then the last child will be marked as such.
-	//
-	// If mulitple is truthy then all whitespace will be stripped out until non-whitespace
-	// content is met.
-	function omitLeft(body, i, multiple) {
-	  var current = body[i == null ? body.length - 1 : i - 1];
-	  if (!current || current.type !== 'ContentStatement' || !multiple && current.leftStripped) {
-	    return;
-	  }
-
-	  // We omit the last node if it's whitespace only and not preceeded by a non-content node.
-	  var original = current.value;
-	  current.value = current.value.replace(multiple ? /\s+$/ : /[ \t]+$/, '');
-	  current.leftStripped = current.value !== original;
-	  return current.leftStripped;
-	}
-
-	exports['default'] = WhitespaceControl;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	function Visitor() {
-	  this.parents = [];
-	}
-
-	Visitor.prototype = {
-	  constructor: Visitor,
-	  mutating: false,
-
-	  // Visits a given value. If mutating, will replace the value if necessary.
-	  acceptKey: function acceptKey(node, name) {
-	    var value = this.accept(node[name]);
-	    if (this.mutating) {
-	      // Hacky sanity check: This may have a few false positives for type for the helper
-	      // methods but will generally do the right thing without a lot of overhead.
-	      if (value && !Visitor.prototype[value.type]) {
-	        throw new _exception2['default']('Unexpected node type "' + value.type + '" found when accepting ' + name + ' on ' + node.type);
-	      }
-	      node[name] = value;
-	    }
-	  },
-
-	  // Performs an accept operation with added sanity check to ensure
-	  // required keys are not removed.
-	  acceptRequired: function acceptRequired(node, name) {
-	    this.acceptKey(node, name);
-
-	    if (!node[name]) {
-	      throw new _exception2['default'](node.type + ' requires ' + name);
-	    }
-	  },
-
-	  // Traverses a given array. If mutating, empty respnses will be removed
-	  // for child elements.
-	  acceptArray: function acceptArray(array) {
-	    for (var i = 0, l = array.length; i < l; i++) {
-	      this.acceptKey(array, i);
-
-	      if (!array[i]) {
-	        array.splice(i, 1);
-	        i--;
-	        l--;
-	      }
-	    }
-	  },
-
-	  accept: function accept(object) {
-	    if (!object) {
-	      return;
-	    }
-
-	    /* istanbul ignore next: Sanity code */
-	    if (!this[object.type]) {
-	      throw new _exception2['default']('Unknown type: ' + object.type, object);
-	    }
-
-	    if (this.current) {
-	      this.parents.unshift(this.current);
-	    }
-	    this.current = object;
-
-	    var ret = this[object.type](object);
-
-	    this.current = this.parents.shift();
-
-	    if (!this.mutating || ret) {
-	      return ret;
-	    } else if (ret !== false) {
-	      return object;
-	    }
-	  },
-
-	  Program: function Program(program) {
-	    this.acceptArray(program.body);
-	  },
-
-	  MustacheStatement: visitSubExpression,
-	  Decorator: visitSubExpression,
-
-	  BlockStatement: visitBlock,
-	  DecoratorBlock: visitBlock,
-
-	  PartialStatement: visitPartial,
-	  PartialBlockStatement: function PartialBlockStatement(partial) {
-	    visitPartial.call(this, partial);
-
-	    this.acceptKey(partial, 'program');
-	  },
-
-	  ContentStatement: function ContentStatement() /* content */{},
-	  CommentStatement: function CommentStatement() /* comment */{},
-
-	  SubExpression: visitSubExpression,
-
-	  PathExpression: function PathExpression() /* path */{},
-
-	  StringLiteral: function StringLiteral() /* string */{},
-	  NumberLiteral: function NumberLiteral() /* number */{},
-	  BooleanLiteral: function BooleanLiteral() /* bool */{},
-	  UndefinedLiteral: function UndefinedLiteral() /* literal */{},
-	  NullLiteral: function NullLiteral() /* literal */{},
-
-	  Hash: function Hash(hash) {
-	    this.acceptArray(hash.pairs);
-	  },
-	  HashPair: function HashPair(pair) {
-	    this.acceptRequired(pair, 'value');
-	  }
-	};
-
-	function visitSubExpression(mustache) {
-	  this.acceptRequired(mustache, 'path');
-	  this.acceptArray(mustache.params);
-	  this.acceptKey(mustache, 'hash');
-	}
-	function visitBlock(block) {
-	  visitSubExpression.call(this, block);
-
-	  this.acceptKey(block, 'program');
-	  this.acceptKey(block, 'inverse');
-	}
-	function visitPartial(partial) {
-	  this.acceptRequired(partial, 'name');
-	  this.acceptArray(partial.params);
-	  this.acceptKey(partial, 'hash');
-	}
-
-	exports['default'] = Visitor;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-	exports.SourceLocation = SourceLocation;
-	exports.id = id;
-	exports.stripFlags = stripFlags;
-	exports.stripComment = stripComment;
-	exports.preparePath = preparePath;
-	exports.prepareMustache = prepareMustache;
-	exports.prepareRawBlock = prepareRawBlock;
-	exports.prepareBlock = prepareBlock;
-	exports.prepareProgram = prepareProgram;
-	exports.preparePartialBlock = preparePartialBlock;
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	function validateClose(open, close) {
-	  close = close.path ? close.path.original : close;
-
-	  if (open.path.original !== close) {
-	    var errorNode = { loc: open.path.loc };
-
-	    throw new _exception2['default'](open.path.original + " doesn't match " + close, errorNode);
-	  }
-	}
-
-	function SourceLocation(source, locInfo) {
-	  this.source = source;
-	  this.start = {
-	    line: locInfo.first_line,
-	    column: locInfo.first_column
-	  };
-	  this.end = {
-	    line: locInfo.last_line,
-	    column: locInfo.last_column
-	  };
-	}
-
-	function id(token) {
-	  if (/^\[.*\]$/.test(token)) {
-	    return token.substr(1, token.length - 2);
-	  } else {
-	    return token;
-	  }
-	}
-
-	function stripFlags(open, close) {
-	  return {
-	    open: open.charAt(2) === '~',
-	    close: close.charAt(close.length - 3) === '~'
-	  };
-	}
-
-	function stripComment(comment) {
-	  return comment.replace(/^\{\{~?\!-?-?/, '').replace(/-?-?~?\}\}$/, '');
-	}
-
-	function preparePath(data, parts, loc) {
-	  loc = this.locInfo(loc);
-
-	  var original = data ? '@' : '',
-	      dig = [],
-	      depth = 0,
-	      depthString = '';
-
-	  for (var i = 0, l = parts.length; i < l; i++) {
-	    var part = parts[i].part,
-
-	    // If we have [] syntax then we do not treat path references as operators,
-	    // i.e. foo.[this] resolves to approximately context.foo['this']
-	    isLiteral = parts[i].original !== part;
-	    original += (parts[i].separator || '') + part;
-
-	    if (!isLiteral && (part === '..' || part === '.' || part === 'this')) {
-	      if (dig.length > 0) {
-	        throw new _exception2['default']('Invalid path: ' + original, { loc: loc });
-	      } else if (part === '..') {
-	        depth++;
-	        depthString += '../';
-	      }
-	    } else {
-	      dig.push(part);
-	    }
-	  }
-
-	  return {
-	    type: 'PathExpression',
-	    data: data,
-	    depth: depth,
-	    parts: dig,
-	    original: original,
-	    loc: loc
-	  };
-	}
-
-	function prepareMustache(path, params, hash, open, strip, locInfo) {
-	  // Must use charAt to support IE pre-10
-	  var escapeFlag = open.charAt(3) || open.charAt(2),
-	      escaped = escapeFlag !== '{' && escapeFlag !== '&';
-
-	  var decorator = /\*/.test(open);
-	  return {
-	    type: decorator ? 'Decorator' : 'MustacheStatement',
-	    path: path,
-	    params: params,
-	    hash: hash,
-	    escaped: escaped,
-	    strip: strip,
-	    loc: this.locInfo(locInfo)
-	  };
-	}
-
-	function prepareRawBlock(openRawBlock, contents, close, locInfo) {
-	  validateClose(openRawBlock, close);
-
-	  locInfo = this.locInfo(locInfo);
-	  var program = {
-	    type: 'Program',
-	    body: contents,
-	    strip: {},
-	    loc: locInfo
-	  };
-
-	  return {
-	    type: 'BlockStatement',
-	    path: openRawBlock.path,
-	    params: openRawBlock.params,
-	    hash: openRawBlock.hash,
-	    program: program,
-	    openStrip: {},
-	    inverseStrip: {},
-	    closeStrip: {},
-	    loc: locInfo
-	  };
-	}
-
-	function prepareBlock(openBlock, program, inverseAndProgram, close, inverted, locInfo) {
-	  if (close && close.path) {
-	    validateClose(openBlock, close);
-	  }
-
-	  var decorator = /\*/.test(openBlock.open);
-
-	  program.blockParams = openBlock.blockParams;
-
-	  var inverse = undefined,
-	      inverseStrip = undefined;
-
-	  if (inverseAndProgram) {
-	    if (decorator) {
-	      throw new _exception2['default']('Unexpected inverse block on decorator', inverseAndProgram);
-	    }
-
-	    if (inverseAndProgram.chain) {
-	      inverseAndProgram.program.body[0].closeStrip = close.strip;
-	    }
-
-	    inverseStrip = inverseAndProgram.strip;
-	    inverse = inverseAndProgram.program;
-	  }
-
-	  if (inverted) {
-	    inverted = inverse;
-	    inverse = program;
-	    program = inverted;
-	  }
-
-	  return {
-	    type: decorator ? 'DecoratorBlock' : 'BlockStatement',
-	    path: openBlock.path,
-	    params: openBlock.params,
-	    hash: openBlock.hash,
-	    program: program,
-	    inverse: inverse,
-	    openStrip: openBlock.strip,
-	    inverseStrip: inverseStrip,
-	    closeStrip: close && close.strip,
-	    loc: this.locInfo(locInfo)
-	  };
-	}
-
-	function prepareProgram(statements, loc) {
-	  if (!loc && statements.length) {
-	    var firstLoc = statements[0].loc,
-	        lastLoc = statements[statements.length - 1].loc;
-
-	    /* istanbul ignore else */
-	    if (firstLoc && lastLoc) {
-	      loc = {
-	        source: firstLoc.source,
-	        start: {
-	          line: firstLoc.start.line,
-	          column: firstLoc.start.column
-	        },
-	        end: {
-	          line: lastLoc.end.line,
-	          column: lastLoc.end.column
-	        }
-	      };
-	    }
-	  }
-
-	  return {
-	    type: 'Program',
-	    body: statements,
-	    strip: {},
-	    loc: loc
-	  };
-	}
-
-	function preparePartialBlock(open, program, close, locInfo) {
-	  validateClose(open, close);
-
-	  return {
-	    type: 'PartialBlockStatement',
-	    name: open.path,
-	    params: open.params,
-	    hash: open.hash,
-	    program: program,
-	    openStrip: open.strip,
-	    closeStrip: close && close.strip,
-	    loc: this.locInfo(locInfo)
-	  };
-	}
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* eslint-disable new-cap */
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-	exports.Compiler = Compiler;
-	exports.precompile = precompile;
-	exports.compile = compile;
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	var _utils = __webpack_require__(5);
-
-	var _ast = __webpack_require__(35);
-
-	var _ast2 = _interopRequireDefault(_ast);
-
-	var slice = [].slice;
-
-	function Compiler() {}
-
-	// the foundHelper register will disambiguate helper lookup from finding a
-	// function in a context. This is necessary for mustache compatibility, which
-	// requires that context functions in blocks are evaluated by blockHelperMissing,
-	// and then proceed as if the resulting value was provided to blockHelperMissing.
-
-	Compiler.prototype = {
-	  compiler: Compiler,
-
-	  equals: function equals(other) {
-	    var len = this.opcodes.length;
-	    if (other.opcodes.length !== len) {
-	      return false;
-	    }
-
-	    for (var i = 0; i < len; i++) {
-	      var opcode = this.opcodes[i],
-	          otherOpcode = other.opcodes[i];
-	      if (opcode.opcode !== otherOpcode.opcode || !argEquals(opcode.args, otherOpcode.args)) {
-	        return false;
-	      }
-	    }
-
-	    // We know that length is the same between the two arrays because they are directly tied
-	    // to the opcode behavior above.
-	    len = this.children.length;
-	    for (var i = 0; i < len; i++) {
-	      if (!this.children[i].equals(other.children[i])) {
-	        return false;
-	      }
-	    }
-
-	    return true;
-	  },
-
-	  guid: 0,
-
-	  compile: function compile(program, options) {
-	    this.sourceNode = [];
-	    this.opcodes = [];
-	    this.children = [];
-	    this.options = options;
-	    this.stringParams = options.stringParams;
-	    this.trackIds = options.trackIds;
-
-	    options.blockParams = options.blockParams || [];
-
-	    // These changes will propagate to the other compiler components
-	    var knownHelpers = options.knownHelpers;
-	    options.knownHelpers = {
-	      'helperMissing': true,
-	      'blockHelperMissing': true,
-	      'each': true,
-	      'if': true,
-	      'unless': true,
-	      'with': true,
-	      'log': true,
-	      'lookup': true
-	    };
-	    if (knownHelpers) {
-	      for (var _name in knownHelpers) {
-	        /* istanbul ignore else */
-	        if (_name in knownHelpers) {
-	          this.options.knownHelpers[_name] = knownHelpers[_name];
-	        }
-	      }
-	    }
-
-	    return this.accept(program);
-	  },
-
-	  compileProgram: function compileProgram(program) {
-	    var childCompiler = new this.compiler(),
-	        // eslint-disable-line new-cap
-	    result = childCompiler.compile(program, this.options),
-	        guid = this.guid++;
-
-	    this.usePartial = this.usePartial || result.usePartial;
-
-	    this.children[guid] = result;
-	    this.useDepths = this.useDepths || result.useDepths;
-
-	    return guid;
-	  },
-
-	  accept: function accept(node) {
-	    /* istanbul ignore next: Sanity code */
-	    if (!this[node.type]) {
-	      throw new _exception2['default']('Unknown type: ' + node.type, node);
-	    }
-
-	    this.sourceNode.unshift(node);
-	    var ret = this[node.type](node);
-	    this.sourceNode.shift();
-	    return ret;
-	  },
-
-	  Program: function Program(program) {
-	    this.options.blockParams.unshift(program.blockParams);
-
-	    var body = program.body,
-	        bodyLength = body.length;
-	    for (var i = 0; i < bodyLength; i++) {
-	      this.accept(body[i]);
-	    }
-
-	    this.options.blockParams.shift();
-
-	    this.isSimple = bodyLength === 1;
-	    this.blockParams = program.blockParams ? program.blockParams.length : 0;
-
-	    return this;
-	  },
-
-	  BlockStatement: function BlockStatement(block) {
-	    transformLiteralToPath(block);
-
-	    var program = block.program,
-	        inverse = block.inverse;
-
-	    program = program && this.compileProgram(program);
-	    inverse = inverse && this.compileProgram(inverse);
-
-	    var type = this.classifySexpr(block);
-
-	    if (type === 'helper') {
-	      this.helperSexpr(block, program, inverse);
-	    } else if (type === 'simple') {
-	      this.simpleSexpr(block);
-
-	      // now that the simple mustache is resolved, we need to
-	      // evaluate it by executing `blockHelperMissing`
-	      this.opcode('pushProgram', program);
-	      this.opcode('pushProgram', inverse);
-	      this.opcode('emptyHash');
-	      this.opcode('blockValue', block.path.original);
-	    } else {
-	      this.ambiguousSexpr(block, program, inverse);
-
-	      // now that the simple mustache is resolved, we need to
-	      // evaluate it by executing `blockHelperMissing`
-	      this.opcode('pushProgram', program);
-	      this.opcode('pushProgram', inverse);
-	      this.opcode('emptyHash');
-	      this.opcode('ambiguousBlockValue');
-	    }
-
-	    this.opcode('append');
-	  },
-
-	  DecoratorBlock: function DecoratorBlock(decorator) {
-	    var program = decorator.program && this.compileProgram(decorator.program);
-	    var params = this.setupFullMustacheParams(decorator, program, undefined),
-	        path = decorator.path;
-
-	    this.useDecorators = true;
-	    this.opcode('registerDecorator', params.length, path.original);
-	  },
-
-	  PartialStatement: function PartialStatement(partial) {
-	    this.usePartial = true;
-
-	    var program = partial.program;
-	    if (program) {
-	      program = this.compileProgram(partial.program);
-	    }
-
-	    var params = partial.params;
-	    if (params.length > 1) {
-	      throw new _exception2['default']('Unsupported number of partial arguments: ' + params.length, partial);
-	    } else if (!params.length) {
-	      if (this.options.explicitPartialContext) {
-	        this.opcode('pushLiteral', 'undefined');
-	      } else {
-	        params.push({ type: 'PathExpression', parts: [], depth: 0 });
-	      }
-	    }
-
-	    var partialName = partial.name.original,
-	        isDynamic = partial.name.type === 'SubExpression';
-	    if (isDynamic) {
-	      this.accept(partial.name);
-	    }
-
-	    this.setupFullMustacheParams(partial, program, undefined, true);
-
-	    var indent = partial.indent || '';
-	    if (this.options.preventIndent && indent) {
-	      this.opcode('appendContent', indent);
-	      indent = '';
-	    }
-
-	    this.opcode('invokePartial', isDynamic, partialName, indent);
-	    this.opcode('append');
-	  },
-	  PartialBlockStatement: function PartialBlockStatement(partialBlock) {
-	    this.PartialStatement(partialBlock);
-	  },
-
-	  MustacheStatement: function MustacheStatement(mustache) {
-	    this.SubExpression(mustache);
-
-	    if (mustache.escaped && !this.options.noEscape) {
-	      this.opcode('appendEscaped');
-	    } else {
-	      this.opcode('append');
-	    }
-	  },
-	  Decorator: function Decorator(decorator) {
-	    this.DecoratorBlock(decorator);
-	  },
-
-	  ContentStatement: function ContentStatement(content) {
-	    if (content.value) {
-	      this.opcode('appendContent', content.value);
-	    }
-	  },
-
-	  CommentStatement: function CommentStatement() {},
-
-	  SubExpression: function SubExpression(sexpr) {
-	    transformLiteralToPath(sexpr);
-	    var type = this.classifySexpr(sexpr);
-
-	    if (type === 'simple') {
-	      this.simpleSexpr(sexpr);
-	    } else if (type === 'helper') {
-	      this.helperSexpr(sexpr);
-	    } else {
-	      this.ambiguousSexpr(sexpr);
-	    }
-	  },
-	  ambiguousSexpr: function ambiguousSexpr(sexpr, program, inverse) {
-	    var path = sexpr.path,
-	        name = path.parts[0],
-	        isBlock = program != null || inverse != null;
-
-	    this.opcode('getContext', path.depth);
-
-	    this.opcode('pushProgram', program);
-	    this.opcode('pushProgram', inverse);
-
-	    path.strict = true;
-	    this.accept(path);
-
-	    this.opcode('invokeAmbiguous', name, isBlock);
-	  },
-
-	  simpleSexpr: function simpleSexpr(sexpr) {
-	    var path = sexpr.path;
-	    path.strict = true;
-	    this.accept(path);
-	    this.opcode('resolvePossibleLambda');
-	  },
-
-	  helperSexpr: function helperSexpr(sexpr, program, inverse) {
-	    var params = this.setupFullMustacheParams(sexpr, program, inverse),
-	        path = sexpr.path,
-	        name = path.parts[0];
-
-	    if (this.options.knownHelpers[name]) {
-	      this.opcode('invokeKnownHelper', params.length, name);
-	    } else if (this.options.knownHelpersOnly) {
-	      throw new _exception2['default']('You specified knownHelpersOnly, but used the unknown helper ' + name, sexpr);
-	    } else {
-	      path.strict = true;
-	      path.falsy = true;
-
-	      this.accept(path);
-	      this.opcode('invokeHelper', params.length, path.original, _ast2['default'].helpers.simpleId(path));
-	    }
-	  },
-
-	  PathExpression: function PathExpression(path) {
-	    this.addDepth(path.depth);
-	    this.opcode('getContext', path.depth);
-
-	    var name = path.parts[0],
-	        scoped = _ast2['default'].helpers.scopedId(path),
-	        blockParamId = !path.depth && !scoped && this.blockParamIndex(name);
-
-	    if (blockParamId) {
-	      this.opcode('lookupBlockParam', blockParamId, path.parts);
-	    } else if (!name) {
-	      // Context reference, i.e. `{{foo .}}` or `{{foo ..}}`
-	      this.opcode('pushContext');
-	    } else if (path.data) {
-	      this.options.data = true;
-	      this.opcode('lookupData', path.depth, path.parts, path.strict);
-	    } else {
-	      this.opcode('lookupOnContext', path.parts, path.falsy, path.strict, scoped);
-	    }
-	  },
-
-	  StringLiteral: function StringLiteral(string) {
-	    this.opcode('pushString', string.value);
-	  },
-
-	  NumberLiteral: function NumberLiteral(number) {
-	    this.opcode('pushLiteral', number.value);
-	  },
-
-	  BooleanLiteral: function BooleanLiteral(bool) {
-	    this.opcode('pushLiteral', bool.value);
-	  },
-
-	  UndefinedLiteral: function UndefinedLiteral() {
-	    this.opcode('pushLiteral', 'undefined');
-	  },
-
-	  NullLiteral: function NullLiteral() {
-	    this.opcode('pushLiteral', 'null');
-	  },
-
-	  Hash: function Hash(hash) {
-	    var pairs = hash.pairs,
-	        i = 0,
-	        l = pairs.length;
-
-	    this.opcode('pushHash');
-
-	    for (; i < l; i++) {
-	      this.pushParam(pairs[i].value);
-	    }
-	    while (i--) {
-	      this.opcode('assignToHash', pairs[i].key);
-	    }
-	    this.opcode('popHash');
-	  },
-
-	  // HELPERS
-	  opcode: function opcode(name) {
-	    this.opcodes.push({ opcode: name, args: slice.call(arguments, 1), loc: this.sourceNode[0].loc });
-	  },
-
-	  addDepth: function addDepth(depth) {
-	    if (!depth) {
-	      return;
-	    }
-
-	    this.useDepths = true;
-	  },
-
-	  classifySexpr: function classifySexpr(sexpr) {
-	    var isSimple = _ast2['default'].helpers.simpleId(sexpr.path);
-
-	    var isBlockParam = isSimple && !!this.blockParamIndex(sexpr.path.parts[0]);
-
-	    // a mustache is an eligible helper if:
-	    // * its id is simple (a single part, not `this` or `..`)
-	    var isHelper = !isBlockParam && _ast2['default'].helpers.helperExpression(sexpr);
-
-	    // if a mustache is an eligible helper but not a definite
-	    // helper, it is ambiguous, and will be resolved in a later
-	    // pass or at runtime.
-	    var isEligible = !isBlockParam && (isHelper || isSimple);
-
-	    // if ambiguous, we can possibly resolve the ambiguity now
-	    // An eligible helper is one that does not have a complex path, i.e. `this.foo`, `../foo` etc.
-	    if (isEligible && !isHelper) {
-	      var _name2 = sexpr.path.parts[0],
-	          options = this.options;
-
-	      if (options.knownHelpers[_name2]) {
-	        isHelper = true;
-	      } else if (options.knownHelpersOnly) {
-	        isEligible = false;
-	      }
-	    }
-
-	    if (isHelper) {
-	      return 'helper';
-	    } else if (isEligible) {
-	      return 'ambiguous';
-	    } else {
-	      return 'simple';
-	    }
-	  },
-
-	  pushParams: function pushParams(params) {
-	    for (var i = 0, l = params.length; i < l; i++) {
-	      this.pushParam(params[i]);
-	    }
-	  },
-
-	  pushParam: function pushParam(val) {
-	    var value = val.value != null ? val.value : val.original || '';
-
-	    if (this.stringParams) {
-	      if (value.replace) {
-	        value = value.replace(/^(\.?\.\/)*/g, '').replace(/\//g, '.');
-	      }
-
-	      if (val.depth) {
-	        this.addDepth(val.depth);
-	      }
-	      this.opcode('getContext', val.depth || 0);
-	      this.opcode('pushStringParam', value, val.type);
-
-	      if (val.type === 'SubExpression') {
-	        // SubExpressions get evaluated and passed in
-	        // in string params mode.
-	        this.accept(val);
-	      }
-	    } else {
-	      if (this.trackIds) {
-	        var blockParamIndex = undefined;
-	        if (val.parts && !_ast2['default'].helpers.scopedId(val) && !val.depth) {
-	          blockParamIndex = this.blockParamIndex(val.parts[0]);
-	        }
-	        if (blockParamIndex) {
-	          var blockParamChild = val.parts.slice(1).join('.');
-	          this.opcode('pushId', 'BlockParam', blockParamIndex, blockParamChild);
-	        } else {
-	          value = val.original || value;
-	          if (value.replace) {
-	            value = value.replace(/^this(?:\.|$)/, '').replace(/^\.\//, '').replace(/^\.$/, '');
-	          }
-
-	          this.opcode('pushId', val.type, value);
-	        }
-	      }
-	      this.accept(val);
-	    }
-	  },
-
-	  setupFullMustacheParams: function setupFullMustacheParams(sexpr, program, inverse, omitEmpty) {
-	    var params = sexpr.params;
-	    this.pushParams(params);
-
-	    this.opcode('pushProgram', program);
-	    this.opcode('pushProgram', inverse);
-
-	    if (sexpr.hash) {
-	      this.accept(sexpr.hash);
-	    } else {
-	      this.opcode('emptyHash', omitEmpty);
-	    }
-
-	    return params;
-	  },
-
-	  blockParamIndex: function blockParamIndex(name) {
-	    for (var depth = 0, len = this.options.blockParams.length; depth < len; depth++) {
-	      var blockParams = this.options.blockParams[depth],
-	          param = blockParams && _utils.indexOf(blockParams, name);
-	      if (blockParams && param >= 0) {
-	        return [depth, param];
-	      }
-	    }
-	  }
-	};
-
-	function precompile(input, options, env) {
-	  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
-	    throw new _exception2['default']('You must pass a string or Handlebars AST to Handlebars.precompile. You passed ' + input);
-	  }
-
-	  options = options || {};
-	  if (!('data' in options)) {
-	    options.data = true;
-	  }
-	  if (options.compat) {
-	    options.useDepths = true;
-	  }
-
-	  var ast = env.parse(input, options),
-	      environment = new env.Compiler().compile(ast, options);
-	  return new env.JavaScriptCompiler().compile(environment, options);
-	}
-
-	function compile(input, options, env) {
-	  if (options === undefined) options = {};
-
-	  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
-	    throw new _exception2['default']('You must pass a string or Handlebars AST to Handlebars.compile. You passed ' + input);
-	  }
-
-	  options = _utils.extend({}, options);
-	  if (!('data' in options)) {
-	    options.data = true;
-	  }
-	  if (options.compat) {
-	    options.useDepths = true;
-	  }
-
-	  var compiled = undefined;
-
-	  function compileInput() {
-	    var ast = env.parse(input, options),
-	        environment = new env.Compiler().compile(ast, options),
-	        templateSpec = new env.JavaScriptCompiler().compile(environment, options, undefined, true);
-	    return env.template(templateSpec);
-	  }
-
-	  // Template is only compiled on first use and cached after that point.
-	  function ret(context, execOptions) {
-	    if (!compiled) {
-	      compiled = compileInput();
-	    }
-	    return compiled.call(this, context, execOptions);
-	  }
-	  ret._setup = function (setupOptions) {
-	    if (!compiled) {
-	      compiled = compileInput();
-	    }
-	    return compiled._setup(setupOptions);
-	  };
-	  ret._child = function (i, data, blockParams, depths) {
-	    if (!compiled) {
-	      compiled = compileInput();
-	    }
-	    return compiled._child(i, data, blockParams, depths);
-	  };
-	  return ret;
-	}
-
-	function argEquals(a, b) {
-	  if (a === b) {
-	    return true;
-	  }
-
-	  if (_utils.isArray(a) && _utils.isArray(b) && a.length === b.length) {
-	    for (var i = 0; i < a.length; i++) {
-	      if (!argEquals(a[i], b[i])) {
-	        return false;
-	      }
-	    }
-	    return true;
-	  }
-	}
-
-	function transformLiteralToPath(sexpr) {
-	  if (!sexpr.path.parts) {
-	    var literal = sexpr.path;
-	    // Casting to string here to make false and 0 literal values play nicely with the rest
-	    // of the system.
-	    sexpr.path = {
-	      type: 'PathExpression',
-	      data: false,
-	      depth: 0,
-	      parts: [literal.original + ''],
-	      original: literal.original + '',
-	      loc: literal.loc
-	    };
-	  }
-	}
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireDefault = __webpack_require__(1)['default'];
-
-	exports.__esModule = true;
-
-	var _base = __webpack_require__(4);
-
-	var _exception = __webpack_require__(6);
-
-	var _exception2 = _interopRequireDefault(_exception);
-
-	var _utils = __webpack_require__(5);
-
-	var _codeGen = __webpack_require__(43);
-
-	var _codeGen2 = _interopRequireDefault(_codeGen);
-
-	function Literal(value) {
-	  this.value = value;
-	}
-
-	function JavaScriptCompiler() {}
-
-	JavaScriptCompiler.prototype = {
-	  // PUBLIC API: You can override these methods in a subclass to provide
-	  // alternative compiled forms for name lookup and buffering semantics
-	  nameLookup: function nameLookup(parent, name /* , type*/) {
-	    if (JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
-	      return [parent, '.', name];
-	    } else {
-	      return [parent, '[', JSON.stringify(name), ']'];
-	    }
-	  },
-	  depthedLookup: function depthedLookup(name) {
-	    return [this.aliasable('container.lookup'), '(depths, "', name, '")'];
-	  },
-
-	  compilerInfo: function compilerInfo() {
-	    var revision = _base.COMPILER_REVISION,
-	        versions = _base.REVISION_CHANGES[revision];
-	    return [revision, versions];
-	  },
-
-	  appendToBuffer: function appendToBuffer(source, location, explicit) {
-	    // Force a source as this simplifies the merge logic.
-	    if (!_utils.isArray(source)) {
-	      source = [source];
-	    }
-	    source = this.source.wrap(source, location);
-
-	    if (this.environment.isSimple) {
-	      return ['return ', source, ';'];
-	    } else if (explicit) {
-	      // This is a case where the buffer operation occurs as a child of another
-	      // construct, generally braces. We have to explicitly output these buffer
-	      // operations to ensure that the emitted code goes in the correct location.
-	      return ['buffer += ', source, ';'];
-	    } else {
-	      source.appendToBuffer = true;
-	      return source;
-	    }
-	  },
-
-	  initializeBuffer: function initializeBuffer() {
-	    return this.quotedString('');
-	  },
-	  // END PUBLIC API
-
-	  compile: function compile(environment, options, context, asObject) {
-	    this.environment = environment;
-	    this.options = options;
-	    this.stringParams = this.options.stringParams;
-	    this.trackIds = this.options.trackIds;
-	    this.precompile = !asObject;
-
-	    this.name = this.environment.name;
-	    this.isChild = !!context;
-	    this.context = context || {
-	      decorators: [],
-	      programs: [],
-	      environments: []
-	    };
-
-	    this.preamble();
-
-	    this.stackSlot = 0;
-	    this.stackVars = [];
-	    this.aliases = {};
-	    this.registers = { list: [] };
-	    this.hashes = [];
-	    this.compileStack = [];
-	    this.inlineStack = [];
-	    this.blockParams = [];
-
-	    this.compileChildren(environment, options);
-
-	    this.useDepths = this.useDepths || environment.useDepths || environment.useDecorators || this.options.compat;
-	    this.useBlockParams = this.useBlockParams || environment.useBlockParams;
-
-	    var opcodes = environment.opcodes,
-	        opcode = undefined,
-	        firstLoc = undefined,
-	        i = undefined,
-	        l = undefined;
-
-	    for (i = 0, l = opcodes.length; i < l; i++) {
-	      opcode = opcodes[i];
-
-	      this.source.currentLocation = opcode.loc;
-	      firstLoc = firstLoc || opcode.loc;
-	      this[opcode.opcode].apply(this, opcode.args);
-	    }
-
-	    // Flush any trailing content that might be pending.
-	    this.source.currentLocation = firstLoc;
-	    this.pushSource('');
-
-	    /* istanbul ignore next */
-	    if (this.stackSlot || this.inlineStack.length || this.compileStack.length) {
-	      throw new _exception2['default']('Compile completed with content left on stack');
-	    }
-
-	    if (!this.decorators.isEmpty()) {
-	      this.useDecorators = true;
-
-	      this.decorators.prepend('var decorators = container.decorators;\n');
-	      this.decorators.push('return fn;');
-
-	      if (asObject) {
-	        this.decorators = Function.apply(this, ['fn', 'props', 'container', 'depth0', 'data', 'blockParams', 'depths', this.decorators.merge()]);
-	      } else {
-	        this.decorators.prepend('function(fn, props, container, depth0, data, blockParams, depths) {\n');
-	        this.decorators.push('}\n');
-	        this.decorators = this.decorators.merge();
-	      }
-	    } else {
-	      this.decorators = undefined;
-	    }
-
-	    var fn = this.createFunctionContext(asObject);
-	    if (!this.isChild) {
-	      var ret = {
-	        compiler: this.compilerInfo(),
-	        main: fn
-	      };
-
-	      if (this.decorators) {
-	        ret.main_d = this.decorators; // eslint-disable-line camelcase
-	        ret.useDecorators = true;
-	      }
-
-	      var _context = this.context;
-	      var programs = _context.programs;
-	      var decorators = _context.decorators;
-
-	      for (i = 0, l = programs.length; i < l; i++) {
-	        if (programs[i]) {
-	          ret[i] = programs[i];
-	          if (decorators[i]) {
-	            ret[i + '_d'] = decorators[i];
-	            ret.useDecorators = true;
-	          }
-	        }
-	      }
-
-	      if (this.environment.usePartial) {
-	        ret.usePartial = true;
-	      }
-	      if (this.options.data) {
-	        ret.useData = true;
-	      }
-	      if (this.useDepths) {
-	        ret.useDepths = true;
-	      }
-	      if (this.useBlockParams) {
-	        ret.useBlockParams = true;
-	      }
-	      if (this.options.compat) {
-	        ret.compat = true;
-	      }
-
-	      if (!asObject) {
-	        ret.compiler = JSON.stringify(ret.compiler);
-
-	        this.source.currentLocation = { start: { line: 1, column: 0 } };
-	        ret = this.objectLiteral(ret);
-
-	        if (options.srcName) {
-	          ret = ret.toStringWithSourceMap({ file: options.destName });
-	          ret.map = ret.map && ret.map.toString();
-	        } else {
-	          ret = ret.toString();
-	        }
-	      } else {
-	        ret.compilerOptions = this.options;
-	      }
-
-	      return ret;
-	    } else {
-	      return fn;
-	    }
-	  },
-
-	  preamble: function preamble() {
-	    // track the last context pushed into place to allow skipping the
-	    // getContext opcode when it would be a noop
-	    this.lastContext = 0;
-	    this.source = new _codeGen2['default'](this.options.srcName);
-	    this.decorators = new _codeGen2['default'](this.options.srcName);
-	  },
-
-	  createFunctionContext: function createFunctionContext(asObject) {
-	    var varDeclarations = '';
-
-	    var locals = this.stackVars.concat(this.registers.list);
-	    if (locals.length > 0) {
-	      varDeclarations += ', ' + locals.join(', ');
-	    }
-
-	    // Generate minimizer alias mappings
-	    //
-	    // When using true SourceNodes, this will update all references to the given alias
-	    // as the source nodes are reused in situ. For the non-source node compilation mode,
-	    // aliases will not be used, but this case is already being run on the client and
-	    // we aren't concern about minimizing the template size.
-	    var aliasCount = 0;
-	    for (var alias in this.aliases) {
-	      // eslint-disable-line guard-for-in
-	      var node = this.aliases[alias];
-
-	      if (this.aliases.hasOwnProperty(alias) && node.children && node.referenceCount > 1) {
-	        varDeclarations += ', alias' + ++aliasCount + '=' + alias;
-	        node.children[0] = 'alias' + aliasCount;
-	      }
-	    }
-
-	    var params = ['container', 'depth0', 'helpers', 'partials', 'data'];
-
-	    if (this.useBlockParams || this.useDepths) {
-	      params.push('blockParams');
-	    }
-	    if (this.useDepths) {
-	      params.push('depths');
-	    }
-
-	    // Perform a second pass over the output to merge content when possible
-	    var source = this.mergeSource(varDeclarations);
-
-	    if (asObject) {
-	      params.push(source);
-
-	      return Function.apply(this, params);
-	    } else {
-	      return this.source.wrap(['function(', params.join(','), ') {\n  ', source, '}']);
-	    }
-	  },
-	  mergeSource: function mergeSource(varDeclarations) {
-	    var isSimple = this.environment.isSimple,
-	        appendOnly = !this.forceBuffer,
-	        appendFirst = undefined,
-	        sourceSeen = undefined,
-	        bufferStart = undefined,
-	        bufferEnd = undefined;
-	    this.source.each(function (line) {
-	      if (line.appendToBuffer) {
-	        if (bufferStart) {
-	          line.prepend('  + ');
-	        } else {
-	          bufferStart = line;
-	        }
-	        bufferEnd = line;
-	      } else {
-	        if (bufferStart) {
-	          if (!sourceSeen) {
-	            appendFirst = true;
-	          } else {
-	            bufferStart.prepend('buffer += ');
-	          }
-	          bufferEnd.add(';');
-	          bufferStart = bufferEnd = undefined;
-	        }
-
-	        sourceSeen = true;
-	        if (!isSimple) {
-	          appendOnly = false;
-	        }
-	      }
-	    });
-
-	    if (appendOnly) {
-	      if (bufferStart) {
-	        bufferStart.prepend('return ');
-	        bufferEnd.add(';');
-	      } else if (!sourceSeen) {
-	        this.source.push('return "";');
-	      }
-	    } else {
-	      varDeclarations += ', buffer = ' + (appendFirst ? '' : this.initializeBuffer());
-
-	      if (bufferStart) {
-	        bufferStart.prepend('return buffer + ');
-	        bufferEnd.add(';');
-	      } else {
-	        this.source.push('return buffer;');
-	      }
-	    }
-
-	    if (varDeclarations) {
-	      this.source.prepend('var ' + varDeclarations.substring(2) + (appendFirst ? '' : ';\n'));
-	    }
-
-	    return this.source.merge();
-	  },
-
-	  // [blockValue]
-	  //
-	  // On stack, before: hash, inverse, program, value
-	  // On stack, after: return value of blockHelperMissing
-	  //
-	  // The purpose of this opcode is to take a block of the form
-	  // `{{#this.foo}}...{{/this.foo}}`, resolve the value of `foo`, and
-	  // replace it on the stack with the result of properly
-	  // invoking blockHelperMissing.
-	  blockValue: function blockValue(name) {
-	    var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
-	        params = [this.contextName(0)];
-	    this.setupHelperArgs(name, 0, params);
-
-	    var blockName = this.popStack();
-	    params.splice(1, 0, blockName);
-
-	    this.push(this.source.functionCall(blockHelperMissing, 'call', params));
-	  },
-
-	  // [ambiguousBlockValue]
-	  //
-	  // On stack, before: hash, inverse, program, value
-	  // Compiler value, before: lastHelper=value of last found helper, if any
-	  // On stack, after, if no lastHelper: same as [blockValue]
-	  // On stack, after, if lastHelper: value
-	  ambiguousBlockValue: function ambiguousBlockValue() {
-	    // We're being a bit cheeky and reusing the options value from the prior exec
-	    var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
-	        params = [this.contextName(0)];
-	    this.setupHelperArgs('', 0, params, true);
-
-	    this.flushInline();
-
-	    var current = this.topStack();
-	    params.splice(1, 0, current);
-
-	    this.pushSource(['if (!', this.lastHelper, ') { ', current, ' = ', this.source.functionCall(blockHelperMissing, 'call', params), '}']);
-	  },
-
-	  // [appendContent]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: ...
-	  //
-	  // Appends the string value of `content` to the current buffer
-	  appendContent: function appendContent(content) {
-	    if (this.pendingContent) {
-	      content = this.pendingContent + content;
-	    } else {
-	      this.pendingLocation = this.source.currentLocation;
-	    }
-
-	    this.pendingContent = content;
-	  },
-
-	  // [append]
-	  //
-	  // On stack, before: value, ...
-	  // On stack, after: ...
-	  //
-	  // Coerces `value` to a String and appends it to the current buffer.
-	  //
-	  // If `value` is truthy, or 0, it is coerced into a string and appended
-	  // Otherwise, the empty string is appended
-	  append: function append() {
-	    if (this.isInline()) {
-	      this.replaceStack(function (current) {
-	        return [' != null ? ', current, ' : ""'];
-	      });
-
-	      this.pushSource(this.appendToBuffer(this.popStack()));
-	    } else {
-	      var local = this.popStack();
-	      this.pushSource(['if (', local, ' != null) { ', this.appendToBuffer(local, undefined, true), ' }']);
-	      if (this.environment.isSimple) {
-	        this.pushSource(['else { ', this.appendToBuffer("''", undefined, true), ' }']);
-	      }
-	    }
-	  },
-
-	  // [appendEscaped]
-	  //
-	  // On stack, before: value, ...
-	  // On stack, after: ...
-	  //
-	  // Escape `value` and append it to the buffer
-	  appendEscaped: function appendEscaped() {
-	    this.pushSource(this.appendToBuffer([this.aliasable('container.escapeExpression'), '(', this.popStack(), ')']));
-	  },
-
-	  // [getContext]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: ...
-	  // Compiler value, after: lastContext=depth
-	  //
-	  // Set the value of the `lastContext` compiler value to the depth
-	  getContext: function getContext(depth) {
-	    this.lastContext = depth;
-	  },
-
-	  // [pushContext]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: currentContext, ...
-	  //
-	  // Pushes the value of the current context onto the stack.
-	  pushContext: function pushContext() {
-	    this.pushStackLiteral(this.contextName(this.lastContext));
-	  },
-
-	  // [lookupOnContext]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: currentContext[name], ...
-	  //
-	  // Looks up the value of `name` on the current context and pushes
-	  // it onto the stack.
-	  lookupOnContext: function lookupOnContext(parts, falsy, strict, scoped) {
-	    var i = 0;
-
-	    if (!scoped && this.options.compat && !this.lastContext) {
-	      // The depthed query is expected to handle the undefined logic for the root level that
-	      // is implemented below, so we evaluate that directly in compat mode
-	      this.push(this.depthedLookup(parts[i++]));
-	    } else {
-	      this.pushContext();
-	    }
-
-	    this.resolvePath('context', parts, i, falsy, strict);
-	  },
-
-	  // [lookupBlockParam]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: blockParam[name], ...
-	  //
-	  // Looks up the value of `parts` on the given block param and pushes
-	  // it onto the stack.
-	  lookupBlockParam: function lookupBlockParam(blockParamId, parts) {
-	    this.useBlockParams = true;
-
-	    this.push(['blockParams[', blockParamId[0], '][', blockParamId[1], ']']);
-	    this.resolvePath('context', parts, 1);
-	  },
-
-	  // [lookupData]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: data, ...
-	  //
-	  // Push the data lookup operator
-	  lookupData: function lookupData(depth, parts, strict) {
-	    if (!depth) {
-	      this.pushStackLiteral('data');
-	    } else {
-	      this.pushStackLiteral('container.data(data, ' + depth + ')');
-	    }
-
-	    this.resolvePath('data', parts, 0, true, strict);
-	  },
-
-	  resolvePath: function resolvePath(type, parts, i, falsy, strict) {
-	    // istanbul ignore next
-
-	    var _this = this;
-
-	    if (this.options.strict || this.options.assumeObjects) {
-	      this.push(strictLookup(this.options.strict && strict, this, parts, type));
-	      return;
-	    }
-
-	    var len = parts.length;
-	    for (; i < len; i++) {
-	      /* eslint-disable no-loop-func */
-	      this.replaceStack(function (current) {
-	        var lookup = _this.nameLookup(current, parts[i], type);
-	        // We want to ensure that zero and false are handled properly if the context (falsy flag)
-	        // needs to have the special handling for these values.
-	        if (!falsy) {
-	          return [' != null ? ', lookup, ' : ', current];
-	        } else {
-	          // Otherwise we can use generic falsy handling
-	          return [' && ', lookup];
-	        }
-	      });
-	      /* eslint-enable no-loop-func */
-	    }
-	  },
-
-	  // [resolvePossibleLambda]
-	  //
-	  // On stack, before: value, ...
-	  // On stack, after: resolved value, ...
-	  //
-	  // If the `value` is a lambda, replace it on the stack by
-	  // the return value of the lambda
-	  resolvePossibleLambda: function resolvePossibleLambda() {
-	    this.push([this.aliasable('container.lambda'), '(', this.popStack(), ', ', this.contextName(0), ')']);
-	  },
-
-	  // [pushStringParam]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: string, currentContext, ...
-	  //
-	  // This opcode is designed for use in string mode, which
-	  // provides the string value of a parameter along with its
-	  // depth rather than resolving it immediately.
-	  pushStringParam: function pushStringParam(string, type) {
-	    this.pushContext();
-	    this.pushString(type);
-
-	    // If it's a subexpression, the string result
-	    // will be pushed after this opcode.
-	    if (type !== 'SubExpression') {
-	      if (typeof string === 'string') {
-	        this.pushString(string);
-	      } else {
-	        this.pushStackLiteral(string);
-	      }
-	    }
-	  },
-
-	  emptyHash: function emptyHash(omitEmpty) {
-	    if (this.trackIds) {
-	      this.push('{}'); // hashIds
-	    }
-	    if (this.stringParams) {
-	      this.push('{}'); // hashContexts
-	      this.push('{}'); // hashTypes
-	    }
-	    this.pushStackLiteral(omitEmpty ? 'undefined' : '{}');
-	  },
-	  pushHash: function pushHash() {
-	    if (this.hash) {
-	      this.hashes.push(this.hash);
-	    }
-	    this.hash = { values: [], types: [], contexts: [], ids: [] };
-	  },
-	  popHash: function popHash() {
-	    var hash = this.hash;
-	    this.hash = this.hashes.pop();
-
-	    if (this.trackIds) {
-	      this.push(this.objectLiteral(hash.ids));
-	    }
-	    if (this.stringParams) {
-	      this.push(this.objectLiteral(hash.contexts));
-	      this.push(this.objectLiteral(hash.types));
-	    }
-
-	    this.push(this.objectLiteral(hash.values));
-	  },
-
-	  // [pushString]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: quotedString(string), ...
-	  //
-	  // Push a quoted version of `string` onto the stack
-	  pushString: function pushString(string) {
-	    this.pushStackLiteral(this.quotedString(string));
-	  },
-
-	  // [pushLiteral]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: value, ...
-	  //
-	  // Pushes a value onto the stack. This operation prevents
-	  // the compiler from creating a temporary variable to hold
-	  // it.
-	  pushLiteral: function pushLiteral(value) {
-	    this.pushStackLiteral(value);
-	  },
-
-	  // [pushProgram]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: program(guid), ...
-	  //
-	  // Push a program expression onto the stack. This takes
-	  // a compile-time guid and converts it into a runtime-accessible
-	  // expression.
-	  pushProgram: function pushProgram(guid) {
-	    if (guid != null) {
-	      this.pushStackLiteral(this.programExpression(guid));
-	    } else {
-	      this.pushStackLiteral(null);
-	    }
-	  },
-
-	  // [registerDecorator]
-	  //
-	  // On stack, before: hash, program, params..., ...
-	  // On stack, after: ...
-	  //
-	  // Pops off the decorator's parameters, invokes the decorator,
-	  // and inserts the decorator into the decorators list.
-	  registerDecorator: function registerDecorator(paramSize, name) {
-	    var foundDecorator = this.nameLookup('decorators', name, 'decorator'),
-	        options = this.setupHelperArgs(name, paramSize);
-
-	    this.decorators.push(['fn = ', this.decorators.functionCall(foundDecorator, '', ['fn', 'props', 'container', options]), ' || fn;']);
-	  },
-
-	  // [invokeHelper]
-	  //
-	  // On stack, before: hash, inverse, program, params..., ...
-	  // On stack, after: result of helper invocation
-	  //
-	  // Pops off the helper's parameters, invokes the helper,
-	  // and pushes the helper's return value onto the stack.
-	  //
-	  // If the helper is not found, `helperMissing` is called.
-	  invokeHelper: function invokeHelper(paramSize, name, isSimple) {
-	    var nonHelper = this.popStack(),
-	        helper = this.setupHelper(paramSize, name),
-	        simple = isSimple ? [helper.name, ' || '] : '';
-
-	    var lookup = ['('].concat(simple, nonHelper);
-	    if (!this.options.strict) {
-	      lookup.push(' || ', this.aliasable('helpers.helperMissing'));
-	    }
-	    lookup.push(')');
-
-	    this.push(this.source.functionCall(lookup, 'call', helper.callParams));
-	  },
-
-	  // [invokeKnownHelper]
-	  //
-	  // On stack, before: hash, inverse, program, params..., ...
-	  // On stack, after: result of helper invocation
-	  //
-	  // This operation is used when the helper is known to exist,
-	  // so a `helperMissing` fallback is not required.
-	  invokeKnownHelper: function invokeKnownHelper(paramSize, name) {
-	    var helper = this.setupHelper(paramSize, name);
-	    this.push(this.source.functionCall(helper.name, 'call', helper.callParams));
-	  },
-
-	  // [invokeAmbiguous]
-	  //
-	  // On stack, before: hash, inverse, program, params..., ...
-	  // On stack, after: result of disambiguation
-	  //
-	  // This operation is used when an expression like `{{foo}}`
-	  // is provided, but we don't know at compile-time whether it
-	  // is a helper or a path.
-	  //
-	  // This operation emits more code than the other options,
-	  // and can be avoided by passing the `knownHelpers` and
-	  // `knownHelpersOnly` flags at compile-time.
-	  invokeAmbiguous: function invokeAmbiguous(name, helperCall) {
-	    this.useRegister('helper');
-
-	    var nonHelper = this.popStack();
-
-	    this.emptyHash();
-	    var helper = this.setupHelper(0, name, helperCall);
-
-	    var helperName = this.lastHelper = this.nameLookup('helpers', name, 'helper');
-
-	    var lookup = ['(', '(helper = ', helperName, ' || ', nonHelper, ')'];
-	    if (!this.options.strict) {
-	      lookup[0] = '(helper = ';
-	      lookup.push(' != null ? helper : ', this.aliasable('helpers.helperMissing'));
-	    }
-
-	    this.push(['(', lookup, helper.paramsInit ? ['),(', helper.paramsInit] : [], '),', '(typeof helper === ', this.aliasable('"function"'), ' ? ', this.source.functionCall('helper', 'call', helper.callParams), ' : helper))']);
-	  },
-
-	  // [invokePartial]
-	  //
-	  // On stack, before: context, ...
-	  // On stack after: result of partial invocation
-	  //
-	  // This operation pops off a context, invokes a partial with that context,
-	  // and pushes the result of the invocation back.
-	  invokePartial: function invokePartial(isDynamic, name, indent) {
-	    var params = [],
-	        options = this.setupParams(name, 1, params);
-
-	    if (isDynamic) {
-	      name = this.popStack();
-	      delete options.name;
-	    }
-
-	    if (indent) {
-	      options.indent = JSON.stringify(indent);
-	    }
-	    options.helpers = 'helpers';
-	    options.partials = 'partials';
-	    options.decorators = 'container.decorators';
-
-	    if (!isDynamic) {
-	      params.unshift(this.nameLookup('partials', name, 'partial'));
-	    } else {
-	      params.unshift(name);
-	    }
-
-	    if (this.options.compat) {
-	      options.depths = 'depths';
-	    }
-	    options = this.objectLiteral(options);
-	    params.push(options);
-
-	    this.push(this.source.functionCall('container.invokePartial', '', params));
-	  },
-
-	  // [assignToHash]
-	  //
-	  // On stack, before: value, ..., hash, ...
-	  // On stack, after: ..., hash, ...
-	  //
-	  // Pops a value off the stack and assigns it to the current hash
-	  assignToHash: function assignToHash(key) {
-	    var value = this.popStack(),
-	        context = undefined,
-	        type = undefined,
-	        id = undefined;
-
-	    if (this.trackIds) {
-	      id = this.popStack();
-	    }
-	    if (this.stringParams) {
-	      type = this.popStack();
-	      context = this.popStack();
-	    }
-
-	    var hash = this.hash;
-	    if (context) {
-	      hash.contexts[key] = context;
-	    }
-	    if (type) {
-	      hash.types[key] = type;
-	    }
-	    if (id) {
-	      hash.ids[key] = id;
-	    }
-	    hash.values[key] = value;
-	  },
-
-	  pushId: function pushId(type, name, child) {
-	    if (type === 'BlockParam') {
-	      this.pushStackLiteral('blockParams[' + name[0] + '].path[' + name[1] + ']' + (child ? ' + ' + JSON.stringify('.' + child) : ''));
-	    } else if (type === 'PathExpression') {
-	      this.pushString(name);
-	    } else if (type === 'SubExpression') {
-	      this.pushStackLiteral('true');
-	    } else {
-	      this.pushStackLiteral('null');
-	    }
-	  },
-
-	  // HELPERS
-
-	  compiler: JavaScriptCompiler,
-
-	  compileChildren: function compileChildren(environment, options) {
-	    var children = environment.children,
-	        child = undefined,
-	        compiler = undefined;
-
-	    for (var i = 0, l = children.length; i < l; i++) {
-	      child = children[i];
-	      compiler = new this.compiler(); // eslint-disable-line new-cap
-
-	      var existing = this.matchExistingProgram(child);
-
-	      if (existing == null) {
-	        this.context.programs.push(''); // Placeholder to prevent name conflicts for nested children
-	        var index = this.context.programs.length;
-	        child.index = index;
-	        child.name = 'program' + index;
-	        this.context.programs[index] = compiler.compile(child, options, this.context, !this.precompile);
-	        this.context.decorators[index] = compiler.decorators;
-	        this.context.environments[index] = child;
-
-	        this.useDepths = this.useDepths || compiler.useDepths;
-	        this.useBlockParams = this.useBlockParams || compiler.useBlockParams;
-	        child.useDepths = this.useDepths;
-	        child.useBlockParams = this.useBlockParams;
-	      } else {
-	        child.index = existing.index;
-	        child.name = 'program' + existing.index;
-
-	        this.useDepths = this.useDepths || existing.useDepths;
-	        this.useBlockParams = this.useBlockParams || existing.useBlockParams;
-	      }
-	    }
-	  },
-	  matchExistingProgram: function matchExistingProgram(child) {
-	    for (var i = 0, len = this.context.environments.length; i < len; i++) {
-	      var environment = this.context.environments[i];
-	      if (environment && environment.equals(child)) {
-	        return environment;
-	      }
-	    }
-	  },
-
-	  programExpression: function programExpression(guid) {
-	    var child = this.environment.children[guid],
-	        programParams = [child.index, 'data', child.blockParams];
-
-	    if (this.useBlockParams || this.useDepths) {
-	      programParams.push('blockParams');
-	    }
-	    if (this.useDepths) {
-	      programParams.push('depths');
-	    }
-
-	    return 'container.program(' + programParams.join(', ') + ')';
-	  },
-
-	  useRegister: function useRegister(name) {
-	    if (!this.registers[name]) {
-	      this.registers[name] = true;
-	      this.registers.list.push(name);
-	    }
-	  },
-
-	  push: function push(expr) {
-	    if (!(expr instanceof Literal)) {
-	      expr = this.source.wrap(expr);
-	    }
-
-	    this.inlineStack.push(expr);
-	    return expr;
-	  },
-
-	  pushStackLiteral: function pushStackLiteral(item) {
-	    this.push(new Literal(item));
-	  },
-
-	  pushSource: function pushSource(source) {
-	    if (this.pendingContent) {
-	      this.source.push(this.appendToBuffer(this.source.quotedString(this.pendingContent), this.pendingLocation));
-	      this.pendingContent = undefined;
-	    }
-
-	    if (source) {
-	      this.source.push(source);
-	    }
-	  },
-
-	  replaceStack: function replaceStack(callback) {
-	    var prefix = ['('],
-	        stack = undefined,
-	        createdStack = undefined,
-	        usedLiteral = undefined;
-
-	    /* istanbul ignore next */
-	    if (!this.isInline()) {
-	      throw new _exception2['default']('replaceStack on non-inline');
-	    }
-
-	    // We want to merge the inline statement into the replacement statement via ','
-	    var top = this.popStack(true);
-
-	    if (top instanceof Literal) {
-	      // Literals do not need to be inlined
-	      stack = [top.value];
-	      prefix = ['(', stack];
-	      usedLiteral = true;
-	    } else {
-	      // Get or create the current stack name for use by the inline
-	      createdStack = true;
-	      var _name = this.incrStack();
-
-	      prefix = ['((', this.push(_name), ' = ', top, ')'];
-	      stack = this.topStack();
-	    }
-
-	    var item = callback.call(this, stack);
-
-	    if (!usedLiteral) {
-	      this.popStack();
-	    }
-	    if (createdStack) {
-	      this.stackSlot--;
-	    }
-	    this.push(prefix.concat(item, ')'));
-	  },
-
-	  incrStack: function incrStack() {
-	    this.stackSlot++;
-	    if (this.stackSlot > this.stackVars.length) {
-	      this.stackVars.push('stack' + this.stackSlot);
-	    }
-	    return this.topStackName();
-	  },
-	  topStackName: function topStackName() {
-	    return 'stack' + this.stackSlot;
-	  },
-	  flushInline: function flushInline() {
-	    var inlineStack = this.inlineStack;
-	    this.inlineStack = [];
-	    for (var i = 0, len = inlineStack.length; i < len; i++) {
-	      var entry = inlineStack[i];
-	      /* istanbul ignore if */
-	      if (entry instanceof Literal) {
-	        this.compileStack.push(entry);
-	      } else {
-	        var stack = this.incrStack();
-	        this.pushSource([stack, ' = ', entry, ';']);
-	        this.compileStack.push(stack);
-	      }
-	    }
-	  },
-	  isInline: function isInline() {
-	    return this.inlineStack.length;
-	  },
-
-	  popStack: function popStack(wrapped) {
-	    var inline = this.isInline(),
-	        item = (inline ? this.inlineStack : this.compileStack).pop();
-
-	    if (!wrapped && item instanceof Literal) {
-	      return item.value;
-	    } else {
-	      if (!inline) {
-	        /* istanbul ignore next */
-	        if (!this.stackSlot) {
-	          throw new _exception2['default']('Invalid stack pop');
-	        }
-	        this.stackSlot--;
-	      }
-	      return item;
-	    }
-	  },
-
-	  topStack: function topStack() {
-	    var stack = this.isInline() ? this.inlineStack : this.compileStack,
-	        item = stack[stack.length - 1];
-
-	    /* istanbul ignore if */
-	    if (item instanceof Literal) {
-	      return item.value;
-	    } else {
-	      return item;
-	    }
-	  },
-
-	  contextName: function contextName(context) {
-	    if (this.useDepths && context) {
-	      return 'depths[' + context + ']';
-	    } else {
-	      return 'depth' + context;
-	    }
-	  },
-
-	  quotedString: function quotedString(str) {
-	    return this.source.quotedString(str);
-	  },
-
-	  objectLiteral: function objectLiteral(obj) {
-	    return this.source.objectLiteral(obj);
-	  },
-
-	  aliasable: function aliasable(name) {
-	    var ret = this.aliases[name];
-	    if (ret) {
-	      ret.referenceCount++;
-	      return ret;
-	    }
-
-	    ret = this.aliases[name] = this.source.wrap(name);
-	    ret.aliasable = true;
-	    ret.referenceCount = 1;
-
-	    return ret;
-	  },
-
-	  setupHelper: function setupHelper(paramSize, name, blockHelper) {
-	    var params = [],
-	        paramsInit = this.setupHelperArgs(name, paramSize, params, blockHelper);
-	    var foundHelper = this.nameLookup('helpers', name, 'helper'),
-	        callContext = this.aliasable(this.contextName(0) + ' != null ? ' + this.contextName(0) + ' : (container.nullContext || {})');
-
-	    return {
-	      params: params,
-	      paramsInit: paramsInit,
-	      name: foundHelper,
-	      callParams: [callContext].concat(params)
-	    };
-	  },
-
-	  setupParams: function setupParams(helper, paramSize, params) {
-	    var options = {},
-	        contexts = [],
-	        types = [],
-	        ids = [],
-	        objectArgs = !params,
-	        param = undefined;
-
-	    if (objectArgs) {
-	      params = [];
-	    }
-
-	    options.name = this.quotedString(helper);
-	    options.hash = this.popStack();
-
-	    if (this.trackIds) {
-	      options.hashIds = this.popStack();
-	    }
-	    if (this.stringParams) {
-	      options.hashTypes = this.popStack();
-	      options.hashContexts = this.popStack();
-	    }
-
-	    var inverse = this.popStack(),
-	        program = this.popStack();
-
-	    // Avoid setting fn and inverse if neither are set. This allows
-	    // helpers to do a check for `if (options.fn)`
-	    if (program || inverse) {
-	      options.fn = program || 'container.noop';
-	      options.inverse = inverse || 'container.noop';
-	    }
-
-	    // The parameters go on to the stack in order (making sure that they are evaluated in order)
-	    // so we need to pop them off the stack in reverse order
-	    var i = paramSize;
-	    while (i--) {
-	      param = this.popStack();
-	      params[i] = param;
-
-	      if (this.trackIds) {
-	        ids[i] = this.popStack();
-	      }
-	      if (this.stringParams) {
-	        types[i] = this.popStack();
-	        contexts[i] = this.popStack();
-	      }
-	    }
-
-	    if (objectArgs) {
-	      options.args = this.source.generateArray(params);
-	    }
-
-	    if (this.trackIds) {
-	      options.ids = this.source.generateArray(ids);
-	    }
-	    if (this.stringParams) {
-	      options.types = this.source.generateArray(types);
-	      options.contexts = this.source.generateArray(contexts);
-	    }
-
-	    if (this.options.data) {
-	      options.data = 'data';
-	    }
-	    if (this.useBlockParams) {
-	      options.blockParams = 'blockParams';
-	    }
-	    return options;
-	  },
-
-	  setupHelperArgs: function setupHelperArgs(helper, paramSize, params, useRegister) {
-	    var options = this.setupParams(helper, paramSize, params);
-	    options = this.objectLiteral(options);
-	    if (useRegister) {
-	      this.useRegister('options');
-	      params.push('options');
-	      return ['options=', options];
-	    } else if (params) {
-	      params.push(options);
-	      return '';
-	    } else {
-	      return options;
-	    }
-	  }
-	};
-
-	(function () {
-	  var reservedWords = ('break else new var' + ' case finally return void' + ' catch for switch while' + ' continue function this with' + ' default if throw' + ' delete in try' + ' do instanceof typeof' + ' abstract enum int short' + ' boolean export interface static' + ' byte extends long super' + ' char final native synchronized' + ' class float package throws' + ' const goto private transient' + ' debugger implements protected volatile' + ' double import public let yield await' + ' null true false').split(' ');
-
-	  var compilerWords = JavaScriptCompiler.RESERVED_WORDS = {};
-
-	  for (var i = 0, l = reservedWords.length; i < l; i++) {
-	    compilerWords[reservedWords[i]] = true;
-	  }
-	})();
-
-	JavaScriptCompiler.isValidJavaScriptVariableName = function (name) {
-	  return !JavaScriptCompiler.RESERVED_WORDS[name] && /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name);
-	};
-
-	function strictLookup(requireTerminal, compiler, parts, type) {
-	  var stack = compiler.popStack(),
-	      i = 0,
-	      len = parts.length;
-	  if (requireTerminal) {
-	    len--;
-	  }
-
-	  for (; i < len; i++) {
-	    stack = compiler.nameLookup(stack, parts[i], type);
-	  }
-
-	  if (requireTerminal) {
-	    return [compiler.aliasable('container.strict'), '(', stack, ', ', compiler.quotedString(parts[i]), ')'];
-	  } else {
-	    return stack;
-	  }
-	}
-
-	exports['default'] = JavaScriptCompiler;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* global define */
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _utils = __webpack_require__(5);
-
-	var SourceNode = undefined;
-
-	try {
-	  /* istanbul ignore next */
-	  
-	} catch (err) {}
-	/* NOP */
-
-	/* istanbul ignore if: tested but not covered in istanbul due to dist build  */
-	if (!SourceNode) {
-	  SourceNode = function (line, column, srcFile, chunks) {
-	    this.src = '';
-	    if (chunks) {
-	      this.add(chunks);
-	    }
-	  };
-	  /* istanbul ignore next */
-	  SourceNode.prototype = {
-	    add: function add(chunks) {
-	      if (_utils.isArray(chunks)) {
-	        chunks = chunks.join('');
-	      }
-	      this.src += chunks;
-	    },
-	    prepend: function prepend(chunks) {
-	      if (_utils.isArray(chunks)) {
-	        chunks = chunks.join('');
-	      }
-	      this.src = chunks + this.src;
-	    },
-	    toStringWithSourceMap: function toStringWithSourceMap() {
-	      return { code: this.toString() };
-	    },
-	    toString: function toString() {
-	      return this.src;
-	    }
-	  };
-	}
-
-	function castChunk(chunk, codeGen, loc) {
-	  if (_utils.isArray(chunk)) {
-	    var ret = [];
-
-	    for (var i = 0, len = chunk.length; i < len; i++) {
-	      ret.push(codeGen.wrap(chunk[i], loc));
-	    }
-	    return ret;
-	  } else if (typeof chunk === 'boolean' || typeof chunk === 'number') {
-	    // Handle primitives that the SourceNode will throw up on
-	    return chunk + '';
-	  }
-	  return chunk;
-	}
-
-	function CodeGen(srcFile) {
-	  this.srcFile = srcFile;
-	  this.source = [];
-	}
-
-	CodeGen.prototype = {
-	  isEmpty: function isEmpty() {
-	    return !this.source.length;
-	  },
-	  prepend: function prepend(source, loc) {
-	    this.source.unshift(this.wrap(source, loc));
-	  },
-	  push: function push(source, loc) {
-	    this.source.push(this.wrap(source, loc));
-	  },
-
-	  merge: function merge() {
-	    var source = this.empty();
-	    this.each(function (line) {
-	      source.add(['  ', line, '\n']);
-	    });
-	    return source;
-	  },
-
-	  each: function each(iter) {
-	    for (var i = 0, len = this.source.length; i < len; i++) {
-	      iter(this.source[i]);
-	    }
-	  },
-
-	  empty: function empty() {
-	    var loc = this.currentLocation || { start: {} };
-	    return new SourceNode(loc.start.line, loc.start.column, this.srcFile);
-	  },
-	  wrap: function wrap(chunk) {
-	    var loc = arguments.length <= 1 || arguments[1] === undefined ? this.currentLocation || { start: {} } : arguments[1];
-
-	    if (chunk instanceof SourceNode) {
-	      return chunk;
-	    }
-
-	    chunk = castChunk(chunk, this, loc);
-
-	    return new SourceNode(loc.start.line, loc.start.column, this.srcFile, chunk);
-	  },
-
-	  functionCall: function functionCall(fn, type, params) {
-	    params = this.generateList(params);
-	    return this.wrap([fn, type ? '.' + type + '(' : '(', params, ')']);
-	  },
-
-	  quotedString: function quotedString(str) {
-	    return '"' + (str + '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\u2028/g, '\\u2028') // Per Ecma-262 7.3 + 7.8.4
-	    .replace(/\u2029/g, '\\u2029') + '"';
-	  },
-
-	  objectLiteral: function objectLiteral(obj) {
-	    var pairs = [];
-
-	    for (var key in obj) {
-	      if (obj.hasOwnProperty(key)) {
-	        var value = castChunk(obj[key], this);
-	        if (value !== 'undefined') {
-	          pairs.push([this.quotedString(key), ':', value]);
-	        }
-	      }
-	    }
-
-	    var ret = this.generateList(pairs);
-	    ret.prepend('{');
-	    ret.add('}');
-	    return ret;
-	  },
-
-	  generateList: function generateList(entries) {
-	    var ret = this.empty();
-
-	    for (var i = 0, len = entries.length; i < len; i++) {
-	      if (i) {
-	        ret.add(',');
-	      }
-
-	      ret.add(castChunk(entries[i], this));
-	    }
-
-	    return ret;
-	  },
-
-	  generateArray: function generateArray(entries) {
-	    var ret = this.generateList(entries);
-	    ret.prepend('[');
-	    ret.add(']');
-
-	    return ret;
-	  }
-	};
-
-	exports['default'] = CodeGen;
-	module.exports = exports['default'];
-
-/***/ })
-/******/ ])
-});
-
-});
-
-var Handlebars = unwrapExports(handlebarsV4_0_10);
-
-let groupType = {
-    column: 'column', // Groups suffixes into columns
-    row: 'row' // Groups suffixes into rows
-};
-
-let groupTitleLocation = {
-    column: 'column', // Group title is located in a (left-side) column
-    row: 'row' // Group title is located within a row
-};
 
 let classNames = {
     cell: 'infl-cell',
@@ -9943,150 +5155,259 @@ let classNames = {
     fullWidth: 'infl-cell--fw',
     header: 'infl-cell--hdr',
     highlight: 'infl-cell--hl',
-    hidden: 'hidden'
-};
-
-/**
- * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
- * This function is for use with Array.prototype.filter().
- * @param {FeatureType} featureType - a grammatical feature type we need to filter on
- * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
- * this ending should have
- * @param {Suffix} suffix - an ending we need to filter out
- * @returns {boolean}
- */
-let filter = function(featureType, featureValues, suffix) {
-    "use strict";
-
-    // If not an array, convert it to array for uniformity
-    if (!Array.isArray(featureValues)) {
-        featureValues = [featureValues];
-    }
-    for (const value of featureValues) {
-        if (suffix.features[featureType] === value) {
-            return true;
-        }
-    }
-
-    return false;
-};
-
-/**
- * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
- * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
- * @param {Suffix} suffixB - A second ending to merge (to be discarded).
- * @returns {Suffix} A modified value of ending A.
- */
-let merge = function(suffixA, suffixB) {
-    let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
-    for (let type of commonGroups) {
-        // Combine values using a comma separator. Can do anything else if we need to.
-        suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
-    }
-    return suffixA;
+    hidden: 'hidden',
+    suffix: 'infl-suff',
+    suffixMatch: 'infl-suff--suffix-match',
+    suffixFullFeatureMatch: 'infl-suff--full-feature-match',
+    footnotesContainer: 'infl-footnotes'
 };
 
 class Cell {
-    constructor() {
-        this.wNode = undefined; // A wide view node
-        this.nNode = undefined; // A narrow view node
-
-        this.empty = false;
-        this.suffixMatches = false;
+    /**
+     * Creates a cell for an inflection table.
+     * @param {Suffix[]} suffixes - A list of suffixes that belongs to this cell.
+     * @param {Feature[]} features - A list of features this cell corresponds to.
+     */
+    constructor(suffixes, features) {
+        this.suffixes = suffixes;
+        if (!this.suffixes) {
+            this.suffixes = [];
+        }
+        this.features = features;
+        this.empty = (this.suffixes.length === 0);
+        this.suffixMatches = !!this.suffixes.find(element => {
+            if (element.match && element.match.suffixMatch) {
+                return element.match.suffixMatch;
+            }
+        });
 
         this.column = undefined; // A column this cell belongs to
         this.row = undefined; // A row this cell belongs to
 
-        this.zeroWidthClass = classNames.widthPrefix + 0;
-        this.initialWidthClass = classNames.widthPrefix + 1;
-
         this._index = undefined;
+
+        this.render();
     }
 
-    set node(node) {
-        this.wNode = node;
-        this.nNode = node.cloneNode(true);
+    /**
+     * Renders an element's HTML representation.
+     */
+    render() {
+        let element = document.createElement('div');
+        element.classList.add(classNames.cell);
+        for (let [index, suffix] of this.suffixes.entries()) {
+            // Render each suffix
+            let suffixElement = document.createElement('a');
+            suffixElement.classList.add(classNames.suffix);
+            if (suffix.match && suffix.match.suffixMatch) {
+                suffixElement.classList.add(classNames.suffixMatch);
+            }
+            if (suffix.match && suffix.match.fullMatch) {
+                suffixElement.classList.add(classNames.suffixFullFeatureMatch);
+            }
+            let suffixValue = suffix.value? suffix.value: '-';
+            if (suffix.footnote && suffix.footnote.length) {
+                suffixValue += '[' + suffix.footnote + ']';
+            }
+            suffixElement.innerHTML = suffixValue;
+            element.appendChild(suffixElement);
+            if (index < this.suffixes.length - 1) {
+                element.appendChild(document.createTextNode(',\u00A0'));
+            }
+        }
+        this.wNode = element;
+        this.nNode = element.cloneNode(true);
     }
 
+    /**
+     * Returns an HTML element for a wide view.
+     * @returns {HTMLElement}
+     */
     get wvNode() {
         return this.wNode;
     }
 
+    /**
+     * Returns an HTML element for a narrow view.
+     * @returns {HTMLElement}
+     */
     get nvNode() {
         return this.nNode;
     }
 
+    /**
+     * Sets a unique index of the cell that can be used for cell identification via 'data-index' attribute.
+     * @param {number} index - A unique cell index.
+     */
     set index(index) {
         this._index = index;
         this.wNode.dataset.index = this._index;
         this.nNode.dataset.index = this._index;
     }
 
+    /**
+     * A proxy for adding an event listener for both wide and narrow view HTML elements.
+     * @param {string} type - Listener type.
+     * @param {EventListener} listener - Event listener function.
+     */
     addEventListener(type, listener) {
         this.wNode.addEventListener(type, listener);
         this.nNode.addEventListener(type, listener);
     }
 
+    /**
+     * Hides an element.
+     */
     hide() {
-        this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        this.nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
+        if (!this.wNode.classList.contains(classNames.hidden)) {
+            this.wNode.classList.add(classNames.hidden);
+            this.nNode.classList.add(classNames.hidden);
+        }
     }
 
+    /**
+     * Shows a previously hidden element.
+     */
     show() {
-        this.wNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
-        this.nNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
+        if (this.wNode.classList.contains(classNames.hidden)) {
+            this.wNode.classList.remove(classNames.hidden);
+            this.nNode.classList.remove(classNames.hidden);
+        }
     }
 
+    /**
+     * Highlights a cell with color.
+     */
     highlight() {
-        this.wNode.classList.add(classNames.highlight);
-        this.nNode.classList.add(classNames.highlight);
+        if (!this.wNode.classList.contains(classNames.highlight)) {
+            this.wNode.classList.add(classNames.highlight);
+            this.nNode.classList.add(classNames.highlight);
+        }
     }
 
+    /**
+     * Removes highlighting from a previously highlighted cell.
+     */
     clearHighlighting() {
-        this.wNode.classList.remove(classNames.highlight);
-        this.nNode.classList.remove(classNames.highlight);
+        if (this.wNode.classList.contains(classNames.highlight)) {
+            this.wNode.classList.remove(classNames.highlight);
+            this.nNode.classList.remove(classNames.highlight);
+        }
     }
 
+    /**
+     * Highlights a row and a column this cell belongs to.
+     */
     highlightRowAndColumn() {
+        if (!this.column) {
+            throw new Error('Column is undefined.');
+        }
+        if (!this.row) {
+            throw new Error('Row is undefined.');
+        }
         this.column.highlight();
         this.row.highlight();
     }
 
+    /**
+     * Removes highlighting form a previously highlighted row and column.
+     */
     clearRowAndColumnHighlighting() {
+        if (!this.column) {
+            throw new Error('Column is undefined.');
+        }
+        if (!this.row) {
+            throw new Error('Row is undefined.');
+        }
         this.column.clearHighlighting();
         this.row.clearHighlighting();
     }
 }
 
-class TitleCell {
-    constructor(node, nvGroupSize) {
-        this.wNode = node; // A wide view node
-        this.nvGroupSize = nvGroupSize;
-        this.nNodes = []; // Narrow nodes, one for each group
-        for (let i = 0; i < nvGroupSize; i++) {
-            this.nNodes.push(node.cloneNode(true));
-        }
+/**
+ * A cell that specifies a title for a row in an inflection table.
+ */
+class RowTitleCell {
 
+    /**
+     * Initializes a row title cell.
+     * @param {string} title - A text that will be shown within the cell.
+     * @param {GroupingFeature} groupingFeature - A grouping feature that specifies a row for which a title cell
+     * is created.
+     * @param {number} nvGroupQty - A number of narrow view groups. Because each group will be shown separately
+     * and will have its own title cells, we need to create a copy of a title cell for each such group.
+     */
+    constructor(title, groupingFeature, nvGroupQty) {
         this.parent = undefined;
+        this.title = title;
+        this.feature = groupingFeature;
+        this.nvGroupQty = nvGroupQty;
 
-        this.zeroWidthClass = classNames.widthPrefix + 0;
-        this.initialWidthClass = classNames.widthPrefix + 1;
+        this.render();
     }
 
+    /**
+     * Renders an element's HTML representation.
+     */
+    render() {
+        // Generate HTML representation for a wide view node
+        this.wNode = document.createElement('div');
+        this.wNode.classList.add(classNames.cell);
+        if (this.feature.isColumnGroup) {
+            this.wNode.classList.add(classNames.header);
+        }
+        if (this.feature.isRowGroup && this.feature.isGroupTitleInRow) {
+            // This cell is taking entire row
+            this.wNode.classList.add(classNames.fullWidth);
+        }
+        if (this.feature.isColumnGroup && this.feature.groupingFeatureList.titleColumnsQuantity > 1) {
+            this.wNode.classList.add(classNames.widthPrefix + this.feature.groupingFeatureList.titleColumnsQuantity);
+        }
+        this.wNode.innerHTML = this.title;
+
+        // Copy HTML representation to all narrow view nodes (each narrow view group has its own node)
+        this.nNodes = []; // Narrow nodes, one for each group
+        for (let i = 0; i < this.nvGroupQty; i++) {
+            this.nNodes.push(this.wNode.cloneNode(true));
+        }
+    }
+
+    /**
+     * Returns an HTML element for a wide view
+     * @returns {HTMLElement} HTML element for a wide view's cell.
+     */
     get wvNode() {
         return this.wNode;
     }
 
+    /**
+     * Returns an array HTML element for narrow view groups
+     * @returns {HTMLElement[]} Array of HTML elements for narrow view group's cells.
+     */
     getNvNode(index) {
         return this.nNodes[index];
     }
 
+    /**
+     * Generates an empty cell placeholder of a certain width. Useful for situation when empty title cells need to be
+     * inserted into a table structure (i.e. when title cells occupy multiple columns.
+     * @param {number} width - A number of columns placeholder cell will occupy.
+     * @returns {HTMLElement} HTML element of a placeholder cell.
+     */
     static placeholder(width = 1) {
         let placeholder = document.createElement('div');
         placeholder.classList.add(classNames.cell, classNames.widthPrefix + width);
         return placeholder;
     }
 
+    /**
+     * Some table layouts require multiple title cells to be shown for a row. These could be, for example, a title
+     * cell for a parent category that will follow a title cell for a category that defines a row. In such situation a
+     * title cell will have a parent, which will represent a parent cell object.
+     * This function returns an array of title cells for a row, starting from the topmost parent and moving down
+     * tot the current title cell.
+     * @returns {RowTitleCell[]} An array of title row cells representing a title cell hierarchy list.
+     */
     get hierarchyList() {
         let parentCells = [];
         if (this.parent) {
@@ -10095,20 +5416,9 @@ class TitleCell {
         return parentCells.concat(this);
     }
 
-    hide() {
-        this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        for (let nNode of this.nNodes) {
-            nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        }
-    }
-
-    show() {
-        this.wNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
-        for (let nNode of this.nNodes) {
-            nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        }
-    }
-
+    /**
+     * Highlights this row title cell
+     */
     highlight() {
         this.wNode.classList.add(classNames.highlight);
         for (let nNode of this.nNodes) {
@@ -10116,6 +5426,9 @@ class TitleCell {
         }
     }
 
+    /**
+     * Removes highlighting from this row title cell
+     */
     clearHighlighting() {
         this.wNode.classList.remove(classNames.highlight);
         for (let nNode of this.nNodes) {
@@ -10124,33 +5437,59 @@ class TitleCell {
     }
 }
 
-
+/**
+ * A cell in a header row, a column title cell.
+ */
 class HeaderCell {
-    constructor(span) {
-        this.wNode = undefined; // A wide view node
-        this.nNode = undefined; // A narrow view node
-
-        this.parent = undefined;
-        this.child = undefined;
-
+    /**
+     * Initializes a header cell.
+     * @param {string} title - A title text that will be shown in the header cell.
+     * @param {GroupingFeature} groupingFeature - A feature that defines one or several columns this header forms.
+     * @param {number} [span=1] - How many columns in a table this header cell forms.
+     */
+    constructor(title, groupingFeature, span = 1) {
+        this.feature = groupingFeature;
+        this.title = title;
         this.span = span;
 
+        this.parent = undefined;
+        this.children = [];
         this.columns = [];
+
+        this.render();
     }
 
-    set node(node) {
-        this.wNode = node;
-        this.nNode = node.cloneNode(true);
+    /**
+     * Renders an element's HTML representation.
+     */
+    render() {
+        let element = document.createElement('div');
+        element.classList.add(classNames.cell, classNames.header, classNames.widthPrefix + this.span);
+        element.innerHTML = this.title;
+        this.wNode = element;
+        this.nNode = element.cloneNode(true);
     }
 
+    /**
+     * Returns an HTML element for a wide view
+     * @returns {HTMLElement} HTML element for a wide view's cell.
+     */
     get wvNode() {
         return this.wNode;
     }
 
+    /**
+     * Returns an HTML element for a narrow view
+     * @returns {HTMLElement} HTML element for a narrow view's cell.
+     */
     get nvNode() {
         return this.nNode;
     }
 
+    /**
+     * Registers a column that's being formed by this header cell. Adds column to itself and to its parent(s).
+     * @param {Column} column - A column that is formed by this header cell.
+     */
     addColumn(column) {
         this.columns = this.columns.concat([column]);
 
@@ -10159,20 +5498,23 @@ class HeaderCell {
         }
     }
 
+    /**
+     * Temporary changes a width of a header cell. This happens when one or several columns
+     * that this header forms are hidden or shown.
+     * @param value
+     */
     changeSpan(value) {
         let currentWidthClass = classNames.widthPrefix + this.span;
         this.span += value;
         let newWidthClass = classNames.widthPrefix + this.span;
         this.wNode.classList.replace(currentWidthClass, newWidthClass);
         this.nNode.classList.replace(currentWidthClass, newWidthClass);
-
-        if (this.parent) {
-            this.parent.changeSpan(value);
-        }
     }
 
     /**
-     * Some columns were hidden or shown
+     * This function will notify all parents and children of a title column that some columns under this headers cell
+     * changed their state (i.e. were hidden or shown). This way parents and children will be able to update their
+     * states accordingly.
      */
     columnStateChange() {
         let visibleColumns = 0;
@@ -10182,63 +5524,68 @@ class HeaderCell {
             }
         }
         if (this.span !== visibleColumns) {
-            // Number of visible columns has changed
+            // Number of visible columns has been changed
             let change = visibleColumns - this.span;
             this.changeSpan(change);
-        }
 
-        // Notify parents and children
-        if (this.child) {
-            this.child.columnStateChange();
-        }
-        if (this.parent) {
-            this.parent.columnStateChange();
+            // Notify parents and children
+            if (this.children.length) {
+                for (let child of this.children) {
+                    child.columnStateChange();
+                }
+            }
+            if (this.parent) {
+                this.parent.columnStateChange();
+            }
         }
     }
 
+    /**
+     * Highlights a header cell, its parent and children
+     */
     highlight() {
-        this.wNode.classList.add(classNames.highlight);
-        this.nNode.classList.add(classNames.highlight);
-        
-        if (this.parent) {
-            this.parent.highlight();
+        if (!this.wNode.classList.contains(classNames.highlight)) {
+            this.wNode.classList.add(classNames.highlight);
+            this.nNode.classList.add(classNames.highlight);
+
+            if (this.parent) {
+                this.parent.highlight();
+            }
         }
     }
-    
+
+    /**
+     * Removes highlighting from a header cell, its parent and children
+     */
     clearHighlighting() {
-        this.wNode.classList.remove(classNames.highlight);
-        this.nNode.classList.remove(classNames.highlight);
-        
-        if (this.parent) {
-            this.parent.clearHighlighting();
+        if (this.wNode.classList.contains(classNames.highlight)) {
+            this.wNode.classList.remove(classNames.highlight);
+            this.nNode.classList.remove(classNames.highlight);
+
+            if (this.parent) {
+                this.parent.clearHighlighting();
+            }
         }
     }
 }
 
-class FeatureGroup {
-    constructor() {
-        this.subgroups = []; // Each value of the feature
-        this.cells = []; // All cells within this group and below
-        this.parent = undefined;
-        this.header = undefined;
-    }
-
-    hide() {
-        for (let element of this.elements) {
-            element.node.style.background = 'red';
-        }
-    }
-}
-
+/**
+ * Represent a column of cells in an inflection table.
+ */
 class Column {
+
+    /**
+     * Initializes column with a provided set of cells.
+     * @param {Cell} cells - Cells that are within this column.
+     */
     constructor(cells) {
-        if (!cells) {
-            cells = [];
-        }
         this.cells = cells;
+        if (!cells) {
+            this.cells = [];
+        }
         this._headerCell = undefined;
         this.hidden = false;
-        this.isEmpty = this.cells.every(cell => cell.empty);
+        this.empty = this.cells.every(cell => cell.empty);
         this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches);
         
         for (let cell of this.cells) {
@@ -10246,33 +5593,54 @@ class Column {
         }
     }
 
+    /**
+     * Assigns a header cell to the column.
+     * @param {HeaderCell} headerCell - A header cell of this column.
+     */
     set headerCell(headerCell) {
         this._headerCell = headerCell;
         headerCell.addColumn(this);
     }
 
+    /**
+     * Returns a number of cells within this column.
+     * @returns {Number} A number of cells this column contains.
+     */
     get length() {
         return this.cells.length;
     }
 
+    /**
+     * Hides the column. Notifies a header about a state change.
+     */
     hide() {
-        this.hidden = true;
+        if (!this.hidden) {
+            this.hidden = true;
 
-        for (let cell of this.cells) {
-            cell.hide();
+            for (let cell of this.cells) {
+                cell.hide();
+            }
+            this._headerCell.columnStateChange();
         }
-        this._headerCell.columnStateChange();
     }
 
+    /**
+     * Shows the column. Notifies a header about a state change.
+     */
     show() {
-        this.hidden = false;
+        if (this.hidden) {
+            this.hidden = false;
 
-        for (let cell of this.cells) {
-            cell.show();
+            for (let cell of this.cells) {
+                cell.show();
+            }
+            this._headerCell.columnStateChange();
         }
-        this._headerCell.columnStateChange();
     }
 
+    /**
+     * Highlights a column and its header.
+     */
     highlight() {
         for (let cell of this.cells) {
             cell.highlight();
@@ -10280,6 +5648,9 @@ class Column {
         this._headerCell.highlight();
     }
 
+    /**
+     * Removes highlighting from a column and its header.
+     */
     clearHighlighting() {
         for (let cell of this.cells) {
             cell.clearHighlighting();
@@ -10330,19 +5701,19 @@ class Row {
 }
 
 class GroupingFeature {
-    constructor(type, values, language, groupType, titleMessageID, titleLocation) {
+    constructor(type, values, language, titleMessageID) {
         this._feature = new FeatureType(type, values, language);
 
-        this._groupType = groupType;
         this.groupTitle = titleMessageID;
-        this._titleLocation = titleLocation;
+        this._groupType = undefined;
+        this._titleLocation = undefined;
 
-        /*this.isColumn = false;
-        this.isRow = false;*/
+        this.groupingFeatureList = undefined;
+        return this;
     }
 
     clone() {
-        let clone = new GroupingFeature(this._feature.type, this._feature.values, this._feature.language);
+        let clone = new GroupingFeature(this._feature.type, this._feature.orderIndex, this._feature.language);
         clone._groupType = this._groupType;
         clone.groupTitle = this.groupTitle;
         clone._titleLocation = this._titleLocation;
@@ -10358,15 +5729,39 @@ class GroupingFeature {
     }
 
     get isColumnGroup() {
-        return this._groupType === groupType.column;
+        return this._groupType === 'column';
     }
 
     get isRowGroup() {
-        return this._groupType === groupType.row;
+        return this._groupType === 'row';
+    }
+
+    setColumnGroupType() {
+        this._groupType = 'column';
+        return this;
+    }
+
+    setRowGroupType() {
+        this._groupType = 'row';
+        return this;
     }
 
     get isTitleInColumn() {
-        return this._titleLocation === groupTitleLocation.column;
+        return this._titleLocation === 'column';
+    }
+
+    setColumnGroupTitleLocation() {
+        this._titleLocation = 'column';
+        return this;
+    }
+
+    setRowGroupTitleLocation() {
+        this._titleLocation = 'row';
+        return this;
+    }
+
+    get isGroupTitleInRow() {
+        return this._titleLocation === 'row';
     }
 
     get size() {
@@ -10391,31 +5786,19 @@ class GroupingFeature {
     }
 
     createTitleCell(text, nvGroupSize) {
-        let titleCellNode = document.createElement('div');
-        titleCellNode.classList.add(classNames.cell);
-        if (this.isColumnGroup) {
-            titleCellNode.classList.add(classNames.header);
-        }
-        if (this.isRowGroup && this._titleLocation === groupTitleLocation.row) {
-            // This cell is taking entire row
-            titleCellNode.classList.add(classNames.fullWidth);
-        }
-        if (this.groupTitleStyles) {
-            titleCellNode.classList.add(...this.groupTitleStyles);
-        }
-
-        titleCellNode.innerHTML = text;
-        let titleCell = new TitleCell(titleCellNode, nvGroupSize);
-        titleCell.node = titleCellNode;
-        return titleCell;
+        return new RowTitleCell(text, this, nvGroupSize);
     }
 }
 
-class GroupingFeatures {
+class GroupingFeatureList {
     constructor(features) {
         this._features = features;
         this._columnFeatures = [];
         this._rowFeatures = [];
+
+        for (let feature of features) {
+            feature.groupingFeatureList = this;
+        }
 
         for (let feature of features) {
             if (feature.isColumnGroup) {
@@ -10476,21 +5859,31 @@ class GroupingFeatures {
     }
 }
 
+class FeatureGroup {
+    constructor() {
+        this.subgroups = []; // Each value of the feature
+        this.cells = []; // All cells within this group and below
+        this.parent = undefined;
+        this.header = undefined;
+    }
+
+    /*hide() {
+        for (let element of this.elements) {
+            element.node.style.background = 'red';
+        }
+    }*/
+}
+
 class Table {
-    constructor(suffixes, rowTitleColumnsQty, groupingFeatures, headerCellTemplate, cellTemplate, messages) {
+    constructor(suffixes, rowTitleColumnsQty, groupingFeatures, messages) {
         this.suffixes = suffixes;
-        this.features = new GroupingFeatures(groupingFeatures);
+        this.features = new GroupingFeatureList(groupingFeatures);
 
         this.cells = [];
         this.columns = [];
         this.rows = [];
 
         this.headers = [];
-
-        this.templates = {
-            headerCell: headerCellTemplate,
-            cell: cellTemplate
-        };
 
         this.rowTitleColumnsQty = rowTitleColumnsQty;
         this.messages = messages;
@@ -10580,6 +5973,46 @@ class Table {
         return group;
     }
 
+    /**
+     * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
+     * This function is for use with Array.prototype.filter().
+     * @param {FeatureType} featureType - a grammatical feature type we need to filter on
+     * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
+     * this ending should have
+     * @param {Suffix} suffix - an ending we need to filter out
+     * @returns {boolean}
+     */
+    static filter(featureType, featureValues, suffix) {
+        "use strict";
+
+        // If not an array, convert it to array for uniformity
+        if (!Array.isArray(featureValues)) {
+            featureValues = [featureValues];
+        }
+        for (const value of featureValues) {
+            if (suffix.features[featureType] === value) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    /**
+     * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
+     * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
+     * @param {Suffix} suffixB - A second ending to merge (to be discarded).
+     * @returns {Suffix} A modified value of ending A.
+     */
+    static merge(suffixA, suffixB) {
+        let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
+        for (let type of commonGroups) {
+            // Combine values using a comma separator. Can do anything else if we need to.
+            suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
+        }
+        return suffixA;
+    };
+
     groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
         let group = new FeatureGroup();
         group.feature = this.features.items[currentLevel];
@@ -10593,7 +6026,7 @@ class Table {
             featureTrail.push(featureValue);
 
             // Suffixes that are selected for current combination of feature values
-            let selectedSuffixes = suffixes.filter(filter.bind(this, group.feature.type, featureValue.value));
+            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.feature.type, featureValue.value));
 
             if (currentLevel < this.features.length - 1) {
                 // Divide to further groups
@@ -10605,25 +6038,10 @@ class Table {
                 // This is the last level. This represent a cell with suffixes
                 // Split result has a list of suffixes in a table cell. We can now combine duplicated items if we want
                 if (selectedSuffixes.length > 0) {
-                    selectedSuffixes = Suffix.combine(selectedSuffixes, merge);
+                    selectedSuffixes = Suffix.combine(selectedSuffixes, Table.merge);
                 }
 
-                let cell = new Cell();
-                cell.suffixes = selectedSuffixes;
-                cell.features = featureTrail.slice();
-
-                if (selectedSuffixes.length === 0) {
-                    cell.empty = true;
-                }
-
-                cell.suffixMatches = !!selectedSuffixes.find(element => element.match.suffixMatch);
-
-                // Render HTML
-                this.cellWrapper.innerHTML = this.templates.cell(cell);
-                let element = this.cellWrapper.childNodes[0];
-                this.docFragment.appendChild(element);
-                cell.node = element;
-
+                let cell = new Cell(selectedSuffixes, featureTrail.slice());
                 group.subgroups.push(cell);
                 group.cells.push(cell);
                 this.cells.push(cell);
@@ -10640,11 +6058,13 @@ class Table {
         for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
             let cellGroup = tree.subgroups[index];
 
-            // Iterate until the last row feature
+            // Iterate until it is the last row feature
             if (!currentFeature.isSameType(this.features.lastRowFeature)) {
                 let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1);
                 if (currentFeature.isRowGroup) {
                     // TODO: Avoid creating extra cells
+
+
                     let group = {
                         titleText: featureValue,
                         groups: currentResult,
@@ -10684,27 +6104,18 @@ class Table {
         for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
             let cellGroup = tree.subgroups[index];
 
-            // Iterate until the last row feature
+            // Iterate over all column features (features that form columns)
             if (currentLevel < this.features.columnFeatures.length - 1) {
                 let subCells = this.constructHeaders(cellGroup, tableHeaders, currentLevel + 1);
 
-                // Last level
+
                 let columnSpan = 0;
                 for (let cell of subCells) {
                     columnSpan += cell.span;
                 }
 
 
-                let headerCell = new HeaderCell(columnSpan);
-                headerCell.feature = currentFeature;
-                headerCell.value = featureValue;
-                headerCell.titleText = currentFeature.groupTitle;
-
-                this.cellWrapper.innerHTML = this.templates.headerCell(headerCell);
-                let element = this.cellWrapper.childNodes[0];
-                this.docFragment.appendChild(element);
-                headerCell.node = element;
-
+                let headerCell = new HeaderCell(featureValue, currentFeature, columnSpan);
                 headerCell.children = subCells;
                 for (let cell of subCells) {
                     cell.parent = headerCell;
@@ -10721,16 +6132,7 @@ class Table {
             }
             else {
                 // Last level
-                let columnSpan = 1;
-                let headerCell = new HeaderCell(columnSpan);
-                headerCell.feature = currentFeature;
-                headerCell.value = featureValue;
-                headerCell.titleText = currentFeature.groupTitle;
-
-                this.cellWrapper.innerHTML = this.templates.headerCell(headerCell);
-                let element = this.cellWrapper.childNodes[0];
-                this.docFragment.appendChild(element);
-                headerCell.node = element;
+                let headerCell = new HeaderCell(featureValue, currentFeature);
 
                 if (!tableHeaders[currentLevel]) {
                     tableHeaders[currentLevel] = new Row();
@@ -10776,7 +6178,7 @@ class Table {
         for (let row of this.rows) {
             let titleCells = row.titleCell.hierarchyList;
             if (titleCells.length < this.features.titleColumnsQuantity) {
-                this.wideView.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
+                this.wideView.nodes.appendChild(RowTitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
             }
             for (let titleCell of titleCells) {
                 this.wideView.nodes.appendChild(titleCell.wvNode);
@@ -10816,7 +6218,7 @@ class Table {
                 for (let row of this.rows) {
                     let titleCells = row.titleCell.hierarchyList;
                     if (titleCells.length < this.features.titleColumnsQuantity) {
-                        group.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
+                        group.nodes.appendChild(RowTitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
                     }
                     for (let titleCell of titleCells) {
                         group.nodes.appendChild(titleCell.getNvNode(groupIndex));
@@ -10856,7 +6258,7 @@ class Table {
 
     hideEmptyColumns() {
         for (let column of this.columns) {
-            if (column.isEmpty) {
+            if (column.empty) {
                 column.hide();
             }
         }
@@ -10895,100 +6297,46 @@ class Table {
     }
 }
 
+class Footnotes {
+    constructor(footnotes) {
+        this.footnotes = footnotes;
+
+        this.nodes = document.createElement('dl');
+        this.nodes.id = "inlection-table-footer";
+        this.nodes.classList.add(classNames.footnotesContainer);
+        for (let footnote of footnotes) {
+            let index = document.createElement('dt');
+            index.innerHTML = footnote.index;
+            this.nodes.appendChild(index);
+            let text = document.createElement('dd');
+            text.innerHTML = footnote.text;
+            this.nodes.appendChild(text);
+        }
+    }
+
+    get html() {
+        return this.nodes;
+    }
+}
+
 class View {
 
-    constructor() {
+    constructor(viewOptions) {
+
+        this.options = viewOptions;
         this.pageHeader = {};
         this.table = {};
 
-        // An HTML element where view is rendered
+        // An HTML element where this view is rendered
         this.container = undefined;
-
-        this.nodes = {
-
-        };
     }
 
-    /**
-     * A compare function that can be used to sort ending according to specific requirements of the current view.
-     * This function is for use with Array.prototype.sort().
-     * @param {FeatureType[]} featureOrder
-     * @param {Suffix} a
-     * @param {Suffix} b
-     */
-    compare(featureOrder, a, b) {
-        "use strict";
-
-        // Set custom sort order if necessary
-        // Custom sort order for each declension
-        //LibLatin.genders.order = [LibLatin.genders.feminine];
-
-
-        for (let [index, feature] of this.featureOrder.entries()) {
-            let featureTypeA = a.features[feature.type],
-                featureTypeB = b.features[feature.type];
-
-            if (feature.orderLookup[featureTypeA] > feature.orderLookup[featureTypeB]) {
-                return 1;
-            }
-            else if (feature.orderLookup[featureTypeA] < feature.orderLookup[featureTypeB]) {
-                return -1;
-            }
-            /*
-             If values on this level are equal, continue comparing using values of the next level.
-             If we are at the last level of comparison (defined by featureOrder) and children are equal, return 0.
-             */
-            else if (index === this.featureOrder.length - 1) {
-                // This is the last sort order item
-                return 0;
-            }
-        }
-
+    get partOfSpeech() {
+        return this.options.partOfSpeech;
     }
 
-    /**
-     * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
-     * This function is for use with Array.prototype.filter().
-     * @param {FeatureType} featureType - a grammatical feature type we need to filter on
-     * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
-     * this ending should have
-     * @param {Suffix} suffix - an ending we need to filter out
-     * @returns {boolean}
-     */
-    filter(featureType, featureValues, suffix) {
-        "use strict";
-
-        // If not an array, convert it to array for uniformity
-        if (!Array.isArray(featureValues)) {
-            featureValues = [featureValues];
-        }
-        for (const value of featureValues) {
-            if (suffix.features[featureType] === value) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    filterByFeature(features, suffixMatch, suffix) {
-        "use strict";
-
-        let result = true;
-        for (let feature of features) {
-            let featureValues = feature.value;
-            let featureType = feature.type;
-            if (!Array.isArray(featureValues)) {
-                featureValues = [featureValues];
-            }
-            result = result && featureValues.includes(suffix.features[featureType]);
-        }
-        // Whether to check for a suffix match
-        if (suffixMatch) {
-            result = result && suffix.match.suffixMatch;
-        }
-
-        return result;
+    get id() {
+        return this.options.id;
     }
 
     /**
@@ -11000,25 +6348,13 @@ class View {
         "use strict";
 
         this.messages = messages;
-
         this.container = container;
-        // Create data structure for a template
-        this.displayData = {};
+        this.resultSet = resultSet;
+        let selection = resultSet[this.options.partOfSpeech];
 
-        this.displayData.word = resultSet.word;
-        this.displayData.title = this.title;
-        let selection = resultSet[this.partOfSpeech];
+        this.footnotes = new Footnotes(selection.footnotes);
 
-        this.displayData.footnotes = selection.footnotes;
-
-        this.pageHeader.nodes = document.createElement('div');
-        this.pageHeader.nodes.innerHTML = this.pageHeaderTemplate(this.displayData);
-        this.footnotes = { nodes: document.createElement('div') };
-        this.footnotes.nodes.innerHTML = this.footnotesTemplate(this.displayData);
-
-
-        this.table = new Table(selection.suffixes, this.rowTitleColumnsQty, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate, messages);
-
+        this.table = new Table(selection.suffixes, this.rowTitleColumnsQty, this.options.groupingFeatures, messages);
         this.display();
     }
 
@@ -11028,616 +6364,333 @@ class View {
         // Clear the container
         this.container.innerHTML = '';
 
-        this.container.appendChild(this.pageHeader.nodes);
+        let word = document.createElement('h2');
+        word.innerHTML = this.resultSet.word;
+        this.container.appendChild(word);
+
+        let title = document.createElement('h3');
+        title.innerHTML = this.options.title;
+        this.container.appendChild(title);
+
+        this.pageHeader = document.createElement('div');
+        this.pageHeader.innerHTML = `
+        <button id="hide-empty-columns" class="switch-btn">Hide empty columns</button><button id="show-empty-columns" class="switch-btn hidden">Show empty columns</button>
+        <button id="hide-no-suffix-groups" class="switch-btn">Hide top-level groups with no suffix matches</button><button id="show-no-suffix-groups" class="switch-btn hidden">Show top-level groups with no suffix matches</button><br>
+        <p>Hover over the suffix to see its grammar features</p>
+        `;
+        this.container.appendChild(this.pageHeader);
 
 
         // Insert a wide view
         this.container.appendChild(this.table.wideView.nodes);
         // Insert narrow views
         this.container.appendChild(this.table.narrowView.nodes);
-        /*for (let group of this.table.narrowView.groups) {
-            this.container.appendChild(group.nodes);
-        }*/
-        this.container.appendChild(this.footnotes.nodes);
 
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));
-        this.pageHeader.nodes.querySelector('#show-empty-columns').addEventListener('click', this.showEmptyColumns.bind(this));
+        this.container.appendChild(this.footnotes.html);
 
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').addEventListener('click', this.hideNoSuffixGroups.bind(this));
-        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').addEventListener('click', this.showNoSuffixGroups.bind(this));
+        this.pageHeader.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));
+        this.pageHeader.querySelector('#show-empty-columns').addEventListener('click', this.showEmptyColumns.bind(this));
+
+        this.pageHeader.querySelector('#hide-no-suffix-groups').addEventListener('click', this.hideNoSuffixGroups.bind(this));
+        this.pageHeader.querySelector('#show-no-suffix-groups').addEventListener('click', this.showNoSuffixGroups.bind(this));
     }
 
 
     hideEmptyColumns() {
         this.table.hideEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#hide-empty-columns').classList.add(classNames.hidden);
+        this.pageHeader.querySelector('#show-empty-columns').classList.remove(classNames.hidden);
     }
 
     showEmptyColumns() {
         this.table.showEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#show-empty-columns').classList.add(classNames.hidden);
+        this.pageHeader.querySelector('#hide-empty-columns').classList.remove(classNames.hidden);
     }
 
     hideNoSuffixGroups() {
         this.table.hideNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#hide-no-suffix-groups').classList.add(classNames.hidden);
+        this.pageHeader.querySelector('#show-no-suffix-groups').classList.remove(classNames.hidden);
     }
 
     showNoSuffixGroups() {
         this.table.showNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#show-no-suffix-groups').classList.add(classNames.hidden);
+        this.pageHeader.querySelector('#hide-no-suffix-groups').classList.remove(classNames.hidden);
     }
 }
 
-var pageHeaderTemplate = "<h2>{{word}}</h2>\r\n\r\n<h3>{{title}}</h3>\r\n<button id=\"hide-empty-columns\" class=\"switch-btn\">Hide empty columns</button><button id=\"show-empty-columns\" class=\"switch-btn hidden\">Show empty columns</button>\r\n<button id=\"hide-no-suffix-groups\" class=\"switch-btn\">Hide top-level groups with no suffix matches</button><button id=\"show-no-suffix-groups\" class=\"switch-btn hidden\">Show top-level groups with no suffix matches</button><br>\r\n<p>Hover over the suffix to see its grammar features</p>";
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-var headerCellTemplate = "<div class=\"infl-cell infl-cell--hdr infl-cell--sp{{span}}\"\r\n     data-role=\"column-title\"\r\n     data-type=\"{{type}}\"\r\n     data-value=\"{{value}}\"\r\n     data-header-row=\"{{headerRowNum}}\"\r\n     data-column-span=\"{{span}}\"\r\n     data-suffix-matches=\"{{suffixMatches}}\"\r\n     data-column-values=\"{{columnValues}}\">\r\n    {{value}}\r\n</div>";
-
-var suffixCellTemplate = "<div class=\"infl-cell infl-cell--sp1\"\r\n     data-role=\"suffix-cell\"\r\n     data-empty=\"{{empty}}\"\r\n     data-suffix-matches=\"{{suffixMatches}}\"\r\n     data-row-values=\"{{rowValues}}\"\r\n     data-column-values=\"{{columnValues}}\">\r\n{{#each suffixes}}\r\n    <a class=\"infl-suff{{#if match.suffixMatch}} infl-suff--suffix-match{{/if}}{{#if match.fullMatch}} infl-suff--full-feature-match{{/if}}\">{{#if value}}{{value}}{{else}}-{{/if}}&nbsp;{{#if footnote.length}}[{{footnote}}]{{/if}}</a>{{#unless @last}}&nbsp;,&nbsp;{{/unless}}\r\n{{/each}}\r\n</div>";
-
-var footnotesTemplate = "<div id=\"inlection-table-footer\" >\r\n    {{#each footnotes}}\r\n        <span><strong>{{index}}:</strong> {{text}}</span><br>\r\n    {{/each}}\r\n</div>";
-
-let view = new View();
-view.id = 'nounDeclension';
-view.name = 'noun declension';
-view.title = 'Noun declension';
-view.partOfSpeech = parts.noun.value;
-view.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view.footnotesTemplate = Handlebars.compile(footnotesTemplate);
-
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
 let numbers$1 = new GroupingFeature(
     types.number,
     ['singular', 'plural'],
     languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.row);
+    'Number')
+    .setRowGroupType()
+    .setRowGroupTitleLocation();
 
 let cases$1 = new GroupingFeature(
     types.grmCase,
     ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
     languages.latin,
-    groupType.row,
-    'Case',
-    groupTitleLocation.column);
+    'Case')
+    .setRowGroupType()
+    .setColumnGroupTitleLocation();
 
 let declensions$1 = new GroupingFeature(
     types.declension,
     ['first', 'second', 'third', 'fourth', 'fifth'],
     languages.latin,
-    groupType.column,
-    'Declension',
-    groupTitleLocation.row);
+    'Declension')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
 let genders$1 = new GroupingFeature(
     types.gender,
     [['masculine', 'feminine'], 'neuter'],
     languages.latin,
-    groupType.column,
-    'Gender',
-    groupTitleLocation.row);
+    'Gender')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
 let types$2 = new GroupingFeature(
     types.type,
     ['regular', 'irregular'],
     languages.latin,
-    groupType.column,
-    'Type',
-    groupTitleLocation.row);
+    'Type')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
-view.groupingFeatures = [declensions$1, genders$1, types$2, numbers$1, cases$1];
+let viewOptions = {
+    id: 'nounDeclension',
+    name: 'noun declension',
+    title: 'Noun declension',
+    partOfSpeech: parts.noun.value,
+    groupingFeatures: [declensions$1, genders$1, types$2, numbers$1, cases$1]
+};
 
-let view$1 = new View();
-view$1.id = 'adjectiveDeclension';
-view$1.name = 'adjective declension';
-view$1.title = 'Adjective declension';
-view$1.partOfSpeech = parts.adjective.value;
-view$1.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view$1.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view$1.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view$1.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
 let numbers$2 = new GroupingFeature(
     types.number,
     ['singular', 'plural'],
     languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.row);
+    'Number')
+    .setRowGroupType()
+    .setRowGroupTitleLocation();
 
 let cases$2 = new GroupingFeature(
     types.grmCase,
     ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
     languages.latin,
-    groupType.row,
-    'Case',
-    groupTitleLocation.column);
+    'Case')
+    .setRowGroupType()
+    .setColumnGroupTitleLocation();
 
 let declensions$2 = new GroupingFeature(
     types.declension,
     ['first', 'second', 'third'],
     languages.latin,
-    groupType.column,
-    'Declension',
-    groupTitleLocation.row);
+    'Declension')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
 let genders$2 = new GroupingFeature(
     types.gender,
     ['masculine', 'feminine', 'neuter'],
     languages.latin,
-    groupType.column,
-    'Gender',
-    groupTitleLocation.row);
+    'Gender')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
 let types$3 = new GroupingFeature(
     types.type,
     ['regular', 'irregular'],
     languages.latin,
-    groupType.column,
-    'Type',
-    groupTitleLocation.row);
+    'Type')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
-view$1.groupingFeatures = [declensions$2, genders$2, types$3, numbers$2, cases$2];
+let viewOptions$1 = {
+    id: 'adjectiveDeclension',
+    name: 'adjective declension',
+    title: 'Adjective declension',
+    partOfSpeech: parts.adjective.value,
+    groupingFeatures: [declensions$2, genders$2, types$3, numbers$2, cases$2]
+};
 
-let view$2 = new View();
-view$2.id = 'verbVoiceConjugationMood';
-view$2.name = 'verb voice-conjugation-mood';
-view$2.title = 'Voice-Conjugation-Mood';
-view$2.partOfSpeech = parts.verb.value;
-view$2.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view$2.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view$2.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view$2.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
-let tenses$1 = new GroupingFeature(
-    types.tense,
-    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
-    languages.latin,
-    groupType.row,
-    'Tense',
-    groupTitleLocation.row);
-
-let numbers$3 = new GroupingFeature(
-    types.number,
-    ['singular', 'plural'],
-    languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.column);
-
-let persons$1 = new GroupingFeature(
-    types.person,
-    ['first', 'second', 'third'],
-    languages.latin,
-    groupType.row,
-    'Person',
-    groupTitleLocation.column);
-
-let voices$1 = new GroupingFeature(
-    types.voice,
-    ['active', 'passive'],
-    languages.latin,
-    groupType.column,
-    'Voice',
-    groupTitleLocation.row);
-voices$1.groupTitleStyles = ['infl-cell--sp2'];
-
-let conjugations$1 = new GroupingFeature(
-    types.conjugation,
-    ['first', 'second', 'third', 'fourth'],
-    languages.latin,
-    groupType.column,
-    'Conjugation Stem',
-    groupTitleLocation.row);
-conjugations$1.groupTitleStyles = ['infl-cell--sp2'];
-
-let moods$1 = new GroupingFeature(
-    types.mood,
-    ['indicative', 'subjunctive'],
-    languages.latin,
-    groupType.column,
-    'Mood',
-    groupTitleLocation.row);
-moods$1.groupTitleStyles = ['infl-cell--sp2'];
-
-view$2.groupingFeatures = [voices$1, conjugations$1, moods$1, tenses$1, numbers$3, persons$1];
-
-let view$3 = new View();
-view$3.id = 'verbVoiceMoodConjugation';
-view$3.name = 'verb voice-mood-conjugation';
-view$3.title = 'Voice-Mood-Conjugation';
-view$3.partOfSpeech = parts.verb.value;
-view$3.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view$3.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view$3.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view$3.footnotesTemplate = Handlebars.compile(footnotesTemplate);
-
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
 let tenses$2 = new GroupingFeature(
     types.tense,
     ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
     languages.latin,
-    groupType.row,
-    'Tense',
-    groupTitleLocation.row);
+    'Tense');
 
 let numbers$4 = new GroupingFeature(
     types.number,
     ['singular', 'plural'],
     languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.column);
+    'Number');
 
 let persons$2 = new GroupingFeature(
     types.person,
     ['first', 'second', 'third'],
     languages.latin,
-    groupType.row,
-    'Person',
-    groupTitleLocation.column);
+    'Person');
 
 let voices$2 = new GroupingFeature(
     types.voice,
     ['active', 'passive'],
     languages.latin,
-    groupType.column,
-    'Voice',
-    groupTitleLocation.row);
-voices$2.groupTitleStyles = ['infl-cell--sp2'];
+    'Voice');
 
 let conjugations$2 = new GroupingFeature(
     types.conjugation,
     ['first', 'second', 'third', 'fourth'],
     languages.latin,
-    groupType.column,
-    'Conjugation Stem',
-    groupTitleLocation.row);
-conjugations$2.groupTitleStyles = ['infl-cell--sp2'];
+    'Conjugation Stem');
 
 let moods$2 = new GroupingFeature(
     types.mood,
     ['indicative', 'subjunctive'],
     languages.latin,
-    groupType.column,
-    'Mood',
-    groupTitleLocation.row);
-moods$2.groupTitleStyles = ['infl-cell--sp2'];
+    'Mood');
 
-view$3.groupingFeatures = [voices$2, moods$2, conjugations$2, tenses$2, numbers$4, persons$2];
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-let view$4 = new View();
-view$4.id = 'verbConjugationVoiceMood';
-view$4.name = 'verb conjugation-voice-mood';
-view$4.title = 'Conjugation-Voice-Mood';
-view$4.partOfSpeech = parts.verb.value;
-view$4.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view$4.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view$4.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view$4.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+let tenses$1 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$3 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$1 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$1 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$1 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$1 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
 
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
-let tenses$3 = new GroupingFeature(
-    types.tense,
-    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
-    languages.latin,
-    groupType.row,
-    'Tense',
-    groupTitleLocation.row);
+let viewOptions$2 = {
+    id: 'verbVoiceConjugationMood',
+    name: 'verb voice-conjugation-mood',
+    title: 'Voice-Conjugation-Mood',
+    partOfSpeech: parts.verb.value,
+    groupingFeatures: [voices$1, conjugations$1, moods$1, tenses$1, numbers$3, persons$1]
+};
 
-let numbers$5 = new GroupingFeature(
-    types.number,
-    ['singular', 'plural'],
-    languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.column);
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-let persons$3 = new GroupingFeature(
-    types.person,
-    ['first', 'second', 'third'],
-    languages.latin,
-    groupType.row,
-    'Person',
-    groupTitleLocation.column);
+let tenses$3 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$5 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$3 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$3 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$3 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$3 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
 
-let voices$3 = new GroupingFeature(
-    types.voice,
-    ['active', 'passive'],
-    languages.latin,
-    groupType.column,
-    'Voice',
-    groupTitleLocation.row);
-voices$3.groupTitleStyles = ['infl-cell--sp2'];
+let viewOptions$3 = {
+    id: 'verbVoiceMoodConjugation',
+    name: 'verb voice-mood-conjugation',
+    title: 'Voice-Mood-Conjugation',
+    partOfSpeech: parts.verb.value,
+    groupingFeatures: [voices$3, moods$3, conjugations$3, tenses$3, numbers$5, persons$3]
+};
 
-let conjugations$3 = new GroupingFeature(
-    types.conjugation,
-    ['first', 'second', 'third', 'fourth'],
-    languages.latin,
-    groupType.column,
-    'Conjugation Stem',
-    groupTitleLocation.row);
-conjugations$3.groupTitleStyles = ['infl-cell--sp2'];
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-let moods$3 = new GroupingFeature(
-    types.mood,
-    ['indicative', 'subjunctive'],
-    languages.latin,
-    groupType.column,
-    'Mood',
-    groupTitleLocation.row);
-moods$3.groupTitleStyles = ['infl-cell--sp2'];
+let tenses$4 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$6 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$4 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$4 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$4 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$4 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
 
-view$4.groupingFeatures = [conjugations$3, voices$3, moods$3, tenses$3, numbers$5, persons$3];
+let viewOptions$4 = {
+    id: 'verbConjugationVoiceMood',
+    name: 'verb conjugation-voice-mood',
+    title: 'Conjugation-Voice-Mood',
+    partOfSpeech: parts.verb.value,
+    groupingFeatures: [conjugations$4, voices$4, moods$4, tenses$4, numbers$6, persons$4]
+};
 
-let view$5 = new View();
-view$5.id = 'verbConjugationMoodVoice';
-view$5.name = 'verb conjugation-mood-voice';
-view$5.title = 'Conjugation-Mood-Voice';
-view$5.partOfSpeech = parts.verb.value;
-view$5.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view$5.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view$5.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view$5.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
-let tenses$4 = new GroupingFeature(
-    types.tense,
-    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
-    languages.latin,
-    groupType.row,
-    'Tense',
-    groupTitleLocation.row);
+let tenses$5 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$7 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$5 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$5 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$5 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$5 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
 
-let numbers$6 = new GroupingFeature(
-    types.number,
-    ['singular', 'plural'],
-    languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.column);
+let viewOptions$5 = {
+    id: 'verbConjugationMoodVoice',
+    name: 'verb conjugation-mood-voice',
+    title: 'Conjugation-Mood-Voice',
+    partOfSpeech: parts.verb.value,
+    groupingFeatures: [conjugations$5, moods$5, voices$5, tenses$5, numbers$7, persons$5]
+};
 
-let persons$4 = new GroupingFeature(
-    types.person,
-    ['first', 'second', 'third'],
-    languages.latin,
-    groupType.row,
-    'Person',
-    groupTitleLocation.column);
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-let voices$4 = new GroupingFeature(
-    types.voice,
-    ['active', 'passive'],
-    languages.latin,
-    groupType.column,
-    'Voice',
-    groupTitleLocation.row);
-voices$4.groupTitleStyles = ['infl-cell--sp2'];
+let tenses$6 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$8 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$6 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$6 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$6 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$6 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
 
-let conjugations$4 = new GroupingFeature(
-    types.conjugation,
-    ['first', 'second', 'third', 'fourth'],
-    languages.latin,
-    groupType.column,
-    'Conjugation Stem',
-    groupTitleLocation.row);
-conjugations$4.groupTitleStyles = ['infl-cell--sp2'];
+let viewOptions$6 = {
+    id: 'verbMoodVoiceConjugation',
+    name: 'verb mood-voice-conjugation',
+    title: 'Mood-Voice-Conjugation',
+    partOfSpeech: parts.verb.value,
+    groupingFeatures: [moods$6, voices$6, conjugations$6, tenses$6, numbers$8, persons$6]
+};
 
-let moods$4 = new GroupingFeature(
-    types.mood,
-    ['indicative', 'subjunctive'],
-    languages.latin,
-    groupType.column,
-    'Mood',
-    groupTitleLocation.row);
-moods$4.groupTitleStyles = ['infl-cell--sp2'];
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-view$5.groupingFeatures = [conjugations$4, moods$4, voices$4, tenses$4, numbers$6, persons$4];
+let tenses$7 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$9 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$7 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$7 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$7 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$7 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
 
-let view$6 = new View();
-view$6.id = 'verbMoodVoiceConjugation';
-view$6.name = 'verb mood-voice-conjugation';
-view$6.title = 'Mood-Voice-Conjugation';
-view$6.partOfSpeech = parts.verb.value;
-view$6.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view$6.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view$6.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view$6.footnotesTemplate = Handlebars.compile(footnotesTemplate);
-
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
-let tenses$5 = new GroupingFeature(
-    types.tense,
-    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
-    languages.latin,
-    groupType.row,
-    'Tense',
-    groupTitleLocation.row);
-
-let numbers$7 = new GroupingFeature(
-    types.number,
-    ['singular', 'plural'],
-    languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.column);
-
-let persons$5 = new GroupingFeature(
-    types.person,
-    ['first', 'second', 'third'],
-    languages.latin,
-    groupType.row,
-    'Person',
-    groupTitleLocation.column);
-
-let voices$5 = new GroupingFeature(
-    types.voice,
-    ['active', 'passive'],
-    languages.latin,
-    groupType.column,
-    'Voice',
-    groupTitleLocation.row);
-voices$5.groupTitleStyles = ['infl-cell--sp2'];
-
-let conjugations$5 = new GroupingFeature(
-    types.conjugation,
-    ['first', 'second', 'third', 'fourth'],
-    languages.latin,
-    groupType.column,
-    'Conjugation Stem',
-    groupTitleLocation.row);
-conjugations$5.groupTitleStyles = ['infl-cell--sp2'];
-
-let moods$5 = new GroupingFeature(
-    types.mood,
-    ['indicative', 'subjunctive'],
-    languages.latin,
-    groupType.column,
-    'Mood',
-    groupTitleLocation.row);
-moods$5.groupTitleStyles = ['infl-cell--sp2'];
-
-view$6.groupingFeatures = [moods$5, voices$5, conjugations$5, tenses$5, numbers$7, persons$5];
-
-let view$7 = new View();
-view$7.id = 'verbMoodConjugationVoice';
-view$7.name = 'verb mood-conjugation-voice';
-view$7.title = 'Mood-Conjugation-Voice';
-view$7.partOfSpeech = parts.verb.value;
-view$7.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view$7.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view$7.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view$7.footnotesTemplate = Handlebars.compile(footnotesTemplate);
-
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
-let tenses$6 = new GroupingFeature(
-    types.tense,
-    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
-    languages.latin,
-    groupType.row,
-    'Tense',
-    groupTitleLocation.row);
-
-let numbers$8 = new GroupingFeature(
-    types.number,
-    ['singular', 'plural'],
-    languages.latin,
-    groupType.row,
-    'Number',
-    groupTitleLocation.column);
-
-let persons$6 = new GroupingFeature(
-    types.person,
-    ['first', 'second', 'third'],
-    languages.latin,
-    groupType.row,
-    'Person',
-    groupTitleLocation.column);
-
-let voices$6 = new GroupingFeature(
-    types.voice,
-    ['active', 'passive'],
-    languages.latin,
-    groupType.column,
-    'Voice',
-    groupTitleLocation.row);
-voices$6.groupTitleStyles = ['infl-cell--sp2'];
-
-let conjugations$6 = new GroupingFeature(
-    types.conjugation,
-    ['first', 'second', 'third', 'fourth'],
-    languages.latin,
-    groupType.column,
-    'Conjugation Stem',
-    groupTitleLocation.row);
-conjugations$6.groupTitleStyles = ['infl-cell--sp2'];
-
-let moods$6 = new GroupingFeature(
-    types.mood,
-    ['indicative', 'subjunctive'],
-    languages.latin,
-    groupType.column,
-    'Mood',
-    groupTitleLocation.row);
-moods$6.groupTitleStyles = ['infl-cell--sp2'];
-
-view$7.groupingFeatures = [moods$6, conjugations$6, voices$6, tenses$6, numbers$8, persons$6];
+let viewOptions$7 = {
+    id: 'verbMoodConjugationVoice',
+    name: 'verb mood-conjugation-voice',
+    title: 'Mood-Conjugation-Voice',
+    partOfSpeech: parts.verb.value,
+    groupingFeatures: [moods$7, conjugations$7, voices$7, tenses$7, numbers$9, persons$7]
+};
 
 /**
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
@@ -11653,16 +6706,17 @@ class Presenter {
         this.zeroWidthClass = 'hidden';
 
         // All views registered by the Presenter
-        this.registeredViews = {
-            nounDeclension: view,
-            adjectiveDeclension: view$1,
-            verbVoiceConjugationMood: view$2,
-            verbVoiceMoodConjugation: view$3,
-            verbConjugationVoiceMood: view$4,
-            verbConjugationMoodVoice: view$5,
-            verbMoodVoiceConjugation: view$6,
-            verbMoodConjugationVoice: view$7
-        };
+        this.views = [];
+        this.viewIndex = {};
+
+        this.addView(viewOptions);
+        this.addView(viewOptions$1);
+        this.addView(viewOptions$2);
+        this.addView(viewOptions$3);
+        this.addView(viewOptions$4);
+        this.addView(viewOptions$5);
+        this.addView(viewOptions$6);
+        this.addView(viewOptions$7);
 
         // Views available for parts of speech that are present in a Result Set
         this.availableViews = this.getViews(this.resultSet[types.part]);
@@ -11676,11 +6730,16 @@ class Presenter {
         return this;
     }
 
+    addView(viewOptions$$1) {
+       let view =  new View(viewOptions$$1);
+       this.views.push(view);
+       this.viewIndex[view.id] = view;
+    }
+
     setLocale(locale) {
         this.locale = locale;
         this.activeView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
     }
-
 
     render() {
         "use strict";
@@ -11702,10 +6761,10 @@ class Presenter {
             viewLabel.setAttribute('for', id);
             viewLabel.innerHTML = "View:&nbsp;";
             let viewList = document.createElement('select');
-            for (const view$$1 of this.availableViews) {
+            for (const view of this.availableViews) {
                 let option = document.createElement("option");
-                option.value = view$$1.id;
-                option.text = view$$1.name;
+                option.value = view.options.id;
+                option.text = view.options.name;
                 viewList.appendChild(option);
             }
             viewList.addEventListener('change', this.viewSelectorEventListener.bind(this));
@@ -11716,9 +6775,9 @@ class Presenter {
 
     viewSelectorEventListener(event) {
         let viewID = event.target.value;
-        let view$$1 = this.registeredViews[viewID];
-        this.registeredViews[viewID].render(this.container, this.resultSet, this.l10n.messages(this.locale));
-        this.activeView = this.registeredViews[viewID];
+        let view = this.viewIndex[viewID];
+        view.render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView = view;
     }
 
     appendLocaleSelector(targetSelector) {
@@ -11749,19 +6808,10 @@ class Presenter {
     getViews(partsOfSpeech) {
         // First view in a returned array will be a default one
         let views = [];
-        if (partsOfSpeech.includes('noun')) {
-            views.push(this.registeredViews.nounDeclension);
-        }
-        if (partsOfSpeech.includes('adjective')) {
-            views.push(this.registeredViews.adjectiveDeclension);
-        }
-        if (partsOfSpeech.includes('verb')) {
-            views.push(this.registeredViews.verbVoiceConjugationMood);
-            views.push(this.registeredViews.verbVoiceMoodConjugation);
-            views.push(this.registeredViews.verbConjugationVoiceMood);
-            views.push(this.registeredViews.verbConjugationMoodVoice);
-            views.push(this.registeredViews.verbMoodVoiceConjugation);
-            views.push(this.registeredViews.verbMoodConjugationVoice);
+        for (let view of this.views) {
+            if (partsOfSpeech.includes(view.partOfSpeech)) {
+                views.push(view);
+            }
         }
         return views;
     }
@@ -11770,11 +6820,10 @@ class Presenter {
 // Import shared language data
 // Load Latin language data
 let langData = dataSet;
-// Prepare lang data for first use
+// Prepare lang data for the first use
 dataSet.loadData();
 
 
-// region Test selector
 let testCases = [
     {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun"},
     {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective"},
@@ -11820,8 +6869,6 @@ let show = function show(word, fileNameBase) {
         console.error(error);
     });
 };
-
-// endregion Test selector
 
 })));
 //# sourceMappingURL=inflection-tables.js.map

@@ -1,71 +1,57 @@
 import * as Lib from "../../../lib/lib.js";
 import * as LibLatin from "../../../lib/lang/latin/latin.js";
-import Handlebars from "../../support/handlebars-4.0.10/handlebars-v4.0.10";  // CommonJS module
-import * as View from "../view.js";
-import pageHeaderTemplate from '../../templates/page-header.hbs';
-import headerCellTemplate from '../../templates/header-cell.hbs';
-import suffixCellTemplate from '../../templates/suffix-cell.hbs';
-import footnotesTemplate from '../../templates/footer.hbs';
+import * as View from "../../lib/view.js";
 
-let view = new View.View();
-view.id = 'nounDeclension';
-view.name = 'noun declension';
-view.title = 'Noun declension';
-view.partOfSpeech = LibLatin.parts.noun.value;
-view.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
 let numbers = new View.GroupingFeature(
     Lib.types.number,
     ['singular', 'plural'],
     Lib.languages.latin,
-    View.groupType.row,
-    'Number',
-    View.groupTitleLocation.row);
+    'Number')
+    .setRowGroupType()
+    .setRowGroupTitleLocation();
 
 let cases = new View.GroupingFeature(
     Lib.types.grmCase,
     ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
     Lib.languages.latin,
-    View.groupType.row,
-    'Case',
-    View.groupTitleLocation.column);
+    'Case')
+    .setRowGroupType()
+    .setColumnGroupTitleLocation();
 
 let declensions = new View.GroupingFeature(
     Lib.types.declension,
     ['first', 'second', 'third', 'fourth', 'fifth'],
     Lib.languages.latin,
-    View.groupType.column,
-    'Declension',
-    View.groupTitleLocation.row);
+    'Declension')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
 let genders = new View.GroupingFeature(
     Lib.types.gender,
     [['masculine', 'feminine'], 'neuter'],
     Lib.languages.latin,
-    View.groupType.column,
-    'Gender',
-    View.groupTitleLocation.row);
+    'Gender')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
 let types = new View.GroupingFeature(
     Lib.types.type,
     ['regular', 'irregular'],
     Lib.languages.latin,
-    View.groupType.column,
-    'Type',
-    View.groupTitleLocation.row);
+    'Type')
+    .setColumnGroupType()
+    .setRowGroupTitleLocation();
 
-view.groupingFeatures = [declensions, genders, types, numbers, cases];
-
-export default view;
+let viewOptions = {
+    id: 'nounDeclension',
+    name: 'noun declension',
+    title: 'Noun declension',
+    partOfSpeech: LibLatin.parts.noun.value,
+    groupingFeatures: [declensions, genders, types, numbers, cases]
+};
+export default viewOptions;

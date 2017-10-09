@@ -51,8 +51,8 @@ class Feature {
      * Initializes a Feature object
      * @param {string | string[]} value - A single feature value or, if this feature could have multiple
      * values, an array of values.
-     * @param {types} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {languages} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor (value, type, language) {
         if (!types.isAllowed(type)) {
@@ -774,8 +774,9 @@ class Suffix {
     /**
      * Initializes a Suffix object.
      * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
+     * @param {MatchData} match - An information about what matches were found for this suffix (optional).
      */
-    constructor(suffixValue) {
+    constructor(suffixValue, match) {
         "use strict";
 
         if (suffixValue === undefined) {
@@ -784,6 +785,7 @@ class Suffix {
         this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
+        this.match = match;
     }
 
     /**
@@ -984,13 +986,13 @@ class Footnonte {
 }
 
 /**
- * Detailed information about a match type
+ * Detailed information about a match type.
  */
 class MatchData {
     constructor() {
-        this.suffixMatch = false; // When two suffixes are the same
-        this.fullMatch = false; // When two suffixes and all grammatical features, including part of speech, are the same
-        this.matchedFeatures = []; // How many features matches
+        this.suffixMatch = false; // Whether two suffixes are the same.
+        this.fullMatch = false; // Whether two suffixes and all grammatical features, including part of speech, are the same.
+        this.matchedFeatures = []; // How many features matches each other.
     }
 }
 

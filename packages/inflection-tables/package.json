@@ -10,7 +10,6 @@
     "test": "jest",
     "build": "node build.js",
     "buildextension": "node build-extension.js",
-    "buildtemplates": "handlebars presenter/views/ -f ./presenter/views/views.js -e hbs",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
   "repository": {
@@ -29,6 +28,7 @@
     "handlebars": "^4.0.10",
     "intl-messageformat": "^2.1.0",
     "jest": "^20.0.4",
+    "jest-cli": "^21.2.1",
     "papaparse": "^4.3.6",
     "rollup": "^0.47.6",
     "rollup-plugin-commonjs": "^8.2.1",

@@ -7,7 +7,7 @@ const string = require('rollup-plugin-string');
 const defaultPlugins = [
     string({
         // Required to be specified
-        include: ['presenter/templates/**/*.hbs', 'lib/lang/**/*.csv'],
+        include: ['lib/lang/**/*.csv'],
 
         // Undefined by default
         //exclude: ['**/index.html']
@@ -84,7 +84,7 @@ const defaultPlugins = [
             // left-hand side can be an absolute path, a path
             // relative to the current directory, or the name
             // of a module in node_modules
-            'node_modules/my-lib/index.js': [ 'named' ]
+            //'node_modules/my-lib/index.js': [ 'named' ]
         }
     })
 ];
@@ -113,7 +113,7 @@ rollup.rollup({
 }).then(bundle => {
     bundle.write({
         format: 'umd',
-        dest: 'dist/inflection-tables-test.js'
+        dest: 'tests/test-bundle.js'
     })
 }).catch(reason => {
     "use strict";

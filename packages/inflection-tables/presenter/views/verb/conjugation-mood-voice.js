@@ -1,82 +1,24 @@
-import * as Lib from "../../../lib/lib.js";
 import * as LibLatin from "../../../lib/lang/latin/latin.js";
-import Handlebars from "../../support/handlebars-4.0.10/handlebars-v4.0.10";  // CommonJS module
-import * as View from "../view.js";
-import pageHeaderTemplate from '../../templates/page-header.hbs';
-import headerCellTemplate from '../../templates/header-cell.hbs';
-import suffixCellTemplate from '../../templates/suffix-cell.hbs';
-import footnotesTemplate from '../../templates/footer.hbs';
+import * as Verb from "./verb";
 
-let view = new View.View();
-view.id = 'verbConjugationMoodVoice';
-view.name = 'verb conjugation-mood-voice';
-view.title = 'Conjugation-Mood-Voice';
-view.partOfSpeech = LibLatin.parts.verb.value;
-view.pageHeaderTemplate = Handlebars.compile(pageHeaderTemplate);
-view.headerCellTemplate = Handlebars.compile(headerCellTemplate);
-view.suffixCellTemplate = Handlebars.compile(suffixCellTemplate);
-view.footnotesTemplate = Handlebars.compile(footnotesTemplate);
+/*
+Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
+GroupingFeature options.
+*/
 
-/**
- * These values are used to define sorting and grouping order. 'featureOrder' determine a sequence in which
- * feature will be used for sorting. The same sequence will be used to group items when building a view matrix.
- * All feature types has a default sort order. This order is defined by a sequence of feature values provided
- * as arguments to each feature type constructor. However, this can be overridden here, as shown by the 'gender'
- * example. If suffixes with several values must be combines, such values can be provided within an array,
- * as shown by 'masculine' and 'feminine' values.
- *
- */
-let tenses = new View.GroupingFeature(
-    Lib.types.tense,
-    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
-    Lib.languages.latin,
-    View.groupType.row,
-    'Tense',
-    View.groupTitleLocation.row);
+let tenses = Verb.tenses.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers = Verb.numbers.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons = Verb.persons.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices = Verb.voices.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations = Verb.conjugations.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods = Verb.moods.clone().setColumnGroupType().setRowGroupTitleLocation();
 
-let numbers = new View.GroupingFeature(
-    Lib.types.number,
-    ['singular', 'plural'],
-    Lib.languages.latin,
-    View.groupType.row,
-    'Number',
-    View.groupTitleLocation.column);
+let viewOptions = {
+    id: 'verbConjugationMoodVoice',
+    name: 'verb conjugation-mood-voice',
+    title: 'Conjugation-Mood-Voice',
+    partOfSpeech: LibLatin.parts.verb.value,
+    groupingFeatures: [conjugations, moods, voices, tenses, numbers, persons]
+};
 
-let persons = new View.GroupingFeature(
-    Lib.types.person,
-    ['first', 'second', 'third'],
-    Lib.languages.latin,
-    View.groupType.row,
-    'Person',
-    View.groupTitleLocation.column);
-
-let voices = new View.GroupingFeature(
-    Lib.types.voice,
-    ['active', 'passive'],
-    Lib.languages.latin,
-    View.groupType.column,
-    'Voice',
-    View.groupTitleLocation.row);
-voices.groupTitleStyles = ['infl-cell--sp2'];
-
-let conjugations = new View.GroupingFeature(
-    Lib.types.conjugation,
-    ['first', 'second', 'third', 'fourth'],
-    Lib.languages.latin,
-    View.groupType.column,
-    'Conjugation Stem',
-    View.groupTitleLocation.row);
-conjugations.groupTitleStyles = ['infl-cell--sp2'];
-
-let moods = new View.GroupingFeature(
-    Lib.types.mood,
-    ['indicative', 'subjunctive'],
-    Lib.languages.latin,
-    View.groupType.column,
-    'Mood',
-    View.groupTitleLocation.row);
-moods.groupTitleStyles = ['infl-cell--sp2'];
-
-view.groupingFeatures = [conjugations, moods, voices, tenses, numbers, persons];
-
-export default view;
+export default viewOptions;

@@ -1,4 +1,4 @@
-const t = require('../../dist/inflection-tables-test');
+const t = require('../../tests/test-bundle');
 
 describe('Feature object', () => {
     "use strict";
@@ -687,7 +687,7 @@ describe('LanguageDataset object', () => {
             language: t.languages.latin,
             suffixes: [],
             features: {},
-            footnotes: {}
+            footnotes: []
         });
 
     });
@@ -726,8 +726,10 @@ describe('LanguageDataset object', () => {
     test('addFootnote should add proper data into a footnotes object', () => {
         "use strict";
 
-        languageDataset.addFootnote(5, 'Footnote text');
-        expect(languageDataset.footnotes).toEqual(expect.objectContaining({5: 'Footnote text'}));
+        let partOfSpeech = new t.Feature('noun', t.types.part, t.languages.latin);
+        languageDataset.addFootnote(partOfSpeech, 5, 'Footnote text');
+        expect(languageDataset.footnotes).toEqual(
+            expect.arrayContaining([{index: 5, text: 'Footnote text', "part of speech": "noun"}]));
 
     });
 

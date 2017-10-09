@@ -1,167 +1,253 @@
-import * as Lib from "../../lib/lib.js";
-import Handlebars from "../support/handlebars-4.0.10/handlebars-v4.0.10";  // CommonJS module
-export {groupType, groupTitleLocation, GroupingFeature, GroupingFeatures, View};
-
-let groupType = {
-    column: 'column', // Groups suffixes into columns
-    row: 'row' // Groups suffixes into rows
-};
-
-let groupTitleLocation = {
-    column: 'column', // Group title is located in a (left-side) column
-    row: 'row' // Group title is located within a row
-};
-
-let classNames = {
-    cell: 'infl-cell',
-    widthPrefix: 'infl-cell--sp',
-    fullWidth: 'infl-cell--fw',
-    header: 'infl-cell--hdr',
-    highlight: 'infl-cell--hl',
-    hidden: 'hidden'
-};
-
-/**
- * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
- * This function is for use with Array.prototype.filter().
- * @param {FeatureType} featureType - a grammatical feature type we need to filter on
- * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
- * this ending should have
- * @param {Suffix} suffix - an ending we need to filter out
- * @returns {boolean}
- */
-let filter = function(featureType, featureValues, suffix) {
-    "use strict";
-
-    // If not an array, convert it to array for uniformity
-    if (!Array.isArray(featureValues)) {
-        featureValues = [featureValues];
-    }
-    for (const value of featureValues) {
-        if (suffix.features[featureType] === value) {
-            return true;
-        }
-    }
-
-    return false;
-};
-
-/**
- * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
- * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
- * @param {Suffix} suffixB - A second ending to merge (to be discarded).
- * @returns {Suffix} A modified value of ending A.
- */
-let merge = function(suffixA, suffixB) {
-    let commonGroups = Lib.Suffix.getCommonGroups([suffixA, suffixB]);
-    for (let type of commonGroups) {
-        // Combine values using a comma separator. Can do anything else if we need to.
-        suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
-    }
-    return suffixA;
-};
+import * as Lib from "../../lib/lib";
+import * as Styles from "../styles/styles";
+export {Cell, RowTitleCell, HeaderCell, Column, Row, GroupingFeature, GroupingFeatureList, View};
 
 class Cell {
-    constructor() {
-        this.wNode = undefined; // A wide view node
-        this.nNode = undefined; // A narrow view node
-
-        this.empty = false;
-        this.suffixMatches = false;
+    /**
+     * Creates a cell for an inflection table.
+     * @param {Suffix[]} suffixes - A list of suffixes that belongs to this cell.
+     * @param {Feature[]} features - A list of features this cell corresponds to.
+     */
+    constructor(suffixes, features) {
+        this.suffixes = suffixes;
+        if (!this.suffixes) {
+            this.suffixes = [];
+        }
+        this.features = features;
+        this.empty = (this.suffixes.length === 0);
+        this.suffixMatches = !!this.suffixes.find(element => {
+            if (element.match && element.match.suffixMatch) {
+                return element.match.suffixMatch;
+            }
+        });
 
         this.column = undefined; // A column this cell belongs to
         this.row = undefined; // A row this cell belongs to
 
-        this.zeroWidthClass = classNames.widthPrefix + 0;
-        this.initialWidthClass = classNames.widthPrefix + 1;
-
         this._index = undefined;
+
+        this.render();
     }
 
-    set node(node) {
-        this.wNode = node;
-        this.nNode = node.cloneNode(true);
+    /**
+     * Renders an element's HTML representation.
+     */
+    render() {
+        let element = document.createElement('div');
+        element.classList.add(Styles.classNames.cell);
+        for (let [index, suffix] of this.suffixes.entries()) {
+            // Render each suffix
+            let suffixElement = document.createElement('a');
+            suffixElement.classList.add(Styles.classNames.suffix);
+            if (suffix.match && suffix.match.suffixMatch) {
+                suffixElement.classList.add(Styles.classNames.suffixMatch);
+            }
+            if (suffix.match && suffix.match.fullMatch) {
+                suffixElement.classList.add(Styles.classNames.suffixFullFeatureMatch);
+            }
+            let suffixValue = suffix.value? suffix.value: '-';
+            if (suffix.footnote && suffix.footnote.length) {
+                suffixValue += '[' + suffix.footnote + ']';
+            }
+            suffixElement.innerHTML = suffixValue;
+            element.appendChild(suffixElement);
+            if (index < this.suffixes.length - 1) {
+                element.appendChild(document.createTextNode(',\u00A0'));
+            }
+        }
+        this.wNode = element;
+        this.nNode = element.cloneNode(true);
     }
 
+    /**
+     * Returns an HTML element for a wide view.
+     * @returns {HTMLElement}
+     */
     get wvNode() {
         return this.wNode;
     }
 
+    /**
+     * Returns an HTML element for a narrow view.
+     * @returns {HTMLElement}
+     */
     get nvNode() {
         return this.nNode;
     }
 
+    /**
+     * Sets a unique index of the cell that can be used for cell identification via 'data-index' attribute.
+     * @param {number} index - A unique cell index.
+     */
     set index(index) {
         this._index = index;
         this.wNode.dataset.index = this._index;
         this.nNode.dataset.index = this._index;
     }
 
+    /**
+     * A proxy for adding an event listener for both wide and narrow view HTML elements.
+     * @param {string} type - Listener type.
+     * @param {EventListener} listener - Event listener function.
+     */
     addEventListener(type, listener) {
         this.wNode.addEventListener(type, listener);
         this.nNode.addEventListener(type, listener);
     }
 
+    /**
+     * Hides an element.
+     */
     hide() {
-        this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        this.nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
+        if (!this.wNode.classList.contains(Styles.classNames.hidden)) {
+            this.wNode.classList.add(Styles.classNames.hidden);
+            this.nNode.classList.add(Styles.classNames.hidden);
+        }
     }
 
+    /**
+     * Shows a previously hidden element.
+     */
     show() {
-        this.wNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
-        this.nNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
+        if (this.wNode.classList.contains(Styles.classNames.hidden)) {
+            this.wNode.classList.remove(Styles.classNames.hidden);
+            this.nNode.classList.remove(Styles.classNames.hidden);
+        }
     }
 
+    /**
+     * Highlights a cell with color.
+     */
     highlight() {
-        this.wNode.classList.add(classNames.highlight);
-        this.nNode.classList.add(classNames.highlight);
+        if (!this.wNode.classList.contains(Styles.classNames.highlight)) {
+            this.wNode.classList.add(Styles.classNames.highlight);
+            this.nNode.classList.add(Styles.classNames.highlight);
+        }
     }
 
+    /**
+     * Removes highlighting from a previously highlighted cell.
+     */
     clearHighlighting() {
-        this.wNode.classList.remove(classNames.highlight);
-        this.nNode.classList.remove(classNames.highlight);
+        if (this.wNode.classList.contains(Styles.classNames.highlight)) {
+            this.wNode.classList.remove(Styles.classNames.highlight);
+            this.nNode.classList.remove(Styles.classNames.highlight);
+        }
     }
 
+    /**
+     * Highlights a row and a column this cell belongs to.
+     */
     highlightRowAndColumn() {
+        if (!this.column) {
+            throw new Error('Column is undefined.');
+        }
+        if (!this.row) {
+            throw new Error('Row is undefined.');
+        }
         this.column.highlight();
         this.row.highlight();
     }
 
+    /**
+     * Removes highlighting form a previously highlighted row and column.
+     */
     clearRowAndColumnHighlighting() {
+        if (!this.column) {
+            throw new Error('Column is undefined.');
+        }
+        if (!this.row) {
+            throw new Error('Row is undefined.');
+        }
         this.column.clearHighlighting();
         this.row.clearHighlighting();
     }
 }
 
-class TitleCell {
-    constructor(node, nvGroupSize) {
-        this.wNode = node; // A wide view node
-        this.nvGroupSize = nvGroupSize;
-        this.nNodes = []; // Narrow nodes, one for each group
-        for (let i = 0; i < nvGroupSize; i++) {
-            this.nNodes.push(node.cloneNode(true));
-        }
+/**
+ * A cell that specifies a title for a row in an inflection table.
+ */
+class RowTitleCell {
 
+    /**
+     * Initializes a row title cell.
+     * @param {string} title - A text that will be shown within the cell.
+     * @param {GroupingFeature} groupingFeature - A grouping feature that specifies a row for which a title cell
+     * is created.
+     * @param {number} nvGroupQty - A number of narrow view groups. Because each group will be shown separately
+     * and will have its own title cells, we need to create a copy of a title cell for each such group.
+     */
+    constructor(title, groupingFeature, nvGroupQty) {
         this.parent = undefined;
+        this.title = title;
+        this.feature = groupingFeature;
+        this.nvGroupQty = nvGroupQty;
 
-        this.zeroWidthClass = classNames.widthPrefix + 0;
-        this.initialWidthClass = classNames.widthPrefix + 1;
+        this.render();
     }
 
+    /**
+     * Renders an element's HTML representation.
+     */
+    render() {
+        // Generate HTML representation for a wide view node
+        this.wNode = document.createElement('div');
+        this.wNode.classList.add(Styles.classNames.cell);
+        if (this.feature.isColumnGroup) {
+            this.wNode.classList.add(Styles.classNames.header);
+        }
+        if (this.feature.isRowGroup && this.feature.isGroupTitleInRow) {
+            // This cell is taking entire row
+            this.wNode.classList.add(Styles.classNames.fullWidth);
+        }
+        if (this.feature.isColumnGroup && this.feature.groupingFeatureList.titleColumnsQuantity > 1) {
+            this.wNode.classList.add(Styles.classNames.widthPrefix + this.feature.groupingFeatureList.titleColumnsQuantity);
+        }
+        this.wNode.innerHTML = this.title;
+
+        // Copy HTML representation to all narrow view nodes (each narrow view group has its own node)
+        this.nNodes = []; // Narrow nodes, one for each group
+        for (let i = 0; i < this.nvGroupQty; i++) {
+            this.nNodes.push(this.wNode.cloneNode(true));
+        }
+    }
+
+    /**
+     * Returns an HTML element for a wide view
+     * @returns {HTMLElement} HTML element for a wide view's cell.
+     */
     get wvNode() {
         return this.wNode;
     }
 
+    /**
+     * Returns an array HTML element for narrow view groups
+     * @returns {HTMLElement[]} Array of HTML elements for narrow view group's cells.
+     */
     getNvNode(index) {
         return this.nNodes[index];
     }
 
+    /**
+     * Generates an empty cell placeholder of a certain width. Useful for situation when empty title cells need to be
+     * inserted into a table structure (i.e. when title cells occupy multiple columns.
+     * @param {number} width - A number of columns placeholder cell will occupy.
+     * @returns {HTMLElement} HTML element of a placeholder cell.
+     */
     static placeholder(width = 1) {
         let placeholder = document.createElement('div');
-        placeholder.classList.add(classNames.cell, classNames.widthPrefix + width);
+        placeholder.classList.add(Styles.classNames.cell, Styles.classNames.widthPrefix + width);
         return placeholder;
     }
 
+    /**
+     * Some table layouts require multiple title cells to be shown for a row. These could be, for example, a title
+     * cell for a parent category that will follow a title cell for a category that defines a row. In such situation a
+     * title cell will have a parent, which will represent a parent cell object.
+     * This function returns an array of title cells for a row, starting from the topmost parent and moving down
+     * tot the current title cell.
+     * @returns {RowTitleCell[]} An array of title row cells representing a title cell hierarchy list.
+     */
     get hierarchyList() {
         let parentCells = [];
         if (this.parent) {
@@ -170,62 +256,80 @@ class TitleCell {
         return parentCells.concat(this);
     }
 
-    hide() {
-        this.wNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        for (let nNode of this.nNodes) {
-            nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        }
-    }
-
-    show() {
-        this.wNode.classList.replace(this.zeroWidthClass, this.initialWidthClass);
-        for (let nNode of this.nNodes) {
-            nNode.classList.replace(this.initialWidthClass, this.zeroWidthClass);
-        }
-    }
-
+    /**
+     * Highlights this row title cell
+     */
     highlight() {
-        this.wNode.classList.add(classNames.highlight);
+        this.wNode.classList.add(Styles.classNames.highlight);
         for (let nNode of this.nNodes) {
-            nNode.classList.add(classNames.highlight);
+            nNode.classList.add(Styles.classNames.highlight);
         }
     }
 
+    /**
+     * Removes highlighting from this row title cell
+     */
     clearHighlighting() {
-        this.wNode.classList.remove(classNames.highlight);
+        this.wNode.classList.remove(Styles.classNames.highlight);
         for (let nNode of this.nNodes) {
-            nNode.classList.remove(classNames.highlight);
+            nNode.classList.remove(Styles.classNames.highlight);
         }
     }
 }
 
-
+/**
+ * A cell in a header row, a column title cell.
+ */
 class HeaderCell {
-    constructor(span) {
-        this.wNode = undefined; // A wide view node
-        this.nNode = undefined; // A narrow view node
-
-        this.parent = undefined;
-        this.child = undefined;
-
+    /**
+     * Initializes a header cell.
+     * @param {string} title - A title text that will be shown in the header cell.
+     * @param {GroupingFeature} groupingFeature - A feature that defines one or several columns this header forms.
+     * @param {number} [span=1] - How many columns in a table this header cell forms.
+     */
+    constructor(title, groupingFeature, span = 1) {
+        this.feature = groupingFeature;
+        this.title = title;
         this.span = span;
 
+        this.parent = undefined;
+        this.children = [];
         this.columns = [];
+
+        this.render();
     }
 
-    set node(node) {
-        this.wNode = node;
-        this.nNode = node.cloneNode(true);
+    /**
+     * Renders an element's HTML representation.
+     */
+    render() {
+        let element = document.createElement('div');
+        element.classList.add(Styles.classNames.cell, Styles.classNames.header, Styles.classNames.widthPrefix + this.span);
+        element.innerHTML = this.title;
+        this.wNode = element;
+        this.nNode = element.cloneNode(true);
     }
 
+    /**
+     * Returns an HTML element for a wide view
+     * @returns {HTMLElement} HTML element for a wide view's cell.
+     */
     get wvNode() {
         return this.wNode;
     }
 
+    /**
+     * Returns an HTML element for a narrow view
+     * @returns {HTMLElement} HTML element for a narrow view's cell.
+     */
     get nvNode() {
         return this.nNode;
     }
 
+    /**
+     * Registers a column that's being formed by this header cell. Adds column to itself and to its parent(s).
+     * @param {Column} column - A column that is formed by this header cell.
+     */
     addColumn(column) {
         this.columns = this.columns.concat([column]);
 
@@ -234,20 +338,23 @@ class HeaderCell {
         }
     }
 
+    /**
+     * Temporary changes a width of a header cell. This happens when one or several columns
+     * that this header forms are hidden or shown.
+     * @param value
+     */
     changeSpan(value) {
-        let currentWidthClass = classNames.widthPrefix + this.span;
+        let currentWidthClass = Styles.classNames.widthPrefix + this.span;
         this.span += value;
-        let newWidthClass = classNames.widthPrefix + this.span;
+        let newWidthClass = Styles.classNames.widthPrefix + this.span;
         this.wNode.classList.replace(currentWidthClass, newWidthClass);
         this.nNode.classList.replace(currentWidthClass, newWidthClass);
-
-        if (this.parent) {
-            this.parent.changeSpan(value);
-        }
     }
 
     /**
-     * Some columns were hidden or shown
+     * This function will notify all parents and children of a title column that some columns under this headers cell
+     * changed their state (i.e. were hidden or shown). This way parents and children will be able to update their
+     * states accordingly.
      */
     columnStateChange() {
         let visibleColumns = 0;
@@ -257,63 +364,68 @@ class HeaderCell {
             }
         }
         if (this.span !== visibleColumns) {
-            // Number of visible columns has changed
+            // Number of visible columns has been changed
             let change = visibleColumns - this.span;
             this.changeSpan(change);
-        }
 
-        // Notify parents and children
-        if (this.child) {
-            this.child.columnStateChange();
-        }
-        if (this.parent) {
-            this.parent.columnStateChange();
+            // Notify parents and children
+            if (this.children.length) {
+                for (let child of this.children) {
+                    child.columnStateChange();
+                }
+            }
+            if (this.parent) {
+                this.parent.columnStateChange();
+            }
         }
     }
 
+    /**
+     * Highlights a header cell, its parent and children
+     */
     highlight() {
-        this.wNode.classList.add(classNames.highlight);
-        this.nNode.classList.add(classNames.highlight);
-        
-        if (this.parent) {
-            this.parent.highlight();
+        if (!this.wNode.classList.contains(Styles.classNames.highlight)) {
+            this.wNode.classList.add(Styles.classNames.highlight);
+            this.nNode.classList.add(Styles.classNames.highlight);
+
+            if (this.parent) {
+                this.parent.highlight();
+            }
         }
     }
-    
+
+    /**
+     * Removes highlighting from a header cell, its parent and children
+     */
     clearHighlighting() {
-        this.wNode.classList.remove(classNames.highlight);
-        this.nNode.classList.remove(classNames.highlight);
-        
-        if (this.parent) {
-            this.parent.clearHighlighting();
+        if (this.wNode.classList.contains(Styles.classNames.highlight)) {
+            this.wNode.classList.remove(Styles.classNames.highlight);
+            this.nNode.classList.remove(Styles.classNames.highlight);
+
+            if (this.parent) {
+                this.parent.clearHighlighting();
+            }
         }
     }
 }
 
-class FeatureGroup {
-    constructor() {
-        this.subgroups = []; // Each value of the feature
-        this.cells = []; // All cells within this group and below
-        this.parent = undefined;
-        this.header = undefined;
-    }
-
-    hide() {
-        for (let element of this.elements) {
-            element.node.style.background = 'red';
-        }
-    }
-}
-
+/**
+ * Represent a column of cells in an inflection table.
+ */
 class Column {
+
+    /**
+     * Initializes column with a provided set of cells.
+     * @param {Cell} cells - Cells that are within this column.
+     */
     constructor(cells) {
-        if (!cells) {
-            cells = [];
-        }
         this.cells = cells;
+        if (!cells) {
+            this.cells = [];
+        }
         this._headerCell = undefined;
         this.hidden = false;
-        this.isEmpty = this.cells.every(cell => cell.empty);
+        this.empty = this.cells.every(cell => cell.empty);
         this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches);
         
         for (let cell of this.cells) {
@@ -321,33 +433,54 @@ class Column {
         }
     }
 
+    /**
+     * Assigns a header cell to the column.
+     * @param {HeaderCell} headerCell - A header cell of this column.
+     */
     set headerCell(headerCell) {
         this._headerCell = headerCell;
         headerCell.addColumn(this);
     }
 
+    /**
+     * Returns a number of cells within this column.
+     * @returns {Number} A number of cells this column contains.
+     */
     get length() {
         return this.cells.length;
     }
 
+    /**
+     * Hides the column. Notifies a header about a state change.
+     */
     hide() {
-        this.hidden = true;
+        if (!this.hidden) {
+            this.hidden = true;
 
-        for (let cell of this.cells) {
-            cell.hide();
+            for (let cell of this.cells) {
+                cell.hide();
+            }
+            this._headerCell.columnStateChange();
         }
-        this._headerCell.columnStateChange();
     }
 
+    /**
+     * Shows the column. Notifies a header about a state change.
+     */
     show() {
-        this.hidden = false;
+        if (this.hidden) {
+            this.hidden = false;
 
-        for (let cell of this.cells) {
-            cell.show();
+            for (let cell of this.cells) {
+                cell.show();
+            }
+            this._headerCell.columnStateChange();
         }
-        this._headerCell.columnStateChange();
     }
 
+    /**
+     * Highlights a column and its header.
+     */
     highlight() {
         for (let cell of this.cells) {
             cell.highlight();
@@ -355,6 +488,9 @@ class Column {
         this._headerCell.highlight();
     }
 
+    /**
+     * Removes highlighting from a column and its header.
+     */
     clearHighlighting() {
         for (let cell of this.cells) {
             cell.clearHighlighting();
@@ -405,19 +541,19 @@ class Row {
 }
 
 class GroupingFeature {
-    constructor(type, values, language, groupType, titleMessageID, titleLocation) {
+    constructor(type, values, language, titleMessageID) {
         this._feature = new Lib.FeatureType(type, values, language);
 
-        this._groupType = groupType;
         this.groupTitle = titleMessageID;
-        this._titleLocation = titleLocation;
+        this._groupType = undefined;
+        this._titleLocation = undefined;
 
-        /*this.isColumn = false;
-        this.isRow = false;*/
+        this.groupingFeatureList = undefined;
+        return this;
     }
 
     clone() {
-        let clone = new GroupingFeature(this._feature.type, this._feature.values, this._feature.language);
+        let clone = new GroupingFeature(this._feature.type, this._feature.orderIndex, this._feature.language);
         clone._groupType = this._groupType;
         clone.groupTitle = this.groupTitle;
         clone._titleLocation = this._titleLocation;
@@ -433,15 +569,39 @@ class GroupingFeature {
     }
 
     get isColumnGroup() {
-        return this._groupType === groupType.column;
+        return this._groupType === 'column';
     }
 
     get isRowGroup() {
-        return this._groupType === groupType.row;
+        return this._groupType === 'row';
+    }
+
+    setColumnGroupType() {
+        this._groupType = 'column';
+        return this;
+    }
+
+    setRowGroupType() {
+        this._groupType = 'row';
+        return this;
     }
 
     get isTitleInColumn() {
-        return this._titleLocation === groupTitleLocation.column;
+        return this._titleLocation === 'column';
+    }
+
+    setColumnGroupTitleLocation() {
+        this._titleLocation = 'column';
+        return this;
+    }
+
+    setRowGroupTitleLocation() {
+        this._titleLocation = 'row';
+        return this;
+    }
+
+    get isGroupTitleInRow() {
+        return this._titleLocation === 'row';
     }
 
     get size() {
@@ -466,31 +626,19 @@ class GroupingFeature {
     }
 
     createTitleCell(text, nvGroupSize) {
-        let titleCellNode = document.createElement('div');
-        titleCellNode.classList.add(classNames.cell);
-        if (this.isColumnGroup) {
-            titleCellNode.classList.add(classNames.header);
-        }
-        if (this.isRowGroup && this._titleLocation === groupTitleLocation.row) {
-            // This cell is taking entire row
-            titleCellNode.classList.add(classNames.fullWidth);
-        }
-        if (this.groupTitleStyles) {
-            titleCellNode.classList.add(...this.groupTitleStyles);
-        }
-
-        titleCellNode.innerHTML = text;
-        let titleCell = new TitleCell(titleCellNode, nvGroupSize);
-        titleCell.node = titleCellNode;
-        return titleCell;
+        return new RowTitleCell(text, this, nvGroupSize);
     }
 }
 
-class GroupingFeatures {
+class GroupingFeatureList {
     constructor(features) {
         this._features = features;
         this._columnFeatures = [];
         this._rowFeatures = [];
+
+        for (let feature of features) {
+            feature.groupingFeatureList = this;
+        }
 
         for (let feature of features) {
             if (feature.isColumnGroup) {
@@ -551,21 +699,31 @@ class GroupingFeatures {
     }
 }
 
+class FeatureGroup {
+    constructor() {
+        this.subgroups = []; // Each value of the feature
+        this.cells = []; // All cells within this group and below
+        this.parent = undefined;
+        this.header = undefined;
+    }
+
+    /*hide() {
+        for (let element of this.elements) {
+            element.node.style.background = 'red';
+        }
+    }*/
+}
+
 class Table {
-    constructor(suffixes, rowTitleColumnsQty, groupingFeatures, headerCellTemplate, cellTemplate, messages) {
+    constructor(suffixes, rowTitleColumnsQty, groupingFeatures, messages) {
         this.suffixes = suffixes;
-        this.features = new GroupingFeatures(groupingFeatures);
+        this.features = new GroupingFeatureList(groupingFeatures);
 
         this.cells = [];
         this.columns = [];
         this.rows = [];
 
         this.headers = [];
-
-        this.templates = {
-            headerCell: headerCellTemplate,
-            cell: cellTemplate
-        };
 
         this.rowTitleColumnsQty = rowTitleColumnsQty;
         this.messages = messages;
@@ -655,6 +813,46 @@ class Table {
         return group;
     }
 
+    /**
+     * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
+     * This function is for use with Array.prototype.filter().
+     * @param {FeatureType} featureType - a grammatical feature type we need to filter on
+     * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
+     * this ending should have
+     * @param {Suffix} suffix - an ending we need to filter out
+     * @returns {boolean}
+     */
+    static filter(featureType, featureValues, suffix) {
+        "use strict";
+
+        // If not an array, convert it to array for uniformity
+        if (!Array.isArray(featureValues)) {
+            featureValues = [featureValues];
+        }
+        for (const value of featureValues) {
+            if (suffix.features[featureType] === value) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    /**
+     * This function provide a view-specific logic that is used to merge two suffixes together when they are combined.
+     * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
+     * @param {Suffix} suffixB - A second ending to merge (to be discarded).
+     * @returns {Suffix} A modified value of ending A.
+     */
+    static merge(suffixA, suffixB) {
+        let commonGroups = Lib.Suffix.getCommonGroups([suffixA, suffixB]);
+        for (let type of commonGroups) {
+            // Combine values using a comma separator. Can do anything else if we need to.
+            suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
+        }
+        return suffixA;
+    };
+
     groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
         let group = new FeatureGroup();
         group.feature = this.features.items[currentLevel];
@@ -668,7 +866,7 @@ class Table {
             featureTrail.push(featureValue);
 
             // Suffixes that are selected for current combination of feature values
-            let selectedSuffixes = suffixes.filter(filter.bind(this, group.feature.type, featureValue.value));
+            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.feature.type, featureValue.value));
 
             if (currentLevel < this.features.length - 1) {
                 // Divide to further groups
@@ -680,25 +878,10 @@ class Table {
                 // This is the last level. This represent a cell with suffixes
                 // Split result has a list of suffixes in a table cell. We can now combine duplicated items if we want
                 if (selectedSuffixes.length > 0) {
-                    selectedSuffixes = Lib.Suffix.combine(selectedSuffixes, merge);
+                    selectedSuffixes = Lib.Suffix.combine(selectedSuffixes, Table.merge);
                 }
 
-                let cell = new Cell();
-                cell.suffixes = selectedSuffixes;
-                cell.features = featureTrail.slice();
-
-                if (selectedSuffixes.length === 0) {
-                    cell.empty = true;
-                }
-
-                cell.suffixMatches = !!selectedSuffixes.find(element => element.match.suffixMatch);
-
-                // Render HTML
-                this.cellWrapper.innerHTML = this.templates.cell(cell);
-                let element = this.cellWrapper.childNodes[0];
-                this.docFragment.appendChild(element);
-                cell.node = element;
-
+                let cell = new Cell(selectedSuffixes, featureTrail.slice());
                 group.subgroups.push(cell);
                 group.cells.push(cell);
                 this.cells.push(cell);
@@ -715,11 +898,13 @@ class Table {
         for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
             let cellGroup = tree.subgroups[index];
 
-            // Iterate until the last row feature
+            // Iterate until it is the last row feature
             if (!currentFeature.isSameType(this.features.lastRowFeature)) {
                 let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1);
                 if (currentFeature.isRowGroup) {
                     // TODO: Avoid creating extra cells
+
+
                     let group = {
                         titleText: featureValue,
                         groups: currentResult,
@@ -759,27 +944,18 @@ class Table {
         for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
             let cellGroup = tree.subgroups[index];
 
-            // Iterate until the last row feature
+            // Iterate over all column features (features that form columns)
             if (currentLevel < this.features.columnFeatures.length - 1) {
                 let subCells = this.constructHeaders(cellGroup, tableHeaders, currentLevel + 1);
 
-                // Last level
+
                 let columnSpan = 0;
                 for (let cell of subCells) {
                     columnSpan += cell.span;
                 }
 
 
-                let headerCell = new HeaderCell(columnSpan);
-                headerCell.feature = currentFeature;
-                headerCell.value = featureValue;
-                headerCell.titleText = currentFeature.groupTitle;
-
-                this.cellWrapper.innerHTML = this.templates.headerCell(headerCell);
-                let element = this.cellWrapper.childNodes[0];
-                this.docFragment.appendChild(element);
-                headerCell.node = element;
-
+                let headerCell = new HeaderCell(featureValue, currentFeature, columnSpan);
                 headerCell.children = subCells;
                 for (let cell of subCells) {
                     cell.parent = headerCell;
@@ -796,16 +972,7 @@ class Table {
             }
             else {
                 // Last level
-                let columnSpan = 1;
-                let headerCell = new HeaderCell(columnSpan);
-                headerCell.feature = currentFeature;
-                headerCell.value = featureValue;
-                headerCell.titleText = currentFeature.groupTitle;
-
-                this.cellWrapper.innerHTML = this.templates.headerCell(headerCell);
-                let element = this.cellWrapper.childNodes[0];
-                this.docFragment.appendChild(element);
-                headerCell.node = element;
+                let headerCell = new HeaderCell(featureValue, currentFeature);
 
                 if (!tableHeaders[currentLevel]) {
                     tableHeaders[currentLevel] = new Row();
@@ -851,7 +1018,7 @@ class Table {
         for (let row of this.rows) {
             let titleCells = row.titleCell.hierarchyList;
             if (titleCells.length < this.features.titleColumnsQuantity) {
-                this.wideView.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
+                this.wideView.nodes.appendChild(RowTitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
             }
             for (let titleCell of titleCells) {
                 this.wideView.nodes.appendChild(titleCell.wvNode);
@@ -891,7 +1058,7 @@ class Table {
                 for (let row of this.rows) {
                     let titleCells = row.titleCell.hierarchyList;
                     if (titleCells.length < this.features.titleColumnsQuantity) {
-                        group.nodes.appendChild(TitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
+                        group.nodes.appendChild(RowTitleCell.placeholder(this.features.titleColumnsQuantity - titleCells.length));
                     }
                     for (let titleCell of titleCells) {
                         group.nodes.appendChild(titleCell.getNvNode(groupIndex));
@@ -901,13 +1068,13 @@ class Table {
                         group.nodes.appendChild(row.cells[i].nvNode);
                     }
                 }
-                group.nodes.classList.remove(classNames.hidden);
+                group.nodes.classList.remove(Styles.classNames.hidden);
                 group.nodes.style.gridTemplateColumns = 'repeat(' + (colNum + this.features.titleColumnsQuantity) + ', 100px)';
                 group.nodes.style.width = (colNum + this.features.titleColumnsQuantity) * 100 + 'px';
             }
             else {
                 // This group is hidden
-                group.nodes.classList.add(classNames.hidden);
+                group.nodes.classList.add(Styles.classNames.hidden);
             }
 
 
@@ -931,7 +1098,7 @@ class Table {
 
     hideEmptyColumns() {
         for (let column of this.columns) {
-            if (column.isEmpty) {
+            if (column.empty) {
                 column.hide();
             }
         }
@@ -970,100 +1137,46 @@ class Table {
     }
 }
 
+class Footnotes {
+    constructor(footnotes) {
+        this.footnotes = footnotes;
+
+        this.nodes = document.createElement('dl');
+        this.nodes.id = "inlection-table-footer";
+        this.nodes.classList.add(Styles.classNames.footnotesContainer);
+        for (let footnote of footnotes) {
+            let index = document.createElement('dt');
+            index.innerHTML = footnote.index;
+            this.nodes.appendChild(index);
+            let text = document.createElement('dd');
+            text.innerHTML = footnote.text;
+            this.nodes.appendChild(text);
+        }
+    }
+
+    get html() {
+        return this.nodes;
+    }
+}
+
 class View {
 
-    constructor() {
+    constructor(viewOptions) {
+
+        this.options = viewOptions;
         this.pageHeader = {};
         this.table = {};
 
-        // An HTML element where view is rendered
+        // An HTML element where this view is rendered
         this.container = undefined;
-
-        this.nodes = {
-
-        };
     }
 
-    /**
-     * A compare function that can be used to sort ending according to specific requirements of the current view.
-     * This function is for use with Array.prototype.sort().
-     * @param {FeatureType[]} featureOrder
-     * @param {Suffix} a
-     * @param {Suffix} b
-     */
-    compare(featureOrder, a, b) {
-        "use strict";
-
-        // Set custom sort order if necessary
-        // Custom sort order for each declension
-        //LibLatin.genders.order = [LibLatin.genders.feminine];
-
-
-        for (let [index, feature] of this.featureOrder.entries()) {
-            let featureTypeA = a.features[feature.type],
-                featureTypeB = b.features[feature.type];
-
-            if (feature.orderLookup[featureTypeA] > feature.orderLookup[featureTypeB]) {
-                return 1;
-            }
-            else if (feature.orderLookup[featureTypeA] < feature.orderLookup[featureTypeB]) {
-                return -1;
-            }
-            /*
-             If values on this level are equal, continue comparing using values of the next level.
-             If we are at the last level of comparison (defined by featureOrder) and children are equal, return 0.
-             */
-            else if (index === this.featureOrder.length - 1) {
-                // This is the last sort order item
-                return 0;
-            }
-        }
-
+    get partOfSpeech() {
+        return this.options.partOfSpeech;
     }
 
-    /**
-     * Returns true if an ending grammatical feature defined by featureType has value that is listed in featureValues array.
-     * This function is for use with Array.prototype.filter().
-     * @param {FeatureType} featureType - a grammatical feature type we need to filter on
-     * @param {Feature[]} featureValues - a list of possible values of a type specified by featureType that
-     * this ending should have
-     * @param {Suffix} suffix - an ending we need to filter out
-     * @returns {boolean}
-     */
-    filter(featureType, featureValues, suffix) {
-        "use strict";
-
-        // If not an array, convert it to array for uniformity
-        if (!Array.isArray(featureValues)) {
-            featureValues = [featureValues];
-        }
-        for (const value of featureValues) {
-            if (suffix.features[featureType] === value) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    filterByFeature(features, suffixMatch, suffix) {
-        "use strict";
-
-        let result = true;
-        for (let feature of features) {
-            let featureValues = feature.value;
-            let featureType = feature.type;
-            if (!Array.isArray(featureValues)) {
-                featureValues = [featureValues];
-            }
-            result = result && featureValues.includes(suffix.features[featureType]);
-        }
-        // Whether to check for a suffix match
-        if (suffixMatch) {
-            result = result && suffix.match.suffixMatch;
-        }
-
-        return result;
+    get id() {
+        return this.options.id;
     }
 
     /**
@@ -1075,25 +1188,13 @@ class View {
         "use strict";
 
         this.messages = messages;
-
         this.container = container;
-        // Create data structure for a template
-        this.displayData = {};
+        this.resultSet = resultSet;
+        let selection = resultSet[this.options.partOfSpeech];
 
-        this.displayData.word = resultSet.word;
-        this.displayData.title = this.title;
-        let selection = resultSet[this.partOfSpeech];
+        this.footnotes = new Footnotes(selection.footnotes);
 
-        this.displayData.footnotes = selection.footnotes;
-
-        this.pageHeader.nodes = document.createElement('div');
-        this.pageHeader.nodes.innerHTML = this.pageHeaderTemplate(this.displayData);
-        this.footnotes = { nodes: document.createElement('div') };
-        this.footnotes.nodes.innerHTML = this.footnotesTemplate(this.displayData);
-
-
-        this.table = new Table(selection.suffixes, this.rowTitleColumnsQty, this.groupingFeatures, this.headerCellTemplate, this.suffixCellTemplate, messages);
-
+        this.table = new Table(selection.suffixes, this.rowTitleColumnsQty, this.options.groupingFeatures, messages);
         this.display();
     }
 
@@ -1103,51 +1204,63 @@ class View {
         // Clear the container
         this.container.innerHTML = '';
 
-        this.container.appendChild(this.pageHeader.nodes);
+        let word = document.createElement('h2');
+        word.innerHTML = this.resultSet.word;
+        this.container.appendChild(word);
+
+        let title = document.createElement('h3');
+        title.innerHTML = this.options.title;
+        this.container.appendChild(title);
+
+        this.pageHeader = document.createElement('div');
+        this.pageHeader.innerHTML = `
+        <button id="hide-empty-columns" class="switch-btn">Hide empty columns</button><button id="show-empty-columns" class="switch-btn hidden">Show empty columns</button>
+        <button id="hide-no-suffix-groups" class="switch-btn">Hide top-level groups with no suffix matches</button><button id="show-no-suffix-groups" class="switch-btn hidden">Show top-level groups with no suffix matches</button><br>
+        <p>Hover over the suffix to see its grammar features</p>
+        `;
+        this.container.appendChild(this.pageHeader);
 
 
         // Insert a wide view
         this.container.appendChild(this.table.wideView.nodes);
         // Insert narrow views
         this.container.appendChild(this.table.narrowView.nodes);
-        /*for (let group of this.table.narrowView.groups) {
-            this.container.appendChild(group.nodes);
-        }*/
-        this.container.appendChild(this.footnotes.nodes);
 
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));
-        this.pageHeader.nodes.querySelector('#show-empty-columns').addEventListener('click', this.showEmptyColumns.bind(this));
+        this.container.appendChild(this.footnotes.html);
 
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').addEventListener('click', this.hideNoSuffixGroups.bind(this));
-        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').addEventListener('click', this.showNoSuffixGroups.bind(this));
+        this.pageHeader.querySelector('#hide-empty-columns').addEventListener('click', this.hideEmptyColumns.bind(this));
+        this.pageHeader.querySelector('#show-empty-columns').addEventListener('click', this.showEmptyColumns.bind(this));
+
+        this.pageHeader.querySelector('#hide-no-suffix-groups').addEventListener('click', this.hideNoSuffixGroups.bind(this));
+        this.pageHeader.querySelector('#show-no-suffix-groups').addEventListener('click', this.showNoSuffixGroups.bind(this));
     }
 
 
     hideEmptyColumns() {
         this.table.hideEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#hide-empty-columns').classList.add(Styles.classNames.hidden);
+        this.pageHeader.querySelector('#show-empty-columns').classList.remove(Styles.classNames.hidden);
     }
 
     showEmptyColumns() {
         this.table.showEmptyColumns();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-empty-columns').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#hide-empty-columns').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#show-empty-columns').classList.add(Styles.classNames.hidden);
+        this.pageHeader.querySelector('#hide-empty-columns').classList.remove(Styles.classNames.hidden);
     }
 
     hideNoSuffixGroups() {
         this.table.hideNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#hide-no-suffix-groups').classList.add(Styles.classNames.hidden);
+        this.pageHeader.querySelector('#show-no-suffix-groups').classList.remove(Styles.classNames.hidden);
     }
 
     showNoSuffixGroups() {
         this.table.showNoSuffixGroups();
         this.display();
-        this.pageHeader.nodes.querySelector('#show-no-suffix-groups').classList.add(classNames.hidden);
-        this.pageHeader.nodes.querySelector('#hide-no-suffix-groups').classList.remove(classNames.hidden);
+        this.pageHeader.querySelector('#show-no-suffix-groups').classList.add(Styles.classNames.hidden);
+        this.pageHeader.querySelector('#hide-no-suffix-groups').classList.remove(Styles.classNames.hidden);
     }
 }
