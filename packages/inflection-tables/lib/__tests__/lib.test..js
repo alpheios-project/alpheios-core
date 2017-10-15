@@ -791,6 +791,20 @@ describe('Suffix object', () => {
     // TODO: implement tests for split as functionality may change
     // TODO: implement tests for combine as functionality may change
 
+    test('merge() should join two previously split object (objects that are in the same group) together.', () => {
+        "use strict";
+
+        let values = ['masculine', 'feminine'];
+        let suffixes = [new t.Suffix('endingOne', undefined), new t.Suffix('endingOne', undefined)];
+        suffixes[0].features[t.types.gender] = values[0];
+        suffixes[1].features[t.types.gender] = values[1];
+        suffixes[0].featureGroups[t.types.gender] = values;
+        suffixes[1].featureGroups[t.types.gender] = values;
+        let merged = t.Suffix.merge(suffixes[0], suffixes[1]);
+        expect(merged.features[t.types.gender]).toBe(values[0] + ', ' + values[1]);
+
+    });
+
     afterAll(() => {
         // Clean a test environment up
         suffix = undefined;

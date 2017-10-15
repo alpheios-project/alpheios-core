@@ -19,6 +19,8 @@ exports.Homonym = Lib.Homonym;
 exports.Suffix = Lib.Suffix;
 exports.LanguageDataset = Lib.LanguageDataset;
 exports.MatchData = Lib.MatchData;
+exports.Footnote = Lib.Footnote;
+exports.ResultSet = Lib.ResultSet;
 
 // L10n
 exports.L10n = {
@@ -28,7 +30,11 @@ exports.L10n = {
 
 // Styles
 exports.Styles = {
-    classNames: Styles.classNames
+    classNames: Styles.classNames,
+    wideView: Styles.wideView,
+    narrowView: Styles.narrowView,
+    footnotes: Styles.footnotes,
+    pageHeader: Styles.pageHeader
 };
 
 // View
@@ -36,7 +42,14 @@ exports.View = {
     Cell: View.Cell,
     RowTitleCell: View.RowTitleCell,
     HeaderCell: View.HeaderCell,
-
     Column: View.Column,
-    GroupingFeature: View.GroupingFeature
+    Row: View.Row,
+    GroupingFeature: View.GroupingFeature,
+    GroupingFeatureList: View.GroupingFeatureList,
+    WideView: View.WideView,
+    NarrowView: View.NarrowView,
+    NarrowViewGroup: View.NarrowViewGroup,
+    Table: View.Table,
+    Footnotes: View.Footnotes,
+    View: View.View
 };

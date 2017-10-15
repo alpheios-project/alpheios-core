@@ -2,7 +2,7 @@
  * Shared data structures and functions
  */
 export {Feature, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
-    Suffix, MatchData, ResultSet, loadData};
+    Suffix, Footnote, MatchData, ResultSet, loadData};
 
 
 // Should have no spaces in values in order to be used in HTML templates
@@ -230,15 +230,14 @@ class FeatureType {
      * @returns {string[] | string[][]}
      */
     get orderIndex() {
-        "use strict";
         return this._orderIndex;
     }
 
     /**
-     * Return copies of all feature values in a sorted array
+     * Return copies of all feature values in a sorted array.
+     * @returns {Feature[]} Array of feature values sorted according to orderIndex.
      */
-    get orderValues() {
-        "use strict";
+    get orderedValues() {
         let values = [];
         for (let value of this._orderIndex) {
             if (Array.isArray(value)) {
@@ -263,7 +262,6 @@ class FeatureType {
      * @returns {object}
      */
     get orderLookup() {
-        "use strict";
         return this._orderLookup;
     }
 
@@ -279,7 +277,6 @@ class FeatureType {
      *
      */
     set order(values) {
-        "use strict";
         if (!values || (Array.isArray(values) && values.length === 0)) {
             throw new Error("A non-empty list of values should be provided.");
         }
@@ -428,7 +425,6 @@ class Inflection {
      * @param {string} language - A word's language.
      */
     constructor(stem, language) {
-        "use strict";
 
         if (!stem) {
             throw new Error('Stem should not be empty.');
@@ -456,7 +452,6 @@ class Inflection {
      * @param {Feature | Feature[]} data
      */
     set feature(data) {
-        "use strict";
         if (!data) {
             throw new Error('Inflection feature data cannot be empty.');
         }
@@ -492,7 +487,6 @@ class Lemma {
      * @param {string} language - A language of a word.
      */
     constructor(word, language) {
-        "use strict";
 
         if (!word) {
             throw new Error('Word should not be empty.');
@@ -521,7 +515,6 @@ class Lexeme {
      * @param {Inflection[]} inflections - An array of inflections.
      */
     constructor(lemma, inflections) {
-        "use strict";
         if (!lemma) {
             throw new Error('Lemma should not be empty.');
         }
@@ -558,7 +551,6 @@ class Homonym {
      * @param {Lexeme[]} lexemes - An array of Lexeme objects.
      */
     constructor (lexemes) {
-        "use strict";
         if (!lexemes) {
             throw new Error('Lexemes data should not be empty.');
         }
@@ -586,7 +578,6 @@ class LanguageDataset {
      * @param {string} language - A language of a data set, from an allowed languages list (see 'languages' object).
      */
     constructor(language) {
-        "use strict";
         if (!language) {
             // Language is not supported
             throw new Error('Language data cannot be empty.');
@@ -611,7 +602,6 @@ class LanguageDataset {
      * @returns {FeatureType} A newly created FeatureType.
      */
     defineFeatureType(type, allowedValues) {
-        "use strict";
         this.features[type] = new FeatureType(type, allowedValues, this.language);
         return this.features[type];
     };
@@ -680,7 +670,6 @@ class LanguageDataset {
      * @param {string} text - A footnote's text.
      */
     addFootnote(partOfSpeech, index, text) {
-        "use strict";
 
         if (!index) {
             throw new Error('Footnote index data should not be empty.');
@@ -690,14 +679,13 @@ class LanguageDataset {
             throw new Error('Footnote text data should not be empty.');
         }
 
-        let footnote = new Footnonte(index, text, partOfSpeech.value);
+        let footnote = new Footnote(index, text, partOfSpeech.value);
         footnote.index = index;
 
         this.footnotes.push(footnote);
     };
 
     getSuffixes(homonym) {
-        "use strict";
         let result = new ResultSet();
         let inflections = {};
 
@@ -777,7 +765,6 @@ class Suffix {
      * @param {MatchData} match - An information about what matches were found for this suffix (optional).
      */
     constructor(suffixValue, match) {
-        "use strict";
 
         if (suffixValue === undefined) {
             throw new Error('Suffix should not be empty.')
@@ -793,7 +780,6 @@ class Suffix {
      * @returns {Suffix}
      */
     clone() {
-        "use strict";
 
         // TODO: do all-feature two-level cloning
         let clone = new Suffix(this.value);
@@ -822,7 +808,6 @@ class Suffix {
      * If no match found, return undefined.
      */
     featureMatch(featureType, featureValues) {
-        "use strict";
         if (this.features.hasOwnProperty(featureType)) {
             for (let value of featureValues) {
                 if (value === this.features[featureType]) {
@@ -838,7 +823,6 @@ class Suffix {
      * @param suffixes
      */
     static getCommonGroups(suffixes) {
-        "use strict";
 
         let features = Object.keys(suffixes[0].featureGroups);
 
@@ -866,7 +850,6 @@ class Suffix {
      * @returns {boolean} - True if both suffixes are in the same group, false otherwise.
      */
     isInSameGroupWith(suffix) {
-        "use strict";
 
         let commonGroups = Suffix.getCommonGroups([this, suffix]);
         if (commonGroups.length < 1) {
@@ -908,13 +891,13 @@ class Suffix {
 
     /**
      * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
-     * with each Suffix object having only a single value of those grammatical features.
+     * with each Suffix object having only a single value of those grammatical features. Initial multiple values
+     * are stored in a featureGroups[featureType] property as an array of values.
      * @param {string} featureType - A type of a feature
      * @param {Feature[]} featureValues - Multiple grammatical feature values.
      * @returns {Suffix[]} - An array of suffixes.
      */
     split(featureType, featureValues) {
-        "use strict";
 
         let copy = this.clone();
         let values = [];
@@ -932,15 +915,15 @@ class Suffix {
     };
 
     /**
-     * Combines suffixes that are in the same group together.
+     * Combines suffixes that are in the same group together. Suffixes to be combined must have their values listed
+     * in an array stored as featureGroups[featureType] property.
      * @param {Suffix[]} suffixes - An array of suffixes to be combined.
-     * @param {function} mergeFunction - A function that will merge two suffixes. It is presentation specific and is
-     * define in a Presenter's View module. A function has two parameters each of Suffix type. It returns a single
-     * Suffix object.
+     * @param {function} mergeFunction - A function that will merge two suffixes. By default it uses Suffix.merge,
+     * but provides a way to supply a presentation specific functions. Please see Suffix.merge for more
+     * information on function format.
      * @returns {Suffix[]} An array of suffixes with some items possibly combined together.
      */
-    static combine(suffixes, mergeFunction) {
-        "use strict";
+    static combine(suffixes, mergeFunction = Suffix.merge) {
 
         let matchFound = false;
         let matchIdx;
@@ -974,10 +957,25 @@ class Suffix {
         while (matchFound);
         return suffixes;
     }
+
+    /**
+     * This function provide a logic of to merge feature values of two suffix object that were previously split together.
+     * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
+     * @param {Suffix} suffixB - A second ending to merge (to be discarded).
+     * @returns {Suffix} A modified value of ending A.
+     */
+    static merge(suffixA, suffixB) {
+        let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
+        for (let type of commonGroups) {
+            // Combine values using a comma separator. Can do anything else if we need to.
+            suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
+        }
+        return suffixA;
+    };
 }
 
 
-class Footnonte {
+class Footnote {
     constructor(index, text, partOfSpeech) {
         this.index = index;
         this.text = text;
@@ -1001,7 +999,6 @@ class MatchData {
  */
 class ResultSet {
     constructor() {
-        "use strict";
         this.word = undefined;
         this[types.part] = [];
     }
