@@ -75,7 +75,10 @@ describe('L10n', () => {
     let l10n;
 
     beforeAll(() => {
-        l10n = new t.L10n.L10n().add(localeEnUs, messagesEnUs).add(localeEnGb, messagesEnGb);
+        l10n = new t.L10n.L10n([
+            new t.L10n.MessageBundle(localeEnUs, messagesEnUs),
+            new t.L10n.MessageBundle(localeEnGb, messagesEnGb)
+        ]);
     });
 
     test('Constructor should create an empty object.', () => {
