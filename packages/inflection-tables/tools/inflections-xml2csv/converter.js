@@ -7,8 +7,8 @@ xmlToJSON.stringToXML = (string) => new DOMParser().parseFromString(string, 'tex
 const csvParser = require('babyparse');
 
 
-const inputDir = 'data/';
 const latin = {
+    inputBaseDir: 'data/latin/',
     outputBaseDir: '../../lib/lang/latin/data/',
 
     noun: {
@@ -232,6 +232,78 @@ const latin = {
     }
 };
 
+const greek = {
+    inputBaseDir: 'data/greek/',
+    outputBaseDir: '../../lib/lang/greek/data/',
+
+    noun: {
+        inputFN: 'alph-infl-noun.xml',
+        outputSubDir: 'noun/',
+        suffixes: {
+            outputFN: 'suffixes.csv',
+            get outputPath() {
+                return path.join(__dirname, greek.outputBaseDir, greek.noun.outputSubDir, this.outputFN)
+            },
+            get (json) {
+                "use strict";
+
+                let data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set'];
+                let result = [];
+
+                for (const group of data) {
+
+                    // Iterate over group's individual items
+                    for (const suffix of group['infl-ending']) {
+                        let footnote = '';
+                        if (suffix['_attr'].hasOwnProperty('footnote')) {
+                            // There can be multiple footnotes separated by spaces
+                            footnote = greek.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value']);
+                        }
+                        result.push({
+                            ['Ending']: suffix['_text'],
+                            ['Number']: group['_attr']['num']['_value'],
+                            ['Case']: group['_attr']['case']['_value'],
+                            ['Declension']: group['_attr']['decl']['_value'],
+                            ['Gender']: group['_attr']['gend']['_value'],
+                            ['Type']: suffix['_attr']['type']['_value'],
+                            ['Footnote']: footnote
+                        })
+
+                    }
+                }
+                return csvParser.unparse(result);
+            }
+
+        },
+        footnotes: {
+            outputFN: 'footnotes.csv',
+            get outputPath() {
+                return path.join(__dirname, greek.outputBaseDir, greek.noun.outputSubDir, this.outputFN)
+            },
+            normalizeIndex(index) {
+                // There can be multiple footnotes separated by spaces
+                return index.replace(/[^\d\s]/g, '');
+            },
+            get (json) {
+                "use strict";
+
+                let data = json['infl-data'][0].footnotes[0].footnote;
+                let result = [];
+
+                for (let i = 0; i < data.length; i++) {
+                    result.push({
+                        ['Index']: this.normalizeIndex(data[i]['_attr'].id['_value']),
+                        ['Text']: data[i]['_text']
+                    })
+                }
+                // Sort result according to index number.
+                result = result.sort((a, b) => parseInt(a.Index, 10) - parseInt(b.Index, 10) );
+                return csvParser.unparse(result);
+            }
+        }
+    }
+};
+
 let readFile = function readFile(filePath) {
     "use strict";
     return fs.readFileSync(filePath, 'utf8');
@@ -244,25 +316,35 @@ let writeData = function writeData(data, filePath) {
 
 
 try {
-    // Nouns
-    let data = readFile(path.join(__dirname, inputDir, latin.noun.inputFN));
+    
+    // region Latin
+    /*// Nouns
+    let data = readFile(path.join(__dirname, latin.inputBaseDir, latin.noun.inputFN));
     let json = xmlToJSON.parseString(data);
     writeData(latin.noun.suffixes.get(json), latin.noun.suffixes.outputPath);
     writeData(latin.noun.footnotes.get(json), latin.noun.footnotes.outputPath);
 
     // Adjectives
-    data = readFile(path.join(__dirname, inputDir, latin.adjective.inputFN));
+    data = readFile(path.join(__dirname, latin.inputBaseDir, latin.adjective.inputFN));
     json = xmlToJSON.parseString(data);
     writeData(latin.noun.suffixes.get(json), latin.adjective.suffixes.outputPath);
     // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
     //writeData(latin.adjective.footnotes.get(json), latin.adjective.footnotes.outputPath);
 
     // Verbs
-    data = readFile(path.join(__dirname, inputDir, latin.verb.inputFN));
+    data = readFile(path.join(__dirname, latin.inputBaseDir, latin.verb.inputFN));
     json = xmlToJSON.parseString(data);
     writeData(latin.verb.suffixes.get(json), latin.verb.suffixes.outputPath);
     // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
     writeData(latin.verb.footnotes.get(json), latin.verb.footnotes.outputPath);
+    // endregion Latin*/
+    
+    // region Greek
+    data = readFile(path.join(__dirname, greek.inputBaseDir, greek.noun.inputFN));
+    json = xmlToJSON.parseString(data);
+    writeData(greek.noun.suffixes.get(json), greek.noun.suffixes.outputPath);
+    writeData(greek.noun.footnotes.get(json), greek.noun.footnotes.outputPath);
+    // endregion Greek
 
 } catch (e) {
     console.log('Error:', e.stack);

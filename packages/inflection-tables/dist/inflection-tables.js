@@ -8,7 +8,7 @@
  * Shared data structures and functions
  */
 // Should have no spaces in values in order to be used in HTML templates
-const types = {
+const types$1 = {
     word: 'word',
     part: 'part of speech', // Part of speech
     number: 'number',
@@ -57,7 +57,7 @@ class Feature {
      * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor (value, type, language) {
-        if (!types.isAllowed(type)) {
+        if (!types$1.isAllowed(type)) {
             throw new Error('Features of "' + type + '" type are not supported.');
         }
         if (!languages.isAllowed(language)) {
@@ -160,7 +160,7 @@ class FeatureType {
      * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor(type, values, language) {
-        if (!types.isAllowed(type)) {
+        if (!types$1.isAllowed(type)) {
             throw new Error('Features of "' + type + '" type are not supported.');
         }
         if (!languages.isAllowed(language)) {
@@ -629,9 +629,9 @@ class LanguageDataset {
 
             // If this is a footnote. Footnotes should go in a flat array
             // because we don't need to split by them
-            if (feature.type === types.footnote) {
-                suffixItem[types.footnote] = suffixItem[types.footnote] || [];
-                suffixItem[types.footnote].push(feature.value);
+            if (feature.type === types$1.footnote) {
+                suffixItem[types$1.footnote] = suffixItem[types$1.footnote] || [];
+                suffixItem[types$1.footnote].push(feature.value);
                 continue;
             }
 
@@ -688,6 +688,8 @@ class LanguageDataset {
     };
 
     getSuffixes(homonym) {
+
+        // Add support for languages
         let result = new ResultSet();
         let inflections = {};
 
@@ -697,7 +699,7 @@ class LanguageDataset {
         for (let lexema of homonym.lexemes) {
             for (let inflection of lexema.inflections) {
                 // Group inflections by a part of speech
-                let partOfSpeech = inflection[types.part];
+                let partOfSpeech = inflection[types$1.part];
                 if (!partOfSpeech) {
                     throw new Error("Part of speech data is missing in an inflection.");
                 }
@@ -714,7 +716,7 @@ class LanguageDataset {
             if (inflections.hasOwnProperty(partOfSpeech)) {
                 let inflectionsGroup = inflections[partOfSpeech];
 
-                result[types.part].push(partOfSpeech);
+                result[types$1.part].push(partOfSpeech);
                 result[partOfSpeech] = {};
                 result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), []);
                 result[partOfSpeech].footnotes = [];
@@ -723,9 +725,9 @@ class LanguageDataset {
                 let footnotesIndex = new Set();
                 // Scan all selected suffixes to build a unique set of footnote indexes
                 for (let suffix of result[partOfSpeech].suffixes) {
-                    if (suffix.hasOwnProperty(types.footnote)) {
+                    if (suffix.hasOwnProperty(types$1.footnote)) {
                         // Footnote indexes are stored in an array
-                        for (let index of suffix[types.footnote]) {
+                        for (let index of suffix[types$1.footnote]) {
                             footnotesIndex.add(index);
                         }
                     }
@@ -733,7 +735,7 @@ class LanguageDataset {
                 // Add footnote indexes and their texts to a result
                 for (let index of footnotesIndex) {
                     let footnote = this.footnotes.find(footnoteElement =>
-                        footnoteElement.index === index && footnoteElement[types.part] === partOfSpeech
+                        footnoteElement.index === index && footnoteElement[types$1.part] === partOfSpeech
                     );
                     result[partOfSpeech].footnotes.push({index: index, text: footnote.text});
                 }
@@ -796,8 +798,8 @@ class Suffix {
             }
         }
 
-        if (this.hasOwnProperty(types.footnote)) {
-            clone[types.footnote] = this[types.footnote];
+        if (this.hasOwnProperty(types$1.footnote)) {
+            clone[types$1.footnote] = this[types$1.footnote];
         }
         return clone;
     };
@@ -981,7 +983,7 @@ class Footnote {
     constructor(index, text, partOfSpeech) {
         this.index = index;
         this.text = text;
-        this[types.part] = partOfSpeech;
+        this[types$1.part] = partOfSpeech;
     }
 }
 
@@ -1001,8 +1003,9 @@ class MatchData {
  */
 class ResultSet {
     constructor() {
+        // Add languages
         this.word = undefined;
-        this[types.part] = [];
+        this[types$1.part] = [];
     }
 }
 
@@ -1024,43 +1027,9 @@ let loadData = function loadData(filePath) {
 };
 
 /*
- Definition of objects that are passed between morphology analysis adapters and inflection tables library
+Objects of a morphology analyzer's library
  */
-class Service {
-    constructor(name) {
-        "use strict";
-
-        this.name = name;
-
-        this.languages = {};
-        this.languages.importer = new Importer();
-    }
-
-    setLanguageData(data) {
-        "use strict";
-
-        data.serviceName = this.name;
-
-        data.getFeatureFrom = function (providerType, providerValue) {
-            "use strict";
-            if (!this[providerType]) {
-                console.warn("Skipping an unknown grammatical feature '" + providerType + "' for " + this.language + " language of " +
-                    data.serviceName + ' morphological service');
-            }
-            else if (!this[providerType][providerValue]) {
-                console.warn("Skipping an unknown value '" + providerValue + "' of a grammatical feature '" + providerType + "' for " + this.language + " language of " +
-                    data.serviceName + ' morphological service');
-            }
-            else {
-                return this[providerType][providerValue];
-            }
-        };
-
-        this[data.language] = data;
-    }
-}
-
-class LanguageData {
+class ImportData {
     constructor(language) {
         "use strict";
         this.language = language;
@@ -1069,7 +1038,6 @@ class LanguageData {
     addFeature(name) {
         this[name] = {};
         let language = this.language;
-        let serviceName = this.serviceName; // TODO: not defined when object is created
 
         this[name].add = function add(providerValue, alpheiosValue) {
             "use strict";
@@ -1080,8 +1048,8 @@ class LanguageData {
         this[name].get = function get(providerValue) {
             "use strict";
             if (!this.importer.has(providerValue)) {
-                console.warn("Skipping an unknown value '" + providerValue + "' of a grammatical feature '" + name + "' of " + language + " language of " +
-                    serviceName + ' morphological service');
+                throw new Error("Skipping an unknown value '"
+                    + providerValue + "' of a grammatical feature '" + name + "' of " + language + " language.");
             }
             else {
                 return this.importer.get(providerValue);
@@ -1099,13 +1067,13 @@ var nounSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,s
 
 var nounFootnotesCSV = "Index,Text\r\n1,archaic (final s and m of os and om may be omitted in inscriptions)\r\n2,only in familiās\r\n3,especially in Greek patronymics and compounds in -gena and -cola.\r\n4,always in deābus and filiābus; rarely with other words to distinguish the female\r\n5,archaic\r\n6,rare\r\n7,\"may occur in words of Greek origin. The forms of many Greek nouns vary among the first, second and third declensions.\"\r\n8,proper names in ius and filius and genius\r\n9,poetic\r\n10,\"only pelagus, vīrus, and sometimes vulgus\"\r\n11,may occur with i-stems\r\n12,several nouns (most commonly domus) show forms of both second and fourth declensions\r\n13,\"some nouns also have forms from the first declension (eg materia, saevitia) or the third declension (eg requiēs, satiēs, plēbēs, famēs)\"\r\n14,\"Always in partus and tribus, usually in artus and lacus, sometimes in other words, eg portus and specus\"\r\n15,Often in names of plants and trees and in nouns ending in -tus\r\n16,When pronounced as one syllable\r\n17,early\r\n18,dies and meridies are masculine";
 
-var adjectiveSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,";
+var adjectiveSuffixesCSV$1 = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,";
 
-var adjectiveFootnotesCSV = "Index,Text\r\n1,\"Adjectives agree with the noun they modify in gender, number and case.\"\r\n2,Adjectives are inflected according to either\r\n3,\"Only nullus, sōlus, alius (alia, aliud), tōtus, ūllus, ūnus, alter, neuter (neutra,\r\n            neutrum) and uter (utra, utrum).\"\r\n4,In a few adjectives of Greek origin.\r\n5,\"The \"\"two-ending\"\" adjectives use \"\"-is\"\", for both masculine and feminine nominative\r\n            singular.\"\r\n6,\"The \"\"one-ending\"\" adjectives use the same consonant ending for all three genders in the\r\n            nominative singular and the neuter accusative and vocative singular.\"\r\n7,\"An ablative singular in \"\"e\"\" is common in one-ending adjectives, but is usually confined to\r\n            poetry in three and two-ending adjectives.\"\r\n8,\"In comparatives, poetry and some one-ending adjectives.\"\r\n9,Chiefly in comparatives.";
+var adjectiveFootnotesCSV$1 = "Index,Text\r\n1,\"Adjectives agree with the noun they modify in gender, number and case.\"\r\n2,Adjectives are inflected according to either\r\n3,\"Only nullus, sōlus, alius (alia, aliud), tōtus, ūllus, ūnus, alter, neuter (neutra,\r\n            neutrum) and uter (utra, utrum).\"\r\n4,In a few adjectives of Greek origin.\r\n5,\"The \"\"two-ending\"\" adjectives use \"\"-is\"\", for both masculine and feminine nominative\r\n            singular.\"\r\n6,\"The \"\"one-ending\"\" adjectives use the same consonant ending for all three genders in the\r\n            nominative singular and the neuter accusative and vocative singular.\"\r\n7,\"An ablative singular in \"\"e\"\" is common in one-ending adjectives, but is usually confined to\r\n            poetry in three and two-ending adjectives.\"\r\n8,\"In comparatives, poetry and some one-ending adjectives.\"\r\n9,Chiefly in comparatives.";
 
-var verbSuffixesCSV = "Ending,Conjugation,Voice,Mood,Tense,Number,Person,Type,Footnote\r\nō,1st,active,indicative,present,singular,1st,regular,\r\nās,1st,active,indicative,present,singular,2nd,regular,\r\nat,1st,active,indicative,present,singular,3rd,regular,\r\nāmus,1st,active,indicative,present,plural,1st,regular,\r\nātis,1st,active,indicative,present,plural,2nd,regular,\r\nant,1st,active,indicative,present,plural,3rd,regular,\r\nem,1st,active,subjunctive,present,singular,1st,regular,\r\nēs,1st,active,subjunctive,present,singular,2nd,regular,\r\net,1st,active,subjunctive,present,singular,3rd,regular,\r\nēmus,1st,active,subjunctive,present,plural,1st,regular,\r\nētis,1st,active,subjunctive,present,plural,2nd,regular,\r\nent,1st,active,subjunctive,present,plural,3rd,regular,\r\neō,2nd,active,indicative,present,singular,1st,regular,\r\nēs,2nd,active,indicative,present,singular,2nd,regular,\r\nēt,2nd,active,indicative,present,singular,3rd,regular,\r\nēmus,2nd,active,indicative,present,plural,1st,regular,\r\nētis,2nd,active,indicative,present,plural,2nd,regular,\r\nent,2nd,active,indicative,present,plural,3rd,regular,\r\neam,2nd,active,subjunctive,present,singular,1st,regular,\r\neās,2nd,active,subjunctive,present,singular,2nd,regular,\r\neat,2nd,active,subjunctive,present,singular,3rd,regular,\r\neāmus,2nd,active,subjunctive,present,plural,1st,regular,\r\neātis,2nd,active,subjunctive,present,plural,2nd,regular,\r\neant,2nd,active,subjunctive,present,plural,3rd,regular,\r\nō,3rd,active,indicative,present,singular,1st,regular,\r\nis,3rd,active,indicative,present,singular,2nd,regular,\r\nit,3rd,active,indicative,present,singular,3rd,regular,\r\nimus,3rd,active,indicative,present,plural,1st,regular,\r\nitis,3rd,active,indicative,present,plural,2nd,regular,\r\nunt,3rd,active,indicative,present,plural,3rd,regular,\r\nam,3rd,active,subjunctive,present,singular,1st,regular,\r\nās,3rd,active,subjunctive,present,singular,2nd,regular,\r\nat,3rd,active,subjunctive,present,singular,3rd,regular,\r\nāmus,3rd,active,subjunctive,present,plural,1st,regular,\r\nātis,3rd,active,subjunctive,present,plural,2nd,regular,\r\nant,3rd,active,subjunctive,present,plural,3rd,regular,\r\niō,4th,active,indicative,present,singular,1st,regular,\r\nīs,4th,active,indicative,present,singular,2nd,regular,\r\nit,4th,active,indicative,present,singular,3rd,regular,\r\nīmus,4th,active,indicative,present,plural,1st,regular,\r\nītis,4th,active,indicative,present,plural,2nd,regular,\r\niunt,4th,active,indicative,present,plural,3rd,regular,\r\niam,4th,active,subjunctive,present,singular,1st,regular,\r\niās,4th,active,subjunctive,present,singular,2nd,regular,\r\niat,4th,active,subjunctive,present,singular,3rd,regular,\r\niāmus,4th,active,subjunctive,present,plural,1st,regular,\r\niāatis,4th,active,subjunctive,present,plural,2nd,regular,\r\niant,4th,active,subjunctive,present,plural,3rd,regular,\r\nābam,1st,active,indicative,imperfect,singular,1st,regular,\r\nābas,1st,active,indicative,imperfect,singular,2nd,regular,\r\nābat,1st,active,indicative,imperfect,singular,3rd,regular,\r\nābāmus,1st,active,indicative,imperfect,plural,1st,regular,\r\nābātis,1st,active,indicative,imperfect,plural,2nd,regular,\r\nābant,1st,active,indicative,imperfect,plural,3rd,regular,\r\nārem,1st,active,subjunctive,imperfect,singular,1st,regular,\r\nārēs,1st,active,subjunctive,imperfect,singular,2nd,regular,\r\nāret,1st,active,subjunctive,imperfect,singular,3rd,regular,\r\nārēmus,1st,active,subjunctive,imperfect,plural,1st,regular,\r\nārētis,1st,active,subjunctive,imperfect,plural,2nd,regular,\r\nārent,1st,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbam,2nd,active,indicative,imperfect,singular,1st,regular,\r\nēbās,2nd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,2nd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,2nd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,2nd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,2nd,active,indicative,imperfect,plural,3rd,regular,\r\nērem,2nd,active,subjunctive,imperfect,singular,1st,regular,\r\nērēs,2nd,active,subjunctive,imperfect,singular,2nd,regular,\r\nēret,2nd,active,subjunctive,imperfect,singular,3rd,regular,\r\nērēmus,2nd,active,subjunctive,imperfect,plural,1st,regular,\r\nērētis,2nd,active,subjunctive,imperfect,plural,2nd,regular,\r\nērēnt,2nd,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbas,3rd,active,indicative,imperfect,singular,1st,regular,\r\nēbāt,3rd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,3rd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,3rd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,3rd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,3rd,active,indicative,imperfect,plural,3rd,regular,\r\nerem,3rd,active,subjunctive,imperfect,singular,1st,regular,\r\nerēs,3rd,active,subjunctive,imperfect,singular,2nd,regular,\r\neret,3rd,active,subjunctive,imperfect,singular,3rd,regular,\r\nerēmus,3rd,active,subjunctive,imperfect,plural,1st,regular,\r\nerētis,3rd,active,subjunctive,imperfect,plural,2nd,regular,\r\nerent,3rd,active,subjunctive,imperfect,plural,3rd,regular,\r\niēbam,4th,active,indicative,imperfect,singular,1st,regular,\r\nībam,4th,active,indicative,imperfect,singular,1st,irregular,2\r\niēbas,4th,active,indicative,imperfect,singular,2nd,regular,\r\nības,4th,active,indicative,imperfect,singular,2nd,irregular,\r\niēbat,4th,active,indicative,imperfect,singular,3rd,regular,\r\nībat,4th,active,indicative,imperfect,singular,3rd,irregular,\r\niēbāmus,4th,active,indicative,imperfect,plural,1st,regular,\r\nībāmus,4th,active,indicative,imperfect,plural,1st,irregular,\r\niēbātis,4th,active,indicative,imperfect,plural,2nd,regular,\r\nībātis,4th,active,indicative,imperfect,plural,2nd,irregular,\r\niēbant,4th,active,indicative,imperfect,plural,3rd,regular,\r\nībant,4th,active,indicative,imperfect,plural,3rd,irregular,\r\nīrem,4th,active,subjunctive,imperfect,singular,1st,regular,\r\nīrēs,4th,active,subjunctive,imperfect,singular,2nd,regular,\r\nīret,4th,active,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmus,4th,active,subjunctive,imperfect,plural,1st,regular,\r\nīrētis,4th,active,subjunctive,imperfect,plural,2nd,regular,\r\nīrēnt,4th,active,subjunctive,imperfect,plural,3rd,regular,\r\nābo,1st,active,indicative,future,singular,1st,regular,\r\nābis,1st,active,indicative,future,singular,2nd,regular,\r\nābit,1st,active,indicative,future,singular,3rd,regular,\r\nābimus,1st,active,indicative,future,plural,1st,regular,\r\nābitis,1st,active,indicative,future,plural,2nd,regular,\r\nābunt,1st,active,indicative,future,plural,3rd,regular,\r\n,1st,active,subjunctive,future,singular,1st,,\r\n,1st,active,subjunctive,future,singular,2nd,,\r\n,1st,active,subjunctive,future,singular,3rd,,\r\n,1st,active,subjunctive,future,plural,1st,,\r\n,1st,active,subjunctive,future,plural,2nd,,\r\n,1st,active,subjunctive,future,plural,3rd,,\r\nēbō,2nd,active,indicative,future,singular,1st,regular,\r\nēbis,2nd,active,indicative,future,singular,2nd,regular,\r\nēbit,2nd,active,indicative,future,singular,3rd,regular,\r\nēbimus,2nd,active,indicative,future,plural,1st,regular,\r\nēbitis,2nd,active,indicative,future,plural,2nd,regular,\r\nēbunt,2nd,active,indicative,future,plural,3rd,regular,\r\n,2nd,active,subjunctive,future,singular,1st,regular,\r\n,2nd,active,subjunctive,future,singular,2nd,,\r\n,2nd,active,subjunctive,future,singular,3rd,,\r\n,2nd,active,subjunctive,future,plural,1st,,\r\n,2nd,active,subjunctive,future,plural,2nd,,\r\n,2nd,active,subjunctive,future,plural,3rd,,\r\nam,3rd,active,indicative,future,singular,1st,regular,\r\nēs,3rd,active,indicative,future,singular,2nd,regular,\r\net,3rd,active,indicative,future,singular,3rd,regular,\r\nēmus,3rd,active,indicative,future,plural,1st,regular,\r\nētis,3rd,active,indicative,future,plural,2nd,regular,\r\nent,3rd,active,indicative,future,plural,3rd,regular,\r\n,3rd,active,subjunctive,future,singular,1st,,\r\n,3rd,active,subjunctive,future,singular,2nd,,\r\n,3rd,active,subjunctive,future,singular,3rd,,\r\n,3rd,active,subjunctive,future,plural,1st,,\r\n,3rd,active,subjunctive,future,plural,2nd,,\r\n,3rd,active,subjunctive,future,plural,3rd,,\r\niam,4th,active,indicative,future,singular,1st,regular,\r\nībō,4th,active,indicative,future,singular,1st,irregular,2\r\niēs,4th,active,indicative,future,singular,2nd,regular,\r\nībis,4th,active,indicative,future,singular,2nd,irregular,\r\niet,4th,active,indicative,future,singular,3rd,regular,\r\nībit,4th,active,indicative,future,singular,3rd,irregular,\r\niēmus,4th,active,indicative,future,plural,1st,regular,\r\nībimus,4th,active,indicative,future,plural,1st,irregular,\r\niētis,4th,active,indicative,future,plural,2nd,regular,\r\nībitis,4th,active,indicative,future,plural,2nd,irregular,\r\nient,4th,active,indicative,future,plural,3rd,regular,\r\nībunt,4th,active,indicative,future,plural,3rd,irregular,\r\n,4th,active,subjunctive,future,singular,1st,,\r\n,4th,active,subjunctive,future,singular,2nd,,\r\n,4th,active,subjunctive,future,singular,3rd,,\r\n,4th,active,subjunctive,future,plural,1st,,\r\n,4th,active,subjunctive,future,plural,2nd,,\r\n,4th,active,subjunctive,future,plural,3rd,,\r\nāvī,1st,active,indicative,perfect,singular,1st,regular,\r\nāvistī,1st,active,indicative,perfect,singular,2nd,regular,\r\nāvit,1st,active,indicative,perfect,singular,3rd,regular,\r\nāvimus,1st,active,indicative,perfect,plural,1st,regular,\r\nāvistis,1st,active,indicative,perfect,plural,2nd,regular,\r\nāvērunt,1st,active,indicative,perfect,plural,3rd,regular,\r\nāvēre,1st,active,indicative,perfect,plural,3rd,irregular,6\r\nāverim,1st,active,subjunctive,perfect,singular,1st,regular,\r\nāveris,1st,active,subjunctive,perfect,singular,2nd,regular,\r\nāverit,1st,active,subjunctive,perfect,singular,3rd,regular,\r\nāverimus,1st,active,subjunctive,perfect,plural,1st,regular,\r\nāveritis,1st,active,subjunctive,perfect,plural,2nd,regular,\r\nāverint,1st,active,subjunctive,perfect,plural,3rd,regular,\r\nvī,2nd,active,indicative,perfect,singular,1st,regular,\r\nvistī,2nd,active,indicative,perfect,singular,2nd,regular,\r\nvit,2nd,active,indicative,perfect,singular,3rd,regular,\r\nvimus,2nd,active,indicative,perfect,plural,1st,regular,\r\nvistis,2nd,active,indicative,perfect,plural,2nd,regular,\r\nvērunt,2nd,active,indicative,perfect,plural,3rd,regular,\r\nvēre,2nd,active,indicative,perfect,plural,3rd,irregular,6\r\nverim,2nd,active,subjunctive,perfect,singular,1st,regular,\r\nveris,2nd,active,subjunctive,perfect,singular,2nd,regular,\r\nverit,2nd,active,subjunctive,perfect,singular,3rd,regular,\r\nverimus,2nd,active,subjunctive,perfect,plural,1st,regular,\r\nveritis,2nd,active,subjunctive,perfect,plural,2nd,regular,\r\nverint,2nd,active,subjunctive,perfect,plural,3rd,regular,\r\nī,3rd,active,indicative,perfect,singular,1st,regular,\r\nistī,3rd,active,indicative,perfect,singular,2nd,regular,\r\nit,3rd,active,indicative,perfect,singular,3rd,regular,\r\nimus,3rd,active,indicative,perfect,plural,1st,regular,\r\nistis,3rd,active,indicative,perfect,plural,2nd,regular,\r\nērunt,3rd,active,indicative,perfect,plural,3rd,regular,\r\nēre,3rd,active,indicative,perfect,plural,3rd,irregular,6\r\nerim,3rd,active,subjunctive,perfect,singular,1st,regular,\r\neris,3rd,active,subjunctive,perfect,singular,2nd,regular,\r\nerit,3rd,active,subjunctive,perfect,singular,3rd,regular,\r\nerimus,3rd,active,subjunctive,perfect,plural,1st,regular,\r\neritis,3rd,active,subjunctive,perfect,plural,2nd,regular,\r\nerint,3rd,active,subjunctive,perfect,plural,3rd,regular,\r\nīvi,4th,active,indicative,perfect,singular,1st,regular,\r\nīvistī,4th,active,indicative,perfect,singular,2nd,regular,\r\nīvit,4th,active,indicative,perfect,singular,3rd,regular,\r\nīvimus,4th,active,indicative,perfect,plural,1st,regular,\r\nīvistis,4th,active,indicative,perfect,plural,2nd,regular,\r\nīvērunt,4th,active,indicative,perfect,plural,3rd,regular,\r\nīvēre,4th,active,indicative,perfect,plural,3rd,irregular,6\r\nīverim,4th,active,subjunctive,perfect,singular,1st,regular,\r\niveris,4th,active,subjunctive,perfect,singular,2nd,regular,\r\nīverit,4th,active,subjunctive,perfect,singular,3rd,regular,\r\nīverimus,4th,active,subjunctive,perfect,plural,1st,regular,\r\nīveritis,4th,active,subjunctive,perfect,plural,2nd,regular,\r\nīverint,4th,active,subjunctive,perfect,plural,3rd,regular,\r\nāveram,1st,active,indicative,pluperfect,singular,1st,regular,\r\nāverās,1st,active,indicative,pluperfect,singular,2nd,regular,\r\nāverat,1st,active,indicative,pluperfect,singular,3rd,regular,\r\nāverāmus,1st,active,indicative,pluperfect,plural,1st,regular,\r\nāverātis,1st,active,indicative,pluperfect,plural,2nd,regular,\r\nāverant,1st,active,indicative,pluperfect,plural,3rd,regular,\r\nāvissem,1st,active,subjunctive,pluperfect,singular,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,singular,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,singular,3rd,regular,\r\nāvissēm,1st,active,subjunctive,pluperfect,plural,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,plural,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,plural,3rd,regular,\r\nveram,2nd,active,indicative,pluperfect,singular,1st,regular,\r\nverās,2nd,active,indicative,pluperfect,singular,2nd,regular,\r\nverat,2nd,active,indicative,pluperfect,singular,3rd,regular,\r\nverāmus,2nd,active,indicative,pluperfect,plural,1st,regular,\r\nverātis,2nd,active,indicative,pluperfect,plural,2nd,regular,\r\nverant,2nd,active,indicative,pluperfect,plural,3rd,regular,\r\nvissem,2nd,active,subjunctive,pluperfect,singular,1st,regular,\r\nvissēs,2nd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nvisset,2nd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nvissēmus,2nd,active,subjunctive,pluperfect,plural,1st,regular,\r\nvissētis,2nd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nvissent,2nd,active,subjunctive,pluperfect,plural,3rd,regular,\r\neram,3rd,active,indicative,pluperfect,singular,1st,regular,\r\nerās,3rd,active,indicative,pluperfect,singular,2nd,regular,\r\nerat,3rd,active,indicative,pluperfect,singular,3rd,regular,\r\nerāmus,3rd,active,indicative,pluperfect,plural,1st,regular,\r\nerātis,3rd,active,indicative,pluperfect,plural,2nd,regular,\r\nerant,3rd,active,indicative,pluperfect,plural,3rd,regular,\r\nissem,3rd,active,subjunctive,pluperfect,singular,1st,regular,\r\nissēs,3rd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nisset,3rd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nissēmus,3rd,active,subjunctive,pluperfect,plural,1st,regular,\r\nissētis,3rd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nissent,3rd,active,subjunctive,pluperfect,plural,3rd,regular,\r\nīveram,4th,active,indicative,pluperfect,singular,1st,regular,\r\nīverās,4th,active,indicative,pluperfect,singular,2nd,regular,\r\nīverat,4th,active,indicative,pluperfect,singular,3rd,regular,\r\nīverāmus,4th,active,indicative,pluperfect,plural,1st,regular,\r\nīverātis,4th,active,indicative,pluperfect,plural,2nd,regular,\r\nīverant,4th,active,indicative,pluperfect,plural,3rd,regular,\r\nīvissem,4th,active,subjunctive,pluperfect,singular,1st,regular,\r\nīvissēs,4th,active,subjunctive,pluperfect,singular,2nd,regular,\r\nīvisset,4th,active,subjunctive,pluperfect,singular,3rd,regular,\r\nīvissēmus,4th,active,subjunctive,pluperfect,plural,1st,regular,\r\nīvissētis,4th,active,subjunctive,pluperfect,plural,2nd,regular,\r\nīvissent,4th,active,subjunctive,pluperfect,plural,3rd,regular,\r\nāverō,1st,active,indicative,future_perfect,singular,1st,regular,\r\nāveris,1st,active,indicative,future_perfect,singular,2nd,regular,\r\nāverit,1st,active,indicative,future_perfect,singular,3rd,regular,\r\nāverimus,1st,active,indicative,future_perfect,plural,1st,regular,\r\nāveritis,1st,active,indicative,future_perfect,plural,2nd,regular,\r\nāverint,1st,active,indicative,future_perfect,plural,3rd,regular,\r\n,1st,active,subjunctive,future_perfect,singular,1st,,\r\n,1st,active,subjunctive,future_perfect,singular,2nd,,\r\n,1st,active,subjunctive,future_perfect,singular,3rd,,\r\n,1st,active,subjunctive,future_perfect,plural,1st,,\r\n,1st,active,subjunctive,future_perfect,plural,2nd,,\r\n,1st,active,subjunctive,future_perfect,plural,3rd,,\r\nverō,2nd,active,indicative,future_perfect,singular,1st,regular,\r\nvēris,2nd,active,indicative,future_perfect,singular,2nd,regular,\r\nvērit,2nd,active,indicative,future_perfect,singular,3rd,regular,\r\nvērimus,2nd,active,indicative,future_perfect,plural,1st,regular,\r\nvēritis,2nd,active,indicative,future_perfect,plural,2nd,regular,\r\nvērint,2nd,active,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,active,subjunctive,future_perfect,singular,1st,,\r\n,2nd,active,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,active,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,active,subjunctive,future_perfect,plural,1st,,\r\n,2nd,active,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,active,subjunctive,future_perfect,plural,3rd,,\r\nerō,3rd,active,indicative,future_perfect,singular,1st,regular,\r\neris,3rd,active,indicative,future_perfect,singular,2nd,regular,\r\nerit,3rd,active,indicative,future_perfect,singular,3rd,regular,\r\nerimus,3rd,active,indicative,future_perfect,plural,1st,regular,\r\neritis,3rd,active,indicative,future_perfect,plural,2nd,regular,\r\nerint,3rd,active,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,active,subjunctive,future_perfect,singular,1st,,\r\n,3rd,active,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,active,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,active,subjunctive,future_perfect,plural,1st,,\r\n,3rd,active,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,active,subjunctive,future_perfect,plural,3rd,,\r\nīverō,4th,active,indicative,future_perfect,singular,1st,regular,\r\nīveris,4th,active,indicative,future_perfect,singular,2nd,regular,\r\nīverit,4th,active,indicative,future_perfect,singular,3rd,regular,\r\nīverimus,4th,active,indicative,future_perfect,plural,1st,regular,\r\nīveritis,4th,active,indicative,future_perfect,plural,2nd,regular,\r\nīverint,4th,active,indicative,future_perfect,plural,3rd,regular,\r\n,4th,active,subjunctive,future_perfect,singular,1st,,\r\n,4th,active,subjunctive,future_perfect,singular,2nd,,\r\n,4th,active,subjunctive,future_perfect,singular,3rd,,\r\n,4th,active,subjunctive,future_perfect,plural,1st,,\r\n,4th,active,subjunctive,future_perfect,plural,2nd,,\r\n,4th,active,subjunctive,future_perfect,plural,3rd,,\r\nor,1st,passive,indicative,present,singular,1st,regular,\r\nāris,1st,passive,indicative,present,singular,2nd,regular,\r\nāre,1st,passive,indicative,present,singular,2nd,irregular,5\r\nātur,1st,passive,indicative,present,singular,3rd,regular,\r\nāmur,1st,passive,indicative,present,plural,1st,regular,\r\nāminiī,1st,passive,indicative,present,plural,2nd,regular,\r\nantur,1st,passive,indicative,present,plural,3rd,regular,\r\ner,1st,passive,subjunctive,present,singular,1st,regular,\r\nēris,1st,passive,subjunctive,present,singular,2nd,regular,\r\nēre,1st,passive,subjunctive,present,singular,2nd,regular,\r\nētur,1st,passive,subjunctive,present,singular,3rd,regular,\r\nēmur,1st,passive,subjunctive,present,plural,1st,regular,\r\nēminī,1st,passive,subjunctive,present,plural,2nd,regular,\r\nentur,1st,passive,subjunctive,present,plural,3rd,regular,\r\neor,2nd,passive,indicative,present,singular,1st,regular,\r\nēris,2nd,passive,indicative,present,singular,2nd,regular,\r\nēre,2nd,passive,indicative,present,singular,2nd,regular,\r\nētur,2nd,passive,indicative,present,singular,3rd,regular,\r\nēmur,2nd,passive,indicative,present,plural,1st,regular,\r\nēmini,2nd,passive,indicative,present,plural,2nd,regular,\r\nentur,2nd,passive,indicative,present,plural,3rd,regular,\r\near,2nd,passive,subjunctive,present,singular,1st,regular,\r\neāris,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neāre,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neātur,2nd,passive,subjunctive,present,singular,3rd,regular,\r\neāmur,2nd,passive,subjunctive,present,plural,1st,regular,\r\neāminī,2nd,passive,subjunctive,present,plural,2nd,regular,\r\neantur,2nd,passive,subjunctive,present,plural,3rd,regular,\r\nor,3rd,passive,indicative,present,singular,1st,regular,\r\neris,3rd,passive,indicative,present,singular,2nd,regular,\r\nere,3rd,passive,indicative,present,singular,2nd,regular,\r\nitur,3rd,passive,indicative,present,singular,3rd,regular,\r\nimur,3rd,passive,indicative,present,plural,1st,regular,\r\niminī,3rd,passive,indicative,present,plural,2nd,regular,\r\nuntur,3rd,passive,indicative,present,plural,3rd,regular,\r\nar,3rd,passive,subjunctive,present,singular,1st,regular,\r\nāris,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nāre,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nātur,3rd,passive,subjunctive,present,singular,3rd,regular,\r\nāmur,3rd,passive,subjunctive,present,plural,1st,regular,\r\nāminī,3rd,passive,subjunctive,present,plural,2nd,regular,\r\nantur,3rd,passive,subjunctive,present,plural,3rd,regular,\r\nior,4th,passive,indicative,present,singular,1st,regular,\r\nīris,4th,passive,indicative,present,singular,2nd,regular,\r\nīre,4th,passive,indicative,present,singular,2nd,regular,\r\nītur,4th,passive,indicative,present,singular,3rd,regular,\r\nīmur,4th,passive,indicative,present,plural,1st,regular,\r\nīminī,4th,passive,indicative,present,plural,2nd,regular,\r\niuntur,4th,passive,indicative,present,plural,3rd,regular,\r\niar,4th,passive,subjunctive,present,singular,1st,regular,\r\niāris,4th,passive,subjunctive,present,singular,2nd,regular,\r\niāre,4th,passive,subjunctive,present,singular,2nd,regular,\r\niātur,4th,passive,subjunctive,present,singular,3rd,regular,\r\niāmur,4th,passive,subjunctive,present,plural,1st,regular,\r\niāminī,4th,passive,subjunctive,present,plural,2nd,regular,\r\niantur,4th,passive,subjunctive,present,plural,3rd,regular,\r\nābar,1st,passive,indicative,imperfect,singular,1st,regular,\r\nābāaris,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābāre,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābātur,1st,passive,indicative,imperfect,singular,3rd,regular,\r\nābāmur,1st,passive,indicative,imperfect,plural,1st,regular,\r\nābāminī,1st,passive,indicative,imperfect,plural,2nd,regular,\r\nābantur,1st,passive,indicative,imperfect,plural,3rd,regular,\r\nārer,1st,passive,subjunctive,imperfect,singular,1st,regular,\r\nārēris,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārēre,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārētur,1st,passive,subjunctive,imperfect,singular,3rd,regular,\r\nārēmur,1st,passive,subjunctive,imperfect,plural,1st,regular,\r\nārēminī,1st,passive,subjunctive,imperfect,plural,2nd,regular,\r\nārentur,1st,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,2nd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbātur,2nd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,2nd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāmini,2nd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,2nd,passive,indicative,imperfect,plural,3rd,regular,\r\nērer,2nd,passive,subjunctive,imperfect,singular,1st,regular,\r\nērēris,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērēre,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērētur,2nd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nērēmur,2nd,passive,subjunctive,imperfect,plural,1st,regular,\r\nērēminī,2nd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nērentur,2nd,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,3rd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbatur,3rd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,3rd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāminī,3rd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,3rd,passive,indicative,imperfect,plural,3rd,regular,\r\nerer,3rd,passive,subjunctive,imperfect,singular,1st,regular,\r\nerēris,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerēre,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerētur,3rd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nerēmur,3rd,passive,subjunctive,imperfect,plural,1st,regular,\r\nerēminī,3rd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nerentur,3rd,passive,subjunctive,imperfect,plural,3rd,regular,\r\niēbar,4th,passive,indicative,imperfect,singular,1st,regular,\r\niēbāris,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbāre,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbātur,4th,passive,indicative,imperfect,singular,3rd,regular,\r\niēbāmur,4th,passive,indicative,imperfect,plural,1st,regular,\r\niēbāminī,4th,passive,indicative,imperfect,plural,2nd,regular,\r\niēbantur,4th,passive,indicative,imperfect,plural,3rd,regular,\r\nīrer,4th,passive,subjunctive,imperfect,singular,1st,regular,\r\nīrēris,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrēre,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrētur,4th,passive,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmur,4th,passive,subjunctive,imperfect,plural,1st,regular,\r\nīrēminī,4th,passive,subjunctive,imperfect,plural,2nd,regular,\r\nīrentur,4th,passive,subjunctive,imperfect,plural,3rd,regular,\r\nābor,1st,passive,indicative,future,singular,1st,regular,\r\nāberis,1st,passive,indicative,future,singular,2nd,regular,\r\nābere,1st,passive,indicative,future,singular,2nd,irregular,\r\nābitur,1st,passive,indicative,future,singular,3rd,regular,\r\nābimur,1st,passive,indicative,future,plural,1st,regular,\r\nābiminī,1st,passive,indicative,future,plural,2nd,regular,\r\nābuntur,1st,passive,indicative,future,plural,3rd,regular,\r\n,1st,passive,subjunctive,future,singular,1st,,\r\n,1st,passive,subjunctive,future,singular,2nd,,\r\n,1st,passive,subjunctive,future,singular,3rd,,\r\n,1st,passive,subjunctive,future,plural,1st,,\r\n,1st,passive,subjunctive,future,plural,2nd,,\r\n,1st,passive,subjunctive,future,plural,3rd,,\r\nēbor,2nd,passive,indicative,future,singular,1st,regular,\r\nēberis,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbere,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbitur,2nd,passive,indicative,future,singular,3rd,regular,\r\nēbimur,2nd,passive,indicative,future,plural,1st,regular,\r\nēbiminī,2nd,passive,indicative,future,plural,2nd,regular,\r\nēbuntur,2nd,passive,indicative,future,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future,singular,1st,,\r\n,2nd,passive,subjunctive,future,singular,2nd,,\r\n,2nd,passive,subjunctive,future,singular,3rd,,\r\n,2nd,passive,subjunctive,future,plural,1st,,\r\n,2nd,passive,subjunctive,future,plural,2nd,,\r\n,2nd,passive,subjunctive,future,plural,3rd,,\r\nar,3rd,passive,indicative,future,singular,1st,regular,\r\nēris,3rd,passive,indicative,future,singular,2nd,regular,\r\nēre,3rd,passive,indicative,future,singular,2nd,irregular,\r\nētur,3rd,passive,indicative,future,singular,3rd,regular,\r\nēmur,3rd,passive,indicative,future,plural,1st,regular,\r\nēminī,3rd,passive,indicative,future,plural,2nd,regular,\r\nentur,3rd,passive,indicative,future,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future,singular,1st,,\r\n,3rd,passive,subjunctive,future,singular,2nd,,\r\n,3rd,passive,subjunctive,future,singular,3rd,,\r\n,3rd,passive,subjunctive,future,plural,1st,,\r\n,3rd,passive,subjunctive,future,plural,2nd,,\r\n,3rd,passive,subjunctive,future,plural,3rd,,\r\niar,4th,passive,indicative,future,singular,1st,regular,\r\niēris,4th,passive,indicative,future,singular,2nd,regular,\r\nīēre,4th,passive,indicative,future,singular,2nd,irregular,\r\niētur,4th,passive,indicative,future,singular,3rd,regular,\r\niēmur,4th,passive,indicative,future,plural,1st,regular,\r\niēminī,4th,passive,indicative,future,plural,2nd,regular,\r\nientur,4th,passive,indicative,future,plural,3rd,regular,\r\n,4th,passive,subjunctive,future,singular,1st,,\r\n,4th,passive,subjunctive,future,singular,2nd,,\r\n,4th,passive,subjunctive,future,singular,3rd,,\r\n,4th,passive,subjunctive,future,plural,1st,,\r\n,4th,passive,subjunctive,future,plural,2nd,,\r\n,4th,passive,subjunctive,future,plural,3rd,,\r\nātus sum,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus fui,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus es,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus fuisti,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus est,1st,passive,indicative,perfect,singular,3rd,regular,\r\nātus fuit,1st,passive,indicative,perfect,singular,3rd,regular,\r\nāti sumus,1st,passive,indicative,perfect,plural,1st,regular,\r\nāti fuimus,1st,passive,indicative,perfect,plural,1st,irregular,\r\nāti estis,1st,passive,indicative,perfect,plural,2nd,regular,\r\nāti fuistis,1st,passive,indicative,perfect,plural,2nd,irregular,\r\nāti sunt,1st,passive,indicative,perfect,plural,3rd,regular,\r\nāti fuerunt,1st,passive,indicative,perfect,plural,3rd,irregular,\r\nātus sim,1st,passive,subjunctive,perfect,singular,1st,regular,\r\nātus fuerim,1st,passive,subjunctive,perfect,singular,1st,irregular,\r\nātus sis,1st,passive,subjunctive,perfect,singular,2nd,regular,\r\nātus fueris,1st,passive,subjunctive,perfect,singular,2nd,irregular,\r\nātus sit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nātus fuerit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nāti sīmus,1st,passive,subjunctive,perfect,plural,1st,regular,\r\nāti fuerimus,1st,passive,subjunctive,perfect,plural,1st,irregular,\r\nāti sītis,1st,passive,subjunctive,perfect,plural,2nd,regular,\r\nāti fueritis,1st,passive,subjunctive,perfect,plural,2nd,irregular,\r\nāti sint,1st,passive,subjunctive,perfect,plural,3rd,regular,\r\nāti fuerint,1st,passive,subjunctive,perfect,plural,3rd,irregular,\r\nitus sum,2nd,passive,indicative,perfect,singular,1st,regular,\r\nitus es,2nd,passive,indicative,perfect,singular,2nd,regular,\r\nitus est,2nd,passive,indicative,perfect,singular,3rd,regular,\r\nitī sumus,2nd,passive,indicative,perfect,plural,1st,regular,\r\nitī estis,2nd,passive,indicative,perfect,plural,2nd,regular,\r\nitī sunt,2nd,passive,indicative,perfect,plural,3rd,regular,\r\nitus sim,2nd,passive,subjunctive,perfect,singular,1st,regular,\r\nitus sīs,2nd,passive,subjunctive,perfect,singular,2nd,regular,\r\nitus sit,2nd,passive,subjunctive,perfect,singular,3rd,regular,\r\nitī sīmus,2nd,passive,subjunctive,perfect,plural,1st,regular,\r\nitī sītis,2nd,passive,subjunctive,perfect,plural,2nd,regular,\r\nitī sint,2nd,passive,subjunctive,perfect,plural,3rd,regular,\r\nus sum,3rd,passive,indicative,perfect,singular,1st,regular,\r\nus es,3rd,passive,indicative,perfect,singular,2nd,regular,\r\nus est,3rd,passive,indicative,perfect,singular,3rd,regular,\r\nī sumus,3rd,passive,indicative,perfect,plural,1st,regular,\r\nī estis,3rd,passive,indicative,perfect,plural,2nd,regular,\r\nī sunt,3rd,passive,indicative,perfect,plural,3rd,regular,\r\nus sim,3rd,passive,subjunctive,perfect,singular,1st,regular,\r\nus sīs,3rd,passive,subjunctive,perfect,singular,2nd,regular,\r\nus sit,3rd,passive,subjunctive,perfect,singular,3rd,regular,\r\nus sīmus,3rd,passive,subjunctive,perfect,plural,1st,regular,\r\nus sītis,3rd,passive,subjunctive,perfect,plural,2nd,regular,\r\nus sint,3rd,passive,subjunctive,perfect,plural,3rd,regular,\r\nītus sum,4th,passive,indicative,perfect,singular,1st,regular,\r\nītus es,4th,passive,indicative,perfect,singular,2nd,regular,\r\nītus est,4th,passive,indicative,perfect,singular,3rd,regular,\r\nītī sumus,4th,passive,indicative,perfect,plural,1st,regular,\r\nīti estis,4th,passive,indicative,perfect,plural,2nd,regular,\r\nīti sunt,4th,passive,indicative,perfect,plural,3rd,regular,\r\nītus sim,4th,passive,subjunctive,perfect,singular,1st,regular,\r\nītus sīs,4th,passive,subjunctive,perfect,singular,2nd,regular,\r\nītus sit,4th,passive,subjunctive,perfect,singular,3rd,regular,\r\nītī sīmus,4th,passive,subjunctive,perfect,plural,1st,regular,\r\nīti sītis,4th,passive,subjunctive,perfect,plural,2nd,regular,\r\nīti sint,4th,passive,subjunctive,perfect,plural,3rd,regular,\r\nātus eram,1st,passive,indicative,pluperfect,singular,1st,regular,\r\nātus fueram,1st,passive,indicative,pluperfect,singular,1st,irregular,\r\nātus eras,1st,passive,indicative,pluperfect,singular,2nd,regular,\r\nātus fueras,1st,passive,indicative,pluperfect,singular,2nd,irregular,\r\nātus erat,1st,passive,indicative,pluperfect,singular,3rd,regular,\r\nātus fuerat,1st,passive,indicative,pluperfect,singular,3rd,irregular,\r\nātī erāmus,1st,passive,indicative,pluperfect,plural,1st,regular,\r\nātī fueramus,1st,passive,indicative,pluperfect,plural,1st,irregular,\r\nātī erātis,1st,passive,indicative,pluperfect,plural,2nd,regular,\r\nātī fueratis,1st,passive,indicative,pluperfect,plural,2nd,irregular,\r\nātī erant,1st,passive,indicative,pluperfect,plural,3rd,regular,\r\nātī fuerant,1st,passive,indicative,pluperfect,plural,3rd,irregular,\r\nātus essem,1st,passive,subjunctive,pluperfect,singular,1st,regular,\r\nātus fuissem,1st,passive,subjunctive,pluperfect,singular,1st,irregular,\r\nātus esses,1st,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nātus fuissēs,1st,passive,subjunctive,pluperfect,singular,2nd,irregular,\r\nātus esset,1st,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nātus fuisset,1st,passive,subjunctive,pluperfect,singular,3rd,irregular,\r\nāti essēmus,1st,passive,subjunctive,pluperfect,plural,1st,regular,\r\nāti fuissēmus,1st,passive,subjunctive,pluperfect,plural,1st,irregular,\r\nāti essētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti fuissētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti essent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nāti fuissent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nitus eram,2nd,passive,indicative,pluperfect,singular,1st,regular,\r\nitus erās,2nd,passive,indicative,pluperfect,singular,2nd,regular,\r\nitus erat,2nd,passive,indicative,pluperfect,singular,3rd,regular,\r\nitī erāmus,2nd,passive,indicative,pluperfect,plural,1st,regular,\r\nitī erātis,2nd,passive,indicative,pluperfect,plural,2nd,regular,\r\nitī erant,2nd,passive,indicative,pluperfect,plural,3rd,regular,\r\nitus essem,2nd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nitus essēs,2nd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nitus esset,2nd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nitī essēmus,2nd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,2nd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,2nd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nus eram,3rd,passive,indicative,pluperfect,singular,1st,regular,\r\nus erās,3rd,passive,indicative,pluperfect,singular,2nd,regular,\r\nus erat,3rd,passive,indicative,pluperfect,singular,3rd,regular,\r\nī erāmus,3rd,passive,indicative,pluperfect,plural,1st,regular,\r\nī erātis,3rd,passive,indicative,pluperfect,plural,2nd,regular,\r\nī erant,3rd,passive,indicative,pluperfect,plural,3rd,regular,\r\nus essem,3rd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nus essēs,3rd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nus esset,3rd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nī essēmus,3rd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nī essētis,3rd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nī essent,3rd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nītus eram,4th,passive,indicative,pluperfect,singular,1st,regular,\r\nītus erās,4th,passive,indicative,pluperfect,singular,2nd,regular,\r\nītus erat,4th,passive,indicative,pluperfect,singular,3rd,regular,\r\nītī erāmus,4th,passive,indicative,pluperfect,plural,1st,regular,\r\nīti erātis,4th,passive,indicative,pluperfect,plural,2nd,regular,\r\nītī erant,4th,passive,indicative,pluperfect,plural,3rd,regular,\r\nītus essem,4th,passive,subjunctive,pluperfect,singular,1st,regular,\r\nītus essēs,4th,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nītus esset,4th,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nītī essēmus,4th,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,4th,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,4th,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nātus erō,1st,passive,indicative,future_perfect,singular,1st,regular,\r\nātus eris,1st,passive,indicative,future_perfect,singular,2nd,regular,\r\nātus erit,1st,passive,indicative,future_perfect,singular,3rd,regular,\r\nāti erimus,1st,passive,indicative,future_perfect,plural,1st,regular,\r\nāti eritis,1st,passive,indicative,future_perfect,plural,2nd,regular,\r\nāti erunt,1st,passive,indicative,future_perfect,plural,3rd,regular,\r\n,1st,passive,subjunctive,future_perfect,singular,1st,,\r\n,1st,passive,subjunctive,future_perfect,singular,2nd,,\r\n,1st,passive,subjunctive,future_perfect,singular,3rd,,\r\n,1st,passive,subjunctive,future_perfect,plural,1st,,\r\n,1st,passive,subjunctive,future_perfect,plural,2nd,,\r\n,1st,passive,subjunctive,future_perfect,plural,3rd,,\r\nitus erō,2nd,passive,indicative,future_perfect,singular,1st,regular,\r\nitus eris,2nd,passive,indicative,future_perfect,singular,2nd,regular,\r\nitus erit,2nd,passive,indicative,future_perfect,singular,3rd,regular,\r\nitī erimus,2nd,passive,indicative,future_perfect,plural,1st,regular,\r\nitī eritis,2nd,passive,indicative,future_perfect,plural,2nd,regular,\r\nitī erunt,2nd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future_perfect,singular,1st,,\r\n,2nd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,1st,,\r\n,2nd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,3rd,,\r\nus erō,3rd,passive,indicative,future_perfect,singular,1st,regular,\r\nus eris,3rd,passive,indicative,future_perfect,singular,2nd,regular,\r\nus erit,3rd,passive,indicative,future_perfect,singular,3rd,regular,\r\nī erimus,3rd,passive,indicative,future_perfect,plural,1st,regular,\r\nī eritis,3rd,passive,indicative,future_perfect,plural,2nd,regular,\r\nī erunt,3rd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future_perfect,singular,1st,,\r\n,3rd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,1st,,\r\n,3rd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,3rd,,\r\nītus erō,4th,passive,indicative,future_perfect,singular,1st,regular,\r\nītus eris,4th,passive,indicative,future_perfect,singular,2nd,regular,\r\nītus erit,4th,passive,indicative,future_perfect,singular,3rd,regular,\r\nītī erimus,4th,passive,indicative,future_perfect,plural,1st,regular,\r\nītī eritis,4th,passive,indicative,future_perfect,plural,2nd,regular,\r\nītī erunt,4th,passive,indicative,future_perfect,plural,3rd,regular,\r\n,4th,passive,subjunctive,future_perfect,singular,1st,,\r\n,4th,passive,subjunctive,future_perfect,singular,2nd,,\r\n,4th,passive,subjunctive,future_perfect,singular,3rd,,\r\n,4th,passive,subjunctive,future_perfect,plural,1st,,\r\n,4th,passive,subjunctive,future_perfect,plural,2nd,,\r\n,4th,passive,subjunctive,future_perfect,plural,3rd,,";
+var verbSuffixesCSV$1 = "Ending,Conjugation,Voice,Mood,Tense,Number,Person,Type,Footnote\r\nō,1st,active,indicative,present,singular,1st,regular,\r\nās,1st,active,indicative,present,singular,2nd,regular,\r\nat,1st,active,indicative,present,singular,3rd,regular,\r\nāmus,1st,active,indicative,present,plural,1st,regular,\r\nātis,1st,active,indicative,present,plural,2nd,regular,\r\nant,1st,active,indicative,present,plural,3rd,regular,\r\nem,1st,active,subjunctive,present,singular,1st,regular,\r\nēs,1st,active,subjunctive,present,singular,2nd,regular,\r\net,1st,active,subjunctive,present,singular,3rd,regular,\r\nēmus,1st,active,subjunctive,present,plural,1st,regular,\r\nētis,1st,active,subjunctive,present,plural,2nd,regular,\r\nent,1st,active,subjunctive,present,plural,3rd,regular,\r\neō,2nd,active,indicative,present,singular,1st,regular,\r\nēs,2nd,active,indicative,present,singular,2nd,regular,\r\nēt,2nd,active,indicative,present,singular,3rd,regular,\r\nēmus,2nd,active,indicative,present,plural,1st,regular,\r\nētis,2nd,active,indicative,present,plural,2nd,regular,\r\nent,2nd,active,indicative,present,plural,3rd,regular,\r\neam,2nd,active,subjunctive,present,singular,1st,regular,\r\neās,2nd,active,subjunctive,present,singular,2nd,regular,\r\neat,2nd,active,subjunctive,present,singular,3rd,regular,\r\neāmus,2nd,active,subjunctive,present,plural,1st,regular,\r\neātis,2nd,active,subjunctive,present,plural,2nd,regular,\r\neant,2nd,active,subjunctive,present,plural,3rd,regular,\r\nō,3rd,active,indicative,present,singular,1st,regular,\r\nis,3rd,active,indicative,present,singular,2nd,regular,\r\nit,3rd,active,indicative,present,singular,3rd,regular,\r\nimus,3rd,active,indicative,present,plural,1st,regular,\r\nitis,3rd,active,indicative,present,plural,2nd,regular,\r\nunt,3rd,active,indicative,present,plural,3rd,regular,\r\nam,3rd,active,subjunctive,present,singular,1st,regular,\r\nās,3rd,active,subjunctive,present,singular,2nd,regular,\r\nat,3rd,active,subjunctive,present,singular,3rd,regular,\r\nāmus,3rd,active,subjunctive,present,plural,1st,regular,\r\nātis,3rd,active,subjunctive,present,plural,2nd,regular,\r\nant,3rd,active,subjunctive,present,plural,3rd,regular,\r\niō,4th,active,indicative,present,singular,1st,regular,\r\nīs,4th,active,indicative,present,singular,2nd,regular,\r\nit,4th,active,indicative,present,singular,3rd,regular,\r\nīmus,4th,active,indicative,present,plural,1st,regular,\r\nītis,4th,active,indicative,present,plural,2nd,regular,\r\niunt,4th,active,indicative,present,plural,3rd,regular,\r\niam,4th,active,subjunctive,present,singular,1st,regular,\r\niās,4th,active,subjunctive,present,singular,2nd,regular,\r\niat,4th,active,subjunctive,present,singular,3rd,regular,\r\niāmus,4th,active,subjunctive,present,plural,1st,regular,\r\niāatis,4th,active,subjunctive,present,plural,2nd,regular,\r\niant,4th,active,subjunctive,present,plural,3rd,regular,\r\nābam,1st,active,indicative,imperfect,singular,1st,regular,\r\nābas,1st,active,indicative,imperfect,singular,2nd,regular,\r\nābat,1st,active,indicative,imperfect,singular,3rd,regular,\r\nābāmus,1st,active,indicative,imperfect,plural,1st,regular,\r\nābātis,1st,active,indicative,imperfect,plural,2nd,regular,\r\nābant,1st,active,indicative,imperfect,plural,3rd,regular,\r\nārem,1st,active,subjunctive,imperfect,singular,1st,regular,\r\nārēs,1st,active,subjunctive,imperfect,singular,2nd,regular,\r\nāret,1st,active,subjunctive,imperfect,singular,3rd,regular,\r\nārēmus,1st,active,subjunctive,imperfect,plural,1st,regular,\r\nārētis,1st,active,subjunctive,imperfect,plural,2nd,regular,\r\nārent,1st,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbam,2nd,active,indicative,imperfect,singular,1st,regular,\r\nēbās,2nd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,2nd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,2nd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,2nd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,2nd,active,indicative,imperfect,plural,3rd,regular,\r\nērem,2nd,active,subjunctive,imperfect,singular,1st,regular,\r\nērēs,2nd,active,subjunctive,imperfect,singular,2nd,regular,\r\nēret,2nd,active,subjunctive,imperfect,singular,3rd,regular,\r\nērēmus,2nd,active,subjunctive,imperfect,plural,1st,regular,\r\nērētis,2nd,active,subjunctive,imperfect,plural,2nd,regular,\r\nērēnt,2nd,active,subjunctive,imperfect,plural,3rd,regular,\r\nēbas,3rd,active,indicative,imperfect,singular,1st,regular,\r\nēbāt,3rd,active,indicative,imperfect,singular,2nd,regular,\r\nēbat,3rd,active,indicative,imperfect,singular,3rd,regular,\r\nēbāmus,3rd,active,indicative,imperfect,plural,1st,regular,\r\nēbātis,3rd,active,indicative,imperfect,plural,2nd,regular,\r\nēbant,3rd,active,indicative,imperfect,plural,3rd,regular,\r\nerem,3rd,active,subjunctive,imperfect,singular,1st,regular,\r\nerēs,3rd,active,subjunctive,imperfect,singular,2nd,regular,\r\neret,3rd,active,subjunctive,imperfect,singular,3rd,regular,\r\nerēmus,3rd,active,subjunctive,imperfect,plural,1st,regular,\r\nerētis,3rd,active,subjunctive,imperfect,plural,2nd,regular,\r\nerent,3rd,active,subjunctive,imperfect,plural,3rd,regular,\r\niēbam,4th,active,indicative,imperfect,singular,1st,regular,\r\nībam,4th,active,indicative,imperfect,singular,1st,irregular,2\r\niēbas,4th,active,indicative,imperfect,singular,2nd,regular,\r\nības,4th,active,indicative,imperfect,singular,2nd,irregular,\r\niēbat,4th,active,indicative,imperfect,singular,3rd,regular,\r\nībat,4th,active,indicative,imperfect,singular,3rd,irregular,\r\niēbāmus,4th,active,indicative,imperfect,plural,1st,regular,\r\nībāmus,4th,active,indicative,imperfect,plural,1st,irregular,\r\niēbātis,4th,active,indicative,imperfect,plural,2nd,regular,\r\nībātis,4th,active,indicative,imperfect,plural,2nd,irregular,\r\niēbant,4th,active,indicative,imperfect,plural,3rd,regular,\r\nībant,4th,active,indicative,imperfect,plural,3rd,irregular,\r\nīrem,4th,active,subjunctive,imperfect,singular,1st,regular,\r\nīrēs,4th,active,subjunctive,imperfect,singular,2nd,regular,\r\nīret,4th,active,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmus,4th,active,subjunctive,imperfect,plural,1st,regular,\r\nīrētis,4th,active,subjunctive,imperfect,plural,2nd,regular,\r\nīrēnt,4th,active,subjunctive,imperfect,plural,3rd,regular,\r\nābo,1st,active,indicative,future,singular,1st,regular,\r\nābis,1st,active,indicative,future,singular,2nd,regular,\r\nābit,1st,active,indicative,future,singular,3rd,regular,\r\nābimus,1st,active,indicative,future,plural,1st,regular,\r\nābitis,1st,active,indicative,future,plural,2nd,regular,\r\nābunt,1st,active,indicative,future,plural,3rd,regular,\r\n,1st,active,subjunctive,future,singular,1st,,\r\n,1st,active,subjunctive,future,singular,2nd,,\r\n,1st,active,subjunctive,future,singular,3rd,,\r\n,1st,active,subjunctive,future,plural,1st,,\r\n,1st,active,subjunctive,future,plural,2nd,,\r\n,1st,active,subjunctive,future,plural,3rd,,\r\nēbō,2nd,active,indicative,future,singular,1st,regular,\r\nēbis,2nd,active,indicative,future,singular,2nd,regular,\r\nēbit,2nd,active,indicative,future,singular,3rd,regular,\r\nēbimus,2nd,active,indicative,future,plural,1st,regular,\r\nēbitis,2nd,active,indicative,future,plural,2nd,regular,\r\nēbunt,2nd,active,indicative,future,plural,3rd,regular,\r\n,2nd,active,subjunctive,future,singular,1st,regular,\r\n,2nd,active,subjunctive,future,singular,2nd,,\r\n,2nd,active,subjunctive,future,singular,3rd,,\r\n,2nd,active,subjunctive,future,plural,1st,,\r\n,2nd,active,subjunctive,future,plural,2nd,,\r\n,2nd,active,subjunctive,future,plural,3rd,,\r\nam,3rd,active,indicative,future,singular,1st,regular,\r\nēs,3rd,active,indicative,future,singular,2nd,regular,\r\net,3rd,active,indicative,future,singular,3rd,regular,\r\nēmus,3rd,active,indicative,future,plural,1st,regular,\r\nētis,3rd,active,indicative,future,plural,2nd,regular,\r\nent,3rd,active,indicative,future,plural,3rd,regular,\r\n,3rd,active,subjunctive,future,singular,1st,,\r\n,3rd,active,subjunctive,future,singular,2nd,,\r\n,3rd,active,subjunctive,future,singular,3rd,,\r\n,3rd,active,subjunctive,future,plural,1st,,\r\n,3rd,active,subjunctive,future,plural,2nd,,\r\n,3rd,active,subjunctive,future,plural,3rd,,\r\niam,4th,active,indicative,future,singular,1st,regular,\r\nībō,4th,active,indicative,future,singular,1st,irregular,2\r\niēs,4th,active,indicative,future,singular,2nd,regular,\r\nībis,4th,active,indicative,future,singular,2nd,irregular,\r\niet,4th,active,indicative,future,singular,3rd,regular,\r\nībit,4th,active,indicative,future,singular,3rd,irregular,\r\niēmus,4th,active,indicative,future,plural,1st,regular,\r\nībimus,4th,active,indicative,future,plural,1st,irregular,\r\niētis,4th,active,indicative,future,plural,2nd,regular,\r\nībitis,4th,active,indicative,future,plural,2nd,irregular,\r\nient,4th,active,indicative,future,plural,3rd,regular,\r\nībunt,4th,active,indicative,future,plural,3rd,irregular,\r\n,4th,active,subjunctive,future,singular,1st,,\r\n,4th,active,subjunctive,future,singular,2nd,,\r\n,4th,active,subjunctive,future,singular,3rd,,\r\n,4th,active,subjunctive,future,plural,1st,,\r\n,4th,active,subjunctive,future,plural,2nd,,\r\n,4th,active,subjunctive,future,plural,3rd,,\r\nāvī,1st,active,indicative,perfect,singular,1st,regular,\r\nāvistī,1st,active,indicative,perfect,singular,2nd,regular,\r\nāvit,1st,active,indicative,perfect,singular,3rd,regular,\r\nāvimus,1st,active,indicative,perfect,plural,1st,regular,\r\nāvistis,1st,active,indicative,perfect,plural,2nd,regular,\r\nāvērunt,1st,active,indicative,perfect,plural,3rd,regular,\r\nāvēre,1st,active,indicative,perfect,plural,3rd,irregular,6\r\nāverim,1st,active,subjunctive,perfect,singular,1st,regular,\r\nāveris,1st,active,subjunctive,perfect,singular,2nd,regular,\r\nāverit,1st,active,subjunctive,perfect,singular,3rd,regular,\r\nāverimus,1st,active,subjunctive,perfect,plural,1st,regular,\r\nāveritis,1st,active,subjunctive,perfect,plural,2nd,regular,\r\nāverint,1st,active,subjunctive,perfect,plural,3rd,regular,\r\nvī,2nd,active,indicative,perfect,singular,1st,regular,\r\nvistī,2nd,active,indicative,perfect,singular,2nd,regular,\r\nvit,2nd,active,indicative,perfect,singular,3rd,regular,\r\nvimus,2nd,active,indicative,perfect,plural,1st,regular,\r\nvistis,2nd,active,indicative,perfect,plural,2nd,regular,\r\nvērunt,2nd,active,indicative,perfect,plural,3rd,regular,\r\nvēre,2nd,active,indicative,perfect,plural,3rd,irregular,6\r\nverim,2nd,active,subjunctive,perfect,singular,1st,regular,\r\nveris,2nd,active,subjunctive,perfect,singular,2nd,regular,\r\nverit,2nd,active,subjunctive,perfect,singular,3rd,regular,\r\nverimus,2nd,active,subjunctive,perfect,plural,1st,regular,\r\nveritis,2nd,active,subjunctive,perfect,plural,2nd,regular,\r\nverint,2nd,active,subjunctive,perfect,plural,3rd,regular,\r\nī,3rd,active,indicative,perfect,singular,1st,regular,\r\nistī,3rd,active,indicative,perfect,singular,2nd,regular,\r\nit,3rd,active,indicative,perfect,singular,3rd,regular,\r\nimus,3rd,active,indicative,perfect,plural,1st,regular,\r\nistis,3rd,active,indicative,perfect,plural,2nd,regular,\r\nērunt,3rd,active,indicative,perfect,plural,3rd,regular,\r\nēre,3rd,active,indicative,perfect,plural,3rd,irregular,6\r\nerim,3rd,active,subjunctive,perfect,singular,1st,regular,\r\neris,3rd,active,subjunctive,perfect,singular,2nd,regular,\r\nerit,3rd,active,subjunctive,perfect,singular,3rd,regular,\r\nerimus,3rd,active,subjunctive,perfect,plural,1st,regular,\r\neritis,3rd,active,subjunctive,perfect,plural,2nd,regular,\r\nerint,3rd,active,subjunctive,perfect,plural,3rd,regular,\r\nīvi,4th,active,indicative,perfect,singular,1st,regular,\r\nīvistī,4th,active,indicative,perfect,singular,2nd,regular,\r\nīvit,4th,active,indicative,perfect,singular,3rd,regular,\r\nīvimus,4th,active,indicative,perfect,plural,1st,regular,\r\nīvistis,4th,active,indicative,perfect,plural,2nd,regular,\r\nīvērunt,4th,active,indicative,perfect,plural,3rd,regular,\r\nīvēre,4th,active,indicative,perfect,plural,3rd,irregular,6\r\nīverim,4th,active,subjunctive,perfect,singular,1st,regular,\r\niveris,4th,active,subjunctive,perfect,singular,2nd,regular,\r\nīverit,4th,active,subjunctive,perfect,singular,3rd,regular,\r\nīverimus,4th,active,subjunctive,perfect,plural,1st,regular,\r\nīveritis,4th,active,subjunctive,perfect,plural,2nd,regular,\r\nīverint,4th,active,subjunctive,perfect,plural,3rd,regular,\r\nāveram,1st,active,indicative,pluperfect,singular,1st,regular,\r\nāverās,1st,active,indicative,pluperfect,singular,2nd,regular,\r\nāverat,1st,active,indicative,pluperfect,singular,3rd,regular,\r\nāverāmus,1st,active,indicative,pluperfect,plural,1st,regular,\r\nāverātis,1st,active,indicative,pluperfect,plural,2nd,regular,\r\nāverant,1st,active,indicative,pluperfect,plural,3rd,regular,\r\nāvissem,1st,active,subjunctive,pluperfect,singular,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,singular,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,singular,3rd,regular,\r\nāvissēm,1st,active,subjunctive,pluperfect,plural,1st,regular,\r\nāvissēs,1st,active,subjunctive,pluperfect,plural,2nd,regular,\r\nāvisset,1st,active,subjunctive,pluperfect,plural,3rd,regular,\r\nveram,2nd,active,indicative,pluperfect,singular,1st,regular,\r\nverās,2nd,active,indicative,pluperfect,singular,2nd,regular,\r\nverat,2nd,active,indicative,pluperfect,singular,3rd,regular,\r\nverāmus,2nd,active,indicative,pluperfect,plural,1st,regular,\r\nverātis,2nd,active,indicative,pluperfect,plural,2nd,regular,\r\nverant,2nd,active,indicative,pluperfect,plural,3rd,regular,\r\nvissem,2nd,active,subjunctive,pluperfect,singular,1st,regular,\r\nvissēs,2nd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nvisset,2nd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nvissēmus,2nd,active,subjunctive,pluperfect,plural,1st,regular,\r\nvissētis,2nd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nvissent,2nd,active,subjunctive,pluperfect,plural,3rd,regular,\r\neram,3rd,active,indicative,pluperfect,singular,1st,regular,\r\nerās,3rd,active,indicative,pluperfect,singular,2nd,regular,\r\nerat,3rd,active,indicative,pluperfect,singular,3rd,regular,\r\nerāmus,3rd,active,indicative,pluperfect,plural,1st,regular,\r\nerātis,3rd,active,indicative,pluperfect,plural,2nd,regular,\r\nerant,3rd,active,indicative,pluperfect,plural,3rd,regular,\r\nissem,3rd,active,subjunctive,pluperfect,singular,1st,regular,\r\nissēs,3rd,active,subjunctive,pluperfect,singular,2nd,regular,\r\nisset,3rd,active,subjunctive,pluperfect,singular,3rd,regular,\r\nissēmus,3rd,active,subjunctive,pluperfect,plural,1st,regular,\r\nissētis,3rd,active,subjunctive,pluperfect,plural,2nd,regular,\r\nissent,3rd,active,subjunctive,pluperfect,plural,3rd,regular,\r\nīveram,4th,active,indicative,pluperfect,singular,1st,regular,\r\nīverās,4th,active,indicative,pluperfect,singular,2nd,regular,\r\nīverat,4th,active,indicative,pluperfect,singular,3rd,regular,\r\nīverāmus,4th,active,indicative,pluperfect,plural,1st,regular,\r\nīverātis,4th,active,indicative,pluperfect,plural,2nd,regular,\r\nīverant,4th,active,indicative,pluperfect,plural,3rd,regular,\r\nīvissem,4th,active,subjunctive,pluperfect,singular,1st,regular,\r\nīvissēs,4th,active,subjunctive,pluperfect,singular,2nd,regular,\r\nīvisset,4th,active,subjunctive,pluperfect,singular,3rd,regular,\r\nīvissēmus,4th,active,subjunctive,pluperfect,plural,1st,regular,\r\nīvissētis,4th,active,subjunctive,pluperfect,plural,2nd,regular,\r\nīvissent,4th,active,subjunctive,pluperfect,plural,3rd,regular,\r\nāverō,1st,active,indicative,future_perfect,singular,1st,regular,\r\nāveris,1st,active,indicative,future_perfect,singular,2nd,regular,\r\nāverit,1st,active,indicative,future_perfect,singular,3rd,regular,\r\nāverimus,1st,active,indicative,future_perfect,plural,1st,regular,\r\nāveritis,1st,active,indicative,future_perfect,plural,2nd,regular,\r\nāverint,1st,active,indicative,future_perfect,plural,3rd,regular,\r\n,1st,active,subjunctive,future_perfect,singular,1st,,\r\n,1st,active,subjunctive,future_perfect,singular,2nd,,\r\n,1st,active,subjunctive,future_perfect,singular,3rd,,\r\n,1st,active,subjunctive,future_perfect,plural,1st,,\r\n,1st,active,subjunctive,future_perfect,plural,2nd,,\r\n,1st,active,subjunctive,future_perfect,plural,3rd,,\r\nverō,2nd,active,indicative,future_perfect,singular,1st,regular,\r\nvēris,2nd,active,indicative,future_perfect,singular,2nd,regular,\r\nvērit,2nd,active,indicative,future_perfect,singular,3rd,regular,\r\nvērimus,2nd,active,indicative,future_perfect,plural,1st,regular,\r\nvēritis,2nd,active,indicative,future_perfect,plural,2nd,regular,\r\nvērint,2nd,active,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,active,subjunctive,future_perfect,singular,1st,,\r\n,2nd,active,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,active,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,active,subjunctive,future_perfect,plural,1st,,\r\n,2nd,active,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,active,subjunctive,future_perfect,plural,3rd,,\r\nerō,3rd,active,indicative,future_perfect,singular,1st,regular,\r\neris,3rd,active,indicative,future_perfect,singular,2nd,regular,\r\nerit,3rd,active,indicative,future_perfect,singular,3rd,regular,\r\nerimus,3rd,active,indicative,future_perfect,plural,1st,regular,\r\neritis,3rd,active,indicative,future_perfect,plural,2nd,regular,\r\nerint,3rd,active,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,active,subjunctive,future_perfect,singular,1st,,\r\n,3rd,active,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,active,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,active,subjunctive,future_perfect,plural,1st,,\r\n,3rd,active,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,active,subjunctive,future_perfect,plural,3rd,,\r\nīverō,4th,active,indicative,future_perfect,singular,1st,regular,\r\nīveris,4th,active,indicative,future_perfect,singular,2nd,regular,\r\nīverit,4th,active,indicative,future_perfect,singular,3rd,regular,\r\nīverimus,4th,active,indicative,future_perfect,plural,1st,regular,\r\nīveritis,4th,active,indicative,future_perfect,plural,2nd,regular,\r\nīverint,4th,active,indicative,future_perfect,plural,3rd,regular,\r\n,4th,active,subjunctive,future_perfect,singular,1st,,\r\n,4th,active,subjunctive,future_perfect,singular,2nd,,\r\n,4th,active,subjunctive,future_perfect,singular,3rd,,\r\n,4th,active,subjunctive,future_perfect,plural,1st,,\r\n,4th,active,subjunctive,future_perfect,plural,2nd,,\r\n,4th,active,subjunctive,future_perfect,plural,3rd,,\r\nor,1st,passive,indicative,present,singular,1st,regular,\r\nāris,1st,passive,indicative,present,singular,2nd,regular,\r\nāre,1st,passive,indicative,present,singular,2nd,irregular,5\r\nātur,1st,passive,indicative,present,singular,3rd,regular,\r\nāmur,1st,passive,indicative,present,plural,1st,regular,\r\nāminiī,1st,passive,indicative,present,plural,2nd,regular,\r\nantur,1st,passive,indicative,present,plural,3rd,regular,\r\ner,1st,passive,subjunctive,present,singular,1st,regular,\r\nēris,1st,passive,subjunctive,present,singular,2nd,regular,\r\nēre,1st,passive,subjunctive,present,singular,2nd,regular,\r\nētur,1st,passive,subjunctive,present,singular,3rd,regular,\r\nēmur,1st,passive,subjunctive,present,plural,1st,regular,\r\nēminī,1st,passive,subjunctive,present,plural,2nd,regular,\r\nentur,1st,passive,subjunctive,present,plural,3rd,regular,\r\neor,2nd,passive,indicative,present,singular,1st,regular,\r\nēris,2nd,passive,indicative,present,singular,2nd,regular,\r\nēre,2nd,passive,indicative,present,singular,2nd,regular,\r\nētur,2nd,passive,indicative,present,singular,3rd,regular,\r\nēmur,2nd,passive,indicative,present,plural,1st,regular,\r\nēmini,2nd,passive,indicative,present,plural,2nd,regular,\r\nentur,2nd,passive,indicative,present,plural,3rd,regular,\r\near,2nd,passive,subjunctive,present,singular,1st,regular,\r\neāris,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neāre,2nd,passive,subjunctive,present,singular,2nd,regular,\r\neātur,2nd,passive,subjunctive,present,singular,3rd,regular,\r\neāmur,2nd,passive,subjunctive,present,plural,1st,regular,\r\neāminī,2nd,passive,subjunctive,present,plural,2nd,regular,\r\neantur,2nd,passive,subjunctive,present,plural,3rd,regular,\r\nor,3rd,passive,indicative,present,singular,1st,regular,\r\neris,3rd,passive,indicative,present,singular,2nd,regular,\r\nere,3rd,passive,indicative,present,singular,2nd,regular,\r\nitur,3rd,passive,indicative,present,singular,3rd,regular,\r\nimur,3rd,passive,indicative,present,plural,1st,regular,\r\niminī,3rd,passive,indicative,present,plural,2nd,regular,\r\nuntur,3rd,passive,indicative,present,plural,3rd,regular,\r\nar,3rd,passive,subjunctive,present,singular,1st,regular,\r\nāris,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nāre,3rd,passive,subjunctive,present,singular,2nd,regular,\r\nātur,3rd,passive,subjunctive,present,singular,3rd,regular,\r\nāmur,3rd,passive,subjunctive,present,plural,1st,regular,\r\nāminī,3rd,passive,subjunctive,present,plural,2nd,regular,\r\nantur,3rd,passive,subjunctive,present,plural,3rd,regular,\r\nior,4th,passive,indicative,present,singular,1st,regular,\r\nīris,4th,passive,indicative,present,singular,2nd,regular,\r\nīre,4th,passive,indicative,present,singular,2nd,regular,\r\nītur,4th,passive,indicative,present,singular,3rd,regular,\r\nīmur,4th,passive,indicative,present,plural,1st,regular,\r\nīminī,4th,passive,indicative,present,plural,2nd,regular,\r\niuntur,4th,passive,indicative,present,plural,3rd,regular,\r\niar,4th,passive,subjunctive,present,singular,1st,regular,\r\niāris,4th,passive,subjunctive,present,singular,2nd,regular,\r\niāre,4th,passive,subjunctive,present,singular,2nd,regular,\r\niātur,4th,passive,subjunctive,present,singular,3rd,regular,\r\niāmur,4th,passive,subjunctive,present,plural,1st,regular,\r\niāminī,4th,passive,subjunctive,present,plural,2nd,regular,\r\niantur,4th,passive,subjunctive,present,plural,3rd,regular,\r\nābar,1st,passive,indicative,imperfect,singular,1st,regular,\r\nābāaris,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābāre,1st,passive,indicative,imperfect,singular,2nd,regular,\r\nābātur,1st,passive,indicative,imperfect,singular,3rd,regular,\r\nābāmur,1st,passive,indicative,imperfect,plural,1st,regular,\r\nābāminī,1st,passive,indicative,imperfect,plural,2nd,regular,\r\nābantur,1st,passive,indicative,imperfect,plural,3rd,regular,\r\nārer,1st,passive,subjunctive,imperfect,singular,1st,regular,\r\nārēris,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārēre,1st,passive,subjunctive,imperfect,singular,2nd,regular,\r\nārētur,1st,passive,subjunctive,imperfect,singular,3rd,regular,\r\nārēmur,1st,passive,subjunctive,imperfect,plural,1st,regular,\r\nārēminī,1st,passive,subjunctive,imperfect,plural,2nd,regular,\r\nārentur,1st,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,2nd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,2nd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbātur,2nd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,2nd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāmini,2nd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,2nd,passive,indicative,imperfect,plural,3rd,regular,\r\nērer,2nd,passive,subjunctive,imperfect,singular,1st,regular,\r\nērēris,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērēre,2nd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nērētur,2nd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nērēmur,2nd,passive,subjunctive,imperfect,plural,1st,regular,\r\nērēminī,2nd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nērentur,2nd,passive,subjunctive,imperfect,plural,3rd,regular,\r\nēbar,3rd,passive,indicative,imperfect,singular,1st,regular,\r\nēbāris,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbāre,3rd,passive,indicative,imperfect,singular,2nd,regular,\r\nēbatur,3rd,passive,indicative,imperfect,singular,3rd,regular,\r\nēbāmur,3rd,passive,indicative,imperfect,plural,1st,regular,\r\nēbāminī,3rd,passive,indicative,imperfect,plural,2nd,regular,\r\nēbantur,3rd,passive,indicative,imperfect,plural,3rd,regular,\r\nerer,3rd,passive,subjunctive,imperfect,singular,1st,regular,\r\nerēris,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerēre,3rd,passive,subjunctive,imperfect,singular,2nd,regular,\r\nerētur,3rd,passive,subjunctive,imperfect,singular,3rd,regular,\r\nerēmur,3rd,passive,subjunctive,imperfect,plural,1st,regular,\r\nerēminī,3rd,passive,subjunctive,imperfect,plural,2nd,regular,\r\nerentur,3rd,passive,subjunctive,imperfect,plural,3rd,regular,\r\niēbar,4th,passive,indicative,imperfect,singular,1st,regular,\r\niēbāris,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbāre,4th,passive,indicative,imperfect,singular,2nd,regular,\r\niēbātur,4th,passive,indicative,imperfect,singular,3rd,regular,\r\niēbāmur,4th,passive,indicative,imperfect,plural,1st,regular,\r\niēbāminī,4th,passive,indicative,imperfect,plural,2nd,regular,\r\niēbantur,4th,passive,indicative,imperfect,plural,3rd,regular,\r\nīrer,4th,passive,subjunctive,imperfect,singular,1st,regular,\r\nīrēris,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrēre,4th,passive,subjunctive,imperfect,singular,2nd,regular,\r\nīrētur,4th,passive,subjunctive,imperfect,singular,3rd,regular,\r\nīrēmur,4th,passive,subjunctive,imperfect,plural,1st,regular,\r\nīrēminī,4th,passive,subjunctive,imperfect,plural,2nd,regular,\r\nīrentur,4th,passive,subjunctive,imperfect,plural,3rd,regular,\r\nābor,1st,passive,indicative,future,singular,1st,regular,\r\nāberis,1st,passive,indicative,future,singular,2nd,regular,\r\nābere,1st,passive,indicative,future,singular,2nd,irregular,\r\nābitur,1st,passive,indicative,future,singular,3rd,regular,\r\nābimur,1st,passive,indicative,future,plural,1st,regular,\r\nābiminī,1st,passive,indicative,future,plural,2nd,regular,\r\nābuntur,1st,passive,indicative,future,plural,3rd,regular,\r\n,1st,passive,subjunctive,future,singular,1st,,\r\n,1st,passive,subjunctive,future,singular,2nd,,\r\n,1st,passive,subjunctive,future,singular,3rd,,\r\n,1st,passive,subjunctive,future,plural,1st,,\r\n,1st,passive,subjunctive,future,plural,2nd,,\r\n,1st,passive,subjunctive,future,plural,3rd,,\r\nēbor,2nd,passive,indicative,future,singular,1st,regular,\r\nēberis,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbere,2nd,passive,indicative,future,singular,2nd,regular,\r\nēbitur,2nd,passive,indicative,future,singular,3rd,regular,\r\nēbimur,2nd,passive,indicative,future,plural,1st,regular,\r\nēbiminī,2nd,passive,indicative,future,plural,2nd,regular,\r\nēbuntur,2nd,passive,indicative,future,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future,singular,1st,,\r\n,2nd,passive,subjunctive,future,singular,2nd,,\r\n,2nd,passive,subjunctive,future,singular,3rd,,\r\n,2nd,passive,subjunctive,future,plural,1st,,\r\n,2nd,passive,subjunctive,future,plural,2nd,,\r\n,2nd,passive,subjunctive,future,plural,3rd,,\r\nar,3rd,passive,indicative,future,singular,1st,regular,\r\nēris,3rd,passive,indicative,future,singular,2nd,regular,\r\nēre,3rd,passive,indicative,future,singular,2nd,irregular,\r\nētur,3rd,passive,indicative,future,singular,3rd,regular,\r\nēmur,3rd,passive,indicative,future,plural,1st,regular,\r\nēminī,3rd,passive,indicative,future,plural,2nd,regular,\r\nentur,3rd,passive,indicative,future,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future,singular,1st,,\r\n,3rd,passive,subjunctive,future,singular,2nd,,\r\n,3rd,passive,subjunctive,future,singular,3rd,,\r\n,3rd,passive,subjunctive,future,plural,1st,,\r\n,3rd,passive,subjunctive,future,plural,2nd,,\r\n,3rd,passive,subjunctive,future,plural,3rd,,\r\niar,4th,passive,indicative,future,singular,1st,regular,\r\niēris,4th,passive,indicative,future,singular,2nd,regular,\r\nīēre,4th,passive,indicative,future,singular,2nd,irregular,\r\niētur,4th,passive,indicative,future,singular,3rd,regular,\r\niēmur,4th,passive,indicative,future,plural,1st,regular,\r\niēminī,4th,passive,indicative,future,plural,2nd,regular,\r\nientur,4th,passive,indicative,future,plural,3rd,regular,\r\n,4th,passive,subjunctive,future,singular,1st,,\r\n,4th,passive,subjunctive,future,singular,2nd,,\r\n,4th,passive,subjunctive,future,singular,3rd,,\r\n,4th,passive,subjunctive,future,plural,1st,,\r\n,4th,passive,subjunctive,future,plural,2nd,,\r\n,4th,passive,subjunctive,future,plural,3rd,,\r\nātus sum,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus fui,1st,passive,indicative,perfect,singular,1st,regular,\r\nātus es,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus fuisti,1st,passive,indicative,perfect,singular,2nd,regular,\r\nātus est,1st,passive,indicative,perfect,singular,3rd,regular,\r\nātus fuit,1st,passive,indicative,perfect,singular,3rd,regular,\r\nāti sumus,1st,passive,indicative,perfect,plural,1st,regular,\r\nāti fuimus,1st,passive,indicative,perfect,plural,1st,irregular,\r\nāti estis,1st,passive,indicative,perfect,plural,2nd,regular,\r\nāti fuistis,1st,passive,indicative,perfect,plural,2nd,irregular,\r\nāti sunt,1st,passive,indicative,perfect,plural,3rd,regular,\r\nāti fuerunt,1st,passive,indicative,perfect,plural,3rd,irregular,\r\nātus sim,1st,passive,subjunctive,perfect,singular,1st,regular,\r\nātus fuerim,1st,passive,subjunctive,perfect,singular,1st,irregular,\r\nātus sis,1st,passive,subjunctive,perfect,singular,2nd,regular,\r\nātus fueris,1st,passive,subjunctive,perfect,singular,2nd,irregular,\r\nātus sit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nātus fuerit,1st,passive,subjunctive,perfect,singular,3rd,regular,\r\nāti sīmus,1st,passive,subjunctive,perfect,plural,1st,regular,\r\nāti fuerimus,1st,passive,subjunctive,perfect,plural,1st,irregular,\r\nāti sītis,1st,passive,subjunctive,perfect,plural,2nd,regular,\r\nāti fueritis,1st,passive,subjunctive,perfect,plural,2nd,irregular,\r\nāti sint,1st,passive,subjunctive,perfect,plural,3rd,regular,\r\nāti fuerint,1st,passive,subjunctive,perfect,plural,3rd,irregular,\r\nitus sum,2nd,passive,indicative,perfect,singular,1st,regular,\r\nitus es,2nd,passive,indicative,perfect,singular,2nd,regular,\r\nitus est,2nd,passive,indicative,perfect,singular,3rd,regular,\r\nitī sumus,2nd,passive,indicative,perfect,plural,1st,regular,\r\nitī estis,2nd,passive,indicative,perfect,plural,2nd,regular,\r\nitī sunt,2nd,passive,indicative,perfect,plural,3rd,regular,\r\nitus sim,2nd,passive,subjunctive,perfect,singular,1st,regular,\r\nitus sīs,2nd,passive,subjunctive,perfect,singular,2nd,regular,\r\nitus sit,2nd,passive,subjunctive,perfect,singular,3rd,regular,\r\nitī sīmus,2nd,passive,subjunctive,perfect,plural,1st,regular,\r\nitī sītis,2nd,passive,subjunctive,perfect,plural,2nd,regular,\r\nitī sint,2nd,passive,subjunctive,perfect,plural,3rd,regular,\r\nus sum,3rd,passive,indicative,perfect,singular,1st,regular,\r\nus es,3rd,passive,indicative,perfect,singular,2nd,regular,\r\nus est,3rd,passive,indicative,perfect,singular,3rd,regular,\r\nī sumus,3rd,passive,indicative,perfect,plural,1st,regular,\r\nī estis,3rd,passive,indicative,perfect,plural,2nd,regular,\r\nī sunt,3rd,passive,indicative,perfect,plural,3rd,regular,\r\nus sim,3rd,passive,subjunctive,perfect,singular,1st,regular,\r\nus sīs,3rd,passive,subjunctive,perfect,singular,2nd,regular,\r\nus sit,3rd,passive,subjunctive,perfect,singular,3rd,regular,\r\nus sīmus,3rd,passive,subjunctive,perfect,plural,1st,regular,\r\nus sītis,3rd,passive,subjunctive,perfect,plural,2nd,regular,\r\nus sint,3rd,passive,subjunctive,perfect,plural,3rd,regular,\r\nītus sum,4th,passive,indicative,perfect,singular,1st,regular,\r\nītus es,4th,passive,indicative,perfect,singular,2nd,regular,\r\nītus est,4th,passive,indicative,perfect,singular,3rd,regular,\r\nītī sumus,4th,passive,indicative,perfect,plural,1st,regular,\r\nīti estis,4th,passive,indicative,perfect,plural,2nd,regular,\r\nīti sunt,4th,passive,indicative,perfect,plural,3rd,regular,\r\nītus sim,4th,passive,subjunctive,perfect,singular,1st,regular,\r\nītus sīs,4th,passive,subjunctive,perfect,singular,2nd,regular,\r\nītus sit,4th,passive,subjunctive,perfect,singular,3rd,regular,\r\nītī sīmus,4th,passive,subjunctive,perfect,plural,1st,regular,\r\nīti sītis,4th,passive,subjunctive,perfect,plural,2nd,regular,\r\nīti sint,4th,passive,subjunctive,perfect,plural,3rd,regular,\r\nātus eram,1st,passive,indicative,pluperfect,singular,1st,regular,\r\nātus fueram,1st,passive,indicative,pluperfect,singular,1st,irregular,\r\nātus eras,1st,passive,indicative,pluperfect,singular,2nd,regular,\r\nātus fueras,1st,passive,indicative,pluperfect,singular,2nd,irregular,\r\nātus erat,1st,passive,indicative,pluperfect,singular,3rd,regular,\r\nātus fuerat,1st,passive,indicative,pluperfect,singular,3rd,irregular,\r\nātī erāmus,1st,passive,indicative,pluperfect,plural,1st,regular,\r\nātī fueramus,1st,passive,indicative,pluperfect,plural,1st,irregular,\r\nātī erātis,1st,passive,indicative,pluperfect,plural,2nd,regular,\r\nātī fueratis,1st,passive,indicative,pluperfect,plural,2nd,irregular,\r\nātī erant,1st,passive,indicative,pluperfect,plural,3rd,regular,\r\nātī fuerant,1st,passive,indicative,pluperfect,plural,3rd,irregular,\r\nātus essem,1st,passive,subjunctive,pluperfect,singular,1st,regular,\r\nātus fuissem,1st,passive,subjunctive,pluperfect,singular,1st,irregular,\r\nātus esses,1st,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nātus fuissēs,1st,passive,subjunctive,pluperfect,singular,2nd,irregular,\r\nātus esset,1st,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nātus fuisset,1st,passive,subjunctive,pluperfect,singular,3rd,irregular,\r\nāti essēmus,1st,passive,subjunctive,pluperfect,plural,1st,regular,\r\nāti fuissēmus,1st,passive,subjunctive,pluperfect,plural,1st,irregular,\r\nāti essētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti fuissētis,1st,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nāti essent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nāti fuissent,1st,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nitus eram,2nd,passive,indicative,pluperfect,singular,1st,regular,\r\nitus erās,2nd,passive,indicative,pluperfect,singular,2nd,regular,\r\nitus erat,2nd,passive,indicative,pluperfect,singular,3rd,regular,\r\nitī erāmus,2nd,passive,indicative,pluperfect,plural,1st,regular,\r\nitī erātis,2nd,passive,indicative,pluperfect,plural,2nd,regular,\r\nitī erant,2nd,passive,indicative,pluperfect,plural,3rd,regular,\r\nitus essem,2nd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nitus essēs,2nd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nitus esset,2nd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nitī essēmus,2nd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,2nd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,2nd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nus eram,3rd,passive,indicative,pluperfect,singular,1st,regular,\r\nus erās,3rd,passive,indicative,pluperfect,singular,2nd,regular,\r\nus erat,3rd,passive,indicative,pluperfect,singular,3rd,regular,\r\nī erāmus,3rd,passive,indicative,pluperfect,plural,1st,regular,\r\nī erātis,3rd,passive,indicative,pluperfect,plural,2nd,regular,\r\nī erant,3rd,passive,indicative,pluperfect,plural,3rd,regular,\r\nus essem,3rd,passive,subjunctive,pluperfect,singular,1st,regular,\r\nus essēs,3rd,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nus esset,3rd,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nī essēmus,3rd,passive,subjunctive,pluperfect,plural,1st,regular,\r\nī essētis,3rd,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nī essent,3rd,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nītus eram,4th,passive,indicative,pluperfect,singular,1st,regular,\r\nītus erās,4th,passive,indicative,pluperfect,singular,2nd,regular,\r\nītus erat,4th,passive,indicative,pluperfect,singular,3rd,regular,\r\nītī erāmus,4th,passive,indicative,pluperfect,plural,1st,regular,\r\nīti erātis,4th,passive,indicative,pluperfect,plural,2nd,regular,\r\nītī erant,4th,passive,indicative,pluperfect,plural,3rd,regular,\r\nītus essem,4th,passive,subjunctive,pluperfect,singular,1st,regular,\r\nītus essēs,4th,passive,subjunctive,pluperfect,singular,2nd,regular,\r\nītus esset,4th,passive,subjunctive,pluperfect,singular,3rd,regular,\r\nītī essēmus,4th,passive,subjunctive,pluperfect,plural,1st,regular,\r\nīti essētis,4th,passive,subjunctive,pluperfect,plural,2nd,regular,\r\nīti essent,4th,passive,subjunctive,pluperfect,plural,3rd,regular,\r\nātus erō,1st,passive,indicative,future_perfect,singular,1st,regular,\r\nātus eris,1st,passive,indicative,future_perfect,singular,2nd,regular,\r\nātus erit,1st,passive,indicative,future_perfect,singular,3rd,regular,\r\nāti erimus,1st,passive,indicative,future_perfect,plural,1st,regular,\r\nāti eritis,1st,passive,indicative,future_perfect,plural,2nd,regular,\r\nāti erunt,1st,passive,indicative,future_perfect,plural,3rd,regular,\r\n,1st,passive,subjunctive,future_perfect,singular,1st,,\r\n,1st,passive,subjunctive,future_perfect,singular,2nd,,\r\n,1st,passive,subjunctive,future_perfect,singular,3rd,,\r\n,1st,passive,subjunctive,future_perfect,plural,1st,,\r\n,1st,passive,subjunctive,future_perfect,plural,2nd,,\r\n,1st,passive,subjunctive,future_perfect,plural,3rd,,\r\nitus erō,2nd,passive,indicative,future_perfect,singular,1st,regular,\r\nitus eris,2nd,passive,indicative,future_perfect,singular,2nd,regular,\r\nitus erit,2nd,passive,indicative,future_perfect,singular,3rd,regular,\r\nitī erimus,2nd,passive,indicative,future_perfect,plural,1st,regular,\r\nitī eritis,2nd,passive,indicative,future_perfect,plural,2nd,regular,\r\nitī erunt,2nd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,2nd,passive,subjunctive,future_perfect,singular,1st,,\r\n,2nd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,1st,,\r\n,2nd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,2nd,passive,subjunctive,future_perfect,plural,3rd,,\r\nus erō,3rd,passive,indicative,future_perfect,singular,1st,regular,\r\nus eris,3rd,passive,indicative,future_perfect,singular,2nd,regular,\r\nus erit,3rd,passive,indicative,future_perfect,singular,3rd,regular,\r\nī erimus,3rd,passive,indicative,future_perfect,plural,1st,regular,\r\nī eritis,3rd,passive,indicative,future_perfect,plural,2nd,regular,\r\nī erunt,3rd,passive,indicative,future_perfect,plural,3rd,regular,\r\n,3rd,passive,subjunctive,future_perfect,singular,1st,,\r\n,3rd,passive,subjunctive,future_perfect,singular,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,singular,3rd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,1st,,\r\n,3rd,passive,subjunctive,future_perfect,plural,2nd,,\r\n,3rd,passive,subjunctive,future_perfect,plural,3rd,,\r\nītus erō,4th,passive,indicative,future_perfect,singular,1st,regular,\r\nītus eris,4th,passive,indicative,future_perfect,singular,2nd,regular,\r\nītus erit,4th,passive,indicative,future_perfect,singular,3rd,regular,\r\nītī erimus,4th,passive,indicative,future_perfect,plural,1st,regular,\r\nītī eritis,4th,passive,indicative,future_perfect,plural,2nd,regular,\r\nītī erunt,4th,passive,indicative,future_perfect,plural,3rd,regular,\r\n,4th,passive,subjunctive,future_perfect,singular,1st,,\r\n,4th,passive,subjunctive,future_perfect,singular,2nd,,\r\n,4th,passive,subjunctive,future_perfect,singular,3rd,,\r\n,4th,passive,subjunctive,future_perfect,plural,1st,,\r\n,4th,passive,subjunctive,future_perfect,plural,2nd,,\r\n,4th,passive,subjunctive,future_perfect,plural,3rd,,";
 
-var verbFootnotesCSV = "Index,Text\r\n2,Chiefly in poetry.\r\n3,\"In tenses based on the perfect stem (the perfect, pluperfect and future perfect of the Active voice) a v between two vowels is often lost with contraction of the two vowels, thus āvī to ā, ēvī to ē, ōvi to ō. Perfects in īvī often omit the v but rarely contract the vowels, except before ss or st, and sometimes in the third person. In addition to the use of v or u, the Active perfect stem can also be formed in a number of other ways, such as the addition of s to the root (eg carpsi), reduplication of the root (eg cecidi from cado), and simple lengthening of the vowel (eg vidī from video or legī from lego).\"\r\n4,\"Dic, duc, fac, and fer lack a final vowel in the imperative in classical Latin. The singular imperative of the verb sciō is always scītō, and the plural is usually scītōte.\"\r\n5,Common in epic poetry.\r\n6,Present in early Latin but chiefly confined to popular use until Livy and later writers.\r\n7,The verb fīō is a 4th conjugation verb that is irregular in only two forms: the present infinitive fierī and the imperfect subjunctive fierem.";
+var verbFootnotesCSV$1 = "Index,Text\r\n2,Chiefly in poetry.\r\n3,\"In tenses based on the perfect stem (the perfect, pluperfect and future perfect of the Active voice) a v between two vowels is often lost with contraction of the two vowels, thus āvī to ā, ēvī to ē, ōvi to ō. Perfects in īvī often omit the v but rarely contract the vowels, except before ss or st, and sometimes in the third person. In addition to the use of v or u, the Active perfect stem can also be formed in a number of other ways, such as the addition of s to the root (eg carpsi), reduplication of the root (eg cecidi from cado), and simple lengthening of the vowel (eg vidī from video or legī from lego).\"\r\n4,\"Dic, duc, fac, and fer lack a final vowel in the imperative in classical Latin. The singular imperative of the verb sciō is always scītō, and the plural is usually scītōte.\"\r\n5,Common in epic poetry.\r\n6,Present in early Latin but chiefly confined to popular use until Livy and later writers.\r\n7,The verb fīō is a 4th conjugation verb that is irregular in only two forms: the present infinitive fierī and the imperfect subjunctive fierem.";
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -2711,12 +2679,12 @@ let dataSet = new LanguageDataset(language);
  analyzer's language modules as well.
  */
 const importerName = 'csv';
-const parts = dataSet.defineFeatureType(types.part, ['noun', 'adjective', 'verb']);
-const numbers = dataSet.defineFeatureType(types.number, ['singular', 'plural']);
+const parts = dataSet.defineFeatureType(types$1.part, ['noun', 'adjective', 'verb']);
+const numbers = dataSet.defineFeatureType(types$1.number, ['singular', 'plural']);
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
     .map('plural', numbers.plural);
-const cases = dataSet.defineFeatureType(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative']);
+const cases = dataSet.defineFeatureType(types$1.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative']);
 cases.addImporter(importerName)
     .map('nominative', cases.nominative)
     .map('genitive', cases.genitive)
@@ -2725,7 +2693,7 @@ cases.addImporter(importerName)
     .map('ablative', cases.ablative)
     .map('locative', cases.locative)
     .map('vocative', cases.vocative);
-const declensions = dataSet.defineFeatureType(types.declension, ['first', 'second', 'third', 'fourth', 'fifth']);
+const declensions = dataSet.defineFeatureType(types$1.declension, ['first', 'second', 'third', 'fourth', 'fifth']);
 declensions.addImporter(importerName)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
@@ -2733,44 +2701,44 @@ declensions.addImporter(importerName)
     .map('3rd', declensions.third)
     .map('4th', declensions.fourth)
     .map('5th', declensions.fifth);
-const genders = dataSet.defineFeatureType(types.gender, ['masculine', 'feminine', 'neuter']);
+const genders = dataSet.defineFeatureType(types$1.gender, ['masculine', 'feminine', 'neuter']);
 genders.addImporter(importerName)
     .map('masculine', genders.masculine)
     .map('feminine', genders.feminine)
     .map('neuter', genders.neuter)
     .map('masculine feminine', [genders.masculine, genders.feminine]);
-const types$1 = dataSet.defineFeatureType(types.type, ['regular', 'irregular']);
-types$1.addImporter(importerName)
-    .map('regular', types$1.regular)
-    .map('irregular', types$1.irregular);
-const conjugations = dataSet.defineFeatureType(types.conjugation, ['first', 'second', 'third', 'fourth']);
-conjugations.addImporter(importerName)
-    .map('1st', conjugations.first)
-    .map('2nd', conjugations.second)
-    .map('3rd', conjugations.third)
-    .map('4th', conjugations.fourth);
-const tenses = dataSet.defineFeatureType(types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
-tenses.addImporter(importerName)
-    .map('present', tenses.present)
-    .map('imperfect', tenses.imperfect)
-    .map('future', tenses.future)
-    .map('perfect', tenses.perfect)
-    .map('pluperfect', tenses.pluperfect)
-    .map('future_perfect', tenses['future perfect']);
-const voices = dataSet.defineFeatureType(types.voice, ['passive', 'active']);
-voices.addImporter(importerName)
-    .map('passive', voices.passive)
-    .map('active', voices.active);
-const moods = dataSet.defineFeatureType(types.mood, ['indicative', 'subjunctive']);
-moods.addImporter(importerName)
-    .map('indicative', moods.indicative)
-    .map('subjunctive', moods.subjunctive);
-const persons = dataSet.defineFeatureType(types.person, ['first', 'second', 'third']);
-persons.addImporter(importerName)
-    .map('1st', persons.first)
-    .map('2nd', persons.second)
-    .map('3rd', persons.third);
-const footnotes = dataSet.defineFeatureType(types.footnote, []);
+const types$2 = dataSet.defineFeatureType(types$1.type, ['regular', 'irregular']);
+types$2.addImporter(importerName)
+    .map('regular', types$2.regular)
+    .map('irregular', types$2.irregular);
+const conjugations$1 = dataSet.defineFeatureType(types$1.conjugation, ['first', 'second', 'third', 'fourth']);
+conjugations$1.addImporter(importerName)
+    .map('1st', conjugations$1.first)
+    .map('2nd', conjugations$1.second)
+    .map('3rd', conjugations$1.third)
+    .map('4th', conjugations$1.fourth);
+const tenses$1 = dataSet.defineFeatureType(types$1.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
+tenses$1.addImporter(importerName)
+    .map('present', tenses$1.present)
+    .map('imperfect', tenses$1.imperfect)
+    .map('future', tenses$1.future)
+    .map('perfect', tenses$1.perfect)
+    .map('pluperfect', tenses$1.pluperfect)
+    .map('future_perfect', tenses$1['future perfect']);
+const voices$1 = dataSet.defineFeatureType(types$1.voice, ['passive', 'active']);
+voices$1.addImporter(importerName)
+    .map('passive', voices$1.passive)
+    .map('active', voices$1.active);
+const moods$1 = dataSet.defineFeatureType(types$1.mood, ['indicative', 'subjunctive']);
+moods$1.addImporter(importerName)
+    .map('indicative', moods$1.indicative)
+    .map('subjunctive', moods$1.subjunctive);
+const persons$1 = dataSet.defineFeatureType(types$1.person, ['first', 'second', 'third']);
+persons$1.addImporter(importerName)
+    .map('1st', persons$1.first)
+    .map('2nd', persons$1.second)
+    .map('3rd', persons$1.third);
+const footnotes$1 = dataSet.defineFeatureType(types$1.footnote, []);
 
 // endregion Definition of grammatical features
 
@@ -2792,12 +2760,12 @@ dataSet.addSuffixes = function(partOfSpeech, data) {
             cases.importer.csv.get(data[i][2]),
             declensions.importer.csv.get(data[i][3]),
             genders.importer.csv.get(data[i][4]),
-            types$1.importer.csv.get(data[i][5])];
+            types$2.importer.csv.get(data[i][5])];
         if (data[i][6]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
             let indexes = data[i][6].split(' ').map(function(index) {
-                return footnotes.get(index);
+                return footnotes$1.get(index);
             });
             features.push(...indexes);
         }
@@ -2819,24 +2787,24 @@ dataSet.addVerbSuffixes = function(partOfSpeech, data) {
         }
 
         let features = [partOfSpeech,
-            conjugations.importer.csv.get(data[i][1]),
-            voices.importer.csv.get(data[i][2]),
-            moods.importer.csv.get(data[i][3]),
-            tenses.importer.csv.get(data[i][4]),
+            conjugations$1.importer.csv.get(data[i][1]),
+            voices$1.importer.csv.get(data[i][2]),
+            moods$1.importer.csv.get(data[i][3]),
+            tenses$1.importer.csv.get(data[i][4]),
             numbers.importer.csv.get(data[i][5]),
-            persons.importer.csv.get(data[i][6])];
+            persons$1.importer.csv.get(data[i][6])];
 
         let grammarType = data[i][7];
         // Type information can be empty if no ending is provided
         if (grammarType) {
-            features.push(types$1.importer.csv.get(grammarType));
+            features.push(types$2.importer.csv.get(grammarType));
         }
         // Footnotes
         if (data[i][8]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
             let indexes = data[i][8].split(' ').map(function(index) {
-                return footnotes.get(index);
+                return footnotes$1.get(index);
             });
             features.push(...indexes);
         }
@@ -2861,16 +2829,16 @@ dataSet.loadData = function() {
 
     // Adjectives
     partOfSpeech = parts.adjective;
-    suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
+    suffixes = papaparse.parse(adjectiveSuffixesCSV$1, {});
     this.addSuffixes(partOfSpeech, suffixes.data);
-    footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
+    footnotes = papaparse.parse(adjectiveFootnotesCSV$1, {});
     this.addFootnotes(partOfSpeech, footnotes.data);
 
     // Verbs
     partOfSpeech = parts.verb;
-    suffixes = papaparse.parse(verbSuffixesCSV, {});
+    suffixes = papaparse.parse(verbSuffixesCSV$1, {});
     this.addVerbSuffixes(partOfSpeech, suffixes.data);
-    footnotes = papaparse.parse(verbFootnotesCSV, {});
+    footnotes = papaparse.parse(verbFootnotesCSV$1, {});
     this.addFootnotes(partOfSpeech, footnotes.data);
 };
 
@@ -2885,10 +2853,10 @@ dataSet.loadData = function() {
 dataSet.matcher = function(inflections, suffix) {
     "use strict";
     // All of those features must match between an inflection and an ending
-    let obligatoryMatches = [types.part];
+    let obligatoryMatches = [types$1.part];
 
     // Any of those features must match between an inflection and an ending
-    let optionalMatches = [types.grmCase, types.declension, types.gender, types.number];
+    let optionalMatches = [types$1.grmCase, types$1.declension, types$1.gender, types$1.number];
     let bestMatchData = null; // Information about the best match we would be able to find
 
     /*
@@ -2983,7 +2951,7 @@ dataSet.bestMatch = function(matchA, matchB) {
     }
 };
 
-let data = new LanguageData(languages.latin);
+let data = new ImportData(languages.latin);
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -2992,153 +2960,482 @@ data.addFeature(typeName).add(providerValueName, LibValueName);
 (functions are chainable)
 Types and values that are unknown (undefined) will be skipped during parsing.
  */
-data.addFeature(types.part).importer
+data.addFeature(types$1.part).importer
     .map('noun', parts.noun)
     .map('adjective', parts.adjective)
     .map('verb', parts.verb);
 
-data.addFeature(types.grmCase).importer
+data.addFeature(types$1.grmCase).importer
     .map('nominative', cases.nominative)
-    .map('genetive', cases.genitive)
+    .map('genitive', cases.genitive)
     .map('dative', cases.dative)
     .map('accusative', cases.accusative)
     .map('ablative', cases.ablative)
     .map('locative', cases.locative)
     .map('vocative', cases.vocative);
 
-data.addFeature(types.declension).importer
+data.addFeature(types$1.declension).importer
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
     .map('3rd', declensions.third)
     .map('4th', declensions.fourth)
     .map('5th', declensions.fifth);
 
-data.addFeature(types.number).importer
+data.addFeature(types$1.number).importer
     .map('singular', numbers.singular)
     .map('plural', numbers.plural);
 
-data.addFeature(types.gender).importer
+data.addFeature(types$1.gender).importer
     .map('masculine', genders.masculine)
     .map('feminine', genders.feminine)
     .map('neuter', genders.neuter)
     .map('common', [genders.masculine, genders.feminine]);
 
-data.addFeature(types.conjugation).importer
+data.addFeature(types$1.conjugation).importer
+    .map('1st', conjugations$1.first)
+    .map('2nd', conjugations$1.second)
+    .map('3rd', conjugations$1.third)
+    .map('4th', conjugations$1.fourth);
+
+data.addFeature(types$1.tense).importer
+    .map('present', tenses$1.present)
+    .map('imperfect', tenses$1.imperfect)
+    .map('future', tenses$1.future)
+    .map('perfect', tenses$1.perfect)
+    .map('pluperfect', tenses$1.pluperfect)
+    .map('future_perfect', tenses$1['future perfect']);
+
+data.addFeature(types$1.voice).importer
+    .map('active', voices$1.active)
+    .map('passive', voices$1.passive);
+
+data.addFeature(types$1.mood).importer
+    .map('indicative', moods$1.indicative)
+    .map('subjunctive', moods$1.subjunctive);
+
+data.addFeature(types$1.person).importer
+    .map('1st', persons$1.first)
+    .map('2nd', persons$1.second)
+    .map('3rd', persons$1.third);
+
+var nounSuffixesCSV$1 = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\nα,dual,accusative,1st,feminine,regular primary,\r\nά,dual,accusative,1st,feminine,regular,\r\nᾶ,dual,accusative,1st,feminine,regular,2\r\nαιν,dual,dative,1st,feminine,regular primary,\r\nαῖν,dual,dative,1st,feminine,regular,\r\nαιιν,dual,dative,1st,feminine,irregular,\r\nαιν,dual,genitive,1st,feminine,regular primary,\r\nαῖν,dual,genitive,1st,feminine,regular,\r\nαιιν,dual,genitive,1st,feminine,irregular,\r\nα,dual,nominative,1st,feminine,regular primary,\r\nά,dual,nominative,1st,feminine,regular,\r\nᾶ,dual,nominative,1st,feminine,regular,2\r\nα,dual,vocative,1st,feminine,regular primary,\r\nά,dual,vocative,1st,feminine,regular,\r\nᾶ,dual,vocative,1st,feminine,regular,2\r\nα,dual,accusative,1st,masculine,regular primary,\r\nά,dual,accusative,1st,masculine,regular,\r\nᾶ,dual,accusative,1st,masculine,regular,2\r\nαιν,dual,dative,1st,masculine,regular primary,\r\nαῖν,dual,dative,1st,masculine,regular,\r\nαιιν,dual,dative,1st,masculine,irregular,\r\nαιν,dual,genitive,1st,masculine,regular primary,\r\nαῖν,dual,genitive,1st,masculine,regular,\r\nαιιν,dual,genitive,1st,masculine,irregular,\r\nα,dual,nominative,1st,masculine,regular primary,\r\nά,dual,nominative,1st,masculine,regular,\r\nᾶ,dual,nominative,1st,masculine,regular,2\r\nα,dual,vocative,1st,masculine,regular primary,\r\nά,dual,vocative,1st,masculine,regular,\r\nᾶ,dual,vocative,1st,masculine,regular,2\r\nας,plural,accusative,1st,feminine,regular primary,\r\nάς,plural,accusative,1st,feminine,regular,\r\nᾶς,plural,accusative,1st,feminine,regular,2\r\nανς,plural,accusative,1st,feminine,irregular,\r\nαις,plural,accusative,1st,feminine,irregular,\r\nαις,plural,dative,1st,feminine,regular primary,\r\nαῖς,plural,dative,1st,feminine,regular,\r\nῃσι,plural,dative,1st,feminine,irregular,44\r\nῃσιν,plural,dative,1st,feminine,irregular,4 44\r\nῃς,plural,dative,1st,feminine,irregular,44\r\nαισι,plural,dative,1st,feminine,irregular,44\r\nαισιν,plural,dative,1st,feminine,irregular,4 44\r\nῶν,plural,genitive,1st,feminine,regular primary,\r\nάων,plural,genitive,1st,feminine,irregular,\r\nέων,plural,genitive,1st,feminine,irregular,\r\nήων,plural,genitive,1st,feminine,irregular,\r\nᾶν,plural,genitive,1st,feminine,irregular,\r\nαι,plural,nominative,1st,feminine,regular primary,\r\nαί,plural,nominative,1st,feminine,regular,\r\nαῖ,plural,nominative,1st,feminine,regular,2\r\nαι,plural,vocative,1st,feminine,regular primary,\r\nαί,plural,vocative,1st,feminine,regular,\r\nαῖ,plural,vocative,1st,feminine,regular,2\r\nας,plural,accusative,1st,masculine,regular primary,\r\nάς,plural,accusative,1st,masculine,regular,\r\nᾶς,plural,accusative,1st,masculine,regular,3\r\nανς,plural,accusative,1st,masculine,irregular,\r\nαις,plural,accusative,1st,masculine,irregular,\r\nαις,plural,dative,1st,masculine,regular primary,\r\nαῖς,plural,dative,1st,masculine,regular,\r\nῃσι,plural,dative,1st,masculine,irregular,44\r\nῃσιν,plural,dative,1st,masculine,irregular,4 44\r\nῃς,plural,dative,1st,masculine,irregular,44\r\nαισι,plural,dative,1st,masculine,irregular,44\r\nαισιν,plural,dative,1st,masculine,irregular,4 44\r\nῶν,plural,genitive,1st,masculine,regular primary,\r\nάων,plural,genitive,1st,masculine,irregular,\r\nέων,plural,genitive,1st,masculine,irregular,\r\nήων,plural,genitive,1st,masculine,irregular,\r\nᾶν,plural,genitive,1st,masculine,irregular,\r\nαι,plural,nominative,1st,masculine,regular primary,\r\nαί,plural,nominative,1st,masculine,regular,\r\nαῖ,plural,nominative,1st,masculine,regular,3\r\nαι,plural,vocative,1st,masculine,regular primary,\r\nαί,plural,vocative,1st,masculine,regular,\r\nαῖ,plural,vocative,1st,masculine,regular,3\r\nαν,singular,accusative,1st,feminine,regular primary,\r\nην,singular,accusative,1st,feminine,regular primary,\r\nήν,singular,accusative,1st,feminine,regular,\r\nᾶν,singular,accusative,1st,feminine,regular,2\r\nῆν,singular,accusative,1st,feminine,regular,2\r\nάν,singular,accusative,1st,feminine,irregular,63\r\nᾳ,singular,dative,1st,feminine,regular primary,\r\nῃ,singular,dative,1st,feminine,regular primary,\r\nῇ,singular,dative,1st,feminine,regular,2\r\nᾷ,singular,dative,1st,feminine,regular,2\r\nηφι,singular,dative,1st,feminine,irregular,45\r\nηφιν,singular,dative,1st,feminine,irregular,4 45\r\nῆφι,singular,dative,1st,feminine,irregular,45\r\nῆφιv,singular,dative,1st,feminine,irregular,4 45\r\nας,singular,genitive,1st,feminine,regular primary,\r\nης,singular,genitive,1st,feminine,regular primary,\r\nῆs,singular,genitive,1st,feminine,regular,\r\nᾶs,singular,genitive,1st,feminine,regular,2\r\nηφι,singular,genitive,1st,feminine,irregular,45\r\nηφιν,singular,genitive,1st,feminine,irregular,4 45\r\nῆφι,singular,genitive,1st,feminine,irregular,45\r\nῆφιv,singular,genitive,1st,feminine,irregular,4 45\r\nα,singular,nominative,1st,feminine,regular primary,\r\nη,singular,nominative,1st,feminine,regular primary,1\r\nή,singular,nominative,1st,feminine,regular,\r\nᾶ,singular,nominative,1st,feminine,regular,2\r\nῆ,singular,nominative,1st,feminine,regular,2\r\nά,singular,nominative,1st,feminine,irregular,63\r\nα,singular,vocative,1st,feminine,regular primary,\r\nη,singular,vocative,1st,feminine,regular primary,\r\nή,singular,vocative,1st,feminine,regular,\r\nᾶ,singular,vocative,1st,feminine,regular,2\r\nῆ,singular,vocative,1st,feminine,regular,2\r\nά,singular,vocative,1st,feminine,irregular,63\r\nαν,singular,accusative,1st,masculine,regular primary,\r\nην,singular,accusative,1st,masculine,regular primary,3\r\nήν,singular,accusative,1st,masculine,regular,\r\nᾶν,singular,accusative,1st,masculine,regular,3\r\nῆν,singular,accusative,1st,masculine,regular,3\r\nεα,singular,accusative,1st,masculine,irregular,\r\nᾳ,singular,dative,1st,masculine,regular primary,\r\nῃ,singular,dative,1st,masculine,regular primary,\r\nῇ,singular,dative,1st,masculine,regular,\r\nᾷ,singular,dative,1st,masculine,regular,3\r\nῆ,singular,dative,1st,masculine,regular,3\r\nηφι,singular,dative,1st,masculine,irregular,45\r\nηφιν,singular,dative,1st,masculine,irregular,4 45\r\nῆφι,singular,dative,1st,masculine,irregular,45\r\nῆφιv,singular,dative,1st,masculine,irregular,4 45\r\nου,singular,genitive,1st,masculine,regular primary,\r\nοῦ,singular,genitive,1st,masculine,regular,\r\nαο,singular,genitive,1st,masculine,irregular,\r\nεω,singular,genitive,1st,masculine,irregular,\r\nηφι,singular,genitive,1st,masculine,irregular,45\r\nηφιν,singular,genitive,1st,masculine,irregular,4 45\r\nῆφι,singular,genitive,1st,masculine,irregular,45\r\nῆφιv,singular,genitive,1st,masculine,irregular,4 45\r\nω,singular,genitive,1st,masculine,irregular,\r\nα,singular,genitive,1st,masculine,irregular,\r\nας,singular,nominative,1st,masculine,regular primary,\r\nης,singular,nominative,1st,masculine,regular primary,\r\nής,singular,nominative,1st,masculine,regular,\r\nᾶs,singular,nominative,1st,masculine,regular,3\r\nῆs,singular,nominative,1st,masculine,regular,3\r\nα,singular,vocative,1st,masculine,regular primary,\r\nη,singular,vocative,1st,masculine,regular primary,\r\nά,singular,vocative,1st,masculine,regular,\r\nᾶ,singular,vocative,1st,masculine,regular,3\r\nῆ,singular,vocative,1st,masculine,regular,3\r\nω,dual,accusative,2nd,masculine feminine,regular primary,\r\nώ,dual,accusative,2nd,masculine feminine,regular,5\r\nοιν,dual,dative,2nd,masculine feminine,regular primary,\r\nοῖν,dual,dative,2nd,masculine feminine,regular,5\r\nοιιν,dual,dative,2nd,masculine feminine,irregular,\r\nῴν,dual,dative,2nd,masculine feminine,irregular,7\r\nοιν,dual,genitive,2nd,masculine feminine,regular primary,\r\nοῖν,dual,genitive,2nd,masculine feminine,regular,5\r\nοιιν,dual,genitive,2nd,masculine feminine,irregular,\r\nῴν,dual,genitive,2nd,masculine feminine,irregular,7\r\nω,dual,nominative,2nd,masculine feminine,regular primary,60\r\nώ,dual,nominative,2nd,masculine feminine,regular,60\r\nω,dual,vocative,2nd,masculine feminine,regular primary,\r\nώ,dual,vocative,2nd,masculine feminine,regular,5\r\nω,dual,accusative,2nd,neuter,regular primary,\r\nώ,dual,accusative,2nd,neuter,regular,6\r\nοιν,dual,dative,2nd,neuter,regular primary,\r\nοῖν,dual,dative,2nd,neuter,regular,6\r\nοιιν,dual,dative,2nd,neuter,irregular,\r\nοιν,dual,genitive,2nd,neuter,regular primary,\r\nοῖν,dual,genitive,2nd,neuter,regular,6\r\nοιιν,dual,genitive,2nd,neuter,irregular,\r\nω,dual,nominative,2nd,neuter,regular primary,\r\nώ,dual,nominative,2nd,neuter,regular,6\r\nω,dual,vocative,2nd,neuter,regular primary,\r\nώ,dual,vocative,2nd,neuter,regular,6\r\nους,plural,accusative,2nd,masculine feminine,regular primary,\r\nούς,plural,accusative,2nd,masculine feminine,regular,41\r\nοῦς,plural,accusative,2nd,masculine feminine,regular,5\r\nονς,plural,accusative,2nd,masculine feminine,irregular,\r\nος,plural,accusative,2nd,masculine feminine,irregular,\r\nως,plural,accusative,2nd,masculine feminine,irregular,\r\nοις,plural,accusative,2nd,masculine feminine,irregular,\r\nώς,plural,accusative,2nd,masculine feminine,irregular,7\r\nοις,plural,dative,2nd,masculine feminine,regular primary,\r\nοῖς,plural,dative,2nd,masculine feminine,regular,5\r\nοισι,plural,dative,2nd,masculine feminine,irregular,\r\nοισιν,plural,dative,2nd,masculine feminine,irregular,4\r\nῴς,plural,dative,2nd,masculine feminine,irregular,7\r\nόφι,plural,dative,2nd,masculine feminine,irregular,45\r\nόφιv,plural,dative,2nd,masculine feminine,irregular,4 45\r\nων,plural,genitive,2nd,masculine feminine,regular primary,\r\nῶν,plural,genitive,2nd,masculine feminine,regular,5\r\nών,plural,genitive,2nd,masculine feminine,irregular,7\r\nόφι,plural,genitive,2nd,masculine feminine,irregular,45\r\nόφιv,plural,genitive,2nd,masculine feminine,irregular,4 45\r\nοι,plural,nominative,2nd,masculine feminine,regular primary,\r\nοί,plural,nominative,2nd,masculine feminine,regular,41\r\nοῖ,plural,nominative,2nd,masculine feminine,regular,5\r\nῴ,plural,nominative,2nd,masculine feminine,irregular,7\r\nοι,plural,vocative,2nd,masculine feminine,regular primary,\r\nοί,plural,vocative,2nd,masculine feminine,regular,41\r\nοῖ,plural,vocative,2nd,masculine feminine,regular,5\r\nα,plural,accusative,2nd,neuter,regular primary,\r\nᾶ,plural,accusative,2nd,neuter,regular,6\r\nοις,plural,dative,2nd,neuter,regular primary,\r\nοῖς,plural,dative,2nd,neuter,regular,6\r\nοισι,plural,dative,2nd,neuter,irregular,\r\nοισιν,plural,dative,2nd,neuter,irregular,4\r\nόφι,plural,dative,2nd,neuter,irregular,45\r\nόφιv,plural,dative,2nd,neuter,irregular,4 45\r\nων,plural,genitive,2nd,neuter,regular primary,\r\nῶν,plural,genitive,2nd,neuter,regular,6\r\nόφι,plural,genitive,2nd,neuter,irregular,45\r\nόφιv,plural,genitive,2nd,neuter,irregular,4 45\r\nα,plural,nominative,2nd,neuter,regular primary,\r\nᾶ,plural,nominative,2nd,neuter,regular,6\r\nα,plural,vocative,2nd,neuter,regular primary,\r\nᾶ,plural,vocative,2nd,neuter,regular,6\r\nον,singular,accusative,2nd,masculine feminine,regular primary,\r\nόν,singular,accusative,2nd,masculine feminine,regular primary,41\r\nουν,singular,accusative,2nd,masculine feminine,regular,5\r\nοῦν,singular,accusative,2nd,masculine feminine,regular,5\r\nω,singular,accusative,2nd,masculine feminine,irregular,7 5\r\nωv,singular,accusative,2nd,masculine feminine,irregular,7 59\r\nώ,singular,accusative,2nd,masculine feminine,irregular,7 42 59\r\nών,singular,accusative,2nd,masculine feminine,irregular,7 59\r\nῳ,singular,dative,2nd,masculine feminine,regular primary,\r\nῷ,singular,dative,2nd,masculine feminine,regular,5\r\nῴ,singular,dative,2nd,masculine feminine,irregular,7\r\nόφι,singular,dative,2nd,masculine feminine,irregular,45\r\nόφιv,singular,dative,2nd,masculine feminine,irregular,4 45\r\nου,singular,genitive,2nd,masculine feminine,regular primary,\r\nοῦ,singular,genitive,2nd,masculine feminine,regular,5\r\nοιο,singular,genitive,2nd,masculine feminine,irregular,\r\nοο,singular,genitive,2nd,masculine feminine,irregular,\r\nω,singular,genitive,2nd,masculine feminine,irregular,\r\nώ,singular,genitive,2nd,masculine feminine,irregular,7\r\nόφι,singular,genitive,2nd,masculine feminine,irregular,45\r\nόφιv,singular,genitive,2nd,masculine feminine,irregular,4 45\r\nος,singular,nominative,2nd,masculine feminine,regular primary,\r\nους,singular,nominative,2nd,masculine feminine,regular,5\r\noῦς,singular,nominative,2nd,masculine feminine,regular,5\r\nός,singular,nominative,2nd,masculine feminine,regular,\r\nώς,singular,nominative,2nd,masculine feminine,irregular,7 42\r\nως,singular,nominative,2nd,masculine feminine,irregular,\r\nε,singular,vocative,2nd,masculine feminine,regular primary,\r\nέ,singular,vocative,2nd,masculine feminine,regular,\r\nοu,singular,vocative,2nd,masculine feminine,regular,5\r\nοῦ,singular,vocative,2nd,masculine feminine,regular,42\r\nός,singular,vocative,2nd,masculine feminine,irregular,57\r\nον,singular,accusative,2nd,neuter,regular primary,\r\nοῦν,singular,accusative,2nd,neuter,regular,6\r\nῳ,singular,dative,2nd,neuter,regular primary,\r\nῷ,singular,dative,2nd,neuter,regular,6\r\nόφι,singular,dative,2nd,neuter,irregular,45\r\nόφιv,singular,dative,2nd,neuter,irregular,4 45\r\nου,singular,genitive,2nd,neuter,regular primary,\r\nοῦ,singular,genitive,2nd,neuter,regular,6\r\nοο,singular,genitive,2nd,neuter,irregular,\r\nοιο,singular,genitive,2nd,neuter,irregular,\r\nω,singular,genitive,2nd,neuter,irregular,\r\nόφι,singular,genitive,2nd,neuter,irregular,45\r\nόφιv,singular,genitive,2nd,neuter,irregular,4 45\r\nον,singular,nominative,2nd,neuter,regular primary,\r\nοῦν,singular,nominative,2nd,neuter,regular,6\r\nον,singular,vocative,2nd,neuter,regular primary,\r\nοῦν,singular,vocative,2nd,neuter,regular,6\r\nε,dual,accusative,3rd,masculine feminine,regular primary,\r\nει,dual,accusative,3rd,masculine feminine,regular,\r\nῆ,dual,accusative,3rd,masculine feminine,regular,18\r\nω,dual,accusative,3rd,masculine feminine,irregular,32\r\nῖ,dual,accusative,3rd,masculine feminine,irregular,33\r\nεε,dual,accusative,3rd,masculine feminine,irregular,16 55 61\r\nοιν,dual,dative,3rd,masculine feminine,regular primary,\r\nοῖν,dual,dative,3rd,masculine feminine,regular,\r\nοιιν,dual,dative,3rd,masculine feminine,irregular,54\r\nσι,dual,dative,3rd,masculine feminine,irregular,33 37\r\nεσσι,dual,dative,3rd,masculine feminine,irregular,33\r\nεσι,dual,dative,3rd,masculine feminine,irregular,33\r\nέοιν,dual,dative,3rd,masculine feminine,irregular,16 61\r\nῳν,dual,dative,3rd,masculine feminine,irregular,49\r\nοιν,dual,genitive,3rd,masculine feminine,primary regular,\r\nοῖν,dual,genitive,3rd,masculine feminine,regular,\r\nοιιν,dual,genitive,3rd,masculine feminine,irregular,54\r\nέοιν,dual,genitive,3rd,masculine feminine,irregular,16 61\r\nῳν,dual,genitive,3rd,masculine feminine,irregular,49\r\nε,dual,nominative,3rd,masculine feminine,regular primary,\r\nει,dual,nominative,3rd,masculine feminine,regular,\r\nῆ,dual,nominative,3rd,masculine feminine,regular,18\r\nω,dual,nominative,3rd,masculine feminine,irregular,32\r\nῖ,dual,nominative,3rd,masculine feminine,irregular,33\r\nεε,dual,nominative,3rd,masculine feminine,irregular,16 55 61\r\nε,dual,vocative,3rd,masculine feminine,regular primary,\r\nει,dual,vocative,3rd,masculine feminine,regular,\r\nῆ,dual,vocative,3rd,masculine feminine,regular,18\r\nω,dual,vocative,3rd,masculine feminine,irregular,32\r\nῖ,dual,vocative,3rd,masculine feminine,irregular,33\r\nεε,dual,vocative,3rd,masculine feminine,irregular,16 55 61\r\nε,dual,accusative,3rd,neuter,regular primary,\r\nει,dual,accusative,3rd,neuter,regular,\r\nα,dual,accusative,3rd,neuter,regular,\r\nεε,dual,accusative,3rd,neuter,irregular,16 61\r\nαε,dual,accusative,3rd,neuter,irregular,16 61\r\nοιν,dual,dative,3rd,neuter,regular primary,\r\nῷν,dual,dative,3rd,neuter,regular,\r\nοις,dual,dative,3rd,neuter,irregular,33 38\r\nοισι,dual,dative,3rd,neuter,irregular,33 38\r\nοισι(ν),dual,dative,3rd,neuter,irregular,4 33 38\r\nοιιν,dual,dative,3rd,neuter,irregular,\r\nέοιν,dual,dative,3rd,neuter,irregular,16 61\r\nάοιν,dual,dative,3rd,neuter,irregular,16 61\r\nοιν,dual,genitive,3rd,neuter,regular primary,\r\nῷν,dual,genitive,3rd,neuter,regular,\r\nων,dual,genitive,3rd,neuter,irregular,33 38\r\nοιιν,dual,genitive,3rd,neuter,irregular,\r\nέοιν,dual,genitive,3rd,neuter,irregular,16 61\r\nάοιν,dual,genitive,3rd,neuter,irregular,16 61\r\nε,dual,nominative,3rd,neuter,regular primary,\r\nει,dual,nominative,3rd,neuter,regular,\r\nα,dual,nominative,3rd,neuter,regular,\r\nεε,dual,nominative,3rd,neuter,irregular,16 61\r\nαε,dual,nominative,3rd,neuter,irregular,16 61\r\nε,dual,vocative,3rd,neuter,regular primary,\r\nει,dual,vocative,3rd,neuter,regular,\r\nα,dual,vocative,3rd,neuter,regular,\r\nεε,dual,vocative,3rd,neuter,irregular,16 61\r\nαε,dual,vocative,3rd,neuter,irregular,16 61\r\nας,plural,accusative,3rd,masculine feminine,regular primary,\r\nεις,plural,accusative,3rd,masculine feminine,regular,17 41\r\nες,plural,accusative,3rd,masculine feminine,regular,\r\nς,plural,accusative,3rd,masculine feminine,regular,\r\nῦς,plural,accusative,3rd,masculine feminine,regular,17 18 48\r\nως,plural,accusative,3rd,masculine feminine,regular,30\r\nῆς,plural,accusative,3rd,masculine feminine,irregular,56\r\nέας,plural,accusative,3rd,masculine feminine,irregular,\r\nέος,plural,accusative,3rd,masculine feminine,irregular,\r\nῆος,plural,accusative,3rd,masculine feminine,irregular,\r\nῆες,plural,accusative,3rd,masculine feminine,irregular,\r\nῆας,plural,accusative,3rd,masculine feminine,irregular,\r\nους,plural,accusative,3rd,masculine feminine,irregular,32\r\nούς,plural,accusative,3rd,masculine feminine,irregular,32\r\nεῖς,plural,accusative,3rd,masculine feminine,irregular,31 41\r\nεες,plural,accusative,3rd,masculine feminine,irregular,55 61\r\nις,plural,accusative,3rd,masculine feminine,irregular,\r\nινς,plural,accusative,3rd,masculine feminine,irregular,\r\nῶς,plural,accusative,3rd,masculine feminine,irregular,48\r\nσι,plural,dative,3rd,masculine feminine,regular primary,\r\nσιν,plural,dative,3rd,masculine feminine,regular primary,4\r\nσί,plural,dative,3rd,masculine feminine,regular,41\r\nσίν,plural,dative,3rd,masculine feminine,regular,4 41\r\nεσι,plural,dative,3rd,masculine feminine,regular,41\r\nεσιν,plural,dative,3rd,masculine feminine,regular,4 41\r\nέσι,plural,dative,3rd,masculine feminine,regular,\r\nέσιν,plural,dative,3rd,masculine feminine,regular,4\r\nψι,plural,dative,3rd,masculine feminine,regular,\r\nψιν,plural,dative,3rd,masculine feminine,regular,4\r\nψί,plural,dative,3rd,masculine feminine,regular,\r\nψίν,plural,dative,3rd,masculine feminine,regular,4\r\nξι,plural,dative,3rd,masculine feminine,regular,\r\nξιν,plural,dative,3rd,masculine feminine,regular,4\r\nξί,plural,dative,3rd,masculine feminine,regular,\r\nξίν,plural,dative,3rd,masculine feminine,regular,4\r\nφι,plural,dative,3rd,masculine feminine,irregular,45\r\nφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nηφι,plural,dative,3rd,masculine feminine,irregular,45\r\nηφιv,plural,dative,3rd,masculine feminine,irregular,4 45\r\nῆφι,plural,dative,3rd,masculine feminine,irregular,45\r\nῆφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nόφι,plural,dative,3rd,masculine feminine,irregular,45\r\nόφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nαις,plural,dative,3rd,masculine feminine,irregular,33 41\r\nοῖσι,plural,dative,3rd,masculine feminine,irregular,33\r\nοῖσιv,plural,dative,3rd,masculine feminine,irregular,4 33\r\nεσσι,plural,dative,3rd,masculine feminine,irregular,16 61\r\nεσσιv,plural,dative,3rd,masculine feminine,irregular,4 16 61\r\nυσσι,plural,dative,3rd,masculine feminine,irregular,54\r\nυσσιv,plural,dative,3rd,masculine feminine,irregular,4 54\r\nσσί,plural,dative,3rd,masculine feminine,irregular,54\r\nσσίv,plural,dative,3rd,masculine feminine,irregular,4 54\r\nων,plural,genitive,3rd,masculine feminine,regular primary,\r\nῶν,plural,genitive,3rd,masculine feminine,regular,\r\n-,plural,genitive,3rd,masculine feminine,irregular,41\r\nφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nηφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nηφιv,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nῆφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nῆφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nόφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nόφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nέων,plural,genitive,3rd,masculine feminine,irregular,16 61\r\nες,plural,nominative,3rd,masculine feminine,regular primary,\r\nως,plural,nominative,3rd,masculine feminine,regular,30\r\nεις,plural,nominative,3rd,masculine feminine,regular,17\r\nεῖς,plural,nominative,3rd,masculine feminine,regular,18\r\nοί,plural,nominative,3rd,masculine feminine,irregular,32\r\nαί,plural,nominative,3rd,masculine feminine,irregular,33\r\nῆς,plural,nominative,3rd,masculine feminine,irregular,18\r\nῄς,plural,nominative,3rd,masculine feminine,irregular,31 41\r\nεες,plural,nominative,3rd,masculine feminine,irregular,16 55 61\r\nοι,plural,nominative,3rd,masculine feminine,irregular,33\r\nες,plural,vocative,3rd,masculine feminine,regular primary,\r\nεις,plural,vocative,3rd,masculine feminine,regular,17\r\nεῖς,plural,vocative,3rd,masculine feminine,regular,18\r\nῆς,plural,vocative,3rd,masculine feminine,regular,18\r\nως,plural,vocative,3rd,masculine feminine,regular,30\r\nεες,plural,vocative,3rd,masculine feminine,irregular,16 55 61\r\nα,plural,accusative,3rd,neuter,regular primary,\r\nη,plural,accusative,3rd,neuter,regular,\r\nς,plural,accusative,3rd,neuter,regular,\r\nά,plural,accusative,3rd,neuter,irregular,33\r\nαα,plural,accusative,3rd,neuter,irregular,16 61\r\nεα,plural,accusative,3rd,neuter,irregular,16 61\r\nσι,plural,dative,3rd,neuter,regular primary,\r\nσιν,plural,dative,3rd,neuter,regular primary,4\r\nσί,plural,dative,3rd,neuter,regular,\r\nσίv,plural,dative,3rd,neuter,regular,4\r\nασι,plural,dative,3rd,neuter,regular,\r\nασιν,plural,dative,3rd,neuter,regular,4\r\nεσι,plural,dative,3rd,neuter,regular,\r\nεσιν,plural,dative,3rd,neuter,regular,4\r\nέσι,plural,dative,3rd,neuter,regular,\r\nέσιv,plural,dative,3rd,neuter,regular,4\r\nεσσι,plural,dative,3rd,neuter,irregular,54\r\nεσσιν,plural,dative,3rd,neuter,irregular,4 54\r\nσσί,plural,dative,3rd,neuter,irregular,54\r\nσσίv,plural,dative,3rd,neuter,irregular,4 54\r\nασσι,plural,dative,3rd,neuter,irregular,54\r\nασσιν,plural,dative,3rd,neuter,irregular,4 54\r\nφι,plural,dative,3rd,neuter,irregular,45\r\nφιν,plural,dative,3rd,neuter,irregular,4 45\r\nηφι,plural,dative,3rd,neuter,irregular,45\r\nηφιv,plural,dative,3rd,neuter,irregular,4 45\r\nῆφι,plural,dative,3rd,neuter,irregular,45\r\nῆφιν,plural,dative,3rd,neuter,irregular,4 45\r\nόφι,plural,dative,3rd,neuter,irregular,45\r\nόφιν,plural,dative,3rd,neuter,irregular,4 45\r\nων,plural,genitive,3rd,neuter,regular primary,\r\nῶν,plural,genitive,3rd,neuter,regular primary,\r\nφι,plural,genitive,3rd,neuter,irregular,\r\nφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nηφι,plural,genitive,3rd,neuter,irregular,45\r\nηφιv,plural,genitive,3rd,neuter,irregular,4 45\r\nῆφι,plural,genitive,3rd,neuter,irregular,45\r\nῆφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nόφι,plural,genitive,3rd,neuter,irregular,45\r\nόφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nέων,plural,genitive,3rd,neuter,irregular,16 61\r\nάων,plural,genitive,3rd,neuter,irregular,16 61\r\nα,plural,nominative,3rd,neuter,regular primary,\r\nη,plural,nominative,3rd,neuter,regular,\r\nες,plural,nominative,3rd,neuter,regular,\r\nά,plural,nominative,3rd,neuter,irregular,33\r\nεα,plural,nominative,3rd,neuter,irregular,16 61\r\nαα,plural,nominative,3rd,neuter,irregular,16 61\r\nα,plural,vocative,3rd,neuter,regular primary,\r\nη,plural,vocative,3rd,neuter,regular,\r\nες,plural,vocative,3rd,neuter,regular,\r\nαα,plural,vocative,3rd,neuter,irregular,16 61\r\nεα,plural,vocative,3rd,neuter,irregular,16 61\r\nα,singular,accusative,3rd,masculine feminine,regular primary,\r\nη,singular,accusative,3rd,masculine feminine,regular,16\r\nν,singular,accusative,3rd,masculine feminine,regular,\r\nιν,singular,accusative,3rd,masculine feminine,regular,41\r\nῦν,singular,accusative,3rd,masculine feminine,regular,18\r\nῶ,singular,accusative,3rd,masculine feminine,regular,23\r\nυν,singular,accusative,3rd,masculine feminine,regular,\r\nῦν,singular,accusative,3rd,masculine feminine,regular,17\r\nύν,singular,accusative,3rd,masculine feminine,regular,17\r\nέα,singular,accusative,3rd,masculine feminine,regular,20\r\nην,singular,accusative,3rd,masculine feminine,regular,24\r\nώ,singular,accusative,3rd,masculine feminine,regular,19 41\r\nω,singular,accusative,3rd,masculine feminine,regular,23\r\nεῖν,singular,accusative,3rd,masculine feminine,irregular,31 41\r\nων,singular,accusative,3rd,masculine feminine,irregular,33 41 49\r\nαν,singular,accusative,3rd,masculine feminine,irregular,33 41\r\nον,singular,accusative,3rd,masculine feminine,irregular,39\r\nῖς,singular,accusative,3rd,masculine feminine,irregular,33\r\nεα,singular,accusative,3rd,masculine feminine,irregular,61\r\nι,singular,dative,3rd,masculine feminine,regular primary,\r\nί,singular,dative,3rd,masculine feminine,regular,\r\nϊ,singular,dative,3rd,masculine feminine,regular,17\r\nΐ,singular,dative,3rd,masculine feminine,regular,40\r\nει,singular,dative,3rd,masculine feminine,regular,16 17\r\nεῖ,singular,dative,3rd,masculine feminine,regular,18\r\nαι,singular,dative,3rd,masculine feminine,regular,\r\noῖ,singular,dative,3rd,masculine feminine,regular,28 41\r\nῖ,singular,dative,3rd,masculine feminine,irregular,33 46\r\nῆι,singular,dative,3rd,masculine feminine,irregular,18\r\nᾳ,singular,dative,3rd,masculine feminine,irregular,25\r\nῳ,singular,dative,3rd,masculine feminine,irregular,33 34\r\nῷ,singular,dative,3rd,masculine feminine,irregular,33\r\nιί,singular,dative,3rd,masculine feminine,irregular,62\r\nυί,singular,dative,3rd,masculine feminine,irregular,62\r\nέϊ,singular,dative,3rd,masculine feminine,irregular,18 61\r\nος,singular,genitive,3rd,masculine feminine,regular primary,\r\nός,singular,genitive,3rd,masculine feminine,regular,\r\nους,singular,genitive,3rd,masculine feminine,regular,16\r\nοῦς,singular,genitive,3rd,masculine feminine,regular,19 46\r\nως,singular,genitive,3rd,masculine feminine,regular,17 18\r\nώς,singular,genitive,3rd,masculine feminine,regular,17 18 41\r\nῶς,singular,genitive,3rd,masculine feminine,regular,47\r\nεως,singular,genitive,3rd,masculine feminine,regular,17\r\nέως,singular,genitive,3rd,masculine feminine,regular,\r\nεώς,singular,genitive,3rd,masculine feminine,regular,\r\nέους,singular,genitive,3rd,masculine feminine,regular,20\r\nω,singular,genitive,3rd,masculine feminine,irregular,\r\nεος,singular,genitive,3rd,masculine feminine,irregular,61\r\nΰς,singular,genitive,3rd,masculine feminine,irregular,41 48\r\nῦς,singular,genitive,3rd,masculine feminine,irregular,48\r\nνος,singular,genitive,3rd,masculine feminine,irregular,22\r\nοῦ,singular,genitive,3rd,masculine feminine,irregular,33\r\nηος,singular,genitive,3rd,masculine feminine,irregular,55\r\nιός,singular,genitive,3rd,masculine feminine,irregular,62\r\nuός,singular,genitive,3rd,masculine feminine,irregular,62\r\nς,singular,nominative,3rd,masculine feminine,regular primary,\r\n-,singular,nominative,3rd,masculine feminine,regular primary,\r\nηρ,singular,nominative,3rd,masculine feminine,regular,41\r\nις,singular,nominative,3rd,masculine feminine,regular,\r\nϊς,singular,nominative,3rd,masculine feminine,regular,\r\nώ,singular,nominative,3rd,masculine feminine,regular,41\r\nψ,singular,nominative,3rd,masculine feminine,regular,\r\nξ,singular,nominative,3rd,masculine feminine,regular,\r\nρ,singular,nominative,3rd,masculine feminine,regular,\r\nήρ,singular,nominative,3rd,masculine feminine,regular,\r\nήν,singular,nominative,3rd,masculine feminine,regular,50\r\nν,singular,nominative,3rd,masculine feminine,regular,\r\nωρ,singular,nominative,3rd,masculine feminine,regular,\r\nων,singular,nominative,3rd,masculine feminine,regular,\r\nών,singular,nominative,3rd,masculine feminine,regular,\r\nης,singular,nominative,3rd,masculine feminine,regular,\r\nῆς,singular,nominative,3rd,masculine feminine,regular,\r\nυς,singular,nominative,3rd,masculine feminine,regular,\r\nῦς,singular,nominative,3rd,masculine feminine,regular,\r\nεῦς,singular,nominative,3rd,masculine feminine,regular,\r\nύς,singular,nominative,3rd,masculine feminine,regular,\r\nής,singular,nominative,3rd,masculine feminine,regular,33\r\nας,singular,nominative,3rd,masculine feminine,irregular,\r\nῴ,singular,nominative,3rd,masculine feminine,irregular,29 41\r\nώς,singular,nominative,3rd,masculine feminine,irregular,27 41\r\nϋς,singular,nominative,3rd,masculine feminine,irregular,41\r\nῄς,singular,nominative,3rd,masculine feminine,irregular,31 41\r\nῖς,singular,nominative,3rd,masculine feminine,irregular,\r\nεῖς,singular,nominative,3rd,masculine feminine,irregular,31 41\r\nῶς,singular,nominative,3rd,masculine feminine,irregular,48\r\nος,singular,nominative,3rd,masculine feminine,irregular,33\r\n-,singular,vocative,3rd,masculine feminine,regular primary,52\r\nς,singular,vocative,3rd,masculine feminine,regular,30\r\nι,singular,vocative,3rd,masculine feminine,regular,41\r\nῦ,singular,vocative,3rd,masculine feminine,regular,15 17 18\r\nοῖ,singular,vocative,3rd,masculine feminine,regular,19 41\r\nψ,singular,vocative,3rd,masculine feminine,regular,\r\nξ,singular,vocative,3rd,masculine feminine,regular,\r\nν,singular,vocative,3rd,masculine feminine,regular,\r\nρ,singular,vocative,3rd,masculine feminine,regular,\r\nων,singular,vocative,3rd,masculine feminine,regular,50\r\nών,singular,vocative,3rd,masculine feminine,regular,\r\nήν,singular,vocative,3rd,masculine feminine,regular,\r\nερ,singular,vocative,3rd,masculine feminine,regular,\r\nες,singular,vocative,3rd,masculine feminine,regular,\r\nί,singular,vocative,3rd,masculine feminine,regular,\r\nως,singular,vocative,3rd,masculine feminine,regular,\r\nἶ,singular,vocative,3rd,masculine feminine,regular,\r\nούς,singular,vocative,3rd,masculine feminine,regular,51\r\nύ,singular,vocative,3rd,masculine feminine,regular,15\r\nυ,singular,vocative,3rd,masculine feminine,regular,51\r\nεις,singular,vocative,3rd,masculine feminine,regular,20\r\nαν,singular,vocative,3rd,masculine feminine,regular,\r\nώς,singular,vocative,3rd,masculine feminine,irregular,27 41 46\r\nον,singular,vocative,3rd,masculine feminine,irregular,\r\nυς,singular,vocative,3rd,masculine feminine,irregular,33\r\nα,singular,accusative,3rd,neuter,regular primary,15\r\n-,singular,accusative,3rd,neuter,regular,33\r\nος,singular,accusative,3rd,neuter,regular,\r\nας,singular,accusative,3rd,neuter,regular,\r\nαρ,singular,accusative,3rd,neuter,regular,21\r\nυ,singular,accusative,3rd,neuter,regular,\r\nι,singular,dative,3rd,neuter,regular primary,\r\nει,singular,dative,3rd,neuter,regular,16\r\nαι,singular,dative,3rd,neuter,regular,16 21\r\nϊ,singular,dative,3rd,neuter,irregular,17\r\nᾳ,singular,dative,3rd,neuter,irregular,25 33\r\nυϊ,singular,dative,3rd,neuter,irregular,17\r\nαϊ,singular,dative,3rd,neuter,irregular,21 61\r\nος,singular,genitive,3rd,neuter,regular primary,\r\nους,singular,genitive,3rd,neuter,regular,16\r\nως,singular,genitive,3rd,neuter,regular,16\r\nεως,singular,genitive,3rd,neuter,regular,17\r\nυς,singular,genitive,3rd,neuter,irregular,26\r\nου,singular,genitive,3rd,neuter,irregular,33\r\nαος,singular,genitive,3rd,neuter,irregular,21 61\r\nα,singular,nominative,3rd,neuter,regular primary,\r\n-,singular,nominative,3rd,neuter,regular,33\r\nος,singular,nominative,3rd,neuter,regular,\r\nαρ,singular,nominative,3rd,neuter,regular,\r\nας,singular,nominative,3rd,neuter,regular,16 21\r\nυ,singular,nominative,3rd,neuter,regular,\r\nον,singular,nominative,3rd,neuter,irregular,33\r\nα,singular,vocative,3rd,neuter,regular primary,15\r\n-,singular,vocative,3rd,neuter,regular,\r\nος,singular,vocative,3rd,neuter,regular,\r\nας,singular,vocative,3rd,neuter,regular,\r\nαρ,singular,vocative,3rd,neuter,regular,21\r\nυ,singular,vocative,3rd,neuter,regular,";
+
+var nounFootnotesCSV$1 = "Index,Text\r\n1,See  for Rules of variance within regular endings\r\n2,See  for Table of α- and ε- stem feminine 1st declension contracts\r\n3,See  for Table of α- and ε- stem masculine 1st declension contracts\r\n4,\"Previous, with (ν)\"\r\n5,See  for Table of o- and ε- stem masculine  2nd declension contracts\r\n6,See  for Table of o- and ε- stem neuter 2nd declension contracts\r\n7,(Attic) contracts of o-stems preceded by a long vowel\r\n15,\"This is not actually an “ending,” but the last letter of the “pure stem”. See\"\r\n16,\"See  &  for Table of Sigma (ες,ας,ος) stem contracts\"\r\n17,See  for Table of  ι and υ - stem contracts\r\n18,\"See  for Table of  ευ,αυ,and ου - stem contracts\"\r\n19,See  for stems in οι feminine 3rd declension contracts\r\n20,See  for Table of 3rd declension contracts of stems in -εσ- preceded by ε\r\n21,See  for Table of stems in τ and ατ neuter 3rd declension contracts\r\n22,\"On stem ending in ν, ν doubled in gen. Sing Aeolic (e.g. μῆνς,μῆννος...)\"\r\n23,Also in inscriptions and expressions of swearing\r\n24,(Borrowed from 1st decl) Sometimes in proper names whose nominative ends in -ης\r\n25,From -ας-stems (properly αι)\r\n26,(ε)υς instead of (ε)ος or ους (gen) for (3rd decl) words whose nominative ends in -ος\r\n27,In 3rd decl. Only in the words αἰδώς (Attic) and ἠώς (Homer and Ionic)\r\n28,Contraction of a stem in οι  and an ι-ending\r\n29,Stronger form of Ionic contractions of οι-stems (in the nominative)\r\n30,See  for Table of ω - stem contracts (masculine only)\r\n31,Nominative plural contraction of  -ειδ+ες  after dropping the δ (used for accusative too). See .a\r\n32,\"Plurals & duals occur rarely (and w/ 2nd decl endings) for 3rd decl οι-stem nouns. See .D.a,b,c\"\r\n33,See  for description and examples of Irreg. Decl involving 3rd decl endings\r\n34,(Homer)  for Attic  (ῳτ)ι\r\n35,(Homer) for Cretan ινς\r\n36,Also an irregular ending for other stem(s)\r\n37,In inscriptions\r\n38,\"Plural endings for otherwise dual noun,οσσε (eyes)\"\r\n39,\"“Poetical” (acc for ἔρως). See ,11\"\r\n40,\"Poetic for χρωτι,dat. of ὁ χρως\"\r\n41,No Masculine of this Form\r\n42,No Feminine of this Form\r\n44,See  D.9 and #215 regarding dialectic alternate forms of the Dative Plural\r\n45,\"Surviving in Homer (See ) Not truly genitive or dative, but instrumental/locative/ablative, associated with the remaining oblique cases (genitive & dative) only after being lost as cases themselves in Greek\"\r\n46,See Smyth # 266 for only surviving ος-stem in Attic (fem. singular of αἰδως)\r\n47,See  for Substantives in -εύς preceded by a vowel.\r\n48,\"See Smyth,  #275 D.1,2,3\"\r\n49,\"See , List of Principal Irregular Substantives\"\r\n50,\"See  for Table of stems in a Liquid (λ,ρ) or a Nasal (ν), and Note #259D for variants including Κρονίων...\"\r\n51,\"See  for Table of stems in a Dental (τ,δ,θ) or a Nasal (ν), and its notes including Ν.κόρυς (Voc. Κόρυ) & ὀδούς\"\r\n52,See  for general rule re 3rd Declension Masc/Fem Singular Vocative\r\n54,See  D\r\n55,See\r\n56,\"See  for other forms of endings for contracts of ευ,αυ,and ου - stems\"\r\n57,Nominative form used as Vocative. See\r\n58,\"See ,b\"\r\n59,\"See ,d\"\r\n60,This (Feminine or Masculine) Form only Masculine when derived from ε- or ο- contraction\r\n61,See Smyth Note 264 D.1 regarding Homer's use of Open Forms\r\n62,See Smyth Note 269 for alternate i-stem and u-stem endings\r\n63,See  D.2\r\n64,See  D.1";
+
+/*
+ * Latin language data module
+ */
+/*import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
+import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
+import verbSuffixesCSV from './data/verb/suffixes.csv';
+import verbFootnotesCSV from './data/verb/footnotes.csv';*/
+// A language of this module
+const language$1 = languages.greek;
+// Create a language data set that will keep all language-related information
+let dataSet$1 = new LanguageDataset(language$1);
+
+// region Definition of grammatical features
+/*
+ Define grammatical features of a language. Those grammatical features definitions will also be used by morphological
+ analyzer's language modules as well.
+ */
+const importerName$1 = 'csv';
+const parts$1 = dataSet$1.defineFeatureType(types$1.part, ['noun', 'adjective', 'verb']);
+const numbers$1 = dataSet$1.defineFeatureType(types$1.number, ['singular', 'dual', 'plural']);
+numbers$1.addImporter(importerName$1)
+    .map('singular', numbers$1.singular)
+    .map('dual', numbers$1.dual)
+    .map('plural', numbers$1.plural);
+const cases$1 = dataSet$1.defineFeatureType(types$1.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative']);
+cases$1.addImporter(importerName$1)
+    .map('nominative', cases$1.nominative)
+    .map('genitive', cases$1.genitive)
+    .map('dative', cases$1.dative)
+    .map('accusative', cases$1.accusative)
+    .map('vocative', cases$1.vocative);
+const declensions$1 = dataSet$1.defineFeatureType(types$1.declension, ['first', 'second', 'third']);
+declensions$1.addImporter(importerName$1)
+    .map('1st', declensions$1.first)
+    .map('2nd', declensions$1.second)
+    .map('3rd', declensions$1.third);
+const genders$1 = dataSet$1.defineFeatureType(types$1.gender, ['masculine', 'feminine', 'neuter']);
+genders$1.addImporter(importerName$1)
+    .map('masculine', genders$1.masculine)
+    .map('feminine', genders$1.feminine)
+    .map('neuter', genders$1.neuter)
+    .map('masculine feminine', [genders$1.masculine, genders$1.feminine]);
+/*const types = dataSet.defineFeatureType(Lib.types.type, ['regular', 'irregular']);
+types.addImporter(importerName)
+    .map('regular', types.regular)
+    .map('irregular', types.irregular);
+const conjugations = dataSet.defineFeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
+conjugations.addImporter(importerName)
     .map('1st', conjugations.first)
     .map('2nd', conjugations.second)
     .map('3rd', conjugations.third)
     .map('4th', conjugations.fourth);
-
-data.addFeature(types.tense).importer
+const tenses = dataSet.defineFeatureType(Lib.types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
+tenses.addImporter(importerName)
     .map('present', tenses.present)
     .map('imperfect', tenses.imperfect)
     .map('future', tenses.future)
     .map('perfect', tenses.perfect)
     .map('pluperfect', tenses.pluperfect)
     .map('future_perfect', tenses['future perfect']);
-
-data.addFeature(types.voice).importer
-    .map('active', voices.active)
-    .map('passive', voices.passive);
-
-data.addFeature(types.mood).importer
+const voices = dataSet.defineFeatureType(Lib.types.voice, ['passive', 'active']);
+voices.addImporter(importerName)
+    .map('passive', voices.passive)
+    .map('active', voices.active);
+const moods = dataSet.defineFeatureType(Lib.types.mood, ['indicative', 'subjunctive']);
+moods.addImporter(importerName)
     .map('indicative', moods.indicative)
     .map('subjunctive', moods.subjunctive);
-
-data.addFeature(types.person).importer
+const persons = dataSet.defineFeatureType(Lib.types.person, ['first', 'second', 'third']);
+persons.addImporter(importerName)
     .map('1st', persons.first)
     .map('2nd', persons.second)
     .map('3rd', persons.third);
+const footnotes = dataSet.defineFeatureType(Lib.types.footnote, []);*/
 
-let maService = new Service('Tufts');
-// Set a language conversion map for this specific service
-maService.languages.importer.map('lat', languages.latin);
-// Load Latin language data for this specific service
-maService.setLanguageData(data);
+// endregion Definition of grammatical features
 
-let adapter = {};
+// For noun and adjectives
+dataSet$1.addSuffixes = function(partOfSpeech, data) {
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+    let noSuffixValue = '-';
 
-/**
- * A function that maps a morphological service's specific data types and values into an inflection library standard.
- * @param {object} jsonObj - A JSON data from a Morphological Analyzer.
- * @returns {Homonym} A library standard Homonym object.
- */
-adapter.transform = function(jsonObj) {
-    "use strict";
-    let lexemes = [];
-    let annotationBody = jsonObj.RDF.Annotation.Body;
-    if (!Array.isArray(annotationBody)) {
-        /*
-        If only one lexeme is returned, Annotation Body will not be an array but rather a single object.
-        Let's convert it to an array so we can work with it in a uniformal way.
-         */
-        annotationBody = [annotationBody];
-    }
-    for (let lexeme of annotationBody) {
-        let lemma = new Lemma(lexeme.rest.entry.dict.hdwd.$, maService.languages.importer.get(lexeme.rest.entry.dict.hdwd.lang));
-
-        let inflections = [];
-        let inflectionsJSON = lexeme.rest.entry.infl;
-        if (!Array.isArray(inflectionsJSON)) {
-            // If only one inflection returned, it is a single object, not an array of objects. Convert it to an array for uniformity.
-            inflectionsJSON = [inflectionsJSON];
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+        let suffix = data[i][0];
+        // Handle special suffix values
+        if (suffix === noSuffixValue) {
+            suffix = null;
         }
-        for (let inflectionJSON of inflectionsJSON) {
-            let inflection = new Inflection(inflectionJSON.term.stem.$, maService.languages.importer.get(lexeme.rest.entry.dict.hdwd.lang));
-            if (inflectionJSON.term.suff) {
-                // Set suffix if provided by a morphological analyzer
-                inflection.suffix = inflectionJSON.term.suff.$;
-            }
 
-            // Parse whatever grammatical features we're interested in
-            if (inflectionJSON.pofs) {
-                inflection.feature = maService.latin[types.part].get(inflectionJSON.pofs.$);
-            }
-
-            if (inflectionJSON.case) {
-                inflection.feature = maService.latin[types.grmCase].get(inflectionJSON.case.$);
-            }
-
-            if (inflectionJSON.decl) {
-                inflection.feature = maService.latin[types.declension].get(inflectionJSON.decl.$);
-            }
-
-            if (inflectionJSON.num) {
-                inflection.feature = maService.latin[types.number].get(inflectionJSON.num.$);
-            }
-
-            if (inflectionJSON.gend) {
-                inflection.feature = maService.latin[types.gender].get(inflectionJSON.gend.$);
-            }
-
-            if (inflectionJSON.conj) {
-                inflection.feature = maService.latin[types.conjugation].get(inflectionJSON.conj.$);
-            }
-
-            if (inflectionJSON.tense) {
-                inflection.feature = maService.latin[types.tense].get(inflectionJSON.tense.$);
-            }
-
-            if (inflectionJSON.voice) {
-                inflection.feature = maService.latin[types.voice].get(inflectionJSON.voice.$);
-            }
-
-            if (inflectionJSON.mood) {
-                inflection.feature = maService.latin[types.mood].get(inflectionJSON.mood.$);
-            }
-
-            if (inflectionJSON.pers) {
-                inflection.feature = maService.latin[types.person].get(inflectionJSON.pers.$);
-            }
-
-            inflections.push(inflection);
+        let features = [partOfSpeech,
+            numbers$1.importer.csv.get(data[i][1]),
+            cases$1.importer.csv.get(data[i][2]),
+            declensions$1.importer.csv.get(data[i][3]),
+            genders$1.importer.csv.get(data[i][4]),
+            types.importer.csv.get(data[i][5])];
+        if (data[i][6]) {
+            // There can be multiple footnote indexes separated by spaces
+            let language = this.language;
+            let indexes = data[i][6].split(' ').map(function(index) {
+                return footnotes.get(index);
+            });
+            features.push(...indexes);
         }
-        lexemes.push(new Lexeme(lemma, inflections));
+        this.addSuffix(suffix, ...features);
     }
-    return new Homonym(lexemes);
 };
 
-let messages = {
+// For verbs
+dataSet$1.addVerbSuffixes = function(partOfSpeech, data) {
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+    let noSuffixValue = '-';
+
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+        let suffix = data[i][0];
+        // Handle special suffix values
+        if (suffix === noSuffixValue) {
+            suffix = null;
+        }
+
+        let features = [partOfSpeech,
+            conjugations.importer.csv.get(data[i][1]),
+            voices.importer.csv.get(data[i][2]),
+            moods.importer.csv.get(data[i][3]),
+            tenses.importer.csv.get(data[i][4]),
+            numbers$1.importer.csv.get(data[i][5]),
+            persons.importer.csv.get(data[i][6])];
+
+        let grammarType = data[i][7];
+        // Type information can be empty if no ending is provided
+        if (grammarType) {
+            features.push(types.importer.csv.get(grammarType));
+        }
+        // Footnotes
+        if (data[i][8]) {
+            // There can be multiple footnote indexes separated by spaces
+            let language = this.language;
+            let indexes = data[i][8].split(' ').map(function(index) {
+                return footnotes.get(index);
+            });
+            features.push(...indexes);
+        }
+        this.addSuffix(suffix, ...features);
+    }
+};
+
+dataSet$1.addFootnotes = function(partOfSpeech, data) {
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+        this.addFootnote(partOfSpeech, data[i][0], data[i][1]);
+    }
+};
+
+dataSet$1.loadData = function() {
+    // Nouns
+    let partOfSpeech = parts$1.noun;
+    let suffixes = papaparse.parse(nounSuffixesCSV$1, {});
+    this.addSuffixes(partOfSpeech, suffixes.data);
+    let footnotes = papaparse.parse(nounFootnotesCSV$1, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
+
+    // Adjectives
+    partOfSpeech = parts$1.adjective;
+    suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
+    this.addSuffixes(partOfSpeech, suffixes.data);
+    footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
+
+    // Verbs
+    partOfSpeech = parts$1.verb;
+    suffixes = papaparse.parse(verbSuffixesCSV, {});
+    this.addVerbSuffixes(partOfSpeech, suffixes.data);
+    footnotes = papaparse.parse(verbFootnotesCSV, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
+};
+
+
+/**
+ * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
+ * @param {Inflection[]} inflections - An array of Inflection objects to be matched against a suffix.
+ * @param {Suffix} suffix - A suffix to be matched with inflections.
+ * @returns {Suffix | null} If a match is found, returns a Suffix object modified with some
+ * additional information about a match. If no matches found, returns null.
+ */
+dataSet$1.matcher = function(inflections, suffix) {
+    "use strict";
+    // All of those features must match between an inflection and an ending
+    let obligatoryMatches = [types$1.part];
+
+    // Any of those features must match between an inflection and an ending
+    let optionalMatches = [types$1.grmCase, types$1.declension, types$1.gender, types$1.number];
+    let bestMatchData = null; // Information about the best match we would be able to find
+
+    /*
+     There can be only one full match between an inflection and a suffix (except when suffix has multiple values?)
+     But there could be multiple partial matches. So we should try to find the best match possible and return it.
+     A fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
+     */
+    for (let inflection of inflections) {
+        let matchData = new MatchData(); // Create a match profile
+
+        if (inflection.suffix === suffix.value) {
+            matchData.suffixMatch = true;
+        }
+
+        // Check obligatory matches
+        for (let feature of  obligatoryMatches) {
+            let featureMatch = suffix.featureMatch(feature, inflection[feature]);
+            //matchFound = matchFound && featureMatch;
+
+            if (!featureMatch) {
+                // If an obligatory match is not found, there is no reason to check other items
+                break;
+            }
+            // Inflection's value of this feature is matching the one of the suffix
+            matchData.matchedFeatures.push(feature);
+        }
+
+        if (matchData.matchedFeatures.length < obligatoryMatches.length) {
+            // Not all obligatory matches are found, this is not a match
+            break;
+        }
+
+        // Check optional matches now
+        for (let feature of optionalMatches) {
+            let matchedValue = suffix.featureMatch(feature, inflection[feature]);
+            if (matchedValue) {
+                matchData.matchedFeatures.push(feature);
+            }
+        }
+
+        if (matchData.suffixMatch && (matchData.matchedFeatures.length === obligatoryMatches.length + optionalMatches.length)) {
+            // This is a full match
+            matchData.fullMatch = true;
+
+            // There can be only one full match, no need to search any further
+            suffix.match = matchData;
+            return suffix;
+        }
+        bestMatchData = this.bestMatch(bestMatchData, matchData);
+    }
+    if (bestMatchData) {
+        // There is some match found
+        suffix.match = bestMatchData;
+        return suffix;
+    }
+    return null;
+};
+
+/**
+ * Decides whether matchA is 'better' (i.e. has more items matched) than matchB or not
+ * @param {MatchData} matchA
+ * @param {MatchData} matchB
+ * @returns {MatchData} A best of two matches
+ */
+dataSet$1.bestMatch = function(matchA, matchB) {
+    // If one of the arguments is not set, return the other one
+    if (!matchA && matchB) {
+        return matchB;
+    }
+
+    if (!matchB && matchA) {
+        return matchA;
+    }
+
+    // Suffix match has a priority
+    if (matchA.suffixMatch !== matchB.suffixMatch) {
+        if (matchA.suffixMatch > matchB.suffixMatch) {
+            return matchA;
+        }
+        else {
+            return matchB;
+        }
+    }
+
+    // If same on suffix matche, compare by how many features matched
+    if (matchA.matchedFeatures.length >= matchB.matchedFeatures.length) {
+        // Arbitrarily return matchA if matches are the same
+        return matchA;
+    }
+    else {
+        return matchB;
+    }
+};
+
+let data$1 = new ImportData(languages.greek);
+
+/*
+Below are value conversion maps for each grammatical feature to be parsed.
+Format:
+data.addFeature(typeName).add(providerValueName, LibValueName);
+(functions are chainable)
+Types and values that are unknown (undefined) will be skipped during parsing.
+ */
+data$1.addFeature(types$1.part).importer
+    .map('noun', parts$1.noun);
+
+data$1.addFeature(types$1.grmCase).importer
+    .map('nominative', cases$1.nominative)
+    .map('genitive', cases$1.genitive)
+    .map('dative', cases$1.dative)
+    .map('accusative', cases$1.accusative)
+    .map('vocative', cases$1.vocative);
+
+data$1.addFeature(types$1.declension).importer
+    .map('1st', declensions$1.first)
+    .map('2nd', declensions$1.second)
+    .map('3rd', declensions$1.third);
+
+data$1.addFeature(types$1.number).importer
+    .map('singular', numbers$1.singular)
+    .map('dual', numbers$1.dual)
+    .map('plural', numbers$1.plural);
+
+data$1.addFeature(types$1.gender).importer
+    .map('masculine', genders$1.masculine)
+    .map('feminine', genders$1.feminine)
+    .map('neuter', genders$1.neuter)
+    .map('masculine feminine', [genders$1.masculine, genders$1.feminine]);
+
+class TuftsAdapter {
+    constructor() {
+        // Register importers
+        this[languages.latin] = data;
+        this[languages.greek] = data$1;
+        this.langMap = new Importer().map('lat', languages.latin).map('grc', languages.greek);
+        return this;
+    }
+
+    /**
+     * A function that maps a morphological service's specific data types and values into an inflection library standard.
+     * @param {object} jsonObj - A JSON data from a Morphological Analyzer.
+     * @returns {Homonym} A library standard Homonym object.
+     */
+    transform (jsonObj) {
+        "use strict";
+        let lexemes = [];
+        let annotationBody = jsonObj.RDF.Annotation.Body;
+        if (!Array.isArray(annotationBody)) {
+            /*
+            If only one lexeme is returned, Annotation Body will not be an array but rather a single object.
+            Let's convert it to an array so we can work with it in the same way no matter what format it is.
+             */
+            annotationBody = [annotationBody];
+        }
+        for (let lexeme of annotationBody) {
+            // Get importer based on the language
+            let language = this.langMap.get(lexeme.rest.entry.dict.hdwd.lang);
+            let lemma = new Lemma(lexeme.rest.entry.dict.hdwd.$, language);
+
+            let inflections = [];
+            let inflectionsJSON = lexeme.rest.entry.infl;
+            if (!Array.isArray(inflectionsJSON)) {
+                // If only one inflection returned, it is a single object, not an array of objects. Convert it to an array for uniformity.
+                inflectionsJSON = [inflectionsJSON];
+            }
+            for (let inflectionJSON of inflectionsJSON) {
+                let inflection = new Inflection(inflectionJSON.term.stem.$, language);
+                if (inflectionJSON.term.suff) {
+                    // Set suffix if provided by a morphological analyzer
+                    inflection.suffix = inflectionJSON.term.suff.$;
+                }
+
+                // Parse whatever grammatical features we're interested in
+                if (inflectionJSON.pofs) {
+                    inflection.feature = this[language][types$1.part].get(inflectionJSON.pofs.$);
+                }
+
+                if (inflectionJSON.case) {
+                    inflection.feature = this[language][types$1.grmCase].get(inflectionJSON.case.$);
+                }
+
+                if (inflectionJSON.decl) {
+                    inflection.feature = this[language][types$1.declension].get(inflectionJSON.decl.$);
+                }
+
+                if (inflectionJSON.num) {
+                    inflection.feature = this[language][types$1.number].get(inflectionJSON.num.$);
+                }
+
+                if (inflectionJSON.gend) {
+                    inflection.feature = this[language][types$1.gender].get(inflectionJSON.gend.$);
+                }
+
+                if (inflectionJSON.conj) {
+                    inflection.feature = this[language][types$1.conjugation].get(inflectionJSON.conj.$);
+                }
+
+                if (inflectionJSON.tense) {
+                    inflection.feature = this[language][types$1.tense].get(inflectionJSON.tense.$);
+                }
+
+                if (inflectionJSON.voice) {
+                    inflection.feature = this[language][types$1.voice].get(inflectionJSON.voice.$);
+                }
+
+                if (inflectionJSON.mood) {
+                    inflection.feature = this[language][types$1.mood].get(inflectionJSON.mood.$);
+                }
+
+                if (inflectionJSON.pers) {
+                    inflection.feature = this[language][types$1.person].get(inflectionJSON.pers.$);
+                }
+
+                inflections.push(inflection);
+            }
+            lexemes.push(new Lexeme(lemma, inflections));
+        }
+        return new Homonym(lexemes);
+    }
+}
+
+let messages$1 = {
     Number: 'Number',
     Case: 'Case',
     Declension: 'Declension',
@@ -3150,7 +3447,7 @@ let messages = {
     Person: 'Person'
 };
 
-let messages$1 = {
+let messages$2 = {
     Number: 'Number (GB)',
     Case: 'Case (GB)',
     Declension: 'Declension (GB)',
@@ -5053,23 +5350,22 @@ class MessageBundle {
     /**
      * Creates a message bundle (a list of messages) for a locale.
      * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
-     * @param {Object[]} messages - Messages for a locale.
-     * @param {string} messages[].id - Message ID, used for message reference.
-     * @param {string} messages[].text - Message text.
+     * @param {Object} messages - Messages for a locale in an object. Object keys are message IDss, strings that
+     * are used to reference a message, and key values are message texts in a string format.
      */
-    constructor(locale, messages$$1) {
+    constructor(locale, messages) {
         if (!locale) {
             throw new Error('Locale data is missing');
         }
-        if (!messages$$1) {
+        if (!messages) {
             throw new Error('Messages data is missing');
         }
 
         this._locale = locale;
 
-        for (let messageID in messages$$1) {
-            if (messages$$1.hasOwnProperty(messageID)) {
-                this[messageID] = new MessageFormat(messages$$1[messageID], this._locale);
+        for (let messageID in messages) {
+            if (messages.hasOwnProperty(messageID)) {
+                this[messageID] = new MessageFormat(messages[messageID], this._locale);
             }
         }
     }
@@ -5089,6 +5385,14 @@ class MessageBundle {
             return `Not in translation data: "${messageID}"`;
         }
     }
+
+    /**
+     * Returns a locale of a current message bundle.
+     * @return {string} A locale of this message bundle.
+     */
+    get locale() {
+        return this._locale;
+    }
 }
 
 /**
@@ -5097,28 +5401,32 @@ class MessageBundle {
 class L10n {
 
     /**
-     * Creates an empty object.
+     * Creates an object. If an array of message bundle data is provided, initializes an object with this data.
+     * This function is chainable.
+     * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
      * @returns {L10n} Returns a reference to self for chaining.
      */
-    constructor() {
+    constructor(messageData) {
         this._locales = {};
         this._localeList = [];
+
+        if (messageData) {
+            this.addLocaleData(messageData);
+        }
         return this;
     }
 
     /**
-     * Adds a message bundle to the storage.
-     * @param {string} locale - A locale code for a message bundle. IETF language tag format is recommended.
-     * @param {Object[]} messages - Messages for a locale.
-     * @param {string} messages[].id - Message ID, used for message reference.
-     * @param {string} messages[].text - Message text.
-     * @returns {L10n} Returns a reference to self for chaining.
+     * Adds one or several message bundles.
+     * This function is chainable.
+     * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
+     * @return {L10n} - Returns self for chaining.
      */
-    add(locale, messages$$1) {
-        let bundle = new MessageBundle(locale, messages$$1); // Will throw an error if arguments are incorrect
-
-        this._localeList.push(locale);
-        this._locales[locale] = bundle;
+    addLocaleData(messageData) {
+        for (let messageBundle of messageData) {
+            this._localeList.push(messageBundle.locale);
+            this._locales[messageBundle.locale] = messageBundle;
+        }
         return this;
     }
 
@@ -5143,8 +5451,10 @@ class L10n {
     }
 }
 
-// Initialize a global L10n object.
-let l10n = new L10n().add('en-US', messages).add('en-GB', messages$1);
+const messages = [
+    new MessageBundle('en-US', messages$1),
+    new MessageBundle('en-GB', messages$2)
+];
 
 let classNames = {
     cell: 'infl-cell',
@@ -5177,7 +5487,7 @@ let narrowView = {
     }
 };
 
-let footnotes$1 = {
+let footnotes$2 = {
     id: "inlection-table-footer"
 };
 
@@ -6705,7 +7015,7 @@ class Footnotes {
         this.footnotes = footnotes;
 
         this.nodes = document.createElement('dl');
-        this.nodes.id = footnotes$1.id;
+        this.nodes.id = footnotes$2.id;
         this.nodes.classList.add(classNames.footnotesContainer);
         for (let footnote of footnotes) {
             let index = document.createElement('dt');
@@ -6872,40 +7182,40 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let numbers$1 = new GroupingFeature(
-    types.number,
+let numbers$2 = new GroupingFeature(
+    types$1.number,
     ['singular', 'plural'],
     languages.latin,
     'Number')
     .setRowGroupType()
     .setRowGroupTitleLocation();
 
-let cases$1 = new GroupingFeature(
-    types.grmCase,
+let cases$2 = new GroupingFeature(
+    types$1.grmCase,
     ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
     languages.latin,
     'Case')
     .setRowGroupType()
     .setColumnGroupTitleLocation();
 
-let declensions$1 = new GroupingFeature(
-    types.declension,
+let declensions$2 = new GroupingFeature(
+    types$1.declension,
     ['first', 'second', 'third', 'fourth', 'fifth'],
     languages.latin,
     'Declension')
     .setColumnGroupType()
     .setRowGroupTitleLocation();
 
-let genders$1 = new GroupingFeature(
-    types.gender,
+let genders$2 = new GroupingFeature(
+    types$1.gender,
     [['masculine', 'feminine'], 'neuter'],
     languages.latin,
     'Gender')
     .setColumnGroupType()
     .setRowGroupTitleLocation();
 
-let types$2 = new GroupingFeature(
-    types.type,
+let types$3 = new GroupingFeature(
+    types$1.type,
     ['regular', 'irregular'],
     languages.latin,
     'Type')
@@ -6917,7 +7227,7 @@ let viewOptions = {
     name: 'noun declension',
     title: 'Noun declension',
     partOfSpeech: parts.noun.value,
-    groupingFeatures: [declensions$1, genders$1, types$2, numbers$1, cases$1]
+    groupingFeatures: [declensions$2, genders$2, types$3, numbers$2, cases$2]
 };
 
 /*
@@ -6925,40 +7235,40 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let numbers$2 = new GroupingFeature(
-    types.number,
+let numbers$3 = new GroupingFeature(
+    types$1.number,
     ['singular', 'plural'],
     languages.latin,
     'Number')
     .setRowGroupType()
     .setRowGroupTitleLocation();
 
-let cases$2 = new GroupingFeature(
-    types.grmCase,
+let cases$3 = new GroupingFeature(
+    types$1.grmCase,
     ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
     languages.latin,
     'Case')
     .setRowGroupType()
     .setColumnGroupTitleLocation();
 
-let declensions$2 = new GroupingFeature(
-    types.declension,
+let declensions$3 = new GroupingFeature(
+    types$1.declension,
     ['first', 'second', 'third'],
     languages.latin,
     'Declension')
     .setColumnGroupType()
     .setRowGroupTitleLocation();
 
-let genders$2 = new GroupingFeature(
-    types.gender,
+let genders$3 = new GroupingFeature(
+    types$1.gender,
     ['masculine', 'feminine', 'neuter'],
     languages.latin,
     'Gender')
     .setColumnGroupType()
     .setRowGroupTitleLocation();
 
-let types$3 = new GroupingFeature(
-    types.type,
+let types$4 = new GroupingFeature(
+    types$1.type,
     ['regular', 'irregular'],
     languages.latin,
     'Type')
@@ -6970,7 +7280,7 @@ let viewOptions$1 = {
     name: 'adjective declension',
     title: 'Adjective declension',
     partOfSpeech: parts.adjective.value,
-    groupingFeatures: [declensions$2, genders$2, types$3, numbers$2, cases$2]
+    groupingFeatures: [declensions$3, genders$3, types$4, numbers$3, cases$3]
 };
 
 /*
@@ -6978,38 +7288,38 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let tenses$2 = new GroupingFeature(
-    types.tense,
+let tenses$3 = new GroupingFeature(
+    types$1.tense,
     ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
     languages.latin,
     'Tense');
 
-let numbers$4 = new GroupingFeature(
-    types.number,
+let numbers$5 = new GroupingFeature(
+    types$1.number,
     ['singular', 'plural'],
     languages.latin,
     'Number');
 
-let persons$2 = new GroupingFeature(
-    types.person,
+let persons$3 = new GroupingFeature(
+    types$1.person,
     ['first', 'second', 'third'],
     languages.latin,
     'Person');
 
-let voices$2 = new GroupingFeature(
-    types.voice,
+let voices$3 = new GroupingFeature(
+    types$1.voice,
     ['active', 'passive'],
     languages.latin,
     'Voice');
 
-let conjugations$2 = new GroupingFeature(
-    types.conjugation,
+let conjugations$3 = new GroupingFeature(
+    types$1.conjugation,
     ['first', 'second', 'third', 'fourth'],
     languages.latin,
     'Conjugation Stem');
 
-let moods$2 = new GroupingFeature(
-    types.mood,
+let moods$3 = new GroupingFeature(
+    types$1.mood,
     ['indicative', 'subjunctive'],
     languages.latin,
     'Mood');
@@ -7019,19 +7329,19 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let tenses$1 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$3 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$1 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$1 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$1 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$1 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let tenses$2 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$4 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$2 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$2 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$2 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$2 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
 
 let viewOptions$2 = {
     id: 'verbVoiceConjugationMood',
     name: 'verb voice-conjugation-mood',
     title: 'Voice-Conjugation-Mood',
     partOfSpeech: parts.verb.value,
-    groupingFeatures: [voices$1, conjugations$1, moods$1, tenses$1, numbers$3, persons$1]
+    groupingFeatures: [voices$2, conjugations$2, moods$2, tenses$2, numbers$4, persons$2]
 };
 
 /*
@@ -7039,19 +7349,19 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let tenses$3 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$5 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$3 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$3 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$3 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$3 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let tenses$4 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$6 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$4 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$4 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$4 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$4 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
 
 let viewOptions$3 = {
     id: 'verbVoiceMoodConjugation',
     name: 'verb voice-mood-conjugation',
     title: 'Voice-Mood-Conjugation',
     partOfSpeech: parts.verb.value,
-    groupingFeatures: [voices$3, moods$3, conjugations$3, tenses$3, numbers$5, persons$3]
+    groupingFeatures: [voices$4, moods$4, conjugations$4, tenses$4, numbers$6, persons$4]
 };
 
 /*
@@ -7059,19 +7369,19 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let tenses$4 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$6 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$4 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$4 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$4 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$4 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let tenses$5 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$7 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$5 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$5 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$5 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$5 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
 
 let viewOptions$4 = {
     id: 'verbConjugationVoiceMood',
     name: 'verb conjugation-voice-mood',
     title: 'Conjugation-Voice-Mood',
     partOfSpeech: parts.verb.value,
-    groupingFeatures: [conjugations$4, voices$4, moods$4, tenses$4, numbers$6, persons$4]
+    groupingFeatures: [conjugations$5, voices$5, moods$5, tenses$5, numbers$7, persons$5]
 };
 
 /*
@@ -7079,19 +7389,19 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let tenses$5 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$7 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$5 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$5 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$5 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$5 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let tenses$6 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$8 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$6 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$6 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$6 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$6 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
 
 let viewOptions$5 = {
     id: 'verbConjugationMoodVoice',
     name: 'verb conjugation-mood-voice',
     title: 'Conjugation-Mood-Voice',
     partOfSpeech: parts.verb.value,
-    groupingFeatures: [conjugations$5, moods$5, voices$5, tenses$5, numbers$7, persons$5]
+    groupingFeatures: [conjugations$6, moods$6, voices$6, tenses$6, numbers$8, persons$6]
 };
 
 /*
@@ -7099,19 +7409,19 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let tenses$6 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$8 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$6 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$6 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$6 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$6 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let tenses$7 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$9 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$7 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$7 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$7 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$7 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
 
 let viewOptions$6 = {
     id: 'verbMoodVoiceConjugation',
     name: 'verb mood-voice-conjugation',
     title: 'Mood-Voice-Conjugation',
     partOfSpeech: parts.verb.value,
-    groupingFeatures: [moods$6, voices$6, conjugations$6, tenses$6, numbers$8, persons$6]
+    groupingFeatures: [moods$7, voices$7, conjugations$7, tenses$7, numbers$9, persons$7]
 };
 
 /*
@@ -7119,19 +7429,19 @@ Please see VIEWS.md for a description of view options and GroupingFeature class 
 GroupingFeature options.
 */
 
-let tenses$7 = tenses$2.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$9 = numbers$4.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$7 = persons$2.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$7 = voices$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$7 = conjugations$2.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$7 = moods$2.clone().setColumnGroupType().setRowGroupTitleLocation();
+let tenses$8 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
+let numbers$10 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
+let persons$8 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
+let voices$8 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let conjugations$8 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+let moods$8 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
 
 let viewOptions$7 = {
     id: 'verbMoodConjugationVoice',
     name: 'verb mood-conjugation-voice',
     title: 'Mood-Conjugation-Voice',
     partOfSpeech: parts.verb.value,
-    groupingFeatures: [moods$7, conjugations$7, voices$7, tenses$7, numbers$9, persons$7]
+    groupingFeatures: [moods$8, conjugations$8, voices$8, tenses$8, numbers$10, persons$8]
 };
 
 /**
@@ -7139,13 +7449,11 @@ let viewOptions$7 = {
  * directory under /presenter/views/view-name
  */
 class Presenter {
-    constructor(selector, resultSet, locale) {
-        "use strict";
+    constructor(selector, resultSet, locale = 'en-US') {
 
         this.targetSelector = selector;
         this.container = document.querySelector(this.targetSelector);
         this.resultSet = resultSet;
-        this.zeroWidthClass = 'hidden';
 
         // All views registered by the Presenter
         this.views = [];
@@ -7161,13 +7469,13 @@ class Presenter {
         this.addView(viewOptions$7);
 
         // Views available for parts of speech that are present in a Result Set
-        this.availableViews = this.getViews(this.resultSet[types.part]);
+        this.availableViews = this.getViews(this.resultSet[types$1.part]);
 
         this.defaultView = this.availableViews[0];
         this.activeView = undefined;
 
         this.locale = locale; // This is a default locale
-        this.l10n = l10n;
+        this.l10n = new L10n(messages);
 
         return this;
     }
@@ -7184,8 +7492,6 @@ class Presenter {
     }
 
     render() {
-        "use strict";
-
         // Show a default view
         this.defaultView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
         this.activeView = this.defaultView;
@@ -7195,10 +7501,10 @@ class Presenter {
     }
 
     appendViewSelector(targetSelector) {
+        let viewContainer = document.querySelector(targetSelector);
+        viewContainer.innerHTML = '';
         if (this.availableViews.length > 1) {
             let id = 'view-selector-list';
-            let viewContainer = document.querySelector(targetSelector);
-            viewContainer.innerHTML = '';
             let viewLabel = document.createElement('label');
             viewLabel.setAttribute('for', id);
             viewLabel.innerHTML = "View:&nbsp;";
@@ -7265,11 +7571,15 @@ let langData = dataSet;
 // Prepare lang data for the first use
 dataSet.loadData();
 
+// Service = new Service().addAdapter(TuftsData);
+//
+
 
 let testCases = [
-    {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun"},
-    {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective"},
-    {word: "cepit", value: "latin_verb_cepit", type: "regular verb"}
+    {word: "cupidinibus (latin)", value: "latin_noun_cupidinibus", type: "noun"},
+    {word: "mare (lating)", value: "latin_noun_adj_mare", type: "noun, adjective"},
+    {word: "cepit (latin)", value: "latin_verb_cepit", type: "regular verb"},
+    {word: "φιλόσοφος (greek)", value: "greek_noun_pilsopo", type: "noun"},
 ];
 let selectList = document.querySelector("#test-selector");
 
@@ -7297,8 +7607,9 @@ let show = function show(word, fileNameBase) {
             json = JSON.parse(json);
 
             // Transform Morphological Analyzer's response into a library standard Homonym object
-            let result = adapter.transform(json);
+            let result = new TuftsAdapter().transform(json);
 
+            // Set lang data according to the language
             // Get matching suffixes from an inflection library
             let resultSet = langData.getSuffixes(result);
             resultSet.word = word;

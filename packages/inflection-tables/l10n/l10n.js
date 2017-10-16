@@ -1,7 +1,7 @@
 import en_US from './locale/en-us.js';
 import en_GB from './locale/en-gb.js';
 import IntlMessageFormat from 'intl-messageformat';
-export {MessageBundle, L10n, l10n};
+export {MessageBundle, L10n, messages};
 
 /**
  * Combines messages with the same locale code.
@@ -11,9 +11,8 @@ class MessageBundle {
     /**
      * Creates a message bundle (a list of messages) for a locale.
      * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
-     * @param {Object[]} messages - Messages for a locale.
-     * @param {string} messages[].id - Message ID, used for message reference.
-     * @param {string} messages[].text - Message text.
+     * @param {Object} messages - Messages for a locale in an object. Object keys are message IDss, strings that
+     * are used to reference a message, and key values are message texts in a string format.
      */
     constructor(locale, messages) {
         if (!locale) {
@@ -47,6 +46,14 @@ class MessageBundle {
             return `Not in translation data: "${messageID}"`;
         }
     }
+
+    /**
+     * Returns a locale of a current message bundle.
+     * @return {string} A locale of this message bundle.
+     */
+    get locale() {
+        return this._locale;
+    }
 }
 
 /**
@@ -55,28 +62,32 @@ class MessageBundle {
 class L10n {
 
     /**
-     * Creates an empty object.
+     * Creates an object. If an array of message bundle data is provided, initializes an object with this data.
+     * This function is chainable.
+     * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
      * @returns {L10n} Returns a reference to self for chaining.
      */
-    constructor() {
+    constructor(messageData) {
         this._locales = {};
         this._localeList = [];
+
+        if (messageData) {
+            this.addLocaleData(messageData);
+        }
         return this;
     }
 
     /**
-     * Adds a message bundle to the storage.
-     * @param {string} locale - A locale code for a message bundle. IETF language tag format is recommended.
-     * @param {Object[]} messages - Messages for a locale.
-     * @param {string} messages[].id - Message ID, used for message reference.
-     * @param {string} messages[].text - Message text.
-     * @returns {L10n} Returns a reference to self for chaining.
+     * Adds one or several message bundles.
+     * This function is chainable.
+     * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
+     * @return {L10n} - Returns self for chaining.
      */
-    add(locale, messages) {
-        let bundle = new MessageBundle(locale, messages); // Will throw an error if arguments are incorrect
-
-        this._localeList.push(locale);
-        this._locales[locale] = bundle;
+    addLocaleData(messageData) {
+        for (let messageBundle of messageData) {
+            this._localeList.push(messageBundle.locale);
+            this._locales[messageBundle.locale] = messageBundle;
+        }
         return this;
     }
 
@@ -101,5 +112,7 @@ class L10n {
     }
 }
 
-// Initialize a global L10n object.
-let l10n = new L10n().add('en-US', en_US).add('en-GB', en_GB);
+const messages = [
+    new MessageBundle('en-US', en_US),
+    new MessageBundle('en-GB', en_GB)
+];

@@ -3,7 +3,7 @@
  * directory under /presenter/views/view-name
  */
 import * as Lib from '../lib/lib';
-import * as L10n from './l10n/l10n.js';
+import * as L10n from '../l10n/l10n.js';
 import * as View from './lib/view';
 import nounDeclensionOptions from "./views/noun/noun";
 import adjectiveDeclensionOptions from "./views/adjective/adjective";
@@ -16,13 +16,11 @@ import verbMoodConjugationVoiceOptions from "./views/verb/mood-conjugation-voice
 
 
 class Presenter {
-    constructor(selector, resultSet, locale) {
-        "use strict";
+    constructor(selector, resultSet, locale = 'en-US') {
 
         this.targetSelector = selector;
         this.container = document.querySelector(this.targetSelector);
         this.resultSet = resultSet;
-        this.zeroWidthClass = 'hidden';
 
         // All views registered by the Presenter
         this.views = [];
@@ -44,7 +42,7 @@ class Presenter {
         this.activeView = undefined;
 
         this.locale = locale; // This is a default locale
-        this.l10n = L10n.l10n;
+        this.l10n = new L10n.L10n(L10n.messages);
 
         return this;
     }
@@ -61,8 +59,6 @@ class Presenter {
     }
 
     render() {
-        "use strict";
-
         // Show a default view
         this.defaultView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
         this.activeView = this.defaultView;
@@ -72,10 +68,10 @@ class Presenter {
     }
 
     appendViewSelector(targetSelector) {
+        let viewContainer = document.querySelector(targetSelector);
+        viewContainer.innerHTML = '';
         if (this.availableViews.length > 1) {
             let id = 'view-selector-list';
-            let viewContainer = document.querySelector(targetSelector);
-            viewContainer.innerHTML = '';
             let viewLabel = document.createElement('label');
             viewLabel.setAttribute('for', id);
             viewLabel.innerHTML = "View:&nbsp;";

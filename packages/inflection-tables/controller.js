@@ -1,7 +1,7 @@
 'use strict';
 // Import shared language data
 import * as Lib from "./lib/lib.js";
-import * as Tufts from "./analyzer/tufts/adapter.js";
+import TuftsAdapter from "./analyzer/tufts/adapter.js";
 import Presenter from "./presenter/presenter.js";
 
 // Load Latin language data
@@ -11,11 +11,15 @@ let langData = ModuleNS.dataSet;
 // Prepare lang data for the first use
 dataSet.loadData();
 
+// Service = new Service().addAdapter(TuftsData);
+//
+
 
 let testCases = [
-    {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun"},
-    {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective"},
-    {word: "cepit", value: "latin_verb_cepit", type: "regular verb"}
+    {word: "cupidinibus (latin)", value: "latin_noun_cupidinibus", type: "noun"},
+    {word: "mare (lating)", value: "latin_noun_adj_mare", type: "noun, adjective"},
+    {word: "cepit (latin)", value: "latin_verb_cepit", type: "regular verb"},
+    {word: "φιλόσοφος (greek)", value: "greek_noun_pilsopo", type: "noun"},
 ];
 let selectList = document.querySelector("#test-selector");
 
@@ -43,8 +47,9 @@ let show = function show(word, fileNameBase) {
             json = JSON.parse(json);
 
             // Transform Morphological Analyzer's response into a library standard Homonym object
-            let result = Tufts.adapter.transform(json);
+            let result = new TuftsAdapter().transform(json);
 
+            // Set lang data according to the language
             // Get matching suffixes from an inflection library
             let resultSet = langData.getSuffixes(result);
             resultSet.word = word;

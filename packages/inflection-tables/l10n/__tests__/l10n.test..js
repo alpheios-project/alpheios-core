@@ -1,4 +1,4 @@
-const t = require('../../../tests/test-bundle');
+const t = require('../../tests/test-bundle');
 
 describe('MessageBundle', () => {
 

@@ -1,9 +1,8 @@
-import * as Lib from "../../../lib/lib.js";
-import * as Service from "../../analyzer.js";
-import * as Latin from '../../../lib/lang/latin/latin.js';
-export {data};
+import * as Lib from "../../../lib/lib";
+import * as Analyzer from "../../lib/lib";
+import * as Latin from '../../../lib/lang/latin/latin';
 
-let data = new Service.LanguageData(Lib.languages.latin);
+let data = new Analyzer.ImportData(Lib.languages.latin);
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -19,7 +18,7 @@ data.addFeature(Lib.types.part).importer
 
 data.addFeature(Lib.types.grmCase).importer
     .map('nominative', Latin.cases.nominative)
-    .map('genetive', Latin.cases.genitive)
+    .map('genitive', Latin.cases.genitive)
     .map('dative', Latin.cases.dative)
     .map('accusative', Latin.cases.accusative)
     .map('ablative', Latin.cases.ablative)
@@ -69,3 +68,5 @@ data.addFeature(Lib.types.person).importer
     .map('1st', Latin.persons.first)
     .map('2nd', Latin.persons.second)
     .map('3rd', Latin.persons.third);
+
+export default data;

@@ -686,6 +686,8 @@ class LanguageDataset {
     };
 
     getSuffixes(homonym) {
+
+        // Add support for languages
         let result = new ResultSet();
         let inflections = {};
 
@@ -999,6 +1001,7 @@ class MatchData {
  */
 class ResultSet {
     constructor() {
+        // Add languages
         this.word = undefined;
         this[types.part] = [];
     }

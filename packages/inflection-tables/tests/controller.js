@@ -1,7 +1,7 @@
 'use strict';
 // Import shared language data
 import * as Lib from "../lib/lib";
-import * as L10n from "../presenter/l10n/l10n";
+import * as L10n from "../l10n/l10n";
 import * as Styles from "../presenter/styles/styles";
 import * as View from "../presenter/lib/view";
 
