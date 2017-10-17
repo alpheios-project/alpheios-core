@@ -7,7 +7,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "node build.js",
     "buildextension": "node build-extension.js",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
@@ -45,5 +45,7 @@
     "verbose": true,
     "testEnvironment": "jest-environment-jsdom-11.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "coveralls": "^3.0.0"
+  }
 }
