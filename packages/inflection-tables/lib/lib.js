@@ -2,7 +2,7 @@
  * Shared data structures and functions
  */
 export {Feature, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
-    Suffix, Footnote, MatchData, ResultSet, loadData};
+    LanguageData, Suffix, Footnote, MatchData, ResultSet, loadData};
 
 
 // Should have no spaces in values in order to be used in HTML templates
@@ -567,6 +567,22 @@ class Homonym {
         
         this.lexemes = lexemes;
     }
+
+    /**
+     * Returns language of a homonym.
+     * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
+     * and inflections within the same homonym will have the same language, and we can determine a language
+     * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
+     * @returns {string} A language code, as defined in the `languages` object.
+     */
+    get language() {
+        if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.language) {
+            return this.lexemes[0].lemma.language;
+        }
+        else {
+            throw new Error('Homonym has not been initialized properly. Unable to obtain language information.');
+        }
+    }
 }
 
 /**
@@ -751,6 +767,57 @@ class LanguageDataset {
             accumulator.push(result);
         }
         return accumulator;
+    }
+}
+
+
+/**
+ * Stores one or several language datasets, one for each language
+ */
+class LanguageData {
+    /**
+     * Combines several language datasets for different languages. Allows to abstract away language data.
+     * This function is chainable.
+     * @param {LanguageDataset[]} languageData - Language datasets of different languages.
+     * @return {LanguageData} Self instance for chaining.
+     */
+    constructor(languageData) {
+        this.supportedLanguages = [];
+
+        if (languageData) {
+            for (let dataset of languageData) {
+                this[dataset.language] = dataset;
+                this.supportedLanguages.push(dataset.language);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Loads data for all data sets.
+     * This function is chainable.
+     * @return {LanguageData} Self instance for chaining.
+     */
+    loadData() {
+        for (let language of this.supportedLanguages) {
+            this[language].loadData();
+        }
+        return this;
+    }
+
+    /**
+     * Finds matching suffixes for a homonym.
+     * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
+     * @return {ResultSet} A return value of an inflection query.
+     */
+    getSuffixes(homonym) {
+        let language = homonym.language;
+        if (this.supportedLanguages.includes(language)) {
+            return this[homonym.language].getSuffixes(homonym);
+        }
+        else {
+            throw new Error(`"${language}" language data is missing. Unable to get suffix data.`);
+        }
     }
 }
 

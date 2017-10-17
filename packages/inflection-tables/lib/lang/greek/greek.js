@@ -160,25 +160,25 @@ dataSet.addFootnotes = function(partOfSpeech, data) {
 
 dataSet.loadData = function() {
     // Nouns
-    let partOfSpeech = parts.noun;
+    /*let partOfSpeech = parts.noun;
     let suffixes = papaparse.parse(nounSuffixesCSV, {});
     this.addSuffixes(partOfSpeech, suffixes.data);
     let footnotes = papaparse.parse(nounFootnotesCSV, {});
-    this.addFootnotes(partOfSpeech, footnotes.data);
+    this.addFootnotes(partOfSpeech, footnotes.data);*/
 
     // Adjectives
-    partOfSpeech = parts.adjective;
+    /*partOfSpeech = parts.adjective;
     suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
     this.addSuffixes(partOfSpeech, suffixes.data);
     footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
-    this.addFootnotes(partOfSpeech, footnotes.data);
+    this.addFootnotes(partOfSpeech, footnotes.data);*/
 
     // Verbs
-    partOfSpeech = parts.verb;
+    /*partOfSpeech = parts.verb;
     suffixes = papaparse.parse(verbSuffixesCSV, {});
     this.addVerbSuffixes(partOfSpeech, suffixes.data);
     footnotes = papaparse.parse(verbFootnotesCSV, {});
-    this.addFootnotes(partOfSpeech, footnotes.data);
+    this.addFootnotes(partOfSpeech, footnotes.data);*/
 };
 
 

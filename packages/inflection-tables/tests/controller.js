@@ -18,6 +18,7 @@ exports.Lexeme = Lib.Lexeme;
 exports.Homonym = Lib.Homonym;
 exports.Suffix = Lib.Suffix;
 exports.LanguageDataset = Lib.LanguageDataset;
+exports.LanguageData = Lib.LanguageData;
 exports.MatchData = Lib.MatchData;
 exports.Footnote = Lib.Footnote;
 exports.ResultSet = Lib.ResultSet;

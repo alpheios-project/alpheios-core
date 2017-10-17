@@ -1,19 +1,13 @@
 'use strict';
 // Import shared language data
-import * as Lib from "./lib/lib.js";
-import TuftsAdapter from "./analyzer/tufts/adapter.js";
-import Presenter from "./presenter/presenter.js";
+import * as Lib from "./lib/lib";
+import TuftsAdapter from "./analyzer/tufts/adapter";
+import Presenter from "./presenter/presenter";
 
-// Load Latin language data
-import * as ModuleNS from './lib/lang/latin/latin.js';
-import {dataSet} from "./lib/lang/latin/latin";
-let langData = ModuleNS.dataSet;
-// Prepare lang data for the first use
-dataSet.loadData();
-
-// Service = new Service().addAdapter(TuftsData);
-//
-
+// Load language data
+import * as LatinData from "./lib/lang/latin/latin";
+import * as GreekData from "./lib/lang/greek/greek";
+let langData = new Lib.LanguageData([LatinData.dataSet, GreekData.dataSet]).loadData();
 
 let testCases = [
     {word: "cupidinibus (latin)", value: "latin_noun_cupidinibus", type: "noun"},
@@ -38,8 +32,6 @@ selectList.addEventListener('change', event => {
 
 
 let show = function show(word, fileNameBase) {
-    console.log('Show started');
-
     let dir = 'tests/data/';
     let extension = '.json';
     Lib.loadData(dir + fileNameBase + extension)
@@ -47,17 +39,15 @@ let show = function show(word, fileNameBase) {
             json = JSON.parse(json);
 
             // Transform Morphological Analyzer's response into a library standard Homonym object
-            let result = new TuftsAdapter().transform(json);
+            let homonym = new TuftsAdapter().transform(json);
 
-            // Set lang data according to the language
             // Get matching suffixes from an inflection library
-            let resultSet = langData.getSuffixes(result);
+            let resultSet = langData.getSuffixes(homonym);
             resultSet.word = word;
 
             // Insert rendered view to a page
-            let presenter = new Presenter('#id-inflections-table', resultSet, 'en-US').render();
+            let presenter = new Presenter('#id-inflections-table', resultSet).render();
 
-            console.log('Show finished');
         }).catch(error => {
         console.error(error);
     });

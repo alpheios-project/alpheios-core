@@ -1,7 +1,6 @@
 const t = require('../../tests/test-bundle');
 
 describe('Feature object', () => {
-    "use strict";
 
     let featureGreek1, featureGreek2, featureGreek3, featureLatin1, featureValue1, featureValue2;
 
@@ -16,7 +15,6 @@ describe('Feature object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(featureGreek1).toEqual({
             value: featureValue1,
@@ -26,7 +24,6 @@ describe('Feature object', () => {
     });
 
     test('Constructor should throw an exception if no arguments are provided', () => {
-        "use strict";
 
         expect(() => {
             new t.Feature();
@@ -35,7 +32,6 @@ describe('Feature object', () => {
     });
 
     test('Constructor should throw an exception if less than 3 arguments are provided', () => {
-        "use strict";
 
         expect(() => {
             new t.Feature(featureValue1, t.types.number);
@@ -44,7 +40,6 @@ describe('Feature object', () => {
     });
 
     test('Constructor should throw an exception if any incorrect values of arguments are provided', () => {
-        "use strict";
 
         expect(() => {
             new t.Feature(featureValue1, 'incorrect value', t.languages.greek);
@@ -53,7 +48,6 @@ describe('Feature object', () => {
     });
 
     test('Constructor should throw an exception if correct argument values are provided in incorrect order', () => {
-        "use strict";
 
         expect(() => {
             new t.Feature(featureValue1, t.languages.greek, t.types.number);
@@ -62,7 +56,6 @@ describe('Feature object', () => {
     });
 
     test('Create method should return a correct Feature object created from a single value', () => {
-        "use strict";
 
         let feature = t.Feature.create(featureGreek1);
         expect(feature).toEqual({
@@ -74,7 +67,6 @@ describe('Feature object', () => {
     });
 
     test('Create method should return a correct Feature object created from an array of values', () => {
-        "use strict";
 
         let feature = t.Feature.create([featureGreek1, featureGreek2]);
         expect(feature).toEqual({
@@ -86,7 +78,6 @@ describe('Feature object', () => {
     });
 
     test('Create method should not allow values of different types', () => {
-        "use strict";
 
         expect(() => {
             t.Feature.create([featureGreek1, featureGreek3]);
@@ -95,7 +86,6 @@ describe('Feature object', () => {
     });
 
     test('Create method should not allow values of different languages', () => {
-        "use strict";
 
         expect(() => {
             t.Feature.create([featureGreek1, featureLatin1]);
@@ -110,7 +100,6 @@ describe('Feature object', () => {
 });
 
 describe('FeatureType object', () => {
-    "use strict";
 
     let featureType;
 
@@ -120,7 +109,6 @@ describe('FeatureType object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(featureType).toEqual({
             "_orderIndex": ["first", ["second", "third"], "fourth"],
@@ -135,7 +123,6 @@ describe('FeatureType object', () => {
     });
 
     test('Constructor should throw an exception if no arguments are provided', () => {
-        "use strict";
 
         expect(() => {
             new new t.FeatureType();
@@ -144,7 +131,6 @@ describe('FeatureType object', () => {
     });
 
     test('Constructor should throw an exception if arguments are provided in wrong order', () => {
-        "use strict";
 
         expect(() => {
             new new t.FeatureType(t.types.declension, t.languages.latin, ['first', 'second', 'third']);
@@ -153,7 +139,6 @@ describe('FeatureType object', () => {
     });
 
     test('Get method should return a new Feature object that is initialized properly', () => {
-        "use strict";
 
         let value = 'some value';
         expect(featureType.get(value)).toEqual({
@@ -165,21 +150,18 @@ describe('FeatureType object', () => {
     });
 
     test('Get method with no value should throw an exception', () => {
-        "use strict";
 
         expect(() => featureType.get()).toThrowError(/non-empty/);
 
     });
 
     test('addImporter method should return a new Importer object', () => {
-        "use strict";
 
         expect(featureType.addImporter('some value')).toBeInstanceOf(t.Importer);
 
     });
 
     test('addImporter method should return a new properly initialized Importer object', () => {
-        "use strict";
 
         let importerName = 'some value';
         expect(featureType.addImporter(importerName)).toEqual({
@@ -189,7 +171,6 @@ describe('FeatureType object', () => {
     });
 
     test('addImporter method should create an Importer object inside a FeatureType object', () => {
-        "use strict";
 
         featureType.addImporter('some value');
         expect(featureType).toEqual(expect.objectContaining({
@@ -201,28 +182,24 @@ describe('FeatureType object', () => {
     });
 
     test('addImporter method with no value should throw an exception', () => {
-        "use strict";
 
         expect(() => featureType.addImporter()).toThrowError(/non-empty/);
 
     });
 
     test('orderIndex method should return a new properly initialized Importer object', () => {
-        "use strict";
 
         expect(featureType.orderIndex).toEqual(["first", ["second", "third"], "fourth"]);
 
     });
 
     test('orderLookup method should return a new properly initialized Importer object', () => {
-        "use strict";
 
         expect(featureType.orderLookup).toEqual({"first": 0, "second": 1, "third": 1, "fourth": 2});
 
     });
 
     test('order setter should change an order of items properly', () => {
-        "use strict";
 
         let f1 = new t.Feature("first", t.types.declension, t.languages.latin);
         let f2 = new t.Feature("second", t.types.declension, t.languages.latin);
@@ -237,21 +214,18 @@ describe('FeatureType object', () => {
     });
 
     test('order setter with no argument should throw an exception', () => {
-        "use strict";
 
         expect(() => featureType.order = undefined).toThrowError(/non-empty/);
 
     });
 
     test('order setter with an empty array argument should throw an exception', () => {
-        "use strict";
 
         expect(() => featureType.order = []).toThrowError(/non-empty/);
 
     });
 
     test('order setter with an argument(s) of mismatching type should throw an exception', () => {
-        "use strict";
 
         let f1 = new t.Feature("first", t.types.gender, t.languages.latin);
         expect(() => featureType.order = [f1]).toThrowError(/is different/);
@@ -259,7 +233,6 @@ describe('FeatureType object', () => {
     });
 
     test('order setter with an argument(s) of mismatching language should throw an exception', () => {
-        "use strict";
 
         let f1 = new t.Feature("first", t.types.declension, t.languages.greek);
         expect(() => featureType.order = [f1]).toThrowError(/is different/);
@@ -267,7 +240,6 @@ describe('FeatureType object', () => {
     });
 
     test('order setter with an argument(s) of values that are not stored should throw an exception', () => {
-        "use strict";
 
         let f1 = new t.Feature("fifth", t.types.declension, t.languages.latin);
         expect(() => featureType.order = [f1]).toThrowError(/not stored/);
@@ -281,7 +253,6 @@ describe('FeatureType object', () => {
 });
 
 describe('Importer object', () => {
-    "use strict";
 
     let importer;
 
@@ -291,7 +262,6 @@ describe('Importer object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(importer).toEqual({
             hash: {}
@@ -300,7 +270,6 @@ describe('Importer object', () => {
     });
 
     test('map method should create proper mapping', () => {
-        "use strict";
 
         importer.map('value1', 'valueOne').map('value2', 'valueTwo');
         expect(importer).toEqual({"hash": {"value1": "valueOne", "value2": "valueTwo"}});
@@ -308,7 +277,6 @@ describe('Importer object', () => {
     });
 
     test('map method should overwrite old values', () => {
-        "use strict";
 
         importer.map('value1', 'valueOne').map('value2', 'valueTwo');
         importer.map('value1', 'newValueOne');
@@ -317,14 +285,12 @@ describe('Importer object', () => {
     });
 
     test('map method should not allow empty arguments', () => {
-        "use strict";
 
         expect(() => importer.map('value')).toThrowError(/empty/);
 
     });
 
     test('has method should check if value is in a map properly', () => {
-        "use strict";
 
         importer.map('value1', 'valueOne').map('value2', 'valueTwo');
         expect(importer.has('value2')).toBeTruthy();
@@ -332,7 +298,6 @@ describe('Importer object', () => {
     });
 
     test('get method should return a proper library object', () => {
-        "use strict";
 
         let key = 'value2', value = 'valueTwo';
         importer.map('value1', 'valueOne').map(key, value);
@@ -341,7 +306,6 @@ describe('Importer object', () => {
     });
 
     test('get method should throw an error if mapping is not found', () => {
-        "use strict";
 
         expect(() => importer.get('incorrect value')).toThrowError(/not found/);
 
@@ -354,7 +318,6 @@ describe('Importer object', () => {
 });
 
 describe('Inflection object', () => {
-    "use strict";
 
     let inflection;
 
@@ -364,7 +327,6 @@ describe('Inflection object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(inflection).toEqual({
             stem: 'stem',
@@ -375,21 +337,18 @@ describe('Inflection object', () => {
     });
 
     test('Should not allow empty arguments', () => {
-        "use strict";
 
         expect(() => new t.Inflection('stem', '')).toThrowError(/empty/);
 
     });
 
     test('Should not allow unsupported languages', () => {
-        "use strict";
 
         expect(() => new t.Inflection('stem', 'egyptian')).toThrowError(/not supported/);
 
     });
 
     test('feature method should add a single feature to the inflection', () => {
-        "use strict";
 
         inflection.feature = new t.Feature('masculine', t.types.gender, t.languages.greek);
         expect(inflection).toEqual(expect.objectContaining({
@@ -399,7 +358,6 @@ describe('Inflection object', () => {
     });
 
     test('feature method should add multiple feature values to the inflection', () => {
-        "use strict";
 
         inflection.feature = [
             new t.Feature('masculine', t.types.gender, t.languages.greek),
@@ -412,21 +370,18 @@ describe('Inflection object', () => {
     });
 
     test('feature method should throw an error if no arguments are provided', () => {
-        "use strict";
 
         expect(() => inflection.feature = '').toThrowError(/empty/);
 
     });
 
     test('feature method should throw an error if argument(s) are of the wrong type', () => {
-        "use strict";
 
         expect(() => inflection.feature = 'some value').toThrowError(/Feature/);
 
     });
 
     test('feature method should not allow a feature language to be different from a language of an inflection', () => {
-        "use strict";
 
         expect(() => inflection.feature = new t.Feature('masculine', t.types.gender, t.languages.latin))
             .toThrowError(/not match/);
@@ -441,7 +396,6 @@ describe('Inflection object', () => {
 });
 
 describe('Lemma object', () => {
-    "use strict";
 
     let lemma, word;
 
@@ -453,7 +407,6 @@ describe('Lemma object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(lemma).toEqual({
             word: word,
@@ -463,14 +416,12 @@ describe('Lemma object', () => {
     });
 
     test('Should not allow empty arguments', () => {
-        "use strict";
 
         expect(() => new t.Lemma()).toThrowError(/empty/);
 
     });
 
     test('Should not allow unsupported languages', () => {
-        "use strict";
 
         expect(() => new t.Lemma('someword', 'egyptian')).toThrowError(/not supported/);
 
@@ -483,7 +434,6 @@ describe('Lemma object', () => {
 });
 
 describe('Lemma object', () => {
-    "use strict";
 
     let lemma, word;
 
@@ -495,7 +445,6 @@ describe('Lemma object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(lemma).toEqual({
             word: word,
@@ -505,14 +454,12 @@ describe('Lemma object', () => {
     });
 
     test('Should not allow empty arguments', () => {
-        "use strict";
 
         expect(() => new t.Lemma()).toThrowError(/empty/);
 
     });
 
     test('Should not allow unsupported languages', () => {
-        "use strict";
 
         expect(() => new t.Lemma('someword', 'egyptian')).toThrowError(/not supported/);
 
@@ -525,7 +472,6 @@ describe('Lemma object', () => {
 });
 
 describe('Lexeme object', () => {
-    "use strict";
 
     let lexeme;
 
@@ -542,7 +488,6 @@ describe('Lexeme object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(lexeme).toEqual({
             lemma: {
@@ -559,21 +504,18 @@ describe('Lexeme object', () => {
     });
 
     test('Should not allow empty arguments', () => {
-        "use strict";
 
         expect(() => new t.Lexeme()).toThrowError(/empty/);
 
     });
 
     test('Should not allow arguments of incorrect type', () => {
-        "use strict";
 
         expect(() => new t.Lexeme(new t.Lemma('someword', t.languages.greek), 'some value')).toThrowError(/array/);
 
     });
 
     test('Should not allow arguments of incorrect type even within an array', () => {
-        "use strict";
 
         expect(() => new t.Lexeme(new t.Lemma('someword', t.languages.greek), ['some value'])).toThrowError(/Inflection/);
 
@@ -585,8 +527,7 @@ describe('Lexeme object', () => {
     });
 });
 
-describe('Homonym object', () => {
-    "use strict";
+describe('Homonym', () => {
 
     let homonym;
 
@@ -611,8 +552,7 @@ describe('Homonym object', () => {
         ]);
     });
 
-    test('Should be initialized properly', () => {
-        "use strict";
+    test('Constructor should initialize an properly.', () => {
 
         expect(homonym).toEqual({
             lexemes:
@@ -642,24 +582,27 @@ describe('Homonym object', () => {
 
     });
 
-    test('Should not allow empty arguments', () => {
-        "use strict";
+    test('Constructor should not allow empty arguments.', () => {
 
         expect(() => new t.Homonym()).toThrowError(/empty/);
 
     });
 
-    test('Should not allow an argument this is not an array', () => {
-        "use strict";
+    test('Constructor should not allow an argument this is not an array.', () => {
 
         expect(() => new t.Homonym('some value')).toThrowError(/array/);
 
     });
 
-    test('Should not allow arguments of incorrect type', () => {
-        "use strict";
+    test('Cosntructor should not allow arguments of incorrect type.', () => {
 
         expect(() => new t.Homonym(['some value'])).toThrowError(/Lexeme/);
+
+    });
+
+    test('language() should return a language of a homonym.', () => {
+
+        expect(homonym.language).toBe(t.languages.greek);
 
     });
 
@@ -670,7 +613,6 @@ describe('Homonym object', () => {
 });
 
 describe('LanguageDataset object', () => {
-    "use strict";
 
     let languageDataset;
 
@@ -681,7 +623,6 @@ describe('LanguageDataset object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(languageDataset).toEqual({
             language: t.languages.latin,
@@ -693,21 +634,18 @@ describe('LanguageDataset object', () => {
     });
 
     test('Should require language to be provided', () => {
-        "use strict";
 
         expect(() => new t.LanguageDataset()).toThrowError(/empty/);
 
     });
 
     test('Should not allow initialization with unsupported languages', () => {
-        "use strict";
 
         expect(() => new t.LanguageDataset('egyptian')).toThrowError(/not supported/);
 
     });
 
     test('defineFeatureType method should add feature type data properly', () => {
-        "use strict";
 
         languageDataset.defineFeatureType(t.types.declension, ['first', ['second', 'third'], 'fourth']);
         expect(languageDataset.features.declension).toEqual(expect.objectContaining({
@@ -724,7 +662,6 @@ describe('LanguageDataset object', () => {
     // TODO: Add tests for addSuffix for later as the logic might change
 
     test('addFootnote should add proper data into a footnotes object', () => {
-        "use strict";
 
         let partOfSpeech = new t.Feature('noun', t.types.part, t.languages.latin);
         languageDataset.addFootnote(partOfSpeech, 5, 'Footnote text');
@@ -734,7 +671,6 @@ describe('LanguageDataset object', () => {
     });
 
     test('addFootnote should not allow empty values', () => {
-        "use strict";
 
         expect(() => languageDataset.addFootnote(5)).toThrowError(/empty/);
 
@@ -748,6 +684,60 @@ describe('LanguageDataset object', () => {
     });
 });
 
+
+describe('LanguageData', () => {
+
+    let languageData, latinDataset, greekDataset;
+
+    beforeAll(() => {
+        latinDataset = new t.LanguageDataset(t.languages.latin);
+        greekDataset = new t.LanguageDataset(t.languages.greek);
+
+        languageData = new t.LanguageData([latinDataset, greekDataset]);
+    });
+
+    test('constructor should initialize object properly.', () => {
+
+        expect(languageData).toEqual(expect.objectContaining({
+            greek: greekDataset,
+            latin: latinDataset,
+            supportedLanguages: [t.languages.latin, t.languages.greek]
+        }));
+
+    });
+
+    test('loadData() should call a matching method of all language data sets.', () => {
+
+        const loadData = jest.fn();
+        latinDataset.loadData = loadData;
+        greekDataset.loadData = loadData;
+        languageData.loadData();
+
+        expect(loadData.mock.calls.length).toBe(2);
+
+    });
+
+    test('getSuffixes() should call a getSuffixes() method of a proper language dataset with correct argument(s).', () => {
+        let homonym = new t.Homonym([
+            new t.Lexeme(
+                new t.Lemma('word1', t.languages.greek),
+                [
+                    new t.Inflection('stem1', t.languages.greek),
+                    new t.Inflection('stem2', t.languages.greek),
+                ]
+            )
+        ]);
+        const getSuffixes = jest.fn();
+        greekDataset.getSuffixes = getSuffixes;
+        languageData.getSuffixes(homonym);
+
+        expect(getSuffixes.mock.calls.length).toBe(1);
+        expect(getSuffixes.mock.calls[0][0]).toBe(homonym);
+
+    });
+});
+
+
 describe('Suffix object', () => {
     "use strict";
 
@@ -760,7 +750,6 @@ describe('Suffix object', () => {
     });
 
     test('Should be initialized properly', () => {
-        "use strict";
 
         expect(suffix).toEqual({
             value: 'suffixtext',
@@ -771,14 +760,12 @@ describe('Suffix object', () => {
     });
 
     test('Should not allow an empty argument', () => {
-        "use strict";
 
         expect(() => new t.Suffix()).toThrowError(/empty/);
 
     });
 
     test('clone method should return a copy of a Suffix object', () => {
-        "use strict";
 
         let clone = suffix.clone();
         expect(clone).toEqual(suffix);
@@ -792,7 +779,6 @@ describe('Suffix object', () => {
     // TODO: implement tests for combine as functionality may change
 
     test('merge() should join two previously split object (objects that are in the same group) together.', () => {
-        "use strict";
 
         let values = ['masculine', 'feminine'];
         let suffixes = [new t.Suffix('endingOne', undefined), new t.Suffix('endingOne', undefined)];
