@@ -42,7 +42,7 @@
     "xmltojson": "^1.3.5"
   },
   "jest": {
-    "verbose": false,
+    "verbose": true,
     "testEnvironment": "jest-environment-jsdom-11.0.0"
   },
   "dependencies": {}

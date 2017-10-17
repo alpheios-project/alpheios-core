@@ -1,5 +1,30 @@
 # Inflection Tables
 
+## Usage
+
+### Prerequisites
+
+* Node >= 7
+
+### Install Dependencies
+
+```
+npm install
+```
+
+### Build
+
+```
+npm run build
+```
+
+### Test
+
+```
+npm run test
+```
+
+
 ## Release Notes
 At the current stage inflection tables are displayed on index.html page. Please view this page via any local or remote web server. Because it uses ES6 modules, it is viewable in Google Chrome 60 only so far. Even though it may require to enable an `Experimental Web Platform` flag. For this type `chrome://flags` in the browser address bar to access the flags. For more details on ES6 module support in Google Chrome please check [https://medium.com/dev-channel/es6-modules-in-chrome-canary-m60-ba588dfb8ab7](https://medium.com/dev-channel/es6-modules-in-chrome-canary-m60-ba588dfb8ab7).
 
