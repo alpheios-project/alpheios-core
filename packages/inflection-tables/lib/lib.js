@@ -1,8 +1,8 @@
 /**
  * Shared data structures and functions
  */
-export {Feature, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
-    LanguageData, Suffix, Footnote, MatchData, ResultSet, loadData};
+export {Feature, FeatureList, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
+    LanguageData, Suffix, Footnote, MatchData, WordData, loadData};
 
 
 // Should have no spaces in values in order to be used in HTML templates
@@ -237,7 +237,7 @@ class FeatureType {
      * Return copies of all feature values in a sorted array.
      * @returns {Feature[]} Array of feature values sorted according to orderIndex.
      */
-    get orderedValues() {
+    get orderedFeatures() {
         let values = [];
         for (let value of this._orderIndex) {
             if (Array.isArray(value)) {
@@ -253,6 +253,17 @@ class FeatureType {
 
         }
         return values;
+    }
+
+    get orderedValues() {
+        return this.orderedFeatures.map( (feature) => {
+            if (Array.isArray(feature)) {
+                return feature.map( (feature) => feature.value );
+            }
+            else {
+                return feature.value;
+            }
+        });
     }
 
     /**
@@ -341,6 +352,69 @@ class FeatureType {
         }
     }
 }
+
+
+/**
+ * A list of grammatical features that characterizes a language unit. Has some additional service methods,
+ * compared with standard storage objects.
+ */
+class FeatureList {
+
+    /**
+     * Initializes a feature list.
+     * @param {FeatureType[]} features - Features that build the list (optional, can be set later).
+     */
+    constructor(features = []) {
+        this._features = [];
+        this._types = {};
+        this.add(features);
+    }
+
+    add(features) {
+        if (!features || !Array.isArray(features)) {
+            throw new Error('Features must be defined and must come in an array.');
+        }
+
+        for (let feature of features) {
+            this._features.push(feature);
+            this._types[feature.type] = feature;
+        }
+    }
+
+
+    /**
+     * Returns an array of grouping features.
+     * @returns {FeatureType[]} - An array of grouping features.
+     */
+    get items() {
+        return this._features;
+    }
+
+    forEach(callback) {
+        this._features.forEach(callback);
+    }
+
+    /**
+     * Returns a feature of a particular type. If such feature does not exist in a list, returns undefined.
+     * @param {string} type - Feature type as defined in `types` object.
+     * @return {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
+     */
+    ofType(type) {
+        if (this.hasType(type)) {
+            return this._types[type];
+        }
+    }
+
+    /**
+     * Checks whether a feature list has a feature of a specific type.
+     * @param {string} type - Feature type as defined in `types` object.
+     * @return {boolean} Whether a feature list has a feature of a particular type.
+     */
+    hasType(type) {
+        return this._types.hasOwnProperty(type);
+    }
+}
+
 
 /**
  * This is a hash table that maps values to be imported from an external file or service to library standard values.
@@ -704,7 +778,7 @@ class LanguageDataset {
     getSuffixes(homonym) {
 
         // Add support for languages
-        let result = new ResultSet();
+        let result = new WordData(homonym);
         let inflections = {};
 
         // Find partial matches first, and then full among them
@@ -808,7 +882,7 @@ class LanguageData {
     /**
      * Finds matching suffixes for a homonym.
      * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
-     * @return {ResultSet} A return value of an inflection query.
+     * @return {WordData} A return value of an inflection query.
      */
     getSuffixes(homonym) {
         let language = homonym.language;
@@ -1066,11 +1140,15 @@ class MatchData {
 /**
  * A return value for inflection queries
  */
-class ResultSet {
-    constructor() {
-        // Add languages
+class WordData {
+    constructor(homonym) {
+        this.homonym = homonym;
         this.word = undefined;
         this[types.part] = [];
+    }
+
+    get language() {
+        return this.homonym.language;
     }
 }
 

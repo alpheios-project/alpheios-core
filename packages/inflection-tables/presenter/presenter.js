@@ -5,38 +5,30 @@
 import * as Lib from '../lib/lib';
 import * as L10n from '../l10n/l10n.js';
 import * as View from './lib/view';
-import nounDeclensionOptions from "./views/noun/noun";
-import adjectiveDeclensionOptions from "./views/adjective/adjective";
-import verbVoiceConjugationMoodOptions from "./views/verb/voice-conjugation-mood";
-import verbVoiceMoodConjugationOptions from "./views/verb/voice-mood-conjugation";
-import verbConjugationVoiceMoodOptions from "./views/verb/conjugation-voice-mood";
-import verbConjugationMoodVoiceOptions from "./views/verb/conjugation-mood-voice";
-import verbMoodVoiceConjugationOptions from "./views/verb/mood-voice-conjugation";
-import verbMoodConjugationVoiceOptions from "./views/verb/mood-conjugation-voice";
+import viewsLatin from "./views/latin";
+import viewsGreek from "./views/greek";
 
 
 class Presenter {
-    constructor(selector, resultSet, locale = 'en-US') {
+    constructor(selector, wordData, locale = 'en-US') {
 
         this.targetSelector = selector;
         this.container = document.querySelector(this.targetSelector);
-        this.resultSet = resultSet;
+        this.wordData = wordData;
 
         // All views registered by the Presenter
         this.views = [];
         this.viewIndex = {};
 
-        this.addView(nounDeclensionOptions);
-        this.addView(adjectiveDeclensionOptions);
-        this.addView(verbVoiceConjugationMoodOptions);
-        this.addView(verbVoiceMoodConjugationOptions);
-        this.addView(verbConjugationVoiceMoodOptions);
-        this.addView(verbConjugationMoodVoiceOptions);
-        this.addView(verbMoodVoiceConjugationOptions);
-        this.addView(verbMoodConjugationVoiceOptions);
+        for (let view of viewsLatin) {
+            this.addView(view);
+        }
+        for (let view of viewsGreek) {
+            this.addView(view);
+        }
 
         // Views available for parts of speech that are present in a Result Set
-        this.availableViews = this.getViews(this.resultSet[Lib.types.part]);
+        this.availableViews = this.getViews(this.wordData);
 
         this.defaultView = this.availableViews[0];
         this.activeView = undefined;
@@ -47,24 +39,26 @@ class Presenter {
         return this;
     }
 
-    addView(viewOptions) {
-       let view =  new View.View(viewOptions);
+    addView(view) {
+       //let view =  new View.View(viewOptions);
        this.views.push(view);
        this.viewIndex[view.id] = view;
     }
 
     setLocale(locale) {
         this.locale = locale;
-        this.activeView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView.render(this.container, this.wordData, this.l10n.messages(this.locale));
     }
 
     render() {
         // Show a default view
-        this.defaultView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
-        this.activeView = this.defaultView;
+        if (this.defaultView) {
+            this.defaultView.render(this.container, this.wordData, this.l10n.messages(this.locale));
+            this.activeView = this.defaultView;
 
-        this.appendViewSelector("#view-switcher");
-        this.appendLocaleSelector("#locale-selector");
+            this.appendViewSelector("#view-switcher");
+            this.appendLocaleSelector("#locale-selector");
+        }
     }
 
     appendViewSelector(targetSelector) {
@@ -78,8 +72,8 @@ class Presenter {
             let viewList = document.createElement('select');
             for (const view of this.availableViews) {
                 let option = document.createElement("option");
-                option.value = view.options.id;
-                option.text = view.options.name;
+                option.value = view.id;
+                option.text = view.name;
                 viewList.appendChild(option);
             }
             viewList.addEventListener('change', this.viewSelectorEventListener.bind(this));
@@ -91,7 +85,7 @@ class Presenter {
     viewSelectorEventListener(event) {
         let viewID = event.target.value;
         let view = this.viewIndex[viewID];
-        view.render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        view.render(this.container, this.wordData, this.l10n.messages(this.locale));
         this.activeView = view;
     }
 
@@ -120,11 +114,11 @@ class Presenter {
         this.setLocale(locale);
     }
 
-    getViews(partsOfSpeech) {
+    getViews(wordData) {
         // First view in a returned array will be a default one
         let views = [];
         for (let view of this.views) {
-            if (partsOfSpeech.includes(view.partOfSpeech)) {
+            if (wordData.language === view.language && wordData[Lib.types.part].includes(view.partOfSpeech)) {
                 views.push(view);
             }
         }

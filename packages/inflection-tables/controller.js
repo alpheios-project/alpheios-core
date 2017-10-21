@@ -10,17 +10,17 @@ import * as GreekData from "./lib/lang/greek/greek";
 let langData = new Lib.LanguageData([LatinData.dataSet, GreekData.dataSet]).loadData();
 
 let testCases = [
-    {word: "cupidinibus (latin)", value: "latin_noun_cupidinibus", type: "noun"},
-    {word: "mare (lating)", value: "latin_noun_adj_mare", type: "noun, adjective"},
-    {word: "cepit (latin)", value: "latin_verb_cepit", type: "regular verb"},
-    {word: "φιλόσοφος (greek)", value: "greek_noun_pilsopo", type: "noun"},
+    {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun", language: 'latin'},
+    {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective", language: 'latin'},
+    {word: "cepit", value: "latin_verb_cepit", type: "regular verb", language: 'latin'},
+    {word: "φιλόσοφος", value: "greek_noun_pilsopo", type: "noun", language: 'greek'},
 ];
 let selectList = document.querySelector("#test-selector");
 
 for (const testCase of testCases) {
     let option = document.createElement("option");
     option.value = testCase.value;
-    option.text = testCase.word + ' (' + testCase.type + ')';
+    option.text = `${testCase.word} (${testCase.language} ${testCase.type})`;
     selectList.appendChild(option);
 }
 
@@ -42,11 +42,11 @@ let show = function show(word, fileNameBase) {
             let homonym = new TuftsAdapter().transform(json);
 
             // Get matching suffixes from an inflection library
-            let resultSet = langData.getSuffixes(homonym);
-            resultSet.word = word;
+            let wordData = langData.getSuffixes(homonym);
+            wordData.homonym.targetWord = word;
 
             // Insert rendered view to a page
-            let presenter = new Presenter('#id-inflections-table', resultSet).render();
+            let presenter = new Presenter('#id-inflections-table', wordData).render();
 
         }).catch(error => {
         console.error(error);

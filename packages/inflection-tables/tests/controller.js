@@ -1,6 +1,7 @@
 'use strict';
 // Import shared language data
 import * as Lib from "../lib/lib";
+import * as Latin from "../lib/lang/latin/latin";
 import * as L10n from "../l10n/l10n";
 import * as Styles from "../presenter/styles/styles";
 import * as View from "../presenter/lib/view";
@@ -21,7 +22,15 @@ exports.LanguageDataset = Lib.LanguageDataset;
 exports.LanguageData = Lib.LanguageData;
 exports.MatchData = Lib.MatchData;
 exports.Footnote = Lib.Footnote;
-exports.ResultSet = Lib.ResultSet;
+exports.ResultSet = Lib.WordData;
+
+// L10n
+exports.Latin = {
+    genders: Latin.genders,
+    types: Latin.types,
+    numbers: Latin.numbers
+};
+
 
 // L10n
 exports.L10n = {
@@ -45,8 +54,8 @@ exports.View = {
     HeaderCell: View.HeaderCell,
     Column: View.Column,
     Row: View.Row,
-    GroupingFeature: View.GroupingFeature,
-    GroupingFeatureList: View.GroupingFeatureList,
+    GroupingFeature: View.GroupFeatureType,
+    GroupingFeatureList: View.GroupFeatureList,
     WideView: View.WideView,
     NarrowView: View.NarrowView,
     NarrowViewGroup: View.NarrowViewGroup,

@@ -1,6 +1,7 @@
 import * as Lib from "../../lib/lib";
 import * as Styles from "../styles/styles";
-export {Cell, RowTitleCell, HeaderCell, Column, Row, GroupingFeature, GroupingFeatureList,
+import * as LibLatin from "../../lib/lang/latin/latin";
+export {Cell, RowTitleCell, HeaderCell, Column, Row, GroupFeatureType, GroupFeatureList,
     WideView, NarrowView, NarrowViewGroup, Table, Footnotes, View};
 
 class Cell {
@@ -173,7 +174,7 @@ class RowTitleCell {
     /**
      * Initializes a row title cell.
      * @param {string} title - A text that will be shown within the cell.
-     * @param {GroupingFeature} groupingFeature - A grouping feature that specifies a row for which a title cell
+     * @param {GroupFeatureType} groupingFeature - A grouping feature that specifies a row for which a title cell
      * is created.
      * @param {number} nvGroupQty - A number of narrow view groups. Because each group will be shown separately
      * and will have its own title cells, we need to create a copy of a title cell for each such group.
@@ -194,15 +195,15 @@ class RowTitleCell {
         // Generate HTML representation for a wide view node
         this.wNode = document.createElement('div');
         this.wNode.classList.add(Styles.classNames.cell);
-        if (this.feature.isColumnGroup) {
+        if (this.feature.formsColumn) {
             this.wNode.classList.add(Styles.classNames.header);
         }
-        if (this.feature.isRowGroup && this.feature.isGroupTitleInRow) {
-            // This cell is taking entire row
+        if (this.feature.hasFullWidthRowTitle) {
+            // This cell is taking an entire row
             this.wNode.classList.add(Styles.classNames.fullWidth);
         }
-        if (this.feature.isColumnGroup && this.feature.groupingFeatureList.titleColumnsQuantity > 1) {
-            this.wNode.classList.add(Styles.classNames.widthPrefix + this.feature.groupingFeatureList.titleColumnsQuantity);
+        if (this.feature.formsColumn && this.feature.groupFeatureList.titleColumnsQuantity > 1) {
+            this.wNode.classList.add(Styles.classNames.widthPrefix + this.feature.groupFeatureList.titleColumnsQuantity);
         }
         this.wNode.innerHTML = this.title;
 
@@ -285,7 +286,7 @@ class HeaderCell {
     /**
      * Initializes a header cell.
      * @param {string} title - A title text that will be shown in the header cell.
-     * @param {GroupingFeature} groupingFeature - A feature that defines one or several columns this header forms.
+     * @param {GroupFeatureType} groupingFeature - A feature that defines one or several columns this header forms.
      * @param {number} [span=1] - How many columns in a table this header cell forms.
      */
     constructor(title, groupingFeature, span = 1) {
@@ -599,131 +600,90 @@ class Row {
 }
 
 /**
- * This is a wrapper around a Feature object. When a Table object creates a
+ * This is a wrapper around a FeatureType object. When a Table object creates a
  * hierarchical tree of suffixes, it uses grammatical features as tree nodes.
- * GroupingFeature extends a Feature object so that it'll be able to store additional information
+ * GroupFeatureType extends a Feature object so that it'll be able to store additional information
  * that is required for that.
  */
-class GroupingFeature {
-
+class GroupFeatureType extends Lib.FeatureType {
     /**
-     * Create a GroupingFeature object.
-     * @param {string} type - A type of the feature, allowed values are specified in 'types' object of the Library
-     * @param {string[] | string[][]} values - A list of allowed values for this feature type.
-     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     *
+     * @param {FeatureType} featureType - A feature that defines a type of this item.
      * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
      * language-specific message bundle.
-     * @returns {GroupingFeature} Returns a newly created object for chaining.
+     * @param {Feature[]} order - A list of feature items that identify a sort order of this feature type (optional).
+     * Use this parameter to redefine a deafult sort order for a type.
      */
-    constructor(type, values, language, titleMessageID) {
-        this._feature = new Lib.FeatureType(type, values, language);
+    constructor(featureType, titleMessageID, order = featureType.orderedFeatures) {
+        super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.language);
 
         this.groupTitle = titleMessageID;
         this._groupType = undefined;
-        this._titleLocation = undefined;
 
-        this.groupingFeatureList = undefined;
-        return this;
+        this.groupFeatureList = undefined;
+
+
+        // Properties below are required to store information during tree creation
+        this.subgroups = []; // Each value of the feature
+        this.cells = []; // All cells within this group and below
+        this.parent = undefined;
+        this.header = undefined;
+
+        this._formsColumn = false;
+        this._formsRow = false;
+        this.hasColumnRowTitle = false; // Whether this feature has a title of a suffix row in the left-side column.
+        this.hasFullWidthRowTitle = false; // Whether this feature has a title of suffix rows that spans the whole table width.
     }
 
     /**
-     * Creates a copy of a grouping feature, copying all its properties.
-     * @returns {GroupingFeature} - A copy of a grouping feature.
+     * Converts a list of Feature objects into a list of strings that represent their values. Keeps tha original
+     * array structure intact (work with up two two array levels).
+     * @param {Feature[] | Feature[][]} features - An array of feature objects.
+     * @return {string[] | strings[][]} A matching array of strings with feature values.
      */
-    clone() {
-        let clone = new GroupingFeature(this._feature.type, this._feature.orderIndex, this._feature.language);
-        clone._groupType = this._groupType;
-        clone.groupTitle = this.groupTitle;
-        clone._titleLocation = this._titleLocation;
-        return clone;
-    }
-
-    /**
-     * Returns a grammatical feature object.
-     * @returns {FeatureType} - A FeatureType object.
-     */
-    get feature() {
-        return this._feature;
-    }
-
-    /**
-     *  Returns a type of this feature.
-     * @returns {string} - A feature type.
-     */
-    get type() {
-        return this._feature.type;
-    }
-
-    /**
-     * Set that this feature would form a column.
-     * @returns {GroupingFeature} Returns itself for chaining.
-     */
-    setColumnGroupType() {
-        this._groupType = 'column';
-        return this;
+    static featuresToValues(features) {
+        return features.map( (feature) => {
+            if (Array.isArray(feature)) {
+                return feature.map( (feature) => feature.value );
+            }
+            else {
+                return feature.value;
+            }
+        });
     }
 
     /**
      * Whether this feature forms a columns group.
      * @returns {boolean} True if this feature forms a column.
      */
-    get isColumnGroup() {
-        return this._groupType === 'column';
+    get formsColumn() {
+        return this._formsColumn;
     }
 
     /**
-     * Set that this feature would form a row.
-     * @returns {GroupingFeature} Returns itself for chaining.
+     * Sets that this feature would form a column.
+     * @param {boolean} value
      */
-    setRowGroupType() {
-        this._groupType = 'row';
-        return this;
+    set formsColumn(value) {
+        this._formsColumn = value;
+        this._formsRow = !value; // Can't do both
     }
 
     /**
      * Whether this feature forms a row group.
      * @returns {boolean} True if this feature forms a row.
      */
-    get isRowGroup() {
-        return this._groupType === 'row';
+    get formsRow() {
+        return this._formsRow;
     }
 
     /**
-     * Set that this feature title cell would be located in a column row.
-     * @returns {GroupingFeature} Returns itself for chaining.
+     * Sets that this feature would form a row.
+     * @param {boolean} value
      */
-    setColumnGroupTitleLocation() {
-        this._titleLocation = 'column';
-        return this;
-    }
-
-    /**
-     * Whether this group would have a title cell located in a column row. Used to calculate how many title
-     * columns a table would have.
-     * @returns {boolean}
-     */
-    get isTitleInColumn() {
-        return this._titleLocation === 'column';
-    }
-
-    /**
-     * Set that this feature title cell would occupy a whole row and would create a group that will combine
-     * other rows.
-     * @returns {GroupingFeature}
-     */
-    setRowGroupTitleLocation() {
-        this._titleLocation = 'row';
-        return this;
-    }
-
-    /**
-     * Whether this group would have a title cell occupying a whole row, instead of being in a title column. This
-     * is usually used for features that group several rows together. Each row in such group would be formed by
-     * some other feature that would be a 'subfeature' of this 'row title' feature.
-     * @returns {boolean}
-     */
-    get isGroupTitleInRow() {
-        return this._titleLocation === 'row';
+    set formsRow(value) {
+        this._formsRow = value;
+        this._formsColumn = !value; // Can't do both
     }
 
     /**
@@ -731,34 +691,16 @@ class GroupingFeature {
      * @returns {Number} A number of groupes formed by this feature.
      */
     get size() {
-        return this._feature.orderIndex.length;
-    }
-
-    /**
-     * Returns an array that lists all possible values of this feature in an order.
-     * This order is used for sorting columns and rows that formed by feature values.
-     * @returns {string[]|string[][]}
-     */
-    get orderIndex() {
-        return this._feature.orderIndex;
-    }
-
-    /**
-     * Returns copies of all feature values in an array sorted according to orderIndex.
-     * A proxy to FeatureType.orderedValues.
-     * @returns {Feature[]} Array of feature values sorted according to orderIndex.
-     */
-    get orderedValues() {
-        return this._feature.orderedValues;
+        return this.orderIndex.length;
     }
 
     /**
      * Checks if two grouping features are of the same type.
-     * @param {GroupingFeature} groupingFeature - A grouping feature to compare with the current one.
+     * @param {GroupFeatureType} groupingFeature - A grouping feature to compare with the current one.
      * @returns {boolean} True if grouping features are of the same type.
      */
     isSameType(groupingFeature) {
-        return this._feature.type === groupingFeature.feature.type;
+        return this.type === groupingFeature.type;
     }
 
     /**
@@ -776,53 +718,48 @@ class GroupingFeature {
 /**
  * Holds a list of all grouping features of a table.
  */
-class GroupingFeatureList {
+class GroupFeatureList extends Lib.FeatureList {
 
     /**
      * Initializes object with an array of grouping feature objects.
-     * @param {GroupingFeature[]} features - An array of grouping features for a table.
+     * @param {GroupFeatureType[]} features - An array of features that form a table.
+     * An order of features defines in what order a table tree would be built.
      */
     constructor(features) {
-        this._features = features;
-        this._columnFeatures = [];
-        this._rowFeatures = [];
+        super(features);
+        this._columnFeatures = []; // Features that group cells into columns
+        this._rowFeatures = []; // Features that group cells into rows
 
-        if (this._features) {
-            for (let feature of this._features) {
-                feature.groupingFeatureList = this;
-            }
-
-            for (let feature of this._features) {
-                if (feature.isColumnGroup) {
-                    this._columnFeatures.push(feature);
-                }
-
-                if (feature.isRowGroup) {
-                    this._rowFeatures.push(feature);
-                }
-            }
-        }
-    }
-
-    /**
-     * Returns an array of grouping features.
-     * @returns {GroupingFeature[]} - An array of grouping features.
-     */
-    get items() {
-        return this._features;
+        this.forEach((feature) => feature.groupFeatureList = this);
     }
 
     /**
      * Return a list of all grouping features that form columns.
-     * @returns {GroupingFeature[]} - An array of grouping features.
+     * @returns {GroupFeatureType[]} - An array of grouping features.
      */
     get columnFeatures() {
         return this._columnFeatures;
     }
 
     /**
+     * Defines what features form columns. An order of items specifies an order in which columns be shown.
+     * @param {Feature[] | GroupingFeature[]} features - What features form columns and what order
+     * these columns would follow.
+     */
+    set columns(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.formsColumn = true;
+            this._columnFeatures.push(matchingFeature);
+        }
+    }
+
+    /**
      * Returns a first column feature item.
-     * @returns {GroupingFeature} A fist column feature.
+     * @returns {GroupFeatureType} A fist column feature.
      */
     get firstColumnFeature() {
         if (this._columnFeatures && this._columnFeatures.length) {
@@ -832,7 +769,7 @@ class GroupingFeatureList {
 
     /**
      * Returns a last column feature item.
-     * @returns {GroupingFeature} A last column feature.
+     * @returns {GroupFeatureType} A last column feature.
      */
     get lastColumnFeature() {
         if (this._columnFeatures && this._columnFeatures.length) {
@@ -842,15 +779,32 @@ class GroupingFeatureList {
 
     /**
      * Return a list of all grouping features that form rows.
-     * @returns {GroupingFeature[]} - An array of grouping rows.
+     * @returns {GroupFeatureType[]} - An array of grouping rows.
      */
     get rowFeatures() {
         return this._rowFeatures;
     }
 
     /**
+     * Defines what features form rows. An order of items specifies an order in which columns be shown.
+     * @param {Feature[] | GroupingFeature[]} features - What features form rows and what order
+     * these rows would follow.
+     */
+    set rows(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.formsRow = true;
+            this._rowFeatures.push(matchingFeature);
+        }
+        return this;
+    }
+
+    /**
      * Returns a first row feature item.
-     * @returns {GroupingFeature} A fist row feature.
+     * @returns {GroupFeatureType} A fist row feature.
      */
     get firstRowFeature() {
         if (this._rowFeatures && this._rowFeatures.length) {
@@ -860,11 +814,43 @@ class GroupingFeatureList {
 
     /**
      * Returns a last row feature item.
-     * @returns {GroupingFeature} A last row feature.
+     * @returns {GroupFeatureType} A last row feature.
      */
     get lastRowFeature() {
         if (this._rowFeatures && this._rowFeatures.length) {
             return this._rowFeatures[this._rowFeatures.length - 1];
+        }
+    }
+
+    /**
+     * Defines what are the titles of suffix cell rows within a table body.
+     * The number of such items defines how many left-side title columns this table would have (default is one).
+     * Full width titles (see below) does not need to be specified here.
+     * @param {Feature | GroupingFeature} features - What suffix row titles this table would have.
+     */
+    set columnRowTitles(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.hasColumnRowTitle = true;
+        }
+    }
+
+    /**
+     * In inflection tables, titles of features are usually located in left-side columns. However, some titles that
+     * group several rows together may span the whole table width. This setters defines
+     * what those features are.
+     * @param {Feature | GroupingFeature} features - What feature titles would take a whole row
+     */
+    set fullWidthRowTitles(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.hasFullWidthRowTitle = true;
         }
     }
 
@@ -883,7 +869,7 @@ class GroupingFeatureList {
     get titleColumnsQuantity() {
         let quantity = 0;
         for (let feature of this._features) {
-            if (feature.isTitleInColumn) {
+            if (feature.hasColumnRowTitle) {
                 quantity++;
             }
         }
@@ -892,9 +878,9 @@ class GroupingFeatureList {
 }
 
 /**
- * Container that is used to store group data during feature tree construction.
+ * Stores group data during feature tree construction.
  */
-class FeatureGroup {
+class NodeGroup {
 
     /**
      * Creates feature group data structures.
@@ -1137,19 +1123,12 @@ class Table {
 
     /**
      * Initializes an inflection table.
-     * This function is chainable.
-     * @param {GroupingFeature[]} groupingFeatures - An array of grouping features. An order of elements in this array
-     * defines in what order suffixes will be grouped into a table. An order of grammatical features
-     * within each feature element defines in what order grammatical feature values be shown in a table.
-     * @param {MessageBundle} messages - A bundle of messages for one particular language.
-     * @returns {Table} Reference to self for chaining.
+     * @param {GroupFeatureType[]} features - An array of grouping features. An order of elements in this array
      */
-    constructor(groupingFeatures, messages) {
-        this.features = new GroupingFeatureList(groupingFeatures);
-        this.messages = messages;
+    constructor(features) {
+        this.features = new GroupFeatureList(features);
         this.emptyColumnsHidden = false;
         this.cells = []; // Will be populated by groupByFeature()
-        return this;
     }
 
     /**
@@ -1243,33 +1222,36 @@ class Table {
      * Each level corresponds to a one grouping feature. The order of items in GroupingFeatures List object
      * defines an order of those levels.
      * Nodes on each level are values of a grammatical feature that forms this level. An order of those values
-     * is determined by the order of values within a GroupingFeature object of each feature.
+     * is determined by the order of values within a GroupFeatureType object of each feature.
      * This is a recursive function.
      * @param {Suffix[]} suffixes - Suffixes to be grouped.
      * @param {Feature[]} featureTrail - A temporary array to store all feature values on levels above the current.
      * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
-     * @returns {FeatureGroup} A top level group of suffixes that contain subgroups all way down to the last group.
+     * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
      */
     groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
-        let group = new FeatureGroup();
+        let group = new NodeGroup();
+        let groupNew = this.features.items[currentLevel];
         group.feature = this.features.items[currentLevel];
 
         // Iterate over each value of the feature
-        for (const featureValue of group.feature.orderedValues) {
-            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === group.feature.type) {
+        for (const featureValue of groupNew.orderedFeatures) {
+            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === groupNew.type) {
                 // Remove previously inserted feature of the same type
                 featureTrail.pop();
             }
             featureTrail.push(featureValue);
 
             // Suffixes that are selected for current combination of feature values
-            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.feature.type, featureValue.value));
+            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, groupNew.type, featureValue.value));
 
             if (currentLevel < this.features.length - 1) {
                 // Divide to further groups
                 let subGroup = this.groupByFeature(selectedSuffixes, featureTrail, currentLevel + 1);
                 group.subgroups.push(subGroup);
+                groupNew.subgroups.push(subGroup);
                 group.cells = group.cells.concat(subGroup.cells);
+                groupNew.cells = groupNew.cells.concat(subGroup.cells);
             }
             else {
                 // This is the last level. This represent a cell with suffixes
@@ -1280,7 +1262,9 @@ class Table {
 
                 let cell = new Cell(selectedSuffixes, featureTrail.slice());
                 group.subgroups.push(cell);
+                groupNew.subgroups.push(cell);
                 group.cells.push(cell);
+                groupNew.cells.push(cell);
                 this.cells.push(cell);
                 cell.index = this.cells.length - 1;
             }
@@ -1292,7 +1276,7 @@ class Table {
     /**
      * Create columns out of a suffixes organized into a tree.
      * This is a recursive function.
-     * @param {FeatureGroup} tree - A tree of suffixes.
+     * @param {NodeGroup} tree - A tree of suffixes.
      * @param {Column[]} columns - An array of columns to be constructed.
      * @param {number} currentLevel - Current recursion level.
      * @returns {Array} An array of columns of suffix cells.
@@ -1307,7 +1291,7 @@ class Table {
             // Iterate until it is the last row feature
             if (!currentFeature.isSameType(this.features.lastRowFeature)) {
                 let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1);
-                if (currentFeature.isRowGroup) {
+                if (currentFeature.formsRow) {
                     // TODO: Avoid creating extra cells
 
 
@@ -1338,7 +1322,7 @@ class Table {
                 groups.push(group);
             }
         }
-        if (currentFeature.isRowGroup) {
+        if (currentFeature.formsRow) {
             return groups;
         }
         return columns;
@@ -1347,7 +1331,7 @@ class Table {
     /**
      * Creates an array of header cell rows.
      * This is a recursive function.
-     * @param {FeatureGroup} tree - A tree of suffixes.
+     * @param {NodeGroup} tree - A tree of suffixes.
      * @param {Row[]} headers - An array of rows with header cells.
      * @param {number} currentLevel - Current recursion level.
      * @returns {Array} A two-dimensional array of header cell rows.
@@ -1547,37 +1531,27 @@ class View {
      * but there could be several views for the same part of speech that show different table representation of a view.
      * @param {Object} viewOptions
      */
-    constructor(viewOptions) {
+    constructor() {
 
-        this.options = viewOptions;
+        //this.options = viewOptions;
         this.pageHeader = {};
-        this.table = {};
 
         // An HTML element where this view is rendered
         this.container = undefined;
+
+        // Must be implemented in a descendant
+        this.id = 'baseView';
+        this.name = 'base view';
+        this.title = 'Base View';
+        this.language = undefined;
+        this.partOfSpeech = undefined;
     }
 
     /**
-     * Returns a part of speech of this view.
-     * @returns {string} A part of speech of this view.
-     */
-    get partOfSpeech() {
-        return this.options.partOfSpeech;
-    }
-
-    /**
-     * Returns an ID of this view.
-     * @returns {string} An ID of this view.
-     */
-    get id() {
-        return this.options.id;
-    }
-
-    /**
-     * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table
+     * Converts a WordData, returned from inflection tables library, into an HTML representation of an inflection table
      * and inserts that HTML into a `container` HTML element. `messages` provides a translation for view's texts.
      * @param {HTMLElement} container - An HTML element where this view will be inserted.
-     * @param {ResultSet} resultSet - A result set from inflection tables library.
+     * @param {WordData} resultSet - A result set from inflection tables library.
      * @param {MessageBundle} messages - A message bundle with message translations.
      */
     render(container, resultSet, messages) {
@@ -1586,12 +1560,15 @@ class View {
         this.messages = messages;
         this.container = container;
         this.resultSet = resultSet;
-        let selection = resultSet[this.options.partOfSpeech];
+        let selection = resultSet[this.partOfSpeech];
 
         this.footnotes = new Footnotes(selection.footnotes);
 
-        //this.table = new Table(selection.suffixes, this.options.groupingFeatures, messages);
-        this.table = new Table(this.options.groupingFeatures, messages).construct(selection.suffixes).constructViews();
+        //this.table = new Table(selection.suffixes, this.groupingFeatures, messages);
+        //this.table = new Table();
+        //this.setTableData();
+        this.table.messages = messages;
+        this.table.construct(selection.suffixes).constructViews();
         this.display();
     }
 
@@ -1603,11 +1580,11 @@ class View {
         this.container.innerHTML = '';
 
         let word = document.createElement('h2');
-        word.innerHTML = this.resultSet.word;
+        word.innerHTML = this.resultSet.homonym.targetWord;
         this.container.appendChild(word);
 
         let title = document.createElement('h3');
-        title.innerHTML = this.options.title;
+        title.innerHTML = this.title;
         this.container.appendChild(title);
 
         this.pageHeader = { nodes: document.createElement('div') };

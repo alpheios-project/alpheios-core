@@ -8,7 +8,7 @@
  * Shared data structures and functions
  */
 // Should have no spaces in values in order to be used in HTML templates
-const types$1 = {
+const types = {
     word: 'word',
     part: 'part of speech', // Part of speech
     number: 'number',
@@ -57,7 +57,7 @@ class Feature {
      * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor (value, type, language) {
-        if (!types$1.isAllowed(type)) {
+        if (!types.isAllowed(type)) {
             throw new Error('Features of "' + type + '" type are not supported.');
         }
         if (!languages.isAllowed(language)) {
@@ -160,7 +160,7 @@ class FeatureType {
      * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor(type, values, language) {
-        if (!types$1.isAllowed(type)) {
+        if (!types.isAllowed(type)) {
             throw new Error('Features of "' + type + '" type are not supported.');
         }
         if (!languages.isAllowed(language)) {
@@ -239,7 +239,7 @@ class FeatureType {
      * Return copies of all feature values in a sorted array.
      * @returns {Feature[]} Array of feature values sorted according to orderIndex.
      */
-    get orderedValues() {
+    get orderedFeatures() {
         let values = [];
         for (let value of this._orderIndex) {
             if (Array.isArray(value)) {
@@ -255,6 +255,17 @@ class FeatureType {
 
         }
         return values;
+    }
+
+    get orderedValues() {
+        return this.orderedFeatures.map( (feature) => {
+            if (Array.isArray(feature)) {
+                return feature.map( (feature) => feature.value );
+            }
+            else {
+                return feature.value;
+            }
+        });
     }
 
     /**
@@ -343,6 +354,69 @@ class FeatureType {
         }
     }
 }
+
+
+/**
+ * A list of grammatical features that characterizes a language unit. Has some additional service methods,
+ * compared with standard storage objects.
+ */
+class FeatureList {
+
+    /**
+     * Initializes a feature list.
+     * @param {FeatureType[]} features - Features that build the list (optional, can be set later).
+     */
+    constructor(features = []) {
+        this._features = [];
+        this._types = {};
+        this.add(features);
+    }
+
+    add(features) {
+        if (!features || !Array.isArray(features)) {
+            throw new Error('Features must be defined and must come in an array.');
+        }
+
+        for (let feature of features) {
+            this._features.push(feature);
+            this._types[feature.type] = feature;
+        }
+    }
+
+
+    /**
+     * Returns an array of grouping features.
+     * @returns {FeatureType[]} - An array of grouping features.
+     */
+    get items() {
+        return this._features;
+    }
+
+    forEach(callback) {
+        this._features.forEach(callback);
+    }
+
+    /**
+     * Returns a feature of a particular type. If such feature does not exist in a list, returns undefined.
+     * @param {string} type - Feature type as defined in `types` object.
+     * @return {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
+     */
+    ofType(type) {
+        if (this.hasType(type)) {
+            return this._types[type];
+        }
+    }
+
+    /**
+     * Checks whether a feature list has a feature of a specific type.
+     * @param {string} type - Feature type as defined in `types` object.
+     * @return {boolean} Whether a feature list has a feature of a particular type.
+     */
+    hasType(type) {
+        return this._types.hasOwnProperty(type);
+    }
+}
+
 
 /**
  * This is a hash table that maps values to be imported from an external file or service to library standard values.
@@ -645,9 +719,9 @@ class LanguageDataset {
 
             // If this is a footnote. Footnotes should go in a flat array
             // because we don't need to split by them
-            if (feature.type === types$1.footnote) {
-                suffixItem[types$1.footnote] = suffixItem[types$1.footnote] || [];
-                suffixItem[types$1.footnote].push(feature.value);
+            if (feature.type === types.footnote) {
+                suffixItem[types.footnote] = suffixItem[types.footnote] || [];
+                suffixItem[types.footnote].push(feature.value);
                 continue;
             }
 
@@ -706,7 +780,7 @@ class LanguageDataset {
     getSuffixes(homonym) {
 
         // Add support for languages
-        let result = new ResultSet();
+        let result = new WordData(homonym);
         let inflections = {};
 
         // Find partial matches first, and then full among them
@@ -715,7 +789,7 @@ class LanguageDataset {
         for (let lexema of homonym.lexemes) {
             for (let inflection of lexema.inflections) {
                 // Group inflections by a part of speech
-                let partOfSpeech = inflection[types$1.part];
+                let partOfSpeech = inflection[types.part];
                 if (!partOfSpeech) {
                     throw new Error("Part of speech data is missing in an inflection.");
                 }
@@ -732,7 +806,7 @@ class LanguageDataset {
             if (inflections.hasOwnProperty(partOfSpeech)) {
                 let inflectionsGroup = inflections[partOfSpeech];
 
-                result[types$1.part].push(partOfSpeech);
+                result[types.part].push(partOfSpeech);
                 result[partOfSpeech] = {};
                 result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), []);
                 result[partOfSpeech].footnotes = [];
@@ -741,9 +815,9 @@ class LanguageDataset {
                 let footnotesIndex = new Set();
                 // Scan all selected suffixes to build a unique set of footnote indexes
                 for (let suffix of result[partOfSpeech].suffixes) {
-                    if (suffix.hasOwnProperty(types$1.footnote)) {
+                    if (suffix.hasOwnProperty(types.footnote)) {
                         // Footnote indexes are stored in an array
-                        for (let index of suffix[types$1.footnote]) {
+                        for (let index of suffix[types.footnote]) {
                             footnotesIndex.add(index);
                         }
                     }
@@ -751,7 +825,7 @@ class LanguageDataset {
                 // Add footnote indexes and their texts to a result
                 for (let index of footnotesIndex) {
                     let footnote = this.footnotes.find(footnoteElement =>
-                        footnoteElement.index === index && footnoteElement[types$1.part] === partOfSpeech
+                        footnoteElement.index === index && footnoteElement[types.part] === partOfSpeech
                     );
                     result[partOfSpeech].footnotes.push({index: index, text: footnote.text});
                 }
@@ -810,7 +884,7 @@ class LanguageData {
     /**
      * Finds matching suffixes for a homonym.
      * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
-     * @return {ResultSet} A return value of an inflection query.
+     * @return {WordData} A return value of an inflection query.
      */
     getSuffixes(homonym) {
         let language = homonym.language;
@@ -865,8 +939,8 @@ class Suffix {
             }
         }
 
-        if (this.hasOwnProperty(types$1.footnote)) {
-            clone[types$1.footnote] = this[types$1.footnote];
+        if (this.hasOwnProperty(types.footnote)) {
+            clone[types.footnote] = this[types.footnote];
         }
         return clone;
     };
@@ -1050,7 +1124,7 @@ class Footnote {
     constructor(index, text, partOfSpeech) {
         this.index = index;
         this.text = text;
-        this[types$1.part] = partOfSpeech;
+        this[types.part] = partOfSpeech;
     }
 }
 
@@ -1068,11 +1142,15 @@ class MatchData {
 /**
  * A return value for inflection queries
  */
-class ResultSet {
-    constructor() {
-        // Add languages
+class WordData {
+    constructor(homonym) {
+        this.homonym = homonym;
         this.word = undefined;
-        this[types$1.part] = [];
+        this[types.part] = [];
+    }
+
+    get language() {
+        return this.homonym.language;
     }
 }
 
@@ -2759,12 +2837,12 @@ let dataSet = new LanguageDataset(language);
  analyzer's language modules as well.
  */
 const importerName = 'csv';
-const parts = dataSet.defineFeatureType(types$1.part, ['noun', 'adjective', 'verb']);
-const numbers = dataSet.defineFeatureType(types$1.number, ['singular', 'plural']);
+const parts = dataSet.defineFeatureType(types.part, ['noun', 'adjective', 'verb']);
+const numbers = dataSet.defineFeatureType(types.number, ['singular', 'plural']);
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
     .map('plural', numbers.plural);
-const cases = dataSet.defineFeatureType(types$1.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative']);
+const cases = dataSet.defineFeatureType(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative']);
 cases.addImporter(importerName)
     .map('nominative', cases.nominative)
     .map('genitive', cases.genitive)
@@ -2773,7 +2851,7 @@ cases.addImporter(importerName)
     .map('ablative', cases.ablative)
     .map('locative', cases.locative)
     .map('vocative', cases.vocative);
-const declensions = dataSet.defineFeatureType(types$1.declension, ['first', 'second', 'third', 'fourth', 'fifth']);
+const declensions = dataSet.defineFeatureType(types.declension, ['first', 'second', 'third', 'fourth', 'fifth']);
 declensions.addImporter(importerName)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
@@ -2781,23 +2859,23 @@ declensions.addImporter(importerName)
     .map('3rd', declensions.third)
     .map('4th', declensions.fourth)
     .map('5th', declensions.fifth);
-const genders = dataSet.defineFeatureType(types$1.gender, ['masculine', 'feminine', 'neuter']);
+const genders = dataSet.defineFeatureType(types.gender, ['masculine', 'feminine', 'neuter']);
 genders.addImporter(importerName)
     .map('masculine', genders.masculine)
     .map('feminine', genders.feminine)
     .map('neuter', genders.neuter)
     .map('masculine feminine', [genders.masculine, genders.feminine]);
-const types$2 = dataSet.defineFeatureType(types$1.type, ['regular', 'irregular']);
-types$2.addImporter(importerName)
-    .map('regular', types$2.regular)
-    .map('irregular', types$2.irregular);
-const conjugations$1 = dataSet.defineFeatureType(types$1.conjugation, ['first', 'second', 'third', 'fourth']);
+const types$1 = dataSet.defineFeatureType(types.type, ['regular', 'irregular']);
+types$1.addImporter(importerName)
+    .map('regular', types$1.regular)
+    .map('irregular', types$1.irregular);
+const conjugations$1 = dataSet.defineFeatureType(types.conjugation, ['first', 'second', 'third', 'fourth']);
 conjugations$1.addImporter(importerName)
     .map('1st', conjugations$1.first)
     .map('2nd', conjugations$1.second)
     .map('3rd', conjugations$1.third)
     .map('4th', conjugations$1.fourth);
-const tenses$1 = dataSet.defineFeatureType(types$1.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
+const tenses$1 = dataSet.defineFeatureType(types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
 tenses$1.addImporter(importerName)
     .map('present', tenses$1.present)
     .map('imperfect', tenses$1.imperfect)
@@ -2805,20 +2883,20 @@ tenses$1.addImporter(importerName)
     .map('perfect', tenses$1.perfect)
     .map('pluperfect', tenses$1.pluperfect)
     .map('future_perfect', tenses$1['future perfect']);
-const voices$1 = dataSet.defineFeatureType(types$1.voice, ['passive', 'active']);
+const voices$1 = dataSet.defineFeatureType(types.voice, ['passive', 'active']);
 voices$1.addImporter(importerName)
     .map('passive', voices$1.passive)
     .map('active', voices$1.active);
-const moods$1 = dataSet.defineFeatureType(types$1.mood, ['indicative', 'subjunctive']);
+const moods$1 = dataSet.defineFeatureType(types.mood, ['indicative', 'subjunctive']);
 moods$1.addImporter(importerName)
     .map('indicative', moods$1.indicative)
     .map('subjunctive', moods$1.subjunctive);
-const persons$1 = dataSet.defineFeatureType(types$1.person, ['first', 'second', 'third']);
+const persons$1 = dataSet.defineFeatureType(types.person, ['first', 'second', 'third']);
 persons$1.addImporter(importerName)
     .map('1st', persons$1.first)
     .map('2nd', persons$1.second)
     .map('3rd', persons$1.third);
-const footnotes$1 = dataSet.defineFeatureType(types$1.footnote, []);
+const footnotes = dataSet.defineFeatureType(types.footnote, []);
 
 // endregion Definition of grammatical features
 
@@ -2840,12 +2918,12 @@ dataSet.addSuffixes = function(partOfSpeech, data) {
             cases.importer.csv.get(data[i][2]),
             declensions.importer.csv.get(data[i][3]),
             genders.importer.csv.get(data[i][4]),
-            types$2.importer.csv.get(data[i][5])];
+            types$1.importer.csv.get(data[i][5])];
         if (data[i][6]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
             let indexes = data[i][6].split(' ').map(function(index) {
-                return footnotes$1.get(index);
+                return footnotes.get(index);
             });
             features.push(...indexes);
         }
@@ -2877,14 +2955,14 @@ dataSet.addVerbSuffixes = function(partOfSpeech, data) {
         let grammarType = data[i][7];
         // Type information can be empty if no ending is provided
         if (grammarType) {
-            features.push(types$2.importer.csv.get(grammarType));
+            features.push(types$1.importer.csv.get(grammarType));
         }
         // Footnotes
         if (data[i][8]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
             let indexes = data[i][8].split(' ').map(function(index) {
-                return footnotes$1.get(index);
+                return footnotes.get(index);
             });
             features.push(...indexes);
         }
@@ -2933,10 +3011,10 @@ dataSet.loadData = function() {
 dataSet.matcher = function(inflections, suffix) {
     "use strict";
     // All of those features must match between an inflection and an ending
-    let obligatoryMatches = [types$1.part];
+    let obligatoryMatches = [types.part];
 
     // Any of those features must match between an inflection and an ending
-    let optionalMatches = [types$1.grmCase, types$1.declension, types$1.gender, types$1.number];
+    let optionalMatches = [types.grmCase, types.declension, types.gender, types.number];
     let bestMatchData = null; // Information about the best match we would be able to find
 
     /*
@@ -3040,12 +3118,12 @@ data.addFeature(typeName).add(providerValueName, LibValueName);
 (functions are chainable)
 Types and values that are unknown (undefined) will be skipped during parsing.
  */
-data.addFeature(types$1.part).importer
+data.addFeature(types.part).importer
     .map('noun', parts.noun)
     .map('adjective', parts.adjective)
     .map('verb', parts.verb);
 
-data.addFeature(types$1.grmCase).importer
+data.addFeature(types.grmCase).importer
     .map('nominative', cases.nominative)
     .map('genitive', cases.genitive)
     .map('dative', cases.dative)
@@ -3054,30 +3132,30 @@ data.addFeature(types$1.grmCase).importer
     .map('locative', cases.locative)
     .map('vocative', cases.vocative);
 
-data.addFeature(types$1.declension).importer
+data.addFeature(types.declension).importer
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
     .map('3rd', declensions.third)
     .map('4th', declensions.fourth)
     .map('5th', declensions.fifth);
 
-data.addFeature(types$1.number).importer
+data.addFeature(types.number).importer
     .map('singular', numbers.singular)
     .map('plural', numbers.plural);
 
-data.addFeature(types$1.gender).importer
+data.addFeature(types.gender).importer
     .map('masculine', genders.masculine)
     .map('feminine', genders.feminine)
     .map('neuter', genders.neuter)
     .map('common', [genders.masculine, genders.feminine]);
 
-data.addFeature(types$1.conjugation).importer
+data.addFeature(types.conjugation).importer
     .map('1st', conjugations$1.first)
     .map('2nd', conjugations$1.second)
     .map('3rd', conjugations$1.third)
     .map('4th', conjugations$1.fourth);
 
-data.addFeature(types$1.tense).importer
+data.addFeature(types.tense).importer
     .map('present', tenses$1.present)
     .map('imperfect', tenses$1.imperfect)
     .map('future', tenses$1.future)
@@ -3085,18 +3163,22 @@ data.addFeature(types$1.tense).importer
     .map('pluperfect', tenses$1.pluperfect)
     .map('future_perfect', tenses$1['future perfect']);
 
-data.addFeature(types$1.voice).importer
+data.addFeature(types.voice).importer
     .map('active', voices$1.active)
     .map('passive', voices$1.passive);
 
-data.addFeature(types$1.mood).importer
+data.addFeature(types.mood).importer
     .map('indicative', moods$1.indicative)
     .map('subjunctive', moods$1.subjunctive);
 
-data.addFeature(types$1.person).importer
+data.addFeature(types.person).importer
     .map('1st', persons$1.first)
     .map('2nd', persons$1.second)
     .map('3rd', persons$1.third);
+
+var nounSuffixesCSV$1 = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\nα,dual,accusative,1st,feminine,regular primary,\r\nά,dual,accusative,1st,feminine,regular,\r\nᾶ,dual,accusative,1st,feminine,regular,2\r\nαιν,dual,dative,1st,feminine,regular primary,\r\nαῖν,dual,dative,1st,feminine,regular,\r\nαιιν,dual,dative,1st,feminine,irregular,\r\nαιν,dual,genitive,1st,feminine,regular primary,\r\nαῖν,dual,genitive,1st,feminine,regular,\r\nαιιν,dual,genitive,1st,feminine,irregular,\r\nα,dual,nominative,1st,feminine,regular primary,\r\nά,dual,nominative,1st,feminine,regular,\r\nᾶ,dual,nominative,1st,feminine,regular,2\r\nα,dual,vocative,1st,feminine,regular primary,\r\nά,dual,vocative,1st,feminine,regular,\r\nᾶ,dual,vocative,1st,feminine,regular,2\r\nα,dual,accusative,1st,masculine,regular primary,\r\nά,dual,accusative,1st,masculine,regular,\r\nᾶ,dual,accusative,1st,masculine,regular,2\r\nαιν,dual,dative,1st,masculine,regular primary,\r\nαῖν,dual,dative,1st,masculine,regular,\r\nαιιν,dual,dative,1st,masculine,irregular,\r\nαιν,dual,genitive,1st,masculine,regular primary,\r\nαῖν,dual,genitive,1st,masculine,regular,\r\nαιιν,dual,genitive,1st,masculine,irregular,\r\nα,dual,nominative,1st,masculine,regular primary,\r\nά,dual,nominative,1st,masculine,regular,\r\nᾶ,dual,nominative,1st,masculine,regular,2\r\nα,dual,vocative,1st,masculine,regular primary,\r\nά,dual,vocative,1st,masculine,regular,\r\nᾶ,dual,vocative,1st,masculine,regular,2\r\nας,plural,accusative,1st,feminine,regular primary,\r\nάς,plural,accusative,1st,feminine,regular,\r\nᾶς,plural,accusative,1st,feminine,regular,2\r\nανς,plural,accusative,1st,feminine,irregular,\r\nαις,plural,accusative,1st,feminine,irregular,\r\nαις,plural,dative,1st,feminine,regular primary,\r\nαῖς,plural,dative,1st,feminine,regular,\r\nῃσι,plural,dative,1st,feminine,irregular,44\r\nῃσιν,plural,dative,1st,feminine,irregular,4 44\r\nῃς,plural,dative,1st,feminine,irregular,44\r\nαισι,plural,dative,1st,feminine,irregular,44\r\nαισιν,plural,dative,1st,feminine,irregular,4 44\r\nῶν,plural,genitive,1st,feminine,regular primary,\r\nάων,plural,genitive,1st,feminine,irregular,\r\nέων,plural,genitive,1st,feminine,irregular,\r\nήων,plural,genitive,1st,feminine,irregular,\r\nᾶν,plural,genitive,1st,feminine,irregular,\r\nαι,plural,nominative,1st,feminine,regular primary,\r\nαί,plural,nominative,1st,feminine,regular,\r\nαῖ,plural,nominative,1st,feminine,regular,2\r\nαι,plural,vocative,1st,feminine,regular primary,\r\nαί,plural,vocative,1st,feminine,regular,\r\nαῖ,plural,vocative,1st,feminine,regular,2\r\nας,plural,accusative,1st,masculine,regular primary,\r\nάς,plural,accusative,1st,masculine,regular,\r\nᾶς,plural,accusative,1st,masculine,regular,3\r\nανς,plural,accusative,1st,masculine,irregular,\r\nαις,plural,accusative,1st,masculine,irregular,\r\nαις,plural,dative,1st,masculine,regular primary,\r\nαῖς,plural,dative,1st,masculine,regular,\r\nῃσι,plural,dative,1st,masculine,irregular,44\r\nῃσιν,plural,dative,1st,masculine,irregular,4 44\r\nῃς,plural,dative,1st,masculine,irregular,44\r\nαισι,plural,dative,1st,masculine,irregular,44\r\nαισιν,plural,dative,1st,masculine,irregular,4 44\r\nῶν,plural,genitive,1st,masculine,regular primary,\r\nάων,plural,genitive,1st,masculine,irregular,\r\nέων,plural,genitive,1st,masculine,irregular,\r\nήων,plural,genitive,1st,masculine,irregular,\r\nᾶν,plural,genitive,1st,masculine,irregular,\r\nαι,plural,nominative,1st,masculine,regular primary,\r\nαί,plural,nominative,1st,masculine,regular,\r\nαῖ,plural,nominative,1st,masculine,regular,3\r\nαι,plural,vocative,1st,masculine,regular primary,\r\nαί,plural,vocative,1st,masculine,regular,\r\nαῖ,plural,vocative,1st,masculine,regular,3\r\nαν,singular,accusative,1st,feminine,regular primary,\r\nην,singular,accusative,1st,feminine,regular primary,\r\nήν,singular,accusative,1st,feminine,regular,\r\nᾶν,singular,accusative,1st,feminine,regular,2\r\nῆν,singular,accusative,1st,feminine,regular,2\r\nάν,singular,accusative,1st,feminine,irregular,63\r\nᾳ,singular,dative,1st,feminine,regular primary,\r\nῃ,singular,dative,1st,feminine,regular primary,\r\nῇ,singular,dative,1st,feminine,regular,2\r\nᾷ,singular,dative,1st,feminine,regular,2\r\nηφι,singular,dative,1st,feminine,irregular,45\r\nηφιν,singular,dative,1st,feminine,irregular,4 45\r\nῆφι,singular,dative,1st,feminine,irregular,45\r\nῆφιv,singular,dative,1st,feminine,irregular,4 45\r\nας,singular,genitive,1st,feminine,regular primary,\r\nης,singular,genitive,1st,feminine,regular primary,\r\nῆs,singular,genitive,1st,feminine,regular,\r\nᾶs,singular,genitive,1st,feminine,regular,2\r\nηφι,singular,genitive,1st,feminine,irregular,45\r\nηφιν,singular,genitive,1st,feminine,irregular,4 45\r\nῆφι,singular,genitive,1st,feminine,irregular,45\r\nῆφιv,singular,genitive,1st,feminine,irregular,4 45\r\nα,singular,nominative,1st,feminine,regular primary,\r\nη,singular,nominative,1st,feminine,regular primary,1\r\nή,singular,nominative,1st,feminine,regular,\r\nᾶ,singular,nominative,1st,feminine,regular,2\r\nῆ,singular,nominative,1st,feminine,regular,2\r\nά,singular,nominative,1st,feminine,irregular,63\r\nα,singular,vocative,1st,feminine,regular primary,\r\nη,singular,vocative,1st,feminine,regular primary,\r\nή,singular,vocative,1st,feminine,regular,\r\nᾶ,singular,vocative,1st,feminine,regular,2\r\nῆ,singular,vocative,1st,feminine,regular,2\r\nά,singular,vocative,1st,feminine,irregular,63\r\nαν,singular,accusative,1st,masculine,regular primary,\r\nην,singular,accusative,1st,masculine,regular primary,3\r\nήν,singular,accusative,1st,masculine,regular,\r\nᾶν,singular,accusative,1st,masculine,regular,3\r\nῆν,singular,accusative,1st,masculine,regular,3\r\nεα,singular,accusative,1st,masculine,irregular,\r\nᾳ,singular,dative,1st,masculine,regular primary,\r\nῃ,singular,dative,1st,masculine,regular primary,\r\nῇ,singular,dative,1st,masculine,regular,\r\nᾷ,singular,dative,1st,masculine,regular,3\r\nῆ,singular,dative,1st,masculine,regular,3\r\nηφι,singular,dative,1st,masculine,irregular,45\r\nηφιν,singular,dative,1st,masculine,irregular,4 45\r\nῆφι,singular,dative,1st,masculine,irregular,45\r\nῆφιv,singular,dative,1st,masculine,irregular,4 45\r\nου,singular,genitive,1st,masculine,regular primary,\r\nοῦ,singular,genitive,1st,masculine,regular,\r\nαο,singular,genitive,1st,masculine,irregular,\r\nεω,singular,genitive,1st,masculine,irregular,\r\nηφι,singular,genitive,1st,masculine,irregular,45\r\nηφιν,singular,genitive,1st,masculine,irregular,4 45\r\nῆφι,singular,genitive,1st,masculine,irregular,45\r\nῆφιv,singular,genitive,1st,masculine,irregular,4 45\r\nω,singular,genitive,1st,masculine,irregular,\r\nα,singular,genitive,1st,masculine,irregular,\r\nας,singular,nominative,1st,masculine,regular primary,\r\nης,singular,nominative,1st,masculine,regular primary,\r\nής,singular,nominative,1st,masculine,regular,\r\nᾶs,singular,nominative,1st,masculine,regular,3\r\nῆs,singular,nominative,1st,masculine,regular,3\r\nα,singular,vocative,1st,masculine,regular primary,\r\nη,singular,vocative,1st,masculine,regular primary,\r\nά,singular,vocative,1st,masculine,regular,\r\nᾶ,singular,vocative,1st,masculine,regular,3\r\nῆ,singular,vocative,1st,masculine,regular,3\r\nω,dual,accusative,2nd,masculine feminine,regular primary,\r\nώ,dual,accusative,2nd,masculine feminine,regular,5\r\nοιν,dual,dative,2nd,masculine feminine,regular primary,\r\nοῖν,dual,dative,2nd,masculine feminine,regular,5\r\nοιιν,dual,dative,2nd,masculine feminine,irregular,\r\nῴν,dual,dative,2nd,masculine feminine,irregular,7\r\nοιν,dual,genitive,2nd,masculine feminine,regular primary,\r\nοῖν,dual,genitive,2nd,masculine feminine,regular,5\r\nοιιν,dual,genitive,2nd,masculine feminine,irregular,\r\nῴν,dual,genitive,2nd,masculine feminine,irregular,7\r\nω,dual,nominative,2nd,masculine feminine,regular primary,60\r\nώ,dual,nominative,2nd,masculine feminine,regular,60\r\nω,dual,vocative,2nd,masculine feminine,regular primary,\r\nώ,dual,vocative,2nd,masculine feminine,regular,5\r\nω,dual,accusative,2nd,neuter,regular primary,\r\nώ,dual,accusative,2nd,neuter,regular,6\r\nοιν,dual,dative,2nd,neuter,regular primary,\r\nοῖν,dual,dative,2nd,neuter,regular,6\r\nοιιν,dual,dative,2nd,neuter,irregular,\r\nοιν,dual,genitive,2nd,neuter,regular primary,\r\nοῖν,dual,genitive,2nd,neuter,regular,6\r\nοιιν,dual,genitive,2nd,neuter,irregular,\r\nω,dual,nominative,2nd,neuter,regular primary,\r\nώ,dual,nominative,2nd,neuter,regular,6\r\nω,dual,vocative,2nd,neuter,regular primary,\r\nώ,dual,vocative,2nd,neuter,regular,6\r\nους,plural,accusative,2nd,masculine feminine,regular primary,\r\nούς,plural,accusative,2nd,masculine feminine,regular,41\r\nοῦς,plural,accusative,2nd,masculine feminine,regular,5\r\nονς,plural,accusative,2nd,masculine feminine,irregular,\r\nος,plural,accusative,2nd,masculine feminine,irregular,\r\nως,plural,accusative,2nd,masculine feminine,irregular,\r\nοις,plural,accusative,2nd,masculine feminine,irregular,\r\nώς,plural,accusative,2nd,masculine feminine,irregular,7\r\nοις,plural,dative,2nd,masculine feminine,regular primary,\r\nοῖς,plural,dative,2nd,masculine feminine,regular,5\r\nοισι,plural,dative,2nd,masculine feminine,irregular,\r\nοισιν,plural,dative,2nd,masculine feminine,irregular,4\r\nῴς,plural,dative,2nd,masculine feminine,irregular,7\r\nόφι,plural,dative,2nd,masculine feminine,irregular,45\r\nόφιv,plural,dative,2nd,masculine feminine,irregular,4 45\r\nων,plural,genitive,2nd,masculine feminine,regular primary,\r\nῶν,plural,genitive,2nd,masculine feminine,regular,5\r\nών,plural,genitive,2nd,masculine feminine,irregular,7\r\nόφι,plural,genitive,2nd,masculine feminine,irregular,45\r\nόφιv,plural,genitive,2nd,masculine feminine,irregular,4 45\r\nοι,plural,nominative,2nd,masculine feminine,regular primary,\r\nοί,plural,nominative,2nd,masculine feminine,regular,41\r\nοῖ,plural,nominative,2nd,masculine feminine,regular,5\r\nῴ,plural,nominative,2nd,masculine feminine,irregular,7\r\nοι,plural,vocative,2nd,masculine feminine,regular primary,\r\nοί,plural,vocative,2nd,masculine feminine,regular,41\r\nοῖ,plural,vocative,2nd,masculine feminine,regular,5\r\nα,plural,accusative,2nd,neuter,regular primary,\r\nᾶ,plural,accusative,2nd,neuter,regular,6\r\nοις,plural,dative,2nd,neuter,regular primary,\r\nοῖς,plural,dative,2nd,neuter,regular,6\r\nοισι,plural,dative,2nd,neuter,irregular,\r\nοισιν,plural,dative,2nd,neuter,irregular,4\r\nόφι,plural,dative,2nd,neuter,irregular,45\r\nόφιv,plural,dative,2nd,neuter,irregular,4 45\r\nων,plural,genitive,2nd,neuter,regular primary,\r\nῶν,plural,genitive,2nd,neuter,regular,6\r\nόφι,plural,genitive,2nd,neuter,irregular,45\r\nόφιv,plural,genitive,2nd,neuter,irregular,4 45\r\nα,plural,nominative,2nd,neuter,regular primary,\r\nᾶ,plural,nominative,2nd,neuter,regular,6\r\nα,plural,vocative,2nd,neuter,regular primary,\r\nᾶ,plural,vocative,2nd,neuter,regular,6\r\nον,singular,accusative,2nd,masculine feminine,regular primary,\r\nόν,singular,accusative,2nd,masculine feminine,regular primary,41\r\nουν,singular,accusative,2nd,masculine feminine,regular,5\r\nοῦν,singular,accusative,2nd,masculine feminine,regular,5\r\nω,singular,accusative,2nd,masculine feminine,irregular,7 5\r\nωv,singular,accusative,2nd,masculine feminine,irregular,7 59\r\nώ,singular,accusative,2nd,masculine feminine,irregular,7 42 59\r\nών,singular,accusative,2nd,masculine feminine,irregular,7 59\r\nῳ,singular,dative,2nd,masculine feminine,regular primary,\r\nῷ,singular,dative,2nd,masculine feminine,regular,5\r\nῴ,singular,dative,2nd,masculine feminine,irregular,7\r\nόφι,singular,dative,2nd,masculine feminine,irregular,45\r\nόφιv,singular,dative,2nd,masculine feminine,irregular,4 45\r\nου,singular,genitive,2nd,masculine feminine,regular primary,\r\nοῦ,singular,genitive,2nd,masculine feminine,regular,5\r\nοιο,singular,genitive,2nd,masculine feminine,irregular,\r\nοο,singular,genitive,2nd,masculine feminine,irregular,\r\nω,singular,genitive,2nd,masculine feminine,irregular,\r\nώ,singular,genitive,2nd,masculine feminine,irregular,7\r\nόφι,singular,genitive,2nd,masculine feminine,irregular,45\r\nόφιv,singular,genitive,2nd,masculine feminine,irregular,4 45\r\nος,singular,nominative,2nd,masculine feminine,regular primary,\r\nους,singular,nominative,2nd,masculine feminine,regular,5\r\noῦς,singular,nominative,2nd,masculine feminine,regular,5\r\nός,singular,nominative,2nd,masculine feminine,regular,\r\nώς,singular,nominative,2nd,masculine feminine,irregular,7 42\r\nως,singular,nominative,2nd,masculine feminine,irregular,\r\nε,singular,vocative,2nd,masculine feminine,regular primary,\r\nέ,singular,vocative,2nd,masculine feminine,regular,\r\nοu,singular,vocative,2nd,masculine feminine,regular,5\r\nοῦ,singular,vocative,2nd,masculine feminine,regular,42\r\nός,singular,vocative,2nd,masculine feminine,irregular,57\r\nον,singular,accusative,2nd,neuter,regular primary,\r\nοῦν,singular,accusative,2nd,neuter,regular,6\r\nῳ,singular,dative,2nd,neuter,regular primary,\r\nῷ,singular,dative,2nd,neuter,regular,6\r\nόφι,singular,dative,2nd,neuter,irregular,45\r\nόφιv,singular,dative,2nd,neuter,irregular,4 45\r\nου,singular,genitive,2nd,neuter,regular primary,\r\nοῦ,singular,genitive,2nd,neuter,regular,6\r\nοο,singular,genitive,2nd,neuter,irregular,\r\nοιο,singular,genitive,2nd,neuter,irregular,\r\nω,singular,genitive,2nd,neuter,irregular,\r\nόφι,singular,genitive,2nd,neuter,irregular,45\r\nόφιv,singular,genitive,2nd,neuter,irregular,4 45\r\nον,singular,nominative,2nd,neuter,regular primary,\r\nοῦν,singular,nominative,2nd,neuter,regular,6\r\nον,singular,vocative,2nd,neuter,regular primary,\r\nοῦν,singular,vocative,2nd,neuter,regular,6\r\nε,dual,accusative,3rd,masculine feminine,regular primary,\r\nει,dual,accusative,3rd,masculine feminine,regular,\r\nῆ,dual,accusative,3rd,masculine feminine,regular,18\r\nω,dual,accusative,3rd,masculine feminine,irregular,32\r\nῖ,dual,accusative,3rd,masculine feminine,irregular,33\r\nεε,dual,accusative,3rd,masculine feminine,irregular,16 55 61\r\nοιν,dual,dative,3rd,masculine feminine,regular primary,\r\nοῖν,dual,dative,3rd,masculine feminine,regular,\r\nοιιν,dual,dative,3rd,masculine feminine,irregular,54\r\nσι,dual,dative,3rd,masculine feminine,irregular,33 37\r\nεσσι,dual,dative,3rd,masculine feminine,irregular,33\r\nεσι,dual,dative,3rd,masculine feminine,irregular,33\r\nέοιν,dual,dative,3rd,masculine feminine,irregular,16 61\r\nῳν,dual,dative,3rd,masculine feminine,irregular,49\r\nοιν,dual,genitive,3rd,masculine feminine,primary regular,\r\nοῖν,dual,genitive,3rd,masculine feminine,regular,\r\nοιιν,dual,genitive,3rd,masculine feminine,irregular,54\r\nέοιν,dual,genitive,3rd,masculine feminine,irregular,16 61\r\nῳν,dual,genitive,3rd,masculine feminine,irregular,49\r\nε,dual,nominative,3rd,masculine feminine,regular primary,\r\nει,dual,nominative,3rd,masculine feminine,regular,\r\nῆ,dual,nominative,3rd,masculine feminine,regular,18\r\nω,dual,nominative,3rd,masculine feminine,irregular,32\r\nῖ,dual,nominative,3rd,masculine feminine,irregular,33\r\nεε,dual,nominative,3rd,masculine feminine,irregular,16 55 61\r\nε,dual,vocative,3rd,masculine feminine,regular primary,\r\nει,dual,vocative,3rd,masculine feminine,regular,\r\nῆ,dual,vocative,3rd,masculine feminine,regular,18\r\nω,dual,vocative,3rd,masculine feminine,irregular,32\r\nῖ,dual,vocative,3rd,masculine feminine,irregular,33\r\nεε,dual,vocative,3rd,masculine feminine,irregular,16 55 61\r\nε,dual,accusative,3rd,neuter,regular primary,\r\nει,dual,accusative,3rd,neuter,regular,\r\nα,dual,accusative,3rd,neuter,regular,\r\nεε,dual,accusative,3rd,neuter,irregular,16 61\r\nαε,dual,accusative,3rd,neuter,irregular,16 61\r\nοιν,dual,dative,3rd,neuter,regular primary,\r\nῷν,dual,dative,3rd,neuter,regular,\r\nοις,dual,dative,3rd,neuter,irregular,33 38\r\nοισι,dual,dative,3rd,neuter,irregular,33 38\r\nοισι(ν),dual,dative,3rd,neuter,irregular,4 33 38\r\nοιιν,dual,dative,3rd,neuter,irregular,\r\nέοιν,dual,dative,3rd,neuter,irregular,16 61\r\nάοιν,dual,dative,3rd,neuter,irregular,16 61\r\nοιν,dual,genitive,3rd,neuter,regular primary,\r\nῷν,dual,genitive,3rd,neuter,regular,\r\nων,dual,genitive,3rd,neuter,irregular,33 38\r\nοιιν,dual,genitive,3rd,neuter,irregular,\r\nέοιν,dual,genitive,3rd,neuter,irregular,16 61\r\nάοιν,dual,genitive,3rd,neuter,irregular,16 61\r\nε,dual,nominative,3rd,neuter,regular primary,\r\nει,dual,nominative,3rd,neuter,regular,\r\nα,dual,nominative,3rd,neuter,regular,\r\nεε,dual,nominative,3rd,neuter,irregular,16 61\r\nαε,dual,nominative,3rd,neuter,irregular,16 61\r\nε,dual,vocative,3rd,neuter,regular primary,\r\nει,dual,vocative,3rd,neuter,regular,\r\nα,dual,vocative,3rd,neuter,regular,\r\nεε,dual,vocative,3rd,neuter,irregular,16 61\r\nαε,dual,vocative,3rd,neuter,irregular,16 61\r\nας,plural,accusative,3rd,masculine feminine,regular primary,\r\nεις,plural,accusative,3rd,masculine feminine,regular,17 41\r\nες,plural,accusative,3rd,masculine feminine,regular,\r\nς,plural,accusative,3rd,masculine feminine,regular,\r\nῦς,plural,accusative,3rd,masculine feminine,regular,17 18 48\r\nως,plural,accusative,3rd,masculine feminine,regular,30\r\nῆς,plural,accusative,3rd,masculine feminine,irregular,56\r\nέας,plural,accusative,3rd,masculine feminine,irregular,\r\nέος,plural,accusative,3rd,masculine feminine,irregular,\r\nῆος,plural,accusative,3rd,masculine feminine,irregular,\r\nῆες,plural,accusative,3rd,masculine feminine,irregular,\r\nῆας,plural,accusative,3rd,masculine feminine,irregular,\r\nους,plural,accusative,3rd,masculine feminine,irregular,32\r\nούς,plural,accusative,3rd,masculine feminine,irregular,32\r\nεῖς,plural,accusative,3rd,masculine feminine,irregular,31 41\r\nεες,plural,accusative,3rd,masculine feminine,irregular,55 61\r\nις,plural,accusative,3rd,masculine feminine,irregular,\r\nινς,plural,accusative,3rd,masculine feminine,irregular,\r\nῶς,plural,accusative,3rd,masculine feminine,irregular,48\r\nσι,plural,dative,3rd,masculine feminine,regular primary,\r\nσιν,plural,dative,3rd,masculine feminine,regular primary,4\r\nσί,plural,dative,3rd,masculine feminine,regular,41\r\nσίν,plural,dative,3rd,masculine feminine,regular,4 41\r\nεσι,plural,dative,3rd,masculine feminine,regular,41\r\nεσιν,plural,dative,3rd,masculine feminine,regular,4 41\r\nέσι,plural,dative,3rd,masculine feminine,regular,\r\nέσιν,plural,dative,3rd,masculine feminine,regular,4\r\nψι,plural,dative,3rd,masculine feminine,regular,\r\nψιν,plural,dative,3rd,masculine feminine,regular,4\r\nψί,plural,dative,3rd,masculine feminine,regular,\r\nψίν,plural,dative,3rd,masculine feminine,regular,4\r\nξι,plural,dative,3rd,masculine feminine,regular,\r\nξιν,plural,dative,3rd,masculine feminine,regular,4\r\nξί,plural,dative,3rd,masculine feminine,regular,\r\nξίν,plural,dative,3rd,masculine feminine,regular,4\r\nφι,plural,dative,3rd,masculine feminine,irregular,45\r\nφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nηφι,plural,dative,3rd,masculine feminine,irregular,45\r\nηφιv,plural,dative,3rd,masculine feminine,irregular,4 45\r\nῆφι,plural,dative,3rd,masculine feminine,irregular,45\r\nῆφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nόφι,plural,dative,3rd,masculine feminine,irregular,45\r\nόφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nαις,plural,dative,3rd,masculine feminine,irregular,33 41\r\nοῖσι,plural,dative,3rd,masculine feminine,irregular,33\r\nοῖσιv,plural,dative,3rd,masculine feminine,irregular,4 33\r\nεσσι,plural,dative,3rd,masculine feminine,irregular,16 61\r\nεσσιv,plural,dative,3rd,masculine feminine,irregular,4 16 61\r\nυσσι,plural,dative,3rd,masculine feminine,irregular,54\r\nυσσιv,plural,dative,3rd,masculine feminine,irregular,4 54\r\nσσί,plural,dative,3rd,masculine feminine,irregular,54\r\nσσίv,plural,dative,3rd,masculine feminine,irregular,4 54\r\nων,plural,genitive,3rd,masculine feminine,regular primary,\r\nῶν,plural,genitive,3rd,masculine feminine,regular,\r\n-,plural,genitive,3rd,masculine feminine,irregular,41\r\nφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nηφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nηφιv,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nῆφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nῆφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nόφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nόφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nέων,plural,genitive,3rd,masculine feminine,irregular,16 61\r\nες,plural,nominative,3rd,masculine feminine,regular primary,\r\nως,plural,nominative,3rd,masculine feminine,regular,30\r\nεις,plural,nominative,3rd,masculine feminine,regular,17\r\nεῖς,plural,nominative,3rd,masculine feminine,regular,18\r\nοί,plural,nominative,3rd,masculine feminine,irregular,32\r\nαί,plural,nominative,3rd,masculine feminine,irregular,33\r\nῆς,plural,nominative,3rd,masculine feminine,irregular,18\r\nῄς,plural,nominative,3rd,masculine feminine,irregular,31 41\r\nεες,plural,nominative,3rd,masculine feminine,irregular,16 55 61\r\nοι,plural,nominative,3rd,masculine feminine,irregular,33\r\nες,plural,vocative,3rd,masculine feminine,regular primary,\r\nεις,plural,vocative,3rd,masculine feminine,regular,17\r\nεῖς,plural,vocative,3rd,masculine feminine,regular,18\r\nῆς,plural,vocative,3rd,masculine feminine,regular,18\r\nως,plural,vocative,3rd,masculine feminine,regular,30\r\nεες,plural,vocative,3rd,masculine feminine,irregular,16 55 61\r\nα,plural,accusative,3rd,neuter,regular primary,\r\nη,plural,accusative,3rd,neuter,regular,\r\nς,plural,accusative,3rd,neuter,regular,\r\nά,plural,accusative,3rd,neuter,irregular,33\r\nαα,plural,accusative,3rd,neuter,irregular,16 61\r\nεα,plural,accusative,3rd,neuter,irregular,16 61\r\nσι,plural,dative,3rd,neuter,regular primary,\r\nσιν,plural,dative,3rd,neuter,regular primary,4\r\nσί,plural,dative,3rd,neuter,regular,\r\nσίv,plural,dative,3rd,neuter,regular,4\r\nασι,plural,dative,3rd,neuter,regular,\r\nασιν,plural,dative,3rd,neuter,regular,4\r\nεσι,plural,dative,3rd,neuter,regular,\r\nεσιν,plural,dative,3rd,neuter,regular,4\r\nέσι,plural,dative,3rd,neuter,regular,\r\nέσιv,plural,dative,3rd,neuter,regular,4\r\nεσσι,plural,dative,3rd,neuter,irregular,54\r\nεσσιν,plural,dative,3rd,neuter,irregular,4 54\r\nσσί,plural,dative,3rd,neuter,irregular,54\r\nσσίv,plural,dative,3rd,neuter,irregular,4 54\r\nασσι,plural,dative,3rd,neuter,irregular,54\r\nασσιν,plural,dative,3rd,neuter,irregular,4 54\r\nφι,plural,dative,3rd,neuter,irregular,45\r\nφιν,plural,dative,3rd,neuter,irregular,4 45\r\nηφι,plural,dative,3rd,neuter,irregular,45\r\nηφιv,plural,dative,3rd,neuter,irregular,4 45\r\nῆφι,plural,dative,3rd,neuter,irregular,45\r\nῆφιν,plural,dative,3rd,neuter,irregular,4 45\r\nόφι,plural,dative,3rd,neuter,irregular,45\r\nόφιν,plural,dative,3rd,neuter,irregular,4 45\r\nων,plural,genitive,3rd,neuter,regular primary,\r\nῶν,plural,genitive,3rd,neuter,regular primary,\r\nφι,plural,genitive,3rd,neuter,irregular,\r\nφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nηφι,plural,genitive,3rd,neuter,irregular,45\r\nηφιv,plural,genitive,3rd,neuter,irregular,4 45\r\nῆφι,plural,genitive,3rd,neuter,irregular,45\r\nῆφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nόφι,plural,genitive,3rd,neuter,irregular,45\r\nόφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nέων,plural,genitive,3rd,neuter,irregular,16 61\r\nάων,plural,genitive,3rd,neuter,irregular,16 61\r\nα,plural,nominative,3rd,neuter,regular primary,\r\nη,plural,nominative,3rd,neuter,regular,\r\nες,plural,nominative,3rd,neuter,regular,\r\nά,plural,nominative,3rd,neuter,irregular,33\r\nεα,plural,nominative,3rd,neuter,irregular,16 61\r\nαα,plural,nominative,3rd,neuter,irregular,16 61\r\nα,plural,vocative,3rd,neuter,regular primary,\r\nη,plural,vocative,3rd,neuter,regular,\r\nες,plural,vocative,3rd,neuter,regular,\r\nαα,plural,vocative,3rd,neuter,irregular,16 61\r\nεα,plural,vocative,3rd,neuter,irregular,16 61\r\nα,singular,accusative,3rd,masculine feminine,regular primary,\r\nη,singular,accusative,3rd,masculine feminine,regular,16\r\nν,singular,accusative,3rd,masculine feminine,regular,\r\nιν,singular,accusative,3rd,masculine feminine,regular,41\r\nῦν,singular,accusative,3rd,masculine feminine,regular,18\r\nῶ,singular,accusative,3rd,masculine feminine,regular,23\r\nυν,singular,accusative,3rd,masculine feminine,regular,\r\nῦν,singular,accusative,3rd,masculine feminine,regular,17\r\nύν,singular,accusative,3rd,masculine feminine,regular,17\r\nέα,singular,accusative,3rd,masculine feminine,regular,20\r\nην,singular,accusative,3rd,masculine feminine,regular,24\r\nώ,singular,accusative,3rd,masculine feminine,regular,19 41\r\nω,singular,accusative,3rd,masculine feminine,regular,23\r\nεῖν,singular,accusative,3rd,masculine feminine,irregular,31 41\r\nων,singular,accusative,3rd,masculine feminine,irregular,33 41 49\r\nαν,singular,accusative,3rd,masculine feminine,irregular,33 41\r\nον,singular,accusative,3rd,masculine feminine,irregular,39\r\nῖς,singular,accusative,3rd,masculine feminine,irregular,33\r\nεα,singular,accusative,3rd,masculine feminine,irregular,61\r\nι,singular,dative,3rd,masculine feminine,regular primary,\r\nί,singular,dative,3rd,masculine feminine,regular,\r\nϊ,singular,dative,3rd,masculine feminine,regular,17\r\nΐ,singular,dative,3rd,masculine feminine,regular,40\r\nει,singular,dative,3rd,masculine feminine,regular,16 17\r\nεῖ,singular,dative,3rd,masculine feminine,regular,18\r\nαι,singular,dative,3rd,masculine feminine,regular,\r\noῖ,singular,dative,3rd,masculine feminine,regular,28 41\r\nῖ,singular,dative,3rd,masculine feminine,irregular,33 46\r\nῆι,singular,dative,3rd,masculine feminine,irregular,18\r\nᾳ,singular,dative,3rd,masculine feminine,irregular,25\r\nῳ,singular,dative,3rd,masculine feminine,irregular,33 34\r\nῷ,singular,dative,3rd,masculine feminine,irregular,33\r\nιί,singular,dative,3rd,masculine feminine,irregular,62\r\nυί,singular,dative,3rd,masculine feminine,irregular,62\r\nέϊ,singular,dative,3rd,masculine feminine,irregular,18 61\r\nος,singular,genitive,3rd,masculine feminine,regular primary,\r\nός,singular,genitive,3rd,masculine feminine,regular,\r\nους,singular,genitive,3rd,masculine feminine,regular,16\r\nοῦς,singular,genitive,3rd,masculine feminine,regular,19 46\r\nως,singular,genitive,3rd,masculine feminine,regular,17 18\r\nώς,singular,genitive,3rd,masculine feminine,regular,17 18 41\r\nῶς,singular,genitive,3rd,masculine feminine,regular,47\r\nεως,singular,genitive,3rd,masculine feminine,regular,17\r\nέως,singular,genitive,3rd,masculine feminine,regular,\r\nεώς,singular,genitive,3rd,masculine feminine,regular,\r\nέους,singular,genitive,3rd,masculine feminine,regular,20\r\nω,singular,genitive,3rd,masculine feminine,irregular,\r\nεος,singular,genitive,3rd,masculine feminine,irregular,61\r\nΰς,singular,genitive,3rd,masculine feminine,irregular,41 48\r\nῦς,singular,genitive,3rd,masculine feminine,irregular,48\r\nνος,singular,genitive,3rd,masculine feminine,irregular,22\r\nοῦ,singular,genitive,3rd,masculine feminine,irregular,33\r\nηος,singular,genitive,3rd,masculine feminine,irregular,55\r\nιός,singular,genitive,3rd,masculine feminine,irregular,62\r\nuός,singular,genitive,3rd,masculine feminine,irregular,62\r\nς,singular,nominative,3rd,masculine feminine,regular primary,\r\n-,singular,nominative,3rd,masculine feminine,regular primary,\r\nηρ,singular,nominative,3rd,masculine feminine,regular,41\r\nις,singular,nominative,3rd,masculine feminine,regular,\r\nϊς,singular,nominative,3rd,masculine feminine,regular,\r\nώ,singular,nominative,3rd,masculine feminine,regular,41\r\nψ,singular,nominative,3rd,masculine feminine,regular,\r\nξ,singular,nominative,3rd,masculine feminine,regular,\r\nρ,singular,nominative,3rd,masculine feminine,regular,\r\nήρ,singular,nominative,3rd,masculine feminine,regular,\r\nήν,singular,nominative,3rd,masculine feminine,regular,50\r\nν,singular,nominative,3rd,masculine feminine,regular,\r\nωρ,singular,nominative,3rd,masculine feminine,regular,\r\nων,singular,nominative,3rd,masculine feminine,regular,\r\nών,singular,nominative,3rd,masculine feminine,regular,\r\nης,singular,nominative,3rd,masculine feminine,regular,\r\nῆς,singular,nominative,3rd,masculine feminine,regular,\r\nυς,singular,nominative,3rd,masculine feminine,regular,\r\nῦς,singular,nominative,3rd,masculine feminine,regular,\r\nεῦς,singular,nominative,3rd,masculine feminine,regular,\r\nύς,singular,nominative,3rd,masculine feminine,regular,\r\nής,singular,nominative,3rd,masculine feminine,regular,33\r\nας,singular,nominative,3rd,masculine feminine,irregular,\r\nῴ,singular,nominative,3rd,masculine feminine,irregular,29 41\r\nώς,singular,nominative,3rd,masculine feminine,irregular,27 41\r\nϋς,singular,nominative,3rd,masculine feminine,irregular,41\r\nῄς,singular,nominative,3rd,masculine feminine,irregular,31 41\r\nῖς,singular,nominative,3rd,masculine feminine,irregular,\r\nεῖς,singular,nominative,3rd,masculine feminine,irregular,31 41\r\nῶς,singular,nominative,3rd,masculine feminine,irregular,48\r\nος,singular,nominative,3rd,masculine feminine,irregular,33\r\n-,singular,vocative,3rd,masculine feminine,regular primary,52\r\nς,singular,vocative,3rd,masculine feminine,regular,30\r\nι,singular,vocative,3rd,masculine feminine,regular,41\r\nῦ,singular,vocative,3rd,masculine feminine,regular,15 17 18\r\nοῖ,singular,vocative,3rd,masculine feminine,regular,19 41\r\nψ,singular,vocative,3rd,masculine feminine,regular,\r\nξ,singular,vocative,3rd,masculine feminine,regular,\r\nν,singular,vocative,3rd,masculine feminine,regular,\r\nρ,singular,vocative,3rd,masculine feminine,regular,\r\nων,singular,vocative,3rd,masculine feminine,regular,50\r\nών,singular,vocative,3rd,masculine feminine,regular,\r\nήν,singular,vocative,3rd,masculine feminine,regular,\r\nερ,singular,vocative,3rd,masculine feminine,regular,\r\nες,singular,vocative,3rd,masculine feminine,regular,\r\nί,singular,vocative,3rd,masculine feminine,regular,\r\nως,singular,vocative,3rd,masculine feminine,regular,\r\nἶ,singular,vocative,3rd,masculine feminine,regular,\r\nούς,singular,vocative,3rd,masculine feminine,regular,51\r\nύ,singular,vocative,3rd,masculine feminine,regular,15\r\nυ,singular,vocative,3rd,masculine feminine,regular,51\r\nεις,singular,vocative,3rd,masculine feminine,regular,20\r\nαν,singular,vocative,3rd,masculine feminine,regular,\r\nώς,singular,vocative,3rd,masculine feminine,irregular,27 41 46\r\nον,singular,vocative,3rd,masculine feminine,irregular,\r\nυς,singular,vocative,3rd,masculine feminine,irregular,33\r\nα,singular,accusative,3rd,neuter,regular primary,15\r\n-,singular,accusative,3rd,neuter,regular,33\r\nος,singular,accusative,3rd,neuter,regular,\r\nας,singular,accusative,3rd,neuter,regular,\r\nαρ,singular,accusative,3rd,neuter,regular,21\r\nυ,singular,accusative,3rd,neuter,regular,\r\nι,singular,dative,3rd,neuter,regular primary,\r\nει,singular,dative,3rd,neuter,regular,16\r\nαι,singular,dative,3rd,neuter,regular,16 21\r\nϊ,singular,dative,3rd,neuter,irregular,17\r\nᾳ,singular,dative,3rd,neuter,irregular,25 33\r\nυϊ,singular,dative,3rd,neuter,irregular,17\r\nαϊ,singular,dative,3rd,neuter,irregular,21 61\r\nος,singular,genitive,3rd,neuter,regular primary,\r\nους,singular,genitive,3rd,neuter,regular,16\r\nως,singular,genitive,3rd,neuter,regular,16\r\nεως,singular,genitive,3rd,neuter,regular,17\r\nυς,singular,genitive,3rd,neuter,irregular,26\r\nου,singular,genitive,3rd,neuter,irregular,33\r\nαος,singular,genitive,3rd,neuter,irregular,21 61\r\nα,singular,nominative,3rd,neuter,regular primary,\r\n-,singular,nominative,3rd,neuter,regular,33\r\nος,singular,nominative,3rd,neuter,regular,\r\nαρ,singular,nominative,3rd,neuter,regular,\r\nας,singular,nominative,3rd,neuter,regular,16 21\r\nυ,singular,nominative,3rd,neuter,regular,\r\nον,singular,nominative,3rd,neuter,irregular,33\r\nα,singular,vocative,3rd,neuter,regular primary,15\r\n-,singular,vocative,3rd,neuter,regular,\r\nος,singular,vocative,3rd,neuter,regular,\r\nας,singular,vocative,3rd,neuter,regular,\r\nαρ,singular,vocative,3rd,neuter,regular,21\r\nυ,singular,vocative,3rd,neuter,regular,";
+
+var nounFootnotesCSV$1 = "Index,Text\r\n1,See  for Rules of variance within regular endings\r\n2,See  for Table of α- and ε- stem feminine 1st declension contracts\r\n3,See  for Table of α- and ε- stem masculine 1st declension contracts\r\n4,\"Previous, with (ν)\"\r\n5,See  for Table of o- and ε- stem masculine  2nd declension contracts\r\n6,See  for Table of o- and ε- stem neuter 2nd declension contracts\r\n7,(Attic) contracts of o-stems preceded by a long vowel\r\n15,\"This is not actually an “ending,” but the last letter of the “pure stem”. See\"\r\n16,\"See  &  for Table of Sigma (ες,ας,ος) stem contracts\"\r\n17,See  for Table of  ι and υ - stem contracts\r\n18,\"See  for Table of  ευ,αυ,and ου - stem contracts\"\r\n19,See  for stems in οι feminine 3rd declension contracts\r\n20,See  for Table of 3rd declension contracts of stems in -εσ- preceded by ε\r\n21,See  for Table of stems in τ and ατ neuter 3rd declension contracts\r\n22,\"On stem ending in ν, ν doubled in gen. Sing Aeolic (e.g. μῆνς,μῆννος...)\"\r\n23,Also in inscriptions and expressions of swearing\r\n24,(Borrowed from 1st decl) Sometimes in proper names whose nominative ends in -ης\r\n25,From -ας-stems (properly αι)\r\n26,(ε)υς instead of (ε)ος or ους (gen) for (3rd decl) words whose nominative ends in -ος\r\n27,In 3rd decl. Only in the words αἰδώς (Attic) and ἠώς (Homer and Ionic)\r\n28,Contraction of a stem in οι  and an ι-ending\r\n29,Stronger form of Ionic contractions of οι-stems (in the nominative)\r\n30,See  for Table of ω - stem contracts (masculine only)\r\n31,Nominative plural contraction of  -ειδ+ες  after dropping the δ (used for accusative too). See .a\r\n32,\"Plurals & duals occur rarely (and w/ 2nd decl endings) for 3rd decl οι-stem nouns. See .D.a,b,c\"\r\n33,See  for description and examples of Irreg. Decl involving 3rd decl endings\r\n34,(Homer)  for Attic  (ῳτ)ι\r\n35,(Homer) for Cretan ινς\r\n36,Also an irregular ending for other stem(s)\r\n37,In inscriptions\r\n38,\"Plural endings for otherwise dual noun,οσσε (eyes)\"\r\n39,\"“Poetical” (acc for ἔρως). See ,11\"\r\n40,\"Poetic for χρωτι,dat. of ὁ χρως\"\r\n41,No Masculine of this Form\r\n42,No Feminine of this Form\r\n44,See  D.9 and #215 regarding dialectic alternate forms of the Dative Plural\r\n45,\"Surviving in Homer (See ) Not truly genitive or dative, but instrumental/locative/ablative, associated with the remaining oblique cases (genitive & dative) only after being lost as cases themselves in Greek\"\r\n46,See Smyth # 266 for only surviving ος-stem in Attic (fem. singular of αἰδως)\r\n47,See  for Substantives in -εύς preceded by a vowel.\r\n48,\"See Smyth,  #275 D.1,2,3\"\r\n49,\"See , List of Principal Irregular Substantives\"\r\n50,\"See  for Table of stems in a Liquid (λ,ρ) or a Nasal (ν), and Note #259D for variants including Κρονίων...\"\r\n51,\"See  for Table of stems in a Dental (τ,δ,θ) or a Nasal (ν), and its notes including Ν.κόρυς (Voc. Κόρυ) & ὀδούς\"\r\n52,See  for general rule re 3rd Declension Masc/Fem Singular Vocative\r\n54,See  D\r\n55,See\r\n56,\"See  for other forms of endings for contracts of ευ,αυ,and ου - stems\"\r\n57,Nominative form used as Vocative. See\r\n58,\"See ,b\"\r\n59,\"See ,d\"\r\n60,This (Feminine or Masculine) Form only Masculine when derived from ε- or ο- contraction\r\n61,See Smyth Note 264 D.1 regarding Homer's use of Open Forms\r\n62,See Smyth Note 269 for alternate i-stem and u-stem endings\r\n63,See  D.2\r\n64,See  D.1";
 
 /*
  * Latin language data module
@@ -3116,35 +3198,36 @@ let dataSet$1 = new LanguageDataset(language$1);
  analyzer's language modules as well.
  */
 const importerName$1 = 'csv';
-const parts$1 = dataSet$1.defineFeatureType(types$1.part, ['noun', 'adjective', 'verb']);
-const numbers$1 = dataSet$1.defineFeatureType(types$1.number, ['singular', 'dual', 'plural']);
+const parts$1 = dataSet$1.defineFeatureType(types.part, ['noun', 'adjective', 'verb']);
+const numbers$1 = dataSet$1.defineFeatureType(types.number, ['singular', 'dual', 'plural']);
 numbers$1.addImporter(importerName$1)
     .map('singular', numbers$1.singular)
     .map('dual', numbers$1.dual)
     .map('plural', numbers$1.plural);
-const cases$1 = dataSet$1.defineFeatureType(types$1.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative']);
+const cases$1 = dataSet$1.defineFeatureType(types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative']);
 cases$1.addImporter(importerName$1)
     .map('nominative', cases$1.nominative)
     .map('genitive', cases$1.genitive)
     .map('dative', cases$1.dative)
     .map('accusative', cases$1.accusative)
     .map('vocative', cases$1.vocative);
-const declensions$1 = dataSet$1.defineFeatureType(types$1.declension, ['first', 'second', 'third']);
+const declensions$1 = dataSet$1.defineFeatureType(types.declension, ['first', 'second', 'third']);
 declensions$1.addImporter(importerName$1)
     .map('1st', declensions$1.first)
     .map('2nd', declensions$1.second)
     .map('3rd', declensions$1.third);
-const genders$1 = dataSet$1.defineFeatureType(types$1.gender, ['masculine', 'feminine', 'neuter']);
+const genders$1 = dataSet$1.defineFeatureType(types.gender, ['masculine', 'feminine', 'neuter']);
 genders$1.addImporter(importerName$1)
     .map('masculine', genders$1.masculine)
     .map('feminine', genders$1.feminine)
     .map('neuter', genders$1.neuter)
     .map('masculine feminine', [genders$1.masculine, genders$1.feminine]);
-/*const types = dataSet.defineFeatureType(Lib.types.type, ['regular', 'irregular']);
-types.addImporter(importerName)
-    .map('regular', types.regular)
-    .map('irregular', types.irregular);
-const conjugations = dataSet.defineFeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
+const types$2 = dataSet$1.defineFeatureType(types.type, ['regular', 'irregular']);
+types$2.addImporter(importerName$1)
+    .map('regular', types$2.regular)
+    .map('primary regular', types$2.regular).map('regular primary', types$2.regular) // TODO: This is a temporary solution only
+    .map('irregular', types$2.irregular);
+/*const conjugations = dataSet.defineFeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
 conjugations.addImporter(importerName)
     .map('1st', conjugations.first)
     .map('2nd', conjugations.second)
@@ -3170,8 +3253,8 @@ const persons = dataSet.defineFeatureType(Lib.types.person, ['first', 'second', 
 persons.addImporter(importerName)
     .map('1st', persons.first)
     .map('2nd', persons.second)
-    .map('3rd', persons.third);
-const footnotes = dataSet.defineFeatureType(Lib.types.footnote, []);*/
+    .map('3rd', persons.third);*/
+const footnotes$1 = dataSet$1.defineFeatureType(types.footnote, []);
 
 // endregion Definition of grammatical features
 
@@ -3182,23 +3265,24 @@ dataSet$1.addSuffixes = function(partOfSpeech, data) {
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-        let suffix = data[i][0];
+        let dataItem = data[i];
+        let suffix = dataItem[0];
         // Handle special suffix values
         if (suffix === noSuffixValue) {
             suffix = null;
         }
 
         let features = [partOfSpeech,
-            numbers$1.importer.csv.get(data[i][1]),
-            cases$1.importer.csv.get(data[i][2]),
-            declensions$1.importer.csv.get(data[i][3]),
-            genders$1.importer.csv.get(data[i][4]),
-            types.importer.csv.get(data[i][5])];
-        if (data[i][6]) {
+            numbers$1.importer.csv.get(dataItem[1]),
+            cases$1.importer.csv.get(dataItem[2]),
+            declensions$1.importer.csv.get(dataItem[3]),
+            genders$1.importer.csv.get(dataItem[4]),
+            types$2.importer.csv.get(dataItem[5])];
+        if (dataItem[6]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
-            let indexes = data[i][6].split(' ').map(function(index) {
-                return footnotes.get(index);
+            let indexes = dataItem[6].split(' ').map(function(index) {
+                return footnotes$1.get(index);
             });
             features.push(...indexes);
         }
@@ -3230,14 +3314,14 @@ dataSet$1.addVerbSuffixes = function(partOfSpeech, data) {
         let grammarType = data[i][7];
         // Type information can be empty if no ending is provided
         if (grammarType) {
-            features.push(types.importer.csv.get(grammarType));
+            features.push(types$2.importer.csv.get(grammarType));
         }
         // Footnotes
         if (data[i][8]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
             let indexes = data[i][8].split(' ').map(function(index) {
-                return footnotes.get(index);
+                return footnotes$1.get(index);
             });
             features.push(...indexes);
         }
@@ -3254,11 +3338,11 @@ dataSet$1.addFootnotes = function(partOfSpeech, data) {
 
 dataSet$1.loadData = function() {
     // Nouns
-    /*let partOfSpeech = parts.noun;
-    let suffixes = papaparse.parse(nounSuffixesCSV, {});
+    let partOfSpeech = parts$1.noun;
+    let suffixes = papaparse.parse(nounSuffixesCSV$1, {});
     this.addSuffixes(partOfSpeech, suffixes.data);
-    let footnotes = papaparse.parse(nounFootnotesCSV, {});
-    this.addFootnotes(partOfSpeech, footnotes.data);*/
+    let footnotes = papaparse.parse(nounFootnotesCSV$1, {});
+    this.addFootnotes(partOfSpeech, footnotes.data);
 
     // Adjectives
     /*partOfSpeech = parts.adjective;
@@ -3286,10 +3370,10 @@ dataSet$1.loadData = function() {
 dataSet$1.matcher = function(inflections, suffix) {
     "use strict";
     // All of those features must match between an inflection and an ending
-    let obligatoryMatches = [types$1.part];
+    let obligatoryMatches = [types.part];
 
     // Any of those features must match between an inflection and an ending
-    let optionalMatches = [types$1.grmCase, types$1.declension, types$1.gender, types$1.number];
+    let optionalMatches = [types.grmCase, types.declension, types.gender, types.number];
     let bestMatchData = null; // Information about the best match we would be able to find
 
     /*
@@ -3393,27 +3477,27 @@ data.addFeature(typeName).add(providerValueName, LibValueName);
 (functions are chainable)
 Types and values that are unknown (undefined) will be skipped during parsing.
  */
-data$1.addFeature(types$1.part).importer
+data$1.addFeature(types.part).importer
     .map('noun', parts$1.noun);
 
-data$1.addFeature(types$1.grmCase).importer
+data$1.addFeature(types.grmCase).importer
     .map('nominative', cases$1.nominative)
     .map('genitive', cases$1.genitive)
     .map('dative', cases$1.dative)
     .map('accusative', cases$1.accusative)
     .map('vocative', cases$1.vocative);
 
-data$1.addFeature(types$1.declension).importer
+data$1.addFeature(types.declension).importer
     .map('1st', declensions$1.first)
     .map('2nd', declensions$1.second)
     .map('3rd', declensions$1.third);
 
-data$1.addFeature(types$1.number).importer
+data$1.addFeature(types.number).importer
     .map('singular', numbers$1.singular)
     .map('dual', numbers$1.dual)
     .map('plural', numbers$1.plural);
 
-data$1.addFeature(types$1.gender).importer
+data$1.addFeature(types.gender).importer
     .map('masculine', genders$1.masculine)
     .map('feminine', genders$1.feminine)
     .map('neuter', genders$1.neuter)
@@ -3464,43 +3548,43 @@ class TuftsAdapter {
 
                 // Parse whatever grammatical features we're interested in
                 if (inflectionJSON.pofs) {
-                    inflection.feature = this[language][types$1.part].get(inflectionJSON.pofs.$);
+                    inflection.feature = this[language][types.part].get(inflectionJSON.pofs.$);
                 }
 
                 if (inflectionJSON.case) {
-                    inflection.feature = this[language][types$1.grmCase].get(inflectionJSON.case.$);
+                    inflection.feature = this[language][types.grmCase].get(inflectionJSON.case.$);
                 }
 
                 if (inflectionJSON.decl) {
-                    inflection.feature = this[language][types$1.declension].get(inflectionJSON.decl.$);
+                    inflection.feature = this[language][types.declension].get(inflectionJSON.decl.$);
                 }
 
                 if (inflectionJSON.num) {
-                    inflection.feature = this[language][types$1.number].get(inflectionJSON.num.$);
+                    inflection.feature = this[language][types.number].get(inflectionJSON.num.$);
                 }
 
                 if (inflectionJSON.gend) {
-                    inflection.feature = this[language][types$1.gender].get(inflectionJSON.gend.$);
+                    inflection.feature = this[language][types.gender].get(inflectionJSON.gend.$);
                 }
 
                 if (inflectionJSON.conj) {
-                    inflection.feature = this[language][types$1.conjugation].get(inflectionJSON.conj.$);
+                    inflection.feature = this[language][types.conjugation].get(inflectionJSON.conj.$);
                 }
 
                 if (inflectionJSON.tense) {
-                    inflection.feature = this[language][types$1.tense].get(inflectionJSON.tense.$);
+                    inflection.feature = this[language][types.tense].get(inflectionJSON.tense.$);
                 }
 
                 if (inflectionJSON.voice) {
-                    inflection.feature = this[language][types$1.voice].get(inflectionJSON.voice.$);
+                    inflection.feature = this[language][types.voice].get(inflectionJSON.voice.$);
                 }
 
                 if (inflectionJSON.mood) {
-                    inflection.feature = this[language][types$1.mood].get(inflectionJSON.mood.$);
+                    inflection.feature = this[language][types.mood].get(inflectionJSON.mood.$);
                 }
 
                 if (inflectionJSON.pers) {
-                    inflection.feature = this[language][types$1.person].get(inflectionJSON.pers.$);
+                    inflection.feature = this[language][types.person].get(inflectionJSON.pers.$);
                 }
 
                 inflections.push(inflection);
@@ -5563,7 +5647,7 @@ let narrowView = {
     }
 };
 
-let footnotes$3 = {
+let footnotes$2 = {
     id: "inlection-table-footer"
 };
 
@@ -5749,7 +5833,7 @@ class RowTitleCell {
     /**
      * Initializes a row title cell.
      * @param {string} title - A text that will be shown within the cell.
-     * @param {GroupingFeature} groupingFeature - A grouping feature that specifies a row for which a title cell
+     * @param {GroupFeatureType} groupingFeature - A grouping feature that specifies a row for which a title cell
      * is created.
      * @param {number} nvGroupQty - A number of narrow view groups. Because each group will be shown separately
      * and will have its own title cells, we need to create a copy of a title cell for each such group.
@@ -5770,15 +5854,15 @@ class RowTitleCell {
         // Generate HTML representation for a wide view node
         this.wNode = document.createElement('div');
         this.wNode.classList.add(classNames.cell);
-        if (this.feature.isColumnGroup) {
+        if (this.feature.formsColumn) {
             this.wNode.classList.add(classNames.header);
         }
-        if (this.feature.isRowGroup && this.feature.isGroupTitleInRow) {
-            // This cell is taking entire row
+        if (this.feature.hasFullWidthRowTitle) {
+            // This cell is taking an entire row
             this.wNode.classList.add(classNames.fullWidth);
         }
-        if (this.feature.isColumnGroup && this.feature.groupingFeatureList.titleColumnsQuantity > 1) {
-            this.wNode.classList.add(classNames.widthPrefix + this.feature.groupingFeatureList.titleColumnsQuantity);
+        if (this.feature.formsColumn && this.feature.groupFeatureList.titleColumnsQuantity > 1) {
+            this.wNode.classList.add(classNames.widthPrefix + this.feature.groupFeatureList.titleColumnsQuantity);
         }
         this.wNode.innerHTML = this.title;
 
@@ -5861,7 +5945,7 @@ class HeaderCell {
     /**
      * Initializes a header cell.
      * @param {string} title - A title text that will be shown in the header cell.
-     * @param {GroupingFeature} groupingFeature - A feature that defines one or several columns this header forms.
+     * @param {GroupFeatureType} groupingFeature - A feature that defines one or several columns this header forms.
      * @param {number} [span=1] - How many columns in a table this header cell forms.
      */
     constructor(title, groupingFeature, span = 1) {
@@ -6175,131 +6259,90 @@ class Row {
 }
 
 /**
- * This is a wrapper around a Feature object. When a Table object creates a
+ * This is a wrapper around a FeatureType object. When a Table object creates a
  * hierarchical tree of suffixes, it uses grammatical features as tree nodes.
- * GroupingFeature extends a Feature object so that it'll be able to store additional information
+ * GroupFeatureType extends a Feature object so that it'll be able to store additional information
  * that is required for that.
  */
-class GroupingFeature {
-
+class GroupFeatureType extends FeatureType {
     /**
-     * Create a GroupingFeature object.
-     * @param {string} type - A type of the feature, allowed values are specified in 'types' object of the Library
-     * @param {string[] | string[][]} values - A list of allowed values for this feature type.
-     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     *
+     * @param {FeatureType} featureType - A feature that defines a type of this item.
      * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
      * language-specific message bundle.
-     * @returns {GroupingFeature} Returns a newly created object for chaining.
+     * @param {Feature[]} order - A list of feature items that identify a sort order of this feature type (optional).
+     * Use this parameter to redefine a deafult sort order for a type.
      */
-    constructor(type, values, language, titleMessageID) {
-        this._feature = new FeatureType(type, values, language);
+    constructor(featureType, titleMessageID, order = featureType.orderedFeatures) {
+        super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.language);
 
         this.groupTitle = titleMessageID;
         this._groupType = undefined;
-        this._titleLocation = undefined;
 
-        this.groupingFeatureList = undefined;
-        return this;
+        this.groupFeatureList = undefined;
+
+
+        // Properties below are required to store information during tree creation
+        this.subgroups = []; // Each value of the feature
+        this.cells = []; // All cells within this group and below
+        this.parent = undefined;
+        this.header = undefined;
+
+        this._formsColumn = false;
+        this._formsRow = false;
+        this.hasColumnRowTitle = false; // Whether this feature has a title of a suffix row in the left-side column.
+        this.hasFullWidthRowTitle = false; // Whether this feature has a title of suffix rows that spans the whole table width.
     }
 
     /**
-     * Creates a copy of a grouping feature, copying all its properties.
-     * @returns {GroupingFeature} - A copy of a grouping feature.
+     * Converts a list of Feature objects into a list of strings that represent their values. Keeps tha original
+     * array structure intact (work with up two two array levels).
+     * @param {Feature[] | Feature[][]} features - An array of feature objects.
+     * @return {string[] | strings[][]} A matching array of strings with feature values.
      */
-    clone() {
-        let clone = new GroupingFeature(this._feature.type, this._feature.orderIndex, this._feature.language);
-        clone._groupType = this._groupType;
-        clone.groupTitle = this.groupTitle;
-        clone._titleLocation = this._titleLocation;
-        return clone;
-    }
-
-    /**
-     * Returns a grammatical feature object.
-     * @returns {FeatureType} - A FeatureType object.
-     */
-    get feature() {
-        return this._feature;
-    }
-
-    /**
-     *  Returns a type of this feature.
-     * @returns {string} - A feature type.
-     */
-    get type() {
-        return this._feature.type;
-    }
-
-    /**
-     * Set that this feature would form a column.
-     * @returns {GroupingFeature} Returns itself for chaining.
-     */
-    setColumnGroupType() {
-        this._groupType = 'column';
-        return this;
+    static featuresToValues(features) {
+        return features.map( (feature) => {
+            if (Array.isArray(feature)) {
+                return feature.map( (feature) => feature.value );
+            }
+            else {
+                return feature.value;
+            }
+        });
     }
 
     /**
      * Whether this feature forms a columns group.
      * @returns {boolean} True if this feature forms a column.
      */
-    get isColumnGroup() {
-        return this._groupType === 'column';
+    get formsColumn() {
+        return this._formsColumn;
     }
 
     /**
-     * Set that this feature would form a row.
-     * @returns {GroupingFeature} Returns itself for chaining.
+     * Sets that this feature would form a column.
+     * @param {boolean} value
      */
-    setRowGroupType() {
-        this._groupType = 'row';
-        return this;
+    set formsColumn(value) {
+        this._formsColumn = value;
+        this._formsRow = !value; // Can't do both
     }
 
     /**
      * Whether this feature forms a row group.
      * @returns {boolean} True if this feature forms a row.
      */
-    get isRowGroup() {
-        return this._groupType === 'row';
+    get formsRow() {
+        return this._formsRow;
     }
 
     /**
-     * Set that this feature title cell would be located in a column row.
-     * @returns {GroupingFeature} Returns itself for chaining.
+     * Sets that this feature would form a row.
+     * @param {boolean} value
      */
-    setColumnGroupTitleLocation() {
-        this._titleLocation = 'column';
-        return this;
-    }
-
-    /**
-     * Whether this group would have a title cell located in a column row. Used to calculate how many title
-     * columns a table would have.
-     * @returns {boolean}
-     */
-    get isTitleInColumn() {
-        return this._titleLocation === 'column';
-    }
-
-    /**
-     * Set that this feature title cell would occupy a whole row and would create a group that will combine
-     * other rows.
-     * @returns {GroupingFeature}
-     */
-    setRowGroupTitleLocation() {
-        this._titleLocation = 'row';
-        return this;
-    }
-
-    /**
-     * Whether this group would have a title cell occupying a whole row, instead of being in a title column. This
-     * is usually used for features that group several rows together. Each row in such group would be formed by
-     * some other feature that would be a 'subfeature' of this 'row title' feature.
-     * @returns {boolean}
-     */
-    get isGroupTitleInRow() {
-        return this._titleLocation === 'row';
+    set formsRow(value) {
+        this._formsRow = value;
+        this._formsColumn = !value; // Can't do both
     }
 
     /**
@@ -6307,34 +6350,16 @@ class GroupingFeature {
      * @returns {Number} A number of groupes formed by this feature.
      */
     get size() {
-        return this._feature.orderIndex.length;
-    }
-
-    /**
-     * Returns an array that lists all possible values of this feature in an order.
-     * This order is used for sorting columns and rows that formed by feature values.
-     * @returns {string[]|string[][]}
-     */
-    get orderIndex() {
-        return this._feature.orderIndex;
-    }
-
-    /**
-     * Returns copies of all feature values in an array sorted according to orderIndex.
-     * A proxy to FeatureType.orderedValues.
-     * @returns {Feature[]} Array of feature values sorted according to orderIndex.
-     */
-    get orderedValues() {
-        return this._feature.orderedValues;
+        return this.orderIndex.length;
     }
 
     /**
      * Checks if two grouping features are of the same type.
-     * @param {GroupingFeature} groupingFeature - A grouping feature to compare with the current one.
+     * @param {GroupFeatureType} groupingFeature - A grouping feature to compare with the current one.
      * @returns {boolean} True if grouping features are of the same type.
      */
     isSameType(groupingFeature) {
-        return this._feature.type === groupingFeature.feature.type;
+        return this.type === groupingFeature.type;
     }
 
     /**
@@ -6352,53 +6377,48 @@ class GroupingFeature {
 /**
  * Holds a list of all grouping features of a table.
  */
-class GroupingFeatureList {
+class GroupFeatureList extends FeatureList {
 
     /**
      * Initializes object with an array of grouping feature objects.
-     * @param {GroupingFeature[]} features - An array of grouping features for a table.
+     * @param {GroupFeatureType[]} features - An array of features that form a table.
+     * An order of features defines in what order a table tree would be built.
      */
     constructor(features) {
-        this._features = features;
-        this._columnFeatures = [];
-        this._rowFeatures = [];
+        super(features);
+        this._columnFeatures = []; // Features that group cells into columns
+        this._rowFeatures = []; // Features that group cells into rows
 
-        if (this._features) {
-            for (let feature of this._features) {
-                feature.groupingFeatureList = this;
-            }
-
-            for (let feature of this._features) {
-                if (feature.isColumnGroup) {
-                    this._columnFeatures.push(feature);
-                }
-
-                if (feature.isRowGroup) {
-                    this._rowFeatures.push(feature);
-                }
-            }
-        }
-    }
-
-    /**
-     * Returns an array of grouping features.
-     * @returns {GroupingFeature[]} - An array of grouping features.
-     */
-    get items() {
-        return this._features;
+        this.forEach((feature) => feature.groupFeatureList = this);
     }
 
     /**
      * Return a list of all grouping features that form columns.
-     * @returns {GroupingFeature[]} - An array of grouping features.
+     * @returns {GroupFeatureType[]} - An array of grouping features.
      */
     get columnFeatures() {
         return this._columnFeatures;
     }
 
     /**
+     * Defines what features form columns. An order of items specifies an order in which columns be shown.
+     * @param {Feature[] | GroupingFeature[]} features - What features form columns and what order
+     * these columns would follow.
+     */
+    set columns(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.formsColumn = true;
+            this._columnFeatures.push(matchingFeature);
+        }
+    }
+
+    /**
      * Returns a first column feature item.
-     * @returns {GroupingFeature} A fist column feature.
+     * @returns {GroupFeatureType} A fist column feature.
      */
     get firstColumnFeature() {
         if (this._columnFeatures && this._columnFeatures.length) {
@@ -6408,7 +6428,7 @@ class GroupingFeatureList {
 
     /**
      * Returns a last column feature item.
-     * @returns {GroupingFeature} A last column feature.
+     * @returns {GroupFeatureType} A last column feature.
      */
     get lastColumnFeature() {
         if (this._columnFeatures && this._columnFeatures.length) {
@@ -6418,15 +6438,32 @@ class GroupingFeatureList {
 
     /**
      * Return a list of all grouping features that form rows.
-     * @returns {GroupingFeature[]} - An array of grouping rows.
+     * @returns {GroupFeatureType[]} - An array of grouping rows.
      */
     get rowFeatures() {
         return this._rowFeatures;
     }
 
     /**
+     * Defines what features form rows. An order of items specifies an order in which columns be shown.
+     * @param {Feature[] | GroupingFeature[]} features - What features form rows and what order
+     * these rows would follow.
+     */
+    set rows(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.formsRow = true;
+            this._rowFeatures.push(matchingFeature);
+        }
+        return this;
+    }
+
+    /**
      * Returns a first row feature item.
-     * @returns {GroupingFeature} A fist row feature.
+     * @returns {GroupFeatureType} A fist row feature.
      */
     get firstRowFeature() {
         if (this._rowFeatures && this._rowFeatures.length) {
@@ -6436,11 +6473,43 @@ class GroupingFeatureList {
 
     /**
      * Returns a last row feature item.
-     * @returns {GroupingFeature} A last row feature.
+     * @returns {GroupFeatureType} A last row feature.
      */
     get lastRowFeature() {
         if (this._rowFeatures && this._rowFeatures.length) {
             return this._rowFeatures[this._rowFeatures.length - 1];
+        }
+    }
+
+    /**
+     * Defines what are the titles of suffix cell rows within a table body.
+     * The number of such items defines how many left-side title columns this table would have (default is one).
+     * Full width titles (see below) does not need to be specified here.
+     * @param {Feature | GroupingFeature} features - What suffix row titles this table would have.
+     */
+    set columnRowTitles(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.hasColumnRowTitle = true;
+        }
+    }
+
+    /**
+     * In inflection tables, titles of features are usually located in left-side columns. However, some titles that
+     * group several rows together may span the whole table width. This setters defines
+     * what those features are.
+     * @param {Feature | GroupingFeature} features - What feature titles would take a whole row
+     */
+    set fullWidthRowTitles(features) {
+        for (let feature of features) {
+            let matchingFeature = this.ofType(feature.type);
+            if (!matchingFeature) {
+                throw new Error(`Feature of ${feature.type} is not found.`)
+            }
+            matchingFeature.hasFullWidthRowTitle = true;
         }
     }
 
@@ -6459,7 +6528,7 @@ class GroupingFeatureList {
     get titleColumnsQuantity() {
         let quantity = 0;
         for (let feature of this._features) {
-            if (feature.isTitleInColumn) {
+            if (feature.hasColumnRowTitle) {
                 quantity++;
             }
         }
@@ -6468,9 +6537,9 @@ class GroupingFeatureList {
 }
 
 /**
- * Container that is used to store group data during feature tree construction.
+ * Stores group data during feature tree construction.
  */
-class FeatureGroup {
+class NodeGroup {
 
     /**
      * Creates feature group data structures.
@@ -6713,19 +6782,12 @@ class Table {
 
     /**
      * Initializes an inflection table.
-     * This function is chainable.
-     * @param {GroupingFeature[]} groupingFeatures - An array of grouping features. An order of elements in this array
-     * defines in what order suffixes will be grouped into a table. An order of grammatical features
-     * within each feature element defines in what order grammatical feature values be shown in a table.
-     * @param {MessageBundle} messages - A bundle of messages for one particular language.
-     * @returns {Table} Reference to self for chaining.
+     * @param {GroupFeatureType[]} features - An array of grouping features. An order of elements in this array
      */
-    constructor(groupingFeatures, messages) {
-        this.features = new GroupingFeatureList(groupingFeatures);
-        this.messages = messages;
+    constructor(features) {
+        this.features = new GroupFeatureList(features);
         this.emptyColumnsHidden = false;
         this.cells = []; // Will be populated by groupByFeature()
-        return this;
     }
 
     /**
@@ -6819,33 +6881,36 @@ class Table {
      * Each level corresponds to a one grouping feature. The order of items in GroupingFeatures List object
      * defines an order of those levels.
      * Nodes on each level are values of a grammatical feature that forms this level. An order of those values
-     * is determined by the order of values within a GroupingFeature object of each feature.
+     * is determined by the order of values within a GroupFeatureType object of each feature.
      * This is a recursive function.
      * @param {Suffix[]} suffixes - Suffixes to be grouped.
      * @param {Feature[]} featureTrail - A temporary array to store all feature values on levels above the current.
      * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
-     * @returns {FeatureGroup} A top level group of suffixes that contain subgroups all way down to the last group.
+     * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
      */
     groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
-        let group = new FeatureGroup();
+        let group = new NodeGroup();
+        let groupNew = this.features.items[currentLevel];
         group.feature = this.features.items[currentLevel];
 
         // Iterate over each value of the feature
-        for (const featureValue of group.feature.orderedValues) {
-            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === group.feature.type) {
+        for (const featureValue of groupNew.orderedFeatures) {
+            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === groupNew.type) {
                 // Remove previously inserted feature of the same type
                 featureTrail.pop();
             }
             featureTrail.push(featureValue);
 
             // Suffixes that are selected for current combination of feature values
-            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.feature.type, featureValue.value));
+            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, groupNew.type, featureValue.value));
 
             if (currentLevel < this.features.length - 1) {
                 // Divide to further groups
                 let subGroup = this.groupByFeature(selectedSuffixes, featureTrail, currentLevel + 1);
                 group.subgroups.push(subGroup);
+                groupNew.subgroups.push(subGroup);
                 group.cells = group.cells.concat(subGroup.cells);
+                groupNew.cells = groupNew.cells.concat(subGroup.cells);
             }
             else {
                 // This is the last level. This represent a cell with suffixes
@@ -6856,7 +6921,9 @@ class Table {
 
                 let cell = new Cell(selectedSuffixes, featureTrail.slice());
                 group.subgroups.push(cell);
+                groupNew.subgroups.push(cell);
                 group.cells.push(cell);
+                groupNew.cells.push(cell);
                 this.cells.push(cell);
                 cell.index = this.cells.length - 1;
             }
@@ -6868,7 +6935,7 @@ class Table {
     /**
      * Create columns out of a suffixes organized into a tree.
      * This is a recursive function.
-     * @param {FeatureGroup} tree - A tree of suffixes.
+     * @param {NodeGroup} tree - A tree of suffixes.
      * @param {Column[]} columns - An array of columns to be constructed.
      * @param {number} currentLevel - Current recursion level.
      * @returns {Array} An array of columns of suffix cells.
@@ -6883,7 +6950,7 @@ class Table {
             // Iterate until it is the last row feature
             if (!currentFeature.isSameType(this.features.lastRowFeature)) {
                 let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1);
-                if (currentFeature.isRowGroup) {
+                if (currentFeature.formsRow) {
                     // TODO: Avoid creating extra cells
 
 
@@ -6914,7 +6981,7 @@ class Table {
                 groups.push(group);
             }
         }
-        if (currentFeature.isRowGroup) {
+        if (currentFeature.formsRow) {
             return groups;
         }
         return columns;
@@ -6923,7 +6990,7 @@ class Table {
     /**
      * Creates an array of header cell rows.
      * This is a recursive function.
-     * @param {FeatureGroup} tree - A tree of suffixes.
+     * @param {NodeGroup} tree - A tree of suffixes.
      * @param {Row[]} headers - An array of rows with header cells.
      * @param {number} currentLevel - Current recursion level.
      * @returns {Array} A two-dimensional array of header cell rows.
@@ -7091,7 +7158,7 @@ class Footnotes {
         this.footnotes = footnotes;
 
         this.nodes = document.createElement('dl');
-        this.nodes.id = footnotes$3.id;
+        this.nodes.id = footnotes$2.id;
         this.nodes.classList.add(classNames.footnotesContainer);
         for (let footnote of footnotes) {
             let index = document.createElement('dt');
@@ -7123,37 +7190,27 @@ class View {
      * but there could be several views for the same part of speech that show different table representation of a view.
      * @param {Object} viewOptions
      */
-    constructor(viewOptions) {
+    constructor() {
 
-        this.options = viewOptions;
+        //this.options = viewOptions;
         this.pageHeader = {};
-        this.table = {};
 
         // An HTML element where this view is rendered
         this.container = undefined;
+
+        // Must be implemented in a descendant
+        this.id = 'baseView';
+        this.name = 'base view';
+        this.title = 'Base View';
+        this.language = undefined;
+        this.partOfSpeech = undefined;
     }
 
     /**
-     * Returns a part of speech of this view.
-     * @returns {string} A part of speech of this view.
-     */
-    get partOfSpeech() {
-        return this.options.partOfSpeech;
-    }
-
-    /**
-     * Returns an ID of this view.
-     * @returns {string} An ID of this view.
-     */
-    get id() {
-        return this.options.id;
-    }
-
-    /**
-     * Converts a ResultSet, returned from inflection tables library, into an HTML representation of an inflection table
+     * Converts a WordData, returned from inflection tables library, into an HTML representation of an inflection table
      * and inserts that HTML into a `container` HTML element. `messages` provides a translation for view's texts.
      * @param {HTMLElement} container - An HTML element where this view will be inserted.
-     * @param {ResultSet} resultSet - A result set from inflection tables library.
+     * @param {WordData} resultSet - A result set from inflection tables library.
      * @param {MessageBundle} messages - A message bundle with message translations.
      */
     render(container, resultSet, messages) {
@@ -7162,12 +7219,15 @@ class View {
         this.messages = messages;
         this.container = container;
         this.resultSet = resultSet;
-        let selection = resultSet[this.options.partOfSpeech];
+        let selection = resultSet[this.partOfSpeech];
 
         this.footnotes = new Footnotes(selection.footnotes);
 
-        //this.table = new Table(selection.suffixes, this.options.groupingFeatures, messages);
-        this.table = new Table(this.options.groupingFeatures, messages).construct(selection.suffixes).constructViews();
+        //this.table = new Table(selection.suffixes, this.groupingFeatures, messages);
+        //this.table = new Table();
+        //this.setTableData();
+        this.table.messages = messages;
+        this.table.construct(selection.suffixes).constructViews();
         this.display();
     }
 
@@ -7179,11 +7239,11 @@ class View {
         this.container.innerHTML = '';
 
         let word = document.createElement('h2');
-        word.innerHTML = this.resultSet.word;
+        word.innerHTML = this.resultSet.homonym.targetWord;
         this.container.appendChild(word);
 
         let title = document.createElement('h3');
-        title.innerHTML = this.options.title;
+        title.innerHTML = this.title;
         this.container.appendChild(title);
 
         this.pageHeader = { nodes: document.createElement('div') };
@@ -7253,299 +7313,293 @@ class View {
     }
 }
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+class LatinView extends View {
+    constructor() {
+        super();
+        this.language = languages.latin;
 
-let numbers$2 = new GroupingFeature(
-    types$1.number,
-    ['singular', 'plural'],
-    languages.latin,
-    'Number')
-    .setRowGroupType()
-    .setRowGroupTitleLocation();
+        /*
+        Default grammatical features of a view. It child views need to have different feature values, redefine
+        those values in child objects.
+         */
+        this.features = {
+            numbers: new GroupFeatureType(numbers, 'Number'),
+            cases: new GroupFeatureType(cases, 'Case'),
+            declensions: new GroupFeatureType(declensions, 'Declension'),
+            genders: new GroupFeatureType(genders, 'Gender'),
+            types: new GroupFeatureType(types$1, 'Type')
+        };
+    }
 
-let cases$2 = new GroupingFeature(
-    types$1.grmCase,
-    ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
-    languages.latin,
-    'Case')
-    .setRowGroupType()
-    .setColumnGroupTitleLocation();
+    /**
+     * Creates and initializes an inflection table. Redefine this method in child objects in order to create
+     * an inflection table differently.
+     */
+    createTable() {
+        this.table = new Table([this.features.declensions, this.features.genders,
+            this.features.types, this.features.numbers, this.features.cases]);
+        let features = this.table.features;
+        features.columns = [declensions, genders, types$1];
+        features.rows = [numbers, cases];
+        features.columnRowTitles = [cases];
+        features.fullWidthRowTitles = [numbers];
+    }
+}
 
-let declensions$2 = new GroupingFeature(
-    types$1.declension,
-    ['first', 'second', 'third', 'fourth', 'fifth'],
-    languages.latin,
-    'Declension')
-    .setColumnGroupType()
-    .setRowGroupTitleLocation();
+class NounView extends LatinView {
+    constructor() {
+        super();
+        this.id = 'nounDeclension';
+        this.name = 'noun declension';
+        this.title = 'Noun declension';
+        this.partOfSpeech = parts.noun.value;
 
-let genders$2 = new GroupingFeature(
-    types$1.gender,
-    [['masculine', 'feminine'], 'neuter'],
-    languages.latin,
-    'Gender')
-    .setColumnGroupType()
-    .setRowGroupTitleLocation();
+        // Features that are different from base class values
+        this.features.genders = new GroupFeatureType(genders, 'Gender',
+            [[genders.masculine, genders.feminine], genders.neuter]);
 
-let types$3 = new GroupingFeature(
-    types$1.type,
-    ['regular', 'irregular'],
-    languages.latin,
-    'Type')
-    .setColumnGroupType()
-    .setRowGroupTitleLocation();
+        this.createTable();
+    }
+}
 
-let viewOptions = {
-    id: 'nounDeclension',
-    name: 'noun declension',
-    title: 'Noun declension',
-    partOfSpeech: parts.noun.value,
-    groupingFeatures: [declensions$2, genders$2, types$3, numbers$2, cases$2]
-};
+class AdjectiveView extends LatinView {
+    constructor() {
+        super();
+        this.id = 'adjectiveDeclension';
+        this.name = 'adjective declension';
+        this.title = 'Adjective declension';
+        this.partOfSpeech = parts.adjective.value;
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+        // Features that are different from base class values
+        this.features.declensions = new GroupFeatureType(declensions, 'Declension',
+            [declensions.first, declensions.second, declensions.third]);
 
-let numbers$3 = new GroupingFeature(
-    types$1.number,
-    ['singular', 'plural'],
-    languages.latin,
-    'Number')
-    .setRowGroupType()
-    .setRowGroupTitleLocation();
+        this.createTable();
+    }
+}
 
-let cases$3 = new GroupingFeature(
-    types$1.grmCase,
-    ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],
-    languages.latin,
-    'Case')
-    .setRowGroupType()
-    .setColumnGroupTitleLocation();
+class VerbView extends LatinView {
+    constructor() {
+        super();
+        this.partOfSpeech = parts.verb.value;
 
-let declensions$3 = new GroupingFeature(
-    types$1.declension,
-    ['first', 'second', 'third'],
-    languages.latin,
-    'Declension')
-    .setColumnGroupType()
-    .setRowGroupTitleLocation();
+        this.features = {
+            tenses: new GroupFeatureType(tenses$1, 'Tenses'),
+            numbers: new GroupFeatureType(numbers, 'Number'),
+            persons: new GroupFeatureType(persons$1, 'Person'),
+            voices: new GroupFeatureType(voices$1, 'Voice'),
+            conjugations: new GroupFeatureType(conjugations$1, 'Conjugation Stem'),
+            moods: new GroupFeatureType(moods$1, 'Mood')
+        };
+    }
+}
 
-let genders$3 = new GroupingFeature(
-    types$1.gender,
-    ['masculine', 'feminine', 'neuter'],
-    languages.latin,
-    'Gender')
-    .setColumnGroupType()
-    .setRowGroupTitleLocation();
+class VoiceConjugationMoodView extends VerbView {
+    constructor() {
+        super();
+        this.id = 'verbVoiceConjugationMood';
+        this.name = 'verb voice-conjugation-mood';
+        this.title = 'Voice-Conjugation-Mood';
 
-let types$4 = new GroupingFeature(
-    types$1.type,
-    ['regular', 'irregular'],
-    languages.latin,
-    'Type')
-    .setColumnGroupType()
-    .setRowGroupTitleLocation();
+        this.createTable();
+    }
 
-let viewOptions$1 = {
-    id: 'adjectiveDeclension',
-    name: 'adjective declension',
-    title: 'Adjective declension',
-    partOfSpeech: parts.adjective.value,
-    groupingFeatures: [declensions$3, genders$3, types$4, numbers$3, cases$3]
-};
+    createTable() {
+        this.table = new Table([this.features.voices, this.features.conjugations, this.features.moods,
+            this.features.tenses, this.features.numbers, this.features.persons]);
+        let features = this.table.features;
+        features.columns = [voices$1, conjugations$1, moods$1];
+        features.rows = [tenses$1, numbers, persons$1];
+        features.columnRowTitles = [numbers, persons$1];
+        features.fullWidthRowTitles = [tenses$1];
+    }
+}
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+class VoiceMoodConjugationView extends VerbView {
+    constructor() {
+        super();
+        this.id = 'verbVoiceMoodConjugation';
+        this.name = 'verb voice-mood-conjugation';
+        this.title = 'Voice-Mood-Conjugation';
 
-let tenses$3 = new GroupingFeature(
-    types$1.tense,
-    ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],
-    languages.latin,
-    'Tense');
+        this.createTable();
+    }
 
-let numbers$5 = new GroupingFeature(
-    types$1.number,
-    ['singular', 'plural'],
-    languages.latin,
-    'Number');
+    createTable() {
+        this.table = new Table([this.features.voices, this.features.moods, this.features.conjugations,
+            this.features.tenses, this.features.numbers, this.features.persons]);
+        let features = this.table.features;
+        features.columns = [voices$1, moods$1, conjugations$1];
+        features.rows = [tenses$1, numbers, persons$1];
+        features.columnRowTitles = [numbers, persons$1];
+        features.fullWidthRowTitles = [tenses$1];
+    }
+}
 
-let persons$3 = new GroupingFeature(
-    types$1.person,
-    ['first', 'second', 'third'],
-    languages.latin,
-    'Person');
+class ConjugationVoiceMoodView extends VerbView {
+    constructor() {
+        super();
+        this.id = 'verbConjugationVoiceMood';
+        this.name = 'verb conjugation-voice-mood';
+        this.title = 'Conjugation-Voice-Mood';
 
-let voices$3 = new GroupingFeature(
-    types$1.voice,
-    ['active', 'passive'],
-    languages.latin,
-    'Voice');
+        this.createTable();
+    }
 
-let conjugations$3 = new GroupingFeature(
-    types$1.conjugation,
-    ['first', 'second', 'third', 'fourth'],
-    languages.latin,
-    'Conjugation Stem');
+    createTable() {
+        this.table = new Table([this.features.conjugations, this.features.voices, this.features.moods,
+            this.features.tenses, this.features.numbers, this.features.persons]);
+        let features = this.table.features;
+        features.columns = [conjugations$1, voices$1, moods$1];
+        features.rows = [tenses$1, numbers, persons$1];
+        features.columnRowTitles = [numbers, persons$1];
+        features.fullWidthRowTitles = [tenses$1];
+    }
+}
 
-let moods$3 = new GroupingFeature(
-    types$1.mood,
-    ['indicative', 'subjunctive'],
-    languages.latin,
-    'Mood');
+class ConjugationMoodVoiceView extends VerbView {
+    constructor() {
+        super();
+        this.id = 'verbConjugationMoodVoice';
+        this.name = 'verb conjugation-mood-voice';
+        this.title = 'Conjugation-Mood-Voice';
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+        this.createTable();
+    }
 
-let tenses$2 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$4 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$2 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$2 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$2 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$2 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+    createTable() {
+        this.table = new Table([this.features.conjugations, this.features.moods, this.features.voices,
+            this.features.tenses, this.features.numbers, this.features.persons]);
+        let features = this.table.features;
+        features.columns = [conjugations$1, moods$1, voices$1];
+        features.rows = [tenses$1, numbers, persons$1];
+        features.columnRowTitles = [numbers, persons$1];
+        features.fullWidthRowTitles = [tenses$1];
+    }
+}
 
-let viewOptions$2 = {
-    id: 'verbVoiceConjugationMood',
-    name: 'verb voice-conjugation-mood',
-    title: 'Voice-Conjugation-Mood',
-    partOfSpeech: parts.verb.value,
-    groupingFeatures: [voices$2, conjugations$2, moods$2, tenses$2, numbers$4, persons$2]
-};
+class MoodVoiceConjugationView extends VerbView {
+    constructor() {
+        super();
+        this.id = 'verbMoodVoiceConjugation';
+        this.name = 'verb mood-voice-conjugation';
+        this.title = 'Mood-Voice-Conjugation';
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+        this.createTable();
+    }
 
-let tenses$4 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$6 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$4 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$4 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$4 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$4 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+    createTable() {
+        this.table = new Table([this.features.moods, this.features.voices, this.features.conjugations,
+            this.features.tenses, this.features.numbers, this.features.persons]);
+        let features = this.table.features;
+        features.columns = [moods$1, voices$1, conjugations$1];
+        features.rows = [tenses$1, numbers, persons$1];
+        features.columnRowTitles = [numbers, persons$1];
+        features.fullWidthRowTitles = [tenses$1];
+    }
+}
 
-let viewOptions$3 = {
-    id: 'verbVoiceMoodConjugation',
-    name: 'verb voice-mood-conjugation',
-    title: 'Voice-Mood-Conjugation',
-    partOfSpeech: parts.verb.value,
-    groupingFeatures: [voices$4, moods$4, conjugations$4, tenses$4, numbers$6, persons$4]
-};
+class MoodConjugationVoiceView extends VerbView {
+    constructor() {
+        super();
+        this.id = 'verbMoodConjugationVoice';
+        this.name = 'verb mood-conjugation-voice';
+        this.title = 'Mood-Conjugation-Voice';
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+        this.createTable();
+    }
 
-let tenses$5 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$7 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$5 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$5 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$5 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$5 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+    createTable() {
+        this.table = new Table([this.features.moods, this.features.conjugations, this.features.voices,
+            this.features.tenses, this.features.numbers, this.features.persons]);
+        let features = this.table.features;
+        features.columns = [moods$1, conjugations$1, voices$1];
+        features.rows = [tenses$1, numbers, persons$1];
+        features.columnRowTitles = [numbers, persons$1];
+        features.fullWidthRowTitles = [tenses$1];
+    }
+}
 
-let viewOptions$4 = {
-    id: 'verbConjugationVoiceMood',
-    name: 'verb conjugation-voice-mood',
-    title: 'Conjugation-Voice-Mood',
-    partOfSpeech: parts.verb.value,
-    groupingFeatures: [conjugations$5, voices$5, moods$5, tenses$5, numbers$7, persons$5]
-};
+var viewsLatin = [new NounView(), new AdjectiveView(),
+    // Verbs
+    new VoiceConjugationMoodView(), new VoiceMoodConjugationView(), new ConjugationVoiceMoodView(),
+    new ConjugationMoodVoiceView(), new MoodVoiceConjugationView(), new MoodConjugationVoiceView()];
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+class GreekView extends View {
+    constructor() {
+        super();
+        this.language = languages.greek;
 
-let tenses$6 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$8 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$6 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$6 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$6 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$6 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+        /*
+        Default grammatical features of a view. It child views need to have different feature values, redefine
+        those values in child objects.
+         */
+        this.features = {
+            numbers: new GroupFeatureType(numbers$1, 'Number'),
+            cases: new GroupFeatureType(cases$1, 'Case'),
+            declensions: new GroupFeatureType(declensions$1, 'Declension'),
+            genders: new GroupFeatureType(genders$1, 'Gender'),
+            types: new GroupFeatureType(types$2, 'Type')
+        };
+    }
 
-let viewOptions$5 = {
-    id: 'verbConjugationMoodVoice',
-    name: 'verb conjugation-mood-voice',
-    title: 'Conjugation-Mood-Voice',
-    partOfSpeech: parts.verb.value,
-    groupingFeatures: [conjugations$6, moods$6, voices$6, tenses$6, numbers$8, persons$6]
-};
+    /**
+     * Creates and initializes an inflection table. Redefine this method in child objects in order to create
+     * an inflection table differently.
+     */
+    createTable() {
+        this.table = new Table([this.features.declensions, this.features.genders,
+            this.features.types, this.features.numbers, this.features.cases]);
+        let features = this.table.features;
+        features.columns = [declensions$1, genders$1, types$2];
+        features.rows = [numbers$1, cases$1];
+        features.columnRowTitles = [cases$1];
+        features.fullWidthRowTitles = [numbers$1];
+    }
+}
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
+class NounView$1 extends GreekView {
+    constructor() {
+        super();
+        this.id = 'nounDeclension';
+        this.name = 'noun declension';
+        this.title = 'Noun declension';
+        this.partOfSpeech = parts$1.noun.value;
 
-let tenses$7 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$9 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$7 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$7 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$7 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$7 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
+        // Features that are different from base class values
+        /*this.features.genders = new View.GroupFeatureType(Greek.genders, 'Gender',
+            [[Greek.genders.masculine, Greek.genders.feminine], Greek.genders.neuter]);*/
 
-let viewOptions$6 = {
-    id: 'verbMoodVoiceConjugation',
-    name: 'verb mood-voice-conjugation',
-    title: 'Mood-Voice-Conjugation',
-    partOfSpeech: parts.verb.value,
-    groupingFeatures: [moods$7, voices$7, conjugations$7, tenses$7, numbers$9, persons$7]
-};
+        this.createTable();
+    }
+}
 
-/*
-Please see VIEWS.md for a description of view options and GroupingFeature class declaration for details of
-GroupingFeature options.
-*/
-
-let tenses$8 = tenses$3.clone().setRowGroupType().setRowGroupTitleLocation();
-let numbers$10 = numbers$5.clone().setRowGroupType().setColumnGroupTitleLocation();
-let persons$8 = persons$3.clone().setRowGroupType().setColumnGroupTitleLocation();
-let voices$8 = voices$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let conjugations$8 = conjugations$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-let moods$8 = moods$3.clone().setColumnGroupType().setRowGroupTitleLocation();
-
-let viewOptions$7 = {
-    id: 'verbMoodConjugationVoice',
-    name: 'verb mood-conjugation-voice',
-    title: 'Mood-Conjugation-Voice',
-    partOfSpeech: parts.verb.value,
-    groupingFeatures: [moods$8, conjugations$8, voices$8, tenses$8, numbers$10, persons$8]
-};
+var viewsGreek = [new NounView$1()];
 
 /**
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
  * directory under /presenter/views/view-name
  */
 class Presenter {
-    constructor(selector, resultSet, locale = 'en-US') {
+    constructor(selector, wordData, locale = 'en-US') {
 
         this.targetSelector = selector;
         this.container = document.querySelector(this.targetSelector);
-        this.resultSet = resultSet;
+        this.wordData = wordData;
 
         // All views registered by the Presenter
         this.views = [];
         this.viewIndex = {};
 
-        this.addView(viewOptions);
-        this.addView(viewOptions$1);
-        this.addView(viewOptions$2);
-        this.addView(viewOptions$3);
-        this.addView(viewOptions$4);
-        this.addView(viewOptions$5);
-        this.addView(viewOptions$6);
-        this.addView(viewOptions$7);
+        for (let view of viewsLatin) {
+            this.addView(view);
+        }
+        for (let view of viewsGreek) {
+            this.addView(view);
+        }
 
         // Views available for parts of speech that are present in a Result Set
-        this.availableViews = this.getViews(this.resultSet[types$1.part]);
+        this.availableViews = this.getViews(this.wordData);
 
         this.defaultView = this.availableViews[0];
         this.activeView = undefined;
@@ -7556,24 +7610,26 @@ class Presenter {
         return this;
     }
 
-    addView(viewOptions$$1) {
-       let view =  new View(viewOptions$$1);
+    addView(view) {
+       //let view =  new View.View(viewOptions);
        this.views.push(view);
        this.viewIndex[view.id] = view;
     }
 
     setLocale(locale) {
         this.locale = locale;
-        this.activeView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        this.activeView.render(this.container, this.wordData, this.l10n.messages(this.locale));
     }
 
     render() {
         // Show a default view
-        this.defaultView.render(this.container, this.resultSet, this.l10n.messages(this.locale));
-        this.activeView = this.defaultView;
+        if (this.defaultView) {
+            this.defaultView.render(this.container, this.wordData, this.l10n.messages(this.locale));
+            this.activeView = this.defaultView;
 
-        this.appendViewSelector("#view-switcher");
-        this.appendLocaleSelector("#locale-selector");
+            this.appendViewSelector("#view-switcher");
+            this.appendLocaleSelector("#locale-selector");
+        }
     }
 
     appendViewSelector(targetSelector) {
@@ -7587,8 +7643,8 @@ class Presenter {
             let viewList = document.createElement('select');
             for (const view of this.availableViews) {
                 let option = document.createElement("option");
-                option.value = view.options.id;
-                option.text = view.options.name;
+                option.value = view.id;
+                option.text = view.name;
                 viewList.appendChild(option);
             }
             viewList.addEventListener('change', this.viewSelectorEventListener.bind(this));
@@ -7600,7 +7656,7 @@ class Presenter {
     viewSelectorEventListener(event) {
         let viewID = event.target.value;
         let view = this.viewIndex[viewID];
-        view.render(this.container, this.resultSet, this.l10n.messages(this.locale));
+        view.render(this.container, this.wordData, this.l10n.messages(this.locale));
         this.activeView = view;
     }
 
@@ -7629,11 +7685,11 @@ class Presenter {
         this.setLocale(locale);
     }
 
-    getViews(partsOfSpeech) {
+    getViews(wordData) {
         // First view in a returned array will be a default one
         let views = [];
         for (let view of this.views) {
-            if (partsOfSpeech.includes(view.partOfSpeech)) {
+            if (wordData.language === view.language && wordData[types.part].includes(view.partOfSpeech)) {
                 views.push(view);
             }
         }
@@ -7646,17 +7702,17 @@ class Presenter {
 let langData = new LanguageData([dataSet, dataSet$1]).loadData();
 
 let testCases = [
-    {word: "cupidinibus (latin)", value: "latin_noun_cupidinibus", type: "noun"},
-    {word: "mare (lating)", value: "latin_noun_adj_mare", type: "noun, adjective"},
-    {word: "cepit (latin)", value: "latin_verb_cepit", type: "regular verb"},
-    {word: "φιλόσοφος (greek)", value: "greek_noun_pilsopo", type: "noun"},
+    {word: "cupidinibus", value: "latin_noun_cupidinibus", type: "noun", language: 'latin'},
+    {word: "mare", value: "latin_noun_adj_mare", type: "noun, adjective", language: 'latin'},
+    {word: "cepit", value: "latin_verb_cepit", type: "regular verb", language: 'latin'},
+    {word: "φιλόσοφος", value: "greek_noun_pilsopo", type: "noun", language: 'greek'},
 ];
 let selectList = document.querySelector("#test-selector");
 
 for (const testCase of testCases) {
     let option = document.createElement("option");
     option.value = testCase.value;
-    option.text = testCase.word + ' (' + testCase.type + ')';
+    option.text = `${testCase.word} (${testCase.language} ${testCase.type})`;
     selectList.appendChild(option);
 }
 
@@ -7678,11 +7734,11 @@ let show = function show(word, fileNameBase) {
             let homonym = new TuftsAdapter().transform(json);
 
             // Get matching suffixes from an inflection library
-            let resultSet = langData.getSuffixes(homonym);
-            resultSet.word = word;
+            let wordData = langData.getSuffixes(homonym);
+            wordData.homonym.targetWord = word;
 
             // Insert rendered view to a page
-            let presenter = new Presenter('#id-inflections-table', resultSet).render();
+            let presenter = new Presenter('#id-inflections-table', wordData).render();
 
         }).catch(error => {
         console.error(error);

@@ -178,24 +178,15 @@ describe('RowTitleCell', () => {
 
         title = "Row title";
         titleColumnQty = 2;
-        groupingFeature = new t.View.GroupingFeature(
-            t.types.gender,
-            ['masculine', 'feminine', 'neuter'],
-            t.languages.latin,
-            'Gender')
-            .setColumnGroupType()
-            .setRowGroupTitleLocation();
-        groupingFeature.groupingFeatureList = {
+        groupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
+        groupingFeature.formsColumn = true;
+        groupingFeature.hasColumnRowTitle = true;
+        groupingFeature.groupFeatureList = {
             titleColumnsQuantity: titleColumnQty
         };
         groupQty = 5;
         cell = new t.View.RowTitleCell(title, groupingFeature, groupQty);
-        let parentGroupingFeature = new t.View.GroupingFeature(
-            t.types.gender,
-            ['masculine', 'feminine', 'neuter'],
-            t.languages.latin,
-            'Gender')
-            .setRowGroupType();
+        let parentGroupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
         parentGroupingFeature.groupingFeatureList = {
             titleColumnsQuantity: titleColumnQty
         };
@@ -316,20 +307,12 @@ describe('HeaderCell', () => {
 
         title = "Header title";
         span = 2;
-        groupingFeature = new t.View.GroupingFeature(
-            t.types.gender,
-            ['masculine', 'feminine', 'neuter'],
-            t.languages.latin,
-            'Gender')
-            .setColumnGroupType()
-            .setColumnGroupTitleLocation();
+        groupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
+        groupingFeature.formsColumn = true;
+        groupingFeature.hasColumnRowTitle = true;
         cell = new t.View.HeaderCell(title, groupingFeature, span);
-        let parentGroupingFeature = new t.View.GroupingFeature(
-            t.types.gender,
-            ['masculine', 'feminine', 'neuter'],
-            t.languages.latin,
-            'Gender')
-            .setColumnGroupType();
+        let parentGroupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
+        parentGroupingFeature.formsColumn = true;
         parentSpan = span*2;
         parentCell = new t.View.HeaderCell(title, parentGroupingFeature, parentSpan);
         childSpan = 1;
@@ -474,13 +457,9 @@ describe('Column', () => {
 
         title = "Header title";
         span = 2;
-        groupingFeature = new t.View.GroupingFeature(
-            t.types.gender,
-            ['masculine', 'feminine', 'neuter'],
-            t.languages.latin,
-            'Gender')
-            .setColumnGroupType()
-            .setColumnGroupTitleLocation();
+        groupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
+        groupingFeature.formsColumn = true;
+        groupingFeature.hasColumnRowTitle = true;
         headerCell = new t.View.HeaderCell(title, groupingFeature, span);
 
         let emptyMatchData = new t.MatchData();
@@ -717,36 +696,29 @@ describe('Row', () => {
 });
 
 
-describe('GroupingFeature', () => {
+describe('GroupFeatureType', () => {
 
-    let groupingFeature, feature, groupTitle;
+    let groupingFeature, featureType, groupTitle;
 
     beforeAll(() => {
 
         groupTitle = 'Gender';
-        feature = new t.FeatureType(
+        featureType = new t.FeatureType(
             t.types.gender,
             [['masculine', 'feminine'], 'neuter'],
             t.languages.latin);
 
-        groupingFeature = new t.View.GroupingFeature(
-            t.types.gender,
-            [['masculine', 'feminine'], 'neuter'],
-            t.languages.latin,
-            groupTitle);
+        groupingFeature = new t.View.GroupingFeature(featureType, groupTitle);
     });
 
     test('Constructor should set simple properties properly.', () => {
 
         expect(groupingFeature).toEqual(expect.objectContaining({
-            groupTitle: groupTitle
+            groupTitle: groupTitle,
+            type: featureType.type,
+            language: featureType.language,
+            _orderIndex: featureType._orderIndex
         }));
-
-    });
-
-    test('Constructor should create a feature object properly.', () => {
-
-        expect(groupingFeature._feature).toEqual(feature);
 
     });
 
@@ -755,96 +727,59 @@ describe('GroupingFeature', () => {
         expect(groupingFeature).toEqual(expect.objectContaining({
             groupTitle: groupTitle
         }));
-        expect(groupingFeature._feature).toEqual(feature);
+        expect(groupingFeature).toEqual(expect.objectContaining({
+            type: featureType.type,
+            language: featureType.language,
+            _orderIndex: featureType._orderIndex
+        }));
 
     });
 
-    test('clone() should create a copy of a GroupingFeature object.', () => {
 
-        let clone = groupingFeature.clone();
-        expect(clone).toEqual(groupingFeature);
+    test('formsColumn() should return a value installed by a setter.', () => {
 
-    });
-
-    test('feature() should return a grammatical feature object.', () => {
-
-        expect(groupingFeature.feature).toEqual(feature);
+        groupingFeature.formsColumn = true;
+        expect(groupingFeature.formsColumn).toBeTruthy();
 
     });
 
-    test('type() should return a type of a grammatical feature.', () => {
+    test('formsRow() should return a value installed by a setter.', () => {
 
-        expect(groupingFeature.type).toBe(feature.type);
-    });
-
-    test('isColumnGroup() should return a group type that is set by setColumnGroupType().', () => {
-
-        groupingFeature.setColumnGroupType();
-        expect(groupingFeature.isColumnGroup).toBeTruthy();
-
-    });
-
-    test('isRowGroup() should return a group type that is set by setRowGroupType().', () => {
-
-        groupingFeature.setRowGroupType();
-        expect(groupingFeature.isRowGroup).toBeTruthy();
-
-    });
-
-    test('isTitleInColumn() should return a title cell location type that is set by setColumnGroupTitleLocation().', () => {
-
-        groupingFeature.setColumnGroupTitleLocation();
-        expect(groupingFeature.isTitleInColumn).toBeTruthy();
-
-    });
-
-    test('isGroupTitleInRow() should return a title cell location type that is set by setRowGroupTitleLocation().', () => {
-
-        groupingFeature.setRowGroupTitleLocation();
-        expect(groupingFeature.isGroupTitleInRow).toBeTruthy();
+        groupingFeature.formsRow = true;
+        expect(groupingFeature.formsRow).toBeTruthy();
 
     });
 
     afterAll(() => {
         // Teardown
         groupingFeature = undefined;
-        feature = undefined;
+        featureType = undefined;
     });
 });
 
 
-describe('GroupingFeatureList', () => {
+describe('GroupFeatureList', () => {
 
     let groupingFeatureList, featureOne, featureTwo, featureThree, featureList;
 
     beforeAll(() => {
 
-        featureOne = new t.View.GroupingFeature(
-            t.types.gender,
-            [['masculine', 'feminine'], 'neuter'],
-            t.languages.latin)
-            .setColumnGroupType()
-            .setRowGroupTitleLocation();
+        featureOne = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
+        featureOne.formsColumn = true;
 
-        featureTwo = new t.View.GroupingFeature(
-            t.types.type,
-            ['regular', 'irregular'],
-            t.languages.latin,
-            'Type')
-            .setRowGroupType()
-            .setColumnGroupTitleLocation();
+        featureTwo = new t.View.GroupingFeature(t.Latin.types, 'Type');
+        featureTwo.formsRow = true;
+        featureTwo.hasColumnRowTitle = true;
 
-        featureThree = new t.View.GroupingFeature(
-            t.types.number,
-            ['singular', 'plural'],
-            t.languages.latin,
-            'Number')
-            .setRowGroupType()
-            .setRowGroupTitleLocation();
+        featureThree = new t.View.GroupingFeature(t.Latin.numbers, 'Number');
+        featureThree.formsRow;
+        featureThree.hasFullWidthRowTitle = true;
 
         featureList = [featureOne, featureTwo, featureThree];
 
         groupingFeatureList = new t.View.GroupingFeatureList(featureList);
+        groupingFeatureList.columns = [featureOne];
+        groupingFeatureList.rows = [featureTwo, featureThree];
     });
 
     test('Constructor should store a list of grouping features.', () => {
@@ -1170,28 +1105,18 @@ describe('Table', () => {
 
     beforeAll(() => {
 
-        featureOne = new t.View.GroupingFeature(
-            t.types.gender,
-            [['masculine', 'feminine'], 'neuter'],
-            t.languages.latin)
-            .setColumnGroupType()
-            .setRowGroupTitleLocation();
+        featureOne = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
+        featureOne.formsColumn = true;
 
-        featureTwo = new t.View.GroupingFeature(
-            t.types.type,
-            ['regular', 'irregular'],
-            t.languages.latin,
-            'Type')
-            .setRowGroupType()
-            .setColumnGroupTitleLocation();
+        featureTwo = new t.View.GroupingFeature(t.Latin.types, 'Type');
+        featureTwo.formsRow = true;
+        featureTwo.hasColumnRowTitle = true;
 
-        featureThree = new t.View.GroupingFeature(
-            t.types.number,
-            ['singular', 'plural'],
-            t.languages.latin,
-            'Number')
-            .setRowGroupType()
-            .setRowGroupTitleLocation();
+        featureThree = new t.View.GroupingFeature(t.Latin.numbers, 'Number');
+        featureThree.formsRow;
+        featureThree.hasFullWidthRowTitle = true;
+
+        features = [featureOne, featureTwo, featureThree];
 
         messages = {
             Number: 'Number',
@@ -1205,11 +1130,10 @@ describe('Table', () => {
             Person: 'Person'
         };
 
-        features = [featureOne, featureTwo, featureThree];
-
         messageBundle = new t.L10n.MessageBundle('en-US', messages);
 
-        table = new t.View.Table(features, messageBundle);
+        table = new t.View.Table(features);
+        table.messages = messageBundle;
     });
 
     test('Constructor should initialize object properties.', () => {
@@ -1438,35 +1362,24 @@ describe('Footnotes', () => {
 describe('View', () => {
 
     let partOfSpeech, featureOne, featureTwo, featureThree, features, messages, messageBundle,
-        footnotes, footnotesList, viewOptions, resultSet, view, word, container;
+        footnotes, footnotesList, viewOptions, resultSet, view, word, title, container;
 
     beforeAll(() => {
 
         partOfSpeech = 'noun';
+        title = 'Test Title';
         word = 'Test';
 
-        featureOne = new t.View.GroupingFeature(
-            t.types.gender,
-            [['masculine', 'feminine'], 'neuter'],
-            t.languages.latin)
-            .setColumnGroupType()
-            .setRowGroupTitleLocation();
+        featureOne = new t.View.GroupingFeature(t.Latin.genders, 'Gender');
+        featureOne.formsColumn = true;
 
-        featureTwo = new t.View.GroupingFeature(
-            t.types.type,
-            ['regular', 'irregular'],
-            t.languages.latin,
-            'Type')
-            .setRowGroupType()
-            .setColumnGroupTitleLocation();
+        featureTwo = new t.View.GroupingFeature(t.Latin.types, 'Type');
+        featureTwo.formsRow = true;
+        featureTwo.hasColumnRowTitle = true;
 
-        featureThree = new t.View.GroupingFeature(
-            t.types.number,
-            ['singular', 'plural'],
-            t.languages.latin,
-            'Number')
-            .setRowGroupType()
-            .setRowGroupTitleLocation();
+        featureThree = new t.View.GroupingFeature(t.Latin.numbers, 'Number');
+        featureThree.formsRow;
+        featureThree.hasFullWidthRowTitle = true;
 
         features = [featureOne, featureTwo, featureThree];
 
@@ -1488,42 +1401,21 @@ describe('View', () => {
         footnotes = new t.View.Footnotes(footnotesList);
 
         resultSet = new t.ResultSet();
-        resultSet.word = word;
+        resultSet.homonym = { targetWord: word };
         resultSet[partOfSpeech] = {
             suffixes: [],
             footnotes: footnotesList
         };
 
-
-        viewOptions = {
-            id: 'nounDeclension',
-            name: 'noun declension',
-            title: 'Noun declension',
-            partOfSpeech: partOfSpeech,
-            groupingFeatures: features
-        };
-
         container = document.createElement('div');
 
-        view = new t.View.View(viewOptions);
-    });
-
-    test('Constructor should initialize object properties.', () => {
-
-        expect(view.options).toBe(viewOptions);
-
-    });
-
-    test('partOfSpeech() should return a part of speech information.', () => {
-
-        expect(view.partOfSpeech).toBe(partOfSpeech);
-
-    });
-
-    test('id() should return a view\'s ID.', () => {
-
-        expect(view.id).toBe(viewOptions.id);
-
+        view = new t.View.View();
+        view.title = title;
+        view.partOfSpeech = partOfSpeech;
+        view.table = new t.View.Table(features);
+        view.table.messages = messageBundle;
+        view.table.features.columns = [featureOne];
+        view.table.features.rows = [featureTwo, featureThree];
     });
 
     /*
@@ -1535,11 +1427,15 @@ describe('View', () => {
         view.container = container;
         view.resultSet = resultSet;
         view.footnotes = new t.View.Footnotes(resultSet[partOfSpeech].footnotes);
-        view.table = new t.View.Table(features, messageBundle).construct(resultSet[partOfSpeech].suffixes).constructViews();
+        view.table = new t.View.Table(features);
+        view.table.messages = messageBundle;
+        view.table.features.columns = [featureOne];
+        view.table.features.rows = [featureTwo, featureThree];
+        view.table.construct(resultSet[partOfSpeech].suffixes).constructViews();
         view.table.wideView.render();
 
         view.display();
-        expect(container.outerHTML).toMatch(new RegExp('<div><h2>' + word + '</h2><h3>' + viewOptions.title + '</h3>' +
+        expect(container.outerHTML).toMatch(new RegExp('<div><h2>' + word + '</h2><h3>' + title + '</h3>' +
             '<div>' + t.Styles.pageHeader.html + '</div>.*</div>'));
 
     });

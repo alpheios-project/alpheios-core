@@ -99,7 +99,7 @@ describe('Feature object', () => {
     });
 });
 
-describe('FeatureType object', () => {
+describe('FeatureType', () => {
 
     let featureType;
 
@@ -187,9 +187,25 @@ describe('FeatureType object', () => {
 
     });
 
-    test('orderIndex method should return a new properly initialized Importer object', () => {
+    test('orderIndex() method should return a new properly initialized Importer object', () => {
 
         expect(featureType.orderIndex).toEqual(["first", ["second", "third"], "fourth"]);
+
+    });
+
+    test('orderedFeatures() should return type features in an indexed order.', () => {
+
+        expect(featureType.orderedFeatures).toEqual([
+            {"language": "latin", "type": "declension", "value": "first"},
+            {"language": "latin", "type": "declension", "value": ["second", "third"]},
+            {"language": "latin", "type": "declension", "value": "fourth"}
+        ]);
+
+    });
+
+    test('orderedValues() should return type features in an indexed order.', () => {
+
+        expect(featureType.orderedValues).toEqual(["first", ["second", "third"], "fourth"]);
 
     });
 
@@ -797,4 +813,4 @@ describe('Suffix object', () => {
     });
 });
 
-// TODO: implement tests for a ResultSet later as it will evolve
+// TODO: implement tests for a WordData later as it will evolve
