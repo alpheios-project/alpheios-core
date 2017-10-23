@@ -71,56 +71,6 @@ class Feature {
         this.language = language;
     };
 
-    /**
-     * Converts one or more Feature objects into a single Feature item. If resulting Feature object is created from
-     * multiple features of the same type, a value field of that object will be an array of values
-     * of all Feature items that were provided as arguments.
-     * @param {Feature | Feature[]} features
-     * @returns {Feature}
-     */
-    static create(features) {
-        if (!features) {
-            throw new Error('At least one Feature object should be provided.');
-        }
-        let type = undefined;
-        let language = undefined;
-        let value = undefined;
-        if (Array.isArray(features)) {
-            value = [];
-            for (let feature of features) {
-                // All features should have the same type
-                if (type === undefined || type === feature.type) {
-                    type = feature.type;
-                }
-                else {
-                    throw new Error('Type mismatch: "' + type + '", "' + feature.type + '". All features must be of the same type.');
-                }
-
-                // All features should have the same language
-                if (language === undefined || language === feature.language) {
-                    language = feature.language;
-                }
-                else {
-                    throw new Error('Language mismatch: "' + language + '", "' + feature.language + '". All features must be of the same language.');
-                }
-
-                value.push(feature.value);
-            }
-
-            // If array has a single value only
-            if (value.length === 1) {
-                value = value[0];
-            }
-        }
-        else {
-            type = features.type;
-            language = features.language;
-            value = features.value;
-        }
-
-        return new Feature(value, type, language);
-    }
-
     isEqual(feature) {
         if (Array.isArray(feature.value)) {
             if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
@@ -227,45 +177,30 @@ class FeatureType {
     }
 
     /**
-     * Returns an ordered array of type values. If some values have the same order, they will be returned as an
-     * array within an array: [value1, [value2, value3], value4]
-     * @returns {string[] | string[][]}
+     * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
+     * For a similar function that returns strings instead of Feature objects see orderedValues().
+     * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
+     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+     * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
      */
-    get orderIndex() {
-        return this._orderIndex;
+    get orderedFeatures() {
+        return this.orderedValues.map((value) => new Feature(value, this.type, this.language));
     }
 
     /**
-     * Return copies of all feature values in a sorted array.
-     * @returns {Feature[]} Array of feature values sorted according to orderIndex.
+     * Return all feature values as strings in a sorted array, according to feature type's sort order.
+     * This is a main method that specifies a sort order of the feature type. orderedFeatures() relies
+     * on this method in providing a sorted array of feature values. If you want to create
+     * a custom sort order for a particular feature type that will depend on some options that are not type-related,
+     * create a wrapper around this function providing it with options arguments so it will be able to decide
+     * in what order those features will be based on those arguments.
+     * For a similar function that returns Feature objects instead of strings see orderedValues().
+     * @returns {string[]} Array of feature values sorted according to orderIndex.
+     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+     * an array of strings will be returned instead of a single strings, as for single feature values.
      */
-    get orderedFeatures() {
-        let values = [];
-        for (let value of this._orderIndex) {
-            if (Array.isArray(value)) {
-                let features = [];
-                for (let feature of value) {
-                    features.push(this[feature]);
-                }
-                values.push(Feature.create(features));
-            }
-            else {
-                values.push(Feature.create(this[value]));
-            }
-
-        }
-        return values;
-    }
-
     get orderedValues() {
-        return this.orderedFeatures.map( (feature) => {
-            if (Array.isArray(feature)) {
-                return feature.map( (feature) => feature.value );
-            }
-            else {
-                return feature.value;
-            }
-        });
+        return this._orderIndex;
     }
 
     /**
@@ -705,10 +640,12 @@ class LanguageDataset {
      *
      * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
      * @param {Feature[]} featureValue
+     * @return {Suffix} A newly added suffix value (can be used to add more data to the suffix).
      */
-    addSuffix(suffixValue, ...featureValue) {
+    addSuffix(suffixValue, featureValue, extendedLangData) {
         // TODO: implement run-time error checking
         let suffixItem = new Suffix(suffixValue);
+        suffixItem.extendedLangData = extendedLangData;
 
         // Build all possible combinations of features
         let multiValueFeatures = [];
@@ -735,7 +672,7 @@ class LanguageDataset {
                 }
                 else {
                     // Array is empty
-                    console.warn('An empty array is provided as a feature argument to the "add" function, ignoring.');
+                    throw new Error('An empty array is provided as a feature argument to the "addSuffix" method.')
                 }
             }
             else {
@@ -917,6 +854,14 @@ class Suffix {
         this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
+        //
+        /*
+        Extended language data stores additional suffix information that is specific for a particular language.
+        It uses the following schema:
+        {string} language(key): {object} extended language data. This object is specific for each language
+        and is defined in a language model.
+         */
+        this.extendedLangData = {};
         this.match = match;
     }
 
@@ -941,6 +886,12 @@ class Suffix {
 
         if (this.hasOwnProperty(types.footnote)) {
             clone[types.footnote] = this[types.footnote];
+        }
+
+        for (const lang in this.extendedLangData) {
+            if (this.extendedLangData.hasOwnProperty(lang)) {
+                clone.extendedLangData[lang] = this.extendedLangData[lang];
+            }
         }
         return clone;
     };
@@ -1035,7 +986,7 @@ class Suffix {
     }
 
     /**
-     * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
+     * Splits a suffix that has multiple values of one or more grammatical features into an array of Suffix objects
      * with each Suffix object having only a single value of those grammatical features. Initial multiple values
      * are stored in a featureGroups[featureType] property as an array of values.
      * @param {string} featureType - A type of a feature
@@ -1104,7 +1055,7 @@ class Suffix {
     }
 
     /**
-     * This function provide a logic of to merge feature values of two suffix object that were previously split together.
+     * This function provide a logic of to merge data of two suffix object that were previously split together.
      * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
      * @param {Suffix} suffixB - A second ending to merge (to be discarded).
      * @returns {Suffix} A modified value of ending A.
@@ -2860,7 +2811,7 @@ dataSet.addSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 
@@ -2899,7 +2850,7 @@ dataSet.addVerbSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 
@@ -5712,12 +5663,17 @@ class Row {
  * that is required for that.
  */
 class GroupFeatureType extends FeatureType {
+
     /**
-     *
+     * GroupFeatureType extends FeatureType to serve as a grouping feature (i.e. a feature that forms
+     * either a column or a row in an inflection table). For that, it adds some additional functionality,
+     * such as custom feature orders that will allow to combine suffixes from several grammatical features
+     * (i.e. masculine and feminine) into a one column of a table.
      * @param {FeatureType} featureType - A feature that defines a type of this item.
      * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
      * language-specific message bundle.
-     * @param {Feature[]} order - A list of feature items that identify a sort order of this feature type (optional).
+     * @param {Feature[]} order - A custom sort order for this feature that redefines
+     * a default one stored in FeatureType object (optional).
      * Use this parameter to redefine a deafult sort order for a type.
      */
     constructor(featureType, titleMessageID, order = featureType.orderedFeatures) {
@@ -5759,6 +5715,24 @@ class GroupFeatureType extends FeatureType {
     }
 
     /**
+     * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
+     * @returns {Feature[] | Feature[][]} A sorted array of feature values.
+     */
+    getOrderedFeatures(ancestorFeatures) {
+        return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(value, this.type, this.language));
+    }
+
+    /**
+     * This is a wrapper around orderedValues() that allows to set a custom feature order for particular columns.
+     * By default it returns features in the same order that is defined in a base FeatureType class.
+     * Redefine it to provide a custom grouping and sort order.
+     * @returns {string[] | string[][]} A sorted array of feature values.
+     */
+    getOrderedValues(ancestorFeatures) {
+        return this._orderIndex;
+    }
+
+    /**
      * Whether this feature forms a columns group.
      * @returns {boolean} True if this feature forms a column.
      */
@@ -5797,7 +5771,7 @@ class GroupFeatureType extends FeatureType {
      * @returns {Number} A number of groupes formed by this feature.
      */
     get size() {
-        return this.orderIndex.length;
+        return this.orderedValues.length;
     }
 
     /**
@@ -5996,6 +5970,9 @@ class NodeGroup {
         this.cells = []; // All cells within this group and below
         this.parent = undefined;
         this.header = undefined;
+
+        this.groupFeatureType = undefined; // Defines a feature type that forms a tree level this node is in.
+        this.ancestorFeatures = undefined; // Defines feature values of this node's parents.
     }
 }
 
@@ -6235,6 +6212,11 @@ class Table {
         this.features = new GroupFeatureList(features);
         this.emptyColumnsHidden = false;
         this.cells = []; // Will be populated by groupByFeature()
+
+        /*
+        This is a special filter function that, if defined will do additional filtering of suffixes within a cell.
+         */
+        this.suffixCellFilter = undefined;
     }
 
     /**
@@ -6331,51 +6313,51 @@ class Table {
      * is determined by the order of values within a GroupFeatureType object of each feature.
      * This is a recursive function.
      * @param {Suffix[]} suffixes - Suffixes to be grouped.
-     * @param {Feature[]} featureTrail - A temporary array to store all feature values on levels above the current.
+     * @param {Feature[]} ancestorFeatures - A list of feature values on levels above the current.
      * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
      * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
      */
-    groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
+    groupByFeature(suffixes, ancestorFeatures = [], currentLevel = 0) {
         let group = new NodeGroup();
-        let groupNew = this.features.items[currentLevel];
-        group.feature = this.features.items[currentLevel];
+        group.groupFeatureType = this.features.items[currentLevel];
+        group.ancestorFeatures = ancestorFeatures.slice();
 
         // Iterate over each value of the feature
-        for (const featureValue of groupNew.orderedFeatures) {
-            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === groupNew.type) {
+        for (const featureValue of group.groupFeatureType.getOrderedFeatures(ancestorFeatures)) {
+            if (ancestorFeatures.length>0 && ancestorFeatures[ancestorFeatures.length-1].type === group.groupFeatureType.type) {
                 // Remove previously inserted feature of the same type
-                featureTrail.pop();
+                ancestorFeatures.pop();
             }
-            featureTrail.push(featureValue);
+            ancestorFeatures.push(featureValue);
 
             // Suffixes that are selected for current combination of feature values
-            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, groupNew.type, featureValue.value));
+            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.groupFeatureType.type, featureValue.value));
 
             if (currentLevel < this.features.length - 1) {
                 // Divide to further groups
-                let subGroup = this.groupByFeature(selectedSuffixes, featureTrail, currentLevel + 1);
+                let subGroup = this.groupByFeature(selectedSuffixes, ancestorFeatures, currentLevel + 1);
                 group.subgroups.push(subGroup);
-                groupNew.subgroups.push(subGroup);
                 group.cells = group.cells.concat(subGroup.cells);
-                groupNew.cells = groupNew.cells.concat(subGroup.cells);
             }
             else {
                 // This is the last level. This represent a cell with suffixes
                 // Split result has a list of suffixes in a table cell. We need to combine items with same endings.
                 if (selectedSuffixes.length > 0) {
+                    if (this.suffixCellFilter) {
+                        selectedSuffixes = selectedSuffixes.filter(this.suffixCellFilter);
+                    }
+
                     selectedSuffixes = Suffix.combine(selectedSuffixes);
                 }
 
-                let cell = new Cell(selectedSuffixes, featureTrail.slice());
+                let cell = new Cell(selectedSuffixes, ancestorFeatures.slice());
                 group.subgroups.push(cell);
-                groupNew.subgroups.push(cell);
                 group.cells.push(cell);
-                groupNew.cells.push(cell);
                 this.cells.push(cell);
                 cell.index = this.cells.length - 1;
             }
         }
-        featureTrail.pop();
+        ancestorFeatures.pop();
         return group;
     }
 
@@ -6391,7 +6373,7 @@ class Table {
         let currentFeature = this.features.items[currentLevel];
 
         let groups = [];
-        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+        for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
             let cellGroup = tree.subgroups[index];
 
             // Iterate until it is the last row feature
@@ -6446,7 +6428,7 @@ class Table {
         let currentFeature = this.features.columnFeatures[currentLevel];
 
         let cells = [];
-        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+        for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
             let cellGroup = tree.subgroups[index];
 
             // Iterate over all column features (features that form columns)

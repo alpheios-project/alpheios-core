@@ -606,12 +606,17 @@ class Row {
  * that is required for that.
  */
 class GroupFeatureType extends Lib.FeatureType {
+
     /**
-     *
+     * GroupFeatureType extends FeatureType to serve as a grouping feature (i.e. a feature that forms
+     * either a column or a row in an inflection table). For that, it adds some additional functionality,
+     * such as custom feature orders that will allow to combine suffixes from several grammatical features
+     * (i.e. masculine and feminine) into a one column of a table.
      * @param {FeatureType} featureType - A feature that defines a type of this item.
      * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
      * language-specific message bundle.
-     * @param {Feature[]} order - A list of feature items that identify a sort order of this feature type (optional).
+     * @param {Feature[]} order - A custom sort order for this feature that redefines
+     * a default one stored in FeatureType object (optional).
      * Use this parameter to redefine a deafult sort order for a type.
      */
     constructor(featureType, titleMessageID, order = featureType.orderedFeatures) {
@@ -653,6 +658,24 @@ class GroupFeatureType extends Lib.FeatureType {
     }
 
     /**
+     * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
+     * @returns {Feature[] | Feature[][]} A sorted array of feature values.
+     */
+    getOrderedFeatures(ancestorFeatures) {
+        return this.getOrderedValues(ancestorFeatures).map((value) => new Lib.Feature(value, this.type, this.language));
+    }
+
+    /**
+     * This is a wrapper around orderedValues() that allows to set a custom feature order for particular columns.
+     * By default it returns features in the same order that is defined in a base FeatureType class.
+     * Redefine it to provide a custom grouping and sort order.
+     * @returns {string[] | string[][]} A sorted array of feature values.
+     */
+    getOrderedValues(ancestorFeatures) {
+        return this._orderIndex;
+    }
+
+    /**
      * Whether this feature forms a columns group.
      * @returns {boolean} True if this feature forms a column.
      */
@@ -691,7 +714,7 @@ class GroupFeatureType extends Lib.FeatureType {
      * @returns {Number} A number of groupes formed by this feature.
      */
     get size() {
-        return this.orderIndex.length;
+        return this.orderedValues.length;
     }
 
     /**
@@ -890,6 +913,9 @@ class NodeGroup {
         this.cells = []; // All cells within this group and below
         this.parent = undefined;
         this.header = undefined;
+
+        this.groupFeatureType = undefined; // Defines a feature type that forms a tree level this node is in.
+        this.ancestorFeatures = undefined; // Defines feature values of this node's parents.
     }
 }
 
@@ -1129,6 +1155,11 @@ class Table {
         this.features = new GroupFeatureList(features);
         this.emptyColumnsHidden = false;
         this.cells = []; // Will be populated by groupByFeature()
+
+        /*
+        This is a special filter function that, if defined will do additional filtering of suffixes within a cell.
+         */
+        this.suffixCellFilter = undefined;
     }
 
     /**
@@ -1225,51 +1256,51 @@ class Table {
      * is determined by the order of values within a GroupFeatureType object of each feature.
      * This is a recursive function.
      * @param {Suffix[]} suffixes - Suffixes to be grouped.
-     * @param {Feature[]} featureTrail - A temporary array to store all feature values on levels above the current.
+     * @param {Feature[]} ancestorFeatures - A list of feature values on levels above the current.
      * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
      * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
      */
-    groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
+    groupByFeature(suffixes, ancestorFeatures = [], currentLevel = 0) {
         let group = new NodeGroup();
-        let groupNew = this.features.items[currentLevel];
-        group.feature = this.features.items[currentLevel];
+        group.groupFeatureType = this.features.items[currentLevel];
+        group.ancestorFeatures = ancestorFeatures.slice();
 
         // Iterate over each value of the feature
-        for (const featureValue of groupNew.orderedFeatures) {
-            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === groupNew.type) {
+        for (const featureValue of group.groupFeatureType.getOrderedFeatures(ancestorFeatures)) {
+            if (ancestorFeatures.length>0 && ancestorFeatures[ancestorFeatures.length-1].type === group.groupFeatureType.type) {
                 // Remove previously inserted feature of the same type
-                featureTrail.pop();
+                ancestorFeatures.pop();
             }
-            featureTrail.push(featureValue);
+            ancestorFeatures.push(featureValue);
 
             // Suffixes that are selected for current combination of feature values
-            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, groupNew.type, featureValue.value));
+            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.groupFeatureType.type, featureValue.value));
 
             if (currentLevel < this.features.length - 1) {
                 // Divide to further groups
-                let subGroup = this.groupByFeature(selectedSuffixes, featureTrail, currentLevel + 1);
+                let subGroup = this.groupByFeature(selectedSuffixes, ancestorFeatures, currentLevel + 1);
                 group.subgroups.push(subGroup);
-                groupNew.subgroups.push(subGroup);
                 group.cells = group.cells.concat(subGroup.cells);
-                groupNew.cells = groupNew.cells.concat(subGroup.cells);
             }
             else {
                 // This is the last level. This represent a cell with suffixes
                 // Split result has a list of suffixes in a table cell. We need to combine items with same endings.
                 if (selectedSuffixes.length > 0) {
+                    if (this.suffixCellFilter) {
+                        selectedSuffixes = selectedSuffixes.filter(this.suffixCellFilter);
+                    }
+
                     selectedSuffixes = Lib.Suffix.combine(selectedSuffixes);
                 }
 
-                let cell = new Cell(selectedSuffixes, featureTrail.slice());
+                let cell = new Cell(selectedSuffixes, ancestorFeatures.slice());
                 group.subgroups.push(cell);
-                groupNew.subgroups.push(cell);
                 group.cells.push(cell);
-                groupNew.cells.push(cell);
                 this.cells.push(cell);
                 cell.index = this.cells.length - 1;
             }
         }
-        featureTrail.pop();
+        ancestorFeatures.pop();
         return group;
     }
 
@@ -1285,7 +1316,7 @@ class Table {
         let currentFeature = this.features.items[currentLevel];
 
         let groups = [];
-        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+        for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
             let cellGroup = tree.subgroups[index];
 
             // Iterate until it is the last row feature
@@ -1340,7 +1371,7 @@ class Table {
         let currentFeature = this.features.columnFeatures[currentLevel];
 
         let cells = [];
-        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+        for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
             let cellGroup = tree.subgroups[index];
 
             // Iterate over all column features (features that form columns)

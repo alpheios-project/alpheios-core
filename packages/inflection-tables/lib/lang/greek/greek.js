@@ -1,7 +1,7 @@
 /*
  * Latin language data module
  */
-export {language, parts, numbers, cases, declensions, genders, types, /*conjugations, tenses, voices, moods, persons, */dataSet};
+export {language, parts, numbers, cases, declensions, genders, types, /*conjugations, tenses, voices, moods, persons, */dataSet, ExtendedGreekData};
 import * as Lib from "../../lib.js";
 import nounSuffixesCSV from './data/noun/suffixes.csv';
 import nounFootnotesCSV from './data/noun/footnotes.csv';
@@ -10,6 +10,27 @@ import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 import verbSuffixesCSV from './data/verb/suffixes.csv';
 import verbFootnotesCSV from './data/verb/footnotes.csv';*/
 import papaparse from "papaparse";
+
+class ExtendedGreekData {
+    constructor() {
+        this.primary = false;
+    }
+
+    /*clone() {
+        let cloned = new ExtendedGreekData();
+        cloned.primary = this.primary;
+        return cloned;
+    }*/
+
+    merge(extendedGreekData) {
+        if (this.primary !== extendedGreekData.primary) {
+            console.log('Mismatch', this.primary, extendedGreekData.primary);
+        }
+        let merged = new ExtendedGreekData();
+        merged.primary = this.primary;
+        return merged;
+    }
+}
 
 // A language of this module
 const language = Lib.languages.greek;
@@ -49,7 +70,6 @@ genders.addImporter(importerName)
 const types = dataSet.defineFeatureType(Lib.types.type, ['regular', 'irregular']);
 types.addImporter(importerName)
     .map('regular', types.regular)
-    .map('primary regular', types.regular).map('regular primary', types.regular) // TODO: This is a temporary solution only
     .map('irregular', types.irregular);
 /*const conjugations = dataSet.defineFeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
 conjugations.addImporter(importerName)
@@ -90,27 +110,36 @@ dataSet.addSuffixes = function(partOfSpeech, data) {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
         let dataItem = data[i];
-        let suffix = dataItem[0];
+        let suffixValue = dataItem[0];
         // Handle special suffix values
-        if (suffix === noSuffixValue) {
-            suffix = null;
+        if (suffixValue === noSuffixValue) {
+            suffixValue = null;
         }
 
+        let primary = false;
         let features = [partOfSpeech,
             numbers.importer.csv.get(dataItem[1]),
             cases.importer.csv.get(dataItem[2]),
             declensions.importer.csv.get(dataItem[3]),
             genders.importer.csv.get(dataItem[4]),
             types.importer.csv.get(dataItem[5])];
-        if (dataItem[6]) {
+        if (dataItem[6] === 'primary') {
+            primary = true;
+        }
+        if (dataItem[7]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
-            let indexes = dataItem[6].split(' ').map(function(index) {
+            let indexes = dataItem[7].split(' ').map(function(index) {
                 return footnotes.get(index);
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        let extendedGreekData = new ExtendedGreekData();
+        extendedGreekData.primary = primary;
+        let extendedLangData = {
+            [Lib.languages.greek]: extendedGreekData
+        };
+        this.addSuffix(suffixValue, features, extendedLangData);
     }
 };
 
@@ -149,7 +178,7 @@ dataSet.addVerbSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 

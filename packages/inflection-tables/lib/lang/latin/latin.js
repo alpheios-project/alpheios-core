@@ -112,7 +112,7 @@ dataSet.addSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 
@@ -151,7 +151,7 @@ dataSet.addVerbSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 

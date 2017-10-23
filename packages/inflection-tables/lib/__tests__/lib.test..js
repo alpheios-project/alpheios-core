@@ -55,44 +55,6 @@ describe('Feature object', () => {
 
     });
 
-    test('Create method should return a correct Feature object created from a single value', () => {
-
-        let feature = t.Feature.create(featureGreek1);
-        expect(feature).toEqual({
-            value: featureValue1,
-            type: t.types.number,
-            language: t.languages.greek
-        });
-
-    });
-
-    test('Create method should return a correct Feature object created from an array of values', () => {
-
-        let feature = t.Feature.create([featureGreek1, featureGreek2]);
-        expect(feature).toEqual({
-            value: [featureValue1, featureValue2],
-            type: t.types.number,
-            language: t.languages.greek
-        });
-
-    });
-
-    test('Create method should not allow values of different types', () => {
-
-        expect(() => {
-            t.Feature.create([featureGreek1, featureGreek3]);
-        }).toThrowError(/mismatch/);
-
-    });
-
-    test('Create method should not allow values of different languages', () => {
-
-        expect(() => {
-            t.Feature.create([featureGreek1, featureLatin1]);
-        }).toThrowError(/mismatch/);
-
-    });
-
     afterAll(() => {
         // Clean a test environment up
         featureGreek1 = undefined;
@@ -187,9 +149,9 @@ describe('FeatureType', () => {
 
     });
 
-    test('orderIndex() method should return a new properly initialized Importer object', () => {
+    test('orderedValues() method should return a new properly initialized Importer object', () => {
 
-        expect(featureType.orderIndex).toEqual(["first", ["second", "third"], "fourth"]);
+        expect(featureType.orderedValues).toEqual(["first", ["second", "third"], "fourth"]);
 
     });
 
@@ -770,7 +732,9 @@ describe('Suffix object', () => {
         expect(suffix).toEqual({
             value: 'suffixtext',
             features: {},
-            featureGroups: {}
+            featureGroups: {},
+            extendedLangData: {},
+            match: undefined
         });
 
     });

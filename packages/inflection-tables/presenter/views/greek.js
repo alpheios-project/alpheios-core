@@ -43,12 +43,33 @@ class NounView extends GreekView {
         this.title = 'Noun declension';
         this.partOfSpeech = Greek.parts.noun.value;
 
-        // Features that are different from base class values
-        /*this.features.genders = new View.GroupFeatureType(Greek.genders, 'Gender',
-            [[Greek.genders.masculine, Greek.genders.feminine], Greek.genders.neuter]);*/
+        this.features.genders.getOrderedValues = function getOrderedValues(ancestorFeatures) {
+            /*if (ancestorFeatures && ancestorFeatures[0].value === 'second') {
+                return [['masculine', 'feminine'], 'neuter'];
+            }*/
+            return ['masculine', 'feminine', 'neuter'];
+        };
 
         this.createTable();
     }
 }
 
-export default [new NounView()];
+class NounViewSimplified extends NounView {
+    constructor() {
+        super();
+        this.id = 'nounDeclensionSimplified';
+        this.name = 'noun declension simplified';
+        this.title = 'Noun declension (simplified)';
+        this.partOfSpeech = Greek.parts.noun.value;
+
+        this.createTable();
+
+        this.table.suffixCellFilter = NounViewSimplified.suffixCellFilter;
+    }
+
+    static suffixCellFilter(suffix) {
+        return suffix.extendedLangData[Lib.languages.greek].primary;
+    }
+}
+
+export default [new NounView(), new NounViewSimplified()];

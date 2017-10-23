@@ -254,6 +254,26 @@ const greek = {
 
                     // Iterate over group's individual items
                     for (const suffix of group['infl-ending']) {
+                        let type = suffix['_attr']['type']['_value'];
+                        let primary = '';
+                        let typeArray = type.split(' ');
+                        if (typeArray.length > 2) {
+                            throw new Error("Type value is expected to contain up to two word.");
+                        }
+                        else if (typeArray.length > 1) {
+                            // Array probably contain two values, one of which is 'primary'
+                            let primaryIndex = typeArray.indexOf('primary');
+                            if (primaryIndex > -1) {
+                                primary = 'primary';
+                                typeArray.splice(primaryIndex, 1);
+                                type = typeArray[0];
+                            }
+                            else {
+                                throw new Error('Type value is expected to contain up to two words, ' +
+                                    'one of them should be "primary".');
+                            }
+                        }
+
                         let footnote = '';
                         if (suffix['_attr'].hasOwnProperty('footnote')) {
                             // There can be multiple footnotes separated by spaces
@@ -265,7 +285,8 @@ const greek = {
                             ['Case']: group['_attr']['case']['_value'],
                             ['Declension']: group['_attr']['decl']['_value'],
                             ['Gender']: group['_attr']['gend']['_value'],
-                            ['Type']: suffix['_attr']['type']['_value'],
+                            ['Type']: type,
+                            ['Primary']: primary,
                             ['Footnote']: footnote
                         })
 

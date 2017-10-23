@@ -69,56 +69,6 @@ class Feature {
         this.language = language;
     };
 
-    /**
-     * Converts one or more Feature objects into a single Feature item. If resulting Feature object is created from
-     * multiple features of the same type, a value field of that object will be an array of values
-     * of all Feature items that were provided as arguments.
-     * @param {Feature | Feature[]} features
-     * @returns {Feature}
-     */
-    static create(features) {
-        if (!features) {
-            throw new Error('At least one Feature object should be provided.');
-        }
-        let type = undefined;
-        let language = undefined;
-        let value = undefined;
-        if (Array.isArray(features)) {
-            value = [];
-            for (let feature of features) {
-                // All features should have the same type
-                if (type === undefined || type === feature.type) {
-                    type = feature.type;
-                }
-                else {
-                    throw new Error('Type mismatch: "' + type + '", "' + feature.type + '". All features must be of the same type.');
-                }
-
-                // All features should have the same language
-                if (language === undefined || language === feature.language) {
-                    language = feature.language;
-                }
-                else {
-                    throw new Error('Language mismatch: "' + language + '", "' + feature.language + '". All features must be of the same language.');
-                }
-
-                value.push(feature.value);
-            }
-
-            // If array has a single value only
-            if (value.length === 1) {
-                value = value[0];
-            }
-        }
-        else {
-            type = features.type;
-            language = features.language;
-            value = features.value;
-        }
-
-        return new Feature(value, type, language);
-    }
-
     isEqual(feature) {
         if (Array.isArray(feature.value)) {
             if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
@@ -225,45 +175,30 @@ class FeatureType {
     }
 
     /**
-     * Returns an ordered array of type values. If some values have the same order, they will be returned as an
-     * array within an array: [value1, [value2, value3], value4]
-     * @returns {string[] | string[][]}
+     * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
+     * For a similar function that returns strings instead of Feature objects see orderedValues().
+     * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
+     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+     * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
      */
-    get orderIndex() {
-        return this._orderIndex;
+    get orderedFeatures() {
+        return this.orderedValues.map((value) => new Feature(value, this.type, this.language));
     }
 
     /**
-     * Return copies of all feature values in a sorted array.
-     * @returns {Feature[]} Array of feature values sorted according to orderIndex.
+     * Return all feature values as strings in a sorted array, according to feature type's sort order.
+     * This is a main method that specifies a sort order of the feature type. orderedFeatures() relies
+     * on this method in providing a sorted array of feature values. If you want to create
+     * a custom sort order for a particular feature type that will depend on some options that are not type-related,
+     * create a wrapper around this function providing it with options arguments so it will be able to decide
+     * in what order those features will be based on those arguments.
+     * For a similar function that returns Feature objects instead of strings see orderedValues().
+     * @returns {string[]} Array of feature values sorted according to orderIndex.
+     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+     * an array of strings will be returned instead of a single strings, as for single feature values.
      */
-    get orderedFeatures() {
-        let values = [];
-        for (let value of this._orderIndex) {
-            if (Array.isArray(value)) {
-                let features = [];
-                for (let feature of value) {
-                    features.push(this[feature]);
-                }
-                values.push(Feature.create(features));
-            }
-            else {
-                values.push(Feature.create(this[value]));
-            }
-
-        }
-        return values;
-    }
-
     get orderedValues() {
-        return this.orderedFeatures.map( (feature) => {
-            if (Array.isArray(feature)) {
-                return feature.map( (feature) => feature.value );
-            }
-            else {
-                return feature.value;
-            }
-        });
+        return this._orderIndex;
     }
 
     /**
@@ -703,10 +638,12 @@ class LanguageDataset {
      *
      * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
      * @param {Feature[]} featureValue
+     * @return {Suffix} A newly added suffix value (can be used to add more data to the suffix).
      */
-    addSuffix(suffixValue, ...featureValue) {
+    addSuffix(suffixValue, featureValue, extendedLangData) {
         // TODO: implement run-time error checking
         let suffixItem = new Suffix(suffixValue);
+        suffixItem.extendedLangData = extendedLangData;
 
         // Build all possible combinations of features
         let multiValueFeatures = [];
@@ -733,7 +670,7 @@ class LanguageDataset {
                 }
                 else {
                     // Array is empty
-                    console.warn('An empty array is provided as a feature argument to the "add" function, ignoring.')
+                    throw new Error('An empty array is provided as a feature argument to the "addSuffix" method.')
                 }
             }
             else {
@@ -915,6 +852,14 @@ class Suffix {
         this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
+        //
+        /*
+        Extended language data stores additional suffix information that is specific for a particular language.
+        It uses the following schema:
+        {string} language(key): {object} extended language data. This object is specific for each language
+        and is defined in a language model.
+         */
+        this.extendedLangData = {};
         this.match = match;
     }
 
@@ -939,6 +884,12 @@ class Suffix {
 
         if (this.hasOwnProperty(types.footnote)) {
             clone[types.footnote] = this[types.footnote];
+        }
+
+        for (const lang in this.extendedLangData) {
+            if (this.extendedLangData.hasOwnProperty(lang)) {
+                clone.extendedLangData[lang] = this.extendedLangData[lang];
+            }
         }
         return clone;
     };
@@ -1033,7 +984,7 @@ class Suffix {
     }
 
     /**
-     * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
+     * Splits a suffix that has multiple values of one or more grammatical features into an array of Suffix objects
      * with each Suffix object having only a single value of those grammatical features. Initial multiple values
      * are stored in a featureGroups[featureType] property as an array of values.
      * @param {string} featureType - A type of a feature
@@ -1102,7 +1053,7 @@ class Suffix {
     }
 
     /**
-     * This function provide a logic of to merge feature values of two suffix object that were previously split together.
+     * This function provide a logic of to merge data of two suffix object that were previously split together.
      * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
      * @param {Suffix} suffixB - A second ending to merge (to be discarded).
      * @returns {Suffix} A modified value of ending A.

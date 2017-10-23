@@ -71,56 +71,6 @@ class Feature {
         this.language = language;
     };
 
-    /**
-     * Converts one or more Feature objects into a single Feature item. If resulting Feature object is created from
-     * multiple features of the same type, a value field of that object will be an array of values
-     * of all Feature items that were provided as arguments.
-     * @param {Feature | Feature[]} features
-     * @returns {Feature}
-     */
-    static create(features) {
-        if (!features) {
-            throw new Error('At least one Feature object should be provided.');
-        }
-        let type = undefined;
-        let language = undefined;
-        let value = undefined;
-        if (Array.isArray(features)) {
-            value = [];
-            for (let feature of features) {
-                // All features should have the same type
-                if (type === undefined || type === feature.type) {
-                    type = feature.type;
-                }
-                else {
-                    throw new Error('Type mismatch: "' + type + '", "' + feature.type + '". All features must be of the same type.');
-                }
-
-                // All features should have the same language
-                if (language === undefined || language === feature.language) {
-                    language = feature.language;
-                }
-                else {
-                    throw new Error('Language mismatch: "' + language + '", "' + feature.language + '". All features must be of the same language.');
-                }
-
-                value.push(feature.value);
-            }
-
-            // If array has a single value only
-            if (value.length === 1) {
-                value = value[0];
-            }
-        }
-        else {
-            type = features.type;
-            language = features.language;
-            value = features.value;
-        }
-
-        return new Feature(value, type, language);
-    }
-
     isEqual(feature) {
         if (Array.isArray(feature.value)) {
             if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
@@ -227,45 +177,30 @@ class FeatureType {
     }
 
     /**
-     * Returns an ordered array of type values. If some values have the same order, they will be returned as an
-     * array within an array: [value1, [value2, value3], value4]
-     * @returns {string[] | string[][]}
+     * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
+     * For a similar function that returns strings instead of Feature objects see orderedValues().
+     * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
+     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+     * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
      */
-    get orderIndex() {
-        return this._orderIndex;
+    get orderedFeatures() {
+        return this.orderedValues.map((value) => new Feature(value, this.type, this.language));
     }
 
     /**
-     * Return copies of all feature values in a sorted array.
-     * @returns {Feature[]} Array of feature values sorted according to orderIndex.
+     * Return all feature values as strings in a sorted array, according to feature type's sort order.
+     * This is a main method that specifies a sort order of the feature type. orderedFeatures() relies
+     * on this method in providing a sorted array of feature values. If you want to create
+     * a custom sort order for a particular feature type that will depend on some options that are not type-related,
+     * create a wrapper around this function providing it with options arguments so it will be able to decide
+     * in what order those features will be based on those arguments.
+     * For a similar function that returns Feature objects instead of strings see orderedValues().
+     * @returns {string[]} Array of feature values sorted according to orderIndex.
+     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+     * an array of strings will be returned instead of a single strings, as for single feature values.
      */
-    get orderedFeatures() {
-        let values = [];
-        for (let value of this._orderIndex) {
-            if (Array.isArray(value)) {
-                let features = [];
-                for (let feature of value) {
-                    features.push(this[feature]);
-                }
-                values.push(Feature.create(features));
-            }
-            else {
-                values.push(Feature.create(this[value]));
-            }
-
-        }
-        return values;
-    }
-
     get orderedValues() {
-        return this.orderedFeatures.map( (feature) => {
-            if (Array.isArray(feature)) {
-                return feature.map( (feature) => feature.value );
-            }
-            else {
-                return feature.value;
-            }
-        });
+        return this._orderIndex;
     }
 
     /**
@@ -705,10 +640,12 @@ class LanguageDataset {
      *
      * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
      * @param {Feature[]} featureValue
+     * @return {Suffix} A newly added suffix value (can be used to add more data to the suffix).
      */
-    addSuffix(suffixValue, ...featureValue) {
+    addSuffix(suffixValue, featureValue, extendedLangData) {
         // TODO: implement run-time error checking
         let suffixItem = new Suffix(suffixValue);
+        suffixItem.extendedLangData = extendedLangData;
 
         // Build all possible combinations of features
         let multiValueFeatures = [];
@@ -735,7 +672,7 @@ class LanguageDataset {
                 }
                 else {
                     // Array is empty
-                    console.warn('An empty array is provided as a feature argument to the "add" function, ignoring.');
+                    throw new Error('An empty array is provided as a feature argument to the "addSuffix" method.')
                 }
             }
             else {
@@ -917,6 +854,14 @@ class Suffix {
         this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
+        //
+        /*
+        Extended language data stores additional suffix information that is specific for a particular language.
+        It uses the following schema:
+        {string} language(key): {object} extended language data. This object is specific for each language
+        and is defined in a language model.
+         */
+        this.extendedLangData = {};
         this.match = match;
     }
 
@@ -941,6 +886,12 @@ class Suffix {
 
         if (this.hasOwnProperty(types.footnote)) {
             clone[types.footnote] = this[types.footnote];
+        }
+
+        for (const lang in this.extendedLangData) {
+            if (this.extendedLangData.hasOwnProperty(lang)) {
+                clone.extendedLangData[lang] = this.extendedLangData[lang];
+            }
         }
         return clone;
     };
@@ -1035,7 +986,7 @@ class Suffix {
     }
 
     /**
-     * Splits an suffix that has multiple values of one or more grammatical features into an array of Suffix objects
+     * Splits a suffix that has multiple values of one or more grammatical features into an array of Suffix objects
      * with each Suffix object having only a single value of those grammatical features. Initial multiple values
      * are stored in a featureGroups[featureType] property as an array of values.
      * @param {string} featureType - A type of a feature
@@ -1104,7 +1055,7 @@ class Suffix {
     }
 
     /**
-     * This function provide a logic of to merge feature values of two suffix object that were previously split together.
+     * This function provide a logic of to merge data of two suffix object that were previously split together.
      * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
      * @param {Suffix} suffixB - A second ending to merge (to be discarded).
      * @returns {Suffix} A modified value of ending A.
@@ -2927,7 +2878,7 @@ dataSet.addSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 
@@ -2966,7 +2917,7 @@ dataSet.addVerbSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 
@@ -3176,7 +3127,7 @@ data.addFeature(types.person).importer
     .map('2nd', persons$1.second)
     .map('3rd', persons$1.third);
 
-var nounSuffixesCSV$1 = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\nα,dual,accusative,1st,feminine,regular primary,\r\nά,dual,accusative,1st,feminine,regular,\r\nᾶ,dual,accusative,1st,feminine,regular,2\r\nαιν,dual,dative,1st,feminine,regular primary,\r\nαῖν,dual,dative,1st,feminine,regular,\r\nαιιν,dual,dative,1st,feminine,irregular,\r\nαιν,dual,genitive,1st,feminine,regular primary,\r\nαῖν,dual,genitive,1st,feminine,regular,\r\nαιιν,dual,genitive,1st,feminine,irregular,\r\nα,dual,nominative,1st,feminine,regular primary,\r\nά,dual,nominative,1st,feminine,regular,\r\nᾶ,dual,nominative,1st,feminine,regular,2\r\nα,dual,vocative,1st,feminine,regular primary,\r\nά,dual,vocative,1st,feminine,regular,\r\nᾶ,dual,vocative,1st,feminine,regular,2\r\nα,dual,accusative,1st,masculine,regular primary,\r\nά,dual,accusative,1st,masculine,regular,\r\nᾶ,dual,accusative,1st,masculine,regular,2\r\nαιν,dual,dative,1st,masculine,regular primary,\r\nαῖν,dual,dative,1st,masculine,regular,\r\nαιιν,dual,dative,1st,masculine,irregular,\r\nαιν,dual,genitive,1st,masculine,regular primary,\r\nαῖν,dual,genitive,1st,masculine,regular,\r\nαιιν,dual,genitive,1st,masculine,irregular,\r\nα,dual,nominative,1st,masculine,regular primary,\r\nά,dual,nominative,1st,masculine,regular,\r\nᾶ,dual,nominative,1st,masculine,regular,2\r\nα,dual,vocative,1st,masculine,regular primary,\r\nά,dual,vocative,1st,masculine,regular,\r\nᾶ,dual,vocative,1st,masculine,regular,2\r\nας,plural,accusative,1st,feminine,regular primary,\r\nάς,plural,accusative,1st,feminine,regular,\r\nᾶς,plural,accusative,1st,feminine,regular,2\r\nανς,plural,accusative,1st,feminine,irregular,\r\nαις,plural,accusative,1st,feminine,irregular,\r\nαις,plural,dative,1st,feminine,regular primary,\r\nαῖς,plural,dative,1st,feminine,regular,\r\nῃσι,plural,dative,1st,feminine,irregular,44\r\nῃσιν,plural,dative,1st,feminine,irregular,4 44\r\nῃς,plural,dative,1st,feminine,irregular,44\r\nαισι,plural,dative,1st,feminine,irregular,44\r\nαισιν,plural,dative,1st,feminine,irregular,4 44\r\nῶν,plural,genitive,1st,feminine,regular primary,\r\nάων,plural,genitive,1st,feminine,irregular,\r\nέων,plural,genitive,1st,feminine,irregular,\r\nήων,plural,genitive,1st,feminine,irregular,\r\nᾶν,plural,genitive,1st,feminine,irregular,\r\nαι,plural,nominative,1st,feminine,regular primary,\r\nαί,plural,nominative,1st,feminine,regular,\r\nαῖ,plural,nominative,1st,feminine,regular,2\r\nαι,plural,vocative,1st,feminine,regular primary,\r\nαί,plural,vocative,1st,feminine,regular,\r\nαῖ,plural,vocative,1st,feminine,regular,2\r\nας,plural,accusative,1st,masculine,regular primary,\r\nάς,plural,accusative,1st,masculine,regular,\r\nᾶς,plural,accusative,1st,masculine,regular,3\r\nανς,plural,accusative,1st,masculine,irregular,\r\nαις,plural,accusative,1st,masculine,irregular,\r\nαις,plural,dative,1st,masculine,regular primary,\r\nαῖς,plural,dative,1st,masculine,regular,\r\nῃσι,plural,dative,1st,masculine,irregular,44\r\nῃσιν,plural,dative,1st,masculine,irregular,4 44\r\nῃς,plural,dative,1st,masculine,irregular,44\r\nαισι,plural,dative,1st,masculine,irregular,44\r\nαισιν,plural,dative,1st,masculine,irregular,4 44\r\nῶν,plural,genitive,1st,masculine,regular primary,\r\nάων,plural,genitive,1st,masculine,irregular,\r\nέων,plural,genitive,1st,masculine,irregular,\r\nήων,plural,genitive,1st,masculine,irregular,\r\nᾶν,plural,genitive,1st,masculine,irregular,\r\nαι,plural,nominative,1st,masculine,regular primary,\r\nαί,plural,nominative,1st,masculine,regular,\r\nαῖ,plural,nominative,1st,masculine,regular,3\r\nαι,plural,vocative,1st,masculine,regular primary,\r\nαί,plural,vocative,1st,masculine,regular,\r\nαῖ,plural,vocative,1st,masculine,regular,3\r\nαν,singular,accusative,1st,feminine,regular primary,\r\nην,singular,accusative,1st,feminine,regular primary,\r\nήν,singular,accusative,1st,feminine,regular,\r\nᾶν,singular,accusative,1st,feminine,regular,2\r\nῆν,singular,accusative,1st,feminine,regular,2\r\nάν,singular,accusative,1st,feminine,irregular,63\r\nᾳ,singular,dative,1st,feminine,regular primary,\r\nῃ,singular,dative,1st,feminine,regular primary,\r\nῇ,singular,dative,1st,feminine,regular,2\r\nᾷ,singular,dative,1st,feminine,regular,2\r\nηφι,singular,dative,1st,feminine,irregular,45\r\nηφιν,singular,dative,1st,feminine,irregular,4 45\r\nῆφι,singular,dative,1st,feminine,irregular,45\r\nῆφιv,singular,dative,1st,feminine,irregular,4 45\r\nας,singular,genitive,1st,feminine,regular primary,\r\nης,singular,genitive,1st,feminine,regular primary,\r\nῆs,singular,genitive,1st,feminine,regular,\r\nᾶs,singular,genitive,1st,feminine,regular,2\r\nηφι,singular,genitive,1st,feminine,irregular,45\r\nηφιν,singular,genitive,1st,feminine,irregular,4 45\r\nῆφι,singular,genitive,1st,feminine,irregular,45\r\nῆφιv,singular,genitive,1st,feminine,irregular,4 45\r\nα,singular,nominative,1st,feminine,regular primary,\r\nη,singular,nominative,1st,feminine,regular primary,1\r\nή,singular,nominative,1st,feminine,regular,\r\nᾶ,singular,nominative,1st,feminine,regular,2\r\nῆ,singular,nominative,1st,feminine,regular,2\r\nά,singular,nominative,1st,feminine,irregular,63\r\nα,singular,vocative,1st,feminine,regular primary,\r\nη,singular,vocative,1st,feminine,regular primary,\r\nή,singular,vocative,1st,feminine,regular,\r\nᾶ,singular,vocative,1st,feminine,regular,2\r\nῆ,singular,vocative,1st,feminine,regular,2\r\nά,singular,vocative,1st,feminine,irregular,63\r\nαν,singular,accusative,1st,masculine,regular primary,\r\nην,singular,accusative,1st,masculine,regular primary,3\r\nήν,singular,accusative,1st,masculine,regular,\r\nᾶν,singular,accusative,1st,masculine,regular,3\r\nῆν,singular,accusative,1st,masculine,regular,3\r\nεα,singular,accusative,1st,masculine,irregular,\r\nᾳ,singular,dative,1st,masculine,regular primary,\r\nῃ,singular,dative,1st,masculine,regular primary,\r\nῇ,singular,dative,1st,masculine,regular,\r\nᾷ,singular,dative,1st,masculine,regular,3\r\nῆ,singular,dative,1st,masculine,regular,3\r\nηφι,singular,dative,1st,masculine,irregular,45\r\nηφιν,singular,dative,1st,masculine,irregular,4 45\r\nῆφι,singular,dative,1st,masculine,irregular,45\r\nῆφιv,singular,dative,1st,masculine,irregular,4 45\r\nου,singular,genitive,1st,masculine,regular primary,\r\nοῦ,singular,genitive,1st,masculine,regular,\r\nαο,singular,genitive,1st,masculine,irregular,\r\nεω,singular,genitive,1st,masculine,irregular,\r\nηφι,singular,genitive,1st,masculine,irregular,45\r\nηφιν,singular,genitive,1st,masculine,irregular,4 45\r\nῆφι,singular,genitive,1st,masculine,irregular,45\r\nῆφιv,singular,genitive,1st,masculine,irregular,4 45\r\nω,singular,genitive,1st,masculine,irregular,\r\nα,singular,genitive,1st,masculine,irregular,\r\nας,singular,nominative,1st,masculine,regular primary,\r\nης,singular,nominative,1st,masculine,regular primary,\r\nής,singular,nominative,1st,masculine,regular,\r\nᾶs,singular,nominative,1st,masculine,regular,3\r\nῆs,singular,nominative,1st,masculine,regular,3\r\nα,singular,vocative,1st,masculine,regular primary,\r\nη,singular,vocative,1st,masculine,regular primary,\r\nά,singular,vocative,1st,masculine,regular,\r\nᾶ,singular,vocative,1st,masculine,regular,3\r\nῆ,singular,vocative,1st,masculine,regular,3\r\nω,dual,accusative,2nd,masculine feminine,regular primary,\r\nώ,dual,accusative,2nd,masculine feminine,regular,5\r\nοιν,dual,dative,2nd,masculine feminine,regular primary,\r\nοῖν,dual,dative,2nd,masculine feminine,regular,5\r\nοιιν,dual,dative,2nd,masculine feminine,irregular,\r\nῴν,dual,dative,2nd,masculine feminine,irregular,7\r\nοιν,dual,genitive,2nd,masculine feminine,regular primary,\r\nοῖν,dual,genitive,2nd,masculine feminine,regular,5\r\nοιιν,dual,genitive,2nd,masculine feminine,irregular,\r\nῴν,dual,genitive,2nd,masculine feminine,irregular,7\r\nω,dual,nominative,2nd,masculine feminine,regular primary,60\r\nώ,dual,nominative,2nd,masculine feminine,regular,60\r\nω,dual,vocative,2nd,masculine feminine,regular primary,\r\nώ,dual,vocative,2nd,masculine feminine,regular,5\r\nω,dual,accusative,2nd,neuter,regular primary,\r\nώ,dual,accusative,2nd,neuter,regular,6\r\nοιν,dual,dative,2nd,neuter,regular primary,\r\nοῖν,dual,dative,2nd,neuter,regular,6\r\nοιιν,dual,dative,2nd,neuter,irregular,\r\nοιν,dual,genitive,2nd,neuter,regular primary,\r\nοῖν,dual,genitive,2nd,neuter,regular,6\r\nοιιν,dual,genitive,2nd,neuter,irregular,\r\nω,dual,nominative,2nd,neuter,regular primary,\r\nώ,dual,nominative,2nd,neuter,regular,6\r\nω,dual,vocative,2nd,neuter,regular primary,\r\nώ,dual,vocative,2nd,neuter,regular,6\r\nους,plural,accusative,2nd,masculine feminine,regular primary,\r\nούς,plural,accusative,2nd,masculine feminine,regular,41\r\nοῦς,plural,accusative,2nd,masculine feminine,regular,5\r\nονς,plural,accusative,2nd,masculine feminine,irregular,\r\nος,plural,accusative,2nd,masculine feminine,irregular,\r\nως,plural,accusative,2nd,masculine feminine,irregular,\r\nοις,plural,accusative,2nd,masculine feminine,irregular,\r\nώς,plural,accusative,2nd,masculine feminine,irregular,7\r\nοις,plural,dative,2nd,masculine feminine,regular primary,\r\nοῖς,plural,dative,2nd,masculine feminine,regular,5\r\nοισι,plural,dative,2nd,masculine feminine,irregular,\r\nοισιν,plural,dative,2nd,masculine feminine,irregular,4\r\nῴς,plural,dative,2nd,masculine feminine,irregular,7\r\nόφι,plural,dative,2nd,masculine feminine,irregular,45\r\nόφιv,plural,dative,2nd,masculine feminine,irregular,4 45\r\nων,plural,genitive,2nd,masculine feminine,regular primary,\r\nῶν,plural,genitive,2nd,masculine feminine,regular,5\r\nών,plural,genitive,2nd,masculine feminine,irregular,7\r\nόφι,plural,genitive,2nd,masculine feminine,irregular,45\r\nόφιv,plural,genitive,2nd,masculine feminine,irregular,4 45\r\nοι,plural,nominative,2nd,masculine feminine,regular primary,\r\nοί,plural,nominative,2nd,masculine feminine,regular,41\r\nοῖ,plural,nominative,2nd,masculine feminine,regular,5\r\nῴ,plural,nominative,2nd,masculine feminine,irregular,7\r\nοι,plural,vocative,2nd,masculine feminine,regular primary,\r\nοί,plural,vocative,2nd,masculine feminine,regular,41\r\nοῖ,plural,vocative,2nd,masculine feminine,regular,5\r\nα,plural,accusative,2nd,neuter,regular primary,\r\nᾶ,plural,accusative,2nd,neuter,regular,6\r\nοις,plural,dative,2nd,neuter,regular primary,\r\nοῖς,plural,dative,2nd,neuter,regular,6\r\nοισι,plural,dative,2nd,neuter,irregular,\r\nοισιν,plural,dative,2nd,neuter,irregular,4\r\nόφι,plural,dative,2nd,neuter,irregular,45\r\nόφιv,plural,dative,2nd,neuter,irregular,4 45\r\nων,plural,genitive,2nd,neuter,regular primary,\r\nῶν,plural,genitive,2nd,neuter,regular,6\r\nόφι,plural,genitive,2nd,neuter,irregular,45\r\nόφιv,plural,genitive,2nd,neuter,irregular,4 45\r\nα,plural,nominative,2nd,neuter,regular primary,\r\nᾶ,plural,nominative,2nd,neuter,regular,6\r\nα,plural,vocative,2nd,neuter,regular primary,\r\nᾶ,plural,vocative,2nd,neuter,regular,6\r\nον,singular,accusative,2nd,masculine feminine,regular primary,\r\nόν,singular,accusative,2nd,masculine feminine,regular primary,41\r\nουν,singular,accusative,2nd,masculine feminine,regular,5\r\nοῦν,singular,accusative,2nd,masculine feminine,regular,5\r\nω,singular,accusative,2nd,masculine feminine,irregular,7 5\r\nωv,singular,accusative,2nd,masculine feminine,irregular,7 59\r\nώ,singular,accusative,2nd,masculine feminine,irregular,7 42 59\r\nών,singular,accusative,2nd,masculine feminine,irregular,7 59\r\nῳ,singular,dative,2nd,masculine feminine,regular primary,\r\nῷ,singular,dative,2nd,masculine feminine,regular,5\r\nῴ,singular,dative,2nd,masculine feminine,irregular,7\r\nόφι,singular,dative,2nd,masculine feminine,irregular,45\r\nόφιv,singular,dative,2nd,masculine feminine,irregular,4 45\r\nου,singular,genitive,2nd,masculine feminine,regular primary,\r\nοῦ,singular,genitive,2nd,masculine feminine,regular,5\r\nοιο,singular,genitive,2nd,masculine feminine,irregular,\r\nοο,singular,genitive,2nd,masculine feminine,irregular,\r\nω,singular,genitive,2nd,masculine feminine,irregular,\r\nώ,singular,genitive,2nd,masculine feminine,irregular,7\r\nόφι,singular,genitive,2nd,masculine feminine,irregular,45\r\nόφιv,singular,genitive,2nd,masculine feminine,irregular,4 45\r\nος,singular,nominative,2nd,masculine feminine,regular primary,\r\nους,singular,nominative,2nd,masculine feminine,regular,5\r\noῦς,singular,nominative,2nd,masculine feminine,regular,5\r\nός,singular,nominative,2nd,masculine feminine,regular,\r\nώς,singular,nominative,2nd,masculine feminine,irregular,7 42\r\nως,singular,nominative,2nd,masculine feminine,irregular,\r\nε,singular,vocative,2nd,masculine feminine,regular primary,\r\nέ,singular,vocative,2nd,masculine feminine,regular,\r\nοu,singular,vocative,2nd,masculine feminine,regular,5\r\nοῦ,singular,vocative,2nd,masculine feminine,regular,42\r\nός,singular,vocative,2nd,masculine feminine,irregular,57\r\nον,singular,accusative,2nd,neuter,regular primary,\r\nοῦν,singular,accusative,2nd,neuter,regular,6\r\nῳ,singular,dative,2nd,neuter,regular primary,\r\nῷ,singular,dative,2nd,neuter,regular,6\r\nόφι,singular,dative,2nd,neuter,irregular,45\r\nόφιv,singular,dative,2nd,neuter,irregular,4 45\r\nου,singular,genitive,2nd,neuter,regular primary,\r\nοῦ,singular,genitive,2nd,neuter,regular,6\r\nοο,singular,genitive,2nd,neuter,irregular,\r\nοιο,singular,genitive,2nd,neuter,irregular,\r\nω,singular,genitive,2nd,neuter,irregular,\r\nόφι,singular,genitive,2nd,neuter,irregular,45\r\nόφιv,singular,genitive,2nd,neuter,irregular,4 45\r\nον,singular,nominative,2nd,neuter,regular primary,\r\nοῦν,singular,nominative,2nd,neuter,regular,6\r\nον,singular,vocative,2nd,neuter,regular primary,\r\nοῦν,singular,vocative,2nd,neuter,regular,6\r\nε,dual,accusative,3rd,masculine feminine,regular primary,\r\nει,dual,accusative,3rd,masculine feminine,regular,\r\nῆ,dual,accusative,3rd,masculine feminine,regular,18\r\nω,dual,accusative,3rd,masculine feminine,irregular,32\r\nῖ,dual,accusative,3rd,masculine feminine,irregular,33\r\nεε,dual,accusative,3rd,masculine feminine,irregular,16 55 61\r\nοιν,dual,dative,3rd,masculine feminine,regular primary,\r\nοῖν,dual,dative,3rd,masculine feminine,regular,\r\nοιιν,dual,dative,3rd,masculine feminine,irregular,54\r\nσι,dual,dative,3rd,masculine feminine,irregular,33 37\r\nεσσι,dual,dative,3rd,masculine feminine,irregular,33\r\nεσι,dual,dative,3rd,masculine feminine,irregular,33\r\nέοιν,dual,dative,3rd,masculine feminine,irregular,16 61\r\nῳν,dual,dative,3rd,masculine feminine,irregular,49\r\nοιν,dual,genitive,3rd,masculine feminine,primary regular,\r\nοῖν,dual,genitive,3rd,masculine feminine,regular,\r\nοιιν,dual,genitive,3rd,masculine feminine,irregular,54\r\nέοιν,dual,genitive,3rd,masculine feminine,irregular,16 61\r\nῳν,dual,genitive,3rd,masculine feminine,irregular,49\r\nε,dual,nominative,3rd,masculine feminine,regular primary,\r\nει,dual,nominative,3rd,masculine feminine,regular,\r\nῆ,dual,nominative,3rd,masculine feminine,regular,18\r\nω,dual,nominative,3rd,masculine feminine,irregular,32\r\nῖ,dual,nominative,3rd,masculine feminine,irregular,33\r\nεε,dual,nominative,3rd,masculine feminine,irregular,16 55 61\r\nε,dual,vocative,3rd,masculine feminine,regular primary,\r\nει,dual,vocative,3rd,masculine feminine,regular,\r\nῆ,dual,vocative,3rd,masculine feminine,regular,18\r\nω,dual,vocative,3rd,masculine feminine,irregular,32\r\nῖ,dual,vocative,3rd,masculine feminine,irregular,33\r\nεε,dual,vocative,3rd,masculine feminine,irregular,16 55 61\r\nε,dual,accusative,3rd,neuter,regular primary,\r\nει,dual,accusative,3rd,neuter,regular,\r\nα,dual,accusative,3rd,neuter,regular,\r\nεε,dual,accusative,3rd,neuter,irregular,16 61\r\nαε,dual,accusative,3rd,neuter,irregular,16 61\r\nοιν,dual,dative,3rd,neuter,regular primary,\r\nῷν,dual,dative,3rd,neuter,regular,\r\nοις,dual,dative,3rd,neuter,irregular,33 38\r\nοισι,dual,dative,3rd,neuter,irregular,33 38\r\nοισι(ν),dual,dative,3rd,neuter,irregular,4 33 38\r\nοιιν,dual,dative,3rd,neuter,irregular,\r\nέοιν,dual,dative,3rd,neuter,irregular,16 61\r\nάοιν,dual,dative,3rd,neuter,irregular,16 61\r\nοιν,dual,genitive,3rd,neuter,regular primary,\r\nῷν,dual,genitive,3rd,neuter,regular,\r\nων,dual,genitive,3rd,neuter,irregular,33 38\r\nοιιν,dual,genitive,3rd,neuter,irregular,\r\nέοιν,dual,genitive,3rd,neuter,irregular,16 61\r\nάοιν,dual,genitive,3rd,neuter,irregular,16 61\r\nε,dual,nominative,3rd,neuter,regular primary,\r\nει,dual,nominative,3rd,neuter,regular,\r\nα,dual,nominative,3rd,neuter,regular,\r\nεε,dual,nominative,3rd,neuter,irregular,16 61\r\nαε,dual,nominative,3rd,neuter,irregular,16 61\r\nε,dual,vocative,3rd,neuter,regular primary,\r\nει,dual,vocative,3rd,neuter,regular,\r\nα,dual,vocative,3rd,neuter,regular,\r\nεε,dual,vocative,3rd,neuter,irregular,16 61\r\nαε,dual,vocative,3rd,neuter,irregular,16 61\r\nας,plural,accusative,3rd,masculine feminine,regular primary,\r\nεις,plural,accusative,3rd,masculine feminine,regular,17 41\r\nες,plural,accusative,3rd,masculine feminine,regular,\r\nς,plural,accusative,3rd,masculine feminine,regular,\r\nῦς,plural,accusative,3rd,masculine feminine,regular,17 18 48\r\nως,plural,accusative,3rd,masculine feminine,regular,30\r\nῆς,plural,accusative,3rd,masculine feminine,irregular,56\r\nέας,plural,accusative,3rd,masculine feminine,irregular,\r\nέος,plural,accusative,3rd,masculine feminine,irregular,\r\nῆος,plural,accusative,3rd,masculine feminine,irregular,\r\nῆες,plural,accusative,3rd,masculine feminine,irregular,\r\nῆας,plural,accusative,3rd,masculine feminine,irregular,\r\nους,plural,accusative,3rd,masculine feminine,irregular,32\r\nούς,plural,accusative,3rd,masculine feminine,irregular,32\r\nεῖς,plural,accusative,3rd,masculine feminine,irregular,31 41\r\nεες,plural,accusative,3rd,masculine feminine,irregular,55 61\r\nις,plural,accusative,3rd,masculine feminine,irregular,\r\nινς,plural,accusative,3rd,masculine feminine,irregular,\r\nῶς,plural,accusative,3rd,masculine feminine,irregular,48\r\nσι,plural,dative,3rd,masculine feminine,regular primary,\r\nσιν,plural,dative,3rd,masculine feminine,regular primary,4\r\nσί,plural,dative,3rd,masculine feminine,regular,41\r\nσίν,plural,dative,3rd,masculine feminine,regular,4 41\r\nεσι,plural,dative,3rd,masculine feminine,regular,41\r\nεσιν,plural,dative,3rd,masculine feminine,regular,4 41\r\nέσι,plural,dative,3rd,masculine feminine,regular,\r\nέσιν,plural,dative,3rd,masculine feminine,regular,4\r\nψι,plural,dative,3rd,masculine feminine,regular,\r\nψιν,plural,dative,3rd,masculine feminine,regular,4\r\nψί,plural,dative,3rd,masculine feminine,regular,\r\nψίν,plural,dative,3rd,masculine feminine,regular,4\r\nξι,plural,dative,3rd,masculine feminine,regular,\r\nξιν,plural,dative,3rd,masculine feminine,regular,4\r\nξί,plural,dative,3rd,masculine feminine,regular,\r\nξίν,plural,dative,3rd,masculine feminine,regular,4\r\nφι,plural,dative,3rd,masculine feminine,irregular,45\r\nφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nηφι,plural,dative,3rd,masculine feminine,irregular,45\r\nηφιv,plural,dative,3rd,masculine feminine,irregular,4 45\r\nῆφι,plural,dative,3rd,masculine feminine,irregular,45\r\nῆφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nόφι,plural,dative,3rd,masculine feminine,irregular,45\r\nόφιν,plural,dative,3rd,masculine feminine,irregular,4 45\r\nαις,plural,dative,3rd,masculine feminine,irregular,33 41\r\nοῖσι,plural,dative,3rd,masculine feminine,irregular,33\r\nοῖσιv,plural,dative,3rd,masculine feminine,irregular,4 33\r\nεσσι,plural,dative,3rd,masculine feminine,irregular,16 61\r\nεσσιv,plural,dative,3rd,masculine feminine,irregular,4 16 61\r\nυσσι,plural,dative,3rd,masculine feminine,irregular,54\r\nυσσιv,plural,dative,3rd,masculine feminine,irregular,4 54\r\nσσί,plural,dative,3rd,masculine feminine,irregular,54\r\nσσίv,plural,dative,3rd,masculine feminine,irregular,4 54\r\nων,plural,genitive,3rd,masculine feminine,regular primary,\r\nῶν,plural,genitive,3rd,masculine feminine,regular,\r\n-,plural,genitive,3rd,masculine feminine,irregular,41\r\nφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nηφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nηφιv,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nῆφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nῆφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nόφι,plural,genitive,3rd,masculine feminine,irregular,45\r\nόφιν,plural,genitive,3rd,masculine feminine,irregular,4 45\r\nέων,plural,genitive,3rd,masculine feminine,irregular,16 61\r\nες,plural,nominative,3rd,masculine feminine,regular primary,\r\nως,plural,nominative,3rd,masculine feminine,regular,30\r\nεις,plural,nominative,3rd,masculine feminine,regular,17\r\nεῖς,plural,nominative,3rd,masculine feminine,regular,18\r\nοί,plural,nominative,3rd,masculine feminine,irregular,32\r\nαί,plural,nominative,3rd,masculine feminine,irregular,33\r\nῆς,plural,nominative,3rd,masculine feminine,irregular,18\r\nῄς,plural,nominative,3rd,masculine feminine,irregular,31 41\r\nεες,plural,nominative,3rd,masculine feminine,irregular,16 55 61\r\nοι,plural,nominative,3rd,masculine feminine,irregular,33\r\nες,plural,vocative,3rd,masculine feminine,regular primary,\r\nεις,plural,vocative,3rd,masculine feminine,regular,17\r\nεῖς,plural,vocative,3rd,masculine feminine,regular,18\r\nῆς,plural,vocative,3rd,masculine feminine,regular,18\r\nως,plural,vocative,3rd,masculine feminine,regular,30\r\nεες,plural,vocative,3rd,masculine feminine,irregular,16 55 61\r\nα,plural,accusative,3rd,neuter,regular primary,\r\nη,plural,accusative,3rd,neuter,regular,\r\nς,plural,accusative,3rd,neuter,regular,\r\nά,plural,accusative,3rd,neuter,irregular,33\r\nαα,plural,accusative,3rd,neuter,irregular,16 61\r\nεα,plural,accusative,3rd,neuter,irregular,16 61\r\nσι,plural,dative,3rd,neuter,regular primary,\r\nσιν,plural,dative,3rd,neuter,regular primary,4\r\nσί,plural,dative,3rd,neuter,regular,\r\nσίv,plural,dative,3rd,neuter,regular,4\r\nασι,plural,dative,3rd,neuter,regular,\r\nασιν,plural,dative,3rd,neuter,regular,4\r\nεσι,plural,dative,3rd,neuter,regular,\r\nεσιν,plural,dative,3rd,neuter,regular,4\r\nέσι,plural,dative,3rd,neuter,regular,\r\nέσιv,plural,dative,3rd,neuter,regular,4\r\nεσσι,plural,dative,3rd,neuter,irregular,54\r\nεσσιν,plural,dative,3rd,neuter,irregular,4 54\r\nσσί,plural,dative,3rd,neuter,irregular,54\r\nσσίv,plural,dative,3rd,neuter,irregular,4 54\r\nασσι,plural,dative,3rd,neuter,irregular,54\r\nασσιν,plural,dative,3rd,neuter,irregular,4 54\r\nφι,plural,dative,3rd,neuter,irregular,45\r\nφιν,plural,dative,3rd,neuter,irregular,4 45\r\nηφι,plural,dative,3rd,neuter,irregular,45\r\nηφιv,plural,dative,3rd,neuter,irregular,4 45\r\nῆφι,plural,dative,3rd,neuter,irregular,45\r\nῆφιν,plural,dative,3rd,neuter,irregular,4 45\r\nόφι,plural,dative,3rd,neuter,irregular,45\r\nόφιν,plural,dative,3rd,neuter,irregular,4 45\r\nων,plural,genitive,3rd,neuter,regular primary,\r\nῶν,plural,genitive,3rd,neuter,regular primary,\r\nφι,plural,genitive,3rd,neuter,irregular,\r\nφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nηφι,plural,genitive,3rd,neuter,irregular,45\r\nηφιv,plural,genitive,3rd,neuter,irregular,4 45\r\nῆφι,plural,genitive,3rd,neuter,irregular,45\r\nῆφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nόφι,plural,genitive,3rd,neuter,irregular,45\r\nόφιν,plural,genitive,3rd,neuter,irregular,4 45\r\nέων,plural,genitive,3rd,neuter,irregular,16 61\r\nάων,plural,genitive,3rd,neuter,irregular,16 61\r\nα,plural,nominative,3rd,neuter,regular primary,\r\nη,plural,nominative,3rd,neuter,regular,\r\nες,plural,nominative,3rd,neuter,regular,\r\nά,plural,nominative,3rd,neuter,irregular,33\r\nεα,plural,nominative,3rd,neuter,irregular,16 61\r\nαα,plural,nominative,3rd,neuter,irregular,16 61\r\nα,plural,vocative,3rd,neuter,regular primary,\r\nη,plural,vocative,3rd,neuter,regular,\r\nες,plural,vocative,3rd,neuter,regular,\r\nαα,plural,vocative,3rd,neuter,irregular,16 61\r\nεα,plural,vocative,3rd,neuter,irregular,16 61\r\nα,singular,accusative,3rd,masculine feminine,regular primary,\r\nη,singular,accusative,3rd,masculine feminine,regular,16\r\nν,singular,accusative,3rd,masculine feminine,regular,\r\nιν,singular,accusative,3rd,masculine feminine,regular,41\r\nῦν,singular,accusative,3rd,masculine feminine,regular,18\r\nῶ,singular,accusative,3rd,masculine feminine,regular,23\r\nυν,singular,accusative,3rd,masculine feminine,regular,\r\nῦν,singular,accusative,3rd,masculine feminine,regular,17\r\nύν,singular,accusative,3rd,masculine feminine,regular,17\r\nέα,singular,accusative,3rd,masculine feminine,regular,20\r\nην,singular,accusative,3rd,masculine feminine,regular,24\r\nώ,singular,accusative,3rd,masculine feminine,regular,19 41\r\nω,singular,accusative,3rd,masculine feminine,regular,23\r\nεῖν,singular,accusative,3rd,masculine feminine,irregular,31 41\r\nων,singular,accusative,3rd,masculine feminine,irregular,33 41 49\r\nαν,singular,accusative,3rd,masculine feminine,irregular,33 41\r\nον,singular,accusative,3rd,masculine feminine,irregular,39\r\nῖς,singular,accusative,3rd,masculine feminine,irregular,33\r\nεα,singular,accusative,3rd,masculine feminine,irregular,61\r\nι,singular,dative,3rd,masculine feminine,regular primary,\r\nί,singular,dative,3rd,masculine feminine,regular,\r\nϊ,singular,dative,3rd,masculine feminine,regular,17\r\nΐ,singular,dative,3rd,masculine feminine,regular,40\r\nει,singular,dative,3rd,masculine feminine,regular,16 17\r\nεῖ,singular,dative,3rd,masculine feminine,regular,18\r\nαι,singular,dative,3rd,masculine feminine,regular,\r\noῖ,singular,dative,3rd,masculine feminine,regular,28 41\r\nῖ,singular,dative,3rd,masculine feminine,irregular,33 46\r\nῆι,singular,dative,3rd,masculine feminine,irregular,18\r\nᾳ,singular,dative,3rd,masculine feminine,irregular,25\r\nῳ,singular,dative,3rd,masculine feminine,irregular,33 34\r\nῷ,singular,dative,3rd,masculine feminine,irregular,33\r\nιί,singular,dative,3rd,masculine feminine,irregular,62\r\nυί,singular,dative,3rd,masculine feminine,irregular,62\r\nέϊ,singular,dative,3rd,masculine feminine,irregular,18 61\r\nος,singular,genitive,3rd,masculine feminine,regular primary,\r\nός,singular,genitive,3rd,masculine feminine,regular,\r\nους,singular,genitive,3rd,masculine feminine,regular,16\r\nοῦς,singular,genitive,3rd,masculine feminine,regular,19 46\r\nως,singular,genitive,3rd,masculine feminine,regular,17 18\r\nώς,singular,genitive,3rd,masculine feminine,regular,17 18 41\r\nῶς,singular,genitive,3rd,masculine feminine,regular,47\r\nεως,singular,genitive,3rd,masculine feminine,regular,17\r\nέως,singular,genitive,3rd,masculine feminine,regular,\r\nεώς,singular,genitive,3rd,masculine feminine,regular,\r\nέους,singular,genitive,3rd,masculine feminine,regular,20\r\nω,singular,genitive,3rd,masculine feminine,irregular,\r\nεος,singular,genitive,3rd,masculine feminine,irregular,61\r\nΰς,singular,genitive,3rd,masculine feminine,irregular,41 48\r\nῦς,singular,genitive,3rd,masculine feminine,irregular,48\r\nνος,singular,genitive,3rd,masculine feminine,irregular,22\r\nοῦ,singular,genitive,3rd,masculine feminine,irregular,33\r\nηος,singular,genitive,3rd,masculine feminine,irregular,55\r\nιός,singular,genitive,3rd,masculine feminine,irregular,62\r\nuός,singular,genitive,3rd,masculine feminine,irregular,62\r\nς,singular,nominative,3rd,masculine feminine,regular primary,\r\n-,singular,nominative,3rd,masculine feminine,regular primary,\r\nηρ,singular,nominative,3rd,masculine feminine,regular,41\r\nις,singular,nominative,3rd,masculine feminine,regular,\r\nϊς,singular,nominative,3rd,masculine feminine,regular,\r\nώ,singular,nominative,3rd,masculine feminine,regular,41\r\nψ,singular,nominative,3rd,masculine feminine,regular,\r\nξ,singular,nominative,3rd,masculine feminine,regular,\r\nρ,singular,nominative,3rd,masculine feminine,regular,\r\nήρ,singular,nominative,3rd,masculine feminine,regular,\r\nήν,singular,nominative,3rd,masculine feminine,regular,50\r\nν,singular,nominative,3rd,masculine feminine,regular,\r\nωρ,singular,nominative,3rd,masculine feminine,regular,\r\nων,singular,nominative,3rd,masculine feminine,regular,\r\nών,singular,nominative,3rd,masculine feminine,regular,\r\nης,singular,nominative,3rd,masculine feminine,regular,\r\nῆς,singular,nominative,3rd,masculine feminine,regular,\r\nυς,singular,nominative,3rd,masculine feminine,regular,\r\nῦς,singular,nominative,3rd,masculine feminine,regular,\r\nεῦς,singular,nominative,3rd,masculine feminine,regular,\r\nύς,singular,nominative,3rd,masculine feminine,regular,\r\nής,singular,nominative,3rd,masculine feminine,regular,33\r\nας,singular,nominative,3rd,masculine feminine,irregular,\r\nῴ,singular,nominative,3rd,masculine feminine,irregular,29 41\r\nώς,singular,nominative,3rd,masculine feminine,irregular,27 41\r\nϋς,singular,nominative,3rd,masculine feminine,irregular,41\r\nῄς,singular,nominative,3rd,masculine feminine,irregular,31 41\r\nῖς,singular,nominative,3rd,masculine feminine,irregular,\r\nεῖς,singular,nominative,3rd,masculine feminine,irregular,31 41\r\nῶς,singular,nominative,3rd,masculine feminine,irregular,48\r\nος,singular,nominative,3rd,masculine feminine,irregular,33\r\n-,singular,vocative,3rd,masculine feminine,regular primary,52\r\nς,singular,vocative,3rd,masculine feminine,regular,30\r\nι,singular,vocative,3rd,masculine feminine,regular,41\r\nῦ,singular,vocative,3rd,masculine feminine,regular,15 17 18\r\nοῖ,singular,vocative,3rd,masculine feminine,regular,19 41\r\nψ,singular,vocative,3rd,masculine feminine,regular,\r\nξ,singular,vocative,3rd,masculine feminine,regular,\r\nν,singular,vocative,3rd,masculine feminine,regular,\r\nρ,singular,vocative,3rd,masculine feminine,regular,\r\nων,singular,vocative,3rd,masculine feminine,regular,50\r\nών,singular,vocative,3rd,masculine feminine,regular,\r\nήν,singular,vocative,3rd,masculine feminine,regular,\r\nερ,singular,vocative,3rd,masculine feminine,regular,\r\nες,singular,vocative,3rd,masculine feminine,regular,\r\nί,singular,vocative,3rd,masculine feminine,regular,\r\nως,singular,vocative,3rd,masculine feminine,regular,\r\nἶ,singular,vocative,3rd,masculine feminine,regular,\r\nούς,singular,vocative,3rd,masculine feminine,regular,51\r\nύ,singular,vocative,3rd,masculine feminine,regular,15\r\nυ,singular,vocative,3rd,masculine feminine,regular,51\r\nεις,singular,vocative,3rd,masculine feminine,regular,20\r\nαν,singular,vocative,3rd,masculine feminine,regular,\r\nώς,singular,vocative,3rd,masculine feminine,irregular,27 41 46\r\nον,singular,vocative,3rd,masculine feminine,irregular,\r\nυς,singular,vocative,3rd,masculine feminine,irregular,33\r\nα,singular,accusative,3rd,neuter,regular primary,15\r\n-,singular,accusative,3rd,neuter,regular,33\r\nος,singular,accusative,3rd,neuter,regular,\r\nας,singular,accusative,3rd,neuter,regular,\r\nαρ,singular,accusative,3rd,neuter,regular,21\r\nυ,singular,accusative,3rd,neuter,regular,\r\nι,singular,dative,3rd,neuter,regular primary,\r\nει,singular,dative,3rd,neuter,regular,16\r\nαι,singular,dative,3rd,neuter,regular,16 21\r\nϊ,singular,dative,3rd,neuter,irregular,17\r\nᾳ,singular,dative,3rd,neuter,irregular,25 33\r\nυϊ,singular,dative,3rd,neuter,irregular,17\r\nαϊ,singular,dative,3rd,neuter,irregular,21 61\r\nος,singular,genitive,3rd,neuter,regular primary,\r\nους,singular,genitive,3rd,neuter,regular,16\r\nως,singular,genitive,3rd,neuter,regular,16\r\nεως,singular,genitive,3rd,neuter,regular,17\r\nυς,singular,genitive,3rd,neuter,irregular,26\r\nου,singular,genitive,3rd,neuter,irregular,33\r\nαος,singular,genitive,3rd,neuter,irregular,21 61\r\nα,singular,nominative,3rd,neuter,regular primary,\r\n-,singular,nominative,3rd,neuter,regular,33\r\nος,singular,nominative,3rd,neuter,regular,\r\nαρ,singular,nominative,3rd,neuter,regular,\r\nας,singular,nominative,3rd,neuter,regular,16 21\r\nυ,singular,nominative,3rd,neuter,regular,\r\nον,singular,nominative,3rd,neuter,irregular,33\r\nα,singular,vocative,3rd,neuter,regular primary,15\r\n-,singular,vocative,3rd,neuter,regular,\r\nος,singular,vocative,3rd,neuter,regular,\r\nας,singular,vocative,3rd,neuter,regular,\r\nαρ,singular,vocative,3rd,neuter,regular,21\r\nυ,singular,vocative,3rd,neuter,regular,";
+var nounSuffixesCSV$1 = "Ending,Number,Case,Declension,Gender,Type,Primary,Footnote\r\nα,dual,accusative,1st,feminine,regular,primary,\r\nά,dual,accusative,1st,feminine,regular,,\r\nᾶ,dual,accusative,1st,feminine,regular,,2\r\nαιν,dual,dative,1st,feminine,regular,primary,\r\nαῖν,dual,dative,1st,feminine,regular,,\r\nαιιν,dual,dative,1st,feminine,irregular,,\r\nαιν,dual,genitive,1st,feminine,regular,primary,\r\nαῖν,dual,genitive,1st,feminine,regular,,\r\nαιιν,dual,genitive,1st,feminine,irregular,,\r\nα,dual,nominative,1st,feminine,regular,primary,\r\nά,dual,nominative,1st,feminine,regular,,\r\nᾶ,dual,nominative,1st,feminine,regular,,2\r\nα,dual,vocative,1st,feminine,regular,primary,\r\nά,dual,vocative,1st,feminine,regular,,\r\nᾶ,dual,vocative,1st,feminine,regular,,2\r\nα,dual,accusative,1st,masculine,regular,primary,\r\nά,dual,accusative,1st,masculine,regular,,\r\nᾶ,dual,accusative,1st,masculine,regular,,2\r\nαιν,dual,dative,1st,masculine,regular,primary,\r\nαῖν,dual,dative,1st,masculine,regular,,\r\nαιιν,dual,dative,1st,masculine,irregular,,\r\nαιν,dual,genitive,1st,masculine,regular,primary,\r\nαῖν,dual,genitive,1st,masculine,regular,,\r\nαιιν,dual,genitive,1st,masculine,irregular,,\r\nα,dual,nominative,1st,masculine,regular,primary,\r\nά,dual,nominative,1st,masculine,regular,,\r\nᾶ,dual,nominative,1st,masculine,regular,,2\r\nα,dual,vocative,1st,masculine,regular,primary,\r\nά,dual,vocative,1st,masculine,regular,,\r\nᾶ,dual,vocative,1st,masculine,regular,,2\r\nας,plural,accusative,1st,feminine,regular,primary,\r\nάς,plural,accusative,1st,feminine,regular,,\r\nᾶς,plural,accusative,1st,feminine,regular,,2\r\nανς,plural,accusative,1st,feminine,irregular,,\r\nαις,plural,accusative,1st,feminine,irregular,,\r\nαις,plural,dative,1st,feminine,regular,primary,\r\nαῖς,plural,dative,1st,feminine,regular,,\r\nῃσι,plural,dative,1st,feminine,irregular,,44\r\nῃσιν,plural,dative,1st,feminine,irregular,,4 44\r\nῃς,plural,dative,1st,feminine,irregular,,44\r\nαισι,plural,dative,1st,feminine,irregular,,44\r\nαισιν,plural,dative,1st,feminine,irregular,,4 44\r\nῶν,plural,genitive,1st,feminine,regular,primary,\r\nάων,plural,genitive,1st,feminine,irregular,,\r\nέων,plural,genitive,1st,feminine,irregular,,\r\nήων,plural,genitive,1st,feminine,irregular,,\r\nᾶν,plural,genitive,1st,feminine,irregular,,\r\nαι,plural,nominative,1st,feminine,regular,primary,\r\nαί,plural,nominative,1st,feminine,regular,,\r\nαῖ,plural,nominative,1st,feminine,regular,,2\r\nαι,plural,vocative,1st,feminine,regular,primary,\r\nαί,plural,vocative,1st,feminine,regular,,\r\nαῖ,plural,vocative,1st,feminine,regular,,2\r\nας,plural,accusative,1st,masculine,regular,primary,\r\nάς,plural,accusative,1st,masculine,regular,,\r\nᾶς,plural,accusative,1st,masculine,regular,,3\r\nανς,plural,accusative,1st,masculine,irregular,,\r\nαις,plural,accusative,1st,masculine,irregular,,\r\nαις,plural,dative,1st,masculine,regular,primary,\r\nαῖς,plural,dative,1st,masculine,regular,,\r\nῃσι,plural,dative,1st,masculine,irregular,,44\r\nῃσιν,plural,dative,1st,masculine,irregular,,4 44\r\nῃς,plural,dative,1st,masculine,irregular,,44\r\nαισι,plural,dative,1st,masculine,irregular,,44\r\nαισιν,plural,dative,1st,masculine,irregular,,4 44\r\nῶν,plural,genitive,1st,masculine,regular,primary,\r\nάων,plural,genitive,1st,masculine,irregular,,\r\nέων,plural,genitive,1st,masculine,irregular,,\r\nήων,plural,genitive,1st,masculine,irregular,,\r\nᾶν,plural,genitive,1st,masculine,irregular,,\r\nαι,plural,nominative,1st,masculine,regular,primary,\r\nαί,plural,nominative,1st,masculine,regular,,\r\nαῖ,plural,nominative,1st,masculine,regular,,3\r\nαι,plural,vocative,1st,masculine,regular,primary,\r\nαί,plural,vocative,1st,masculine,regular,,\r\nαῖ,plural,vocative,1st,masculine,regular,,3\r\nαν,singular,accusative,1st,feminine,regular,primary,\r\nην,singular,accusative,1st,feminine,regular,primary,\r\nήν,singular,accusative,1st,feminine,regular,,\r\nᾶν,singular,accusative,1st,feminine,regular,,2\r\nῆν,singular,accusative,1st,feminine,regular,,2\r\nάν,singular,accusative,1st,feminine,irregular,,63\r\nᾳ,singular,dative,1st,feminine,regular,primary,\r\nῃ,singular,dative,1st,feminine,regular,primary,\r\nῇ,singular,dative,1st,feminine,regular,,2\r\nᾷ,singular,dative,1st,feminine,regular,,2\r\nηφι,singular,dative,1st,feminine,irregular,,45\r\nηφιν,singular,dative,1st,feminine,irregular,,4 45\r\nῆφι,singular,dative,1st,feminine,irregular,,45\r\nῆφιv,singular,dative,1st,feminine,irregular,,4 45\r\nας,singular,genitive,1st,feminine,regular,primary,\r\nης,singular,genitive,1st,feminine,regular,primary,\r\nῆs,singular,genitive,1st,feminine,regular,,\r\nᾶs,singular,genitive,1st,feminine,regular,,2\r\nηφι,singular,genitive,1st,feminine,irregular,,45\r\nηφιν,singular,genitive,1st,feminine,irregular,,4 45\r\nῆφι,singular,genitive,1st,feminine,irregular,,45\r\nῆφιv,singular,genitive,1st,feminine,irregular,,4 45\r\nα,singular,nominative,1st,feminine,regular,primary,\r\nη,singular,nominative,1st,feminine,regular,primary,1\r\nή,singular,nominative,1st,feminine,regular,,\r\nᾶ,singular,nominative,1st,feminine,regular,,2\r\nῆ,singular,nominative,1st,feminine,regular,,2\r\nά,singular,nominative,1st,feminine,irregular,,63\r\nα,singular,vocative,1st,feminine,regular,primary,\r\nη,singular,vocative,1st,feminine,regular,primary,\r\nή,singular,vocative,1st,feminine,regular,,\r\nᾶ,singular,vocative,1st,feminine,regular,,2\r\nῆ,singular,vocative,1st,feminine,regular,,2\r\nά,singular,vocative,1st,feminine,irregular,,63\r\nαν,singular,accusative,1st,masculine,regular,primary,\r\nην,singular,accusative,1st,masculine,regular,primary,3\r\nήν,singular,accusative,1st,masculine,regular,,\r\nᾶν,singular,accusative,1st,masculine,regular,,3\r\nῆν,singular,accusative,1st,masculine,regular,,3\r\nεα,singular,accusative,1st,masculine,irregular,,\r\nᾳ,singular,dative,1st,masculine,regular,primary,\r\nῃ,singular,dative,1st,masculine,regular,primary,\r\nῇ,singular,dative,1st,masculine,regular,,\r\nᾷ,singular,dative,1st,masculine,regular,,3\r\nῆ,singular,dative,1st,masculine,regular,,3\r\nηφι,singular,dative,1st,masculine,irregular,,45\r\nηφιν,singular,dative,1st,masculine,irregular,,4 45\r\nῆφι,singular,dative,1st,masculine,irregular,,45\r\nῆφιv,singular,dative,1st,masculine,irregular,,4 45\r\nου,singular,genitive,1st,masculine,regular,primary,\r\nοῦ,singular,genitive,1st,masculine,regular,,\r\nαο,singular,genitive,1st,masculine,irregular,,\r\nεω,singular,genitive,1st,masculine,irregular,,\r\nηφι,singular,genitive,1st,masculine,irregular,,45\r\nηφιν,singular,genitive,1st,masculine,irregular,,4 45\r\nῆφι,singular,genitive,1st,masculine,irregular,,45\r\nῆφιv,singular,genitive,1st,masculine,irregular,,4 45\r\nω,singular,genitive,1st,masculine,irregular,,\r\nα,singular,genitive,1st,masculine,irregular,,\r\nας,singular,nominative,1st,masculine,regular,primary,\r\nης,singular,nominative,1st,masculine,regular,primary,\r\nής,singular,nominative,1st,masculine,regular,,\r\nᾶs,singular,nominative,1st,masculine,regular,,3\r\nῆs,singular,nominative,1st,masculine,regular,,3\r\nα,singular,vocative,1st,masculine,regular,primary,\r\nη,singular,vocative,1st,masculine,regular,primary,\r\nά,singular,vocative,1st,masculine,regular,,\r\nᾶ,singular,vocative,1st,masculine,regular,,3\r\nῆ,singular,vocative,1st,masculine,regular,,3\r\nω,dual,accusative,2nd,masculine feminine,regular,primary,\r\nώ,dual,accusative,2nd,masculine feminine,regular,,5\r\nοιν,dual,dative,2nd,masculine feminine,regular,primary,\r\nοῖν,dual,dative,2nd,masculine feminine,regular,,5\r\nοιιν,dual,dative,2nd,masculine feminine,irregular,,\r\nῴν,dual,dative,2nd,masculine feminine,irregular,,7\r\nοιν,dual,genitive,2nd,masculine feminine,regular,primary,\r\nοῖν,dual,genitive,2nd,masculine feminine,regular,,5\r\nοιιν,dual,genitive,2nd,masculine feminine,irregular,,\r\nῴν,dual,genitive,2nd,masculine feminine,irregular,,7\r\nω,dual,nominative,2nd,masculine feminine,regular,primary,60\r\nώ,dual,nominative,2nd,masculine feminine,regular,,60\r\nω,dual,vocative,2nd,masculine feminine,regular,primary,\r\nώ,dual,vocative,2nd,masculine feminine,regular,,5\r\nω,dual,accusative,2nd,neuter,regular,primary,\r\nώ,dual,accusative,2nd,neuter,regular,,6\r\nοιν,dual,dative,2nd,neuter,regular,primary,\r\nοῖν,dual,dative,2nd,neuter,regular,,6\r\nοιιν,dual,dative,2nd,neuter,irregular,,\r\nοιν,dual,genitive,2nd,neuter,regular,primary,\r\nοῖν,dual,genitive,2nd,neuter,regular,,6\r\nοιιν,dual,genitive,2nd,neuter,irregular,,\r\nω,dual,nominative,2nd,neuter,regular,primary,\r\nώ,dual,nominative,2nd,neuter,regular,,6\r\nω,dual,vocative,2nd,neuter,regular,primary,\r\nώ,dual,vocative,2nd,neuter,regular,,6\r\nους,plural,accusative,2nd,masculine feminine,regular,primary,\r\nούς,plural,accusative,2nd,masculine feminine,regular,,41\r\nοῦς,plural,accusative,2nd,masculine feminine,regular,,5\r\nονς,plural,accusative,2nd,masculine feminine,irregular,,\r\nος,plural,accusative,2nd,masculine feminine,irregular,,\r\nως,plural,accusative,2nd,masculine feminine,irregular,,\r\nοις,plural,accusative,2nd,masculine feminine,irregular,,\r\nώς,plural,accusative,2nd,masculine feminine,irregular,,7\r\nοις,plural,dative,2nd,masculine feminine,regular,primary,\r\nοῖς,plural,dative,2nd,masculine feminine,regular,,5\r\nοισι,plural,dative,2nd,masculine feminine,irregular,,\r\nοισιν,plural,dative,2nd,masculine feminine,irregular,,4\r\nῴς,plural,dative,2nd,masculine feminine,irregular,,7\r\nόφι,plural,dative,2nd,masculine feminine,irregular,,45\r\nόφιv,plural,dative,2nd,masculine feminine,irregular,,4 45\r\nων,plural,genitive,2nd,masculine feminine,regular,primary,\r\nῶν,plural,genitive,2nd,masculine feminine,regular,,5\r\nών,plural,genitive,2nd,masculine feminine,irregular,,7\r\nόφι,plural,genitive,2nd,masculine feminine,irregular,,45\r\nόφιv,plural,genitive,2nd,masculine feminine,irregular,,4 45\r\nοι,plural,nominative,2nd,masculine feminine,regular,primary,\r\nοί,plural,nominative,2nd,masculine feminine,regular,,41\r\nοῖ,plural,nominative,2nd,masculine feminine,regular,,5\r\nῴ,plural,nominative,2nd,masculine feminine,irregular,,7\r\nοι,plural,vocative,2nd,masculine feminine,regular,primary,\r\nοί,plural,vocative,2nd,masculine feminine,regular,,41\r\nοῖ,plural,vocative,2nd,masculine feminine,regular,,5\r\nα,plural,accusative,2nd,neuter,regular,primary,\r\nᾶ,plural,accusative,2nd,neuter,regular,,6\r\nοις,plural,dative,2nd,neuter,regular,primary,\r\nοῖς,plural,dative,2nd,neuter,regular,,6\r\nοισι,plural,dative,2nd,neuter,irregular,,\r\nοισιν,plural,dative,2nd,neuter,irregular,,4\r\nόφι,plural,dative,2nd,neuter,irregular,,45\r\nόφιv,plural,dative,2nd,neuter,irregular,,4 45\r\nων,plural,genitive,2nd,neuter,regular,primary,\r\nῶν,plural,genitive,2nd,neuter,regular,,6\r\nόφι,plural,genitive,2nd,neuter,irregular,,45\r\nόφιv,plural,genitive,2nd,neuter,irregular,,4 45\r\nα,plural,nominative,2nd,neuter,regular,primary,\r\nᾶ,plural,nominative,2nd,neuter,regular,,6\r\nα,plural,vocative,2nd,neuter,regular,primary,\r\nᾶ,plural,vocative,2nd,neuter,regular,,6\r\nον,singular,accusative,2nd,masculine feminine,regular,primary,\r\nόν,singular,accusative,2nd,masculine feminine,regular,primary,41\r\nουν,singular,accusative,2nd,masculine feminine,regular,,5\r\nοῦν,singular,accusative,2nd,masculine feminine,regular,,5\r\nω,singular,accusative,2nd,masculine feminine,irregular,,7 5\r\nωv,singular,accusative,2nd,masculine feminine,irregular,,7 59\r\nώ,singular,accusative,2nd,masculine feminine,irregular,,7 42 59\r\nών,singular,accusative,2nd,masculine feminine,irregular,,7 59\r\nῳ,singular,dative,2nd,masculine feminine,regular,primary,\r\nῷ,singular,dative,2nd,masculine feminine,regular,,5\r\nῴ,singular,dative,2nd,masculine feminine,irregular,,7\r\nόφι,singular,dative,2nd,masculine feminine,irregular,,45\r\nόφιv,singular,dative,2nd,masculine feminine,irregular,,4 45\r\nου,singular,genitive,2nd,masculine feminine,regular,primary,\r\nοῦ,singular,genitive,2nd,masculine feminine,regular,,5\r\nοιο,singular,genitive,2nd,masculine feminine,irregular,,\r\nοο,singular,genitive,2nd,masculine feminine,irregular,,\r\nω,singular,genitive,2nd,masculine feminine,irregular,,\r\nώ,singular,genitive,2nd,masculine feminine,irregular,,7\r\nόφι,singular,genitive,2nd,masculine feminine,irregular,,45\r\nόφιv,singular,genitive,2nd,masculine feminine,irregular,,4 45\r\nος,singular,nominative,2nd,masculine feminine,regular,primary,\r\nους,singular,nominative,2nd,masculine feminine,regular,,5\r\noῦς,singular,nominative,2nd,masculine feminine,regular,,5\r\nός,singular,nominative,2nd,masculine feminine,regular,,\r\nώς,singular,nominative,2nd,masculine feminine,irregular,,7 42\r\nως,singular,nominative,2nd,masculine feminine,irregular,,\r\nε,singular,vocative,2nd,masculine feminine,regular,primary,\r\nέ,singular,vocative,2nd,masculine feminine,regular,,\r\nοu,singular,vocative,2nd,masculine feminine,regular,,5\r\nοῦ,singular,vocative,2nd,masculine feminine,regular,,42\r\nός,singular,vocative,2nd,masculine feminine,irregular,,57\r\nον,singular,accusative,2nd,neuter,regular,primary,\r\nοῦν,singular,accusative,2nd,neuter,regular,,6\r\nῳ,singular,dative,2nd,neuter,regular,primary,\r\nῷ,singular,dative,2nd,neuter,regular,,6\r\nόφι,singular,dative,2nd,neuter,irregular,,45\r\nόφιv,singular,dative,2nd,neuter,irregular,,4 45\r\nου,singular,genitive,2nd,neuter,regular,primary,\r\nοῦ,singular,genitive,2nd,neuter,regular,,6\r\nοο,singular,genitive,2nd,neuter,irregular,,\r\nοιο,singular,genitive,2nd,neuter,irregular,,\r\nω,singular,genitive,2nd,neuter,irregular,,\r\nόφι,singular,genitive,2nd,neuter,irregular,,45\r\nόφιv,singular,genitive,2nd,neuter,irregular,,4 45\r\nον,singular,nominative,2nd,neuter,regular,primary,\r\nοῦν,singular,nominative,2nd,neuter,regular,,6\r\nον,singular,vocative,2nd,neuter,regular,primary,\r\nοῦν,singular,vocative,2nd,neuter,regular,,6\r\nε,dual,accusative,3rd,masculine feminine,regular,primary,\r\nει,dual,accusative,3rd,masculine feminine,regular,,\r\nῆ,dual,accusative,3rd,masculine feminine,regular,,18\r\nω,dual,accusative,3rd,masculine feminine,irregular,,32\r\nῖ,dual,accusative,3rd,masculine feminine,irregular,,33\r\nεε,dual,accusative,3rd,masculine feminine,irregular,,16 55 61\r\nοιν,dual,dative,3rd,masculine feminine,regular,primary,\r\nοῖν,dual,dative,3rd,masculine feminine,regular,,\r\nοιιν,dual,dative,3rd,masculine feminine,irregular,,54\r\nσι,dual,dative,3rd,masculine feminine,irregular,,33 37\r\nεσσι,dual,dative,3rd,masculine feminine,irregular,,33\r\nεσι,dual,dative,3rd,masculine feminine,irregular,,33\r\nέοιν,dual,dative,3rd,masculine feminine,irregular,,16 61\r\nῳν,dual,dative,3rd,masculine feminine,irregular,,49\r\nοιν,dual,genitive,3rd,masculine feminine,regular,primary,\r\nοῖν,dual,genitive,3rd,masculine feminine,regular,,\r\nοιιν,dual,genitive,3rd,masculine feminine,irregular,,54\r\nέοιν,dual,genitive,3rd,masculine feminine,irregular,,16 61\r\nῳν,dual,genitive,3rd,masculine feminine,irregular,,49\r\nε,dual,nominative,3rd,masculine feminine,regular,primary,\r\nει,dual,nominative,3rd,masculine feminine,regular,,\r\nῆ,dual,nominative,3rd,masculine feminine,regular,,18\r\nω,dual,nominative,3rd,masculine feminine,irregular,,32\r\nῖ,dual,nominative,3rd,masculine feminine,irregular,,33\r\nεε,dual,nominative,3rd,masculine feminine,irregular,,16 55 61\r\nε,dual,vocative,3rd,masculine feminine,regular,primary,\r\nει,dual,vocative,3rd,masculine feminine,regular,,\r\nῆ,dual,vocative,3rd,masculine feminine,regular,,18\r\nω,dual,vocative,3rd,masculine feminine,irregular,,32\r\nῖ,dual,vocative,3rd,masculine feminine,irregular,,33\r\nεε,dual,vocative,3rd,masculine feminine,irregular,,16 55 61\r\nε,dual,accusative,3rd,neuter,regular,primary,\r\nει,dual,accusative,3rd,neuter,regular,,\r\nα,dual,accusative,3rd,neuter,regular,,\r\nεε,dual,accusative,3rd,neuter,irregular,,16 61\r\nαε,dual,accusative,3rd,neuter,irregular,,16 61\r\nοιν,dual,dative,3rd,neuter,regular,primary,\r\nῷν,dual,dative,3rd,neuter,regular,,\r\nοις,dual,dative,3rd,neuter,irregular,,33 38\r\nοισι,dual,dative,3rd,neuter,irregular,,33 38\r\nοισι(ν),dual,dative,3rd,neuter,irregular,,4 33 38\r\nοιιν,dual,dative,3rd,neuter,irregular,,\r\nέοιν,dual,dative,3rd,neuter,irregular,,16 61\r\nάοιν,dual,dative,3rd,neuter,irregular,,16 61\r\nοιν,dual,genitive,3rd,neuter,regular,primary,\r\nῷν,dual,genitive,3rd,neuter,regular,,\r\nων,dual,genitive,3rd,neuter,irregular,,33 38\r\nοιιν,dual,genitive,3rd,neuter,irregular,,\r\nέοιν,dual,genitive,3rd,neuter,irregular,,16 61\r\nάοιν,dual,genitive,3rd,neuter,irregular,,16 61\r\nε,dual,nominative,3rd,neuter,regular,primary,\r\nει,dual,nominative,3rd,neuter,regular,,\r\nα,dual,nominative,3rd,neuter,regular,,\r\nεε,dual,nominative,3rd,neuter,irregular,,16 61\r\nαε,dual,nominative,3rd,neuter,irregular,,16 61\r\nε,dual,vocative,3rd,neuter,regular,primary,\r\nει,dual,vocative,3rd,neuter,regular,,\r\nα,dual,vocative,3rd,neuter,regular,,\r\nεε,dual,vocative,3rd,neuter,irregular,,16 61\r\nαε,dual,vocative,3rd,neuter,irregular,,16 61\r\nας,plural,accusative,3rd,masculine feminine,regular,primary,\r\nεις,plural,accusative,3rd,masculine feminine,regular,,17 41\r\nες,plural,accusative,3rd,masculine feminine,regular,,\r\nς,plural,accusative,3rd,masculine feminine,regular,,\r\nῦς,plural,accusative,3rd,masculine feminine,regular,,17 18 48\r\nως,plural,accusative,3rd,masculine feminine,regular,,30\r\nῆς,plural,accusative,3rd,masculine feminine,irregular,,56\r\nέας,plural,accusative,3rd,masculine feminine,irregular,,\r\nέος,plural,accusative,3rd,masculine feminine,irregular,,\r\nῆος,plural,accusative,3rd,masculine feminine,irregular,,\r\nῆες,plural,accusative,3rd,masculine feminine,irregular,,\r\nῆας,plural,accusative,3rd,masculine feminine,irregular,,\r\nους,plural,accusative,3rd,masculine feminine,irregular,,32\r\nούς,plural,accusative,3rd,masculine feminine,irregular,,32\r\nεῖς,plural,accusative,3rd,masculine feminine,irregular,,31 41\r\nεες,plural,accusative,3rd,masculine feminine,irregular,,55 61\r\nις,plural,accusative,3rd,masculine feminine,irregular,,\r\nινς,plural,accusative,3rd,masculine feminine,irregular,,\r\nῶς,plural,accusative,3rd,masculine feminine,irregular,,48\r\nσι,plural,dative,3rd,masculine feminine,regular,primary,\r\nσιν,plural,dative,3rd,masculine feminine,regular,primary,4\r\nσί,plural,dative,3rd,masculine feminine,regular,,41\r\nσίν,plural,dative,3rd,masculine feminine,regular,,4 41\r\nεσι,plural,dative,3rd,masculine feminine,regular,,41\r\nεσιν,plural,dative,3rd,masculine feminine,regular,,4 41\r\nέσι,plural,dative,3rd,masculine feminine,regular,,\r\nέσιν,plural,dative,3rd,masculine feminine,regular,,4\r\nψι,plural,dative,3rd,masculine feminine,regular,,\r\nψιν,plural,dative,3rd,masculine feminine,regular,,4\r\nψί,plural,dative,3rd,masculine feminine,regular,,\r\nψίν,plural,dative,3rd,masculine feminine,regular,,4\r\nξι,plural,dative,3rd,masculine feminine,regular,,\r\nξιν,plural,dative,3rd,masculine feminine,regular,,4\r\nξί,plural,dative,3rd,masculine feminine,regular,,\r\nξίν,plural,dative,3rd,masculine feminine,regular,,4\r\nφι,plural,dative,3rd,masculine feminine,irregular,,45\r\nφιν,plural,dative,3rd,masculine feminine,irregular,,4 45\r\nηφι,plural,dative,3rd,masculine feminine,irregular,,45\r\nηφιv,plural,dative,3rd,masculine feminine,irregular,,4 45\r\nῆφι,plural,dative,3rd,masculine feminine,irregular,,45\r\nῆφιν,plural,dative,3rd,masculine feminine,irregular,,4 45\r\nόφι,plural,dative,3rd,masculine feminine,irregular,,45\r\nόφιν,plural,dative,3rd,masculine feminine,irregular,,4 45\r\nαις,plural,dative,3rd,masculine feminine,irregular,,33 41\r\nοῖσι,plural,dative,3rd,masculine feminine,irregular,,33\r\nοῖσιv,plural,dative,3rd,masculine feminine,irregular,,4 33\r\nεσσι,plural,dative,3rd,masculine feminine,irregular,,16 61\r\nεσσιv,plural,dative,3rd,masculine feminine,irregular,,4 16 61\r\nυσσι,plural,dative,3rd,masculine feminine,irregular,,54\r\nυσσιv,plural,dative,3rd,masculine feminine,irregular,,4 54\r\nσσί,plural,dative,3rd,masculine feminine,irregular,,54\r\nσσίv,plural,dative,3rd,masculine feminine,irregular,,4 54\r\nων,plural,genitive,3rd,masculine feminine,regular,primary,\r\nῶν,plural,genitive,3rd,masculine feminine,regular,,\r\n-,plural,genitive,3rd,masculine feminine,irregular,,41\r\nφι,plural,genitive,3rd,masculine feminine,irregular,,45\r\nφιν,plural,genitive,3rd,masculine feminine,irregular,,4 45\r\nηφι,plural,genitive,3rd,masculine feminine,irregular,,45\r\nηφιv,plural,genitive,3rd,masculine feminine,irregular,,4 45\r\nῆφι,plural,genitive,3rd,masculine feminine,irregular,,45\r\nῆφιν,plural,genitive,3rd,masculine feminine,irregular,,4 45\r\nόφι,plural,genitive,3rd,masculine feminine,irregular,,45\r\nόφιν,plural,genitive,3rd,masculine feminine,irregular,,4 45\r\nέων,plural,genitive,3rd,masculine feminine,irregular,,16 61\r\nες,plural,nominative,3rd,masculine feminine,regular,primary,\r\nως,plural,nominative,3rd,masculine feminine,regular,,30\r\nεις,plural,nominative,3rd,masculine feminine,regular,,17\r\nεῖς,plural,nominative,3rd,masculine feminine,regular,,18\r\nοί,plural,nominative,3rd,masculine feminine,irregular,,32\r\nαί,plural,nominative,3rd,masculine feminine,irregular,,33\r\nῆς,plural,nominative,3rd,masculine feminine,irregular,,18\r\nῄς,plural,nominative,3rd,masculine feminine,irregular,,31 41\r\nεες,plural,nominative,3rd,masculine feminine,irregular,,16 55 61\r\nοι,plural,nominative,3rd,masculine feminine,irregular,,33\r\nες,plural,vocative,3rd,masculine feminine,regular,primary,\r\nεις,plural,vocative,3rd,masculine feminine,regular,,17\r\nεῖς,plural,vocative,3rd,masculine feminine,regular,,18\r\nῆς,plural,vocative,3rd,masculine feminine,regular,,18\r\nως,plural,vocative,3rd,masculine feminine,regular,,30\r\nεες,plural,vocative,3rd,masculine feminine,irregular,,16 55 61\r\nα,plural,accusative,3rd,neuter,regular,primary,\r\nη,plural,accusative,3rd,neuter,regular,,\r\nς,plural,accusative,3rd,neuter,regular,,\r\nά,plural,accusative,3rd,neuter,irregular,,33\r\nαα,plural,accusative,3rd,neuter,irregular,,16 61\r\nεα,plural,accusative,3rd,neuter,irregular,,16 61\r\nσι,plural,dative,3rd,neuter,regular,primary,\r\nσιν,plural,dative,3rd,neuter,regular,primary,4\r\nσί,plural,dative,3rd,neuter,regular,,\r\nσίv,plural,dative,3rd,neuter,regular,,4\r\nασι,plural,dative,3rd,neuter,regular,,\r\nασιν,plural,dative,3rd,neuter,regular,,4\r\nεσι,plural,dative,3rd,neuter,regular,,\r\nεσιν,plural,dative,3rd,neuter,regular,,4\r\nέσι,plural,dative,3rd,neuter,regular,,\r\nέσιv,plural,dative,3rd,neuter,regular,,4\r\nεσσι,plural,dative,3rd,neuter,irregular,,54\r\nεσσιν,plural,dative,3rd,neuter,irregular,,4 54\r\nσσί,plural,dative,3rd,neuter,irregular,,54\r\nσσίv,plural,dative,3rd,neuter,irregular,,4 54\r\nασσι,plural,dative,3rd,neuter,irregular,,54\r\nασσιν,plural,dative,3rd,neuter,irregular,,4 54\r\nφι,plural,dative,3rd,neuter,irregular,,45\r\nφιν,plural,dative,3rd,neuter,irregular,,4 45\r\nηφι,plural,dative,3rd,neuter,irregular,,45\r\nηφιv,plural,dative,3rd,neuter,irregular,,4 45\r\nῆφι,plural,dative,3rd,neuter,irregular,,45\r\nῆφιν,plural,dative,3rd,neuter,irregular,,4 45\r\nόφι,plural,dative,3rd,neuter,irregular,,45\r\nόφιν,plural,dative,3rd,neuter,irregular,,4 45\r\nων,plural,genitive,3rd,neuter,regular,primary,\r\nῶν,plural,genitive,3rd,neuter,regular,primary,\r\nφι,plural,genitive,3rd,neuter,irregular,,\r\nφιν,plural,genitive,3rd,neuter,irregular,,4 45\r\nηφι,plural,genitive,3rd,neuter,irregular,,45\r\nηφιv,plural,genitive,3rd,neuter,irregular,,4 45\r\nῆφι,plural,genitive,3rd,neuter,irregular,,45\r\nῆφιν,plural,genitive,3rd,neuter,irregular,,4 45\r\nόφι,plural,genitive,3rd,neuter,irregular,,45\r\nόφιν,plural,genitive,3rd,neuter,irregular,,4 45\r\nέων,plural,genitive,3rd,neuter,irregular,,16 61\r\nάων,plural,genitive,3rd,neuter,irregular,,16 61\r\nα,plural,nominative,3rd,neuter,regular,primary,\r\nη,plural,nominative,3rd,neuter,regular,,\r\nες,plural,nominative,3rd,neuter,regular,,\r\nά,plural,nominative,3rd,neuter,irregular,,33\r\nεα,plural,nominative,3rd,neuter,irregular,,16 61\r\nαα,plural,nominative,3rd,neuter,irregular,,16 61\r\nα,plural,vocative,3rd,neuter,regular,primary,\r\nη,plural,vocative,3rd,neuter,regular,,\r\nες,plural,vocative,3rd,neuter,regular,,\r\nαα,plural,vocative,3rd,neuter,irregular,,16 61\r\nεα,plural,vocative,3rd,neuter,irregular,,16 61\r\nα,singular,accusative,3rd,masculine feminine,regular,primary,\r\nη,singular,accusative,3rd,masculine feminine,regular,,16\r\nν,singular,accusative,3rd,masculine feminine,regular,,\r\nιν,singular,accusative,3rd,masculine feminine,regular,,41\r\nῦν,singular,accusative,3rd,masculine feminine,regular,,18\r\nῶ,singular,accusative,3rd,masculine feminine,regular,,23\r\nυν,singular,accusative,3rd,masculine feminine,regular,,\r\nῦν,singular,accusative,3rd,masculine feminine,regular,,17\r\nύν,singular,accusative,3rd,masculine feminine,regular,,17\r\nέα,singular,accusative,3rd,masculine feminine,regular,,20\r\nην,singular,accusative,3rd,masculine feminine,regular,,24\r\nώ,singular,accusative,3rd,masculine feminine,regular,,19 41\r\nω,singular,accusative,3rd,masculine feminine,regular,,23\r\nεῖν,singular,accusative,3rd,masculine feminine,irregular,,31 41\r\nων,singular,accusative,3rd,masculine feminine,irregular,,33 41 49\r\nαν,singular,accusative,3rd,masculine feminine,irregular,,33 41\r\nον,singular,accusative,3rd,masculine feminine,irregular,,39\r\nῖς,singular,accusative,3rd,masculine feminine,irregular,,33\r\nεα,singular,accusative,3rd,masculine feminine,irregular,,61\r\nι,singular,dative,3rd,masculine feminine,regular,primary,\r\nί,singular,dative,3rd,masculine feminine,regular,,\r\nϊ,singular,dative,3rd,masculine feminine,regular,,17\r\nΐ,singular,dative,3rd,masculine feminine,regular,,40\r\nει,singular,dative,3rd,masculine feminine,regular,,16 17\r\nεῖ,singular,dative,3rd,masculine feminine,regular,,18\r\nαι,singular,dative,3rd,masculine feminine,regular,,\r\noῖ,singular,dative,3rd,masculine feminine,regular,,28 41\r\nῖ,singular,dative,3rd,masculine feminine,irregular,,33 46\r\nῆι,singular,dative,3rd,masculine feminine,irregular,,18\r\nᾳ,singular,dative,3rd,masculine feminine,irregular,,25\r\nῳ,singular,dative,3rd,masculine feminine,irregular,,33 34\r\nῷ,singular,dative,3rd,masculine feminine,irregular,,33\r\nιί,singular,dative,3rd,masculine feminine,irregular,,62\r\nυί,singular,dative,3rd,masculine feminine,irregular,,62\r\nέϊ,singular,dative,3rd,masculine feminine,irregular,,18 61\r\nος,singular,genitive,3rd,masculine feminine,regular,primary,\r\nός,singular,genitive,3rd,masculine feminine,regular,,\r\nους,singular,genitive,3rd,masculine feminine,regular,,16\r\nοῦς,singular,genitive,3rd,masculine feminine,regular,,19 46\r\nως,singular,genitive,3rd,masculine feminine,regular,,17 18\r\nώς,singular,genitive,3rd,masculine feminine,regular,,17 18 41\r\nῶς,singular,genitive,3rd,masculine feminine,regular,,47\r\nεως,singular,genitive,3rd,masculine feminine,regular,,17\r\nέως,singular,genitive,3rd,masculine feminine,regular,,\r\nεώς,singular,genitive,3rd,masculine feminine,regular,,\r\nέους,singular,genitive,3rd,masculine feminine,regular,,20\r\nω,singular,genitive,3rd,masculine feminine,irregular,,\r\nεος,singular,genitive,3rd,masculine feminine,irregular,,61\r\nΰς,singular,genitive,3rd,masculine feminine,irregular,,41 48\r\nῦς,singular,genitive,3rd,masculine feminine,irregular,,48\r\nνος,singular,genitive,3rd,masculine feminine,irregular,,22\r\nοῦ,singular,genitive,3rd,masculine feminine,irregular,,33\r\nηος,singular,genitive,3rd,masculine feminine,irregular,,55\r\nιός,singular,genitive,3rd,masculine feminine,irregular,,62\r\nuός,singular,genitive,3rd,masculine feminine,irregular,,62\r\nς,singular,nominative,3rd,masculine feminine,regular,primary,\r\n-,singular,nominative,3rd,masculine feminine,regular,primary,\r\nηρ,singular,nominative,3rd,masculine feminine,regular,,41\r\nις,singular,nominative,3rd,masculine feminine,regular,,\r\nϊς,singular,nominative,3rd,masculine feminine,regular,,\r\nώ,singular,nominative,3rd,masculine feminine,regular,,41\r\nψ,singular,nominative,3rd,masculine feminine,regular,,\r\nξ,singular,nominative,3rd,masculine feminine,regular,,\r\nρ,singular,nominative,3rd,masculine feminine,regular,,\r\nήρ,singular,nominative,3rd,masculine feminine,regular,,\r\nήν,singular,nominative,3rd,masculine feminine,regular,,50\r\nν,singular,nominative,3rd,masculine feminine,regular,,\r\nωρ,singular,nominative,3rd,masculine feminine,regular,,\r\nων,singular,nominative,3rd,masculine feminine,regular,,\r\nών,singular,nominative,3rd,masculine feminine,regular,,\r\nης,singular,nominative,3rd,masculine feminine,regular,,\r\nῆς,singular,nominative,3rd,masculine feminine,regular,,\r\nυς,singular,nominative,3rd,masculine feminine,regular,,\r\nῦς,singular,nominative,3rd,masculine feminine,regular,,\r\nεῦς,singular,nominative,3rd,masculine feminine,regular,,\r\nύς,singular,nominative,3rd,masculine feminine,regular,,\r\nής,singular,nominative,3rd,masculine feminine,regular,,33\r\nας,singular,nominative,3rd,masculine feminine,irregular,,\r\nῴ,singular,nominative,3rd,masculine feminine,irregular,,29 41\r\nώς,singular,nominative,3rd,masculine feminine,irregular,,27 41\r\nϋς,singular,nominative,3rd,masculine feminine,irregular,,41\r\nῄς,singular,nominative,3rd,masculine feminine,irregular,,31 41\r\nῖς,singular,nominative,3rd,masculine feminine,irregular,,\r\nεῖς,singular,nominative,3rd,masculine feminine,irregular,,31 41\r\nῶς,singular,nominative,3rd,masculine feminine,irregular,,48\r\nος,singular,nominative,3rd,masculine feminine,irregular,,33\r\n-,singular,vocative,3rd,masculine feminine,regular,primary,52\r\nς,singular,vocative,3rd,masculine feminine,regular,,30\r\nι,singular,vocative,3rd,masculine feminine,regular,,41\r\nῦ,singular,vocative,3rd,masculine feminine,regular,,15 17 18\r\nοῖ,singular,vocative,3rd,masculine feminine,regular,,19 41\r\nψ,singular,vocative,3rd,masculine feminine,regular,,\r\nξ,singular,vocative,3rd,masculine feminine,regular,,\r\nν,singular,vocative,3rd,masculine feminine,regular,,\r\nρ,singular,vocative,3rd,masculine feminine,regular,,\r\nων,singular,vocative,3rd,masculine feminine,regular,,50\r\nών,singular,vocative,3rd,masculine feminine,regular,,\r\nήν,singular,vocative,3rd,masculine feminine,regular,,\r\nερ,singular,vocative,3rd,masculine feminine,regular,,\r\nες,singular,vocative,3rd,masculine feminine,regular,,\r\nί,singular,vocative,3rd,masculine feminine,regular,,\r\nως,singular,vocative,3rd,masculine feminine,regular,,\r\nἶ,singular,vocative,3rd,masculine feminine,regular,,\r\nούς,singular,vocative,3rd,masculine feminine,regular,,51\r\nύ,singular,vocative,3rd,masculine feminine,regular,,15\r\nυ,singular,vocative,3rd,masculine feminine,regular,,51\r\nεις,singular,vocative,3rd,masculine feminine,regular,,20\r\nαν,singular,vocative,3rd,masculine feminine,regular,,\r\nώς,singular,vocative,3rd,masculine feminine,irregular,,27 41 46\r\nον,singular,vocative,3rd,masculine feminine,irregular,,\r\nυς,singular,vocative,3rd,masculine feminine,irregular,,33\r\nα,singular,accusative,3rd,neuter,regular,primary,15\r\n-,singular,accusative,3rd,neuter,regular,,33\r\nος,singular,accusative,3rd,neuter,regular,,\r\nας,singular,accusative,3rd,neuter,regular,,\r\nαρ,singular,accusative,3rd,neuter,regular,,21\r\nυ,singular,accusative,3rd,neuter,regular,,\r\nι,singular,dative,3rd,neuter,regular,primary,\r\nει,singular,dative,3rd,neuter,regular,,16\r\nαι,singular,dative,3rd,neuter,regular,,16 21\r\nϊ,singular,dative,3rd,neuter,irregular,,17\r\nᾳ,singular,dative,3rd,neuter,irregular,,25 33\r\nυϊ,singular,dative,3rd,neuter,irregular,,17\r\nαϊ,singular,dative,3rd,neuter,irregular,,21 61\r\nος,singular,genitive,3rd,neuter,regular,primary,\r\nους,singular,genitive,3rd,neuter,regular,,16\r\nως,singular,genitive,3rd,neuter,regular,,16\r\nεως,singular,genitive,3rd,neuter,regular,,17\r\nυς,singular,genitive,3rd,neuter,irregular,,26\r\nου,singular,genitive,3rd,neuter,irregular,,33\r\nαος,singular,genitive,3rd,neuter,irregular,,21 61\r\nα,singular,nominative,3rd,neuter,regular,primary,\r\n-,singular,nominative,3rd,neuter,regular,,33\r\nος,singular,nominative,3rd,neuter,regular,,\r\nαρ,singular,nominative,3rd,neuter,regular,,\r\nας,singular,nominative,3rd,neuter,regular,,16 21\r\nυ,singular,nominative,3rd,neuter,regular,,\r\nον,singular,nominative,3rd,neuter,irregular,,33\r\nα,singular,vocative,3rd,neuter,regular,primary,15\r\n-,singular,vocative,3rd,neuter,regular,,\r\nος,singular,vocative,3rd,neuter,regular,,\r\nας,singular,vocative,3rd,neuter,regular,,\r\nαρ,singular,vocative,3rd,neuter,regular,,21\r\nυ,singular,vocative,3rd,neuter,regular,,";
 
 var nounFootnotesCSV$1 = "Index,Text\r\n1,See  for Rules of variance within regular endings\r\n2,See  for Table of α- and ε- stem feminine 1st declension contracts\r\n3,See  for Table of α- and ε- stem masculine 1st declension contracts\r\n4,\"Previous, with (ν)\"\r\n5,See  for Table of o- and ε- stem masculine  2nd declension contracts\r\n6,See  for Table of o- and ε- stem neuter 2nd declension contracts\r\n7,(Attic) contracts of o-stems preceded by a long vowel\r\n15,\"This is not actually an “ending,” but the last letter of the “pure stem”. See\"\r\n16,\"See  &  for Table of Sigma (ες,ας,ος) stem contracts\"\r\n17,See  for Table of  ι and υ - stem contracts\r\n18,\"See  for Table of  ευ,αυ,and ου - stem contracts\"\r\n19,See  for stems in οι feminine 3rd declension contracts\r\n20,See  for Table of 3rd declension contracts of stems in -εσ- preceded by ε\r\n21,See  for Table of stems in τ and ατ neuter 3rd declension contracts\r\n22,\"On stem ending in ν, ν doubled in gen. Sing Aeolic (e.g. μῆνς,μῆννος...)\"\r\n23,Also in inscriptions and expressions of swearing\r\n24,(Borrowed from 1st decl) Sometimes in proper names whose nominative ends in -ης\r\n25,From -ας-stems (properly αι)\r\n26,(ε)υς instead of (ε)ος or ους (gen) for (3rd decl) words whose nominative ends in -ος\r\n27,In 3rd decl. Only in the words αἰδώς (Attic) and ἠώς (Homer and Ionic)\r\n28,Contraction of a stem in οι  and an ι-ending\r\n29,Stronger form of Ionic contractions of οι-stems (in the nominative)\r\n30,See  for Table of ω - stem contracts (masculine only)\r\n31,Nominative plural contraction of  -ειδ+ες  after dropping the δ (used for accusative too). See .a\r\n32,\"Plurals & duals occur rarely (and w/ 2nd decl endings) for 3rd decl οι-stem nouns. See .D.a,b,c\"\r\n33,See  for description and examples of Irreg. Decl involving 3rd decl endings\r\n34,(Homer)  for Attic  (ῳτ)ι\r\n35,(Homer) for Cretan ινς\r\n36,Also an irregular ending for other stem(s)\r\n37,In inscriptions\r\n38,\"Plural endings for otherwise dual noun,οσσε (eyes)\"\r\n39,\"“Poetical” (acc for ἔρως). See ,11\"\r\n40,\"Poetic for χρωτι,dat. of ὁ χρως\"\r\n41,No Masculine of this Form\r\n42,No Feminine of this Form\r\n44,See  D.9 and #215 regarding dialectic alternate forms of the Dative Plural\r\n45,\"Surviving in Homer (See ) Not truly genitive or dative, but instrumental/locative/ablative, associated with the remaining oblique cases (genitive & dative) only after being lost as cases themselves in Greek\"\r\n46,See Smyth # 266 for only surviving ος-stem in Attic (fem. singular of αἰδως)\r\n47,See  for Substantives in -εύς preceded by a vowel.\r\n48,\"See Smyth,  #275 D.1,2,3\"\r\n49,\"See , List of Principal Irregular Substantives\"\r\n50,\"See  for Table of stems in a Liquid (λ,ρ) or a Nasal (ν), and Note #259D for variants including Κρονίων...\"\r\n51,\"See  for Table of stems in a Dental (τ,δ,θ) or a Nasal (ν), and its notes including Ν.κόρυς (Voc. Κόρυ) & ὀδούς\"\r\n52,See  for general rule re 3rd Declension Masc/Fem Singular Vocative\r\n54,See  D\r\n55,See\r\n56,\"See  for other forms of endings for contracts of ευ,αυ,and ου - stems\"\r\n57,Nominative form used as Vocative. See\r\n58,\"See ,b\"\r\n59,\"See ,d\"\r\n60,This (Feminine or Masculine) Form only Masculine when derived from ε- or ο- contraction\r\n61,See Smyth Note 264 D.1 regarding Homer's use of Open Forms\r\n62,See Smyth Note 269 for alternate i-stem and u-stem endings\r\n63,See  D.2\r\n64,See  D.1";
 
@@ -3187,6 +3138,27 @@ var nounFootnotesCSV$1 = "Index,Text\r\n1,See  for Rules of variance within regu
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 import verbSuffixesCSV from './data/verb/suffixes.csv';
 import verbFootnotesCSV from './data/verb/footnotes.csv';*/
+class ExtendedGreekData {
+    constructor() {
+        this.primary = false;
+    }
+
+    /*clone() {
+        let cloned = new ExtendedGreekData();
+        cloned.primary = this.primary;
+        return cloned;
+    }*/
+
+    merge(extendedGreekData) {
+        if (this.primary !== extendedGreekData.primary) {
+            console.log('Mismatch', this.primary, extendedGreekData.primary);
+        }
+        let merged = new ExtendedGreekData();
+        merged.primary = this.primary;
+        return merged;
+    }
+}
+
 // A language of this module
 const language$1 = languages.greek;
 // Create a language data set that will keep all language-related information
@@ -3225,7 +3197,6 @@ genders$1.addImporter(importerName$1)
 const types$2 = dataSet$1.defineFeatureType(types.type, ['regular', 'irregular']);
 types$2.addImporter(importerName$1)
     .map('regular', types$2.regular)
-    .map('primary regular', types$2.regular).map('regular primary', types$2.regular) // TODO: This is a temporary solution only
     .map('irregular', types$2.irregular);
 /*const conjugations = dataSet.defineFeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
 conjugations.addImporter(importerName)
@@ -3266,27 +3237,36 @@ dataSet$1.addSuffixes = function(partOfSpeech, data) {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
         let dataItem = data[i];
-        let suffix = dataItem[0];
+        let suffixValue = dataItem[0];
         // Handle special suffix values
-        if (suffix === noSuffixValue) {
-            suffix = null;
+        if (suffixValue === noSuffixValue) {
+            suffixValue = null;
         }
 
+        let primary = false;
         let features = [partOfSpeech,
             numbers$1.importer.csv.get(dataItem[1]),
             cases$1.importer.csv.get(dataItem[2]),
             declensions$1.importer.csv.get(dataItem[3]),
             genders$1.importer.csv.get(dataItem[4]),
             types$2.importer.csv.get(dataItem[5])];
-        if (dataItem[6]) {
+        if (dataItem[6] === 'primary') {
+            primary = true;
+        }
+        if (dataItem[7]) {
             // There can be multiple footnote indexes separated by spaces
             let language = this.language;
-            let indexes = dataItem[6].split(' ').map(function(index) {
+            let indexes = dataItem[7].split(' ').map(function(index) {
                 return footnotes$1.get(index);
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        let extendedGreekData = new ExtendedGreekData();
+        extendedGreekData.primary = primary;
+        let extendedLangData = {
+            [languages.greek]: extendedGreekData
+        };
+        this.addSuffix(suffixValue, features, extendedLangData);
     }
 };
 
@@ -3325,7 +3305,7 @@ dataSet$1.addVerbSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        this.addSuffix(suffix, ...features);
+        this.addSuffix(suffix, features);
     }
 };
 
@@ -6265,12 +6245,17 @@ class Row {
  * that is required for that.
  */
 class GroupFeatureType extends FeatureType {
+
     /**
-     *
+     * GroupFeatureType extends FeatureType to serve as a grouping feature (i.e. a feature that forms
+     * either a column or a row in an inflection table). For that, it adds some additional functionality,
+     * such as custom feature orders that will allow to combine suffixes from several grammatical features
+     * (i.e. masculine and feminine) into a one column of a table.
      * @param {FeatureType} featureType - A feature that defines a type of this item.
      * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
      * language-specific message bundle.
-     * @param {Feature[]} order - A list of feature items that identify a sort order of this feature type (optional).
+     * @param {Feature[]} order - A custom sort order for this feature that redefines
+     * a default one stored in FeatureType object (optional).
      * Use this parameter to redefine a deafult sort order for a type.
      */
     constructor(featureType, titleMessageID, order = featureType.orderedFeatures) {
@@ -6312,6 +6297,24 @@ class GroupFeatureType extends FeatureType {
     }
 
     /**
+     * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
+     * @returns {Feature[] | Feature[][]} A sorted array of feature values.
+     */
+    getOrderedFeatures(ancestorFeatures) {
+        return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(value, this.type, this.language));
+    }
+
+    /**
+     * This is a wrapper around orderedValues() that allows to set a custom feature order for particular columns.
+     * By default it returns features in the same order that is defined in a base FeatureType class.
+     * Redefine it to provide a custom grouping and sort order.
+     * @returns {string[] | string[][]} A sorted array of feature values.
+     */
+    getOrderedValues(ancestorFeatures) {
+        return this._orderIndex;
+    }
+
+    /**
      * Whether this feature forms a columns group.
      * @returns {boolean} True if this feature forms a column.
      */
@@ -6350,7 +6353,7 @@ class GroupFeatureType extends FeatureType {
      * @returns {Number} A number of groupes formed by this feature.
      */
     get size() {
-        return this.orderIndex.length;
+        return this.orderedValues.length;
     }
 
     /**
@@ -6549,6 +6552,9 @@ class NodeGroup {
         this.cells = []; // All cells within this group and below
         this.parent = undefined;
         this.header = undefined;
+
+        this.groupFeatureType = undefined; // Defines a feature type that forms a tree level this node is in.
+        this.ancestorFeatures = undefined; // Defines feature values of this node's parents.
     }
 }
 
@@ -6788,6 +6794,11 @@ class Table {
         this.features = new GroupFeatureList(features);
         this.emptyColumnsHidden = false;
         this.cells = []; // Will be populated by groupByFeature()
+
+        /*
+        This is a special filter function that, if defined will do additional filtering of suffixes within a cell.
+         */
+        this.suffixCellFilter = undefined;
     }
 
     /**
@@ -6884,51 +6895,51 @@ class Table {
      * is determined by the order of values within a GroupFeatureType object of each feature.
      * This is a recursive function.
      * @param {Suffix[]} suffixes - Suffixes to be grouped.
-     * @param {Feature[]} featureTrail - A temporary array to store all feature values on levels above the current.
+     * @param {Feature[]} ancestorFeatures - A list of feature values on levels above the current.
      * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
      * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
      */
-    groupByFeature(suffixes, featureTrail = [], currentLevel = 0) {
+    groupByFeature(suffixes, ancestorFeatures = [], currentLevel = 0) {
         let group = new NodeGroup();
-        let groupNew = this.features.items[currentLevel];
-        group.feature = this.features.items[currentLevel];
+        group.groupFeatureType = this.features.items[currentLevel];
+        group.ancestorFeatures = ancestorFeatures.slice();
 
         // Iterate over each value of the feature
-        for (const featureValue of groupNew.orderedFeatures) {
-            if (featureTrail.length>0 && featureTrail[featureTrail.length-1].type === groupNew.type) {
+        for (const featureValue of group.groupFeatureType.getOrderedFeatures(ancestorFeatures)) {
+            if (ancestorFeatures.length>0 && ancestorFeatures[ancestorFeatures.length-1].type === group.groupFeatureType.type) {
                 // Remove previously inserted feature of the same type
-                featureTrail.pop();
+                ancestorFeatures.pop();
             }
-            featureTrail.push(featureValue);
+            ancestorFeatures.push(featureValue);
 
             // Suffixes that are selected for current combination of feature values
-            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, groupNew.type, featureValue.value));
+            let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.groupFeatureType.type, featureValue.value));
 
             if (currentLevel < this.features.length - 1) {
                 // Divide to further groups
-                let subGroup = this.groupByFeature(selectedSuffixes, featureTrail, currentLevel + 1);
+                let subGroup = this.groupByFeature(selectedSuffixes, ancestorFeatures, currentLevel + 1);
                 group.subgroups.push(subGroup);
-                groupNew.subgroups.push(subGroup);
                 group.cells = group.cells.concat(subGroup.cells);
-                groupNew.cells = groupNew.cells.concat(subGroup.cells);
             }
             else {
                 // This is the last level. This represent a cell with suffixes
                 // Split result has a list of suffixes in a table cell. We need to combine items with same endings.
                 if (selectedSuffixes.length > 0) {
+                    if (this.suffixCellFilter) {
+                        selectedSuffixes = selectedSuffixes.filter(this.suffixCellFilter);
+                    }
+
                     selectedSuffixes = Suffix.combine(selectedSuffixes);
                 }
 
-                let cell = new Cell(selectedSuffixes, featureTrail.slice());
+                let cell = new Cell(selectedSuffixes, ancestorFeatures.slice());
                 group.subgroups.push(cell);
-                groupNew.subgroups.push(cell);
                 group.cells.push(cell);
-                groupNew.cells.push(cell);
                 this.cells.push(cell);
                 cell.index = this.cells.length - 1;
             }
         }
-        featureTrail.pop();
+        ancestorFeatures.pop();
         return group;
     }
 
@@ -6944,7 +6955,7 @@ class Table {
         let currentFeature = this.features.items[currentLevel];
 
         let groups = [];
-        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+        for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
             let cellGroup = tree.subgroups[index];
 
             // Iterate until it is the last row feature
@@ -6999,7 +7010,7 @@ class Table {
         let currentFeature = this.features.columnFeatures[currentLevel];
 
         let cells = [];
-        for (let [index, featureValue] of currentFeature.orderIndex.entries()) {
+        for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
             let cellGroup = tree.subgroups[index];
 
             // Iterate over all column features (features that form columns)
@@ -7566,15 +7577,36 @@ class NounView$1 extends GreekView {
         this.title = 'Noun declension';
         this.partOfSpeech = parts$1.noun.value;
 
-        // Features that are different from base class values
-        /*this.features.genders = new View.GroupFeatureType(Greek.genders, 'Gender',
-            [[Greek.genders.masculine, Greek.genders.feminine], Greek.genders.neuter]);*/
+        this.features.genders.getOrderedValues = function getOrderedValues(ancestorFeatures) {
+            /*if (ancestorFeatures && ancestorFeatures[0].value === 'second') {
+                return [['masculine', 'feminine'], 'neuter'];
+            }*/
+            return ['masculine', 'feminine', 'neuter'];
+        };
 
         this.createTable();
     }
 }
 
-var viewsGreek = [new NounView$1()];
+class NounViewSimplified extends NounView$1 {
+    constructor() {
+        super();
+        this.id = 'nounDeclensionSimplified';
+        this.name = 'noun declension simplified';
+        this.title = 'Noun declension (simplified)';
+        this.partOfSpeech = parts$1.noun.value;
+
+        this.createTable();
+
+        this.table.suffixCellFilter = NounViewSimplified.suffixCellFilter;
+    }
+
+    static suffixCellFilter(suffix) {
+        return suffix.extendedLangData[languages.greek].primary;
+    }
+}
+
+var viewsGreek = [new NounView$1(), new NounViewSimplified()];
 
 /**
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
