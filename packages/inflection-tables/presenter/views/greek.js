@@ -44,10 +44,13 @@ class NounView extends GreekView {
         this.partOfSpeech = Greek.parts.noun.value;
 
         this.features.genders.getOrderedValues = function getOrderedValues(ancestorFeatures) {
-            /*if (ancestorFeatures && ancestorFeatures[0].value === 'second') {
-                return [['masculine', 'feminine'], 'neuter'];
-            }*/
-            return ['masculine', 'feminine', 'neuter'];
+            if (ancestorFeatures) {
+                if (ancestorFeatures[0].value === Greek.declensions.second.value ||
+                    ancestorFeatures[0].value === Greek.declensions.third.value) {
+                    return [[Greek.genders.masculine.value, Greek.genders.feminine.value], Greek.genders.neuter.value];
+                }
+            }
+            return [Greek.genders.masculine.value, Greek.genders.feminine.value, Greek.genders.neuter.value];
         };
 
         this.createTable();
@@ -61,6 +64,18 @@ class NounViewSimplified extends NounView {
         this.name = 'noun declension simplified';
         this.title = 'Noun declension (simplified)';
         this.partOfSpeech = Greek.parts.noun.value;
+
+        this.features.genders.getOrderedValues = function getOrderedValues(ancestorFeatures) {
+            if (ancestorFeatures) {
+                if (ancestorFeatures[0].value === Greek.declensions.second.value) {
+                    return [[Greek.genders.masculine.value, Greek.genders.feminine.value], Greek.genders.neuter.value];
+                }
+                if (ancestorFeatures[0].value === Greek.declensions.third.value) {
+                    return [[Greek.genders.masculine.value, Greek.genders.feminine.value, Greek.genders.neuter.value]];
+                }
+            }
+            return [Greek.genders.masculine.value, Greek.genders.feminine.value, Greek.genders.neuter.value];
+        };
 
         this.createTable();
 

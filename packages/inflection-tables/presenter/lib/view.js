@@ -1017,8 +1017,8 @@ class NarrowView {
         this.nodes = document.createElement('div');
         this.nodes.classList.add(Styles.classNames.narrowViewsContainer);
 
-        for (let index = 0; index < this.groupQty; index++) {
-            this.createGroup(index);
+        for (let [index, headerCell] of this.headers[0].cells.entries()) {
+            this.createGroup(index, headerCell);
         }
     }
 
@@ -1026,9 +1026,8 @@ class NarrowView {
      * Creates a group within a table.
      * @returns {NarrowViewGroup} A newly created group.
      */
-    createGroup(index) {
-        let group = new NarrowViewGroup(index, this.groupQty, this.columns,
-            this.rows, this.headers, this.titleColumnQty);
+    createGroup(index, headerCell) {
+        let group = new NarrowViewGroup(index, this.headers, this.rows, this.titleColumnQty);
         this.nodes.appendChild(group.nodes);
         this.groups.push(group);
     }
@@ -1059,27 +1058,38 @@ class NarrowViewGroup {
      * not of this particular group. NarrowViewGroup constructor will use this data to build
      * the corresponding objects of the group itself.
      * @param {number} index - An index of this group within a groups array, starting from zero.
-     * @param {number} groupQty - A number of visible groups (sub tables) within a narrow view.
-     * @param {Column[]} columns - Table columns.
-     * @param {Row[]} rows - Table rows.
      * @param {Row[]} headers - Table headers.
+     * @param {Row[]} rows - Table rows.
      * @param {number} titleColumnQty - Number of title columns in a table.
      */
-    constructor(index, groupQty, columns, rows, headers, titleColumnQty) {
+    constructor(index, headers, rows, titleColumnQty) {
         this.index = index;
-        this.groupSize = columns.length/groupQty;
-        this.columns = [];
-        for (let i = this.index * this.groupSize; i < ((this.index + 1) * this.groupSize); i++) {
-            this.columns.push(columns[i]);
-        }
+        this.columns = headers[0].cells[index].columns;
+        this.groupSize = this.columns.length;
+        let columnsStartIndex = this.columns[0].index;
+        let columnsEndIndex = this.columns[this.columns.length - 1].index;
+
         this.rows = [];
         for (let row of rows) {
-            this.rows.push(row.slice(this.index * this.groupSize, (this.index + 1) * this.groupSize));
+            this.rows.push(row.slice(columnsStartIndex, columnsEndIndex + 1));
         }
         this.headers = [];
-        for (let header of headers) {
-            let headerGroupSize = header.length/ groupQty;
-            this.headers.push(header.slice(this.index * headerGroupSize, (this.index + 1) * headerGroupSize));
+        /**
+         * Since we group by the first column feature, there will be a single feature in a first header row,
+         * its children in the second row, children of its children in a third row and so on.
+         */
+        for (let [headerIndex, headerRow] of headers.entries()) {
+            let row = new Row();
+            row.titleCell = headerRow.titleCell;
+            if (headerIndex === 0) {
+                row.cells.push(headerRow.cells[index]);
+            }
+            else {
+                for (let headerCell of this.headers[headerIndex - 1].cells) {
+                    row.cells = row.cells.concat(headerCell.children);
+                }
+            }
+            this.headers.push(row);
         }
         this.titleColumnQty = titleColumnQty;
 
@@ -1338,6 +1348,7 @@ class Table {
                     let column = new Column(cellGroup.cells);
                     column.groups = currentResult;
                     column.header = featureValue;
+                    column.index = columns.length;
                     columns.push(column);
                     column.headerCell = this.headers[this.headers.length-1].cells[columns.length - 1];
                 }
