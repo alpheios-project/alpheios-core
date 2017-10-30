@@ -2,7 +2,7 @@
  * Shared data structures and functions
  */
 export {Feature, FeatureList, FeatureType, Importer, languages, types, Homonym, Lexeme, Lemma, Inflection, LanguageDataset,
-    LanguageData, Suffix, Footnote, MatchData, WordData, loadData};
+    LanguageData, Suffix, Footnote, MatchData, ExtendedLanguageData, ExtendedGreekData, SelectedWord, WordData, loadData};
 
 
 // Should have no spaces in values in order to be used in HTML templates
@@ -454,6 +454,14 @@ class Inflection {
         this.suffix = null;
     }
 
+    static readObject(jsonObject) {
+        let inflection = new Inflection(jsonObject.stem, jsonObject.language);
+        if (jsonObject.suffix) {
+            inflection.suffix = jsonObject.suffix;
+        }
+        return inflection;
+    }
+
     /**
      * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
      * an array of Feature objects will be provided.
@@ -512,6 +520,10 @@ class Lemma {
         this.word = word;
         this.language = language;
     }
+
+    static readObject(jsonObject) {
+        return new Lemma(jsonObject.word, jsonObject.language);
+    }
 }
 
 /**
@@ -549,6 +561,15 @@ class Lexeme {
         this.lemma = lemma;
         this.inflections = inflections;
     }
+
+    static readObject(jsonObject) {
+        let lemma = Lemma.readObject(jsonObject.lemma);
+        let inflections = [];
+        for (let inflection of jsonObject.inflections) {
+            inflections.push(Inflection.readObject(inflection));
+        }
+        return new Lexeme(lemma, inflections);
+    }
 }
 
 /**
@@ -575,6 +596,21 @@ class Homonym {
         }
         
         this.lexemes = lexemes;
+        this.targetWord = undefined;
+    }
+
+    static readObject(jsonObject) {
+        let lexemes = [];
+        if (jsonObject.lexemes) {
+            for (let lexeme of jsonObject.lexemes) {
+                lexemes.push(Lexeme.readObject(lexeme));
+            }
+        }
+        let homonym = new Homonym(lexemes);
+        if (jsonObject.targetWord) {
+            homonym.targetWord = jsonObject.targetWord;
+        }
+        return homonym;
     }
 
     /**
@@ -842,9 +878,8 @@ class Suffix {
     /**
      * Initializes a Suffix object.
      * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
-     * @param {MatchData} match - An information about what matches were found for this suffix (optional).
      */
-    constructor(suffixValue, match) {
+    constructor(suffixValue) {
 
         if (suffixValue === undefined) {
             throw new Error('Suffix should not be empty.')
@@ -852,7 +887,7 @@ class Suffix {
         this.value = suffixValue;
         this.features = {};
         this.featureGroups = {};
-        //
+
         /*
         Extended language data stores additional suffix information that is specific for a particular language.
         It uses the following schema:
@@ -860,7 +895,48 @@ class Suffix {
         and is defined in a language model.
          */
         this.extendedLangData = {};
-        this.match = match;
+        this.match = undefined;
+    }
+
+    static readObject(jsonObject) {
+        let suffix = new Suffix(jsonObject.value);
+
+        if (jsonObject.features) {
+            for (let key in jsonObject.features) {
+                if (jsonObject.features.hasOwnProperty(key)) {
+                    suffix.features[key] = jsonObject.features[key];
+                }
+            }
+        }
+
+        if (jsonObject.featureGroups) {
+            for (let key in jsonObject.featureGroups) {
+                if (jsonObject.featureGroups.hasOwnProperty(key)) {
+                    suffix.featureGroups[key] = [];
+                    for (let value of jsonObject.featureGroups[key]) {
+                        suffix.featureGroups[key].push(value);
+                    }
+                }
+            }
+        }
+
+        if (jsonObject[types.footnote]) {
+            suffix[types.footnote] = [];
+            for (let footnote of jsonObject[types.footnote]) {
+                suffix[types.footnote].push(footnote);
+            }
+        }
+
+        if (jsonObject.match) {
+            suffix.match = MatchData.readObject(jsonObject.match);
+        }
+
+        for (const lang in jsonObject.extendedLangData) {
+            if (jsonObject.extendedLangData.hasOwnProperty(lang)) {
+                suffix.extendedLangData[lang] = ExtendedLanguageData.readObject(jsonObject.extendedLangData[lang]);
+            }
+        }
+        return suffix;
     }
 
     /**
@@ -1075,6 +1151,13 @@ class Footnote {
         this.text = text;
         this[types.part] = partOfSpeech;
     }
+
+    static readObject(jsonObject) {
+        this.index = jsonObject.index;
+        this.text = jsonObject.text;
+        this[types.part] = jsonObject[types.part];
+        return new Footnote(jsonObject.index, jsonObject.text, jsonObject[types.part]);
+    }
 }
 
 /**
@@ -1086,6 +1169,76 @@ class MatchData {
         this.fullMatch = false; // Whether two suffixes and all grammatical features, including part of speech, are the same.
         this.matchedFeatures = []; // How many features matches each other.
     }
+
+    static readObject(jsonObject) {
+        let matchData = new MatchData();
+        matchData.suffixMatch = jsonObject.suffixMatch;
+        matchData.fullMatch = jsonObject.fullMatch;
+        for (let feature of jsonObject.matchedFeatures) {
+            matchData.matchedFeatures.push(feature);
+        }
+        return matchData;
+    }
+}
+
+
+class ExtendedLanguageData {
+    constructor() {
+        this._type = undefined; // This is a base class
+    }
+
+    static types() {
+        return {
+            EXTENDED_GREEK_DATA: "ExtendedGreekData"
+        }
+    }
+
+    static readObject(jsonObject) {
+        if (!jsonObject._type) {
+            throw new Error('Extended language data has no type information. Unable to deserialize.');
+        }
+        else if(jsonObject._type === ExtendedLanguageData.types().EXTENDED_GREEK_DATA) {
+            return ExtendedGreekData.readObject(jsonObject);
+        }
+        else {
+            throw new Error(`Unsupported extended language data of type "${jsonObject._type}".`);
+        }
+    }
+}
+
+class ExtendedGreekData extends ExtendedLanguageData {
+    constructor() {
+        super();
+        this._type = ExtendedLanguageData.types().EXTENDED_GREEK_DATA; // For deserialization
+        this.primary = false;
+    }
+
+    static readObject(jsonObject) {
+        let data = new ExtendedGreekData();
+        data.primary = jsonObject.primary;
+        return data;
+    }
+
+    merge(extendedGreekData) {
+        if (this.primary !== extendedGreekData.primary) {
+            console.log('Mismatch', this.primary, extendedGreekData.primary);
+        }
+        let merged = new ExtendedGreekData();
+        merged.primary = this.primary;
+        return merged;
+    }
+}
+
+
+class SelectedWord {
+    constructor(language, word) {
+        this.language = language;
+        this.word = word;
+    }
+
+    static readObjects(jsonObject) {
+        return new SelectedWord(jsonObject.language, jsonObject.word);
+    }
 }
 
 /**
@@ -1094,8 +1247,45 @@ class MatchData {
 class WordData {
     constructor(homonym) {
         this.homonym = homonym;
-        this.word = undefined;
-        this[types.part] = [];
+        this.definition = undefined;
+        this[types.part] = []; // What parts of speech are represented by this object.
+    }
+
+    static readObject(jsonObject) {
+        let homonym = Homonym.readObject(jsonObject.homonym);
+
+        let wordData = new WordData(homonym);
+        wordData.definition = jsonObject.definition;
+        wordData[types.part] = jsonObject[types.part];
+
+        for (let part of wordData[types.part]) {
+            let partData = jsonObject[part];
+            wordData[part] = {};
+
+            if (partData.suffixes) {
+                wordData[part].suffixes = [];
+                for (let suffix of partData.suffixes) {
+                    wordData[part].suffixes.push(Suffix.readObject(suffix));
+                }
+            }
+
+            if (partData.footnotes) {
+                wordData[part].footnotes = [];
+                for (let footnote of partData.footnotes) {
+                    wordData[part].footnotes.push(Footnote.readObject(footnote));
+                }
+            }
+        }
+
+        return wordData;
+    }
+
+    get word() {
+        return this.homonym.targetWord;
+    }
+
+    set word(word) {
+        this.homonym.targetWord = word;
     }
 
     get language() {

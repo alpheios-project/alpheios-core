@@ -10,10 +10,11 @@ import viewsGreek from "./views/greek";
 
 
 class Presenter {
-    constructor(selector, wordData, locale = 'en-US') {
+    constructor(viewContainer, viewSelectorContainer, localeSelectorContainer, wordData, locale = 'en-US') {
 
-        this.targetSelector = selector;
-        this.container = document.querySelector(this.targetSelector);
+        this.viewContainer = viewContainer;
+        this.viewSelectorContainer = viewSelectorContainer;
+        this.localeSelectorContainer = localeSelectorContainer;
         this.wordData = wordData;
 
         // All views registered by the Presenter
@@ -47,29 +48,30 @@ class Presenter {
 
     setLocale(locale) {
         this.locale = locale;
-        this.activeView.render(this.container, this.wordData, this.l10n.messages(this.locale));
+        this.activeView.render(this.viewContainer, this.wordData, this.l10n.messages(this.locale));
     }
 
     render() {
         // Show a default view
         if (this.defaultView) {
-            this.defaultView.render(this.container, this.wordData, this.l10n.messages(this.locale));
+            this.defaultView.render(this.viewContainer, this.wordData, this.l10n.messages(this.locale));
             this.activeView = this.defaultView;
 
-            this.appendViewSelector("#view-switcher");
-            this.appendLocaleSelector("#locale-selector");
+            this.appendViewSelector(this.viewSelectorContainer);
+            this.appendLocaleSelector(this.localeSelectorContainer);
         }
+        return this;
     }
 
-    appendViewSelector(targetSelector) {
-        let viewContainer = document.querySelector(targetSelector);
-        viewContainer.innerHTML = '';
+    appendViewSelector(targetContainer) {
+        targetContainer.innerHTML = '';
         if (this.availableViews.length > 1) {
             let id = 'view-selector-list';
             let viewLabel = document.createElement('label');
             viewLabel.setAttribute('for', id);
             viewLabel.innerHTML = "View:&nbsp;";
             let viewList = document.createElement('select');
+            viewList.classList.add('alpheios-ui-form-control');
             for (const view of this.availableViews) {
                 let option = document.createElement("option");
                 option.value = view.id;
@@ -77,26 +79,27 @@ class Presenter {
                 viewList.appendChild(option);
             }
             viewList.addEventListener('change', this.viewSelectorEventListener.bind(this));
-            viewContainer.appendChild(viewLabel);
-            viewContainer.appendChild(viewList);
+            targetContainer.appendChild(viewLabel);
+            targetContainer.appendChild(viewList);
         }
+        return this;
     }
 
     viewSelectorEventListener(event) {
         let viewID = event.target.value;
         let view = this.viewIndex[viewID];
-        view.render(this.container, this.wordData, this.l10n.messages(this.locale));
+        view.render(this.viewContainer, this.wordData, this.l10n.messages(this.locale));
         this.activeView = view;
     }
 
-    appendLocaleSelector(targetSelector) {
+    appendLocaleSelector(targetContainer) {
         let id = 'locale-selector-list';
-        let locale = document.querySelector(targetSelector);
-        locale.innerHTML = ''; // Erase whatever was there
+        targetContainer.innerHTML = ''; // Erase whatever was there
         let localeLabel = document.createElement('label');
         localeLabel.setAttribute('for', id);
         localeLabel.innerHTML = "Locale:&nbsp;";
         let localeList = document.createElement('select');
+        localeList.classList.add('alpheios-ui-form-control');
         localeList.id = id;
         for (let locale of this.l10n.locales) {
             let option = document.createElement("option");
@@ -105,8 +108,9 @@ class Presenter {
             localeList.appendChild(option);
         }
         localeList.addEventListener('change', this.localeSelectorEventListener.bind(this));
-        locale.appendChild(localeLabel);
-        locale.appendChild(localeList);
+        targetContainer.appendChild(localeLabel);
+        targetContainer.appendChild(localeList);
+        return this;
     }
 
     localeSelectorEventListener() {

@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "Alpheios WebExtension",
+  "version": "0.0.1",
+  "description": "Adds Alpheios language tools to browser's pages.",
+  "icons": {
+    "48": "icons/ic_device_hub_black_24px.svg"
+  },
+
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "contextMenus"
+  ],
+
+  "page_action": {
+    "default_icon": "icons/off.svg",
+    "browser_style": true
+  },
+
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+
+  "web_accessible_resources": [
+    "styles/style.css"
+  ]
+}

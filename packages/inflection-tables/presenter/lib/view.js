@@ -1593,16 +1593,16 @@ class View {
      * Converts a WordData, returned from inflection tables library, into an HTML representation of an inflection table
      * and inserts that HTML into a `container` HTML element. `messages` provides a translation for view's texts.
      * @param {HTMLElement} container - An HTML element where this view will be inserted.
-     * @param {WordData} resultSet - A result set from inflection tables library.
+     * @param {WordData} wordData - A result set from inflection tables library.
      * @param {MessageBundle} messages - A message bundle with message translations.
      */
-    render(container, resultSet, messages) {
+    render(container, wordData, messages) {
         "use strict";
 
         this.messages = messages;
         this.container = container;
-        this.resultSet = resultSet;
-        let selection = resultSet[this.partOfSpeech];
+        this.wordData = wordData;
+        let selection = wordData[this.partOfSpeech];
 
         this.footnotes = new Footnotes(selection.footnotes);
 
@@ -1622,7 +1622,7 @@ class View {
         this.container.innerHTML = '';
 
         let word = document.createElement('h2');
-        word.innerHTML = this.resultSet.homonym.targetWord;
+        word.innerHTML = this.wordData.homonym.targetWord;
         this.container.appendChild(word);
 
         let title = document.createElement('h3');

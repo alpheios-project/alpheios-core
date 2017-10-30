@@ -1,7 +1,7 @@
 /*
  * Latin language data module
  */
-export {language, parts, numbers, cases, declensions, genders, types, /*conjugations, tenses, voices, moods, persons, */dataSet, ExtendedGreekData};
+export {language, parts, numbers, cases, declensions, genders, types, /*conjugations, tenses, voices, moods, persons, */dataSet};
 import * as Lib from "../../lib.js";
 import nounSuffixesCSV from './data/noun/suffixes.csv';
 import nounFootnotesCSV from './data/noun/footnotes.csv';
@@ -10,27 +10,6 @@ import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 import verbSuffixesCSV from './data/verb/suffixes.csv';
 import verbFootnotesCSV from './data/verb/footnotes.csv';*/
 import papaparse from "papaparse";
-
-class ExtendedGreekData {
-    constructor() {
-        this.primary = false;
-    }
-
-    /*clone() {
-        let cloned = new ExtendedGreekData();
-        cloned.primary = this.primary;
-        return cloned;
-    }*/
-
-    merge(extendedGreekData) {
-        if (this.primary !== extendedGreekData.primary) {
-            console.log('Mismatch', this.primary, extendedGreekData.primary);
-        }
-        let merged = new ExtendedGreekData();
-        merged.primary = this.primary;
-        return merged;
-    }
-}
 
 // A language of this module
 const language = Lib.languages.greek;
@@ -134,7 +113,7 @@ dataSet.addSuffixes = function(partOfSpeech, data) {
             });
             features.push(...indexes);
         }
-        let extendedGreekData = new ExtendedGreekData();
+        let extendedGreekData = new Lib.ExtendedGreekData();
         extendedGreekData.primary = primary;
         let extendedLangData = {
             [Lib.languages.greek]: extendedGreekData

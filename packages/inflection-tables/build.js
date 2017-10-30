@@ -7,7 +7,7 @@ const string = require('rollup-plugin-string');
 const defaultPlugins = [
     string({
         // Required to be specified
-        include: ['lib/lang/**/*.csv'],
+        include: ['lib/lang/**/*.csv', 'tests/data/**/*.json'],
 
         // Undefined by default
         //exclude: ['**/index.html']

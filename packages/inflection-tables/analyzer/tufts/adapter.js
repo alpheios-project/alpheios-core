@@ -1,6 +1,7 @@
 import * as Lib from "../../lib/lib";
 import TuftsLatinData from './lang/latin';
 import TuftsGreekData from './lang/greek';
+import * as TestWords from '../../tests/data/test-data';
 
 class TuftsAdapter {
     constructor() {
@@ -9,6 +10,24 @@ class TuftsAdapter {
         this[Lib.languages.greek] = TuftsGreekData;
         this.langMap = new Lib.Importer().map('lat', Lib.languages.latin).map('grc', Lib.languages.greek);
         return this;
+    }
+
+    // Not implemented yet
+    fetch(lang, word) {
+    }
+
+    fetchTestData(lang, word) {
+        return new Promise((resolve, reject) => {
+            try {
+                let wordData = new TestWords.WordTestData().get(word);
+                let json = JSON.parse(wordData);
+                resolve(json);
+            }
+            catch (error) {
+                // Word is not found in test data
+                reject(error);
+            }
+        });
     }
 
     /**

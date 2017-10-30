@@ -1,4 +1,3 @@
-'use strict';
 // Import shared language data
 import * as Lib from "./lib/lib";
 import TuftsAdapter from "./analyzer/tufts/adapter";
@@ -46,7 +45,10 @@ let show = function show(word, fileNameBase) {
             wordData.homonym.targetWord = word;
 
             // Insert rendered view to a page
-            let presenter = new Presenter('#id-inflections-table', wordData).render();
+            let container = document.querySelector('#id-inflections-table');
+            let viewSelectorContainer = document.querySelector('#view-switcher');
+            let localeSwitcherContainer = document.querySelector('#locale-selector');
+            new Presenter(container, viewSelectorContainer, localeSwitcherContainer, wordData).render();
 
         }).catch(error => {
         console.error(error);
