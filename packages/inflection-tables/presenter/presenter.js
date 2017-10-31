@@ -58,7 +58,7 @@ class Presenter {
             this.activeView = this.defaultView;
 
             this.appendViewSelector(this.viewSelectorContainer);
-            this.appendLocaleSelector(this.localeSelectorContainer);
+            //this.appendLocaleSelector(this.localeSelectorContainer);
         }
         return this;
     }

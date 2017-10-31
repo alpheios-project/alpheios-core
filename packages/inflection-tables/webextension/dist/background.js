@@ -3763,6 +3763,7 @@ var BackgroundProcess = function () {
         BackgroundProcess.createMenuItem();
 
         browser.contextMenus.onClicked.addListener(this.menuListener.bind(this));
+        browser.browserAction.onClicked.addListener(this.browserActionListener.bind(this));
     }
 
     _createClass(BackgroundProcess, [{
@@ -3873,6 +3874,11 @@ var BackgroundProcess = function () {
                 this.loadContent();
             }
         }
+    }, {
+        key: "browserActionListener",
+        value: function browserActionListener(tab) {
+            this.loadContent();
+        }
     }], [{
         key: "reportBrowserSupport",
         value: function reportBrowserSupport() {
@@ -3896,6 +3902,13 @@ var BackgroundProcess = function () {
 }();
 
 var backgroundProcess = new BackgroundProcess(alpheiosExtSettings);
+
+/*
+browser.browserAction.onClicked.addListener((tab) => {
+    // disable the active tab
+    //browser.browserAction.disable(tab.id);
+    console.log('Clicked 2');
+});*/
 
 /***/ }),
 /* 6 */

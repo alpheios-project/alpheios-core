@@ -1,13 +1,16 @@
-export {Panel};
+export {Panel, Options};
 
 class Panel {
-    constructor() {
+    constructor(options) {
+        this.options = options;
+
         this.pageBody = document.body;
         this.body = document.querySelector('#alpheios-panel');
         this.definitionContainer = document.querySelector('#alpheios-panel-content-definition');
         this.inflTableContainer = document.querySelector('#alpheios-panel-content-infl-table-body');
         this.viewSelectorContainer = document.querySelector('#alpheios-panel-content-infl-table-view-selector');
         this.localeSwitcherContainer = document.querySelector('#alpheios-panel-content-infl-table-locale-switcher');
+        this.optionsContainer = document.querySelector('#alpheios-panel-content-options');
 
         this.showOpenBtn = document.querySelector('#alpheios-panel-show-open');
         this.showFWBtn = document.querySelector('#alpheios-panel-show-fw');
@@ -113,5 +116,73 @@ class Panel {
         document.getElementById(target).classList.remove(this.hiddenClassName);
         this.activeTab = activeTab;
         return this;
+    }
+
+    get optionsPage() {
+        return this.optionsContainer;
+    }
+
+    set optionsPage(htmlContent) {
+        return this.optionsContainer.innerHTML = htmlContent;
+    }
+}
+
+class Options {
+    constructor() {
+        this._values = Options.defaults;
+        browser.storage.local.get().then(
+            (values) => {
+                for (let key in values) {
+                    if (this._values.hasOwnProperty(key)) {
+                        this._values[key].currentValue = values[key];
+                    }
+                }
+            },
+            (errorMessage) => {
+                console.err(`Cannot retrieve options for Alpheios extension from a local storage: ${errorMessage}`);
+            }
+        );
+        for (let key in this._values) {
+            if (this._values.hasOwnProperty(key)) {
+                // If current value is not present in the local storage, set it to default
+                if (!this._values[key].currentValue) {
+                    this._values[key].currentValue = this._values[key].defaultValue;
+                }
+            }
+        }
+    }
+
+    static get defaults() {
+        return {
+            locale: {
+                defaultValue: 'en-US',
+                values: [
+                    { value: 'en-US', text: 'English (US)' },
+                    { value: 'en-GB', text: 'English (GB)' }
+                ],
+                inputSelector: '#alpheios-locale-selector-list'
+            }
+        }
+    }
+
+    get items() {
+        return this._values;
+    }
+
+    update(option, value) {
+        this._values[option].currentValue = value;
+
+        // Update value in the local storage
+        let optionObj = {};
+        optionObj[option] = value;
+        browser.storage.local.set(optionObj).then(
+            () => {
+                // Options storage succeeded
+                console.log('Option value was stored successfully.');
+            },
+            (errorMessage) => {
+                console.err(`Storage of option value failed: ${errorMessage}`);
+            }
+        );
     }
 }

@@ -10,11 +10,13 @@
   "permissions": [
     "tabs",
     "activeTab",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
 
-  "page_action": {
-    "default_icon": "icons/off.svg",
+  "browser_action": {
+    "default_icon": "icons/circle-o-notch.svg",
+    "default_title": "Load Alpheios",
     "browser_style": true
   },
 

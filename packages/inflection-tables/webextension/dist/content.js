@@ -5100,9 +5100,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__templates_page_controls_htmlf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__templates_page_controls_htmlf__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__templates_panel_htmlf__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__templates_panel_htmlf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__templates_panel_htmlf__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__templates_options_htmlf__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__templates_options_htmlf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__templates_options_htmlf__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 
 
 
@@ -5116,14 +5119,17 @@ var ContentProcess = function () {
     function ContentProcess() {
         _classCallCheck(this, ContentProcess);
 
+        this.options = new __WEBPACK_IMPORTED_MODULE_3__ui__["a" /* Options */]();
+
         // Inject HTML code of a plugin. Should go in reverse order.
         document.body.classList.add('alpheios');
         ContentProcess.loadPanel();
         ContentProcess.loadPageControls();
         ContentProcess.loadSymbols();
 
-        this.panel = new __WEBPACK_IMPORTED_MODULE_3__ui__["a" /* Panel */]();
+        this.panel = new __WEBPACK_IMPORTED_MODULE_3__ui__["b" /* Panel */](this.options);
         this.panelToggleBtn = document.querySelector('#alpheios-panel-toggle');
+        this.renderOptions();
 
         // Add a message listener
         browser.runtime.onMessage.addListener(this.messageListener.bind(this));
@@ -5173,7 +5179,53 @@ var ContentProcess = function () {
     }, {
         key: "updateInflectionTable",
         value: function updateInflectionTable(wordData) {
-            var presenter = new __WEBPACK_IMPORTED_MODULE_1__presenter_presenter__["a" /* default */](this.panel.inflTableContainer, this.panel.viewSelectorContainer, this.panel.localeSwitcherContainer, wordData).render();
+            this.presenter = new __WEBPACK_IMPORTED_MODULE_1__presenter_presenter__["a" /* default */](this.panel.inflTableContainer, this.panel.viewSelectorContainer, this.panel.localeSwitcherContainer, wordData).render();
+        }
+    }, {
+        key: "renderOptions",
+        value: function renderOptions() {
+            this.panel.optionsPage = __WEBPACK_IMPORTED_MODULE_7__templates_options_htmlf___default.a;
+            var localeSelector = this.panel.optionsPage.querySelector('#alpheios-locale-selector-list');
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this.options.items.locale.values[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var locale = _step.value;
+
+                    var option = document.createElement("option");
+                    option.value = locale.value;
+                    option.text = locale.text;
+                    if (locale.value === this.options.items.locale.defaultValue) {
+                        option.setAttribute('selected', 'selected');
+                    }
+                    localeSelector.appendChild(option);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            localeSelector.addEventListener('change', this.optionChangeListener.bind(this, 'locale'));
+        }
+    }, {
+        key: "optionChangeListener",
+        value: function optionChangeListener(option, event) {
+            this.options.update(option, event.target.value);
+            if (option === 'locale') {
+                this.presenter.setLocale(event.target.value);
+            }
         }
     }], [{
         key: "loadSymbols",
@@ -5286,7 +5338,7 @@ class Presenter {
             this.activeView = this.defaultView;
 
             this.appendViewSelector(this.viewSelectorContainer);
-            this.appendLocaleSelector(this.localeSelectorContainer);
+            //this.appendLocaleSelector(this.localeSelectorContainer);
         }
         return this;
     }
@@ -8534,7 +8586,8 @@ module.exports = bytesToUuid;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Panel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Panel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Options; });
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8542,8 +8595,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
 var Panel = function () {
-    function Panel() {
+    function Panel(options) {
         _classCallCheck(this, Panel);
+
+        this.options = options;
 
         this.pageBody = document.body;
         this.body = document.querySelector('#alpheios-panel');
@@ -8551,6 +8606,7 @@ var Panel = function () {
         this.inflTableContainer = document.querySelector('#alpheios-panel-content-infl-table-body');
         this.viewSelectorContainer = document.querySelector('#alpheios-panel-content-infl-table-view-selector');
         this.localeSwitcherContainer = document.querySelector('#alpheios-panel-content-infl-table-locale-switcher');
+        this.optionsContainer = document.querySelector('#alpheios-panel-content-options');
 
         this.showOpenBtn = document.querySelector('#alpheios-panel-show-open');
         this.showFWBtn = document.querySelector('#alpheios-panel-show-fw');
@@ -8686,9 +8742,79 @@ var Panel = function () {
             this.activeTab = activeTab;
             return this;
         }
+    }, {
+        key: 'optionsPage',
+        get: function get() {
+            return this.optionsContainer;
+        },
+        set: function set(htmlContent) {
+            return this.optionsContainer.innerHTML = htmlContent;
+        }
     }]);
 
     return Panel;
+}();
+
+var Options = function () {
+    function Options() {
+        var _this = this;
+
+        _classCallCheck(this, Options);
+
+        this._values = Options.defaults;
+        browser.storage.local.get().then(function (values) {
+            for (var key in values) {
+                if (_this._values.hasOwnProperty(key)) {
+                    _this._values[key].currentValue = values[key];
+                }
+            }
+        }, function (errorMessage) {
+            console.err('Cannot retrieve options for Alpheios extension from a local storage: ' + errorMessage);
+        });
+        for (var key in this._values) {
+            if (this._values.hasOwnProperty(key)) {
+                // If current value is not present in the local storage, set it to default
+                if (!this._values[key].currentValue) {
+                    this._values[key].currentValue = this._values[key].defaultValue;
+                }
+            }
+        }
+    }
+
+    _createClass(Options, [{
+        key: 'update',
+        value: function update(option, value) {
+            this._values[option].currentValue = value;
+
+            // Update value in the local storage
+            var optionObj = {};
+            optionObj[option] = value;
+            browser.storage.local.set(optionObj).then(function () {
+                // Options storage succeeded
+                console.log('Option value was stored successfully.');
+            }, function (errorMessage) {
+                console.err('Storage of option value failed: ' + errorMessage);
+            });
+        }
+    }, {
+        key: 'items',
+        get: function get() {
+            return this._values;
+        }
+    }], [{
+        key: 'defaults',
+        get: function get() {
+            return {
+                locale: {
+                    defaultValue: 'en-US',
+                    values: [{ value: 'en-US', text: 'English (US)' }, { value: 'en-GB', text: 'English (GB)' }],
+                    inputSelector: '#alpheios-locale-selector-list'
+                }
+            };
+        }
+    }]);
+
+    return Options;
 }();
 
 /***/ }),
@@ -8707,7 +8833,13 @@ module.exports = "<svg id=\"alpheios-panel-toggle\" class=\"alpheios-panel-show-
 /* 39 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-panel\" class=\"alpheios-panel\">\r\n    <div class=\"alpheios-panel__header\">\r\n        <h3>Alpheios</h3>\r\n        <div class=\"alpheios-panel__header-button-cont\">\r\n            <svg id=\"alpheios-panel-hide\" class=\"alpheios-panel__header-action-btn\">\r\n                <use xlink:href=\"#alf-icon-chevron-left\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-open\" class=\"alpheios-panel__header-action-btn\">\r\n                <use xlink:href=\"#alf-icon-arrow-left\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-fw\" class=\"alpheios-panel__header-action-btn\">\r\n                <use xlink:href=\"#alf-icon-chevron-right\"/>\r\n            </svg>\r\n        </div>\r\n\r\n    </div>\r\n    <div class=\"alpheios-panel__body\">\r\n        <div id=\"alpheios-panel-content\" class=\"alpheios-panel__content\">\r\n            <div id=\"alpheios-panel-content-definition\"></div>\r\n            <div id=\"alpheios-panel-content-infl-table\">\r\n                <div id=\"alpheios-panel-content-infl-table-locale-switcher\" class=\"alpheios-ui-form-group\"></div>\r\n                <div id=\"alpheios-panel-content-infl-table-view-selector\" class=\"alpheios-ui-form-group\"></div>\r\n                <div id=\"alpheios-panel-content-infl-table-body\"></div>\r\n            </div>\r\n            <div id=\"alpheios-panel-content-options\">\r\n                <h4>Options</h4>\r\n                <p>Option 1</p>\r\n                <p>Option 2</p>\r\n                <p>Option 3</p>\r\n            </div>\r\n        </div>\r\n        <div id=\"alpheios-panel__nav\" class=\"alpheios-panel__nav\">\r\n            <svg id=\"alpheios-panel-show-word-data\" class=\"alpheios-panel__nav-btn\"\r\n                 data-target=\"alpheios-panel-content-definition\">\r\n                <use xlink:href=\"#alf-icon-commenting\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-infl-table\" class=\"alpheios-panel__nav-btn\"\r\n                 data-target=\"alpheios-panel-content-infl-table\">\r\n                <use xlink:href=\"#alf-icon-table\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-options\" class=\"alpheios-panel__nav-btn\"\r\n                 data-target=\"alpheios-panel-content-options\">\r\n                <use xlink:href=\"#alf-icon-wrench\"/>\r\n            </svg>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div id=\"alpheios-panel\" class=\"alpheios-panel\">\r\n    <div class=\"alpheios-panel__header\">\r\n        <h3>Alpheios</h3>\r\n        <div class=\"alpheios-panel__header-button-cont\">\r\n            <svg id=\"alpheios-panel-hide\" class=\"alpheios-panel__header-action-btn\">\r\n                <use xlink:href=\"#alf-icon-chevron-left\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-open\" class=\"alpheios-panel__header-action-btn\">\r\n                <use xlink:href=\"#alf-icon-arrow-left\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-fw\" class=\"alpheios-panel__header-action-btn\">\r\n                <use xlink:href=\"#alf-icon-chevron-right\"/>\r\n            </svg>\r\n        </div>\r\n\r\n    </div>\r\n    <div class=\"alpheios-panel__body\">\r\n        <div id=\"alpheios-panel-content\" class=\"alpheios-panel__content\">\r\n            <div id=\"alpheios-panel-content-definition\"></div>\r\n            <div id=\"alpheios-panel-content-infl-table\">\r\n                <div id=\"alpheios-panel-content-infl-table-locale-switcher\" class=\"alpheios-ui-form-group\"></div>\r\n                <div id=\"alpheios-panel-content-infl-table-view-selector\" class=\"alpheios-ui-form-group\"></div>\r\n                <div id=\"alpheios-panel-content-infl-table-body\"></div>\r\n            </div>\r\n            <div id=\"alpheios-panel-content-options\"></div>\r\n        </div>\r\n        <div id=\"alpheios-panel__nav\" class=\"alpheios-panel__nav\">\r\n            <svg id=\"alpheios-panel-show-word-data\" class=\"alpheios-panel__nav-btn\"\r\n                 data-target=\"alpheios-panel-content-definition\">\r\n                <use xlink:href=\"#alf-icon-commenting\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-infl-table\" class=\"alpheios-panel__nav-btn\"\r\n                 data-target=\"alpheios-panel-content-infl-table\">\r\n                <use xlink:href=\"#alf-icon-table\"/>\r\n            </svg>\r\n            <svg id=\"alpheios-panel-show-options\" class=\"alpheios-panel__nav-btn\"\r\n                 data-target=\"alpheios-panel-content-options\">\r\n                <use xlink:href=\"#alf-icon-wrench\"/>\r\n            </svg>\r\n        </div>\r\n    </div>\r\n</div>"
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports) {
+
+module.exports = "<h4>Options</h4>\r\n<div id=\"alpheios-locale-switcher\" class=\"alpheios-ui-form-group\">\r\n    <label for=\"alpheios-locale-selector-list\">Locale:</label>\r\n    <select id=\"alpheios-locale-selector-list\" class=\"alpheios-ui-form-control\">\r\n    </select>\r\n</div>"
 
 /***/ })
 /******/ ]);

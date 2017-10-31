@@ -5,17 +5,21 @@ import * as UI from './ui';
 import Symbols from './templates/symbols.htmlf';
 import PageControls from './templates/page-controls.htmlf';
 import Panel from './templates/panel.htmlf';
+import Options from './templates/options.htmlf';
 
 class ContentProcess {
     constructor() {
+        this.options = new UI.Options();
+
         // Inject HTML code of a plugin. Should go in reverse order.
         document.body.classList.add('alpheios');
         ContentProcess.loadPanel();
         ContentProcess.loadPageControls();
         ContentProcess.loadSymbols();
 
-        this.panel = new UI.Panel();
+        this.panel = new UI.Panel(this.options);
         this.panelToggleBtn = document.querySelector('#alpheios-panel-toggle');
+        this.renderOptions();
 
         // Add a message listener
         browser.runtime.onMessage.addListener(this.messageListener.bind(this));
@@ -85,8 +89,30 @@ class ContentProcess {
     }
 
     updateInflectionTable(wordData) {
-        let presenter = new Presenter(this.panel.inflTableContainer, this.panel.viewSelectorContainer,
+        this.presenter = new Presenter(this.panel.inflTableContainer, this.panel.viewSelectorContainer,
             this.panel.localeSwitcherContainer, wordData).render();
+    }
+
+    renderOptions() {
+        this.panel.optionsPage = Options;
+        let localeSelector = this.panel.optionsPage.querySelector('#alpheios-locale-selector-list');
+        for (let locale of this.options.items.locale.values) {
+            let option = document.createElement("option");
+            option.value = locale.value;
+            option.text = locale.text;
+            if (locale.value === this.options.items.locale.defaultValue) {
+                option.setAttribute('selected','selected');
+            }
+            localeSelector.appendChild(option);
+        }
+        localeSelector.addEventListener('change', this.optionChangeListener.bind(this, 'locale'));
+    }
+
+    optionChangeListener(option, event) {
+        this.options.update(option, event.target.value);
+        if (option === 'locale') {
+            this.presenter.setLocale(event.target.value);
+        }
     }
 
     static getSelectedText() {

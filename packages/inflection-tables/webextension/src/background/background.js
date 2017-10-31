@@ -49,6 +49,7 @@ class BackgroundProcess {
         BackgroundProcess.createMenuItem();
 
         browser.contextMenus.onClicked.addListener(this.menuListener.bind(this));
+        browser.browserAction.onClicked.addListener(this.browserActionListener.bind(this));
     }
 
     loadContent() {
@@ -150,6 +151,10 @@ class BackgroundProcess {
         }
     }
 
+    browserActionListener(tab) {
+        this.loadContent();
+    }
+
     static reportBrowserSupport() {
         if (alpheiosExtSettings.noBrowserEnv) {
             console.log(`No support for "browser" detected`);
@@ -168,3 +173,11 @@ class BackgroundProcess {
 }
 
 let backgroundProcess = new BackgroundProcess(alpheiosExtSettings);
+
+
+/*
+browser.browserAction.onClicked.addListener((tab) => {
+    // disable the active tab
+    //browser.browserAction.disable(tab.id);
+    console.log('Clicked 2');
+});*/

@@ -22,12 +22,7 @@
                 <div id="alpheios-panel-content-infl-table-view-selector" class="alpheios-ui-form-group"></div>
                 <div id="alpheios-panel-content-infl-table-body"></div>
             </div>
-            <div id="alpheios-panel-content-options">
-                <h4>Options</h4>
-                <p>Option 1</p>
-                <p>Option 2</p>
-                <p>Option 3</p>
-            </div>
+            <div id="alpheios-panel-content-options"></div>
         </div>
         <div id="alpheios-panel__nav" class="alpheios-panel__nav">
             <svg id="alpheios-panel-show-word-data" class="alpheios-panel__nav-btn"

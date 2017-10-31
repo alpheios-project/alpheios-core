@@ -1,0 +1,6 @@
+<h4>Options</h4>
+<div id="alpheios-locale-switcher" class="alpheios-ui-form-group">
+    <label for="alpheios-locale-selector-list">Locale:</label>
+    <select id="alpheios-locale-selector-list" class="alpheios-ui-form-control">
+    </select>
+</div>
