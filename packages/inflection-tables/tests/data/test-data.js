@@ -18,6 +18,6 @@ class WordTestData {
         if (this._words.hasOwnProperty(word)) {
             return this._words[word];
         }
-        throw new Error(`Word "${word}" does not exist in test data`);
+        return undefined;
     }
 }

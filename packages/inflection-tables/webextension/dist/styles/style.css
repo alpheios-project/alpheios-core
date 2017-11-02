@@ -1,14 +1,4 @@
 /* region Panel styles */
-.hidden {
-    display: none;
-}
-
-.alpheios-demo-page-instructions {
-    background: lightblue;
-    padding: 10px 20px;
-    line-height: 1.5;
-}
-
 .alpheios-ui-form-group {
     margin-bottom: 1rem;
     font-family: Tahoma, Verdana, Segoe, sans-serif;
@@ -33,10 +23,6 @@
     height: calc(1.55rem + 2px);
 }
 
-.target-word {
-    background: lightgoldenrodyellow;
-}
-
 .alpheios-panel-open {
     padding-left: 70%;
 }
@@ -46,8 +32,12 @@
     height: 30px;
     fill: #0D77B6;
     cursor: pointer;
-    display: block !important; /* important is for testing only to override page's inline styles */
+    display: block;
     margin: 20px;
+}
+
+.alpheios-panel-show-btn.hidden {
+    display: none;
 }
 
 .alpheios-panel {
@@ -310,3 +300,9 @@
     display: block;
 }
 /* endregion Footnotes */
+
+/* region Utility */
+.hidden {
+    display: none;
+}
+/* endregion Utility */

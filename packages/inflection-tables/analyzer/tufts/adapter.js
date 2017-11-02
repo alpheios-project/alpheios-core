@@ -13,21 +13,29 @@ class TuftsAdapter {
     }
 
     // Not implemented yet
-    fetch(lang, word) {
+    async fetch(lang, word) {
     }
 
-    fetchTestData(lang, word) {
-        return new Promise((resolve, reject) => {
-            try {
-                let wordData = new TestWords.WordTestData().get(word);
-                let json = JSON.parse(wordData);
-                resolve(json);
-            }
-            catch (error) {
-                // Word is not found in test data
-                reject(error);
-            }
-        });
+    /**
+     * Returns an emulated morphological analyzer's output in a JSON format.
+     * This function is async to match fetch().
+     * @param lang - A language code of a word requested (not needed; used to match a fetch() signature).
+     * @param word - A word whose data needs to be retrieved.
+     * @return {Promise.<void> | undefined} - A promise resolved with a parsed JSON object representing a word info,
+     * undefined if word data is not found, or a promise rejected with an error message.
+     */
+    async fetchTestData(lang, word) {
+        if (!this.testWordData) {
+            this.testWordData = new TestWords.WordTestData();
+        }
+        let json = this.testWordData.get(word);
+        if (json) {
+            return JSON.parse(this.testWordData.get(word));
+        }
+        else {
+            // No data is found for this word
+            return undefined
+        }
     }
 
     /**
@@ -110,6 +118,19 @@ class TuftsAdapter {
             lexemes.push(new Lib.Lexeme(lemma, inflections));
         }
         return new Lib.Homonym(lexemes);
+    }
+
+    async getHomonym(lang, word) {
+        let jsonObj = await this.fetch(lang, word);
+        if (jsonObj) {
+            let homonym = this.transform(jsonObj);
+            homonym.targetWord = word;
+            return homonym;
+        }
+        else {
+            // No data found for this word
+            return undefined;
+        }
     }
 }
 

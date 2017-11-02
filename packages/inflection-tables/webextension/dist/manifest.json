@@ -28,5 +28,11 @@
 
   "web_accessible_resources": [
     "styles/style.css"
-  ]
+  ],
+
+  "applications": {
+    "gecko": {
+      "id": "alpheios@someserver.com"
+    }
+  }
 }
