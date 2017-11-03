@@ -10,7 +10,7 @@ class Feature {
      * @param {string | string[]} value - A single feature value or, if this feature could have multiple
      * values, an array of values.
      * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {LanguageModel} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor (value, type, language) {
         if (!Feature.types.isAllowed(type)) {
@@ -22,7 +22,7 @@ class Feature {
         if (!type) {
             throw new Error('Feature should have a non-empty type.');
         }
-        if (!language || ! language instanceof LanguageModel) {
+        if (!language) {
           throw new Error('Feature constructor requires a language');
         }
         this.value = value;

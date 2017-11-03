@@ -20,7 +20,7 @@ class FeatureType {
      * If an empty array is provided, there will be no
      * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
      * such as footnotes).
-     * @param {LanguageModel} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
      */
     constructor(type, values, language) {
         if (!Feature.types.isAllowed(type)) {
@@ -29,7 +29,7 @@ class FeatureType {
         if (!values || !Array.isArray(values)) {
             throw new Error('Values should be an array (or an empty array) of values.');
         }
-        if (!language || ! language instanceof LanguageModel) {
+        if (!language) {
           throw new Error('FeatureType constructor requires a language');
         }
 

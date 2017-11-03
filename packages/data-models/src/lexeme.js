@@ -9,8 +9,9 @@ class Lexeme {
      * Initializes a Lexeme object.
      * @param {Lemma} lemma - A lemma object.
      * @param {Inflection[]} inflections - An array of inflections.
+     * @param {string} meaning - a short definition
      */
-    constructor(lemma, inflections) {
+    constructor(lemma, inflections, meaning="") {
         if (!lemma) {
             throw new Error('Lemma should not be empty.');
         }
@@ -35,6 +36,7 @@ class Lexeme {
 
         this.lemma = lemma;
         this.inflections = inflections;
+        this.meaning = meaning;
     }
 
     static readObject(jsonObject) {

@@ -25,17 +25,18 @@ class LatinLanguageModel extends LanguageModel {
 
    _initializeFeatures() {
      let features = {}
-     features[Feature.types.part] = new FeatureType(Feature.types.part, ['noun', 'adjective', 'verb'],this);
-     features[Feature.types.number] = new FeatureType(Feature.types.number, ['singular', 'plural'],this);
-     features[Feature.types.grmCase] = new FeatureType(Feature.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],this);
-     features[Feature.types.declension] = new FeatureType(Feature.types.declension, ['first', 'second', 'third', 'fourth', 'fifth'],this);
-     features[Feature.types.gender] = new FeatureType(Feature.types.gender, ['masculine', 'feminine', 'neuter'],this);
-     features[Feature.types.type] = new FeatureType(Feature.types.type, ['regular', 'irregular'],this);
-     features[Feature.types.tense] = new FeatureType(Feature.types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],this);
-     features[Feature.types.voice] = new FeatureType(Feature.types.voice, ['passive', 'active'],this);
-     features[Feature.types.mood] = new FeatureType(Feature.types.mood, ['indicative', 'subjunctive'],this);
-     features[Feature.types.person] =new FeatureType(Feature.types.person, ['first', 'second', 'third'],this);
-     features[Feature.types.conjugation] = new FeatureType(Feature.types.conjugation, ['first', 'second', 'third', 'fourth'],this);
+     let lang_code = this.toCode();
+     features[Feature.types.part] = new FeatureType(Feature.types.part, ['noun', 'adjective', 'verb'],lang_code);
+     features[Feature.types.number] = new FeatureType(Feature.types.number, ['singular', 'plural'],lang_code);
+     features[Feature.types.grmCase] = new FeatureType(Feature.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'ablative', 'locative', 'vocative'],lang_code);
+     features[Feature.types.declension] = new FeatureType(Feature.types.declension, ['first', 'second', 'third', 'fourth', 'fifth'],lang_code);
+     features[Feature.types.gender] = new FeatureType(Feature.types.gender, ['masculine', 'feminine', 'neuter'],lang_code);
+     features[Feature.types.type] = new FeatureType(Feature.types.type, ['regular', 'irregular'],lang_code);
+     features[Feature.types.tense] = new FeatureType(Feature.types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect'],lang_code);
+     features[Feature.types.voice] = new FeatureType(Feature.types.voice, ['passive', 'active'],lang_code);
+     features[Feature.types.mood] = new FeatureType(Feature.types.mood, ['indicative', 'subjunctive'],lang_code);
+     features[Feature.types.person] =new FeatureType(Feature.types.person, ['first', 'second', 'third'],lang_code);
+     features[Feature.types.conjugation] = new FeatureType(Feature.types.conjugation, ['first', 'second', 'third', 'fourth'],lang_code);
      return features;
    }
 

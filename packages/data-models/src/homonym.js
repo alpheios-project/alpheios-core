@@ -4,8 +4,9 @@ class Homonym {
     /**
      * Initializes a Homonym object.
      * @param {Lexeme[]} lexemes - An array of Lexeme objects.
+     * @param {string} form - the form which produces the homonyms
      */
-    constructor (lexemes) {
+    constructor (lexemes, form) {
         if (!lexemes) {
             throw new Error('Lexemes data should not be empty.');
         }
@@ -21,7 +22,7 @@ class Homonym {
         }
 
         this.lexemes = lexemes;
-        this.targetWord = undefined;
+        this.targetWord = form;
     }
 
     static readObject(jsonObject) {

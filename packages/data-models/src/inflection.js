@@ -28,7 +28,7 @@ class Inflection {
     /**
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
-     * @param {LanguageModel} language - A word's language.
+     * @param {string} language - A word's language.
      */
     constructor(stem, language) {
 
