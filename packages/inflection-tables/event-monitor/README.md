@@ -1,21 +1,21 @@
-#Event Monitoring
+# Event Monitoring
 
 Event monitor should gather information about important events in a system, store this information, and send it to a
 centralized data collection service.
 
-##Events
+## Events
 
 Event is anything worth noticing that happens within a system. Monitored events are events that are tracked 
 by an event monitor.
 
-##Monitoring Goals
+## Monitoring Goals
 
 The main goals of event monitoring are:
 * Gather information about user actions to better understand user needs.
 * Gather performance data to identify possible bottlenecks and improve overall app performance.
 * Identify possible issues within an application and use this data to improve code quality.
 
-##Implementation Goals
+## Implementation Goals
 
 Major design goals are:
 * Gather as much information as required to fulfill monitoring goals.
@@ -23,7 +23,7 @@ Major design goals are:
 * Minimize an amount of space stored information would occupy.
 * Minimize number of network requests and amount of information transferred over the network.
 
-##Monitored Events
+## Monitored Events
 
 The following event types can be monitored:
 * User actions: actions that user initiates using an application UI.
@@ -38,7 +38,7 @@ Separating events into different groups would allow to analyze them separately: 
 user-initiated events (how long does it take to process a user request and what bottlenecks might there be), 
 system events (how do system background processes behave).
 
-##Performance Limitations
+## Performance Limitations
 
 Event collection should provide the best performance possible. The major performance concerns are:
 * Amount of data stored. Stored data could potentially take a significant amount of space.
@@ -78,7 +78,7 @@ and is running all the time when an extension is activated. It can use IndexedDB
 will send a batch of events to the centralized event collection serer periodically once a certain 
 event or duration threshold is reached.
 
-##Event Recording
+## Event Recording
 
 It is probably better to keep an event monitoring logic separate from an object that provide business logic functions.
 This has several advantages:
@@ -96,9 +96,9 @@ An approach like this would work very well with synchronous functions. Asynchron
 require some special architecture, probably a division into smaller synchronous methods that can 
 be recorded separately.
 
-##Implementation Details
+## Implementation Details
 
-###User IDs
+### User IDs
 Each user should ideally be represented by one User object with a unique user ID. With such user ID it would
 be very easy to trace all user activity through time. Such IDs should probably be generated in some centralized
 place, such as centralized data server, as only this server would own the knowledge of all users across all
@@ -114,7 +114,7 @@ in its database. Even though more complex, such approach would cut the number of
 and will allow to record user actions even when a centralized serer is not available 
 (i.e. if there is no Internet connection).
 
-###Data Structure
+### Data Structure
 We should probably store user and session objects separately from events itself. Events can store session IDs
 as references to session objects, and session objects can store a reference to the user object.
 
