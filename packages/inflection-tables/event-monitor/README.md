@@ -47,7 +47,10 @@ especially for users with mobile devices.
 
 ## Events Architecture
 
-### Events Class Diagram
+### Sequence Diagram
+![Events Sequence Diagram](events-sequence-diagram.svg)
+
+### Class Diagram
 ![Events Class Diagram](events-class-diagram.svg)
 
 ### Event, UserActionEvent, UserInitiatedEvent, and SystemEvent
@@ -80,17 +83,24 @@ event or duration threshold is reached.
 
 ## Event Recording
 
-It is probably better to keep an event monitoring logic separate from an object that provide business logic functions.
+It is better to keep an event monitoring logic separate from an object that provide business logic functions.
 This has several advantages:
 * Separation of concerns: business logic does need to know nothing about how logging is made.
 * Less interdependency: business logic and monitoring logic can be changed more easily (although monitoring
 logic would depend on signature of business logic functions).
 * Better testing: business and monitoring logic can be tested separately.
 
-Such separation can be achieved by utilizing wrapper monitoring objects. Each business class whose actions needs
-to be monitored must have a monitoring subclass. A monitoring subclass reimplements those methods of a parent
+Such separation can be achieved by utilizing wrapper monitoring objects. There are several ways to implement
+this. First is by using (Proxies)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy].
+This is the most flexible way to do so. 
+
+The other, more "traditional" way is to use subclassing. Each business class whose actions needs
+to be monitored must have a monitoring subclass. A monitoring subclass reimplements the methods of a parent
 that need to be monitored. Monitoring subclass' methods record events data and then call corresponding
 methods of their business superclass.
+
+It's probably best to use a proxy approach because of its flexibility. If, for whatever reason, proxies
+would not work, we can resort to use of subclassing.
 
 An approach like this would work very well with synchronous functions. Asynchronous functions would probably 
 require some special architecture, probably a division into smaller synchronous methods that can 
