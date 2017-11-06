@@ -91,7 +91,7 @@ logic would depend on signature of business logic functions).
 * Better testing: business and monitoring logic can be tested separately.
 
 Such separation can be achieved by utilizing wrapper monitoring objects. There are several ways to implement
-this. First is by using (Proxies)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy].
+this. First is by using [Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy).
 This is the most flexible way to do so. 
 
 The other, more "traditional" way is to use subclassing. Each business class whose actions needs
