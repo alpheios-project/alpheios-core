@@ -91,12 +91,12 @@ const defaultPlugins = [
 
 // Regular bundle
 rollup.rollup({
-    entry: 'controller.js',
+    entry: 'index.js',
     moduleName: 'InflectionTables',
     plugins: defaultPlugins
 }).then(bundle => {
     bundle.write({
-        format: 'umd',
+        format: 'es',
         dest: 'dist/inflection-tables.js',
         sourceMap: true
     })

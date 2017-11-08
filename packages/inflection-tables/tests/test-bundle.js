@@ -32,8 +32,8 @@ const types = {
 
 const languages = {
     type: 'language',
-    latin: 'latin',
-    greek: 'greek',
+    latin: 'lat',
+    greek: 'grc',
     isAllowed(language) {
         if (language === this.type) {
             return false;

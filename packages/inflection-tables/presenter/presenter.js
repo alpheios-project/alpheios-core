@@ -8,6 +8,7 @@ import * as View from './lib/view';
 import viewsLatin from "./views/latin";
 import viewsGreek from "./views/greek";
 
+export {Presenter};
 
 class Presenter {
     constructor(viewContainer, viewSelectorContainer, localeSelectorContainer, wordData, locale = 'en-US') {
@@ -129,5 +130,3 @@ class Presenter {
         return views;
     }
 }
-
-export default Presenter;
