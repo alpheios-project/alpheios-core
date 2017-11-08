@@ -9,9 +9,6 @@
   "scripts": {
     "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "node ./support/rollup/build.js",
-    "buildextensionbackground": "node build-extension-background.js",
-    "buildextensioncontent": "node build-extension-content.js",
-    "buildwebext": "webpack --config webextension/support/webpack/webpack.config.js",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
   "repository": {
@@ -56,5 +53,16 @@
     "alpheios-data-models": "git://github.com/alpheios-project/data-models.git",
     "alpheios-tufts-adapter": "git://github.com/alpheios-project/tufts-adapter.git",
     "coveralls": "^3.0.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    }
   }
 }

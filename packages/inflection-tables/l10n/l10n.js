@@ -1,59 +1,60 @@
-import en_US from './locale/en-us.js';
-import en_GB from './locale/en-gb.js';
-import IntlMessageFormat from 'intl-messageformat';
-export {MessageBundle, L10n, messages};
+import en_US from './locale/en-us.js'
+import en_GB from './locale/en-gb.js'
+import IntlMessageFormat from 'intl-messageformat'
+
+export { MessageBundle, L10n, messages }
 
 /**
  * Combines messages with the same locale code.
  */
 class MessageBundle {
 
-    /**
-     * Creates a message bundle (a list of messages) for a locale.
-     * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
-     * @param {Object} messages - Messages for a locale in an object. Object keys are message IDss, strings that
-     * are used to reference a message, and key values are message texts in a string format.
-     */
-    constructor(locale, messages) {
-        if (!locale) {
-            throw new Error('Locale data is missing');
-        }
-        if (!messages) {
-            throw new Error('Messages data is missing');
-        }
-
-        this._locale = locale;
-
-        for (let messageID in messages) {
-            if (messages.hasOwnProperty(messageID)) {
-                this[messageID] = new IntlMessageFormat(messages[messageID], this._locale);
-            }
-        }
+  /**
+   * Creates a message bundle (a list of messages) for a locale.
+   * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
+   * @param {Object} messages - Messages for a locale in an object. Object keys are message IDss, strings that
+   * are used to reference a message, and key values are message texts in a string format.
+   */
+  constructor (locale, messages) {
+    if (!locale) {
+      throw new Error('Locale data is missing')
+    }
+    if (!messages) {
+      throw new Error('Messages data is missing')
     }
 
-    /**
-     * Returns a (formatted) message for a message ID provided.
-     * @param messageID - An ID of a message.
-     * @param options - Options that can be used for message formatting.
-     * @returns {string} A formatted message. If message not found, returns a message that contains an error text.
-     */
-    get(messageID, options = undefined) {
-        if (this[messageID]) {
-            return this[messageID].format(options);
-        }
-        else {
-            // If message with the ID provided is not in translation data, generate a warning.
-            return `Not in translation data: "${messageID}"`;
-        }
-    }
+    this._locale = locale
 
-    /**
-     * Returns a locale of a current message bundle.
-     * @return {string} A locale of this message bundle.
-     */
-    get locale() {
-        return this._locale;
+    for (let messageID in messages) {
+      if (messages.hasOwnProperty(messageID)) {
+        this[messageID] = new IntlMessageFormat(messages[messageID], this._locale)
+      }
     }
+  }
+
+  /**
+   * Returns a (formatted) message for a message ID provided.
+   * @param messageID - An ID of a message.
+   * @param options - Options that can be used for message formatting.
+   * @returns {string} A formatted message. If message not found, returns a message that contains an error text.
+   */
+  get (messageID, options = undefined) {
+    if (this[messageID]) {
+      return this[messageID].format(options)
+    }
+    else {
+      // If message with the ID provided is not in translation data, generate a warning.
+      return `Not in translation data: "${messageID}"`
+    }
+  }
+
+  /**
+   * Returns a locale of a current message bundle.
+   * @return {string} A locale of this message bundle.
+   */
+  get locale () {
+    return this._locale
+  }
 }
 
 /**
@@ -61,58 +62,58 @@ class MessageBundle {
  */
 class L10n {
 
-    /**
-     * Creates an object. If an array of message bundle data is provided, initializes an object with this data.
-     * This function is chainable.
-     * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
-     * @returns {L10n} Returns a reference to self for chaining.
-     */
-    constructor(messageData) {
-        this._locales = {};
-        this._localeList = [];
+  /**
+   * Creates an object. If an array of message bundle data is provided, initializes an object with this data.
+   * This function is chainable.
+   * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
+   * @returns {L10n} Returns a reference to self for chaining.
+   */
+  constructor (messageData) {
+    this._locales = {}
+    this._localeList = []
 
-        if (messageData) {
-            this.addLocaleData(messageData);
-        }
-        return this;
+    if (messageData) {
+      this.addLocaleData(messageData)
     }
+    return this
+  }
 
-    /**
-     * Adds one or several message bundles.
-     * This function is chainable.
-     * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
-     * @return {L10n} - Returns self for chaining.
-     */
-    addLocaleData(messageData) {
-        for (let messageBundle of messageData) {
-            this._localeList.push(messageBundle.locale);
-            this._locales[messageBundle.locale] = messageBundle;
-        }
-        return this;
+  /**
+   * Adds one or several message bundles.
+   * This function is chainable.
+   * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
+   * @return {L10n} - Returns self for chaining.
+   */
+  addLocaleData (messageData) {
+    for (let messageBundle of messageData) {
+      this._localeList.push(messageBundle.locale)
+      this._locales[messageBundle.locale] = messageBundle
     }
+    return this
+  }
 
-    /**
-     * Returns a message bundle for a locale.
-     * @param {string} locale - A locale code for a message bundle. IETF language tag format is recommended.
-     * @returns {MessageBundle} A message bundle for a locale.
-     */
-    messages(locale) {
-        if (!this._locales[locale]) {
-            throw new Error('Locale "' + locale + '" is not found.');
-        }
-        return this._locales[locale];
+  /**
+   * Returns a message bundle for a locale.
+   * @param {string} locale - A locale code for a message bundle. IETF language tag format is recommended.
+   * @returns {MessageBundle} A message bundle for a locale.
+   */
+  messages (locale) {
+    if (!this._locales[locale]) {
+      throw new Error('Locale "' + locale + '" is not found.')
     }
+    return this._locales[locale]
+  }
 
-    /**
-     * Returns a list of available locale codes.
-     * @returns {string[]} Array of local codes.
-     */
-    get locales() {
-        return this._localeList;
-    }
+  /**
+   * Returns a list of available locale codes.
+   * @returns {string[]} Array of local codes.
+   */
+  get locales () {
+    return this._localeList
+  }
 }
 
 const messages = [
-    new MessageBundle('en-US', en_US),
-    new MessageBundle('en-GB', en_GB)
-];
+  new MessageBundle('en-US', en_US),
+  new MessageBundle('en-GB', en_GB)
+]
