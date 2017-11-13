@@ -45,5 +45,15 @@
     "verbose": true,
     "testEnvironment": "jest-environment-jsdom-11.0.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    }
+  }
 }

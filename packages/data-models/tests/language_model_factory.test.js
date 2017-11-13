@@ -17,6 +17,6 @@ describe('LanguageModelFactory object', () => {
     test('Should return a Base model', () => {
       let model = LanguageModelFactory.getLanguageForCode('foo');
       expect(model instanceof LanguageModel).toBeTruthy();
-      expect(model.source_language).toBeNull();
+      expect(model.sourceLanguage).toBeNull();
     });
 });

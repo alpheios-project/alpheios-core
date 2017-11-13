@@ -24,7 +24,7 @@ describe('SourceSelection object', () => {
         let el = doc.getElementById("latembed");
         el.closest = polyfill_closest;
         let sw = new SourceSelection(el);
-        expect(sw.language.source_language).toEqual(LanguageModel.LANG_LATIN);
+        expect(sw.language.sourceLanguage).toEqual(LanguageModel.LANG_LATIN);
     });
 
     test('we find an embedded xml language properly', () => {
@@ -32,6 +32,6 @@ describe('SourceSelection object', () => {
         let el = doc.getElementById("latembed");
         el.closest = polyfill_closest;
         let sw = new SourceSelection(el);
-        expect(sw.language.source_language).toBeNull();
+        expect(sw.language.sourceLanguage).toBeNull();
     });
 });
