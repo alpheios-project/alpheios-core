@@ -1,18 +1,30 @@
-import LanguageModel from './language_model'
-import LatinLanguageModel from './latin_language_model'
-import GreekLanguageModel from './greek_language_model'
+import LanguageModel from './language_model.js'
+import LatinLanguageModel from './latin_language_model.js'
+import GreekLanguageModel from './greek_language_model.js'
+import ArabicLanguageModel from './arabic_language_model.js'
+import * as Constants from './constants.js'
+
+const MODELS = new Map([
+  [ Constants.STR_LANG_CODE_LA, LatinLanguageModel ],
+  [ Constants.STR_LANG_CODE_LAT, LatinLanguageModel ],
+  [ Constants.STR_LANG_CODE_GRC, GreekLanguageModel ],
+  [ Constants.STR_LANG_CODE_ARA, ArabicLanguageModel ],
+  [ Constants.STR_LANG_CODE_AR, ArabicLanguageModel ]
+])
 
 class LanguageModelFactory {
+  static supportsLanguage (code) {
+    return MODELS.has(code)
+  }
 
   static getLanguageForCode (code = null) {
-    for (const model of LanguageModelFactory.MODELS) {
-      if (model.supportsLanguage(code)) {
-        return new model()
-      }
+    let Model = MODELS.get(code)
+    if (Model) {
+      return new Model()
     }
+    // for now return a default Model
+    // TODO may want to throw an error
     return new LanguageModel()
   }
 }
-
-LanguageModelFactory.MODELS = [LatinLanguageModel, GreekLanguageModel]
 export default LanguageModelFactory

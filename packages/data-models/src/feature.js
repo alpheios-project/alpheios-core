@@ -1,15 +1,15 @@
+
 /**
  * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
  */
 class Feature {
-
-  /**
-   * Initializes a Feature object
-   * @param {string | string[]} value - A single feature value or, if this feature could have multiple
-   * values, an array of values.
-   * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-   * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
-   */
+    /**
+     * Initializes a Feature object
+     * @param {string | string[]} value - A single feature value or, if this feature could have multiple
+     * values, an array of values.
+     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     */
   constructor (value, type, language) {
     if (!Feature.types.isAllowed(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
@@ -26,7 +26,6 @@ class Feature {
     this.value = value
     this.type = type
     this.language = language
-
   };
 
   isEqual (feature) {
@@ -39,13 +38,11 @@ class Feature {
         return element === feature.value[index]
       })
       return equal
-    }
-    else {
+    } else {
       return this.value === feature.value && this.type === feature.type && this.language === feature.language
     }
   }
 }
-
 // Should have no spaces in values in order to be used in HTML templates
 Feature.types = {
   word: 'word',
@@ -56,6 +53,7 @@ Feature.types = {
   gender: 'gender',
   type: 'type',
   conjugation: 'conjugation',
+  comparison: 'comparison',
   tense: 'tense',
   voice: 'voice',
   mood: 'mood',
@@ -64,6 +62,16 @@ Feature.types = {
   meaning: 'meaning', // Meaning of a word
   source: 'source', // Source of word definition
   footnote: 'footnote', // A footnote for a word's ending
+  dialect: 'dialect', // a dialect iderntifier
+  note: 'note', // a general note
+  pronunciation: 'pronunciation',
+  area: 'area',
+  geo: 'geo', // geographical data
+  kind: 'kind', // verb kind informatin
+  derivtype: 'derivtype',
+  stemtype: 'stemtype',
+  morph: 'morph', // general morphological information
+  var: 'var', // variance?
   isAllowed (value) {
     let v = `${value}`
     return Object.values(this).includes(v)

@@ -5,12 +5,12 @@ import Inflection from './inflection.js'
  * A basic unit of lexical meaning. Contains a Lemma object and one or more Inflection objects.
  */
 class Lexeme {
-  /**
-   * Initializes a Lexeme object.
-   * @param {Lemma} lemma - A lemma object.
-   * @param {Inflection[]} inflections - An array of inflections.
-   * @param {string} meaning - a short definition
-   */
+    /**
+     * Initializes a Lexeme object.
+     * @param {Lemma} lemma - A lemma object.
+     * @param {Inflection[]} inflections - An array of inflections.
+     * @param {string} meaning - a short definition
+     */
   constructor (lemma, inflections, meaning = '') {
     if (!lemma) {
       throw new Error('Lemma should not be empty.')
@@ -48,5 +48,4 @@ class Lexeme {
     return new Lexeme(lemma, inflections)
   }
 }
-
 export default Lexeme

@@ -1,5 +1,5 @@
 import Feature from './feature.js'
-
+import LanguageModelFactory from './language_model_factory.js'
 /*
  Hierarchical structure of return value of a morphological analyzer:
 
@@ -24,14 +24,12 @@ import Feature from './feature.js'
  * Represents an inflection of a word
  */
 class Inflection {
-
-  /**
-   * Initializes an Inflection object.
-   * @param {string} stem - A stem of a word.
-   * @param {string} language - A word's language.
-   */
+    /**
+     * Initializes an Inflection object.
+     * @param {string} stem - A stem of a word.
+     * @param {string} language - A word's language.
+     */
   constructor (stem, language) {
-
     if (!stem) {
       throw new Error('Stem should not be empty.')
     }
@@ -40,11 +38,21 @@ class Inflection {
       throw new Error('Langauge should not be empty.')
     }
 
+    if (!LanguageModelFactory.supportsLanguage(language)) {
+      throw new Error(`language ${language} not supported.`)
+    }
+
     this.stem = stem
     this.language = language
 
     // Suffix may not be present in every word. If missing, it will set to null.
     this.suffix = null
+
+    // Prefix may not be present in every word. If missing, it will set to null.
+    this.prefix = null
+
+    // Example may not be provided
+    this.example = null
   }
 
   static readObject (jsonObject) {
@@ -52,15 +60,21 @@ class Inflection {
     if (jsonObject.suffix) {
       inflection.suffix = jsonObject.suffix
     }
+    if (jsonObject.prefix) {
+      inflection.prefix = jsonObject.prefix
+    }
+    if (jsonObject.example) {
+      inflection.example = jsonObject.example
+    }
     return inflection
   }
 
-  /**
-   * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
-   * an array of Feature objects will be provided.
-   * Values are taken from features and stored in a 'feature.type' property as an array of values.
-   * @param {Feature | Feature[]} data
-   */
+    /**
+     * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
+     * an array of Feature objects will be provided.
+     * Values are taken from features and stored in a 'feature.type' property as an array of values.
+     * @param {Feature | Feature[]} data
+     */
   set feature (data) {
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
@@ -77,13 +91,12 @@ class Inflection {
       }
 
       if (element.language !== this.language) {
-        throw new Error('Language "' + element.language + '" of a feature does not match a language "'
-          + this.language + '" of an Inflection object.')
+        throw new Error('Language "' + element.language + '" of a feature does not match a language "' +
+                this.language + '" of an Inflection object.')
       }
 
       this[type].push(element.value)
     }
   }
 }
-
 export default Inflection
