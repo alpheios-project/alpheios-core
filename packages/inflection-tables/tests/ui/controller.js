@@ -9,7 +9,7 @@ let testCases = [
   {word: 'mare', value: 'latin_noun_adj_mare', type: 'noun, adjective', language: 'latin'},
   {word: 'cepit', value: 'latin_verb_cepit', type: 'regular verb', language: 'latin'}
   // Cannot test this until Greek language model is ready
-  //{word: "φιλόσοφος", value: "greek_noun_pilsopo", type: "noun", language: 'greek'}
+  // {word: "φιλόσοφος", value: "greek_noun_pilsopo", type: "noun", language: 'greek'}
 ]
 let selectList = document.querySelector('#test-selector')
 
@@ -38,7 +38,7 @@ let show = function show (language, word) {
     (homonym) => {
       // Get matching suffixes from an inflection library
       let wordData = langData.getSuffixes(homonym)
-      //wordData.homonym.targetWord = word;
+      // wordData.homonym.targetWord = word;
 
       // Insert rendered view to a page
       let container = document.querySelector('#id-inflections-table')

@@ -1,5 +1,3 @@
-export { classNames, wideView, narrowView, footnotes, pageHeader }
-
 let classNames = {
   cell: 'infl-cell',
   widthPrefix: 'infl-cell--sp',
@@ -46,3 +44,5 @@ let pageHeader = {
   hideNoSuffixGroupsBtnSel: '#hide-no-suffix-groups',
   showNoSuffixGroupsBtnSel: '#show-no-suffix-groups'
 }
+
+export { classNames, wideView, narrowView, footnotes, pageHeader }

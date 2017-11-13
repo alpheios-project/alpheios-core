@@ -1,23 +1,14 @@
 /*
  * Latin language data module
  */
-export {
-  language,
-  parts,
-  numbers,
-  cases,
-  declensions,
-  genders,
-  types, /*conjugations, tenses, voices, moods, persons, */
-  dataSet
-}
 import * as Lib from '../../lib.js'
+import * as Models from 'alpheios-data-models'
 import nounSuffixesCSV from './data/noun/suffixes.csv'
 import nounFootnotesCSV from './data/noun/footnotes.csv'
-/*import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
+/* import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 import verbSuffixesCSV from './data/verb/suffixes.csv';
-import verbFootnotesCSV from './data/verb/footnotes.csv';*/
+import verbFootnotesCSV from './data/verb/footnotes.csv'; */
 import papaparse from 'papaparse'
 
 // A language of this module
@@ -31,41 +22,42 @@ let dataSet = new Lib.LanguageDataset(language)
  analyzer's language modules as well.
  */
 const importerName = 'csv'
-const parts = dataSet.defineFeatureType(Lib.types.part, ['noun', 'adjective', 'verb'])
-const numbers = dataSet.defineFeatureType(Lib.types.number, ['singular', 'dual', 'plural'])
+const parts = new Models.FeatureType(Models.Feature.types.part, ['noun', 'adjective', 'verb'], language)
+const numbers = new Models.FeatureType(Models.Feature.types.number, ['singular', 'dual', 'plural'], language)
 numbers.addImporter(importerName)
-  .map('singular', numbers.singular)
-  .map('dual', numbers.dual)
-  .map('plural', numbers.plural)
-const cases = dataSet.defineFeatureType(Lib.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative'])
+    .map('singular', numbers.singular)
+    .map('dual', numbers.dual)
+    .map('plural', numbers.plural)
+const cases = new Models.FeatureType(Models.Feature.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative'], language)
 cases.addImporter(importerName)
-  .map('nominative', cases.nominative)
-  .map('genitive', cases.genitive)
-  .map('dative', cases.dative)
-  .map('accusative', cases.accusative)
-  .map('vocative', cases.vocative)
-const declensions = dataSet.defineFeatureType(Lib.types.declension, ['first', 'second', 'third'])
+    .map('nominative', cases.nominative)
+    .map('genitive', cases.genitive)
+    .map('dative', cases.dative)
+    .map('accusative', cases.accusative)
+    .map('vocative', cases.vocative)
+const declensions = new Models.FeatureType(Models.Feature.types.declension, ['first', 'second', 'third'], language)
 declensions.addImporter(importerName)
-  .map('1st', declensions.first)
-  .map('2nd', declensions.second)
-  .map('3rd', declensions.third)
-const genders = dataSet.defineFeatureType(Lib.types.gender, ['masculine', 'feminine', 'neuter'])
+    .map('1st', declensions.first)
+    .map('2nd', declensions.second)
+    .map('3rd', declensions.third)
+const genders = new Models.FeatureType(Models.Feature.types.gender, ['masculine', 'feminine', 'neuter'], language)
 genders.addImporter(importerName)
-  .map('masculine', genders.masculine)
-  .map('feminine', genders.feminine)
-  .map('neuter', genders.neuter)
-  .map('masculine feminine', [genders.masculine, genders.feminine])
-const types = dataSet.defineFeatureType(Lib.types.type, ['regular', 'irregular'])
+    .map('masculine', genders.masculine)
+    .map('feminine', genders.feminine)
+    .map('neuter', genders.neuter)
+    .map('masculine feminine', [genders.masculine, genders.feminine])
+const types = new Models.FeatureType(Models.Feature.types.type, ['regular', 'irregular'], language)
 types.addImporter(importerName)
-  .map('regular', types.regular)
-  .map('irregular', types.irregular)
-/*const conjugations = dataSet.defineFeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
+    .map('regular', types.regular)
+    .map('irregular', types.irregular)
+/*
+const conjugations = new Models.FeatureType(Lib.types.conjugation, ['first', 'second', 'third', 'fourth']);
 conjugations.addImporter(importerName)
     .map('1st', conjugations.first)
     .map('2nd', conjugations.second)
     .map('3rd', conjugations.third)
     .map('4th', conjugations.fourth);
-const tenses = dataSet.defineFeatureType(Lib.types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
+const tenses = new Models.FeatureType(Lib.types.tense, ['present', 'imperfect', 'future', 'perfect', 'pluperfect', 'future perfect']);
 tenses.addImporter(importerName)
     .map('present', tenses.present)
     .map('imperfect', tenses.imperfect)
@@ -73,20 +65,20 @@ tenses.addImporter(importerName)
     .map('perfect', tenses.perfect)
     .map('pluperfect', tenses.pluperfect)
     .map('future_perfect', tenses['future perfect']);
-const voices = dataSet.defineFeatureType(Lib.types.voice, ['passive', 'active']);
+const voices = new Models.FeatureType(Lib.types.voice, ['passive', 'active'],language);
 voices.addImporter(importerName)
     .map('passive', voices.passive)
     .map('active', voices.active);
-const moods = dataSet.defineFeatureType(Lib.types.mood, ['indicative', 'subjunctive']);
+const moods = new Models.FeatureType(Lib.types.mood, ['indicative', 'subjunctive']);
 moods.addImporter(importerName)
     .map('indicative', moods.indicative)
     .map('subjunctive', moods.subjunctive);
-const persons = dataSet.defineFeatureType(Lib.types.person, ['first', 'second', 'third']);
+const persons = new Models.FeatureType(Lib.types.person, ['first', 'second', 'third']);
 persons.addImporter(importerName)
     .map('1st', persons.first)
     .map('2nd', persons.second)
-    .map('3rd', persons.third);*/
-const footnotes = dataSet.defineFeatureType(Lib.types.footnote, [])
+    .map('3rd', persons.third); */
+const footnotes = new Models.FeatureType(Models.Feature.types.footnote, [], {})
 
 // endregion Definition of grammatical features
 
@@ -116,7 +108,6 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
     }
     if (dataItem[7]) {
       // There can be multiple footnote indexes separated by spaces
-      let language = this.language
       let indexes = dataItem[7].split(' ').map(function (index) {
         return footnotes.get(index)
       })
@@ -144,13 +135,15 @@ dataSet.addVerbSuffixes = function (partOfSpeech, data) {
       suffix = null
     }
 
-    let features = [partOfSpeech,
+    let features = [partOfSpeech
+      /*
       conjugations.importer.csv.get(data[i][1]),
       voices.importer.csv.get(data[i][2]),
       moods.importer.csv.get(data[i][3]),
       tenses.importer.csv.get(data[i][4]),
       numbers.importer.csv.get(data[i][5]),
-      persons.importer.csv.get(data[i][6])]
+      persons.importer.csv.get(data[i][6]) */
+    ]
 
     let grammarType = data[i][7]
     // Type information can be empty if no ending is provided
@@ -160,7 +153,6 @@ dataSet.addVerbSuffixes = function (partOfSpeech, data) {
     // Footnotes
     if (data[i][8]) {
       // There can be multiple footnote indexes separated by spaces
-      let language = this.language
       let indexes = data[i][8].split(' ').map(function (index) {
         return footnotes.get(index)
       })
@@ -186,18 +178,18 @@ dataSet.loadData = function () {
   this.addFootnotes(partOfSpeech, footnotes.data)
 
   // Adjectives
-  /*partOfSpeech = parts.adjective;
+  /* partOfSpeech = parts.adjective;
   suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
   this.addSuffixes(partOfSpeech, suffixes.data);
   footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
-  this.addFootnotes(partOfSpeech, footnotes.data);*/
+  this.addFootnotes(partOfSpeech, footnotes.data); */
 
   // Verbs
-  /*partOfSpeech = parts.verb;
+  /* partOfSpeech = parts.verb;
   suffixes = papaparse.parse(verbSuffixesCSV, {});
   this.addVerbSuffixes(partOfSpeech, suffixes.data);
   footnotes = papaparse.parse(verbFootnotesCSV, {});
-  this.addFootnotes(partOfSpeech, footnotes.data);*/
+  this.addFootnotes(partOfSpeech, footnotes.data); */
 }
 
 /**
@@ -209,11 +201,11 @@ dataSet.loadData = function () {
  */
 dataSet.matcher = function (inflections, suffix) {
   'use strict'
-  // All of those features must match between an inflection and an ending
-  let obligatoryMatches = [Lib.types.part]
+    // All of those features must match between an inflection and an ending
+  let obligatoryMatches = [Models.Feature.types.part]
 
-  // Any of those features must match between an inflection and an ending
-  let optionalMatches = [Lib.types.grmCase, Lib.types.declension, Lib.types.gender, Lib.types.number]
+    // Any of those features must match between an inflection and an ending
+  let optionalMatches = [Models.Feature.types.grmCase, Models.Feature.types.declension, Models.Feature.types.gender, Models.Feature.types.number]
   let bestMatchData = null // Information about the best match we would be able to find
 
   /*
@@ -229,9 +221,9 @@ dataSet.matcher = function (inflections, suffix) {
     }
 
     // Check obligatory matches
-    for (let feature of  obligatoryMatches) {
+    for (let feature of obligatoryMatches) {
       let featureMatch = suffix.featureMatch(feature, inflection[feature])
-      //matchFound = matchFound && featureMatch;
+      // matchFound = matchFound && featureMatch;
 
       if (!featureMatch) {
         // If an obligatory match is not found, there is no reason to check other items
@@ -292,8 +284,7 @@ dataSet.bestMatch = function (matchA, matchB) {
   if (matchA.suffixMatch !== matchB.suffixMatch) {
     if (matchA.suffixMatch > matchB.suffixMatch) {
       return matchA
-    }
-    else {
+    } else {
       return matchB
     }
   }
@@ -302,8 +293,8 @@ dataSet.bestMatch = function (matchA, matchB) {
   if (matchA.matchedFeatures.length >= matchB.matchedFeatures.length) {
     // Arbitrarily return matchA if matches are the same
     return matchA
-  }
-  else {
+  } else {
     return matchB
   }
 }
+export {language, parts, numbers, cases, declensions, genders, types, /* conjugations, tenses, voices, moods, persons, */dataSet}

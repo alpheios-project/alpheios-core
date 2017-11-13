@@ -2,23 +2,19 @@
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
  * directory under /presenter/views/view-name
  */
-import * as Lib from '../lib/lib'
 import * as L10n from '../l10n/l10n.js'
-import * as View from './lib/view'
 import viewsLatin from './views/latin'
 import viewsGreek from './views/greek'
-
-export { Presenter }
+import * as Models from 'alpheios-data-models'
 
 class Presenter {
   constructor (viewContainer, viewSelectorContainer, localeSelectorContainer, wordData, locale = 'en-US') {
-
     this.viewContainer = viewContainer
     this.viewSelectorContainer = viewSelectorContainer
     this.localeSelectorContainer = localeSelectorContainer
     this.wordData = wordData
 
-    // All views registered by the Presenter
+        // All views registered by the Presenter
     this.views = []
     this.viewIndex = {}
 
@@ -29,7 +25,7 @@ class Presenter {
       this.addView(view)
     }
 
-    // Views available for parts of speech that are present in a Result Set
+        // Views available for parts of speech that are present in a Result Set
     this.availableViews = this.getViews(this.wordData)
 
     this.defaultView = this.availableViews[0]
@@ -42,7 +38,7 @@ class Presenter {
   }
 
   addView (view) {
-    //let view =  new View.View(viewOptions);
+       // let view =  new View.View(viewOptions);
     this.views.push(view)
     this.viewIndex[view.id] = view
   }
@@ -53,13 +49,13 @@ class Presenter {
   }
 
   render () {
-    // Show a default view
+        // Show a default view
     if (this.defaultView) {
       this.defaultView.render(this.viewContainer, this.wordData, this.l10n.messages(this.locale))
       this.activeView = this.defaultView
 
       this.appendViewSelector(this.viewSelectorContainer)
-      //this.appendLocaleSelector(this.localeSelectorContainer);
+            // this.appendLocaleSelector(this.localeSelectorContainer);
     }
     return this
   }
@@ -115,18 +111,20 @@ class Presenter {
   }
 
   localeSelectorEventListener () {
-    let locale = event.target.value
+    let locale = window.event.target.value
     this.setLocale(locale)
   }
 
   getViews (wordData) {
-    // First view in a returned array will be a default one
+        // First view in a returned array will be a default one
     let views = []
     for (let view of this.views) {
-      if (wordData.language === view.language && wordData[Lib.types.part].includes(view.partOfSpeech)) {
+      if (wordData.language === view.language && wordData[Models.Feature.types.part].includes(view.partOfSpeech)) {
         views.push(view)
       }
     }
     return views
   }
 }
+
+export { Presenter }

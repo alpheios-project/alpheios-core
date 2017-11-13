@@ -7,8 +7,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build": "node ./support/rollup/build.js",
+    "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "build": "standard --fix && node ./support/rollup/build.js",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-string": "^2.0.2",
+    "standard": "*",
     "the-answer": "^1.0.0",
     "uuid": "^3.1.0",
     "vue": "^2.5.3",
@@ -64,5 +65,13 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     }
+  },
+  "standard" : {
+    "ignore": [
+      "**/dist",
+      "**/tests",
+      "**/__tests__",
+      "**/tools"
+    ]
   }
 }

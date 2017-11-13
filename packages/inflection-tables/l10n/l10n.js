@@ -1,14 +1,11 @@
-import en_US from './locale/en-us.js'
-import en_GB from './locale/en-gb.js'
+import enUS from './locale/en-us.js'
+import enGB from './locale/en-gb.js'
 import IntlMessageFormat from 'intl-messageformat'
-
-export { MessageBundle, L10n, messages }
 
 /**
  * Combines messages with the same locale code.
  */
 class MessageBundle {
-
   /**
    * Creates a message bundle (a list of messages) for a locale.
    * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
@@ -41,8 +38,7 @@ class MessageBundle {
   get (messageID, options = undefined) {
     if (this[messageID]) {
       return this[messageID].format(options)
-    }
-    else {
+    } else {
       // If message with the ID provided is not in translation data, generate a warning.
       return `Not in translation data: "${messageID}"`
     }
@@ -61,7 +57,6 @@ class MessageBundle {
  * Combines several message bundle for different locales.
  */
 class L10n {
-
   /**
    * Creates an object. If an array of message bundle data is provided, initializes an object with this data.
    * This function is chainable.
@@ -114,6 +109,8 @@ class L10n {
 }
 
 const messages = [
-  new MessageBundle('en-US', en_US),
-  new MessageBundle('en-GB', en_GB)
+  new MessageBundle('en-US', enUS),
+  new MessageBundle('en-GB', enGB)
 ]
+
+export { MessageBundle, L10n, messages }

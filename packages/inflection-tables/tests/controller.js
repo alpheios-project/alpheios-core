@@ -2,6 +2,7 @@
 // Import shared language data
 import * as Lib from '../lib/lib'
 import * as Latin from '../lib/lang/latin/latin'
+import * as Models from 'alpheios-data-models'
 import * as L10n from '../l10n/l10n'
 import * as Styles from '../presenter/styles/styles'
 import * as View from '../presenter/lib/view'
@@ -9,14 +10,13 @@ import * as View from '../presenter/lib/view'
 // Reexport items for Jest
 // Library
 exports.languages = Lib.languages
-exports.types = Lib.types
-exports.Feature = Lib.Feature
-exports.FeatureType = Lib.FeatureType
-exports.Importer = Lib.Importer
-exports.Inflection = Lib.Inflection
-exports.Lemma = Lib.Lemma
-exports.Lexeme = Lib.Lexeme
-exports.Homonym = Lib.Homonym
+exports.Feature = Models.Feature
+exports.FeatureType = Models.FeatureType
+exports.FeatureImporter = Models.FeatureImporter
+exports.Inflection = Models.Inflection
+exports.Lemma = Models.Lemma
+exports.Lexeme = Models.Lexeme
+exports.Homonym = Models.Homonym
 exports.Suffix = Lib.Suffix
 exports.LanguageDataset = Lib.LanguageDataset
 exports.LanguageData = Lib.LanguageData
@@ -26,9 +26,9 @@ exports.ResultSet = Lib.WordData
 
 // L10n
 exports.Latin = {
-  genders: Latin.genders,
-  types: Latin.types,
-  numbers: Latin.numbers
+    // genders: Latin.genders,
+    // types: Latin.types,
+    // numbers: Latin.numbers
 }
 
 // L10n

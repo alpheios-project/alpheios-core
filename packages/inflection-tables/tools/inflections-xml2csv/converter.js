@@ -25,7 +25,6 @@ const latin = {
         let result = []
 
         for (const group of data) {
-
           // Iterate over group's individual items
           for (const suffix of group['infl-ending']) {
             let footnote = ''
@@ -34,15 +33,14 @@ const latin = {
               footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
-              ['Ending']: suffix['_text'],
-              ['Number']: group['_attr']['num']['_value'],
-              ['Case']: group['_attr']['case']['_value'],
-              ['Declension']: group['_attr']['decl']['_value'],
-              ['Gender']: group['_attr']['gend']['_value'],
-              ['Type']: suffix['_attr']['type']['_value'],
-              ['Footnote']: footnote
+              'Ending': suffix['_text'],
+              'Number': group['_attr']['num']['_value'],
+              'Case': group['_attr']['case']['_value'],
+              'Declension': group['_attr']['decl']['_value'],
+              'Gender': group['_attr']['gend']['_value'],
+              'Type': suffix['_attr']['type']['_value'],
+              'Footnote': footnote
             })
-
           }
         }
         return csvParser.unparse(result)
@@ -68,8 +66,8 @@ const latin = {
         // Skip the first item
         for (let i = 1; i < data.length; i++) {
           result.push({
-            ['Index']: this.normalizeIndex(data[i]['_attr'].id['_value']),
-            ['Text']: data[i]['_text']
+            'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+            'Text': data[i]['_text']
           })
         }
         return csvParser.unparse(result)
@@ -92,7 +90,6 @@ const latin = {
         let result = []
 
         for (const group of data) {
-
           // Iterate over group's individual items
           for (const suffix of group['infl-ending']) {
             let footnote = ''
@@ -101,15 +98,14 @@ const latin = {
               footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
-              ['Ending']: suffix['_text'],
-              ['Number']: group['_attr']['num']['_value'],
-              ['Case']: group['_attr']['case']['_value'],
-              ['Declension']: group['_attr']['decl']['_value'],
-              ['Gender']: group['_attr']['gend']['_value'],
-              ['Type']: suffix['_attr']['type']['_value'],
-              ['Footnote']: footnote
+              'Ending': suffix['_text'],
+              'Number': group['_attr']['num']['_value'],
+              'Case': group['_attr']['case']['_value'],
+              'Declension': group['_attr']['decl']['_value'],
+              'Gender': group['_attr']['gend']['_value'],
+              'Type': suffix['_attr']['type']['_value'],
+              'Footnote': footnote
             })
-
           }
         }
         return csvParser.unparse(result)
@@ -135,8 +131,8 @@ const latin = {
         // Skip the first item
         for (let i = 1; i < data.length; i++) {
           result.push({
-            ['Index']: this.normalizeIndex(data[i]['_attr'].id['_value']),
-            ['Text']: data[i]['_text']
+            'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+            'Text': data[i]['_text']
           })
         }
         return csvParser.unparse(result)
@@ -159,7 +155,6 @@ const latin = {
         let result = []
 
         for (const group of data) {
-
           // Iterate over group's individual items
           if (group['infl-ending']) {
             for (const suffix of group['infl-ending']) {
@@ -169,33 +164,30 @@ const latin = {
                 footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
               }
               result.push({
-                ['Ending']: suffix['_text'],
-                ['Conjugation']: group['_attr']['conj']['_value'],
-                ['Voice']: group['_attr']['voice']['_value'],
-                ['Mood']: group['_attr']['mood']['_value'],
-                ['Tense']: group['_attr']['tense']['_value'],
-                ['Number']: group['_attr']['num']['_value'],
-                ['Person']: group['_attr']['pers']['_value'],
-                ['Type']: suffix['_attr']['type']['_value'],
-                ['Footnote']: footnote
+                'Ending': suffix['_text'],
+                'Conjugation': group['_attr']['conj']['_value'],
+                'Voice': group['_attr']['voice']['_value'],
+                'Mood': group['_attr']['mood']['_value'],
+                'Tense': group['_attr']['tense']['_value'],
+                'Number': group['_attr']['num']['_value'],
+                'Person': group['_attr']['pers']['_value'],
+                'Type': suffix['_attr']['type']['_value'],
+                'Footnote': footnote
               })
-
             }
-          }
-          else {
+          } else {
             // There is no ending defined for this group.
             result.push({
-              ['Ending']: '',
-              ['Conjugation']: group['_attr']['conj']['_value'],
-              ['Voice']: group['_attr']['voice']['_value'],
-              ['Mood']: group['_attr']['mood']['_value'],
-              ['Tense']: group['_attr']['tense']['_value'],
-              ['Number']: group['_attr']['num']['_value'],
-              ['Person']: group['_attr']['pers']['_value'],
-              ['Footnote']: ''
+              'Ending': '',
+              'Conjugation': group['_attr']['conj']['_value'],
+              'Voice': group['_attr']['voice']['_value'],
+              'Mood': group['_attr']['mood']['_value'],
+              'Tense': group['_attr']['tense']['_value'],
+              'Number': group['_attr']['num']['_value'],
+              'Person': group['_attr']['pers']['_value'],
+              'Footnote': ''
             })
           }
-
         }
         return csvParser.unparse(result)
       }
@@ -221,8 +213,8 @@ const latin = {
           let text = data[i]['_text']
           text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
           result.push({
-            ['Index']: this.normalizeIndex(data[i]['_attr'].id['_value']),
-            ['Text']: text
+            'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+            'Text': text
           })
         }
         return csvParser.unparse(result)
@@ -250,7 +242,6 @@ const greek = {
         let result = []
 
         for (const group of data) {
-
           // Iterate over group's individual items
           for (const suffix of group['infl-ending']) {
             let type = suffix['_attr']['type']['_value']
@@ -258,16 +249,14 @@ const greek = {
             let typeArray = type.split(' ')
             if (typeArray.length > 2) {
               throw new Error('Type value is expected to contain up to two word.')
-            }
-            else if (typeArray.length > 1) {
+            } else if (typeArray.length > 1) {
               // Array probably contain two values, one of which is 'primary'
               let primaryIndex = typeArray.indexOf('primary')
               if (primaryIndex > -1) {
                 primary = 'primary'
                 typeArray.splice(primaryIndex, 1)
                 type = typeArray[0]
-              }
-              else {
+              } else {
                 throw new Error('Type value is expected to contain up to two words, ' +
                   'one of them should be "primary".')
               }
@@ -279,16 +268,15 @@ const greek = {
               footnote = greek.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
-              ['Ending']: suffix['_text'],
-              ['Number']: group['_attr']['num']['_value'],
-              ['Case']: group['_attr']['case']['_value'],
-              ['Declension']: group['_attr']['decl']['_value'],
-              ['Gender']: group['_attr']['gend']['_value'],
-              ['Type']: type,
-              ['Primary']: primary,
-              ['Footnote']: footnote
+              'Ending': suffix['_text'],
+              'Number': group['_attr']['num']['_value'],
+              'Case': group['_attr']['case']['_value'],
+              'Declension': group['_attr']['decl']['_value'],
+              'Gender': group['_attr']['gend']['_value'],
+              'Type': type,
+              'Primary': primary,
+              'Footnote': footnote
             })
-
           }
         }
         return csvParser.unparse(result)
@@ -312,8 +300,8 @@ const greek = {
 
         for (let i = 0; i < data.length; i++) {
           result.push({
-            ['Index']: this.normalizeIndex(data[i]['_attr'].id['_value']),
-            ['Text']: data[i]['_text']
+            'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+            'Text': data[i]['_text']
           })
         }
         // Sort result according to index number.
@@ -335,9 +323,8 @@ let writeData = function writeData (data, filePath) {
 }
 
 try {
-
   // region Latin
-  /*// Nouns
+  /* // Nouns
   let data = readFile(path.join(__dirname, latin.inputBaseDir, latin.noun.inputFN));
   let json = xmlToJSON.parseString(data);
   writeData(latin.noun.suffixes.get(json), latin.noun.suffixes.outputPath);
@@ -356,7 +343,7 @@ try {
   writeData(latin.verb.suffixes.get(json), latin.verb.suffixes.outputPath);
   // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
   writeData(latin.verb.footnotes.get(json), latin.verb.footnotes.outputPath);
-  // endregion Latin*/
+  // endregion Latin */
 
   // region Greek
   data = readFile(path.join(__dirname, greek.inputBaseDir, greek.noun.inputFN))
@@ -364,8 +351,6 @@ try {
   writeData(greek.noun.suffixes.get(json), greek.noun.suffixes.outputPath)
   writeData(greek.noun.footnotes.get(json), greek.noun.footnotes.outputPath)
   // endregion Greek
-
 } catch (e) {
   console.log('Error:', e.stack)
 }
-
