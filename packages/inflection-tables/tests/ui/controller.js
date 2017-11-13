@@ -7,9 +7,8 @@ let langData = new Lib.LanguageData([Lib.LatinDataSet, Lib.GreekDataSet]).loadDa
 let testCases = [
   {word: 'cupidinibus', value: 'latin_noun_cupidinibus', type: 'noun', language: 'latin'},
   {word: 'mare', value: 'latin_noun_adj_mare', type: 'noun, adjective', language: 'latin'},
-  {word: 'cepit', value: 'latin_verb_cepit', type: 'regular verb', language: 'latin'}
-  // Cannot test this until Greek language model is ready
-  // {word: "φιλόσοφος", value: "greek_noun_pilsopo", type: "noun", language: 'greek'}
+  {word: 'cepit', value: 'latin_verb_cepit', type: 'regular verb', language: 'latin'},
+  {word: 'φιλόσοφος', value: 'greek_noun_pilsopo', type: 'noun', language: 'greek'}
 ]
 let selectList = document.querySelector('#test-selector')
 
@@ -29,7 +28,7 @@ selectList.addEventListener('change', event => {
 
 let show = function show (language, word) {
   let adapterArgs = {
-    engine: {lat: 'whitakerLat'},
+    engine: {lat: 'whitakerLat', grc: 'morpheusgrc'},
     url: 'http://morph.alpheios.net/api/v1/analysis/word?word=r_WORD&engine=r_ENGINE&lang=r_LANG'
   }
   let maAdapter = new AlpheiosTuftsAdapter(adapterArgs) // Morphological analyzer adapter
