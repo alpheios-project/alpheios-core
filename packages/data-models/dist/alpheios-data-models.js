@@ -1192,7 +1192,7 @@ class Lemma {
     }
 
     if (!language) {
-      throw new Error('Langauge should not be empty.')
+      throw new Error('Language should not be empty.')
     }
 
         // if (!languages.isAllowed(language)) {
