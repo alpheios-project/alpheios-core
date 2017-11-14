@@ -1,3 +1,4 @@
+/* eslint-env jest */
 const t = require('../../../tests/test-bundle')
 
 describe('Cell', () => {
@@ -145,12 +146,13 @@ describe('Cell', () => {
 })
 
 describe('RowTitleCell', () => {
-  let groupingFeature, title, groupQty, cell, parentCell, titleColumnQty
+  let groupingFeature, title, groupQty, cell, parentCell, titleColumnQty, latin
 
   beforeAll(() => {
     title = 'Row title'
     titleColumnQty = 2
-    groupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    latin = new t.LatinLanguageModel()
+    groupingFeature = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     groupingFeature.formsColumn = true
     groupingFeature.hasColumnRowTitle = true
     groupingFeature.groupFeatureList = {
@@ -158,7 +160,7 @@ describe('RowTitleCell', () => {
     }
     groupQty = 5
     cell = new t.View.RowTitleCell(title, groupingFeature, groupQty)
-    let parentGroupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    let parentGroupingFeature = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     parentGroupingFeature.groupingFeatureList = {
       titleColumnsQuantity: titleColumnQty
     }
@@ -255,16 +257,17 @@ describe('RowTitleCell', () => {
 })
 
 describe('HeaderCell', () => {
-  let groupingFeature, title, cell, parentCell, childCell, span, parentSpan, childSpan
+  let groupingFeature, title, cell, parentCell, childCell, span, parentSpan, childSpan, latin
 
   beforeAll(() => {
     title = 'Header title'
     span = 2
-    groupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    latin = new t.LatinLanguageModel()
+    groupingFeature = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     groupingFeature.formsColumn = true
     groupingFeature.hasColumnRowTitle = true
     cell = new t.View.HeaderCell(title, groupingFeature, span)
-    let parentGroupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    let parentGroupingFeature = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     parentGroupingFeature.formsColumn = true
     parentSpan = span * 2
     parentCell = new t.View.HeaderCell(title, parentGroupingFeature, parentSpan)
@@ -384,12 +387,13 @@ describe('HeaderCell', () => {
 
 describe('Column', () => {
   let groupingFeature, noMatchCell, emptyCell, suffixMatchCell, headerCell, span, title,
-    noMatchColumn, emptyColumn, suffixMatchColumn
+    noMatchColumn, emptyColumn, suffixMatchColumn, latin
 
   beforeAll(() => {
     title = 'Header title'
     span = 2
-    groupingFeature = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    latin = new t.LatinLanguageModel()
+    groupingFeature = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     groupingFeature.formsColumn = true
     groupingFeature.hasColumnRowTitle = true
     headerCell = new t.View.HeaderCell(title, groupingFeature, span)
@@ -606,7 +610,7 @@ describe('GroupFeatureType', () => {
   beforeAll(() => {
     groupTitle = 'Gender'
     featureType = new t.FeatureType(
-      t.types.gender,
+      t.Feature.types.gender,
       [['masculine', 'feminine'], 'neuter'],
       t.languages.latin)
 
@@ -651,18 +655,19 @@ describe('GroupFeatureType', () => {
 })
 
 describe('GroupFeatureList', () => {
-  let groupingFeatureList, featureOne, featureTwo, featureThree, featureList
+  let groupingFeatureList, featureOne, featureTwo, featureThree, featureList, latin
 
   beforeAll(() => {
-    featureOne = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    latin = new t.LatinLanguageModel()
+    featureOne = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     featureOne.formsColumn = true
 
-    featureTwo = new t.View.GroupingFeature(t.Latin.types, 'Type')
+    featureTwo = new t.View.GroupingFeature(latin.features[t.Feature.types.type], 'Type')
     featureTwo.formsRow = true
     featureTwo.hasColumnRowTitle = true
 
-    featureThree = new t.View.GroupingFeature(t.Latin.numbers, 'Number')
-    featureThree.formsRow
+    featureThree = new t.View.GroupingFeature(latin.features[t.Feature.types.number], 'Number')
+    featureThree.formsRow = true
     featureThree.hasFullWidthRowTitle = true
 
     featureList = [featureOne, featureTwo, featureThree]
@@ -855,21 +860,21 @@ describe('NarrowView', () => {
 })
 
 describe('NarrowViewGroup', () => {
-  let index, visibleColumn, hiddenColumn, columns, rows, headers, titleColumnQty, groupQty, narrowViewGroup
+  // let index, columns, headers, rows, visibleColumn, hiddenColumn, titleColumnQty, groupQty, narrowViewGroup
 
   beforeAll(() => {
-    visibleColumn = new t.View.Column()
-    hiddenColumn = new t.View.Column()
-    hiddenColumn.hidden = true
-    columns = [visibleColumn, hiddenColumn]
-    rows = [new t.View.Row(), new t.View.Row()]
-    headers = [new t.View.Row(), new t.View.Row(), new t.View.Row()]
-    index = 0
-    titleColumnQty = 1
-    groupQty = 1
+    // visibleColumn = new t.View.Column()
+    // hiddenColumn = new t.View.Column()
+    // hiddenColumn.hidden = true
+    // columns = [visibleColumn, hiddenColumn]
+    // rows = [new t.View.Row(), new t.View.Row()]
+    // headers = [new t.View.Row(), new t.View.Row(), new t.View.Row()]
+    // index = 0
+    // titleColumnQty = 1
+    // groupQty = 1
     // narrowViewGroup = new t.View.NarrowViewGroup(index, headers, rows, titleColumnQty);
 
-    let a = 1
+    // let a = 1
   })
 
   /* test('Constructor should initialize object properties.', () => {
@@ -924,7 +929,7 @@ describe('NarrowViewGroup', () => {
   }); */
 
   afterAll(() => {
-    narrowViewGroup = undefined
+    // narrowViewGroup = undefined
   })
 })
 
@@ -935,18 +940,19 @@ describe('NarrowViewGroup', () => {
 describe('Table', () => {
   'use strict'
 
-  let featureOne, featureTwo, featureThree, features, messages, messageBundle, table
+  let featureOne, featureTwo, featureThree, features, messages, messageBundle, table, latin
 
   beforeAll(() => {
-    featureOne = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    latin = new t.LatinLanguageModel()
+    featureOne = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     featureOne.formsColumn = true
 
-    featureTwo = new t.View.GroupingFeature(t.Latin.types, 'Type')
+    featureTwo = new t.View.GroupingFeature(latin.features[t.Feature.types.type], 'Type')
     featureTwo.formsRow = true
     featureTwo.hasColumnRowTitle = true
 
-    featureThree = new t.View.GroupingFeature(t.Latin.numbers, 'Number')
-    featureThree.formsRow
+    featureThree = new t.View.GroupingFeature(latin.features[t.Feature.types.number], 'Number')
+    featureThree.formsRow = true
     featureThree.hasFullWidthRowTitle = true
 
     features = [featureOne, featureTwo, featureThree]
@@ -1002,10 +1008,10 @@ describe('Table', () => {
 
   test('filter() should check whether a feature value matches the one stored in a suffix.', () => {
     let suffix = new t.Suffix('suffixValue', undefined)
-    suffix.features[t.types.gender] = 'neuter'
-    expect(t.View.Table.filter(t.types.gender, 'neuter', suffix)).toBeTruthy()
-    expect(t.View.Table.filter(t.types.gender, 'feminine', suffix)).toBeFalsy()
-    expect(t.View.Table.filter(t.types.tense, 'imperfect', suffix)).toBeFalsy()
+    suffix.features[t.Feature.types.gender] = 'neuter'
+    expect(t.View.Table.filter(t.Feature.types.gender, 'neuter', suffix)).toBeTruthy()
+    expect(t.View.Table.filter(t.Feature.types.gender, 'feminine', suffix)).toBeFalsy()
+    expect(t.View.Table.filter(t.Feature.types.tense, 'imperfect', suffix)).toBeFalsy()
   })
 
   /*
@@ -1152,22 +1158,23 @@ describe('Footnotes', () => {
 
 describe('View', () => {
   let partOfSpeech, featureOne, featureTwo, featureThree, features, messages, messageBundle,
-    footnotes, footnotesList, viewOptions, resultSet, view, word, title, container
+    footnotesList, resultSet, view, word, title, latin
 
   beforeAll(() => {
     partOfSpeech = 'noun'
     title = 'Test Title'
     word = 'Test'
+    latin = new t.LatinLanguageModel()
 
-    featureOne = new t.View.GroupingFeature(t.Latin.genders, 'Gender')
+    featureOne = new t.View.GroupingFeature(latin.features[t.Feature.types.gender], 'Gender')
     featureOne.formsColumn = true
 
-    featureTwo = new t.View.GroupingFeature(t.Latin.types, 'Type')
+    featureTwo = new t.View.GroupingFeature(latin.features[t.Feature.types.type], 'Type')
     featureTwo.formsRow = true
     featureTwo.hasColumnRowTitle = true
 
-    featureThree = new t.View.GroupingFeature(t.Latin.numbers, 'Number')
-    featureThree.formsRow
+    featureThree = new t.View.GroupingFeature(latin.features[t.Feature.types.number], 'Number')
+    featureThree.formsRow = true
     featureThree.hasFullWidthRowTitle = true
 
     features = [featureOne, featureTwo, featureThree]
@@ -1187,7 +1194,7 @@ describe('View', () => {
     messageBundle = new t.L10n.MessageBundle('en-US', messages)
 
     footnotesList = [new t.Footnote(1, 'FootnoteOne'), new t.Footnote(2, 'FootnoteTwo')]
-    footnotes = new t.View.Footnotes(footnotesList)
+    // footnotes = new t.View.Footnotes(footnotesList)
 
     resultSet = new t.ResultSet()
     resultSet.homonym = {targetWord: word}
@@ -1196,7 +1203,7 @@ describe('View', () => {
       footnotes: footnotesList
     }
 
-    container = document.createElement('div')
+    // container = document.createElement('div')
 
     view = new t.View.View()
     view.title = title

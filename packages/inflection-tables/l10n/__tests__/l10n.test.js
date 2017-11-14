@@ -1,3 +1,4 @@
+/* eslint-env jest */
 const t = require('../../tests/test-bundle')
 
 describe('MessageBundle', () => {
@@ -22,13 +23,13 @@ describe('MessageBundle', () => {
 
   test('Constructor should throw an exception if no arguments are provided.', () => {
     expect(() => {
-      new t.L10n.MessageBundle()
+      new t.L10n.MessageBundle() // eslint-disable-line
     }).toThrowError()
   })
 
   test('Constructor should throw an exception if no locale and message data provided.', () => {
     expect(() => {
-      new t.L10n.MessageBundle(localeEnUs)
+      new t.L10n.MessageBundle(localeEnUs) //eslint-disable-line
     }).toThrowError()
   })
 

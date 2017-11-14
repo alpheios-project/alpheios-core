@@ -69,9 +69,8 @@
   "standard": {
     "ignore": [
       "**/dist",
-      "**/tests",
-      "**/__tests__",
-      "**/tools"
+      "**/tools",
+      "**/tests/test-bundle.js"
     ]
   }
 }
