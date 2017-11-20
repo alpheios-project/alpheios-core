@@ -18,6 +18,12 @@ describe('Lexeme object', () => {
   test('Should be initialized properly', () => {
     expect(lexeme.lemma).toEqual(lemma)
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
+    expect(lexeme.meaning).toEqual('')
+  })
+
+  test('meaning gets initialized', () => {
+    let testLex = new Lexeme(lemma, [inflection1], 'shortdef')
+    expect(testLex.meaning).toEqual('shortdef')
   })
 
   test('Should not allow empty arguments', () => {

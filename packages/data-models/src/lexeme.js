@@ -2,7 +2,8 @@ import Lemma from './lemma.js'
 import Inflection from './inflection.js'
 
 /**
- * A basic unit of lexical meaning. Contains a Lemma object and one or more Inflection objects.
+ * A basic unit of lexical meaning. Contains a primary Lemma object, one or more Inflection objects
+ * and optional alternate Lemmas
  */
 class Lexeme {
     /**

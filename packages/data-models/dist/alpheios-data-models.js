@@ -1185,8 +1185,9 @@ class Lemma {
      * Initializes a Lemma object.
      * @param {string} word - A word.
      * @param {string} language - A language of a word.
+     * @param {Array[string]} principalParts - the principalParts of a lemma
      */
-  constructor (word, language) {
+  constructor (word, language, principalParts = []) {
     if (!word) {
       throw new Error('Word should not be empty.')
     }
@@ -1201,6 +1202,7 @@ class Lemma {
 
     this.word = word;
     this.language = language;
+    this.principalParts = principalParts;
   }
 
   static readObject (jsonObject) {
@@ -1309,7 +1311,8 @@ class Inflection {
 }
 
 /**
- * A basic unit of lexical meaning. Contains a Lemma object and one or more Inflection objects.
+ * A basic unit of lexical meaning. Contains a primary Lemma object, one or more Inflection objects
+ * and optional alternate Lemmas
  */
 class Lexeme {
     /**

@@ -1,19 +1,27 @@
 /* eslint-env jest */
 import Lemma from '../src/lemma.js'
 describe('Lemma object', () => {
-  let lemma, word
+  let lemma, word, lemmaWithParts
 
   beforeAll(() => {
     // Create a test environment
 
     word = 'someword'
     lemma = new Lemma(word, 'lat')
+    lemmaWithParts = new Lemma(word, 'lat', ['part1', 'part2'])
   })
 
   test('Should be initialized properly', () => {
     expect(lemma).toEqual({
       word: word,
-      language: 'lat'
+      language: 'lat',
+      principalParts: []
+    })
+    expect(lemmaWithParts).toEqual({
+      word: word,
+      language: 'lat',
+      principalParts: ['part1', 'part2']
+
     })
   })
 
