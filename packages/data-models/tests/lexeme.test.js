@@ -2,6 +2,7 @@
 import Lexeme from '../src/lexeme.js'
 import Lemma from '../src/lemma.js'
 import Inflection from '../src/inflection.js'
+import Definition from '../src/definition.js'
 
 describe('Lexeme object', () => {
   let lexeme, lemma, inflection1, inflection2
@@ -18,12 +19,13 @@ describe('Lexeme object', () => {
   test('Should be initialized properly', () => {
     expect(lexeme.lemma).toEqual(lemma)
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
-    expect(lexeme.meaning).toEqual('')
+    expect(lexeme.meaning).toBeNull()
   })
 
   test('meaning gets initialized', () => {
-    let testLex = new Lexeme(lemma, [inflection1], 'shortdef')
-    expect(testLex.meaning).toEqual('shortdef')
+    let def = new Definition('shortdef', 'eng', 'text/plain')
+    let testLex = new Lexeme(lemma, [inflection1], def)
+    expect(testLex.meaning).toEqual(def)
   })
 
   test('Should not allow empty arguments', () => {

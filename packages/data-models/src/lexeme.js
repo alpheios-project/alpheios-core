@@ -10,9 +10,9 @@ class Lexeme {
      * Initializes a Lexeme object.
      * @param {Lemma} lemma - A lemma object.
      * @param {Inflection[]} inflections - An array of inflections.
-     * @param {string} meaning - a short definition
+     * @param {Definition} meaning - a short definition
      */
-  constructor (lemma, inflections, meaning = '') {
+  constructor (lemma, inflections, meaning = null) {
     if (!lemma) {
       throw new Error('Lemma should not be empty.')
     }

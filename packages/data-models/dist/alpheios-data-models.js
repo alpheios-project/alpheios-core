@@ -400,6 +400,14 @@ var constants = Object.freeze({
 	TYPE_REGULAR: TYPE_REGULAR
 });
 
+class Definition {
+  constructor (text, language, format) {
+    this.text = text;
+    this.language = language;
+    this.format = format;
+  }
+}
+
 /**
  * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
  */
@@ -1319,9 +1327,9 @@ class Lexeme {
      * Initializes a Lexeme object.
      * @param {Lemma} lemma - A lemma object.
      * @param {Inflection[]} inflections - An array of inflections.
-     * @param {string} meaning - a short definition
+     * @param {Definition} meaning - a short definition
      */
-  constructor (lemma, inflections, meaning = '') {
+  constructor (lemma, inflections, meaning = null) {
     if (!lemma) {
       throw new Error('Lemma should not be empty.')
     }
@@ -1414,5 +1422,48 @@ class Homonym {
   }
 }
 
-export { constants as Constants, Feature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel };
+/**
+ * An abstraction of an Alpheios resource provider
+ */
+class ResourceProvider {
+  /**
+   * @constructor
+   * @param {string} uri - a unique resource identifier for this provider
+   * @param {string} rights - rights text
+   * @param {Map} rightsTranslations - optional map of translated rights text - keys should be language of text, values the text
+   */
+  constructor (uri = '', rights = '', rightsTranslations = new Map([['default', rights]])) {
+    this.uri = uri;
+    this.rights = rightsTranslations;
+    if (!this.rights.has('default')) {
+      this.rights.set('default', rights);
+    }
+  }
+
+  /**
+   * @return a string representation of the resource provider, in the default language
+   */
+  toString () {
+    return this.rights.get('default')
+  }
+
+  /**
+   * Produce a string representation of the resource provider, in the requested locale if available
+   * @param {string} languageCode
+   * @return a string representation of the resource provider, in the requested locale if available
+   */
+  toLocaleString (languageCode) {
+    return this.rights.get(languageCode) || this.rights.get('default')
+  }
+
+  static getProxy (provider = null, target = {}) {
+    return new Proxy(target, {
+      get: function (target, name) {
+        return name === 'provider' ? provider : target[name]
+      }
+    })
+  }
+}
+
+export { constants as Constants, Definition, Feature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, ResourceProvider };
 //# sourceMappingURL=alpheios-data-models.js.map
