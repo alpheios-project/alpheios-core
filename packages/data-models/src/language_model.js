@@ -112,6 +112,18 @@ class LanguageModel {
   }
 
   /**
+   * Return alternate encodings for a word
+   * @param {string} word the word
+   * @param {string} preceding optional preceding word
+   * @param {string} following optional following word
+   * @param {string} encoding optional encoding name to filter the response to
+   * @returns an array of alternate encodinges
+   */
+  alternateEncodings (word, preceding = null, folloiwng = null, encoding = null) {
+    return []
+  }
+
+  /**
    * Get a list of valid puncutation for this language
    * @returns {String} a string containing valid puncutation symbols
    */

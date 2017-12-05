@@ -36,15 +36,34 @@ class ArabicLanguageModel extends LanguageModel {
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
-   * @param {String} word the source word
-   * @returns the normalized form of the word (default version just returns the same word,
-   *          override in language-specific subclass)
-   * @type String
+   * @override LanguageModel#alternateWordEncodings
    */
-  normalizeWord (word) {
-    // TODO
-    return word
+  alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+    // tanwin (& tatweel) - drop FATHATAN, DAMMATAN, KASRATAN, TATWEEL
+    let tanwin = word.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, '')
+    // hamzas - replace ALEF WITH MADDA ABOVE, ALEF WITH HAMZA ABOVE/BELOW with ALEF
+    let hamza = tanwin.replace(/[\u{0622}\u{0623}\u{0625}]/ug, '\u{0627}')
+    // harakat - drop FATHA, DAMMA, KASRA, SUPERSCRIPT ALEF, ALEF WASLA
+    let harakat = hamza.replace(/[\u{064E}\u{064F}\u{0650}\u{0670}\u{0671}]/ug, '')
+    // shadda
+    let shadda = harakat.replace(/\u{0651}/ug, '')
+    // sukun
+    let sukun = shadda.replace(/\u{0652}/ug, '')
+    // alef
+    let alef = sukun.replace(/\u{0627}/ug, '')
+    let alternates = new Map([
+      ['tanwin', tanwin],
+      ['hamza', hamza],
+      ['harakat', harakat],
+      ['shadda', shadda],
+      ['sukun', sukun],
+      ['alef', alef]
+    ])
+    if (encoding !== null && alternates.has(encoding)) {
+      return [alternates.get(encoding)]
+    } else {
+      return Array.from(alternates.values())
+    }
   }
 
   /**

@@ -80,7 +80,55 @@ class GreekLanguageModel extends LanguageModel {
    * @type String
    */
   normalizeWord (word) {
-    return word
+    // we normalize greek to NFC - Normalization Form Canonical Composition
+    return word.normalize('NFC')
+  }
+
+  /**
+   * @override LanguageModel#alternateWordEncodings
+   */
+  alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+    // the original alpheios code used the following normalizations
+    // 1. When looking up a lemma
+    //    stripped vowel length
+    //    stripped caps
+    //    then if failed, tried again with out these
+    // 2. when adding to a word list
+    //    precombined unicode (vowel length/diacritics preserved)
+    // 2. When looking up a verb in the verb paradigm tables
+    //    it set e_normalize to false, otherwise it was true...
+    // make sure it's normalized to NFC and in lower case
+    let normalized = this.normalizeWord(word).toLocaleLowerCase()
+    let strippedVowelLength = normalized.replace(
+      /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
+      /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(
+      /[\u{1FD0}\u{1FD1}]/ug, '\u{03B9}').replace(
+      /[\u{1FD8}\u{1FD9}]/ug, '\u{0399}').replace(
+      /[\u{1FE0}\u{1FE1}]/ug, '\u{03C5}').replace(
+      /[\u{1FE8}\u{1FE9}]/ug, '\u{03A5}').replace(
+      /[\u{00AF}\u{0304}\u{0306}]/ug, '')
+    let strippedDiaeresis = normalized.replace(
+      /\u{0390}/ug, '\u{03AF}').replace(
+      /\u{03AA}/ug, '\u{0399}').replace(
+      /\u{03AB}/ug, '\u{03A5}').replace(
+      /\u{03B0}/ug, '\u{03CD}').replace(
+      /\u{03CA}/ug, '\u{03B9}').replace(
+      /\u{03CB}/ug, '\u{03C5}').replace(
+      /\u{1FD2}/ug, '\u{1F76}').replace(
+      /\u{1FD3}/ug, '\u{1F77}').replace(
+      /\u{1FD7}/ug, '\u{1FD6}').replace(
+      /\u{1FE2}/ug, '\u{1F7A}').replace(
+      /\u{1FE3}/ug, '\u{1F7B}').replace(
+      /\u{1FE7}/ug, '\u{1FE6}').replace(
+      /\u{1FC1}/ug, '\u{1FC0}').replace(
+      /\u{1FED}/ug, '\u{1FEF}').replace(
+      /\u{1FEE}/ug, '\u{1FFD}').replace(
+      /[\u{00A8}\u{0308}]/ug, '')
+    if (encoding === 'strippedDiaeresis') {
+      return [strippedDiaeresis]
+    } else {
+      return [strippedVowelLength]
+    }
   }
 
   /**
