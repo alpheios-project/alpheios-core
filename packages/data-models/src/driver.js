@@ -13,6 +13,7 @@ import Inflection from './inflection.js'
 import LatinLanguageModel from './latin_language_model.js'
 import GreekLanguageModel from './greek_language_model.js'
 import ArabicLanguageModel from './arabic_language_model.js'
+import PersianLanguageModel from './persian_language_model.js'
 import ResourceProvider from './resource_provider.js'
 export {
   Constants,
@@ -29,4 +30,5 @@ export {
   LatinLanguageModel,
   GreekLanguageModel,
   ArabicLanguageModel,
+  PersianLanguageModel,
   ResourceProvider }
