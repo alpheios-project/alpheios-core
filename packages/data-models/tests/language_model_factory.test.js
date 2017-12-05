@@ -4,6 +4,7 @@ import LanguageModelFactory from '../src/language_model_factory.js'
 import LatinLanguageModel from '../src/latin_language_model.js'
 import GreekLanguageModel from '../src/greek_language_model.js'
 import ArabicLanguageModel from '../src/arabic_language_model.js'
+import PersianLanguageModel from '../src/persian_language_model.js'
 import LanguageModel from '../src/language_model.js'
 
 describe('LanguageModelFactory object', () => {
@@ -25,6 +26,11 @@ describe('LanguageModelFactory object', () => {
   test('Should return an Arabic model', () => {
     let model = LanguageModelFactory.getLanguageForCode('ara')
     expect(model instanceof ArabicLanguageModel).toBeTruthy()
+  })
+
+  test('Should return a Persian model', () => {
+    let model = LanguageModelFactory.getLanguageForCode('per')
+    expect(model instanceof PersianLanguageModel).toBeTruthy()
   })
 
   test('Should return a Base model', () => {

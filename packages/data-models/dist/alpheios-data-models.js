@@ -1240,12 +1240,57 @@ class ArabicLanguageModel extends LanguageModel {
   }
 }
 
+/**
+ * @class  PersianLanguageModel is the lass for Persian specific behavior
+ */
+class PersianLanguageModel extends LanguageModel {
+   /**
+   * @constructor
+   */
+  constructor () {
+    super();
+    this.sourceLanguage = LANG_PERSIAN;
+    this.contextForward = 0;
+    this.contextBackward = 0;
+    this.direction = LANG_DIR_RTL;
+    this.baseUnit = LANG_UNIT_WORD;
+    this.languageCodes = [STR_LANG_CODE_PER, STR_LANG_CODE_FAR];
+    this._initializeFeatures();
+  }
+
+  _initializeFeatures () {
+    this.features = super._initializeFeatures();
+  }
+
+  toCode () {
+    return STR_LANG_CODE_PER
+  }
+
+  /**
+   * Check to see if this language tool can produce an inflection table display
+   * for the current node
+   */
+  canInflect (node) {
+    return false
+  }
+
+  /**
+   * Get a list of valid puncutation for this language
+   * @returns {String} a string containing valid puncutation symbols
+   */
+  getPunctuation () {
+    return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r"
+  }
+}
+
 const MODELS = new Map([
   [ STR_LANG_CODE_LA, LatinLanguageModel ],
   [ STR_LANG_CODE_LAT, LatinLanguageModel ],
   [ STR_LANG_CODE_GRC, GreekLanguageModel ],
   [ STR_LANG_CODE_ARA, ArabicLanguageModel ],
-  [ STR_LANG_CODE_AR, ArabicLanguageModel ]
+  [ STR_LANG_CODE_AR, ArabicLanguageModel ],
+  [ STR_LANG_CODE_PER, PersianLanguageModel ],
+  [ STR_LANG_CODE_FAR, PersianLanguageModel ]
 ]);
 
 class LanguageModelFactory {
@@ -1498,49 +1543,6 @@ class Homonym {
     } else {
       throw new Error('Homonym has not been initialized properly. Unable to obtain language information.')
     }
-  }
-}
-
-/**
- * @class  PersianLanguageModel is the lass for Persian specific behavior
- */
-class PersianLanguageModel extends LanguageModel {
-   /**
-   * @constructor
-   */
-  constructor () {
-    super();
-    this.sourceLanguage = LANG_PERSIAN;
-    this.contextForward = 0;
-    this.contextBackward = 0;
-    this.direction = LANG_DIR_RTL;
-    this.baseUnit = LANG_UNIT_WORD;
-    this.languageCodes = [STR_LANG_CODE_PER, STR_LANG_CODE_FAR];
-    this._initializeFeatures();
-  }
-
-  _initializeFeatures () {
-    this.features = super._initializeFeatures();
-  }
-
-  toCode () {
-    return STR_LANG_CODE_PER
-  }
-
-  /**
-   * Check to see if this language tool can produce an inflection table display
-   * for the current node
-   */
-  canInflect (node) {
-    return false
-  }
-
-  /**
-   * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
-   */
-  getPunctuation () {
-    return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r"
   }
 }
 
