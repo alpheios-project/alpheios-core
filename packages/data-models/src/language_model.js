@@ -119,7 +119,7 @@ class LanguageModel {
    * @param {string} encoding optional encoding name to filter the response to
    * @returns an array of alternate encodinges
    */
-  alternateEncodings (word, preceding = null, folloiwng = null, encoding = null) {
+  alternateWordEncodings (word, preceding = null, folloiwng = null, encoding = null) {
     return []
   }
 
