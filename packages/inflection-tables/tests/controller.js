@@ -21,7 +21,7 @@ exports.LanguageDataset = Lib.LanguageDataset
 exports.LanguageData = Lib.LanguageData
 exports.MatchData = Lib.MatchData
 exports.Footnote = Lib.Footnote
-exports.ResultSet = Lib.WordData
+exports.ResultSet = Lib.LexicalData
 
 // L10n
 exports.LatinLanguageModel = Models.LatinLanguageModel

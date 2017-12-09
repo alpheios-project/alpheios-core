@@ -119,7 +119,7 @@ class LanguageDataset {
 
   getSuffixes (homonym) {
         // Add support for languages
-    let result = new WordData(homonym)
+    let result = new LexicalData(homonym)
     let inflections = {}
 
         // Find partial matches first, and then full among them
@@ -226,7 +226,7 @@ class LanguageData {
     /**
      * Finds matching suffixes for a homonym.
      * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
-     * @return {WordData} A return value of an inflection query.
+     * @return {LexicalData} A return value of an inflection query.
      */
   getSuffixes (homonym) {
     let language = homonym.language
@@ -603,40 +603,38 @@ class SelectedWord {
 /**
  * A return value for inflection queries
  */
-class WordData {
+class LexicalData {
   constructor (homonym) {
     this.homonym = homonym
-    this.definition = undefined
     this[Models.Feature.types.part] = [] // What parts of speech are represented by this object.
   }
 
   static readObject (jsonObject) {
     let homonym = Models.Homonym.readObject(jsonObject.homonym)
 
-    let wordData = new WordData(homonym)
-    wordData.definition = jsonObject.definition
-    wordData[Models.Feature.types.part] = jsonObject[Models.Feature.types.part]
+    let lexicalData = new LexicalData(homonym)
+    lexicalData[Models.Feature.types.part] = jsonObject[Models.Feature.types.part]
 
-    for (let part of wordData[Models.Feature.types.part]) {
+    for (let part of lexicalData[Models.Feature.types.part]) {
       let partData = jsonObject[part]
-      wordData[part] = {}
+      lexicalData[part] = {}
 
       if (partData.suffixes) {
-        wordData[part].suffixes = []
+        lexicalData[part].suffixes = []
         for (let suffix of partData.suffixes) {
-          wordData[part].suffixes.push(Suffix.readObject(suffix))
+          lexicalData[part].suffixes.push(Suffix.readObject(suffix))
         }
       }
 
       if (partData.footnotes) {
-        wordData[part].footnotes = []
+        lexicalData[part].footnotes = []
         for (let footnote of partData.footnotes) {
-          wordData[part].footnotes.push(Footnote.readObject(footnote))
+          lexicalData[part].footnotes.push(Footnote.readObject(footnote))
         }
       }
     }
 
-    return wordData
+    return lexicalData
   }
 
   get word () {
@@ -669,4 +667,4 @@ let loadData = function loadData (filePath) {
   })
 }
 
-export {languages, LanguageDataset, LanguageData, Suffix, Footnote, MatchData, ExtendedLanguageData, ExtendedGreekData, WordData, loadData, SelectedWord}
+export {languages, LanguageDataset, LanguageData, Suffix, Footnote, MatchData, ExtendedLanguageData, ExtendedGreekData, LexicalData, loadData, SelectedWord}

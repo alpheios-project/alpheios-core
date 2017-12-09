@@ -2,13 +2,14 @@
   "name": "alpheios-inflection-tables",
   "version": "0.1.0",
   "description": "Inflection library for an Alpheios project",
-  "main": "dist/inflection-tables.js",
+  "main": "dist/inflection-tables.standalone.js",
+  "moduleExternal": "dist/inflection-tables.module-external.js",
   "directories": {
     "doc": "doc"
   },
   "scripts": {
     "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build": "standard --fix && node ./support/rollup/build.js",
+    "build": "standard --fix && node ./build/rollup/build.js",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
   "repository": {

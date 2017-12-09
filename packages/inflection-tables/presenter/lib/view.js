@@ -1567,7 +1567,7 @@ class View {
      * Converts a WordData, returned from inflection tables library, into an HTML representation of an inflection table
      * and inserts that HTML into a `container` HTML element. `messages` provides a translation for view's texts.
      * @param {HTMLElement} container - An HTML element where this view will be inserted.
-     * @param {WordData} wordData - A result set from inflection tables library.
+     * @param {LexicalData} wordData - A result set from inflection tables library.
      * @param {MessageBundle} messages - A message bundle with message translations.
      */
   render (container, wordData, messages) {

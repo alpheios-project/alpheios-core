@@ -20,7 +20,7 @@ const defaultPlugins = [
   })
 ]
 
-// Regular bundle
+// Standalone bundle
 rollup.rollup({
   entry: 'index.js',
   moduleName: 'InflectionTables',
@@ -28,8 +28,25 @@ rollup.rollup({
 }).then(bundle => {
   bundle.write({
     format: 'es',
-    dest: 'dist/inflection-tables.js',
+    dest: 'dist/inflection-tables.standalone.js',
     sourceMap: true
+  })
+}).catch(reason => {
+  'use strict'
+  console.error(reason)
+})
+
+// Module bundle
+rollup.rollup({
+  entry: 'index.js',
+  external: ['alpheios-data-models'],
+  moduleName: 'InflectionTables',
+  plugins: defaultPlugins
+}).then(bundle => {
+  bundle.write({
+    format: 'es',
+    dest: 'dist/inflection-tables.module-external.js',
+    sourceMap: false
   })
 }).catch(reason => {
   'use strict'
