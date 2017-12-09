@@ -1,6 +1,7 @@
 'use strict'
 import * as Constants from './constants.js'
 import Definition from './definition.js'
+import DefinitionSet from './definition-set'
 import Feature from './feature.js'
 import FeatureType from './feature_type.js'
 import FeatureList from './feature_list.js'
@@ -18,6 +19,7 @@ import ResourceProvider from './resource_provider.js'
 export {
   Constants,
   Definition,
+  DefinitionSet,
   Feature,
   FeatureType,
   FeatureList,

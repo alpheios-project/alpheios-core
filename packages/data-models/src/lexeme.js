@@ -1,5 +1,6 @@
 import Lemma from './lemma.js'
 import Inflection from './inflection.js'
+import DefinitionSet from './definition-set'
 
 /**
  * A basic unit of lexical meaning. Contains a primary Lemma object, one or more Inflection objects
@@ -10,7 +11,7 @@ class Lexeme {
      * Initializes a Lexeme object.
      * @param {Lemma} lemma - A lemma object.
      * @param {Inflection[]} inflections - An array of inflections.
-     * @param {Definition} meaning - a short definition
+     * @param {DefinitionSet} meaning - A set of definitions.
      */
   constructor (lemma, inflections, meaning = null) {
     if (!lemma) {
@@ -37,7 +38,7 @@ class Lexeme {
 
     this.lemma = lemma
     this.inflections = inflections
-    this.meaning = meaning
+    this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID)
   }
 
   static readObject (jsonObject) {
@@ -46,7 +47,10 @@ class Lexeme {
     for (let inflection of jsonObject.inflections) {
       inflections.push(Inflection.readObject(inflection))
     }
-    return new Lexeme(lemma, inflections)
+
+    let lexeme = new Lexeme(lemma, inflections)
+    lexeme.meaning = DefinitionSet.readObject(jsonObject.meaning)
+    return lexeme
   }
 }
 export default Lexeme

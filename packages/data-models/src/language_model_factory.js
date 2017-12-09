@@ -29,5 +29,31 @@ class LanguageModelFactory {
     // TODO may want to throw an error
     return new LanguageModel()
   }
+
+  /**
+   * Converts an ISO 639-3 language code to a language ID
+   * @param {String} languageCode - An ISO 639-3 language code
+   * @return {Symbol | undefined} A language ID or undefined if language ID is not found
+   */
+  static getLanguageIdFromCode (languageCode) {
+    for (const languageModel of MODELS.values()) {
+      if (languageModel.hasCode(languageCode)) {
+        return languageModel.sourceLanguage
+      }
+    }
+  }
+
+  /**
+   * Converts a language ID to an default ISO 639-3 language code for that language
+   * @param {Symbol} languageID - A language ID
+   * @return {String | undefined} An ISO 639-3 language code or undefined if language code is not found
+   */
+  static getLanguageCodeFromId (languageID) {
+    for (const languageModel of MODELS.values()) {
+      if (languageModel.sourceLanguage === languageID) {
+        return languageModel.toCode()
+      }
+    }
+  }
 }
 export default LanguageModelFactory

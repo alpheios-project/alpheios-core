@@ -10,12 +10,12 @@ class PersianLanguageModel extends LanguageModel {
    */
   constructor () {
     super()
-    this.sourceLanguage = Constants.LANG_PERSIAN
+    this.sourceLanguage = PersianLanguageModel.sourceLanguage
     this.contextForward = 0
     this.contextBackward = 0
     this.direction = Constants.LANG_DIR_RTL
     this.baseUnit = Constants.LANG_UNIT_WORD
-    this.languageCodes = [Constants.STR_LANG_CODE_PER, Constants.STR_LANG_CODE_FAR]
+    this.languageCodes = PersianLanguageModel.codes
     this._initializeFeatures()
   }
 
@@ -23,8 +23,30 @@ class PersianLanguageModel extends LanguageModel {
     this.features = super._initializeFeatures()
   }
 
+  static get sourceLanguage () {
+    return Constants.LANG_PERSIAN
+  }
+
+  static get codes () {
+    return [Constants.STR_LANG_CODE_PER, Constants.STR_LANG_CODE_FAR]
+  }
+
+  // For compatibility with existing code, can be replaced with a static version
   toCode () {
+    return PersianLanguageModel.toCode()
+  }
+
+  static toCode () {
     return Constants.STR_LANG_CODE_PER
+  }
+
+  /**
+   * Checks wither a language has a particular language code in its list of codes
+   * @param {String} languageCode - A language code to check
+   * @return {boolean} Wither this language code exists in a language code list
+   */
+  static hasCode (languageCode) {
+    return LanguageModel.hasCodeInList(languageCode, PersianLanguageModel.codes)
   }
 
   /**

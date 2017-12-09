@@ -16,10 +16,15 @@ describe('Lexeme object', () => {
     lexeme = new Lexeme(lemma, [inflection1, inflection2])
   })
 
-  test('Should be initialized properly', () => {
+  test.only('Should be initialized properly', () => {
     expect(lexeme.lemma).toEqual(lemma)
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
-    expect(lexeme.meaning).toBeNull()
+    expect(lexeme.meaning).toMatchObject({
+      languageID: expect.anything(),
+      lemmaWord: 'word',
+      shortDefs: [],
+      fullDefs: []
+    })
   })
 
   test('meaning gets initialized', () => {

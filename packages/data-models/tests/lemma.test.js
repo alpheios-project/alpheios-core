@@ -15,11 +15,15 @@ describe('Lemma object', () => {
     expect(lemma).toEqual({
       word: word,
       language: 'lat',
+      languageCode: 'lat',
+      languageID: expect.anything(),
       principalParts: []
     })
     expect(lemmaWithParts).toEqual({
       word: word,
       language: 'lat',
+      languageCode: 'lat',
+      languageID: expect.anything(),
       principalParts: ['part1', 'part2']
 
     })

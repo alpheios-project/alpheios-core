@@ -22,10 +22,10 @@
   },
   "homepage": "https://github.com/alpheios-project/data-models#readme",
   "devDependencies": {
+    "babel-jest": "^21.2.0",
     "babel-preset-es2015": "^6.24.1",
     "intl-messageformat": "^2.1.0",
     "jest": "^21.2.1",
-    "babel-jest": "^21.2.0",
     "jest-environment-jsdom-11.0.0": "^20.0.9",
     "rollup": "^0.47.6",
     "rollup-plugin-commonjs": "^8.2.1",

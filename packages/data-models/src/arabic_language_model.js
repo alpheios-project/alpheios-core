@@ -10,12 +10,12 @@ class ArabicLanguageModel extends LanguageModel {
    */
   constructor () {
     super()
-    this.sourceLanguage = Constants.LANG_ARABIC
+    this.sourceLanguage = ArabicLanguageModel.sourceLanguage
     this.contextForward = 0
     this.contextBackward = 0
     this.direction = Constants.LANG_DIR_RTL
     this.baseUnit = Constants.LANG_UNIT_WORD
-    this.languageCodes = [Constants.STR_LANG_CODE_ARA, Constants.STR_LANG_CODE_AR]
+    this.languageCodes = ArabicLanguageModel.codes
     this._initializeFeatures()
   }
 
@@ -23,8 +23,30 @@ class ArabicLanguageModel extends LanguageModel {
     this.features = super._initializeFeatures()
   }
 
+  static get sourceLanguage () {
+    return Constants.LANG_ARABIC
+  }
+
+  static get codes () {
+    return [Constants.STR_LANG_CODE_ARA, Constants.STR_LANG_CODE_AR]
+  }
+
+  // For compatibility with existing code, can be replaced with a static version
   toCode () {
+    return ArabicLanguageModel.toCode()
+  }
+
+  static toCode () {
     return Constants.STR_LANG_CODE_ARA
+  }
+
+  /**
+   * Checks wither a language has a particular language code in its list of codes
+   * @param {String} languageCode - A language code to check
+   * @return {boolean} Wither this language code exists in a language code list
+   */
+  static hasCode (languageCode) {
+    return LanguageModel.hasCodeInList(languageCode, ArabicLanguageModel.codes)
   }
 
   /**

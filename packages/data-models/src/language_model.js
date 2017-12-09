@@ -142,6 +142,53 @@ class LanguageModel {
   toCode () {
     return null
   }
+
+  /*
+  There are two types of language identificators: language IDs and language code. Language ID is a symbol constant
+  defined in constants.js, such as LANG_LATIN or LANG_GREEK. Language code is a string containing (usually)
+  a three-letter language codes such as 'lat' or 'la' for latin. There can be multiple language codes that identify
+  the same language, but there is only one unique language ID for each language.
+   */
+
+  /**
+   * Returns an array of language codes that represents the language.
+   * @return {String[]} An array of language codes that matches the language.
+   */
+  static get codes () {
+    return []
+  }
+
+  /**
+   * Checks wither a language has a particular language code in its list of codes
+   * @param {String} languageCode - A language code to check
+   * @param {String[]} codes - Array of language codes a specific language has
+   * @return {boolean} Wither this language code exists in a language code list
+   */
+  static hasCodeInList (languageCode, codes) {
+    if (LanguageModel.isLanguageCode(languageCode)) {
+      return codes.includes(languageCode)
+    } else {
+      throw new Error(`Format of a "${languageCode}" is incorrect`)
+    }
+  }
+
+  /**
+   * Tests wither a provided language identificator is a language ID.
+   * @param {Symbol | string} language - A language identificator, either a Symbol or a string language code.
+   * @return {boolean} True if language identificator provided is a language ID.
+   */
+  static isLanguageID (language) {
+    return (typeof language === 'symbol')
+  }
+
+  /**
+   * Tests wither a provided language identificator is a language code.
+   * @param {Symbol | string} language - A language identificator, either a Symbol or a string language code.
+   * @return {boolean} - True if language identificator provided is a language code.
+   */
+  static isLanguageCode (language) {
+    return !LanguageModel.isLanguageID(language)
+  }
 }
 
 export default LanguageModel

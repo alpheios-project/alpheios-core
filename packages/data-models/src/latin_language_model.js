@@ -10,13 +10,30 @@ class LatinLanguageModel extends LanguageModel {
    */
   constructor () {
     super()
-    this.sourceLanguage = Constants.LANG_LATIN
+    this.sourceLanguage = LatinLanguageModel.sourceLanguage // For compatibility, should use a static method instead
     this.contextForward = 0
     this.contextBackward = 0
     this.direction = Constants.LANG_DIR_LTR
     this.baseUnit = Constants.LANG_UNIT_WORD
-    this.codes = [Constants.STR_LANG_CODE_LA, Constants.STR_LANG_CODE_LAT]
+    this.codes = LatinLanguageModel.codes // To keep compatibility with existing code
     this.features = this._initializeFeatures()
+  }
+
+  static get sourceLanguage () {
+    return Constants.LANG_LATIN
+  }
+
+  static get codes () {
+    return [Constants.STR_LANG_CODE_LA, Constants.STR_LANG_CODE_LAT]
+  }
+
+  /**
+   * Checks wither a language has a particular language code in its list of codes
+   * @param {String} languageCode - A language code to check
+   * @return {boolean} Wither this language code exists in a language code list
+   */
+  static hasCode (languageCode) {
+    return LanguageModel.hasCodeInList(languageCode, LatinLanguageModel.codes)
   }
 
   _initializeFeatures () {
@@ -80,7 +97,12 @@ class LatinLanguageModel extends LanguageModel {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r"
   }
 
+  // For compatibility with existing code, can be replaced with a static version
   toCode () {
+    return LatinLanguageModel.toCode()
+  }
+
+  static toCode () {
     return Constants.STR_LANG_CODE_LAT
   }
 }

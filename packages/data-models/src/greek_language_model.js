@@ -12,12 +12,12 @@ class GreekLanguageModel extends LanguageModel {
    */
   constructor () {
     super()
-    this.sourceLanguage = Constants.LANG_GREEK
+    this.sourceLanguage = GreekLanguageModel.sourceLanguage
     this.contextForward = 0
     this.contextBackward = 0
     this.direction = Constants.LANG_DIR_LTR
     this.baseUnit = Constants.LANG_UNIT_WORD
-    this.languageCodes = [Constants.STR_LANG_CODE_GRC]
+    this.languageCodes = GreekLanguageModel.codes
     this.features = this._initializeFeatures()
   }
 
@@ -60,7 +60,29 @@ class GreekLanguageModel extends LanguageModel {
     return features
   }
 
+  static get sourceLanguage () {
+    return Constants.LANG_GREEK
+  }
+
+  static get codes () {
+    return [Constants.STR_LANG_CODE_GRC]
+  }
+
+  /**
+   * Checks wither a language has a particular language code in its list of codes
+   * @param {String} languageCode - A language code to check
+   * @return {boolean} Wither this language code exists in a language code list
+   */
+  static hasCode (languageCode) {
+    return LanguageModel.hasCodeInList(languageCode, GreekLanguageModel.codes)
+  }
+
+  // For compatibility with existing code, can be replaced with a static version
   toCode () {
+    return GreekLanguageModel.toCode()
+  }
+
+  static toCode () {
     return Constants.STR_LANG_CODE_GRC
   }
 
