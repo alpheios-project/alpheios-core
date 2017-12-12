@@ -233,7 +233,8 @@ class LanguageData {
     if (this.supportedLanguages.includes(language)) {
       return this[homonym.language].getSuffixes(homonym)
     } else {
-      throw new Error(`"${language}" language data is missing. Unable to get suffix data.`)
+      // throw new Error(`"${language}" language data is missing. Unable to get suffix data.`)
+      return new LexicalData(homonym)
     }
   }
 }
