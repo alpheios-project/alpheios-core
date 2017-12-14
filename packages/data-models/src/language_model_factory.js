@@ -11,8 +11,7 @@ const MODELS = new Map([
   [ Constants.STR_LANG_CODE_GRC, GreekLanguageModel ],
   [ Constants.STR_LANG_CODE_ARA, ArabicLanguageModel ],
   [ Constants.STR_LANG_CODE_AR, ArabicLanguageModel ],
-  [ Constants.STR_LANG_CODE_PER, PersianLanguageModel ],
-  [ Constants.STR_LANG_CODE_FAR, PersianLanguageModel ]
+  [ Constants.STR_LANG_CODE_PER, PersianLanguageModel ]
 ])
 
 class LanguageModelFactory {

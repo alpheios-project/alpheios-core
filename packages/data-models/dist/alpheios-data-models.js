@@ -12,8 +12,10 @@ const STR_LANG_CODE_LA = 'la';
 const STR_LANG_CODE_GRC = 'grc';
 const STR_LANG_CODE_ARA = 'ara';
 const STR_LANG_CODE_AR = 'ar';
-const STR_LANG_CODE_FAR = 'far';
+const STR_LANG_CODE_FAS = 'fas';
 const STR_LANG_CODE_PER = 'per';
+const STR_LANG_CODE_FA_IR = 'fa-IR';
+const STR_LANG_CODE_FA = 'fa';
 // parts of speech
 const POFS_ADJECTIVE = 'adjective';
 const POFS_ADVERB = 'adverb';
@@ -216,8 +218,10 @@ var constants = Object.freeze({
 	STR_LANG_CODE_GRC: STR_LANG_CODE_GRC,
 	STR_LANG_CODE_ARA: STR_LANG_CODE_ARA,
 	STR_LANG_CODE_AR: STR_LANG_CODE_AR,
-	STR_LANG_CODE_FAR: STR_LANG_CODE_FAR,
+	STR_LANG_CODE_FAS: STR_LANG_CODE_FAS,
 	STR_LANG_CODE_PER: STR_LANG_CODE_PER,
+	STR_LANG_CODE_FA_IR: STR_LANG_CODE_FA_IR,
+	STR_LANG_CODE_FA: STR_LANG_CODE_FA,
 	POFS_ADJECTIVE: POFS_ADJECTIVE,
 	POFS_ADVERB: POFS_ADVERB,
 	POFS_ADVERBIAL: POFS_ADVERBIAL,
@@ -1440,7 +1444,7 @@ class PersianLanguageModel extends LanguageModel {
   }
 
   static get codes () {
-    return [STR_LANG_CODE_PER, STR_LANG_CODE_FAR]
+    return [STR_LANG_CODE_PER, STR_LANG_CODE_FAS, STR_LANG_CODE_FA, STR_LANG_CODE_FA_IR]
   }
 
   // For compatibility with existing code, can be replaced with a static version
@@ -1484,8 +1488,7 @@ const MODELS = new Map([
   [ STR_LANG_CODE_GRC, GreekLanguageModel ],
   [ STR_LANG_CODE_ARA, ArabicLanguageModel ],
   [ STR_LANG_CODE_AR, ArabicLanguageModel ],
-  [ STR_LANG_CODE_PER, PersianLanguageModel ],
-  [ STR_LANG_CODE_FAR, PersianLanguageModel ]
+  [ STR_LANG_CODE_PER, PersianLanguageModel ]
 ]);
 
 class LanguageModelFactory {

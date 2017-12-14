@@ -28,7 +28,7 @@ class PersianLanguageModel extends LanguageModel {
   }
 
   static get codes () {
-    return [Constants.STR_LANG_CODE_PER, Constants.STR_LANG_CODE_FAR]
+    return [Constants.STR_LANG_CODE_PER, Constants.STR_LANG_CODE_FAS, Constants.STR_LANG_CODE_FA, Constants.STR_LANG_CODE_FA_IR]
   }
 
   // For compatibility with existing code, can be replaced with a static version

@@ -33,6 +33,11 @@ describe('LanguageModelFactory object', () => {
     expect(model instanceof PersianLanguageModel).toBeTruthy()
   })
 
+  test('Should return a Persian code id for alternate code', () => {
+    let id = LanguageModelFactory.getLanguageIdFromCode('fa-IR')
+    expect(id).toBeTruthy()
+  })
+
   test('Should return a Base model', () => {
     let model = LanguageModelFactory.getLanguageForCode('foo')
     expect(model instanceof LanguageModel).toBeTruthy()
