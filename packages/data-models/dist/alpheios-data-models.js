@@ -1115,7 +1115,12 @@ class LatinLanguageModel extends LanguageModel {
         TENSE_FUTURE_PERFECT
       ], code);
     features[Feature.types.voice] = new FeatureType(Feature.types.voice, [VOICE_PASSIVE, VOICE_ACTIVE], code);
-    features[Feature.types.mood] = new FeatureType(Feature.types.mood, [MOOD_INDICATIVE, MOOD_SUBJUNCTIVE], code);
+    features[Feature.types.mood] = new FeatureType(Feature.types.mood,
+      [ MOOD_INDICATIVE,
+        MOOD_SUBJUNCTIVE,
+        MOOD_IMPERATIVE,
+        MOOD_PARTICIPLE
+      ], code);
     features[Feature.types.conjugation] = new FeatureType(Feature.types.conjugation,
       [ ORD_1ST,
         ORD_2ND,
