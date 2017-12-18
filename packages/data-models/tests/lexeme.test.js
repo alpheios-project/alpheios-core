@@ -16,7 +16,7 @@ describe('Lexeme object', () => {
     lexeme = new Lexeme(lemma, [inflection1, inflection2])
   })
 
-  test.only('Should be initialized properly', () => {
+  test('Should be initialized properly', () => {
     expect(lexeme.lemma).toEqual(lemma)
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
     expect(lexeme.meaning).toMatchObject({

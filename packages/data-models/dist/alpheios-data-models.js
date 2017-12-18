@@ -1765,17 +1765,28 @@ class Homonym {
   }
 
     /**
-     * Returns language of a homonym.
+     * Returns a language code of a homonym (ISO 639-3).
      * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
      * and inflections within the same homonym will have the same language, and we can determine a language
      * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
      * @returns {string} A language code, as defined in the `languages` object.
      */
   get language () {
-    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.language) {
-      return this.lexemes[0].lemma.language
+    return LanguageModelFactory.getLanguageCodeFromId(this.languageID)
+  }
+
+  /**
+   * Returns a language ID of a homonym.
+   * Homonym does not have a languageID property, only lemmas and inflections do. We assume that all lemmas
+   * and inflections within the same homonym will have the same language, and we can determine a language
+   * by using languageID property of the first lemma. We chan change this logic in the future if we'll need to.
+   * @returns {Symbol} A language ID, as defined in the `LANG_` constants.
+   */
+  get languageID () {
+    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.languageID) {
+      return this.lexemes[0].lemma.languageID
     } else {
-      throw new Error('Homonym has not been initialized properly. Unable to obtain language information.')
+      throw new Error('Homonym has not been initialized properly. Unable to obtain language ID information.')
     }
   }
 }
