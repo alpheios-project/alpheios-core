@@ -7,12 +7,12 @@ import viewsLatin from './views/latin'
 import viewsGreek from './views/greek'
 import * as Models from 'alpheios-data-models'
 
-class Presenter {
-  constructor (viewContainer, viewSelectorContainer, localeSelectorContainer, wordData, locale = 'en-US') {
+export default class Presenter {
+  constructor (viewContainer, viewSelectorContainer, localeSelectorContainer, inflectionData, locale = 'en-US') {
     this.viewContainer = viewContainer
     this.viewSelectorContainer = viewSelectorContainer
     this.localeSelectorContainer = localeSelectorContainer
-    this.wordData = wordData
+    this.inflectionData = inflectionData
 
         // All views registered by the Presenter
     this.views = []
@@ -26,7 +26,7 @@ class Presenter {
     }
 
         // Views available for parts of speech that are present in a Result Set
-    this.availableViews = this.getViews(this.wordData)
+    this.availableViews = this.getViews(this.inflectionData)
 
     this.defaultView = this.availableViews[0]
     this.activeView = undefined
@@ -45,13 +45,13 @@ class Presenter {
 
   setLocale (locale) {
     this.locale = locale
-    this.activeView.render(this.viewContainer, this.wordData, this.l10n.messages(this.locale))
+    this.activeView.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
   }
 
   render () {
         // Show a default view
     if (this.defaultView) {
-      this.defaultView.render(this.viewContainer, this.wordData, this.l10n.messages(this.locale))
+      this.defaultView.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
       this.activeView = this.defaultView
 
       this.appendViewSelector(this.viewSelectorContainer)
@@ -85,7 +85,7 @@ class Presenter {
   viewSelectorEventListener (event) {
     let viewID = event.target.value
     let view = this.viewIndex[viewID]
-    view.render(this.viewContainer, this.wordData, this.l10n.messages(this.locale))
+    view.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
     this.activeView = view
   }
 
@@ -126,5 +126,3 @@ class Presenter {
     return views
   }
 }
-
-export { Presenter }

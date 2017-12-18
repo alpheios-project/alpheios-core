@@ -4,6 +4,19 @@
 	(factory());
 }(this, (function () { 'use strict';
 
+const languages = {
+  type: 'language',
+  latin: 'lat',
+  greek: 'grc',
+  isAllowed (language) {
+    if (language === this.type) {
+      return false
+    } else {
+      return Object.values(this).includes(language)
+    }
+  }
+};
+
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word');
 const LANG_UNIT_CHAR = Symbol('char');
@@ -18,8 +31,10 @@ const STR_LANG_CODE_LA = 'la';
 const STR_LANG_CODE_GRC = 'grc';
 const STR_LANG_CODE_ARA = 'ara';
 const STR_LANG_CODE_AR = 'ar';
-const STR_LANG_CODE_FAR = 'far';
+const STR_LANG_CODE_FAS = 'fas';
 const STR_LANG_CODE_PER = 'per';
+const STR_LANG_CODE_FA_IR = 'fa-IR';
+const STR_LANG_CODE_FA = 'fa';
 // parts of speech
 const POFS_ADJECTIVE = 'adjective';
 const POFS_ADVERB = 'adverb';
@@ -222,8 +237,10 @@ var constants = Object.freeze({
 	STR_LANG_CODE_GRC: STR_LANG_CODE_GRC,
 	STR_LANG_CODE_ARA: STR_LANG_CODE_ARA,
 	STR_LANG_CODE_AR: STR_LANG_CODE_AR,
-	STR_LANG_CODE_FAR: STR_LANG_CODE_FAR,
+	STR_LANG_CODE_FAS: STR_LANG_CODE_FAS,
 	STR_LANG_CODE_PER: STR_LANG_CODE_PER,
+	STR_LANG_CODE_FA_IR: STR_LANG_CODE_FA_IR,
+	STR_LANG_CODE_FA: STR_LANG_CODE_FA,
 	POFS_ADJECTIVE: POFS_ADJECTIVE,
 	POFS_ADVERB: POFS_ADVERB,
 	POFS_ADVERBIAL: POFS_ADVERBIAL,
@@ -1117,7 +1134,12 @@ class LatinLanguageModel extends LanguageModel {
         TENSE_FUTURE_PERFECT
       ], code);
     features[Feature.types.voice] = new FeatureType(Feature.types.voice, [VOICE_PASSIVE, VOICE_ACTIVE], code);
-    features[Feature.types.mood] = new FeatureType(Feature.types.mood, [MOOD_INDICATIVE, MOOD_SUBJUNCTIVE], code);
+    features[Feature.types.mood] = new FeatureType(Feature.types.mood,
+      [ MOOD_INDICATIVE,
+        MOOD_SUBJUNCTIVE,
+        MOOD_IMPERATIVE,
+        MOOD_PARTICIPLE
+      ], code);
     features[Feature.types.conjugation] = new FeatureType(Feature.types.conjugation,
       [ ORD_1ST,
         ORD_2ND,
@@ -1446,7 +1468,7 @@ class PersianLanguageModel extends LanguageModel {
   }
 
   static get codes () {
-    return [STR_LANG_CODE_PER, STR_LANG_CODE_FAR]
+    return [STR_LANG_CODE_PER, STR_LANG_CODE_FAS, STR_LANG_CODE_FA, STR_LANG_CODE_FA_IR]
   }
 
   // For compatibility with existing code, can be replaced with a static version
@@ -1490,8 +1512,7 @@ const MODELS = new Map([
   [ STR_LANG_CODE_GRC, GreekLanguageModel ],
   [ STR_LANG_CODE_ARA, ArabicLanguageModel ],
   [ STR_LANG_CODE_AR, ArabicLanguageModel ],
-  [ STR_LANG_CODE_PER, PersianLanguageModel ],
-  [ STR_LANG_CODE_FAR, PersianLanguageModel ]
+  [ STR_LANG_CODE_PER, PersianLanguageModel ]
 ]);
 
 class LanguageModelFactory {
@@ -1775,647 +1796,6 @@ class Homonym {
     } else {
       throw new Error('Homonym has not been initialized properly. Unable to obtain language information.')
     }
-  }
-}
-
-/**
- * Shared data structures and functions
- */
-
-const languages = {
-  type: 'language',
-  latin: 'lat',
-  greek: 'grc',
-  isAllowed (language) {
-    if (language === this.type) {
-      return false
-    } else {
-      return Object.values(this).includes(language)
-    }
-  }
-};
-
-/**
- * Stores inflection language data
- */
-class LanguageDataset {
-    /**
-     * Initializes a LanguageDataset.
-     * @param {string} language - A language of a data set, from an allowed languages list (see 'languages' object).
-     */
-  constructor (language) {
-    if (!language) {
-            // Language is not supported
-      throw new Error('Language data cannot be empty.')
-    }
-
-    if (!languages.isAllowed(language)) {
-            // Language is not supported
-      throw new Error('Language "' + language + '" is not supported.')
-    }
-    this.language = language;
-    this.suffixes = []; // An array of suffixes.
-    this.footnotes = []; // Footnotes
-  };
-
-    /**
-     * Each grammatical feature can be either a single or an array of Feature objects. The latter is the case when
-     * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
-     * 'feminine' genders
-     *
-     * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
-     * @param {Feature[]} featureValue
-     * @return {Suffix} A newly added suffix value (can be used to add more data to the suffix).
-     */
-  addSuffix (suffixValue, featureValue, extendedLangData) {
-        // TODO: implement run-time error checking
-    let suffixItem = new Suffix(suffixValue);
-    suffixItem.extendedLangData = extendedLangData;
-
-        // Build all possible combinations of features
-    let multiValueFeatures = [];
-
-        // Go through all features provided
-    for (let feature of featureValue) {
-            // If this is a footnote. Footnotes should go in a flat array
-            // because we don't need to split by them
-      if (feature.type === Feature.types.footnote) {
-        suffixItem[Feature.types.footnote] = suffixItem[Feature.types.footnote] || [];
-        suffixItem[Feature.types.footnote].push(feature.value);
-        continue
-      }
-
-            // If this ending has several grammatical feature values then they will be in an array
-      if (Array.isArray(feature)) {
-        if (feature.length > 0) {
-          if (feature[0]) {
-            let type = feature[0].type;
-                    // Store all multi-value features to create a separate copy of a a Suffix object for each of them
-            multiValueFeatures.push({type: type, features: feature});
-          } else {
-            console.log(feature);
-          }
-        } else {
-                    // Array is empty
-          throw new Error('An empty array is provided as a feature argument to the "addSuffix" method.')
-        }
-      } else {
-        suffixItem.features[feature.type] = feature.value;
-      }
-    }
-
-        // Create a copy of an Suffix object for each multi-value item
-    if (multiValueFeatures.length > 0) {
-      for (let featureGroup of multiValueFeatures) {
-        let endingItems = suffixItem.split(featureGroup.type, featureGroup.features);
-        this.suffixes = this.suffixes.concat(endingItems);
-      }
-    } else {
-      this.suffixes.push(suffixItem);
-    }
-  };
-
-    /**
-     * Stores a footnote item.
-     * @param {Feature} partOfSpeech - A part of speech this footnote belongs to
-     * @param {number} index - A footnote's index.
-     * @param {string} text - A footnote's text.
-     */
-  addFootnote (partOfSpeech, index, text) {
-    if (!index) {
-      throw new Error('Footnote index data should not be empty.')
-    }
-
-    if (!text) {
-      throw new Error('Footnote text data should not be empty.')
-    }
-
-    let footnote = new Footnote(index, text, partOfSpeech.value);
-    footnote.index = index;
-
-    this.footnotes.push(footnote);
-  };
-
-  getSuffixes (homonym) {
-        // Add support for languages
-    let result = new LexicalData(homonym);
-    let inflections = {};
-
-        // Find partial matches first, and then full among them
-
-        // TODO: do we ever need lemmas?
-    for (let lexema of homonym.lexemes) {
-      for (let inflection of lexema.inflections) {
-                // Group inflections by a part of speech
-        let partOfSpeech = inflection[Feature.types.part];
-        if (!partOfSpeech) {
-          throw new Error('Part of speech data is missing in an inflection.')
-        }
-
-        if (!inflections.hasOwnProperty(partOfSpeech)) {
-          inflections[partOfSpeech] = [];
-        }
-        inflections[partOfSpeech].push(inflection);
-      }
-    }
-
-        // Scan for matches for all parts of speech separately
-    for (const partOfSpeech in inflections) {
-      if (inflections.hasOwnProperty(partOfSpeech)) {
-        let inflectionsGroup = inflections[partOfSpeech];
-
-        result[Feature.types.part].push(partOfSpeech);
-        result[partOfSpeech] = {};
-        result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), []);
-        result[partOfSpeech].footnotes = [];
-
-                // Create a set so all footnote indexes be unique
-        let footnotesIndex = new Set();
-                // Scan all selected suffixes to build a unique set of footnote indexes
-        for (let suffix of result[partOfSpeech].suffixes) {
-          if (suffix.hasOwnProperty(Feature.types.footnote)) {
-                        // Footnote indexes are stored in an array
-            for (let index of suffix[Feature.types.footnote]) {
-              footnotesIndex.add(index);
-            }
-          }
-        }
-                // Add footnote indexes and their texts to a result
-        for (let index of footnotesIndex) {
-          let footnote = this.footnotes.find(footnoteElement =>
-                        footnoteElement.index === index && footnoteElement[Feature.types.part] === partOfSpeech
-                    );
-          result[partOfSpeech].footnotes.push({index: index, text: footnote.text});
-        }
-                // Sort footnotes according to their index numbers
-        result[partOfSpeech].footnotes.sort((a, b) => parseInt(a.index) - parseInt(b.index));
-      }
-    }
-
-    return result
-  }
-
-  reducer (inflections, accumulator, suffix) {
-    let result = this.matcher(inflections, suffix);
-    if (result) {
-      accumulator.push(result);
-    }
-    return accumulator
-  }
-}
-
-/**
- * Stores one or several language datasets, one for each language
- */
-class LanguageData {
-    /**
-     * Combines several language datasets for different languages. Allows to abstract away language data.
-     * This function is chainable.
-     * @param {LanguageDataset[]} languageData - Language datasets of different languages.
-     * @return {LanguageData} Self instance for chaining.
-     */
-  constructor (languageData) {
-    this.supportedLanguages = [];
-
-    if (languageData) {
-      for (let dataset of languageData) {
-        this[dataset.language] = dataset;
-        this.supportedLanguages.push(dataset.language);
-      }
-    }
-    return this
-  }
-
-    /**
-     * Loads data for all data sets.
-     * This function is chainable.
-     * @return {LanguageData} Self instance for chaining.
-     */
-  loadData () {
-    for (let language of this.supportedLanguages) {
-      try {
-        this[language].loadData();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    return this
-  }
-
-    /**
-     * Finds matching suffixes for a homonym.
-     * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
-     * @return {LexicalData} A return value of an inflection query.
-     */
-  getSuffixes (homonym) {
-    let language = homonym.language;
-    if (this.supportedLanguages.includes(language)) {
-      return this[homonym.language].getSuffixes(homonym)
-    } else {
-      // throw new Error(`"${language}" language data is missing. Unable to get suffix data.`)
-      return new LexicalData(homonym)
-    }
-  }
-}
-
-/**
- * Suffix is an ending of a word with none or any grammatical features associated with it.
- * Features are stored in properties whose names are type of a grammatical feature (i.e. case, gender, etc.)
- * Each feature can have a single or multiple values associated with it (i.e. gender can be either 'masculine',
- * a single value, or 'masculine' and 'feminine'. That's why all values are stored in an array.
- */
-class Suffix {
-    /**
-     * Initializes a Suffix object.
-     * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
-     */
-  constructor (suffixValue) {
-    if (suffixValue === undefined) {
-      throw new Error('Suffix should not be empty.')
-    }
-    this.value = suffixValue;
-    this.features = {};
-    this.featureGroups = {};
-
-        /*
-        Extended language data stores additional suffix information that is specific for a particular language.
-        It uses the following schema:
-        {string} language(key): {object} extended language data. This object is specific for each language
-        and is defined in a language model.
-         */
-    this.extendedLangData = {};
-    this.match = undefined;
-  }
-
-  static readObject (jsonObject) {
-    let suffix = new Suffix(jsonObject.value);
-
-    if (jsonObject.features) {
-      for (let key in jsonObject.features) {
-        if (jsonObject.features.hasOwnProperty(key)) {
-          suffix.features[key] = jsonObject.features[key];
-        }
-      }
-    }
-
-    if (jsonObject.featureGroups) {
-      for (let key in jsonObject.featureGroups) {
-        if (jsonObject.featureGroups.hasOwnProperty(key)) {
-          suffix.featureGroups[key] = [];
-          for (let value of jsonObject.featureGroups[key]) {
-            suffix.featureGroups[key].push(value);
-          }
-        }
-      }
-    }
-
-    if (jsonObject[Feature.types.footnote]) {
-      suffix[Feature.types.footnote] = [];
-      for (let footnote of jsonObject[Feature.types.footnote]) {
-        suffix[Feature.types.footnote].push(footnote);
-      }
-    }
-
-    if (jsonObject.match) {
-      suffix.match = MatchData.readObject(jsonObject.match);
-    }
-
-    for (const lang in jsonObject.extendedLangData) {
-      if (jsonObject.extendedLangData.hasOwnProperty(lang)) {
-        suffix.extendedLangData[lang] = ExtendedLanguageData.readObject(jsonObject.extendedLangData[lang]);
-      }
-    }
-    return suffix
-  }
-
-    /**
-     * Returns a copy of itself. Used in splitting suffixes with multi-value features.
-     * @returns {Suffix}
-     */
-  clone () {
-        // TODO: do all-feature two-level cloning
-    let clone = new Suffix(this.value);
-    for (const key in this.features) {
-      if (this.features.hasOwnProperty(key)) {
-        clone.features[key] = this.features[key];
-      }
-    }
-    for (const key in this.featureGroups) {
-      if (this.featureGroups.hasOwnProperty(key)) {
-        clone.featureGroups[key] = this.featureGroups[key];
-      }
-    }
-
-    if (this.hasOwnProperty(Feature.types.footnote)) {
-      clone[Feature.types.footnote] = this[Feature.types.footnote];
-    }
-
-    for (const lang in this.extendedLangData) {
-      if (this.extendedLangData.hasOwnProperty(lang)) {
-        clone.extendedLangData[lang] = this.extendedLangData[lang];
-      }
-    }
-    return clone
-  };
-
-    /**
-     * Checks if suffix has a feature that is a match to the one provided.
-     * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
-     * @param {string[]} featureValues - A list of feature values we need to match with the ones stored inside the suffix
-     * @returns {string | undefined} - If provided feature is a match, returns a first feature that matched.
-     * If no match found, return undefined.
-     */
-  featureMatch (featureType, featureValues) {
-    if (this.features.hasOwnProperty(featureType)) {
-      for (let value of featureValues) {
-        if (value === this.features[featureType]) {
-          return value
-        }
-      }
-    }
-    return undefined
-  }
-
-    /**
-     * Find feature groups in Suffix.featureGroups that are the same between suffixes provided
-     * @param suffixes
-     */
-  static getCommonGroups (suffixes) {
-    let features = Object.keys(suffixes[0].featureGroups);
-
-    let commonGroups = features.filter(feature => {
-      let result = true;
-      for (let i = 1; i < suffixes.length; i++) {
-        result = result && suffixes[i].features.hasOwnProperty(feature);
-      }
-      return result
-    });
-    return commonGroups
-  }
-
-    /**
-     * Finds out if an suffix is in the same group with some other suffix. The other suffix is provided as a function argument.
-     * Two suffixes are considered to be in the same group if they are:
-     * a. Have at least one common group in featureGroups;
-     * b. Have the same suffix
-     * c. Have values of all features the same except for those that belong to a common group(s)
-     * d. Values of the common group features must be complementary. Here is an example:
-     * Let's say a 'gender' group can have values such as 'masculine' and 'feminine'. Then suffixes will be combined
-     * only if gender value of one suffix is 'masculine' and the other value is 'feminine'. If both suffixes have the same
-     * either 'masculine' or 'feminine' value, they sill not be combined as are not being complementary.
-     * @param {Suffix} suffix - An other suffix that we compare this suffix with.
-     * @returns {boolean} - True if both suffixes are in the same group, false otherwise.
-     */
-  isInSameGroupWith (suffix) {
-    let commonGroups = Suffix.getCommonGroups([this, suffix]);
-    if (commonGroups.length < 1) {
-            // If elements do not have common groups in Suffix.featureGroups then they are not in the same group
-      return false
-    }
-
-    let commonValues = {};
-    commonGroups.forEach((feature) => { commonValues[feature] = new Set([this.features[feature]]); });
-
-    let result = true;
-    result = result && this.value === suffix.value;
-        // If suffixes does not match don't check any further
-    if (!result) {
-      return false
-    }
-
-        // Check all features to be a match, except those that are possible group values
-    for (let feature of Object.keys(this.features)) {
-      if (commonGroups.indexOf(feature) >= 0) {
-        commonValues[feature].add(suffix.features[feature]);
-
-                // Do not compare common groups
-        continue
-      }
-      result = result && this.features[feature] === suffix.features[feature];
-            // If feature mismatch discovered, do not check any further
-      if (!result) {
-        return false
-      }
-    }
-
-    commonGroups.forEach(feature => {
-      result = result && commonValues[feature].size === 2;
-    });
-
-    return result
-  }
-
-    /**
-     * Splits a suffix that has multiple values of one or more grammatical features into an array of Suffix objects
-     * with each Suffix object having only a single value of those grammatical features. Initial multiple values
-     * are stored in a featureGroups[featureType] property as an array of values.
-     * @param {string} featureType - A type of a feature
-     * @param {Feature[]} featureValues - Multiple grammatical feature values.
-     * @returns {Suffix[]} - An array of suffixes.
-     */
-  split (featureType, featureValues) {
-    let copy = this.clone();
-    let values = [];
-    featureValues.forEach(element => values.push(element.value));
-    copy.features[featureType] = featureValues[0].value;
-    copy.featureGroups[featureType] = values;
-    let suffixItems = [copy];
-    for (let i = 1; i < featureValues.length; i++) {
-      copy = this.clone();
-      copy.features[featureType] = featureValues[i].value;
-      copy.featureGroups[featureType] = values;
-      suffixItems.push(copy);
-    }
-    return suffixItems
-  };
-
-    /**
-     * Combines suffixes that are in the same group together. Suffixes to be combined must have their values listed
-     * in an array stored as featureGroups[featureType] property.
-     * @param {Suffix[]} suffixes - An array of suffixes to be combined.
-     * @param {function} mergeFunction - A function that will merge two suffixes. By default it uses Suffix.merge,
-     * but provides a way to supply a presentation specific functions. Please see Suffix.merge for more
-     * information on function format.
-     * @returns {Suffix[]} An array of suffixes with some items possibly combined together.
-     */
-  static combine (suffixes, mergeFunction = Suffix.merge) {
-    let matchFound = false;
-    let matchIdx;
-
-    do {
-      matchFound = false;
-
-            /*
-            Go through an array of suffixes end compare each suffix with each other (two-way compare) one time. \
-            If items are in the same group, merge two suffixes, break out of a loop,
-            and remove one matching suffix (the second one) from an array.
-            Then repeat on a modified array until no further matches found.
-             */
-      for (let i = 0; i < suffixes.length; i++) {
-        if (matchFound) {
-          continue
-        }
-        for (let j = i + 1; j < suffixes.length; j++) {
-          if (suffixes[i].isInSameGroupWith(suffixes[j])) {
-            matchIdx = j;
-            matchFound = true;
-            mergeFunction(suffixes[i], suffixes[j]);
-          }
-        }
-      }
-
-      if (matchFound) {
-        suffixes.splice(matchIdx, 1);
-      }
-    }
-    while (matchFound)
-    return suffixes
-  }
-
-    /**
-     * This function provide a logic of to merge data of two suffix object that were previously split together.
-     * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
-     * @param {Suffix} suffixB - A second ending to merge (to be discarded).
-     * @returns {Suffix} A modified value of ending A.
-     */
-  static merge (suffixA, suffixB) {
-    let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
-    for (let type of commonGroups) {
-            // Combine values using a comma separator. Can do anything else if we need to.
-      suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
-    }
-    return suffixA
-  };
-}
-
-class Footnote {
-  constructor (index, text, partOfSpeech) {
-    this.index = index;
-    this.text = text;
-    this[Feature.types.part] = partOfSpeech;
-  }
-
-  static readObject (jsonObject) {
-    this.index = jsonObject.index;
-    this.text = jsonObject.text;
-    this[Feature.types.part] = jsonObject[Feature.types.part];
-    return new Footnote(jsonObject.index, jsonObject.text, jsonObject[Feature.types.part])
-  }
-}
-
-/**
- * Detailed information about a match type.
- */
-class MatchData {
-  constructor () {
-    this.suffixMatch = false; // Whether two suffixes are the same.
-    this.fullMatch = false; // Whether two suffixes and all grammatical features, including part of speech, are the same.
-    this.matchedFeatures = []; // How many features matches each other.
-  }
-
-  static readObject (jsonObject) {
-    let matchData = new MatchData();
-    matchData.suffixMatch = jsonObject.suffixMatch;
-    matchData.fullMatch = jsonObject.fullMatch;
-    for (let feature of jsonObject.matchedFeatures) {
-      matchData.matchedFeatures.push(feature);
-    }
-    return matchData
-  }
-}
-
-class ExtendedLanguageData {
-  constructor () {
-    this._type = undefined; // This is a base class
-  }
-
-  static types () {
-    return {
-      EXTENDED_GREEK_DATA: 'ExtendedGreekData'
-    }
-  }
-
-  static readObject (jsonObject) {
-    if (!jsonObject._type) {
-      throw new Error('Extended language data has no type information. Unable to deserialize.')
-    } else if (jsonObject._type === ExtendedLanguageData.types().EXTENDED_GREEK_DATA) {
-      return ExtendedGreekData.readObject(jsonObject)
-    } else {
-      throw new Error(`Unsupported extended language data of type "${jsonObject._type}".`)
-    }
-  }
-}
-
-class ExtendedGreekData extends ExtendedLanguageData {
-  constructor () {
-    super();
-    this._type = ExtendedLanguageData.types().EXTENDED_GREEK_DATA; // For deserialization
-    this.primary = false;
-  }
-
-  static readObject (jsonObject) {
-    let data = new ExtendedGreekData();
-    data.primary = jsonObject.primary;
-    return data
-  }
-
-  merge (extendedGreekData) {
-    if (this.primary !== extendedGreekData.primary) {
-      console.log('Mismatch', this.primary, extendedGreekData.primary);
-    }
-    let merged = new ExtendedGreekData();
-    merged.primary = this.primary;
-    return merged
-  }
-}
-
-/**
- * A return value for inflection queries
- */
-class LexicalData {
-  constructor (homonym) {
-    this.homonym = homonym;
-    this[Feature.types.part] = []; // What parts of speech are represented by this object.
-  }
-
-  static readObject (jsonObject) {
-    let homonym = Homonym.readObject(jsonObject.homonym);
-
-    let lexicalData = new LexicalData(homonym);
-    lexicalData[Feature.types.part] = jsonObject[Feature.types.part];
-
-    for (let part of lexicalData[Feature.types.part]) {
-      let partData = jsonObject[part];
-      lexicalData[part] = {};
-
-      if (partData.suffixes) {
-        lexicalData[part].suffixes = [];
-        for (let suffix of partData.suffixes) {
-          lexicalData[part].suffixes.push(Suffix.readObject(suffix));
-        }
-      }
-
-      if (partData.footnotes) {
-        lexicalData[part].footnotes = [];
-        for (let footnote of partData.footnotes) {
-          lexicalData[part].footnotes.push(Footnote.readObject(footnote));
-        }
-      }
-    }
-
-    return lexicalData
-  }
-
-  get word () {
-    return this.homonym.targetWord
-  }
-
-  set word (word) {
-    this.homonym.targetWord = word;
-  }
-
-  get language () {
-    return this.homonym.language
   }
 }
 
@@ -4532,12 +3912,602 @@ let pageHeader = {
   showNoSuffixGroupsBtnSel: '#show-no-suffix-groups'
 };
 
-class Cell {
-    /**
-     * Creates a cell for an inflection table.
-     * @param {Suffix[]} suffixes - A list of suffixes that belongs to this cell.
-     * @param {Feature[]} features - A list of features this cell corresponds to.
+/**
+ * Detailed information about a match type.
+ */
+class MatchData {
+  constructor () {
+    this.suffixMatch = false; // Whether two suffixes are the same.
+    this.fullMatch = false; // Whether two suffixes and all grammatical features, including part of speech, are the same.
+    this.matchedFeatures = []; // How many features matches each other.
+  }
+
+  static readObject (jsonObject) {
+    let matchData = new MatchData();
+    matchData.suffixMatch = jsonObject.suffixMatch;
+    matchData.fullMatch = jsonObject.fullMatch;
+    for (let feature of jsonObject.matchedFeatures) {
+      matchData.matchedFeatures.push(feature);
+    }
+    return matchData
+  }
+}
+
+class ExtendedLanguageData {
+  constructor () {
+    this._type = undefined; // This is a base class
+  }
+
+  static types () {
+    return {
+      EXTENDED_GREEK_DATA: 'ExtendedGreekData'
+    }
+  }
+
+  /* static readObject (jsonObject) {
+    if (!jsonObject._type) {
+      throw new Error('Extended language data has no type information. Unable to deserialize.')
+    } else if (jsonObject._type === ExtendedLanguageData.types().EXTENDED_GREEK_DATA) {
+      return ExtendedGreekData.readObject(jsonObject)
+    } else {
+      throw new Error(`Unsupported extended language data of type "${jsonObject._type}".`)
+    }
+  } */
+}
+
+/**
+ * Suffix is an ending of a word with none or any grammatical features associated with it.
+ * Features are stored in properties whose names are type of a grammatical feature (i.e. case, gender, etc.)
+ * Each feature can have a single or multiple values associated with it (i.e. gender can be either 'masculine',
+ * a single value, or 'masculine' and 'feminine'. That's why all values are stored in an array.
+ */
+class Suffix {
+  /**
+   * Initializes a Suffix object.
+   * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
+   */
+  constructor (suffixValue) {
+    if (suffixValue === undefined) {
+      throw new Error('Suffix should not be empty.')
+    }
+    this.value = suffixValue;
+    this.features = {};
+    this.featureGroups = {};
+
+    /*
+    Extended language data stores additional suffix information that is specific for a particular language.
+    It uses the following schema:
+    {string} language(key): {object} extended language data. This object is specific for each language
+    and is defined in a language model.
      */
+    this.extendedLangData = {};
+    this.match = undefined;
+  }
+
+  static readObject (jsonObject) {
+    let suffix = new Suffix(jsonObject.value);
+
+    if (jsonObject.features) {
+      for (let key in jsonObject.features) {
+        if (jsonObject.features.hasOwnProperty(key)) {
+          suffix.features[key] = jsonObject.features[key];
+        }
+      }
+    }
+
+    if (jsonObject.featureGroups) {
+      for (let key in jsonObject.featureGroups) {
+        if (jsonObject.featureGroups.hasOwnProperty(key)) {
+          suffix.featureGroups[key] = [];
+          for (let value of jsonObject.featureGroups[key]) {
+            suffix.featureGroups[key].push(value);
+          }
+        }
+      }
+    }
+
+    if (jsonObject[Feature.types.footnote]) {
+      suffix[Feature.types.footnote] = [];
+      for (let footnote of jsonObject[Feature.types.footnote]) {
+        suffix[Feature.types.footnote].push(footnote);
+      }
+    }
+
+    if (jsonObject.match) {
+      suffix.match = MatchData.readObject(jsonObject.match);
+    }
+
+    for (const lang in jsonObject.extendedLangData) {
+      if (jsonObject.extendedLangData.hasOwnProperty(lang)) {
+        suffix.extendedLangData[lang] = ExtendedLanguageData.readObject(jsonObject.extendedLangData[lang]);
+      }
+    }
+    return suffix
+  }
+
+  /**
+   * Returns a copy of itself. Used in splitting suffixes with multi-value features.
+   * @returns {Suffix}
+   */
+  clone () {
+    // TODO: do all-feature two-level cloning
+    let clone = new Suffix(this.value);
+    for (const key in this.features) {
+      if (this.features.hasOwnProperty(key)) {
+        clone.features[key] = this.features[key];
+      }
+    }
+    for (const key in this.featureGroups) {
+      if (this.featureGroups.hasOwnProperty(key)) {
+        clone.featureGroups[key] = this.featureGroups[key];
+      }
+    }
+
+    if (this.hasOwnProperty(Feature.types.footnote)) {
+      clone[Feature.types.footnote] = this[Feature.types.footnote];
+    }
+
+    for (const lang in this.extendedLangData) {
+      if (this.extendedLangData.hasOwnProperty(lang)) {
+        clone.extendedLangData[lang] = this.extendedLangData[lang];
+      }
+    }
+    return clone
+  };
+
+  /**
+   * Checks if suffix has a feature that is a match to the one provided.
+   * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
+   * @param {string[]} featureValues - A list of feature values we need to match with the ones stored inside the suffix
+   * @returns {string | undefined} - If provided feature is a match, returns a first feature that matched.
+   * If no match found, return undefined.
+   */
+  featureMatch (featureType, featureValues) {
+    if (this.features.hasOwnProperty(featureType)) {
+      for (let value of featureValues) {
+        if (value === this.features[featureType]) {
+          return value
+        }
+      }
+    }
+    return undefined
+  }
+
+  /**
+   * Find feature groups in Suffix.featureGroups that are the same between suffixes provided
+   * @param suffixes
+   */
+  static getCommonGroups (suffixes) {
+    let features = Object.keys(suffixes[0].featureGroups);
+
+    let commonGroups = features.filter(feature => {
+      let result = true;
+      for (let i = 1; i < suffixes.length; i++) {
+        result = result && suffixes[i].features.hasOwnProperty(feature);
+      }
+      return result
+    });
+    return commonGroups
+  }
+
+  /**
+   * Finds out if an suffix is in the same group with some other suffix. The other suffix is provided as a function argument.
+   * Two suffixes are considered to be in the same group if they are:
+   * a. Have at least one common group in featureGroups;
+   * b. Have the same suffix
+   * c. Have values of all features the same except for those that belong to a common group(s)
+   * d. Values of the common group features must be complementary. Here is an example:
+   * Let's say a 'gender' group can have values such as 'masculine' and 'feminine'. Then suffixes will be combined
+   * only if gender value of one suffix is 'masculine' and the other value is 'feminine'. If both suffixes have the same
+   * either 'masculine' or 'feminine' value, they sill not be combined as are not being complementary.
+   * @param {Suffix} suffix - An other suffix that we compare this suffix with.
+   * @returns {boolean} - True if both suffixes are in the same group, false otherwise.
+   */
+  isInSameGroupWith (suffix) {
+    let commonGroups = Suffix.getCommonGroups([this, suffix]);
+    if (commonGroups.length < 1) {
+      // If elements do not have common groups in Suffix.featureGroups then they are not in the same group
+      return false
+    }
+
+    let commonValues = {};
+    commonGroups.forEach((feature) => { commonValues[feature] = new Set([this.features[feature]]); });
+
+    let result = true;
+    result = result && this.value === suffix.value;
+    // If suffixes does not match don't check any further
+    if (!result) {
+      return false
+    }
+
+    // Check all features to be a match, except those that are possible group values
+    for (let feature of Object.keys(this.features)) {
+      if (commonGroups.indexOf(feature) >= 0) {
+        commonValues[feature].add(suffix.features[feature]);
+
+        // Do not compare common groups
+        continue
+      }
+      result = result && this.features[feature] === suffix.features[feature];
+      // If feature mismatch discovered, do not check any further
+      if (!result) {
+        return false
+      }
+    }
+
+    commonGroups.forEach(feature => {
+      result = result && commonValues[feature].size === 2;
+    });
+
+    return result
+  }
+
+  /**
+   * Splits a suffix that has multiple values of one or more grammatical features into an array of Suffix objects
+   * with each Suffix object having only a single value of those grammatical features. Initial multiple values
+   * are stored in a featureGroups[featureType] property as an array of values.
+   * @param {string} featureType - A type of a feature
+   * @param {Feature[]} featureValues - Multiple grammatical feature values.
+   * @returns {Suffix[]} - An array of suffixes.
+   */
+  split (featureType, featureValues) {
+    let copy = this.clone();
+    let values = [];
+    featureValues.forEach(element => values.push(element.value));
+    copy.features[featureType] = featureValues[0].value;
+    copy.featureGroups[featureType] = values;
+    let suffixItems = [copy];
+    for (let i = 1; i < featureValues.length; i++) {
+      copy = this.clone();
+      copy.features[featureType] = featureValues[i].value;
+      copy.featureGroups[featureType] = values;
+      suffixItems.push(copy);
+    }
+    return suffixItems
+  };
+
+  /**
+   * Combines suffixes that are in the same group together. Suffixes to be combined must have their values listed
+   * in an array stored as featureGroups[featureType] property.
+   * @param {Suffix[]} suffixes - An array of suffixes to be combined.
+   * @param {function} mergeFunction - A function that will merge two suffixes. By default it uses Suffix.merge,
+   * but provides a way to supply a presentation specific functions. Please see Suffix.merge for more
+   * information on function format.
+   * @returns {Suffix[]} An array of suffixes with some items possibly combined together.
+   */
+  static combine (suffixes, mergeFunction = Suffix.merge) {
+    let matchFound = false;
+    let matchIdx;
+
+    do {
+      matchFound = false;
+
+      /*
+      Go through an array of suffixes end compare each suffix with each other (two-way compare) one time. \
+      If items are in the same group, merge two suffixes, break out of a loop,
+      and remove one matching suffix (the second one) from an array.
+      Then repeat on a modified array until no further matches found.
+       */
+      for (let i = 0; i < suffixes.length; i++) {
+        if (matchFound) {
+          continue
+        }
+        for (let j = i + 1; j < suffixes.length; j++) {
+          if (suffixes[i].isInSameGroupWith(suffixes[j])) {
+            matchIdx = j;
+            matchFound = true;
+            mergeFunction(suffixes[i], suffixes[j]);
+          }
+        }
+      }
+
+      if (matchFound) {
+        suffixes.splice(matchIdx, 1);
+      }
+    }
+    while (matchFound)
+    return suffixes
+  }
+
+  /**
+   * This function provide a logic of to merge data of two suffix object that were previously split together.
+   * @param {Suffix} suffixA - A first of two suffixes to merge (to be returned).
+   * @param {Suffix} suffixB - A second ending to merge (to be discarded).
+   * @returns {Suffix} A modified value of ending A.
+   */
+  static merge (suffixA, suffixB) {
+    let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
+    for (let type of commonGroups) {
+      // Combine values using a comma separator. Can do anything else if we need to.
+      suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
+    }
+    return suffixA
+  };
+}
+
+class Footnote {
+  constructor (index, text, partOfSpeech) {
+    this.index = index;
+    this.text = text;
+    this[Feature.types.part] = partOfSpeech;
+  }
+
+  static readObject (jsonObject) {
+    this.index = jsonObject.index;
+    this.text = jsonObject.text;
+    this[Feature.types.part] = jsonObject[Feature.types.part];
+    return new Footnote(jsonObject.index, jsonObject.text, jsonObject[Feature.types.part])
+  }
+}
+
+/**
+ * A return value for inflection queries
+ */
+class InflectionData {
+  constructor (language) {
+    // this.homonym = homonym
+    this.language = language;
+    this[Feature.types.part] = []; // What parts of speech are represented by this object.
+  }
+
+  static readObject (jsonObject) {
+    // let homonym = Models.Homonym.readObject(jsonObject.homonym)
+
+    let lexicalData = new InflectionData();
+    lexicalData[Feature.types.part] = jsonObject[Feature.types.part];
+
+    for (let part of lexicalData[Feature.types.part]) {
+      let partData = jsonObject[part];
+      lexicalData[part] = {};
+
+      if (partData.suffixes) {
+        lexicalData[part].suffixes = [];
+        for (let suffix of partData.suffixes) {
+          lexicalData[part].suffixes.push(Suffix.readObject(suffix));
+        }
+      }
+
+      if (partData.footnotes) {
+        lexicalData[part].footnotes = [];
+        for (let footnote of partData.footnotes) {
+          lexicalData[part].footnotes.push(Footnote.readObject(footnote));
+        }
+      }
+    }
+
+    return lexicalData
+  }
+}
+
+/**
+ * Stores inflection language data
+ */
+class LanguageDataset {
+  /**
+   * Initializes a LanguageDataset.
+   * @param {string} language - A language of a data set, from an allowed languages list (see 'languages' object).
+   */
+  constructor (language) {
+    if (!language) {
+      // Language is not supported
+      throw new Error('Language data cannot be empty.')
+    }
+
+    if (!languages.isAllowed(language)) {
+      // Language is not supported
+      throw new Error('Language "' + language + '" is not supported.')
+    }
+    this.language = language;
+    this.suffixes = []; // An array of suffixes.
+    this.footnotes = []; // Footnotes
+  };
+
+  /**
+   * Each grammatical feature can be either a single or an array of Feature objects. The latter is the case when
+   * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
+   * 'feminine' genders
+   *
+   * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
+   * @param {Feature[]} featureValue
+   * @return {Suffix} A newly added suffix value (can be used to add more data to the suffix).
+   */
+  addSuffix (suffixValue, featureValue, extendedLangData) {
+    // TODO: implement run-time error checking
+    let suffixItem = new Suffix(suffixValue);
+    suffixItem.extendedLangData = extendedLangData;
+
+    // Build all possible combinations of features
+    let multiValueFeatures = [];
+
+    // Go through all features provided
+    for (let feature of featureValue) {
+      // If this is a footnote. Footnotes should go in a flat array
+      // because we don't need to split by them
+      if (feature.type === Feature.types.footnote) {
+        suffixItem[Feature.types.footnote] = suffixItem[Feature.types.footnote] || [];
+        suffixItem[Feature.types.footnote].push(feature.value);
+        continue
+      }
+
+      // If this ending has several grammatical feature values then they will be in an array
+      if (Array.isArray(feature)) {
+        if (feature.length > 0) {
+          if (feature[0]) {
+            let type = feature[0].type;
+            // Store all multi-value features to create a separate copy of a a Suffix object for each of them
+            multiValueFeatures.push({type: type, features: feature});
+          } else {
+            console.log(feature);
+          }
+        } else {
+          // Array is empty
+          throw new Error('An empty array is provided as a feature argument to the "addSuffix" method.')
+        }
+      } else {
+        suffixItem.features[feature.type] = feature.value;
+      }
+    }
+
+    // Create a copy of an Suffix object for each multi-value item
+    if (multiValueFeatures.length > 0) {
+      for (let featureGroup of multiValueFeatures) {
+        let endingItems = suffixItem.split(featureGroup.type, featureGroup.features);
+        this.suffixes = this.suffixes.concat(endingItems);
+      }
+    } else {
+      this.suffixes.push(suffixItem);
+    }
+  };
+
+  /**
+   * Stores a footnote item.
+   * @param {Feature} partOfSpeech - A part of speech this footnote belongs to
+   * @param {number} index - A footnote's index.
+   * @param {string} text - A footnote's text.
+   */
+  addFootnote (partOfSpeech, index, text) {
+    if (!index) {
+      throw new Error('Footnote index data should not be empty.')
+    }
+
+    if (!text) {
+      throw new Error('Footnote text data should not be empty.')
+    }
+
+    let footnote = new Footnote(index, text, partOfSpeech.value);
+    footnote.index = index;
+
+    this.footnotes.push(footnote);
+  };
+
+  getSuffixes (homonym) {
+    // Add support for languages
+    let result = new InflectionData(homonym.language);
+    let inflections = {};
+
+    // Find partial matches first, and then full among them
+
+    // TODO: do we ever need lemmas?
+    for (let lexema of homonym.lexemes) {
+      for (let inflection of lexema.inflections) {
+        // Group inflections by a part of speech
+        let partOfSpeech = inflection[Feature.types.part];
+        if (!partOfSpeech) {
+          throw new Error('Part of speech data is missing in an inflection.')
+        }
+
+        if (!inflections.hasOwnProperty(partOfSpeech)) {
+          inflections[partOfSpeech] = [];
+        }
+        inflections[partOfSpeech].push(inflection);
+      }
+    }
+
+    // Scan for matches for all parts of speech separately
+    for (const partOfSpeech in inflections) {
+      if (inflections.hasOwnProperty(partOfSpeech)) {
+        let inflectionsGroup = inflections[partOfSpeech];
+
+        result[Feature.types.part].push(partOfSpeech);
+        result[partOfSpeech] = {};
+        result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), []);
+        result[partOfSpeech].footnotes = [];
+
+        // Create a set so all footnote indexes be unique
+        let footnotesIndex = new Set();
+        // Scan all selected suffixes to build a unique set of footnote indexes
+        for (let suffix of result[partOfSpeech].suffixes) {
+          if (suffix.hasOwnProperty(Feature.types.footnote)) {
+            // Footnote indexes are stored in an array
+            for (let index of suffix[Feature.types.footnote]) {
+              footnotesIndex.add(index);
+            }
+          }
+        }
+        // Add footnote indexes and their texts to a result
+        for (let index of footnotesIndex) {
+          let footnote = this.footnotes.find(footnoteElement =>
+            footnoteElement.index === index && footnoteElement[Feature.types.part] === partOfSpeech
+          );
+          result[partOfSpeech].footnotes.push({index: index, text: footnote.text});
+        }
+        // Sort footnotes according to their index numbers
+        result[partOfSpeech].footnotes.sort((a, b) => parseInt(a.index) - parseInt(b.index));
+      }
+    }
+
+    return result
+  }
+
+  reducer (inflections, accumulator, suffix) {
+    let result = this.matcher(inflections, suffix);
+    if (result) {
+      accumulator.push(result);
+    }
+    return accumulator
+  }
+}
+
+/**
+ * Stores one or several language datasets, one for each language
+ */
+class LanguageData {
+  /**
+   * Combines several language datasets for different languages. Allows to abstract away language data.
+   * This function is chainable.
+   * @param {LanguageDataset[]} languageData - Language datasets of different languages.
+   * @return {LanguageData} Self instance for chaining.
+   */
+  constructor (languageData) {
+    this.supportedLanguages = [];
+
+    if (languageData) {
+      for (let dataset of languageData) {
+        this[dataset.language] = dataset;
+        this.supportedLanguages.push(dataset.language);
+      }
+    }
+    return this
+  }
+
+  /**
+   * Loads data for all data sets.
+   * This function is chainable.
+   * @return {LanguageData} Self instance for chaining.
+   */
+  loadData () {
+    for (let language of this.supportedLanguages) {
+      try {
+        this[language].loadData();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    return this
+  }
+
+  /**
+   * Finds matching suffixes for a homonym.
+   * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
+   * @return {InflectionData} A return value of an inflection query.
+   */
+  getSuffixes (homonym) {
+    let language = homonym.language;
+    if (this.supportedLanguages.includes(language)) {
+      return this[homonym.language].getSuffixes(homonym)
+    } else {
+      // throw new Error(`"${language}" language data is missing. Unable to get suffix data.`)
+      return new InflectionData(homonym)
+    }
+  }
+}
+
+class Cell {
+  /**
+   * Creates a cell for an inflection table.
+   * @param {Suffix[]} suffixes - A list of suffixes that belongs to this cell.
+   * @param {Feature[]} features - A list of features this cell corresponds to.
+   */
   constructor (suffixes, features) {
     this.suffixes = suffixes;
     if (!this.suffixes) {
@@ -4559,14 +4529,14 @@ class Cell {
     this.render();
   }
 
-    /**
-     * Renders an element's HTML representation.
-     */
+  /**
+   * Renders an element's HTML representation.
+   */
   render () {
     let element = document.createElement('div');
     element.classList.add(classNames.cell);
     for (let [index, suffix] of this.suffixes.entries()) {
-            // Render each suffix
+      // Render each suffix
       let suffixElement = document.createElement('a');
       suffixElement.classList.add(classNames.suffix);
       if (suffix.match && suffix.match.suffixMatch) {
@@ -4589,45 +4559,45 @@ class Cell {
     this.nNode = element.cloneNode(true);
   }
 
-    /**
-     * Returns an HTML element for a wide view.
-     * @returns {HTMLElement}
-     */
+  /**
+   * Returns an HTML element for a wide view.
+   * @returns {HTMLElement}
+   */
   get wvNode () {
     return this.wNode
   }
 
-    /**
-     * Returns an HTML element for a narrow view.
-     * @returns {HTMLElement}
-     */
+  /**
+   * Returns an HTML element for a narrow view.
+   * @returns {HTMLElement}
+   */
   get nvNode () {
     return this.nNode
   }
 
-    /**
-     * Sets a unique index of the cell that can be used for cell identification via 'data-index' attribute.
-     * @param {number} index - A unique cell index.
-     */
+  /**
+   * Sets a unique index of the cell that can be used for cell identification via 'data-index' attribute.
+   * @param {number} index - A unique cell index.
+   */
   set index (index) {
     this._index = index;
     this.wNode.dataset.index = this._index;
     this.nNode.dataset.index = this._index;
   }
 
-    /**
-     * A proxy for adding an event listener for both wide and narrow view HTML elements.
-     * @param {string} type - Listener type.
-     * @param {EventListener} listener - Event listener function.
-     */
+  /**
+   * A proxy for adding an event listener for both wide and narrow view HTML elements.
+   * @param {string} type - Listener type.
+   * @param {EventListener} listener - Event listener function.
+   */
   addEventListener (type, listener) {
     this.wNode.addEventListener(type, listener);
     this.nNode.addEventListener(type, listener);
   }
 
-    /**
-     * Hides an element.
-     */
+  /**
+   * Hides an element.
+   */
   hide () {
     if (!this.wNode.classList.contains(classNames.hidden)) {
       this.wNode.classList.add(classNames.hidden);
@@ -4635,9 +4605,9 @@ class Cell {
     }
   }
 
-    /**
-     * Shows a previously hidden element.
-     */
+  /**
+   * Shows a previously hidden element.
+   */
   show () {
     if (this.wNode.classList.contains(classNames.hidden)) {
       this.wNode.classList.remove(classNames.hidden);
@@ -4645,9 +4615,9 @@ class Cell {
     }
   }
 
-    /**
-     * Highlights a cell with color.
-     */
+  /**
+   * Highlights a cell with color.
+   */
   highlight () {
     if (!this.wNode.classList.contains(classNames.highlight)) {
       this.wNode.classList.add(classNames.highlight);
@@ -4655,9 +4625,9 @@ class Cell {
     }
   }
 
-    /**
-     * Removes highlighting from a previously highlighted cell.
-     */
+  /**
+   * Removes highlighting from a previously highlighted cell.
+   */
   clearHighlighting () {
     if (this.wNode.classList.contains(classNames.highlight)) {
       this.wNode.classList.remove(classNames.highlight);
@@ -4665,9 +4635,9 @@ class Cell {
     }
   }
 
-    /**
-     * Highlights a row and a column this cell belongs to.
-     */
+  /**
+   * Highlights a row and a column this cell belongs to.
+   */
   highlightRowAndColumn () {
     if (!this.column) {
       throw new Error('Column is undefined.')
@@ -4679,9 +4649,9 @@ class Cell {
     this.row.highlight();
   }
 
-    /**
-     * Removes highlighting form a previously highlighted row and column.
-     */
+  /**
+   * Removes highlighting form a previously highlighted row and column.
+   */
   clearRowAndColumnHighlighting () {
     if (!this.column) {
       throw new Error('Column is undefined.')
@@ -4698,14 +4668,14 @@ class Cell {
  * A cell that specifies a title for a row in an inflection table.
  */
 class RowTitleCell {
-    /**
-     * Initializes a row title cell.
-     * @param {string} title - A text that will be shown within the cell.
-     * @param {GroupFeatureType} groupingFeature - A grouping feature that specifies a row for which a title cell
-     * is created.
-     * @param {number} nvGroupQty - A number of narrow view groups. Because each group will be shown separately
-     * and will have its own title cells, we need to create a copy of a title cell for each such group.
-     */
+  /**
+   * Initializes a row title cell.
+   * @param {string} title - A text that will be shown within the cell.
+   * @param {GroupFeatureType} groupingFeature - A grouping feature that specifies a row for which a title cell
+   * is created.
+   * @param {number} nvGroupQty - A number of narrow view groups. Because each group will be shown separately
+   * and will have its own title cells, we need to create a copy of a title cell for each such group.
+   */
   constructor (title, groupingFeature, nvGroupQty) {
     this.parent = undefined;
     this.title = title;
@@ -4715,18 +4685,18 @@ class RowTitleCell {
     this.render();
   }
 
-    /**
-     * Renders an element's HTML representation.
-     */
+  /**
+   * Renders an element's HTML representation.
+   */
   render () {
-        // Generate HTML representation for a wide view node
+    // Generate HTML representation for a wide view node
     this.wNode = document.createElement('div');
     this.wNode.classList.add(classNames.cell);
     if (this.feature.formsColumn) {
       this.wNode.classList.add(classNames.header);
     }
     if (this.feature.hasFullWidthRowTitle) {
-            // This cell is taking an entire row
+      // This cell is taking an entire row
       this.wNode.classList.add(classNames.fullWidth);
     }
     if (this.feature.formsColumn && this.feature.groupFeatureList.titleColumnsQuantity > 1) {
@@ -4734,49 +4704,49 @@ class RowTitleCell {
     }
     this.wNode.innerHTML = this.title;
 
-        // Copy HTML representation to all narrow view nodes (each narrow view group has its own node)
+    // Copy HTML representation to all narrow view nodes (each narrow view group has its own node)
     this.nNodes = []; // Narrow nodes, one for each group
     for (let i = 0; i < this.nvGroupQty; i++) {
       this.nNodes.push(this.wNode.cloneNode(true));
     }
   }
 
-    /**
-     * Returns an HTML element for a wide view
-     * @returns {HTMLElement} HTML element for a wide view's cell.
-     */
+  /**
+   * Returns an HTML element for a wide view
+   * @returns {HTMLElement} HTML element for a wide view's cell.
+   */
   get wvNode () {
     return this.wNode
   }
 
-    /**
-     * Returns an array HTML element for narrow view groups
-     * @returns {HTMLElement[]} Array of HTML elements for narrow view group's cells.
-     */
+  /**
+   * Returns an array HTML element for narrow view groups
+   * @returns {HTMLElement[]} Array of HTML elements for narrow view group's cells.
+   */
   getNvNode (index) {
     return this.nNodes[index]
   }
 
-    /**
-     * Generates an empty cell placeholder of a certain width. Useful for situation when empty title cells need to be
-     * inserted into a table structure (i.e. when title cells occupy multiple columns.
-     * @param {number} width - A number of columns placeholder cell will occupy.
-     * @returns {HTMLElement} HTML element of a placeholder cell.
-     */
+  /**
+   * Generates an empty cell placeholder of a certain width. Useful for situation when empty title cells need to be
+   * inserted into a table structure (i.e. when title cells occupy multiple columns.
+   * @param {number} width - A number of columns placeholder cell will occupy.
+   * @returns {HTMLElement} HTML element of a placeholder cell.
+   */
   static placeholder (width = 1) {
     let placeholder = document.createElement('div');
     placeholder.classList.add(classNames.cell, classNames.widthPrefix + width);
     return placeholder
   }
 
-    /**
-     * Some table layouts require multiple title cells to be shown for a row. These could be, for example, a title
-     * cell for a parent category that will follow a title cell for a category that defines a row. In such situation a
-     * title cell will have a parent, which will represent a parent cell object.
-     * This function returns an array of title cells for a row, starting from the topmost parent and moving down
-     * tot the current title cell.
-     * @returns {RowTitleCell[]} An array of title row cells representing a title cell hierarchy list.
-     */
+  /**
+   * Some table layouts require multiple title cells to be shown for a row. These could be, for example, a title
+   * cell for a parent category that will follow a title cell for a category that defines a row. In such situation a
+   * title cell will have a parent, which will represent a parent cell object.
+   * This function returns an array of title cells for a row, starting from the topmost parent and moving down
+   * tot the current title cell.
+   * @returns {RowTitleCell[]} An array of title row cells representing a title cell hierarchy list.
+   */
   get hierarchyList () {
     let parentCells = [];
     if (this.parent) {
@@ -4785,9 +4755,9 @@ class RowTitleCell {
     return parentCells.concat(this)
   }
 
-    /**
-     * Highlights this row title cell
-     */
+  /**
+   * Highlights this row title cell
+   */
   highlight () {
     this.wNode.classList.add(classNames.highlight);
     for (let nNode of this.nNodes) {
@@ -4795,9 +4765,9 @@ class RowTitleCell {
     }
   }
 
-    /**
-     * Removes highlighting from this row title cell
-     */
+  /**
+   * Removes highlighting from this row title cell
+   */
   clearHighlighting () {
     this.wNode.classList.remove(classNames.highlight);
     for (let nNode of this.nNodes) {
@@ -4810,12 +4780,12 @@ class RowTitleCell {
  * A cell in a header row, a column title cell.
  */
 class HeaderCell {
-    /**
-     * Initializes a header cell.
-     * @param {string} title - A title text that will be shown in the header cell.
-     * @param {GroupFeatureType} groupingFeature - A feature that defines one or several columns this header forms.
-     * @param {number} [span=1] - How many columns in a table this header cell forms.
-     */
+  /**
+   * Initializes a header cell.
+   * @param {string} title - A title text that will be shown in the header cell.
+   * @param {GroupFeatureType} groupingFeature - A feature that defines one or several columns this header forms.
+   * @param {number} [span=1] - How many columns in a table this header cell forms.
+   */
   constructor (title, groupingFeature, span = 1) {
     this.feature = groupingFeature;
     this.title = title;
@@ -4828,9 +4798,9 @@ class HeaderCell {
     this.render();
   }
 
-    /**
-     * Renders an element's HTML representation.
-     */
+  /**
+   * Renders an element's HTML representation.
+   */
   render () {
     let element = document.createElement('div');
     element.classList.add(classNames.cell, classNames.header, classNames.widthPrefix + this.span);
@@ -4839,26 +4809,26 @@ class HeaderCell {
     this.nNode = element.cloneNode(true);
   }
 
-    /**
-     * Returns an HTML element for a wide view
-     * @returns {HTMLElement} HTML element for a wide view's cell.
-     */
+  /**
+   * Returns an HTML element for a wide view
+   * @returns {HTMLElement} HTML element for a wide view's cell.
+   */
   get wvNode () {
     return this.wNode
   }
 
-    /**
-     * Returns an HTML element for a narrow view
-     * @returns {HTMLElement} HTML element for a narrow view's cell.
-     */
+  /**
+   * Returns an HTML element for a narrow view
+   * @returns {HTMLElement} HTML element for a narrow view's cell.
+   */
   get nvNode () {
     return this.nNode
   }
 
-    /**
-     * Registers a column that's being formed by this header cell. Adds column to itself and to its parent(s).
-     * @param {Column} column - A column that is formed by this header cell.
-     */
+  /**
+   * Registers a column that's being formed by this header cell. Adds column to itself and to its parent(s).
+   * @param {Column} column - A column that is formed by this header cell.
+   */
   addColumn (column) {
     this.columns = this.columns.concat([column]);
 
@@ -4867,11 +4837,11 @@ class HeaderCell {
     }
   }
 
-    /**
-     * Temporary changes a width of a header cell. This happens when one or several columns
-     * that this header forms are hidden or shown.
-     * @param value
-     */
+  /**
+   * Temporary changes a width of a header cell. This happens when one or several columns
+   * that this header forms are hidden or shown.
+   * @param value
+   */
   changeSpan (value) {
     let currentWidthClass = classNames.widthPrefix + this.span;
     this.span += value;
@@ -4880,11 +4850,11 @@ class HeaderCell {
     this.nNode.classList.replace(currentWidthClass, newWidthClass);
   }
 
-    /**
-     * This function will notify all parents and children of a title column that some columns under this headers cell
-     * changed their state (i.e. were hidden or shown). This way parents and children will be able to update their
-     * states accordingly.
-     */
+  /**
+   * This function will notify all parents and children of a title column that some columns under this headers cell
+   * changed their state (i.e. were hidden or shown). This way parents and children will be able to update their
+   * states accordingly.
+   */
   columnStateChange () {
     let visibleColumns = 0;
     for (let column of this.columns) {
@@ -4893,11 +4863,11 @@ class HeaderCell {
       }
     }
     if (this.span !== visibleColumns) {
-            // Number of visible columns has been changed
+      // Number of visible columns has been changed
       let change = visibleColumns - this.span;
       this.changeSpan(change);
 
-            // Notify parents and children
+      // Notify parents and children
       if (this.children.length) {
         for (let child of this.children) {
           child.columnStateChange();
@@ -4909,9 +4879,9 @@ class HeaderCell {
     }
   }
 
-    /**
-     * Highlights a header cell, its parent and children
-     */
+  /**
+   * Highlights a header cell, its parent and children
+   */
   highlight () {
     if (!this.wNode.classList.contains(classNames.highlight)) {
       this.wNode.classList.add(classNames.highlight);
@@ -4923,9 +4893,9 @@ class HeaderCell {
     }
   }
 
-    /**
-     * Removes highlighting from a header cell, its parent and children
-     */
+  /**
+   * Removes highlighting from a header cell, its parent and children
+   */
   clearHighlighting () {
     if (this.wNode.classList.contains(classNames.highlight)) {
       this.wNode.classList.remove(classNames.highlight);
@@ -4942,10 +4912,10 @@ class HeaderCell {
  * Represent a column of cells in an inflection table.
  */
 class Column {
-    /**
-     * Initializes column with a provided set of cells.
-     * @param {Cell} cells - Cells that are within this column.
-     */
+  /**
+   * Initializes column with a provided set of cells.
+   * @param {Cell} cells - Cells that are within this column.
+   */
   constructor (cells) {
     this.cells = cells;
     if (!cells) {
@@ -4961,26 +4931,26 @@ class Column {
     }
   }
 
-    /**
-     * Assigns a header cell to the column.
-     * @param {HeaderCell} headerCell - A header cell of this column.
-     */
+  /**
+   * Assigns a header cell to the column.
+   * @param {HeaderCell} headerCell - A header cell of this column.
+   */
   set headerCell (headerCell) {
     this._headerCell = headerCell;
     headerCell.addColumn(this);
   }
 
-    /**
-     * Returns a number of cells within this column.
-     * @returns {Number} A number of cells this column contains.
-     */
+  /**
+   * Returns a number of cells within this column.
+   * @returns {Number} A number of cells this column contains.
+   */
   get length () {
     return this.cells.length
   }
 
-    /**
-     * Hides the column. Notifies a header about a state change.
-     */
+  /**
+   * Hides the column. Notifies a header about a state change.
+   */
   hide () {
     if (!this.hidden) {
       this.hidden = true;
@@ -4994,9 +4964,9 @@ class Column {
     }
   }
 
-    /**
-     * Shows the column. Notifies a header about a state change.
-     */
+  /**
+   * Shows the column. Notifies a header about a state change.
+   */
   show () {
     if (this.hidden) {
       this.hidden = false;
@@ -5010,9 +4980,9 @@ class Column {
     }
   }
 
-    /**
-     * Highlights a column and its header.
-     */
+  /**
+   * Highlights a column and its header.
+   */
   highlight () {
     for (let cell of this.cells) {
       cell.highlight();
@@ -5022,9 +4992,9 @@ class Column {
     }
   }
 
-    /**
-     * Removes highlighting from a column and its header.
-     */
+  /**
+   * Removes highlighting from a column and its header.
+   */
   clearHighlighting () {
     for (let cell of this.cells) {
       cell.clearHighlighting();
@@ -5039,10 +5009,10 @@ class Column {
  * Represents a row of cells
  */
 class Row {
-    /**
-     * Populates row with cells
-     * @param {Cell[]} cells - Cells that belong to this row
-     */
+  /**
+   * Populates row with cells
+   * @param {Cell[]} cells - Cells that belong to this row
+   */
   constructor (cells) {
     this.cells = cells;
     if (!cells) {
@@ -5055,35 +5025,35 @@ class Row {
     }
   }
 
-    /**
-     * Adds a cell to the row.
-     * This is a chainable function.
-     * @param {Cell} cell - A cell to be added to the row
-     */
+  /**
+   * Adds a cell to the row.
+   * This is a chainable function.
+   * @param {Cell} cell - A cell to be added to the row
+   */
   add (cell) {
     cell.row = this;
     this.cells.push(cell);
     return this
   }
 
-    /**
-     * Returns a number of cells in a row
-     * @returns {Number} A number of cells in a row
-     */
+  /**
+   * Returns a number of cells in a row
+   * @returns {Number} A number of cells in a row
+   */
   get length () {
     return this.cells.length
   }
 
-    /**
-     * Returns a portion of a cells array starting from `from` item and up to, but not including, `upto` element.
-     * It does not create new copies of cells to populate a newly created array; this array contains references to
-     * the same cells that original Row refers to. It also does not update row reference within Cell objects.
-     *
-     * This function presents a way to create another structure of existing table's cells.
-     * It can be useful for views that have a different structure (i.e. narrow view).
-     * @param {number} from
-     * @param {number} upto
-     */
+  /**
+   * Returns a portion of a cells array starting from `from` item and up to, but not including, `upto` element.
+   * It does not create new copies of cells to populate a newly created array; this array contains references to
+   * the same cells that original Row refers to. It also does not update row reference within Cell objects.
+   *
+   * This function presents a way to create another structure of existing table's cells.
+   * It can be useful for views that have a different structure (i.e. narrow view).
+   * @param {number} from
+   * @param {number} upto
+   */
   slice (from, upto) {
     let slice = new Row();
     if (from < 0 && from > this.cells.length) {
@@ -5099,9 +5069,9 @@ class Row {
     return slice
   }
 
-    /**
-     * Highlights all cells in a row, and a title cells
-     */
+  /**
+   * Highlights all cells in a row, and a title cells
+   */
   highlight () {
     for (let cell of this.cells) {
       cell.highlight();
@@ -5111,9 +5081,9 @@ class Row {
     }
   }
 
-    /**
-     * Removes highlighting from all cells in a row, and from a title cell
-     */
+  /**
+   * Removes highlighting from all cells in a row, and from a title cell
+   */
   clearHighlighting () {
     for (let cell of this.cells) {
       cell.clearHighlighting();
@@ -5131,18 +5101,18 @@ class Row {
  * that is required for that.
  */
 class GroupFeatureType extends FeatureType {
-    /**
-     * GroupFeatureType extends FeatureType to serve as a grouping feature (i.e. a feature that forms
-     * either a column or a row in an inflection table). For that, it adds some additional functionality,
-     * such as custom feature orders that will allow to combine suffixes from several grammatical features
-     * (i.e. masculine and feminine) into a one column of a table.
-     * @param {FeatureType} featureType - A feature that defines a type of this item.
-     * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
-     * language-specific message bundle.
-     * @param {Feature[]} order - A custom sort order for this feature that redefines
-     * a default one stored in FeatureType object (optional).
-     * Use this parameter to redefine a deafult sort order for a type.
-     */
+  /**
+   * GroupFeatureType extends FeatureType to serve as a grouping feature (i.e. a feature that forms
+   * either a column or a row in an inflection table). For that, it adds some additional functionality,
+   * such as custom feature orders that will allow to combine suffixes from several grammatical features
+   * (i.e. masculine and feminine) into a one column of a table.
+   * @param {FeatureType} featureType - A feature that defines a type of this item.
+   * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
+   * language-specific message bundle.
+   * @param {Feature[]} order - A custom sort order for this feature that redefines
+   * a default one stored in FeatureType object (optional).
+   * Use this parameter to redefine a deafult sort order for a type.
+   */
   constructor (featureType, titleMessageID, order = featureType.orderedFeatures) {
     super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.language);
 
@@ -5151,7 +5121,7 @@ class GroupFeatureType extends FeatureType {
 
     this.groupFeatureList = undefined;
 
-        // Properties below are required to store information during tree creation
+    // Properties below are required to store information during tree creation
     this.subgroups = []; // Each value of the feature
     this.cells = []; // All cells within this group and below
     this.parent = undefined;
@@ -5163,12 +5133,12 @@ class GroupFeatureType extends FeatureType {
     this.hasFullWidthRowTitle = false; // Whether this feature has a title of suffix rows that spans the whole table width.
   }
 
-    /**
-     * Converts a list of Feature objects into a list of strings that represent their values. Keeps tha original
-     * array structure intact (work with up two two array levels).
-     * @param {Feature[] | Feature[][]} features - An array of feature objects.
-     * @return {string[] | strings[][]} A matching array of strings with feature values.
-     */
+  /**
+   * Converts a list of Feature objects into a list of strings that represent their values. Keeps tha original
+   * array structure intact (work with up two two array levels).
+   * @param {Feature[] | Feature[][]} features - An array of feature objects.
+   * @return {string[] | strings[][]} A matching array of strings with feature values.
+   */
   static featuresToValues (features) {
     return features.map((feature) => {
       if (Array.isArray(feature)) {
@@ -5179,81 +5149,81 @@ class GroupFeatureType extends FeatureType {
     })
   }
 
-    /**
-     * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
-     * @returns {Feature[] | Feature[][]} A sorted array of feature values.
-     */
+  /**
+   * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
+   * @returns {Feature[] | Feature[][]} A sorted array of feature values.
+   */
   getOrderedFeatures (ancestorFeatures) {
     return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(value, this.type, this.language))
   }
 
-    /**
-     * This is a wrapper around orderedValues() that allows to set a custom feature order for particular columns.
-     * By default it returns features in the same order that is defined in a base FeatureType class.
-     * Redefine it to provide a custom grouping and sort order.
-     * @returns {string[] | string[][]} A sorted array of feature values.
-     */
+  /**
+   * This is a wrapper around orderedValues() that allows to set a custom feature order for particular columns.
+   * By default it returns features in the same order that is defined in a base FeatureType class.
+   * Redefine it to provide a custom grouping and sort order.
+   * @returns {string[] | string[][]} A sorted array of feature values.
+   */
   getOrderedValues (ancestorFeatures) {
     return this._orderIndex
   }
 
-    /**
-     * Whether this feature forms a columns group.
-     * @returns {boolean} True if this feature forms a column.
-     */
+  /**
+   * Whether this feature forms a columns group.
+   * @returns {boolean} True if this feature forms a column.
+   */
   get formsColumn () {
     return this._formsColumn
   }
 
-    /**
-     * Sets that this feature would form a column.
-     * @param {boolean} value
-     */
+  /**
+   * Sets that this feature would form a column.
+   * @param {boolean} value
+   */
   set formsColumn (value) {
     this._formsColumn = value;
     this._formsRow = !value; // Can't do both
   }
 
-    /**
-     * Whether this feature forms a row group.
-     * @returns {boolean} True if this feature forms a row.
-     */
+  /**
+   * Whether this feature forms a row group.
+   * @returns {boolean} True if this feature forms a row.
+   */
   get formsRow () {
     return this._formsRow
   }
 
-    /**
-     * Sets that this feature would form a row.
-     * @param {boolean} value
-     */
+  /**
+   * Sets that this feature would form a row.
+   * @param {boolean} value
+   */
   set formsRow (value) {
     this._formsRow = value;
     this._formsColumn = !value; // Can't do both
   }
 
-    /**
-     * How many groups this feature would form.
-     * @returns {Number} A number of groupes formed by this feature.
-     */
+  /**
+   * How many groups this feature would form.
+   * @returns {Number} A number of groupes formed by this feature.
+   */
   get size () {
     return this.orderedValues.length
   }
 
-    /**
-     * Checks if two grouping features are of the same type.
-     * @param {GroupFeatureType} groupingFeature - A grouping feature to compare with the current one.
-     * @returns {boolean} True if grouping features are of the same type.
-     */
+  /**
+   * Checks if two grouping features are of the same type.
+   * @param {GroupFeatureType} groupingFeature - A grouping feature to compare with the current one.
+   * @returns {boolean} True if grouping features are of the same type.
+   */
   isSameType (groupingFeature) {
     return this.type === groupingFeature.type
   }
 
-    /**
-     * Creates a title cell for a feature from the current group.
-     * @param {string} title - A text that will be shown within a cell.
-     * @param {number} nvGroupQty - A number of narrow view groups.
-     * @returns {RowTitleCell} A created RowTitleCell object.
-     */
+  /**
+   * Creates a title cell for a feature from the current group.
+   * @param {string} title - A text that will be shown within a cell.
+   * @param {number} nvGroupQty - A number of narrow view groups.
+   * @returns {RowTitleCell} A created RowTitleCell object.
+   */
   createTitleCell (title, nvGroupQty) {
     return new RowTitleCell(title, this, nvGroupQty)
   }
@@ -5263,11 +5233,11 @@ class GroupFeatureType extends FeatureType {
  * Holds a list of all grouping features of a table.
  */
 class GroupFeatureList extends FeatureList {
-    /**
-     * Initializes object with an array of grouping feature objects.
-     * @param {GroupFeatureType[]} features - An array of features that form a table.
-     * An order of features defines in what order a table tree would be built.
-     */
+  /**
+   * Initializes object with an array of grouping feature objects.
+   * @param {GroupFeatureType[]} features - An array of features that form a table.
+   * An order of features defines in what order a table tree would be built.
+   */
   constructor (features) {
     super(features);
     this._columnFeatures = []; // Features that group cells into columns
@@ -5276,19 +5246,19 @@ class GroupFeatureList extends FeatureList {
     this.forEach((feature) => { feature.groupFeatureList = this; });
   }
 
-    /**
-     * Return a list of all grouping features that form columns.
-     * @returns {GroupFeatureType[]} - An array of grouping features.
-     */
+  /**
+   * Return a list of all grouping features that form columns.
+   * @returns {GroupFeatureType[]} - An array of grouping features.
+   */
   get columnFeatures () {
     return this._columnFeatures
   }
 
-    /**
-     * Defines what features form columns. An order of items specifies an order in which columns be shown.
-     * @param {Feature[] | GroupingFeature[]} features - What features form columns and what order
-     * these columns would follow.
-     */
+  /**
+   * Defines what features form columns. An order of items specifies an order in which columns be shown.
+   * @param {Feature[] | GroupingFeature[]} features - What features form columns and what order
+   * these columns would follow.
+   */
   set columns (features) {
     for (let feature of features) {
       let matchingFeature = this.ofType(feature.type);
@@ -5300,39 +5270,39 @@ class GroupFeatureList extends FeatureList {
     }
   }
 
-    /**
-     * Returns a first column feature item.
-     * @returns {GroupFeatureType} A fist column feature.
-     */
+  /**
+   * Returns a first column feature item.
+   * @returns {GroupFeatureType} A fist column feature.
+   */
   get firstColumnFeature () {
     if (this._columnFeatures && this._columnFeatures.length) {
       return this._columnFeatures[0]
     }
   }
 
-    /**
-     * Returns a last column feature item.
-     * @returns {GroupFeatureType} A last column feature.
-     */
+  /**
+   * Returns a last column feature item.
+   * @returns {GroupFeatureType} A last column feature.
+   */
   get lastColumnFeature () {
     if (this._columnFeatures && this._columnFeatures.length) {
       return this._columnFeatures[this._columnFeatures.length - 1]
     }
   }
 
-    /**
-     * Return a list of all grouping features that form rows.
-     * @returns {GroupFeatureType[]} - An array of grouping rows.
-     */
+  /**
+   * Return a list of all grouping features that form rows.
+   * @returns {GroupFeatureType[]} - An array of grouping rows.
+   */
   get rowFeatures () {
     return this._rowFeatures
   }
 
-    /**
-     * Defines what features form rows. An order of items specifies an order in which columns be shown.
-     * @param {Feature[] | GroupingFeature[]} features - What features form rows and what order
-     * these rows would follow.
-     */
+  /**
+   * Defines what features form rows. An order of items specifies an order in which columns be shown.
+   * @param {Feature[] | GroupingFeature[]} features - What features form rows and what order
+   * these rows would follow.
+   */
   set rows (features) {
     for (let feature of features) {
       let matchingFeature = this.ofType(feature.type);
@@ -5345,32 +5315,32 @@ class GroupFeatureList extends FeatureList {
     return this
   }
 
-    /**
-     * Returns a first row feature item.
-     * @returns {GroupFeatureType} A fist row feature.
-     */
+  /**
+   * Returns a first row feature item.
+   * @returns {GroupFeatureType} A fist row feature.
+   */
   get firstRowFeature () {
     if (this._rowFeatures && this._rowFeatures.length) {
       return this._rowFeatures[0]
     }
   }
 
-    /**
-     * Returns a last row feature item.
-     * @returns {GroupFeatureType} A last row feature.
-     */
+  /**
+   * Returns a last row feature item.
+   * @returns {GroupFeatureType} A last row feature.
+   */
   get lastRowFeature () {
     if (this._rowFeatures && this._rowFeatures.length) {
       return this._rowFeatures[this._rowFeatures.length - 1]
     }
   }
 
-    /**
-     * Defines what are the titles of suffix cell rows within a table body.
-     * The number of such items defines how many left-side title columns this table would have (default is one).
-     * Full width titles (see below) does not need to be specified here.
-     * @param {Feature | GroupingFeature} features - What suffix row titles this table would have.
-     */
+  /**
+   * Defines what are the titles of suffix cell rows within a table body.
+   * The number of such items defines how many left-side title columns this table would have (default is one).
+   * Full width titles (see below) does not need to be specified here.
+   * @param {Feature | GroupingFeature} features - What suffix row titles this table would have.
+   */
   set columnRowTitles (features) {
     for (let feature of features) {
       let matchingFeature = this.ofType(feature.type);
@@ -5381,12 +5351,12 @@ class GroupFeatureList extends FeatureList {
     }
   }
 
-    /**
-     * In inflection tables, titles of features are usually located in left-side columns. However, some titles that
-     * group several rows together may span the whole table width. This setters defines
-     * what those features are.
-     * @param {Feature | GroupingFeature} features - What feature titles would take a whole row
-     */
+  /**
+   * In inflection tables, titles of features are usually located in left-side columns. However, some titles that
+   * group several rows together may span the whole table width. This setters defines
+   * what those features are.
+   * @param {Feature | GroupingFeature} features - What feature titles would take a whole row
+   */
   set fullWidthRowTitles (features) {
     for (let feature of features) {
       let matchingFeature = this.ofType(feature.type);
@@ -5397,18 +5367,18 @@ class GroupFeatureList extends FeatureList {
     }
   }
 
-    /**
-     * Returns a quantity of grouping features.
-     * @returns {number} - A number of grouping features.
-     */
+  /**
+   * Returns a quantity of grouping features.
+   * @returns {number} - A number of grouping features.
+   */
   get length () {
     return this._features.length
   }
 
-    /**
-     * Calculate a number of title columns.
-     * @returns {number} A number of title columns.
-     */
+  /**
+   * Calculate a number of title columns.
+   * @returns {number} A number of title columns.
+   */
   get titleColumnsQuantity () {
     let quantity = 0;
     for (let feature of this._features) {
@@ -5421,34 +5391,16 @@ class GroupFeatureList extends FeatureList {
 }
 
 /**
- * Stores group data during feature tree construction.
- */
-class NodeGroup {
-    /**
-     * Creates feature group data structures.
-     */
-  constructor () {
-    this.subgroups = []; // Each value of the feature
-    this.cells = []; // All cells within this group and below
-    this.parent = undefined;
-    this.header = undefined;
-
-    this.groupFeatureType = undefined; // Defines a feature type that forms a tree level this node is in.
-    this.ancestorFeatures = undefined; // Defines feature values of this node's parents.
-  }
-}
-
-/**
  * A representation of a table that is shown on wide screens (desktops).
  */
 class WideView {
-    /**
-     * Initializes a wide view.
-     * @param {Column[]} columns - Table columns.
-     * @param {Row[]} rows - Table rows.
-     * @param {Row[]} headers - Table headers.
-     * @param {number} titleColumnQty - Number of title columns in a table.
-     */
+  /**
+   * Initializes a wide view.
+   * @param {Column[]} columns - Table columns.
+   * @param {Row[]} rows - Table rows.
+   * @param {Row[]} headers - Table headers.
+   * @param {number} titleColumnQty - Number of title columns in a table.
+   */
   constructor (columns, rows, headers, titleColumnQty) {
     this.columns = columns;
     this.rows = rows;
@@ -5458,10 +5410,10 @@ class WideView {
     this.nodes.classList.add(classNames.inflectionTable, classNames.wideView);
   }
 
-    /**
-     * Calculates a number of visible columns in this view.
-     * @returns {number} A number of visible columns.
-     */
+  /**
+   * Calculates a number of visible columns in this view.
+   * @returns {number} A number of visible columns.
+   */
   get visibleColumnQty () {
     let qty = 0;
     for (let column of this.columns) {
@@ -5472,12 +5424,12 @@ class WideView {
     return qty
   }
 
-    /**
-     * Renders an HTML representation of a wide table view.
-     * @returns {HTMLElement} A rendered HTML Element.
-     */
+  /**
+   * Renders an HTML representation of a wide table view.
+   * @returns {HTMLElement} A rendered HTML Element.
+   */
   render () {
-        // Remove any previously inserted nodes
+    // Remove any previously inserted nodes
     this.nodes.innerHTML = '';
 
     for (let row of this.headers) {
@@ -5501,62 +5453,8 @@ class WideView {
       }
     }
     this.nodes.style.gridTemplateColumns = 'repeat(' + (this.visibleColumnQty + this.titleColumnQty) + ', ' +
-            wideView.column.width + wideView.column.unit + ')';
+      wideView.column.width + wideView.column.unit + ')';
 
-    return this.nodes
-  }
-}
-
-/**
- * A representation of a table that is shown on narrow screens (mobile devices).
- */
-class NarrowView {
-    /**
-     * Initializes a narrow view.
-     * @param {number} groupQty - A number of visible groups (sub tables) within a narrow view.
-     * @param {Column[]} columns - Table columns.
-     * @param {Row[]} rows - Table rows.
-     * @param {Row[]} headers - Table headers.
-     * @param {number} titleColumnQty - Number of title columns in a table.
-     */
-  constructor (groupQty, columns, rows, headers, titleColumnQty) {
-    this.columns = columns;
-    this.rows = rows;
-    this.headers = headers;
-    this.titleColumnQty = titleColumnQty;
-    this.groups = [];
-    this.groupQty = groupQty;
-    this.groupSize = 0;
-    if (groupQty) {
-      this.groupSize = this.columns.length / groupQty;
-    }
-
-    this.nodes = document.createElement('div');
-    this.nodes.classList.add(classNames.narrowViewsContainer);
-
-    for (let [index, headerCell] of this.headers[0].cells.entries()) {
-      this.createGroup(index, headerCell);
-    }
-  }
-
-    /**
-     * Creates a group within a table.
-     * @returns {NarrowViewGroup} A newly created group.
-     */
-  createGroup (index, headerCell) {
-    let group = new NarrowViewGroup(index, this.headers, this.rows, this.titleColumnQty);
-    this.nodes.appendChild(group.nodes);
-    this.groups.push(group);
-  }
-
-    /**
-     * Generates an HTML representation of a view.
-     * @returns {HTMLElement} - HTML representation of a view.
-     */
-  render () {
-    for (let group of this.groups) {
-      group.render();
-    }
     return this.nodes
   }
 }
@@ -5568,17 +5466,17 @@ class NarrowView {
  * separated object and can be reflown on devices with narrow screens.
  */
 class NarrowViewGroup {
-    // TODO: Review constructor parameters
+  // TODO: Review constructor parameters
 
-    /**
-     * Initializes a narrow view group. Please note that column, rows, and headers are those of a whole table,
-     * not of this particular group. NarrowViewGroup constructor will use this data to build
-     * the corresponding objects of the group itself.
-     * @param {number} index - An index of this group within a groups array, starting from zero.
-     * @param {Row[]} headers - Table headers.
-     * @param {Row[]} rows - Table rows.
-     * @param {number} titleColumnQty - Number of title columns in a table.
-     */
+  /**
+   * Initializes a narrow view group. Please note that column, rows, and headers are those of a whole table,
+   * not of this particular group. NarrowViewGroup constructor will use this data to build
+   * the corresponding objects of the group itself.
+   * @param {number} index - An index of this group within a groups array, starting from zero.
+   * @param {Row[]} headers - Table headers.
+   * @param {Row[]} rows - Table rows.
+   * @param {number} titleColumnQty - Number of title columns in a table.
+   */
   constructor (index, headers, rows, titleColumnQty) {
     this.index = index;
     this.columns = headers[0].cells[index].columns;
@@ -5591,10 +5489,10 @@ class NarrowViewGroup {
       this.rows.push(row.slice(columnsStartIndex, columnsEndIndex + 1));
     }
     this.headers = [];
-        /**
-         * Since we group by the first column feature, there will be a single feature in a first header row,
-         * its children in the second row, children of its children in a third row and so on.
-         */
+    /**
+     * Since we group by the first column feature, there will be a single feature in a first header row,
+     * its children in the second row, children of its children in a third row and so on.
+     */
     for (let [headerIndex, headerRow] of headers.entries()) {
       let row = new Row();
       row.titleCell = headerRow.titleCell;
@@ -5613,10 +5511,10 @@ class NarrowViewGroup {
     this.nodes.classList.add(classNames.inflectionTable, classNames.narrowView);
   }
 
-    /**
-     * Calculates a number of visible columns in this view.
-     * @returns {number} A number of visible columns.
-     */
+  /**
+   * Calculates a number of visible columns in this view.
+   * @returns {number} A number of visible columns.
+   */
   get visibleColumnQty () {
     let qty = 0;
     for (let column of this.columns) {
@@ -5627,14 +5525,14 @@ class NarrowViewGroup {
     return qty
   }
 
-    /**
-     * Renders an HTML representation of a narrow view group.
-     */
+  /**
+   * Renders an HTML representation of a narrow view group.
+   */
   render () {
     this.nodes.innerHTML = '';
 
     if (this.visibleColumnQty) {
-            // This group is visible
+      // This group is visible
       for (let headerRow of this.headers) {
         this.nodes.appendChild(headerRow.titleCell.getNvNode(this.index));
         for (let headerCell of headerRow.cells) {
@@ -5657,13 +5555,85 @@ class NarrowViewGroup {
       }
       this.nodes.classList.remove(classNames.hidden);
       this.nodes.style.gridTemplateColumns = 'repeat(' + (this.visibleColumnQty + this.titleColumnQty) + ', ' +
-                narrowView.column.width + narrowView.column.unit + ')';
+        narrowView.column.width + narrowView.column.unit + ')';
       this.nodes.style.width = (this.visibleColumnQty + this.titleColumnQty) * narrowView.column.width +
-                narrowView.column.unit;
+        narrowView.column.unit;
     } else {
-            // This group is hidden
+      // This group is hidden
       this.nodes.classList.add(classNames.hidden);
     }
+  }
+}
+
+/**
+ * A representation of a table that is shown on narrow screens (mobile devices).
+ */
+class NarrowView {
+  /**
+   * Initializes a narrow view.
+   * @param {number} groupQty - A number of visible groups (sub tables) within a narrow view.
+   * @param {Column[]} columns - Table columns.
+   * @param {Row[]} rows - Table rows.
+   * @param {Row[]} headers - Table headers.
+   * @param {number} titleColumnQty - Number of title columns in a table.
+   */
+  constructor (groupQty, columns, rows, headers, titleColumnQty) {
+    this.columns = columns;
+    this.rows = rows;
+    this.headers = headers;
+    this.titleColumnQty = titleColumnQty;
+    this.groups = [];
+    this.groupQty = groupQty;
+    this.groupSize = 0;
+    if (groupQty) {
+      this.groupSize = this.columns.length / groupQty;
+    }
+
+    this.nodes = document.createElement('div');
+    this.nodes.classList.add(classNames.narrowViewsContainer);
+
+    for (let [index, headerCell] of this.headers[0].cells.entries()) {
+      this.createGroup(index, headerCell);
+    }
+  }
+
+  /**
+   * Creates a group within a table.
+   * @returns {NarrowViewGroup} A newly created group.
+   */
+  createGroup (index, headerCell) {
+    let group = new NarrowViewGroup(index, this.headers, this.rows, this.titleColumnQty);
+    this.nodes.appendChild(group.nodes);
+    this.groups.push(group);
+  }
+
+  /**
+   * Generates an HTML representation of a view.
+   * @returns {HTMLElement} - HTML representation of a view.
+   */
+  render () {
+    for (let group of this.groups) {
+      group.render();
+    }
+    return this.nodes
+  }
+}
+
+/**
+ * Stores group data during feature tree construction.
+ */
+class NodeGroup {
+  /**
+   * Creates feature group data structures.
+   */
+  constructor () {
+    this.subgroups = []; // Each value of the feature
+    this.cells = []; // All cells within this group and below
+    this.parent = undefined;
+    this.header = undefined;
+
+    this.groupFeatureType = undefined; // Defines a feature type that forms a tree level this node is in.
+    this.ancestorFeatures = undefined; // Defines feature values of this node's parents.
   }
 }
 
@@ -5671,27 +5641,27 @@ class NarrowViewGroup {
  * Represents an inflection table.
  */
 class Table {
-    /**
-     * Initializes an inflection table.
-     * @param {GroupFeatureType[]} features - An array of grouping features. An order of elements in this array
-     */
+  /**
+   * Initializes an inflection table.
+   * @param {GroupFeatureType[]} features - An array of grouping features. An order of elements in this array
+   */
   constructor (features) {
     this.features = new GroupFeatureList(features);
     this.emptyColumnsHidden = false;
     this.cells = []; // Will be populated by groupByFeature()
 
-        /*
-        This is a special filter function that, if defined will do additional filtering of suffixes within a cell.
-         */
+    /*
+    This is a special filter function that, if defined will do additional filtering of suffixes within a cell.
+     */
     this.suffixCellFilter = undefined;
   }
 
-    /**
-     * Creates a table tree and other data structures (columns, rows, headers).
-     * This function is chainabe.
-     * @param {Suffix[]} suffixes - An array of suffixes to build table from.
-     * @returns {Table} Reference to self for chaining.
-     */
+  /**
+   * Creates a table tree and other data structures (columns, rows, headers).
+   * This function is chainabe.
+   * @param {Suffix[]} suffixes - An array of suffixes to build table from.
+   * @returns {Table} Reference to self for chaining.
+   */
   construct (suffixes) {
     this.suffixes = suffixes;
     this.tree = this.groupByFeature(suffixes);
@@ -5702,22 +5672,22 @@ class Table {
     return this
   }
 
-    /**
-     * Builds wide and narrow views of the table.
-     * This function is chainabe.
-     * @returns {Table} Reference to self for chaining.
-     */
+  /**
+   * Builds wide and narrow views of the table.
+   * This function is chainabe.
+   * @returns {Table} Reference to self for chaining.
+   */
   constructViews () {
     this.wideView = new WideView(this.columns, this.rows, this.headers, this.titleColumnQty);
     this.narrowView = new NarrowView(
-            this.features.firstColumnFeature.size, this.columns, this.rows, this.headers, this.titleColumnQty);
+      this.features.firstColumnFeature.size, this.columns, this.rows, this.headers, this.titleColumnQty);
     return this
   }
 
-    /**
-     * Returns a number of columns with suffix cells in a table.
-     * @returns {number} A number of columns with suffix cells in a table.
-     */
+  /**
+   * Returns a number of columns with suffix cells in a table.
+   * @returns {number} A number of columns with suffix cells in a table.
+   */
   get suffixColumnQty () {
     if (!this.columns) {
       throw new Error('Columns are not populated yet.')
@@ -5725,10 +5695,10 @@ class Table {
     return this.columns.length
   }
 
-    /**
-     * Returns a number of columns with row titles in a table.
-     * @returns {number} A number of columns with row titles.
-     */
+  /**
+   * Returns a number of columns with row titles in a table.
+   * @returns {number} A number of columns with row titles.
+   */
   get titleColumnQty () {
     if (!this.features) {
       throw new Error('Features are not defined.')
@@ -5736,10 +5706,10 @@ class Table {
     return this.features.titleColumnsQuantity
   }
 
-    /**
-     * Returns a number of rows with suffix cells in a table.
-     * @returns {number} A number of rows with suffix cells.
-     */
+  /**
+   * Returns a number of rows with suffix cells in a table.
+   * @returns {number} A number of rows with suffix cells.
+   */
   get suffixRowQty () {
     if (!this.columns) {
       throw new Error('Columns are not populated yet.')
@@ -5747,19 +5717,19 @@ class Table {
     return this.columns[0].length
   }
 
-    /**
-     * Returns true if an ending grammatical feature defined by featureType has a value that is listed in a featureValues array.
-     * This function is for use with Array.prototype.filter().
-     * @param {string} featureType - a grammatical feature type we need to filter on.
-     * @param {string | string[]} featureValues - a list of possible values of a type specified by featureType that
-     * this ending should have.
-     * @param {Suffix} suffix - an ending we need to filter out.
-     * @returns {boolean} True if suffix has a value of a grammatical feature specified.
-     */
+  /**
+   * Returns true if an ending grammatical feature defined by featureType has a value that is listed in a featureValues array.
+   * This function is for use with Array.prototype.filter().
+   * @param {string} featureType - a grammatical feature type we need to filter on.
+   * @param {string | string[]} featureValues - a list of possible values of a type specified by featureType that
+   * this ending should have.
+   * @param {Suffix} suffix - an ending we need to filter out.
+   * @returns {boolean} True if suffix has a value of a grammatical feature specified.
+   */
   static filter (featureType, featureValues, suffix) {
     'use strict';
 
-        // If not an array, convert it to array for uniformity
+    // If not an array, convert it to array for uniformity
     if (!Array.isArray(featureValues)) {
       featureValues = [featureValues];
     }
@@ -5772,42 +5742,42 @@ class Table {
     return false
   };
 
-    /**
-     * Groups all suffixes into a tree according to their grammatical features. There are several levels in this tree.
-     * Each level corresponds to a one grouping feature. The order of items in GroupingFeatures List object
-     * defines an order of those levels.
-     * Nodes on each level are values of a grammatical feature that forms this level. An order of those values
-     * is determined by the order of values within a GroupFeatureType object of each feature.
-     * This is a recursive function.
-     * @param {Suffix[]} suffixes - Suffixes to be grouped.
-     * @param {Feature[]} ancestorFeatures - A list of feature values on levels above the current.
-     * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
-     * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
-     */
+  /**
+   * Groups all suffixes into a tree according to their grammatical features. There are several levels in this tree.
+   * Each level corresponds to a one grouping feature. The order of items in GroupingFeatures List object
+   * defines an order of those levels.
+   * Nodes on each level are values of a grammatical feature that forms this level. An order of those values
+   * is determined by the order of values within a GroupFeatureType object of each feature.
+   * This is a recursive function.
+   * @param {Suffix[]} suffixes - Suffixes to be grouped.
+   * @param {Feature[]} ancestorFeatures - A list of feature values on levels above the current.
+   * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
+   * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
+   */
   groupByFeature (suffixes, ancestorFeatures = [], currentLevel = 0) {
     let group = new NodeGroup();
     group.groupFeatureType = this.features.items[currentLevel];
     group.ancestorFeatures = ancestorFeatures.slice();
 
-        // Iterate over each value of the feature
+    // Iterate over each value of the feature
     for (const featureValue of group.groupFeatureType.getOrderedFeatures(ancestorFeatures)) {
       if (ancestorFeatures.length > 0 && ancestorFeatures[ancestorFeatures.length - 1].type === group.groupFeatureType.type) {
-                // Remove previously inserted feature of the same type
+        // Remove previously inserted feature of the same type
         ancestorFeatures.pop();
       }
       ancestorFeatures.push(featureValue);
 
-            // Suffixes that are selected for current combination of feature values
+      // Suffixes that are selected for current combination of feature values
       let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.groupFeatureType.type, featureValue.value));
 
       if (currentLevel < this.features.length - 1) {
-                // Divide to further groups
+        // Divide to further groups
         let subGroup = this.groupByFeature(selectedSuffixes, ancestorFeatures, currentLevel + 1);
         group.subgroups.push(subGroup);
         group.cells = group.cells.concat(subGroup.cells);
       } else {
-                // This is the last level. This represent a cell with suffixes
-                // Split result has a list of suffixes in a table cell. We need to combine items with same endings.
+        // This is the last level. This represent a cell with suffixes
+        // Split result has a list of suffixes in a table cell. We need to combine items with same endings.
         if (selectedSuffixes.length > 0) {
           if (this.suffixCellFilter) {
             selectedSuffixes = selectedSuffixes.filter(this.suffixCellFilter);
@@ -5827,14 +5797,14 @@ class Table {
     return group
   }
 
-    /**
-     * Create columns out of a suffixes organized into a tree.
-     * This is a recursive function.
-     * @param {NodeGroup} tree - A tree of suffixes.
-     * @param {Column[]} columns - An array of columns to be constructed.
-     * @param {number} currentLevel - Current recursion level.
-     * @returns {Array} An array of columns of suffix cells.
-     */
+  /**
+   * Create columns out of a suffixes organized into a tree.
+   * This is a recursive function.
+   * @param {NodeGroup} tree - A tree of suffixes.
+   * @param {Column[]} columns - An array of columns to be constructed.
+   * @param {number} currentLevel - Current recursion level.
+   * @returns {Array} An array of columns of suffix cells.
+   */
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
     let currentFeature = this.features.items[currentLevel];
 
@@ -5842,11 +5812,11 @@ class Table {
     for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
       let cellGroup = tree.subgroups[index];
 
-            // Iterate until it is the last row feature
+      // Iterate until it is the last row feature
       if (!currentFeature.isSameType(this.features.lastRowFeature)) {
         let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1);
         if (currentFeature.formsRow) {
-                    // TODO: Avoid creating extra cells
+          // TODO: Avoid creating extra cells
 
           let group = {
             titleText: featureValue,
@@ -5864,7 +5834,7 @@ class Table {
           column.headerCell = this.headers[this.headers.length - 1].cells[columns.length - 1];
         }
       } else {
-                // Last level
+        // Last level
         cellGroup.titleCell = currentFeature.createTitleCell(featureValue, this.features.firstColumnFeature.size);
         let group = {
           titleText: featureValue,
@@ -5880,14 +5850,14 @@ class Table {
     return columns
   }
 
-    /**
-     * Creates an array of header cell rows.
-     * This is a recursive function.
-     * @param {NodeGroup} tree - A tree of suffixes.
-     * @param {Row[]} headers - An array of rows with header cells.
-     * @param {number} currentLevel - Current recursion level.
-     * @returns {Array} A two-dimensional array of header cell rows.
-     */
+  /**
+   * Creates an array of header cell rows.
+   * This is a recursive function.
+   * @param {NodeGroup} tree - A tree of suffixes.
+   * @param {Row[]} headers - An array of rows with header cells.
+   * @param {number} currentLevel - Current recursion level.
+   * @returns {Array} A two-dimensional array of header cell rows.
+   */
   constructHeaders (tree = this.tree, headers = [], currentLevel = 0) {
     let currentFeature = this.features.columnFeatures[currentLevel];
 
@@ -5895,7 +5865,7 @@ class Table {
     for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
       let cellGroup = tree.subgroups[index];
 
-            // Iterate over all column features (features that form columns)
+      // Iterate over all column features (features that form columns)
       if (currentLevel < this.features.columnFeatures.length - 1) {
         let subCells = this.constructHeaders(cellGroup, headers, currentLevel + 1);
 
@@ -5914,12 +5884,12 @@ class Table {
           headers[currentLevel] = new Row();
         }
         headers[currentLevel].titleCell = currentFeature.createTitleCell(
-                    this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
+          this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
 
         headers[currentLevel].add(headerCell);
         cells.push(headerCell);
       } else {
-                // Last level
+        // Last level
         let headerCell = new HeaderCell(featureValue, currentFeature);
 
         if (!headers[currentLevel]) {
@@ -5928,7 +5898,7 @@ class Table {
 
         headers[currentLevel].add(headerCell);
         headers[currentLevel].titleCell = currentFeature.createTitleCell(
-                    this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
+          this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size);
         cells.push(headerCell);
       }
     }
@@ -5939,10 +5909,10 @@ class Table {
     }
   }
 
-    /**
-     * Creates an array of rows by parsing an array of columns.
-     * @returns {Row[]} An array of rows.
-     */
+  /**
+   * Creates an array of rows by parsing an array of columns.
+   * @returns {Row[]} An array of rows.
+   */
   constructRows () {
     let rows = [];
     for (let rowIndex = 0; rowIndex < this.suffixRowQty; rowIndex++) {
@@ -5955,9 +5925,9 @@ class Table {
     return rows
   }
 
-    /**
-     * Adds event listeners to each cell object.
-     */
+  /**
+   * Adds event listeners to each cell object.
+   */
   addEventListeners () {
     for (let cell of this.cells) {
       cell.addEventListener('mouseenter', this.highlightRowAndColumn.bind(this));
@@ -5965,27 +5935,27 @@ class Table {
     }
   }
 
-    /**
-     * Highlights a row and a column this cell is in.
-     * @param {Event} event - An event that triggers this function.
-     */
+  /**
+   * Highlights a row and a column this cell is in.
+   * @param {Event} event - An event that triggers this function.
+   */
   highlightRowAndColumn (event) {
     let index = event.currentTarget.dataset.index;
     this.cells[index].highlightRowAndColumn();
   }
 
-    /**
-     * Removes highlighting from row and a column this cell is in.
-     * @param {Event} event - An event that triggers this function.
-     */
+  /**
+   * Removes highlighting from row and a column this cell is in.
+   * @param {Event} event - An event that triggers this function.
+   */
   clearRowAndColumnHighlighting (event) {
     let index = event.currentTarget.dataset.index;
     this.cells[index].clearRowAndColumnHighlighting();
   }
 
-    /**
-     * Hides empty columns in a table.
-     */
+  /**
+   * Hides empty columns in a table.
+   */
   hideEmptyColumns () {
     for (let column of this.columns) {
       if (column.empty) {
@@ -5995,9 +5965,9 @@ class Table {
     this.emptyColumnsHidden = true;
   }
 
-    /**
-     * Show all empty columns that were previously hidden.
-     */
+  /**
+   * Show all empty columns that were previously hidden.
+   */
   showEmptyColumns () {
     for (let column of this.columns) {
       if (column.hidden) {
@@ -6007,9 +5977,9 @@ class Table {
     this.emptyColumnsHidden = false;
   }
 
-    /**
-     * Hide groups that have no suffix matches.
-     */
+  /**
+   * Hide groups that have no suffix matches.
+   */
   hideNoSuffixGroups () {
     for (let headerCell of this.headers[0].cells) {
       let matches = !!headerCell.columns.find(column => column.suffixMatches);
@@ -6022,9 +5992,9 @@ class Table {
     this.suffixMatchesHidden = true;
   }
 
-    /**
-     * Show groups that have no suffix matches.
-     */
+  /**
+   * Show groups that have no suffix matches.
+   */
   showNoSuffixGroups () {
     for (let column of this.columns) {
       column.show();
@@ -6040,10 +6010,10 @@ class Table {
  * Represents a list of footnotes.
  */
 class Footnotes {
-    /**
-     * Initialises a Footnotes object.
-     * @param {Footnote[]} footnotes - An array of footnote objects.
-     */
+  /**
+   * Initialises a Footnotes object.
+   * @param {Footnote[]} footnotes - An array of footnote objects.
+   */
   constructor (footnotes$$1) {
     this.footnotes = footnotes$$1;
 
@@ -6060,10 +6030,10 @@ class Footnotes {
     }
   }
 
-    /**
-     * Returns an HTML representation of a Footnotes object.
-     * @returns {HTMLElement} An HTML representation of a Footnotes object.
-     */
+  /**
+   * Returns an HTML representation of a Footnotes object.
+   * @returns {HTMLElement} An HTML representation of a Footnotes object.
+   */
   get html () {
     return this.nodes
   }
@@ -6073,19 +6043,19 @@ class Footnotes {
  * Represents a single view.
  */
 class View {
-    /**
-     * Initializes a View object with options. There is at least one view per part of speech,
-     * but there could be several views for the same part of speech that show different table representation of a view.
-     * @param {Object} viewOptions
-     */
+  /**
+   * Initializes a View object with options. There is at least one view per part of speech,
+   * but there could be several views for the same part of speech that show different table representation of a view.
+   * @param {Object} viewOptions
+   */
   constructor () {
-        // this.options = viewOptions;
+    // this.options = viewOptions;
     this.pageHeader = {};
 
-        // An HTML element where this view is rendered
+    // An HTML element where this view is rendered
     this.container = undefined;
 
-        // Must be implemented in a descendant
+    // Must be implemented in a descendant
     this.id = 'baseView';
     this.name = 'base view';
     this.title = 'Base View';
@@ -6093,47 +6063,43 @@ class View {
     this.partOfSpeech = undefined;
   }
 
-    /**
-     * Converts a WordData, returned from inflection tables library, into an HTML representation of an inflection table
-     * and inserts that HTML into a `container` HTML element. `messages` provides a translation for view's texts.
-     * @param {HTMLElement} container - An HTML element where this view will be inserted.
-     * @param {LexicalData} wordData - A result set from inflection tables library.
-     * @param {MessageBundle} messages - A message bundle with message translations.
-     */
+  /**
+   * Converts a WordData, returned from inflection tables library, into an HTML representation of an inflection table
+   * and inserts that HTML into a `container` HTML element. `messages` provides a translation for view's texts.
+   * @param {HTMLElement} container - An HTML element where this view will be inserted.
+   * @param {InflectionData} wordData - A result set from inflection tables library.
+   * @param {MessageBundle} messages - A message bundle with message translations.
+   */
   render (container, wordData, messages) {
     'use strict';
 
     this.messages = messages;
     this.container = container;
-    this.wordData = wordData;
+    this.inflectionData = wordData;
     let selection = wordData[this.partOfSpeech];
 
     this.footnotes = new Footnotes(selection.footnotes);
 
-        // this.table = new Table(selection.suffixes, this.groupingFeatures, messages);
-        // this.table = new Table();
-        // this.setTableData();
+    // this.table = new Table(selection.suffixes, this.groupingFeatures, messages);
+    // this.table = new Table();
+    // this.setTableData();
     this.table.messages = messages;
     this.table.construct(selection.suffixes).constructViews();
     this.display();
   }
 
-    /**
-     * Renders a view's HTML representation and inserts it into `container` HTML element.
-     */
+  /**
+   * Renders a view's HTML representation and inserts it into `container` HTML element.
+   */
   display () {
-        // Clear the container
+    // Clear the container
     this.container.innerHTML = '';
-
-    let word = document.createElement('h2');
-    word.innerHTML = this.wordData.homonym.targetWord;
-    this.container.appendChild(word);
 
     let title = document.createElement('h3');
     title.innerHTML = this.title;
     this.container.appendChild(title);
 
-    this.pageHeader = { nodes: document.createElement('div') };
+    this.pageHeader = {nodes: document.createElement('div')};
     this.pageHeader.nodes.innerHTML = pageHeader.html;
     this.pageHeader.hideEmptyColumnsBtn = this.pageHeader.nodes.querySelector(pageHeader.hideEmptyColumnsBtnSel);
     this.pageHeader.showEmptyColumnsBtn = this.pageHeader.nodes.querySelector(pageHeader.showEmptyColumnsBtnSel);
@@ -6141,9 +6107,9 @@ class View {
     this.pageHeader.showNoSuffixGroupsBtn = this.pageHeader.nodes.querySelector(pageHeader.showNoSuffixGroupsBtnSel);
     this.container.appendChild(this.pageHeader.nodes);
 
-        // Insert a wide view
+    // Insert a wide view
     this.container.appendChild(this.table.wideView.render());
-        // Insert narrow views
+    // Insert narrow views
     this.container.appendChild(this.table.narrowView.render());
 
     this.table.addEventListeners();
@@ -6157,9 +6123,9 @@ class View {
     this.pageHeader.showNoSuffixGroupsBtn.addEventListener('click', this.showNoSuffixGroups.bind(this));
   }
 
-    /**
-     * Hides all empty columns of the view.
-     */
+  /**
+   * Hides all empty columns of the view.
+   */
   hideEmptyColumns () {
     this.table.hideEmptyColumns();
     this.display();
@@ -6167,9 +6133,9 @@ class View {
     this.pageHeader.showEmptyColumnsBtn.classList.remove(classNames.hidden);
   }
 
-    /**
-     * Displays all previously hidden columns.
-     */
+  /**
+   * Displays all previously hidden columns.
+   */
   showEmptyColumns () {
     this.table.showEmptyColumns();
     this.display();
@@ -6177,9 +6143,9 @@ class View {
     this.pageHeader.hideEmptyColumnsBtn.classList.remove(classNames.hidden);
   }
 
-    /**
-     * Hides groups (formed by first column feature) that have no suffix matches.
-     */
+  /**
+   * Hides groups (formed by first column feature) that have no suffix matches.
+   */
   hideNoSuffixGroups () {
     this.table.hideNoSuffixGroups();
     this.display();
@@ -6187,9 +6153,9 @@ class View {
     this.pageHeader.showNoSuffixGroupsBtn.classList.remove(classNames.hidden);
   }
 
-    /**
-     * Displays previously hidden groups with no suffix matches.
-     */
+  /**
+   * Displays previously hidden groups with no suffix matches.
+   */
   showNoSuffixGroups () {
     this.table.showNoSuffixGroups();
     this.display();
@@ -6214,7 +6180,7 @@ exports.LanguageDataset = LanguageDataset;
 exports.LanguageData = LanguageData;
 exports.MatchData = MatchData;
 exports.Footnote = Footnote;
-exports.ResultSet = LexicalData;
+exports.ResultSet = InflectionData;
 
 // L10n
 exports.LatinLanguageModel = LatinLanguageModel;

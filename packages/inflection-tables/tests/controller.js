@@ -1,14 +1,32 @@
 'use strict'
 // Import shared language data
-import * as Lib from '../lib/lib'
+import languages from '../lib/languages'
 import * as Models from 'alpheios-data-models'
 import * as L10n from '../l10n/l10n'
 import * as Styles from '../presenter/styles/styles'
-import * as View from '../presenter/lib/view'
+import Suffix from '../lib/suffix'
+import LanguageDataset from '../lib/language-dataset'
+import LanguageData from '../lib/language-data'
+import MatchData from '../lib/match-data'
+import Footnote from '../lib/footnote'
+import InflectionData from '../lib/inflection-data'
+import Cell from '../presenter/lib/cell'
+import RowTitleCell from '../presenter/lib/row-title-cell'
+import HeaderCell from '../presenter/lib/header-cell'
+import Column from '../presenter/lib/column'
+import Row from '../presenter/lib/row'
+import GroupFeatureType from '../presenter/lib/group-feature-type'
+import GroupFeatureList from '../presenter/lib/group-feature-list'
+import WideView from '../presenter/lib/wide-view'
+import NarrowView from '../presenter/lib/narrow-view'
+import NarrowViewGroup from '../presenter/lib/narrow-view-group'
+import Table from '../presenter/lib/table'
+import Footnotes from '../presenter/lib/footnotes'
+import View from '../presenter/lib/view'
 
 // Reexport items for Jest
 // Library
-exports.languages = Lib.languages
+exports.languages = languages
 exports.Feature = Models.Feature
 exports.FeatureType = Models.FeatureType
 exports.FeatureImporter = Models.FeatureImporter
@@ -16,12 +34,12 @@ exports.Inflection = Models.Inflection
 exports.Lemma = Models.Lemma
 exports.Lexeme = Models.Lexeme
 exports.Homonym = Models.Homonym
-exports.Suffix = Lib.Suffix
-exports.LanguageDataset = Lib.LanguageDataset
-exports.LanguageData = Lib.LanguageData
-exports.MatchData = Lib.MatchData
-exports.Footnote = Lib.Footnote
-exports.ResultSet = Lib.LexicalData
+exports.Suffix = Suffix
+exports.LanguageDataset = LanguageDataset
+exports.LanguageData = LanguageData
+exports.MatchData = MatchData
+exports.Footnote = Footnote
+exports.ResultSet = InflectionData
 
 // L10n
 exports.LatinLanguageModel = Models.LatinLanguageModel
@@ -43,17 +61,17 @@ exports.Styles = {
 
 // View
 exports.View = {
-  Cell: View.Cell,
-  RowTitleCell: View.RowTitleCell,
-  HeaderCell: View.HeaderCell,
-  Column: View.Column,
-  Row: View.Row,
-  GroupingFeature: View.GroupFeatureType,
-  GroupingFeatureList: View.GroupFeatureList,
-  WideView: View.WideView,
-  NarrowView: View.NarrowView,
-  NarrowViewGroup: View.NarrowViewGroup,
-  Table: View.Table,
-  Footnotes: View.Footnotes,
-  View: View.View
+  Cell: Cell,
+  RowTitleCell: RowTitleCell,
+  HeaderCell: HeaderCell,
+  Column: Column,
+  Row: Row,
+  GroupingFeature: GroupFeatureType,
+  GroupingFeatureList: GroupFeatureList,
+  WideView: WideView,
+  NarrowView: NarrowView,
+  NarrowViewGroup: NarrowViewGroup,
+  Table: Table,
+  Footnotes: Footnotes,
+  View: View
 }

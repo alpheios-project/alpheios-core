@@ -1,12 +1,14 @@
-import * as Lib from '../../lib/lib'
+import languages from '../../lib/languages'
 import * as Models from 'alpheios-data-models'
 import * as Latin from '../../lib/lang/latin/latin'
-import * as View from '../lib/view'
+import View from '../lib/view'
+import GroupFeatureType from '../lib/group-feature-type'
+import Table from '../lib/table'
 
-class LatinView extends View.View {
+class LatinView extends View {
   constructor () {
     super()
-    this.language = Lib.languages.latin
+    this.language = languages.latin
     this.language_features = Latin.languageModel.features
 
         /*
@@ -14,11 +16,11 @@ class LatinView extends View.View {
         those values in child objects.
          */
     this.features = {
-      numbers: new View.GroupFeatureType(this.language_features[Models.Feature.types.number], 'Number'),
-      cases: new View.GroupFeatureType(this.language_features[Models.Feature.types.grmCase], 'Case'),
-      declensions: new View.GroupFeatureType(this.language_features[Models.Feature.types.declension], 'Declension'),
-      genders: new View.GroupFeatureType(this.language_features[Models.Feature.types.gender], 'Gender'),
-      types: new View.GroupFeatureType(this.language_features[Models.Feature.types.type], 'Type')
+      numbers: new GroupFeatureType(this.language_features[Models.Feature.types.number], 'Number'),
+      cases: new GroupFeatureType(this.language_features[Models.Feature.types.grmCase], 'Case'),
+      declensions: new GroupFeatureType(this.language_features[Models.Feature.types.declension], 'Declension'),
+      genders: new GroupFeatureType(this.language_features[Models.Feature.types.gender], 'Gender'),
+      types: new GroupFeatureType(this.language_features[Models.Feature.types.type], 'Type')
     }
   }
 
@@ -27,7 +29,7 @@ class LatinView extends View.View {
     an inflection table differently
      */
   createTable () {
-    this.table = new View.Table([this.features.declensions, this.features.genders,
+    this.table = new Table([this.features.declensions, this.features.genders,
       this.features.types, this.features.numbers, this.features.cases])
     let features = this.table.features
     features.columns = [this.language_features[Models.Feature.types.declension], this.language_features[Models.Feature.types.gender], this.language_features[Models.Feature.types.type]]
@@ -46,7 +48,7 @@ class NounView extends LatinView {
     this.partOfSpeech = this.language_features[Models.Feature.types.part][Models.Constants.POFS_NOUN].value
 
         // Models.Feature that are different from base class values
-    this.features.genders = new View.GroupFeatureType(this.language_features[Models.Feature.types.gender], 'Gender',
+    this.features.genders = new GroupFeatureType(this.language_features[Models.Feature.types.gender], 'Gender',
       [ this.language_features[Models.Feature.types.gender][Models.Constants.GEND_MASCULINE],
         this.language_features[Models.Feature.types.gender][Models.Constants.GEND_FEMININE],
         this.language_features[Models.Feature.types.gender][Models.Constants.GEND_NEUTER]
@@ -64,7 +66,7 @@ class AdjectiveView extends LatinView {
     this.partOfSpeech = this.language_features[Models.Feature.types.part].adjective.value
 
         // Models.Feature that are different from base class values
-    this.features.declensions = new View.GroupFeatureType(this.language_features[Models.Feature.types.declension], 'Declension',
+    this.features.declensions = new GroupFeatureType(this.language_features[Models.Feature.types.declension], 'Declension',
       [ this.language_features[Models.Feature.types.declension][Models.Constants.ORD_1ST],
         this.language_features[Models.Feature.types.declension][Models.Constants.ORD_2ND],
         this.language_features[Models.Feature.types.declension][Models.Constants.ORD_3RD]
@@ -79,12 +81,12 @@ class VerbView extends LatinView {
     this.partOfSpeech = this.language_features[Models.Feature.types.part][Models.Constants.POFS_VERB].value
 
     this.features = {
-      tenses: new View.GroupFeatureType(this.language_features[Models.Feature.types.tense], 'Tenses'),
-      numbers: new View.GroupFeatureType(this.language_features[Models.Feature.types.number], 'Number'),
-      persons: new View.GroupFeatureType(this.language_features[Models.Feature.types.person], 'Person'),
-      voices: new View.GroupFeatureType(this.language_features[Models.Feature.types.voice], 'Voice'),
-      conjugations: new View.GroupFeatureType(this.language_features[Models.Feature.types.conjugation], 'Conjugation Stem'),
-      moods: new View.GroupFeatureType(this.language_features[Models.Feature.types.mood], 'Mood')
+      tenses: new GroupFeatureType(this.language_features[Models.Feature.types.tense], 'Tenses'),
+      numbers: new GroupFeatureType(this.language_features[Models.Feature.types.number], 'Number'),
+      persons: new GroupFeatureType(this.language_features[Models.Feature.types.person], 'Person'),
+      voices: new GroupFeatureType(this.language_features[Models.Feature.types.voice], 'Voice'),
+      conjugations: new GroupFeatureType(this.language_features[Models.Feature.types.conjugation], 'Conjugation Stem'),
+      moods: new GroupFeatureType(this.language_features[Models.Feature.types.mood], 'Mood')
     }
   }
 }
@@ -100,7 +102,7 @@ class VoiceConjugationMoodView extends VerbView {
   }
 
   createTable () {
-    this.table = new View.Table([this.features.voices, this.features.conjugations, this.features.moods,
+    this.table = new Table([this.features.voices, this.features.conjugations, this.features.moods,
       this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features
     features.columns = [
@@ -129,7 +131,7 @@ class VoiceMoodConjugationView extends VerbView {
   }
 
   createTable () {
-    this.table = new View.Table([this.features.voices, this.features.moods, this.features.conjugations,
+    this.table = new Table([this.features.voices, this.features.moods, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features
     features.columns = [
@@ -158,7 +160,7 @@ class ConjugationVoiceMoodView extends VerbView {
   }
 
   createTable () {
-    this.table = new View.Table([this.features.conjugations, this.features.voices, this.features.moods,
+    this.table = new Table([this.features.conjugations, this.features.voices, this.features.moods,
       this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features
     features.columns = [
@@ -186,7 +188,7 @@ class ConjugationMoodVoiceView extends VerbView {
   }
 
   createTable () {
-    this.table = new View.Table([this.features.conjugations, this.features.moods, this.features.voices,
+    this.table = new Table([this.features.conjugations, this.features.moods, this.features.voices,
       this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features
     features.columns = [
@@ -215,7 +217,7 @@ class MoodVoiceConjugationView extends VerbView {
   }
 
   createTable () {
-    this.table = new View.Table([this.features.moods, this.features.voices, this.features.conjugations,
+    this.table = new Table([this.features.moods, this.features.voices, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features
     features.columns = [this.language_features[Models.Feature.types.mood], this.language_features[Models.Feature.types.voice], this.language_features[Models.Feature.types.conjugation]]
@@ -236,7 +238,7 @@ class MoodConjugationVoiceView extends VerbView {
   }
 
   createTable () {
-    this.table = new View.Table([this.features.moods, this.features.conjugations, this.features.voices,
+    this.table = new Table([this.features.moods, this.features.conjugations, this.features.voices,
       this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features
     features.columns = [this.language_features[Models.Feature.types.mood], this.language_features[Models.Feature.types.conjugation], this.language_features[Models.Feature.types.voice]]

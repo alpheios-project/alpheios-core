@@ -1,7 +1,10 @@
 /*
  * Latin language data module
  */
-import * as Lib from '../../lib.js'
+import languages from '../../../lib/languages'
+import LanguageDataset from '../../../lib/language-dataset'
+import ExtendedGreekData from '../../../lib/extended-greek-data'
+import MatchData from '../../../lib/match-data'
 import * as Models from 'alpheios-data-models'
 import nounSuffixesCSV from './data/noun/suffixes.csv'
 import nounFootnotesCSV from './data/noun/footnotes.csv'
@@ -12,9 +15,9 @@ import verbFootnotesCSV from './data/verb/footnotes.csv'; */
 import papaparse from 'papaparse'
 
 // A language of this module
-const language = Lib.languages.greek
+const language = languages.greek
 // Create a language data set that will keep all language-related information
-let dataSet = new Lib.LanguageDataset(language)
+let dataSet = new LanguageDataset(language)
 
 // region Definition of grammatical features
 /*
@@ -113,10 +116,10 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
       })
       features.push(...indexes)
     }
-    let extendedGreekData = new Lib.ExtendedGreekData()
+    let extendedGreekData = new ExtendedGreekData()
     extendedGreekData.primary = primary
     let extendedLangData = {
-      [Lib.languages.greek]: extendedGreekData
+      [languages.greek]: extendedGreekData
     }
     this.addSuffix(suffixValue, features, extendedLangData)
   }
@@ -214,7 +217,7 @@ dataSet.matcher = function (inflections, suffix) {
    A fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
    */
   for (let inflection of inflections) {
-    let matchData = new Lib.MatchData() // Create a match profile
+    let matchData = new MatchData() // Create a match profile
 
     if (inflection.suffix === suffix.value) {
       matchData.suffixMatch = true

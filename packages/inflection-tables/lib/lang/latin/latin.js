@@ -2,7 +2,9 @@
  * Latin language data module
  */
 import * as Models from 'alpheios-data-models'
-import * as Lib from '../../lib.js'
+import languages from '../../../lib/languages'
+import LanguageDataset from '../../../lib/language-dataset'
+import MatchData from '../../../lib/match-data'
 import nounSuffixesCSV from './data/noun/suffixes.csv'
 import nounFootnotesCSV from './data/noun/footnotes.csv'
 import adjectiveSuffixesCSV from './data/adjective/suffixes.csv'
@@ -14,9 +16,9 @@ import papaparse from 'papaparse'
 let languageModel = new Models.LatinLanguageModel()
 let types = Models.Feature.types
 // A language of this module
-const language = Lib.languages.latin
+const language = languages.latin
 // Create a language data set that will keep all language-related information
-let dataSet = new Lib.LanguageDataset(language)
+let dataSet = new LanguageDataset(language)
 
 // region Definition of grammatical features
 /*
@@ -160,7 +162,7 @@ dataSet.matcher = function (inflections, suffix) {
      a fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
      */
   for (let inflection of inflections) {
-    let matchData = new Lib.MatchData() // Create a match profile
+    let matchData = new MatchData() // Create a match profile
 
     if (inflection.suffix === suffix.value) {
       matchData.suffixMatch = true
