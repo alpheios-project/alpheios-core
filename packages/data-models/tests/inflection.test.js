@@ -34,7 +34,11 @@ describe('Inflection object', () => {
   test('feature method should add a single feature to the inflection', () => {
     inflection.feature = new Feature('masculine', Feature.types.gender, grc)
     expect(inflection).toEqual(expect.objectContaining({
-      gender: ['masculine']
+      gender: [{
+        language: 'grc',
+        type: 'gender',
+        value: 'masculine'
+      }]
     }))
   })
 
@@ -44,7 +48,18 @@ describe('Inflection object', () => {
       new Feature('feminine', Feature.types.gender, grc)
     ]
     expect(inflection).toEqual(expect.objectContaining({
-      gender: ['masculine', 'feminine']
+      gender: [
+        {
+          language: 'grc',
+          type: 'gender',
+          value: 'masculine'
+        },
+        {
+          language: 'grc',
+          type: 'gender',
+          value: 'feminine'
+        }
+      ]
     }))
   })
 

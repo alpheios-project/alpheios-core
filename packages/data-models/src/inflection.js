@@ -95,7 +95,7 @@ class Inflection {
                 this.language + '" of an Inflection object.')
       }
 
-      this[type].push(element.value)
+      this[type].push(element)
     }
   }
 }
