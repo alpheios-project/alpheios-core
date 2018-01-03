@@ -57,15 +57,24 @@ class FeatureType {
     }
   };
 
+  /**
+   * test to see if this FeatureType allows unrestricted values
+   * @returns {boolean} true if unrestricted false if not
+   */
+  hasUnrestrictedValue () {
+    return this.orderedValues.length === 1 && this.orderedValues[0] === FeatureType.UNRESTRICTED_VALUE
+  }
+
     /**
      * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
      * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
      * @param value
+     * @param {int} sortOrder
      * @returns {Feature}
      */
-  get (value) {
+  get (value, sortOrder = 1) {
     if (value) {
-      return new Feature(value, this.type, this.language)
+      return new Feature(value, this.type, this.language, sortOrder)
     } else {
       throw new Error('A non-empty value should be provided.')
     }
@@ -207,4 +216,5 @@ class FeatureType {
     }
   }
 }
+FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 export default FeatureType

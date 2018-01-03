@@ -28,8 +28,11 @@ class Inflection {
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
      * @param {string} language - A word's language.
+     * @param {string} suffix - a suffix of a word
+     * @param {prefix} prefix - a prefix of a word
+     * @param {example} example - example
      */
-  constructor (stem, language) {
+  constructor (stem, language, suffix = null, prefix = null, example = null) {
     if (!stem) {
       throw new Error('Stem should not be empty.')
     }
@@ -46,26 +49,19 @@ class Inflection {
     this.language = language
 
     // Suffix may not be present in every word. If missing, it will set to null.
-    this.suffix = null
+    this.suffix = suffix
 
     // Prefix may not be present in every word. If missing, it will set to null.
-    this.prefix = null
+    this.prefix = prefix
 
     // Example may not be provided
-    this.example = null
+    this.example = example
   }
 
   static readObject (jsonObject) {
-    let inflection = new Inflection(jsonObject.stem, jsonObject.language)
-    if (jsonObject.suffix) {
-      inflection.suffix = jsonObject.suffix
-    }
-    if (jsonObject.prefix) {
-      inflection.prefix = jsonObject.prefix
-    }
-    if (jsonObject.example) {
-      inflection.example = jsonObject.example
-    }
+    let inflection =
+      new Inflection(
+        jsonObject.stem, jsonObject.language, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
     return inflection
   }
 

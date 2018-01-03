@@ -76,6 +76,19 @@ describe('Inflection object', () => {
             .toThrowError(/not match/)
   })
 
+  test('featureMatch', () => {
+    let one = new Inflection('nat', 'lat', 'urae', null, null)
+    one.feature = [new Feature('feminine', Feature.types.gender, 'lat'),
+      new Feature('masculine', Feature.types.gender, 'lat')]
+    one.feature = new Feature('verb', Feature.types.part, 'lat')
+    console.log(one)
+    let two = new Inflection('nat', 'lat', 'urae', null, null)
+    two.feature = new Feature('feminine', Feature.types.gender, 'lat')
+    two.feature = new Feature('noun', Feature.types.part, 'lat')
+    expect(one.featureMatch(Feature.types.gender, two)).toEqual(true)
+    expect(one.featureMatch(Feature.types.part, two)).toEqual(false)
+  })
+
   afterAll(() => {
         // Clean a test environment up
     inflection = undefined

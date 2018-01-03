@@ -45,6 +45,37 @@ describe('Lexeme object', () => {
     expect(() => new Lexeme(new Lemma('someword', 'grc'), ['some value'])).toThrowError(/Inflection/)
   })
 
+  test('Sorting on feature order', () => {
+    let mockLexemeOne = {
+      lemma: {
+        features: {
+          freq: [ { sortOrder: 5 } ],
+          pofs: [ { sortOrder: 3 } ]
+        }
+      }
+    }
+    let mockLexemeTwo = {
+      lemma: {
+        features: {
+          freq: [ { sortOrder: 5 } ],
+          pofs: [ { sortOrder: 5 } ]
+        }
+      }
+    }
+    let mockLexemeThree = {
+      lemma: {
+        features: {
+          pofs: [ { sortOrder: 7 } ]
+        }
+      }
+    }
+    let lexemes = [ mockLexemeOne, mockLexemeTwo ]
+    let sortFunc = Lexeme.getSortByTwoLemmaFeatures('freq', 'pofs')
+    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeOne])
+    lexemes = [ mockLexemeTwo, mockLexemeThree ]
+    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeThree])
+  })
+
   afterAll(() => {
     // Clean a test environment up
     lexeme = undefined

@@ -1,5 +1,7 @@
 /* eslint-env jest */
 import Lemma from '../src/lemma.js'
+import Feature from '../src/feature.js'
+
 describe('Lemma object', () => {
   let lemma, word, lemmaWithParts
 
@@ -31,6 +33,11 @@ describe('Lemma object', () => {
 
   test('Should not allow empty arguments', () => {
     expect(() => new Lemma()).toThrowError(/empty/)
+  })
+
+  test('key', () => {
+    lemma.feature = new Feature('noun', 'part of speech', 'lat')
+    expect(lemma.key).toEqual('someword-lat-noun')
   })
 
   // test('Should not allow unsupported languages', () => {

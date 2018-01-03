@@ -10,7 +10,7 @@ describe('Feature object', () => {
   beforeAll(() => {
         // Create a test environment
     featureValue1 = 'featureValueOne'
-    languageGreek = LanguageModelFactory.getLanguageForCode('grc')
+    languageGreek = LanguageModelFactory.getLanguageForCode('grc').toCode()
     featureGreek1 = new Feature(featureValue1, Feature.types.number, languageGreek)
   })
 
@@ -18,7 +18,10 @@ describe('Feature object', () => {
     expect(featureGreek1).toEqual({
       value: featureValue1,
       type: Feature.types.number,
-      language: languageGreek
+      language: languageGreek,
+      languageCode: languageGreek,
+      languageID: LanguageModelFactory.getLanguageIdFromCode(languageGreek),
+      sortOrder: 1
     })
   })
 
@@ -48,6 +51,23 @@ describe('Feature object', () => {
       let f = new Feature(featureValue1, languageGreek, Feature.types.number)
       console.log(f)
     }).toThrowError(/not supported/)
+  })
+
+  test('toString returns value', () => {
+    let f = new Feature(featureValue1, Feature.types.number, languageGreek)
+    expect(`${f}`).toEqual(featureValue1)
+  })
+
+  test('toLocaleStringAbbr returns value', () => {
+    let f = new Feature('feminine', Feature.types.gender, 'lat')
+    expect(f.toLocaleStringAbbr('en')).toEqual('f')
+  })
+
+  test('hasValue', () => {
+    let f = new Feature(['foo', 'bar'], Feature.types.gender, 'lat')
+    expect(f.hasValue('foo')).toBeTruthy()
+    expect(f.hasValue('bar')).toBeTruthy()
+    expect(f.hasValue('junk')).toBeFalsy()
   })
 
   afterAll(() => {

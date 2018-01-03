@@ -1,4 +1,5 @@
-
+import LMF from './language_model_factory.js'
+import * as i18n from './i18n.js'
 /**
  * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
  */
@@ -9,8 +10,9 @@ class Feature {
      * values, an array of values.
      * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
      * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {int} sortOrder - an integer used for sorting
      */
-  constructor (value, type, language) {
+  constructor (value, type, language, sortOrder = 1) {
     if (!Feature.types.isAllowed(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
     }
@@ -26,6 +28,9 @@ class Feature {
     this.value = value
     this.type = type
     this.language = language
+    this.languageCode = language
+    this.languageID = LMF.getLanguageIdFromCode(this.languageCode)
+    this.sortOrder = sortOrder
   };
 
   isEqual (feature) {
@@ -40,6 +45,43 @@ class Feature {
       return equal
     } else {
       return this.value === feature.value && this.type === feature.type && this.language === feature.language
+    }
+  }
+
+  /**
+   * examine the feature for a specific value
+   * @param {string} value
+   * @returns {boolean} true if the value is included in the feature's values
+   */
+  hasValue (value) {
+    if (Array.isArray(this.value)) {
+      return this.value.includes(value)
+    } else {
+      return this.value === value
+    }
+  }
+
+  /**
+   * string representation of a feature
+   * @return {string}
+   */
+  toString () {
+    if (Array.isArray(this.value)) {
+      return this.value.join(',')
+    } else {
+      return this.value
+    }
+  }
+
+  /**
+   * a locale-specific abbreviation for a feature's values
+   * @return {string}
+   */
+  toLocaleStringAbbr (lang = 'en') {
+    if (Array.isArray(this.value)) {
+      return this.value.map((v) => this.toLocaleStringAbbr(v, lang))
+    } else {
+      return i18n.i18n[lang][this.value].abbr
     }
   }
 }
@@ -65,6 +107,7 @@ Feature.types = {
   dialect: 'dialect', // a dialect iderntifier
   note: 'note', // a general note
   pronunciation: 'pronunciation',
+  age: 'age',
   area: 'area',
   geo: 'geo', // geographical data
   kind: 'kind', // verb kind informatin
