@@ -36,6 +36,9 @@ describe('Inflection object', () => {
     expect(inflection).toEqual(expect.objectContaining({
       gender: [{
         language: 'grc',
+        languageCode: 'grc',
+        languageID: Constants.LANG_GREEK,
+        sortOrder: 1,
         type: 'gender',
         value: 'masculine'
       }]
@@ -51,11 +54,17 @@ describe('Inflection object', () => {
       gender: [
         {
           language: 'grc',
+          languageCode: 'grc',
+          languageID: Constants.LANG_GREEK,
+          sortOrder: 1,
           type: 'gender',
           value: 'masculine'
         },
         {
           language: 'grc',
+          languageCode: 'grc',
+          languageID: Constants.LANG_GREEK,
+          sortOrder: 1,
           type: 'gender',
           value: 'feminine'
         }
@@ -74,19 +83,6 @@ describe('Inflection object', () => {
   test('feature method should not allow a feature language to be different from a language of an inflection', () => {
     expect(() => inflection.feature = new Feature('masculine', Feature.types.gender, Constants.STR_LANG_CODE_LAT)) // eslint-disable-line no-return-assign
             .toThrowError(/not match/)
-  })
-
-  test('featureMatch', () => {
-    let one = new Inflection('nat', 'lat', 'urae', null, null)
-    one.feature = [new Feature('feminine', Feature.types.gender, 'lat'),
-      new Feature('masculine', Feature.types.gender, 'lat')]
-    one.feature = new Feature('verb', Feature.types.part, 'lat')
-    console.log(one)
-    let two = new Inflection('nat', 'lat', 'urae', null, null)
-    two.feature = new Feature('feminine', Feature.types.gender, 'lat')
-    two.feature = new Feature('noun', Feature.types.part, 'lat')
-    expect(one.featureMatch(Feature.types.gender, two)).toEqual(true)
-    expect(one.featureMatch(Feature.types.part, two)).toEqual(false)
   })
 
   afterAll(() => {

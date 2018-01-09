@@ -1,6 +1,6 @@
 /* eslint-env jest */
 'use strict'
-import ArabicLanguageModel from '../src/arabic_language_model.js'
+import LMF from '../src/language_model_factory.js'
 
 describe('LanguageModelFactory object', () => {
   'use strict'
@@ -8,7 +8,7 @@ describe('LanguageModelFactory object', () => {
   let arabic
 
   beforeAll(() => {
-    arabic = new ArabicLanguageModel()
+    arabic = LMF.getLanguageForCode('ara')
   })
 
   test('has features', () => {

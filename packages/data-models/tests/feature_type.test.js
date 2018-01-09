@@ -2,7 +2,7 @@
 import FeatureType from '../src/feature_type.js'
 import Feature from '../src/feature.js'
 import FeatureImporter from '../src/feature_importer.js'
-import Constants from '../src/constants.js'
+import * as Constants from '../src/constants.js'
 
 describe('FeatureType', () => {
   let featureType
@@ -16,10 +16,10 @@ describe('FeatureType', () => {
     expect(featureType).toEqual({
       '_orderIndex': ['first', ['second', 'third'], 'fourth'],
       '_orderLookup': {'first': 0, 'second': 1, 'third': 1, 'fourth': 2},
-      'first': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first'},
-      'second': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'second'},
-      'third': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'third'},
-      'fourth': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth'},
+      'first': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
+      'second': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'second', 'sortOrder': 1},
+      'third': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'third', 'sortOrder': 1},
+      'fourth': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1},
       'language': 'lat',
       'type': Feature.types.declension
     })
@@ -44,7 +44,8 @@ describe('FeatureType', () => {
       'languageCode': 'lat',
       'languageID': Constants.LANG_LATIN,
       'type': Feature.types.declension,
-      'value': value
+      'value': value,
+      'sortOrder': 1
     })
   })
 
@@ -82,9 +83,9 @@ describe('FeatureType', () => {
 
   test('orderedFeatures() should return type features in an indexed order.', () => {
     expect(featureType.orderedFeatures).toEqual([
-      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first'},
-      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': ['second', 'third']},
-      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth'}
+      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
+      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': ['second', 'third'], 'sortOrder': 1},
+      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1}
     ])
   })
 

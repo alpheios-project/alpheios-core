@@ -1,6 +1,6 @@
 /* eslint-env jest */
 'use strict'
-import PersianLanguageModel from '../src/persian_language_model.js'
+import LMF from '../src/language_model_factory.js'
 
 describe('LanguageModelFactory object', () => {
   'use strict'
@@ -8,7 +8,7 @@ describe('LanguageModelFactory object', () => {
   let persian
 
   beforeAll(() => {
-    persian = new PersianLanguageModel()
+    persian = LMF.getLanguageForCode('per')
   })
 
   test('has features', () => {

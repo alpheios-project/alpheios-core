@@ -1,6 +1,6 @@
 /* eslint-env jest */
 'use strict'
-import LatinLanguageModel from '../src/latin_language_model.js'
+import LMF from '../src/language_model_factory.js'
 import Feature from '../src/feature.js'
 import * as Constants from '../src/constants.js'
 
@@ -10,7 +10,7 @@ describe('LanguageModelFactory object', () => {
   let latin
 
   beforeAll(() => {
-    latin = new LatinLanguageModel()
+    latin = LMF.getLanguageForCode('lat')
   })
 
   test('Uses default features with correct language', () => {

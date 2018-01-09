@@ -1,6 +1,6 @@
 /* eslint-env jest */
 'use strict'
-import GreekLanguageModel from '../src/greek_language_model.js'
+import LMF from '../src/language_model_factory.js'
 
 describe('LanguageModelFactory object', () => {
   'use strict'
@@ -8,7 +8,7 @@ describe('LanguageModelFactory object', () => {
   let greek
 
   beforeAll(() => {
-    greek = new GreekLanguageModel()
+    greek = LMF.getLanguageForCode('grc')
   })
 
   test('additional encodings strip vowel length', () => {
