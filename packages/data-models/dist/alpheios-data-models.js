@@ -1892,7 +1892,7 @@ class Lemma {
    * @return {string} the key
    */
   get key () {
-    return [this.word, this.languageCode, ...this.features[Feature.types.part]].join('-')
+    return [this.word, this.languageCode, ...Object.values(this.features)].join('-')
   }
 }
 

@@ -19,14 +19,16 @@ describe('Lemma object', () => {
       language: 'lat',
       languageCode: 'lat',
       languageID: expect.anything(),
-      principalParts: []
+      principalParts: [],
+      features: {}
     })
     expect(lemmaWithParts).toEqual({
       word: word,
       language: 'lat',
       languageCode: 'lat',
       languageID: expect.anything(),
-      principalParts: ['part1', 'part2']
+      principalParts: ['part1', 'part2'],
+      features: {}
 
     })
   })
@@ -37,7 +39,8 @@ describe('Lemma object', () => {
 
   test('key', () => {
     lemma.feature = new Feature('noun', 'part of speech', 'lat')
-    expect(lemma.key).toEqual('someword-lat-noun')
+    lemma.feature = new Feature('present', 'tense', 'lat')
+    expect(lemma.key).toEqual('someword-lat-noun-present')
   })
 
   // test('Should not allow unsupported languages', () => {
