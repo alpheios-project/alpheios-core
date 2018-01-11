@@ -1,0 +1,12 @@
+{
+  "https://github.com/alpheios-project/grammar-bennett": {
+    "base_url": "http://localhost/Bennett_files/",
+    "index_url": "http://localhost/bennett_index/alph-index-bennett",
+    "description": "New Latin Grammar, by Charles E. Bennett",
+    "rights": "New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.",
+    "langs": {
+      "source": "lat",
+      "target": "en"
+    }
+  }
+}
