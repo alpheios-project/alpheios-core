@@ -76,6 +76,14 @@ class LatinLanguageModel extends LanguageModel {
   }
 
   /**
+   * @override LanguageModel#grammarFeatures
+   */
+  grammarFeatures () {
+    // TODO this ideally might be grammar specific
+    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense]
+  }
+
+  /**
    * Check to see if this language tool can produce an inflection table display
    * for the current node
    */
