@@ -73,6 +73,11 @@ class GrammarResAdapter extends BaseResourceAdapter {
       key = `alph-${key}`
       found = data.get(key)
     }
+    // final fallback try for an index
+    if (!found) {
+      key = `alph-general-index`
+      found = data.get(key)
+    }
     if (found) {
       return [found]
     } else {

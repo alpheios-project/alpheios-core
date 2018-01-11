@@ -1608,7 +1608,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 }));
 });
 
-var DefaultConfig = "{\n  \"https://github.com/alpheios-project/grammar-bennett\": {\n    \"base_url\": \"http://localhost/Bennett_files/\",\n    \"index_url\": \"http://localhost/bennett_index/alph-index-bennett\",\n    \"description\": \"New Latin Grammar, by Charles E. Bennett\",\n    \"rights\": \"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\n    \"langs\": {\n      \"source\": \"lat\",\n      \"target\": \"en\"\n    }\n  }\n}\n";
+var DefaultConfig = "{\n  \"https://github.com/alpheios-project/grammar-bennett\": {\n    \"base_url\": \"https://grammars.alpheios.net/bennett/\",\n    \"index_url\": \"https://grammars.alpheios.net/bennett/index/alph-index-bennett\",\n    \"description\": \"New Latin Grammar, by Charles E. Bennett\",\n    \"rights\": \"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\n    \"langs\": {\n      \"source\": \"lat\",\n      \"target\": \"en\"\n    }\n  }\n}\n";
 
 class GrammarResAdapter extends BaseResourceAdapter {
   /**
@@ -1678,6 +1678,11 @@ class GrammarResAdapter extends BaseResourceAdapter {
     // legacy , look for key preceded by alph-
     if (!found) {
       key = `alph-${key}`;
+      found = data.get(key);
+    }
+    // final fallback try for an index
+    if (!found) {
+      key = `alph-general-index`;
       found = data.get(key);
     }
     if (found) {
@@ -1810,7 +1815,7 @@ class Grammars {
 
       return requests
     } catch (error) {
-      console.log(`Unable to fetch full definitions due to: ${error}`);
+      console.log(`Unable to fetch resources due to: ${error}`);
       return []
     }
   }
