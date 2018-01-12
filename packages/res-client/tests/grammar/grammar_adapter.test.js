@@ -30,11 +30,12 @@ describe('BaseAdapter object', () => {
       type: 'case',
       value: ['vocative']
     }
-    let adapter = new GrammarResAdapter(bennett, {base_url: 'http://example.org/bennett/', 'index_url': 'abc'})
+    let adapter = new GrammarResAdapter(bennett)
     let dummyResponse = 'alph-case-locative|part5.htm#alph-case-locative'
     window.fetch.mockResponse(dummyResponse)
     let response = await adapter.getResources(mockFeature)
-    expect(response).toEqual(['http://example.org/bennett/part5.htm#alph-case-locative'])
+    expect(response[0].url).toEqual('https://grammars.alpheios.net/bennett/part5.htm#alph-case-locative')
+    expect(response[0].provider).toBeTruthy()
     response = await adapter.getResources(mockFeature2)
     expect(response).toEqual([])
   })

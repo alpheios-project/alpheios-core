@@ -1653,16 +1653,21 @@ class GrammarResAdapter extends BaseResourceAdapter {
       this.index = this._fillMap(parsed.data);
     }
 
-    let resources = [];
+    let found = [];
     let key = `${keyObj.type}-${keyObj.value}`;
     if (this.index) {
-      resources = this._lookupInDataIndex(this.index, key);
+      found = this._lookupInDataIndex(this.index, key);
     }
     let baseUrl = this.getConfig('base_url');
-    if (baseUrl) {
-      for (let res of resources.entries()) {
-        resources[res[0]] = `${baseUrl}${res[1]}`;
+    let resources = [];
+    for (let url of found) {
+      let res = {};
+      if (baseUrl) {
+        res.url = `${baseUrl}${url}`;
+      } else {
+        res.url = url;
       }
+      resources.push(ResourceProvider.getProxy(this.provider, res));
     }
     return resources
   }
