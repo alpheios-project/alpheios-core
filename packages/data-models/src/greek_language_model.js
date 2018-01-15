@@ -93,6 +93,13 @@ class GreekLanguageModel extends LanguageModel {
   canInflect (node) {
     return true
   }
+  /**
+   * @override LanguageModel#grammarFeatures
+   */
+  grammarFeatures () {
+    // TODO this ideally might be grammar specific
+    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense, Feature.types.voice]
+  }
 
   /**
    * Return a normalized version of a word which can be used to compare the word for equality
