@@ -8,5 +8,15 @@
       "source": "lat",
       "target": "en"
     }
+  },
+  "https://github.com/alpheios-project/grammar-smyth": {
+    "base_url": "https://grammars.alpheios.net/smyth/xhtml",
+    "index_url": "https://grammars.alpheios.net/smyth/index/alph-index-smyth",
+    "description": "Smyth's Greek Grammar For Colleges",
+    "rights": "Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth. Digitized by The Perseus Project at Tufts University. Creative Commons License CC-BY-SA.",
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    }
   }
 }
