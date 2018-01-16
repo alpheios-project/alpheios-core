@@ -2,14 +2,14 @@
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
  * directory under /presenter/views/view-name
  */
-import * as L10n from '../l10n/l10n.js'
-import viewsLatin from './views/latin'
-import viewsGreek from './views/greek'
-import * as Models from 'alpheios-data-models'
+import { ViewSet, L10n, L10nMessages } from '../../dist/inflection-tables.standalone.js'
+import { Feature } from '../../node_modules/alpheios-data-models/dist/alpheios-data-models.js'
 
 export default class Presenter {
-  constructor (viewContainer, viewSelectorContainer, localeSelectorContainer, inflectionData, locale = 'en-US') {
-    this.viewContainer = viewContainer
+  constructor (wideViewContainer, narrowViewContainer, footerContainer, viewSelectorContainer, localeSelectorContainer, inflectionData, locale = 'en-US') {
+    this.wideViewContainer = wideViewContainer
+    this.narrowViewContainer = narrowViewContainer
+    this.footerContainer = footerContainer
     this.viewSelectorContainer = viewSelectorContainer
     this.localeSelectorContainer = localeSelectorContainer
     this.inflectionData = inflectionData
@@ -45,19 +45,74 @@ export default class Presenter {
 
   setLocale (locale) {
     this.locale = locale
-    this.activeView.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
+    // this.activeView.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
+    this.renderInflections(this.activeView).displayInflections(this.activeView)
   }
 
   render () {
         // Show a default view
     if (this.defaultView) {
-      this.defaultView.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
+      // this.defaultView.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
+      this.renderInflections(this.defaultView).displayInflections(this.defaultView)
       this.activeView = this.defaultView
 
       this.appendViewSelector(this.viewSelectorContainer)
             // this.appendLocaleSelector(this.localeSelectorContainer);
     }
     return this
+  }
+
+  clearInflections () {
+    this.wideViewContainer.innerHTML = ''
+    this.narrowViewContainer.innerHTML = ''
+    this.footerContainer.innerHTML = ''
+    return this
+  }
+
+  setDefaults () {
+//    this.buttons.hideEmptyCols.contentHidden = false
+//    this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.shownText
+//    this.buttons.hideNoSuffixGroups.contentHidden = false
+//    this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.shownText
+    return this
+  }
+
+  renderInflections (view) {
+    this.clearInflections().setDefaults()
+    // view.render(this.inflectionData, this.l10n.messages(this.locale))
+    this.renderInflections(view).displayInflections(view)
+    return this
+  }
+
+  displayInflections (view) {
+    this.wideViewContainer.appendChild(view.wideViewNodes)
+    this.narrowViewContainer.appendChild(view.narrowViewNodes)
+    this.footerContainer.appendChild(view.footnotesNodes)
+    return this
+  }
+
+  hideEmptyColsClick () {
+    /* this.buttons.hideEmptyCols.contentHidden = !this.buttons.hideEmptyCols.contentHidden
+    if (this.buttons.hideEmptyCols.contentHidden) {
+      this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.hiddenText
+      this.selectedView.hideEmptyColumns()
+    } else {
+      this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.shownText
+      this.selectedView.showEmptyColumns()
+    }
+    this.displayInflections() */
+  }
+
+  hideNoSuffixGroupsClick () {
+    /* this.buttons.hideNoSuffixGroups.contentHidden = !this.buttons.hideNoSuffixGroups.contentHidden
+    if (this.buttons.hideNoSuffixGroups.contentHidden) {
+      this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.hiddenText
+      this.selectedView.hideNoSuffixGroups()
+    } else {
+      this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.shownText
+      this.selectedView.showNoSuffixGroups()
+    }
+    this.displayInflections() */
   }
 
   appendViewSelector (targetContainer) {
@@ -85,7 +140,8 @@ export default class Presenter {
   viewSelectorEventListener (event) {
     let viewID = event.target.value
     let view = this.viewIndex[viewID]
-    view.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
+    // view.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
+    this.renderInflections(view).displayInflections(view)
     this.activeView = view
   }
 
@@ -119,7 +175,7 @@ export default class Presenter {
         // First view in a returned array will be a default one
     let views = []
     for (let view of this.views) {
-      if (wordData.language === view.language && wordData[Models.Feature.types.part].includes(view.partOfSpeech)) {
+      if (wordData.language === view.language && wordData[Feature.types.part].includes(view.partOfSpeech)) {
         views.push(view)
       }
     }

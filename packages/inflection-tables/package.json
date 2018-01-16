@@ -23,19 +23,22 @@
   },
   "homepage": "https://github.com/alpheios-project/inflection-tables#readme",
   "devDependencies": {
+    "alpheios-data-models": "github:alpheios-project/data-models",
+    "alpheios-tufts-adapter": "github:alpheios-project/tufts-adapter",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babyparse": "^0.4.6",
+    "coveralls": "^3.0.0",
     "font-awesome-svg-png": "^1.2.2",
     "intl-messageformat": "^2.2.0",
     "jest": "^21.2.1",
-    "jest-environment-jsdom-11.0.0": "^20.0.9",
+    "jest-environment-jsdom-11.0.0": "^20.1.9",
     "papaparse": "^4.3.6",
     "raw-loader": "^0.5.1",
     "rollup": "^0.47.6",
     "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-string": "^2.0.2",
     "standard": "*",
@@ -50,11 +53,6 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "jest-environment-jsdom-11.0.0"
-  },
-  "dependencies": {
-    "alpheios-data-models": "git://github.com/alpheios-project/data-models.git",
-    "alpheios-tufts-adapter": "git://github.com/alpheios-project/tufts-adapter.git",
-    "coveralls": "^3.0.0"
   },
   "eslintConfig": {
     "env": {
@@ -73,5 +71,6 @@
       "**/tools",
       "**/tests/test-bundle.js"
     ]
-  }
+  },
+  "dependencies": {}
 }
