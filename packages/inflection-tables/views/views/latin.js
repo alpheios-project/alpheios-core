@@ -1,6 +1,4 @@
-import languages from '../../lib/languages'
 import * as Models from 'alpheios-data-models'
-import * as Latin from '../../lib/lang/latin/latin'
 import View from '../lib/view'
 import GroupFeatureType from '../lib/group-feature-type'
 import Table from '../lib/table'
@@ -8,8 +6,9 @@ import Table from '../lib/table'
 class LatinView extends View {
   constructor () {
     super()
-    this.language = languages.latin
-    this.language_features = Latin.languageModel.features
+    this.languageID = Models.Constants.LANG_LATIN
+    this.languageModel = new Models.LatinLanguageModel() // TODO: Do we really need to create it every time?
+    this.language_features = this.languageModel.features
 
         /*
         Default grammatical features of a view. It child views need to have different feature values, redefine

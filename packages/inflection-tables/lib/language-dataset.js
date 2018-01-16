@@ -1,5 +1,4 @@
 import * as Models from 'alpheios-data-models'
-import languages from './languages'
 import Suffix from './suffix'
 import Footnote from './footnote'
 import InflectionData from './inflection-data'
@@ -10,19 +9,15 @@ import InflectionData from './inflection-data'
 export default class LanguageDataset {
   /**
    * Initializes a LanguageDataset.
-   * @param {string} language - A language of a data set, from an allowed languages list (see 'languages' object).
+   * @param {string} languageID - A language ID of a data set.
    */
-  constructor (language) {
-    if (!language) {
+  constructor (languageID) {
+    if (!languageID) {
       // Language is not supported
-      throw new Error('Language data cannot be empty.')
+      throw new Error('Language ID cannot be empty.')
     }
 
-    if (!languages.isAllowed(language)) {
-      // Language is not supported
-      throw new Error('Language "' + language + '" is not supported.')
-    }
-    this.language = language
+    this.languageID = languageID
     this.suffixes = [] // An array of suffixes.
     this.footnotes = [] // Footnotes
   };
@@ -107,7 +102,7 @@ export default class LanguageDataset {
 
   getSuffixes (homonym) {
     // Add support for languages
-    let result = new InflectionData(homonym.language)
+    let result = new InflectionData(homonym.languageID)
     let inflections = {}
 
     // Find partial matches first, and then full among them
@@ -118,8 +113,15 @@ export default class LanguageDataset {
         // Group inflections by a part of speech
         let partOfSpeech = inflection[Models.Feature.types.part]
         if (!partOfSpeech) {
-          throw new Error('Part of speech data is missing in an inflection.')
+          throw new Error('Part of speech data is missing in an inflection')
         }
+        if (!Array.isArray(partOfSpeech)) {
+          throw new Error('Part of speech data should be in an array format')
+        }
+        if (partOfSpeech.length === 0 && partOfSpeech.length > 1) {
+          throw new Error('Part of speech data should be an array with exactly one element')
+        }
+        partOfSpeech = partOfSpeech[0].value
 
         if (!inflections.hasOwnProperty(partOfSpeech)) {
           inflections[partOfSpeech] = []

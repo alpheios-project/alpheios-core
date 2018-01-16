@@ -6,7 +6,7 @@ import * as L10n from '../l10n/l10n'
 import * as Styles from '../views/styles/styles'
 import Suffix from '../lib/suffix'
 import LanguageDataset from '../lib/language-dataset'
-import LanguageData from '../lib/language-data'
+import LanguageDataList from '../lib/language-data-list'
 import MatchData from '../lib/match-data'
 import Footnote from '../lib/footnote'
 import InflectionData from '../lib/inflection-data'
@@ -26,6 +26,10 @@ import View from '../views/lib/view'
 
 // Reexport items for Jest
 // Library
+exports.Models = {
+  Constants: Models.Constants
+}
+
 exports.languages = languages
 exports.Feature = Models.Feature
 exports.FeatureType = Models.FeatureType
@@ -36,7 +40,7 @@ exports.Lexeme = Models.Lexeme
 exports.Homonym = Models.Homonym
 exports.Suffix = Suffix
 exports.LanguageDataset = LanguageDataset
-exports.LanguageData = LanguageData
+exports.LanguageDataList = LanguageDataList
 exports.MatchData = MatchData
 exports.Footnote = Footnote
 exports.ResultSet = InflectionData

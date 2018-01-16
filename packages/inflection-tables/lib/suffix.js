@@ -105,15 +105,15 @@ export default class Suffix {
   /**
    * Checks if suffix has a feature that is a match to the one provided.
    * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
-   * @param {string[]} featureValues - A list of feature values we need to match with the ones stored inside the suffix
-   * @returns {string | undefined} - If provided feature is a match, returns a first feature that matched.
+   * @param {Feature[]} features - A list of features we need to match with the ones stored inside the suffix
+   * @returns {string | undefined} - If provided feature is a match, returns a value of a first feature that matched.
    * If no match found, return undefined.
    */
-  featureMatch (featureType, featureValues) {
-    if (this.features.hasOwnProperty(featureType)) {
-      for (let value of featureValues) {
-        if (value === this.features[featureType]) {
-          return value
+  featureMatch (featureType, features) {
+    if (features && this.features.hasOwnProperty(featureType)) {
+      for (let feature of features) {
+        if (feature.value === this.features[featureType]) {
+          return feature.value
         }
       }
     }

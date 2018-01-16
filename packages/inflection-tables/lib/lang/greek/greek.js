@@ -1,7 +1,7 @@
 /*
  * Latin language data module
  */
-import languages from '../../../lib/languages'
+// import languages from '../../../lib/languages'
 import LanguageDataset from '../../../lib/language-dataset'
 import ExtendedGreekData from '../../../lib/extended-greek-data'
 import MatchData from '../../../lib/match-data'
@@ -15,9 +15,9 @@ import verbFootnotesCSV from './data/verb/footnotes.csv'; */
 import papaparse from 'papaparse'
 
 // A language of this module
-const language = languages.greek
+// const language = languages.greek
 // Create a language data set that will keep all language-related information
-let dataSet = new LanguageDataset(language)
+let dataSet = new LanguageDataset(Models.Constants.LANG_GREEK)
 
 // region Definition of grammatical features
 /*
@@ -25,31 +25,37 @@ let dataSet = new LanguageDataset(language)
  analyzer's language modules as well.
  */
 const importerName = 'csv'
-const parts = new Models.FeatureType(Models.Feature.types.part, ['noun', 'adjective', 'verb'], language)
-const numbers = new Models.FeatureType(Models.Feature.types.number, ['singular', 'dual', 'plural'], language)
+const parts = new Models.FeatureType(Models.Feature.types.part, ['noun', 'adjective', 'verb'],
+  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
+const numbers = new Models.FeatureType(Models.Feature.types.number, ['singular', 'dual', 'plural'],
+  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
     .map('dual', numbers.dual)
     .map('plural', numbers.plural)
-const cases = new Models.FeatureType(Models.Feature.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative'], language)
+const cases = new Models.FeatureType(Models.Feature.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative'],
+  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
 cases.addImporter(importerName)
     .map('nominative', cases.nominative)
     .map('genitive', cases.genitive)
     .map('dative', cases.dative)
     .map('accusative', cases.accusative)
     .map('vocative', cases.vocative)
-const declensions = new Models.FeatureType(Models.Feature.types.declension, ['first', 'second', 'third'], language)
+const declensions = new Models.FeatureType(Models.Feature.types.declension, ['first', 'second', 'third'],
+  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
 declensions.addImporter(importerName)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
     .map('3rd', declensions.third)
-const genders = new Models.FeatureType(Models.Feature.types.gender, ['masculine', 'feminine', 'neuter'], language)
+const genders = new Models.FeatureType(Models.Feature.types.gender, ['masculine', 'feminine', 'neuter'],
+  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
 genders.addImporter(importerName)
     .map('masculine', genders.masculine)
     .map('feminine', genders.feminine)
     .map('neuter', genders.neuter)
     .map('masculine feminine', [genders.masculine, genders.feminine])
-const types = new Models.FeatureType(Models.Feature.types.type, ['regular', 'irregular'], language)
+const types = new Models.FeatureType(Models.Feature.types.type, ['regular', 'irregular'],
+  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
 types.addImporter(importerName)
     .map('regular', types.regular)
     .map('irregular', types.irregular)
@@ -119,7 +125,7 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
     let extendedGreekData = new ExtendedGreekData()
     extendedGreekData.primary = primary
     let extendedLangData = {
-      [languages.greek]: extendedGreekData
+      [Models.Constants.LANG_GREEK]: extendedGreekData
     }
     this.addSuffix(suffixValue, features, extendedLangData)
   }
@@ -300,4 +306,4 @@ dataSet.bestMatch = function (matchA, matchB) {
     return matchB
   }
 }
-export {language, parts, numbers, cases, declensions, genders, types, /* conjugations, tenses, voices, moods, persons, */dataSet}
+export {parts, numbers, cases, declensions, genders, types, /* conjugations, tenses, voices, moods, persons, */dataSet}

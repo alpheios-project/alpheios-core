@@ -1238,97 +1238,41 @@ describe('View', () => {
 
   test('hideEmptyColumns() should proxy request to the table and and update the view.', () => {
     let hideEmptyColumnsStored = view.table.hideEmptyColumns
-    let displayStored = view.display
     const hideEmptyColumns = jest.fn()
-    const display = jest.fn()
     view.table.hideEmptyColumns = hideEmptyColumns
-    view.display = display
 
-    let hideEmptyColumnsBtnStored = view.pageHeader.hideEmptyColumnsBtn
-    let showEmptyColumnsBtnStored = view.pageHeader.showEmptyColumnsBtn
-    view.pageHeader.hideEmptyColumnsBtn = document.createElement('div')
-    view.pageHeader.showEmptyColumnsBtn = document.createElement('div')
-    view.pageHeader.showEmptyColumnsBtn.classList.add(t.Styles.classNames.hidden)
     view.hideEmptyColumns()
     expect(hideEmptyColumns.mock.calls.length).toBe(1)
-    expect(display.mock.calls.length).toBe(1)
-    expect(view.pageHeader.hideEmptyColumnsBtn.classList.contains(t.Styles.classNames.hidden)).toBeTruthy()
-    expect(view.pageHeader.showEmptyColumnsBtn.classList.contains(t.Styles.classNames.hidden)).toBeFalsy()
     view.table.hideEmptyColumns = hideEmptyColumnsStored
-    view.display = displayStored
-    view.pageHeader.hideEmptyColumnsBtn = hideEmptyColumnsBtnStored
-    view.pageHeader.showEmptyColumnsBtn = showEmptyColumnsBtnStored
   })
 
   test('showEmptyColumns() should proxy request to the table and and update the view.', () => {
     let showEmptyColumnsStored = view.table.hideEmptyColumns
-    let displayStored = view.display
     const showEmptyColumns = jest.fn()
-    const display = jest.fn()
     view.table.showEmptyColumns = showEmptyColumns
-    view.display = display
 
-    let hideEmptyColumnsBtnStored = view.pageHeader.hideEmptyColumnsBtn
-    let showEmptyColumnsBtnStored = view.pageHeader.showEmptyColumnsBtn
-    view.pageHeader.hideEmptyColumnsBtn = document.createElement('div')
-    view.pageHeader.showEmptyColumnsBtn = document.createElement('div')
-    view.pageHeader.hideEmptyColumnsBtn.classList.add(t.Styles.classNames.hidden)
     view.showEmptyColumns()
     expect(showEmptyColumns.mock.calls.length).toBe(1)
-    expect(display.mock.calls.length).toBe(1)
-    expect(view.pageHeader.showEmptyColumnsBtn.classList.contains(t.Styles.classNames.hidden)).toBeTruthy()
-    expect(view.pageHeader.hideEmptyColumnsBtn.classList.contains(t.Styles.classNames.hidden)).toBeFalsy()
     view.table.showEmptyColumns = showEmptyColumnsStored
-    view.display = displayStored
-    view.pageHeader.hideEmptyColumnsBtn = hideEmptyColumnsBtnStored
-    view.pageHeader.showEmptyColumnsBtn = showEmptyColumnsBtnStored
   })
 
   test('hideNoSuffixGroups() should proxy request to the table and and update the view.', () => {
     let hideNoSuffixGroupsStored = view.table.hideNoSuffixGroups
-    let displayStored = view.display
     const hideNoSuffixGroups = jest.fn()
-    const display = jest.fn()
     view.table.hideNoSuffixGroups = hideNoSuffixGroups
-    view.display = display
 
-    let hideNoSuffixGroupsBtnStored = view.pageHeader.hideNoSuffixGroupsBtn
-    let showNoSuffixGroupsBtnStored = view.pageHeader.showNoSuffixGroupsBtn
-    view.pageHeader.hideNoSuffixGroupsBtn = document.createElement('div')
-    view.pageHeader.showNoSuffixGroupsBtn = document.createElement('div')
-    view.pageHeader.showNoSuffixGroupsBtn.classList.add(t.Styles.classNames.hidden)
     view.hideNoSuffixGroups()
     expect(hideNoSuffixGroups.mock.calls.length).toBe(1)
-    expect(display.mock.calls.length).toBe(1)
-    expect(view.pageHeader.hideNoSuffixGroupsBtn.classList.contains(t.Styles.classNames.hidden)).toBeTruthy()
-    expect(view.pageHeader.showNoSuffixGroupsBtn.classList.contains(t.Styles.classNames.hidden)).toBeFalsy()
     view.table.hideNoSuffixGroups = hideNoSuffixGroupsStored
-    view.display = displayStored
-    view.pageHeader.hideNoSuffixGroupsBtn = hideNoSuffixGroupsBtnStored
-    view.pageHeader.showNoSuffixGroupsBtn = showNoSuffixGroupsBtnStored
   })
 
   test('showNoSuffixGroups() should proxy request to the table and and update the view.', () => {
     let showNoSuffixGroupsStored = view.table.showNoSuffixGroups
-    let displayStored = view.display
     const showNoSuffixGroups = jest.fn()
-    const display = jest.fn()
     view.table.showNoSuffixGroups = showNoSuffixGroups
-    view.display = display
 
-    let hideNoSuffixGroupsBtnStored = view.pageHeader.hideNoSuffixGroupsBtn
-    let showNoSuffixGroupsBtnStored = view.pageHeader.showNoSuffixGroupsBtn
-    view.pageHeader.showNoSuffixGroupsBtn = document.createElement('div')
-    view.pageHeader.showNoSuffixGroupsBtn.classList.add(t.Styles.classNames.hidden)
-    view.pageHeader.hideNoSuffixGroupsBtn = document.createElement('div')
     view.showNoSuffixGroups()
     expect(showNoSuffixGroups.mock.calls.length).toBe(1)
-    expect(display.mock.calls.length).toBe(1)
-    expect(view.pageHeader.hideNoSuffixGroupsBtn.classList.contains(t.Styles.classNames.hidden)).toBeTruthy()
-    expect(view.pageHeader.showNoSuffixGroupsBtn.classList.contains(t.Styles.classNames.hidden)).toBeFalsy()
     view.table.showNoSuffixGroups = showNoSuffixGroupsStored
-    view.display = displayStored
-    view.pageHeader.hideNoSuffixGroupsBtn = hideNoSuffixGroupsBtnStored
-    view.pageHeader.showNoSuffixGroupsBtn = showNoSuffixGroupsBtnStored
   })
 })

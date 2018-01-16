@@ -6,9 +6,9 @@ import Footnote from './footnote'
  * A return value for inflection queries
  */
 export default class InflectionData {
-  constructor (language) {
+  constructor (languageID) {
     // this.homonym = homonym
-    this.language = language
+    this.languageID = languageID
     this[Models.Feature.types.part] = [] // What parts of speech are represented by this object.
   }
 

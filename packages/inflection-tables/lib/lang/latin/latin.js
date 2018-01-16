@@ -2,7 +2,7 @@
  * Latin language data module
  */
 import * as Models from 'alpheios-data-models'
-import languages from '../../../lib/languages'
+// import languages from '../../../lib/languages'
 import LanguageDataset from '../../../lib/language-dataset'
 import MatchData from '../../../lib/match-data'
 import nounSuffixesCSV from './data/noun/suffixes.csv'
@@ -16,9 +16,9 @@ import papaparse from 'papaparse'
 let languageModel = new Models.LatinLanguageModel()
 let types = Models.Feature.types
 // A language of this module
-const language = languages.latin
+// const languageID = languages.latin
 // Create a language data set that will keep all language-related information
-let dataSet = new LanguageDataset(language)
+let dataSet = new LanguageDataset(Models.Constants.LANG_LATIN)
 
 // region Definition of grammatical features
 /*
@@ -38,7 +38,7 @@ languageModel.features[types.gender].addImporter(importerName)
   ])
 languageModel.features[types.tense].addImporter(importerName)
     .map('future_perfect', languageModel.features[types.tense][Models.Constants.TENSE_FUTURE_PERFECT])
-const footnotes = new Models.FeatureType(types.footnote, [], language)
+const footnotes = new Models.FeatureType(types.footnote, [], Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
 
 // endregion Definition of grammatical features
 
@@ -245,4 +245,4 @@ dataSet.bestMatch = function (matchA, matchB) {
     return matchB
   }
 }
-export {language, languageModel, dataSet}
+export {languageModel, dataSet}

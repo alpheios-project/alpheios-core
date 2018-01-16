@@ -6,12 +6,12 @@ describe('LanguageDataset object', () => {
 
   beforeAll(() => {
     // Create a test environment
-    languageDataset = new t.LanguageDataset(t.languages.latin)
+    languageDataset = new t.LanguageDataset(t.Models.Constants.LANG_LATIN)
   })
 
   test('Should be initialized properly', () => {
     expect(languageDataset).toEqual({
-      language: t.languages.latin,
+      languageID: t.Models.Constants.LANG_LATIN,
       suffixes: [],
       footnotes: []
     })
@@ -19,10 +19,6 @@ describe('LanguageDataset object', () => {
 
   test('Should require language to be provided', () => {
     expect(() => new t.LanguageDataset()).toThrowError(/empty/)
-  })
-
-  test('Should not allow initialization with unsupported languages', () => {
-    expect(() => new t.LanguageDataset('egyptian')).toThrowError(/not supported/)
   })
 
   // TODO: Add tests for addSuffix for later as the logic might change
@@ -50,18 +46,17 @@ describe('LanguageData', () => {
   let languageData, latinDataset, greekDataset
 
   beforeAll(() => {
-    latinDataset = new t.LanguageDataset(t.languages.latin)
-    greekDataset = new t.LanguageDataset(t.languages.greek)
+    latinDataset = new t.LanguageDataset(t.Models.Constants.LANG_LATIN)
+    greekDataset = new t.LanguageDataset(t.Models.Constants.LANG_GREEK)
 
-    languageData = new t.LanguageData([latinDataset, greekDataset])
+    languageData = new t.LanguageDataList([latinDataset, greekDataset])
   })
 
   test('constructor should initialize object properly.', () => {
-    expect(languageData).toEqual(expect.objectContaining({
-      grc: greekDataset,
-      lat: latinDataset,
-      supportedLanguages: [t.languages.latin, t.languages.greek]
-    }))
+    expect(Array.from(languageData.sets.values())).toEqual(expect.arrayContaining([
+      greekDataset,
+      latinDataset
+    ]))
   })
 
   test('loadData() should call a matching method of all language data sets.', () => {

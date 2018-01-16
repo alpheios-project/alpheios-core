@@ -4,7 +4,7 @@ import Presenter from './presenter.js'
 import { Constants } from '../../node_modules/alpheios-data-models/dist/alpheios-data-models.js'
 import AlpheiosTuftsAdapter from '../../node_modules/alpheios-tufts-adapter/dist/alpheios-tufts-adapter.standalone.js'
 
-let langData = new Lib.LanguageData([Lib.LatinDataSet, Lib.GreekDataSet]).loadData()
+let langData = new Lib.LanguageDataList([Lib.LatinDataSet, Lib.GreekDataSet]).loadData()
 
 let testCases = [
   {word: 'cupidinibus', value: 'latin_noun_cupidinibus', type: 'noun', language: 'Latin', languageCode: Constants.STR_LANG_CODE_LAT},
