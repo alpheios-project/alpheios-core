@@ -2,7 +2,7 @@
  * This module is responsible for displaying different views of an inflection table. Each view is located in a separate
  * directory under /presenter/views/view-name
  */
-import { ViewSet, L10n, L10nMessages } from '../../dist/inflection-tables.standalone.js'
+import { L10n } from '../../dist/inflection-tables.standalone.js'
 import { Feature } from '../../node_modules/alpheios-data-models/dist/alpheios-data-models.js'
 
 export default class Presenter {
@@ -18,12 +18,12 @@ export default class Presenter {
     this.views = []
     this.viewIndex = {}
 
-    for (let view of viewsLatin) {
+    /* for (let view of viewsLatin) {
       this.addView(view)
     }
     for (let view of viewsGreek) {
       this.addView(view)
-    }
+    } */
 
         // Views available for parts of speech that are present in a Result Set
     this.availableViews = this.getViews(this.inflectionData)

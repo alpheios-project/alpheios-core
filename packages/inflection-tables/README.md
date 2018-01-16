@@ -41,7 +41,7 @@ Based on data from Homonym object, it finds matching suffixes. Inflection librar
 ### Presenter
 Presenter is responsible for displaying data that is returned by an Inflection Library. It can display data in different ways using different view modules. All Presenter files are located in a `/presenter/` directory.
 
-[More details about views](views/views/VIEWS.md)
+[More details about views](views/lang/VIEWS.md)
 
 ### Controller
 This is a `controller.js` file located in the root directory. It controls application modules and data flows between them.

@@ -1,5 +1,5 @@
-import LatinViews from './views/latin'
-import GreekViews from './views/greek'
+import LatinViews from '../lang/latin.js'
+import GreekViews from '../lang/greek.js'
 import * as Models from 'alpheios-data-models'
 
 export default class ViewSet {
