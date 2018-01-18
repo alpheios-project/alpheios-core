@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import Lexeme from '../src/lexeme.js'
 import Lemma from '../src/lemma.js'
+import Feature from '../src/feature.js'
 import Inflection from '../src/inflection.js'
 import Definition from '../src/definition.js'
 
@@ -74,6 +75,21 @@ describe('Lexeme object', () => {
     expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeOne])
     lexemes = [ mockLexemeTwo, mockLexemeThree ]
     expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeThree])
+  })
+
+  test('isPopulated', () => {
+    // it has inflections
+    expect(lexeme.isPopulated()).toBeTruthy()
+    let empty = new Lexeme(lemma, [])
+    expect(empty.isPopulated()).toBeFalsy()
+    let flemma = new Lemma('word', 'grc')
+    flemma.feature = new Feature(['noun'], 'tense', 'grc')
+    let withFeatures = new Lexeme(flemma, [])
+    expect(withFeatures.isPopulated()).toBeTruthy()
+    let def = new Definition('shortdef', 'eng', 'text/plain')
+    let withDef = new Lexeme(lemma, [])
+    withDef.meaning.appendShortDefs([def])
+    expect(withDef.isPopulated()).toBeTruthy()
   })
 
   afterAll(() => {

@@ -28,6 +28,14 @@ export default class DefinitionSet {
   }
 
   /**
+   * Check to see if the DefinitionSet is empty
+   * @return {boolean} true if empty false if there is at least one definition
+   */
+  isEmpty () {
+    return this.shortDefs.length === 0 && this.fullDefs.length === 0
+  }
+
+  /**
    * Appends one or more definitions to a list of short definitions.
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
    * @return {Definition[]} A list of short definitions this object has.

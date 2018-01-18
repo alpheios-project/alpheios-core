@@ -60,7 +60,7 @@ class Lemma {
 
       if (element.languageID !== this.languageID) {
         throw new Error('Language "' + element.languageID + '" of a feature does not match a language "' +
-                this.languageID + '" of a Lemma object.')
+                this.languageID.toString() + '" of a Lemma object.')
       }
 
       this.features[type].push(element)

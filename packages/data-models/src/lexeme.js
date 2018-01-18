@@ -43,6 +43,20 @@ class Lexeme {
     this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID)
   }
 
+  /**
+   * test to see if a lexeme is populated with meaningful data
+   * Returns true if any of these are true:
+   *   its lemma has morphological features defined
+   *   it has one ore more definitions supplied in the meaning
+   *   it has one ore more inflections
+   * @return {boolean}
+   */
+  isPopulated () {
+    return Object.entries(this.lemma.features).length > 0 ||
+      !this.meaning.isEmpty() ||
+      this.inflections.length > 0
+  }
+
   getGroupedInflections () {
     let lm = LMF.getLanguageForCode(this.lemma.language)
     return lm.groupInflectionsForDisplay(this.inflections)

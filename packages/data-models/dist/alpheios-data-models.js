@@ -445,6 +445,14 @@ class DefinitionSet {
   }
 
   /**
+   * Check to see if the DefinitionSet is empty
+   * @return {boolean} true if empty false if there is at least one definition
+   */
+  isEmpty () {
+    return this.shortDefs.length === 0 && this.fullDefs.length === 0
+  }
+
+  /**
    * Appends one or more definitions to a list of short definitions.
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
    * @return {Definition[]} A list of short definitions this object has.
@@ -1868,7 +1876,7 @@ class Lemma {
 
       if (element.languageID !== this.languageID) {
         throw new Error('Language "' + element.languageID + '" of a feature does not match a language "' +
-                this.languageID + '" of a Lemma object.')
+                this.languageID.toString() + '" of a Lemma object.')
       }
 
       this.features[type].push(element);
@@ -2018,6 +2026,20 @@ class Lexeme {
     this.lemma = lemma;
     this.inflections = inflections;
     this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID);
+  }
+
+  /**
+   * test to see if a lexeme is populated with meaningful data
+   * Returns true if any of these are true:
+   *   its lemma has morphological features defined
+   *   it has one ore more definitions supplied in the meaning
+   *   it has one ore more inflections
+   * @return {boolean}
+   */
+  isPopulated () {
+    return Object.entries(this.lemma.features).length > 0 ||
+      !this.meaning.isEmpty() ||
+      this.inflections.length > 0
   }
 
   getGroupedInflections () {
