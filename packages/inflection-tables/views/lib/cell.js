@@ -43,14 +43,19 @@ export default class Cell {
       if (suffix.match && suffix.match.fullMatch) {
         suffixElement.classList.add(Styles.classNames.suffixFullFeatureMatch)
       }
-      let suffixValue = suffix.value ? suffix.value : '-'
-      if (suffix.footnote && suffix.footnote.length) {
-        suffixValue += '[' + suffix.footnote + ']'
-      }
-      suffixElement.innerHTML = suffixValue
+      suffixElement.innerHTML = suffix.value ? suffix.value : '-'
       element.appendChild(suffixElement)
+
+      if (suffix.footnote && suffix.footnote.length) {
+        let footnoteElement = document.createElement('a')
+        footnoteElement.innerHTML = '[' + suffix.footnote + ']'
+        footnoteElement.dataset.footnote = suffix.footnote
+        footnoteElement.dataset.tooltipVisible = 'false'
+        footnoteElement.setAttribute('title', 'This is a title')
+        element.appendChild(footnoteElement)
+      }
       if (index < this.suffixes.length - 1) {
-        element.appendChild(document.createTextNode(',\u00A0'))
+        element.appendChild(document.createTextNode(',\u00A0')) // 00A0 is a non-breaking space
       }
     }
     this.wNode = element

@@ -7059,14 +7059,19 @@ class Cell {
       if (suffix.match && suffix.match.fullMatch) {
         suffixElement.classList.add(classNames.suffixFullFeatureMatch);
       }
-      let suffixValue = suffix.value ? suffix.value : '-';
-      if (suffix.footnote && suffix.footnote.length) {
-        suffixValue += '[' + suffix.footnote + ']';
-      }
-      suffixElement.innerHTML = suffixValue;
+      suffixElement.innerHTML = suffix.value ? suffix.value : '-';
       element.appendChild(suffixElement);
+
+      if (suffix.footnote && suffix.footnote.length) {
+        let footnoteElement = document.createElement('a');
+        footnoteElement.innerHTML = '[' + suffix.footnote + ']';
+        footnoteElement.dataset.footnote = suffix.footnote;
+        footnoteElement.dataset.tooltipVisible = 'false';
+        footnoteElement.setAttribute('title', 'This is a title');
+        element.appendChild(footnoteElement);
+      }
       if (index < this.suffixes.length - 1) {
-        element.appendChild(document.createTextNode(',\u00A0'));
+        element.appendChild(document.createTextNode(',\u00A0')); // 00A0 is a non-breaking space
       }
     }
     this.wNode = element;
@@ -8521,39 +8526,6 @@ class Table {
 }
 
 /**
- * Represents a list of footnotes.
- */
-class Footnotes {
-  /**
-   * Initialises a Footnotes object.
-   * @param {Footnote[]} footnotes - An array of footnote objects.
-   */
-  constructor (footnotes$$1) {
-    this.footnotes = footnotes$$1;
-
-    this.nodes = document.createElement('dl');
-    this.nodes.id = footnotes.id;
-    this.nodes.classList.add(classNames.footnotesContainer);
-    for (let footnote of footnotes$$1) {
-      let index = document.createElement('dt');
-      index.innerHTML = footnote.index;
-      this.nodes.appendChild(index);
-      let text = document.createElement('dd');
-      text.innerHTML = footnote.text;
-      this.nodes.appendChild(text);
-    }
-  }
-
-  /**
-   * Returns an HTML representation of a Footnotes object.
-   * @returns {HTMLElement} An HTML representation of a Footnotes object.
-   */
-  get html () {
-    return this.nodes
-  }
-}
-
-/**
  * Represents a single view.
  */
 class View {
@@ -8587,7 +8559,12 @@ class View {
   render (inflectionData, messages) {
     let selection = inflectionData[this.partOfSpeech];
 
-    this.footnotes = new Footnotes(selection.footnotes);
+    this.footnotes = new Map();
+    if (selection.footnotes && Array.isArray(selection.footnotes)) {
+      for (const footnote of selection.footnotes) {
+        this.footnotes.set(footnote.index, footnote);
+      }
+    }
 
     // Table is created during view construction
     this.table.messages = messages;
@@ -8601,10 +8578,6 @@ class View {
 
   get narrowViewNodes () {
     return this.table.narrowView.render()
-  }
-
-  get footnotesNodes () {
-    return this.footnotes.html
   }
 
   /**
@@ -8693,7 +8666,6 @@ exports.View = {
   NarrowView: NarrowView,
   NarrowViewGroup: NarrowViewGroup,
   Table: Table,
-  Footnotes: Footnotes,
   View: View
 };
 

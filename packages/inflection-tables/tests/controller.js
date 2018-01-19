@@ -21,7 +21,6 @@ import WideView from '../views/lib/wide-view'
 import NarrowView from '../views/lib/narrow-view'
 import NarrowViewGroup from '../views/lib/narrow-view-group'
 import Table from '../views/lib/table'
-import Footnotes from '../views/lib/footnotes'
 import View from '../views/lib/view'
 
 // Reexport items for Jest
@@ -76,6 +75,5 @@ exports.View = {
   NarrowView: NarrowView,
   NarrowViewGroup: NarrowViewGroup,
   Table: Table,
-  Footnotes: Footnotes,
   View: View
 }

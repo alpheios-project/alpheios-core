@@ -1,5 +1,3 @@
-import Footnotes from './footnotes'
-
 /**
  * Represents a single view.
  */
@@ -34,7 +32,12 @@ export default class View {
   render (inflectionData, messages) {
     let selection = inflectionData[this.partOfSpeech]
 
-    this.footnotes = new Footnotes(selection.footnotes)
+    this.footnotes = new Map()
+    if (selection.footnotes && Array.isArray(selection.footnotes)) {
+      for (const footnote of selection.footnotes) {
+        this.footnotes.set(footnote.index, footnote)
+      }
+    }
 
     // Table is created during view construction
     this.table.messages = messages
@@ -48,10 +51,6 @@ export default class View {
 
   get narrowViewNodes () {
     return this.table.narrowView.render()
-  }
-
-  get footnotesNodes () {
-    return this.footnotes.html
   }
 
   /**

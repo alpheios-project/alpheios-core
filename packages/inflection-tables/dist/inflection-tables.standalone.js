@@ -6548,74 +6548,6 @@ const messages = [
   new MessageBundle('en-GB', messages$2)
 ];
 
-let classNames = {
-  cell: 'infl-cell',
-  widthPrefix: 'infl-cell--sp',
-  fullWidth: 'infl-cell--fw',
-  header: 'infl-cell--hdr',
-  highlight: 'infl-cell--hl',
-  hidden: 'hidden',
-  suffix: 'infl-suff',
-  suffixMatch: 'infl-suff--suffix-match',
-  suffixFullFeatureMatch: 'infl-suff--full-feature-match',
-  inflectionTable: 'infl-table',
-  wideView: 'infl-table--wide',
-  narrowViewsContainer: 'infl-table-narrow-views-cont',
-  narrowView: 'infl-table--narrow',
-  footnotesContainer: 'infl-footnotes'
-};
-
-let wideView = {
-  column: {
-    width: 1,
-    unit: 'fr'
-  }
-};
-
-let narrowView = {
-  column: {
-    width: 100,
-    unit: 'px'
-  }
-};
-
-let footnotes$2 = {
-  id: 'inlection-table-footer'
-};
-
-/**
- * Represents a list of footnotes.
- */
-class Footnotes {
-  /**
-   * Initialises a Footnotes object.
-   * @param {Footnote[]} footnotes - An array of footnote objects.
-   */
-  constructor (footnotes) {
-    this.footnotes = footnotes;
-
-    this.nodes = document.createElement('dl');
-    this.nodes.id = footnotes$2.id;
-    this.nodes.classList.add(classNames.footnotesContainer);
-    for (let footnote of footnotes) {
-      let index = document.createElement('dt');
-      index.innerHTML = footnote.index;
-      this.nodes.appendChild(index);
-      let text = document.createElement('dd');
-      text.innerHTML = footnote.text;
-      this.nodes.appendChild(text);
-    }
-  }
-
-  /**
-   * Returns an HTML representation of a Footnotes object.
-   * @returns {HTMLElement} An HTML representation of a Footnotes object.
-   */
-  get html () {
-    return this.nodes
-  }
-}
-
 /**
  * Represents a single view.
  */
@@ -6650,7 +6582,12 @@ class View {
   render (inflectionData, messages) {
     let selection = inflectionData[this.partOfSpeech];
 
-    this.footnotes = new Footnotes(selection.footnotes);
+    this.footnotes = new Map();
+    if (selection.footnotes && Array.isArray(selection.footnotes)) {
+      for (const footnote of selection.footnotes) {
+        this.footnotes.set(footnote.index, footnote);
+      }
+    }
 
     // Table is created during view construction
     this.table.messages = messages;
@@ -6664,10 +6601,6 @@ class View {
 
   get narrowViewNodes () {
     return this.table.narrowView.render()
-  }
-
-  get footnotesNodes () {
-    return this.footnotes.html
   }
 
   /**
@@ -6702,6 +6635,37 @@ class View {
     return this
   }
 }
+
+let classNames = {
+  cell: 'infl-cell',
+  widthPrefix: 'infl-cell--sp',
+  fullWidth: 'infl-cell--fw',
+  header: 'infl-cell--hdr',
+  highlight: 'infl-cell--hl',
+  hidden: 'hidden',
+  suffix: 'infl-suff',
+  suffixMatch: 'infl-suff--suffix-match',
+  suffixFullFeatureMatch: 'infl-suff--full-feature-match',
+  inflectionTable: 'infl-table',
+  wideView: 'infl-table--wide',
+  narrowViewsContainer: 'infl-table-narrow-views-cont',
+  narrowView: 'infl-table--narrow',
+  footnotesContainer: 'infl-footnotes'
+};
+
+let wideView = {
+  column: {
+    width: 1,
+    unit: 'fr'
+  }
+};
+
+let narrowView = {
+  column: {
+    width: 100,
+    unit: 'px'
+  }
+};
 
 /**
  * A cell that specifies a title for a row in an inflection table.
@@ -6993,14 +6957,19 @@ class Cell {
       if (suffix.match && suffix.match.fullMatch) {
         suffixElement.classList.add(classNames.suffixFullFeatureMatch);
       }
-      let suffixValue = suffix.value ? suffix.value : '-';
-      if (suffix.footnote && suffix.footnote.length) {
-        suffixValue += '[' + suffix.footnote + ']';
-      }
-      suffixElement.innerHTML = suffixValue;
+      suffixElement.innerHTML = suffix.value ? suffix.value : '-';
       element.appendChild(suffixElement);
+
+      if (suffix.footnote && suffix.footnote.length) {
+        let footnoteElement = document.createElement('a');
+        footnoteElement.innerHTML = '[' + suffix.footnote + ']';
+        footnoteElement.dataset.footnote = suffix.footnote;
+        footnoteElement.dataset.tooltipVisible = 'false';
+        footnoteElement.setAttribute('title', 'This is a title');
+        element.appendChild(footnoteElement);
+      }
       if (index < this.suffixes.length - 1) {
-        element.appendChild(document.createTextNode(',\u00A0'));
+        element.appendChild(document.createTextNode(',\u00A0')); // 00A0 is a non-breaking space
       }
     }
     this.wNode = element;

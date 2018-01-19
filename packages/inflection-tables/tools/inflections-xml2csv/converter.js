@@ -30,7 +30,7 @@ const latin = {
             let footnote = ''
             if (suffix['_attr'].hasOwnProperty('footnote')) {
               // There can be multiple footnotes separated by spaces
-              footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+              footnote = latin.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
               'Ending': suffix['_text'],
@@ -60,7 +60,7 @@ const latin = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotes[0].footnote
+        let data = json['infl-data'][0].footnotesView[0].footnote
         let result = []
 
         // Skip the first item
@@ -95,7 +95,7 @@ const latin = {
             let footnote = ''
             if (suffix['_attr'].hasOwnProperty('footnote')) {
               // There can be multiple footnotes separated by spaces
-              footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+              footnote = latin.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
               'Ending': suffix['_text'],
@@ -125,7 +125,7 @@ const latin = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotes[0].footnote
+        let data = json['infl-data'][0].footnotesView[0].footnote
         let result = []
 
         // Skip the first item
@@ -161,7 +161,7 @@ const latin = {
               let footnote = ''
               if (suffix['_attr'].hasOwnProperty('footnote')) {
                 // There can be multiple footnotes separated by spaces
-                footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+                footnote = latin.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
               }
               result.push({
                 'Ending': suffix['_text'],
@@ -205,7 +205,7 @@ const latin = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotes[0].footnote
+        let data = json['infl-data'][0].footnotesView[0].footnote
         let result = []
 
         // Skip the first item
@@ -265,7 +265,7 @@ const greek = {
             let footnote = ''
             if (suffix['_attr'].hasOwnProperty('footnote')) {
               // There can be multiple footnotes separated by spaces
-              footnote = greek.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+              footnote = greek.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
               'Ending': suffix['_text'],
@@ -295,7 +295,7 @@ const greek = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotes[0].footnote
+        let data = json['infl-data'][0].footnotesView[0].footnote
         let result = []
 
         for (let i = 0; i < data.length; i++) {
@@ -349,7 +349,7 @@ try {
   data = readFile(path.join(__dirname, greek.inputBaseDir, greek.noun.inputFN))
   json = xmlToJSON.parseString(data)
   writeData(greek.noun.suffixes.get(json), greek.noun.suffixes.outputPath)
-  writeData(greek.noun.footnotes.get(json), greek.noun.footnotes.outputPath)
+  writeData(greek.noun.footnotesView.get(json), greek.noun.footnotesView.outputPath)
   // endregion Greek
 } catch (e) {
   console.log('Error:', e.stack)

@@ -1126,36 +1126,6 @@ describe('Table', () => {
   })
 })
 
-describe('Footnotes', () => {
-  let footnotes, footnotesList
-
-  beforeAll(() => {
-    footnotesList = [new t.Footnote(1, 'FootnoteOne'), new t.Footnote(2, 'FootnoteTwo')]
-    footnotes = new t.View.Footnotes(footnotesList)
-  })
-
-  test('Constructor should initialize object properties.', () => {
-    expect(footnotes).toEqual(expect.objectContaining({
-      footnotes: footnotesList
-    }))
-  })
-
-  test('Constructor should create an HTML representation of a footnotes object.', () => {
-    expect(footnotes.nodes.outerHTML).toBe('<dl id="' + t.Styles.footnotes.id + '" class="' +
-      t.Styles.classNames.footnotesContainer + '">' +
-      '<dt>1</dt><dd>FootnoteOne</dd><dt>2</dt><dd>FootnoteTwo</dd></dl>')
-  })
-
-  test('html() should return a nodes list.', () => {
-    expect(footnotes.html).toEqual(footnotes.nodes)
-  })
-
-  afterAll(() => {
-    footnotes = undefined
-    footnotesList = undefined
-  })
-})
-
 describe('View', () => {
   let partOfSpeech, featureOne, featureTwo, featureThree, features, messages, messageBundle,
     footnotesList, resultSet, view, word, title, latin
@@ -1200,7 +1170,7 @@ describe('View', () => {
     resultSet.homonym = {targetWord: word}
     resultSet[partOfSpeech] = {
       suffixes: [],
-      footnotes: footnotesList
+      footnotesView: footnotesList
     }
 
     // container = document.createElement('div')
