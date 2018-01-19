@@ -30,7 +30,7 @@ const latin = {
             let footnote = ''
             if (suffix['_attr'].hasOwnProperty('footnote')) {
               // There can be multiple footnotes separated by spaces
-              footnote = latin.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
+              footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
               'Ending': suffix['_text'],
@@ -60,7 +60,7 @@ const latin = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotesView[0].footnote
+        let data = json['infl-data'][0].footnotes[0].footnote
         let result = []
 
         // Skip the first item
@@ -95,7 +95,7 @@ const latin = {
             let footnote = ''
             if (suffix['_attr'].hasOwnProperty('footnote')) {
               // There can be multiple footnotes separated by spaces
-              footnote = latin.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
+              footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
               'Ending': suffix['_text'],
@@ -125,7 +125,7 @@ const latin = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotesView[0].footnote
+        let data = json['infl-data'][0].footnotes[0].footnote
         let result = []
 
         // Skip the first item
@@ -161,7 +161,7 @@ const latin = {
               let footnote = ''
               if (suffix['_attr'].hasOwnProperty('footnote')) {
                 // There can be multiple footnotes separated by spaces
-                footnote = latin.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
+                footnote = latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
               }
               result.push({
                 'Ending': suffix['_text'],
@@ -205,11 +205,82 @@ const latin = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotesView[0].footnote
+        let data = json['infl-data'][0].footnotes[0].footnote
         let result = []
 
         // Skip the first item
         for (let i = 1; i < data.length; i++) {
+          let text = data[i]['_text']
+          text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+          result.push({
+            'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+            'Text': text
+          })
+        }
+        return csvParser.unparse(result)
+      }
+    }
+  },
+
+  lemma: {
+    inputFN: 'alph-verb-conj-irreg.xml',
+    outputSubDir: 'verb/',
+    forms: {
+      outputFN: 'forms.csv',
+      get outputPath () {
+        return path.join(__dirname, latin.outputBaseDir, latin.lemma.outputSubDir, this.outputFN)
+      },
+      get (json) {
+        'use strict'
+
+        let data = json['infl-data'][0]['conjugation']
+        let result = []
+        for (const conj of data) {
+          let [lemma,...principalParts] = conj['hdwd-set'][0]['hdwd'][0]['_text'].split(/,/).map((h) => h.trim())
+          for (const group of conj['infl-form-set']) {
+            // Iterate over group's individual items
+            if (group['infl-form']) {
+              for (const form of group['infl-form']) {
+                let footnote = ''
+                if (form['_attr'].hasOwnProperty('footnote')) {
+                  // There can be multiple footnotes separated by spaces
+                  footnote = latin.lemma.footnotes.normalizeIndex(form['_attr']['footnote']['_value'])
+                }
+                result.push({
+                  'Lemma': lemma,
+                  'PrincipalParts': principalParts.join('_'),
+                  'Form': form['_text'],
+                  'Voice': group['_attr']['voice'] ? group['_attr']['voice']['_value'] : '',
+                  'Mood': group['_attr']['mood'] ? group['_attr']['mood']['_value']: '',
+                  'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                  'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                  'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value']: '',
+                  'Footnote': footnote
+                })
+              }
+            }
+          }
+        }
+        return csvParser.unparse(result)
+      }
+
+    },
+    footnotes: {
+      outputFN: 'form_footnotes.csv',
+      get outputPath () {
+        return path.join(__dirname, latin.outputBaseDir, latin.lemma.outputSubDir, this.outputFN)
+      },
+      normalizeIndex (index) {
+        // There can be multiple footnotes separated by spaces
+        return index.replace(/[^\d\s]/g, '')
+      },
+      get (json) {
+        'use strict'
+
+        let data = json['infl-data'][0].footnotes[0].footnote
+        let result = []
+
+        for (let i = 0; i < data.length; i++) {
           let text = data[i]['_text']
           text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
           result.push({
@@ -265,7 +336,7 @@ const greek = {
             let footnote = ''
             if (suffix['_attr'].hasOwnProperty('footnote')) {
               // There can be multiple footnotes separated by spaces
-              footnote = greek.noun.footnotesView.normalizeIndex(suffix['_attr']['footnote']['_value'])
+              footnote = greek.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
             }
             result.push({
               'Ending': suffix['_text'],
@@ -295,7 +366,7 @@ const greek = {
       get (json) {
         'use strict'
 
-        let data = json['infl-data'][0].footnotesView[0].footnote
+        let data = json['infl-data'][0].footnotes[0].footnote
         let result = []
 
         for (let i = 0; i < data.length; i++) {
@@ -343,13 +414,21 @@ try {
   writeData(latin.verb.suffixes.get(json), latin.verb.suffixes.outputPath);
   // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
   writeData(latin.verb.footnotes.get(json), latin.verb.footnotes.outputPath);
-  // endregion Latin */
+  */
+  // Lemmas
+  data = readFile(path.join(__dirname, latin.inputBaseDir, latin.lemma.inputFN));
+  json = xmlToJSON.parseString(data);
+  writeData(latin.lemma.forms.get(json), latin.lemma.forms.outputPath);
+  writeData(latin.lemma.footnotes.get(json), latin.lemma.footnotes.outputPath);
+  // endregion Latin
 
   // region Greek
+  /*
   data = readFile(path.join(__dirname, greek.inputBaseDir, greek.noun.inputFN))
   json = xmlToJSON.parseString(data)
   writeData(greek.noun.suffixes.get(json), greek.noun.suffixes.outputPath)
-  writeData(greek.noun.footnotesView.get(json), greek.noun.footnotesView.outputPath)
+  writeData(greek.noun.footnotes.get(json), greek.noun.footnotes.outputPath)
+  */
   // endregion Greek
 } catch (e) {
   console.log('Error:', e.stack)

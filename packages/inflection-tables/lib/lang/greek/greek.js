@@ -127,7 +127,7 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
     let extendedLangData = {
       [Models.Constants.LANG_GREEK]: extendedGreekData
     }
-    this.addSuffix(suffixValue, features, extendedLangData)
+    this.addItem(suffixValue, LanguageDataset.SUFFIX, features, extendedLangData)
   }
 }
 
@@ -167,7 +167,7 @@ dataSet.addVerbSuffixes = function (partOfSpeech, data) {
       })
       features.push(...indexes)
     }
-    this.addSuffix(suffix, features)
+    this.addItem(suffix, LanguageDataset.SUFFIX, features)
   }
 }
 

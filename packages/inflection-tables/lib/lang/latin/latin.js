@@ -11,6 +11,8 @@ import adjectiveSuffixesCSV from './data/adjective/suffixes.csv'
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv'
 import verbSuffixesCSV from './data/verb/suffixes.csv'
 import verbFootnotesCSV from './data/verb/footnotes.csv'
+import verbFormsCSV from './data/verb/forms.csv'
+import verbFormFootnotesCSV from './data/verb/form_footnotes.csv'
 import papaparse from 'papaparse'
 
 let languageModel = new Models.LatinLanguageModel()
@@ -68,7 +70,7 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
       })
       features.push(...indexes)
     }
-    this.addSuffix(suffix, features)
+    this.addItem(suffix, LanguageDataset.SUFFIX, features)
   }
 }
 
@@ -106,7 +108,46 @@ dataSet.addVerbSuffixes = function (partOfSpeech, data) {
       })
       features.push(...indexes)
     }
-    this.addSuffix(suffix, features)
+    this.addItem(suffix, LanguageDataset.SUFFIX, features)
+  }
+}
+
+// for Lemmas
+dataSet.addVerbForms = function (partOfSpeech, data) {
+  // First row are headers
+  for (let i = 1; i < data.length; i++) {
+    let lemma = data[i][0]
+    // let principalParts = data[i][1].split(/_/)
+    let form = data[i][2]
+
+    // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
+    let features = [partOfSpeech,
+      new Models.FeatureType(types.word, [Models.FeatureType.UNRESTRICTED_VALUE], languageModel.toCode()).getFromImporter('csv', lemma)]
+    if (data[i][3]) {
+      features.push(languageModel.features[types.voice].getFromImporter('csv', data[i][3]))
+    }
+    if (data[i][4]) {
+      features.push(languageModel.features[types.mood].getFromImporter('csv', data[i][4]))
+    }
+    if (data[i][5]) {
+      features.push(languageModel.features[types.tense].getFromImporter('csv', data[i][5]))
+    }
+    if (data[i][6]) {
+      features.push(languageModel.features[types.number].getFromImporter('csv', data[i][6]))
+    }
+    if (data[i][7]) {
+      features.push(languageModel.features[types.person].getFromImporter('csv', data[i][7]))
+    }
+
+    // Footnotes
+    if (data[i][8]) {
+            // There can be multiple footnote indexes separated by spaces
+      let indexes = data[i][8].split(' ').map(function (index) {
+        return footnotes.get(index)
+      })
+      features.push(...indexes)
+    }
+    this.addItem(form, LanguageDataset.FORM, features)
   }
 }
 
@@ -138,22 +179,34 @@ dataSet.loadData = function () {
   this.addVerbSuffixes(partOfSpeech, suffixes.data)
   footnotes = papaparse.parse(verbFootnotesCSV, {})
   this.addFootnotes(partOfSpeech, footnotes.data)
+  let forms = papaparse.parse(verbFormsCSV, {})
+  this.addVerbForms(partOfSpeech, forms.data)
+  footnotes = papaparse.parse(verbFormFootnotesCSV, {})
+  this.addFootnotes(partOfSpeech, footnotes.data)
 }
 
 /**
  * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
  * @param {Inflection[]} inflections - an array of inflection objects to be matched against a suffix.
+ * @param {string} type - LanguageDataset.SUFFIX or LanguageDataset.FORM
  * @param {Suffix} suffix - a suffix to be matched with inflections.
  * @returns {Suffix | null} if a match is found, returns a suffix object modified with some
  * additional information about a match. if no matches found, returns null.
  */
-dataSet.matcher = function (inflections, suffix) {
+dataSet.matcher = function (inflections, type, item) {
   'use strict'
     // All of those features must match between an inflection and an ending
-  let obligatoryMatches = [types.part]
+  let obligatoryMatches, optionalMatches
+  if (type === LanguageDataset.SUFFIX) {
+    obligatoryMatches = [types.part]
+    // TODO this needs to change based upon pofs
+    optionalMatches = [types.grmCase, types.declension, types.gender, types.number]
+  } else {
+    obligatoryMatches = [types.word]
+    optionalMatches = []
+  }
 
     // Any of those features must match between an inflection and an ending
-  let optionalMatches = [types.grmCase, types.declension, types.gender, types.number]
   let bestMatchData = null // information about the best match we would be able to find
 
     /*
@@ -164,13 +217,22 @@ dataSet.matcher = function (inflections, suffix) {
   for (let inflection of inflections) {
     let matchData = new MatchData() // Create a match profile
 
-    if (inflection.suffix === suffix.value) {
-      matchData.suffixMatch = true
+    if (type === LanguageDataset.SUFFIX) {
+      if (inflection.suffix === item.value) {
+        matchData.suffixMatch = true
+      }
+    } else {
+      let form = inflection.prefix ? inflection.prefix : ''
+      form = form + inflection.stem
+      form = inflection.suffix ? form + inflection.suffix : form
+      if (form === item.value) {
+        matchData.suffixMatch = true
+      }
     }
 
         // Check obligatory matches
     for (let feature of obligatoryMatches) {
-      let featureMatch = suffix.featureMatch(feature, inflection[feature])
+      let featureMatch = item.featureMatch(feature, inflection[feature])
             // matchFound = matchFound && featureMatch;
 
       if (!featureMatch) {
@@ -188,7 +250,7 @@ dataSet.matcher = function (inflections, suffix) {
 
         // Check optional matches now
     for (let feature of optionalMatches) {
-      let matchedValue = suffix.featureMatch(feature, inflection[feature])
+      let matchedValue = item.featureMatch(feature, inflection[feature])
       if (matchedValue) {
         matchData.matchedFeatures.push(feature)
       }
@@ -199,15 +261,15 @@ dataSet.matcher = function (inflections, suffix) {
       matchData.fullMatch = true
 
             // There can be only one full match, no need to search any further
-      suffix.match = matchData
-      return suffix
+      item.match = matchData
+      return item
     }
     bestMatchData = this.bestMatch(bestMatchData, matchData)
   }
   if (bestMatchData) {
         // There is some match found
-    suffix.match = bestMatchData
-    return suffix
+    item.match = bestMatchData
+    return item
   }
   return null
 }
@@ -228,7 +290,7 @@ dataSet.bestMatch = function (matchA, matchB) {
     return matchA
   }
 
-    // Suffix match has a priority
+    // item match has a priority
   if (matchA.suffixMatch !== matchB.suffixMatch) {
     if (matchA.suffixMatch > matchB.suffixMatch) {
       return matchA

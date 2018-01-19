@@ -19,6 +19,7 @@ export default class LanguageDataset {
 
     this.languageID = languageID
     this.suffixes = [] // An array of suffixes.
+    this.forms = [] // An array of suffixes.
     this.footnotes = [] // Footnotes
   };
 
@@ -27,14 +28,15 @@ export default class LanguageDataset {
    * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
    * 'feminine' genders
    *
-   * @param {string | null} suffixValue - A text of a suffix. It is either a string or null if there is no suffix.
+   * @param {string | null} itemValue - A text of an item. It is either a string or null if there is no suffix.
+   * @param {string} itemType - either LanguageDataset.FORM or LanguageDataset.SUFFIX
    * @param {Feature[]} featureValue
-   * @return {Suffix} A newly added suffix value (can be used to add more data to the suffix).
+   * @return {Suffix} A newly added data value (Form or Suffix) (can be used to add more data to the suffix).
    */
-  addSuffix (suffixValue, featureValue, extendedLangData) {
+  addItem (itemValue, itemType, featureValue, extendedLangData) {
     // TODO: implement run-time error checking
-    let suffixItem = new Suffix(suffixValue)
-    suffixItem.extendedLangData = extendedLangData
+    let item = new Suffix(itemValue)
+    item.extendedLangData = extendedLangData
 
     // Build all possible combinations of features
     let multiValueFeatures = []
@@ -44,8 +46,8 @@ export default class LanguageDataset {
       // If this is a footnote. Footnotes should go in a flat array
       // because we don't need to split by them
       if (feature.type === Models.Feature.types.footnote) {
-        suffixItem[Models.Feature.types.footnote] = suffixItem[Models.Feature.types.footnote] || []
-        suffixItem[Models.Feature.types.footnote].push(feature.value)
+        item[Models.Feature.types.footnote] = item[Models.Feature.types.footnote] || []
+        item[Models.Feature.types.footnote].push(feature.value)
         continue
       }
 
@@ -64,18 +66,26 @@ export default class LanguageDataset {
           throw new Error('An empty array is provided as a feature argument to the "addSuffix" method.')
         }
       } else {
-        suffixItem.features[feature.type] = feature.value
+        item.features[feature.type] = feature.value
       }
     }
 
     // Create a copy of an Suffix object for each multi-value item
     if (multiValueFeatures.length > 0) {
       for (let featureGroup of multiValueFeatures) {
-        let endingItems = suffixItem.split(featureGroup.type, featureGroup.features)
-        this.suffixes = this.suffixes.concat(endingItems)
+        let endingItems = item.split(featureGroup.type, featureGroup.features)
+        if (itemType === LanguageDataset.SUFFIX) {
+          this.suffixes = this.suffixes.concat(endingItems)
+        } else {
+          this.forms = this.forms.concat(endingItems)
+        }
       }
     } else {
-      this.suffixes.push(suffixItem)
+      if (itemType === LanguageDataset.SUFFIX) {
+        this.suffixes.push(item)
+      } else {
+        this.forms.push(item)
+      }
     }
   };
 
@@ -110,6 +120,9 @@ export default class LanguageDataset {
     // TODO: do we ever need lemmas?
     for (let lexema of homonym.lexemes) {
       for (let inflection of lexema.inflections) {
+        // add the lemma to the inflection
+        inflection[Models.Feature.types.word] =
+          [new Models.Feature(lexema.lemma.word, Models.Feature.types.word, lexema.lemma.language)]
         // Group inflections by a part of speech
         let partOfSpeech = inflection[Models.Feature.types.part]
         if (!partOfSpeech) {
@@ -137,16 +150,20 @@ export default class LanguageDataset {
 
         result[Models.Feature.types.part].push(partOfSpeech)
         result[partOfSpeech] = {}
-        result[partOfSpeech].suffixes = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup), [])
+        let items = this.forms.reduce(this['reducer'].bind(this, inflectionsGroup, LanguageDataset.FORM), [])
+        if (items.length === 0) {
+          items = this.suffixes.reduce(this['reducer'].bind(this, inflectionsGroup, LanguageDataset.SUFFIX), [])
+        }
+        result[partOfSpeech].suffixes = items
         result[partOfSpeech].footnotes = []
 
         // Create a set so all footnote indexes be unique
         let footnotesIndex = new Set()
         // Scan all selected suffixes to build a unique set of footnote indexes
-        for (let suffix of result[partOfSpeech].suffixes) {
-          if (suffix.hasOwnProperty(Models.Feature.types.footnote)) {
+        for (let item of result[partOfSpeech].suffixes) {
+          if (item.hasOwnProperty(Models.Feature.types.footnote)) {
             // Footnote indexes are stored in an array
-            for (let index of suffix[Models.Feature.types.footnote]) {
+            for (let index of item[Models.Feature.types.footnote]) {
               footnotesIndex.add(index)
             }
           }
@@ -166,11 +183,13 @@ export default class LanguageDataset {
     return result
   }
 
-  reducer (inflections, accumulator, suffix) {
-    let result = this.matcher(inflections, suffix)
+  reducer (inflections, type, accumulator, item) {
+    let result = this.matcher(inflections, type, item)
     if (result) {
       accumulator.push(result)
     }
     return accumulator
   }
 }
+LanguageDataset.SUFFIX = 'suffix'
+LanguageDataset.FORM = 'form'
