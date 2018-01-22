@@ -50,8 +50,6 @@ export default class Cell {
         let footnoteElement = document.createElement('a')
         footnoteElement.innerHTML = '[' + suffix.footnote + ']'
         footnoteElement.dataset.footnote = suffix.footnote
-        footnoteElement.dataset.tooltipVisible = 'false'
-        footnoteElement.setAttribute('title', 'This is a title')
         element.appendChild(footnoteElement)
       }
       if (index < this.suffixes.length - 1) {

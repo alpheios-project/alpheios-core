@@ -1,5 +1,5 @@
 import InflectionData from './inflection-data'
-import { dataSet as LatinDataSet } from './lang/latin/latin'
+import LatinDataSet from './lang/latin/latin'
 import { dataSet as GreekDataSet } from './lang/greek/greek'
 
 /**

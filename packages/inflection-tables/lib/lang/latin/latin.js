@@ -2,11 +2,12 @@
  * Latin language data module
  */
 import * as Models from 'alpheios-data-models'
-// import languages from '../../../lib/languages'
-import LanguageDataset from '../../../lib/language-dataset'
-import MatchData from '../../../lib/match-data'
+import LanguageDataset from '../../../lib/language-dataset.js'
+import MatchData from '../../../lib/match-data.js'
 import nounSuffixesCSV from './data/noun/suffixes.csv'
 import nounFootnotesCSV from './data/noun/footnotes.csv'
+import pronounFormsCSV from './data/pronoun/forms.csv'
+import pronounFootnotesCSV from './data/pronoun/footnotes.csv'
 import adjectiveSuffixesCSV from './data/adjective/suffixes.csv'
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv'
 import verbSuffixesCSV from './data/verb/suffixes.csv'
@@ -17,8 +18,6 @@ import papaparse from 'papaparse'
 
 let languageModel = new Models.LatinLanguageModel()
 let types = Models.Feature.types
-// A language of this module
-// const languageID = languages.latin
 // Create a language data set that will keep all language-related information
 let dataSet = new LanguageDataset(Models.Constants.LANG_LATIN)
 
@@ -40,7 +39,7 @@ languageModel.features[types.gender].addImporter(importerName)
   ])
 languageModel.features[types.tense].addImporter(importerName)
     .map('future_perfect', languageModel.features[types.tense][Models.Constants.TENSE_FUTURE_PERFECT])
-const footnotes = new Models.FeatureType(types.footnote, [], Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
+const footnotes = new Models.FeatureType(types.footnote, [], dataSet.languageID)
 
 // endregion Definition of grammatical features
 
@@ -71,6 +70,44 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
       features.push(...indexes)
     }
     this.addItem(suffix, LanguageDataset.SUFFIX, features)
+  }
+}
+
+// For pronouns
+dataSet.addPronounForms = function (partOfSpeech, data) {
+  // First row are headers
+  for (let i = 1; i < data.length; i++) {
+    let features = [partOfSpeech]
+    if (data[i][0]) {
+      features.push(languageModel.features[types.grmClass].getFromImporter('csv', data[i][0]))
+    }
+    if (data[i][1]) {
+      features.push(languageModel.features[types.person].getFromImporter('csv', data[i][1]))
+    }
+    if (data[i][2]) {
+      features.push(languageModel.features[types.number].getFromImporter('csv', data[i][2]))
+    }
+    if (data[i][3]) {
+      features.push(languageModel.features[types.case].getFromImporter('csv', data[i][3]))
+    }
+    if (data[i][4]) {
+      features.push(languageModel.features[types.type].getFromImporter('csv', data[i][4]))
+    }
+    // TODO: Check if form and alt are there
+    let form = data[i][5] ? data[i][5] : ''
+    /* if (data[i][6]) {
+      features.push(languageModel.features[types.alt].getFromImporter('csv', data[i][6]))
+    } */
+
+    // Footnotes
+    if (data[i][7]) {
+      // There can be multiple footnote indexes separated by spaces
+      let indexes = data[i][7].split(' ').map(function (index) {
+        return footnotes.get(index)
+      })
+      features.push(...indexes)
+    }
+    this.addItem(form, LanguageDataset.FORM, features)
   }
 }
 
@@ -159,27 +196,39 @@ dataSet.addFootnotes = function (partOfSpeech, data) {
 }
 
 dataSet.loadData = function () {
-    // Nouns
-  let partOfSpeech = languageModel.features[types.part][Models.Constants.POFS_NOUN]
-  let suffixes = papaparse.parse(nounSuffixesCSV, {})
+  let partOfSpeech
+  let suffixes
+  let forms
+  let footnotes
+
+  // Nouns
+  partOfSpeech = languageModel.features[types.part][Models.Constants.POFS_NOUN]
+  suffixes = papaparse.parse(nounSuffixesCSV, {})
   this.addSuffixes(partOfSpeech, suffixes.data)
-  let footnotes = papaparse.parse(nounFootnotesCSV, {})
+  footnotes = papaparse.parse(nounFootnotesCSV, {})
   this.addFootnotes(partOfSpeech, footnotes.data)
 
-    // Adjectives
+  // Pronouns
+  partOfSpeech = languageModel.features[types.part][Models.Constants.POFS_PRONOUN]
+  forms = papaparse.parse(pronounFormsCSV, {})
+  this.addPronounForms(partOfSpeech, forms.data)
+  footnotes = papaparse.parse(pronounFootnotesCSV, {})
+  this.addFootnotes(partOfSpeech, footnotes.data)
+
+  // Adjectives
   partOfSpeech = languageModel.features[types.part][Models.Constants.POFS_ADJECTIVE]
   suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
   this.addSuffixes(partOfSpeech, suffixes.data)
   footnotes = papaparse.parse(adjectiveFootnotesCSV, {})
   this.addFootnotes(partOfSpeech, footnotes.data)
 
-    // Verbs
+  // Verbs
   partOfSpeech = languageModel.features[types.part][Models.Constants.POFS_VERB]
   suffixes = papaparse.parse(verbSuffixesCSV, {})
   this.addVerbSuffixes(partOfSpeech, suffixes.data)
   footnotes = papaparse.parse(verbFootnotesCSV, {})
   this.addFootnotes(partOfSpeech, footnotes.data)
-  let forms = papaparse.parse(verbFormsCSV, {})
+  forms = papaparse.parse(verbFormsCSV, {})
   this.addVerbForms(partOfSpeech, forms.data)
   footnotes = papaparse.parse(verbFormFootnotesCSV, {})
   this.addFootnotes(partOfSpeech, footnotes.data)
@@ -307,4 +356,4 @@ dataSet.bestMatch = function (matchA, matchB) {
     return matchB
   }
 }
-export {languageModel, dataSet}
+export default dataSet

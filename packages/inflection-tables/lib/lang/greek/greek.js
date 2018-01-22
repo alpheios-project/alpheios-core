@@ -25,37 +25,33 @@ let dataSet = new LanguageDataset(Models.Constants.LANG_GREEK)
  analyzer's language modules as well.
  */
 const importerName = 'csv'
-const parts = new Models.FeatureType(Models.Feature.types.part, ['noun', 'adjective', 'verb'],
-  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
-const numbers = new Models.FeatureType(Models.Feature.types.number, ['singular', 'dual', 'plural'],
-  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
+const parts = new Models.FeatureType(Models.Feature.types.part, ['noun', 'adjective', 'verb'], dataSet.languageID)
+const numbers = new Models.FeatureType(Models.Feature.types.number, ['singular', 'dual', 'plural'], dataSet.languageID)
 numbers.addImporter(importerName)
     .map('singular', numbers.singular)
     .map('dual', numbers.dual)
     .map('plural', numbers.plural)
-const cases = new Models.FeatureType(Models.Feature.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative'],
-  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
+const cases = new Models.FeatureType(Models.Feature.types.grmCase,
+  ['nominative', 'genitive', 'dative', 'accusative', 'vocative'],
+  dataSet.languageID)
 cases.addImporter(importerName)
     .map('nominative', cases.nominative)
     .map('genitive', cases.genitive)
     .map('dative', cases.dative)
     .map('accusative', cases.accusative)
     .map('vocative', cases.vocative)
-const declensions = new Models.FeatureType(Models.Feature.types.declension, ['first', 'second', 'third'],
-  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
+const declensions = new Models.FeatureType(Models.Feature.types.declension, ['first', 'second', 'third'], dataSet.languageID)
 declensions.addImporter(importerName)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
     .map('3rd', declensions.third)
-const genders = new Models.FeatureType(Models.Feature.types.gender, ['masculine', 'feminine', 'neuter'],
-  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
+const genders = new Models.FeatureType(Models.Feature.types.gender, ['masculine', 'feminine', 'neuter'], dataSet.languageID)
 genders.addImporter(importerName)
     .map('masculine', genders.masculine)
     .map('feminine', genders.feminine)
     .map('neuter', genders.neuter)
     .map('masculine feminine', [genders.masculine, genders.feminine])
-const types = new Models.FeatureType(Models.Feature.types.type, ['regular', 'irregular'],
-  Models.LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID))
+const types = new Models.FeatureType(Models.Feature.types.type, ['regular', 'irregular'], dataSet.languageID)
 types.addImporter(importerName)
     .map('regular', types.regular)
     .map('irregular', types.irregular)
@@ -87,7 +83,7 @@ persons.addImporter(importerName)
     .map('1st', persons.first)
     .map('2nd', persons.second)
     .map('3rd', persons.third); */
-const footnotes = new Models.FeatureType(Models.Feature.types.footnote, [], {})
+const footnotes = new Models.FeatureType(Models.Feature.types.footnote, [], dataSet.languageID)
 
 // endregion Definition of grammatical features
 

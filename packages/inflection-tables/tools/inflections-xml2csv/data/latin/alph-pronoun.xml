@@ -1,0 +1,3009 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/pronoun.xsd"
+    xml:lang="la">
+    <order-table>
+        <order-item attname="pers" order="1">1st</order-item>
+        <order-item attname="pers" order="2">2nd</order-item>
+        <order-item attname="pers" order="3">3rd</order-item>
+        <order-item attname="num" order="1">singular</order-item>
+        <order-item attname="num" order="2">plural</order-item>
+        <order-item attname="case" order="1">nominative</order-item>     
+        <order-item attname="case" order="2">genitive</order-item>
+        <order-item attname="case" order="3">dative</order-item>
+        <order-item attname="case" order="4">accusative</order-item>
+        <order-item attname="case" order="5">ablative</order-item>
+        <order-item attname="case" order="6">locative</order-item>
+        <order-item attname="case" order="7">vocative</order-item>
+        <order-item attname="gend" order="1">masculine</order-item>
+        <order-item attname="gend" order="2">feminine</order-item>
+        <order-item attname="gend" order="3">neuter</order-item>
+    </order-table>
+    <pronoun-data-set
+        class="personal">
+        <infl-form-set
+            pers="1st"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">ego</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular" alt="mei">meI</infl-form>
+            <infl-form type="irregular" alt="mis" footnote="F-1">mIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="singular"
+            case="dative">
+            <infl-form type="regular">mihi</infl-form>
+            <infl-form type="irregular" alt="mi">mI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular" alt="me">mE</infl-form>
+            <infl-form type="irregular" alt="meme">mEmE</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="me">mE</infl-form>
+            <infl-form type="irregular" alt="meme">mEmE</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="singular"
+            case="vocative"/>
+        <infl-form-set
+            pers="2nd"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular" alt="tu">tU</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular" alt="tui">tuI</infl-form>
+            <infl-form type="irregular" alt="tis" footnote="F-1">tIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="singular"
+            case="dative">
+            <infl-form type="regular">tibi</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular" alt="te">tE</infl-form>
+            <infl-form type="irregular" alt="tete">tEtE</infl-form>
+        </infl-form-set>
+        <infl-form-set 
+            pers="2nd"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="te">tE</infl-form>
+            <infl-form type="irregular" alt="tete">tEtE</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular" alt="tu">tU</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="nos">nOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular">nostrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="plural"
+            case="dative">
+            <infl-form type="regular" alt="nobis">nObIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="nos">nOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="nobis">nObIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            num="plural"
+            case="vocative"/>
+        <infl-form-set
+            pers="2nd"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="vos">vOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular">vestrum</infl-form>
+            <infl-form type="regular" alt="vestri">vestrI</infl-form>
+            <infl-form type="irregular">vostrum</infl-form>
+            <infl-form type="irregular" alt="vostri">vostrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="plural"
+            case="dative">
+            <infl-form type="regular" alt="vobis">vObIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="vos">vOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="vobis">vObIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular" alt="vos">vOs</infl-form>
+        </infl-form-set>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="reflexive">
+        <infl-form-set
+            pers="3rd"
+            num="singular"
+            case="nominative"/>
+        <infl-form-set
+            pers="3rd"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular" alt="sui">suI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="singular"
+            case="dative">
+            <infl-form type="regular">sibi</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular" alt="se">sE</infl-form>
+            <infl-form type="irregular" alt="sese">sEsE</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="se">sE</infl-form>
+            <infl-form type="irregular" alt="sese">sEsE</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="singular"
+            case="vocative"/>
+        <infl-form-set
+            pers="3rd"
+            num="plural"
+            case="nominative"/>
+        <infl-form-set
+            pers="3rd"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="sui">suI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="plural"
+            case="dative">
+            <infl-form type="regular">sibi</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="se">sE</infl-form>
+            <infl-form type="irregular" alt="sese">sEsE</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="se">sE</infl-form>
+            <infl-form type="irregular" alt="sese">sEsE</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            num="plural"
+            case="vocative"/>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="possessive">
+        <hdwd-set>
+            <hdwd>meus,mea,meum</hdwd>
+            <hdwd>tuus,tua,tuum</hdwd>
+            <hdwd>suus,sua,suum</hdwd>
+        </hdwd-set>
+        <!-- 1st person singular -->
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">meus</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="mei">meI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="meo">meO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">meum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="meo">meO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="vocative"
+            num="singular">
+            <infl-form type="regular" alt="mi">mI</infl-form>
+            <infl-form type="irregular">meus</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">mea</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular">meae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular">meae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">meam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="mea">meA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="vocative"
+            num="singular">
+            <infl-form type="regular">mea</infl-form>
+        </infl-form-set>  
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">meum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="mei">meI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="meo">meO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">meum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="meo">meO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="vocative"
+            num="singular">
+            <infl-form type="regular">meum</infl-form>
+        </infl-form-set>
+        <!-- 2nd person singular -->
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">tuus</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="tui">tuI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="tuo">tuO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">tuum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="tuo">tuO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="vocative"
+            num="singular"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">tua</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular">tuae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular">tuae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">tuam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="tua">tuA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="vocative"
+            num="singular"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">tuum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="tui">tuI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="tuo">tuO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">tuum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="tuo">tuO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="vocative"
+            num="singular"/>
+        <!-- 3rd person singular-->
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">suus</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="sui">suI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="suo">suO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">suum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="suo">suO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="vocative"
+            num="singular"/>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">sua</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular">suae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular">suae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">suam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="sua">suA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="vocative"
+            num="singular"/>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">suum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="sui">suI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="suo">suO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">suum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="suo">suO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="vocative"
+            num="singular"/>
+        <!-- 1st person plural -->
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular" alt="mei">meI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="meorum">meOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="dative"
+            num="plural">
+            <infl-form type="regular" alt="meis">meIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="meos">meOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="ablative"
+            num="plural">
+            <infl-form type="regular" alt="meis">meIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="vocative"
+            num="plural">
+            <infl-form type="regular" alt="mei">meI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">meae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="mearum">meArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="meas">meAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="vocative"
+            num="plural">
+            <infl-form type="regular">meae</infl-form>
+        </infl-form-set>  
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">mea</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="meorum">meOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular">mea</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="vocative"
+            num="plural">
+            <infl-form type="regular">mea</infl-form>
+        </infl-form-set>
+        <!-- 2nd person plural -->
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular" alt="tui">tuI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="tuorum">tuOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="dative"
+            num="plural">
+            <infl-form type="regular" alt="tuis">tuIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="tuos">tuOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="ablative"
+            num="plural">
+            <infl-form type="regular" alt="tuis">tuIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="vocative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">tuae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="tuarum">tuArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="tuas">tuAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="vocative"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">tua</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="tuorum">tuOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular">tua</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="vocative"
+            num="plural"/>
+        <!-- 3rd person plural-->
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular" alt="sui">suI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="suorum">suOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="dative"
+            num="plural">
+            <infl-form type="regular" alt="suis">suIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="suos">suOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="ablative"
+            num="plural">
+            <infl-form type="regular" alt="suis">suIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="masculine"
+            case="vocative"
+            num="plural"/>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">suae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="suarum">suArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="suas">suAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="3rd"
+            gend="feminine"
+            case="vocative"
+            num="plural"/>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">sua</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="suorum">suOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular">sua</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="3rd"
+            gend="neuter"
+            case="vocative"
+            num="plural"/>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="possessive">
+        <hdwd-set>
+            <hdwd>noster,nostra,nostrum</hdwd>
+            <hdwd>vester,vestra,vestrum</hdwd>
+        </hdwd-set>
+        <!-- 1st person singular -->
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">noster</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="nostri">nostrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="nostro">nostrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">nostrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="nostro">nostrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="vocative"
+            num="singular">
+            <infl-form type="regular">noster</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">nostra</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular">nostrae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular">nostrae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">nostram</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="nostra">nostrA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="vocative"
+            num="singular">
+            <infl-form type="regular">nostra</infl-form>
+        </infl-form-set>  
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">nostrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="nostri">nostrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="nostro">nostrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">nostrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="nostro">nostrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="vocative"
+            num="singular">
+            <infl-form type="regular">nostrum</infl-form>
+        </infl-form-set>
+        <!-- 2nd person singular -->
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">vester</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="vestri">vestrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="vestro">vestrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">vestrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="vestro">vestrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="vocative"
+            num="singular"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">vestra</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular">vestrae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="dative"
+            num="singular">
+            <infl-form type="regular">vestrae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">vestram</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="vestra">vestrA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="vocative"
+            num="singular"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="nominative"
+            num="singular">
+            <infl-form type="regular">vestum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="genitive"
+            num="singular">
+            <infl-form type="regular" alt="vestri">vestrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="dative"
+            num="singular">
+            <infl-form type="regular" alt="vestro">vestrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="accusative"
+            num="singular">
+            <infl-form type="regular">vestrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="ablative"
+            num="singular">
+            <infl-form type="regular" alt="vestro">vestrO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="vocative"
+            num="singular"/>
+        <!-- 1st person plural -->
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular" alt="nostri">nostrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="nostrorum">nostrOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="dative"
+            num="plural">
+            <infl-form type="regular" alt="nostris">nostrIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="nostros">nostrOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="ablative"
+            num="plural">
+            <infl-form type="regular" alt="nostris">nostrIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="masculine"
+            case="vocative"
+            num="plural">
+            <infl-form type="regular" alt="nostri">nostrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">nostrae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="nostrarum">nostrArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="nostras">nostrAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="feminine"
+            case="vocative"
+            num="plural">
+            <infl-form type="regular">nostrae</infl-form>
+        </infl-form-set>  
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">nostra</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="nostrorum">nostrOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular">nostra</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="1st"
+            gend="neuter"
+            case="vocative"
+            num="plural">
+            <infl-form type="regular">nostra</infl-form>
+        </infl-form-set>
+        <!-- 2nd person plural -->
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular" alt="vestri">vestrI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="vestrorum">vestrOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="dative"
+            num="plural">
+            <infl-form type="regular" alt="vestris">vestrIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="vestros">vestrOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="ablative"
+            num="plural">
+            <infl-form type="regular" alt="vestris">vestrIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="masculine"
+            case="vocative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">vestrae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="vestrarum">vestrArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular" alt="vestras">vestrAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="feminine"
+            case="vocative"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="nominative"
+            num="plural">
+            <infl-form type="regular">vestra</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="genitive"
+            num="plural">
+            <infl-form type="regular" alt="vestrorum">vestrOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="dative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="accusative"
+            num="plural">
+            <infl-form type="regular">vestra</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="ablative"
+            num="plural"/>
+        <infl-form-set
+            pers="2nd"
+            gend="neuter"
+            case="vocative"
+            num="plural"/>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="demonstrative">
+        <hdwd-set>
+            <hdwd>is,ea,id</hdwd>
+        </hdwd-set>
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">is</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular">eius</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular" alt="ei">eI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">eum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="eo">eO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">ea</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">eam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="ea">eA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">id</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">id</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="eo">eO</infl-form>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="ei">eI</infl-form>
+            <infl-form type="irregular" alt="ii">iI</infl-form>
+            <infl-form type="irregular" alt="i">I</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="eorum">eOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-form type="regular" alt="eis">eIs</infl-form>
+            <infl-form type="irregular" alt="iis">iIs</infl-form>
+            <infl-form type="irregular" alt="is">Is</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="eos">eOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="eis">eIs</infl-form>
+            <infl-form type="irregular" alt="iis">iIs</infl-form>
+            <infl-form type="irregular" alt="is">Is</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">eae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="earum">eArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="eas">eAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">ea</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="eorum">eOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular">ea</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="demonstrative">
+        <hdwd-set>
+            <hdwd>ille,illa,illud</hdwd>
+        </hdwd-set>
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">ille</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular" alt="illius">illIus</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular" alt="illi">illI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">illum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="illo">illO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">illa</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">illam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="illa">illA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">illud</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">illud</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="illo">illO</infl-form>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="illi">illI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="illorum">illOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-form type="regular" alt="illis">illIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="illos">illOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="illis">illIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">illae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="illarum">illArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="illas">illAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="illa">Illa</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="illorum">illOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular">illa</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="demonstrative">
+        <hdwd-set>
+            <hdwd>ipse,ipsa,ipsum</hdwd>
+        </hdwd-set>
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">ipse</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular" alt="ipsius">ipsIus</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular" alt="ipsi">ipsI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">ipsum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="ipso">ipsO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">ipsa</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">ipsam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="ipsa">ipsA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">ipsum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">ipsum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="ipso">ipsO</infl-form>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="ipsi">ipsI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="ipsorum">ipsOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-form type="regular" alt="ipsis">ipsIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="ipsos">ipsOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="ipsis">ipsIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">ipsae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="ipsarum">ipsArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="illas">ipsAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">ipsa</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="ipsorum">ipsOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular">ipsa</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="demonstrative">
+        <hdwd-set>
+            <hdwd>iste,ista,istud</hdwd>
+        </hdwd-set>
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">iste</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular" alt="istius">istIus</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular" alt="isti">istI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">istum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="isto">istO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">ista</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">istam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="ista">istA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">istud</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">istud</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="isto">istO</infl-form>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="isti">istI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="istorum">istOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-form type="regular" alt="istis">istIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="istos">istOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="istis">istIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">istae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="istarum">istArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="istas">istAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="ista">ista</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="istorum">istOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular">ista</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="demonstrative">
+        <hdwd-set>
+            <hdwd>is,id,ea</hdwd>
+            <hdwd>Idem,eadem,idem</hdwd>
+            <hdwd>ille,illa,illud</hdwd>
+            <hdwd>ipse,ipsa,ipsum</hdwd>
+            <hdwd>iste,ista,istud</hdwd>
+        </hdwd-set>
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-ending type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-ending type="regular">ius</infl-ending>
+            <infl-ending type="regular" alt="ius">Ius</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-ending type="regular" alt="i">I</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-ending type="regular">um</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-ending type="regular" alt="o">O</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="vocative">
+            <infl-ending type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-ending type="regular"></infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-ending type="regular">am</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-ending type="regular" alt="a">A</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-ending type="regular"></infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-ending type="regular"></infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-ending type="regular" alt="o">O</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="vocative">
+            <infl-ending type="regular"></infl-ending>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-ending type="regular" alt="i">I</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-ending type="regular" alt="orum">Orum</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-ending type="regular" alt="is">Is</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-ending type="regular" alt="os">Os</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-ending type="regular" alt="is">Is</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="vocative">
+            <infl-ending type="regular"></infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-ending type="regular">ae</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-ending type="regular" alt="arum">Arum</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-ending type="regular" alt="as">As</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="vocative">
+            <infl-ending type="regular"></infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-ending type="regular" alt="a">a</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-ending type="regular" alt="orum">Orum</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-ending type="regular">a</infl-ending>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="vocative">
+            <infl-ending type="regular"></infl-ending>
+        </infl-form-set>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="demonstrative">
+        <hdwd-set>
+            <hdwd footnote="F-2">hIc,haec,hOc</hdwd>
+        </hdwd-set>
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular" alt="hic">hIc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular">huius</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular">huic</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">hunc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="hoc">hOc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">haec</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">hanc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="hac">hAc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular" alt="hoc">hOc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular" alt="hoc">hOc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="hoc">hOc</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="hi">hI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="horum">hOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-form type="regular" alt="his">hIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="hos">hOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular" alt="his">hIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">hae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="harum">hArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="has">hAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">haec</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="horum">hOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular">haec</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="relative">
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular" alt="qui">quI</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular">cuius</infl-form>
+            <infl-form type="irregular" footnote="F-3">quoius</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular">cui</infl-form>
+            <infl-form type="irregular" footnote="F-3">quoius</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">quem</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="quo">quO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">qua</infl-form>
+            <infl-form type="irregular">quae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">quam</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="qua">quA</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">quod</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">quod</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="quo">quO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="qui">quI</infl-form>
+            <infl-form type="regular" alt="ques" footnote="F-3">quEs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="quorum">quOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-form type="regular">quibus</infl-form>
+            <infl-form type="irregular" alt="quis">quIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="quos">quOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular">quibus</infl-form>
+            <infl-form type="irregular" alt="quis">quIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">quae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="quarum">quArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="quas">quAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">quae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular">quorum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular">quae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+    </pronoun-data-set>
+    <pronoun-data-set
+        class="interrogative"
+        footnote="F-4">
+        <!-- singular -->
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">quis</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular">cuius</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular">cui</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">quem</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="quo">quO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">quis</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="genitive">
+            <infl-form type="regular">cuius</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="dative">
+            <infl-form type="regular">cui</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">quem</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="quo">quO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="nominative">
+            <infl-form type="regular">quid</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="genitive"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="accusative">
+            <infl-form type="regular">quid</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="ablative">
+            <infl-form type="regular" alt="quo">quO</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="singular"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        <!-- plural -->
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular" alt="qui">quI</infl-form>
+            <infl-form type="regular" alt="ques" footnote="F-3">quEs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="quorum">quOrum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="dative">
+            <infl-form type="regular">quibus</infl-form>
+            <infl-form type="irregular" alt="quis">quIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="quos">quOs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="ablative">
+            <infl-form type="regular">quibus</infl-form>
+            <infl-form type="irregular" alt="quis">quIs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="masculine"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">quae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular" alt="quarum">quArum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular" alt="quas">quAs</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="feminine"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+        
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="nominative">
+            <infl-form type="regular">quae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="genitive">
+            <infl-form type="regular">quorum</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="dative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="accusative">
+            <infl-form type="regular">quae</infl-form>
+        </infl-form-set>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="ablative"/>
+        <infl-form-set
+            gend="neuter"
+            num="plural"
+            case="vocative">
+            <infl-form type="regular"/>
+        </infl-form-set>
+    </pronoun-data-set>
+    <footnotes>
+        <footnote id="F-1">
+            tU is made emphatic by adding on the endings –te, –temet or –timet. 
+            The other forms of the personal pronoun (with the exception of the genitive plural) 
+            are made emphatic by the addition of –met to the original form. Early emphatic forms include mEpte and tEpte.
+        </footnote>
+        <footnote id="F-2">
+            Enclitics –ce or –c are sometimes added to forms of hic. Common examples include huiusce and hIsce.
+        </footnote>
+        <footnote id="F-3">
+            Earlier forms.
+        </footnote>
+        <footnote id="F-4">
+            The plural forms of the Interrogatives are the same as the plural forms of the Relative. 
+        </footnote>
+    </footnotes>
+</infl-data>

@@ -21,7 +21,7 @@ export default class GroupFeatureType extends Models.FeatureType {
    * Use this parameter to redefine a deafult sort order for a type.
    */
   constructor (featureType, titleMessageID, order = featureType.orderedFeatures) {
-    super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.language)
+    super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.languageID)
 
     this.groupTitle = titleMessageID
     this._groupType = undefined
@@ -61,7 +61,7 @@ export default class GroupFeatureType extends Models.FeatureType {
    * @returns {Feature[] | Feature[][]} A sorted array of feature values.
    */
   getOrderedFeatures (ancestorFeatures) {
-    return this.getOrderedValues(ancestorFeatures).map((value) => new Models.Feature(value, this.type, this.language))
+    return this.getOrderedValues(ancestorFeatures).map((value) => new Models.Feature(value, this.type, this.languageID))
   }
 
   /**

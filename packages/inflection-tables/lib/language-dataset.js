@@ -1,5 +1,6 @@
 import * as Models from 'alpheios-data-models'
 import Suffix from './suffix'
+import Form from './form'
 import Footnote from './footnote'
 import InflectionData from './inflection-data'
 
@@ -35,7 +36,17 @@ export default class LanguageDataset {
    */
   addItem (itemValue, itemType, featureValue, extendedLangData) {
     // TODO: implement run-time error checking
-    let item = new Suffix(itemValue)
+    let item
+    let store
+    if (itemType === LanguageDataset.SUFFIX) {
+      item = new Suffix(itemValue)
+      store = this.suffixes
+    } else if (itemType === LanguageDataset.FORM) {
+      item = new Form(itemValue)
+      store = this.forms
+    } else {
+      throw new Error(`Unknown item type "${itemType}"`)
+    }
     item.extendedLangData = extendedLangData
 
     // Build all possible combinations of features
@@ -74,18 +85,10 @@ export default class LanguageDataset {
     if (multiValueFeatures.length > 0) {
       for (let featureGroup of multiValueFeatures) {
         let endingItems = item.split(featureGroup.type, featureGroup.features)
-        if (itemType === LanguageDataset.SUFFIX) {
-          this.suffixes = this.suffixes.concat(endingItems)
-        } else {
-          this.forms = this.forms.concat(endingItems)
-        }
+        store = store.concat(endingItems)
       }
     } else {
-      if (itemType === LanguageDataset.SUFFIX) {
-        this.suffixes.push(item)
-      } else {
-        this.forms.push(item)
-      }
+      store.push(item)
     }
   };
 

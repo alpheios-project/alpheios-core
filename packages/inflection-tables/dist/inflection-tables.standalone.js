@@ -201,6 +201,13 @@ const VOICE_CIRCUMSTANTIAL = 'circumstantial';
 const VOICE_DEPONENT = 'deponent';
 const TYPE_IRREGULAR = 'irregular';
 const TYPE_REGULAR = 'regular';
+// Classes (of pronouns in Latin)
+const CLASS_PERSONAL = 'personal';
+const CLASS_REFLEXIVE = 'reflexive';
+const CLASS_POSSESSIVE = 'possessive';
+const CLASS_DEMONSTRATIVE = 'demonstrative';
+const CLASS_RELATIVE = 'relative';
+const CLASS_INTERROGATIVE = 'interrogative';
 /* eslit-enable no-unused-vars */
 
 
@@ -401,7 +408,13 @@ var constants = Object.freeze({
 	VOICE_CIRCUMSTANTIAL: VOICE_CIRCUMSTANTIAL,
 	VOICE_DEPONENT: VOICE_DEPONENT,
 	TYPE_IRREGULAR: TYPE_IRREGULAR,
-	TYPE_REGULAR: TYPE_REGULAR
+	TYPE_REGULAR: TYPE_REGULAR,
+	CLASS_PERSONAL: CLASS_PERSONAL,
+	CLASS_REFLEXIVE: CLASS_REFLEXIVE,
+	CLASS_POSSESSIVE: CLASS_POSSESSIVE,
+	CLASS_DEMONSTRATIVE: CLASS_DEMONSTRATIVE,
+	CLASS_RELATIVE: CLASS_RELATIVE,
+	CLASS_INTERROGATIVE: CLASS_INTERROGATIVE
 });
 
 class FeatureImporter {
@@ -474,7 +487,7 @@ class FeatureType {
      * If an empty array is provided, there will be no
      * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
      * such as footnotes).
-     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {String | Symbol} language - A language of a feature type.
      */
   constructor (type, values, language) {
     if (!Feature.types.isAllowed(type)) {
@@ -488,12 +501,14 @@ class FeatureType {
     }
 
     this.type = type;
-    this.language = language;
+    this.languageID = undefined;
+    this.languageCode = undefined
+    ;({languageID: this.languageID, languageCode: this.languageCode} = LanguageModelFactory.getLanguageAttrs(language));
 
-        /*
-         This is a sort order index for a grammatical feature values. It is determined by the order of values in
-         a 'values' array.
-         */
+    /*
+     This is a sort order index for a grammatical feature values. It is determined by the order of values in
+     a 'values' array.
+     */
     this._orderIndex = [];
     this._orderLookup = {};
 
@@ -501,15 +516,24 @@ class FeatureType {
       this._orderIndex.push(value);
       if (Array.isArray(value)) {
         for (let element of value) {
-          this[element] = new Feature(element, this.type, this.language);
+          this[element] = new Feature(element, this.type, this.languageID);
           this._orderLookup[element] = index;
         }
       } else {
-        this[value] = new Feature(value, this.type, this.language);
+        this[value] = new Feature(value, this.type, this.languageID);
         this._orderLookup[value] = index;
       }
     }
-  };
+  }
+
+  /**
+   * This is a compatibility function for legacy code.
+   * @return {String} A language code.
+   */
+  get language () {
+    console.warn(`Please use a "languageID" instead of a "language"`);
+    return this.languageCode
+  }
 
   /**
    * test to see if this FeatureType allows unrestricted values
@@ -528,7 +552,7 @@ class FeatureType {
      */
   get (value, sortOrder = 1) {
     if (value) {
-      return new Feature(value, this.type, this.language, sortOrder)
+      return new Feature(value, this.type, this.languageID, sortOrder)
     } else {
       throw new Error('A non-empty value should be provided.')
     }
@@ -568,7 +592,7 @@ class FeatureType {
      * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
      */
   get orderedFeatures () {
-    return this.orderedValues.map((value) => new Feature(value, this.type, this.language))
+    return this.orderedValues.map((value) => new Feature(value, this.type, this.languageID))
   }
 
     /**
@@ -629,8 +653,8 @@ class FeatureType {
             throw new Error('Trying to order an element with type "' + element.type + '" that is different from "' + this.type + '".')
           }
 
-          if (element.language !== this.language) {
-            throw new Error('Trying to order an element with language "' + element.language + '" that is different from "' + this.language + '".')
+          if (LanguageModelFactory.compareLanguages(element.languageID, this.languageID)) {
+            throw new Error(`Trying to order an element with language "${element.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
           }
         }
       } else {
@@ -642,8 +666,8 @@ class FeatureType {
           throw new Error('Trying to order an element with type "' + value.type + '" that is different from "' + this.type + '".')
         }
 
-        if (value.language !== this.language) {
-          throw new Error('Trying to order an element with language "' + value.language + '" that is different from "' + this.language + '".')
+        if (LanguageModelFactory.compareLanguages(value.languageID, this.languageID)) {
+          throw new Error(`Trying to order an element with language "${value.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
         }
       }
     }
@@ -1081,6 +1105,15 @@ class LatinLanguageModel extends LanguageModel {
   _initializeFeatures () {
     let features = super._initializeFeatures();
     let code = this.toCode();
+    features[Feature.types.grmClass] = new FeatureType(Feature.types.grmClass,
+      [ CLASS_PERSONAL,
+        CLASS_REFLEXIVE,
+        CLASS_POSSESSIVE,
+        CLASS_DEMONSTRATIVE,
+        CLASS_RELATIVE,
+        CLASS_INTERROGATIVE
+      ],
+      code);
     features[Feature.types.number] = new FeatureType(Feature.types.number, [NUM_SINGULAR, NUM_PLURAL], code);
     features[Feature.types.grmCase] = new FeatureType(Feature.types.grmCase,
       [ CASE_NOMINATIVE,
@@ -1251,6 +1284,13 @@ class GreekLanguageModel extends LanguageModel {
    */
   canInflect (node) {
     return true
+  }
+  /**
+   * @override LanguageModel#grammarFeatures
+   */
+  grammarFeatures () {
+    // TODO this ideally might be grammar specific
+    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense, Feature.types.voice]
   }
 
   /**
@@ -1492,8 +1532,14 @@ const MODELS = new Map([
 ]);
 
 class LanguageModelFactory {
-  static supportsLanguage (code) {
-    return MODELS.has(code)
+  /**
+   * Checks whether a language is supported
+   * @param {String | Symbol} language - Language as a language ID (Symbol) or a language code (String)
+   * @return {boolean} True if language is supported, false otherwise
+   */
+  static supportsLanguage (language) {
+    language = (typeof language === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(language) : language;
+    return MODELS.has(language)
   }
 
   static getLanguageForCode (code = null) {
@@ -1531,6 +1577,43 @@ class LanguageModelFactory {
       }
     }
   }
+
+  /**
+   * Takes either a language ID or a language code and returns an object with both an ID and a code.
+   * @param {String | Symbol} language - Either a language ID (a Symbol) or a language code (a String).
+   * @return {Object} An object with the following properties:
+   *    {Symbol} languageID
+   *    {String} languageCode
+   */
+  static getLanguageAttrs (language) {
+    if (typeof language === 'symbol') {
+      // `language` is a language ID
+      return {
+        languageID: language,
+        languageCode: LanguageModelFactory.getLanguageCodeFromId(language)
+      }
+    } else {
+      // `language` is a language code
+      return {
+        languageID: LanguageModelFactory.getLanguageIdFromCode(language),
+        languageCode: language
+      }
+    }
+  }
+
+  /**
+   * Compares two languages in either a language ID or a language code format. For this, does conversion of
+   * language IDs to language code. Because fo this, it will work even for language IDs defined in
+   * different modules
+   * @param {String | Symbol} languageA - Either a language ID (a Symbol) or a language code (a String).
+   * @param {String | Symbol} languageB - Either a language ID (a Symbol) or a language code (a String).
+   * @return {boolean} True if languages are the same, false otherwise.
+   */
+  static compareLanguages (languageA, languageB) {
+    languageA = (typeof languageA === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(languageA) : languageA;
+    languageB = (typeof languageB === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(languageB) : languageB;
+    return languageA === languageB
+  }
 }
 
 /**
@@ -1562,7 +1645,7 @@ class Feature {
      * @param {string | string[]} value - A single feature value or, if this feature could have multiple
      * values, an array of values.
      * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {String | Symbol} language - A language of a feature, allowed values are specified in 'languages' object.
      * @param {int} sortOrder - an integer used for sorting
      */
   constructor (value, type, language, sortOrder = 1) {
@@ -1580,24 +1663,33 @@ class Feature {
     }
     this.value = value;
     this.type = type;
-    this.language = language;
-    this.languageCode = language;
-    this.languageID = LanguageModelFactory.getLanguageIdFromCode(this.languageCode);
+    this.languageID = undefined;
+    this.languageCode = undefined
+    ;({languageID: this.languageID, languageCode: this.languageCode} = LanguageModelFactory.getLanguageAttrs(language));
     this.sortOrder = sortOrder;
-  };
+  }
+
+  /**
+   * This is a compatibility function for legacy code.
+   * @return {String} A language code.
+   */
+  get language () {
+    console.warn(`Please use a "languageID" instead of a "language"`);
+    return this.languageCode
+  }
 
   isEqual (feature) {
     if (Array.isArray(feature.value)) {
       if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
         return false
       }
-      let equal = this.type === feature.type && this.language === feature.language;
+      let equal = this.type === feature.type && LanguageModelFactory.compareLanguages(this.languageID, feature.languageID);
       equal = equal && this.value.every(function (element, index) {
         return element === feature.value[index]
       });
       return equal
     } else {
-      return this.value === feature.value && this.type === feature.type && this.language === feature.language
+      return this.value === feature.value && this.type === feature.type && LanguageModelFactory.compareLanguages(this.languageID, feature.languageID)
     }
   }
 
@@ -1643,10 +1735,13 @@ Feature.types = {
   word: 'word',
   part: 'part of speech', // Part of speech
   number: 'number',
-  grmCase: 'case',
+  'case': 'case',
+  grmCase: 'case', // A synonym of `case`
   declension: 'declension',
   gender: 'gender',
   type: 'type',
+  'class': 'class',
+  grmClass: 'class', // A synonym of `class`
   conjugation: 'conjugation',
   comparison: 'comparison',
   tense: 'tense',
@@ -1782,16 +1877,18 @@ class ExtendedLanguageData {
  * Each feature can have a single or multiple values associated with it (i.e. gender can be either 'masculine',
  * a single value, or 'masculine' and 'feminine'. That's why all values are stored in an array.
  */
-class Suffix {
+class Morpheme {
   /**
    * Initializes a Suffix object.
-   * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
+   * @param {string | null} morphemeValue - A suffix text or null if suffix is empty.
+   * @param {Function} constructorFunc - A constructor function of a subclass to create subclass instances.
    */
-  constructor (suffixValue) {
-    if (suffixValue === undefined) {
-      throw new Error('Suffix should not be empty.')
+  constructor (morphemeValue, constructorFunc = Morpheme) {
+    if (morphemeValue === undefined) {
+      throw new Error('Morpheme value should not be empty.')
     }
-    this.value = suffixValue;
+    this.ConstructorFunc = constructorFunc;
+    this.value = morphemeValue;
     this.features = {};
     this.featureGroups = {};
 
@@ -1806,7 +1903,7 @@ class Suffix {
   }
 
   static readObject (jsonObject) {
-    let suffix = new Suffix(jsonObject.value);
+    let suffix = new this.ConstructorFunc(jsonObject.value);
 
     if (jsonObject.features) {
       for (let key in jsonObject.features) {
@@ -1852,7 +1949,7 @@ class Suffix {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    let clone = new Suffix(this.value);
+    let clone = new this.ConstructorFunc(this.value);
     for (const key in this.features) {
       if (this.features.hasOwnProperty(key)) {
         clone.features[key] = this.features[key];
@@ -1925,7 +2022,7 @@ class Suffix {
    * @returns {boolean} - True if both suffixes are in the same group, false otherwise.
    */
   isInSameGroupWith (suffix) {
-    let commonGroups = Suffix.getCommonGroups([this, suffix]);
+    let commonGroups = Morpheme.getCommonGroups([this, suffix]);
     if (commonGroups.length < 1) {
       // If elements do not have common groups in Suffix.featureGroups then they are not in the same group
       return false
@@ -1996,7 +2093,7 @@ class Suffix {
    * information on function format.
    * @returns {Suffix[]} An array of suffixes with some items possibly combined together.
    */
-  static combine (suffixes, mergeFunction = Suffix.merge) {
+  static combine (suffixes, mergeFunction = Morpheme.merge) {
     let matchFound = false;
     let matchIdx;
 
@@ -2037,13 +2134,23 @@ class Suffix {
    * @returns {Suffix} A modified value of ending A.
    */
   static merge (suffixA, suffixB) {
-    let commonGroups = Suffix.getCommonGroups([suffixA, suffixB]);
+    let commonGroups = Morpheme.getCommonGroups([suffixA, suffixB]);
     for (let type of commonGroups) {
       // Combine values using a comma separator. Can do anything else if we need to.
       suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type];
     }
     return suffixA
   };
+}
+
+class Form extends Morpheme {
+  /**
+   * Initializes a Suffix object.
+   * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
+   */
+  constructor (suffixValue) {
+    super(suffixValue, Form);
+  }
 }
 
 class Footnote {
@@ -2084,7 +2191,7 @@ class InflectionData {
       if (partData.suffixes) {
         lexicalData[part].suffixes = [];
         for (let suffix of partData.suffixes) {
-          lexicalData[part].suffixes.push(Suffix.readObject(suffix));
+          lexicalData[part].suffixes.push(Form.readObject(suffix));
         }
       }
 
@@ -2097,6 +2204,22 @@ class InflectionData {
     }
 
     return lexicalData
+  }
+}
+
+/**
+ * Suffix is an ending of a word with none or any grammatical features associated with it.
+ * Features are stored in properties whose names are type of a grammatical feature (i.e. case, gender, etc.)
+ * Each feature can have a single or multiple values associated with it (i.e. gender can be either 'masculine',
+ * a single value, or 'masculine' and 'feminine'. That's why all values are stored in an array.
+ */
+class Suffix extends Morpheme {
+  /**
+   * Initializes a Suffix object.
+   * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
+   */
+  constructor (suffixValue) {
+    super(suffixValue, Suffix);
   }
 }
 
@@ -2132,7 +2255,17 @@ class LanguageDataset {
    */
   addItem (itemValue, itemType, featureValue, extendedLangData) {
     // TODO: implement run-time error checking
-    let item = new Suffix(itemValue);
+    let item;
+    let store;
+    if (itemType === LanguageDataset.SUFFIX) {
+      item = new Form(itemValue);
+      store = this.suffixes;
+    } else if (itemType === LanguageDataset.FORM) {
+      item = new Suffix(itemValue);
+      store = this.forms;
+    } else {
+      throw new Error(`Unknown item type "${itemType}"`)
+    }
     item.extendedLangData = extendedLangData;
 
     // Build all possible combinations of features
@@ -2171,18 +2304,10 @@ class LanguageDataset {
     if (multiValueFeatures.length > 0) {
       for (let featureGroup of multiValueFeatures) {
         let endingItems = item.split(featureGroup.type, featureGroup.features);
-        if (itemType === LanguageDataset.SUFFIX) {
-          this.suffixes = this.suffixes.concat(endingItems);
-        } else {
-          this.forms = this.forms.concat(endingItems);
-        }
+        store = store.concat(endingItems);
       }
     } else {
-      if (itemType === LanguageDataset.SUFFIX) {
-        this.suffixes.push(item);
-      } else {
-        this.forms.push(item);
-      }
+      store.push(item);
     }
   };
 
@@ -2294,6 +2419,10 @@ LanguageDataset.FORM = 'form';
 var nounSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st,feminine,regular,\r\nē,singular,nominative,1st,feminine,irregular,\r\nēs,singular,nominative,1st,feminine,irregular,\r\nā,singular,nominative,1st,feminine,irregular,7\r\nus,singular,nominative,2nd,masculine feminine,regular,\r\ner,singular,nominative,2nd,masculine feminine,regular,\r\nir,singular,nominative,2nd,masculine feminine,regular,\r\n-,singular,nominative,2nd,masculine feminine,irregular,\r\nos,singular,nominative,2nd,masculine feminine,irregular,1\r\nōs,singular,nominative,2nd,masculine feminine,irregular,\r\nō,singular,nominative,2nd,masculine feminine,irregular,7\r\num,singular,nominative,2nd,neuter,regular,\r\nus,singular,nominative,2nd,neuter,irregular,10\r\non,singular,nominative,2nd,neuter,irregular,7\r\n-,singular,nominative,3rd,masculine feminine,regular,\r\nos,singular,nominative,3rd,masculine feminine,irregular,\r\nōn,singular,nominative,3rd,masculine feminine,irregular,7\r\n-,singular,nominative,3rd,neuter,regular,\r\nus,singular,nominative,4th,masculine feminine,regular,\r\nū,singular,nominative,4th,neuter,regular,\r\nēs,singular,nominative,5th,feminine,regular,\r\nae,singular,genitive,1st,feminine,regular,\r\nāī,singular,genitive,1st,feminine,irregular,1\r\nās,singular,genitive,1st,feminine,irregular,2\r\nēs,singular,genitive,1st,feminine,irregular,7\r\nī,singular,genitive,2nd,masculine feminine,regular,\r\nō,singular,genitive,2nd,masculine feminine,irregular,7\r\nī,singular,genitive,2nd,neuter,regular,\r\nis,singular,genitive,3rd,masculine feminine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nūs,singular,genitive,4th,masculine feminine,regular,\r\nuis,singular,genitive,4th,masculine feminine,irregular,1\r\nuos,singular,genitive,4th,masculine feminine,irregular,1\r\nī,singular,genitive,4th,masculine feminine,irregular,15\r\nūs,singular,genitive,4th,neuter,regular,\r\nēī,singular,genitive,5th,feminine,regular,\r\neī,singular,genitive,5th,feminine,regular,\r\nī,singular,genitive,5th,feminine,irregular,\r\nē,singular,genitive,5th,feminine,irregular,\r\nēs,singular,genitive,5th,feminine,irregular,6\r\nae,singular,dative,1st,feminine,regular,\r\nāī,singular,dative,1st,feminine,irregular,1\r\nō,singular,dative,2nd,masculine feminine,regular,\r\nō,singular,dative,2nd,neuter,regular,\r\nī,singular,dative,3rd,masculine feminine,regular,\r\ne,singular,dative,3rd,masculine feminine,irregular,17\r\nī,singular,dative,3rd,neuter,regular,\r\nūī,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,masculine feminine,regular,\r\nū,singular,dative,4th,neuter,regular,\r\nēī,singular,dative,5th,feminine,regular,\r\neī,singular,dative,5th,feminine,regular,\r\nī,singular,dative,5th,feminine,irregular,\r\nē,singular,dative,5th,feminine,irregular,6\r\nam,singular,accusative,1st,feminine,regular,\r\nēn,singular,accusative,1st,feminine,irregular,\r\nān,singular,accusative,1st,feminine,irregular,7\r\num,singular,accusative,2nd,masculine feminine,regular,\r\nom,singular,accusative,2nd,masculine feminine,irregular,1\r\nōn,singular,accusative,2nd,masculine feminine,irregular,7\r\num,singular,accusative,2nd,neuter,regular,\r\nus,singular,accusative,2nd,neuter,irregular,10\r\non,singular,accusative,2nd,neuter,irregular,7\r\nem,singular,accusative,3rd,masculine feminine,regular,\r\nim,singular,accusative,3rd,masculine feminine,irregular,11\r\na,singular,accusative,3rd,masculine feminine,irregular,7\r\n-,singular,accusative,3rd,neuter,regular,\r\num,singular,accusative,4th,masculine feminine,regular,\r\nū,singular,accusative,4th,neuter,regular,\r\nem,singular,accusative,5th,feminine,regular,\r\nā,singular,ablative,1st,feminine,regular,\r\nād,singular,ablative,1st,feminine,irregular,5\r\nē,singular,ablative,1st,feminine,irregular,7\r\nō,singular,ablative,2nd,masculine feminine,regular,\r\nōd,singular,ablative,2nd,masculine feminine,irregular,1\r\nō,singular,ablative,2nd,neuter,regular,\r\ne,singular,ablative,3rd,masculine feminine,regular,\r\nī,singular,ablative,3rd,masculine feminine,irregular,11\r\ne,singular,ablative,3rd,neuter,regular,\r\nī,singular,ablative,3rd,neuter,irregular,11\r\nū,singular,ablative,4th,masculine feminine,regular,\r\nūd,singular,ablative,4th,masculine feminine,irregular,1\r\nū,singular,ablative,4th,neuter,regular,\r\nē,singular,ablative,5th,feminine,regular,\r\nae,singular,locative,1st,feminine,regular,\r\nō,singular,locative,2nd,masculine feminine,regular,\r\nō,singular,locative,2nd,neuter,regular,\r\ne,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,masculine feminine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\nū,singular,locative,4th,masculine feminine,regular,\r\nū,singular,locative,4th,neuter,regular,\r\nē,singular,locative,5th,feminine,regular,\r\na,singular,vocative,1st,feminine,regular,\r\nē,singular,vocative,1st,feminine,irregular,\r\nā,singular,vocative,1st,feminine,irregular,7\r\ne,singular,vocative,2nd,masculine feminine,regular,\r\ner,singular,vocative,2nd,masculine feminine,regular,\r\nir,singular,vocative,2nd,masculine feminine,regular,\r\n-,singular,vocative,2nd,masculine feminine,irregular,\r\nī,singular,vocative,2nd,masculine feminine,irregular,8\r\nōs,singular,vocative,2nd,masculine feminine,irregular,\r\ne,singular,vocative,2nd,masculine feminine,irregular,7\r\num,singular,vocative,2nd,neuter,regular,\r\non,singular,vocative,2nd,neuter,irregular,7\r\n-,singular,vocative,3rd,masculine feminine,regular,\r\n-,singular,vocative,3rd,neuter,regular,\r\nus,singular,vocative,4th,masculine feminine,regular,\r\nū,singular,vocative,4th,neuter,regular,\r\nēs,singular,vocative,5th,feminine,regular,\r\nae,plural,nominative,1st,feminine,regular,\r\nī,plural,nominative,2nd,masculine feminine,regular,\r\noe,plural,nominative,2nd,masculine feminine,irregular,7 9\r\na,plural,nominative,2nd,neuter,regular,\r\nēs,plural,nominative,3rd,masculine feminine,regular,\r\nes,plural,nominative,3rd,masculine feminine,irregular,7\r\na,plural,nominative,3rd,neuter,regular,\r\nia,plural,nominative,3rd,neuter,irregular,11\r\nūs,plural,nominative,4th,masculine feminine,regular,\r\nua,plural,nominative,4th,neuter,regular,\r\nēs,plural,nominative,5th,feminine,regular,\r\nārum,plural,genitive,1st,feminine,regular,\r\num,plural,genitive,1st,feminine,irregular,3\r\nōrum,plural,genitive,2nd,masculine feminine,regular,\r\num,plural,genitive,2nd,masculine feminine,irregular,\r\nom,plural,genitive,2nd,masculine feminine,irregular,8\r\nōrum,plural,genitive,2nd,neuter,regular,\r\num,plural,genitive,2nd,neuter,irregular,\r\num,plural,genitive,3rd,masculine feminine,regular,\r\nium,plural,genitive,3rd,masculine feminine,irregular,11\r\nōn,plural,genitive,3rd,masculine feminine,irregular,7\r\num,plural,genitive,3rd,neuter,regular,\r\nium,plural,genitive,3rd,neuter,irregular,11\r\nuum,plural,genitive,4th,masculine feminine,regular,\r\num,plural,genitive,4th,masculine feminine,irregular,16\r\nuom,plural,genitive,4th,masculine feminine,irregular,1\r\nuum,plural,genitive,4th,neuter,regular,\r\nērum,plural,genitive,5th,feminine,regular,\r\nīs,plural,dative,1st,feminine,regular,\r\nābus,plural,dative,1st,feminine,irregular,4\r\neis,plural,dative,1st,feminine,irregular,6\r\nīs,plural,dative,2nd,masculine feminine,regular,\r\nīs,plural,dative,2nd,neuter,regular,\r\nibus,plural,dative,3rd,masculine feminine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nibus,plural,dative,4th,masculine feminine,regular,\r\nubus,plural,dative,4th,masculine feminine,irregular,14\r\nibus,plural,dative,4th,neuter,regular,\r\nēbus,plural,dative,5th,feminine,regular,\r\nās,plural,accusative,1st,feminine,regular,\r\nōs,plural,accusative,2nd,masculine feminine,regular,\r\na,plural,accusative,2nd,neuter,regular,\r\nēs,plural,accusative,3rd,masculine feminine,regular,\r\nīs,plural,accusative,3rd,masculine feminine,irregular,11\r\nas,plural,accusative,3rd,masculine feminine,irregular,7\r\na,plural,accusative,3rd,neuter,regular,\r\nia,plural,accusative,3rd,neuter,irregular,11\r\nūs,plural,accusative,4th,masculine feminine,regular,\r\nua,plural,accusative,4th,neuter,regular,\r\nēs,plural,accusative,5th,feminine,regular,\r\nīs,plural,ablative,1st,feminine,regular,\r\nābus,plural,ablative,1st,feminine,irregular,4\r\neis,plural,ablative,1st,feminine,irregular,6\r\nīs,plural,ablative,2nd,masculine feminine,regular,\r\nīs,plural,ablative,2nd,neuter,regular,\r\nibus,plural,ablative,3rd,masculine feminine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nibus,plural,ablative,4th,masculine feminine,regular,\r\nubus,plural,ablative,4th,masculine feminine,irregular,14\r\nibus,plural,ablative,4th,neuter,regular,\r\nēbus,plural,ablative,5th,feminine,regular,\r\nīs,plural,locative,1st,feminine,regular,\r\nīs,plural,locative,2nd,masculine feminine,regular,\r\nīs,plural,locative,2nd,neuter,regular,\r\nibus,plural,locative,3rd,masculine feminine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nibus,plural,locative,4th,masculine feminine,regular,\r\nibus,plural,locative,4th,neuter,regular,\r\nēbus,plural,locative,5th,feminine,regular,\r\nae,plural,vocative,1st,feminine,regular,\r\nī,plural,vocative,2nd,masculine feminine,regular,\r\na,plural,vocative,2nd,neuter,regular,\r\nēs,plural,vocative,3rd,masculine feminine,regular,\r\na,plural,vocative,3rd,neuter,regular,\r\nia,plural,vocative,3rd,neuter,irregular,11\r\nūs,plural,vocative,4th,masculine feminine,regular,\r\nua,plural,vocative,4th,neuter,regular,\r\nēs,plural,vocative,5th,feminine,regular,";
 
 var nounFootnotesCSV = "Index,Text\r\n1,archaic (final s and m of os and om may be omitted in inscriptions)\r\n2,only in familiās\r\n3,especially in Greek patronymics and compounds in -gena and -cola.\r\n4,always in deābus and filiābus; rarely with other words to distinguish the female\r\n5,archaic\r\n6,rare\r\n7,\"may occur in words of Greek origin. The forms of many Greek nouns vary among the first, second and third declensions.\"\r\n8,proper names in ius and filius and genius\r\n9,poetic\r\n10,\"only pelagus, vīrus, and sometimes vulgus\"\r\n11,may occur with i-stems\r\n12,several nouns (most commonly domus) show forms of both second and fourth declensions\r\n13,\"some nouns also have forms from the first declension (eg materia, saevitia) or the third declension (eg requiēs, satiēs, plēbēs, famēs)\"\r\n14,\"Always in partus and tribus, usually in artus and lacus, sometimes in other words, eg portus and specus\"\r\n15,Often in names of plants and trees and in nouns ending in -tus\r\n16,When pronounced as one syllable\r\n17,early\r\n18,dies and meridies are masculine";
+
+var pronounFormsCSV = "Class,Person,Number,Case,Type,Form,Alt,Footnote\r\npersonal,1st,singular,nominative,regular,ego,,\r\npersonal,1st,singular,genitive,regular,meI,,\r\npersonal,1st,singular,genitive,irregular,mIs,,1\r\npersonal,1st,singular,dative,regular,mihi,,\r\npersonal,1st,singular,dative,irregular,mI,,\r\npersonal,1st,singular,accusative,regular,mE,,\r\npersonal,1st,singular,accusative,irregular,mEmE,,\r\npersonal,1st,singular,ablative,regular,mE,,\r\npersonal,1st,singular,ablative,irregular,mEmE,,\r\npersonal,1st,singular,vocative,,,,\r\npersonal,2nd,singular,nominative,regular,tU,,\r\npersonal,2nd,singular,genitive,regular,tuI,,\r\npersonal,2nd,singular,genitive,irregular,tIs,,1\r\npersonal,2nd,singular,dative,regular,tibi,,\r\npersonal,2nd,singular,accusative,regular,tE,,\r\npersonal,2nd,singular,accusative,irregular,tEtE,,\r\npersonal,2nd,singular,ablative,regular,tE,,\r\npersonal,2nd,singular,ablative,irregular,tEtE,,\r\npersonal,2nd,singular,vocative,regular,tU,,\r\npersonal,1st,plural,nominative,regular,nOs,,\r\npersonal,1st,plural,genitive,regular,nostrum,,\r\npersonal,1st,plural,dative,regular,nObIs,,\r\npersonal,1st,plural,accusative,regular,nOs,,\r\npersonal,1st,plural,ablative,regular,nObIs,,\r\npersonal,1st,plural,vocative,,,,\r\npersonal,2nd,plural,nominative,regular,vOs,,\r\npersonal,2nd,plural,genitive,regular,vestrum,,\r\npersonal,2nd,plural,genitive,regular,vestrI,,\r\npersonal,2nd,plural,genitive,irregular,vostrum,,\r\npersonal,2nd,plural,genitive,irregular,vostrI,,\r\npersonal,2nd,plural,dative,regular,vObIs,,\r\npersonal,2nd,plural,accusative,regular,vOs,,\r\npersonal,2nd,plural,ablative,regular,vObIs,,\r\npersonal,2nd,plural,vocative,regular,vOs,,\r\nreflexive,3rd,singular,nominative,,,,\r\nreflexive,3rd,singular,genitive,regular,suI,,\r\nreflexive,3rd,singular,dative,regular,sibi,,\r\nreflexive,3rd,singular,accusative,regular,sE,,\r\nreflexive,3rd,singular,accusative,irregular,sEsE,,\r\nreflexive,3rd,singular,ablative,regular,sE,,\r\nreflexive,3rd,singular,ablative,irregular,sEsE,,\r\nreflexive,3rd,singular,vocative,,,,\r\nreflexive,3rd,plural,nominative,,,,\r\nreflexive,3rd,plural,genitive,regular,suI,,\r\nreflexive,3rd,plural,dative,regular,sibi,,\r\nreflexive,3rd,plural,accusative,regular,sE,,\r\nreflexive,3rd,plural,accusative,irregular,sEsE,,\r\nreflexive,3rd,plural,ablative,regular,sE,,\r\nreflexive,3rd,plural,ablative,irregular,sEsE,,\r\nreflexive,3rd,plural,vocative,,,,\r\npossessive,1st,singular,nominative,regular,meus,,\r\npossessive,1st,singular,genitive,regular,meI,,\r\npossessive,1st,singular,dative,regular,meO,,\r\npossessive,1st,singular,accusative,regular,meum,,\r\npossessive,1st,singular,ablative,regular,meO,,\r\npossessive,1st,singular,vocative,regular,mI,,\r\npossessive,1st,singular,vocative,irregular,meus,,\r\npossessive,1st,singular,nominative,regular,mea,,\r\npossessive,1st,singular,genitive,regular,meae,,\r\npossessive,1st,singular,dative,regular,meae,,\r\npossessive,1st,singular,accusative,regular,meam,,\r\npossessive,1st,singular,ablative,regular,meA,,\r\npossessive,1st,singular,vocative,regular,mea,,\r\npossessive,1st,singular,nominative,regular,meum,,\r\npossessive,1st,singular,genitive,regular,meI,,\r\npossessive,1st,singular,dative,regular,meO,,\r\npossessive,1st,singular,accusative,regular,meum,,\r\npossessive,1st,singular,ablative,regular,meO,,\r\npossessive,1st,singular,vocative,regular,meum,,\r\npossessive,2nd,singular,nominative,regular,tuus,,\r\npossessive,2nd,singular,genitive,regular,tuI,,\r\npossessive,2nd,singular,dative,regular,tuO,,\r\npossessive,2nd,singular,accusative,regular,tuum,,\r\npossessive,2nd,singular,ablative,regular,tuO,,\r\npossessive,2nd,singular,vocative,,,,\r\npossessive,2nd,singular,nominative,regular,tua,,\r\npossessive,2nd,singular,genitive,regular,tuae,,\r\npossessive,2nd,singular,dative,regular,tuae,,\r\npossessive,2nd,singular,accusative,regular,tuam,,\r\npossessive,2nd,singular,ablative,regular,tuA,,\r\npossessive,2nd,singular,vocative,,,,\r\npossessive,2nd,singular,nominative,regular,tuum,,\r\npossessive,2nd,singular,genitive,regular,tuI,,\r\npossessive,2nd,singular,dative,regular,tuO,,\r\npossessive,2nd,singular,accusative,regular,tuum,,\r\npossessive,2nd,singular,ablative,regular,tuO,,\r\npossessive,2nd,singular,vocative,,,,\r\npossessive,3rd,singular,nominative,regular,suus,,\r\npossessive,3rd,singular,genitive,regular,suI,,\r\npossessive,3rd,singular,dative,regular,suO,,\r\npossessive,3rd,singular,accusative,regular,suum,,\r\npossessive,3rd,singular,ablative,regular,suO,,\r\npossessive,3rd,singular,vocative,,,,\r\npossessive,3rd,singular,nominative,regular,sua,,\r\npossessive,3rd,singular,genitive,regular,suae,,\r\npossessive,3rd,singular,dative,regular,suae,,\r\npossessive,3rd,singular,accusative,regular,suam,,\r\npossessive,3rd,singular,ablative,regular,suA,,\r\npossessive,3rd,singular,vocative,,,,\r\npossessive,3rd,singular,nominative,regular,suum,,\r\npossessive,3rd,singular,genitive,regular,suI,,\r\npossessive,3rd,singular,dative,regular,suO,,\r\npossessive,3rd,singular,accusative,regular,suum,,\r\npossessive,3rd,singular,ablative,regular,suO,,\r\npossessive,3rd,singular,vocative,,,,\r\npossessive,1st,plural,nominative,regular,meI,,\r\npossessive,1st,plural,genitive,regular,meOrum,,\r\npossessive,1st,plural,dative,regular,meIs,,\r\npossessive,1st,plural,accusative,regular,meOs,,\r\npossessive,1st,plural,ablative,regular,meIs,,\r\npossessive,1st,plural,vocative,regular,meI,,\r\npossessive,1st,plural,nominative,regular,meae,,\r\npossessive,1st,plural,genitive,regular,meArum,,\r\npossessive,1st,plural,dative,,,,\r\npossessive,1st,plural,accusative,regular,meAs,,\r\npossessive,1st,plural,ablative,,,,\r\npossessive,1st,plural,vocative,regular,meae,,\r\npossessive,1st,plural,nominative,regular,mea,,\r\npossessive,1st,plural,genitive,regular,meOrum,,\r\npossessive,1st,plural,dative,,,,\r\npossessive,1st,plural,accusative,regular,mea,,\r\npossessive,1st,plural,ablative,,,,\r\npossessive,1st,plural,vocative,regular,mea,,\r\npossessive,2nd,plural,nominative,regular,tuI,,\r\npossessive,2nd,plural,genitive,regular,tuOrum,,\r\npossessive,2nd,plural,dative,regular,tuIs,,\r\npossessive,2nd,plural,accusative,regular,tuOs,,\r\npossessive,2nd,plural,ablative,regular,tuIs,,\r\npossessive,2nd,plural,vocative,,,,\r\npossessive,2nd,plural,nominative,regular,tuae,,\r\npossessive,2nd,plural,genitive,regular,tuArum,,\r\npossessive,2nd,plural,dative,,,,\r\npossessive,2nd,plural,accusative,regular,tuAs,,\r\npossessive,2nd,plural,ablative,,,,\r\npossessive,2nd,,vocative,,,,\r\npossessive,2nd,plural,nominative,regular,tua,,\r\npossessive,2nd,plural,genitive,regular,tuOrum,,\r\npossessive,2nd,plural,dative,,,,\r\npossessive,2nd,plural,accusative,regular,tua,,\r\npossessive,2nd,plural,ablative,,,,\r\npossessive,2nd,plural,vocative,,,,\r\npossessive,3rd,plural,nominative,regular,suI,,\r\npossessive,3rd,plural,genitive,regular,suOrum,,\r\npossessive,3rd,plural,dative,regular,suIs,,\r\npossessive,3rd,plural,accusative,regular,suOs,,\r\npossessive,3rd,plural,ablative,regular,suIs,,\r\npossessive,3rd,plural,vocative,,,,\r\npossessive,3rd,plural,nominative,regular,suae,,\r\npossessive,3rd,plural,genitive,regular,suArum,,\r\npossessive,3rd,plural,dative,,,,\r\npossessive,3rd,plural,accusative,regular,suAs,,\r\npossessive,3rd,plural,ablative,,,,\r\npossessive,3rd,plural,vocative,,,,\r\npossessive,3rd,plural,nominative,regular,sua,,\r\npossessive,3rd,plural,genitive,regular,suOrum,,\r\npossessive,3rd,plural,dative,,,,\r\npossessive,3rd,plural,accusative,regular,sua,,\r\npossessive,3rd,plural,ablative,,,,\r\npossessive,3rd,plural,vocative,,,,\r\npossessive,1st,singular,nominative,regular,noster,,\r\npossessive,1st,singular,genitive,regular,nostrI,,\r\npossessive,1st,singular,dative,regular,nostrO,,\r\npossessive,1st,singular,accusative,regular,nostrum,,\r\npossessive,1st,singular,ablative,regular,nostrO,,\r\npossessive,1st,singular,vocative,regular,noster,,\r\npossessive,1st,singular,nominative,regular,nostra,,\r\npossessive,1st,singular,genitive,regular,nostrae,,\r\npossessive,1st,singular,dative,regular,nostrae,,\r\npossessive,1st,singular,accusative,regular,nostram,,\r\npossessive,1st,singular,ablative,regular,nostrA,,\r\npossessive,1st,singular,vocative,regular,nostra,,\r\npossessive,1st,singular,nominative,regular,nostrum,,\r\npossessive,1st,singular,genitive,regular,nostrI,,\r\npossessive,1st,singular,dative,regular,nostrO,,\r\npossessive,1st,singular,accusative,regular,nostrum,,\r\npossessive,1st,singular,ablative,regular,nostrO,,\r\npossessive,1st,singular,vocative,regular,nostrum,,\r\npossessive,2nd,singular,nominative,regular,vester,,\r\npossessive,2nd,singular,genitive,regular,vestrI,,\r\npossessive,2nd,singular,dative,regular,vestrO,,\r\npossessive,2nd,singular,accusative,regular,vestrum,,\r\npossessive,2nd,singular,ablative,regular,vestrO,,\r\npossessive,2nd,singular,vocative,,,,\r\npossessive,2nd,singular,nominative,regular,vestra,,\r\npossessive,2nd,singular,genitive,regular,vestrae,,\r\npossessive,2nd,singular,dative,regular,vestrae,,\r\npossessive,2nd,singular,accusative,regular,vestram,,\r\npossessive,2nd,singular,ablative,regular,vestrA,,\r\npossessive,2nd,singular,vocative,,,,\r\npossessive,2nd,singular,nominative,regular,vestum,,\r\npossessive,2nd,singular,genitive,regular,vestrI,,\r\npossessive,2nd,singular,dative,regular,vestrO,,\r\npossessive,2nd,singular,accusative,regular,vestrum,,\r\npossessive,2nd,singular,ablative,regular,vestrO,,\r\npossessive,2nd,singular,vocative,,,,\r\npossessive,1st,plural,nominative,regular,nostrI,,\r\npossessive,1st,plural,genitive,regular,nostrOrum,,\r\npossessive,1st,plural,dative,regular,nostrIs,,\r\npossessive,1st,plural,accusative,regular,nostrOs,,\r\npossessive,1st,plural,ablative,regular,nostrIs,,\r\npossessive,1st,plural,vocative,regular,nostrI,,\r\npossessive,1st,plural,nominative,regular,nostrae,,\r\npossessive,1st,plural,genitive,regular,nostrArum,,\r\npossessive,1st,plural,dative,,,,\r\npossessive,1st,plural,accusative,regular,nostrAs,,\r\npossessive,1st,plural,ablative,,,,\r\npossessive,1st,plural,vocative,regular,nostrae,,\r\npossessive,1st,plural,nominative,regular,nostra,,\r\npossessive,1st,plural,genitive,regular,nostrOrum,,\r\npossessive,1st,plural,dative,,,,\r\npossessive,1st,plural,accusative,regular,nostra,,\r\npossessive,1st,plural,ablative,,,,\r\npossessive,1st,plural,vocative,regular,nostra,,\r\npossessive,2nd,plural,nominative,regular,vestrI,,\r\npossessive,2nd,plural,genitive,regular,vestrOrum,,\r\npossessive,2nd,plural,dative,regular,vestrIs,,\r\npossessive,2nd,plural,accusative,regular,vestrOs,,\r\npossessive,2nd,plural,ablative,regular,vestrIs,,\r\npossessive,2nd,plural,vocative,,,,\r\npossessive,2nd,plural,nominative,regular,vestrae,,\r\npossessive,2nd,plural,genitive,regular,vestrArum,,\r\npossessive,2nd,plural,dative,,,,\r\npossessive,2nd,plural,accusative,regular,vestrAs,,\r\npossessive,2nd,plural,ablative,,,,\r\npossessive,2nd,,vocative,,,,\r\npossessive,2nd,plural,nominative,regular,vestra,,\r\npossessive,2nd,plural,genitive,regular,vestrOrum,,\r\npossessive,2nd,plural,dative,,,,\r\npossessive,2nd,plural,accusative,regular,vestra,,\r\npossessive,2nd,plural,ablative,,,,\r\npossessive,2nd,plural,vocative,,,,\r\ndemonstrative,,singular,nominative,regular,is,,\r\ndemonstrative,,singular,genitive,regular,eius,,\r\ndemonstrative,,singular,dative,regular,eI,,\r\ndemonstrative,,singular,accusative,regular,eum,,\r\ndemonstrative,,singular,ablative,regular,eO,,\r\ndemonstrative,,singular,nominative,regular,ea,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,eam,,\r\ndemonstrative,,singular,ablative,regular,eA,,\r\ndemonstrative,,singular,nominative,regular,id,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,id,,\r\ndemonstrative,,singular,ablative,regular,eO,,\r\ndemonstrative,,plural,nominative,regular,eI,,\r\ndemonstrative,,plural,nominative,irregular,iI,,\r\ndemonstrative,,plural,nominative,irregular,I,,\r\ndemonstrative,,plural,genitive,regular,eOrum,,\r\ndemonstrative,,plural,dative,regular,eIs,,\r\ndemonstrative,,plural,dative,irregular,iIs,,\r\ndemonstrative,,plural,dative,irregular,Is,,\r\ndemonstrative,,plural,accusative,regular,eOs,,\r\ndemonstrative,,plural,ablative,regular,eIs,,\r\ndemonstrative,,plural,ablative,irregular,iIs,,\r\ndemonstrative,,plural,ablative,irregular,Is,,\r\ndemonstrative,,plural,nominative,regular,eae,,\r\ndemonstrative,,plural,genitive,regular,eArum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,eAs,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,nominative,regular,ea,,\r\ndemonstrative,,plural,genitive,regular,eOrum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,ea,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,singular,nominative,regular,ille,,\r\ndemonstrative,,singular,genitive,regular,illIus,,\r\ndemonstrative,,singular,dative,regular,illI,,\r\ndemonstrative,,singular,accusative,regular,illum,,\r\ndemonstrative,,singular,ablative,regular,illO,,\r\ndemonstrative,,singular,nominative,regular,illa,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,illam,,\r\ndemonstrative,,singular,ablative,regular,illA,,\r\ndemonstrative,,singular,nominative,regular,illud,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,illud,,\r\ndemonstrative,,singular,ablative,regular,illO,,\r\ndemonstrative,,plural,nominative,regular,illI,,\r\ndemonstrative,,plural,genitive,regular,illOrum,,\r\ndemonstrative,,plural,dative,regular,illIs,,\r\ndemonstrative,,plural,accusative,regular,illOs,,\r\ndemonstrative,,plural,ablative,regular,illIs,,\r\ndemonstrative,,plural,nominative,regular,illae,,\r\ndemonstrative,,plural,genitive,regular,illArum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,illAs,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,nominative,regular,Illa,,\r\ndemonstrative,,plural,genitive,regular,illOrum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,illa,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,singular,nominative,regular,ipse,,\r\ndemonstrative,,singular,genitive,regular,ipsIus,,\r\ndemonstrative,,singular,dative,regular,ipsI,,\r\ndemonstrative,,singular,accusative,regular,ipsum,,\r\ndemonstrative,,singular,ablative,regular,ipsO,,\r\ndemonstrative,,singular,nominative,regular,ipsa,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,ipsam,,\r\ndemonstrative,,singular,ablative,regular,ipsA,,\r\ndemonstrative,,singular,nominative,regular,ipsum,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,ipsum,,\r\ndemonstrative,,singular,ablative,regular,ipsO,,\r\ndemonstrative,,plural,nominative,regular,ipsI,,\r\ndemonstrative,,plural,genitive,regular,ipsOrum,,\r\ndemonstrative,,plural,dative,regular,ipsIs,,\r\ndemonstrative,,plural,accusative,regular,ipsOs,,\r\ndemonstrative,,plural,ablative,regular,ipsIs,,\r\ndemonstrative,,plural,nominative,regular,ipsae,,\r\ndemonstrative,,plural,genitive,regular,ipsArum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,ipsAs,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,nominative,regular,ipsa,,\r\ndemonstrative,,plural,genitive,regular,ipsOrum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,ipsa,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,singular,nominative,regular,iste,,\r\ndemonstrative,,singular,genitive,regular,istIus,,\r\ndemonstrative,,singular,dative,regular,istI,,\r\ndemonstrative,,singular,accusative,regular,istum,,\r\ndemonstrative,,singular,ablative,regular,istO,,\r\ndemonstrative,,singular,nominative,regular,ista,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,istam,,\r\ndemonstrative,,singular,ablative,regular,istA,,\r\ndemonstrative,,singular,nominative,regular,istud,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,istud,,\r\ndemonstrative,,singular,ablative,regular,istO,,\r\ndemonstrative,,plural,nominative,regular,istI,,\r\ndemonstrative,,plural,genitive,regular,istOrum,,\r\ndemonstrative,,plural,dative,regular,istIs,,\r\ndemonstrative,,plural,accusative,regular,istOs,,\r\ndemonstrative,,plural,ablative,regular,istIs,,\r\ndemonstrative,,plural,nominative,regular,istae,,\r\ndemonstrative,,plural,genitive,regular,istArum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,istAs,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,nominative,regular,ista,,\r\ndemonstrative,,plural,genitive,regular,istOrum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,ista,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,singular,nominative,,,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,,,,\r\ndemonstrative,,singular,ablative,,,,\r\ndemonstrative,,singular,vocative,,,,\r\ndemonstrative,,singular,nominative,,,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,,,,\r\ndemonstrative,,singular,ablative,,,,\r\ndemonstrative,,singular,nominative,,,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,,,,\r\ndemonstrative,,singular,ablative,,,,\r\ndemonstrative,,singular,vocative,,,,\r\ndemonstrative,,plural,nominative,,,,\r\ndemonstrative,,plural,genitive,,,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,,,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,vocative,,,,\r\ndemonstrative,,plural,nominative,,,,\r\ndemonstrative,,plural,genitive,,,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,,,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,vocative,,,,\r\ndemonstrative,,plural,nominative,,,,\r\ndemonstrative,,plural,genitive,,,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,,,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,vocative,,,,\r\ndemonstrative,,singular,nominative,regular,hIc,,\r\ndemonstrative,,singular,genitive,regular,huius,,\r\ndemonstrative,,singular,dative,regular,huic,,\r\ndemonstrative,,singular,accusative,regular,hunc,,\r\ndemonstrative,,singular,ablative,regular,hOc,,\r\ndemonstrative,,singular,vocative,regular,,,\r\ndemonstrative,,singular,nominative,regular,haec,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,hanc,,\r\ndemonstrative,,singular,ablative,regular,hAc,,\r\ndemonstrative,,singular,vocative,regular,,,\r\ndemonstrative,,singular,nominative,regular,hOc,,\r\ndemonstrative,,singular,genitive,,,,\r\ndemonstrative,,singular,dative,,,,\r\ndemonstrative,,singular,accusative,regular,hOc,,\r\ndemonstrative,,singular,ablative,regular,hOc,,\r\ndemonstrative,,singular,vocative,regular,,,\r\ndemonstrative,,plural,nominative,regular,hI,,\r\ndemonstrative,,plural,genitive,regular,hOrum,,\r\ndemonstrative,,plural,dative,regular,hIs,,\r\ndemonstrative,,plural,accusative,regular,hOs,,\r\ndemonstrative,,plural,ablative,regular,hIs,,\r\ndemonstrative,,plural,vocative,regular,,,\r\ndemonstrative,,plural,nominative,regular,hae,,\r\ndemonstrative,,plural,genitive,regular,hArum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,hAs,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,vocative,regular,,,\r\ndemonstrative,,plural,nominative,regular,haec,,\r\ndemonstrative,,plural,genitive,regular,hOrum,,\r\ndemonstrative,,plural,dative,,,,\r\ndemonstrative,,plural,accusative,regular,haec,,\r\ndemonstrative,,plural,ablative,,,,\r\ndemonstrative,,plural,vocative,regular,,,\r\nrelative,,singular,nominative,regular,quI,,\r\nrelative,,singular,genitive,regular,cuius,,\r\nrelative,,singular,genitive,irregular,quoius,,3\r\nrelative,,singular,dative,regular,cui,,\r\nrelative,,singular,dative,irregular,quoius,,3\r\nrelative,,singular,accusative,regular,quem,,\r\nrelative,,singular,ablative,regular,quO,,\r\nrelative,,singular,vocative,regular,,,\r\nrelative,,singular,nominative,regular,qua,,\r\nrelative,,singular,nominative,irregular,quae,,\r\nrelative,,singular,genitive,,,,\r\nrelative,,singular,dative,,,,\r\nrelative,,singular,accusative,regular,quam,,\r\nrelative,,singular,ablative,regular,quA,,\r\nrelative,,singular,vocative,regular,,,\r\nrelative,,singular,nominative,regular,quod,,\r\nrelative,,singular,genitive,,,,\r\nrelative,,singular,dative,,,,\r\nrelative,,singular,accusative,regular,quod,,\r\nrelative,,singular,ablative,regular,quO,,\r\nrelative,,singular,vocative,regular,,,\r\nrelative,,plural,nominative,regular,quI,,\r\nrelative,,plural,nominative,regular,quEs,,3\r\nrelative,,plural,genitive,regular,quOrum,,\r\nrelative,,plural,dative,regular,quibus,,\r\nrelative,,plural,dative,irregular,quIs,,\r\nrelative,,plural,accusative,regular,quOs,,\r\nrelative,,plural,ablative,regular,quibus,,\r\nrelative,,plural,ablative,irregular,quIs,,\r\nrelative,,plural,vocative,regular,,,\r\nrelative,,plural,nominative,regular,quae,,\r\nrelative,,plural,genitive,regular,quArum,,\r\nrelative,,plural,dative,,,,\r\nrelative,,plural,accusative,regular,quAs,,\r\nrelative,,plural,ablative,,,,\r\nrelative,,plural,vocative,regular,,,\r\nrelative,,plural,nominative,regular,quae,,\r\nrelative,,plural,genitive,regular,quorum,,\r\nrelative,,plural,dative,,,,\r\nrelative,,plural,accusative,regular,quae,,\r\nrelative,,plural,ablative,,,,\r\nrelative,,plural,vocative,regular,,,\r\ninterrogative,,singular,nominative,regular,quis,,\r\ninterrogative,,singular,genitive,regular,cuius,,\r\ninterrogative,,singular,dative,regular,cui,,\r\ninterrogative,,singular,accusative,regular,quem,,\r\ninterrogative,,singular,ablative,regular,quO,,\r\ninterrogative,,singular,vocative,regular,,,\r\ninterrogative,,singular,nominative,regular,quis,,\r\ninterrogative,,singular,genitive,regular,cuius,,\r\ninterrogative,,singular,dative,regular,cui,,\r\ninterrogative,,singular,accusative,regular,quem,,\r\ninterrogative,,singular,ablative,regular,quO,,\r\ninterrogative,,singular,vocative,regular,,,\r\ninterrogative,,singular,nominative,regular,quid,,\r\ninterrogative,,singular,genitive,,,,\r\ninterrogative,,singular,dative,,,,\r\ninterrogative,,singular,accusative,regular,quid,,\r\ninterrogative,,singular,ablative,regular,quO,,\r\ninterrogative,,singular,vocative,regular,,,\r\ninterrogative,,plural,nominative,regular,quI,,\r\ninterrogative,,plural,nominative,regular,quEs,,3\r\ninterrogative,,plural,genitive,regular,quOrum,,\r\ninterrogative,,plural,dative,regular,quibus,,\r\ninterrogative,,plural,dative,irregular,quIs,,\r\ninterrogative,,plural,accusative,regular,quOs,,\r\ninterrogative,,plural,ablative,regular,quibus,,\r\ninterrogative,,plural,ablative,irregular,quIs,,\r\ninterrogative,,plural,vocative,regular,,,\r\ninterrogative,,plural,nominative,regular,quae,,\r\ninterrogative,,plural,genitive,regular,quArum,,\r\ninterrogative,,plural,dative,,,,\r\ninterrogative,,plural,accusative,regular,quAs,,\r\ninterrogative,,plural,ablative,,,,\r\ninterrogative,,plural,vocative,regular,,,\r\ninterrogative,,plural,nominative,regular,quae,,\r\ninterrogative,,plural,genitive,regular,quorum,,\r\ninterrogative,,plural,dative,,,,\r\ninterrogative,,plural,accusative,regular,quae,,\r\ninterrogative,,plural,ablative,,,,\r\ninterrogative,,plural,vocative,regular,,,";
+
+var pronounFootnotesCSV = "Index,Text\r\n1,\"tU is made emphatic by adding on the endings –te, –temet or –timet. \n            The other forms of the personal pronoun (with the exception of the genitive plural) \n            are made emphatic by the addition of –met to the original form. Early emphatic forms include mEpte and tEpte.\"\r\n2,Enclitics –ce or –c are sometimes added to forms of hic. Common examples include huiusce and hIsce.\r\n3,Earlier forms.\r\n4,The plural forms of the Interrogatives are the same as the plural forms of the Relative.";
 
 var adjectiveSuffixesCSV = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,";
 
@@ -3900,11 +4029,8 @@ var papaparse = createCommonjsModule(function (module, exports) {
 /*
  * Latin language data module
  */
-// import languages from '../../../lib/languages'
 let languageModel = new LatinLanguageModel();
 let types = Feature.types;
-// A language of this module
-// const languageID = languages.latin
 // Create a language data set that will keep all language-related information
 let dataSet = new LanguageDataset(constants.LANG_LATIN);
 
@@ -3926,7 +4052,7 @@ languageModel.features[types.gender].addImporter(importerName)
   ]);
 languageModel.features[types.tense].addImporter(importerName)
     .map('future_perfect', languageModel.features[types.tense][constants.TENSE_FUTURE_PERFECT]);
-const footnotes = new FeatureType(types.footnote, [], LanguageModelFactory.getLanguageCodeFromId(dataSet.languageID));
+const footnotes = new FeatureType(types.footnote, [], dataSet.languageID);
 
 // endregion Definition of grammatical features
 
@@ -3957,6 +4083,44 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
       features.push(...indexes);
     }
     this.addItem(suffix, LanguageDataset.SUFFIX, features);
+  }
+};
+
+// For pronouns
+dataSet.addPronounForms = function (partOfSpeech, data) {
+  // First row are headers
+  for (let i = 1; i < data.length; i++) {
+    let features = [partOfSpeech];
+    if (data[i][0]) {
+      features.push(languageModel.features[types.grmClass].getFromImporter('csv', data[i][0]));
+    }
+    if (data[i][1]) {
+      features.push(languageModel.features[types.person].getFromImporter('csv', data[i][1]));
+    }
+    if (data[i][2]) {
+      features.push(languageModel.features[types.number].getFromImporter('csv', data[i][2]));
+    }
+    if (data[i][3]) {
+      features.push(languageModel.features[types.case].getFromImporter('csv', data[i][3]));
+    }
+    if (data[i][4]) {
+      features.push(languageModel.features[types.type].getFromImporter('csv', data[i][4]));
+    }
+    // TODO: Check if form and alt are there
+    let form = data[i][5] ? data[i][5] : '';
+    /* if (data[i][6]) {
+      features.push(languageModel.features[types.alt].getFromImporter('csv', data[i][6]))
+    } */
+
+    // Footnotes
+    if (data[i][7]) {
+      // There can be multiple footnote indexes separated by spaces
+      let indexes = data[i][7].split(' ').map(function (index) {
+        return footnotes.get(index)
+      });
+      features.push(...indexes);
+    }
+    this.addItem(form, LanguageDataset.FORM, features);
   }
 };
 
@@ -4045,27 +4209,39 @@ dataSet.addFootnotes = function (partOfSpeech, data) {
 };
 
 dataSet.loadData = function () {
-    // Nouns
-  let partOfSpeech = languageModel.features[types.part][constants.POFS_NOUN];
-  let suffixes = papaparse.parse(nounSuffixesCSV, {});
+  let partOfSpeech;
+  let suffixes;
+  let forms;
+  let footnotes;
+
+  // Nouns
+  partOfSpeech = languageModel.features[types.part][constants.POFS_NOUN];
+  suffixes = papaparse.parse(nounSuffixesCSV, {});
   this.addSuffixes(partOfSpeech, suffixes.data);
-  let footnotes = papaparse.parse(nounFootnotesCSV, {});
+  footnotes = papaparse.parse(nounFootnotesCSV, {});
   this.addFootnotes(partOfSpeech, footnotes.data);
 
-    // Adjectives
+  // Pronouns
+  partOfSpeech = languageModel.features[types.part][constants.POFS_PRONOUN];
+  forms = papaparse.parse(pronounFormsCSV, {});
+  this.addPronounForms(partOfSpeech, forms.data);
+  footnotes = papaparse.parse(pronounFootnotesCSV, {});
+  this.addFootnotes(partOfSpeech, footnotes.data);
+
+  // Adjectives
   partOfSpeech = languageModel.features[types.part][constants.POFS_ADJECTIVE];
   suffixes = papaparse.parse(adjectiveSuffixesCSV, {});
   this.addSuffixes(partOfSpeech, suffixes.data);
   footnotes = papaparse.parse(adjectiveFootnotesCSV, {});
   this.addFootnotes(partOfSpeech, footnotes.data);
 
-    // Verbs
+  // Verbs
   partOfSpeech = languageModel.features[types.part][constants.POFS_VERB];
   suffixes = papaparse.parse(verbSuffixesCSV, {});
   this.addVerbSuffixes(partOfSpeech, suffixes.data);
   footnotes = papaparse.parse(verbFootnotesCSV, {});
   this.addFootnotes(partOfSpeech, footnotes.data);
-  let forms = papaparse.parse(verbFormsCSV, {});
+  forms = papaparse.parse(verbFormsCSV, {});
   this.addVerbForms(partOfSpeech, forms.data);
   footnotes = papaparse.parse(verbFormFootnotesCSV, {});
   this.addFootnotes(partOfSpeech, footnotes.data);
@@ -4240,37 +4416,33 @@ let dataSet$1 = new LanguageDataset(constants.LANG_GREEK);
  analyzer's language modules as well.
  */
 const importerName$1 = 'csv';
-const parts = new FeatureType(Feature.types.part, ['noun', 'adjective', 'verb'],
-  LanguageModelFactory.getLanguageCodeFromId(dataSet$1.languageID));
-const numbers = new FeatureType(Feature.types.number, ['singular', 'dual', 'plural'],
-  LanguageModelFactory.getLanguageCodeFromId(dataSet$1.languageID));
+const parts = new FeatureType(Feature.types.part, ['noun', 'adjective', 'verb'], dataSet$1.languageID);
+const numbers = new FeatureType(Feature.types.number, ['singular', 'dual', 'plural'], dataSet$1.languageID);
 numbers.addImporter(importerName$1)
     .map('singular', numbers.singular)
     .map('dual', numbers.dual)
     .map('plural', numbers.plural);
-const cases = new FeatureType(Feature.types.grmCase, ['nominative', 'genitive', 'dative', 'accusative', 'vocative'],
-  LanguageModelFactory.getLanguageCodeFromId(dataSet$1.languageID));
+const cases = new FeatureType(Feature.types.grmCase,
+  ['nominative', 'genitive', 'dative', 'accusative', 'vocative'],
+  dataSet$1.languageID);
 cases.addImporter(importerName$1)
     .map('nominative', cases.nominative)
     .map('genitive', cases.genitive)
     .map('dative', cases.dative)
     .map('accusative', cases.accusative)
     .map('vocative', cases.vocative);
-const declensions = new FeatureType(Feature.types.declension, ['first', 'second', 'third'],
-  LanguageModelFactory.getLanguageCodeFromId(dataSet$1.languageID));
+const declensions = new FeatureType(Feature.types.declension, ['first', 'second', 'third'], dataSet$1.languageID);
 declensions.addImporter(importerName$1)
     .map('1st', declensions.first)
     .map('2nd', declensions.second)
     .map('3rd', declensions.third);
-const genders = new FeatureType(Feature.types.gender, ['masculine', 'feminine', 'neuter'],
-  LanguageModelFactory.getLanguageCodeFromId(dataSet$1.languageID));
+const genders = new FeatureType(Feature.types.gender, ['masculine', 'feminine', 'neuter'], dataSet$1.languageID);
 genders.addImporter(importerName$1)
     .map('masculine', genders.masculine)
     .map('feminine', genders.feminine)
     .map('neuter', genders.neuter)
     .map('masculine feminine', [genders.masculine, genders.feminine]);
-const types$1 = new FeatureType(Feature.types.type, ['regular', 'irregular'],
-  LanguageModelFactory.getLanguageCodeFromId(dataSet$1.languageID));
+const types$1 = new FeatureType(Feature.types.type, ['regular', 'irregular'], dataSet$1.languageID);
 types$1.addImporter(importerName$1)
     .map('regular', types$1.regular)
     .map('irregular', types$1.irregular);
@@ -4302,7 +4474,7 @@ persons.addImporter(importerName)
     .map('1st', persons.first)
     .map('2nd', persons.second)
     .map('3rd', persons.third); */
-const footnotes$1 = new FeatureType(Feature.types.footnote, [], {});
+const footnotes$1 = new FeatureType(Feature.types.footnote, [], dataSet$1.languageID);
 
 // endregion Definition of grammatical features
 
@@ -6882,7 +7054,7 @@ class GroupFeatureType extends FeatureType {
    * Use this parameter to redefine a deafult sort order for a type.
    */
   constructor (featureType, titleMessageID, order = featureType.orderedFeatures) {
-    super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.language);
+    super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.languageID);
 
     this.groupTitle = titleMessageID;
     this._groupType = undefined;
@@ -6922,7 +7094,7 @@ class GroupFeatureType extends FeatureType {
    * @returns {Feature[] | Feature[][]} A sorted array of feature values.
    */
   getOrderedFeatures (ancestorFeatures) {
-    return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(value, this.type, this.language))
+    return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(value, this.type, this.languageID))
   }
 
   /**
@@ -7047,8 +7219,6 @@ class Cell {
         let footnoteElement = document.createElement('a');
         footnoteElement.innerHTML = '[' + suffix.footnote + ']';
         footnoteElement.dataset.footnote = suffix.footnote;
-        footnoteElement.dataset.tooltipVisible = 'false';
-        footnoteElement.setAttribute('title', 'This is a title');
         element.appendChild(footnoteElement);
       }
       if (index < this.suffixes.length - 1) {
@@ -8036,7 +8206,7 @@ class Table {
             selectedSuffixes = selectedSuffixes.filter(this.suffixCellFilter);
           }
 
-          selectedSuffixes = Suffix.combine(selectedSuffixes);
+          selectedSuffixes = Form.combine(selectedSuffixes);
         }
 
         let cell = new Cell(selectedSuffixes, ancestorFeatures.slice());
