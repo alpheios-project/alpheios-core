@@ -85,7 +85,7 @@ export default class LanguageDataset {
     if (multiValueFeatures.length > 0) {
       for (let featureGroup of multiValueFeatures) {
         let endingItems = item.split(featureGroup.type, featureGroup.features)
-        store = store.concat(endingItems)
+        store.push(...endingItems)
       }
     } else {
       store.push(item)
