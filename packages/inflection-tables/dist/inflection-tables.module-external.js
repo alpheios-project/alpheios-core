@@ -2242,10 +2242,6 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
       suffix = null;
     }
 
-    if (suffix === 'us') {
-      console.log('BREAKHERE');
-    }
-
     let features = [partOfSpeech,
       languageModel.features[types.number].getFromImporter('csv', data[i][1]),
       languageModel.features[types.grmCase].getFromImporter('csv', data[i][2]),
@@ -6732,7 +6728,7 @@ class VoiceMoodConjugationView extends VerbView {
     super();
     this.id = 'verbVoiceMoodConjugation';
     this.name = 'verb voice-mood-conjugation';
-    this.title = 'Voice-Mood-Conjugation';
+    this.title = 'Verb (Voice-Mood-Conjugation)';
 
     this.createTable();
   }
@@ -6761,7 +6757,7 @@ class ConjugationVoiceMoodView extends VerbView {
     super();
     this.id = 'verbConjugationVoiceMood';
     this.name = 'verb conjugation-voice-mood';
-    this.title = 'Conjugation-Voice-Mood';
+    this.title = 'Verb (Conjugation-Voice-Mood)';
 
     this.createTable();
   }
@@ -6789,7 +6785,7 @@ class ConjugationMoodVoiceView extends VerbView {
     super();
     this.id = 'verbConjugationMoodVoice';
     this.name = 'verb conjugation-mood-voice';
-    this.title = 'Conjugation-Mood-Voice';
+    this.title = 'Verb (Conjugation-Mood-Voice)';
 
     this.createTable();
   }
@@ -6818,7 +6814,7 @@ class MoodVoiceConjugationView extends VerbView {
     super();
     this.id = 'verbMoodVoiceConjugation';
     this.name = 'verb mood-voice-conjugation';
-    this.title = 'Mood-Voice-Conjugation';
+    this.title = 'Verb (Mood-Voice-Conjugation)';
 
     this.createTable();
   }
@@ -6839,7 +6835,7 @@ class MoodConjugationVoiceView extends VerbView {
     super();
     this.id = 'verbMoodConjugationVoice';
     this.name = 'verb mood-conjugation-voice';
-    this.title = 'Mood-Conjugation-Voice';
+    this.title = 'Verb (Mood-Conjugation-Voice)';
 
     this.createTable();
   }

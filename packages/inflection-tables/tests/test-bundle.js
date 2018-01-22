@@ -6638,10 +6638,6 @@ dataSet.addSuffixes = function (partOfSpeech, data) {
       suffix = null;
     }
 
-    if (suffix === 'us') {
-      console.log('BREAKHERE');
-    }
-
     let features = [partOfSpeech,
       languageModel.features[types.number].getFromImporter('csv', data[i][1]),
       languageModel.features[types.grmCase].getFromImporter('csv', data[i][2]),
