@@ -135,10 +135,18 @@
 
 .infl-suff--suffix-match {
     background-color: rgb(188, 230, 240);
+    font-weight: bold;
+    font-size: larger;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .infl-suff--full-feature-match {
     background-color: lightgray;
+    font-weight: bold;
+    font-size: larger;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .infl-suff--suffix-match.infl-suff--full-feature-match {
