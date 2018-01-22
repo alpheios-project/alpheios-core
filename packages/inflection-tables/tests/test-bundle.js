@@ -6854,14 +6854,14 @@ dataSet.matcher = function (inflections, type, item) {
     }
 
     if (type === LanguageDataset.SUFFIX) {
-      if (inflection.suffix === item.value) {
+      if (languageModel.normalizeWord(inflection.suffix) === languageModel.normalizeWord(item.value)) {
         matchData.suffixMatch = true;
       }
     } else {
       let form = inflection.prefix ? inflection.prefix : '';
       form = form + inflection.stem;
       form = inflection.suffix ? form + inflection.suffix : form;
-      if (form === item.value) {
+      if (languageModel.normalizeWord(form) === languageModel.normalizeWord(item.value)) {
         matchData.suffixMatch = true;
       }
     }
