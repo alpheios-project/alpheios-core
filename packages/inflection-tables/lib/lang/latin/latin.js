@@ -40,6 +40,7 @@ languageModel.features[types.gender].addImporter(importerName)
 languageModel.features[types.tense].addImporter(importerName)
     .map('future_perfect', languageModel.features[types.tense][Models.Constants.TENSE_FUTURE_PERFECT])
 const footnotes = new Models.FeatureType(types.footnote, [], dataSet.languageID)
+const featureOptions = [types.grmCase, types.declension, types.gender, types.number, types.voice, types.mood, types.tense, types.person]
 
 // endregion Definition of grammatical features
 
@@ -246,13 +247,13 @@ dataSet.matcher = function (inflections, type, item) {
   'use strict'
     // All of those features must match between an inflection and an ending
   let obligatoryMatches, optionalMatches
+  // I'm not sure if we ever want to restrict what we consider optional matches
+  // so this is just a placeholder for now
+  let matchOptional = true
   if (type === LanguageDataset.SUFFIX) {
     obligatoryMatches = [types.part]
-    // TODO this needs to change based upon pofs
-    optionalMatches = [types.grmCase, types.declension, types.gender, types.number]
   } else {
     obligatoryMatches = [types.word]
-    optionalMatches = []
   }
 
     // Any of those features must match between an inflection and an ending
@@ -265,6 +266,11 @@ dataSet.matcher = function (inflections, type, item) {
      */
   for (let inflection of inflections) {
     let matchData = new MatchData() // Create a match profile
+    if (matchOptional) {
+      optionalMatches = featureOptions.filter((f) => inflection[f])
+    } else {
+      optionalMatches = []
+    }
 
     if (type === LanguageDataset.SUFFIX) {
       if (inflection.suffix === item.value) {
