@@ -99,6 +99,20 @@ class LatinLanguageModel extends LanguageModel {
    * @type String
    */
   normalizeWord (word) {
+    word = word.replace(/[\u00c0\u00c1\u00c2\u00c3\u00c4\u0100\u0102]/g, 'A')
+    word = word.replace(/[\u00c8\u00c9\u00ca\u00cb\u0112\u0114]/g, 'E')
+    word = word.replace(/[\u00cc\u00cd\u00ce\u00cf\u012a\u012c]/g, 'I')
+    word = word.replace(/[\u00d2\u00d3\u00d4\u00df\u00d6\u014c\u014e]/g, 'O')
+    word = word.replace(/[\u00d9\u00da\u00db\u00dc\u016a\u016c]/g, 'U')
+    word = word.replace(/[\u00c6\u01e2]/g, 'AE')
+    word = word.replace(/[\u0152]/g, 'OE')
+    word = word.replace(/[\u00e0\u00e1\u00e2\u00e3\u00e4\u0101\u0103]/g, 'a')
+    word = word.replace(/[\u00e8\u00e9\u00ea\u00eb\u0113\u0115]/g, 'e')
+    word = word.replace(/[\u00ec\u00ed\u00ee\u00ef\u012b\u012d\u0129]/g, 'i')
+    word = word.replace(/[\u00f2\u00f3\u00f4\u00f5\u00f6\u014d\u014f]/g, 'o')
+    word = word.replace(/[\u00f9\u00fa\u00fb\u00fc\u016b\u016d]/g, 'u')
+    word = word.replace(/[\u00e6\u01e3]/g, 'ae')
+    word = word.replace(/[\u0153]/g, 'oe')
     return word
   }
 

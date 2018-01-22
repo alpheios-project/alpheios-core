@@ -23,4 +23,8 @@ describe('LanguageModelFactory object', () => {
     let decl = latin.features[Feature.types.declension][Constants.ORD_5TH]
     expect(decl).toBeDefined()
   })
+
+  test('normalizes accents', () => {
+    expect(latin.normalizeWord('tantulō')).toEqual('tantulo')
+  })
 })
