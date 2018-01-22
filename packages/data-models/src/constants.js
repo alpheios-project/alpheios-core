@@ -201,4 +201,11 @@ export const VOICE_CIRCUMSTANTIAL = 'circumstantial'
 export const VOICE_DEPONENT = 'deponent'
 export const TYPE_IRREGULAR = 'irregular'
 export const TYPE_REGULAR = 'regular'
+// Classes (of pronouns in Latin)
+export const CLASS_PERSONAL = 'personal'
+export const CLASS_REFLEXIVE = 'reflexive'
+export const CLASS_POSSESSIVE = 'possessive'
+export const CLASS_DEMONSTRATIVE = 'demonstrative'
+export const CLASS_RELATIVE = 'relative'
+export const CLASS_INTERROGATIVE = 'interrogative'
 /* eslit-enable no-unused-vars */

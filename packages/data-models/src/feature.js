@@ -9,7 +9,7 @@ class Feature {
      * @param {string | string[]} value - A single feature value or, if this feature could have multiple
      * values, an array of values.
      * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {String | Symbol} language - A language of a feature, allowed values are specified in 'languages' object.
      * @param {int} sortOrder - an integer used for sorting
      */
   constructor (value, type, language, sortOrder = 1) {
@@ -27,24 +27,33 @@ class Feature {
     }
     this.value = value
     this.type = type
-    this.language = language
-    this.languageCode = language
-    this.languageID = LMF.getLanguageIdFromCode(this.languageCode)
+    this.languageID = undefined
+    this.languageCode = undefined
+    ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(language))
     this.sortOrder = sortOrder
-  };
+  }
+
+  /**
+   * This is a compatibility function for legacy code.
+   * @return {String} A language code.
+   */
+  get language () {
+    console.warn(`Please use a "languageID" instead of a "language"`)
+    return this.languageCode
+  }
 
   isEqual (feature) {
     if (Array.isArray(feature.value)) {
       if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
         return false
       }
-      let equal = this.type === feature.type && this.language === feature.language
+      let equal = this.type === feature.type && LMF.compareLanguages(this.languageID, feature.languageID)
       equal = equal && this.value.every(function (element, index) {
         return element === feature.value[index]
       })
       return equal
     } else {
-      return this.value === feature.value && this.type === feature.type && this.language === feature.language
+      return this.value === feature.value && this.type === feature.type && LMF.compareLanguages(this.languageID, feature.languageID)
     }
   }
 
@@ -90,10 +99,13 @@ Feature.types = {
   word: 'word',
   part: 'part of speech', // Part of speech
   number: 'number',
-  grmCase: 'case',
+  'case': 'case',
+  grmCase: 'case', // A synonym of `case`
   declension: 'declension',
   gender: 'gender',
   type: 'type',
+  'class': 'class',
+  grmClass: 'class', // A synonym of `class`
   conjugation: 'conjugation',
   comparison: 'comparison',
   tense: 'tense',

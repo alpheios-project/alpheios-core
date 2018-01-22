@@ -15,8 +15,14 @@ const MODELS = new Map([
 ])
 
 class LanguageModelFactory {
-  static supportsLanguage (code) {
-    return MODELS.has(code)
+  /**
+   * Checks whether a language is supported
+   * @param {String | Symbol} language - Language as a language ID (Symbol) or a language code (String)
+   * @return {boolean} True if language is supported, false otherwise
+   */
+  static supportsLanguage (language) {
+    language = (typeof language === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(language) : language
+    return MODELS.has(language)
   }
 
   static getLanguageForCode (code = null) {
@@ -53,6 +59,43 @@ class LanguageModelFactory {
         return languageModel.toCode()
       }
     }
+  }
+
+  /**
+   * Takes either a language ID or a language code and returns an object with both an ID and a code.
+   * @param {String | Symbol} language - Either a language ID (a Symbol) or a language code (a String).
+   * @return {Object} An object with the following properties:
+   *    {Symbol} languageID
+   *    {String} languageCode
+   */
+  static getLanguageAttrs (language) {
+    if (typeof language === 'symbol') {
+      // `language` is a language ID
+      return {
+        languageID: language,
+        languageCode: LanguageModelFactory.getLanguageCodeFromId(language)
+      }
+    } else {
+      // `language` is a language code
+      return {
+        languageID: LanguageModelFactory.getLanguageIdFromCode(language),
+        languageCode: language
+      }
+    }
+  }
+
+  /**
+   * Compares two languages in either a language ID or a language code format. For this, does conversion of
+   * language IDs to language code. Because fo this, it will work even for language IDs defined in
+   * different modules
+   * @param {String | Symbol} languageA - Either a language ID (a Symbol) or a language code (a String).
+   * @param {String | Symbol} languageB - Either a language ID (a Symbol) or a language code (a String).
+   * @return {boolean} True if languages are the same, false otherwise.
+   */
+  static compareLanguages (languageA, languageB) {
+    languageA = (typeof languageA === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(languageA) : languageA
+    languageB = (typeof languageB === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(languageB) : languageB
+    return languageA === languageB
   }
 }
 export default LanguageModelFactory

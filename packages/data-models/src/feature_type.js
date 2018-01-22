@@ -1,5 +1,6 @@
 import Feature from './feature.js'
 import FeatureImporter from './feature_importer.js'
+import LMF from './language_model_factory'
 
 /**
  * Definition class for a (grammatical) feature. Stores type information and (optionally) all possible values of the feature.
@@ -20,7 +21,7 @@ class FeatureType {
      * If an empty array is provided, there will be no
      * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
      * such as footnotes).
-     * @param {string} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {String | Symbol} language - A language of a feature type.
      */
   constructor (type, values, language) {
     if (!Feature.types.isAllowed(type)) {
@@ -34,12 +35,14 @@ class FeatureType {
     }
 
     this.type = type
-    this.language = language
+    this.languageID = undefined
+    this.languageCode = undefined
+    ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(language))
 
-        /*
-         This is a sort order index for a grammatical feature values. It is determined by the order of values in
-         a 'values' array.
-         */
+    /*
+     This is a sort order index for a grammatical feature values. It is determined by the order of values in
+     a 'values' array.
+     */
     this._orderIndex = []
     this._orderLookup = {}
 
@@ -47,15 +50,24 @@ class FeatureType {
       this._orderIndex.push(value)
       if (Array.isArray(value)) {
         for (let element of value) {
-          this[element] = new Feature(element, this.type, this.language)
+          this[element] = new Feature(element, this.type, this.languageID)
           this._orderLookup[element] = index
         }
       } else {
-        this[value] = new Feature(value, this.type, this.language)
+        this[value] = new Feature(value, this.type, this.languageID)
         this._orderLookup[value] = index
       }
     }
-  };
+  }
+
+  /**
+   * This is a compatibility function for legacy code.
+   * @return {String} A language code.
+   */
+  get language () {
+    console.warn(`Please use a "languageID" instead of a "language"`)
+    return this.languageCode
+  }
 
   /**
    * test to see if this FeatureType allows unrestricted values
@@ -74,7 +86,7 @@ class FeatureType {
      */
   get (value, sortOrder = 1) {
     if (value) {
-      return new Feature(value, this.type, this.language, sortOrder)
+      return new Feature(value, this.type, this.languageID, sortOrder)
     } else {
       throw new Error('A non-empty value should be provided.')
     }
@@ -114,7 +126,7 @@ class FeatureType {
      * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
      */
   get orderedFeatures () {
-    return this.orderedValues.map((value) => new Feature(value, this.type, this.language))
+    return this.orderedValues.map((value) => new Feature(value, this.type, this.languageID))
   }
 
     /**
@@ -175,8 +187,8 @@ class FeatureType {
             throw new Error('Trying to order an element with type "' + element.type + '" that is different from "' + this.type + '".')
           }
 
-          if (element.language !== this.language) {
-            throw new Error('Trying to order an element with language "' + element.language + '" that is different from "' + this.language + '".')
+          if (LMF.compareLanguages(element.languageID, this.languageID)) {
+            throw new Error(`Trying to order an element with language "${element.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
           }
         }
       } else {
@@ -188,8 +200,8 @@ class FeatureType {
           throw new Error('Trying to order an element with type "' + value.type + '" that is different from "' + this.type + '".')
         }
 
-        if (value.language !== this.language) {
-          throw new Error('Trying to order an element with language "' + value.language + '" that is different from "' + this.language + '".')
+        if (LMF.compareLanguages(value.languageID, this.languageID)) {
+          throw new Error(`Trying to order an element with language "${value.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
         }
       }
     }

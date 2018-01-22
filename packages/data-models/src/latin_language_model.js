@@ -39,6 +39,15 @@ class LatinLanguageModel extends LanguageModel {
   _initializeFeatures () {
     let features = super._initializeFeatures()
     let code = this.toCode()
+    features[Feature.types.grmClass] = new FeatureType(Feature.types.grmClass,
+      [ Constants.CLASS_PERSONAL,
+        Constants.CLASS_REFLEXIVE,
+        Constants.CLASS_POSSESSIVE,
+        Constants.CLASS_DEMONSTRATIVE,
+        Constants.CLASS_RELATIVE,
+        Constants.CLASS_INTERROGATIVE
+      ],
+      code)
     features[Feature.types.number] = new FeatureType(Feature.types.number, [Constants.NUM_SINGULAR, Constants.NUM_PLURAL], code)
     features[Feature.types.grmCase] = new FeatureType(Feature.types.grmCase,
       [ Constants.CASE_NOMINATIVE,

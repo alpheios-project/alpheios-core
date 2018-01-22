@@ -1,5 +1,5 @@
 import Feature from './feature.js'
-import LanguageModelFactory from './language_model_factory.js'
+import LMF from './language_model_factory.js'
 /*
  Hierarchical structure of return value of a morphological analyzer:
 
@@ -27,7 +27,7 @@ class Inflection {
     /**
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
-     * @param {string} language - A word's language.
+     * @param {String | Symbol} language - A word's language.
      * @param {string} suffix - a suffix of a word
      * @param {prefix} prefix - a prefix of a word
      * @param {example} example - example
@@ -41,12 +41,14 @@ class Inflection {
       throw new Error('Langauge should not be empty.')
     }
 
-    if (!LanguageModelFactory.supportsLanguage(language)) {
+    if (!LMF.supportsLanguage(language)) {
       throw new Error(`language ${language} not supported.`)
     }
 
     this.stem = stem
-    this.language = language
+    this.languageID = undefined
+    this.languageCode = undefined
+    ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(language))
 
     // Suffix may not be present in every word. If missing, it will set to null.
     this.suffix = suffix
@@ -58,10 +60,20 @@ class Inflection {
     this.example = example
   }
 
+  /**
+   * This is a compatibility function for legacy code.
+   * @return {String} A language code.
+   */
+  get language () {
+    console.warn(`Please use a "languageID" instead of a "language"`)
+    return this.languageCode
+  }
+
   static readObject (jsonObject) {
     let inflection =
       new Inflection(
-        jsonObject.stem, jsonObject.language, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
+        jsonObject.stem, jsonObject.languageCode, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
+    inflection.languageID = LMF.getLanguageIdFromCode(inflection.languageCode)
     return inflection
   }
 
@@ -86,9 +98,9 @@ class Inflection {
         throw new Error('Inflection feature data must be a Feature object.')
       }
 
-      if (element.language !== this.language) {
-        throw new Error('Language "' + element.language + '" of a feature does not match a language "' +
-                this.language + '" of an Inflection object.')
+      if (!LMF.compareLanguages(element.languageID, this.languageID)) {
+        throw new Error(`Language "${element.languageID.toString()}" of a feature does not match 
+          a language "${this.languageID.toString()}" of an Inflection object.`)
       }
 
       this[type].push(element)
