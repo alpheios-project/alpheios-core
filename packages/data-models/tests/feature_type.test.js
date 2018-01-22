@@ -16,11 +16,12 @@ describe('FeatureType', () => {
     expect(featureType).toEqual({
       '_orderIndex': ['first', ['second', 'third'], 'fourth'],
       '_orderLookup': {'first': 0, 'second': 1, 'third': 1, 'fourth': 2},
-      'first': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
-      'second': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'second', 'sortOrder': 1},
-      'third': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'third', 'sortOrder': 1},
-      'fourth': {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1},
-      'language': 'lat',
+      'first': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
+      'second': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'second', 'sortOrder': 1},
+      'third': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'third', 'sortOrder': 1},
+      'fourth': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1},
+      'languageCode': 'lat',
+      'languageID': Constants.LANG_LATIN,
       'type': Feature.types.declension
     })
   })
@@ -40,7 +41,6 @@ describe('FeatureType', () => {
   test('Get method should return a new Feature object that is initialized properly', () => {
     let value = 'some value'
     expect(featureType.get(value)).toEqual({
-      'language': 'lat',
       'languageCode': 'lat',
       'languageID': Constants.LANG_LATIN,
       'type': Feature.types.declension,
@@ -83,9 +83,9 @@ describe('FeatureType', () => {
 
   test('orderedFeatures() should return type features in an indexed order.', () => {
     expect(featureType.orderedFeatures).toEqual([
-      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
-      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': ['second', 'third'], 'sortOrder': 1},
-      {'language': 'lat', 'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1}
+      {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
+      {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': ['second', 'third'], 'sortOrder': 1},
+      {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1}
     ])
   })
 
@@ -118,12 +118,12 @@ describe('FeatureType', () => {
   })
 
   test('order setter with an argument(s) of mismatching type should throw an exception', () => {
-    let f1 = new Feature('first', Feature.types.gender, 'lat')
+    let f1 = new Feature('first', Feature.types.gender, Constants.LANG_LATIN)
     expect(() => featureType.order = [f1]).toThrowError(/is different/) //eslint-disable-line
   })
 
   test('order setter with an argument(s) of mismatching language should throw an exception', () => {
-    let f1 = new Feature('first', Feature.types.declension, 'grc')
+    let f1 = new Feature('first', Feature.types.declension, Constants.LANG_GREEK)
     expect(() => featureType.order = [f1]).toThrowError(/is different/) // eslint-disable-line
   })
 

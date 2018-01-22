@@ -730,7 +730,7 @@ class FeatureType {
             throw new Error('Trying to order an element with type "' + element.type + '" that is different from "' + this.type + '".')
           }
 
-          if (LanguageModelFactory.compareLanguages(element.languageID, this.languageID)) {
+          if (!LanguageModelFactory.compareLanguages(element.languageID, this.languageID)) {
             throw new Error(`Trying to order an element with language "${element.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
           }
         }
@@ -743,7 +743,7 @@ class FeatureType {
           throw new Error('Trying to order an element with type "' + value.type + '" that is different from "' + this.type + '".')
         }
 
-        if (LanguageModelFactory.compareLanguages(value.languageID, this.languageID)) {
+        if (!LanguageModelFactory.compareLanguages(value.languageID, this.languageID)) {
           throw new Error(`Trying to order an element with language "${value.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
         }
       }

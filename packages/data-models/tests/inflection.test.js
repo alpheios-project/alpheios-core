@@ -19,7 +19,8 @@ describe('Inflection object', () => {
       suffix: null,
       prefix: null,
       example: null,
-      language: grc
+      languageCode: grc,
+      languageID: Constants.LANG_GREEK
     })
   })
 
@@ -35,7 +36,6 @@ describe('Inflection object', () => {
     inflection.feature = new Feature('masculine', Feature.types.gender, grc)
     expect(inflection).toEqual(expect.objectContaining({
       gender: [{
-        language: 'grc',
         languageCode: 'grc',
         languageID: Constants.LANG_GREEK,
         sortOrder: 1,
@@ -53,7 +53,6 @@ describe('Inflection object', () => {
     expect(inflection).toEqual(expect.objectContaining({
       gender: [
         {
-          language: 'grc',
           languageCode: 'grc',
           languageID: Constants.LANG_GREEK,
           sortOrder: 1,
@@ -61,7 +60,6 @@ describe('Inflection object', () => {
           value: 'masculine'
         },
         {
-          language: 'grc',
           languageCode: 'grc',
           languageID: Constants.LANG_GREEK,
           sortOrder: 1,

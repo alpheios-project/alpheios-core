@@ -18,7 +18,6 @@ describe('Feature object', () => {
     expect(featureGreek1).toEqual({
       value: featureValue1,
       type: Feature.types.number,
-      language: languageGreek,
       languageCode: languageGreek,
       languageID: LanguageModelFactory.getLanguageIdFromCode(languageGreek),
       sortOrder: 1
