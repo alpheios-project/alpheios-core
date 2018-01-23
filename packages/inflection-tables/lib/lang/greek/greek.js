@@ -16,9 +16,12 @@ import papaparse from 'papaparse'
 
 // A language of this module
 // const language = languages.greek
+let languageModel = new Models.GreekLanguageModel()
+let ftypes = Models.Feature.types
 // Create a language data set that will keep all language-related information
 let dataSet = new LanguageDataset(Models.Constants.LANG_GREEK)
 
+const featureOptions = [ftypes.grmCase, ftypes.declension, ftypes.gender, ftypes.number, ftypes.voice, ftypes.mood, ftypes.tense, ftypes.person]
 // region Definition of grammatical features
 /*
  Define grammatical features of a language. Those grammatical features definitions will also be used by morphological
@@ -200,71 +203,93 @@ dataSet.loadData = function () {
 /**
  * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
  * @param {Inflection[]} inflections - An array of Inflection objects to be matched against a suffix.
+ * @param {string} type - LanguageDataset.SUFFIX or LanguageDataset.FORM
  * @param {Suffix} suffix - A suffix to be matched with inflections.
  * @returns {Suffix | null} If a match is found, returns a Suffix object modified with some
  * additional information about a match. If no matches found, returns null.
  */
-dataSet.matcher = function (inflections, suffix) {
+dataSet.matcher = function (inflections, type, item) {
   'use strict'
     // All of those features must match between an inflection and an ending
-  let obligatoryMatches = [Models.Feature.types.part]
+  let obligatoryMatches, optionalMatches
+  // I'm not sure if we ever want to restrict what we consider optional matches
+  // so this is just a placeholder for now
+  let matchOptional = true
+  if (type === LanguageDataset.SUFFIX) {
+    obligatoryMatches = [types.part]
+  } else {
+    obligatoryMatches = [types.word]
+  }
 
     // Any of those features must match between an inflection and an ending
-  let optionalMatches = [Models.Feature.types.grmCase, Models.Feature.types.declension, Models.Feature.types.gender, Models.Feature.types.number]
-  let bestMatchData = null // Information about the best match we would be able to find
+  let bestMatchData = null // information about the best match we would be able to find
 
-  /*
-   There can be only one full match between an inflection and a suffix (except when suffix has multiple values?)
-   But there could be multiple partial matches. So we should try to find the best match possible and return it.
-   A fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
-   */
+    /*
+     There can be only one full match between an inflection and a suffix (except when suffix has multiple values?)
+     But there could be multiple partial matches. So we should try to find the best match possible and return it.
+     a fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
+     */
   for (let inflection of inflections) {
     let matchData = new MatchData() // Create a match profile
-
-    if (inflection.suffix === suffix.value) {
-      matchData.suffixMatch = true
+    if (matchOptional) {
+      optionalMatches = featureOptions.filter((f) => inflection[f])
+    } else {
+      optionalMatches = []
     }
 
-    // Check obligatory matches
+    if (type === LanguageDataset.SUFFIX) {
+      if (languageModel.normalizeWord(inflection.suffix) === languageModel.normalizeWord(item.value)) {
+        matchData.suffixMatch = true
+      }
+    } else {
+      let form = inflection.prefix ? inflection.prefix : ''
+      form = form + inflection.stem
+      form = inflection.suffix ? form + inflection.suffix : form
+      if (languageModel.normalizeWord(form) === languageModel.normalizeWord(item.value)) {
+        matchData.suffixMatch = true
+      }
+    }
+
+        // Check obligatory matches
     for (let feature of obligatoryMatches) {
-      let featureMatch = suffix.featureMatch(feature, inflection[feature])
-      // matchFound = matchFound && featureMatch;
+      let featureMatch = item.featureMatch(feature, inflection[feature])
+            // matchFound = matchFound && featureMatch;
 
       if (!featureMatch) {
-        // If an obligatory match is not found, there is no reason to check other items
+                // If an obligatory match is not found, there is no reason to check other items
         break
       }
-      // Inflection's value of this feature is matching the one of the suffix
+            // Inflection's value of this feature is matching the one of the suffix
       matchData.matchedFeatures.push(feature)
     }
 
     if (matchData.matchedFeatures.length < obligatoryMatches.length) {
-      // Not all obligatory matches are found, this is not a match
+            // Not all obligatory matches are found, this is not a match
       break
     }
 
-    // Check optional matches now
+        // Check optional matches now
     for (let feature of optionalMatches) {
-      let matchedValue = suffix.featureMatch(feature, inflection[feature])
+      let matchedValue = item.featureMatch(feature, inflection[feature])
       if (matchedValue) {
         matchData.matchedFeatures.push(feature)
       }
     }
 
     if (matchData.suffixMatch && (matchData.matchedFeatures.length === obligatoryMatches.length + optionalMatches.length)) {
-      // This is a full match
+            // This is a full match
       matchData.fullMatch = true
 
-      // There can be only one full match, no need to search any further
-      suffix.match = matchData
-      return suffix
+            // There can be only one full match, no need to search any further
+      item.match = matchData
+      return item
     }
     bestMatchData = this.bestMatch(bestMatchData, matchData)
   }
   if (bestMatchData) {
-    // There is some match found
-    suffix.match = bestMatchData
-    return suffix
+        // There is some match found
+    item.match = bestMatchData
+    return item
   }
   return null
 }
