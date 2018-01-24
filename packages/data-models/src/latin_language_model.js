@@ -68,7 +68,7 @@ class LatinLanguageModel extends LanguageModel {
         Constants.TENSE_PLUPERFECT,
         Constants.TENSE_FUTURE_PERFECT
       ], code)
-    features[Feature.types.voice] = new FeatureType(Feature.types.voice, [Constants.VOICE_PASSIVE, Constants.VOICE_ACTIVE], code)
+    features[Feature.types.voice] = new FeatureType(Feature.types.voice, [Constants.VOICE_ACTIVE, Constants.VOICE_PASSIVE], code)
     features[Feature.types.mood] = new FeatureType(Feature.types.mood,
       [ Constants.MOOD_INDICATIVE,
         Constants.MOOD_SUBJUNCTIVE,
