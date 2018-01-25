@@ -73,7 +73,11 @@ class LatinLanguageModel extends LanguageModel {
       [ Constants.MOOD_INDICATIVE,
         Constants.MOOD_SUBJUNCTIVE,
         Constants.MOOD_IMPERATIVE,
-        Constants.MOOD_PARTICIPLE
+        Constants.MOOD_PARTICIPLE,
+        Constants.MOOD_SUPINE,
+        Constants.MOOD_GERUNDIVE,
+        Constants.MOOD_PARTICIPLE,
+        Constants.MOOD_INFINITIVE
       ], code)
     features[Feature.types.conjugation] = new FeatureType(Feature.types.conjugation,
       [ Constants.ORD_1ST,
