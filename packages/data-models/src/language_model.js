@@ -65,6 +65,12 @@ class LanguageModel {
       [FeatureType.UNRESTRICTED_VALUE], code)
     features[Feature.types.comparison] = new FeatureType(Feature.types.comparison,
       [Constants.COMP_POSITIVE, Constants.COMP_SUPERLATIVE, Constants.COMP_COMPARITIVE], code)
+    features[Feature.types.morph] = new FeatureType(Feature.types.morph,
+      [FeatureType.UNRESTRICTED_VALUE], code)
+    features[Feature.types.stemtype] = new FeatureType(Feature.types.stemtype,
+      [FeatureType.UNRESTRICTED_VALUE], code)
+    features[Feature.types.derivtype] = new FeatureType(Feature.types.derivtype,
+      [FeatureType.UNRESTRICTED_VALUE], code)
     return features
   }
 
