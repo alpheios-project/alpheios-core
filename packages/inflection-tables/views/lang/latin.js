@@ -110,6 +110,39 @@ class VerbParticipleView extends LatinView {
   }
 }
 
+class SupineView extends LatinView {
+  constructor () {
+    super()
+    this.partOfSpeech = this.language_features[Models.Feature.types.part][Models.Constants.POFS_SUPINE].value
+    this.id = 'verbSupine'
+    this.name = 'verb supine'
+    this.title = 'Verb (Supine)'
+    this.features.moods = new GroupFeatureType(
+      new Models.FeatureType(Models.Feature.types.mood, [Models.Constants.MOOD_SUPINE], this.languageModel.toCode()),
+      'Mood')
+    this.language_features[Models.Feature.types.grmCase] = new Models.FeatureType(Models.Feature.types.grmCase,
+      [Models.Constants.CASE_ACCUSATIVE, Models.Constants.CASE_ABLATIVE], this.languageModel.toCode())
+    this.features = {
+      cases: new GroupFeatureType(this.language_features[Models.Feature.types.grmCase], 'Case'),
+      voices: new GroupFeatureType(this.language_features[Models.Feature.types.voice], 'Voice'),
+      conjugations: new GroupFeatureType(this.language_features[Models.Feature.types.conjugation], 'Conjugation Stem')
+    }
+    this.createTable()
+  }
+
+  createTable () {
+    this.table = new Table([this.features.voices, this.features.conjugations,
+      this.features.cases])
+    let features = this.table.features
+    features.columns = [
+      this.language_features[Models.Feature.types.voice],
+      this.language_features[Models.Feature.types.conjugation]]
+    features.rows = [this.language_features[Models.Feature.types.grmCase]]
+    features.columnRowTitles = [this.language_features[Models.Feature.types.grmCase]]
+    features.fullWidthRowTitles = []
+  }
+}
+
 class VerbView extends LatinView {
   constructor () {
     super()
@@ -348,4 +381,4 @@ export default [new NounView(), new AdjectiveView(),
     // Verbs
   new VoiceConjugationMoodView(), new VoiceMoodConjugationView(), new ConjugationVoiceMoodView(),
   new ConjugationMoodVoiceView(), new MoodVoiceConjugationView(), new MoodConjugationVoiceView(),
-  new ImperativeView(), new VerbParticipleView()]
+  new ImperativeView(), new SupineView(), new VerbParticipleView()]
