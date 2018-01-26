@@ -8941,11 +8941,57 @@ class ImperativeView extends VerbMoodView {
   }
 }
 
+class InfinitiveView extends VerbMoodView {
+  constructor () {
+    super();
+    this.id = 'verbInfinitive';
+    this.name = 'verb infinitive';
+    this.title = 'Verb (Infinitive)';
+    this.features.moods = new GroupFeatureType(
+      new FeatureType(Feature.types.mood, [constants.MOOD_INFINITIVE], this.languageModel.toCode()),
+      'Mood');
+    this.language_features[Feature.types.tense] = new FeatureType(Feature.types.tense,
+      [constants.TENSE_PRESENT, constants.TENSE_PERFECT, constants.TENSE_FUTURE], this.languageModel.toCode());
+    this.features.tenses = new GroupFeatureType(this.language_features[Feature.types.tense], 'Tense');
+    this.createTable();
+    this.table.suffixCellFilter = InfinitiveView.suffixCellFilter;
+  }
+
+  createTable () {
+    this.table = new Table([this.features.voices, this.features.conjugations,
+      this.features.tenses]);
+    let features = this.table.features;
+    features.columns = [
+      this.language_features[Feature.types.voice],
+      this.language_features[Feature.types.conjugation]];
+    features.rows = [this.language_features[Feature.types.tense]];
+    features.columnRowTitles = [this.language_features[Feature.types.tense]];
+    features.fullWidthRowTitles = [];
+  }
+
+  enabledForLexemes (lexemes) {
+      // default is true
+    for (let lexeme of lexemes) {
+      for (let inflection of lexeme.inflections) {
+        if (inflection[Feature.types.mood] &&
+          inflection[Feature.types.mood].filter((f) => f.value.includes(constants.MOOD_INFINITIVE)).length > 0) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  static suffixCellFilter (suffix) {
+    return suffix.features[Feature.types.mood].includes(constants.MOOD_INFINITIVE)
+  }
+}
+
 var LatinViews = [new NounView(), new AdjectiveView(),
     // Verbs
   new VoiceConjugationMoodView(), new VoiceMoodConjugationView(), new ConjugationVoiceMoodView(),
   new ConjugationMoodVoiceView(), new MoodVoiceConjugationView(), new MoodConjugationVoiceView(),
-  new ImperativeView(), new SupineView(), new VerbParticipleView()];
+  new ImperativeView(), new SupineView(), new VerbParticipleView(), new InfinitiveView()];
 
 const languages = {
   type: 'language',
