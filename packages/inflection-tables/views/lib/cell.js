@@ -35,7 +35,7 @@ export default class Cell {
     element.classList.add(Styles.classNames.cell)
     for (let [index, suffix] of this.suffixes.entries()) {
       // Render each suffix
-      let suffixElement = document.createElement('a')
+      let suffixElement = document.createElement('span')
       suffixElement.classList.add(Styles.classNames.suffix)
       if (suffix.match && suffix.match.suffixMatch) {
         suffixElement.classList.add(Styles.classNames.suffixMatch)

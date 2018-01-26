@@ -125,13 +125,15 @@ dataSet.addVerbSuffixes = function (partOfSpeech, data) {
       suffix = null
     }
 
-    let features = [partOfSpeech,
-      languageModel.features[types.conjugation].getFromImporter('csv', data[i][1]),
-      languageModel.features[types.voice].getFromImporter('csv', data[i][2]),
-      languageModel.features[types.mood].getFromImporter('csv', data[i][3]),
-      languageModel.features[types.tense].getFromImporter('csv', data[i][4]),
-      languageModel.features[types.number].getFromImporter('csv', data[i][5]),
-      languageModel.features[types.person].getFromImporter('csv', data[i][6])]
+    let features = [partOfSpeech]
+    let columns = [types.conjugation, types.voice, types.mood, types.tense, types.number, types.person, types.case, types.type]
+    columns.forEach((c, j) => {
+      try {
+        features.push(languageModel.features[c].getFromImporter('csv', data[i][j + 1]))
+      } catch (e) {
+        // ignore empty or non-parsable values
+      }
+    })
 
     let grammartype = data[i][7]
         // Type information can be empty if no ending is provided
@@ -139,9 +141,9 @@ dataSet.addVerbSuffixes = function (partOfSpeech, data) {
       features.push(languageModel.features[types.type].getFromImporter('csv', grammartype))
     }
         // Footnotes
-    if (data[i][8]) {
+    if (data[i][9]) {
             // There can be multiple footnote indexes separated by spaces
-      let indexes = data[i][8].split(' ').map(function (index) {
+      let indexes = data[i][9].split(' ').map(function (index) {
         return footnotes.get(index)
       })
       features.push(...indexes)

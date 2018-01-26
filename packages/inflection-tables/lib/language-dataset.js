@@ -115,7 +115,7 @@ export default class LanguageDataset {
 
   getSuffixes (homonym) {
     // Add support for languages
-    let result = new InflectionData(homonym.languageID)
+    let result = new InflectionData(homonym)
     let inflections = {}
 
     // Find partial matches first, and then full among them

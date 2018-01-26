@@ -9,6 +9,12 @@ class LatinView extends View {
     this.languageID = Models.Constants.LANG_LATIN
     this.languageModel = new Models.LatinLanguageModel() // TODO: Do we really need to create it every time?
     this.language_features = this.languageModel.features
+    // limit regular verb moods
+    this.language_features[Models.Feature.types.mood] =
+      new Models.FeatureType(Models.Feature.types.mood,
+        [ Models.Constants.MOOD_INDICATIVE,
+          Models.Constants.MOOD_SUBJUNCTIVE
+        ], this.languageModel.toCode())
 
         /*
         Default grammatical features of a view. It child views need to have different feature values, redefine
@@ -86,6 +92,19 @@ class VerbView extends LatinView {
       voices: new GroupFeatureType(this.language_features[Models.Feature.types.voice], 'Voice'),
       conjugations: new GroupFeatureType(this.language_features[Models.Feature.types.conjugation], 'Conjugation Stem'),
       moods: new GroupFeatureType(this.language_features[Models.Feature.types.mood], 'Mood')
+    }
+  }
+}
+
+class VerbMoodView extends VerbView {
+  constructor () {
+    super()
+    this.features = {
+      tenses: new GroupFeatureType(this.language_features[Models.Feature.types.tense], 'Tenses'),
+      numbers: new GroupFeatureType(this.language_features[Models.Feature.types.number], 'Number'),
+      persons: new GroupFeatureType(this.language_features[Models.Feature.types.person], 'Person'),
+      voices: new GroupFeatureType(this.language_features[Models.Feature.types.voice], 'Voice'),
+      conjugations: new GroupFeatureType(this.language_features[Models.Feature.types.conjugation], 'Conjugation Stem')
     }
   }
 }
@@ -247,7 +266,56 @@ class MoodConjugationVoiceView extends VerbView {
   }
 }
 
+class ImperativeView extends VerbMoodView {
+  constructor () {
+    super()
+    this.id = 'verbImperative'
+    this.name = 'verb imperative'
+    this.title = 'Verb (Imperative)'
+    this.features.moods = new GroupFeatureType(
+      new Models.FeatureType(Models.Feature.types.mood, [Models.Constants.MOOD_IMPERATIVE], this.languageModel.toCode()),
+      'Mood')
+    this.language_features[Models.Feature.types.person] = new Models.FeatureType(Models.Feature.types.person, [Models.Constants.ORD_2ND, Models.Constants.ORD_3RD], this.languageModel.toCode())
+    this.features.persons = new GroupFeatureType(this.language_features[Models.Feature.types.person], 'Person')
+    this.language_features[Models.Feature.types.tense] = new Models.FeatureType(Models.Feature.types.tense,
+      [Models.Constants.TENSE_PRESENT, Models.Constants.TENSE_FUTURE], this.languageModel.toCode())
+    this.features.tenses = new GroupFeatureType(this.language_features[Models.Feature.types.tense], 'Tense')
+    this.createTable()
+    this.table.suffixCellFilter = ImperativeView.suffixCellFilter
+  }
+
+  createTable () {
+    this.table = new Table([this.features.voices, this.features.conjugations,
+      this.features.tenses, this.features.numbers, this.features.persons])
+    let features = this.table.features
+    features.columns = [
+      this.language_features[Models.Feature.types.voice],
+      this.language_features[Models.Feature.types.conjugation]]
+    features.rows = [this.language_features[Models.Feature.types.tense], this.language_features[Models.Feature.types.number], this.language_features[Models.Feature.types.person]]
+    features.columnRowTitles = [this.language_features[Models.Feature.types.number], this.language_features[Models.Feature.types.person]]
+    features.fullWidthRowTitles = [this.language_features[Models.Feature.types.tense]]
+  }
+
+  enabledForLexemes (lexemes) {
+      // default is true
+    for (let lexeme of lexemes) {
+      for (let inflection of lexeme.inflections) {
+        if (inflection[Models.Feature.types.mood] &&
+          inflection[Models.Feature.types.mood].filter((f) => f.value.includes(Models.Constants.MOOD_IMPERATIVE)).length > 0) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  static suffixCellFilter (suffix) {
+    return suffix.features[Models.Feature.types.mood].includes(Models.Constants.MOOD_IMPERATIVE)
+  }
+}
+
 export default [new NounView(), new AdjectiveView(),
     // Verbs
   new VoiceConjugationMoodView(), new VoiceMoodConjugationView(), new ConjugationVoiceMoodView(),
-  new ConjugationMoodVoiceView(), new MoodVoiceConjugationView(), new MoodConjugationVoiceView()]
+  new ConjugationMoodVoiceView(), new MoodVoiceConjugationView(), new MoodConjugationVoiceView(),
+  new ImperativeView()]

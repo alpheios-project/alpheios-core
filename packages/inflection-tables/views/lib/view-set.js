@@ -12,7 +12,9 @@ export default class ViewSet {
   getViews (inflectionData) {
     if (this.views.has(inflectionData.languageID)) {
       return this.views.get(inflectionData.languageID)
-        .filter(view => inflectionData[Models.Feature.types.part].includes(view.partOfSpeech))
+        .filter(view =>
+          inflectionData[Models.Feature.types.part].includes(view.partOfSpeech) &&
+          view.enabledForLexemes(inflectionData.homonym.lexemes))
     }
     return []
   }

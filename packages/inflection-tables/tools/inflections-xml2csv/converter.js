@@ -163,7 +163,6 @@ const config = {
         }
       }
     },
-
     adjective: {
       inputFN: 'alph-infl-adjective.xml',
       outputSubDir: 'adjective/',
@@ -181,6 +180,7 @@ const config = {
           for (const group of data) {
             // Iterate over group's individual items
             for (const suffix of group['infl-ending']) {
+
               let footnote = ''
               if (suffix['_attr'].hasOwnProperty('footnote')) {
                 // There can be multiple footnotes separated by spaces
@@ -230,7 +230,7 @@ const config = {
     },
 
     verb: {
-      inputFN: 'alph-verb-conj.xml',
+      inputFN: ['alph-verb-conj.xml','alph-verb-conj-supp.xml'],
       outputSubDir: 'verb/',
       suffixes: {
         outputFN: 'suffixes.csv',
@@ -241,6 +241,10 @@ const config = {
           'use strict'
 
           let data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set']
+          for (let d of json['infl-data']) {
+            data.push(...d['infl-endings'][0]['infl-ending-set'])
+          }
+
           let result = []
 
           for (const group of data) {
@@ -257,9 +261,10 @@ const config = {
                   'Conjugation': group['_attr']['conj']['_value'],
                   'Voice': group['_attr']['voice']['_value'],
                   'Mood': group['_attr']['mood']['_value'],
-                  'Tense': group['_attr']['tense']['_value'],
-                  'Number': group['_attr']['num']['_value'],
-                  'Person': group['_attr']['pers']['_value'],
+                  'Tense': group['_attr']['tense']? group['_attr']['tense']['_value'] : '',
+                  'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                  'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                  'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
                   'Type': suffix['_attr']['type']['_value'],
                   'Footnote': footnote
                 })
@@ -271,9 +276,10 @@ const config = {
                 'Conjugation': group['_attr']['conj']['_value'],
                 'Voice': group['_attr']['voice']['_value'],
                 'Mood': group['_attr']['mood']['_value'],
-                'Tense': group['_attr']['tense']['_value'],
-                'Number': group['_attr']['num']['_value'],
-                'Person': group['_attr']['pers']['_value'],
+                'Tense': group['_attr']['tense']? group['_attr']['tense']['_value'] : '',
+                'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
                 'Footnote': ''
               })
             }
@@ -545,7 +551,12 @@ try {
     if (posName === POS_VERB || posName === POS_ALL) {
       posCfg = lCfg[POS_VERB]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
-      json = xmlToJSON.parseString(data)
+      json = {'infl-data':[]}
+      for (let f of latin.verb.inputFN) {
+        let d = readFile(path.join(__dirname, latin.inputBaseDir, f));
+        let j = xmlToJSON.parseString(d);
+        json['infl-data'] = json['infl-data'].concat(j['infl-data'])
+      }
       writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
       // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
       writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)

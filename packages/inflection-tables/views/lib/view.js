@@ -24,6 +24,16 @@ export default class View {
   }
 
   /**
+   * test to see if a view is enabled for a specific set of lexemes
+   * @param {Lexeme[]} lexemes
+   * @return {boolean} true if the view should be shown false if not
+   */
+  enabledForLexemes (lexemes) {
+    // default returns true
+    return true
+  }
+
+  /**
    * Converts an InflectionData, returned from an inflection tables library, into an HTML representation of an inflection table.
    * `messages` provides a translation for view's texts.
    * @param {InflectionData} inflectionData - A result set from inflection tables library.
