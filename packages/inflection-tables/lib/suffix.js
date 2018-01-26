@@ -1,6 +1,6 @@
 import Morpheme from './morpheme.js'
 
-export default class Form extends Morpheme {
+export default class Suffix extends Morpheme {
   /**
    * Initializes a Suffix object.
    * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
