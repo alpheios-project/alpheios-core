@@ -6934,6 +6934,7 @@ class View {
     this.title = 'Base View';
     this.language = undefined;
     this.partOfSpeech = undefined;
+    this.forms = [];
     this.table = {};
   }
 
@@ -6965,6 +6966,17 @@ class View {
 
     // Table is created during view construction
     this.table.messages = messages;
+    this.forms = new Set();
+    for (let lexeme of inflectionData.homonym.lexemes) {
+      for (let inflection of lexeme.inflections) {
+        if (inflection['part of speech'].filter((f) => f.hasValue(this.partOfSpeech)).length > 0) {
+          let form = inflection.prefix ? `${inflection.prefix} - ` : '';
+          form = form + inflection.stem;
+          form = inflection.suffix ? `${form} - ${inflection.suffix}` : form;
+          this.forms.add(form);
+        }
+      }
+    }
     this.table.construct(selection.suffixes).constructViews().addEventListeners();
     return this
   }
