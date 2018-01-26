@@ -12,6 +12,6 @@ export default class Form extends Morpheme {
    * @param {string | null} suffixValue - A suffix text or null if suffix is empty.
    */
   constructor (suffixValue) {
-    super(suffixValue, Suffix)
+    super(suffixValue, Form)
   }
 }
