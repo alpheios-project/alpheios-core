@@ -14,6 +14,8 @@ import verbSuffixesCSV from './data/verb/suffixes.csv'
 import verbFootnotesCSV from './data/verb/footnotes.csv'
 import verbFormsCSV from './data/verb/forms.csv'
 import verbFormFootnotesCSV from './data/verb/form_footnotes.csv'
+import verbParticipleSuffixesCSV from './data/participle/suffixes.csv'
+
 import papaparse from 'papaparse'
 
 let languageModel = new Models.LatinLanguageModel()
@@ -152,6 +154,37 @@ dataSet.addVerbSuffixes = function (partOfSpeech, data) {
   }
 }
 
+dataSet.addVerbParticipleSuffixes = function (partOfSpeech, data) {
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+  let noSuffixValue = '-'
+
+    // First row are headers
+  for (let i = 1; i < data.length; i++) {
+    let suffix = data[i][0]
+        // Handle special suffix values
+    if (suffix === noSuffixValue) {
+      suffix = null
+    }
+
+    let features = [partOfSpeech]
+    let columns = [types.conjugation, types.voice, types.mood, types.tense, types.number, types.person, types.case, types.type]
+    columns.forEach((c, j) => {
+      try {
+        features.push(languageModel.features[c].getFromImporter('csv', data[i][j + 1]))
+      } catch (e) {
+        // ignore empty or non-parsable values
+      }
+    })
+
+    let grammartype = data[i][7]
+        // Type information can be empty if no ending is provided
+    if (grammartype) {
+      features.push(languageModel.features[types.type].getFromImporter('csv', grammartype))
+    }
+    this.addItem(suffix, LanguageDataset.SUFFIX, features)
+  }
+}
+
 // for Lemmas
 dataSet.addVerbForms = function (partOfSpeech, data) {
   // First row are headers
@@ -235,6 +268,11 @@ dataSet.loadData = function () {
   this.addVerbForms(partOfSpeech, forms.data)
   footnotes = papaparse.parse(verbFormFootnotesCSV, {})
   this.addFootnotes(partOfSpeech, footnotes.data)
+
+  // Verb Participles
+  partOfSpeech = languageModel.features[types.part][Models.Constants.POFS_VERB_PARTICIPLE]
+  suffixes = papaparse.parse(verbParticipleSuffixesCSV, {})
+  this.addVerbParticipleSuffixes(partOfSpeech, suffixes.data)
 }
 
 /**

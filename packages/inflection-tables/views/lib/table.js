@@ -40,6 +40,7 @@ export default class Table {
     this.columns = this.constructColumns()
     this.rows = this.constructRows()
     this.emptyColumnsHidden = false
+    this.canCollapse = this._hasAnyMatches()
     return this
   }
 
@@ -346,6 +347,22 @@ export default class Table {
       }
     }
     this.emptyColumnsHidden = false
+  }
+
+  /**
+   * Check for any matched suffixes
+   */
+  _hasAnyMatches () {
+    let hasMatches = false
+    if (this.headers.length > 0) {
+      for (let headerCell of this.headers[0].cells) {
+        hasMatches = !!headerCell.columns.find(column => column.suffixMatches)
+        if (hasMatches) {
+          break
+        }
+      }
+    }
+    return hasMatches
   }
 
   /**

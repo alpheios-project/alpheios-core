@@ -83,7 +83,9 @@ export default class View {
    * Hides groups (formed by first column feature) that have no suffix matches.
    */
   hideNoSuffixGroups () {
-    this.table.hideNoSuffixGroups()
+    if (this.table.canCollapse) {
+      this.table.hideNoSuffixGroups()
+    }
     return this
   }
 

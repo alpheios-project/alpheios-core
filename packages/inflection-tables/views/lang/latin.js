@@ -80,6 +80,36 @@ class AdjectiveView extends LatinView {
   }
 }
 
+class VerbParticipleView extends LatinView {
+  constructor () {
+    super()
+    this.partOfSpeech = this.language_features[Models.Feature.types.part][Models.Constants.POFS_VERB_PARTICIPLE].value
+    this.id = 'verbParticiple'
+    this.name = 'verb participle'
+    this.title = 'Verb Participle'
+    this.language_features[Models.Feature.types.tense] = new Models.FeatureType(Models.Feature.types.tense,
+      [Models.Constants.TENSE_PRESENT, Models.Constants.TENSE_PERFECT, Models.Constants.TENSE_FUTURE], this.languageModel.toCode())
+    this.features = {
+      tenses: new GroupFeatureType(this.language_features[Models.Feature.types.tense], 'Tenses'),
+      voices: new GroupFeatureType(this.language_features[Models.Feature.types.voice], 'Voice'),
+      conjugations: new GroupFeatureType(this.language_features[Models.Feature.types.conjugation], 'Conjugation Stem')
+    }
+    this.createTable()
+  }
+
+  createTable () {
+    this.table = new Table([this.features.voices, this.features.conjugations,
+      this.features.tenses])
+    let features = this.table.features
+    features.columns = [
+      this.language_features[Models.Feature.types.voice],
+      this.language_features[Models.Feature.types.conjugation]]
+    features.rows = [this.language_features[Models.Feature.types.tense]]
+    features.columnRowTitles = [this.language_features[Models.Feature.types.tense]]
+    features.fullWidthRowTitles = []
+  }
+}
+
 class VerbView extends LatinView {
   constructor () {
     super()
@@ -318,4 +348,4 @@ export default [new NounView(), new AdjectiveView(),
     // Verbs
   new VoiceConjugationMoodView(), new VoiceMoodConjugationView(), new ConjugationVoiceMoodView(),
   new ConjugationMoodVoiceView(), new MoodVoiceConjugationView(), new MoodConjugationVoiceView(),
-  new ImperativeView()]
+  new ImperativeView(), new VerbParticipleView()]
