@@ -1654,7 +1654,10 @@ class GrammarResAdapter extends BaseResourceAdapter {
     }
 
     let found = [];
-    let key = `${keyObj.type}-${keyObj.value}`;
+    let key = keyObj.type;
+    if (keyObj.value) {
+      key = `${key}-${keyObj.value}`;
+    }
     if (this.index) {
       found = this._lookupInDataIndex(this.index, key);
     }
