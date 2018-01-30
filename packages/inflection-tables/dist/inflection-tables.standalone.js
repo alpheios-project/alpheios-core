@@ -8701,8 +8701,8 @@ class VerbParticipleView extends LatinView {
     super();
     this.partOfSpeech = this.language_features[Feature.types.part][constants.POFS_VERB_PARTICIPLE].value;
     this.id = 'verbParticiple';
-    this.name = 'verb participle';
-    this.title = 'Verb Participle';
+    this.name = 'participle';
+    this.title = 'Participle';
     this.language_features[Feature.types.tense] = new FeatureType(Feature.types.tense,
       [constants.TENSE_PRESENT, constants.TENSE_PERFECT, constants.TENSE_FUTURE], this.languageModel.toCode());
     this.features = {
@@ -8731,8 +8731,8 @@ class SupineView extends LatinView {
     super();
     this.partOfSpeech = this.language_features[Feature.types.part][constants.POFS_SUPINE].value;
     this.id = 'verbSupine';
-    this.name = 'verb supine';
-    this.title = 'Verb (Supine)';
+    this.name = 'supine';
+    this.title = 'Supine';
     this.features.moods = new GroupFeatureType(
       new FeatureType(Feature.types.mood, [constants.MOOD_SUPINE], this.languageModel.toCode()),
       'Mood');
@@ -8792,8 +8792,8 @@ class VoiceConjugationMoodView extends VerbView {
   constructor () {
     super();
     this.id = 'verbVoiceConjugationMood';
-    this.name = 'verb voice-conjugation-mood';
-    this.title = 'Voice-Conjugation-Mood';
+    this.name = 'voice-conjugation-mood';
+    this.title = 'Verb Conjugation';
 
     this.createTable();
   }
@@ -8821,8 +8821,8 @@ class VoiceMoodConjugationView extends VerbView {
   constructor () {
     super();
     this.id = 'verbVoiceMoodConjugation';
-    this.name = 'verb voice-mood-conjugation';
-    this.title = 'Verb (Voice-Mood-Conjugation)';
+    this.name = 'voice-mood-conjugation';
+    this.title = 'Verb Conjugation';
 
     this.createTable();
   }
@@ -8850,8 +8850,8 @@ class ConjugationVoiceMoodView extends VerbView {
   constructor () {
     super();
     this.id = 'verbConjugationVoiceMood';
-    this.name = 'verb conjugation-voice-mood';
-    this.title = 'Verb (Conjugation-Voice-Mood)';
+    this.name = 'conjugation-voice-mood';
+    this.title = 'Verb Conjugation';
 
     this.createTable();
   }
@@ -8878,8 +8878,8 @@ class ConjugationMoodVoiceView extends VerbView {
   constructor () {
     super();
     this.id = 'verbConjugationMoodVoice';
-    this.name = 'verb conjugation-mood-voice';
-    this.title = 'Verb (Conjugation-Mood-Voice)';
+    this.name = 'conjugation-mood-voice';
+    this.title = 'Verb Conjugation';
 
     this.createTable();
   }
@@ -8907,8 +8907,8 @@ class MoodVoiceConjugationView extends VerbView {
   constructor () {
     super();
     this.id = 'verbMoodVoiceConjugation';
-    this.name = 'verb mood-voice-conjugation';
-    this.title = 'Verb (Mood-Voice-Conjugation)';
+    this.name = 'mood-voice-conjugation';
+    this.title = 'Verb Conjugation';
 
     this.createTable();
   }
@@ -8928,8 +8928,8 @@ class MoodConjugationVoiceView extends VerbView {
   constructor () {
     super();
     this.id = 'verbMoodConjugationVoice';
-    this.name = 'verb mood-conjugation-voice';
-    this.title = 'Verb (Mood-Conjugation-Voice)';
+    this.name = 'mood-conjugation-voice';
+    this.title = 'Verb Conjugation';
 
     this.createTable();
   }
@@ -8949,8 +8949,8 @@ class ImperativeView extends VerbMoodView {
   constructor () {
     super();
     this.id = 'verbImperative';
-    this.name = 'verb imperative';
-    this.title = 'Verb (Imperative)';
+    this.name = 'imperative';
+    this.title = 'Imperative';
     this.features.moods = new GroupFeatureType(
       new FeatureType(Feature.types.mood, [constants.MOOD_IMPERATIVE], this.languageModel.toCode()),
       'Mood');
@@ -8997,8 +8997,8 @@ class InfinitiveView extends VerbMoodView {
   constructor () {
     super();
     this.id = 'verbInfinitive';
-    this.name = 'verb infinitive';
-    this.title = 'Verb (Infinitive)';
+    this.name = 'infinitive';
+    this.title = 'Infinitive';
     this.features.moods = new GroupFeatureType(
       new FeatureType(Feature.types.mood, [constants.MOOD_INFINITIVE], this.languageModel.toCode()),
       'Mood');
