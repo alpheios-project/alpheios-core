@@ -140,7 +140,7 @@ export default class Table {
       ancestorFeatures.push(featureValue)
 
       // Suffixes that are selected for current combination of feature values
-      let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.groupFeatureType.type, featureValue.value))
+      let selectedSuffixes = suffixes.filter(group.groupFeatureType.filter.bind(group.groupFeatureType, featureValue.value))
 
       if (currentLevel < this.features.length - 1) {
         // Divide to further groups

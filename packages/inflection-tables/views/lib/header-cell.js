@@ -6,13 +6,13 @@ import * as Styles from '../styles/styles'
 export default class HeaderCell {
   /**
    * Initializes a header cell.
-   * @param {string} title - A title text that will be shown in the header cell.
+   * @param {string} featureValue - A title text that will be shown in the header cell.
    * @param {GroupFeatureType} groupingFeature - A feature that defines one or several columns this header forms.
    * @param {number} [span=1] - How many columns in a table this header cell forms.
    */
-  constructor (title, groupingFeature, span = 1) {
+  constructor (featureValue, groupingFeature, span = 1) {
     this.feature = groupingFeature
-    this.title = title
+    this.title = groupingFeature.getTitle(featureValue)
     this.span = span
 
     this.parent = undefined

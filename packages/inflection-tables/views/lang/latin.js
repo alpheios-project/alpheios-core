@@ -2,6 +2,31 @@ import * as Models from 'alpheios-data-models'
 import View from '../lib/view'
 import GroupFeatureType from '../lib/group-feature-type'
 import Table from '../lib/table'
+import { Constants } from '../../../data-models'
+
+ /**
+ * Define declension group titles
+ * @param {String} featureValue - A value of a declension
+ * @return {string} - A title of a declension group, in HTML format
+ */
+let getDeclensionTitle = function getDeclensionTitle (featureValue) {
+  if (featureValue === Constants.ORD_1ST) { return `First` }
+  if (featureValue === Constants.ORD_2ND) { return `Second` }
+  if (featureValue === Constants.ORD_3RD) { return `Third` }
+  if (featureValue === Constants.ORD_4TH) { return `Fourth` }
+  if (featureValue === Constants.ORD_5TH) { return `Fifth` }
+
+  if (this.hasOwnProperty(featureValue)) {
+    if (Array.isArray(this[featureValue])) {
+      return this[featureValue].map((feature) => feature.value).join('/')
+    } else {
+      return this[featureValue].value
+    }
+  } else {
+    return 'not available'
+  }
+}
+
 class LatinView extends View {
   constructor () {
     super()
@@ -26,6 +51,7 @@ class LatinView extends View {
       genders: new GroupFeatureType(this.language_features[Models.Feature.types.gender], 'Gender'),
       types: new GroupFeatureType(this.language_features[Models.Feature.types.type], 'Type')
     }
+    this.features.declensions.getTitle = getDeclensionTitle
   }
 
     /*
@@ -75,6 +101,8 @@ class AdjectiveView extends LatinView {
         this.language_features[Models.Feature.types.declension][Models.Constants.ORD_2ND],
         this.language_features[Models.Feature.types.declension][Models.Constants.ORD_3RD]
       ])
+    this.features.declensions.getTitle = getDeclensionTitle
+
     this.createTable()
   }
 }
@@ -154,6 +182,28 @@ class VerbView extends LatinView {
       voices: new GroupFeatureType(this.language_features[Models.Feature.types.voice], 'Voice'),
       conjugations: new GroupFeatureType(this.language_features[Models.Feature.types.conjugation], 'Conjugation Stem'),
       moods: new GroupFeatureType(this.language_features[Models.Feature.types.mood], 'Mood')
+    }
+
+    /**
+     * Define conjugation group titles
+     * @param {String} featureValue - A value of a conjugation feature
+     * @return {string} - A title of a conjugation group, in HTML format
+     */
+    this.features.conjugations.getTitle = function getTitle (featureValue) {
+      if (featureValue === Constants.ORD_1ST) { return `First<br><span class="infl-cell__conj-stem">ā</span>` }
+      if (featureValue === Constants.ORD_2ND) { return `Second<br><span class="infl-cell__conj-stem">ē</span>` }
+      if (featureValue === Constants.ORD_3RD) { return `Third<br><span class="infl-cell__conj-stem">e</span>` }
+      if (featureValue === Constants.ORD_4TH) { return `Fourth<br><span class="infl-cell__conj-stem">i</span>` }
+
+      if (this.hasOwnProperty(featureValue)) {
+        if (Array.isArray(this[featureValue])) {
+          return this[featureValue].map((feature) => feature.value).join('/')
+        } else {
+          return this[featureValue].value
+        }
+      } else {
+        return 'not available'
+      }
     }
   }
 }

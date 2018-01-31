@@ -5413,6 +5413,48 @@ class GroupFeatureType extends FeatureType {
   }
 
   /**
+   * Returns a column or row title for a value of a feature provided.
+   * Redefine it if you want to display custom titles instead of feature values.
+   * @param {Feature} featureValue - A feature object containing a feature value
+   * @return {string} - A row or column title for a table
+   */
+  getTitle (featureValue) {
+    if (this.hasOwnProperty(featureValue)) {
+      if (Array.isArray(this[featureValue])) {
+        return this[featureValue].map((feature) => feature.value).join('/')
+      } else {
+        return this[featureValue].value
+      }
+    } else {
+      return 'not available'
+    }
+  }
+
+  /**
+   * Returns true if an ending grammatical feature defined by featureType has a value that is listed in a featureValues array.
+   * This function is used with Array.prototype.filter().
+   * If you want to provide a custom grouping for any particular feature type, redefine this function
+   * to implement a custom grouping logic.
+   * @param {string | string[]} featureValues - a list of possible values of a type specified by featureType that
+   * this ending should have.
+   * @param {Suffix} suffix - an ending we need to filter out.
+   * @returns {boolean} True if suffix has a value of a grammatical feature specified.
+   */
+  filter (featureValues, suffix) {
+    // If not an array, convert it to array for uniformity
+    if (!Array.isArray(featureValues)) {
+      featureValues = [featureValues];
+    }
+    for (const value of featureValues) {
+      if (suffix.features[this.type] === value) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  /**
    * Whether this feature forms a columns group.
    * @returns {boolean} True if this feature forms a column.
    */
@@ -5645,13 +5687,13 @@ class Cell {
 class HeaderCell {
   /**
    * Initializes a header cell.
-   * @param {string} title - A title text that will be shown in the header cell.
+   * @param {string} featureValue - A title text that will be shown in the header cell.
    * @param {GroupFeatureType} groupingFeature - A feature that defines one or several columns this header forms.
    * @param {number} [span=1] - How many columns in a table this header cell forms.
    */
-  constructor (title, groupingFeature, span = 1) {
+  constructor (featureValue, groupingFeature, span = 1) {
     this.feature = groupingFeature;
-    this.title = title;
+    this.title = groupingFeature.getTitle(featureValue);
     this.span = span;
 
     this.parent = undefined;
@@ -6497,7 +6539,7 @@ class Table {
       ancestorFeatures.push(featureValue);
 
       // Suffixes that are selected for current combination of feature values
-      let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.groupFeatureType.type, featureValue.value));
+      let selectedSuffixes = suffixes.filter(group.groupFeatureType.filter.bind(group.groupFeatureType, featureValue.value));
 
       if (currentLevel < this.features.length - 1) {
         // Divide to further groups
@@ -6751,6 +6793,448 @@ class Table {
   }
 }
 
+/* eslint-disable no-unused-vars */
+const LANG_UNIT_WORD = Symbol('word');
+const LANG_UNIT_CHAR = Symbol('char');
+const LANG_DIR_LTR = Symbol('ltr');
+const LANG_DIR_RTL = Symbol('rtl');
+const LANG_LATIN = Symbol('latin');
+const LANG_GREEK = Symbol('greek');
+const LANG_ARABIC = Symbol('arabic');
+const LANG_PERSIAN = Symbol('persian');
+const STR_LANG_CODE_LAT = 'lat';
+const STR_LANG_CODE_LA = 'la';
+const STR_LANG_CODE_GRC = 'grc';
+const STR_LANG_CODE_ARA = 'ara';
+const STR_LANG_CODE_AR = 'ar';
+const STR_LANG_CODE_FAS = 'fas';
+const STR_LANG_CODE_PER = 'per';
+const STR_LANG_CODE_FA_IR = 'fa-IR';
+const STR_LANG_CODE_FA = 'fa';
+// parts of speech
+const POFS_ADJECTIVE = 'adjective';
+const POFS_ADVERB = 'adverb';
+const POFS_ADVERBIAL = 'adverbial';
+const POFS_ARTICLE = 'article';
+const POFS_CONJUNCTION = 'conjunction';
+const POFS_EXCLAMATION = 'exclamation';
+const POFS_INTERJECTION = 'interjection';
+const POFS_NOUN = 'noun';
+const POFS_NUMERAL = 'numeral';
+const POFS_PARTICLE = 'particle';
+const POFS_PREFIX = 'prefix';
+const POFS_PREPOSITION = 'preposition';
+const POFS_PRONOUN = 'pronoun';
+const POFS_SUFFIX = 'suffix';
+const POFS_SUPINE = 'supine';
+const POFS_VERB = 'verb';
+const POFS_VERB_PARTICIPLE = 'verb participle';
+// gender
+const GEND_MASCULINE = 'masculine';
+const GEND_FEMININE = 'feminine';
+const GEND_NEUTER = 'neuter';
+const GEND_COMMON = 'common';
+const GEND_ANIMATE = 'animate';
+const GEND_INANIMATE = 'inanimate';
+// Polish gender types
+const GEND_PERSONAL_MASCULINE = 'personal masculine';
+const GEND_ANIMATE_MASCULINE = 'animate masculine';
+const GEND_INANIMATE_MASCULINE = 'inanimate masculine';
+// comparative
+const COMP_POSITIVE = 'positive';
+const COMP_COMPARITIVE = 'comparative';
+const COMP_SUPERLATIVE = 'superlative';
+// case
+const CASE_ABESSIVE = 'abessive';
+const CASE_ABLATIVE = 'ablative';
+const CASE_ABSOLUTIVE = 'absolutive';
+const CASE_ACCUSATIVE = 'accusative';
+const CASE_ADDIRECTIVE = 'addirective';
+const CASE_ADELATIVE = 'adelative';
+const CASE_ADESSIVE = 'adessive';
+const CASE_ADVERBIAL = 'adverbial';
+const CASE_ALLATIVE = 'allative';
+const CASE_ANTESSIVE = 'antessive';
+const CASE_APUDESSIVE = 'apudessive';
+const CASE_AVERSIVE = 'aversive';
+const CASE_BENEFACTIVE = 'benefactive';
+const CASE_CARITIVE = 'caritive';
+const CASE_CAUSAL = 'causal';
+const CASE_CAUSAL_FINAL = 'causal-final';
+const CASE_COMITATIVE = 'comitative';
+const CASE_DATIVE = 'dative';
+const CASE_DELATIVE = 'delative';
+const CASE_DIRECT = 'direct';
+const CASE_DISTRIBUTIVE = 'distributive';
+const CASE_DISTRIBUTIVE_TEMPORAL = 'distributive-temporal';
+const CASE_ELATIVE = 'elative';
+const CASE_ERGATIVE = 'ergative';
+const CASE_ESSIVE = 'essive';
+const CASE_ESSIVE_FORMAL = 'essive-formal';
+const CASE_ESSIVE_MODAL = 'essive-modal';
+const CASE_EQUATIVE = 'equative';
+const CASE_EVITATIVE = 'evitative';
+const CASE_EXESSIVE = 'exessive';
+const CASE_FINAL = 'final';
+const CASE_FORMAL = 'formal';
+const CASE_GENITIVE = 'genitive';
+const CASE_ILLATIVE = 'illative';
+const CASE_INELATIVE = 'inelative';
+const CASE_INESSIVE = 'inessive';
+const CASE_INSTRUCTIVE = 'instructive';
+const CASE_INSTRUMENTAL = 'instrumental';
+const CASE_INSTRUMENTAL_COMITATIVE = 'instrumental-comitative';
+const CASE_INTRANSITIVE = 'intransitive';
+const CASE_LATIVE = 'lative';
+const CASE_LOCATIVE = 'locative';
+const CASE_MODAL = 'modal';
+const CASE_MULTIPLICATIVE = 'multiplicative';
+const CASE_NOMINATIVE = 'nominative';
+const CASE_PARTITIVE = 'partitive';
+const CASE_PEGATIVE = 'pegative';
+const CASE_PERLATIVE = 'perlative';
+const CASE_POSSESSIVE = 'possessive';
+const CASE_POSTELATIVE = 'postelative';
+const CASE_POSTDIRECTIVE = 'postdirective';
+const CASE_POSTESSIVE = 'postessive';
+const CASE_POSTPOSITIONAL = 'postpositional';
+const CASE_PREPOSITIONAL = 'prepositional';
+const CASE_PRIVATIVE = 'privative';
+const CASE_PROLATIVE = 'prolative';
+const CASE_PROSECUTIVE = 'prosecutive';
+const CASE_PROXIMATIVE = 'proximative';
+const CASE_SEPARATIVE = 'separative';
+const CASE_SOCIATIVE = 'sociative';
+const CASE_SUBDIRECTIVE = 'subdirective';
+const CASE_SUBESSIVE = 'subessive';
+const CASE_SUBELATIVE = 'subelative';
+const CASE_SUBLATIVE = 'sublative';
+const CASE_SUPERDIRECTIVE = 'superdirective';
+const CASE_SUPERESSIVE = 'superessive';
+const CASE_SUPERLATIVE = 'superlative';
+const CASE_SUPPRESSIVE = 'suppressive';
+const CASE_TEMPORAL = 'temporal';
+const CASE_TERMINATIVE = 'terminative';
+const CASE_TRANSLATIVE = 'translative';
+const CASE_VIALIS = 'vialis';
+const CASE_VOCATIVE = 'vocative';
+const MOOD_ADMIRATIVE = 'admirative';
+const MOOD_COHORTATIVE = 'cohortative';
+const MOOD_CONDITIONAL = 'conditional';
+const MOOD_DECLARATIVE = 'declarative';
+const MOOD_DUBITATIVE = 'dubitative';
+const MOOD_ENERGETIC = 'energetic';
+const MOOD_EVENTIVE = 'eventive';
+const MOOD_GENERIC = 'generic';
+const MOOD_GERUNDIVE = 'gerundive';
+const MOOD_HYPOTHETICAL = 'hypothetical';
+const MOOD_IMPERATIVE = 'imperative';
+const MOOD_INDICATIVE = 'indicative';
+const MOOD_INFERENTIAL = 'inferential';
+const MOOD_INFINITIVE = 'infinitive';
+const MOOD_INTERROGATIVE = 'interrogative';
+const MOOD_JUSSIVE = 'jussive';
+const MOOD_NEGATIVE = 'negative';
+const MOOD_OPTATIVE = 'optative';
+const MOOD_PARTICIPLE = 'participle';
+const MOOD_PRESUMPTIVE = 'presumptive';
+const MOOD_RENARRATIVE = 'renarrative';
+const MOOD_SUBJUNCTIVE = 'subjunctive';
+const MOOD_SUPINE = 'supine';
+const NUM_SINGULAR = 'singular';
+const NUM_PLURAL = 'plural';
+const NUM_DUAL = 'dual';
+const NUM_TRIAL = 'trial';
+const NUM_PAUCAL = 'paucal';
+const NUM_SINGULATIVE = 'singulative';
+const NUM_COLLECTIVE = 'collective';
+const NUM_DISTRIBUTIVE_PLURAL = 'distributive plural';
+const NRL_CARDINAL = 'cardinal';
+const NRL_ORDINAL = 'ordinal';
+const NRL_DISTRIBUTIVE = 'distributive';
+const NURL_NUMERAL_ADVERB = 'numeral adverb';
+const ORD_1ST = '1st';
+const ORD_2ND = '2nd';
+const ORD_3RD = '3rd';
+const ORD_4TH = '4th';
+const ORD_5TH = '5th';
+const ORD_6TH = '6th';
+const ORD_7TH = '7th';
+const ORD_8TH = '8th';
+const ORD_9TH = '9th';
+const TENSE_AORIST = 'aorist';
+const TENSE_FUTURE = 'future';
+const TENSE_FUTURE_PERFECT = 'future perfect';
+const TENSE_IMPERFECT = 'imperfect';
+const TENSE_PAST_ABSOLUTE = 'past absolute';
+const TENSE_PERFECT = 'perfect';
+const TENSE_PLUPERFECT = 'pluperfect';
+const TENSE_PRESENT = 'present';
+const VKIND_TO_BE = 'to be';
+const VKIND_COMPOUNDS_OF_TO_BE = 'compounds of to be';
+const VKIND_TAKING_ABLATIVE = 'taking ablative';
+const VKIND_TAKING_DATIVE = 'taking dative';
+const VKIND_TAKING_GENITIVE = 'taking genitive';
+const VKIND_TRANSITIVE = 'transitive';
+const VKIND_INTRANSITIVE = 'intransitive';
+const VKIND_IMPERSONAL = 'impersonal';
+const VKIND_DEPONENT = 'deponent';
+const VKIND_SEMIDEPONENT = 'semideponent';
+const VKIND_PERFECT_DEFINITE = 'perfect definite';
+const VOICE_ACTIVE = 'active';
+const VOICE_PASSIVE = 'passive';
+const VOICE_MEDIOPASSIVE = 'mediopassive';
+const VOICE_IMPERSONAL_PASSIVE = 'impersonal passive';
+const VOICE_MIDDLE = 'middle';
+const VOICE_ANTIPASSIVE = 'antipassive';
+const VOICE_REFLEXIVE = 'reflexive';
+const VOICE_RECIPROCAL = 'reciprocal';
+const VOICE_CAUSATIVE = 'causative';
+const VOICE_ADJUTATIVE = 'adjutative';
+const VOICE_APPLICATIVE = 'applicative';
+const VOICE_CIRCUMSTANTIAL = 'circumstantial';
+const VOICE_DEPONENT = 'deponent';
+const TYPE_IRREGULAR = 'irregular';
+const TYPE_REGULAR = 'regular';
+// Classes (of pronouns in Latin)
+const CLASS_PERSONAL = 'personal';
+const CLASS_REFLEXIVE = 'reflexive';
+const CLASS_POSSESSIVE = 'possessive';
+const CLASS_DEMONSTRATIVE = 'demonstrative';
+const CLASS_RELATIVE = 'relative';
+const CLASS_INTERROGATIVE = 'interrogative';
+/* eslit-enable no-unused-vars */
+
+
+var constants = Object.freeze({
+	LANG_UNIT_WORD: LANG_UNIT_WORD,
+	LANG_UNIT_CHAR: LANG_UNIT_CHAR,
+	LANG_DIR_LTR: LANG_DIR_LTR,
+	LANG_DIR_RTL: LANG_DIR_RTL,
+	LANG_LATIN: LANG_LATIN,
+	LANG_GREEK: LANG_GREEK,
+	LANG_ARABIC: LANG_ARABIC,
+	LANG_PERSIAN: LANG_PERSIAN,
+	STR_LANG_CODE_LAT: STR_LANG_CODE_LAT,
+	STR_LANG_CODE_LA: STR_LANG_CODE_LA,
+	STR_LANG_CODE_GRC: STR_LANG_CODE_GRC,
+	STR_LANG_CODE_ARA: STR_LANG_CODE_ARA,
+	STR_LANG_CODE_AR: STR_LANG_CODE_AR,
+	STR_LANG_CODE_FAS: STR_LANG_CODE_FAS,
+	STR_LANG_CODE_PER: STR_LANG_CODE_PER,
+	STR_LANG_CODE_FA_IR: STR_LANG_CODE_FA_IR,
+	STR_LANG_CODE_FA: STR_LANG_CODE_FA,
+	POFS_ADJECTIVE: POFS_ADJECTIVE,
+	POFS_ADVERB: POFS_ADVERB,
+	POFS_ADVERBIAL: POFS_ADVERBIAL,
+	POFS_ARTICLE: POFS_ARTICLE,
+	POFS_CONJUNCTION: POFS_CONJUNCTION,
+	POFS_EXCLAMATION: POFS_EXCLAMATION,
+	POFS_INTERJECTION: POFS_INTERJECTION,
+	POFS_NOUN: POFS_NOUN,
+	POFS_NUMERAL: POFS_NUMERAL,
+	POFS_PARTICLE: POFS_PARTICLE,
+	POFS_PREFIX: POFS_PREFIX,
+	POFS_PREPOSITION: POFS_PREPOSITION,
+	POFS_PRONOUN: POFS_PRONOUN,
+	POFS_SUFFIX: POFS_SUFFIX,
+	POFS_SUPINE: POFS_SUPINE,
+	POFS_VERB: POFS_VERB,
+	POFS_VERB_PARTICIPLE: POFS_VERB_PARTICIPLE,
+	GEND_MASCULINE: GEND_MASCULINE,
+	GEND_FEMININE: GEND_FEMININE,
+	GEND_NEUTER: GEND_NEUTER,
+	GEND_COMMON: GEND_COMMON,
+	GEND_ANIMATE: GEND_ANIMATE,
+	GEND_INANIMATE: GEND_INANIMATE,
+	GEND_PERSONAL_MASCULINE: GEND_PERSONAL_MASCULINE,
+	GEND_ANIMATE_MASCULINE: GEND_ANIMATE_MASCULINE,
+	GEND_INANIMATE_MASCULINE: GEND_INANIMATE_MASCULINE,
+	COMP_POSITIVE: COMP_POSITIVE,
+	COMP_COMPARITIVE: COMP_COMPARITIVE,
+	COMP_SUPERLATIVE: COMP_SUPERLATIVE,
+	CASE_ABESSIVE: CASE_ABESSIVE,
+	CASE_ABLATIVE: CASE_ABLATIVE,
+	CASE_ABSOLUTIVE: CASE_ABSOLUTIVE,
+	CASE_ACCUSATIVE: CASE_ACCUSATIVE,
+	CASE_ADDIRECTIVE: CASE_ADDIRECTIVE,
+	CASE_ADELATIVE: CASE_ADELATIVE,
+	CASE_ADESSIVE: CASE_ADESSIVE,
+	CASE_ADVERBIAL: CASE_ADVERBIAL,
+	CASE_ALLATIVE: CASE_ALLATIVE,
+	CASE_ANTESSIVE: CASE_ANTESSIVE,
+	CASE_APUDESSIVE: CASE_APUDESSIVE,
+	CASE_AVERSIVE: CASE_AVERSIVE,
+	CASE_BENEFACTIVE: CASE_BENEFACTIVE,
+	CASE_CARITIVE: CASE_CARITIVE,
+	CASE_CAUSAL: CASE_CAUSAL,
+	CASE_CAUSAL_FINAL: CASE_CAUSAL_FINAL,
+	CASE_COMITATIVE: CASE_COMITATIVE,
+	CASE_DATIVE: CASE_DATIVE,
+	CASE_DELATIVE: CASE_DELATIVE,
+	CASE_DIRECT: CASE_DIRECT,
+	CASE_DISTRIBUTIVE: CASE_DISTRIBUTIVE,
+	CASE_DISTRIBUTIVE_TEMPORAL: CASE_DISTRIBUTIVE_TEMPORAL,
+	CASE_ELATIVE: CASE_ELATIVE,
+	CASE_ERGATIVE: CASE_ERGATIVE,
+	CASE_ESSIVE: CASE_ESSIVE,
+	CASE_ESSIVE_FORMAL: CASE_ESSIVE_FORMAL,
+	CASE_ESSIVE_MODAL: CASE_ESSIVE_MODAL,
+	CASE_EQUATIVE: CASE_EQUATIVE,
+	CASE_EVITATIVE: CASE_EVITATIVE,
+	CASE_EXESSIVE: CASE_EXESSIVE,
+	CASE_FINAL: CASE_FINAL,
+	CASE_FORMAL: CASE_FORMAL,
+	CASE_GENITIVE: CASE_GENITIVE,
+	CASE_ILLATIVE: CASE_ILLATIVE,
+	CASE_INELATIVE: CASE_INELATIVE,
+	CASE_INESSIVE: CASE_INESSIVE,
+	CASE_INSTRUCTIVE: CASE_INSTRUCTIVE,
+	CASE_INSTRUMENTAL: CASE_INSTRUMENTAL,
+	CASE_INSTRUMENTAL_COMITATIVE: CASE_INSTRUMENTAL_COMITATIVE,
+	CASE_INTRANSITIVE: CASE_INTRANSITIVE,
+	CASE_LATIVE: CASE_LATIVE,
+	CASE_LOCATIVE: CASE_LOCATIVE,
+	CASE_MODAL: CASE_MODAL,
+	CASE_MULTIPLICATIVE: CASE_MULTIPLICATIVE,
+	CASE_NOMINATIVE: CASE_NOMINATIVE,
+	CASE_PARTITIVE: CASE_PARTITIVE,
+	CASE_PEGATIVE: CASE_PEGATIVE,
+	CASE_PERLATIVE: CASE_PERLATIVE,
+	CASE_POSSESSIVE: CASE_POSSESSIVE,
+	CASE_POSTELATIVE: CASE_POSTELATIVE,
+	CASE_POSTDIRECTIVE: CASE_POSTDIRECTIVE,
+	CASE_POSTESSIVE: CASE_POSTESSIVE,
+	CASE_POSTPOSITIONAL: CASE_POSTPOSITIONAL,
+	CASE_PREPOSITIONAL: CASE_PREPOSITIONAL,
+	CASE_PRIVATIVE: CASE_PRIVATIVE,
+	CASE_PROLATIVE: CASE_PROLATIVE,
+	CASE_PROSECUTIVE: CASE_PROSECUTIVE,
+	CASE_PROXIMATIVE: CASE_PROXIMATIVE,
+	CASE_SEPARATIVE: CASE_SEPARATIVE,
+	CASE_SOCIATIVE: CASE_SOCIATIVE,
+	CASE_SUBDIRECTIVE: CASE_SUBDIRECTIVE,
+	CASE_SUBESSIVE: CASE_SUBESSIVE,
+	CASE_SUBELATIVE: CASE_SUBELATIVE,
+	CASE_SUBLATIVE: CASE_SUBLATIVE,
+	CASE_SUPERDIRECTIVE: CASE_SUPERDIRECTIVE,
+	CASE_SUPERESSIVE: CASE_SUPERESSIVE,
+	CASE_SUPERLATIVE: CASE_SUPERLATIVE,
+	CASE_SUPPRESSIVE: CASE_SUPPRESSIVE,
+	CASE_TEMPORAL: CASE_TEMPORAL,
+	CASE_TERMINATIVE: CASE_TERMINATIVE,
+	CASE_TRANSLATIVE: CASE_TRANSLATIVE,
+	CASE_VIALIS: CASE_VIALIS,
+	CASE_VOCATIVE: CASE_VOCATIVE,
+	MOOD_ADMIRATIVE: MOOD_ADMIRATIVE,
+	MOOD_COHORTATIVE: MOOD_COHORTATIVE,
+	MOOD_CONDITIONAL: MOOD_CONDITIONAL,
+	MOOD_DECLARATIVE: MOOD_DECLARATIVE,
+	MOOD_DUBITATIVE: MOOD_DUBITATIVE,
+	MOOD_ENERGETIC: MOOD_ENERGETIC,
+	MOOD_EVENTIVE: MOOD_EVENTIVE,
+	MOOD_GENERIC: MOOD_GENERIC,
+	MOOD_GERUNDIVE: MOOD_GERUNDIVE,
+	MOOD_HYPOTHETICAL: MOOD_HYPOTHETICAL,
+	MOOD_IMPERATIVE: MOOD_IMPERATIVE,
+	MOOD_INDICATIVE: MOOD_INDICATIVE,
+	MOOD_INFERENTIAL: MOOD_INFERENTIAL,
+	MOOD_INFINITIVE: MOOD_INFINITIVE,
+	MOOD_INTERROGATIVE: MOOD_INTERROGATIVE,
+	MOOD_JUSSIVE: MOOD_JUSSIVE,
+	MOOD_NEGATIVE: MOOD_NEGATIVE,
+	MOOD_OPTATIVE: MOOD_OPTATIVE,
+	MOOD_PARTICIPLE: MOOD_PARTICIPLE,
+	MOOD_PRESUMPTIVE: MOOD_PRESUMPTIVE,
+	MOOD_RENARRATIVE: MOOD_RENARRATIVE,
+	MOOD_SUBJUNCTIVE: MOOD_SUBJUNCTIVE,
+	MOOD_SUPINE: MOOD_SUPINE,
+	NUM_SINGULAR: NUM_SINGULAR,
+	NUM_PLURAL: NUM_PLURAL,
+	NUM_DUAL: NUM_DUAL,
+	NUM_TRIAL: NUM_TRIAL,
+	NUM_PAUCAL: NUM_PAUCAL,
+	NUM_SINGULATIVE: NUM_SINGULATIVE,
+	NUM_COLLECTIVE: NUM_COLLECTIVE,
+	NUM_DISTRIBUTIVE_PLURAL: NUM_DISTRIBUTIVE_PLURAL,
+	NRL_CARDINAL: NRL_CARDINAL,
+	NRL_ORDINAL: NRL_ORDINAL,
+	NRL_DISTRIBUTIVE: NRL_DISTRIBUTIVE,
+	NURL_NUMERAL_ADVERB: NURL_NUMERAL_ADVERB,
+	ORD_1ST: ORD_1ST,
+	ORD_2ND: ORD_2ND,
+	ORD_3RD: ORD_3RD,
+	ORD_4TH: ORD_4TH,
+	ORD_5TH: ORD_5TH,
+	ORD_6TH: ORD_6TH,
+	ORD_7TH: ORD_7TH,
+	ORD_8TH: ORD_8TH,
+	ORD_9TH: ORD_9TH,
+	TENSE_AORIST: TENSE_AORIST,
+	TENSE_FUTURE: TENSE_FUTURE,
+	TENSE_FUTURE_PERFECT: TENSE_FUTURE_PERFECT,
+	TENSE_IMPERFECT: TENSE_IMPERFECT,
+	TENSE_PAST_ABSOLUTE: TENSE_PAST_ABSOLUTE,
+	TENSE_PERFECT: TENSE_PERFECT,
+	TENSE_PLUPERFECT: TENSE_PLUPERFECT,
+	TENSE_PRESENT: TENSE_PRESENT,
+	VKIND_TO_BE: VKIND_TO_BE,
+	VKIND_COMPOUNDS_OF_TO_BE: VKIND_COMPOUNDS_OF_TO_BE,
+	VKIND_TAKING_ABLATIVE: VKIND_TAKING_ABLATIVE,
+	VKIND_TAKING_DATIVE: VKIND_TAKING_DATIVE,
+	VKIND_TAKING_GENITIVE: VKIND_TAKING_GENITIVE,
+	VKIND_TRANSITIVE: VKIND_TRANSITIVE,
+	VKIND_INTRANSITIVE: VKIND_INTRANSITIVE,
+	VKIND_IMPERSONAL: VKIND_IMPERSONAL,
+	VKIND_DEPONENT: VKIND_DEPONENT,
+	VKIND_SEMIDEPONENT: VKIND_SEMIDEPONENT,
+	VKIND_PERFECT_DEFINITE: VKIND_PERFECT_DEFINITE,
+	VOICE_ACTIVE: VOICE_ACTIVE,
+	VOICE_PASSIVE: VOICE_PASSIVE,
+	VOICE_MEDIOPASSIVE: VOICE_MEDIOPASSIVE,
+	VOICE_IMPERSONAL_PASSIVE: VOICE_IMPERSONAL_PASSIVE,
+	VOICE_MIDDLE: VOICE_MIDDLE,
+	VOICE_ANTIPASSIVE: VOICE_ANTIPASSIVE,
+	VOICE_REFLEXIVE: VOICE_REFLEXIVE,
+	VOICE_RECIPROCAL: VOICE_RECIPROCAL,
+	VOICE_CAUSATIVE: VOICE_CAUSATIVE,
+	VOICE_ADJUTATIVE: VOICE_ADJUTATIVE,
+	VOICE_APPLICATIVE: VOICE_APPLICATIVE,
+	VOICE_CIRCUMSTANTIAL: VOICE_CIRCUMSTANTIAL,
+	VOICE_DEPONENT: VOICE_DEPONENT,
+	TYPE_IRREGULAR: TYPE_IRREGULAR,
+	TYPE_REGULAR: TYPE_REGULAR,
+	CLASS_PERSONAL: CLASS_PERSONAL,
+	CLASS_REFLEXIVE: CLASS_REFLEXIVE,
+	CLASS_POSSESSIVE: CLASS_POSSESSIVE,
+	CLASS_DEMONSTRATIVE: CLASS_DEMONSTRATIVE,
+	CLASS_RELATIVE: CLASS_RELATIVE,
+	CLASS_INTERROGATIVE: CLASS_INTERROGATIVE
+});
+
+/**
+ * Define declension group titles
+ * @param {String} featureValue - A value of a declension
+ * @return {string} - A title of a declension group, in HTML format
+ */
+let getDeclensionTitle = function getDeclensionTitle (featureValue) {
+  if (featureValue === constants.ORD_1ST) { return `First` }
+  if (featureValue === constants.ORD_2ND) { return `Second` }
+  if (featureValue === constants.ORD_3RD) { return `Third` }
+  if (featureValue === constants.ORD_4TH) { return `Fourth` }
+  if (featureValue === constants.ORD_5TH) { return `Fifth` }
+
+  if (this.hasOwnProperty(featureValue)) {
+    if (Array.isArray(this[featureValue])) {
+      return this[featureValue].map((feature) => feature.value).join('/')
+    } else {
+      return this[featureValue].value
+    }
+  } else {
+    return 'not available'
+  }
+};
+
 class LatinView extends View {
   constructor () {
     super();
@@ -6775,6 +7259,7 @@ class LatinView extends View {
       genders: new GroupFeatureType(this.language_features[Feature.types.gender], 'Gender'),
       types: new GroupFeatureType(this.language_features[Feature.types.type], 'Type')
     };
+    this.features.declensions.getTitle = getDeclensionTitle;
   }
 
     /*
@@ -6824,6 +7309,8 @@ class AdjectiveView extends LatinView {
         this.language_features[Feature.types.declension][Constants.ORD_2ND],
         this.language_features[Feature.types.declension][Constants.ORD_3RD]
       ]);
+    this.features.declensions.getTitle = getDeclensionTitle;
+
     this.createTable();
   }
 }
@@ -6903,6 +7390,28 @@ class VerbView extends LatinView {
       voices: new GroupFeatureType(this.language_features[Feature.types.voice], 'Voice'),
       conjugations: new GroupFeatureType(this.language_features[Feature.types.conjugation], 'Conjugation Stem'),
       moods: new GroupFeatureType(this.language_features[Feature.types.mood], 'Mood')
+    };
+
+    /**
+     * Define conjugation group titles
+     * @param {String} featureValue - A value of a conjugation feature
+     * @return {string} - A title of a conjugation group, in HTML format
+     */
+    this.features.conjugations.getTitle = function getTitle (featureValue) {
+      if (featureValue === constants.ORD_1ST) { return `First<br><span class="infl-cell__conj-stem">ā</span>` }
+      if (featureValue === constants.ORD_2ND) { return `Second<br><span class="infl-cell__conj-stem">ē</span>` }
+      if (featureValue === constants.ORD_3RD) { return `Third<br><span class="infl-cell__conj-stem">e</span>` }
+      if (featureValue === constants.ORD_4TH) { return `Fourth<br><span class="infl-cell__conj-stem">i</span>` }
+
+      if (this.hasOwnProperty(featureValue)) {
+        if (Array.isArray(this[featureValue])) {
+          return this[featureValue].map((feature) => feature.value).join('/')
+        } else {
+          return this[featureValue].value
+        }
+      } else {
+        return 'not available'
+      }
     };
   }
 }

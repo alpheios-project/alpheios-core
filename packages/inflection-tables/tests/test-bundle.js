@@ -7737,13 +7737,13 @@ class RowTitleCell {
 class HeaderCell {
   /**
    * Initializes a header cell.
-   * @param {string} title - A title text that will be shown in the header cell.
+   * @param {string} featureValue - A title text that will be shown in the header cell.
    * @param {GroupFeatureType} groupingFeature - A feature that defines one or several columns this header forms.
    * @param {number} [span=1] - How many columns in a table this header cell forms.
    */
-  constructor (title, groupingFeature, span = 1) {
+  constructor (featureValue, groupingFeature, span = 1) {
     this.feature = groupingFeature;
-    this.title = title;
+    this.title = groupingFeature.getTitle(featureValue);
     this.span = span;
 
     this.parent = undefined;
@@ -8120,6 +8120,48 @@ class GroupFeatureType extends FeatureType {
    */
   getOrderedValues (ancestorFeatures) {
     return this._orderIndex
+  }
+
+  /**
+   * Returns a column or row title for a value of a feature provided.
+   * Redefine it if you want to display custom titles instead of feature values.
+   * @param {Feature} featureValue - A feature object containing a feature value
+   * @return {string} - A row or column title for a table
+   */
+  getTitle (featureValue) {
+    if (this.hasOwnProperty(featureValue)) {
+      if (Array.isArray(this[featureValue])) {
+        return this[featureValue].map((feature) => feature.value).join('/')
+      } else {
+        return this[featureValue].value
+      }
+    } else {
+      return 'not available'
+    }
+  }
+
+  /**
+   * Returns true if an ending grammatical feature defined by featureType has a value that is listed in a featureValues array.
+   * This function is used with Array.prototype.filter().
+   * If you want to provide a custom grouping for any particular feature type, redefine this function
+   * to implement a custom grouping logic.
+   * @param {string | string[]} featureValues - a list of possible values of a type specified by featureType that
+   * this ending should have.
+   * @param {Suffix} suffix - an ending we need to filter out.
+   * @returns {boolean} True if suffix has a value of a grammatical feature specified.
+   */
+  filter (featureValues, suffix) {
+    // If not an array, convert it to array for uniformity
+    if (!Array.isArray(featureValues)) {
+      featureValues = [featureValues];
+    }
+    for (const value of featureValues) {
+      if (suffix.features[this.type] === value) {
+        return true
+      }
+    }
+
+    return false
   }
 
   /**
@@ -8724,7 +8766,7 @@ class Table {
       ancestorFeatures.push(featureValue);
 
       // Suffixes that are selected for current combination of feature values
-      let selectedSuffixes = suffixes.filter(Table.filter.bind(this, group.groupFeatureType.type, featureValue.value));
+      let selectedSuffixes = suffixes.filter(group.groupFeatureType.filter.bind(group.groupFeatureType, featureValue.value));
 
       if (currentLevel < this.features.length - 1) {
         // Divide to further groups
