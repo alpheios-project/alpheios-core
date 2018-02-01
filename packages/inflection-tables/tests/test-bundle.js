@@ -7507,7 +7507,7 @@ class Cell {
         element.appendChild(footnoteElement);
       }
       if (index < this.suffixes.length - 1) {
-        element.appendChild(document.createTextNode(',\u00A0')); // 00A0 is a non-breaking space
+        element.appendChild(document.createTextNode(', ')); // 00A0 is a non-breaking space
       }
     }
     this.wNode = element;
