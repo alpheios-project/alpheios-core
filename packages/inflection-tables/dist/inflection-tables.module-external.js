@@ -5564,7 +5564,7 @@ class Cell {
 
       if (suffix.footnote && suffix.footnote.length) {
         let footnoteElement = document.createElement('a');
-        footnoteElement.innerHTML = '[' + suffix.footnote + ']';
+        footnoteElement.innerHTML = `<sup>${suffix.footnote}</sup>`;
         footnoteElement.dataset.footnote = suffix.footnote;
         element.appendChild(footnoteElement);
       }
@@ -6996,13 +6996,17 @@ const VOICE_CIRCUMSTANTIAL = 'circumstantial';
 const VOICE_DEPONENT = 'deponent';
 const TYPE_IRREGULAR = 'irregular';
 const TYPE_REGULAR = 'regular';
-// Classes (of pronouns in Latin)
+// Classes
 const CLASS_PERSONAL = 'personal';
 const CLASS_REFLEXIVE = 'reflexive';
 const CLASS_POSSESSIVE = 'possessive';
 const CLASS_DEMONSTRATIVE = 'demonstrative';
 const CLASS_RELATIVE = 'relative';
 const CLASS_INTERROGATIVE = 'interrogative';
+const CLASS_GENERAL_RELATIVE = 'general relative';
+const CLASS_INDEFINITE = 'indefinite';
+const CLASS_INTENSIVE = 'intensive';
+const CLASS_RECIPROCAL = 'reciprocal';
 /* eslit-enable no-unused-vars */
 
 
@@ -7209,7 +7213,11 @@ var constants = Object.freeze({
 	CLASS_POSSESSIVE: CLASS_POSSESSIVE,
 	CLASS_DEMONSTRATIVE: CLASS_DEMONSTRATIVE,
 	CLASS_RELATIVE: CLASS_RELATIVE,
-	CLASS_INTERROGATIVE: CLASS_INTERROGATIVE
+	CLASS_INTERROGATIVE: CLASS_INTERROGATIVE,
+	CLASS_GENERAL_RELATIVE: CLASS_GENERAL_RELATIVE,
+	CLASS_INDEFINITE: CLASS_INDEFINITE,
+	CLASS_INTENSIVE: CLASS_INTENSIVE,
+	CLASS_RECIPROCAL: CLASS_RECIPROCAL
 });
 
 /**

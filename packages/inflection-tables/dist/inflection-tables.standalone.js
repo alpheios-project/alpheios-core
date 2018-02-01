@@ -831,6 +831,12 @@ class LanguageModel {
       [FeatureType.UNRESTRICTED_VALUE], code);
     features[Feature.types.comparison] = new FeatureType(Feature.types.comparison,
       [COMP_POSITIVE, COMP_SUPERLATIVE, COMP_COMPARITIVE], code);
+    features[Feature.types.morph] = new FeatureType(Feature.types.morph,
+      [FeatureType.UNRESTRICTED_VALUE], code);
+    features[Feature.types.stemtype] = new FeatureType(Feature.types.stemtype,
+      [FeatureType.UNRESTRICTED_VALUE], code);
+    features[Feature.types.derivtype] = new FeatureType(Feature.types.derivtype,
+      [FeatureType.UNRESTRICTED_VALUE], code);
     return features
   }
 
@@ -1142,12 +1148,16 @@ class LatinLanguageModel extends LanguageModel {
         TENSE_PLUPERFECT,
         TENSE_FUTURE_PERFECT
       ], code);
-    features[Feature.types.voice] = new FeatureType(Feature.types.voice, [VOICE_PASSIVE, VOICE_ACTIVE], code);
+    features[Feature.types.voice] = new FeatureType(Feature.types.voice, [VOICE_ACTIVE, VOICE_PASSIVE], code);
     features[Feature.types.mood] = new FeatureType(Feature.types.mood,
       [ MOOD_INDICATIVE,
         MOOD_SUBJUNCTIVE,
         MOOD_IMPERATIVE,
-        MOOD_PARTICIPLE
+        MOOD_PARTICIPLE,
+        MOOD_SUPINE,
+        MOOD_GERUNDIVE,
+        MOOD_PARTICIPLE,
+        MOOD_INFINITIVE
       ], code);
     features[Feature.types.conjugation] = new FeatureType(Feature.types.conjugation,
       [ ORD_1ST,
@@ -1322,7 +1332,7 @@ class GreekLanguageModel extends LanguageModel {
    * for the current node
    */
   canInflect (node) {
-    return true
+    return false
   }
   /**
    * @override LanguageModel#grammarFeatures
@@ -1341,7 +1351,11 @@ class GreekLanguageModel extends LanguageModel {
    */
   normalizeWord (word) {
     // we normalize greek to NFC - Normalization Form Canonical Composition
-    return word.normalize('NFC')
+    if (word) {
+      return word.normalize('NFC')
+    } else {
+      return word
+    }
   }
 
   /**
@@ -7432,7 +7446,7 @@ class Cell {
 
       if (suffix.footnote && suffix.footnote.length) {
         let footnoteElement = document.createElement('a');
-        footnoteElement.innerHTML = '[' + suffix.footnote + ']';
+        footnoteElement.innerHTML = `<sup>${suffix.footnote}</sup>`;
         footnoteElement.dataset.footnote = suffix.footnote;
         element.appendChild(footnoteElement);
       }
@@ -8864,13 +8878,17 @@ const VOICE_CIRCUMSTANTIAL$1 = 'circumstantial';
 const VOICE_DEPONENT$1 = 'deponent';
 const TYPE_IRREGULAR$1 = 'irregular';
 const TYPE_REGULAR$1 = 'regular';
-// Classes (of pronouns in Latin)
+// Classes
 const CLASS_PERSONAL$1 = 'personal';
 const CLASS_REFLEXIVE$1 = 'reflexive';
 const CLASS_POSSESSIVE$1 = 'possessive';
 const CLASS_DEMONSTRATIVE$1 = 'demonstrative';
 const CLASS_RELATIVE$1 = 'relative';
 const CLASS_INTERROGATIVE$1 = 'interrogative';
+const CLASS_GENERAL_RELATIVE$1 = 'general relative';
+const CLASS_INDEFINITE$1 = 'indefinite';
+const CLASS_INTENSIVE$1 = 'intensive';
+const CLASS_RECIPROCAL$1 = 'reciprocal';
 /* eslit-enable no-unused-vars */
 
 
@@ -9077,7 +9095,11 @@ var constants$1 = Object.freeze({
 	CLASS_POSSESSIVE: CLASS_POSSESSIVE$1,
 	CLASS_DEMONSTRATIVE: CLASS_DEMONSTRATIVE$1,
 	CLASS_RELATIVE: CLASS_RELATIVE$1,
-	CLASS_INTERROGATIVE: CLASS_INTERROGATIVE$1
+	CLASS_INTERROGATIVE: CLASS_INTERROGATIVE$1,
+	CLASS_GENERAL_RELATIVE: CLASS_GENERAL_RELATIVE$1,
+	CLASS_INDEFINITE: CLASS_INDEFINITE$1,
+	CLASS_INTENSIVE: CLASS_INTENSIVE$1,
+	CLASS_RECIPROCAL: CLASS_RECIPROCAL$1
 });
 
 /**

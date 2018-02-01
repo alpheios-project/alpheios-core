@@ -48,7 +48,7 @@ export default class Cell {
 
       if (suffix.footnote && suffix.footnote.length) {
         let footnoteElement = document.createElement('a')
-        footnoteElement.innerHTML = '[' + suffix.footnote + ']'
+        footnoteElement.innerHTML = `<sup>${suffix.footnote}</sup>`
         footnoteElement.dataset.footnote = suffix.footnote
         element.appendChild(footnoteElement)
       }
