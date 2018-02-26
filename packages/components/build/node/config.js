@@ -20,7 +20,9 @@ module.exports = {
       devtool: 'source-map',
       externals: {
         'alpheios-data-models': 'alpheios-data-models',
-        'alpheios-inflection-tables': 'alpheios-inflection-tables'
+        'alpheios-inflection-tables': 'alpheios-inflection-tables',
+        'alpheios-experience': 'alpheios-experience',
+        'alpheios-res-client': 'alpheios-res-client'
       }
     },
     tasks: [
