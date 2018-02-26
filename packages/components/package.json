@@ -1,0 +1,113 @@
+{
+  "name": "alpheios-components",
+  "version": "0.0.1",
+  "description": "Alpheios UI Compononents",
+  "main": "dist/alpheios-components.js",
+  "scripts": {
+    "test": "standard --fix && jest",
+    "build": "standard --fix && node ./build/node/build.js",
+    "lint": "standard --fix",
+    "buildstyles": "node ./build/node/build.js styles",
+    "buildimages": "node ./build/node/build.js images",
+    "buildwebpack": "node ./build/node/build.js webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/components.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/components/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/components#readme",
+  "devDependencies": {
+    "alpheios-data-models": "github:alpheios-project/data-models",
+    "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
+    "autoprefixer": "^7.2.5",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^21.0.2",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "bytes": "^3.0.0",
+    "chalk": "^2.3.0",
+    "copy-webpack-plugin": "^4.3.1",
+    "coveralls": "^3.0.0",
+    "css-loader": "^0.28.9",
+    "element-closest": "^2.0.2",
+    "eslint": "^4.17.0",
+    "eslint-plugin-import": "^2.8.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "font-awesome-svg-png": "^1.2.2",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "fs": "0.0.1-security",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^2.30.1",
+    "imagemin": "^5.3.1",
+    "imagemin-jpegtran": "^5.0.2",
+    "imagemin-optipng": "^5.2.1",
+    "imagemin-svgo": "^6.0.0",
+    "interactjs": "^1.3.3",
+    "intl-messageformat": "^2.2.0",
+    "jest": "^21.2.1",
+    "jest-environment-jsdom-11.0.0": "^20.0.9",
+    "jest-serializer-vue": "^0.3.0",
+    "mkdirp": "^0.5.1",
+    "node-sass": "^4.7.2",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "parallel-webpack": "^2.2.0",
+    "path": "^0.12.7",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.1.0",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.6",
+    "semver": "^5.5.0",
+    "shelljs": "^0.7.6",
+    "standard": "^10.0.3",
+    "style-loader": "^0.19.1",
+    "uikit": "^3.0.0-beta.39",
+    "url-loader": "^0.5.9",
+    "uuid": "^3.2.1",
+    "vue": "^2.5.13",
+    "vue-jest": "^1.4.0",
+    "vue-loader": "^13.7.1",
+    "vue-style-loader": "^3.1.2",
+    "vue-svg-loader": "^0.4.0",
+    "vue-template-compiler": "^2.5.13",
+    "webextension-polyfill": "^0.2.1",
+    "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.10.0",
+    "webpack-dev-server": "^2.11.1",
+    "webpack-merge": "^4.1.0",
+    "zip-folder": "^1.0.0"
+  },
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.4.2"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    }
+  },
+  "standard": {
+    "ignore": [
+      "**/dist",
+      "**/support"
+    ]
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,7 @@
+node_modules/
+/dist/*.map
+npm-debug.log*
+/test/unit/coverage/
+coverage
+alpheios.zip
+alpheios.xpi

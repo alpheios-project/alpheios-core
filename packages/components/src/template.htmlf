@@ -1,0 +1,11 @@
+<div id="alpheios-popup" >
+    <popup :messages="messages" :definitions="definitions" :visible="visible" :lexemes="lexemes" :linkedfeatures="linkedFeatures"
+           :data="popupData" @close="close" @closepopupnotifications="clearNotifications" @showpaneltab="showPanelTab"
+           @sendfeature="sendFeature" @settingchange="settingChange">
+    </popup>
+</div>
+<div id="alpheios-panel">
+    <panel :data="panelData" @close="close" @closenotifications="clearNotifications"
+           @setposition="setPositionTo" @settingchange="settingChange" @resourcesettingchange="resourceSettingChange"
+           @changetab="changeTab"></panel>
+</div>

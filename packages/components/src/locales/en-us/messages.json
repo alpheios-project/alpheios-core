@@ -1,0 +1,276 @@
+{
+  "COOKIE_TEST_MESSAGE": {
+    "message": "This is a test message about a cookie.",
+    "description": "A test message that is shown in a panel",
+    "component": "Panel"
+  },
+  "NUM_LINES_TEST_MESSAGE": {
+    "message": "There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.",
+    "description": "A test message that is shown in a panel",
+    "component": "Panel",
+    "params": ["numLines"]
+  },
+  "TOOLTIP_MOVE_PANEL_LEFT": {
+    "message": "Move Panel to Left",
+    "description": "tooltip for moving the panel to the left",
+    "component": "Panel"
+  },
+  "TOOLTIP_MOVE_PANEL_RIGHT": {
+    "message": "Move Panel to Right",
+    "description": "tooltip for moving the panel to the right",
+    "component": "Panel"
+  },
+  "TOOLTIP_CLOSE_PANEL": {
+    "message": "Close Panel",
+    "description": "tooltip for closing the panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_HELP": {
+    "message": "Help",
+    "description": "tooltip for help tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT": {
+    "message": "Inflection Tables",
+    "description": "tooltip for inflections tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_DEFINITIONS": {
+    "message": "Definitions",
+    "description": "tooltip for definitions tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_GRAMMAR": {
+    "message": "Grammar",
+    "description": "tooltip for grammar tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_OPTIONS": {
+    "message": "Options",
+    "description": "tooltip for settings tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_STATUS": {
+    "message": "Status Messages",
+    "description": "tooltip for status tab",
+    "component": "Panel"
+  },
+  "PLACEHOLDER_DEFINITIONS":  {
+    "message": "Lookup a word to show definitions...",
+    "description": "placeholder for definitions panel",
+    "component": "Panel"
+  },
+  "PLACEHOLDER_INFLECT":  {
+    "message": "Lookup a word to show inflections...",
+    "description": "placeholder for inflections panel",
+    "component": "Panel"
+  },
+  "PLACEHOLDER_INFLECT_UNAVAILABLE":  {
+    "message": "Inflection data is unavailable",
+    "description": "placeholder for inflections panel if unavailable",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_SELECT_POFS":  {
+    "message": "Part of speech:",
+    "description": "label for part of speech selector on inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_SHOWFULL": {
+    "message": "Full Table",
+    "description": "label for show full table button on inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_COLLAPSE": {
+    "message": "Collapse",
+    "description": "label for collapse table button on inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_HIDEEMPTY": {
+    "message": "Hide empty columns",
+    "description": "label for hide empty columns button on inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_SHOWEMPTY": {
+    "message": "Show empty columns",
+    "description": "label for show empty columns button on inflections panel",
+    "component": "Panel"
+  },
+  "TEXT_INFO_GETTINGSTARTED": {
+    "message": "Getting Started",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_GETTINGSTARTED": {
+    "message": "Getting Started",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_ACTIVATE": {
+    "message": "Activate on a page with Latin, Ancient Greek, Arabic or Persian text.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_CLICK": {
+    "message": "Double-click on a word to retrieve morphology and short definitions.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_LANGDETECT": {
+    "message": "Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "LABEL_INFO_CURRENTLANGUAGE": {
+    "message": "Current language:",
+    "description": "label for current language in info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_SETTINGS": {
+    "message": "Click the Settings wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_ARROW": {
+    "message": "Use the arrow at the top of this panel to move it from the right to left of your browser window.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_REOPEN": {
+    "message": "You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_DEACTIVATE": {
+    "message": "Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TOOLTIP_POPUP_CLOSE": {
+    "message": "Close Popup",
+    "description": "tooltip for closing the popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_INFLECT": {
+    "message": "Inflect",
+    "description": "label for inflect button on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_OPTIONS": {
+    "message": "Options",
+    "description": "label for options button on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_DEFINE": {
+    "message": "Define",
+    "description": "label for define button on popup",
+    "component": "Popup"
+  },
+  "PLACEHOLDER_POPUP_DATA": {
+    "message": "No lexical data is available yet",
+    "description": "placeholder text for popup data",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_CREDITS": {
+    "message": "Credits:",
+    "description": "label for credits on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_SHOWCREDITS": {
+    "message": "Credits",
+    "description": "label for show credits link on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_HIDECREDITS": {
+    "message": "Hide Credits",
+    "description": "label for hide credits link on popup",
+    "component": "Popup"
+  },
+  "TEXT_NOTICE_CHANGE_LANGUAGE": {
+    "message": "Language: {languageName}<br>Wrong? Change to:",
+    "description": "language notification",
+    "component": "UI",
+    "params": ["languageName"]
+  },
+  "TEXT_NOTICE_LANGUAGE_UNKNOWN": {
+    "message": "unknown",
+    "description": "unknown language notification",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_GRAMMAR_NOTFOUND": {
+    "message": "The requested grammar resource is not currently available",
+    "description": "grammar not found notification",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_MORPHDATA_READY": {
+    "message": "Morphological analyzer data is ready",
+    "description": "morph data ready notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_MORPHDATA_NOTFOUND": {
+    "message": "Morphological data not found. Definition queries pending.",
+    "description": "morph data not found notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_INFLDATA_READY": {
+    "message": "Inflection data is ready",
+    "description": "inflection data ready notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_DEFSDATA_READY": {
+    "message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"",
+    "description": "definition request success notice",
+    "component": "UI",
+    "params": ["requestType","lemma"]
+  },
+  "TEXT_NOTICE_DEFSDATA_NOTFOUND": {
+    "message":"{requestType} request failed. Lemma not found for: \"{word}\"",
+    "description": "definition request success notice",
+    "component": "UI",
+    "params": ["requestType","word"]
+  },
+  "TEXT_NOTICE_LEXQUERY_COMPLETE": {
+    "message": "All lexical queries complete.",
+    "description": "lexical queries complete notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_GRAMMAR_READY": {
+    "message": "Grammar resource retrieved",
+    "description": "grammar retrieved notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_GRAMMAR_COMPLETE": {
+    "message": "All grammar resource data retrieved",
+    "description": "grammar retrieved notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_RESQUERY_COMPLETE": {
+    "message": "All resource data retrieved",
+    "description": "resource query complete notice",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_DEACTIVATE": {
+    "message": "Deactivate",
+    "description": "Deactivate context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_ACTIVATE": {
+    "message": "Activate",
+    "description": "Activate context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_OPENPANEL": {
+    "message": "Open Panel",
+    "description": "Open Panel context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_INFO": {
+    "message": "Info",
+    "description": "Info context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_SENDEXP": {
+    "message": "Send Experiences to remote server",
+    "description": "send exp data context menu label",
+    "component": "UI"
+  }
+}
