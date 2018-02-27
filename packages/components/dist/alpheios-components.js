@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-experience"), require("alpheios-res-client"));
+		module.exports = factory(require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-res-client"));
 	else if(typeof define === 'function' && define.amd)
-		define(["alpheios-data-models", "alpheios-inflection-tables", "alpheios-experience", "alpheios-res-client"], factory);
+		define(["alpheios-data-models", "alpheios-inflection-tables", "alpheios-res-client"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-experience"), require("alpheios-res-client")) : factory(root["alpheios-data-models"], root["alpheios-inflection-tables"], root["alpheios-experience"], root["alpheios-res-client"]);
+		var a = typeof exports === 'object' ? factory(require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-res-client")) : factory(root["alpheios-data-models"], root["alpheios-inflection-tables"], root["alpheios-res-client"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_47__, __WEBPACK_EXTERNAL_MODULE_77__, __WEBPACK_EXTERNAL_MODULE_83__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_47__, __WEBPACK_EXTERNAL_MODULE_82__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -9714,7 +9714,7 @@ class ResourceQuery extends __WEBPACK_IMPORTED_MODULE_0__query_js__["a" /* defau
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid_v4__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid_v4__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid_v4___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_uuid_v4__);
 
 
@@ -9824,11 +9824,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__locales_en_gb_messages_json__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__locales_en_gb_messages_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__locales_en_gb_messages_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib_controllers_ui_controller__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__lib_selection_media_html_selector__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__lib_queries_lexical_query__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__lib_selection_media_html_selector__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__lib_queries_lexical_query__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__lib_queries_resource_query__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_options_content_options__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__lib_options_resource_options__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_options_content_options__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__lib_options_resource_options__ = __webpack_require__(93);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Popup", function() { return __WEBPACK_IMPORTED_MODULE_0__vue_components_popup_vue__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Panel", function() { return __WEBPACK_IMPORTED_MODULE_1__vue_components_panel_vue__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "L10n", function() { return __WEBPACK_IMPORTED_MODULE_2__lib_l10n_l10n__["a"]; });
@@ -14666,26 +14666,24 @@ exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_experience__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_experience___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_alpheios_experience__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_dist_vue__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_dist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_dist_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vue_components_panel_vue__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__vue_components_popup_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__l10n_l10n__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__locales_locales__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__locales_en_us_messages_json__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__locales_en_us_messages_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__locales_en_us_messages_json__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__locales_en_gb_messages_json__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__locales_en_gb_messages_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__locales_en_gb_messages_json__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__template_htmlf__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__template_htmlf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__template_htmlf__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_alpheios_res_client__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_alpheios_res_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_alpheios_res_client__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__queries_resource_query__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_dist_vue__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_dist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_dist_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__vue_components_panel_vue__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vue_components_popup_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__l10n_l10n__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__locales_locales__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__locales_en_us_messages_json__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__locales_en_us_messages_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__locales_en_us_messages_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__locales_en_gb_messages_json__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__locales_en_gb_messages_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__locales_en_gb_messages_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__template_htmlf__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__template_htmlf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__template_htmlf__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_alpheios_res_client__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_alpheios_res_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_alpheios_res_client__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__queries_resource_query__ = __webpack_require__(26);
 /* global Node */
 
-
+// import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
  // Vue in a runtime + compiler configuration
 
 
@@ -14718,20 +14716,20 @@ class UIController {
 
     this.zIndex = this.getZIndexMax()
 
-    this.l10n = new __WEBPACK_IMPORTED_MODULE_5__l10n_l10n__["a" /* default */]()
-      .addMessages(__WEBPACK_IMPORTED_MODULE_7__locales_en_us_messages_json___default.a, __WEBPACK_IMPORTED_MODULE_6__locales_locales__["a" /* default */].en_US)
-      .addMessages(__WEBPACK_IMPORTED_MODULE_8__locales_en_gb_messages_json___default.a, __WEBPACK_IMPORTED_MODULE_6__locales_locales__["a" /* default */].en_GB)
-      .setLocale(__WEBPACK_IMPORTED_MODULE_6__locales_locales__["a" /* default */].en_US)
+    this.l10n = new __WEBPACK_IMPORTED_MODULE_4__l10n_l10n__["a" /* default */]()
+      .addMessages(__WEBPACK_IMPORTED_MODULE_6__locales_en_us_messages_json___default.a, __WEBPACK_IMPORTED_MODULE_5__locales_locales__["a" /* default */].en_US)
+      .addMessages(__WEBPACK_IMPORTED_MODULE_7__locales_en_gb_messages_json___default.a, __WEBPACK_IMPORTED_MODULE_5__locales_locales__["a" /* default */].en_GB)
+      .setLocale(__WEBPACK_IMPORTED_MODULE_5__locales_locales__["a" /* default */].en_US)
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
-    container.outerHTML = __WEBPACK_IMPORTED_MODULE_9__template_htmlf___default.a
+    container.outerHTML = __WEBPACK_IMPORTED_MODULE_8__template_htmlf___default.a
     // Initialize components
-    this.panel = new __WEBPACK_IMPORTED_MODULE_2_vue_dist_vue___default.a({
+    this.panel = new __WEBPACK_IMPORTED_MODULE_1_vue_dist_vue___default.a({
       el: '#alpheios-panel',
-      components: { panel: __WEBPACK_IMPORTED_MODULE_3__vue_components_panel_vue__["a" /* default */] },
+      components: { panel: __WEBPACK_IMPORTED_MODULE_2__vue_components_panel_vue__["a" /* default */] },
       data: {
         panelData: {
           isOpen: false,
@@ -14928,18 +14926,18 @@ class UIController {
         },
 
         requestGrammar: function (feature) {
-          __WEBPACK_IMPORTED_MODULE_1_alpheios_experience__["ObjectMonitor"].track(
-            __WEBPACK_IMPORTED_MODULE_11__queries_resource_query__["a" /* default */].create(feature, {
-              uiController: this.uiController,
-              grammars: __WEBPACK_IMPORTED_MODULE_10_alpheios_res_client__["Grammars"]
-            }),
-            {
-              experience: 'Get resource',
-              actions: [
-                { name: 'getData', action: __WEBPACK_IMPORTED_MODULE_1_alpheios_experience__["ObjectMonitor"].actions.START, event: __WEBPACK_IMPORTED_MODULE_1_alpheios_experience__["ObjectMonitor"].events.GET },
-                { name: 'finalize', action: __WEBPACK_IMPORTED_MODULE_1_alpheios_experience__["ObjectMonitor"].actions.STOP, event: __WEBPACK_IMPORTED_MODULE_1_alpheios_experience__["ObjectMonitor"].events.GET }
-              ]
-            }).getData()
+          // ExpObjMon.track(
+          __WEBPACK_IMPORTED_MODULE_10__queries_resource_query__["a" /* default */].create(feature, {
+            uiController: this.uiController,
+            grammars: __WEBPACK_IMPORTED_MODULE_9_alpheios_res_client__["Grammars"]
+          }).getData()
+            //, {
+            // experience: 'Get resource',
+            //  actions: [
+            //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
+            //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
+            // ]
+            // }).getData()
         },
 
         settingChange: function (name, value) {
@@ -14978,9 +14976,9 @@ class UIController {
     })
 
     // Create a Vue instance for a popup
-    this.popup = new __WEBPACK_IMPORTED_MODULE_2_vue_dist_vue___default.a({
+    this.popup = new __WEBPACK_IMPORTED_MODULE_1_vue_dist_vue___default.a({
       el: '#alpheios-popup',
-      components: { popup: __WEBPACK_IMPORTED_MODULE_4__vue_components_popup_vue__["a" /* default */] },
+      components: { popup: __WEBPACK_IMPORTED_MODULE_3__vue_components_popup_vue__["a" /* default */] },
       data: {
         messages: [],
         lexemes: [],
@@ -15415,12 +15413,6 @@ class UIController {
 
 /***/ }),
 /* 77 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_77__;
-
-/***/ }),
-/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
@@ -26222,10 +26214,10 @@ return Vue$3;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(79).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(78).setImmediate))
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
@@ -26278,7 +26270,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(80);
+__webpack_require__(79);
 // On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -26292,7 +26284,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -26482,10 +26474,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(81)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(80)))
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -26675,23 +26667,23 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports) {
 
 module.exports = "<div id=\"alpheios-popup\" >\n    <popup :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :linkedfeatures=\"linkedFeatures\"\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\">\n    </popup>\n</div>\n<div id=\"alpheios-panel\">\n    <panel :data=\"panelData\" @close=\"close\" @closenotifications=\"clearNotifications\"\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\n           @changetab=\"changeTab\"></panel>\n</div>\n";
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_83__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_82__;
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(85);
-var bytesToUuid = __webpack_require__(86);
+var rng = __webpack_require__(84);
+var bytesToUuid = __webpack_require__(85);
 
 function v4(options, buf, offset) {
   var i = buf && offset || 0;
@@ -26722,7 +26714,7 @@ module.exports = v4;
 
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports) {
 
 // Unique ID creation requires a high quality random # generator.  In the
@@ -26760,7 +26752,7 @@ if (getRandomValues) {
 
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports) {
 
 /**
@@ -26789,16 +26781,16 @@ module.exports = bytesToUuid;
 
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_closest__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_closest__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_closest___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_closest__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_selector__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__media_selector__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_selector__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__media_selector__ = __webpack_require__(90);
  // To polyfill Element.closest() if required
 
 
@@ -26989,7 +26981,7 @@ class HTMLSelector extends __WEBPACK_IMPORTED_MODULE_3__media_selector__["a" /* 
 
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports) {
 
 // element-closest | CC0-1.0 | github.com/jonathantneal/closest
@@ -27028,11 +27020,11 @@ class HTMLSelector extends __WEBPACK_IMPORTED_MODULE_3__media_selector__["a" /* 
 
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__w3c_text_quote_selector__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__w3c_text_quote_selector__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__);
 
@@ -27116,7 +27108,7 @@ class TextSelector {
 
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27130,7 +27122,7 @@ class TextQuoteSelector {
 
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27184,7 +27176,7 @@ class MediaSelector {
 
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27367,7 +27359,7 @@ class LexicalQuery extends __WEBPACK_IMPORTED_MODULE_1__query_js__["a" /* defaul
 
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27501,7 +27493,7 @@ class ContentOptions {
 
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

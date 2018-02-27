@@ -1,6 +1,6 @@
 /* global Node */
 import {Lexeme, Feature, Definition, LanguageModelFactory, Constants} from 'alpheios-data-models'
-import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
+// import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Panel from '../../vue-components/panel.vue'
 import Popup from '../../vue-components/popup.vue'
@@ -243,18 +243,18 @@ export default class UIController {
         },
 
         requestGrammar: function (feature) {
-          ExpObjMon.track(
-            ResourceQuery.create(feature, {
-              uiController: this.uiController,
-              grammars: Grammars
-            }),
-            {
-              experience: 'Get resource',
-              actions: [
-                { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
-                { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
-              ]
-            }).getData()
+          // ExpObjMon.track(
+          ResourceQuery.create(feature, {
+            uiController: this.uiController,
+            grammars: Grammars
+          }).getData()
+            //, {
+            // experience: 'Get resource',
+            //  actions: [
+            //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
+            //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
+            // ]
+            // }).getData()
         },
 
         settingChange: function (name, value) {
