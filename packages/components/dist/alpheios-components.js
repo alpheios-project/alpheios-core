@@ -9827,6 +9827,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__lib_selection_media_html_selector__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__lib_queries_lexical_query__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__lib_queries_resource_query__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_options_content_options__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__lib_options_resource_options__ = __webpack_require__(94);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Popup", function() { return __WEBPACK_IMPORTED_MODULE_0__vue_components_popup_vue__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Panel", function() { return __WEBPACK_IMPORTED_MODULE_1__vue_components_panel_vue__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "L10n", function() { return __WEBPACK_IMPORTED_MODULE_2__lib_l10n_l10n__["a"]; });
@@ -9837,6 +9839,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return __WEBPACK_IMPORTED_MODULE_7__lib_selection_media_html_selector__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return __WEBPACK_IMPORTED_MODULE_8__lib_queries_lexical_query__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return __WEBPACK_IMPORTED_MODULE_9__lib_queries_resource_query__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ContentOptions", function() { return __WEBPACK_IMPORTED_MODULE_10__lib_options_content_options__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceOptions", function() { return __WEBPACK_IMPORTED_MODULE_11__lib_options_resource_options__["a"]; });
+
+
 
 
 
@@ -27356,6 +27362,313 @@ class LexicalQuery extends __WEBPACK_IMPORTED_MODULE_1__query_js__["a" /* defaul
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = LexicalQuery;
+
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class ContentOptions {
+  constructor (loader, saver) {
+    this.items = ContentOptions.initItems(this)
+    this.loader = loader
+    this.saver = saver
+  }
+
+  static get defaults () {
+    return {
+      locale: {
+        defaultValue: 'en-US',
+        labelText: 'UI Locale:',
+        values: [
+          {value: 'en-US', text: 'English (US)'},
+          {value: 'en-GB', text: 'English (GB)'}
+        ]
+      },
+      panelPosition: {
+        defaultValue: 'left',
+        labelText: 'Panel position:',
+        values: [
+          {value: 'left', text: 'Left'},
+          {value: 'right', text: 'Right'}
+        ]
+      },
+      popupPosition: {
+        defaultValue: 'fixed',
+        labelText: 'Popup position:',
+        values: [
+          {value: 'flexible', text: 'Flexible'},
+          {value: 'fixed', text: 'Fixed'}
+        ]
+      },
+      uiType: {
+        defaultValue: 'popup',
+        labelText: 'UI type:',
+        values: [
+          {value: 'popup', text: 'Pop-up'},
+          {value: 'panel', text: 'Panel'}
+        ]
+      },
+      preferredLanguage: {
+        defaultValue: 'lat',
+        labelText: 'Page language:',
+        values: [
+          {value: 'lat', text: 'Latin'},
+          {value: 'grc', text: 'Greek'},
+          {value: 'ara', text: 'Arabic'},
+          {value: 'per', text: 'Persian'}
+        ]
+      }
+    }
+  }
+
+  static initItems (instance) {
+    let items = {}
+    for (let [key, item] of Object.entries(ContentOptions.defaults)) {
+      items[key] = item
+      item.currentValue = item.defaultValue
+      item.name = key
+      item.textValues = function () {
+        return this.values.map(value => value.text)
+      }
+      item.currentTextValue = function () {
+        for (let value of this.values) {
+          if (value.value === this.currentValue) { return value.text }
+        }
+      }
+      item.setValue = function (value) {
+        item.currentValue = value
+        instance.save(item.name, item.currentValue)
+        return this
+      }
+      item.setTextValue = function (textValue) {
+        for (let value of item.values) {
+          if (value.text === textValue) { item.currentValue = value.value }
+        }
+        instance.save(item.name, item.currentValue)
+        return this
+      }
+    }
+    return items
+  }
+
+  get names () {
+    return Object.keys(this.items)
+  }
+
+  /**
+   * Will always return a resolved promise.
+   */
+  load (callbackFunc) {
+    this.loader().then(
+      values => {
+        for (let key in values) {
+          if (this.items.hasOwnProperty(key)) {
+            this.items[key].currentValue = values[key]
+          }
+        }
+        callbackFunc(this)
+      },
+      error => {
+        console.error(`Cannot retrieve options for Alpheios extension from storage: ${error}. Default values
+          will be used instead`)
+        callbackFunc(this)
+      }
+    )
+  }
+
+  save (optionName, optionValue) {
+    // Update value in the local storage
+    let option = {}
+    option[optionName] = optionValue
+
+    this.saver(option).then(
+      () => {
+        // Options storage succeeded
+        console.log(`Value "${optionValue}" of "${optionName}" option value was stored successfully`)
+      },
+      (errorMessage) => {
+        console.error(`Storage of an option value failed: ${errorMessage}`)
+      }
+    )
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ContentOptions;
+
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__);
+
+
+let codes = {
+  greek: __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageCodeFromId(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Constants"].LANG_GREEK),
+  latin: __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageCodeFromId(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Constants"].LANG_LATIN),
+  persian: __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageCodeFromId(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Constants"].LANG_PERSIAN),
+  arabic: __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageCodeFromId(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Constants"].LANG_ARABIC)
+}
+
+class ResourceOptions {
+  /**
+   * ResourceOptions is a class which encapsulates defaults and user preferences
+   * for settings related to language specific resources such as Lexicons and Grammars
+   */
+  constructor (loader, saver) {
+    this.items = ResourceOptions.initItems(this)
+    this.loader = loader
+    this.saver = saver
+  }
+
+  static get defaults () {
+    return {
+      // TODO we should actually pull the defaults from the LexiconClient itself
+      // this is provisional for the alpha release
+      lexicons: {
+        labelText: 'Lexicons',
+        languages: {
+          [codes.greek]: {
+            defaultValue: ['https://github.com/alpheios-project/lsj'],
+            labelText: 'Greek Lexicons',
+            multiValue: true,
+            values: [
+              {value: 'https://github.com/alpheios-project/ml', text: 'Middle Liddell'},
+              {value: 'https://github.com/alpheios-project/lsj', text: 'Liddell, Scott, Jones'},
+              {value: 'https://github.com/alpheios-project/aut', text: 'Autenrieth Homeric Lexicon'},
+              {value: 'https://github.com/alpheios-project/dod', text: 'Dodson'},
+              {value: 'https://github.com/alpheios-project/as', text: 'Abbott-Smith'}
+            ]
+          },
+          [codes.latin]: {
+            defaultValue: ['https://github.com/alpheios-project/ls'],
+            labelText: 'Latin Lexicons',
+            multiValue: true,
+            values: [
+              {value: 'https://github.com/alpheios-project/ls', text: 'Lewis & Short'}
+            ]
+          },
+          [codes.arabic]: {
+            defaultValue: ['https://github.com/alpheios-project/lan'],
+            labelText: 'Arabic Lexicons',
+            multiValue: true,
+            values: [
+              {value: 'https://github.com/alpheios-project/lan', text: 'Lane'},
+              {value: 'https://github.com/alpheios-project/sal', text: 'Salmone'}
+            ]
+          },
+          [codes.persian]: {
+            defaultValue: ['https://github.com/alpheios-project/stg'],
+            labelText: 'Persian Lexicons',
+            multiValue: true,
+            values: [
+              {value: 'https://github.com/alpheios-project/stg', text: 'Steingass'}
+            ]
+          }
+        }
+      }
+    }
+  }
+
+  static initItems (instance) {
+    let items = {}
+    for (let [option, langs] of Object.entries(ResourceOptions.defaults)) {
+      items[option] = []
+      for (let [key, item] of Object.entries(langs.languages)) {
+        item.currentValue = item.defaultValue
+        item.name = `${option}-${key}`
+        item.textValues = function () {
+          return this.values.map(value => value.text)
+        }
+        item.currentTextValue = function () {
+          let currentTextValues = []
+          for (let value of this.values) {
+            if (this.currentValue.includes(value.value)) { currentTextValues.push(value.text) }
+          }
+          return currentTextValues
+        }
+        item.setValue = function (value) {
+          item.currentValue = value
+          instance.save(item.name, item.currentValue)
+          return this
+        }
+        item.setTextValue = function (textValues) {
+          item.currentValue = []
+          for (let value of item.values) {
+            for (let textValue of textValues) {
+              if (value.text === textValue) { item.currentValue.push(value.value) }
+            }
+          }
+          instance.save(item.name, item.currentValue)
+          return this
+        }
+        items[option].push(item)
+      }
+    }
+    return items
+  }
+
+  get names () {
+    return Object.keys(this.items)
+  }
+
+  /**
+   * Will always return a resolved promise.
+   */
+  load (callbackFunc) {
+    this.loader().then(
+      values => {
+        for (let key in values) {
+          let keyinfo = this.parseKey(key)
+          if (this.items.hasOwnProperty(keyinfo.setting)) {
+            this.items[keyinfo.setting].forEach((f) => { if (f.name === key) { f.currentValue = JSON.parse(values[key]) } })
+          }
+        }
+        callbackFunc(this)
+      },
+      error => {
+        console.error(`Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values
+          will be used instead`)
+        callbackFunc(this)
+      }
+    )
+  }
+
+ /**
+  * Parse a stored setting name into its component parts
+  * (for simplicity of the data structure, setting names are stored under
+  * keys which combine the setting and the language)
+  */
+  parseKey (name) {
+    let [setting, language] = name.split('-')
+    return {
+      setting: setting,
+      language: language
+    }
+  }
+
+  save (optionName, optionValue) {
+    // Update value in the local storage
+    let option = {}
+    option[optionName] = JSON.stringify(optionValue)
+
+    this.saver(option).then(
+      () => {
+        // Options storage succeeded
+        console.log(`Value "${optionValue}" of "${optionName}" option value was stored successfully`)
+      },
+      (errorMessage) => {
+        console.error(`Storage of an option value failed: ${errorMessage}`)
+      }
+    )
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ResourceOptions;
 
 
 

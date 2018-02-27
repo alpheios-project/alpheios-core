@@ -8,4 +8,6 @@ import UIController from './lib/controllers/ui-controller'
 import HTMLSelector from './lib/selection/media/html-selector'
 import LexicalQuery from './lib/queries/lexical-query'
 import ResourceQuery from './lib/queries/resource-query'
-export { Popup, Panel, L10n, Locales, enUS, enGB, UIController, HTMLSelector, LexicalQuery, ResourceQuery }
+import ContentOptions from './lib/options/content-options'
+import ResourceOptions from './lib/options/resource-options'
+export { Popup, Panel, L10n, Locales, enUS, enGB, UIController, HTMLSelector, LexicalQuery, ResourceQuery, ContentOptions, ResourceOptions }
