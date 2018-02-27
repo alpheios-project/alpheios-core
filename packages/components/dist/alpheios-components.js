@@ -14683,7 +14683,7 @@ exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_alpheios_res_client__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_alpheios_res_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_alpheios_res_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__queries_resource_query__ = __webpack_require__(26);
-/* global Node, browser */
+/* global Node */
 
 
  // Vue in a runtime + compiler configuration
@@ -14705,7 +14705,7 @@ const languageNames = new Map([
 ])
 
 class UIController {
-  constructor (state, options, resourceOptions, statuses) {
+  constructor (state, options, resourceOptions, statuses, manifest) {
     this.state = state
     this.options = options
     this.resourceOptions = resourceOptions
@@ -14714,6 +14714,7 @@ class UIController {
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.verboseMode = false
+    this.manifest = manifest
 
     this.zIndex = this.getZIndexMax()
 
@@ -14762,7 +14763,7 @@ class UIController {
             tableBody: 'alpheios-panel-content-infl-table-body'
           },
           infoComponentData: {
-            manifest: browser.runtime.getManifest(),
+            manifest: this.manifest,
             languageName: UIController.getLanguageName(this.state.currentLanguage)
           },
           messages: [],

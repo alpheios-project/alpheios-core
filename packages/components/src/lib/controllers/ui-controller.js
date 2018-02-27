@@ -1,4 +1,4 @@
-/* global Node, browser */
+/* global Node */
 import {Lexeme, Feature, Definition, LanguageModelFactory, Constants} from 'alpheios-data-models'
 import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
@@ -20,7 +20,7 @@ const languageNames = new Map([
 ])
 
 export default class UIController {
-  constructor (state, options, resourceOptions, statuses) {
+  constructor (state, options, resourceOptions, statuses, manifest) {
     this.state = state
     this.options = options
     this.resourceOptions = resourceOptions
@@ -29,6 +29,7 @@ export default class UIController {
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.verboseMode = false
+    this.manifest = manifest
 
     this.zIndex = this.getZIndexMax()
 
@@ -77,7 +78,7 @@ export default class UIController {
             tableBody: 'alpheios-panel-content-infl-table-body'
           },
           infoComponentData: {
-            manifest: browser.runtime.getManifest(),
+            manifest: this.manifest,
             languageName: UIController.getLanguageName(this.state.currentLanguage)
           },
           messages: [],
