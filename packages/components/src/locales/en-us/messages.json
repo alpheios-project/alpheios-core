@@ -248,6 +248,21 @@
     "description": "resource query complete notice",
     "component": "UI"
   },
+  "LABEL_BROWSERACTION_DEACTIVATE": {
+    "message": "Deactivate Alpheios",
+    "description": "Deactivate browser action title",
+    "component": "UI"
+  },
+  "LABEL_BROWSERACTION_ACTIVATE": {
+    "message": "Activate Alpheios",
+    "description": "Activate browser action title",
+    "component": "UI"
+  },
+  "LABEL_BROWSERACTION_DISABLED": {
+    "message": "(Alpheios Extension Disabled For Page)",
+    "description": "Disabled browser action title",
+    "component": "UI"
+  },
   "LABEL_CTXTMENU_DEACTIVATE": {
     "message": "Deactivate",
     "description": "Deactivate context menu label",
@@ -256,6 +271,11 @@
   "LABEL_CTXTMENU_ACTIVATE": {
     "message": "Activate",
     "description": "Activate context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_DISABLED": {
+    "message": "(Disabled)",
+    "description": "Disabled context menu label",
     "component": "UI"
   },
   "LABEL_CTXTMENU_OPENPANEL": {
