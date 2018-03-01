@@ -1,6 +1,6 @@
 {
   "name": "alpheios-res-client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Alpheios Resource Client Library",
   "main": "dist/alpheios-res-client.standalone.js",
   "moduleExternal": "dist/alpheios-res-client.module-external.js",
