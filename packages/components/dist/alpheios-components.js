@@ -14708,7 +14708,7 @@ const languageNames = new Map([
 class UIController {
   /**
    * @constructor
-   * @param {Object} state - State object for the parent application  (API definiition pending)
+   * @param {UIStateAPI} state - State object for the parent application
    * @param {ContentOptions} options - content options  (API definition pending)
    * @param {ResourceOptions} resourceOptions - resource options  (API definition pending)
    * @param {Object} manifest - parent application info details  (API definition pending)
