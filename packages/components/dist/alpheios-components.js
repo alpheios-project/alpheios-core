@@ -14703,16 +14703,17 @@ const languageNames = new Map([
 ])
 
 class UIController {
-  constructor (state, options, resourceOptions, statuses, manifest) {
+  constructor (state, options, resourceOptions, manifest,
+    template = {html: __WEBPACK_IMPORTED_MODULE_8__template_htmlf___default.a, panelId: 'alpheios-panel', popupId: 'alpheios-popup'}) {
     this.state = state
     this.options = options
     this.resourceOptions = resourceOptions
-    this.statuses = statuses
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.verboseMode = false
     this.manifest = manifest
+    this.template = template
 
     this.zIndex = this.getZIndexMax()
 
@@ -14725,10 +14726,10 @@ class UIController {
     document.body.classList.add('alpheios')
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
-    container.outerHTML = __WEBPACK_IMPORTED_MODULE_8__template_htmlf___default.a
+    container.outerHTML = template.html
     // Initialize components
     this.panel = new __WEBPACK_IMPORTED_MODULE_1_vue_dist_vue___default.a({
-      el: '#alpheios-panel',
+      el: `#${this.template.panelId}`,
       components: { panel: __WEBPACK_IMPORTED_MODULE_2__vue_components_panel_vue__["a" /* default */] },
       data: {
         panelData: {
@@ -14799,7 +14800,7 @@ class UIController {
         open: function () {
           if (!this.state.isPanelOpen()) {
             this.panelData.isOpen = true
-            this.state.setItem('panelStatus', statuses.panel.OPEN)
+            this.state.setPanelOpen()
           }
           return this
         },
@@ -14807,7 +14808,7 @@ class UIController {
         close: function () {
           if (!this.state.isPanelClosed()) {
             this.panelData.isOpen = false
-            this.state.setItem('panelStatus', statuses.panel.CLOSED)
+            this.state.setPanelClosed()
           }
           return this
         },
@@ -14969,15 +14970,15 @@ class UIController {
 
     this.options.load(() => {
       this.resourceOptions.load(() => {
-        this.state.status = statuses.script.ACTIVE
-        console.log('Content script is activated')
+        this.state.activateUI()
+        console.log('UI options are loaded')
         this.updateLanguage(this.options.items.preferredLanguage.currentValue)
       })
     })
 
     // Create a Vue instance for a popup
     this.popup = new __WEBPACK_IMPORTED_MODULE_1_vue_dist_vue___default.a({
-      el: '#alpheios-popup',
+      el: `#${this.template.popupId}`,
       components: { popup: __WEBPACK_IMPORTED_MODULE_3__vue_components_popup_vue__["a" /* default */] },
       data: {
         messages: [],

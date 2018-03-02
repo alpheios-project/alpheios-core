@@ -20,16 +20,29 @@ const languageNames = new Map([
 ])
 
 export default class UIController {
-  constructor (state, options, resourceOptions, statuses, manifest) {
+
+  /**
+   * @constructor
+   * @param {Object} state - State object for the parent application  (API definiition pending)
+   * @param {ContentOptions} options - content options  (API definition pending)
+   * @param {ResourceOptions} resourceOptions - resource options  (API definition pending)
+   * @param {Object} manifest - parent application info details  (API definition pending)
+   * @param {Object} template - object with the following properties:
+   *                            html: HTML string for the container of the Alpheios components
+   *                            panelId: the id of the wrapper for the panel component
+   *                            popupId: the id of the wrapper for the popup component
+   */
+  constructor (state, options, resourceOptions, manifest,
+    template = {html: Template, panelId: 'alpheios-panel', popupId: 'alpheios-popup'}) {
     this.state = state
     this.options = options
     this.resourceOptions = resourceOptions
-    this.statuses = statuses
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.verboseMode = false
     this.manifest = manifest
+    this.template = template
 
     this.zIndex = this.getZIndexMax()
 
@@ -42,10 +55,10 @@ export default class UIController {
     document.body.classList.add('alpheios')
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
-    container.outerHTML = Template
+    container.outerHTML = template.html
     // Initialize components
     this.panel = new Vue({
-      el: '#alpheios-panel',
+      el: `#${this.template.panelId}`,
       components: { panel: Panel },
       data: {
         panelData: {
@@ -116,7 +129,7 @@ export default class UIController {
         open: function () {
           if (!this.state.isPanelOpen()) {
             this.panelData.isOpen = true
-            this.state.setItem('panelStatus', statuses.panel.OPEN)
+            this.state.setPanelOpen()
           }
           return this
         },
@@ -124,7 +137,7 @@ export default class UIController {
         close: function () {
           if (!this.state.isPanelClosed()) {
             this.panelData.isOpen = false
-            this.state.setItem('panelStatus', statuses.panel.CLOSED)
+            this.state.setPanelClosed()
           }
           return this
         },
@@ -286,15 +299,15 @@ export default class UIController {
 
     this.options.load(() => {
       this.resourceOptions.load(() => {
-        this.state.status = statuses.script.ACTIVE
-        console.log('Content script is activated')
+        this.state.activateUI()
+        console.log('UI options are loaded')
         this.updateLanguage(this.options.items.preferredLanguage.currentValue)
       })
     })
 
     // Create a Vue instance for a popup
     this.popup = new Vue({
-      el: '#alpheios-popup',
+      el: `#${this.template.popupId}`,
       components: { popup: Popup },
       data: {
         messages: [],
