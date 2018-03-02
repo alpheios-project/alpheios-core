@@ -9824,11 +9824,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__locales_en_gb_messages_json__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__locales_en_gb_messages_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__locales_en_gb_messages_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib_controllers_ui_controller__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__lib_selection_media_html_selector__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__lib_queries_lexical_query__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__lib_queries_resource_query__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_options_content_options__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__lib_options_resource_options__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__lib_controllers_ui_state__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__lib_selection_media_html_selector__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__lib_queries_lexical_query__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_queries_resource_query__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__lib_options_content_options__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__lib_options_resource_options__ = __webpack_require__(94);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Popup", function() { return __WEBPACK_IMPORTED_MODULE_0__vue_components_popup_vue__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Panel", function() { return __WEBPACK_IMPORTED_MODULE_1__vue_components_panel_vue__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "L10n", function() { return __WEBPACK_IMPORTED_MODULE_2__lib_l10n_l10n__["a"]; });
@@ -9836,11 +9837,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "enUS", function() { return __WEBPACK_IMPORTED_MODULE_4__locales_en_us_messages_json___default.a; });
 /* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "enGB", function() { return __WEBPACK_IMPORTED_MODULE_5__locales_en_gb_messages_json___default.a; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "UIController", function() { return __WEBPACK_IMPORTED_MODULE_6__lib_controllers_ui_controller__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return __WEBPACK_IMPORTED_MODULE_7__lib_selection_media_html_selector__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return __WEBPACK_IMPORTED_MODULE_8__lib_queries_lexical_query__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return __WEBPACK_IMPORTED_MODULE_9__lib_queries_resource_query__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ContentOptions", function() { return __WEBPACK_IMPORTED_MODULE_10__lib_options_content_options__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceOptions", function() { return __WEBPACK_IMPORTED_MODULE_11__lib_options_resource_options__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return __WEBPACK_IMPORTED_MODULE_8__lib_selection_media_html_selector__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return __WEBPACK_IMPORTED_MODULE_9__lib_queries_lexical_query__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return __WEBPACK_IMPORTED_MODULE_10__lib_queries_resource_query__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ContentOptions", function() { return __WEBPACK_IMPORTED_MODULE_11__lib_options_content_options__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceOptions", function() { return __WEBPACK_IMPORTED_MODULE_12__lib_options_resource_options__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return __WEBPACK_IMPORTED_MODULE_7__lib_controllers_ui_state__["a"]; });
+
 
 
 
@@ -14703,6 +14706,17 @@ const languageNames = new Map([
 ])
 
 class UIController {
+  /**
+   * @constructor
+   * @param {Object} state - State object for the parent application  (API definiition pending)
+   * @param {ContentOptions} options - content options  (API definition pending)
+   * @param {ResourceOptions} resourceOptions - resource options  (API definition pending)
+   * @param {Object} manifest - parent application info details  (API definition pending)
+   * @param {Object} template - object with the following properties:
+   *                            html: HTML string for the container of the Alpheios components
+   *                            panelId: the id of the wrapper for the panel component
+   *                            popupId: the id of the wrapper for the popup component
+   */
   constructor (state, options, resourceOptions, manifest,
     template = {html: __WEBPACK_IMPORTED_MODULE_8__template_htmlf___default.a, panelId: 'alpheios-panel', popupId: 'alpheios-popup'}) {
     this.state = state
@@ -26786,12 +26800,106 @@ module.exports = bytesToUuid;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_closest__ = __webpack_require__(87);
+/**
+ * Interface for a State Object to manage Alpheios UI State
+ */
+class UIStateAPI {
+  /**
+   * Method to use to set a general property on the state
+   * @param key
+   * @param value
+   * @return {UIStateAPI}
+   */
+  setItem (key, value) {
+    throw new Error('Unimplemented')
+  }
+
+  /**
+   * Sets a watcher function that is called every time a property is changed using a setItem() method.
+   * @param {String} property - A name of a property that should be monitored
+   * @param {Function} watchFunc - A function that will be called every time a property changes
+   * @return {State} Reference to self for chaining
+   */
+  setWatcher (property, watchFunc) {
+    throw new Error('Unimplemented')
+  }
+
+  /**
+   * Check if the state of the panel is open
+   * @return {boolean} true if open false if closed
+   */
+  isPanelOpen () {
+    return false
+  }
+
+  /**
+   * Check if the state of the panel is closed
+   * @return {boolean} true if closed false if open
+   */
+  isPanelClosed () {
+    return false
+  }
+
+  /**
+   * Set the state of the panel to open
+   * @return {UIStateAPI} the updated state object
+   */
+  setPanelOpen () {
+    console.log('setPanelOpen is not implemented')
+    return this
+  }
+
+  /**
+   * Set the state of the panel to closed
+   * @return {UIStateAPI} the updated state object
+   */
+  setPanelClosed () {
+    console.log('setPanelClosed is not implemented')
+    return this
+  }
+
+  /**
+   * Check if the state of the UI is active (i.e. fully loaded and ready to use)
+   * @return {boolean} true if active false if not
+   */
+  uiIsActive () {
+    return false
+  }
+
+  /**
+   * Set the state of the UI to active (i.e. fully loaded and ready to use)
+   * @return {IState} the updated state object
+   */
+  activateUI () {
+    console.log('activateUI is not implemented')
+    return this
+  }
+
+  /**
+   * Set the currently active panel tab
+   * @param {String} tabName name of the tab
+   * @return {UIStateAPI} the updated state object
+   */
+  changeTab (tabName) {
+    console.log('changeTab is not implemented')
+    return this
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = UIStateAPI;
+
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_closest__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_closest___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_closest__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_selector__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__media_selector__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_selector__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__media_selector__ = __webpack_require__(91);
  // To polyfill Element.closest() if required
 
 
@@ -26982,7 +27090,7 @@ class HTMLSelector extends __WEBPACK_IMPORTED_MODULE_3__media_selector__["a" /* 
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports) {
 
 // element-closest | CC0-1.0 | github.com/jonathantneal/closest
@@ -27021,11 +27129,11 @@ class HTMLSelector extends __WEBPACK_IMPORTED_MODULE_3__media_selector__["a" /* 
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__w3c_text_quote_selector__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__w3c_text_quote_selector__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_alpheios_data_models___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_alpheios_data_models__);
 
@@ -27109,7 +27217,7 @@ class TextSelector {
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27123,7 +27231,7 @@ class TextQuoteSelector {
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27177,7 +27285,7 @@ class MediaSelector {
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27360,7 +27468,7 @@ class LexicalQuery extends __WEBPACK_IMPORTED_MODULE_1__query_js__["a" /* defaul
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27494,7 +27602,7 @@ class ContentOptions {
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -20,7 +20,6 @@ const languageNames = new Map([
 ])
 
 export default class UIController {
-
   /**
    * @constructor
    * @param {Object} state - State object for the parent application  (API definiition pending)
