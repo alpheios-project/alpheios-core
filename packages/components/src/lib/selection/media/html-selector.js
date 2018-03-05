@@ -72,7 +72,12 @@ export default class HTMLSelector extends MediaSelector {
     let anchorText = anchor.data
     let ro
     let invalidAnchor = false
-    if (focus.data && !anchorText.match(this._escapeRegExp(focus.data))) {
+    // firefox's implementation of getSelection is buggy and can result
+    // in incomplete data - sometimes the anchor text doesn't contain the focus data
+    // and sometimes the focus data and anchor text is just whitespaces
+    // in these cases we just use the target textContent
+    if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
+      (focus.data && focus.data.match(/^\s*$/))) {
       anchorText = this.target.textContent
       ro = 0
       invalidAnchor = true
