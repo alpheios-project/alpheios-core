@@ -12,12 +12,6 @@
         type: Object,
         required: true
       },
-    },
-
-    computed: {
-      grammarProvider: function () {
-        return (this.res.provider) ? this.res.provider.toString() : ''
-      }
     }
   }
 </script>
