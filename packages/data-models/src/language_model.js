@@ -1,4 +1,5 @@
 import * as Constants from './constants.js'
+import LanguageModelFactory from './language_model_factory.js'
 import Feature from './feature.js'
 import FeatureType from './feature_type.js'
 import InflectionGroupingKey from './inflection_grouping_key.js'
@@ -8,77 +9,285 @@ import InflectionGroup from './inflection_group.js'
  * @class  LanguageModel is the base class for language-specific behavior
  */
 class LanguageModel {
-   /**
-   */
   constructor () {
-    this.sourceLanguage = null
-    this.contextForward = 0
-    this.context_backward = 0
-    this.direction = Constants.LANG_DIR_LTR
-    this.baseUnit = Constants.LANG_UNIT_WORD
-    this.codes = []
+    // This is just to avoid JavaScript Standard error on `context_backward` getter name. Don't need a constructor otherwise
+    // TODO: `contextBackward` shall be used instead of `context_backward` wherever it is used
+    this.context_backward = LanguageModel.contextBackward
+  }
+
+  static get contextForward () { return 0 }
+  static get contextBackward () { return 0 }
+  static get direction () { return Constants.LANG_DIR_LTR }
+  static get baseUnit () { return Constants.LANG_UNIT_WORD }
+
+  /**
+   * @deprecated
+   */
+  get contextForward () {
+    console.warn(`Please use static "contextForward" instead`)
+    return this.constructor.contextForward
+  }
+
+  /**
+   * @deprecated
+   */
+  get contextBackward () {
+    console.warn(`Please use static "contextBackward" instead`)
+    return this.constructor.contextBackward
+  }
+
+  /**
+   * @deprecated
+   */
+  get direction () {
+    console.warn(`Please use static "direction" instead`)
+    return this.constructor.direction
+  }
+
+  /**
+   * @deprecated
+   */
+  get baseUnit () {
+    console.warn(`Please use static "baseUnit" instead`)
+    return this.constructor.baseUnit
+  }
+
+  /**
+   * @deprecated
+   */
+  get features () {
+    console.warn(`Please use individual "getFeatureType" or static "features" instead`)
+    return this.constructor.features
+  }
+
+  static get featureNames () {
+    return this.featureValues.keys()
+  }
+
+  static get features () {
+    let features = {}
+    for (const featureName of this.featureNames) {
+      features[featureName] = this.getFeatureType(featureName)
+    }
+    return features
+  }
+
+  static get languageID () {
+    return Constants.LANG_UNDEFINED
+  }
+
+  static get languageCode () {
+    return Constants.STR_LANG_CODE_UNDEFINED
+  }
+
+  /**
+   * Returns an array of language codes that represents the language.
+   * @return {String[]} An array of language codes that matches the language.
+   */
+  static get languageCodes () {
+    return []
+  }
+
+  static get codes () {
+    console.warn(`Use static "languageCodes" instead`)
+    return this.languageCodes
+  }
+
+  /**
+   * @deprecated
+   * @return {String[]}
+   */
+  get codes () {
+    console.warn(`Please use a static version of "codes" instead`)
+    return this.constructor.languageCodes
+  }
+
+  /**
+   * @deprecated
+   * @return {string}
+   */
+  toCode () {
+    console.warn(`Please use a static "languageCode" instead`)
+    return this.constructor.languageCode
+  }
+
+  /**
+   * @deprecated
+   * @return {string}
+   */
+  static toCode () {
+    console.warn(`Please use a static "languageCode" instead`)
+    return this.languageCode
+  }
+
+  static get featureValues () {
+    /*
+    This could be a static variable, but then it will create a circular reference:
+    Feature -> LanguageModelFactory -> LanguageModel -> Feature
+     */
+    return new Map([
+      [
+        Feature.types.part,
+        [
+          Constants.POFS_ADVERB,
+          Constants.POFS_ADVERBIAL,
+          Constants.POFS_ADJECTIVE,
+          Constants.POFS_ARTICLE,
+          Constants.POFS_CONJUNCTION,
+          Constants.POFS_EXCLAMATION,
+          Constants.POFS_INTERJECTION,
+          Constants.POFS_NOUN,
+          Constants.POFS_NUMERAL,
+          Constants.POFS_PARTICLE,
+          Constants.POFS_PREFIX,
+          Constants.POFS_PREPOSITION,
+          Constants.POFS_PRONOUN,
+          Constants.POFS_SUFFIX,
+          Constants.POFS_SUPINE,
+          Constants.POFS_VERB,
+          Constants.POFS_VERB_PARTICIPLE
+        ]
+      ],
+      [
+        Feature.types.gender,
+        [
+          Constants.GEND_MASCULINE,
+          Constants.GEND_FEMININE,
+          Constants.GEND_NEUTER
+        ]
+      ],
+      [
+        Feature.types.type,
+        [
+          Constants.TYPE_REGULAR,
+          Constants.TYPE_IRREGULAR
+        ]
+      ],
+      [
+        Feature.types.person,
+        [
+          Constants.ORD_1ST,
+          Constants.ORD_2ND,
+          Constants.ORD_3RD
+        ]
+      ],
+      [
+        Feature.types.age,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.area,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.source,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.frequency,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.geo,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.pronunciation,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.kind,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.comparison,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.morph,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.stemtype,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ],
+      [
+        Feature.types.derivtype,
+        [
+          FeatureType.UNRESTRICTED_VALUE
+        ]
+      ]
+    ])
+  }
+
+  /**
+   * @deprecated
+   * @return {symbol} Returns a language ID
+   */
+  static get sourceLanguage () {
+    console.warn(`Please use languageID directly`)
+    return this.languageID
+  }
+
+  /**
+   * @deprecated
+   * @return {symbol} Returns a language ID
+   */
+  get sourceLanguage () {
+    console.warn(`Please use languageID directly`)
+    return this.constructor.languageID
+  }
+
+  static getFeatureType (name) {
+    let featureValues = this.featureValues
+    if (featureValues.has(name)) {
+      return new FeatureType(name, featureValues.get(name), this.languageID)
+    } else {
+      throw new Error(`Feature "${name}" is not defined`)
+    }
   }
 
   _initializeFeatures () {
     let features = {}
-    let code = this.toCode()
-    features[Feature.types.part] = new FeatureType(Feature.types.part,
-      [ Constants.POFS_ADVERB,
-        Constants.POFS_ADVERBIAL,
-        Constants.POFS_ADJECTIVE,
-        Constants.POFS_ARTICLE,
-        Constants.POFS_CONJUNCTION,
-        Constants.POFS_EXCLAMATION,
-        Constants.POFS_INTERJECTION,
-        Constants.POFS_NOUN,
-        Constants.POFS_NUMERAL,
-        Constants.POFS_PARTICLE,
-        Constants.POFS_PREFIX,
-        Constants.POFS_PREPOSITION,
-        Constants.POFS_PRONOUN,
-        Constants.POFS_SUFFIX,
-        Constants.POFS_SUPINE,
-        Constants.POFS_VERB,
-        Constants.POFS_VERB_PARTICIPLE ], code)
-    features[Feature.types.gender] = new FeatureType(Feature.types.gender,
-      [ Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER ], code)
-    features[Feature.types.type] = new FeatureType(Feature.types.type,
-      [Constants.TYPE_REGULAR, Constants.TYPE_IRREGULAR], code)
-    features[Feature.types.person] = new FeatureType(Feature.types.person,
-      [Constants.ORD_1ST, Constants.ORD_2ND, Constants.ORD_3RD], code)
-    // some general, non-language specific grammatical features
-    features[Feature.types.age] = new FeatureType(Feature.types.age,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.area] = new FeatureType(Feature.types.area,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.source] = new FeatureType(Feature.types.source,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.frequency] = new FeatureType(Feature.types.frequency,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.geo] = new FeatureType(Feature.types.geo,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.source] = new FeatureType(Feature.types.source,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.pronunciation] = new FeatureType(Feature.types.pronunciation,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.kind] = new FeatureType(Feature.types.kind,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.comparison] = new FeatureType(Feature.types.comparison,
-      [Constants.COMP_POSITIVE, Constants.COMP_SUPERLATIVE, Constants.COMP_COMPARITIVE], code)
-    features[Feature.types.morph] = new FeatureType(Feature.types.morph,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.stemtype] = new FeatureType(Feature.types.stemtype,
-      [FeatureType.UNRESTRICTED_VALUE], code)
-    features[Feature.types.derivtype] = new FeatureType(Feature.types.derivtype,
-      [FeatureType.UNRESTRICTED_VALUE], code)
+    for (const featureName of this.constructor.featureValues.keys()) {
+      features[featureName] = this.constructor.getFeatureType(featureName)
+    }
     return features
+  }
+
+  /**
+   * @deprecated
+   */
+  grammarFeatures () {
+    console.warn(`Please use a static version of "grammarFeatures" instead`)
+    return this.constructor.grammarFeatures()
   }
 
   /**
    * Identify the morphological features which should be linked to a grammar.
    * @returns {String[]} Array of Feature types
    */
-  grammarFeatures () {
+  static grammarFeatures () {
     return []
   }
 
@@ -86,7 +295,7 @@ class LanguageModel {
    * Check to see if this language tool can produce an inflection table display
    * for the current node
    */
-  canInflect (node) {
+  static canInflect (node) {
     return false
   }
 
@@ -97,7 +306,7 @@ class LanguageModel {
    * @type Boolean
    */
   static supportsLanguage (code) {
-    return this.codes.includes[code]
+    return this.languageCodes.includes[code]
   }
 
   /**
@@ -107,7 +316,7 @@ class LanguageModel {
    *          override in language-specific subclass)
    * @type String
    */
-  normalizeWord (word) {
+  static normalizeWord (word) {
     return word
   }
 
@@ -117,30 +326,40 @@ class LanguageModel {
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
    * @param {string} encoding optional encoding name to filter the response to
-   * @returns an array of alternate encodinges
+   * @returns {Array} an array of alternate encodings
    */
-  alternateWordEncodings (word, preceding = null, folloiwng = null, encoding = null) {
+  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
     return []
+  }
+
+  alternateWordEncodings (word, preceding, following, encoding) {
+    console.warn(`Please use static "alternateWordEncodings" instead`)
+    return this.constructor.alternateWordEncodings(word, preceding, following, encoding)
   }
 
   /**
    * Get a list of valid puncutation for this language
    * @returns {String} a string containing valid puncutation symbols
    */
+  static getPunctuation () {
+    return '.,;:!?\'"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r'
+  }
+
+  /**
+   * @deprecated
+   * @return {String}
+   */
   getPunctuation () {
-    return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r"
+    console.warn(`Please use a static version of "getPunctuation"`)
+    return this.constructor.getPunctuation()
   }
 
   toString () {
-    return String(this.sourceLanguage)
+    return String(this.constructor.languageCode)
   }
 
   isEqual (model) {
-    return this.sourceLanguage === model.sourceLanguage
-  }
-
-  toCode () {
-    return null
+    return LanguageModelFactory.compareLanguages(this.languageID, model.languageID)
   }
 
   /*
@@ -151,22 +370,13 @@ class LanguageModel {
    */
 
   /**
-   * Returns an array of language codes that represents the language.
-   * @return {String[]} An array of language codes that matches the language.
-   */
-  static get codes () {
-    return []
-  }
-
-  /**
-   * Checks wither a language has a particular language code in its list of codes
+   * Checks whether a language has a particular language code in its list of codes
    * @param {String} languageCode - A language code to check
-   * @param {String[]} codes - Array of language codes a specific language has
-   * @return {boolean} Wither this language code exists in a language code list
+   * @return {boolean} Whether this language code exists in a language code list
    */
-  static hasCodeInList (languageCode, codes) {
-    if (LanguageModel.isLanguageCode(languageCode)) {
-      return codes.includes(languageCode)
+  static hasCode (languageCode) {
+    if (this.isLanguageCode(languageCode)) {
+      return this.languageCodes.includes(languageCode)
     } else {
       throw new Error(`Format of a "${languageCode}" is incorrect`)
     }
@@ -191,6 +401,15 @@ class LanguageModel {
   }
 
   /**
+   * @deprecated
+   * @param node
+   */
+  canInflect (node) {
+    console.warn(`Please use a static version of "canInflect" instead`)
+    return this.constructor.canInflect(node)
+  }
+
+  /**
    * Groups a set of inflections according to a language-specific display paradigm
    * The default groups according to the following logic:
    *   1. groups of groups with unique stem, prefix, suffix, part of speech dialect and comparison
@@ -203,18 +422,19 @@ class LanguageModel {
    *       3. groups of those groups with unique voice and tense
    *         4. groups of inflections with unique gender, person, mood, and sort
    */
-  groupInflectionsForDisplay (inflections) {
+  static groupInflectionsForDisplay (inflections) {
     let grouped = new Map()
 
     // group inflections by part of speech
     for (let infl of inflections) {
       let groupingKey = new InflectionGroupingKey(infl,
         [Feature.types.part, Feature.types.dialect, Feature.types.comparison],
-        { prefix: infl.prefix,
+        {
+          prefix: infl.prefix,
           suffix: infl.suffix,
           stem: infl.stem
         }
-        )
+      )
       let groupingKeyStr = groupingKey.toString()
       if (grouped.has(groupingKeyStr)) {
         grouped.get(groupingKeyStr).append(infl)
@@ -313,6 +533,16 @@ class LanguageModel {
       kv[1].inflections = Array.from(inflgrp.values())
     }
     return Array.from(grouped.values())
+  }
+
+  /**
+   * @deprecated
+   * @param inflections
+   * @return {*}
+   */
+  groupInflectionsForDisplay (inflections) {
+    console.warn(`Please use a static version of "groupInflectionsForDisplay" instead`)
+    return this.constructor.groupInflectionsForDisplay(inflections)
   }
 }
 

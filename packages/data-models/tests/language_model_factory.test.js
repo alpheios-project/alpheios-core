@@ -1,5 +1,6 @@
 /* eslint-env jest */
 'use strict'
+import * as Constants from '../src/constants.js'
 import LanguageModelFactory from '../src/language_model_factory.js'
 import LatinLanguageModel from '../src/latin_language_model.js'
 import GreekLanguageModel from '../src/greek_language_model.js'
@@ -41,7 +42,7 @@ describe('LanguageModelFactory object', () => {
   test('Should return a Base model', () => {
     let model = LanguageModelFactory.getLanguageForCode('foo')
     expect(model instanceof LanguageModel).toBeTruthy()
-    expect(model.sourceLanguage).toBeNull()
+    expect(model.constructor.languageID).toBe(Constants.LANG_UNDEFINED)
   })
 
   test('Should return false for an unsupported language', () => {

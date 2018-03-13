@@ -1,5 +1,6 @@
 import LMF from './language_model_factory.js'
 import * as i18n from './i18n.js'
+
 /**
  * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
  */
@@ -8,8 +9,13 @@ class Feature {
      * Initializes a Feature object
      * @param {string | string[]} value - A single feature value or, if this feature could have multiple
      * values, an array of values.
+     * Multiple values do not allow to use a sort order. Because of this, it's better to use
+     * array of multiple Feature objects with single value each instead of a single Feature object
+     * with multiple values.
+     * Multiple values are left for backward compatibility only. Please do not use them as they
+     * will be removed in the future.
      * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {String | Symbol} language - A language of a feature, allowed values are specified in 'languages' object.
+     * @param {string | symbol} language - A language of a feature, allowed values are specified in 'languages' object.
      * @param {int} sortOrder - an integer used for sorting
      */
   constructor (value, type, language, sortOrder = 1) {
@@ -44,6 +50,8 @@ class Feature {
 
   isEqual (feature) {
     if (Array.isArray(feature.value)) {
+      // `feature` is a single object with multiple `value` properties. This feature will be sunset
+      // as it does not allow to use sort order on Feature objects.
       if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
         return false
       }
@@ -53,7 +61,7 @@ class Feature {
       })
       return equal
     } else {
-      return this.value === feature.value && this.type === feature.type && LMF.compareLanguages(this.languageID, feature.languageID)
+      return LMF.compareLanguages(this.languageID, feature.languageID) && this.type === feature.type && this.value === feature.value
     }
   }
 
@@ -116,13 +124,13 @@ Feature.types = {
   meaning: 'meaning', // Meaning of a word
   source: 'source', // Source of word definition
   footnote: 'footnote', // A footnote for a word's ending
-  dialect: 'dialect', // a dialect iderntifier
+  dialect: 'dialect', // a dialect identifier
   note: 'note', // a general note
   pronunciation: 'pronunciation',
   age: 'age',
   area: 'area',
   geo: 'geo', // geographical data
-  kind: 'kind', // verb kind informatin
+  kind: 'kind', // verb kind information
   derivtype: 'derivtype',
   stemtype: 'stemtype',
   morph: 'morph', // general morphological information

@@ -27,7 +27,7 @@ class Inflection {
     /**
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
-     * @param {String | Symbol} language - A word's language.
+     * @param {string | symbol} language - A word's language.
      * @param {string} suffix - a suffix of a word
      * @param {prefix} prefix - a prefix of a word
      * @param {example} example - example
@@ -38,7 +38,7 @@ class Inflection {
     }
 
     if (!language) {
-      throw new Error('Langauge should not be empty.')
+      throw new Error('Language should not be empty.')
     }
 
     if (!LMF.supportsLanguage(language)) {
@@ -49,15 +49,31 @@ class Inflection {
     this.languageID = undefined
     this.languageCode = undefined
     ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(language))
+    this.model = LMF.getLanguageModel(this.languageID)
 
-    // Suffix may not be present in every word. If missing, it will set to null.
+    // A grammar constraints object
+    this.constraints = {
+      fullFormBased: false,  // True this inflection stores and requires to use a full form of a word
+      suffixBased: false,    // True if only suffix is enough to identify this inflection
+      obligatoryMatches: [], // Names of features that should be matched in order to include a form or suffix to an inflection table
+      optionalMatches: []    // Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
+    }
+
+    // Suffix may not be present in every word. If missing, it will be set to null.
     this.suffix = suffix
 
-    // Prefix may not be present in every word. If missing, it will set to null.
+    // Prefix may not be present in every word. If missing, it will be set to null.
     this.prefix = prefix
 
     // Example may not be provided
     this.example = example
+  }
+
+  get form () {
+    let form = this.prefix ? this.prefix : ''
+    form = form + this.stem
+    form = this.suffix ? form + this.suffix : form
+    return form
   }
 
   /**
@@ -67,6 +83,24 @@ class Inflection {
   get language () {
     console.warn(`Please use a "languageID" instead of a "language"`)
     return this.languageCode
+  }
+
+  /**
+   * Sets grammar properties based on inflection info
+   */
+  setConstraints () {
+    if (this.model.hasOwnProperty('getInflectionConstraints')) {
+      let constraintData = this.model.getInflectionConstraints(this)
+      this.constraints = Object.assign(this.constraints, constraintData)
+    }
+  }
+
+  compareWithWord (word, normalize = true) {
+    const model = LMF.getLanguageModel(this.languageID)
+    const value = this.constraints.suffixBased ? this.suffix : this.form
+    return normalize
+      ? model.normalizeWord(value) === model.normalizeWord(word)
+      : value === word
   }
 
   static readObject (jsonObject) {
@@ -105,6 +139,23 @@ class Inflection {
 
       this[type].push(element)
     }
+  }
+
+  /**
+   * Checks whether an inflection has a feature with `featureName` name and `featureValue` value
+   * @param {string} featureName - A name of a feature
+   * @param {string} featureValue - A value of a feature
+   * @return {boolean} True if an inflection contains a feature, false otherwise
+   */
+  hasFeatureValue (featureName, featureValue) {
+    if (this.hasOwnProperty(featureName) && Array.isArray(this[featureName]) && this[featureName].length > 0) {
+      for (let feature of this[featureName]) {
+        if (feature.hasValue(featureValue)) {
+          return true
+        }
+      }
+    }
+    return false
   }
 }
 export default Inflection

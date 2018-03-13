@@ -16,7 +16,6 @@ describe('Lemma object', () => {
   test('Should be initialized properly', () => {
     expect(lemma).toEqual({
       word: word,
-      language: 'lat',
       languageCode: 'lat',
       languageID: expect.anything(),
       principalParts: [],
@@ -24,7 +23,6 @@ describe('Lemma object', () => {
     })
     expect(lemmaWithParts).toEqual({
       word: word,
-      language: 'lat',
       languageCode: 'lat',
       languageID: expect.anything(),
       principalParts: ['part1', 'part2'],

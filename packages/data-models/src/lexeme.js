@@ -58,7 +58,7 @@ class Lexeme {
   }
 
   getGroupedInflections () {
-    let lm = LMF.getLanguageForCode(this.lemma.language)
+    let lm = LMF.getLanguageModel(this.lemma.languageID)
     return lm.groupInflectionsForDisplay(this.inflections)
   }
 

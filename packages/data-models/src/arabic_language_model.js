@@ -4,63 +4,27 @@ import * as Constants from './constants.js'
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
-class ArabicLanguageModel extends LanguageModel {
-   /**
-   * @constructor
-   */
-  constructor () {
-    super()
-    this.sourceLanguage = ArabicLanguageModel.sourceLanguage
-    this.contextForward = 0
-    this.contextBackward = 0
-    this.direction = Constants.LANG_DIR_RTL
-    this.baseUnit = Constants.LANG_UNIT_WORD
-    this.languageCodes = ArabicLanguageModel.codes
-    this._initializeFeatures()
-  }
-
-  _initializeFeatures () {
-    this.features = super._initializeFeatures()
-  }
-
-  static get sourceLanguage () {
-    return Constants.LANG_ARABIC
-  }
-
-  static get codes () {
-    return [Constants.STR_LANG_CODE_ARA, Constants.STR_LANG_CODE_AR]
-  }
-
-  // For compatibility with existing code, can be replaced with a static version
-  toCode () {
-    return ArabicLanguageModel.toCode()
-  }
-
-  static toCode () {
-    return Constants.STR_LANG_CODE_ARA
-  }
-
-  /**
-   * Checks wither a language has a particular language code in its list of codes
-   * @param {String} languageCode - A language code to check
-   * @return {boolean} Wither this language code exists in a language code list
-   */
-  static hasCode (languageCode) {
-    return LanguageModel.hasCodeInList(languageCode, ArabicLanguageModel.codes)
-  }
+export default class ArabicLanguageModel extends LanguageModel {
+  static get languageID () { return Constants.LANG_ARABIC }
+  static get languageCode () { return Constants.STR_LANG_CODE_ARA }
+  static get languageCodes () { return [Constants.STR_LANG_CODE_ARA, Constants.STR_LANG_CODE_AR] }
+  static get contextForward () { return 0 }
+  static get contextBackward () { return 0 }
+  static get direction () { return Constants.LANG_DIR_RTL }
+  static get baseUnit () { return Constants.LANG_UNIT_WORD }
 
   /**
    * Check to see if this language tool can produce an inflection table display
    * for the current node
    */
-  canInflect (node) {
+  static canInflect (node) {
     return false
   }
 
   /**
    * @override LanguageModel#alternateWordEncodings
    */
-  alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
     // tanwin (& tatweel) - drop FATHATAN, DAMMATAN, KASRATAN, TATWEEL
     let tanwin = word.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, '')
     // hamzas - replace ALEF WITH MADDA ABOVE, ALEF WITH HAMZA ABOVE/BELOW with ALEF
@@ -92,8 +56,7 @@ class ArabicLanguageModel extends LanguageModel {
    * Get a list of valid puncutation for this language
    * @returns {String} a string containing valid puncutation symbols
    */
-  getPunctuation () {
+  static getPunctuation () {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r"
   }
 }
-export default ArabicLanguageModel

@@ -3,10 +3,12 @@ export const LANG_UNIT_WORD = Symbol('word')
 export const LANG_UNIT_CHAR = Symbol('char')
 export const LANG_DIR_LTR = Symbol('ltr')
 export const LANG_DIR_RTL = Symbol('rtl')
+export const LANG_UNDEFINED = Symbol('undefined')
 export const LANG_LATIN = Symbol('latin')
 export const LANG_GREEK = Symbol('greek')
 export const LANG_ARABIC = Symbol('arabic')
 export const LANG_PERSIAN = Symbol('persian')
+export const STR_LANG_CODE_UNDEFINED = 'undefined'
 export const STR_LANG_CODE_LAT = 'lat'
 export const STR_LANG_CODE_LA = 'la'
 export const STR_LANG_CODE_GRC = 'grc'
@@ -201,11 +203,15 @@ export const VOICE_CIRCUMSTANTIAL = 'circumstantial'
 export const VOICE_DEPONENT = 'deponent'
 export const TYPE_IRREGULAR = 'irregular'
 export const TYPE_REGULAR = 'regular'
-// Classes (of pronouns in Latin)
+// Classes
 export const CLASS_PERSONAL = 'personal'
 export const CLASS_REFLEXIVE = 'reflexive'
 export const CLASS_POSSESSIVE = 'possessive'
 export const CLASS_DEMONSTRATIVE = 'demonstrative'
 export const CLASS_RELATIVE = 'relative'
 export const CLASS_INTERROGATIVE = 'interrogative'
+export const CLASS_GENERAL_RELATIVE = 'general relative'
+export const CLASS_INDEFINITE = 'indefinite'
+export const CLASS_INTENSIVE = 'intensive'
+export const CLASS_RECIPROCAL = 'reciprocal'
 /* eslit-enable no-unused-vars */

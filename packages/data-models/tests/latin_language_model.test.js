@@ -1,16 +1,18 @@
 /* eslint-env jest */
 'use strict'
+import * as Constants from '../src/constants.js'
 import LMF from '../src/language_model_factory.js'
 import Feature from '../src/feature.js'
-import * as Constants from '../src/constants.js'
 
 describe('LanguageModelFactory object', () => {
   'use strict'
 
   let latin
+  let latinModel
 
   beforeAll(() => {
     latin = LMF.getLanguageForCode('lat')
+    latinModel = LMF.getLanguageModel(Constants.LANG_LATIN)
   })
 
   test('Uses default features with correct language', () => {
@@ -25,6 +27,6 @@ describe('LanguageModelFactory object', () => {
   })
 
   test('normalizes accents', () => {
-    expect(latin.normalizeWord('tantulō')).toEqual('tantulo')
+    expect(latinModel.normalizeWord('tantulō')).toEqual('tantulo')
   })
 })

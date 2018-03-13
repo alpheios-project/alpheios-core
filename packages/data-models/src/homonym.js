@@ -65,5 +65,17 @@ class Homonym {
       throw new Error('Homonym has not been initialized properly. Unable to obtain language ID information.')
     }
   }
+
+  /**
+   * Returns a list of all inflections within all lexemes of a homonym
+   * @return {Inflection[]} An array of inflections
+   */
+  get inflections () {
+    let inflections = []
+    for (const lexeme of this.lexemes) {
+      inflections = inflections.concat(lexeme.inflections)
+    }
+    return inflections
+  }
 }
 export default Homonym

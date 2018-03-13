@@ -1,4 +1,5 @@
 /* eslint-env jest */
+import * as Constants from '../src/constants.js'
 import Homonym from '../src/homonym.js'
 import Lexeme from '../src/lexeme.js'
 import Lemma from '../src/lemma.js'
@@ -43,8 +44,9 @@ describe('Homonym', () => {
     expect(() => new Homonym(['some value'])).toThrowError(/Lexeme/)
   })
 
-  test('language() should return a language of a homonym.', () => {
-    expect(homonym.language).toBe('grc')
+  test('languageID should return a language of a homonym.', () => {
+    // TODO: Need to test for a symbol here
+    expect(homonym.languageID).toBe(Constants.LANG_GREEK)
   })
 
   afterAll(() => {
