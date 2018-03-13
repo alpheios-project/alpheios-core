@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/alpheios-project/inflection-tables#readme",
   "devDependencies": {
-    "alpheios-data-models": "github:alpheios-project/data-models#pronouns",
+    "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-tufts-adapter": "github:alpheios-project/tufts-adapter",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
