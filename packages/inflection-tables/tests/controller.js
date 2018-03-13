@@ -1,12 +1,11 @@
 'use strict'
 // Import shared language data
-import languages from '../lib/languages'
 import * as Models from 'alpheios-data-models'
-import * as L10n from '../l10n/l10n'
+import L10n from '../l10n/l10n.js'
 import * as Styles from '../views/styles/styles'
 import Suffix from '../lib/suffix'
 import LanguageDataset from '../lib/language-dataset'
-import LanguageDataList from '../lib/language-data-list'
+import LanguageDatasetFactory from '../lib/language-dataset-factory'
 import MatchData from '../lib/match-data'
 import Footnote from '../lib/footnote'
 import InflectionData from '../lib/inflection-data'
@@ -29,7 +28,6 @@ exports.Models = {
   Constants: Models.Constants
 }
 
-exports.languages = languages
 exports.Feature = Models.Feature
 exports.FeatureType = Models.FeatureType
 exports.FeatureImporter = Models.FeatureImporter
@@ -39,19 +37,16 @@ exports.Lexeme = Models.Lexeme
 exports.Homonym = Models.Homonym
 exports.Suffix = Suffix
 exports.LanguageDataset = LanguageDataset
-exports.LanguageDataList = LanguageDataList
+exports.LanguageDatasetFactory = LanguageDatasetFactory
 exports.MatchData = MatchData
 exports.Footnote = Footnote
-exports.ResultSet = InflectionData
+exports.InflectionData = InflectionData
 
 // L10n
 exports.LatinLanguageModel = Models.LatinLanguageModel
 
 // L10n
-exports.L10n = {
-  MessageBundle: L10n.MessageBundle,
-  L10n: L10n.L10n
-}
+exports.L10n = L10n
 
 // Styles
 exports.Styles = {

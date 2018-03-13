@@ -33,7 +33,7 @@ let show = function show (languageCode, word) {
   maAdapter.getHomonym(languageCode, word).then(
     (homonym) => {
       // Get matching suffixes from an inflection library
-      let wordData = langData.getSuffixes(homonym)
+      let wordData = langData.getInflectionData(homonym)
       // wordData.homonym.targetWord = word;
 
       // Insert rendered view to a page

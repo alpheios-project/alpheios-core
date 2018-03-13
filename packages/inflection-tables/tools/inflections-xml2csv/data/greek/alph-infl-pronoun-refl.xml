@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="file:/C:/work/schemas/inflections.css"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="greek" footnote="foot-1">
+  <order-table>
+    <order-item attname="case" order="1">nominative</order-item>
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="pers" order="1">1st</order-item>
+    <order-item attname="pers" order="2">2nd</order-item>
+    <order-item attname="pers" order="3">3rd</order-item>
+    <order-item attname="type" order="2">regular</order-item>
+    <order-item attname="type" order="3">irregular</order-item>
+    <order-item attname="num" order="1">singular</order-item>
+    <order-item attname="num" order="3">plural</order-item>
+    <order-item attname="gend" order="2">feminine</order-item>
+    <order-item attname="gend" order="1">masculine</order-item>
+    <order-item attname="gend" order="3">neuter</order-item>
+  </order-table>
+  <infl-endings>
+    <infl-ending-set
+      pers="1st" num="plural"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἡμᾶς</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτά̄ς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἡμῖν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐταῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἡμῶν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ὑ̄μᾶς</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτά̄ς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ὑ̄μῖν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐταῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ὑ̄μῶν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἑαυτά̄ς</infl-ending>
+        <infl-ending
+               type="primary regular">σφᾶς</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτά̄ς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἑαυταῖς</infl-ending>
+        <infl-ending
+               type="primary regular">σφίσιν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑταῖς  </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἑαυτῶν</infl-ending>
+        <infl-ending
+               type="primary regular">σφῶν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἡμᾶς</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτούς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἡμῖν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτοῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἡμῶν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ὑ̄μᾶς</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτούς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ὑ̄μῖν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτοῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ὑ̄μῶν</infl-ending>
+        <infl-ending
+               type="primary regular">αὐτῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑαυτούς</infl-ending>
+        <infl-ending
+               type="primary regular">σφᾶς</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτούς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑαυτοῖς</infl-ending>
+        <infl-ending
+               type="primary regular">σφίσιν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτοῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑαυτῶν</infl-ending>
+        <infl-ending
+               type="primary regular">σφῶν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑαυτά</infl-ending>
+        <infl-ending
+               type="primary regular">σφέα</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτά</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑαυτοῖς</infl-ending>
+        <infl-ending
+               type="primary regular">σφίσιν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτοῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑαυτῶν</infl-ending>
+        <infl-ending
+               type="primary regular">σφῶν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐμαυτήν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐμαυτῇ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐμαυτῆς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">σεαυτήν</infl-ending>
+        <infl-ending
+               type="primary regular">σαυτήν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">σεαυτῇ</infl-ending>
+        <infl-ending
+               type="primary regular">σαυτῇ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">σεαυτῆς</infl-ending>
+        <infl-ending
+               type="primary regular">σαυτῆς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἑαυτήν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτήν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἑαυτῇ</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτῇ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἑαυτῆς</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτῆς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐμαυτόν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐμαυτῷ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐμαυτοῦ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">σεαυτόν</infl-ending>
+        <infl-ending
+               type="primary regular">σαυτόν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">σεαυτῷ</infl-ending>
+        <infl-ending
+               type="primary regular">σαυτῷ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">σεαυτοῦ</infl-ending>
+        <infl-ending
+               type="primary regular">σαυτοῦ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑαυτόν</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτόν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑαυτῷ</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτῷ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑαυτοῦ</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτοῦ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑαυτό</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτό</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑαυτῷ</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτῷ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑαυτοῦ</infl-ending>
+        <infl-ending
+               type="primary regular">αὑτοῦ</infl-ending>
+    </infl-ending-set>
+  </infl-endings>
+<footnotes>
+    <footnote id="foot-1">The reflexive pronouns are formed by compounding the stems of the personal pronouns with the oblique cases of αὐτός</footnote>
+</footnotes>
+</infl-data>

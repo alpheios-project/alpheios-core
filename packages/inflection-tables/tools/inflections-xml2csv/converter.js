@@ -88,8 +88,18 @@ const config = {
           'use strict'
 
           let results = []
+          let dataSetNum = 1
           for (const classGroup of json['infl-data'][0]['pronoun-data-set']) {
             let className = classGroup['_attr']['class']['_value']
+
+            // If there are any headwords
+            let headwords = ''
+            if (classGroup['hdwd-set']) {
+              for (const hdwd of classGroup['hdwd-set'][0]['hdwd']) {
+                if (headwords) headwords += ';'
+                headwords += hdwd['_text']
+              }
+            }
             for (const formGroup of classGroup['infl-form-set']) {
               let person = formGroup['_attr']['pers'] ? formGroup['_attr']['pers']['_value'] : ''
               let number = formGroup['_attr']['num'] ? formGroup['_attr']['num']['_value'] : ''
@@ -100,37 +110,37 @@ const config = {
                 // There is an `infl-form` node
                 for (const form of formGroup['infl-form']) {
                   let type = form['_attr']['type']['_value']
-                  let alt = form['_attr'].hasOwnProperty('alt')
-                    ? config.latin.pronoun.footnotes.normalizeIndex(form['_attr']['alt']['_value'])
-                    : ''
                   let footnote = form['_attr'].hasOwnProperty('footnote')
                     ? config.latin.pronoun.footnotes.normalizeIndex(form['_attr']['footnote']['_value'])
                     : ''
                   results.push({
+                    'Form Set': dataSetNum,
+                    'Headwords': headwords,
                     'Class': className,
                     'Person': person,
                     'Number': number,
                     'Case': grmCase,
                     'Type': type,
                     'Form': form['_text'],
-                    'Alt': alt,
                     'Footnote': footnote
                   })
                 }
               } else {
                 // There is no `infl-form` node
                 results.push({
+                  'Form Set': dataSetNum,
+                  'Headwords': headwords,
                   'Class': className,
                   'Person': person,
                   'Number': number,
                   'Case': grmCase,
                   'Type': '',
                   'Form': '',
-                  'Alt': '',
                   'Footnote': ''
                 })
               }
             }
+            dataSetNum++
           }
           return csvParser.unparse(results)
         }
@@ -180,7 +190,6 @@ const config = {
           for (const group of data) {
             // Iterate over group's individual items
             for (const suffix of group['infl-ending']) {
-
               let footnote = ''
               if (suffix['_attr'].hasOwnProperty('footnote')) {
                 // There can be multiple footnotes separated by spaces
@@ -230,7 +239,7 @@ const config = {
     },
 
     verb: {
-      inputFN: ['alph-verb-conj.xml','alph-verb-conj-supp.xml'],
+      inputFN: ['alph-verb-conj.xml', 'alph-verb-conj-supp.xml'],
       outputSubDir: 'verb/',
       suffixes: {
         outputFN: 'suffixes.csv',
@@ -261,7 +270,7 @@ const config = {
                   'Conjugation': group['_attr']['conj']['_value'],
                   'Voice': group['_attr']['voice']['_value'],
                   'Mood': group['_attr']['mood']['_value'],
-                  'Tense': group['_attr']['tense']? group['_attr']['tense']['_value'] : '',
+                  'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
                   'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
                   'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
                   'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
@@ -276,7 +285,7 @@ const config = {
                 'Conjugation': group['_attr']['conj']['_value'],
                 'Voice': group['_attr']['voice']['_value'],
                 'Mood': group['_attr']['mood']['_value'],
-                'Tense': group['_attr']['tense']? group['_attr']['tense']['_value'] : '',
+                'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
                 'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
                 'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
                 'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
@@ -475,6 +484,294 @@ const config = {
           return csvParser.unparse(result)
         }
       }
+    },
+
+    pronoun: {
+      inputFiles: [
+        { name: 'alph-infl-pronoun-dem.xml', class: 'demonstrative' },
+        { name: 'alph-infl-pronoun-genrel.xml', class: 'general relative' },
+        { name: 'alph-infl-pronoun-indef.xml', class: 'indefinite' },
+        { name: 'alph-infl-pronoun-inten.xml', class: 'intensive' },
+        { name: 'alph-infl-pronoun-inter.xml', class: 'interrogative' },
+        { name: 'alph-infl-pronoun-pers.xml', class: 'personal' },
+        // Eliminate possessive pronouns for now because of complexities with person
+        /* { name: 'alph-infl-pronoun-pos.xml', class: 'possessive' },
+        { name: 'alph-infl-pronoun-pos1.xml', class: 'possessive' },
+        { name: 'alph-infl-pronoun-pos2.xml', class: 'possessive' },
+        { name: 'alph-infl-pronoun-pos3.xml', class: 'possessive' }, */
+        { name: 'alph-infl-pronoun-recip.xml', class: 'reciprocal' },
+        { name: 'alph-infl-pronoun-refl.xml', class: 'reflexive' },
+        { name: 'alph-infl-pronoun-rel.xml', class: 'relative' }
+      ],
+      outputSubDir: 'pronoun/',
+      forms: {
+        outputFN: 'forms.csv',
+        get outputPath () {
+          return path.join(__dirname, config.greek.outputBaseDir, config.greek.pronoun.outputSubDir, this.outputFN)
+        },
+        getFromFiles (files, inputBaseDir) {
+          let forms = []
+          let footnotes = []
+          let footnoteBase = 0
+          for (const file of files) {
+            let data = readFile(path.join(__dirname, inputBaseDir, file.name))
+            const json = xmlToJSON.parseString(data)
+            data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set']
+            let grmClass = file.class
+
+            for (const group of data) {
+              let person = group['_attr'].hasOwnProperty('pers') ? group['_attr']['pers']['_value'].replace(' and ', ',').replace(', ', ',') : ''
+              let headword = group['_attr'].hasOwnProperty('hdwd') ? group['_attr']['hdwd']['_value'] : ''
+              // Probably don't need that
+              // let objectNumber = group['_attr'].hasOwnProperty('objnum') ? group['_attr']['objnum']['_value'] : ''
+              let number = group['_attr']['num']['_value']
+              let grmCase = group['_attr']['case']['_value']
+              let gender = group['_attr'].hasOwnProperty('gend') ? group['_attr']['gend']['_value'] : ''
+
+              // Iterate over endings
+              for (const formData of group['infl-ending']) {
+                let type = formData['_attr']['type']['_value']
+                let primary = ''
+                let typeArray = type.split(' ')
+                if (typeArray.length > 2) {
+                  throw new Error('Type value is expected to contain up to two word.')
+                } else if (typeArray.length > 1) {
+                  // Array probably contain two values, one of which is 'primary'
+                  let primaryIndex = typeArray.indexOf('primary')
+                  if (primaryIndex > -1) {
+                    primary = 'primary'
+                    typeArray.splice(primaryIndex, 1)
+                    type = typeArray[0]
+                  } else {
+                    throw new Error('Type value is expected to contain up to two words, ' +
+                      'one of them should be "primary".')
+                  }
+                }
+
+                let dialects = formData['_attr'].hasOwnProperty('dialects') ? formData['_attr']['dialects']['_value'] : ''
+
+                let footnote = ''
+                if (formData['_attr'].hasOwnProperty('footnote')) {
+                  // There can be multiple footnotes separated by spaces
+                  let footnotes = formData['_attr']['footnote']['_value'].match(/\d+/g)
+                  if (footnotes) {
+                    footnotes = footnotes.map(value => footnoteBase + parseInt(value, 10))
+                    footnote = footnotes.join(',')
+                  }
+                }
+
+                let form = {
+                  'Form': formData['_text'],
+                  'Headword': headword,
+                  'Class': grmClass,
+                  'Person': person,
+                  'Number': number,
+                  'Case': grmCase,
+                  'Gender': gender,
+                  'Type': type,
+                  'Primary': primary,
+                  'Dialects': dialects,
+                  'Footnote': footnote
+                }
+                forms.push(form)
+              }
+            }
+
+            // Footnotes
+            if (json['infl-data'][0].hasOwnProperty('footnotes')) {
+              const footnoteItems = json['infl-data'][0].footnotes[0].footnote
+
+              for (const footnoteItem of footnoteItems) {
+                let text = footnoteItem['_text'].replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+                let index = this.normalizeIndex(footnoteItem['_attr'].id['_value'])
+                footnotes.push({
+                  'Index': footnoteBase + parseInt(index, 10),
+                  'Text': text
+                })
+              }
+            }
+            footnoteBase = footnotes.length
+          }
+          return {
+            forms: csvParser.unparse(forms),
+            footnotes: csvParser.unparse(footnotes)
+          }
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        }
+      },
+      footnotes: {
+        outputFN: 'footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.greek.outputBaseDir, config.greek.pronoun.outputSubDir, this.outputFN)
+        }
+      }
+    },
+    paradigm: {
+      inputFileName: 'alph-infl-verb-paradigms.xml',
+      outputVerbSubDir: 'verb/paradigm',
+      outputVerbParticipleSubDir: 'verb-participle/paradigm',
+      rulesFileName: 'rules.csv',
+      footnotesFileName: 'footnotes.csv',
+      createParadigmTables () {
+        // let forms = []
+        // let footnotes = []
+        // let footnoteBase = 0
+        let data = readFile(path.join(__dirname, config.greek.inputBaseDir, config.greek.paradigm.inputFileName))
+        const json = xmlToJSON.parseString(data)
+
+        // Rules of matching
+        data = json['infl-paradigms'][0]['morpheus-paradigm-match'][0]['match']
+        let verbRules = []
+        let verbRuleIDs = []
+        let verbParticipleRules = []
+        let verbParticipleRuleIDs = []
+        for (const paradigm of data) {
+          const id = paradigm['_attr']['paradigm_id_ref']['_value']
+          const matchOrder = paradigm['_attr']['match_order']['_value']
+          let partOfSpeech = ''
+          let stemtype = ''
+          let voice = ''
+          let mood = ''
+          let tense = ''
+          let lemma = ''
+          let morphFlags = ''
+          let dialect = ''
+          for (const constraint of paradigm['constraint']) {
+            const name = constraint['_attr']['name']['_value']
+            if (name === 'pofs') {
+              partOfSpeech = constraint['_text']
+            } else if (name === 'stemtype') {
+              stemtype = constraint['_text']
+            } else if (name === 'voice') {
+              voice = constraint['_text']
+            } else if (name === 'mood') {
+              mood = constraint['_text']
+            } else if (name === 'tense') {
+              tense = constraint['_text']
+            } else if (name === 'lemma') {
+              lemma = constraint['_text']
+            } else if (name === 'morphflags') {
+              morphFlags = constraint['_text']
+            } else if (name === 'dial') {
+              dialect = constraint['_text']
+            }
+          }
+          if (!partOfSpeech) {
+            partOfSpeech = 'verb' // If not specified, set to verb by default
+            verbRuleIDs.push(id)
+          } else {
+            // This is a verb participle
+            verbParticipleRuleIDs.push(id)
+          }
+          let store = (partOfSpeech === 'verb_participle') ? verbParticipleRules : verbRules
+          store.push({
+            'ID ref': id,
+            'Match order': matchOrder,
+            'Part of speech': partOfSpeech,
+            'Stem type': stemtype,
+            'Voice': voice,
+            'Mood': mood,
+            'Tense': tense,
+            'Lemma': lemma,
+            'Morph flags': morphFlags,
+            'Dialect': dialect
+          })
+        }
+        writeData(csvParser.unparse(verbRules), path.join(__dirname, config.greek.outputBaseDir,
+          config.greek.paradigm.outputVerbSubDir, config.greek.paradigm.rulesFileName))
+        writeData(csvParser.unparse(verbParticipleRules), path.join(__dirname, config.greek.outputBaseDir,
+          config.greek.paradigm.outputVerbParticipleSubDir, config.greek.paradigm.rulesFileName))
+
+        // Tables
+        data = json['infl-paradigms'][0]['infl-paradigm']
+        for (const tableEntry of data) {
+          let tableObject = {}
+          tableObject.ID = tableEntry['_attr']['id']['_value']
+          let index = tableObject.ID.replace('verbpdgm', '')
+          if (index.length === 1) { index = '0' + index }
+          tableObject.partOfSpeech = verbRuleIDs.includes(tableObject.ID) ? 'verb' : 'verb_participle'
+          tableObject.title = tableEntry['title'][0]['_text']
+          tableObject.table = undefined
+          tableObject.subTables = []
+          for (const tableData of tableEntry['table']) {
+            let table = {
+              rows: []
+            }
+            for (const rowData of tableData['row']) {
+              let row = {
+                cells: []
+              }
+              for (const cellData of rowData['cell']) {
+                let cell = {}
+                cell.role = cellData['_attr']['role']['_value']
+                if (cellData['_attr'].hasOwnProperty('tense')) { cell.tense = cellData['_attr']['tense']['_value'] }
+                if (cellData['_attr'].hasOwnProperty('voice')) { cell.voice = cellData['_attr']['voice']['_value'] }
+                if (cellData['_attr'].hasOwnProperty('num')) { cell.number = cellData['_attr']['num']['_value'] }
+                if (cellData['_attr'].hasOwnProperty('pers')) { cell.person = cellData['_attr']['pers']['_value'] }
+                if (cellData['_attr'].hasOwnProperty('mood')) { cell.mood = cellData['_attr']['mood']['_value'] }
+                if (cell.role === 'data') {
+                  cell.value = ''
+                  if (cellData.hasOwnProperty('span') &&
+                    cellData['span'][0].hasOwnProperty('_text') &&
+                    !Array.isArray(cellData['span'][0]['_text'])) {
+                    cell.value = cellData['span'][0]['_text']
+                  }
+                  if (cellData.hasOwnProperty('reflink')) {
+                    cell.reflink = {}
+                    if (cellData['reflink'][0].hasOwnProperty('_text')) {
+                      cell.reflink.text = cellData['reflink'][0]['_text']
+                    }
+                    if (cellData['reflink'][0].hasOwnProperty('_attr') &&
+                      cellData['reflink'][0]['_attr'].hasOwnProperty('href')) {
+                      cell.reflink.href = cellData['reflink'][0]['_attr']['href']['_value']
+                    }
+                  }
+                } else if (cell.role === 'label') {
+                  cell.value = ''
+                  if (cellData.hasOwnProperty('_text') && !Array.isArray(cellData['_text'])) {
+                    cell.value = cellData['_text']
+                  }
+                }
+                row.cells.push(cell)
+              }
+              table.rows.push(row)
+            }
+            if (tableData.hasOwnProperty('_attr') &&
+              tableData['_attr'].hasOwnProperty('role') &&
+              tableData['_attr']['role']['_value'] === 'sub') {
+              // This is a sub table
+              tableObject.subTables.push(table)
+            } else {
+              // This is a main table
+              tableObject.table = table
+            }
+          }
+          const outputSubDir = (tableObject.partOfSpeech === 'verb_participle')
+            ? config.greek.paradigm.outputVerbParticipleSubDir
+            : config.greek.paradigm.outputVerbSubDir
+          writeData(JSON.stringify(tableObject), path.join(__dirname, config.greek.outputBaseDir,
+            outputSubDir, `tables`, `paradigm-${index}.json`))
+        }
+
+        // Footnotes
+        data = json['infl-paradigms'][0]['footnotes'][0]['footnote']
+        let footnotes = []
+        for (const footnote of data) {
+          let index = footnote['_attr']['id']['_value'].replace(/\D+/g, '')
+          let text = footnote['_text']
+          footnotes.push({
+            Index: index,
+            Text: text
+          })
+        }
+
+        writeData(csvParser.unparse(footnotes), path.join(__dirname, config.greek.outputBaseDir,
+          config.greek.paradigm.outputVerbSubDir, config.greek.paradigm.footnotesFileName))
+        // There are no footnotes for verb participles
+      }
     }
   }
 }
@@ -498,6 +795,7 @@ const POS_PRONOUN = 'pronoun'
 const POS_ADJECTIVE = 'adjective'
 const POS_VERB = 'verb'
 const POS_LEMMA = 'lemma'
+const POS_PARADIGM = 'paradigm'
 
 /*
  To convert flies selectively a script can take the following parameters: <language> <part of speech>, where
@@ -551,10 +849,10 @@ try {
     if (posName === POS_VERB || posName === POS_ALL) {
       posCfg = lCfg[POS_VERB]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
-      json = {'infl-data':[]}
+      json = {'infl-data': []}
       for (let f of latin.verb.inputFN) {
-        let d = readFile(path.join(__dirname, latin.inputBaseDir, f));
-        let j = xmlToJSON.parseString(d);
+        let d = readFile(path.join(__dirname, latin.inputBaseDir, f))
+        let j = xmlToJSON.parseString(d)
         json['infl-data'] = json['infl-data'].concat(j['infl-data'])
       }
       writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
@@ -577,12 +875,28 @@ try {
   if (langName === LANG_GREEK || langName === LANG_ALL) {
     let lCfg = config[LANG_GREEK]
     let posCfg
+
+    // Nouns
     if (posName === POS_NOUN || posName === POS_ALL) {
       posCfg = lCfg[POS_NOUN]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
       writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
       writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+    }
+
+    // Pronouns
+    if (posName === POS_PRONOUN || posName === POS_ALL) {
+      posCfg = lCfg[POS_PRONOUN]
+      const {forms, footnotes} = posCfg.forms.getFromFiles(posCfg.inputFiles, lCfg.inputBaseDir)
+      writeData(forms, posCfg.forms.outputPath)
+      writeData(footnotes, posCfg.footnotes.outputPath)
+    }
+
+    // Paradigms
+    if (posName === POS_PARADIGM || posName === POS_ALL) {
+      posCfg = lCfg[POS_PARADIGM]
+      posCfg.createParadigmTables()
     }
   }
   // endregion Greek

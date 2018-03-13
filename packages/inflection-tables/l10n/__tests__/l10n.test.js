@@ -44,7 +44,7 @@ describe('MessageBundle', () => {
   })
 
   afterAll(() => {
-        // Clean a test environment up
+    // Clean a test environment up
     messageBundleEnUs = undefined
   })
 })
@@ -104,7 +104,7 @@ describe('L10n', () => {
   })
 
   afterAll(() => {
-        // Clean a test environment up
+    // Clean a test environment up
     l10n = undefined
   })
 })

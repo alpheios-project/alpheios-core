@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="file:/C:/work/schemas/inflections.css"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="greek">
+  <order-table>
+    <order-item attname="case" order="1">nominative</order-item>
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">vocative</order-item>
+    <order-item attname="type" order="2">regular</order-item>
+    <order-item attname="type" order="3">irregular</order-item>
+    <order-item attname="num" order="2">dual</order-item>
+    <order-item attname="num" order="3">plural</order-item>
+    <order-item attname="gend" order="2">feminine</order-item>
+    <order-item attname="gend" order="1">masculine</order-item>
+    <order-item attname="gend" order="3">neuter</order-item>
+  </order-table>
+  <infl-endings>
+    <infl-ending-set
+       num="dual"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἀλλήλᾱ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἀλλήλαιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἀλλήλαιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἀλλήλω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἀλλήλοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἀλλήλοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἀλλήλω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἀλλήλοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ἀλλήλοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἀλλήλᾱς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἀλλήλαις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἀλλήλων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἀλλήλους</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἀλλήλοις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἀλλήλων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἄλληλα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἀλλήλοις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ἀλλήλων</infl-ending>
+    </infl-ending-set>
+  </infl-endings>
+</infl-data>

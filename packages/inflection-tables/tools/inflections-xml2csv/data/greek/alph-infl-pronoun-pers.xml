@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="file:/C:/work/schemas/inflections.css"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="greek">
+  <order-table>
+    <order-item attname="case" order="1">nominative</order-item>
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">vocative</order-item>
+    <order-item attname="pers" order="1">1st</order-item>
+    <order-item attname="pers" order="2">2nd</order-item>
+    <order-item attname="pers" order="3">3rd</order-item>
+    <order-item attname="type" order="2">regular</order-item>
+    <order-item attname="type" order="3">irregular</order-item>
+    <order-item attname="num" order="1">singular</order-item>
+    <order-item attname="num" order="2">dual</order-item>
+    <order-item attname="num" order="3">plural</order-item>
+  </order-table>
+  <infl-endings>
+    <infl-ending-set
+      pers="1st" num="dual"  case="accusative" >
+        <infl-ending
+               type="primary regular">νώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="dual"  case="dative" >
+        <infl-ending
+               type="primary regular">νῷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="dual"  case="genitive" >
+        <infl-ending
+               type="primary regular">νῷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="dual"  case="nominative" >
+        <infl-ending
+               type="primary regular">νώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="dual"  case="accusative" >
+        <infl-ending
+               type="primary regular">σφώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="dual"  case="dative" >
+        <infl-ending
+               type="primary regular">σφῷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="dual"  case="genitive" >
+        <infl-ending
+               type="primary regular">σφῷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="dual"  case="nominative" >
+        <infl-ending
+               type="primary regular">σφώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"  case="accusative" >
+        <infl-ending
+               type="primary regular">ἡμᾶς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"  case="dative" >
+        <infl-ending
+               type="primary regular">ἡμῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"  case="genitive" >
+        <infl-ending
+               type="primary regular">ἡμῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="plural"  case="nominative" >
+        <infl-ending
+               type="primary regular">ἡμεῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"  case="accusative" >
+        <infl-ending
+               type="primary regular">ὑμᾶς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"  case="dative" >
+        <infl-ending
+               type="primary regular">ὑμῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"  case="genitive" >
+        <infl-ending
+               type="primary regular">ὑμῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="plural"  case="nominative" >
+        <infl-ending
+               type="primary regular">ὑμεῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"  case="accusative" >
+        <infl-ending
+               type="primary regular">σφᾶς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"  case="dative" >
+        <infl-ending
+               type="primary regular">σφίσι</infl-ending>
+        <infl-ending
+               type="primary regular">σφίσιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"  case="genitive" >
+        <infl-ending
+               type="primary regular">σφῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="plural"  case="nominative" >
+        <infl-ending
+               type="primary regular">σφεῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"  case="accusative" >
+        <infl-ending
+               type="primary regular">ἐμέ</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">με</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"  case="dative" >
+        <infl-ending
+               type="primary regular">ἐμοί</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">μοι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"  case="genitive" >
+        <infl-ending
+               type="primary regular">ἐμοῦ</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">μου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st" num="singular"  case="nominative" >
+        <infl-ending
+               type="primary regular">ἐγώ </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"  case="accusative" >
+        <infl-ending
+               type="primary regular">σέ</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">σε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"  case="dative" >
+        <infl-ending
+               type="primary regular">σοί</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">σοι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"  case="genitive" >
+        <infl-ending
+               type="primary regular">σοῦ</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">σου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="2nd" num="singular"  case="nominative" >
+        <infl-ending
+               type="primary regular">σύ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"  case="accusative" >
+        <infl-ending
+               type="primary regular">ἕ</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">ἑ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"  case="dative" >
+        <infl-ending
+               type="primary regular">οἷ</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">οἱ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"  case="genitive" >
+        <infl-ending
+               type="primary regular">οὗ</infl-ending>
+        <infl-ending
+            footnote="foot-1"   type="primary regular">οὑ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd" num="singular"  case="nominative" >
+        <infl-ending
+               type="primary regular">-</infl-ending>
+    </infl-ending-set>
+  </infl-endings>
+<footnotes>
+    <footnote id="foot-1">enclitic</footnote>
+</footnotes>
+</infl-data>

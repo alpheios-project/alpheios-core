@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="file:/C:/work/schemas/inflections.css"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="greek">
+  <order-table>
+    <order-item attname="hdwd" order="1">ὅδε</order-item>
+    <order-item attname="hdwd" order="2">οὗτος</order-item>
+    <order-item attname="hdwd" order="3">ἐκεῖνος</order-item>
+    <order-item attname="case" order="1">nominative</order-item>
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">vocative</order-item>
+    <order-item attname="type" order="2">regular</order-item>
+    <order-item attname="type" order="3">irregular</order-item>
+    <order-item attname="num" order="1">singular</order-item>
+    <order-item attname="num" order="2">dual</order-item>
+    <order-item attname="num" order="3">plural</order-item>
+    <order-item attname="gend" order="2">feminine</order-item>
+    <order-item attname="gend" order="1">masculine</order-item>
+    <order-item attname="gend" order="3">neuter</order-item>
+    <order-item attname="gend" order="4">masculine feminine neuter</order-item>
+  </order-table>
+  <infl-endings>
+    <infl-ending-set
+       num="dual" hdwd="οὗτος"  case="accusative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τούτω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="οὗτος"  case="dative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τούτοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="οὗτος"  case="genitive" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τούτοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="οὗτος"  case="nominative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τούτω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ταύτᾱς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ταύταις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">τούτων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">αὗται</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">τούτους</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">τούτοις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">τούτων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">οὗτοι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ταῦτα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">τούτοις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">τούτων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="οὗτος"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ταῦτα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ταύτην</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ταύτῃ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ταύτης</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">αὕτη</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">τοῦτον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">τούτῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">τούτου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">οὗτος</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">τοῦτο</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">τούτῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">τούτου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="οὗτος"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">τοῦτο</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ἐκεῖνος"  case="accusative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">ἐκείνω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ἐκεῖνος"  case="dative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">ἐκείνοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ἐκεῖνος"  case="genitive" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">ἐκείνοιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ἐκεῖνος"  case="nominative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">ἐκείνω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐκείνᾱς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐκείναις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐκείνων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐκεῖναι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκείνους</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκείνοις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκείνων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκεῖνοι </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἐκεῖνα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἐκείνοις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ἐκείνων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ἐκεῖνος"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἐκεῖνα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular"> ἐκείνην  </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐκείνῃ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐκείνης</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἐκείνη</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκεῖνον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκείνῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκείνου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἐκεῖνος</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἐκεῖνο</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἐκείνῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">  ἐκείνου   </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ἐκεῖνος"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἐκεῖνο</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ὅδε"  case="accusative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τώδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ὅδε"  case="dative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τοῖνδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ὅδε"  case="genitive" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τοῖνδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="ὅδε"  case="nominative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">τώδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">τά̄σδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">  ταῖσδε   </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">τῶνδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">αἵδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">τούσδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">  τοῖσδε   </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">τῶνδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">οἵδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">τάδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">τοῖσδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">τῶνδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="ὅδε"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">τάδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">τήνδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">τῇδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">  τῆσδε   </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">ἥδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">τόνδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">τῷδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">τοῦδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">ὅδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">τόδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">τῷδε</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">  τοῦδε   </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="ὅδε"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">τόδε</infl-ending>
+    </infl-ending-set>
+  </infl-endings>
+</infl-data>

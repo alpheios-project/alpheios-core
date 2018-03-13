@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="file:/C:/work/schemas/inflections.css"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="greek"
+    footnote="foot-1">
+  <order-table>
+    <order-item attname="case" order="1">nominative</order-item>
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">vocative</order-item>
+    <order-item attname="pers" order="1">1st, 2nd and 3rd singular</order-item>
+    <order-item attname="pers" order="2">1st, 2nd and 3rd plural</order-item>
+    <order-item attname="type" order="2">regular</order-item>
+    <order-item attname="type" order="3">irregular</order-item>
+    <order-item attname="objnum" order="1">singular</order-item>
+    <order-item attname="objnum" order="2">dual</order-item>
+    <order-item attname="objnum" order="3">plural</order-item>
+    <order-item attname="gend" order="2">feminine</order-item>
+    <order-item attname="gend" order="1">masculine</order-item>
+    <order-item attname="gend" order="3">neuter</order-item>
+  </order-table>
+  <infl-endings>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">α</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">αιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">αιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">α</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ά</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">αῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">αῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">ά</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">οιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">οιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">ω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">οῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">οῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">ώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">οιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">οιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="dual"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">οῖν    </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">οῖν    </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="dual"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ώ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ας</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">αις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">αι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ά̄ς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">αῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">αί</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ους</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">οις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">οι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ούς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">οῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">οί</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">α</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">οις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="plural"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">α</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ά</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">οῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="plural"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ά</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">αν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ᾳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ας</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">α</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">ήν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">ῇ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">ῆς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">ή</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">ος</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">όν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ῷ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">οῦ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">ός</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">ον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd plural" num="plural" objnum="singular"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">όν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ῷ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">οῦ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="1st, 2nd and 3rd singular" num="plural" objnum="singular"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">όν</infl-ending>
+    </infl-ending-set>
+  </infl-endings>
+<footnotes>
+  <footnote id="foot-1">The possessive pronouns, formed from the stems of the personal pronouns, are declined like ἀγαθός, ἄξιος (see <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="grammar:smyth:s287">Smyth 287</reflink>)</footnote>
+</footnotes>
+</infl-data>

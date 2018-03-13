@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="file:/C:/work/schemas/inflections.css"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="greek"
+    footnote="foot-1">
+  <order-table>
+    <order-item attname="case" order="1">nominative</order-item>
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">vocative</order-item>
+    <order-item attname="pers" order="1">3rd singular</order-item>
+    <order-item attname="pers" order="2">3rd plural</order-item>
+    <order-item attname="type" order="2">regular</order-item>
+    <order-item attname="type" order="3">irregular</order-item>
+    <order-item attname="objnum" order="1">singular</order-item>
+    <order-item attname="objnum" order="2">dual</order-item>
+    <order-item attname="objnum" order="3">plural</order-item>
+    <order-item attname="gend" order="2">feminine</order-item>
+    <order-item attname="gend" order="1">masculine</order-item>
+    <order-item attname="gend" order="3">neuter</order-item>
+  </order-table>
+  <infl-endings>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτερα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτεραιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτεραιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτερα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="accusative" gend="feminine">
+        <infl-ending
+            footnote="not sure"   type="primary regular">ἅ̄</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="dative" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">αἷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="genitive" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">αἷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="nominative" gend="feminine">
+        <infl-ending
+            footnote="not sure"   type="primary regular">ἅ̄</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτεροιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτεροιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="accusative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὥ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="dative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">οἷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="genitive" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">οἷν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="nominative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὥ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτεροιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτεροιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="dual"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερω</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="accusative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὥ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="dative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">οἷν    </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="genitive" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">οἷν    </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="dual"   case="nominative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὥ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτερας</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτεραις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτερων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτεραι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="accusative" gend="feminine">
+        <infl-ending
+            footnote="not sure"   type="primary regular">ἅ̄ς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="dative" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">αἷς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="genitive" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὧν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="nominative" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">αἵ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερους</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτεροις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτεροι</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="accusative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">οὕς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="dative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">οἷς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="genitive" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὧν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="nominative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">οἵ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτεροις</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="plural"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="accusative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ἅ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="dative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">οἷς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="genitive" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὧν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="plural"   case="nominative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ἅ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτεραν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτερᾳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτερας</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">σφέτερα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="accusative" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ἥν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="dative" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ᾗ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="genitive" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ἧς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="nominative" gend="feminine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ἥ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">σφέτερος</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="accusative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὅν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="dative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ᾧ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="genitive" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">οὗ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="nominative" gend="masculine">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὅς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερῳ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερου</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd plural" num="plural" objnum="singular"   case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">σφέτερον</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="accusative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὅν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="dative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ᾧ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="genitive" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">οὗ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+      pers="3rd singular" num="singular" objnum="singular"   case="nominative" gend="neuter">
+        <infl-ending
+            footnote="ok"   type="primary regular">ὅν</infl-ending>
+    </infl-ending-set>
+  </infl-endings>
+<footnotes>
+    <footnote id="foot-1">The possessive pronouns, formed from the stems of the personal pronouns, are declined like ἀγαθός, ἄξιος (see <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="grammar:smyth:s287">Smyth 287</reflink>)</footnote>
+</footnotes>
+</infl-data>

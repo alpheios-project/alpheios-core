@@ -26,7 +26,7 @@ describe('Cell', () => {
 
   test('render() should create node elements properly.', () => {
     // Render is called in constructor so we don't need to call it explicitly
-    expect(cell.wNode.outerHTML).toMatch('<div class="infl-cell"><a class="infl-suff">endingOne</a>,&nbsp;<a class="infl-suff infl-suff--suffix-match">endingTwo</a></div>')
+    expect(cell.wNode.outerHTML).toMatch(`<div class="infl-cell"><span class="infl-suff">endingOne</span>, <span class="infl-suff infl-suff--suffix-match">endingTwo</span></div>`)
     expect(cell.wNode.outerHTML).toMatch(cell.nNode.outerHTML)
   })
 
@@ -612,7 +612,7 @@ describe('GroupFeatureType', () => {
     featureType = new t.FeatureType(
       t.Feature.types.gender,
       [['masculine', 'feminine'], 'neuter'],
-      t.languages.latin)
+      t.Models.Constants.LANG_LATIN)
 
     groupingFeature = new t.View.GroupingFeature(featureType, groupTitle)
   })
@@ -621,7 +621,7 @@ describe('GroupFeatureType', () => {
     expect(groupingFeature).toEqual(expect.objectContaining({
       groupTitle: groupTitle,
       type: featureType.type,
-      language: featureType.language,
+      language: featureType.languageID,
       _orderIndex: featureType._orderIndex
     }))
   })
@@ -632,7 +632,7 @@ describe('GroupFeatureType', () => {
     }))
     expect(groupingFeature).toEqual(expect.objectContaining({
       type: featureType.type,
-      language: featureType.language,
+      language: featureType.languageID,
       _orderIndex: featureType._orderIndex
     }))
   })
@@ -690,7 +690,7 @@ describe('GroupFeatureList', () => {
   })
 
   test('items() should return a list of features.', () => {
-    expect(groupingFeatureList.items).toEqual(featureList)
+    expect(groupingFeatureList.types).toEqual(featureList)
   })
 
   test('columnFeatures() should return a list of column features.', () => {
@@ -1128,7 +1128,7 @@ describe('Table', () => {
 
 describe('View', () => {
   let partOfSpeech, featureOne, featureTwo, featureThree, features, messages, messageBundle,
-    footnotesList, resultSet, view, word, title, latin
+    footnotesList, inflectionData, view, word, title, latin
 
   beforeAll(() => {
     partOfSpeech = 'noun'
@@ -1166,9 +1166,9 @@ describe('View', () => {
     footnotesList = [new t.Footnote(1, 'FootnoteOne'), new t.Footnote(2, 'FootnoteTwo')]
     // footnotes = new t.View.Footnotes(footnotesList)
 
-    resultSet = new t.ResultSet()
-    resultSet.homonym = {targetWord: word}
-    resultSet[partOfSpeech] = {
+    inflectionData = new t.InflectionData()
+    inflectionData.homonym = {targetWord: word}
+    inflectionData[partOfSpeech] = {
       suffixes: [],
       footnotesView: footnotesList
     }
@@ -1191,13 +1191,13 @@ describe('View', () => {
   /* test('display() should insert a view\'s HTML into a container.', () => {
 
        view.container = container;
-       view.wordData = resultSet;
-       view.footnotes = new t.View.Footnotes(resultSet[partOfSpeech].footnotes);
+       view.wordData = inflectionData;
+       view.footnotes = new t.View.Footnotes(inflectionData[partOfSpeech].footnotes);
        view.table = new t.View.Table(features);
        view.table.messages = messageBundle;
        view.table.features.columns = [featureOne];
        view.table.features.rows = [featureTwo, featureThree];
-       view.table.construct(resultSet[partOfSpeech].suffixes).constructViews();
+       view.table.construct(inflectionData[partOfSpeech].suffixes).constructViews();
        view.table.wideView.render();
 
        view.display();

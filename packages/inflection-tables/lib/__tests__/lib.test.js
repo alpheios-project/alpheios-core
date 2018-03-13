@@ -11,8 +11,11 @@ describe('LanguageDataset object', () => {
 
   test('Should be initialized properly', () => {
     expect(languageDataset).toEqual({
+      dataLoaded: false,
       languageID: t.Models.Constants.LANG_LATIN,
+      model: expect.any(Function),
       suffixes: [],
+      forms: [],
       footnotes: []
     })
   })
@@ -24,7 +27,7 @@ describe('LanguageDataset object', () => {
   // TODO: Add tests for addSuffix for later as the logic might change
 
   test('addFootnote should add proper data into a footnotes object', () => {
-    let partOfSpeech = new t.Feature('noun', t.Feature.types.part, t.languages.latin)
+    let partOfSpeech = new t.Feature('noun', t.Feature.types.part, t.Models.Constants.LANG_LATIN)
     languageDataset.addFootnote(partOfSpeech, 5, 'Footnote text')
     expect(languageDataset.footnotes).toEqual(
       expect.arrayContaining([{index: 5, text: 'Footnote text', 'part of speech': 'noun'}]))
@@ -43,44 +46,33 @@ describe('LanguageDataset object', () => {
 })
 
 describe('LanguageData', () => {
-  let languageData, latinDataset, greekDataset
+  let latinDataset, greekDataset
 
   beforeAll(() => {
     latinDataset = new t.LanguageDataset(t.Models.Constants.LANG_LATIN)
     greekDataset = new t.LanguageDataset(t.Models.Constants.LANG_GREEK)
-
-    languageData = new t.LanguageDataList([latinDataset, greekDataset])
   })
 
   test('constructor should initialize object properly.', () => {
-    expect(Array.from(languageData.sets.values())).toEqual(expect.arrayContaining([
+    expect(Array.from(t.LanguageDatasetFactory.instance.sets.values())).toEqual(expect.arrayContaining([
       greekDataset,
       latinDataset
     ]))
   })
 
-  test('loadData() should call a matching method of all language data sets.', () => {
-    const loadData = jest.fn()
-    latinDataset.loadData = loadData
-    greekDataset.loadData = loadData
-    languageData.loadData()
-
-    expect(loadData.mock.calls.length).toBe(2)
-  })
-
   test('getSuffixes() should call a getSuffixes() method of a proper language dataset with correct argument(s).', () => {
     let homonym = new t.Homonym([
       new t.Lexeme(
-        new t.Lemma('word1', t.languages.greek),
+        new t.Lemma('word1', t.Models.Constants.STR_LANG_CODE_GRC),
         [
-          new t.Inflection('stem1', t.languages.greek),
-          new t.Inflection('stem2', t.languages.greek)
+          new t.Inflection('stem1', t.Models.Constants.STR_LANG_CODE_GRC),
+          new t.Inflection('stem2', t.Models.Constants.STR_LANG_CODE_GRC)
         ]
       )
     ])
     const getSuffixes = jest.fn()
     greekDataset.getSuffixes = getSuffixes
-    languageData.getSuffixes(homonym)
+    t.LanguageDatasetFactory.getInflectionData(homonym)
 
     expect(getSuffixes.mock.calls.length).toBe(1)
     expect(getSuffixes.mock.calls[0][0]).toBe(homonym)
@@ -100,6 +92,7 @@ describe('Suffix object', () => {
 
   test('Should be initialized properly', () => {
     expect(suffix).toEqual({
+      ConstructorFunc: expect.any(Function),
       value: 'suffixtext',
       features: {},
       featureGroups: {},

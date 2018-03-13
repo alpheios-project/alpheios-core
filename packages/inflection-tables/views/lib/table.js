@@ -90,31 +90,6 @@ export default class Table {
   }
 
   /**
-   * Returns true if an ending grammatical feature defined by featureType has a value that is listed in a featureValues array.
-   * This function is for use with Array.prototype.filter().
-   * @param {string} featureType - a grammatical feature type we need to filter on.
-   * @param {string | string[]} featureValues - a list of possible values of a type specified by featureType that
-   * this ending should have.
-   * @param {Suffix} suffix - an ending we need to filter out.
-   * @returns {boolean} True if suffix has a value of a grammatical feature specified.
-   */
-  static filter (featureType, featureValues, suffix) {
-    'use strict'
-
-    // If not an array, convert it to array for uniformity
-    if (!Array.isArray(featureValues)) {
-      featureValues = [featureValues]
-    }
-    for (const value of featureValues) {
-      if (suffix.features[featureType] === value) {
-        return true
-      }
-    }
-
-    return false
-  };
-
-  /**
    * Groups all suffixes into a tree according to their grammatical features. There are several levels in this tree.
    * Each level corresponds to a one grouping feature. The order of items in GroupingFeatures List object
    * defines an order of those levels.

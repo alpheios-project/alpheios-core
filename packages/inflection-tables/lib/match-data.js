@@ -4,6 +4,7 @@
 export default class MatchData {
   constructor () {
     this.suffixMatch = false // Whether two suffixes are the same.
+    this.formMatch = false // Whether two forms of the word are the same
     this.fullMatch = false // Whether two suffixes and all grammatical features, including part of speech, are the same.
     this.matchedFeatures = [] // How many features matches each other.
   }

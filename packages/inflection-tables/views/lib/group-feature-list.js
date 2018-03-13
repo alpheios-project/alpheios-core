@@ -1,9 +1,9 @@
-import * as Models from 'alpheios-data-models'
+import { FeatureList } from 'alpheios-data-models'
 
 /**
  * Holds a list of all grouping features of a table.
  */
-export default class GroupFeatureList extends Models.FeatureList {
+export default class GroupFeatureList extends FeatureList {
   /**
    * Initializes object with an array of grouping feature objects.
    * @param {GroupFeatureType[]} features - An array of features that form a table.

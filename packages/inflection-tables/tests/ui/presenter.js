@@ -14,7 +14,7 @@ export default class Presenter {
     this.localeSelectorContainer = localeSelectorContainer
     this.inflectionData = inflectionData
 
-        // All views registered by the Presenter
+    // All views registered by the Presenter
     this.views = []
     this.viewIndex = {}
 
@@ -25,7 +25,7 @@ export default class Presenter {
       this.addView(view)
     } */
 
-        // Views available for parts of speech that are present in a Result Set
+    // Views available for parts of speech that are present in a Result Set
     this.availableViews = this.getViews(this.inflectionData)
 
     this.defaultView = this.availableViews[0]
@@ -38,7 +38,7 @@ export default class Presenter {
   }
 
   addView (view) {
-       // let view =  new View.View(viewOptions);
+    // let view =  new View.View(viewOptions);
     this.views.push(view)
     this.viewIndex[view.id] = view
   }
@@ -50,14 +50,14 @@ export default class Presenter {
   }
 
   render () {
-        // Show a default view
+    // Show a default view
     if (this.defaultView) {
       // this.defaultView.render(this.viewContainer, this.inflectionData, this.l10n.messages(this.locale))
       this.renderInflections(this.defaultView).displayInflections(this.defaultView)
       this.activeView = this.defaultView
 
       this.appendViewSelector(this.viewSelectorContainer)
-            // this.appendLocaleSelector(this.localeSelectorContainer);
+      // this.appendLocaleSelector(this.localeSelectorContainer);
     }
     return this
   }
@@ -70,10 +70,10 @@ export default class Presenter {
   }
 
   setDefaults () {
-//    this.buttons.hideEmptyCols.contentHidden = false
-//    this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.shownText
-//    this.buttons.hideNoSuffixGroups.contentHidden = false
-//    this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.shownText
+    //    this.buttons.hideEmptyCols.contentHidden = false
+    //    this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.shownText
+    //    this.buttons.hideNoSuffixGroups.contentHidden = false
+    //    this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.shownText
     return this
   }
 
@@ -172,7 +172,7 @@ export default class Presenter {
   }
 
   getViews (wordData) {
-        // First view in a returned array will be a default one
+    // First view in a returned array will be a default one
     let views = []
     for (let view of this.views) {
       if (wordData.language === view.language && wordData[Feature.types.part].includes(view.partOfSpeech)) {

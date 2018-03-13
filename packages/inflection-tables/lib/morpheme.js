@@ -1,6 +1,7 @@
 import * as Models from 'alpheios-data-models'
 import MatchData from './match-data'
 import ExtendedLanguageData from './extended-language-data'
+import uuidv4 from 'uuid/v4'
 
 /**
  * Suffix is an ending of a word with none or any grammatical features associated with it.
@@ -12,13 +13,12 @@ export default class Morpheme {
   /**
    * Initializes a Suffix object.
    * @param {string | null} morphemeValue - A suffix text or null if suffix is empty.
-   * @param {Function} constructorFunc - A constructor function of a subclass to create subclass instances.
    */
-  constructor (morphemeValue, constructorFunc = Morpheme) {
+  constructor (morphemeValue) {
     if (morphemeValue === undefined) {
       throw new Error('Morpheme value should not be empty.')
     }
-    this.ConstructorFunc = constructorFunc
+    this.id = uuidv4()
     this.value = morphemeValue
     this.features = {}
     this.featureGroups = {}
@@ -33,8 +33,12 @@ export default class Morpheme {
     this.match = undefined
   }
 
+  static get ClassType () {
+    return this
+  }
+
   static readObject (jsonObject) {
-    let suffix = new this.ConstructorFunc(jsonObject.value)
+    let suffix = new this.ClassType(jsonObject.value)
 
     if (jsonObject.features) {
       for (let key in jsonObject.features) {
@@ -80,7 +84,7 @@ export default class Morpheme {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    let clone = new this.ConstructorFunc(this.value)
+    let clone = new this.constructor.ClassType(this.value)
     for (const key in this.features) {
       if (this.features.hasOwnProperty(key)) {
         clone.features[key] = this.features[key]
@@ -102,17 +106,21 @@ export default class Morpheme {
       }
     }
     return clone
-  };
+  }
 
   /**
    * Checks if suffix has a feature that is a match to the one provided.
    * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
-   * @param {Feature[]} features - A list of features we need to match with the ones stored inside the suffix
+   * @param {Feature | Feature[]} features - One or several features we need to match with the ones stored
+   * inside the suffix object
    * @returns {string | undefined} - If provided feature is a match, returns a value of a first feature that matched.
    * If no match found, return undefined.
    */
   featureMatch (featureType, features) {
-    if (features && this.features.hasOwnProperty(featureType)) {
+    if (!featureType) { throw new Error(`No feature type information is provided for feature matching`) }
+    if (!features) { throw new Error(`No features information is provided for feature matching`) }
+    if (!Array.isArray(features)) { features = [features] } // Convert a single feature to an array
+    if (this.features.hasOwnProperty(featureType)) {
       for (let feature of features) {
         if (feature.value === this.features[featureType]) {
           return feature.value
@@ -213,7 +221,7 @@ export default class Morpheme {
       suffixItems.push(copy)
     }
     return suffixItems
-  };
+  }
 
   /**
    * Combines suffixes that are in the same group together. Suffixes to be combined must have their values listed
@@ -271,5 +279,5 @@ export default class Morpheme {
       suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type]
     }
     return suffixA
-  };
+  }
 }
