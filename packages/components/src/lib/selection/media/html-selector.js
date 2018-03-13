@@ -1,5 +1,5 @@
 import 'element-closest' // To polyfill Element.closest() if required
-import * as Models from 'alpheios-data-models'
+import {Constants, LanguageModelFactory} from 'alpheios-data-models'
 import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
 
@@ -13,8 +13,8 @@ export default class HTMLSelector extends MediaSelector {
     this.defaultLanguageCode = defaultLanguageCode
 
     this.wordSeparator = new Map()
-    this.wordSeparator.set(Models.Constants.LANG_UNIT_WORD, this.doSpaceSeparatedWordSelection.bind(this))
-    this.wordSeparator.set(Models.Constants.LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
+    this.wordSeparator.set(Constants.LANG_UNIT_WORD, this.doSpaceSeparatedWordSelection.bind(this))
+    this.wordSeparator.set(Constants.LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
   }
 
   static getSelector (target, defaultLanguageCode) {
@@ -24,12 +24,14 @@ export default class HTMLSelector extends MediaSelector {
   createTextSelector () {
     let textSelector = new TextSelector()
     textSelector.languageCode = this.getLanguageCode(this.defaultLanguageCode)
-    textSelector.language = TextSelector.getLanguage(textSelector.languageCode)
+    textSelector.languageID = LanguageModelFactory.getLanguageIdFromCode(textSelector.languageCode)
+    textSelector.model = LanguageModelFactory.getLanguageModel(this.languageID)
+    // textSelector.language = TextSelector.getLanguage(textSelector.languageCode)
 
-    if (this.wordSeparator.has(textSelector.language.baseUnit)) {
-      textSelector = this.wordSeparator.get(textSelector.language.baseUnit)(textSelector)
+    if (this.wordSeparator.has(textSelector.model.baseUnit)) {
+      textSelector = this.wordSeparator.get(textSelector.model.baseUnit)(textSelector)
     } else {
-      console.warn(`No word separator function found for a "${textSelector.language.baseUnit}" base unit`)
+      console.warn(`No word separator function found for a "${textSelector.model.baseUnit}" base unit`)
     }
     return textSelector
   }
@@ -89,7 +91,7 @@ export default class HTMLSelector extends MediaSelector {
 
     // clean string:
     //   convert punctuation to spaces
-    anchorText = anchorText.replace(new RegExp('[' + textSelector.language.getPunctuation() + ']', 'g'), ' ')
+    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
 
     // find word
     let wordStart = anchorText.lastIndexOf(' ', ro)
@@ -125,7 +127,7 @@ export default class HTMLSelector extends MediaSelector {
     let contextStr = null
     let contextPos = 0
 
-    if (textSelector.language.contextForward || textSelector.language.contextBackward) {
+    if (textSelector.model.contextForward || textSelector.model.contextBackward) {
       let startstr = anchorText.substring(0, wordEnd)
       let endstr = anchorText.substring(wordEnd + 1, anchorText.length)
       let preWordlist = startstr.split(/\s+/)
@@ -135,13 +137,13 @@ export default class HTMLSelector extends MediaSelector {
       // prior to the selected word
       // the selected word is the last item in the
       // preWordlist array
-      if (preWordlist.length > textSelector.language.contextBackward + 1) {
-        preWordlist = preWordlist.slice(preWordlist.length - (textSelector.language.contextBackward + 1))
+      if (preWordlist.length > textSelector.model.contextBackward + 1) {
+        preWordlist = preWordlist.slice(preWordlist.length - (textSelector.model.contextBackward + 1))
       }
       // limit to the requested # of context words
       // following to the selected word
-      if (postWordlist.length > textSelector.language.contextForward) {
-        postWordlist = postWordlist.slice(0, textSelector.language.contextForward)
+      if (postWordlist.length > textSelector.model.contextForward) {
+        postWordlist = postWordlist.slice(0, textSelector.model.contextForward)
       }
 
       /* TODO: should we put the punctuation back in to the

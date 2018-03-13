@@ -32,21 +32,38 @@
                   </button>
                 </div>
             </div>
+
+            <template v-if="selectedView.hasComponentData">
+                <widetable :data="selectedView.wideTable"></widetable>
+                <widesubtables :data="selectedView.wideSubTables"></widesubtables>
+            </template>
+            <template v-else>
             <div :id="elementIDs.wideView" class=""></div>
-            <div :id="elementIDs.footnotes" class="alpheios-inflections__footnotes">
-                <template v-for="footnote in footnotes">
-                    <dt>{{footnote.index}}</dt>
-                    <dd>{{footnote.text}}</dd>
-                </template>
-            </div>
+                <div :id="elementIDs.footnotes" class="alpheios-inflections__footnotes">
+                    <template v-for="footnote in footnotes">
+                        <dt>{{footnote.index}}</dt>
+                        <dd>{{footnote.text}}</dd>
+                    </template>
+                </div>
+            </template>
         </div>
     </div>
 </template>
 <script>
-  import { ViewSet, L10n, L10nMessages } from 'alpheios-inflection-tables'
+  // Subcomponents
+  import WideTable from './inflections-table-wide.vue'
+  import WideSubTables from './inflections-subtables-wide.vue'
+
+  // Other dependencies
+  import { ViewSet, L10n} from 'alpheios-inflection-tables'
 
   export default {
     name: 'Inflections',
+    components: {
+      widetable: WideTable,
+      widesubtables: WideSubTables
+    },
+
     props: {
       // This will be an InflectionData object
       data: {
@@ -118,23 +135,28 @@
           this.selectedPartOfSpeech = newValue
           this.views = this.viewSet.getViews(this.selectedPartOfSpeech)
           this.selectedView = this.views[0]
-          this.selectedViewName = this.views[0].name
-          this.renderInflections().displayInflections()
+          this.selectedViewID = this.views[0].id
+          if (!this.selectedView.hasComponentData) {
+            // Rendering is not required for component-enabled views
+            this.renderInflections().displayInflections()
+          }
         }
       },
       viewSelector: {
         get: function () {
-          return this.selectedViewName
+          return this.selectedViewID
         },
         set: function (newValue) {
-          console.log(`View changed to ${newValue}`)
-          this.selectedView = this.views.find(view => view.name === newValue)
-          this.renderInflections().displayInflections()
-          this.selectedViewName = newValue
+          this.selectedView = this.views.find(view => view.id === newValue)
+          console.log(`View ID changed to ${newValue}, view name is "${this.selectedView.name}"`)
+          if (!this.selectedView.hasComponentData) {
+            this.renderInflections().displayInflections()
+          }
+          this.selectedViewID = newValue
         }
       },
       inflectionTable: function () {
-        return this.selectedView.name
+        return this.selectedView.id
       },
       footnotes: function () {
         let footnotes = []
@@ -164,7 +186,7 @@
       inflectionData: function (inflectionData) {
         console.log(`Inflection data changed`)
         if (inflectionData) {
-          this.viewSet = new ViewSet(inflectionData)
+          this.viewSet = new ViewSet(inflectionData, this.locale)
 
           this.partsOfSpeech = this.viewSet.partsOfSpeech
           if (this.partsOfSpeech.length > 0) {
@@ -176,11 +198,14 @@
           }
 
           if (this.views.length > 0) {
-            this.selectedViewName = this.views[0].name
+            this.selectedViewID = this.views[0].id
             this.selectedView = this.views[0]
-            this.renderInflections().displayInflections()
+            if (!this.selectedView.hasComponentData) {
+              // Rendering is not required for component-enabled views
+              this.renderInflections().displayInflections()
+            }
           } else {
-            this.selectedViewName = ''
+            this.selectedViewID = ''
             this.selectedView = ''
           }
         }
@@ -203,7 +228,11 @@
       locale: function (locale) {
         console.log(`locale changed to ${locale}`)
         if (this.data.inflectionData) {
-          this.renderInflections().displayInflections() // Re-render inflections for a different locale
+          this.viewSet.setLocale(this.locale)
+          if (!this.selectedView.hasComponentData) {
+            // Rendering is not required for component-enabled views
+            this.renderInflections().displayInflections() // Re-render inflections for a different locale
+          }
         }
       }
     },
@@ -218,7 +247,7 @@
         this.clearInflections().setDefaults()
         // Hide empty columns by default
         // TODO: change inflection library to take that as an option
-        this.selectedView.render(this.data.inflectionData, this.l10n.messages(this.locale)).hideEmptyColumns().hideNoSuffixGroups()
+        this.selectedView.render().hideEmptyColumns().hideNoSuffixGroups()
         return this
       },
 
@@ -246,12 +275,16 @@
 
             for (const index of indexes) {
               let footnote = this.selectedView.footnotes.get(index)
-              let dt = document.createElement('dt')
-              dt.innerHTML = footnote.index
-              popup.appendChild(dt)
-              let dd = document.createElement('dd')
-              dd.innerHTML = footnote.text
-              popup.appendChild(dd)
+              if (footnote) {
+                let dt = document.createElement('dt')
+                dt.innerHTML = footnote.index
+                popup.appendChild(dt)
+                let dd = document.createElement('dd')
+                dd.innerHTML = footnote.text
+                popup.appendChild(dd)
+              } else {
+                console.warn(`Footnote "${index}" is not found`)
+              }
             }
             let closeBtn = document.createElement('div')
             closeBtn.classList.add(closeBtnClassName)
