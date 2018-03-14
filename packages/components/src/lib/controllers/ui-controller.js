@@ -1,5 +1,5 @@
 /* global Node */
-import {Lexeme, Feature, Definition, LanguageModelFactory, Constants} from 'alpheios-data-models'
+import {Lexeme, GrmFeature, Definition, LanguageModelFactory, Constants} from 'alpheios-data-models'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Panel from '../../vue-components/panel.vue'
@@ -632,7 +632,7 @@ export default class UIController {
   }
 
   updateMorphology (homonym) {
-    homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
+    homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(GrmFeature.types.frequency, GrmFeature.types.part))
     this.popup.lexemes = homonym.lexemes
     if (homonym.lexemes.length > 0) {
       // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple

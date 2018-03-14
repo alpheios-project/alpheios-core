@@ -1341,7 +1341,7 @@ exports.default = {
     };
   },
   created: function created() {
-    this.types = _alpheiosDataModels.Feature.types;
+    this.types = _alpheiosDataModels.GrmFeature.types;
   },
   methods: {
     groupClass: function groupClass(group) {
@@ -15926,7 +15926,7 @@ class UIController {
   }
 
   updateMorphology (homonym) {
-    homonym.lexemes.sort(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Lexeme"].getSortByTwoLemmaFeatures(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Feature"].types.frequency, __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Feature"].types.part))
+    homonym.lexemes.sort(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Lexeme"].getSortByTwoLemmaFeatures(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["GrmFeature"].types.frequency, __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["GrmFeature"].types.part))
     this.popup.lexemes = homonym.lexemes
     if (homonym.lexemes.length > 0) {
       // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple

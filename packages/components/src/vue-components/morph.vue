@@ -147,7 +147,7 @@
   </div>
 </template>
 <script>
-  import { LanguageModelFactory, Feature } from 'alpheios-data-models'
+  import { LanguageModelFactory, GrmFeature } from 'alpheios-data-models'
   import ShortDef from './shortdef.vue'
 
   export default {
@@ -175,7 +175,7 @@
       }
     },
     created: function () {
-      this.types = Feature.types
+      this.types = GrmFeature.types
     },
     methods: {
       groupClass(group) {
