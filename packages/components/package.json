@@ -4,7 +4,7 @@
   "description": "Alpheios UI Compononents",
   "main": "dist/alpheios-components.js",
   "scripts": {
-    "test": "standard --fix && jest",
+    "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "standard --fix && node ./build/node/build.js",
     "lint": "standard --fix",
     "buildstyles": "node ./build/node/build.js styles",
