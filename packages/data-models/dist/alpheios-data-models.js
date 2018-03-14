@@ -1167,7 +1167,7 @@ class LanguageModel {
   }
 
   /**
-   * Return alternate encodings for a word
+   * Returns alternate encodings for a word
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -1534,6 +1534,19 @@ class LatinLanguageModel extends LanguageModel {
       word = word.replace(/[\u0153]/g, 'oe');
     }
     return word
+  }
+
+  /**
+   * Returns alternate encodings for a word
+   * @param {string} word the word
+   * @param {string} preceding optional preceding word
+   * @param {string} following optional following word
+   * @param {string} encoding optional encoding name to filter the response to
+   * @returns {Array} an array of alternate encodings
+   */
+  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+    // Not implemented yet
+    return []
   }
 
   /**
@@ -1918,6 +1931,19 @@ class PersianLanguageModel extends LanguageModel {
    */
   static canInflect (node) {
     return false
+  }
+
+  /**
+   * Returns alternate encodings for a word
+   * @param {string} word the word
+   * @param {string} preceding optional preceding word
+   * @param {string} following optional following word
+   * @param {string} encoding optional encoding name to filter the response to
+   * @returns {Array} an array of alternate encodings
+   */
+  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+    // Not implemented yet
+    return []
   }
 
   /**

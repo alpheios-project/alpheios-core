@@ -321,7 +321,7 @@ class LanguageModel {
   }
 
   /**
-   * Return alternate encodings for a word
+   * Returns alternate encodings for a word
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
