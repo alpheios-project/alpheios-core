@@ -1423,6 +1423,9 @@ exports.default = {
       return list.length > 0 ? '(' + list.map(function (f) {
         return f.toString();
       }).join(', ') + ')' : '';
+    },
+    languageCode: function languageCode(languageID) {
+      return _alpheiosDataModels.LanguageModelFactory.getLanguageCodeFromId(languageID);
     }
   }
 };
@@ -10384,7 +10387,7 @@ var render = function() {
                 "span",
                 {
                   staticClass: "alpheios-morph__formtext",
-                  attrs: { lang: lex.lemma.language }
+                  attrs: { lang: _vm.languageCode(lex.lemma.languageID) }
                 },
                 [_vm._v(_vm._s(lex.lemma.word))]
               )
@@ -10398,7 +10401,7 @@ var render = function() {
                 "span",
                 {
                   staticClass: "alpheios-morph__listitem",
-                  attrs: { lang: lex.lemma.language }
+                  attrs: { lang: _vm.languageCode(lex.lemma.languageID) }
                 },
                 [_vm._v(_vm._s(part))]
               )
@@ -15927,7 +15930,7 @@ class UIController {
     this.popup.lexemes = homonym.lexemes
     if (homonym.lexemes.length > 0) {
       // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple
-      this.popup.linkedFeatures = __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageForCode(homonym.lexemes[0].lemma.language).grammarFeatures()
+      this.popup.linkedFeatures = __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
     }
     this.popup.popupData.morphDataReady = true
     this.panel.panelData.lexemes = homonym.lexemes
@@ -15999,13 +16002,13 @@ class UIController {
     this.state.setItem('currentLanguage', currentLanguage)
     let languageID = __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageIdFromCode(currentLanguage)
     this.panel.requestGrammar({ type: 'table-of-contents', value: '', languageID: languageID })
-    this.panel.enableInflections(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageForCode(currentLanguage).canInflect())
+    this.panel.enableInflections(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageModel(languageID).canInflect())
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(languageID)
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
   updateInflections (inflectionData, homonym) {
-    let enabled = __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageForCode(homonym.language).canInflect()
+    let enabled = __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["LanguageModelFactory"].getLanguageModel(homonym.languageID).canInflect()
     this.panel.enableInflections(enabled)
     this.panel.updateInflections(inflectionData, homonym)
     this.popup.popupData.inflDataReady = enabled && inflectionData.hasInflectionSets

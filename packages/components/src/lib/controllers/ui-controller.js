@@ -636,7 +636,7 @@ export default class UIController {
     this.popup.lexemes = homonym.lexemes
     if (homonym.lexemes.length > 0) {
       // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple
-      this.popup.linkedFeatures = LanguageModelFactory.getLanguageForCode(homonym.lexemes[0].lemma.language).grammarFeatures()
+      this.popup.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
     }
     this.popup.popupData.morphDataReady = true
     this.panel.panelData.lexemes = homonym.lexemes
@@ -708,13 +708,13 @@ export default class UIController {
     this.state.setItem('currentLanguage', currentLanguage)
     let languageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguage)
     this.panel.requestGrammar({ type: 'table-of-contents', value: '', languageID: languageID })
-    this.panel.enableInflections(LanguageModelFactory.getLanguageForCode(currentLanguage).canInflect())
+    this.panel.enableInflections(LanguageModelFactory.getLanguageModel(languageID).canInflect())
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(languageID)
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
   updateInflections (inflectionData, homonym) {
-    let enabled = LanguageModelFactory.getLanguageForCode(homonym.language).canInflect()
+    let enabled = LanguageModelFactory.getLanguageModel(homonym.languageID).canInflect()
     this.panel.enableInflections(enabled)
     this.panel.updateInflections(inflectionData, homonym)
     this.popup.popupData.inflDataReady = enabled && inflectionData.hasInflectionSets
