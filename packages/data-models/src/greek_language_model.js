@@ -110,7 +110,7 @@ export default class GreekLanguageModel extends LanguageModel {
    * for the current node
    */
   static canInflect (node) {
-    return false
+    return true
   }
 
   /**
