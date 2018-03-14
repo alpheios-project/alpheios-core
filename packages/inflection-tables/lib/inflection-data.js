@@ -5,7 +5,7 @@
 
 /**
  * A return value for inflection queries. Stores suffixes, forms and corresponding footnotes.
- * Inflection data is grouped first by a part of speech within a [Models.Feature.types.part] property object.
+ * Inflection data is grouped first by a part of speech within a [Models.GrmFeature.types.part] property object.
  * Inside that object, it is grouped by type: suffixes, or forms.
  */
 export default class InflectionData {
@@ -99,9 +99,9 @@ export default class InflectionData {
     // let homonym = Models.Homonym.readObject(jsonObject.homonym)
 
     let lexicalData = new InflectionData()
-    lexicalData[Models.Feature.types.part] = jsonObject[Models.Feature.types.part]
+    lexicalData[Models.GrmFeature.types.part] = jsonObject[Models.GrmFeature.types.part]
 
-    for (let part of lexicalData[Models.Feature.types.part]) {
+    for (let part of lexicalData[Models.GrmFeature.types.part]) {
       let partData = jsonObject[part]
       lexicalData[part] = {}
 

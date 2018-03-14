@@ -59,10 +59,10 @@ export default class Morpheme {
       }
     }
 
-    if (jsonObject[Models.Feature.types.footnote]) {
-      suffix[Models.Feature.types.footnote] = []
-      for (let footnote of jsonObject[Models.Feature.types.footnote]) {
-        suffix[Models.Feature.types.footnote].push(footnote)
+    if (jsonObject[Models.GrmFeature.types.footnote]) {
+      suffix[Models.GrmFeature.types.footnote] = []
+      for (let footnote of jsonObject[Models.GrmFeature.types.footnote]) {
+        suffix[Models.GrmFeature.types.footnote].push(footnote)
       }
     }
 
@@ -96,8 +96,8 @@ export default class Morpheme {
       }
     }
 
-    if (this.hasOwnProperty(Models.Feature.types.footnote)) {
-      clone[Models.Feature.types.footnote] = this[Models.Feature.types.footnote]
+    if (this.hasOwnProperty(Models.GrmFeature.types.footnote)) {
+      clone[Models.GrmFeature.types.footnote] = this[Models.GrmFeature.types.footnote]
     }
 
     for (const lang in this.extendedLangData) {
@@ -111,7 +111,7 @@ export default class Morpheme {
   /**
    * Checks if suffix has a feature that is a match to the one provided.
    * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
-   * @param {Feature | Feature[]} features - One or several features we need to match with the ones stored
+   * @param {GrmFeature | GrmFeature[]} features - One or several features we need to match with the ones stored
    * inside the suffix object
    * @returns {string | undefined} - If provided feature is a match, returns a value of a first feature that matched.
    * If no match found, return undefined.
@@ -204,7 +204,7 @@ export default class Morpheme {
    * with each Suffix object having only a single value of those grammatical features. Initial multiple values
    * are stored in a featureGroups[featureType] property as an array of values.
    * @param {string} featureType - A type of a feature
-   * @param {Feature[]} featureValues - Multiple grammatical feature values.
+   * @param {GrmFeature[]} featureValues - Multiple grammatical feature values.
    * @returns {Suffix[]} - An array of suffixes.
    */
   split (featureType, featureValues) {

@@ -68,8 +68,7 @@ export default class InflectionSet {
     console.log(`Matching paradigms`)
     if (this.types.has(Paradigm)) {
       const paradigms = this.types.get(Paradigm)
-      // return paradigms.getMatches(inflection).map(o => o.paradigm)
-      return paradigms.items // Testing only
+      return paradigms.getMatches(inflection).map(o => o.paradigm)
     }
     return []
   }

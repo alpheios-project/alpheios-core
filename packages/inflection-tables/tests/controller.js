@@ -28,7 +28,7 @@ exports.Models = {
   Constants: Models.Constants
 }
 
-exports.Feature = Models.Feature
+exports.GrmFeature = Models.GrmFeature
 exports.FeatureType = Models.FeatureType
 exports.FeatureImporter = Models.FeatureImporter
 exports.Inflection = Models.Inflection

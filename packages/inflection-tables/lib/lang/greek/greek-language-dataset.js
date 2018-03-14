@@ -1,7 +1,7 @@
 /*
  * Greek language data module
  */
-import { Constants, LanguageModelFactory, Feature, FeatureType, Lemma } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory, GrmFeature, FeatureType, Lemma } from 'alpheios-data-models'
 import LanguageDataset from '../../../lib/language-dataset'
 import ExtendedGreekData from '../../../lib/extended-greek-data'
 import Suffix from '../../../lib/suffix.js'
@@ -95,7 +95,7 @@ import papaparse from 'papaparse'
 
 // Create a language data set that will keep all language-related information
 // let dataSet = new LanguageDataset(Constants.LANG_GREEK)
-let fTypes = Feature.types
+let fTypes = GrmFeature.types
 
 // region Definition of grammatical features
 /*
@@ -103,7 +103,7 @@ let fTypes = Feature.types
  analyzer's language modules as well.
  */
 const impName = 'csv'
-const footnotes = new FeatureType(Feature.types.footnote, [], Constants.LANG_GREEK)
+const footnotes = new FeatureType(GrmFeature.types.footnote, [], Constants.LANG_GREEK)
 
 // endregion Definition of grammatical features
 
@@ -221,7 +221,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       // Dialects could have multiple values
       let dialects = item[n.dialect].split(',')
       if (item[n.dialect] && dialects && dialects.length > 0) {
-        features.push(new Feature(dialects, fTypes.dialect, this.languageID))
+        features.push(new GrmFeature(dialects, fTypes.dialect, this.languageID))
       }
 
       // Footnotes. There can be multiple footnote indexes separated by commas
@@ -342,11 +342,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let features = [partOfSpeech]
 
-      if (item[n.stemtype]) { features.push(this.model.getFeatureType(Feature.types.stemtype).getFromImporter(impName, item[n.stemtype])) }
-      if (item[n.voice]) { features.push(this.model.getFeatureType(Feature.types.voice).getFromImporter(impName, item[n.voice])) }
-      if (item[n.mood]) { features.push(this.model.getFeatureType(Feature.types.mood).getFromImporter(impName, item[n.mood])) }
-      if (item[n.tense]) { features.push(this.model.getFeatureType(Feature.types.tense).getFromImporter(impName, item[n.tense])) }
-      if (item[n.dialect]) { features.push(this.model.getFeatureType(Feature.types.dialect).getFromImporter(impName, item[n.dialect])) }
+      if (item[n.stemtype]) { features.push(this.model.getFeatureType(GrmFeature.types.stemtype).getFromImporter(impName, item[n.stemtype])) }
+      if (item[n.voice]) { features.push(this.model.getFeatureType(GrmFeature.types.voice).getFromImporter(impName, item[n.voice])) }
+      if (item[n.mood]) { features.push(this.model.getFeatureType(GrmFeature.types.mood).getFromImporter(impName, item[n.mood])) }
+      if (item[n.tense]) { features.push(this.model.getFeatureType(GrmFeature.types.tense).getFromImporter(impName, item[n.tense])) }
+      if (item[n.dialect]) { features.push(this.model.getFeatureType(GrmFeature.types.dialect).getFromImporter(impName, item[n.dialect])) }
 
       let lemma
       if (item[n.lemma]) {
@@ -425,18 +425,18 @@ export default class GreekLanguageDataset extends LanguageDataset {
    */
   getPronounGroupingLemmas (grammarClass) {
     let values = this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : []
-    return new FeatureType(Feature.types.word, values, this.languageID)
+    return new FeatureType(GrmFeature.types.word, values, this.languageID)
   }
 
   getObligatoryMatches (inflection) {
     let obligatoryMatches = []
-    if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
-      obligatoryMatches.push(Feature.types.grmClass)
+    if (inflection.hasFeatureValue(GrmFeature.types.part, Constants.POFS_PRONOUN)) {
+      obligatoryMatches.push(GrmFeature.types.grmClass)
     } else if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word)
+      obligatoryMatches.push(GrmFeature.types.word)
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part)
+      obligatoryMatches.push(GrmFeature.types.part)
     }
     return obligatoryMatches
   }

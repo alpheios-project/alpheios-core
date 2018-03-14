@@ -27,7 +27,7 @@ describe('LanguageDataset object', () => {
   // TODO: Add tests for addSuffix for later as the logic might change
 
   test('addFootnote should add proper data into a footnotes object', () => {
-    let partOfSpeech = new t.Feature('noun', t.Feature.types.part, t.Models.Constants.LANG_LATIN)
+    let partOfSpeech = new t.GrmFeature('noun', t.GrmFeature.types.part, t.Models.Constants.LANG_LATIN)
     languageDataset.addFootnote(partOfSpeech, 5, 'Footnote text')
     expect(languageDataset.footnotes).toEqual(
       expect.arrayContaining([{index: 5, text: 'Footnote text', 'part of speech': 'noun'}]))
@@ -119,12 +119,12 @@ describe('Suffix object', () => {
   test('merge() should join two previously split object (objects that are in the same group) together.', () => {
     let values = ['masculine', 'feminine']
     let suffixes = [new t.Suffix('endingOne', undefined), new t.Suffix('endingOne', undefined)]
-    suffixes[0].features[t.Feature.types.gender] = values[0]
-    suffixes[1].features[t.Feature.types.gender] = values[1]
-    suffixes[0].featureGroups[t.Feature.types.gender] = values
-    suffixes[1].featureGroups[t.Feature.types.gender] = values
+    suffixes[0].features[t.GrmFeature.types.gender] = values[0]
+    suffixes[1].features[t.GrmFeature.types.gender] = values[1]
+    suffixes[0].featureGroups[t.GrmFeature.types.gender] = values
+    suffixes[1].featureGroups[t.GrmFeature.types.gender] = values
     let merged = t.Suffix.merge(suffixes[0], suffixes[1])
-    expect(merged.features[t.Feature.types.gender]).toBe(values[0] + ', ' + values[1])
+    expect(merged.features[t.GrmFeature.types.gender]).toBe(values[0] + ', ' + values[1])
   })
 
   afterAll(() => {

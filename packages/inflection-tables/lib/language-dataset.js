@@ -1,4 +1,4 @@
-import { Feature, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { GrmFeature, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import Suffix from './suffix.js'
 import Form from './form.js'
 import Footnote from './footnote.js'
@@ -28,14 +28,14 @@ export default class LanguageDataset {
   }
 
   /**
-   * Each grammatical feature can be either a single or an array of Feature objects. The latter is the case when
+   * Each grammatical feature can be either a single or an array of GrmFeature objects. The latter is the case when
    * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
    * 'feminine' genders.
    *
    * @param {string} partOfSpeech - A part of speech this inflection belongs to.
    * @param {string | null} itemValue - A text of an item. It is either a string or null if there is no suffix.
    * @param {string} inflectionType - either LanguageDataset.FORM or LanguageDataset.SUFFIX.
-   * @param {Feature[]} features.
+   * @param {GrmFeature[]} features.
    */
   addInflection (partOfSpeech, ClassType, itemValue, features, extendedLangData) {
     let item = new ClassType(itemValue)
@@ -48,9 +48,9 @@ export default class LanguageDataset {
     for (let feature of features) {
       // If this is a footnote. Footnotes should go in a flat array
       // because we don't need to split by them
-      if (feature.type === Feature.types.footnote) {
-        item[Feature.types.footnote] = item[Feature.types.footnote] || []
-        item[Feature.types.footnote].push(feature.value)
+      if (feature.type === GrmFeature.types.footnote) {
+        item[GrmFeature.types.footnote] = item[GrmFeature.types.footnote] || []
+        item[GrmFeature.types.footnote].push(feature.value)
         continue
       }
 
@@ -155,7 +155,7 @@ export default class LanguageDataset {
 
     for (let lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
-        let partOfSpeech = inflection[Feature.types.part]
+        let partOfSpeech = inflection[GrmFeature.types.part]
         if (!partOfSpeech) {
           throw new Error('Part of speech data is missing in an inflection')
         }
@@ -182,13 +182,13 @@ export default class LanguageDataset {
               Table construction will probably fail`)
           } else {
             // One or more values found
-            inflection[Feature.types.grmClass] = grmClasses
+            inflection[GrmFeature.types.grmClass] = grmClasses
           }
         }
 
         // add the lemma to the inflection
-        inflection[Feature.types.word] =
-          [new Feature(lexeme.lemma.word, Feature.types.word, lexeme.lemma.languageID)]
+        inflection[GrmFeature.types.word] =
+          [new GrmFeature(lexeme.lemma.word, GrmFeature.types.word, lexeme.lemma.languageID)]
 
         // Group inflections by a part of speech
         if (!inflections.hasOwnProperty(partOfSpeech)) {

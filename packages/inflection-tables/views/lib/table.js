@@ -97,7 +97,7 @@ export default class Table {
    * is determined by the order of values within a GroupFeatureType object of each feature.
    * This is a recursive function.
    * @param {Suffix[]} suffixes - Suffixes to be grouped.
-   * @param {Feature[]} ancestorFeatures - A list of feature values on levels above the current.
+   * @param {GrmFeature[]} ancestorFeatures - A list of feature values on levels above the current.
    * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
    * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
    */

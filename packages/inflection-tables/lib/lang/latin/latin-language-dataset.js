@@ -1,7 +1,7 @@
 /*
  * Latin language data module
  */
-import {Constants, LatinLanguageModel, Feature, FeatureType} from 'alpheios-data-models'
+import {Constants, LatinLanguageModel, GrmFeature, FeatureType} from 'alpheios-data-models'
 import LanguageDataset from '../../../lib/language-dataset.js'
 import Suffix from '../../../lib/suffix.js'
 import Form from '../../../lib/form.js'
@@ -19,7 +19,7 @@ import verbParticipleSuffixesCSV from './data/participle/suffixes.csv'
 import verbSupineSuffixesCSV from './data/supine/suffixes.csv'
 
 import papaparse from 'papaparse'
-let types = Feature.types
+let types = GrmFeature.types
 
 // region Definition of grammatical features
 /*
@@ -324,10 +324,10 @@ export default class LatinLanguageDataset extends LanguageDataset {
   getObligatoryMatches (inflection) {
     let obligatoryMatches = []
     if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word)
+      obligatoryMatches.push(GrmFeature.types.word)
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part)
+      obligatoryMatches.push(GrmFeature.types.part)
     }
     return obligatoryMatches
   }
