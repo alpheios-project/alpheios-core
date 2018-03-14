@@ -35,7 +35,7 @@ class GrammarResAdapter extends BaseResourceAdapter {
 
   /**
    * @override BaseResourceAdapter#getResources
-   * @param {Feature} keyObj - receives a feature and returns a list of resources
+   * @param {GrmFeature} keyObj - receives a feature and returns a list of resources
    */
   async getResources (keyObj) {
     // TODO figure out the best way to handle initial reading of the data file
@@ -102,13 +102,13 @@ class GrammarResAdapter extends BaseResourceAdapter {
     // TODO figure out best way to load this data
     return new Promise((resolve, reject) => {
       window.fetch(url).then(
-          function (response) {
-            let text = response.text()
-            resolve(text)
-          }
-        ).catch((error) => {
-          reject(error)
-        })
+        function (response) {
+          let text = response.text()
+          resolve(text)
+        }
+      ).catch((error) => {
+        reject(error)
+      })
     })
   }
 

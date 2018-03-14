@@ -8,15 +8,15 @@ const defaultPlugins = [
     include: ['src/**/*.json']
   }),
   commonjs({
-    ignoreGlobal: true,  // Default: false
-    sourceMap: true  // Default: true
+    ignoreGlobal: true, // Default: false
+    sourceMap: true // Default: true
   }),
   resolve({
     // use "module" field for ES6 module if possible
     module: true, // Default: true
-    jsnext: true,  // Default: false
-    main: true,  // Default: true
-    browser: true  // Default: false
+    jsnext: true, // Default: false
+    main: true, // Default: true
+    browser: true // Default: false
   })
 ]
 

@@ -25,7 +25,7 @@ function createCommonjsModule(fn, module) {
 var papaparse = createCommonjsModule(function (module, exports) {
 /*!
 	Papa Parse
-	v4.3.6
+	v4.3.7
 	https://github.com/mholt/PapaParse
 	License: MIT
 */
@@ -731,7 +731,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 		this._chunkError = function()
 		{
-			this._sendError(reader.error);
+			this._sendError(reader.error.message);
 		};
 
 	}
@@ -1171,7 +1171,12 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		var step = config.step;
 		var preview = config.preview;
 		var fastMode = config.fastMode;
-		var quoteChar = config.quoteChar || '"';
+		/** Allows for no quoteChar by setting quoteChar to undefined in config */
+		if (config.quoteChar === undefined){
+			var quoteChar = '"';
+		} else {
+			var quoteChar = config.quoteChar;
+		}
 
 		// Delimiter must be valid
 		if (typeof delim !== 'string'
@@ -1608,7 +1613,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 }));
 });
 
-var DefaultConfig = "{\n  \"https://github.com/alpheios-project/grammar-bennett\": {\n    \"base_url\": \"https://grammars.alpheios.net/bennett/\",\n    \"index_url\": \"https://grammars.alpheios.net/bennett/index/alph-index-bennett\",\n    \"description\": \"New Latin Grammar, by Charles E. Bennett\",\n    \"rights\": \"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\n    \"langs\": {\n      \"source\": \"lat\",\n      \"target\": \"en\"\n    }\n  },\n  \"https://github.com/alpheios-project/grammar-smyth\": {\n    \"base_url\": \"https://grammars.alpheios.net/smyth/xhtml/\",\n    \"index_url\": \"https://grammars.alpheios.net/smyth/index/alph-index-smyth\",\n    \"description\": \"Smyth's Greek Grammar For Colleges\",\n    \"rights\": \"Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth.\",\n    \"langs\": {\n      \"source\": \"grc\",\n      \"target\": \"en\"\n    }\n  }\n}\n";
+var DefaultConfig = "{\r\n  \"https://github.com/alpheios-project/grammar-bennett\": {\r\n    \"base_url\": \"https://grammars.alpheios.net/bennett/\",\r\n    \"index_url\": \"https://grammars.alpheios.net/bennett/index/alph-index-bennett\",\r\n    \"description\": \"New Latin Grammar, by Charles E. Bennett\",\r\n    \"rights\": \"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\r\n    \"langs\": {\r\n      \"source\": \"lat\",\r\n      \"target\": \"en\"\r\n    }\r\n  },\r\n  \"https://github.com/alpheios-project/grammar-smyth\": {\r\n    \"base_url\": \"https://grammars.alpheios.net/smyth/xhtml/\",\r\n    \"index_url\": \"https://grammars.alpheios.net/smyth/index/alph-index-smyth\",\r\n    \"description\": \"Smyth's Greek Grammar For Colleges\",\r\n    \"rights\": \"Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth.\",\r\n    \"langs\": {\r\n      \"source\": \"grc\",\r\n      \"target\": \"en\"\r\n    }\r\n  }\r\n}\r\n";
 
 class GrammarResAdapter extends BaseResourceAdapter {
   /**
@@ -1642,7 +1647,7 @@ class GrammarResAdapter extends BaseResourceAdapter {
 
   /**
    * @override BaseResourceAdapter#getResources
-   * @param {Feature} keyObj - receives a feature and returns a list of resources
+   * @param {GrmFeature} keyObj - receives a feature and returns a list of resources
    */
   async getResources (keyObj) {
     // TODO figure out the best way to handle initial reading of the data file
@@ -1709,13 +1714,13 @@ class GrammarResAdapter extends BaseResourceAdapter {
     // TODO figure out best way to load this data
     return new Promise((resolve, reject) => {
       window.fetch(url).then(
-          function (response) {
-            let text = response.text();
-            resolve(text);
-          }
-        ).catch((error) => {
-          reject(error);
-        });
+        function (response) {
+          let text = response.text();
+          resolve(text);
+        }
+      ).catch((error) => {
+        reject(error);
+      });
     })
   }
 
@@ -1782,7 +1787,7 @@ class Grammars {
 
   /**
    * Send request to a grammar index
-   * @param {Feature} feature - A feature to lookup
+   * @param {GrmFeature} feature - A feature to lookup
    * @param {Object} requestOptions - With what options run a request.
    * @return {Promise[]} Array of Promises, one for each request. They will be either fulfilled with
    * a Definition object or resolved with an error if request cannot be made/failed/timeout expired.
