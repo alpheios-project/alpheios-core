@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import Lemma from '../src/lemma.js'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 
 describe('Lemma object', () => {
   let lemma, word, lemmaWithParts

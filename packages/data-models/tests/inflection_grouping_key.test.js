@@ -2,7 +2,7 @@
 'use strict'
 import Inflection from '../src/inflection.js'
 import InflectionGroupingKey from '../src/inflection_grouping_key.js'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 
 describe('GroupingKey object', () => {
   beforeAll(() => {

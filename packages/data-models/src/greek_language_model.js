@@ -1,7 +1,7 @@
 import LanguageModel from './language_model.js'
 import LanguageModelFactory from './language_model_factory.js'
 import * as Constants from './constants.js'
-import Feature from './feature.js'
+import Feature from './grm-feature.js'
 
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
@@ -236,7 +236,7 @@ export default class GreekLanguageModel extends LanguageModel {
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
    * @param {boolean} normalize - Whether normalized forms of words shall be used for comparison.
-   * @return {Feature[]} Matching classes found in an array of Feature objects. If no matching classes found,
+   * @return {GrmFeature[]} Matching classes found in an array of Feature objects. If no matching classes found,
    * returns an empty array.
    */
   static getPronounClasses (forms, word, normalize = true) {

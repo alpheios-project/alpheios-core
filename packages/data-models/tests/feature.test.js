@@ -1,6 +1,6 @@
 /* eslint-env jest */
 'use strict'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 import LanguageModelFactory from '../src/language_model_factory.js'
 
 describe('Feature object', () => {

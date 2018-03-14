@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import Lexeme from '../src/lexeme.js'
 import Lemma from '../src/lemma.js'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 import Inflection from '../src/inflection.js'
 import Definition from '../src/definition.js'
 

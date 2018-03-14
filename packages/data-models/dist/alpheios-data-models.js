@@ -2680,6 +2680,7 @@ class Homonym {
      * @returns {string} A language code, as defined in the `languages` object.
      */
   get language () {
+    console.warn(`Please use languageID instead`);
     return LanguageModelFactory.getLanguageCodeFromId(this.languageID)
   }
 

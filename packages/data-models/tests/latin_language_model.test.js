@@ -2,7 +2,7 @@
 'use strict'
 import * as Constants from '../src/constants.js'
 import LMF from '../src/language_model_factory.js'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 
 describe('LanguageModelFactory object', () => {
   'use strict'

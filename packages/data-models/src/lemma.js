@@ -1,5 +1,5 @@
 import LMF from './language_model_factory'
-import Feature from './feature.js'
+import Feature from './grm-feature.js'
 
 /**
  * Lemma, a canonical form of a word.
@@ -43,7 +43,7 @@ class Lemma {
    * Sets a grammatical feature for a lemma. Some features can have multiple values, In this case
    * an array of Feature objects will be provided.
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
-   * @param {Feature | Feature[]} data
+   * @param {GrmFeature | GrmFeature[]} data
    */
   set feature (data) {
     if (!data) {

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import FeatureType from '../src/feature_type.js'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 import FeatureImporter from '../src/feature_importer.js'
 import * as Constants from '../src/constants.js'
 

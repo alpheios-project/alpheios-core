@@ -2,7 +2,7 @@
 'use strict'
 import LanguageModelFactory from '../src/language_model_factory.js'
 import Inflection from '../src/inflection.js'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 
 describe('Language Model object', () => {
   test('groupForDisplay', () => {

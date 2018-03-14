@@ -1,5 +1,5 @@
 import LanguageModel from './language_model.js'
-import Feature from './feature.js'
+import Feature from './grm-feature.js'
 import * as Constants from './constants.js'
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior

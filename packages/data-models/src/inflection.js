@@ -1,4 +1,4 @@
-import Feature from './feature.js'
+import Feature from './grm-feature.js'
 import LMF from './language_model_factory.js'
 /*
  Hierarchical structure of return value of a morphological analyzer:
@@ -115,7 +115,7 @@ class Inflection {
      * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
      * an array of Feature objects will be provided.
      * Values are taken from features and stored in a 'feature.type' property as an array of values.
-     * @param {Feature | Feature[]} data
+     * @param {GrmFeature | GrmFeature[]} data
      */
   set feature (data) {
     if (!data) {

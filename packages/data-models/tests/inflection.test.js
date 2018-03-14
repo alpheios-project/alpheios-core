@@ -1,7 +1,7 @@
 /* eslint-env jest */
 'use strict'
 import Inflection from '../src/inflection.js'
-import Feature from '../src/feature.js'
+import Feature from '../src/grm-feature.js'
 import * as Constants from '../src/constants.js'
 
 describe('Inflection object', () => {

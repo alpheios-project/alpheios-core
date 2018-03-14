@@ -3,6 +3,7 @@ import * as Constants from './constants.js'
 import Definition from './definition.js'
 import DefinitionSet from './definition-set'
 import Feature from './feature.js'
+import GrmFeature from './grm-feature.js'
 import FeatureType from './feature_type.js'
 import FeatureList from './feature_list.js'
 import FeatureImporter from './feature_importer.js'
@@ -21,6 +22,7 @@ export {
   Definition,
   DefinitionSet,
   Feature,
+  GrmFeature,
   FeatureType,
   FeatureList,
   FeatureImporter,

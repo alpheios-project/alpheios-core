@@ -1,4 +1,4 @@
-import Feature from './feature.js'
+import Feature from './grm-feature.js'
 import FeatureImporter from './feature_importer.js'
 import LMF from './language_model_factory'
 
@@ -82,7 +82,7 @@ class FeatureType {
      * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
      * @param value
      * @param {int} sortOrder
-     * @returns {Feature}
+     * @returns {GrmFeature}
      */
   get (value, sortOrder = 1) {
     if (value) {
@@ -121,7 +121,7 @@ class FeatureType {
     /**
      * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
      * For a similar function that returns strings instead of Feature objects see orderedValues().
-     * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
+     * @returns {GrmFeature[] | GrmFeature[][]} Array of feature values sorted according to orderIndex.
      * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
      * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
      */
@@ -159,7 +159,7 @@ class FeatureType {
      * Sets an order of grammatical feature values for a grammatical feature. Used mostly for sorting, filtering,
      * and displaying.
      *
-     * @param {Feature[] | Feature[][]} values - a list of grammatical features that specify their order for
+     * @param {GrmFeature[] | GrmFeature[][]} values - a list of grammatical features that specify their order for
      * sorting and filtering. Some features can be grouped as [[genders.masculine, genders.feminine], LibLatin.genders.neuter].
      * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
      * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
