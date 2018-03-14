@@ -16,7 +16,7 @@
                 </div>
                 <div v-show="views.length > 1">
                     <select v-model="viewSelector" class="uk-select alpheios-inflections__view-selector">
-                        <option v-for="view in views">{{view.name}}</option>
+                        <option v-for="view in views" :value="view.id">{{view.name}}</option>
                     </select>
                 </div>
                 <div class="alpheios-inflections__control-btn-cont uk-button-group">
@@ -131,11 +131,9 @@
           return this.selectedPartOfSpeech
         },
         set: function (newValue) {
-          console.log(`Part of speech changed to ${newValue}`)
           this.selectedPartOfSpeech = newValue
           this.views = this.viewSet.getViews(this.selectedPartOfSpeech)
           this.selectedView = this.views[0]
-          this.selectedViewID = this.views[0].id
           if (!this.selectedView.hasComponentData) {
             // Rendering is not required for component-enabled views
             this.renderInflections().displayInflections()
@@ -144,15 +142,13 @@
       },
       viewSelector: {
         get: function () {
-          return this.selectedViewID
+          return this.selectedView ? this.selectedView.id : ''
         },
         set: function (newValue) {
           this.selectedView = this.views.find(view => view.id === newValue)
-          console.log(`View ID changed to ${newValue}, view name is "${this.selectedView.name}"`)
           if (!this.selectedView.hasComponentData) {
             this.renderInflections().displayInflections()
           }
-          this.selectedViewID = newValue
         }
       },
       inflectionTable: function () {
@@ -184,7 +180,6 @@
     watch: {
 
       inflectionData: function (inflectionData) {
-        console.log(`Inflection data changed`)
         if (inflectionData) {
           this.viewSet = new ViewSet(inflectionData, this.locale)
 
@@ -198,14 +193,12 @@
           }
 
           if (this.views.length > 0) {
-            this.selectedViewID = this.views[0].id
             this.selectedView = this.views[0]
             if (!this.selectedView.hasComponentData) {
               // Rendering is not required for component-enabled views
               this.renderInflections().displayInflections()
             }
           } else {
-            this.selectedViewID = ''
             this.selectedView = ''
           }
         }
@@ -226,7 +219,6 @@
         }
       },
       locale: function (locale) {
-        console.log(`locale changed to ${locale}`)
         if (this.data.inflectionData) {
           this.viewSet.setLocale(this.locale)
           if (!this.selectedView.hasComponentData) {
@@ -340,10 +332,6 @@
         }
         this.displayInflections()
       }
-    },
-
-    created: function () {
-      this.l10n = new L10n(L10nMessages)
     },
 
     mounted: function () {
