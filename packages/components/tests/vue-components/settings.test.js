@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { shallow } from 'vue-test-utils'
+import { shallow } from '@vue/test-utils'
 import Setting from '../../src/vue-components/setting.vue'
 
 describe('setting.test.js', () => {
@@ -42,6 +42,30 @@ describe('setting.test.js', () => {
     expect(selected.attributes().multiple).toBeFalsy()
   })
 
+  it('expects label to be shown', () => {
+    let label = cmp.find('div').find('label')
+    expect(label.is('label')).toBeTruthy()
+    expect(label.isVisible()).toBeTruthy()
+  })
+
+  it('expects label not to be shown', () => {
+    let myCmp = shallow(Setting, {
+      propsData: {
+        showTitle: false,
+        data: {
+          name: 'mockSetting',
+          labelText: 'mockSetting',
+          multiValue: true,
+          textValues: () => { return ['foo', 'bar'] },
+          currentTextValue: () => { return ['foo'] }
+        }
+      }
+    })
+    let label = myCmp.find('div').find('label')
+    expect(myCmp.vm.showTitle).toBeFalsy()
+    expect(label.isVisible()).toBeFalsy()
+  })
+
   it('expects multivalue data to force multiple select', () => {
     let myCmp = shallow(Setting, {
       propsData: {
@@ -49,7 +73,7 @@ describe('setting.test.js', () => {
           name: 'mockSetting',
           multiValue: true,
           textValues: () => { return ['foo', 'bar'] },
-          currentTextValue: () => { return 'foo' }
+          currentTextValue: () => { return ['foo'] }
         }
       }
     })

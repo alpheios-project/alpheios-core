@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { shallow } from 'vue-test-utils'
+import { shallow } from '@vue/test-utils'
 import Grammar from '../../src/vue-components/grammar.vue'
 
 describe('grammar.test.js', () => {

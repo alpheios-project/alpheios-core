@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { shallow } from 'vue-test-utils'
+import { shallow } from '@vue/test-utils'
 import ShortDef from '../../src/vue-components/shortdef.vue'
 
 describe('shortdef.test.js', () => {
