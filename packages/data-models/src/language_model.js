@@ -1,6 +1,6 @@
 import * as Constants from './constants.js'
 import LanguageModelFactory from './language_model_factory.js'
-import Feature from './grm-feature.js'
+import Feature from './feature.js'
 import FeatureType from './feature_type.js'
 import InflectionGroupingKey from './inflection_grouping_key.js'
 import InflectionGroup from './inflection_group.js'

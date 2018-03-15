@@ -8,13 +8,13 @@ import LMF from './language_model_factory'
  * and a DefinitionSet
  */
 class Lexeme {
-    /**
-     * Initializes a Lexeme object.
-     * @param {Lemma} lemma - A lemma object.
-     * @param {Inflection[]} inflections - An array of inflections.
-     * @param {DefinitionSet} meaning - A set of definitions.
+  /**
+   * Initializes a Lexeme object.
+   * @param {Lemma} lemma - A lemma object.
+   * @param {Inflection[]} inflections - An array of inflections.
+   * @param {DefinitionSet} meaning - A set of definitions.
 
-     */
+   */
   constructor (lemma, inflections, meaning = null) {
     if (!lemma) {
       throw new Error('Lemma should not be empty.')

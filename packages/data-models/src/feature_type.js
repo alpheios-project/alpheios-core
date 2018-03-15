@@ -1,4 +1,4 @@
-import Feature from './grm-feature.js'
+import GrmFeature from './grm-feature.js'
 import FeatureImporter from './feature_importer.js'
 import LMF from './language_model_factory'
 
@@ -13,18 +13,18 @@ import LMF from './language_model_factory'
  * the same priority for sorting and grouping.
  */
 class FeatureType {
-    // TODO: value checking
-    /**
-     * Creates and initializes a Feature Type object.
-     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {string[] | string[][]} values - A list of allowed values for this feature type.
-     * If an empty array is provided, there will be no
-     * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
-     * such as footnotes).
-     * @param {String | Symbol} language - A language of a feature type.
-     */
+  // TODO: value checking
+  /**
+   * Creates and initializes a Feature Type object.
+   * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+   * @param {string[] | string[][]} values - A list of allowed values for this feature type.
+   * If an empty array is provided, there will be no
+   * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
+   * such as footnotes).
+   * @param {String | Symbol} language - A language of a feature type.
+   */
   constructor (type, values, language) {
-    if (!Feature.types.isAllowed(type)) {
+    if (!GrmFeature.types.isAllowed(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
     }
     if (!values || !Array.isArray(values)) {
@@ -50,11 +50,11 @@ class FeatureType {
       this._orderIndex.push(value)
       if (Array.isArray(value)) {
         for (let element of value) {
-          this[element] = new Feature(element, this.type, this.languageID)
+          this[element] = new GrmFeature(element, this.type, this.languageID)
           this._orderLookup[element] = index
         }
       } else {
-        this[value] = new Feature(value, this.type, this.languageID)
+        this[value] = new GrmFeature(value, this.type, this.languageID)
         this._orderLookup[value] = index
       }
     }
@@ -77,16 +77,16 @@ class FeatureType {
     return this.orderedValues.length === 1 && this.orderedValues[0] === FeatureType.UNRESTRICTED_VALUE
   }
 
-    /**
-     * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
-     * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
-     * @param value
-     * @param {int} sortOrder
-     * @returns {GrmFeature}
-     */
+  /**
+   * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
+   * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
+   * @param value
+   * @param {int} sortOrder
+   * @returns {GrmFeature}
+   */
   get (value, sortOrder = 1) {
     if (value) {
-      return new Feature(value, this.type, this.languageID, sortOrder)
+      return new GrmFeature(value, this.type, this.languageID, sortOrder)
     } else {
       throw new Error('A non-empty value should be provided.')
     }
@@ -103,12 +103,12 @@ class FeatureType {
     return mapped
   }
 
-    /**
-     * Creates and returns a new importer with a specific name. If an importer with this name already exists,
-     * an existing Importer object will be returned.
-     * @param {string} name - A name of an importer object
-     * @returns {Importer} A new or existing Importer object that matches a name provided
-     */
+  /**
+   * Creates and returns a new importer with a specific name. If an importer with this name already exists,
+   * an existing Importer object will be returned.
+   * @param {string} name - A name of an importer object
+   * @returns {Importer} A new or existing Importer object that matches a name provided
+   */
   addImporter (name) {
     if (!name) {
       throw new Error('Importer should have a non-empty name.')
@@ -118,60 +118,60 @@ class FeatureType {
     return this.importer[name]
   }
 
-    /**
-     * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
-     * For a similar function that returns strings instead of Feature objects see orderedValues().
-     * @returns {GrmFeature[] | GrmFeature[][]} Array of feature values sorted according to orderIndex.
-     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
-     * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
-     */
+  /**
+   * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
+   * For a similar function that returns strings instead of Feature objects see orderedValues().
+   * @returns {GrmFeature[] | GrmFeature[][]} Array of feature values sorted according to orderIndex.
+   * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+   * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
+   */
   get orderedFeatures () {
-    return this.orderedValues.map((value) => new Feature(value, this.type, this.languageID))
+    return this.orderedValues.map((value) => new GrmFeature(value, this.type, this.languageID))
   }
 
-    /**
-     * Return all feature values as strings in a sorted array, according to feature type's sort order.
-     * This is a main method that specifies a sort order of the feature type. orderedFeatures() relies
-     * on this method in providing a sorted array of feature values. If you want to create
-     * a custom sort order for a particular feature type that will depend on some options that are not type-related,
-     * create a wrapper around this function providing it with options arguments so it will be able to decide
-     * in what order those features will be based on those arguments.
-     * For a similar function that returns Feature objects instead of strings see orderedValues().
-     * @returns {string[]} Array of feature values sorted according to orderIndex.
-     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
-     * an array of strings will be returned instead of a single strings, as for single feature values.
-     */
+  /**
+   * Return all feature values as strings in a sorted array, according to feature type's sort order.
+   * This is a main method that specifies a sort order of the feature type. orderedFeatures() relies
+   * on this method in providing a sorted array of feature values. If you want to create
+   * a custom sort order for a particular feature type that will depend on some options that are not type-related,
+   * create a wrapper around this function providing it with options arguments so it will be able to decide
+   * in what order those features will be based on those arguments.
+   * For a similar function that returns Feature objects instead of strings see orderedValues().
+   * @returns {string[]} Array of feature values sorted according to orderIndex.
+   * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+   * an array of strings will be returned instead of a single strings, as for single feature values.
+   */
   get orderedValues () {
     return this._orderIndex
   }
 
-    /**
-     * Returns a lookup table for type values as:
-     *  {value1: order1, value2: order2}, where order is a sort order of an item. If two items have the same sort order,
-     *  their order value will be the same.
-     * @returns {object}
-     */
+  /**
+   * Returns a lookup table for type values as:
+   *  {value1: order1, value2: order2}, where order is a sort order of an item. If two items have the same sort order,
+   *  their order value will be the same.
+   * @returns {object}
+   */
   get orderLookup () {
     return this._orderLookup
   }
 
-    /**
-     * Sets an order of grammatical feature values for a grammatical feature. Used mostly for sorting, filtering,
-     * and displaying.
-     *
-     * @param {GrmFeature[] | GrmFeature[][]} values - a list of grammatical features that specify their order for
-     * sorting and filtering. Some features can be grouped as [[genders.masculine, genders.feminine], LibLatin.genders.neuter].
-     * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
-     * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
-     * during filtering and will be in the same bin during sorting.
-     *
-     */
+  /**
+   * Sets an order of grammatical feature values for a grammatical feature. Used mostly for sorting, filtering,
+   * and displaying.
+   *
+   * @param {GrmFeature[] | GrmFeature[][]} values - a list of grammatical features that specify their order for
+   * sorting and filtering. Some features can be grouped as [[genders.masculine, genders.feminine], LibLatin.genders.neuter].
+   * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
+   * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
+   * during filtering and will be in the same bin during sorting.
+   *
+   */
   set order (values) {
     if (!values || (Array.isArray(values) && values.length === 0)) {
       throw new Error('A non-empty list of values should be provided.')
     }
 
-        // If a single value is provided, convert it into an array
+    // If a single value is provided, convert it into an array
     if (!Array.isArray(values)) {
       values = [values]
     }
@@ -206,14 +206,14 @@ class FeatureType {
       }
     }
 
-        // Erase whatever sort order was set previously
+    // Erase whatever sort order was set previously
     this._orderLookup = {}
     this._orderIndex = []
 
-        // Define a new sort order
+    // Define a new sort order
     for (const [index, element] of values.entries()) {
       if (Array.isArray(element)) {
-                // If it is an array, all values should have the same order
+        // If it is an array, all values should have the same order
         let elements = []
         for (const subElement of element) {
           this._orderLookup[subElement.value] = index
@@ -221,7 +221,7 @@ class FeatureType {
         }
         this._orderIndex[index] = elements
       } else {
-                // If is a single value
+        // If is a single value
         this._orderLookup[element.value] = index
         this._orderIndex[index] = element.value
       }

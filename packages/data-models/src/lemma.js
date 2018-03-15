@@ -1,5 +1,5 @@
 import LMF from './language_model_factory'
-import Feature from './grm-feature.js'
+import GrmFeature from './grm-feature.js'
 
 /**
  * Lemma, a canonical form of a word.
@@ -56,7 +56,7 @@ class Lemma {
     let type = data[0].type
     this.features[type] = []
     for (let element of data) {
-      if (!(element instanceof Feature)) {
+      if (!(element instanceof GrmFeature)) {
         throw new Error('feature data must be a Feature object.')
       }
 

@@ -5,19 +5,19 @@ import * as i18n from './i18n.js'
  * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
  */
 class GrmFeature {
-    /**
-     * Initializes a Feature object
-     * @param {string | string[]} value - A single feature value or, if this feature could have multiple
-     * values, an array of values.
-     * Multiple values do not allow to use a sort order. Because of this, it's better to use
-     * array of multiple Feature objects with single value each instead of a single Feature object
-     * with multiple values.
-     * Multiple values are left for backward compatibility only. Please do not use them as they
-     * will be removed in the future.
-     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {string | symbol} language - A language of a feature, allowed values are specified in 'languages' object.
-     * @param {int} sortOrder - an integer used for sorting
-     */
+  /**
+   * Initializes a Feature object
+   * @param {string | string[]} value - A single feature value or, if this feature could have multiple
+   * values, an array of values.
+   * Multiple values do not allow to use a sort order. Because of this, it's better to use
+   * array of multiple Feature objects with single value each instead of a single Feature object
+   * with multiple values.
+   * Multiple values are left for backward compatibility only. Please do not use them as they
+   * will be removed in the future.
+   * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+   * @param {string | symbol} language - A language of a feature, allowed values are specified in 'languages' object.
+   * @param {int} sortOrder - an integer used for sorting
+   */
   constructor (value, type, language, sortOrder = 1) {
     if (!GrmFeature.types.isAllowed(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')

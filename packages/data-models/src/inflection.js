@@ -1,4 +1,4 @@
-import Feature from './grm-feature.js'
+import GrmFeature from './grm-feature.js'
 import LMF from './language_model_factory.js'
 /*
  Hierarchical structure of return value of a morphological analyzer:
@@ -24,7 +24,7 @@ import LMF from './language_model_factory.js'
  * Represents an inflection of a word
  */
 class Inflection {
-    /**
+  /**
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
      * @param {string | symbol} language - A word's language.
@@ -53,10 +53,10 @@ class Inflection {
 
     // A grammar constraints object
     this.constraints = {
-      fullFormBased: false,  // True this inflection stores and requires to use a full form of a word
-      suffixBased: false,    // True if only suffix is enough to identify this inflection
+      fullFormBased: false, // True this inflection stores and requires to use a full form of a word
+      suffixBased: false, // True if only suffix is enough to identify this inflection
       obligatoryMatches: [], // Names of features that should be matched in order to include a form or suffix to an inflection table
-      optionalMatches: []    // Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
+      optionalMatches: [] // Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
     }
 
     // Suffix may not be present in every word. If missing, it will be set to null.
@@ -111,7 +111,7 @@ class Inflection {
     return inflection
   }
 
-    /**
+  /**
      * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
      * an array of Feature objects will be provided.
      * Values are taken from features and stored in a 'feature.type' property as an array of values.
@@ -128,7 +128,7 @@ class Inflection {
     let type = data[0].type
     this[type] = []
     for (let element of data) {
-      if (!(element instanceof Feature)) {
+      if (!(element instanceof GrmFeature)) {
         throw new Error('Inflection feature data must be a Feature object.')
       }
 

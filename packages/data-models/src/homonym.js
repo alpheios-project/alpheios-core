@@ -2,11 +2,11 @@ import LMF from './language_model_factory'
 import Lexeme from './lexeme.js'
 
 class Homonym {
-    /**
-     * Initializes a Homonym object.
-     * @param {Lexeme[]} lexemes - An array of Lexeme objects.
-     * @param {string} form - the form which produces the homonyms
-     */
+  /**
+   * Initializes a Homonym object.
+   * @param {Lexeme[]} lexemes - An array of Lexeme objects.
+   * @param {string} form - the form which produces the homonyms
+   */
   constructor (lexemes, form) {
     if (!lexemes) {
       throw new Error('Lexemes data should not be empty.')
@@ -40,13 +40,13 @@ class Homonym {
     return homonym
   }
 
-    /**
-     * Returns a language code of a homonym (ISO 639-3).
-     * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
-     * and inflections within the same homonym will have the same language, and we can determine a language
-     * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
-     * @returns {string} A language code, as defined in the `languages` object.
-     */
+  /**
+   * Returns a language code of a homonym (ISO 639-3).
+   * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
+   * and inflections within the same homonym will have the same language, and we can determine a language
+   * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
+   * @returns {string} A language code, as defined in the `languages` object.
+   */
   get language () {
     console.warn(`Please use languageID instead`)
     return LMF.getLanguageCodeFromId(this.languageID)
