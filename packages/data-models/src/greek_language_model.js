@@ -2,6 +2,7 @@ import LanguageModel from './language_model.js'
 import LanguageModelFactory from './language_model_factory.js'
 import * as Constants from './constants.js'
 import Feature from './feature.js'
+import GrmFeature from './grm-feature.js'
 
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
@@ -259,7 +260,7 @@ export default class GreekLanguageModel extends LanguageModel {
       }
     }
     for (const matchingValue of matchingValues) {
-      classes.push(new Feature(matchingValue, Feature.types.grmClass, GreekLanguageModel.languageID))
+      classes.push(new GrmFeature(matchingValue, Feature.types.grmClass, GreekLanguageModel.languageID))
     }
     return classes
   }

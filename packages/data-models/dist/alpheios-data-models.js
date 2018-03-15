@@ -2001,7 +2001,7 @@ class GreekLanguageModel extends LanguageModel {
       }
     }
     for (const matchingValue of matchingValues) {
-      classes.push(new Feature(matchingValue, Feature.types.grmClass, GreekLanguageModel.languageID));
+      classes.push(new GrmFeature(matchingValue, Feature.types.grmClass, GreekLanguageModel.languageID));
     }
     return classes
   }
