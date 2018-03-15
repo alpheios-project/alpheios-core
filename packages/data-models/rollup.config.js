@@ -4,9 +4,9 @@ export default {
   plugins: [
     resolve({
       module: true, // Default: true
-      jsnext: true,  // Default: false
-      main: true,  // Default: true
-      browser: true,  // Default: false
+      jsnext: true, // Default: false
+      main: true, // Default: true
+      browser: true, // Default: false
       namedExports: {
       }
     })

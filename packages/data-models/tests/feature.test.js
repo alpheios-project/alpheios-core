@@ -8,7 +8,7 @@ describe('Feature object', () => {
   let languageGreek
 
   beforeAll(() => {
-        // Create a test environment
+    // Create a test environment
     featureValue1 = 'featureValueOne'
     languageGreek = LanguageModelFactory.getLanguageForCode('grc').toCode()
     featureGreek1 = new Feature(featureValue1, Feature.types.number, languageGreek)
@@ -70,7 +70,7 @@ describe('Feature object', () => {
   })
 
   afterAll(() => {
-        // Clean a test environment up
+    // Clean a test environment up
     featureGreek1 = undefined
   })
 })

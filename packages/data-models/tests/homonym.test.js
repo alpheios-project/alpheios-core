@@ -12,19 +12,19 @@ describe('Homonym', () => {
     // Create a test environment
 
     lexeme1 = new Lexeme(
-        new Lemma('word1', 'grc'),
+      new Lemma('word1', 'grc'),
       [
         new Inflection('stem1', 'grc'),
         new Inflection('stem2', 'grc')
       ]
-      )
+    )
     lexeme2 = new Lexeme(
-        new Lemma('word2', 'grc'),
+      new Lemma('word2', 'grc'),
       [
         new Inflection('stem3', 'grc'),
         new Inflection('stem4', 'grc')
       ]
-      )
+    )
     homonym = new Homonym([lexeme1, lexeme2])
   })
 

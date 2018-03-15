@@ -8,7 +8,7 @@ describe('Inflection object', () => {
   let inflection, grc
 
   beforeAll(() => {
-        // Create a test environment
+    // Create a test environment
     grc = Constants.STR_LANG_CODE_GRC
     inflection = new Inflection('stem', grc)
   })
@@ -90,11 +90,11 @@ describe('Inflection object', () => {
 
   test('feature method should not allow a feature language to be different from a language of an inflection', () => {
     expect(() => inflection.feature = new Feature('masculine', Feature.types.gender, Constants.STR_LANG_CODE_LAT)) // eslint-disable-line no-return-assign
-            .toThrowError(/not match/)
+      .toThrowError(/not match/)
   })
 
   afterAll(() => {
-        // Clean a test environment up
+    // Clean a test environment up
     inflection = undefined
   })
 })
