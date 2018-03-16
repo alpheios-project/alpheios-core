@@ -1647,7 +1647,7 @@ class GrammarResAdapter extends BaseResourceAdapter {
 
   /**
    * @override BaseResourceAdapter#getResources
-   * @param {GrmFeature} keyObj - receives a feature and returns a list of resources
+   * @param {Feature} keyObj - receives a feature and returns a list of resources
    */
   async getResources (keyObj) {
     // TODO figure out the best way to handle initial reading of the data file
@@ -1787,7 +1787,7 @@ class Grammars {
 
   /**
    * Send request to a grammar index
-   * @param {GrmFeature} feature - A feature to lookup
+   * @param {Feature} feature - A feature to lookup
    * @param {Object} requestOptions - With what options run a request.
    * @return {Promise[]} Array of Promises, one for each request. They will be either fulfilled with
    * a Definition object or resolved with an error if request cannot be made/failed/timeout expired.
