@@ -220,7 +220,7 @@ export default class Feature {
   isEqual (grmFtr) {
     return this.type === grmFtr.type &&
       LanguageModelFactory.compareLanguages(this.languageID, grmFtr.languageID) &&
-      this.values === grmFtr.values
+      this.value === grmFtr.value
   }
 
   /**
