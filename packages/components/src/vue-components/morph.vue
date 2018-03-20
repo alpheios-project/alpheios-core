@@ -186,13 +186,11 @@
         return classList.join(' ')
       },
       featureMatch (a, b) {
-        if (!a || !b) {
-          console.warn(`Undefined in featureMatch:`, a, b)
-          return false
+        if (a && b) {
+          return a.isEqual(b)
         }
-        a = GrmFeature.toFeature(a)
-        b = GrmFeature.toFeature(b)
-        return a.isEqual(b)
+        return false
+
       },
       sendFeature(features) {
         let tosend = features
