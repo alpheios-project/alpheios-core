@@ -12,10 +12,7 @@ export default class LatinNounView extends LatinView {
 
     // Feature that are different from base class values
     this.features.genders = new GroupFeatureType(this.language_features[Feature.types.gender], 'Gender',
-      [ this.language_features[Feature.types.gender][Constants.GEND_MASCULINE],
-        this.language_features[Feature.types.gender][Constants.GEND_FEMININE],
-        this.language_features[Feature.types.gender][Constants.GEND_NEUTER]
-      ])
+      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
     this.createTable()
   }
 

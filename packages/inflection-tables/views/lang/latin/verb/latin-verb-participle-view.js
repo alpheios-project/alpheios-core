@@ -1,4 +1,4 @@
-import { Constants, LanguageModelFactory, Feature, FeatureType } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory, Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type'
@@ -7,11 +7,11 @@ import Table from '../../../lib/table'
 export default class LatinVerbParticipleView extends LatinView {
   constructor (inflectionData, locale) {
     super(inflectionData, locale)
-    this.partOfSpeech = this.language_features[Feature.types.part][Constants.POFS_VERB_PARTICIPLE].value
+    this.partOfSpeech = LatinVerbParticipleView.partOfSpeech
     this.id = 'verbParticiple'
     this.name = 'participle'
     this.title = 'Participle'
-    this.language_features[Feature.types.tense] = new FeatureType(Feature.types.tense,
+    this.language_features[Feature.types.tense] = new Feature(Feature.types.tense,
       [Constants.TENSE_PRESENT, Constants.TENSE_PERFECT, Constants.TENSE_FUTURE], this.model.languageID)
     this.features = {
       tenses: new GroupFeatureType(this.language_features[Feature.types.tense], 'Tenses'),

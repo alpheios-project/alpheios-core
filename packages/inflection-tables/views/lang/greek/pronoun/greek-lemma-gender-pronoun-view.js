@@ -22,8 +22,8 @@ export default class GreekLemmaGenderPronounView extends GreekPronounView {
     this.table = new Table([this.features.lemmas, this.features.genders, this.features.numbers, this.features.cases])
     let features = this.table.features
     features.columns = [this.featureTypes.lemmas, this.featureTypes.genders]
-    features.rows = [this.featureTypes.numbers, GreekLanguageModel.getFeatureType(Feature.types.grmCase)]
-    features.columnRowTitles = [GreekLanguageModel.getFeatureType(Feature.types.grmCase)]
+    features.rows = [this.featureTypes.numbers, GreekLanguageModel.typeFeature(Feature.types.grmCase)]
+    features.columnRowTitles = [GreekLanguageModel.typeFeature(Feature.types.grmCase)]
     features.fullWidthRowTitles = [this.featureTypes.numbers]
   }
 

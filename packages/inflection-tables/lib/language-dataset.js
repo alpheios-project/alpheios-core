@@ -1,4 +1,4 @@
-import { GrmFeature, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Feature, GrmFeature, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import Suffix from './suffix.js'
 import Form from './form.js'
 import Footnote from './footnote.js'
@@ -33,11 +33,12 @@ export default class LanguageDataset {
    * 'feminine' genders.
    *
    * @param {string} partOfSpeech - A part of speech this inflection belongs to.
+   * @param {Function} ClassType - either Suffix, Form, or Paradigm
    * @param {string | null} itemValue - A text of an item. It is either a string or null if there is no suffix.
-   * @param {string} inflectionType - either LanguageDataset.FORM or LanguageDataset.SUFFIX.
-   * @param {GrmFeature[]} features.
+   * @param {Feature[]} features.
+   * @param {ExtendedLanguageData} extendedLangData
    */
-  addInflection (partOfSpeech, ClassType, itemValue, features, extendedLangData) {
+  addInflection (partOfSpeech, ClassType, itemValue, features, extendedLangData = undefined) {
     let item = new ClassType(itemValue)
     item.extendedLangData = extendedLangData
 
@@ -159,13 +160,17 @@ export default class LanguageDataset {
         if (!partOfSpeech) {
           throw new Error('Part of speech data is missing in an inflection')
         }
-        if (!Array.isArray(partOfSpeech)) {
+        /* if (!Array.isArray(partOfSpeech)) {
           throw new Error('Part of speech data should be in an array format')
         }
         if (partOfSpeech.length === 0 && partOfSpeech.length > 1) {
           throw new Error('Part of speech data should be an array with exactly one element')
         }
-        partOfSpeech = partOfSpeech[0].value
+        partOfSpeech = partOfSpeech[0].value */
+        if (!partOfSpeech.isSingle) {
+          throw new Error('Part of speech data should have only one value')
+        }
+        partOfSpeech = partOfSpeech.value
 
         if (inflection.constraints.pronounClassRequired) {
           /*
@@ -177,7 +182,7 @@ export default class LanguageDataset {
            */
           // Get a class this inflection belongs to
           let grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.form)
-          if (grmClasses.length === 0) {
+          if (!grmClasses) {
             console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun. 
               Table construction will probably fail`)
           } else {
@@ -187,8 +192,7 @@ export default class LanguageDataset {
         }
 
         // add the lemma to the inflection
-        inflection[GrmFeature.types.word] =
-          [new GrmFeature(lexeme.lemma.word, GrmFeature.types.word, lexeme.lemma.languageID)]
+        inflection[Feature.types.word] = new Feature(Feature.types.word, lexeme.lemma.word, lexeme.lemma.languageID)
 
         // Group inflections by a part of speech
         if (!inflections.hasOwnProperty(partOfSpeech)) {
@@ -211,6 +215,7 @@ export default class LanguageDataset {
         }
 
         let paradigms = []
+        let paradigmIDs = []
         let paradigmBased = false
 
         /*
@@ -219,19 +224,26 @@ export default class LanguageDataset {
         If any found, `fullFormBased` constraint will be set to true.
          */
         for (let inflection of inflectionsGroup) {
-          if (!inflection.constraints.fullFormBased) {
-            inflection.constraints.fullFormBased = this.hasMatchingForms(partOfSpeech, inflection)
-          }
-          if (!inflection.constraints.fullFormBased) {
-            // If it is not full form based, then probably it is suffix base
-            inflection.constraints.suffixBased = true
-          }
-
           let matchingParadigms = sourceSet.getMatchingParadigms(inflection)
           if (matchingParadigms.length > 0) {
-            paradigms.push(...matchingParadigms)
+            // Make sure all paradigms are unique
+            for (const paradigm of matchingParadigms) {
+              if (!paradigmIDs.includes(paradigm.id)) {
+                paradigms.push(paradigm)
+                paradigmIDs.push(paradigm.id)
+              }
+            }
             inflection.constraints.paradigmBased = true
             paradigmBased = true
+          }
+
+          if (!inflection.constraints.suffixBased && !paradigmBased) {
+            inflection.constraints.fullFormBased = this.hasMatchingForms(partOfSpeech, inflection)
+          }
+
+          if (!inflection.constraints.fullFormBased && !paradigmBased) {
+            // If it is not full form based, then probably it is suffix base
+            inflection.constraints.suffixBased = true
           }
         }
         if (paradigmBased) {

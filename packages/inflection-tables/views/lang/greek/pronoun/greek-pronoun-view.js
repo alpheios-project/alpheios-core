@@ -1,4 +1,4 @@
-import { Constants, GreekLanguageModel, Feature, FeatureType, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, GreekLanguageModel, Feature, LanguageModelFactory } from 'alpheios-data-models'
 import Form from '../../../../lib/form.js'
 import View from '../../../lib/view.js'
 import GreekView from '../greek-view.js'
@@ -23,30 +23,26 @@ export default class GreekPronounView extends GreekView {
 
     const GEND_MASCULINE_FEMININE = 'masculine feminine'
     const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'
-    this.featureTypes.numbers = new FeatureType(
+    this.featureTypes.numbers = new Feature(
       Feature.types.number,
       [Constants.NUM_SINGULAR, Constants.NUM_DUAL, Constants.NUM_PLURAL],
       this.languageID
     )
 
-    this.featureTypes.genders = new FeatureType(
+    this.featureTypes.genders = new Feature(
       Feature.types.gender,
       [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
       this.languageID
     )
 
     // This is just a placeholder. Lemma values will be generated dynamically
-    this.featureTypes.lemmas = new FeatureType(
-      Feature.types.word,
-      [],
-      this.languageID
-    )
+    this.featureTypes.lemmas = new Feature(Feature.types.word, [], this.languageID)
 
     this.features = {
       numbers: new GroupFeatureType(this.featureTypes.numbers, 'Number'),
-      cases: new GroupFeatureType(GreekLanguageModel.getFeatureType(Feature.types.grmCase), 'Case'),
+      cases: new GroupFeatureType(GreekLanguageModel.typeFeature(Feature.types.grmCase), 'Case'),
       genders: new GroupFeatureType(this.featureTypes.genders, 'Gender'),
-      persons: new GroupFeatureType(GreekLanguageModel.getFeatureType(Feature.types.grmCase), 'Case')
+      persons: new GroupFeatureType(GreekLanguageModel.typeFeature(Feature.types.grmCase), 'Case')
     }
 
     this.features.genders.getTitle = function getTitle (featureValue) {

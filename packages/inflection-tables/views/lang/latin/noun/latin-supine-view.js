@@ -1,4 +1,4 @@
-import { Constants, LanguageModelFactory, Feature, FeatureType } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory, Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type'
@@ -7,14 +7,14 @@ import Table from '../../../lib/table'
 export default class LatinSupineView extends LatinView {
   constructor (inflectionData, locale) {
     super(inflectionData, locale)
-    this.partOfSpeech = this.language_features[Feature.types.part][Constants.POFS_SUPINE].value
+    this.partOfSpeech = LatinSupineView.partOfSpeech
     this.id = 'verbSupine'
     this.name = 'supine'
     this.title = 'Supine'
     this.features.moods = new GroupFeatureType(
-      new FeatureType(Feature.types.mood, [Constants.MOOD_SUPINE], this.model.languageID),
+      new Feature(Feature.types.mood, [Constants.MOOD_SUPINE], this.model.languageID),
       'Mood')
-    this.language_features[Feature.types.grmCase] = new FeatureType(Feature.types.grmCase,
+    this.language_features[Feature.types.grmCase] = new Feature(Feature.types.grmCase,
       [Constants.CASE_ACCUSATIVE, Constants.CASE_ABLATIVE], this.model.languageID)
     this.features = {
       cases: new GroupFeatureType(this.language_features[Feature.types.grmCase], 'Case'),

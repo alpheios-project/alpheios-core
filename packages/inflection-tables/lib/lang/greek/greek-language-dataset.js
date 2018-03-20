@@ -1,7 +1,7 @@
 /*
  * Greek language data module
  */
-import { Constants, LanguageModelFactory, GrmFeature, FeatureType, Lemma } from 'alpheios-data-models'
+import { Constants, Feature, Lemma, FeatureImporter } from 'alpheios-data-models'
 import LanguageDataset from '../../../lib/language-dataset'
 import ExtendedGreekData from '../../../lib/extended-greek-data'
 import Suffix from '../../../lib/suffix.js'
@@ -93,23 +93,27 @@ import verbParticipleParadigmRulesCSV from './data/verb-participle/paradigm/rule
 
 import papaparse from 'papaparse'
 
-// Create a language data set that will keep all language-related information
-// let dataSet = new LanguageDataset(Constants.LANG_GREEK)
-let fTypes = GrmFeature.types
-
 // region Definition of grammatical features
 /*
  Define grammatical features of a language. Those grammatical features definitions will also be used by morphological
  analyzer's language modules as well.
  */
-const impName = 'csv'
-const footnotes = new FeatureType(GrmFeature.types.footnote, [], Constants.LANG_GREEK)
 
 // endregion Definition of grammatical features
 
 export default class GreekLanguageDataset extends LanguageDataset {
   constructor () {
     super(GreekLanguageDataset.languageID)
+
+    this.features = this.model.typeFeatures
+    this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], GreekLanguageDataset.languageID))
+    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], GreekLanguageDataset.languageID))
+    this.features.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID))
+
+    // Create an importer with default values for every feature
+    for (let feature of this.features.values()) {
+      feature.addImporter(new FeatureImporter(feature.values, true))
+    }
   }
 
   static get languageID () {
@@ -143,21 +147,20 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let primary = false
       let features = [partOfSpeech,
-        this.model.getFeatureType(fTypes.number).getFromImporter(impName, item[n.number]),
-        this.model.getFeatureType(fTypes.grmCase).getFromImporter(impName, item[n.grmCase]),
-        this.model.getFeatureType(fTypes.declension).getFromImporter(impName, item[n.declension]),
-        this.model.getFeatureType(fTypes.gender).getFromImporter(impName, item[n.gender]),
-        this.model.getFeatureType(fTypes.type).getFromImporter(impName, item[n.type])]
+        this.features.get(Feature.types.number).createFromImporter(item[n.number]),
+        this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
+        this.features.get(Feature.types.declension).createFromImporter(item[n.declension]),
+        this.features.get(Feature.types.gender).createFromImporter(item[n.gender]),
+        this.features.get(Feature.types.type).createFromImporter(item[n.type])]
       if (item[n.primary] === 'primary') {
         primary = true
       }
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ').map(function (index) {
-          return footnotes.get(index)
-        })
-        features.push(...indexes)
+        let indexes = item[n.footnote].split(' ')
+        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
       }
+
       let extendedGreekData = new ExtendedGreekData()
       extendedGreekData.primary = primary
       let extendedLangData = {
@@ -190,11 +193,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // Custom importers
     // TODO: decide on the best way to keep mulitple values and re-enable later
-    /* languageModel.features[fTypes.gender].addImporter(impName)
+    /* languageModel.features[Feature.types.gender].addImporter(impName)
       .map('masculine feminine neuter', [
-        languageModel.features[fTypes.gender][Constants.GEND_MASCULINE],
-        languageModel.features[fTypes.gender][Constants.GEND_FEMININE],
-        languageModel.features[fTypes.gender][Constants.GEND_NEUTER]
+        languageModel.features[Feature.types.gender][Constants.GEND_MASCULINE],
+        languageModel.features[Feature.types.gender][Constants.GEND_FEMININE],
+        languageModel.features[Feature.types.gender][Constants.GEND_NEUTER]
       ]) */
 
     // First row are headers
@@ -205,29 +208,28 @@ export default class GreekLanguageDataset extends LanguageDataset {
       let features = [partOfSpeech]
 
       if (item[n.hdwd]) {
-        features.push(
-          new FeatureType(fTypes.word, [FeatureType.UNRESTRICTED_VALUE], this.languageID).getFromImporter(impName, item[n.hdwd])
-        )
+        features.push(this.features.get(Feature.types.word).createFromImporter(item[n.hdwd]))
       }
-      if (item[n.grmClass]) { features.push(this.model.getFeatureType(fTypes.grmClass).getFromImporter(impName, item[n.grmClass])) }
-      if (item[n.person]) { features.push(this.model.getFeatureType(fTypes.person).getFromImporter(impName, item[n.person])) }
-      if (item[n.number]) { features.push(this.model.getFeatureType(fTypes.number).getFromImporter(impName, item[n.number])) }
-      if (item[n.grmCase]) { features.push(this.model.getFeatureType(fTypes.grmCase).getFromImporter(impName, item[n.grmCase])) }
-      if (item[n.gender]) { features.push(this.model.getFeatureType(fTypes.gender).getFromImporter(impName, item[n.gender])) }
-      if (item[n.type]) { features.push(this.model.getFeatureType(fTypes.type).getFromImporter(impName, item[n.type])) }
+      if (item[n.grmClass]) { features.push(this.features.get(Feature.types.grmClass).createFromImporter(item[n.grmClass])) }
+      if (item[n.person]) { features.push(this.features.get(Feature.types.person).createFromImporter(item[n.person])) }
+      if (item[n.number]) { features.push(this.features.get(Feature.types.number).createFromImporter(item[n.number])) }
+      if (item[n.grmCase]) { features.push(this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase])) }
+      if (item[n.gender]) { features.push(this.features.get(Feature.types.gender).createFromImporter(item[n.gender])) }
+      if (item[n.type]) { features.push(this.features.get(Feature.types.type).createFromImporter(item[n.type])) }
 
       let primary = (item[n.primary] === 'primary')
 
       // Dialects could have multiple values
       let dialects = item[n.dialect].split(',')
       if (item[n.dialect] && dialects && dialects.length > 0) {
-        features.push(new GrmFeature(dialects, fTypes.dialect, this.languageID))
+        features.push(this.features.get(Feature.types.dialect).createFeatures(dialects))
       }
 
       // Footnotes. There can be multiple footnote indexes separated by commas
-      let footnoteIndexes = item[n.footnote].split(',')
-      if (item[n.footnote] && footnoteIndexes && footnoteIndexes.length > 0) {
-        for (let index of footnoteIndexes) { features.push(footnotes.get(index)) }
+      if (item[n.footnote]) {
+        // There can be multiple footnote indexes separated by spaces
+        let indexes = item[n.footnote].split(' ')
+        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
       }
 
       let extendedGreekData = new ExtendedGreekData()
@@ -240,8 +242,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   static get verbParadigmTables () {
-    const partOfSpeech = LanguageModelFactory.getLanguageModel(this.languageID)
-      .getFeatureType(fTypes.part).get(Constants.POFS_VERB)
+    const partOfSpeech = Constants.POFS_VERB
     return new Map([
       ['verbpdgm1', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm01))],
       ['verbpdgm2', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm02))],
@@ -300,8 +301,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   static get verbParticipleParadigmTables () {
-    const partOfSpeech = LanguageModelFactory.getLanguageModel(this.languageID)
-      .getFeatureType(fTypes.part).get(Constants.POFS_VERB_PARTICIPLE)
+    const partOfSpeech = Constants.POFS_VERB_PARTICIPLE
     return new Map([
       ['verbpdgm54', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm54))],
       ['verbpdgm55', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm55))],
@@ -342,11 +342,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let features = [partOfSpeech]
 
-      if (item[n.stemtype]) { features.push(this.model.getFeatureType(GrmFeature.types.stemtype).getFromImporter(impName, item[n.stemtype])) }
-      if (item[n.voice]) { features.push(this.model.getFeatureType(GrmFeature.types.voice).getFromImporter(impName, item[n.voice])) }
-      if (item[n.mood]) { features.push(this.model.getFeatureType(GrmFeature.types.mood).getFromImporter(impName, item[n.mood])) }
-      if (item[n.tense]) { features.push(this.model.getFeatureType(GrmFeature.types.tense).getFromImporter(impName, item[n.tense])) }
-      if (item[n.dialect]) { features.push(this.model.getFeatureType(GrmFeature.types.dialect).getFromImporter(impName, item[n.dialect])) }
+      if (item[n.stemtype]) { features.push(this.features.get(Feature.types.stemtype).createFromImporter(item[n.stemtype])) }
+      if (item[n.voice]) { features.push(this.features.get(Feature.types.voice).createFromImporter(item[n.voice])) }
+      if (item[n.mood]) { features.push(this.features.get(Feature.types.mood).createFromImporter(item[n.mood])) }
+      if (item[n.tense]) { features.push(this.features.get(Feature.types.tense).createFromImporter(item[n.tense])) }
+      if (item[n.dialect]) { features.push(this.features.get(Feature.types.dialect).createFromImporter(item[n.dialect])) }
 
       let lemma
       if (item[n.lemma]) {
@@ -385,14 +385,14 @@ export default class GreekLanguageDataset extends LanguageDataset {
     let footnotes
 
     // Nouns
-    partOfSpeech = this.model.getFeatureType(fTypes.part)[Constants.POFS_NOUN]
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
     suffixes = papaparse.parse(nounSuffixesCSV, {})
     this.addSuffixes(partOfSpeech, suffixes.data)
     footnotes = papaparse.parse(nounFootnotesCSV, {})
     this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
 
     // Pronouns
-    partOfSpeech = this.model.getFeatureType(fTypes.part)[Constants.POFS_PRONOUN]
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     forms = papaparse.parse(pronounFormsCSV, {})
     this.addPronounForms(partOfSpeech, forms.data)
     footnotes = papaparse.parse(pronounFootnotesCSV, {})
@@ -400,7 +400,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // Verbs
     // Paradigms
-    partOfSpeech = this.model.getFeatureType(fTypes.part)[Constants.POFS_VERB]
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     paradigms = this.getParadigms(
       partOfSpeech, this.constructor.verbParadigmTables, papaparse.parse(verbParadigmRulesCSV, {}).data)
     this.addParadigms(partOfSpeech, paradigms)
@@ -408,7 +408,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // Verb Participles
     // Paradigms
-    partOfSpeech = this.model.getFeatureType(fTypes.part)[Constants.POFS_VERB_PARTICIPLE]
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
     paradigms = this.getParadigms(
       partOfSpeech, this.constructor.verbParticipleParadigmTables, papaparse.parse(verbParticipleParadigmRulesCSV, {}).data)
     this.addParadigms(partOfSpeech, paradigms)
@@ -421,36 +421,36 @@ export default class GreekLanguageDataset extends LanguageDataset {
    * Returns a feature type with lemmas that are used to group values within inflection tables,
    * such as for demonstrative pronouns
    * @param {string} grammarClass - A name of a pronoun class
-   * @return {FeatureType} An object with lemma values
+   * @return {Feature} An object with lemma values
    */
   getPronounGroupingLemmas (grammarClass) {
     let values = this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : []
-    return new FeatureType(GrmFeature.types.word, values, this.languageID)
+    return new Feature(Feature.types.word, values, this.languageID)
   }
 
   getObligatoryMatches (inflection) {
     let obligatoryMatches = []
-    if (inflection.hasFeatureValue(GrmFeature.types.part, Constants.POFS_PRONOUN)) {
-      obligatoryMatches.push(GrmFeature.types.grmClass)
+    if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
+      obligatoryMatches.push(Feature.types.grmClass)
     } else if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(GrmFeature.types.word)
+      obligatoryMatches.push(Feature.types.word)
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(GrmFeature.types.part)
+      obligatoryMatches.push(Feature.types.part)
     }
     return obligatoryMatches
   }
 
   getOptionalMatches (inflection) {
     const featureOptions = [
-      fTypes.grmCase,
-      fTypes.declension,
-      fTypes.gender,
-      fTypes.number,
-      fTypes.voice,
-      fTypes.mood,
-      fTypes.tense,
-      fTypes.person
+      Feature.types.grmCase,
+      Feature.types.declension,
+      Feature.types.gender,
+      Feature.types.number,
+      Feature.types.voice,
+      Feature.types.mood,
+      Feature.types.tense,
+      Feature.types.person
     ]
     return featureOptions.filter(f => inflection[f])
   }

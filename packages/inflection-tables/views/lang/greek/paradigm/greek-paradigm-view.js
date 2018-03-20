@@ -75,7 +75,6 @@ export default class GreekParadigmView extends GreekView {
   }
 
   static getMatchingInstances (inflectionData, messages) {
-    console.log(`Get matching instances`)
     if (this.matchFilter(inflectionData)) {
       let paradigms = inflectionData.pos.get(this.partOfSpeech).types.get(this.inflectionType).items
       return paradigms.map(paradigm => new this(paradigm, inflectionData, messages))

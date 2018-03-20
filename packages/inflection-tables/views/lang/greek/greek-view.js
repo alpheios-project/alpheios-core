@@ -16,11 +16,11 @@ export default class GreekView extends View {
     those values in child objects.
      */
     this.features = {
-      numbers: new GroupFeatureType(this.model.getFeatureType(Feature.types.number), 'Number'),
-      cases: new GroupFeatureType(this.model.getFeatureType(Feature.types.grmCase), 'Case'),
-      declensions: new GroupFeatureType(this.model.getFeatureType(Feature.types.declension), 'Declension'),
-      genders: new GroupFeatureType(this.model.getFeatureType(Feature.types.gender), 'Gender'),
-      types: new GroupFeatureType(this.model.getFeatureType(Feature.types.type), 'Type')
+      numbers: new GroupFeatureType(this.model.typeFeature(Feature.types.number), 'Number'),
+      cases: new GroupFeatureType(this.model.typeFeature(Feature.types.grmCase), 'Case'),
+      declensions: new GroupFeatureType(this.model.typeFeature(Feature.types.declension), 'Declension'),
+      genders: new GroupFeatureType(this.model.typeFeature(Feature.types.gender), 'Gender'),
+      types: new GroupFeatureType(this.model.typeFeature(Feature.types.type), 'Type')
     }
   }
 
@@ -37,19 +37,19 @@ export default class GreekView extends View {
       this.features.types, this.features.numbers, this.features.cases])
     let features = this.table.features
     features.columns = [
-      this.model.getFeatureType(Feature.types.declension),
-      this.model.getFeatureType(Feature.types.gender),
-      this.model.getFeatureType(Feature.types.type)
+      this.model.typeFeature(Feature.types.declension),
+      this.model.typeFeature(Feature.types.gender),
+      this.model.typeFeature(Feature.types.type)
     ]
     features.rows = [
-      this.model.getFeatureType(Feature.types.number),
-      this.model.getFeatureType(Feature.types.grmCase)
+      this.model.typeFeature(Feature.types.number),
+      this.model.typeFeature(Feature.types.grmCase)
     ]
     features.columnRowTitles = [
-      this.model.getFeatureType(Feature.types.grmCase)
+      this.model.typeFeature(Feature.types.grmCase)
     ]
     features.fullWidthRowTitles = [
-      this.model.getFeatureType(Feature.types.number)
+      this.model.typeFeature(Feature.types.number)
     ]
   }
 }

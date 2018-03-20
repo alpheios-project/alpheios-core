@@ -114,7 +114,13 @@ export default class View {
     this.table.messages = this.messages
     for (let lexeme of this.inflectionData.homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
-        if (inflection['part of speech'].filter((f) => f.hasValue(this.constructor.partOfSpeech)).length > 0) {
+        /* if (inflection['part of speech'].filter((f) => f.hasValue(this.constructor.partOfSpeech)).length > 0) {
+          let form = inflection.prefix ? `${inflection.prefix} - ` : ''
+          form = form + inflection.stem
+          form = inflection.suffix ? `${form} - ${inflection.suffix}` : form
+          this.forms.add(form)
+        } */
+        if (inflection['part of speech'].values.includes(this.constructor.partOfSpeech)) {
           let form = inflection.prefix ? `${inflection.prefix} - ` : ''
           form = form + inflection.stem
           form = inflection.suffix ? `${form} - ${inflection.suffix}` : form

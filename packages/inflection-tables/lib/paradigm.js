@@ -39,7 +39,7 @@ export default class Paradigm {
     for (const rule of this.rules) {
       let match = true
       for (const feature of rule.features) {
-        if (!(inflection.hasOwnProperty(feature.type) && feature.isSubsetof(inflection[feature.type]))) {
+        if (!inflection.hasOwnProperty(feature.type) || feature.value !== inflection[feature.type].value) {
           match = false
         }
       }

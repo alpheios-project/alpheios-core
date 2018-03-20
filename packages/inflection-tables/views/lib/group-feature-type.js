@@ -1,27 +1,28 @@
-import * as Models from 'alpheios-data-models'
+import { GrmFeature, FeatureType } from 'alpheios-data-models'
 import RowTitleCell from './row-title-cell'
 
+// TODO: Rebase on Feature instead of FeatureType
 /**
  * This is a wrapper around a FeatureType object. When a Table object creates a
  * hierarchical tree of suffixes, it uses grammatical features as tree nodes.
  * GroupFeatureType extends a Feature object so that it'll be able to store additional information
  * that is required for that.
  */
-export default class GroupFeatureType extends Models.FeatureType {
+export default class GroupFeatureType extends FeatureType {
   /**
    * GroupFeatureType extends FeatureType to serve as a grouping feature (i.e. a feature that forms
    * either a column or a row in an inflection table). For that, it adds some additional functionality,
    * such as custom feature orders that will allow to combine suffixes from several grammatical features
    * (i.e. masculine and feminine) into a one column of a table.
-   * @param {FeatureType} featureType - A feature that defines a type of this item.
+   * @param {Feature} feature - A feature that defines a type of this item.
    * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
    * language-specific message bundle.
-   * @param {Feature[]} order - A custom sort order for this feature that redefines
+   * @param {string[]} order - A custom sort order for this feature that redefines
    * a default one stored in FeatureType object (optional).
-   * Use this parameter to redefine a deafult sort order for a type.
+   * Use this parameter to redefine a default sort order for a type.
    */
-  constructor (featureType, titleMessageID, order = featureType.orderedFeatures) {
-    super(featureType.type, GroupFeatureType.featuresToValues(order), featureType.languageID)
+  constructor (feature, titleMessageID, order = feature.values) {
+    super(feature.type, order, feature.languageID)
 
     this.groupTitle = titleMessageID
     this._groupType = undefined
@@ -58,10 +59,10 @@ export default class GroupFeatureType extends Models.FeatureType {
 
   /**
    * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
-   * @returns {Feature[] | Feature[][]} A sorted array of feature values.
+   * @returns {GrmFeature[] | GrmFeature[][]} A sorted array of feature values.
    */
   getOrderedFeatures (ancestorFeatures) {
-    return this.getOrderedValues(ancestorFeatures).map((value) => new Models.Feature(value, this.type, this.languageID))
+    return this.getOrderedValues(ancestorFeatures).map((value) => new GrmFeature(value, this.type, this.languageID))
   }
 
   /**

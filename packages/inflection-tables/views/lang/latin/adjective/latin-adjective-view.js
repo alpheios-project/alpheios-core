@@ -10,15 +10,12 @@ export default class LatinAdjectiveView extends LatinView {
     this.id = 'adjectiveDeclension'
     this.name = 'adjective declension'
     this.title = 'Adjective declension'
-    this.partOfSpeech = this.language_features[Feature.types.part].adjective.value
+    this.partOfSpeech = LatinAdjectiveView.partOfSpeech
     this.inflectionType = LanguageDataset.SUFFIX
 
     // Feature that are different from base class values
     this.features.declensions = new GroupFeatureType(this.language_features[Feature.types.declension], 'Declension',
-      [ this.language_features[Feature.types.declension][Constants.ORD_1ST],
-        this.language_features[Feature.types.declension][Constants.ORD_2ND],
-        this.language_features[Feature.types.declension][Constants.ORD_3RD]
-      ])
+      [ Constants.ORD_1ST, Constants.ORD_2ND, Constants.ORD_3RD ])
     this.features.declensions.getTitle = LatinView.getDeclensionTitle
 
     this.createTable()

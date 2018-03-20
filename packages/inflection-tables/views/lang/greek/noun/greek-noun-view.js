@@ -1,4 +1,4 @@
-import { Constants, GreekLanguageModel, Feature, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import GreekView from '../greek-view.js'
 
@@ -10,14 +10,13 @@ export default class GreekNounView extends GreekView {
     this.title = 'Noun declension'
     this.partOfSpeech = Constants.POFS_NOUN
     this.inflectionType = Suffix
-    let genderMasculine = GreekLanguageModel.getFeatureType(Feature.types.gender)[Constants.GEND_MASCULINE].value
-    let genderFeminine = GreekLanguageModel.getFeatureType(Feature.types.gender)[Constants.GEND_FEMININE].value
-    let genderNeuter = GreekLanguageModel.getFeatureType(Feature.types.gender)[Constants.GEND_NEUTER].value
+    let genderMasculine = Constants.GEND_MASCULINE
+    let genderFeminine = Constants.GEND_FEMININE
+    let genderNeuter = Constants.GEND_NEUTER
 
     this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
       if (ancestorFeatures) {
-        if (ancestorFeatures[0].value === GreekLanguageModel.getFeatureType(Feature.types.declension)[Constants.ORD_2ND].value ||
-          ancestorFeatures[0].value === GreekLanguageModel.getFeatureType(Feature.types.declension)[Constants.ORD_3RD].value) {
+        if (ancestorFeatures.value === Constants.ORD_2ND || ancestorFeatures.value === Constants.ORD_3RD) {
           return [[genderMasculine, genderFeminine], genderNeuter]
         }
       }
