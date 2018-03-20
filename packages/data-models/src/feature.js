@@ -30,7 +30,6 @@ export default class Feature {
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
    * values. An order of those values can define a sort order.
    */
-  // TODO: Add restrictions that will prohibit to have more than one value
   constructor (type, data, languageID, allowedValues = []) {
     if (!Feature.isAllowedType(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
@@ -44,7 +43,6 @@ export default class Feature {
 
     this.type = type
     this.languageID = languageID
-    // TODO: add allowed values as required
     this.allowedValues = allowedValues
 
     this._data = Feature.dataValuesFromInput(data)
@@ -171,6 +169,14 @@ export default class Feature {
   }
 
   /**
+   * Retrieves a value object by name. Can be used to update a value object directly.
+   * @param {string} featureVale - A feature value of an object to retrieve.
+   */
+  getValue (featureVale) {
+    return this._data.find(v => v.value === featureVale)
+  }
+
+  /**
    * Returns a number of feature values.
    * @retrun {number] A quantity of feature values
    */
@@ -199,12 +205,38 @@ export default class Feature {
   }
 
   /**
-   * Examine the feature for a specific value
+   * Examines the feature for a specific value.
    * @param {string} value
-   * @returns {boolean} true if the value is included in the feature's values
+   * @returns {boolean} true if the value is included in the feature's values.
    */
   hasValue (value) {
     return this.values.includes(value)
+  }
+
+  /**
+   * Checks if this feature has all value from an array.
+   * @param {string[]} values - An array of values to check for.
+   * @returns {boolean} true if the value is included in the feature's values.
+   */
+  hasValues (values) {
+    let hasValues = true
+    for (let value of values) {
+      hasValues = hasValues && this.hasValue(value)
+    }
+    return hasValues
+  }
+
+  /**
+   * Checks if this feature has some value from an array.
+   * @param {string[]} values - An array of values to check for.
+   * @returns {boolean} true if the value is included in the feature's values.
+   */
+  hasSomeValues (values) {
+    let hasValues = false
+    for (let value of values) {
+      hasValues = hasValues || this.hasValue(value)
+    }
+    return hasValues
   }
 
   get valuesUnrestricted () {
@@ -214,13 +246,13 @@ export default class Feature {
   /**
    * Two features are considered fully equal if they are of the same type, have the same language,
    * and the same set of feature values in the same order.
-   * @param {Feature} grmFtr - A GrmFtr object this feature should be compared with.
+   * @param {Feature} feature - A GrmFtr object this feature should be compared with.
    * @return {boolean} True if features are equal, false otherwise.
    */
-  isEqual (grmFtr) {
-    return this.type === grmFtr.type &&
-      LanguageModelFactory.compareLanguages(this.languageID, grmFtr.languageID) &&
-      this.value === grmFtr.value
+  isEqual (feature) {
+    return this.type === feature.type &&
+      LanguageModelFactory.compareLanguages(this.languageID, feature.languageID) &&
+      this.value === feature.value
   }
 
   /**
@@ -231,11 +263,15 @@ export default class Feature {
    * @return {Feature} - Self reference for chaining.
    */
   addValue (value, sortOrder = this.constructor.defaultSortOrder) {
-    this._data.push({
-      value: value,
-      sortOrder: sortOrder
-    })
-    this.sort() // Resort an array to place an inserted value to the proper place
+    if (!this.hasValue(value)) {
+      this._data.push({
+        value: value,
+        sortOrder: sortOrder
+      })
+      this.sort() // Resort an array to place an inserted value to the proper place
+    } else {
+      console.warn(`Value "${value} already exists. If you want to change it, use "getValue" to access it directly.`)
+    }
     return this
   }
 
@@ -246,8 +282,14 @@ export default class Feature {
    * @return {Feature} - Self reference for chaining.
    */
   addValues (data) {
-    this._data = this._data.concat(this.constructor.dataValuesFromInput(data))
-    this.sort() // Resort an array to place an inserted value to the proper place
+    let normalizedData = this.constructor.dataValuesFromInput(data)
+    let values = normalizedData.map(v => v.value)
+    if (!this.hasValue(values)) {
+      this._data = this._data.concat(normalizedData)
+      this.sort() // Resort an array to place an inserted value to the proper place
+    } else {
+      console.warn(`One or several values from "${values} already exist. If you want to change it, use "getValue" to access a value directly.`)
+    }
     return this
   }
 
