@@ -33,15 +33,15 @@
           v-if="lex.lemma.features[types.kind]">{{kind.value}}</span>
         <span @click="sendFeature(decl)"
           :class="attributeClass(types.declension)"
-          v-for="decl in lex.lemma.features[types.declension]"
-          v-if="lex.lemma.features[types.declension]">{{decl.value}} declension</span>
+          v-for="decl in lex.lemma.features[types.declension].values"
+          v-if="lex.lemma.features[types.declension]">{{decl}} declension</span>
         <span @click="sendFeature(conj)"
           :class="attributeClass(types.conjugation)"
           v-for="conj in lex.lemma.features[types.conjugation]"
           v-if="lex.lemma.features[types.conjugation]">{{conj.value}} conjugation</span>
         <span>{{ featureList(lex.lemma,['age','area','geo','frequency']) }}</span>
-        <span class="alpheios-morph__attr"
-          v-for="source in lex.lemma.features.source" v-if="lex.lemma.features.source">[{{source.value}}]</span>
+        <span class="alpheios-morph__attr 1"
+          v-for="source in lex.lemma.features.source.values" v-if="lex.lemma.features.source">[{{source}}]</span>
         <span class="alpheios-morph__attr"
           v-for="note in lex.lemma.features.note" v-if="lex.lemma.features.note">[{{source.note}}]</span>
       </div>
@@ -95,7 +95,7 @@
                       <span @click="sendFeature(infl.groupingKey[types.gender])"
                         :class="attributeClass(types.gender)"
                         v-if="infl.groupingKey[types.gender] && ! featureMatch(infl.groupingKey[types.gender],lex.lemma.features[types.gender]) ">
-                        ({{ infl.groupingKey[types.gender].toLocaleStringAbbr().toString()}})
+                        ({{ infl.groupingKey[types.gender].toLocaleStringAbbr().join(', ')}})
                       </span>
                       <span @click="sendFeature(infl.groupingKey[types.comparison])"
                         :class="attributeClass(types.comparison)"

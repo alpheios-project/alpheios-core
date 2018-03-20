@@ -1024,6 +1024,9 @@ exports.default = {
         this.$el.setAttribute('data-x', '0');
         this.$el.setAttribute('data-y', '0');
       }
+    },
+    sendFeature: function sendFeature(data) {
+      this.$emit('sendfeature', data);
     }
   },
 
@@ -1379,7 +1382,7 @@ exports.default = {
         tosend = features[0];
       }
       if (this.linkedfeatures.includes(tosend.type)) {
-        this.$parent.$emit('sendfeature', tosend);
+        this.$emit('sendfeature', tosend);
       } else return false;
     },
     showLexeme: function showLexeme(lex) {
@@ -10479,7 +10482,9 @@ var render = function() {
                   : _vm._e()
               }),
               _vm._v(" "),
-              _vm._l(lex.lemma.features[_vm.types.declension], function(decl) {
+              _vm._l(lex.lemma.features[_vm.types.declension].values, function(
+                decl
+              ) {
                 return lex.lemma.features[_vm.types.declension]
                   ? _c(
                       "span",
@@ -10491,7 +10496,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(decl.value) + " declension")]
+                      [_vm._v(_vm._s(decl) + " declension")]
                     )
                   : _vm._e()
               }),
@@ -10526,10 +10531,10 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._l(lex.lemma.features.source, function(source) {
+              _vm._l(lex.lemma.features.source.values, function(source) {
                 return lex.lemma.features.source
-                  ? _c("span", { staticClass: "alpheios-morph__attr" }, [
-                      _vm._v("[" + _vm._s(source.value) + "]")
+                  ? _c("span", { staticClass: "alpheios-morph__attr 1" }, [
+                      _vm._v("[" + _vm._s(source) + "]")
                     ])
                   : _vm._e()
               }),
@@ -10843,7 +10848,7 @@ var render = function() {
                                                               _vm.types.gender
                                                             ]
                                                               .toLocaleStringAbbr()
-                                                              .toString()
+                                                              .join(", ")
                                                           ) +
                                                           ")\n                    "
                                                       )
@@ -11456,7 +11461,8 @@ var render = function() {
               lexemes: _vm.lexemes,
               definitions: _vm.definitions,
               linkedfeatures: _vm.linkedfeatures
-            }
+            },
+            on: { sendfeature: _vm.sendFeature }
           }),
           _vm._v(" "),
           _vm.showProviders
