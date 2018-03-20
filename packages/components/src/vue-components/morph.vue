@@ -15,35 +15,30 @@
       </span>
       <div class="alpheios-morph__morphdata">
         <span class="alpheios-morph__pofs">
-          <span @click="sendFeature(gcase)"
+          <span @click="sendFeature(lex.lemma.features[types.grmCase])"
             :class="attributeClass(types.grmCase)"
-            v-for="gcase in lex.lemma.features[types.grmCase]"
-            v-if="lex.lemma.features[types.grmCase]">{{gcase.toString()}}</span>
-          <span @click="sendFeature(gender)"
+            v-if="lex.lemma.features[types.grmCase]">{{lex.lemma.features[types.grmCase].value}}</span>
+          <span @click="sendFeature(lex.lemma.features[types.gender])"
             :class="attributeClass(types.gender)"
-            v-for="gender in lex.lemma.features[types.gender]"
-            v-if="lex.lemma.features[types.gender]">{{gender.value}}</span>
+            v-if="lex.lemma.features[types.gender]">{{lex.lemma.features[types.gender].value}}</span>
           <span @click="sendFeature(lex.lemma.features[types.part])"
             :class="attributeClass(types.part)"
-            v-if="lex.lemma.features[types.part]">{{ lex.lemma.features[types.part].toString() }}</span>
+            v-if="lex.lemma.features[types.part]">{{ lex.lemma.features[types.part].value }}</span>
         </span>
-        <span @click="sendFeature(kind)"
+        <span @click="sendFeature(lex.lemma.features[types.kind])"
           :class="attributeClass(types.kind)"
-          v-for="kind in lex.lemma.features[types.kind]"
-          v-if="lex.lemma.features[types.kind]">{{kind.value}}</span>
-        <span @click="sendFeature(decl)"
+          v-if="lex.lemma.features[types.kind]">{{lex.lemma.features[types.kind].value}}</span>
+        <span @click="sendFeature(lex.lemma.features[types.declension])"
           :class="attributeClass(types.declension)"
-          v-for="decl in lex.lemma.features[types.declension].values"
-          v-if="lex.lemma.features[types.declension]">{{decl}} declension</span>
-        <span @click="sendFeature(conj)"
+          v-if="lex.lemma.features[types.declension]">{{lex.lemma.features[types.declension].value}} declension</span>
+        <span @click="sendFeature(lex.lemma.features[types.conjugation])"
           :class="attributeClass(types.conjugation)"
-          v-for="conj in lex.lemma.features[types.conjugation]"
-          v-if="lex.lemma.features[types.conjugation]">{{conj.value}} conjugation</span>
+          v-if="lex.lemma.features[types.conjugation]">{{lex.lemma.features[types.conjugation].value}} conjugation</span>
         <span>{{ featureList(lex.lemma,['age','area','geo','frequency']) }}</span>
-        <span class="alpheios-morph__attr 1"
-          v-for="source in lex.lemma.features.source.values" v-if="lex.lemma.features.source">[{{source}}]</span>
         <span class="alpheios-morph__attr"
-          v-for="note in lex.lemma.features.note" v-if="lex.lemma.features.note">[{{source.note}}]</span>
+          v-if="lex.lemma.features.source">[{{lex.lemma.features.source.value}}]</span>
+        <span class="alpheios-morph__attr"
+           v-if="lex.lemma.features.note">[{{lex.lemma.features.note.value}}]</span>
       </div>
       <div v-if="definitions">
         <div v-for="definition in definitions[lex.lemma.key]" class="alpheios-morph__definition">
