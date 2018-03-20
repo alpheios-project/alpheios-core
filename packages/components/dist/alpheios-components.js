@@ -1310,7 +1310,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
 
 exports.default = {
   name: 'Morph',
@@ -10378,15 +10377,24 @@ var render = function() {
             })
           ),
           _vm._v(" :\n    "),
-          _vm._l(lex.lemma.features[_vm.types.pronunciation], function(pron) {
-            return lex.lemma.features[_vm.types.pronunciation]
-              ? _c(
-                  "span",
-                  { class: _vm.attributeClass(_vm.types.pronunciation) },
-                  [_vm._v("\n      [" + _vm._s(pron) + "]\n    ")]
-                )
-              : _vm._e()
-          }),
+          lex.lemma.features[_vm.types.pronunciation]
+            ? _c(
+                "span",
+                {
+                  class: _vm.attributeClass(_vm.types.pronunciation),
+                  attrs: { "data-feature": _vm.types.pronunciation }
+                },
+                [
+                  _vm._v(
+                    "\n      [" +
+                      _vm._s(
+                        lex.lemma.features[_vm.types.pronunciation].value
+                      ) +
+                      "]\n    "
+                  )
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "alpheios-morph__morphdata" }, [
             _c("span", { staticClass: "alpheios-morph__pofs" }, [
@@ -10395,6 +10403,7 @@ var render = function() {
                     "span",
                     {
                       class: _vm.attributeClass(_vm.types.grmCase),
+                      attrs: { "data-feature": _vm.types.grmCase },
                       on: {
                         click: function($event) {
                           _vm.sendFeature(lex.lemma.features[_vm.types.grmCase])
@@ -10414,6 +10423,7 @@ var render = function() {
                     "span",
                     {
                       class: _vm.attributeClass(_vm.types.gender),
+                      attrs: { "data-feature": _vm.types.gender },
                       on: {
                         click: function($event) {
                           _vm.sendFeature(lex.lemma.features[_vm.types.gender])
@@ -10429,6 +10439,7 @@ var render = function() {
                     "span",
                     {
                       class: _vm.attributeClass(_vm.types.part),
+                      attrs: { "data-feature": _vm.types.part },
                       on: {
                         click: function($event) {
                           _vm.sendFeature(lex.lemma.features[_vm.types.part])
@@ -10445,6 +10456,7 @@ var render = function() {
                   "span",
                   {
                     class: _vm.attributeClass(_vm.types.kind),
+                    attrs: { "data-feature": _vm.types.kind },
                     on: {
                       click: function($event) {
                         _vm.sendFeature(lex.lemma.features[_vm.types.kind])
@@ -10460,6 +10472,7 @@ var render = function() {
                   "span",
                   {
                     class: _vm.attributeClass(_vm.types.declension),
+                    attrs: { "data-feature": _vm.types.declension },
                     on: {
                       click: function($event) {
                         _vm.sendFeature(
@@ -10482,6 +10495,7 @@ var render = function() {
                   "span",
                   {
                     class: _vm.attributeClass(_vm.types.conjugation),
+                    attrs: { "data-feature": _vm.types.conjugation },
                     on: {
                       click: function($event) {
                         _vm.sendFeature(
@@ -10499,7 +10513,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _c("span", [
+            _c("span", { attrs: { "data-feature": "extras" } }, [
               _vm._v(
                 _vm._s(
                   _vm.featureList(lex.lemma, [
@@ -10512,16 +10526,38 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            lex.lemma.features.source
-              ? _c("span", { staticClass: "alpheios-morph__attr" }, [
-                  _vm._v("[" + _vm._s(lex.lemma.features.source.value) + "]")
-                ])
+            lex.lemma.features[_vm.types.source]
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "alpheios-morph__attr",
+                    attrs: { "data-feature": _vm.types.source }
+                  },
+                  [
+                    _vm._v(
+                      "[" +
+                        _vm._s(lex.lemma.features[_vm.types.source].value) +
+                        "]"
+                    )
+                  ]
+                )
               : _vm._e(),
             _vm._v(" "),
-            lex.lemma.features.note
-              ? _c("span", { staticClass: "alpheios-morph__attr" }, [
-                  _vm._v("[" + _vm._s(lex.lemma.features.note.value) + "]")
-                ])
+            lex.lemma.features[_vm.types.note]
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "alpheios-morph__attr",
+                    attrs: { "data-feature": _vm.types.note }
+                  },
+                  [
+                    _vm._v(
+                      "[" +
+                        _vm._s(lex.lemma.features[_vm.types.note].value) +
+                        "]"
+                    )
+                  ]
+                )
               : _vm._e()
           ]),
           _vm._v(" "),
@@ -11068,8 +11104,7 @@ var render = function() {
               ])
             })
           )
-        ],
-        2
+        ]
       )
     })
   )

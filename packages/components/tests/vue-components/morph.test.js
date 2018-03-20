@@ -13,7 +13,12 @@ describe('morph.test.js', () => {
             isPopulated: () => { return true },
             lemma: {
               principalParts: ['foo', 'bar'],
-              features: {'pronunciation': ['foopron']},
+              features: {
+                'pronunciation': { value: 'foopron' },
+                'case': { value: 'accusative' },
+                'gender': { value: 'feminine' },
+                'part of speech': { value: 'noun' }
+              },
               word: 'foo',
               languageID: Symbol('lat') },
             getGroupedInflections: () => { return [] }
@@ -25,7 +30,15 @@ describe('morph.test.js', () => {
           },
           {
             isPopulated: () => { return true },
-            lemma: { principalParts: ['bar'], features: {}, word: 'foo', languageID: Symbol('lat') },
+            lemma: {
+              principalParts: ['bar'],
+              features: {
+                'conjugation': {value: '1st'},
+                'part of speech': { value: 'verb' }
+              },
+              word: 'foo',
+              languageID: Symbol('lat')
+            },
             getGroupedInflections: () => { return [] }
           }
         ],
@@ -85,4 +98,21 @@ describe('morph.test.js', () => {
     expect(cmp.emitted('sendfeature')).toBeTruthy()
     expect(cmp.emitted('sendfeature')[0]).toEqual([mockFeature])
   })
+  it('expects case and gender to be rendered with pofs for noun', () => {
+    let pofsElem = cmp.find('div').find('div.alpheios-morph__dictentry').find('div.alpheios-morph__morphdata').find('span.alpheios-morph__pofs')
+    expect(pofsElem).toBeTruthy()
+    expect(pofsElem.find('[data-feature="case"]').is('span')).toBeTruthy()
+    expect(pofsElem.find('[data-feature="gender"]').is('span')).toBeTruthy()
+    expect(pofsElem.find('[data-feature="part of speech"]').is('span')).toBeTruthy()
+  })
+  it('expects case and gender not to be rendered with pofs for verb', () => {
+    let pofsElem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div.alpheios-morph__morphdata').find('span.alpheios-morph__pofs')
+    expect(pofsElem).toBeTruthy()
+    expect(pofsElem.find('[data-feature="case"]').exists()).toBeFalsy()
+    expect(pofsElem.find('[data-feature="gender"]').exists()).toBeFalsy()
+    expect(pofsElem.find('[data-feature="part of speech"]').is('span')).toBeTruthy()
+  })
+
+  // test that inflection group with same part of speech as lemma doesn't show part of speech
+  // test that inflection group with different part of speech as lemma does show part of speech
 })
