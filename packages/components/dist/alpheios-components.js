@@ -1363,44 +1363,13 @@ exports.default = {
       return classList.join(' ');
     },
     featureMatch: function featureMatch(a, b) {
-      var matches = false;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        var _loop = function _loop() {
-          var f = _step.value;
-
-          if (b && b.filter(function (x) {
-            return x.isEqual(f);
-          }).length > 0) {
-            matches = true;
-            return 'break';
-          }
-        };
-
-        for (var _iterator = a[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _ret = _loop();
-
-          if (_ret === 'break') break;
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+      if (!a || !b) {
+        console.warn('Undefined in featureMatch:', a, b);
+        return false;
       }
-
-      return matches;
+      a = _alpheiosDataModels.GrmFeature.toFeature(a);
+      b = _alpheiosDataModels.GrmFeature.toFeature(b);
+      return a.isEqual(b);
     },
     sendFeature: function sendFeature(features) {
       var tosend = features;
@@ -1420,6 +1389,9 @@ exports.default = {
       var list = features.reduce(function (acc, cv, ci) {
         return lemma.features[cv] ? [].concat(_toConsumableArray(acc), _toConsumableArray(lemma.features[cv])) : acc;
       }, []);
+      list = list.map(function (i) {
+        return _alpheiosDataModels.GrmFeature.toFeature(i);
+      });
       return list.length > 0 ? '(' + list.map(function (f) {
         return f.toString();
       }).join(', ') + ')' : '';
@@ -9495,7 +9467,7 @@ exports.default = {
               console.warn('[data-footnote] attribute has no index value');
               return 'break';
             }
-            var indexes = index.replace(/\s*/g, '').split(',');
+            var indexes = index.replace(/\s+/g, ' ').trim().split(' ');
             var popup = document.createElement('div');
             popup.classList.add(popupClassName, hiddenClassName);
             var title = document.createElement('div');
@@ -10870,9 +10842,7 @@ var render = function() {
                                                             infl.groupingKey[
                                                               _vm.types.gender
                                                             ]
-                                                              .map(function(g) {
-                                                                return g.toLocaleStringAbbr()
-                                                              })
+                                                              .toLocaleStringAbbr()
                                                               .toString()
                                                           ) +
                                                           ")\n                    "
@@ -15554,13 +15524,13 @@ class UIController {
             uiController: this.uiController,
             grammars: __WEBPACK_IMPORTED_MODULE_9_alpheios_res_client__["Grammars"]
           }).getData()
-            //, {
-            // experience: 'Get resource',
-            //  actions: [
-            //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
-            //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
-            // ]
-            // }).getData()
+          //, {
+          // experience: 'Get resource',
+          //  actions: [
+          //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
+          //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
+          // ]
+          // }).getData()
         },
 
         settingChange: function (name, value) {
@@ -15926,7 +15896,7 @@ class UIController {
   }
 
   updateMorphology (homonym) {
-    homonym.lexemes.sort(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Lexeme"].getSortByTwoLemmaFeatures(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["GrmFeature"].types.frequency, __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["GrmFeature"].types.part))
+    homonym.lexemes.sort(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Lexeme"].getSortByTwoLemmaFeatures(__WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Feature"].types.frequency, __WEBPACK_IMPORTED_MODULE_0_alpheios_data_models__["Feature"].types.part))
     this.popup.lexemes = homonym.lexemes
     if (homonym.lexemes.length > 0) {
       // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple

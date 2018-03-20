@@ -95,7 +95,7 @@
                       <span @click="sendFeature(infl.groupingKey[types.gender])"
                         :class="attributeClass(types.gender)"
                         v-if="infl.groupingKey[types.gender] && ! featureMatch(infl.groupingKey[types.gender],lex.lemma.features[types.gender]) ">
-                        ({{ infl.groupingKey[types.gender].map((g) => g.toLocaleStringAbbr()).toString()}})
+                        ({{ infl.groupingKey[types.gender].toLocaleStringAbbr().toString()}})
                       </span>
                       <span @click="sendFeature(infl.groupingKey[types.comparison])"
                         :class="attributeClass(types.comparison)"
@@ -191,15 +191,14 @@
         classList.push(...extras)
         return classList.join(' ')
       },
-      featureMatch(a,b) {
-        let matches = false
-        for (let f of a) {
-          if (b && b.filter((x) => x.isEqual(f)).length > 0) {
-            matches = true
-            break
-          }
+      featureMatch (a, b) {
+        if (!a || !b) {
+          console.warn(`Undefined in featureMatch:`, a, b)
+          return false
         }
-        return matches
+        a = GrmFeature.toFeature(a)
+        b = GrmFeature.toFeature(b)
+        return a.isEqual(b)
       },
       sendFeature(features) {
         let tosend = features
@@ -220,6 +219,7 @@
         let list = features.reduce((acc,cv,ci)=> {
             return lemma.features[cv] ? [...acc,...lemma.features[cv]] : acc
           },[])
+        list = list.map(i => GrmFeature.toFeature(i))
         return list.length > 0 ? `(${list.map((f)=>f.toString()).join(', ')})` : ''
       },
       languageCode (languageID) {

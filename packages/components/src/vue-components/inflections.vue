@@ -257,7 +257,7 @@
               console.warn(`[data-footnote] attribute has no index value`)
               break
             }
-            let indexes = index.replace(/\s*/g, '').split(',')
+            let indexes = index.replace(/\s+/g, ' ').trim().split(' ')
             let popup = document.createElement('div')
             popup.classList.add(popupClassName, hiddenClassName)
             let title = document.createElement('div')
