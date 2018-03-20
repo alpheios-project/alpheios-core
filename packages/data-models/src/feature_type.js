@@ -1,4 +1,4 @@
-import GrmFeature from './grm-feature.js'
+import Feature from './feature.js'
 import FeatureImporter from './feature_importer.js'
 import LMF from './language_model_factory'
 
@@ -24,9 +24,6 @@ class FeatureType {
    * @param {String | Symbol} language - A language of a feature type.
    */
   constructor (type, values, language) {
-    if (!GrmFeature.types.isAllowed(type)) {
-      throw new Error('Features of "' + type + '" type are not supported.')
-    }
     if (!values || !Array.isArray(values)) {
       throw new Error('Values should be an array (or an empty array) of values.')
     }
@@ -50,11 +47,11 @@ class FeatureType {
       this._orderIndex.push(value)
       if (Array.isArray(value)) {
         for (let element of value) {
-          this[element] = new GrmFeature(element, this.type, this.languageID)
+          this[element] = new Feature(this.type, element, this.languageID)
           this._orderLookup[element] = index
         }
       } else {
-        this[value] = new GrmFeature(value, this.type, this.languageID)
+        this[value] = new Feature(this.type, value, this.languageID)
         this._orderLookup[value] = index
       }
     }
@@ -82,14 +79,23 @@ class FeatureType {
    * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
    * @param value
    * @param {int} sortOrder
-   * @returns {GrmFeature}
+   * @returns {Feature}
    */
   get (value, sortOrder = 1) {
     if (value) {
-      return new GrmFeature(value, this.type, this.languageID, sortOrder)
+      return new Feature(this.type, [[value, sortOrder]], this.languageID)
     } else {
       throw new Error('A non-empty value should be provided.')
     }
+  }
+
+  /**
+   *
+   * @param {string[][]} data - An array of value arrays as: [[value1, sortOrder1], [value2, sortOrder2]]
+   * @return {Feature}
+   */
+  getValues (data) {
+    return new Feature(this.type, data, this.languageID)
   }
 
   getFromImporter (importerName, value) {
@@ -121,12 +127,12 @@ class FeatureType {
   /**
    * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
    * For a similar function that returns strings instead of Feature objects see orderedValues().
-   * @returns {GrmFeature[] | GrmFeature[][]} Array of feature values sorted according to orderIndex.
+   * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
    * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
    * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
    */
   get orderedFeatures () {
-    return this.orderedValues.map((value) => new GrmFeature(value, this.type, this.languageID))
+    return this.orderedValues.map((value) => new Feature(this.type, value, this.languageID))
   }
 
   /**
@@ -159,7 +165,7 @@ class FeatureType {
    * Sets an order of grammatical feature values for a grammatical feature. Used mostly for sorting, filtering,
    * and displaying.
    *
-   * @param {GrmFeature[] | GrmFeature[][]} values - a list of grammatical features that specify their order for
+   * @param {Feature[] | Feature[][]} values - a list of grammatical features that specify their order for
    * sorting and filtering. Some features can be grouped as [[genders.masculine, genders.feminine], LibLatin.genders.neuter].
    * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
    * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together

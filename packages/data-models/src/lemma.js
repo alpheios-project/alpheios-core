@@ -1,5 +1,5 @@
-import LMF from './language_model_factory'
-import GrmFeature from './grm-feature.js'
+import LMF from './language_model_factory.js'
+import Feature from './feature.js'
 
 /**
  * Lemma, a canonical form of a word.
@@ -40,10 +40,11 @@ class Lemma {
   }
 
   /**
+   * @deprecated Please use `addFeature` instead.
    * Sets a grammatical feature for a lemma. Some features can have multiple values, In this case
    * an array of Feature objects will be provided.
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
-   * @param {GrmFeature | GrmFeature[]} data
+   * @param {Feature | Feature[]} data
    */
   set feature (data) {
     if (!data) {
@@ -56,7 +57,7 @@ class Lemma {
     let type = data[0].type
     this.features[type] = []
     for (let element of data) {
-      if (!(element instanceof GrmFeature)) {
+      if (!(element instanceof Feature)) {
         throw new Error('feature data must be a Feature object.')
       }
 
@@ -70,11 +71,32 @@ class Lemma {
   }
 
   /**
+   * Sets a grammatical feature of a lemma. Feature is stored in a `feature.type` property.
+   * @param {Feature} feature - A feature object with one or multiple values.
+   */
+  addFeature (feature) {
+    if (!feature) {
+      throw new Error('feature data cannot be empty.')
+    }
+
+    if (!(feature instanceof Feature)) {
+      throw new Error('feature data must be a Feature object.')
+    }
+
+    if (!LMF.compareLanguages(feature.languageID, this.languageID)) {
+      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
+        this.languageID.toString() + '" of a Lemma object.')
+    }
+
+    this.features[feature.type] = feature
+  }
+
+  /**
    * Get a string which can be used as a unique key to identify this lemma
    * @return {string} the key
    */
   get key () {
-    return [this.word, this.languageCode, ...Object.values(this.features)].join('-')
+    return [this.word, LMF.getLanguageCodeFromId(this.languageID), ...Object.values(this.features)].join('-')
   }
 }
 

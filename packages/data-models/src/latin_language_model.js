@@ -1,6 +1,10 @@
 import LanguageModel from './language_model.js'
 import Feature from './feature.js'
 import * as Constants from './constants.js'
+
+let typeFeatures = new Map()
+let typeFeaturesInitialized = false
+
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
@@ -103,6 +107,18 @@ export default class LatinLanguageModel extends LanguageModel {
     ])
   }
 
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized) { this.initTypeFeatures() }
+    return typeFeatures
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures.set(featureName, this.getFeature(featureName))
+    }
+    typeFeaturesInitialized = true
+  }
+
   /**
    * @override LanguageModel#grammarFeatures
    */
@@ -177,11 +193,8 @@ export default class LatinLanguageModel extends LanguageModel {
       suffixBased: false,
       pronounClassRequired: false
     }
-    if (inflection.hasOwnProperty(Feature.types.part) &&
-      Array.isArray(inflection[Feature.types.part]) &&
-      inflection[Feature.types.part].length === 1) {
-      let partOfSpeech = inflection[Feature.types.part][0]
-      if (partOfSpeech.value === Constants.POFS_PRONOUN) {
+    if (inflection.hasOwnProperty(Feature.types.part)) {
+      if (inflection[Feature.types.part].value === Constants.POFS_PRONOUN) {
         grammar.fullFormBased = true
       } else {
         grammar.suffixBased = true

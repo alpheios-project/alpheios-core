@@ -1,6 +1,9 @@
 import LanguageModel from './language_model.js'
 import * as Constants from './constants.js'
 
+let typeFeatures = new Map()
+let typeFeaturesInitialized = false
+
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
@@ -12,6 +15,18 @@ export default class ArabicLanguageModel extends LanguageModel {
   static get contextBackward () { return 0 }
   static get direction () { return Constants.LANG_DIR_RTL }
   static get baseUnit () { return Constants.LANG_UNIT_WORD }
+
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized) { this.initTypeFeatures() }
+    return typeFeatures
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures.set(featureName, this.getFeature(featureName))
+    }
+    typeFeaturesInitialized = true
+  }
 
   /**
    * Check to see if this language tool can produce an inflection table display

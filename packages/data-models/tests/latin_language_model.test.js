@@ -18,7 +18,7 @@ describe('LanguageModelFactory object', () => {
   test('Uses default features with correct language', () => {
     let noun = latin.features[Feature.types.part][Constants.POFS_NOUN]
     expect(noun).toBeDefined()
-    expect(noun.language).toEqual(Constants.STR_LANG_CODE_LAT)
+    expect(noun.languageID).toEqual(Constants.LANG_LATIN)
   })
 
   test('Uses model specific features', () => {

@@ -1,4 +1,5 @@
 import LMF from './language_model_factory.js'
+import Feature from './feature.js'
 import * as i18n from './i18n.js'
 
 /**
@@ -65,6 +66,20 @@ class GrmFeature {
     }
   }
 
+  isSubsetof (features) {
+    if (!Array.isArray(features)) {
+      features = [features] // If `features` is a single value, convert it to an array (a more general case)
+    }
+    // `feature` is an array of feature objects with (possibly) each having a single feature value.
+    let languageID = features[0].languageID // Assume all Feature objects have the same language ID
+    let type = features[0].type // Assume all Feature objects have the same type
+    let values = features.map(f => f.value)
+    if (LMF.compareLanguages(this.languageID, languageID) && this.type === type && values.includes(this.value)) {
+      return true
+    }
+    return false
+  }
+
   /**
    * examine the feature for a specific value
    * @param {string} value
@@ -100,6 +115,22 @@ class GrmFeature {
     } else {
       return i18n.i18n[lang][this.value].abbr
     }
+  }
+
+  static toFeature (sourceFeature) {
+    if (Array.isArray(sourceFeature)) {
+      if (!(sourceFeature[0] instanceof Feature)) {
+        const type = sourceFeature[0].type
+        const languageID = sourceFeature[0].languageID
+        const values = sourceFeature.map(v => v.value)
+        return new Feature(type, values, languageID)
+      }
+    } else {
+      if (!(sourceFeature instanceof Feature)) {
+        return new Feature(sourceFeature.type, sourceFeature.value, sourceFeature.languageID)
+      }
+    }
+    return sourceFeature
   }
 }
 // Should have no spaces in values in order to be used in HTML templates

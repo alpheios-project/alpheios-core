@@ -1,4 +1,4 @@
-import GrmFeature from './grm-feature.js'
+import Feature from './feature.js'
 import LMF from './language_model_factory.js'
 /*
  Hierarchical structure of return value of a morphological analyzer:
@@ -112,11 +112,12 @@ class Inflection {
   }
 
   /**
-     * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
-     * an array of Feature objects will be provided.
-     * Values are taken from features and stored in a 'feature.type' property as an array of values.
-     * @param {GrmFeature | GrmFeature[]} data
-     */
+   * @deprecated Use `addFeature` instead
+   * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
+   * an array of Feature objects will be provided.
+   * Values are taken from features and stored in a 'feature.type' property as an array of values.
+   * @param {Feature | Feature[]} data
+   */
   set feature (data) {
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
@@ -128,7 +129,7 @@ class Inflection {
     let type = data[0].type
     this[type] = []
     for (let element of data) {
-      if (!(element instanceof GrmFeature)) {
+      if (!(element instanceof Feature)) {
         throw new Error('Inflection feature data must be a Feature object.')
       }
 
@@ -139,6 +140,27 @@ class Inflection {
 
       this[type].push(element)
     }
+  }
+
+  /**
+   * Sets a grammatical feature of an inflection. Feature is stored in a `feature.type` property.
+   * @param {Feature} feature - A feature object with one or multiple values.
+   */
+  addFeature (feature) {
+    if (!feature) {
+      throw new Error('feature data cannot be empty.')
+    }
+
+    if (!(feature instanceof Feature)) {
+      throw new Error('feature data must be a Feature object.')
+    }
+
+    if (!LMF.compareLanguages(feature.languageID, this.languageID)) {
+      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
+        this.languageID.toString() + '" of a Lemma object.')
+    }
+
+    this[feature.type] = feature
   }
 
   /**

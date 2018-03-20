@@ -1,4 +1,6 @@
 import LanguageModelFactory from './language_model_factory.js'
+import FeatureImporter from './feature_importer.js'
+import * as i18n from './i18n.js'
 
 /**
  * A grammatical feature object, that can replace both Feature and FeatureType objects.
@@ -28,6 +30,7 @@ export default class Feature {
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
    * values. An order of those values can define a sort order.
    */
+  // TODO: Add restrictions that will prohibit to have more than one value
   constructor (type, data, languageID, allowedValues = []) {
     if (!Feature.isAllowedType(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
@@ -41,12 +44,11 @@ export default class Feature {
 
     this.type = type
     this.languageID = languageID
+    // TODO: add allowed values as required
     this.allowedValues = allowedValues
 
     this._data = Feature.dataValuesFromInput(data)
     this.sort()
-
-    this.importers = new Map()
   }
 
   static dataValuesFromInput (data) {
@@ -119,6 +121,10 @@ export default class Feature {
     return ' '
   }
 
+  static get defaultImporterName () {
+    return 'default'
+  }
+
   /**
    * Test to see if this feature allows unrestricted values.
    * @returns {boolean} true if unrestricted false if not.
@@ -138,6 +144,10 @@ export default class Feature {
    */
   sort () {
     this._data.sort((a, b) => a.sortOrder !== b.sortOrder ? a.sortOrder - b.sortOrder : a.value.localeCompare(b.value))
+  }
+
+  get items () {
+    return this._data
   }
 
   /**
@@ -161,6 +171,26 @@ export default class Feature {
   }
 
   /**
+   * Returns a number of feature values.
+   * @retrun {number] A quantity of feature values
+   */
+  get valQty () {
+    return this._data.length
+  }
+
+  get isEmpty () {
+    return this.valQty === 0
+  }
+
+  get isSingle () {
+    return this.valQty === 1
+  }
+
+  get isMultiple () {
+    return this.valQty > 1
+  }
+
+  /**
    * A string representation of a feature.
    * @return {string}
    */
@@ -175,6 +205,10 @@ export default class Feature {
    */
   hasValue (value) {
     return this.values.includes(value)
+  }
+
+  get valuesUnrestricted () {
+    return this.allowedValues.length === 0
   }
 
   /**
@@ -196,7 +230,7 @@ export default class Feature {
    * @param {number} sortOrder - A sort order.
    * @return {Feature} - Self reference for chaining.
    */
-  addValue (value, sortOrder = this.defaultSortOrder) {
+  addValue (value, sortOrder = this.constructor.defaultSortOrder) {
     this._data.push({
       value: value,
       sortOrder: sortOrder
@@ -227,7 +261,7 @@ export default class Feature {
   }
 
   /**
-   * Creates a new single value GrmFtr object of the same type and same language,
+   * Creates a new single value Feature object of the same type and same language,
    * but with a different feature value.
    * This can be used when one feature defines a type and it is necessary
    * to create other items of the same type.
@@ -235,12 +269,12 @@ export default class Feature {
    * @param {number} sortOrder.
    * @return {Feature} A new Ftr object.
    */
-  createFeature (value, sortOrder = this.defaultSortOrder) {
+  createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
     return new Feature(this.type, [[value, sortOrder]], this.languageID, this.allowedValues)
   }
 
   /**
-   * Creates a multiple value GrmFtr object of the same type and same language,
+   * Creates a multiple value Feature object of the same type and same language,
    * but with a different feature values.
    * @param {string | string[] | string[][]} data - Single or multiple values, in different combinations,
    * formatted according to rules described in a Ftr constructor.
@@ -259,12 +293,32 @@ export default class Feature {
   }
 
   /**
-   * Adds an importer to the internal list.
-   * @param {FeatureImporter} importer - A `FeatureImporter` object.
-   * @param {string} name - A name of an importer
+   * A locale-specific abbreviation for a feature's values.
+   * @return {string[]}
    */
-  addImporter (importer, name = 'default') {
+  toLocaleStringAbbr (lang = 'en') {
+    // TODO: Should it return a string instead of array? This function is used in morph.vue.
+    return this.values.map(v => i18n.i18n[lang][v].abbr)
+  }
+
+  /**
+   * Adds an importer to the internal list.
+   * @param {string} name - A name of an importer.
+   * @param {FeatureImporter} importer - A `FeatureImporter` object.
+   */
+  addImporter (importer = new FeatureImporter(), name = this.constructor.defaultImporterName) {
+    if (!this.importers) {
+      this.importers = new Map()
+    }
     this.importers.set(name, importer)
+    return importer
+  }
+
+  getImporter (name = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(name)) {
+      throw new Error(`Importer "${name}" does not exist`)
+    }
+    return this.importers.get(name)
   }
 
   /**
@@ -273,7 +327,10 @@ export default class Feature {
    * @param {string} name - A name of an importer.
    * @return {Feature} - A new Ftr object.
    */
-  addFromImporter (foreignData, name = 'default') {
+  addFromImporter (foreignData, name = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(name)) {
+      throw new Error(`Importer "${name}" does not exist`)
+    }
     const importer = this.importers.get(name)
     foreignData = this.constructor.dataValuesFromInput(foreignData)
     this._data.push(...foreignData.map(fv => { return { value: importer.get(fv.value), sortOrder: fv.sortOrder } }))
@@ -287,7 +344,10 @@ export default class Feature {
    * @param {string} name - A name of an importer.
    * @return {Feature} - A new Ftr object.
    */
-  createFromImporter (foreignData, name = 'default') {
+  createFromImporter (foreignData, name = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(name)) {
+      throw new Error(`Importer "${name}" does not exist`)
+    }
     const importer = this.importers.get(name)
     if (!Array.isArray(foreignData)) {
       foreignData = [foreignData]

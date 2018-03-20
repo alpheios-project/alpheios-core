@@ -2,8 +2,9 @@ import LanguageModel from './language_model.js'
 import LanguageModelFactory from './language_model_factory.js'
 import * as Constants from './constants.js'
 import Feature from './feature.js'
-import GrmFeature from './grm-feature.js'
 
+let typeFeatures = new Map()
+let typeFeaturesInitialized = false
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
@@ -106,6 +107,18 @@ export default class GreekLanguageModel extends LanguageModel {
     ])
   }
 
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized) { this.initTypeFeatures() }
+    return typeFeatures
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures.set(featureName, this.getFeature(featureName))
+    }
+    typeFeaturesInitialized = true
+  }
+
   /**
    * Check to see if this language tool can produce an inflection table display
    * for the current node
@@ -204,11 +217,8 @@ export default class GreekLanguageModel extends LanguageModel {
       suffixBased: false,
       pronounClassRequired: false
     }
-    if (inflection.hasOwnProperty(Feature.types.part) &&
-      Array.isArray(inflection[Feature.types.part]) &&
-      inflection[Feature.types.part].length === 1) {
-      let partOfSpeech = inflection[Feature.types.part][0]
-      if (partOfSpeech.value === Constants.POFS_PRONOUN) {
+    if (inflection.hasOwnProperty(Feature.types.part)) {
+      if (inflection[Feature.types.part].value === Constants.POFS_PRONOUN) {
         constraints.fullFormBased = true
       } else {
         constraints.suffixBased = true
@@ -220,9 +230,7 @@ export default class GreekLanguageModel extends LanguageModel {
     constraints.pronounClassRequired =
       LanguageModelFactory.compareLanguages(GreekLanguageModel.languageID, inflection.languageID) &&
       inflection.hasOwnProperty(Feature.types.part) &&
-      Array.isArray(inflection[Feature.types.part]) &&
-      inflection[Feature.types.part].length >= 1 &&
-      inflection[Feature.types.part][0].value === Constants.POFS_PRONOUN
+      inflection[Feature.types.part].value === Constants.POFS_PRONOUN
 
     return constraints
   }
@@ -237,11 +245,10 @@ export default class GreekLanguageModel extends LanguageModel {
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
    * @param {boolean} normalize - Whether normalized forms of words shall be used for comparison.
-   * @return {GrmFeature[]} Matching classes found in an array of Feature objects. If no matching classes found,
-   * returns an empty array.
+   * @return {Feature} Matching classes found within a Feature objects. If no matching classes found,
+   * returns undefined.
    */
   static getPronounClasses (forms, word, normalize = true) {
-    let classes = []
     let matchingValues = new Set() // Will eliminate duplicated values
     let matchingForms = forms.filter(
       form => {
@@ -259,9 +266,8 @@ export default class GreekLanguageModel extends LanguageModel {
         matchingValues.add(matchingForm.features[Feature.types.grmClass])
       }
     }
-    for (const matchingValue of matchingValues) {
-      classes.push(new GrmFeature(matchingValue, Feature.types.grmClass, GreekLanguageModel.languageID))
+    if (matchingValues.size > 0) {
+      return new Feature(Feature.types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
     }
-    return classes
   }
 }

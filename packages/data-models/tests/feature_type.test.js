@@ -13,13 +13,13 @@ describe('FeatureType', () => {
   })
 
   test('Should be initialized properly', () => {
-    expect(featureType).toEqual({
+    expect(featureType).toMatchObject({
       '_orderIndex': ['first', ['second', 'third'], 'fourth'],
       '_orderLookup': {'first': 0, 'second': 1, 'third': 1, 'fourth': 2},
-      'first': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
-      'second': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'second', 'sortOrder': 1},
-      'third': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'third', 'sortOrder': 1},
-      'fourth': {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1},
+      'first': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'first'}]},
+      'second': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'second'}]},
+      'third': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'third'}]},
+      'fourth': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'fourth'}]},
       'languageCode': 'lat',
       'languageID': Constants.LANG_LATIN,
       'type': Feature.types.declension
@@ -40,12 +40,10 @@ describe('FeatureType', () => {
 
   test('Get method should return a new Feature object that is initialized properly', () => {
     let value = 'some value'
-    expect(featureType.get(value)).toEqual({
-      'languageCode': 'lat',
+    expect(featureType.get(value)).toMatchObject({
       'languageID': Constants.LANG_LATIN,
       'type': Feature.types.declension,
-      'value': value,
-      'sortOrder': 1
+      '_data': [{'sortOrder': 1, 'value': 'some value'}]
     })
   })
 
@@ -82,10 +80,10 @@ describe('FeatureType', () => {
   })
 
   test('orderedFeatures() should return type features in an indexed order.', () => {
-    expect(featureType.orderedFeatures).toEqual([
-      {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'first', 'sortOrder': 1},
-      {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': ['second', 'third'], 'sortOrder': 1},
-      {'languageCode': 'lat', 'languageID': Constants.LANG_LATIN, 'type': 'declension', 'value': 'fourth', 'sortOrder': 1}
+    expect(featureType.orderedFeatures).toMatchObject([
+      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'first'}]},
+      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'second'}, {'sortOrder': 2, 'value': 'third'}]},
+      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'fourth'}]}
     ])
   })
 

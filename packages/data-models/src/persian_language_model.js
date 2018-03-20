@@ -1,6 +1,9 @@
 import LanguageModel from './language_model.js'
 import * as Constants from './constants.js'
 
+let typeFeatures = new Map()
+let typeFeaturesInitialized = false
+
 /**
  * @class  PersianLanguageModel is the lass for Persian specific behavior
  */
@@ -18,6 +21,18 @@ export default class PersianLanguageModel extends LanguageModel {
   static get direction () { return Constants.LANG_DIR_RTL }
 
   static get baseUnit () { return Constants.LANG_UNIT_WORD }
+
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized) { this.initTypeFeatures() }
+    return typeFeatures
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures.set(featureName, this.getFeature(featureName))
+    }
+    typeFeaturesInitialized = true
+  }
 
   /**
    * Check to see if this language tool can produce an inflection table display

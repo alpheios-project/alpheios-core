@@ -1,7 +1,7 @@
 /* eslint-env jest */
 'use strict'
 import Inflection from '../src/inflection.js'
-import Feature from '../src/grm-feature.js'
+import Feature from '../src/feature.js'
 import * as Constants from '../src/constants.js'
 
 describe('Inflection object', () => {
@@ -43,14 +43,12 @@ describe('Inflection object', () => {
   })
 
   test('feature method should add a single feature to the inflection', () => {
-    inflection.feature = new Feature('masculine', Feature.types.gender, grc)
+    inflection.feature = new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)
     expect(inflection).toEqual(expect.objectContaining({
       gender: [{
-        languageCode: 'grc',
         languageID: Constants.LANG_GREEK,
-        sortOrder: 1,
         type: 'gender',
-        value: 'masculine'
+        '_data': [{value: 'masculine', sortOrder: 1}]
       }]
     }))
   })

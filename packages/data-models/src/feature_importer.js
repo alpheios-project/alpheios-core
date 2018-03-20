@@ -1,9 +1,17 @@
 class FeatureImporter {
-  constructor (defaults = []) {
+  /**
+   * @param defaults
+   * @param {boolean} returnUnknown - If true, and a source value is not found in the importer,
+   * a source value will be returned without any change (a passthrough). If false, an Error
+   * will be thrown for unknown source values.
+   * @return {FeatureImporter}
+   */
+  constructor (defaults = [], returnUnknown = false) {
     this.hash = {}
     for (let value of defaults) {
       this.map(value, value)
     }
+    this.returnUnknown = returnUnknown
     return this
   }
 
@@ -37,14 +45,16 @@ class FeatureImporter {
 
   /**
    * Returns one or more library standard values that match an external value
-   * @param {string} importedValue - External value
+   * @param {string} sourceValue - External value
    * @returns {Object | string} One or more of library standard values
    */
-  get (importedValue) {
-    if (this.has(importedValue)) {
-      return this.hash[importedValue]
+  get (sourceValue) {
+    if (this.has(sourceValue)) {
+      return this.hash[sourceValue]
+    } else if (this.returnUnknown) {
+      return sourceValue
     } else {
-      throw new Error('A value "' + importedValue + '" is not found in the importer.')
+      throw new Error('A value "' + sourceValue + '" is not found in the importer.')
     }
   }
 }

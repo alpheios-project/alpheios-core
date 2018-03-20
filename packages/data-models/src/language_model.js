@@ -64,10 +64,18 @@ class LanguageModel {
     return this.featureValues.keys()
   }
 
+  static typeFeature (name) {
+    if (this.typeFeatures.has(name)) {
+      return this.typeFeatures.get(name)
+    } else {
+      throw new Error(`Type feature "${name}" is not defined within "${this}"`)
+    }
+  }
+
   static get features () {
     let features = {}
     for (const featureName of this.featureNames) {
-      features[featureName] = this.getFeatureType(featureName)
+      features[featureName] = this.getFeature(featureName)
     }
     return features
   }
@@ -173,69 +181,47 @@ class LanguageModel {
       ],
       [
         Feature.types.age,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.area,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.source,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.frequency,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.geo,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.pronunciation,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.kind,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.comparison,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.morph,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.stemtype,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ],
       [
         Feature.types.derivtype,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        []
       ]
     ])
   }
@@ -259,6 +245,7 @@ class LanguageModel {
   }
 
   static getFeatureType (name) {
+    console.warn('Please use getFeature instead')
     let featureValues = this.featureValues
     if (featureValues.has(name)) {
       return new FeatureType(name, featureValues.get(name), this.languageID)
@@ -267,10 +254,19 @@ class LanguageModel {
     }
   }
 
+  static getFeature (name) {
+    let featureValues = this.featureValues
+    if (featureValues.has(name)) {
+      return new Feature(name, featureValues.get(name), this.languageID)
+    } else {
+      throw new Error(`Feature "${name}" is not defined`)
+    }
+  }
+
   _initializeFeatures () {
     let features = {}
     for (const featureName of this.constructor.featureValues.keys()) {
-      features[featureName] = this.constructor.getFeatureType(featureName)
+      features[featureName] = this.constructor.getFeature(featureName)
     }
     return features
   }
@@ -486,7 +482,7 @@ class LanguageModel {
         let nextGroup = new Map()
         let sortOrder = new Map()
         for (let infl of kv[1].inflections) {
-          let sortkey = infl[Feature.types.grmCase] ? Math.max(infl[Feature.types.grmCase].map((f) => { return f.sortOrder })) : 1
+          let sortkey = infl[Feature.types.grmCase] ? Math.max(infl[Feature.types.grmCase].items.map(f => f.sortOrder)) : 1
           let groupingKey = new InflectionGroupingKey(infl, [Feature.types.tense, Feature.types.voice])
           let groupingKeyStr = groupingKey.toString()
           if (nextGroup.has(groupingKeyStr)) {
@@ -519,7 +515,7 @@ class LanguageModel {
             // set key is case comp gend pers mood sort
             let groupingKey = new InflectionGroupingKey(infl,
               [Feature.types.grmCase, Feature.types.comparison, Feature.types.gender, Feature.types.number, Feature.types.person,
-                Feature.types.tense, Feature.types.mood, Feature.types.sort, Feature.types.voice])
+                Feature.types.tense, Feature.types.mood, Feature.types.voice])
             let groupingKeyStr = groupingKey.toString()
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl)
