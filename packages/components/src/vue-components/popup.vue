@@ -27,7 +27,7 @@
         </div>
         <div v-show="morphDataReady" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small">
             <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions"
-                   :linkedfeatures="linkedfeatures">
+                   :linkedfeatures="linkedfeatures" @sendfeature="sendFeature">
             </morph>
 
             <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
@@ -410,7 +410,12 @@
           this.$el.setAttribute('data-x', '0')
           this.$el.setAttribute('data-y', '0')
         }
+      },
+
+      sendFeature (data) {
+        this.$emit('sendfeature',data)
       }
+
     },
 
     mounted () {
