@@ -821,10 +821,8 @@ class InflectionGroupingKey {
    * @returns {boolean} true if found, false if not
    */
   hasFeatureValue (feature, value) {
-    for (let f of this[feature]) {
-      if (f.hasValue(value)) {
-        return true
-      }
+    if (this.hasOwnProperty(feature)) {
+      return this[feature].values.includes(value)
     }
     return false
   }
@@ -2223,6 +2221,7 @@ class Feature {
     this.languageID = languageID;
     this.allowedValues = allowedValues;
 
+    // `_data` is an array
     this._data = Feature.dataValuesFromInput(data);
     this.sort();
   }
@@ -3197,17 +3196,16 @@ class Lexeme {
    * @returns {Function} function which can be passed to Array.sort
    */
   static getSortByTwoLemmaFeatures (primary, secondary) {
-    // TODO: Review and fix the logic for this
     return (a, b) => {
       if (a.lemma.features[primary] && b.lemma.features[primary]) {
-        if (a.lemma.features[primary].items[0].sortOrder < b.lemma.features[primary].items[0].sortOrder) {
+        if (a.lemma.features[primary][0].sortOrder < b.lemma.features[primary][0].sortOrder) {
           return 1
-        } else if (a.lemma.features[primary].items[0].sortOrder > b.lemma.features[primary].items[0].sortOrder) {
+        } else if (a.lemma.features[primary][0].sortOrder > b.lemma.features[primary][0].sortOrder) {
           return -1
         } else if (a.lemma.features[secondary] && b.lemma.features[secondary]) {
-          if (a.lemma.features[secondary].items[0].sortOrder < b.lemma.features[secondary].items[0].sortOrder) {
+          if (a.lemma.features[secondary][0].sortOrder < b.lemma.features[secondary][0].sortOrder) {
             return 1
-          } else if (a.lemma.features[secondary].items[0].sortOrder > b.lemma.features[secondary].items[0].sortOrder) {
+          } else if (a.lemma.features[secondary][0].sortOrder > b.lemma.features[secondary][0].sortOrder) {
             return -1
           } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
             return -1

@@ -1,8 +1,9 @@
 /* eslint-env jest */
 'use strict'
-// import LanguageModelFactory from '../src/language_model_factory.js'
-// import Inflection from '../src/inflection.js'
-// import Feature from '../src/feature.js'
+import * as Constants from '../src/constants.js'
+import LanguageModelFactory from '../src/language_model_factory.js'
+import Inflection from '../src/inflection.js'
+import Feature from '../src/feature.js'
 
 describe('Language Model object', () => {
   test('groupForDisplay', () => {
@@ -10,42 +11,42 @@ describe('Language Model object', () => {
     let something = true
     expect(something).toBeTruthy()
   })
-  // TODO: Enable after clearing a situation with grouping functions
-  /* test('groupForDisplay', () => {
-    let basemodel = LanguageModelFactory.getLanguageForCode('foo')
-    let one = new Inflection('nat', 'lat', 'urae', null, null)
-    let two = new Inflection('nat', 'lat', 'urae', null, null)
-    let three = new Inflection('nat', 'lat', 'urae', null, null)
-    let four = new Inflection('natur', 'lat', 'ae', null, null)
-    let five = new Inflection('natur', 'lat', 'ae', null, null)
-    let six = new Inflection('natur', 'lat', 'ae', null, null)
 
-    one.addFeature(new Feature(Feature.types.part, 'verb', 'lat', 3))
-    one.addFeature(new Feature(Feature.types.tense, 'present', 'lat'))
-    one.addFeature(new Feature(Feature.types.gender, 'feminine', 'lat'))
-    one.addFeature(new Feature(Feature.types.voice, 'active', 'lat'))
-    one.addFeature(new Feature(Feature.types.mood, 'indicative', 'lat'))
+  test('groupForDisplay', () => {
+    let basemodel = LanguageModelFactory.getLanguageModel(Constants.LANG_LATIN)
+    let one = new Inflection('nat', Constants.LANG_LATIN, 'urae', null, null)
+    let two = new Inflection('nat', Constants.LANG_LATIN, 'urae', null, null)
+    let three = new Inflection('nat', Constants.LANG_LATIN, 'urae', null, null)
+    let four = new Inflection('natur', Constants.LANG_LATIN, 'ae', null, null)
+    let five = new Inflection('natur', Constants.LANG_LATIN, 'ae', null, null)
+    let six = new Inflection('natur', Constants.LANG_LATIN, 'ae', null, null)
 
-    two.addFeature(new Feature(Feature.types.part, 'verb', 'lat', 3))
-    two.addFeature(new Feature(Feature.types.tense, 'present', 'present', 'lat'))
-    two.addFeature(new Feature(Feature.types.gender, 'feminine', 'lat'))
-    two.addFeature(new Feature(Feature.types.voice, 'passive', 'lat'))
-    two.addFeature(new Feature(Feature.types.mood, 'indicative', 'lat'))
+    one.addFeature(new Feature(Feature.types.part, [['verb', 3]], Constants.LANG_LATIN))
+    one.addFeature(new Feature(Feature.types.tense, 'present', Constants.LANG_LATIN))
+    one.addFeature(new Feature(Feature.types.gender, 'feminine', Constants.LANG_LATIN))
+    one.addFeature(new Feature(Feature.types.voice, 'active', Constants.LANG_LATIN))
+    one.addFeature(new Feature(Feature.types.mood, 'indicative', Constants.LANG_LATIN))
 
-    three.addFeature(new Feature(Feature.types.part, 'verb', 'lat', 3))
-    three.addFeature(new Feature(Feature.types.tense, 'future', 'lat'))
-    three.addFeature(new Feature(Feature.types.gender, 'masculine', 'lat'))
-    three.addFeature(new Feature(Feature.types.mood, 'subjunctive', 'lat'))
+    two.addFeature(new Feature(Feature.types.part, [['verb', 3]], Constants.LANG_LATIN))
+    two.addFeature(new Feature(Feature.types.tense, 'present', Constants.LANG_LATIN))
+    two.addFeature(new Feature(Feature.types.gender, 'feminine', Constants.LANG_LATIN))
+    two.addFeature(new Feature(Feature.types.voice, 'passive', Constants.LANG_LATIN))
+    two.addFeature(new Feature(Feature.types.mood, 'indicative', Constants.LANG_LATIN))
 
-    four.addFeature(new Feature(Feature.types.part, 'noun', 'lat', 5))
-    four.addFeature(new Feature(Feature.types.grmCase, 'nominative', 'lat', 5))
-    four.addFeature(new Feature(Feature.types.number, 'singular', 'lat'))
-    five.addFeature(new Feature(Feature.types.part, 'noun', 'lat', 5))
-    five.addFeature(new Feature(Feature.types.grmCase, 'accusative', 'lat', 5))
-    five.addFeature(new Feature(Feature.types.number, 'singular', 'lat'))
-    six.addFeature(new Feature(Feature.types.part, 'noun', 'lat', 5))
-    six.addFeature(new Feature(Feature.types.grmCase, 'accusative', 'lat', 5))
-    six.addFeature(new Feature(Feature.types.number, 'plural', 'lat'))
+    three.addFeature(new Feature(Feature.types.part, [['verb', 3]], Constants.LANG_LATIN))
+    three.addFeature(new Feature(Feature.types.tense, 'future', Constants.LANG_LATIN))
+    three.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_LATIN))
+    three.addFeature(new Feature(Feature.types.mood, 'subjunctive', Constants.LANG_LATIN))
+
+    four.addFeature(new Feature(Feature.types.part, [['noun', 5]], Constants.LANG_LATIN))
+    four.addFeature(new Feature(Feature.types.grmCase, [['nominative', 5]], Constants.LANG_LATIN))
+    four.addFeature(new Feature(Feature.types.number, 'singular', Constants.LANG_LATIN))
+    five.addFeature(new Feature(Feature.types.part, [['noun', 5]], Constants.LANG_LATIN))
+    five.addFeature(new Feature(Feature.types.grmCase, [['accusative', 5]], Constants.LANG_LATIN))
+    five.addFeature(new Feature(Feature.types.number, 'singular', Constants.LANG_LATIN))
+    six.addFeature(new Feature(Feature.types.part, [['noun', 5]], Constants.LANG_LATIN))
+    six.addFeature(new Feature(Feature.types.grmCase, [['accusative', 5]], Constants.LANG_LATIN))
+    six.addFeature(new Feature(Feature.types.number, 'plural', Constants.LANG_LATIN))
     let inflections = [one, two, three, four, five, six]
     let grouped = basemodel.groupInflectionsForDisplay(inflections)
     expect(grouped.length).toEqual(2)
@@ -68,5 +69,5 @@ describe('Language Model object', () => {
     expect(active[0].inflections[0].groupingKey.hasFeatureValue(Feature.types.gender, 'feminine')).toBeTruthy()
     expect(active[0].inflections[0].inflections.length).toEqual(1)
     expect(active[0].inflections[0].inflections[0]).toEqual(one)
-  }) */
+  })
 })

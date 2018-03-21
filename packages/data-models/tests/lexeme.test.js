@@ -48,8 +48,7 @@ describe('Lexeme object', () => {
   })
 
   test('Sorting on feature order', () => {
-    // TODO: fix later
-    /* let mockLexemeOne = {
+    let mockLexemeOne = {
       lemma: {
         features: {
           freq: [ { sortOrder: 5 } ],
@@ -76,7 +75,7 @@ describe('Lexeme object', () => {
     let sortFunc = Lexeme.getSortByTwoLemmaFeatures('freq', 'pofs')
     expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeOne])
     lexemes = [ mockLexemeTwo, mockLexemeThree ]
-    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeThree]) */
+    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeThree])
   })
 
   test('isPopulated', () => {

@@ -20,10 +20,8 @@ class InflectionGroupingKey {
    * @returns {boolean} true if found, false if not
    */
   hasFeatureValue (feature, value) {
-    for (let f of this[feature]) {
-      if (f.hasValue(value)) {
-        return true
-      }
+    if (this.hasOwnProperty(feature)) {
+      return this[feature].values.includes(value)
     }
     return false
   }

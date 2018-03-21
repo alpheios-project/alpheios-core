@@ -45,6 +45,7 @@ export default class Feature {
     this.languageID = languageID
     this.allowedValues = allowedValues
 
+    // `_data` is an array
     this._data = Feature.dataValuesFromInput(data)
     this.sort()
   }
