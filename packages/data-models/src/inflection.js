@@ -119,6 +119,7 @@ class Inflection {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
+    console.warn(`Please use "addFeature" instead.`)
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }
@@ -161,6 +162,20 @@ class Inflection {
     }
 
     this[feature.type] = feature
+  }
+
+  /**
+   * Sets multiple grammatical features of an inflection.
+   * @param {Feature[]} features - Features to be added.
+   */
+  addFeatures (features) {
+    if (!Array.isArray(features)) {
+      throw new Error(`Features must be in an array`)
+    }
+
+    for (let feature of features) {
+      this.addFeature(feature)
+    }
   }
 
   /**

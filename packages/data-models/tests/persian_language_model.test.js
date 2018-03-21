@@ -1,5 +1,6 @@
 /* eslint-env jest */
 'use strict'
+import * as Constants from '../src/constants.js'
 import LMF from '../src/language_model_factory.js'
 
 describe('LanguageModelFactory object', () => {
@@ -8,10 +9,10 @@ describe('LanguageModelFactory object', () => {
   let persian
 
   beforeAll(() => {
-    persian = LMF.getLanguageForCode('per')
+    persian = LMF.getLanguageModel(Constants.LANG_PERSIAN)
   })
 
   test('has features', () => {
-    expect(persian.features).toBeDefined()
+    expect(persian.typeFeatures).toBeDefined()
   })
 })

@@ -1,9 +1,11 @@
+import Feature from './feature.js'
+
 class InflectionGroupingKey {
   /**
    * @constructor
    * @param {Inflection} infl inflection with features which are used as a grouping key
    * @param {string[]} features array of feature names which are used as the key
-   * @param {Map} extras extra property name and value pairs used in the key
+   * @param {Object} extras extra property name and value pairs used in the key
    */
   constructor (infl, features, extras = {}) {
     for (let feature of features) {
@@ -33,11 +35,9 @@ class InflectionGroupingKey {
   toString () {
     let values = []
     for (let prop of Object.getOwnPropertyNames(this).sort()) {
-      if (Array.isArray(this[prop])) {
-        values.push(this[prop].map((x) => x.toString()).sort().join(','))
-      } else {
-        values.push(this[prop])
-      }
+      // A prop can be either a Feature object, or a one of the extras of a string type
+      let value = (this[prop] instanceof Feature) ? this[prop].values.sort().join(',') : this[prop]
+      values.push(value)
     }
     return values.join(' ')
   }

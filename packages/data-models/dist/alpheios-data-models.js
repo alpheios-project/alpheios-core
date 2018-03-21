@@ -806,7 +806,7 @@ class InflectionGroupingKey {
    * @constructor
    * @param {Inflection} infl inflection with features which are used as a grouping key
    * @param {string[]} features array of feature names which are used as the key
-   * @param {Map} extras extra property name and value pairs used in the key
+   * @param {Object} extras extra property name and value pairs used in the key
    */
   constructor (infl, features, extras = {}) {
     for (let feature of features) {
@@ -836,11 +836,9 @@ class InflectionGroupingKey {
   toString () {
     let values = [];
     for (let prop of Object.getOwnPropertyNames(this).sort()) {
-      if (Array.isArray(this[prop])) {
-        values.push(this[prop].map((x) => x.toString()).sort().join(','));
-      } else {
-        values.push(this[prop]);
-      }
+      // A prop can be either a Feature object, or a one of the extras of a string type
+      let value = (this[prop] instanceof Feature) ? this[prop].values.sort().join(',') : this[prop];
+      values.push(value);
     }
     return values.join(' ')
   }
@@ -922,16 +920,38 @@ class LanguageModel {
     return this.constructor.features
   }
 
+  /**
+   * Returns a list of names of feature types that are defined in a language model.
+   * @return {string[]} Names of features that are defined in a model.
+   */
   static get featureNames () {
     return this.featureValues.keys()
   }
 
-  static typeFeature (name) {
-    if (this.typeFeatures.has(name)) {
-      return this.typeFeatures.get(name)
+  /**
+   * Returns a feature a `featureType` name that is defined for a language. It does not create a new Feature
+   * object instance. It returns the one defined in a language model. To get a new instance of a Feature
+   * object, use `getFeature` instead.
+   * If no feature of `featureType` is defined in a language model, throws an error.
+   * @param {string} featureType - A feature type name.
+   * @return {Feature} A feature object of requested type.
+   */
+  static typeFeature (featureType) {
+    if (this.typeFeatures.has(featureType)) {
+      return this.typeFeatures.get(featureType)
     } else {
-      throw new Error(`Type feature "${name}" is not defined within "${this}"`)
+      throw new Error(`Type feature "${featureType}" is not defined within "${this}"`)
     }
+  }
+
+  /**
+   * Returns a map with Feature objects of all features defined in a language. Use this method to get all
+   * Feature objects defined in a language model.
+   * @return {Map} Feature objects for all features defined within a language in a Map object. The key is
+   * a feature type (a string), and the value is a Feature object.
+   */
+  static get typeFeatures () {
+    console.warn(`This getter must be defined in a descendant class`);
   }
 
   static get features () {
@@ -1106,6 +1126,11 @@ class LanguageModel {
     return this.constructor.languageID
   }
 
+  /**
+   * @deprecated
+   * @param name
+   * @return {FeatureType}
+   */
   static getFeatureType (name) {
     console.warn('Please use getFeature instead');
     let featureValues = this.featureValues;
@@ -1116,12 +1141,18 @@ class LanguageModel {
     }
   }
 
-  static getFeature (name) {
-    let featureValues = this.featureValues;
-    if (featureValues.has(name)) {
-      return new Feature(name, featureValues.get(name), this.languageID)
+  /**
+   * Returns a new instance of a feature with `featureType`. It uses a feature defined in a language model
+   * as a master.
+   * @param {string} featureType - A name of a feature type.
+   * @return {Feature} - A newly created Feature object.
+   */
+  static getFeature (featureType) {
+    let featureValues = this.featureValues; // To cache the values
+    if (featureValues.has(featureType)) {
+      return new Feature(featureType, featureValues.get(featureType), this.languageID)
     } else {
-      throw new Error(`Feature "${name}" is not defined`)
+      throw new Error(`Feature "${featureType}" is not defined`)
     }
   }
 
@@ -2459,6 +2490,7 @@ class Feature {
    * @return {Feature} A new Ftr object.
    */
   createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
+    // TODO: Add a check of if the value exists in a source Feature object
     return new Feature(this.type, [[value, sortOrder]], this.languageID, this.allowedValues)
   }
 
@@ -2474,11 +2506,11 @@ class Feature {
   }
 
   /**
-   * Create a copy of this feature.
+   * Create a copy of the feature object.
    */
-  copy () {
-    // TODO: Do we need it?
-    console.warn(`This feature is not implemented yet`);
+  getCopy () {
+    let values = this._data.map(item => [item.value, item.sortOrder]);
+    return new Feature(this.type, values, this.languageID, this.allowedValues.slice())
   }
 
   /**
@@ -2821,6 +2853,7 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
+    console.warn(`Please use "addFeature" instead`);
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -2863,6 +2896,20 @@ class Lemma {
     }
 
     this.features[feature.type] = feature;
+  }
+
+  /**
+   * Sets multiple grammatical features of a lemma.
+   * @param {Feature[]} features - Features to be added.
+   */
+  addFeatures (features) {
+    if (!Array.isArray(features)) {
+      throw new Error(`Features must be in an array`)
+    }
+
+    for (let feature of features) {
+      this.addFeature(feature);
+    }
   }
 
   /**
@@ -2993,6 +3040,7 @@ class Inflection {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
+    console.warn(`Please use "addFeature" instead.`);
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }
@@ -3035,6 +3083,20 @@ class Inflection {
     }
 
     this[feature.type] = feature;
+  }
+
+  /**
+   * Sets multiple grammatical features of an inflection.
+   * @param {Feature[]} features - Features to be added.
+   */
+  addFeatures (features) {
+    if (!Array.isArray(features)) {
+      throw new Error(`Features must be in an array`)
+    }
+
+    for (let feature of features) {
+      this.addFeature(feature);
+    }
   }
 
   /**
@@ -3135,6 +3197,7 @@ class Lexeme {
    * @returns {Function} function which can be passed to Array.sort
    */
   static getSortByTwoLemmaFeatures (primary, secondary) {
+    // TODO: Review and fix the logic for this
     return (a, b) => {
       if (a.lemma.features[primary] && b.lemma.features[primary]) {
         if (a.lemma.features[primary].items[0].sortOrder < b.lemma.features[primary].items[0].sortOrder) {

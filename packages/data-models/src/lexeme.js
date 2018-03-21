@@ -83,6 +83,7 @@ class Lexeme {
    * @returns {Function} function which can be passed to Array.sort
    */
   static getSortByTwoLemmaFeatures (primary, secondary) {
+    // TODO: Review and fix the logic for this
     return (a, b) => {
       if (a.lemma.features[primary] && b.lemma.features[primary]) {
         if (a.lemma.features[primary].items[0].sortOrder < b.lemma.features[primary].items[0].sortOrder) {

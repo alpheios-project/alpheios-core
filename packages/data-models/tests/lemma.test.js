@@ -1,7 +1,7 @@
 /* eslint-env jest */
-import Constants from '../src/constants.js'
+import * as Constants from '../src/constants.js'
 import Lemma from '../src/lemma.js'
-import Feature from '../src/grm-feature.js'
+import Feature from '../src/feature.js'
 
 describe('Lemma object', () => {
   let lemma, word, lemmaWithParts
@@ -37,8 +37,10 @@ describe('Lemma object', () => {
   })
 
   test('key', () => {
-    lemma.feature = new Feature(Feature.types.part, 'noun', Constants.LANG_LATIN)
-    lemma.feature = new Feature(Feature.types.tense, 'present', Constants.LANG_LATIN)
+    lemma.addFeatures([
+      new Feature(Feature.types.part, 'noun', Constants.LANG_LATIN),
+      new Feature(Feature.types.tense, 'present', Constants.LANG_LATIN)
+    ])
     expect(lemma.key).toEqual('someword-lat-noun-present')
   })
 

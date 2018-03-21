@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import FeatureType from '../src/feature_type.js'
-import Feature from '../src/grm-feature.js'
+import Feature from '../src/feature.js'
 import FeatureImporter from '../src/feature_importer.js'
 import * as Constants from '../src/constants.js'
 
@@ -58,17 +58,18 @@ describe('FeatureType', () => {
   test('addImporter method should return a new properly initialized Importer object', () => {
     let importerName = 'some value'
     expect(featureType.addImporter(importerName)).toEqual({
-      'hash': {}
+      hash: {},
+      returnUnknown: false
     })
   })
 
   test('addImporter method should create an Importer object inside a FeatureType object', () => {
     featureType.addImporter('some value')
-    expect(featureType).toEqual(expect.objectContaining({
+    expect(featureType).toMatchObject({
       'importer': {
         'some value': {hash: {}}
       }
-    }))
+    })
   })
 
   test('addImporter method with no value should throw an exception', () => {
@@ -96,10 +97,10 @@ describe('FeatureType', () => {
   })
 
   test('order setter should change an order of items properly', () => {
-    let f1 = new Feature('first', Feature.types.declension, 'lat')
-    let f2 = new Feature('second', Feature.types.declension, 'lat')
-    let f3 = new Feature('third', Feature.types.declension, 'lat')
-    let f4 = new Feature('fourth', Feature.types.declension, 'lat')
+    let f1 = new Feature(Feature.types.declension, 'first', Constants.LANG_LATIN)
+    let f2 = new Feature(Feature.types.declension, 'second', Constants.LANG_LATIN)
+    let f3 = new Feature(Feature.types.declension, 'third', Constants.LANG_LATIN)
+    let f4 = new Feature(Feature.types.declension, 'fourth', Constants.LANG_LATIN)
     featureType.order = [[f4, f2], f3, f1]
     expect(featureType).toEqual(expect.objectContaining({
       '_orderIndex': [['fourth', 'second'], 'third', 'first'],
@@ -116,17 +117,17 @@ describe('FeatureType', () => {
   })
 
   test('order setter with an argument(s) of mismatching type should throw an exception', () => {
-    let f1 = new Feature('first', Feature.types.gender, Constants.LANG_LATIN)
+    let f1 = new Feature(Feature.types.gender, 'first', Constants.LANG_LATIN)
     expect(() => featureType.order = [f1]).toThrowError(/is different/) //eslint-disable-line
   })
 
   test('order setter with an argument(s) of mismatching language should throw an exception', () => {
-    let f1 = new Feature('first', Feature.types.declension, Constants.LANG_GREEK)
+    let f1 = new Feature(Feature.types.declension, 'first', Constants.LANG_GREEK)
     expect(() => featureType.order = [f1]).toThrowError(/is different/) // eslint-disable-line
   })
 
   test('order setter with an argument(s) of values that are not stored should throw an exception', () => {
-    let f1 = new Feature('fifth', Feature.types.declension, 'lat')
+    let f1 = new Feature(Feature.types.declension, 'fifth', 'lat')
     expect(() => featureType.order = [f1]).toThrowError(/not stored/) //eslint-disable-line
   })
 

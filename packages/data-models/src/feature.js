@@ -312,6 +312,7 @@ export default class Feature {
    * @return {Feature} A new Ftr object.
    */
   createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
+    // TODO: Add a check of if the value exists in a source Feature object
     return new Feature(this.type, [[value, sortOrder]], this.languageID, this.allowedValues)
   }
 
@@ -327,11 +328,11 @@ export default class Feature {
   }
 
   /**
-   * Create a copy of this feature.
+   * Create a copy of the feature object.
    */
-  copy () {
-    // TODO: Do we need it?
-    console.warn(`This feature is not implemented yet`)
+  getCopy () {
+    let values = this._data.map(item => [item.value, item.sortOrder])
+    return new Feature(this.type, values, this.languageID, this.allowedValues.slice())
   }
 
   /**

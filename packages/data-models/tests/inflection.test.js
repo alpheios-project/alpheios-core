@@ -43,51 +43,26 @@ describe('Inflection object', () => {
   })
 
   test('feature method should add a single feature to the inflection', () => {
-    inflection.feature = new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)
-    expect(inflection).toEqual(expect.objectContaining({
-      gender: [{
+    inflection.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK))
+    expect(inflection).toMatchObject({
+      gender: {
         languageID: Constants.LANG_GREEK,
         type: 'gender',
         '_data': [{value: 'masculine', sortOrder: 1}]
-      }]
-    }))
-  })
-
-  test('feature method should add multiple feature values to the inflection', () => {
-    inflection.feature = [
-      new Feature('masculine', Feature.types.gender, grc),
-      new Feature('feminine', Feature.types.gender, grc)
-    ]
-    expect(inflection).toEqual(expect.objectContaining({
-      gender: [
-        {
-          languageCode: 'grc',
-          languageID: Constants.LANG_GREEK,
-          sortOrder: 1,
-          type: 'gender',
-          value: 'masculine'
-        },
-        {
-          languageCode: 'grc',
-          languageID: Constants.LANG_GREEK,
-          sortOrder: 1,
-          type: 'gender',
-          value: 'feminine'
-        }
-      ]
-    }))
+      }
+    })
   })
 
   test('feature method should throw an error if no arguments are provided', () => {
-    expect(() => inflection.feature = '').toThrowError(/empty/) // eslint-disable-line no-return-assign
+    expect(() => inflection.addFeature('')).toThrowError(/empty/) // eslint-disable-line no-return-assign
   })
 
   test('feature method should throw an error if argument(s) are of the wrong type', () => {
-    expect(() => inflection.feature = 'some value').toThrowError(/Feature/) // eslint-disable-line no-return-assign
+    expect(() => inflection.addFeature('some value')).toThrowError(/Feature/) // eslint-disable-line no-return-assign
   })
 
   test('feature method should not allow a feature language to be different from a language of an inflection', () => {
-    expect(() => inflection.feature = new Feature('masculine', Feature.types.gender, Constants.STR_LANG_CODE_LAT)) // eslint-disable-line no-return-assign
+    expect(() => inflection.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_LATIN))) // eslint-disable-line no-return-assign
       .toThrowError(/not match/)
   })
 

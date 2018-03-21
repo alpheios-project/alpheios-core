@@ -9,21 +9,28 @@ describe('FeatureImporter object', () => {
   test('Should be initialized properly', () => {
     let importer = new FeatureImporter()
     expect(importer).toEqual({
-      hash: {}
+      hash: {},
+      returnUnknown: false
     })
   })
 
   test('map method should create proper mapping', () => {
     let importer = new FeatureImporter()
     importer.map('value1', 'valueOne').map('value2', 'valueTwo')
-    expect(importer).toEqual({'hash': {'value1': 'valueOne', 'value2': 'valueTwo'}})
+    expect(importer).toEqual({
+      hash: {'value1': 'valueOne', 'value2': 'valueTwo'},
+      returnUnknown: false
+    })
   })
 
   test('map method should overwrite old values', () => {
     let importer = new FeatureImporter()
     importer.map('value1', 'valueOne').map('value2', 'valueTwo')
     importer.map('value1', 'newValueOne')
-    expect(importer).toEqual({'hash': {'value1': 'newValueOne', 'value2': 'valueTwo'}})
+    expect(importer).toEqual({
+      hash: {'value1': 'newValueOne', 'value2': 'valueTwo'},
+      returnUnknown: false
+    })
   })
 
   test('map method should not allow empty arguments', () => {

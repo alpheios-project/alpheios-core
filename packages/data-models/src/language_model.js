@@ -60,16 +60,38 @@ class LanguageModel {
     return this.constructor.features
   }
 
+  /**
+   * Returns a list of names of feature types that are defined in a language model.
+   * @return {string[]} Names of features that are defined in a model.
+   */
   static get featureNames () {
     return this.featureValues.keys()
   }
 
-  static typeFeature (name) {
-    if (this.typeFeatures.has(name)) {
-      return this.typeFeatures.get(name)
+  /**
+   * Returns a feature a `featureType` name that is defined for a language. It does not create a new Feature
+   * object instance. It returns the one defined in a language model. To get a new instance of a Feature
+   * object, use `getFeature` instead.
+   * If no feature of `featureType` is defined in a language model, throws an error.
+   * @param {string} featureType - A feature type name.
+   * @return {Feature} A feature object of requested type.
+   */
+  static typeFeature (featureType) {
+    if (this.typeFeatures.has(featureType)) {
+      return this.typeFeatures.get(featureType)
     } else {
-      throw new Error(`Type feature "${name}" is not defined within "${this}"`)
+      throw new Error(`Type feature "${featureType}" is not defined within "${this}"`)
     }
+  }
+
+  /**
+   * Returns a map with Feature objects of all features defined in a language. Use this method to get all
+   * Feature objects defined in a language model.
+   * @return {Map} Feature objects for all features defined within a language in a Map object. The key is
+   * a feature type (a string), and the value is a Feature object.
+   */
+  static get typeFeatures () {
+    console.warn(`This getter must be defined in a descendant class`)
   }
 
   static get features () {
@@ -244,6 +266,11 @@ class LanguageModel {
     return this.constructor.languageID
   }
 
+  /**
+   * @deprecated
+   * @param name
+   * @return {FeatureType}
+   */
   static getFeatureType (name) {
     console.warn('Please use getFeature instead')
     let featureValues = this.featureValues
@@ -254,12 +281,18 @@ class LanguageModel {
     }
   }
 
-  static getFeature (name) {
-    let featureValues = this.featureValues
-    if (featureValues.has(name)) {
-      return new Feature(name, featureValues.get(name), this.languageID)
+  /**
+   * Returns a new instance of a feature with `featureType`. It uses a feature defined in a language model
+   * as a master.
+   * @param {string} featureType - A name of a feature type.
+   * @return {Feature} - A newly created Feature object.
+   */
+  static getFeature (featureType) {
+    let featureValues = this.featureValues // To cache the values
+    if (featureValues.has(featureType)) {
+      return new Feature(featureType, featureValues.get(featureType), this.languageID)
     } else {
-      throw new Error(`Feature "${name}" is not defined`)
+      throw new Error(`Feature "${featureType}" is not defined`)
     }
   }
 

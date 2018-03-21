@@ -47,6 +47,7 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
+    console.warn(`Please use "addFeature" instead`)
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -89,6 +90,20 @@ class Lemma {
     }
 
     this.features[feature.type] = feature
+  }
+
+  /**
+   * Sets multiple grammatical features of a lemma.
+   * @param {Feature[]} features - Features to be added.
+   */
+  addFeatures (features) {
+    if (!Array.isArray(features)) {
+      throw new Error(`Features must be in an array`)
+    }
+
+    for (let feature of features) {
+      this.addFeature(feature)
+    }
   }
 
   /**
