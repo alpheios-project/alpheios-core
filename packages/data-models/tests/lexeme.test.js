@@ -51,16 +51,16 @@ describe('Lexeme object', () => {
     let mockLexemeOne = {
       lemma: {
         features: {
-          freq: [ { sortOrder: 5 } ],
-          pofs: [ { sortOrder: 3 } ]
+          freq: new Feature(Feature.types.frequency, [['', 5]], Constants.LANG_GREEK),
+          pofs: new Feature(Feature.types.part, [['', 3]], Constants.LANG_GREEK)
         }
       }
     }
     let mockLexemeTwo = {
       lemma: {
         features: {
-          freq: [ { sortOrder: 5 } ],
-          pofs: [ { sortOrder: 5 } ]
+          freq: new Feature(Feature.types.frequency, [['', 5]], Constants.LANG_GREEK),
+          pofs: new Feature(Feature.types.part, [['', 5]], Constants.LANG_GREEK)
         }
       }
     }
