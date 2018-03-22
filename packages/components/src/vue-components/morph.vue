@@ -208,11 +208,8 @@
         return lex.isPopulated()
       },
       featureList(lemma,features) {
-        let list = features.reduce((acc,cv,ci)=> {
-            return lemma.features[cv] ? [...acc,...lemma.features[cv]] : acc
-          },[])
-        list = list.map(i => GrmFeature.toFeature(i))
-        return list.length > 0 ? `(${list.map((f)=>f.toString()).join(', ')})` : ''
+        let list = features.map(i => lemma.features[i] ? GrmFeature.toFeature(lemma.features[i]): null).filter(i => i)
+        return list.length > 0 ? `(${list.map((f)=>f.value).join(', ')})` : ''
       },
       languageCode (languageID) {
         return LanguageModelFactory.getLanguageCodeFromId(languageID)

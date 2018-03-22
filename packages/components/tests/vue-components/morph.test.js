@@ -3,26 +3,30 @@ import { shallow } from '@vue/test-utils'
 import Morph from '../../src/vue-components/morph.vue'
 
 describe('morph.test.js', () => {
-  let cmp
+  let cmp, mockLexemeNoun
 
   beforeEach(() => {
+    mockLexemeNoun = {
+      isPopulated: () => { return true },
+      lemma: {
+        principalParts: ['foo', 'bar'],
+        features: {
+          'pronunciation': { value: 'foopron' },
+          'case': { value: 'accusative' },
+          'gender': { value: 'feminine' },
+          'part of speech': { value: 'noun' },
+          'declension': {value: '1st'},
+          'frequency': {type: 'frequency', value: 'frequent', languageID: Symbol('lat')},
+          'age': {type: 'age', value: 'ancient', languageID: Symbol('lat')}
+        },
+        word: 'foo',
+        languageID: Symbol('lat') },
+      getGroupedInflections: () => { return [] }
+    }
     cmp = shallow(Morph, {
       propsData: {
         lexemes: [
-          {
-            isPopulated: () => { return true },
-            lemma: {
-              principalParts: ['foo', 'bar'],
-              features: {
-                'pronunciation': { value: 'foopron' },
-                'case': { value: 'accusative' },
-                'gender': { value: 'feminine' },
-                'part of speech': { value: 'noun' }
-              },
-              word: 'foo',
-              languageID: Symbol('lat') },
-            getGroupedInflections: () => { return [] }
-          },
+          mockLexemeNoun,
           {
             isPopulated: () => { return false },
             lemma: { principalParts: [], features: {}, word: null, languageID: null },
@@ -34,7 +38,8 @@ describe('morph.test.js', () => {
               principalParts: ['bar'],
               features: {
                 'conjugation': {value: '1st'},
-                'part of speech': { value: 'verb' }
+                'part of speech': { value: 'verb' },
+                'kind': { value: 'taking xyz' }
               },
               word: 'foo',
               languageID: Symbol('lat')
@@ -111,6 +116,40 @@ describe('morph.test.js', () => {
     expect(pofsElem.find('[data-feature="case"]').exists()).toBeFalsy()
     expect(pofsElem.find('[data-feature="gender"]').exists()).toBeFalsy()
     expect(pofsElem.find('[data-feature="part of speech"]').is('span')).toBeTruthy()
+  })
+
+  it('expects lemma feature kind to be rendered', () => {
+    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div.alpheios-morph__morphdata').find('[data-feature="kind"]')
+    expect(elem.exists()).toBeTruthy()
+    expect(elem.text()).toEqual('taking xyz')
+  })
+
+  it('expects lemma feature conjugation to be rendered', () => {
+    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div.alpheios-morph__morphdata').find('[data-feature="conjugation"]')
+    expect(elem.exists()).toBeTruthy()
+    expect(elem.text()).toEqual('1st conjugation')
+  })
+
+  it('expects lemma feature declension to be rendered', () => {
+    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="declension"]')
+    expect(elem.exists()).toBeTruthy()
+    expect(elem.text()).toEqual('1st declension')
+  })
+
+  it('expected featureList to return a list of features for rendering', () => {
+    expect(cmp.vm.featureList(mockLexemeNoun.lemma, ['age', 'frequency'])).toEqual('(ancient, frequent)')
+  })
+
+  it('expects extra lemma features to be rendered', () => {
+    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="extras"]')
+    expect(elem.exists()).toBeTruthy()
+    expect(elem.text()).toEqual('(ancient, frequent)')
+  })
+
+  it('expects extra lemma features to be empty', () => {
+    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div.alpheios-morph__morphdata').find('[data-feature="extras"]')
+    expect(elem.exists()).toBeTruthy()
+    expect(elem.text()).toEqual('')
   })
 
   // test that inflection group with same part of speech as lemma doesn't show part of speech
