@@ -185,12 +185,8 @@ class Inflection {
    * @return {boolean} True if an inflection contains a feature, false otherwise
    */
   hasFeatureValue (featureName, featureValue) {
-    if (this.hasOwnProperty(featureName) && Array.isArray(this[featureName]) && this[featureName].length > 0) {
-      for (let feature of this[featureName]) {
-        if (feature.hasValue(featureValue)) {
-          return true
-        }
-      }
+    if (this.hasOwnProperty(featureName)) {
+      return this[featureName].values.includes(featureValue)
     }
     return false
   }

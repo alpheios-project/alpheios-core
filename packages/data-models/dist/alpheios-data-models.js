@@ -2202,11 +2202,16 @@ class Feature {
    *  [[value1, sortOrder1], [value2, sortOrder2], [value3, sortOrder3], ...]
    * If a sort order is omitted anywhere, it will be set to a default sort order.
    *
+   * Each value of a feature has its `sortOrder` property. This value is used to soft values of a feature
+   * between themselves. Feature object has a `sortOrder` property of its own, too. It is used
+   * to compare two Feature objects between themselves.
+   *
    * @param {symbol} languageID - A language ID of a feature
+   * @param {number} sortOrder - A sort order of a feature when multiple features are compared.
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
    * values. An order of those values can define a sort order.
    */
-  constructor (type, data, languageID, allowedValues = []) {
+  constructor (type, data, languageID, sortOrder = 1, allowedValues = []) {
     if (!Feature.isAllowedType(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
     }
@@ -2219,6 +2224,7 @@ class Feature {
 
     this.type = type;
     this.languageID = languageID;
+    this.sortOrder = sortOrder;
     this.allowedValues = allowedValues;
 
     // `_data` is an array
@@ -2250,7 +2256,12 @@ class Feature {
 
   static get types () {
     return {
+      /**
+       * @deprecated : Use `fullForm` where appropriate instead
+       */
       word: 'word',
+      fullForm: 'full form',
+      hdwd: 'headword',
       part: 'part of speech', // Part of speech
       number: 'number',
       'case': 'case',
@@ -2490,7 +2501,7 @@ class Feature {
    */
   createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
     // TODO: Add a check of if the value exists in a source Feature object
-    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.allowedValues)
+    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
@@ -2501,7 +2512,7 @@ class Feature {
    * @return {Feature} A new Ftr object.
    */
   createFeatures (data) {
-    return new Feature(this.type, data, this.languageID, this.allowedValues)
+    return new Feature(this.type, data, this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
@@ -2509,7 +2520,7 @@ class Feature {
    */
   getCopy () {
     let values = this._data.map(item => [item.value, item.sortOrder]);
-    return new Feature(this.type, values, this.languageID, this.allowedValues.slice())
+    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice())
   }
 
   /**
@@ -2573,7 +2584,7 @@ class Feature {
       foreignData = [foreignData];
     }
     const values = foreignData.map(fv => importer.get(fv));
-    return new Feature(this.type, values, this.languageID, this.allowedValues)
+    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues)
   }
 }
 
@@ -2830,6 +2841,7 @@ class Lemma {
     this.languageCode = undefined
     ;({languageID: this.languageID, languageCode: this.languageCode} = LanguageModelFactory.getLanguageAttrs(languageID));
 
+    // This is a headword
     this.word = word;
     this.principalParts = principalParts;
     this.features = {};
@@ -3105,12 +3117,8 @@ class Inflection {
    * @return {boolean} True if an inflection contains a feature, false otherwise
    */
   hasFeatureValue (featureName, featureValue) {
-    if (this.hasOwnProperty(featureName) && Array.isArray(this[featureName]) && this[featureName].length > 0) {
-      for (let feature of this[featureName]) {
-        if (feature.hasValue(featureValue)) {
-          return true
-        }
-      }
+    if (this.hasOwnProperty(featureName)) {
+      return this[featureName].values.includes(featureValue)
     }
     return false
   }
@@ -3198,14 +3206,14 @@ class Lexeme {
   static getSortByTwoLemmaFeatures (primary, secondary) {
     return (a, b) => {
       if (a.lemma.features[primary] && b.lemma.features[primary]) {
-        if (a.lemma.features[primary].items[0].sortOrder < b.lemma.features[primary].items[0].sortOrder) {
+        if (a.lemma.features[primary].sortOrder < b.lemma.features[primary].sortOrder) {
           return 1
-        } else if (a.lemma.features[primary].items[0].sortOrder > b.lemma.features[primary].items[0].sortOrder) {
+        } else if (a.lemma.features[primary].sortOrder > b.lemma.features[primary].sortOrder) {
           return -1
         } else if (a.lemma.features[secondary] && b.lemma.features[secondary]) {
-          if (a.lemma.features[secondary].items[0].sortOrder < b.lemma.features[secondary].items[0].sortOrder) {
+          if (a.lemma.features[secondary].sortOrder < b.lemma.features[secondary].sortOrder) {
             return 1
-          } else if (a.lemma.features[secondary].items[0].sortOrder > b.lemma.features[secondary].items[0].sortOrder) {
+          } else if (a.lemma.features[secondary].sortOrder > b.lemma.features[secondary].sortOrder) {
             return -1
           } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
             return -1

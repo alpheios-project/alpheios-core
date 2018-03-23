@@ -26,11 +26,16 @@ export default class Feature {
    *  [[value1, sortOrder1], [value2, sortOrder2], [value3, sortOrder3], ...]
    * If a sort order is omitted anywhere, it will be set to a default sort order.
    *
+   * Each value of a feature has its `sortOrder` property. This value is used to soft values of a feature
+   * between themselves. Feature object has a `sortOrder` property of its own, too. It is used
+   * to compare two Feature objects between themselves.
+   *
    * @param {symbol} languageID - A language ID of a feature
+   * @param {number} sortOrder - A sort order of a feature when multiple features are compared.
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
    * values. An order of those values can define a sort order.
    */
-  constructor (type, data, languageID, allowedValues = []) {
+  constructor (type, data, languageID, sortOrder = 1, allowedValues = []) {
     if (!Feature.isAllowedType(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
     }
@@ -43,6 +48,7 @@ export default class Feature {
 
     this.type = type
     this.languageID = languageID
+    this.sortOrder = sortOrder
     this.allowedValues = allowedValues
 
     // `_data` is an array
@@ -74,7 +80,12 @@ export default class Feature {
 
   static get types () {
     return {
+      /**
+       * @deprecated : Use `fullForm` where appropriate instead
+       */
       word: 'word',
+      fullForm: 'full form',
+      hdwd: 'headword',
       part: 'part of speech', // Part of speech
       number: 'number',
       'case': 'case',
@@ -314,7 +325,7 @@ export default class Feature {
    */
   createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
     // TODO: Add a check of if the value exists in a source Feature object
-    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.allowedValues)
+    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
@@ -325,7 +336,7 @@ export default class Feature {
    * @return {Feature} A new Ftr object.
    */
   createFeatures (data) {
-    return new Feature(this.type, data, this.languageID, this.allowedValues)
+    return new Feature(this.type, data, this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
@@ -333,7 +344,7 @@ export default class Feature {
    */
   getCopy () {
     let values = this._data.map(item => [item.value, item.sortOrder])
-    return new Feature(this.type, values, this.languageID, this.allowedValues.slice())
+    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice())
   }
 
   /**
@@ -397,6 +408,6 @@ export default class Feature {
       foreignData = [foreignData]
     }
     const values = foreignData.map(fv => importer.get(fv))
-    return new Feature(this.type, values, this.languageID, this.allowedValues)
+    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues)
   }
 }
