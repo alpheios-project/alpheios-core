@@ -1,10 +1,10 @@
 <template>
   <div class="alpheios-morph__lexemes">
     <div class="alpheios-morph__dictentry" v-for="lex in lexemes" v-show="showLexeme(lex)">
-      <span class="alpheios-morph__formtext"
+      <span class="alpheios-morph__hdwd alpheios-morph__formtext"
         v-if="! lex.lemma.principalParts.includes(lex.lemma.word)"
         :lang="languageCode(lex.lemma.languageID)">{{ lex.lemma.word }}</span>
-      <span class="alpheios-morph__formtext">
+      <span class="alpheios-morph__hdwd alpheios-morph__formtext">
         <span class="alpheios-morph__listitem"
           v-for="part in lex.lemma.principalParts" :lang="languageCode(lex.lemma.languageID)">{{ part }}</span>
       </span> :
@@ -40,7 +40,7 @@
            v-if="lex.lemma.features[types.note]">[{{lex.lemma.features[types.note].value}}]</span>
       </div>
       <div v-if="definitions">
-        <div v-for="definition in definitions[lex.lemma.key]" class="alpheios-morph__definition">
+        <div v-for="definition in definitions[lex.lemma.key]" class="alpheios-morph__definition" :data-lemmakey="lex.lemma.key">
           <shortdef :definition="definition"></shortdef>
         </div>
       </div>
@@ -50,32 +50,32 @@
             <span class="alpheios-morph__formtext" v-if="inflset.groupingKey.prefix">{{inflset.groupingKey.prefix}} </span>
             <span class="alpheios-morph__formtext">{{inflset.groupingKey.stem}}</span>
             <span class="alpheios-morph__formtext" v-if="inflset.groupingKey.suffix"> -{{inflset.groupingKey.suffix}}</span>
-            <span @click="sendFeature(inflset.groupingKey[types.part])"
-              :class="attributeClass(types.part)"
-              v-if="! featureMatch(lex.lemma.features[types.part],inflset.groupingKey[types.part])">
-                ({{inflset.groupingKey["part of speech"].toString()}})</span>
-            <span @click="sendFeature(infset.groupingKey[types.declension])"
-              :class="attributeClass(types.declension)"
-              v-if="inflset.groupingKey.declension && inflset.groupingKey.declension !== lex.lemma.features.declension">
-                ({{inflset.groupingKey.declension.toString()}})</span>
+            <span class="alpheios-morph__inflfeatures">
+              <span @click="sendFeature(inflset.groupingKey[types.part])"
+                :class="attributeClass(types.part)" :data-feature="types.part"
+                v-if="! featureMatch(lex.lemma.features[types.part],inflset.groupingKey[types.part])">{{inflset.groupingKey["part of speech"].value}}</span>
+              <span @click="sendFeature(inflset.groupingKey[types.declension])"
+                :class="attributeClass(types.declension)" :data-feature="types.declension"
+                v-if="inflset.groupingKey.declension && ! featureMatch(inflset.groupingKey.declension,lex.lemma.features.declension)">{{inflset.groupingKey.declension.value}} declension</span>
+            </span>
             <div class="alpheios-morph__inflgroup" v-for="group in inflset.inflections">
               <span @click="sendFeature(group.groupingKey[types.number])"
-                :class="attributeClass(types.number)"
+                :class="attributeClass(types.number)" :data-feature="types.number"
                 v-if="group.groupingKey[types.number] && group.groupingKey.isCaseInflectionSet">
                   {{ group.groupingKey.number.toString() }}</span>
               <span @click="sendFeature(group.groupingKey[types.tense])"
-                :class="attributeClass(types.tense)"
+                :class="attributeClass(types.tense)" :data-feature="types.tense"
                 v-if="group.groupingKey[types.tense] && group.groupingKey.isCaseInflectionSet">
                   {{ group.groupingKey[types.tense].toString() }}</span>
               <div v-for="nextGroup in group.inflections"
                 :class="groupClass(group)">
                 <span v-if="group.groupingKey.isCaseInflectionSet">
                   <span @click="sendFeature(nextGroup.groupingKey[types.voice])"
-                    :class="attributeClass(types.voice)"
+                    :class="attributeClass(types.voice)" :data-feature="types.voice"
                     v-if="group.groupingKey.isCaseInflectionSet && nextGroup.groupingKey.voice">
                     {{ nextGroup.groupingKey[types.voice].toString() }}</span>
                   <span @click="sendFeature(nextGroup.groupingKey[types.tense])"
-                    :class="attributeClass(types.tense)"
+                    :class="attributeClass(types.tense)" :data-feature="types.tense"
                     v-if="group.groupingKey.isCaseInflectionSet && nextGroup.groupingKey.tense">
                       {{ nextGroup.groupingKey.tense.toString() }}</span>
                   :
@@ -83,47 +83,47 @@
                 <div v-for="infl in nextGroup.inflections"
                   :class="groupClass(group)">
                     <span @click="sendFeature(infl.groupingKey[types.grmCase])"
-                      :class="attributeClass(types.grmCase)"
+                      :class="attributeClass(types.grmCase)" :data-feature="types.grmCase"
                       v-if="infl.groupingKey[types.grmCase]">
                       {{ infl.groupingKey[types.grmCase].toString() }}
                       <span @click="sendFeature(infl.groupingKey[types.gender])"
-                        :class="attributeClass(types.gender)"
+                        :class="attributeClass(types.gender)" :data-feature="types.gender"
                         v-if="infl.groupingKey[types.gender] && ! featureMatch(infl.groupingKey[types.gender],lex.lemma.features[types.gender]) ">
                         ({{ infl.groupingKey[types.gender].toLocaleStringAbbr().join(', ')}})
                       </span>
                       <span @click="sendFeature(infl.groupingKey[types.comparison])"
-                        :class="attributeClass(types.comparison)"
+                        :class="attributeClass(types.comparison)" :data-feature="types.comparison"
                         v-if="infl.groupingKey[types.comparison]">
                         {{ infl.groupingKey[types.comparison].toString() }}
                       </span>
                     </span>
 
                     <span @click="sendFeature(infl.groupingKey[types.person])"
-                      :class="attributeClass(types.person)"
+                      :class="attributeClass(types.person)" :data-feature="types.person"
                       v-if="infl.groupingKey[types.person]">
                       {{ infl.groupingKey[types.person].toString() }} person
                     </span>
 
                     <span @click="sendFeature(infl.groupingKey[types.number])"
-                      :class="attributeClass(types.number)"
+                      :class="attributeClass(types.number)" :data-feature="types.number"
                       v-if="infl.groupingKey[types.number] && ! group.groupingKey.isCaseInflectionSet">
                         {{ infl.groupingKey[types.number].toString() }}
                     </span>
 
                     <span @click="sendFeature(infl.groupingKey[types.tense])"
-                      :class="attributeClass(types.tense)"
+                      :class="attributeClass(types.tense)" :data-feature="types.tense"
                       v-if="infl.groupingKey[types.tense] && ! group.groupingKey.isCaseInflectionSet" >
                       {{ infl.groupingKey[types.tense].toString() }}
                     </span>
 
                     <span @click="sendFeature(infl.groupingKey[types.mood])"
-                      :class="attributeClass(types.mood)"
+                      :class="attributeClass(types.mood)" :data-feature="types.mood"
                       v-if="infl.groupingKey[types.mood] && !group.groupingKey.isCaseInflectionSet">
                       {{ infl.groupingKey[types.mood].toString() }}
                     </span>
 
                     <span @click="sendFeature(infl.groupingKey[types.voice])"
-                      :class="attributeClass(types.voice)"
+                      :class="attributeClass(types.voice)" :data-feature="types.voice"
                       v-if="infl.groupingKey[types.voice] && !group.groupingKey.isCaseInflectionSet">
                       {{ infl.groupingKey[types.voice].toString() }}
                     </span>
@@ -327,4 +327,12 @@
    .alpheios-panel__tab-panel .alpheios-morph__lexemes {
     font-size: .75rem;
    }
+
+  .alpheios-morph__inflfeatures span:first-child:before {
+    content: '(';
+  }
+
+  .alpheios-morph__inflfeatures span:last-child:after {
+    content: ')';
+  }
 </style>

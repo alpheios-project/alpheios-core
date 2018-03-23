@@ -4,24 +4,68 @@ import Morph from '../../src/vue-components/morph.vue'
 
 describe('morph.test.js', () => {
   let cmp, mockLexemeNoun
+  let latin = Symbol('latin')
+  let mockFeature = (type, value, languageID) => {
+    return {
+      type: type,
+      value: value,
+      languageID: languageID,
+      isEqual: (b) => {
+        return type === b.type && value === b.value && languageID === b.languageID
+      }
+    }
+  }
 
   beforeEach(() => {
+    let mockNounInflectionGroup = [
+      {
+        groupingKey: {
+          prefix: '',
+          stem: 'f',
+          suffix: 'oo',
+          'part of speech': mockFeature('part of speech', 'pronoun', latin),
+          declension: mockFeature('declension', '2nd', latin)
+        },
+        inflections: [
+          {
+            groupingKey: {
+              number: mockFeature('number', 'singular', latin)
+            },
+            isCaseInflectionSet: true
+
+          },
+          {
+            groupingKey: {
+              number: mockFeature('number', 'plural', latin)
+            },
+            isCaseInflectionSet: true
+          }
+        ]
+
+      }
+
+    ]
+
     mockLexemeNoun = {
       isPopulated: () => { return true },
       lemma: {
         principalParts: ['foo', 'bar'],
         features: {
-          'pronunciation': { value: 'foopron' },
-          'case': { value: 'accusative' },
-          'gender': { value: 'feminine' },
-          'part of speech': { value: 'noun' },
-          'declension': {value: '1st'},
-          'frequency': {type: 'frequency', value: 'frequent', languageID: Symbol('lat')},
-          'age': {type: 'age', value: 'ancient', languageID: Symbol('lat')}
+          'pronunciation': mockFeature('pronunciation', 'foopron', latin),
+          'case': mockFeature('case', 'accusative', latin),
+          'gender': mockFeature('gender', 'feminine', latin),
+          'part of speech': mockFeature('part of speech', 'noun', latin),
+          'declension': mockFeature('declension', '1st', latin),
+          'frequency': mockFeature('frequency', 'frequent', latin),
+          'age': mockFeature('age', 'ancient', latin),
+          'source': mockFeature('source', 'foo source', latin),
+          'note': mockFeature('note', 'foo note', latin)
         },
         word: 'foo',
-        languageID: Symbol('lat') },
-      getGroupedInflections: () => { return [] }
+        key: 'foo-noun-lat-key',
+        languageID: latin
+      },
+      getGroupedInflections: () => { return mockNounInflectionGroup }
     }
     cmp = shallow(Morph, {
       propsData: {
@@ -37,17 +81,21 @@ describe('morph.test.js', () => {
             lemma: {
               principalParts: ['bar'],
               features: {
-                'conjugation': {value: '1st'},
-                'part of speech': { value: 'verb' },
-                'kind': { value: 'taking xyz' }
+                'conjugation': mockFeature('conjugation', '1st', latin),
+                'part of speech': mockFeature('part of speech', 'verb', latin),
+                'kind': mockFeature('kind', 'taking xyz', latin)
               },
               word: 'foo',
-              languageID: Symbol('lat')
+              key: 'foo-verb-lat-key',
+              languageID: latin
             },
             getGroupedInflections: () => { return [] }
           }
         ],
-        definitions: {},
+        definitions: {
+          'foo-noun-lat-key': [{text: 'foo noun def 1'}, {text: 'foo noun def 2'}],
+          'foo-verb-lat-key': [{text: 'foo verb def 1'}]
+        },
         linkedfeatures: ['declension']
       },
       data: {
@@ -72,16 +120,16 @@ describe('morph.test.js', () => {
 
   it('expects the lemma word to be deduped from principalParts', () => {
     let entries = cmp.find('div').findAll('div.alpheios-morph__dictentry')
-    let firstLexemeWord = entries.at(0).findAll('span.alpheios-morph__formtext')
-    let thirdLexemeWord = entries.at(2).findAll('span.alpheios-morph__formtext')
+    let firstLexemeWord = entries.at(0).findAll('span.alpheios-morph__hdwd')
+    let thirdLexemeWord = entries.at(2).findAll('span.alpheios-morph__hdwd')
     expect(firstLexemeWord.length).toEqual(1)
-    expect(firstLexemeWord.at(0).findAll('span.alpheios-morph__listitem').length).toEqual(2)
-    expect(firstLexemeWord.at(0).findAll('span.alpheios-morph__listitem').at(0).text()).toEqual('foo')
-    expect(firstLexemeWord.at(0).findAll('span.alpheios-morph__listitem').at(1).text()).toEqual('bar')
+    expect(firstLexemeWord.at(0).findAll('span.alpheios-morph__hdwd span.alpheios-morph__listitem').length).toEqual(2)
+    expect(firstLexemeWord.at(0).findAll('span.alpheios-morph__hdwd span.alpheios-morph__listitem').at(0).text()).toEqual('foo')
+    expect(firstLexemeWord.at(0).findAll('span.alpheios-morph__hdwd span.alpheios-morph__listitem').at(1).text()).toEqual('bar')
     expect(thirdLexemeWord.length).toEqual(2)
     expect(thirdLexemeWord.at(0).text()).toEqual('foo')
-    expect(thirdLexemeWord.at(1).findAll('span.alpheios-morph__listitem').length).toEqual(1)
-    expect(thirdLexemeWord.at(1).findAll('span.alpheios-morph__listitem').at(0).text()).toEqual('bar')
+    expect(thirdLexemeWord.at(1).findAll('span.alpheios-morph__hdwd span.alpheios-morph__listitem').length).toEqual(1)
+    expect(thirdLexemeWord.at(1).findAll('span.alpheios-morph__hdwd span.alpheios-morph__listitem').at(0).text()).toEqual('bar')
   })
 
   it('expects attributeClass method to obey linkedfeatures', () => {
@@ -152,6 +200,34 @@ describe('morph.test.js', () => {
     expect(elem.text()).toEqual('')
   })
 
+  it('expects lemma feature note to be rendered in brackets', () => {
+    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="note"]')
+    expect(elem.exists()).toBeTruthy()
+    expect(elem.text()).toEqual('[foo note]')
+  })
+
+  it('expects lemma feature source to be rendered in brackets', () => {
+    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="source"]')
+    expect(elem.exists()).toBeTruthy()
+    expect(elem.text()).toEqual('[foo source]')
+  })
+
+  it('expects correct definitions to be rendered', () => {
+    let elems = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div').findAll('div.alpheios-morph__definition')
+    expect(elems.length).toEqual(2)
+    expect(elems.at(0).attributes()['data-lemmakey']).toEqual('foo-noun-lat-key')
+    expect(elems.at(1).attributes()['data-lemmakey']).toEqual('foo-noun-lat-key')
+    elems = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div').findAll('div.alpheios-morph__definition')
+    expect(elems.length).toEqual(1)
+    expect(elems.at(0).attributes()['data-lemmakey']).toEqual('foo-verb-lat-key')
+  })
+
+  it('expects inflection group with different part of speech and declension than lemma to render that', () => {
+    let inflset = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__inflections div.alpheios-morph__inflset')
+    expect(inflset.find('.alpheios-morph__inflfeatures').exists()).toBeTruthy()
+    expect(inflset.find('.alpheios-morph__inflfeatures').text()).toEqual(expect.stringMatching(/pronoun/))
+    expect(inflset.find('.alpheios-morph__inflfeatures').text()).toEqual(expect.stringMatching(/2nd declension/))
+  })
   // test that inflection group with same part of speech as lemma doesn't show part of speech
   // test that inflection group with different part of speech as lemma does show part of speech
 })

@@ -10245,7 +10245,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.alpheios-morph__lexemes {\n  color: #0E2233;\n}\n.alpheios-morph__dictentry {\n  margin-bottom: .5em;\n  padding-bottom: 5px;\n  clear: both;\n}\n.alpheios-morph__formtext {\n  font-weight: bold;\n}\n.alpheios-morph__dictentry .alpheios-morph__formtext {\n  font-size: larger;\n}\n.alpheios-morph__dictentry .alpheios-morph__forms .alpheios-morph__formtext {\n  font-size: inherit;\n}\n.alpheios-morph__source {\n  font-size: smaller;\n  color: #4E6476;\n  font-style: italic;\n}\n.alpheios-morph__dial {\n  font-size: smaller;\n}\n.alpheios-morph__attr {\n  font-weight: normal;\n  padding-right: .25em;\n}\n.alpheios-morph__linkedattr {\n  color: #3E8D9C;\n  font-weight: bold;\n  cursor: pointer;\n  padding-right: .25em;\n}\n.alpheios-morph__linkedattr:hover {\n  color: #5BC8DC !important;\n}\n.alpheios-morph__pofs span:last-child:after {\n  content: \";\";\n}\n.alpheios-morph__inflset {\n  margin-left: .5em;\n  margin-top: .5em;\n}\n.alpheios-morph__inflset h5 {\n  display: none;\n  font-size: 16px;\n  line-height: 1;\n  margin-bottom: .5em;\n}\n.alpheios-morph__inflset:first-child h5 {\n  color: #4E6476;\n  display: block;\n}\n.alpheios-morph__morphdata {\n  display: inline;\n}\n.alpheios-morph__inflections, .alpheios-morph__definition, .alpheios-morph__forms {\n  margin-left: .5em;\n}\n.alpheios-morph__listitem:after {\n  content: \", \";\n}\n.alpheios-morph__listitem:last-child:after {\n  content: \"\";\n}\n.alpheios-morph__list .alpheios-morph__infl:first-child .alpheios-morph__showiffirst {\n  display: block;\n}\n.alpheios-morph__list .alpheios-morph__infl .alpheios-morph__showiffirst {\n  display: none;\n}\n.alpheios-morph__lexemes .alpheios-definition__lemma {\n  display: none;\n}\ndiv.alpheios-morph__inline {\n  display: inline;\n}\ndiv.alpheios-morph__block {\n  display: block;\n}\n.alpheios-panel__tab-panel .alpheios-morph__lexemes {\n  font-size: .75rem;\n}\n", ""]);
+exports.push([module.i, "\n.alpheios-morph__lexemes {\n  color: #0E2233;\n}\n.alpheios-morph__dictentry {\n  margin-bottom: .5em;\n  padding-bottom: 5px;\n  clear: both;\n}\n.alpheios-morph__formtext {\n  font-weight: bold;\n}\n.alpheios-morph__dictentry .alpheios-morph__formtext {\n  font-size: larger;\n}\n.alpheios-morph__dictentry .alpheios-morph__forms .alpheios-morph__formtext {\n  font-size: inherit;\n}\n.alpheios-morph__source {\n  font-size: smaller;\n  color: #4E6476;\n  font-style: italic;\n}\n.alpheios-morph__dial {\n  font-size: smaller;\n}\n.alpheios-morph__attr {\n  font-weight: normal;\n  padding-right: .25em;\n}\n.alpheios-morph__linkedattr {\n  color: #3E8D9C;\n  font-weight: bold;\n  cursor: pointer;\n  padding-right: .25em;\n}\n.alpheios-morph__linkedattr:hover {\n  color: #5BC8DC !important;\n}\n.alpheios-morph__pofs span:last-child:after {\n  content: \";\";\n}\n.alpheios-morph__inflset {\n  margin-left: .5em;\n  margin-top: .5em;\n}\n.alpheios-morph__inflset h5 {\n  display: none;\n  font-size: 16px;\n  line-height: 1;\n  margin-bottom: .5em;\n}\n.alpheios-morph__inflset:first-child h5 {\n  color: #4E6476;\n  display: block;\n}\n.alpheios-morph__morphdata {\n  display: inline;\n}\n.alpheios-morph__inflections, .alpheios-morph__definition, .alpheios-morph__forms {\n  margin-left: .5em;\n}\n.alpheios-morph__listitem:after {\n  content: \", \";\n}\n.alpheios-morph__listitem:last-child:after {\n  content: \"\";\n}\n.alpheios-morph__list .alpheios-morph__infl:first-child .alpheios-morph__showiffirst {\n  display: block;\n}\n.alpheios-morph__list .alpheios-morph__infl .alpheios-morph__showiffirst {\n  display: none;\n}\n.alpheios-morph__lexemes .alpheios-definition__lemma {\n  display: none;\n}\ndiv.alpheios-morph__inline {\n  display: inline;\n}\ndiv.alpheios-morph__block {\n  display: block;\n}\n.alpheios-panel__tab-panel .alpheios-morph__lexemes {\n  font-size: .75rem;\n}\n.alpheios-morph__inflfeatures span:first-child:before {\n  content: '(';\n}\n.alpheios-morph__inflfeatures span:last-child:after {\n  content: ')';\n}\n", ""]);
 
 // exports
 
@@ -10351,7 +10351,7 @@ var render = function() {
             ? _c(
                 "span",
                 {
-                  staticClass: "alpheios-morph__formtext",
+                  staticClass: "alpheios-morph__hdwd alpheios-morph__formtext",
                   attrs: { lang: _vm.languageCode(lex.lemma.languageID) }
                 },
                 [_vm._v(_vm._s(lex.lemma.word))]
@@ -10360,7 +10360,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "span",
-            { staticClass: "alpheios-morph__formtext" },
+            { staticClass: "alpheios-morph__hdwd alpheios-morph__formtext" },
             _vm._l(lex.lemma.principalParts, function(part) {
               return _c(
                 "span",
@@ -10563,7 +10563,10 @@ var render = function() {
                 _vm._l(_vm.definitions[lex.lemma.key], function(definition) {
                   return _c(
                     "div",
-                    { staticClass: "alpheios-morph__definition" },
+                    {
+                      staticClass: "alpheios-morph__definition",
+                      attrs: { "data-lemmakey": lex.lemma.key }
+                    },
                     [_c("shortdef", { attrs: { definition: definition } })],
                     1
                   )
@@ -10600,62 +10603,65 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    !_vm.featureMatch(
-                      lex.lemma.features[_vm.types.part],
-                      inflset.groupingKey[_vm.types.part]
-                    )
-                      ? _c(
-                          "span",
-                          {
-                            class: _vm.attributeClass(_vm.types.part),
-                            on: {
-                              click: function($event) {
-                                _vm.sendFeature(
-                                  inflset.groupingKey[_vm.types.part]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n              (" +
-                                _vm._s(
-                                  inflset.groupingKey[
-                                    "part of speech"
-                                  ].toString()
-                                ) +
-                                ")"
-                            )
-                          ]
+                    _c(
+                      "span",
+                      { staticClass: "alpheios-morph__inflfeatures" },
+                      [
+                        !_vm.featureMatch(
+                          lex.lemma.features[_vm.types.part],
+                          inflset.groupingKey[_vm.types.part]
                         )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    inflset.groupingKey.declension &&
-                    inflset.groupingKey.declension !==
-                      lex.lemma.features.declension
-                      ? _c(
-                          "span",
-                          {
-                            class: _vm.attributeClass(_vm.types.declension),
-                            on: {
-                              click: function($event) {
-                                _vm.sendFeature(
-                                  _vm.infset.groupingKey[_vm.types.declension]
+                          ? _c(
+                              "span",
+                              {
+                                class: _vm.attributeClass(_vm.types.part),
+                                attrs: { "data-feature": _vm.types.part },
+                                on: {
+                                  click: function($event) {
+                                    _vm.sendFeature(
+                                      inflset.groupingKey[_vm.types.part]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    inflset.groupingKey["part of speech"].value
+                                  )
                                 )
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n              (" +
-                                _vm._s(
-                                  inflset.groupingKey.declension.toString()
-                                ) +
-                                ")"
+                              ]
                             )
-                          ]
+                          : _vm._e(),
+                        _vm._v(" "),
+                        inflset.groupingKey.declension &&
+                        !_vm.featureMatch(
+                          inflset.groupingKey.declension,
+                          lex.lemma.features.declension
                         )
-                      : _vm._e(),
+                          ? _c(
+                              "span",
+                              {
+                                class: _vm.attributeClass(_vm.types.declension),
+                                attrs: { "data-feature": _vm.types.declension },
+                                on: {
+                                  click: function($event) {
+                                    _vm.sendFeature(
+                                      inflset.groupingKey[_vm.types.declension]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(inflset.groupingKey.declension.value) +
+                                    " declension"
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ]
+                    ),
                     _vm._v(" "),
                     _vm._l(inflset.inflections, function(group) {
                       return _c(
@@ -10668,6 +10674,7 @@ var render = function() {
                                 "span",
                                 {
                                   class: _vm.attributeClass(_vm.types.number),
+                                  attrs: { "data-feature": _vm.types.number },
                                   on: {
                                     click: function($event) {
                                       _vm.sendFeature(
@@ -10693,6 +10700,7 @@ var render = function() {
                                 "span",
                                 {
                                   class: _vm.attributeClass(_vm.types.tense),
+                                  attrs: { "data-feature": _vm.types.tense },
                                   on: {
                                     click: function($event) {
                                       _vm.sendFeature(
@@ -10729,6 +10737,9 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.voice
                                               ),
+                                              attrs: {
+                                                "data-feature": _vm.types.voice
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
@@ -10760,6 +10771,9 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.tense
                                               ),
+                                              attrs: {
+                                                "data-feature": _vm.types.tense
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
@@ -10798,6 +10812,10 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.grmCase
                                               ),
+                                              attrs: {
+                                                "data-feature":
+                                                  _vm.types.grmCase
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
@@ -10835,6 +10853,10 @@ var render = function() {
                                                       class: _vm.attributeClass(
                                                         _vm.types.gender
                                                       ),
+                                                      attrs: {
+                                                        "data-feature":
+                                                          _vm.types.gender
+                                                      },
                                                       on: {
                                                         click: function(
                                                           $event
@@ -10872,6 +10894,10 @@ var render = function() {
                                                       class: _vm.attributeClass(
                                                         _vm.types.comparison
                                                       ),
+                                                      attrs: {
+                                                        "data-feature":
+                                                          _vm.types.comparison
+                                                      },
                                                       on: {
                                                         click: function(
                                                           $event
@@ -10910,6 +10936,9 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.person
                                               ),
+                                              attrs: {
+                                                "data-feature": _vm.types.person
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
@@ -10942,6 +10971,9 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.number
                                               ),
+                                              attrs: {
+                                                "data-feature": _vm.types.number
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
@@ -10974,6 +11006,9 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.tense
                                               ),
+                                              attrs: {
+                                                "data-feature": _vm.types.tense
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
@@ -11006,6 +11041,9 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.mood
                                               ),
+                                              attrs: {
+                                                "data-feature": _vm.types.mood
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
@@ -11038,6 +11076,9 @@ var render = function() {
                                               class: _vm.attributeClass(
                                                 _vm.types.voice
                                               ),
+                                              attrs: {
+                                                "data-feature": _vm.types.voice
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   _vm.sendFeature(
