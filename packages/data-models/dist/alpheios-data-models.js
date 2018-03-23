@@ -1148,7 +1148,8 @@ class LanguageModel {
   static getFeature (featureType) {
     let featureValues = this.featureValues; // To cache the values
     if (featureValues.has(featureType)) {
-      return new Feature(featureType, featureValues.get(featureType), this.languageID)
+      let allowedValues = featureValues.get(featureType);
+      return new Feature(featureType, allowedValues, this.languageID, 1, allowedValues)
     } else {
       throw new Error(`Feature "${featureType}" is not defined`)
     }
@@ -1299,7 +1300,7 @@ class LanguageModel {
   /**
    * Groups a set of inflections according to a language-specific display paradigm
    * The default groups according to the following logic:
-   *   1. groups of groups with unique stem, prefix, suffix, part of speech dialect and comparison
+   *   1. groups of groups with unique stem, prefix, suffix, part of speech, declension, dialect and comparison
    *     2. groups of those groups with unique
    *          number, if it's an inflection with a grammatical case
    *          tense, if it's an inflection with tense but no case (i.e. a verb)
@@ -1315,7 +1316,7 @@ class LanguageModel {
     // group inflections by part of speech
     for (let infl of inflections) {
       let groupingKey = new InflectionGroupingKey(infl,
-        [Feature.types.part, Feature.types.dialect, Feature.types.comparison],
+        [Feature.types.part, Feature.types.declension, Feature.types.dialect, Feature.types.comparison],
         {
           prefix: infl.prefix,
           suffix: infl.suffix,
@@ -2841,7 +2842,6 @@ class Lemma {
     this.languageCode = undefined
     ;({languageID: this.languageID, languageCode: this.languageCode} = LanguageModelFactory.getLanguageAttrs(languageID));
 
-    // This is a headword
     this.word = word;
     this.principalParts = principalParts;
     this.features = {};
