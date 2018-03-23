@@ -29,7 +29,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
     this.features = this.model.typeFeatures
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], LatinLanguageDataset.languageID))
-    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], LatinLanguageDataset.languageID))
+    this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], LatinLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
     for (let feature of this.features.values()) {
@@ -283,7 +283,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
       let features = [
         partOfSpeech,
-        this.features.get(Feature.types.word).createFromImporter(lemma)
+        this.features.get(Feature.types.fullForm).createFromImporter(lemma)
       ]
       if (item[3]) {
         features.push(this.features.get(Feature.types.voice).createFromImporter(item[3]))
@@ -370,15 +370,13 @@ export default class LatinLanguageDataset extends LanguageDataset {
     return this
   }
 
-  getObligatoryMatches (inflection) {
-    let obligatoryMatches = []
+  static getObligatoryMatchList (inflection) {
     if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word)
+      return [Feature.types.fullForm]
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part)
+      return [Feature.types.part]
     }
-    return obligatoryMatches
   }
 
   getOptionalMatches (inflection) {

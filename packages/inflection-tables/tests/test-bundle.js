@@ -512,181 +512,29 @@ class DefinitionSet {
   }
 }
 
-/**
- * This is a temporary placeholder for an i18n library
- */
-const i18n = {
-  en: {
-    feminine: {
-      full: 'feminine',
-      abbr: 'f'
-    },
-    masculine: {
-      full: 'masculine',
-      abbr: 'm'
-    },
-    neuter: {
-      full: 'neuter',
-      abbr: 'n'
-    }
-  }
-};
-
-/**
- * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
- */
-class GrmFeature {
-    /**
-     * Initializes a Feature object
-     * @param {string | string[]} value - A single feature value or, if this feature could have multiple
-     * values, an array of values.
-     * Multiple values do not allow to use a sort order. Because of this, it's better to use
-     * array of multiple Feature objects with single value each instead of a single Feature object
-     * with multiple values.
-     * Multiple values are left for backward compatibility only. Please do not use them as they
-     * will be removed in the future.
-     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {string | symbol} language - A language of a feature, allowed values are specified in 'languages' object.
-     * @param {int} sortOrder - an integer used for sorting
-     */
-  constructor (value, type, language, sortOrder = 1) {
-    if (!GrmFeature.types.isAllowed(type)) {
-      throw new Error('Features of "' + type + '" type are not supported.')
-    }
-    if (!value) {
-      throw new Error('Feature should have a non-empty value.')
-    }
-    if (!type) {
-      throw new Error('Feature should have a non-empty type.')
-    }
-    if (!language) {
-      throw new Error('Feature constructor requires a language')
-    }
-    this.value = value;
-    this.type = type;
-    this.languageID = undefined;
-    this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = LanguageModelFactory.getLanguageAttrs(language));
-    this.sortOrder = sortOrder;
-  }
-
-  /**
-   * This is a compatibility function for legacy code.
-   * @return {String} A language code.
-   */
-  get language () {
-    console.warn(`Please use a "languageID" instead of a "language"`);
-    return this.languageCode
-  }
-
-  isEqual (feature) {
-    if (Array.isArray(feature.value)) {
-      // `feature` is a single object with multiple `value` properties. This feature will be sunset
-      // as it does not allow to use sort order on Feature objects.
-      if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
-        return false
-      }
-      let equal = this.type === feature.type && LanguageModelFactory.compareLanguages(this.languageID, feature.languageID);
-      equal = equal && this.value.every(function (element, index) {
-        return element === feature.value[index]
-      });
-      return equal
-    } else {
-      return LanguageModelFactory.compareLanguages(this.languageID, feature.languageID) && this.type === feature.type && this.value === feature.value
-    }
-  }
-
-  /**
-   * examine the feature for a specific value
-   * @param {string} value
-   * @returns {boolean} true if the value is included in the feature's values
-   */
-  hasValue (value) {
-    if (Array.isArray(this.value)) {
-      return this.value.includes(value)
-    } else {
-      return this.value === value
-    }
-  }
-
-  /**
-   * string representation of a feature
-   * @return {string}
-   */
-  toString () {
-    if (Array.isArray(this.value)) {
-      return this.value.join(',')
-    } else {
-      return this.value
-    }
-  }
-
-  /**
-   * a locale-specific abbreviation for a feature's values
-   * @return {string}
-   */
-  toLocaleStringAbbr (lang = 'en') {
-    if (Array.isArray(this.value)) {
-      return this.value.map((v) => this.toLocaleStringAbbr(v, lang))
-    } else {
-      return i18n[lang][this.value].abbr
-    }
-  }
-}
-// Should have no spaces in values in order to be used in HTML templates
-GrmFeature.types = {
-  word: 'word',
-  part: 'part of speech', // Part of speech
-  number: 'number',
-  'case': 'case',
-  grmCase: 'case', // A synonym of `case`
-  declension: 'declension',
-  gender: 'gender',
-  type: 'type',
-  'class': 'class',
-  grmClass: 'class', // A synonym of `class`
-  conjugation: 'conjugation',
-  comparison: 'comparison',
-  tense: 'tense',
-  voice: 'voice',
-  mood: 'mood',
-  person: 'person',
-  frequency: 'frequency', // How frequent this word is
-  meaning: 'meaning', // Meaning of a word
-  source: 'source', // Source of word definition
-  footnote: 'footnote', // A footnote for a word's ending
-  dialect: 'dialect', // a dialect identifier
-  note: 'note', // a general note
-  pronunciation: 'pronunciation',
-  age: 'age',
-  area: 'area',
-  geo: 'geo', // geographical data
-  kind: 'kind', // verb kind information
-  derivtype: 'derivtype',
-  stemtype: 'stemtype',
-  morph: 'morph', // general morphological information
-  var: 'var', // variance?
-  isAllowed (value) {
-    let v = `${value}`;
-    return Object.values(this).includes(v)
-  }
-};
-
 class FeatureImporter {
-  constructor (defaults = []) {
+  /**
+   * @param defaults
+   * @param {boolean} returnUnknown - If true, and a source value is not found in the importer,
+   * a source value will be returned without any change (a passthrough). If false, an Error
+   * will be thrown for unknown source values.
+   * @return {FeatureImporter}
+   */
+  constructor (defaults = [], returnUnknown = false) {
     this.hash = {};
     for (let value of defaults) {
       this.map(value, value);
     }
+    this.returnUnknown = returnUnknown;
     return this
   }
 
-    /**
-     * Sets mapping between external imported value and one or more library standard values. If an importedValue
-     * is already in a hash table, old libraryValue will be overwritten with the new one.
-     * @param {string} importedValue - External value
-     * @param {Object | Object[] | string | string[]} libraryValue - Library standard value
-     */
+  /**
+   * Sets mapping between external imported value and one or more library standard values. If an importedValue
+   * is already in a hash table, old libraryValue will be overwritten with the new one.
+   * @param {string} importedValue - External value
+   * @param {Object | Object[] | string | string[]} libraryValue - Library standard value
+   */
   map (importedValue, libraryValue) {
     if (!importedValue) {
       throw new Error('Imported value should not be empty.')
@@ -700,25 +548,27 @@ class FeatureImporter {
     return this
   }
 
-    /**
-     * Checks if value is in a map.
-     * @param {string} importedValue - A value to test.
-     * @returns {boolean} - Tru if value is in a map, false otherwise.
-     */
+  /**
+   * Checks if value is in a map.
+   * @param {string} importedValue - A value to test.
+   * @returns {boolean} - Tru if value is in a map, false otherwise.
+   */
   has (importedValue) {
     return this.hash.hasOwnProperty(importedValue)
   }
 
-    /**
-     * Returns one or more library standard values that match an external value
-     * @param {string} importedValue - External value
-     * @returns {Object | string} One or more of library standard values
-     */
-  get (importedValue) {
-    if (this.has(importedValue)) {
-      return this.hash[importedValue]
+  /**
+   * Returns one or more library standard values that match an external value
+   * @param {string} sourceValue - External value
+   * @returns {Object | string} One or more of library standard values
+   */
+  get (sourceValue) {
+    if (this.has(sourceValue)) {
+      return this.hash[sourceValue]
+    } else if (this.returnUnknown) {
+      return sourceValue
     } else {
-      throw new Error('A value "' + importedValue + '" is not found in the importer.')
+      throw new Error('A value "' + sourceValue + '" is not found in the importer.')
     }
   }
 }
@@ -734,20 +584,17 @@ class FeatureImporter {
  * the same priority for sorting and grouping.
  */
 class FeatureType {
-    // TODO: value checking
-    /**
-     * Creates and initializes a Feature Type object.
-     * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
-     * @param {string[] | string[][]} values - A list of allowed values for this feature type.
-     * If an empty array is provided, there will be no
-     * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
-     * such as footnotes).
-     * @param {String | Symbol} language - A language of a feature type.
-     */
+  // TODO: value checking
+  /**
+   * Creates and initializes a Feature Type object.
+   * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+   * @param {string[] | string[][]} values - A list of allowed values for this feature type.
+   * If an empty array is provided, there will be no
+   * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
+   * such as footnotes).
+   * @param {String | Symbol} language - A language of a feature type.
+   */
   constructor (type, values, language) {
-    if (!GrmFeature.types.isAllowed(type)) {
-      throw new Error('Features of "' + type + '" type are not supported.')
-    }
     if (!values || !Array.isArray(values)) {
       throw new Error('Values should be an array (or an empty array) of values.')
     }
@@ -771,11 +618,11 @@ class FeatureType {
       this._orderIndex.push(value);
       if (Array.isArray(value)) {
         for (let element of value) {
-          this[element] = new GrmFeature(element, this.type, this.languageID);
+          this[element] = new Feature(this.type, element, this.languageID);
           this._orderLookup[element] = index;
         }
       } else {
-        this[value] = new GrmFeature(value, this.type, this.languageID);
+        this[value] = new Feature(this.type, value, this.languageID);
         this._orderLookup[value] = index;
       }
     }
@@ -798,19 +645,28 @@ class FeatureType {
     return this.orderedValues.length === 1 && this.orderedValues[0] === FeatureType.UNRESTRICTED_VALUE
   }
 
-    /**
-     * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
-     * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
-     * @param value
-     * @param {int} sortOrder
-     * @returns {GrmFeature}
-     */
+  /**
+   * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
+   * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
+   * @param value
+   * @param {int} sortOrder
+   * @returns {Feature}
+   */
   get (value, sortOrder = 1) {
     if (value) {
-      return new GrmFeature(value, this.type, this.languageID, sortOrder)
+      return new Feature(this.type, [[value, sortOrder]], this.languageID)
     } else {
       throw new Error('A non-empty value should be provided.')
     }
+  }
+
+  /**
+   *
+   * @param {string[][]} data - An array of value arrays as: [[value1, sortOrder1], [value2, sortOrder2]]
+   * @return {Feature}
+   */
+  getValues (data) {
+    return new Feature(this.type, data, this.languageID)
   }
 
   getFromImporter (importerName, value) {
@@ -824,12 +680,12 @@ class FeatureType {
     return mapped
   }
 
-    /**
-     * Creates and returns a new importer with a specific name. If an importer with this name already exists,
-     * an existing Importer object will be returned.
-     * @param {string} name - A name of an importer object
-     * @returns {Importer} A new or existing Importer object that matches a name provided
-     */
+  /**
+   * Creates and returns a new importer with a specific name. If an importer with this name already exists,
+   * an existing Importer object will be returned.
+   * @param {string} name - A name of an importer object
+   * @returns {Importer} A new or existing Importer object that matches a name provided
+   */
   addImporter (name) {
     if (!name) {
       throw new Error('Importer should have a non-empty name.')
@@ -839,60 +695,60 @@ class FeatureType {
     return this.importer[name]
   }
 
-    /**
-     * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
-     * For a similar function that returns strings instead of Feature objects see orderedValues().
-     * @returns {GrmFeature[] | GrmFeature[][]} Array of feature values sorted according to orderIndex.
-     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
-     * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
-     */
+  /**
+   * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
+   * For a similar function that returns strings instead of Feature objects see orderedValues().
+   * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
+   * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+   * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
+   */
   get orderedFeatures () {
-    return this.orderedValues.map((value) => new GrmFeature(value, this.type, this.languageID))
+    return this.orderedValues.map((value) => new Feature(this.type, value, this.languageID))
   }
 
-    /**
-     * Return all feature values as strings in a sorted array, according to feature type's sort order.
-     * This is a main method that specifies a sort order of the feature type. orderedFeatures() relies
-     * on this method in providing a sorted array of feature values. If you want to create
-     * a custom sort order for a particular feature type that will depend on some options that are not type-related,
-     * create a wrapper around this function providing it with options arguments so it will be able to decide
-     * in what order those features will be based on those arguments.
-     * For a similar function that returns Feature objects instead of strings see orderedValues().
-     * @returns {string[]} Array of feature values sorted according to orderIndex.
-     * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
-     * an array of strings will be returned instead of a single strings, as for single feature values.
-     */
+  /**
+   * Return all feature values as strings in a sorted array, according to feature type's sort order.
+   * This is a main method that specifies a sort order of the feature type. orderedFeatures() relies
+   * on this method in providing a sorted array of feature values. If you want to create
+   * a custom sort order for a particular feature type that will depend on some options that are not type-related,
+   * create a wrapper around this function providing it with options arguments so it will be able to decide
+   * in what order those features will be based on those arguments.
+   * For a similar function that returns Feature objects instead of strings see orderedValues().
+   * @returns {string[]} Array of feature values sorted according to orderIndex.
+   * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
+   * an array of strings will be returned instead of a single strings, as for single feature values.
+   */
   get orderedValues () {
     return this._orderIndex
   }
 
-    /**
-     * Returns a lookup table for type values as:
-     *  {value1: order1, value2: order2}, where order is a sort order of an item. If two items have the same sort order,
-     *  their order value will be the same.
-     * @returns {object}
-     */
+  /**
+   * Returns a lookup table for type values as:
+   *  {value1: order1, value2: order2}, where order is a sort order of an item. If two items have the same sort order,
+   *  their order value will be the same.
+   * @returns {object}
+   */
   get orderLookup () {
     return this._orderLookup
   }
 
-    /**
-     * Sets an order of grammatical feature values for a grammatical feature. Used mostly for sorting, filtering,
-     * and displaying.
-     *
-     * @param {GrmFeature[] | GrmFeature[][]} values - a list of grammatical features that specify their order for
-     * sorting and filtering. Some features can be grouped as [[genders.masculine, genders.feminine], LibLatin.genders.neuter].
-     * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
-     * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
-     * during filtering and will be in the same bin during sorting.
-     *
-     */
+  /**
+   * Sets an order of grammatical feature values for a grammatical feature. Used mostly for sorting, filtering,
+   * and displaying.
+   *
+   * @param {Feature[] | Feature[][]} values - a list of grammatical features that specify their order for
+   * sorting and filtering. Some features can be grouped as [[genders.masculine, genders.feminine], LibLatin.genders.neuter].
+   * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
+   * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
+   * during filtering and will be in the same bin during sorting.
+   *
+   */
   set order (values) {
     if (!values || (Array.isArray(values) && values.length === 0)) {
       throw new Error('A non-empty list of values should be provided.')
     }
 
-        // If a single value is provided, convert it into an array
+    // If a single value is provided, convert it into an array
     if (!Array.isArray(values)) {
       values = [values];
     }
@@ -927,14 +783,14 @@ class FeatureType {
       }
     }
 
-        // Erase whatever sort order was set previously
+    // Erase whatever sort order was set previously
     this._orderLookup = {};
     this._orderIndex = [];
 
-        // Define a new sort order
+    // Define a new sort order
     for (const [index, element] of values.entries()) {
       if (Array.isArray(element)) {
-                // If it is an array, all values should have the same order
+        // If it is an array, all values should have the same order
         let elements = [];
         for (const subElement of element) {
           this._orderLookup[subElement.value] = index;
@@ -942,7 +798,7 @@ class FeatureType {
         }
         this._orderIndex[index] = elements;
       } else {
-                // If is a single value
+        // If is a single value
         this._orderLookup[element.value] = index;
         this._orderIndex[index] = element.value;
       }
@@ -956,7 +812,7 @@ class InflectionGroupingKey {
    * @constructor
    * @param {Inflection} infl inflection with features which are used as a grouping key
    * @param {string[]} features array of feature names which are used as the key
-   * @param {Map} extras extra property name and value pairs used in the key
+   * @param {Object} extras extra property name and value pairs used in the key
    */
   constructor (infl, features, extras = {}) {
     for (let feature of features) {
@@ -971,10 +827,8 @@ class InflectionGroupingKey {
    * @returns {boolean} true if found, false if not
    */
   hasFeatureValue (feature, value) {
-    for (let f of this[feature]) {
-      if (f.hasValue(value)) {
-        return true
-      }
+    if (this.hasOwnProperty(feature)) {
+      return this[feature].values.includes(value)
     }
     return false
   }
@@ -986,11 +840,9 @@ class InflectionGroupingKey {
   toString () {
     let values = [];
     for (let prop of Object.getOwnPropertyNames(this).sort()) {
-      if (Array.isArray(this[prop])) {
-        values.push(this[prop].map((x) => x.toString()).sort().join(','));
-      } else {
-        values.push(this[prop]);
-      }
+      // A prop can be either a Feature object, or a one of the extras of a string type
+      let value = (this[prop] instanceof Feature) ? this[prop].values.sort().join(',') : this[prop];
+      values.push(value);
     }
     return values.join(' ')
   }
@@ -1072,14 +924,44 @@ class LanguageModel {
     return this.constructor.features
   }
 
+  /**
+   * Returns a list of names of feature types that are defined in a language model.
+   * @return {string[]} Names of features that are defined in a model.
+   */
   static get featureNames () {
     return this.featureValues.keys()
+  }
+
+  /**
+   * Returns a feature a `featureType` name that is defined for a language. It does not create a new Feature
+   * object instance. It returns the one defined in a language model. To get a new instance of a Feature
+   * object, use `getFeature` instead.
+   * If no feature of `featureType` is defined in a language model, throws an error.
+   * @param {string} featureType - A feature type name.
+   * @return {Feature} A feature object of requested type.
+   */
+  static typeFeature (featureType) {
+    if (this.typeFeatures.has(featureType)) {
+      return this.typeFeatures.get(featureType)
+    } else {
+      throw new Error(`Type feature "${featureType}" is not defined within "${this}"`)
+    }
+  }
+
+  /**
+   * Returns a map with Feature objects of all features defined in a language. Use this method to get all
+   * Feature objects defined in a language model.
+   * @return {Map} Feature objects for all features defined within a language in a Map object. The key is
+   * a feature type (a string), and the value is a Feature object.
+   */
+  static get typeFeatures () {
+    console.warn(`This getter must be defined in a descendant class`);
   }
 
   static get features () {
     let features = {};
     for (const featureName of this.featureNames) {
-      features[featureName] = this.getFeatureType(featureName);
+      features[featureName] = this.getFeature(featureName);
     }
     return features
   }
@@ -1139,7 +1021,7 @@ class LanguageModel {
      */
     return new Map([
       [
-        GrmFeature.types.part,
+        Feature.types.part,
         [
           POFS_ADVERB,
           POFS_ADVERBIAL,
@@ -1161,7 +1043,7 @@ class LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.gender,
+        Feature.types.gender,
         [
           GEND_MASCULINE,
           GEND_FEMININE,
@@ -1169,14 +1051,14 @@ class LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.type,
+        Feature.types.type,
         [
           TYPE_REGULAR,
           TYPE_IRREGULAR
         ]
       ],
       [
-        GrmFeature.types.person,
+        Feature.types.person,
         [
           ORD_1ST,
           ORD_2ND,
@@ -1184,70 +1066,48 @@ class LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.age,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.age,
+        []
       ],
       [
-        GrmFeature.types.area,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.area,
+        []
       ],
       [
-        GrmFeature.types.source,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.source,
+        []
       ],
       [
-        GrmFeature.types.frequency,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.frequency,
+        []
       ],
       [
-        GrmFeature.types.geo,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.geo,
+        []
       ],
       [
-        GrmFeature.types.pronunciation,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.pronunciation,
+        []
       ],
       [
-        GrmFeature.types.kind,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.kind,
+        []
       ],
       [
-        GrmFeature.types.comparison,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.comparison,
+        []
       ],
       [
-        GrmFeature.types.morph,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.morph,
+        []
       ],
       [
-        GrmFeature.types.stemtype,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.stemtype,
+        []
       ],
       [
-        GrmFeature.types.derivtype,
-        [
-          FeatureType.UNRESTRICTED_VALUE
-        ]
+        Feature.types.derivtype,
+        []
       ]
     ])
   }
@@ -1270,7 +1130,13 @@ class LanguageModel {
     return this.constructor.languageID
   }
 
+  /**
+   * @deprecated
+   * @param name
+   * @return {FeatureType}
+   */
   static getFeatureType (name) {
+    console.warn('Please use getFeature instead');
     let featureValues = this.featureValues;
     if (featureValues.has(name)) {
       return new FeatureType(name, featureValues.get(name), this.languageID)
@@ -1279,10 +1145,26 @@ class LanguageModel {
     }
   }
 
+  /**
+   * Returns a new instance of a feature with `featureType`. It uses a feature defined in a language model
+   * as a master.
+   * @param {string} featureType - A name of a feature type.
+   * @return {Feature} - A newly created Feature object.
+   */
+  static getFeature (featureType) {
+    let featureValues = this.featureValues; // To cache the values
+    if (featureValues.has(featureType)) {
+      let allowedValues = featureValues.get(featureType);
+      return new Feature(featureType, allowedValues, this.languageID, 1, allowedValues)
+    } else {
+      throw new Error(`Feature "${featureType}" is not defined`)
+    }
+  }
+
   _initializeFeatures () {
     let features = {};
     for (const featureName of this.constructor.featureValues.keys()) {
-      features[featureName] = this.constructor.getFeatureType(featureName);
+      features[featureName] = this.constructor.getFeature(featureName);
     }
     return features
   }
@@ -1424,7 +1306,7 @@ class LanguageModel {
   /**
    * Groups a set of inflections according to a language-specific display paradigm
    * The default groups according to the following logic:
-   *   1. groups of groups with unique stem, prefix, suffix, part of speech dialect and comparison
+   *   1. groups of groups with unique stem, prefix, suffix, part of speech, declension, dialect and comparison
    *     2. groups of those groups with unique
    *          number, if it's an inflection with a grammatical case
    *          tense, if it's an inflection with tense but no case (i.e. a verb)
@@ -1440,7 +1322,7 @@ class LanguageModel {
     // group inflections by part of speech
     for (let infl of inflections) {
       let groupingKey = new InflectionGroupingKey(infl,
-        [GrmFeature.types.part, GrmFeature.types.dialect, GrmFeature.types.comparison],
+        [Feature.types.part, Feature.types.declension, Feature.types.dialect, Feature.types.comparison],
         {
           prefix: infl.prefix,
           suffix: infl.suffix,
@@ -1461,18 +1343,18 @@ class LanguageModel {
       for (let infl of kv[1].inflections) {
         let keyprop;
         let isCaseInflectionSet = false;
-        if (infl[GrmFeature.types.grmCase]) {
+        if (infl[Feature.types.grmCase]) {
           // grouping on number if case is defined
-          keyprop = GrmFeature.types.number;
+          keyprop = Feature.types.number;
           isCaseInflectionSet = true;
-        } else if (infl[GrmFeature.types.tense]) {
+        } else if (infl[Feature.types.tense]) {
           // grouping on tense if tense is defined but not case
-          keyprop = GrmFeature.types.tense;
-        } else if (infl[GrmFeature.types.part] === POFS_VERB) {
+          keyprop = Feature.types.tense;
+        } else if (infl[Feature.types.part] === POFS_VERB) {
           // grouping on no case or tense but a verb
-          keyprop = GrmFeature.types.part;
-        } else if (infl[GrmFeature.types.part] === POFS_ADVERB) {
-          keyprop = GrmFeature.types.part;
+          keyprop = Feature.types.part;
+        } else if (infl[Feature.types.part] === POFS_ADVERB) {
+          keyprop = Feature.types.part;
           // grouping on adverbs without case or tense
         } else {
           keyprop = 'misc';
@@ -1498,8 +1380,8 @@ class LanguageModel {
         let nextGroup = new Map();
         let sortOrder = new Map();
         for (let infl of kv[1].inflections) {
-          let sortkey = infl[GrmFeature.types.grmCase] ? Math.max(infl[GrmFeature.types.grmCase].map((f) => { return f.sortOrder })) : 1;
-          let groupingKey = new InflectionGroupingKey(infl, [GrmFeature.types.tense, GrmFeature.types.voice]);
+          let sortkey = infl[Feature.types.grmCase] ? Math.max(infl[Feature.types.grmCase].items.map(f => f.sortOrder)) : 1;
+          let groupingKey = new InflectionGroupingKey(infl, [Feature.types.tense, Feature.types.voice]);
           let groupingKeyStr = groupingKey.toString();
           if (nextGroup.has(groupingKeyStr)) {
             nextGroup.get(groupingKeyStr).append(infl);
@@ -1530,8 +1412,8 @@ class LanguageModel {
           for (let infl of group.inflections) {
             // set key is case comp gend pers mood sort
             let groupingKey = new InflectionGroupingKey(infl,
-              [GrmFeature.types.grmCase, GrmFeature.types.comparison, GrmFeature.types.gender, GrmFeature.types.number, GrmFeature.types.person,
-                GrmFeature.types.tense, GrmFeature.types.mood, GrmFeature.types.sort, GrmFeature.types.voice]);
+              [Feature.types.grmCase, Feature.types.comparison, Feature.types.gender, Feature.types.number, Feature.types.person,
+                Feature.types.tense, Feature.types.mood, Feature.types.voice]);
             let groupingKeyStr = groupingKey.toString();
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl);
@@ -1558,6 +1440,9 @@ class LanguageModel {
   }
 }
 
+let typeFeatures = new Map();
+let typeFeaturesInitialized = false;
+
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
@@ -1578,7 +1463,7 @@ class LatinLanguageModel extends LanguageModel {
     return new Map([
       ...LanguageModel.featureValues,
       [
-        GrmFeature.types.grmClass,
+        Feature.types.grmClass,
         [
           CLASS_PERSONAL,
           CLASS_REFLEXIVE,
@@ -1589,14 +1474,14 @@ class LatinLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.number,
+        Feature.types.number,
         [
           NUM_SINGULAR,
           NUM_PLURAL
         ]
       ],
       [
-        GrmFeature.types.grmCase,
+        Feature.types.grmCase,
         [
           CASE_NOMINATIVE,
           CASE_GENITIVE,
@@ -1608,7 +1493,7 @@ class LatinLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.declension,
+        Feature.types.declension,
         [
           ORD_1ST,
           ORD_2ND,
@@ -1618,7 +1503,7 @@ class LatinLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.tense,
+        Feature.types.tense,
         [
           TENSE_PRESENT,
           TENSE_IMPERFECT,
@@ -1629,14 +1514,14 @@ class LatinLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.voice,
+        Feature.types.voice,
         [
           VOICE_ACTIVE,
           VOICE_PASSIVE
         ]
       ],
       [
-        GrmFeature.types.mood,
+        Feature.types.mood,
         [
           MOOD_INDICATIVE,
           MOOD_SUBJUNCTIVE,
@@ -1649,7 +1534,7 @@ class LatinLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.conjugation,
+        Feature.types.conjugation,
         [
           ORD_1ST,
           ORD_2ND,
@@ -1660,12 +1545,24 @@ class LatinLanguageModel extends LanguageModel {
     ])
   }
 
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized) { this.initTypeFeatures(); }
+    return typeFeatures
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures.set(featureName, this.getFeature(featureName));
+    }
+    typeFeaturesInitialized = true;
+  }
+
   /**
    * @override LanguageModel#grammarFeatures
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
-    return [GrmFeature.types.part, GrmFeature.types.grmCase, GrmFeature.types.mood, GrmFeature.types.declension, GrmFeature.types.tense]
+    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense]
   }
 
   /**
@@ -1734,23 +1631,22 @@ class LatinLanguageModel extends LanguageModel {
       suffixBased: false,
       pronounClassRequired: false
     };
-    if (inflection.hasOwnProperty(GrmFeature.types.part) &&
-      Array.isArray(inflection[GrmFeature.types.part]) &&
-      inflection[GrmFeature.types.part].length === 1) {
-      let partOfSpeech = inflection[GrmFeature.types.part][0];
-      if (partOfSpeech.value === POFS_PRONOUN) {
+    if (inflection.hasOwnProperty(Feature.types.part)) {
+      if (inflection[Feature.types.part].value === POFS_PRONOUN) {
         grammar.fullFormBased = true;
       } else {
         grammar.suffixBased = true;
       }
     } else {
-      console.warn(`Unable to set grammar: part of speech data is missing or is incorrect`, inflection[GrmFeature.types.part]);
+      console.warn(`Unable to set grammar: part of speech data is missing or is incorrect`, inflection[Feature.types.part]);
     }
 
     return grammar
   }
 }
 
+let typeFeatures$1 = new Map();
+let typeFeaturesInitialized$1 = false;
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
@@ -1771,7 +1667,7 @@ class GreekLanguageModel extends LanguageModel {
     return new Map([
       ...LanguageModel.featureValues,
       [
-        GrmFeature.types.grmClass,
+        Feature.types.grmClass,
         [
           CLASS_DEMONSTRATIVE,
           CLASS_GENERAL_RELATIVE,
@@ -1786,7 +1682,7 @@ class GreekLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.number,
+        Feature.types.number,
         [
           NUM_SINGULAR,
           NUM_PLURAL,
@@ -1794,7 +1690,7 @@ class GreekLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.grmCase,
+        Feature.types.grmCase,
         [
           CASE_NOMINATIVE,
           CASE_GENITIVE,
@@ -1804,7 +1700,7 @@ class GreekLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.declension,
+        Feature.types.declension,
         [
           ORD_1ST,
           ORD_2ND,
@@ -1812,7 +1708,7 @@ class GreekLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.tense,
+        Feature.types.tense,
         [
           TENSE_PRESENT,
           TENSE_IMPERFECT,
@@ -1824,7 +1720,7 @@ class GreekLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.voice,
+        Feature.types.voice,
         [
           VOICE_PASSIVE,
           VOICE_ACTIVE,
@@ -1833,7 +1729,7 @@ class GreekLanguageModel extends LanguageModel {
         ]
       ],
       [
-        GrmFeature.types.mood,
+        Feature.types.mood,
         [
           MOOD_INDICATIVE,
           MOOD_SUBJUNCTIVE,
@@ -1843,7 +1739,7 @@ class GreekLanguageModel extends LanguageModel {
       ],
       [
         // TODO full list of greek dialects
-        GrmFeature.types.dialect,
+        Feature.types.dialect,
         [
           'attic',
           'epic',
@@ -1851,6 +1747,18 @@ class GreekLanguageModel extends LanguageModel {
         ]
       ]
     ])
+  }
+
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized$1) { this.initTypeFeatures(); }
+    return typeFeatures$1
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures$1.set(featureName, this.getFeature(featureName));
+    }
+    typeFeaturesInitialized$1 = true;
   }
 
   /**
@@ -1866,7 +1774,7 @@ class GreekLanguageModel extends LanguageModel {
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
-    return [GrmFeature.types.part, GrmFeature.types.grmCase, GrmFeature.types.mood, GrmFeature.types.declension, GrmFeature.types.tense, GrmFeature.types.voice]
+    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense, Feature.types.voice]
   }
 
   /**
@@ -1951,25 +1859,20 @@ class GreekLanguageModel extends LanguageModel {
       suffixBased: false,
       pronounClassRequired: false
     };
-    if (inflection.hasOwnProperty(GrmFeature.types.part) &&
-      Array.isArray(inflection[GrmFeature.types.part]) &&
-      inflection[GrmFeature.types.part].length === 1) {
-      let partOfSpeech = inflection[GrmFeature.types.part][0];
-      if (partOfSpeech.value === POFS_PRONOUN) {
+    if (inflection.hasOwnProperty(Feature.types.part)) {
+      if (inflection[Feature.types.part].value === POFS_PRONOUN) {
         constraints.fullFormBased = true;
       } else {
         constraints.suffixBased = true;
       }
     } else {
-      console.warn(`Unable to set grammar: part of speech data is missing or is incorrect`, inflection[GrmFeature.types.part]);
+      console.warn(`Unable to set grammar: part of speech data is missing or is incorrect`, inflection[Feature.types.part]);
     }
 
     constraints.pronounClassRequired =
       LanguageModelFactory.compareLanguages(GreekLanguageModel.languageID, inflection.languageID) &&
-      inflection.hasOwnProperty(GrmFeature.types.part) &&
-      Array.isArray(inflection[GrmFeature.types.part]) &&
-      inflection[GrmFeature.types.part].length >= 1 &&
-      inflection[GrmFeature.types.part][0].value === POFS_PRONOUN;
+      inflection.hasOwnProperty(Feature.types.part) &&
+      inflection[Feature.types.part].value === POFS_PRONOUN;
 
     return constraints
   }
@@ -1984,11 +1887,10 @@ class GreekLanguageModel extends LanguageModel {
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
    * @param {boolean} normalize - Whether normalized forms of words shall be used for comparison.
-   * @return {GrmFeature[]} Matching classes found in an array of Feature objects. If no matching classes found,
-   * returns an empty array.
+   * @return {Feature} Matching classes found within a Feature objects. If no matching classes found,
+   * returns undefined.
    */
   static getPronounClasses (forms, word, normalize = true) {
-    let classes = [];
     let matchingValues = new Set(); // Will eliminate duplicated values
     let matchingForms = forms.filter(
       form => {
@@ -2002,16 +1904,18 @@ class GreekLanguageModel extends LanguageModel {
       }
     );
     for (const matchingForm of matchingForms) {
-      if (matchingForm.features.hasOwnProperty(GrmFeature.types.grmClass)) {
-        matchingValues.add(matchingForm.features[GrmFeature.types.grmClass]);
+      if (matchingForm.features.hasOwnProperty(Feature.types.grmClass)) {
+        matchingValues.add(matchingForm.features[Feature.types.grmClass]);
       }
     }
-    for (const matchingValue of matchingValues) {
-      classes.push(new GrmFeature(matchingValue, GrmFeature.types.grmClass, GreekLanguageModel.languageID));
+    if (matchingValues.size > 0) {
+      return new Feature(Feature.types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
     }
-    return classes
   }
 }
+
+let typeFeatures$2 = new Map();
+let typeFeaturesInitialized$2 = false;
 
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
@@ -2024,6 +1928,18 @@ class ArabicLanguageModel extends LanguageModel {
   static get contextBackward () { return 0 }
   static get direction () { return LANG_DIR_RTL }
   static get baseUnit () { return LANG_UNIT_WORD }
+
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized$2) { this.initTypeFeatures(); }
+    return typeFeatures$2
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures$2.set(featureName, this.getFeature(featureName));
+    }
+    typeFeaturesInitialized$2 = true;
+  }
 
   /**
    * Check to see if this language tool can produce an inflection table display
@@ -2073,6 +1989,9 @@ class ArabicLanguageModel extends LanguageModel {
   }
 }
 
+let typeFeatures$3 = new Map();
+let typeFeaturesInitialized$3 = false;
+
 /**
  * @class  PersianLanguageModel is the lass for Persian specific behavior
  */
@@ -2090,6 +2009,18 @@ class PersianLanguageModel extends LanguageModel {
   static get direction () { return LANG_DIR_RTL }
 
   static get baseUnit () { return LANG_UNIT_WORD }
+
+  static get typeFeatures () {
+    if (!typeFeaturesInitialized$3) { this.initTypeFeatures(); }
+    return typeFeatures$3
+  }
+
+  static initTypeFeatures () {
+    for (const featureName of this.featureNames) {
+      typeFeatures$3.set(featureName, this.getFeature(featureName));
+    }
+    typeFeaturesInitialized$3 = true;
+  }
 
   /**
    * Check to see if this language tool can produce an inflection table display
@@ -2235,6 +2166,26 @@ class LanguageModelFactory {
 }
 
 /**
+ * This is a temporary placeholder for an i18n library
+ */
+const i18n = {
+  en: {
+    feminine: {
+      full: 'feminine',
+      abbr: 'f'
+    },
+    masculine: {
+      full: 'masculine',
+      abbr: 'm'
+    },
+    neuter: {
+      full: 'neuter',
+      abbr: 'n'
+    }
+  }
+};
+
+/**
  * A grammatical feature object, that can replace both Feature and FeatureType objects.
  */
 class Feature {
@@ -2258,11 +2209,16 @@ class Feature {
    *  [[value1, sortOrder1], [value2, sortOrder2], [value3, sortOrder3], ...]
    * If a sort order is omitted anywhere, it will be set to a default sort order.
    *
+   * Each value of a feature has its `sortOrder` property. This value is used to soft values of a feature
+   * between themselves. Feature object has a `sortOrder` property of its own, too. It is used
+   * to compare two Feature objects between themselves.
+   *
    * @param {symbol} languageID - A language ID of a feature
+   * @param {number} sortOrder - A sort order of a feature when multiple features are compared.
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
    * values. An order of those values can define a sort order.
    */
-  constructor (type, data, languageID, allowedValues = []) {
+  constructor (type, data, languageID, sortOrder = 1, allowedValues = []) {
     if (!Feature.isAllowedType(type)) {
       throw new Error('Features of "' + type + '" type are not supported.')
     }
@@ -2275,12 +2231,12 @@ class Feature {
 
     this.type = type;
     this.languageID = languageID;
+    this.sortOrder = sortOrder;
     this.allowedValues = allowedValues;
 
+    // `_data` is an array
     this._data = Feature.dataValuesFromInput(data);
     this.sort();
-
-    this.importers = new Map();
   }
 
   static dataValuesFromInput (data) {
@@ -2307,7 +2263,12 @@ class Feature {
 
   static get types () {
     return {
+      /**
+       * @deprecated : Use `fullForm` where appropriate instead
+       */
       word: 'word',
+      fullForm: 'full form',
+      hdwd: 'headword',
       part: 'part of speech', // Part of speech
       number: 'number',
       'case': 'case',
@@ -2353,6 +2314,10 @@ class Feature {
     return ' '
   }
 
+  static get defaultImporterName () {
+    return 'default'
+  }
+
   /**
    * Test to see if this feature allows unrestricted values.
    * @returns {boolean} true if unrestricted false if not.
@@ -2372,6 +2337,10 @@ class Feature {
    */
   sort () {
     this._data.sort((a, b) => a.sortOrder !== b.sortOrder ? a.sortOrder - b.sortOrder : a.value.localeCompare(b.value));
+  }
+
+  get items () {
+    return this._data
   }
 
   /**
@@ -2395,6 +2364,34 @@ class Feature {
   }
 
   /**
+   * Retrieves a value object by name. Can be used to update a value object directly.
+   * @param {string} featureVale - A feature value of an object to retrieve.
+   */
+  getValue (featureVale) {
+    return this._data.find(v => v.value === featureVale)
+  }
+
+  /**
+   * Returns a number of feature values.
+   * @retrun {number] A quantity of feature values
+   */
+  get valQty () {
+    return this._data.length
+  }
+
+  get isEmpty () {
+    return this.valQty === 0
+  }
+
+  get isSingle () {
+    return this.valQty === 1
+  }
+
+  get isMultiple () {
+    return this.valQty > 1
+  }
+
+  /**
    * A string representation of a feature.
    * @return {string}
    */
@@ -2403,24 +2400,54 @@ class Feature {
   }
 
   /**
-   * Examine the feature for a specific value
+   * Examines the feature for a specific value.
    * @param {string} value
-   * @returns {boolean} true if the value is included in the feature's values
+   * @returns {boolean} true if the value is included in the feature's values.
    */
   hasValue (value) {
     return this.values.includes(value)
   }
 
   /**
+   * Checks if this feature has all value from an array.
+   * @param {string[]} values - An array of values to check for.
+   * @returns {boolean} true if the value is included in the feature's values.
+   */
+  hasValues (values) {
+    let hasValues = true;
+    for (let value of values) {
+      hasValues = hasValues && this.hasValue(value);
+    }
+    return hasValues
+  }
+
+  /**
+   * Checks if this feature has some value from an array.
+   * @param {string[]} values - An array of values to check for.
+   * @returns {boolean} true if the value is included in the feature's values.
+   */
+  hasSomeValues (values) {
+    let hasValues = false;
+    for (let value of values) {
+      hasValues = hasValues || this.hasValue(value);
+    }
+    return hasValues
+  }
+
+  get valuesUnrestricted () {
+    return this.allowedValues.length === 0
+  }
+
+  /**
    * Two features are considered fully equal if they are of the same type, have the same language,
    * and the same set of feature values in the same order.
-   * @param {Feature} grmFtr - A GrmFtr object this feature should be compared with.
+   * @param {Feature} feature - A GrmFtr object this feature should be compared with.
    * @return {boolean} True if features are equal, false otherwise.
    */
-  isEqual (grmFtr) {
-    return this.type === grmFtr.type &&
-      LanguageModelFactory.compareLanguages(this.languageID, grmFtr.languageID) &&
-      this.values === grmFtr.values
+  isEqual (feature) {
+    return this.type === feature.type &&
+      LanguageModelFactory.compareLanguages(this.languageID, feature.languageID) &&
+      this.value === feature.value
   }
 
   /**
@@ -2430,12 +2457,16 @@ class Feature {
    * @param {number} sortOrder - A sort order.
    * @return {Feature} - Self reference for chaining.
    */
-  addValue (value, sortOrder = this.defaultSortOrder) {
-    this._data.push({
-      value: value,
-      sortOrder: sortOrder
-    });
-    this.sort(); // Resort an array to place an inserted value to the proper place
+  addValue (value, sortOrder = this.constructor.defaultSortOrder) {
+    if (!this.hasValue(value)) {
+      this._data.push({
+        value: value,
+        sortOrder: sortOrder
+      });
+      this.sort(); // Resort an array to place an inserted value to the proper place
+    } else {
+      console.warn(`Value "${value} already exists. If you want to change it, use "getValue" to access it directly.`);
+    }
     return this
   }
 
@@ -2446,8 +2477,14 @@ class Feature {
    * @return {Feature} - Self reference for chaining.
    */
   addValues (data) {
-    this._data = this._data.concat(this.constructor.dataValuesFromInput(data));
-    this.sort(); // Resort an array to place an inserted value to the proper place
+    let normalizedData = this.constructor.dataValuesFromInput(data);
+    let values = normalizedData.map(v => v.value);
+    if (!this.hasValue(values)) {
+      this._data = this._data.concat(normalizedData);
+      this.sort(); // Resort an array to place an inserted value to the proper place
+    } else {
+      console.warn(`One or several values from "${values} already exist. If you want to change it, use "getValue" to access a value directly.`);
+    }
     return this
   }
 
@@ -2461,7 +2498,7 @@ class Feature {
   }
 
   /**
-   * Creates a new single value GrmFtr object of the same type and same language,
+   * Creates a new single value Feature object of the same type and same language,
    * but with a different feature value.
    * This can be used when one feature defines a type and it is necessary
    * to create other items of the same type.
@@ -2469,36 +2506,57 @@ class Feature {
    * @param {number} sortOrder.
    * @return {Feature} A new Ftr object.
    */
-  createFeature (value, sortOrder = this.defaultSortOrder) {
-    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.allowedValues)
+  createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
+    // TODO: Add a check of if the value exists in a source Feature object
+    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
-   * Creates a multiple value GrmFtr object of the same type and same language,
+   * Creates a multiple value Feature object of the same type and same language,
    * but with a different feature values.
    * @param {string | string[] | string[][]} data - Single or multiple values, in different combinations,
    * formatted according to rules described in a Ftr constructor.
    * @return {Feature} A new Ftr object.
    */
   createFeatures (data) {
-    return new Feature(this.type, data, this.languageID, this.allowedValues)
+    return new Feature(this.type, data, this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
-   * Create a copy of this feature.
+   * Create a copy of the feature object.
    */
-  copy () {
-    // TODO: Do we need it?
-    console.warn(`This feature is not implemented yet`);
+  getCopy () {
+    let values = this._data.map(item => [item.value, item.sortOrder]);
+    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice())
+  }
+
+  /**
+   * A locale-specific abbreviation for a feature's values.
+   * @return {string[]}
+   */
+  toLocaleStringAbbr (lang = 'en') {
+    // TODO: Should it return a string instead of array? This function is used in morph.vue.
+    return this.values.map(v => i18n[lang][v].abbr)
   }
 
   /**
    * Adds an importer to the internal list.
+   * @param {string} name - A name of an importer.
    * @param {FeatureImporter} importer - A `FeatureImporter` object.
-   * @param {string} name - A name of an importer
    */
-  addImporter (importer, name = 'default') {
+  addImporter (importer = new FeatureImporter(), name = this.constructor.defaultImporterName) {
+    if (!this.importers) {
+      this.importers = new Map();
+    }
     this.importers.set(name, importer);
+    return importer
+  }
+
+  getImporter (name = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(name)) {
+      throw new Error(`Importer "${name}" does not exist`)
+    }
+    return this.importers.get(name)
   }
 
   /**
@@ -2507,7 +2565,10 @@ class Feature {
    * @param {string} name - A name of an importer.
    * @return {Feature} - A new Ftr object.
    */
-  addFromImporter (foreignData, name = 'default') {
+  addFromImporter (foreignData, name = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(name)) {
+      throw new Error(`Importer "${name}" does not exist`)
+    }
     const importer = this.importers.get(name);
     foreignData = this.constructor.dataValuesFromInput(foreignData);
     this._data.push(...foreignData.map(fv => { return { value: importer.get(fv.value), sortOrder: fv.sortOrder } }));
@@ -2521,25 +2582,198 @@ class Feature {
    * @param {string} name - A name of an importer.
    * @return {Feature} - A new Ftr object.
    */
-  createFromImporter (foreignData, name = 'default') {
+  createFromImporter (foreignData, name = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(name)) {
+      throw new Error(`Importer "${name}" does not exist`)
+    }
     const importer = this.importers.get(name);
     if (!Array.isArray(foreignData)) {
       foreignData = [foreignData];
     }
     const values = foreignData.map(fv => importer.get(fv));
-    return new Feature(this.type, values, this.languageID, this.allowedValues)
+    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues)
   }
 }
+
+/**
+ * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
+ */
+class GrmFeature {
+  /**
+   * Initializes a Feature object
+   * @param {string | string[]} value - A single feature value or, if this feature could have multiple
+   * values, an array of values.
+   * Multiple values do not allow to use a sort order. Because of this, it's better to use
+   * array of multiple Feature objects with single value each instead of a single Feature object
+   * with multiple values.
+   * Multiple values are left for backward compatibility only. Please do not use them as they
+   * will be removed in the future.
+   * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+   * @param {string | symbol} language - A language of a feature, allowed values are specified in 'languages' object.
+   * @param {int} sortOrder - an integer used for sorting
+   */
+  constructor (value, type, language, sortOrder = 1) {
+    if (!GrmFeature.types.isAllowed(type)) {
+      throw new Error('Features of "' + type + '" type are not supported.')
+    }
+    if (!value) {
+      throw new Error('Feature should have a non-empty value.')
+    }
+    if (!type) {
+      throw new Error('Feature should have a non-empty type.')
+    }
+    if (!language) {
+      throw new Error('Feature constructor requires a language')
+    }
+    this.value = value;
+    this.type = type;
+    this.languageID = undefined;
+    this.languageCode = undefined
+    ;({languageID: this.languageID, languageCode: this.languageCode} = LanguageModelFactory.getLanguageAttrs(language));
+    this.sortOrder = sortOrder;
+  }
+
+  /**
+   * This is a compatibility function for legacy code.
+   * @return {String} A language code.
+   */
+  get language () {
+    console.warn(`Please use a "languageID" instead of a "language"`);
+    return this.languageCode
+  }
+
+  isEqual (feature) {
+    if (Array.isArray(feature.value)) {
+      // `feature` is a single object with multiple `value` properties. This feature will be sunset
+      // as it does not allow to use sort order on Feature objects.
+      if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
+        return false
+      }
+      let equal = this.type === feature.type && LanguageModelFactory.compareLanguages(this.languageID, feature.languageID);
+      equal = equal && this.value.every(function (element, index) {
+        return element === feature.value[index]
+      });
+      return equal
+    } else {
+      return LanguageModelFactory.compareLanguages(this.languageID, feature.languageID) && this.type === feature.type && this.value === feature.value
+    }
+  }
+
+  isSubsetof (features) {
+    if (!Array.isArray(features)) {
+      features = [features]; // If `features` is a single value, convert it to an array (a more general case)
+    }
+    // `feature` is an array of feature objects with (possibly) each having a single feature value.
+    let languageID = features[0].languageID; // Assume all Feature objects have the same language ID
+    let type = features[0].type; // Assume all Feature objects have the same type
+    let values = features.map(f => f.value);
+    if (LanguageModelFactory.compareLanguages(this.languageID, languageID) && this.type === type && values.includes(this.value)) {
+      return true
+    }
+    return false
+  }
+
+  /**
+   * examine the feature for a specific value
+   * @param {string} value
+   * @returns {boolean} true if the value is included in the feature's values
+   */
+  hasValue (value) {
+    if (Array.isArray(this.value)) {
+      return this.value.includes(value)
+    } else {
+      return this.value === value
+    }
+  }
+
+  /**
+   * string representation of a feature
+   * @return {string}
+   */
+  toString () {
+    if (Array.isArray(this.value)) {
+      return this.value.join(',')
+    } else {
+      return this.value
+    }
+  }
+
+  /**
+   * a locale-specific abbreviation for a feature's values
+   * @return {string}
+   */
+  toLocaleStringAbbr (lang = 'en') {
+    if (Array.isArray(this.value)) {
+      return this.value.map((v) => this.toLocaleStringAbbr(v, lang))
+    } else {
+      return i18n[lang][this.value].abbr
+    }
+  }
+
+  static toFeature (sourceFeature) {
+    if (Array.isArray(sourceFeature)) {
+      if (!(sourceFeature[0] instanceof Feature)) {
+        const type = sourceFeature[0].type;
+        const languageID = sourceFeature[0].languageID;
+        const values = sourceFeature.map(v => v.value);
+        return new Feature(type, values, languageID)
+      }
+    } else {
+      if (!(sourceFeature instanceof Feature)) {
+        return new Feature(sourceFeature.type, sourceFeature.value, sourceFeature.languageID)
+      }
+    }
+    return sourceFeature
+  }
+}
+// Should have no spaces in values in order to be used in HTML templates
+GrmFeature.types = {
+  word: 'word',
+  part: 'part of speech', // Part of speech
+  number: 'number',
+  'case': 'case',
+  grmCase: 'case', // A synonym of `case`
+  declension: 'declension',
+  gender: 'gender',
+  type: 'type',
+  'class': 'class',
+  grmClass: 'class', // A synonym of `class`
+  conjugation: 'conjugation',
+  comparison: 'comparison',
+  tense: 'tense',
+  voice: 'voice',
+  mood: 'mood',
+  person: 'person',
+  frequency: 'frequency', // How frequent this word is
+  meaning: 'meaning', // Meaning of a word
+  source: 'source', // Source of word definition
+  footnote: 'footnote', // A footnote for a word's ending
+  dialect: 'dialect', // a dialect identifier
+  note: 'note', // a general note
+  pronunciation: 'pronunciation',
+  age: 'age',
+  area: 'area',
+  geo: 'geo', // geographical data
+  kind: 'kind', // verb kind information
+  derivtype: 'derivtype',
+  stemtype: 'stemtype',
+  morph: 'morph', // general morphological information
+  var: 'var', // variance?
+  isAllowed (value) {
+    let v = `${value}`;
+    return Object.values(this).includes(v)
+  }
+};
 
 /**
  * A list of grammatical features that characterizes a language unit. Has some additional service methods,
  * compared with standard storage objects.
  */
 class FeatureList {
-    /**
-     * Initializes a feature list.
-     * @param {FeatureType[]} features - Features that build the list (optional, can be set later).
-     */
+  /**
+   * Initializes a feature list.
+   * @param {FeatureType[]} features - Features that build the list (optional, can be set later).
+   */
   constructor (features = []) {
     this._features = [];
     this._types = {};
@@ -2557,10 +2791,10 @@ class FeatureList {
     }
   }
 
-    /**
-     * Returns an array of grouping features.
-     * @returns {FeatureType[]} - An array of grouping features.
-     */
+  /**
+   * Returns an array of grouping features.
+   * @returns {FeatureType[]} - An array of grouping features.
+   */
   get items () {
     return this._features
   }
@@ -2569,22 +2803,22 @@ class FeatureList {
     this._features.forEach(callback);
   }
 
-    /**
-     * Returns a feature of a particular type. If such feature does not exist in a list, returns undefined.
-     * @param {string} type - Feature type as defined in `types` object.
-     * @return {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
-     */
+  /**
+   * Returns a feature of a particular type. If such feature does not exist in a list, returns undefined.
+   * @param {string} type - Feature type as defined in `types` object.
+   * @return {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
+   */
   ofType (type) {
     if (this.hasType(type)) {
       return this._types[type]
     }
   }
 
-    /**
-     * Checks whether a feature list has a feature of a specific type.
-     * @param {string} type - Feature type as defined in `types` object.
-     * @return {boolean} Whether a feature list has a feature of a particular type.
-     */
+  /**
+   * Checks whether a feature list has a feature of a specific type.
+   * @param {string} type - Feature type as defined in `types` object.
+   * @return {boolean} Whether a feature list has a feature of a particular type.
+   */
   hasType (type) {
     return this._types.hasOwnProperty(type)
   }
@@ -2629,12 +2863,14 @@ class Lemma {
   }
 
   /**
+   * @deprecated Please use `addFeature` instead.
    * Sets a grammatical feature for a lemma. Some features can have multiple values, In this case
    * an array of Feature objects will be provided.
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
-   * @param {GrmFeature | GrmFeature[]} data
+   * @param {Feature | Feature[]} data
    */
   set feature (data) {
+    console.warn(`Please use "addFeature" instead`);
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -2645,7 +2881,7 @@ class Lemma {
     let type = data[0].type;
     this.features[type] = [];
     for (let element of data) {
-      if (!(element instanceof GrmFeature)) {
+      if (!(element instanceof Feature)) {
         throw new Error('feature data must be a Feature object.')
       }
 
@@ -2659,11 +2895,46 @@ class Lemma {
   }
 
   /**
+   * Sets a grammatical feature of a lemma. Feature is stored in a `feature.type` property.
+   * @param {Feature} feature - A feature object with one or multiple values.
+   */
+  addFeature (feature) {
+    if (!feature) {
+      throw new Error('feature data cannot be empty.')
+    }
+
+    if (!(feature instanceof Feature)) {
+      throw new Error('feature data must be a Feature object.')
+    }
+
+    if (!LanguageModelFactory.compareLanguages(feature.languageID, this.languageID)) {
+      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
+        this.languageID.toString() + '" of a Lemma object.')
+    }
+
+    this.features[feature.type] = feature;
+  }
+
+  /**
+   * Sets multiple grammatical features of a lemma.
+   * @param {Feature[]} features - Features to be added.
+   */
+  addFeatures (features) {
+    if (!Array.isArray(features)) {
+      throw new Error(`Features must be in an array`)
+    }
+
+    for (let feature of features) {
+      this.addFeature(feature);
+    }
+  }
+
+  /**
    * Get a string which can be used as a unique key to identify this lemma
    * @return {string} the key
    */
   get key () {
-    return [this.word, this.languageCode, ...Object.values(this.features)].join('-')
+    return [this.word, LanguageModelFactory.getLanguageCodeFromId(this.languageID), ...Object.values(this.features)].join('-')
   }
 }
 
@@ -2691,7 +2962,7 @@ class Lemma {
  * Represents an inflection of a word
  */
 class Inflection {
-    /**
+  /**
      * Initializes an Inflection object.
      * @param {string} stem - A stem of a word.
      * @param {string | symbol} language - A word's language.
@@ -2720,10 +2991,10 @@ class Inflection {
 
     // A grammar constraints object
     this.constraints = {
-      fullFormBased: false,  // True this inflection stores and requires to use a full form of a word
-      suffixBased: false,    // True if only suffix is enough to identify this inflection
+      fullFormBased: false, // True this inflection stores and requires to use a full form of a word
+      suffixBased: false, // True if only suffix is enough to identify this inflection
       obligatoryMatches: [], // Names of features that should be matched in order to include a form or suffix to an inflection table
-      optionalMatches: []    // Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
+      optionalMatches: [] // Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
     };
 
     // Suffix may not be present in every word. If missing, it will be set to null.
@@ -2778,13 +3049,15 @@ class Inflection {
     return inflection
   }
 
-    /**
-     * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
-     * an array of Feature objects will be provided.
-     * Values are taken from features and stored in a 'feature.type' property as an array of values.
-     * @param {GrmFeature | GrmFeature[]} data
-     */
+  /**
+   * @deprecated Use `addFeature` instead
+   * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
+   * an array of Feature objects will be provided.
+   * Values are taken from features and stored in a 'feature.type' property as an array of values.
+   * @param {Feature | Feature[]} data
+   */
   set feature (data) {
+    console.warn(`Please use "addFeature" instead.`);
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }
@@ -2795,7 +3068,7 @@ class Inflection {
     let type = data[0].type;
     this[type] = [];
     for (let element of data) {
-      if (!(element instanceof GrmFeature)) {
+      if (!(element instanceof Feature)) {
         throw new Error('Inflection feature data must be a Feature object.')
       }
 
@@ -2809,18 +3082,49 @@ class Inflection {
   }
 
   /**
+   * Sets a grammatical feature of an inflection. Feature is stored in a `feature.type` property.
+   * @param {Feature} feature - A feature object with one or multiple values.
+   */
+  addFeature (feature) {
+    if (!feature) {
+      throw new Error('feature data cannot be empty.')
+    }
+
+    if (!(feature instanceof Feature)) {
+      throw new Error('feature data must be a Feature object.')
+    }
+
+    if (!LanguageModelFactory.compareLanguages(feature.languageID, this.languageID)) {
+      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
+        this.languageID.toString() + '" of a Lemma object.')
+    }
+
+    this[feature.type] = feature;
+  }
+
+  /**
+   * Sets multiple grammatical features of an inflection.
+   * @param {Feature[]} features - Features to be added.
+   */
+  addFeatures (features) {
+    if (!Array.isArray(features)) {
+      throw new Error(`Features must be in an array`)
+    }
+
+    for (let feature of features) {
+      this.addFeature(feature);
+    }
+  }
+
+  /**
    * Checks whether an inflection has a feature with `featureName` name and `featureValue` value
    * @param {string} featureName - A name of a feature
    * @param {string} featureValue - A value of a feature
    * @return {boolean} True if an inflection contains a feature, false otherwise
    */
   hasFeatureValue (featureName, featureValue) {
-    if (this.hasOwnProperty(featureName) && Array.isArray(this[featureName]) && this[featureName].length > 0) {
-      for (let feature of this[featureName]) {
-        if (feature.hasValue(featureValue)) {
-          return true
-        }
-      }
+    if (this.hasOwnProperty(featureName)) {
+      return this[featureName].values.includes(featureValue)
     }
     return false
   }
@@ -2831,13 +3135,13 @@ class Inflection {
  * and a DefinitionSet
  */
 class Lexeme {
-    /**
-     * Initializes a Lexeme object.
-     * @param {Lemma} lemma - A lemma object.
-     * @param {Inflection[]} inflections - An array of inflections.
-     * @param {DefinitionSet} meaning - A set of definitions.
+  /**
+   * Initializes a Lexeme object.
+   * @param {Lemma} lemma - A lemma object.
+   * @param {Inflection[]} inflections - An array of inflections.
+   * @param {DefinitionSet} meaning - A set of definitions.
 
-     */
+   */
   constructor (lemma, inflections, meaning = null) {
     if (!lemma) {
       throw new Error('Lemma should not be empty.')
@@ -2908,14 +3212,14 @@ class Lexeme {
   static getSortByTwoLemmaFeatures (primary, secondary) {
     return (a, b) => {
       if (a.lemma.features[primary] && b.lemma.features[primary]) {
-        if (a.lemma.features[primary][0].sortOrder < b.lemma.features[primary][0].sortOrder) {
+        if (a.lemma.features[primary].sortOrder < b.lemma.features[primary].sortOrder) {
           return 1
-        } else if (a.lemma.features[primary][0].sortOrder > b.lemma.features[primary][0].sortOrder) {
+        } else if (a.lemma.features[primary].sortOrder > b.lemma.features[primary].sortOrder) {
           return -1
         } else if (a.lemma.features[secondary] && b.lemma.features[secondary]) {
-          if (a.lemma.features[secondary][0].sortOrder < b.lemma.features[secondary][0].sortOrder) {
+          if (a.lemma.features[secondary].sortOrder < b.lemma.features[secondary].sortOrder) {
             return 1
-          } else if (a.lemma.features[secondary][0].sortOrder > b.lemma.features[secondary][0].sortOrder) {
+          } else if (a.lemma.features[secondary].sortOrder > b.lemma.features[secondary].sortOrder) {
             return -1
           } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
             return -1
@@ -2937,11 +3241,11 @@ class Lexeme {
 }
 
 class Homonym {
-    /**
-     * Initializes a Homonym object.
-     * @param {Lexeme[]} lexemes - An array of Lexeme objects.
-     * @param {string} form - the form which produces the homonyms
-     */
+  /**
+   * Initializes a Homonym object.
+   * @param {Lexeme[]} lexemes - An array of Lexeme objects.
+   * @param {string} form - the form which produces the homonyms
+   */
   constructor (lexemes, form) {
     if (!lexemes) {
       throw new Error('Lexemes data should not be empty.')
@@ -2975,13 +3279,13 @@ class Homonym {
     return homonym
   }
 
-    /**
-     * Returns a language code of a homonym (ISO 639-3).
-     * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
-     * and inflections within the same homonym will have the same language, and we can determine a language
-     * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
-     * @returns {string} A language code, as defined in the `languages` object.
-     */
+  /**
+   * Returns a language code of a homonym (ISO 639-3).
+   * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
+   * and inflections within the same homonym will have the same language, and we can determine a language
+   * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
+   * @returns {string} A language code, as defined in the `languages` object.
+   */
   get language () {
     console.warn(`Please use languageID instead`);
     return LanguageModelFactory.getLanguageCodeFromId(this.languageID)
@@ -5371,21 +5675,16 @@ class Morpheme {
 
   /**
    * Checks if suffix has a feature that is a match to the one provided.
-   * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
-   * @param {GrmFeature | GrmFeature[]} features - One or several features we need to match with the ones stored
-   * inside the suffix object
-   * @returns {string | undefined} - If provided feature is a match, returns a value of a first feature that matched.
-   * If no match found, return undefined.
+   * @param {Feature} feature - A feature we need to match with the ones stored inside the morpheme object.
+   * @returns {string | undefined} - If provided feature is a match, returns a value of that value.
+   * If no match found, returns undefined.
    */
-  featureMatch (featureType, features) {
-    if (!featureType) { throw new Error(`No feature type information is provided for feature matching`) }
-    if (!features) { throw new Error(`No features information is provided for feature matching`) }
-    if (!Array.isArray(features)) { features = [features]; } // Convert a single feature to an array
+  featureMatch (feature) {
+    if (!feature) { return undefined }
+    const featureType = feature.type;
     if (this.features.hasOwnProperty(featureType)) {
-      for (let feature of features) {
-        if (feature.value === this.features[featureType]) {
-          return feature.value
-        }
+      if (feature.values.includes(this.features[featureType])) {
+        return feature.value
       }
     }
     return undefined
@@ -5636,9 +5935,9 @@ class Inflections {
     let set = new Set();
     // Scan all selected suffixes to build a unique set of footnote indexes
     for (const item of this.items) {
-      if (item.hasOwnProperty(GrmFeature.types.footnote)) {
+      if (item.hasOwnProperty(Feature.types.footnote)) {
         // Footnote indexes are stored in an array
-        for (let index of item[GrmFeature.types.footnote]) {
+        for (let index of item[Feature.types.footnote]) {
           set.add(index);
         }
       }
@@ -5782,7 +6081,7 @@ class InflectionSet {
 
 /**
  * A return value for inflection queries. Stores suffixes, forms and corresponding footnotes.
- * Inflection data is grouped first by a part of speech within a [Models.GrmFeature.types.part] property object.
+ * Inflection data is grouped first by a part of speech within a [Models.Feature.types.part] property object.
  * Inside that object, it is grouped by type: suffixes, or forms.
  */
 class InflectionData {
@@ -5876,9 +6175,9 @@ class InflectionData {
     // let homonym = Models.Homonym.readObject(jsonObject.homonym)
 
     let lexicalData = new InflectionData()
-    lexicalData[Models.GrmFeature.types.part] = jsonObject[Models.GrmFeature.types.part]
+    lexicalData[Models.GrmFeature.types.part] = jsonObject[Models.Feature.types.part]
 
-    for (let part of lexicalData[Models.GrmFeature.types.part]) {
+    for (let part of lexicalData[Models.Feature.types.part]) {
       let partData = jsonObject[part]
       lexicalData[part] = {}
 
@@ -6018,11 +6317,27 @@ class LanguageDataset {
   }
 
   /**
-   * Should be redefined in child classes
-   * @return {Array}
+   * Checks for obligatory matches between an inflection and an item.
+   * @param {Inflection} inflection - An inflection object.
+   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm
+   * @return {Object} A results in the following format:
+   *   {Feature[]} matchedItems - Features that matched (if any)
+   *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
-  getObligatoryMatches () {
-    return []
+  getObligatoryMatches (inflection, item) {
+    return this.constructor.checkMatches(this.constructor.getObligatoryMatchList(inflection), inflection, item)
+  }
+
+  static checkMatches (matchList, inflection, item) {
+    let matches = [];
+    for (const feature of matchList) {
+      let match = item.featureMatch(inflection[feature]);
+      if (match) {
+        matches.push(Feature.types.fullForm);
+      }
+    }
+    let result = (matches.length === matchList.length);
+    return { fullMatch: result, matchedItems: matches }
   }
 
   /**
@@ -6039,7 +6354,7 @@ class LanguageDataset {
    * @return {Inflection} A modified inflection data object
    */
   setInflectionConstraints (inflection) {
-    inflection.constraints.obligatoryMatches = this.getObligatoryMatches(inflection);
+    // inflection.constraints.obligatoryMatches = this.getObligatoryMatches(inflection)
     inflection.constraints.optionalMatches = this.getOptionalMatches(inflection);
     return inflection
   }
@@ -6229,18 +6544,21 @@ class LanguageDataset {
       matchData.suffixMatch = inflection.compareWithWord(item.value);
 
       // Check for obligatory matches
-      for (let featureName of inflection.constraints.obligatoryMatches) {
+      /* for (let featureName of inflection.constraints.obligatoryMatches) {
         if (inflection.hasOwnProperty(featureName) && item.featureMatch(featureName, inflection[featureName])) {
           // Add a matched feature name to a list of matched features
-          matchData.matchedFeatures.push(featureName);
+          matchData.matchedFeatures.push(featureName)
         } else {
           // If an obligatory match is not found, there is no reason to check other items
           break
         }
-      }
+      } */
 
-      if (matchData.matchedFeatures.length < inflection.constraints.obligatoryMatches.length) {
-        // Not all obligatory matches are found, this is not a match
+      let obligatoryMatches = this.getObligatoryMatches(inflection, item);
+      if (obligatoryMatches.fullMatch) {
+        matchData.matchedFeatures.push(...obligatoryMatches.matchedItems);
+      } else {
+        // If obligatory features do not match, there is no reason to check other items
         break
       }
 
@@ -7933,7 +8251,7 @@ class LatinLanguageDataset extends LanguageDataset {
 
     this.features = this.model.typeFeatures;
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], LatinLanguageDataset.languageID));
-    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], LatinLanguageDataset.languageID));
+    this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], LatinLanguageDataset.languageID));
 
     // Create an importer with default values for every feature
     for (let feature of this.features.values()) {
@@ -8187,7 +8505,7 @@ class LatinLanguageDataset extends LanguageDataset {
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
       let features = [
         partOfSpeech,
-        this.features.get(Feature.types.word).createFromImporter(lemma)
+        this.features.get(Feature.types.fullForm).createFromImporter(lemma)
       ];
       if (item[3]) {
         features.push(this.features.get(Feature.types.voice).createFromImporter(item[3]));
@@ -8274,15 +8592,13 @@ class LatinLanguageDataset extends LanguageDataset {
     return this
   }
 
-  getObligatoryMatches (inflection) {
-    let obligatoryMatches = [];
+  static getObligatoryMatchList (inflection) {
     if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word);
+      return [Feature.types.fullForm]
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part);
+      return [Feature.types.part]
     }
-    return obligatoryMatches
   }
 
   getOptionalMatches (inflection) {
@@ -8363,7 +8679,7 @@ var paradigm15 = "{\"ID\":\"verbpdgm15\",\"partOfSpeech\":\"verb\",\"title\":\"P
 
 var paradigm16 = "{\"ID\":\"verbpdgm16\",\"partOfSpeech\":\"verb\",\"title\":\"Future Perfect Indicative, Infinitive, Participle\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"periphrastic active\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"simple active (rare)\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"mood\":\"indicative\",\"value\":\"middle-passive\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"singular\",\"mood\":\"indicative\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυκὼς (-υῖα) ἔσομαι\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"τεθνήξω\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελύσομαι\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυμένος (-η) ἔσομαι\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"singular\",\"mood\":\"indicative\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυκὼς (-υῖα) ἔσῃ\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"τεθνήξεις\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελύσῃ\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυμένος (-η) ἔσῃ\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"singular\",\"mood\":\"indicative\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκὼς (-υῖα, -ὸς) ἔσται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"τεθνήξει\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελύσεται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένος (-η, -ον) ἔσται\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"dual\",\"mood\":\"indicative\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυκότε (-υία) ἔσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"τεθνήξετον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελύσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυμένω (-ᾱ) ἔσεσθον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"dual\",\"mood\":\"indicative\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκότε (-υία) ἔσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"τεθνήξετον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελύσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένω (-ᾱ) ἔσεσθον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυκότες (-υῖαι) ἐσόμεθα\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"τεθνήξομεν\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυσόμεθα\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυμένοι (-αι) ἐσόμεθα\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυκότες (-υῖαι) ἔσεσθε\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"τεθνήξετε\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελύσεσθε\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυμένοι (-αι) ἔσεσθε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκότες (-υῖαι) ἔσονται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"τεθνήξουσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελύσονται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένοι (-αι) ἔσονται\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκότα ἔσται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένᾰ ἔσται\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"active infinitive\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"mood\":\"infinitive\",\"value\":\"periphrastic:\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"middle-passive infinitive\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"mood\":\"infinitive\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"middle-passive participle\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"value\":\"\"}]}]}]}";
 
-var paradigm17 = "{\"ID\":\"verbpdgm17\",\"partOfSpeech\":\"verb\",\"title\":\"Athematic Perfects\\n          (in addition to forms from )\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"indicative\",\"value\":\"indicative\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"subjunctive\",\"value\":\"subjunctive\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"optative\",\"value\":\"optative (poetic)\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"imperative\",\"value\":\"imperative (poetic)\"},{\"role\":\"label\",\"tense\":\"pluperfect\",\"mood\":\"indicative\",\"value\":\"pluperfect indicative\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἕσταίην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇς\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἕσταίης\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕσταθι\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἕσταίη\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτω\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταίτην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστάτην\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἑσταῖμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστᾶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταῖεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάντων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστασαν\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"infinitive\"},{\"role\":\"data\",\"tense\":\"perfect\",\"mood\":\"infinitive\",\"value\":\"ἑστάναι\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"participle\"},{\"role\":\"data\",\"tense\":\"perfect\",\"value\":\"ἑστώς, ἑστῶσᾰ, ἑστός\",\"reflink\":{\"text\":\"(see declension)\",\"href\":\"verbpdgm64\"}}]}]}]}";
+var paradigm17 = "{\"ID\":\"verbpdgm17\",\"partOfSpeech\":\"verb\",\"title\":\"Athematic Perfects\\r\\n          (in addition to forms from )\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"indicative\",\"value\":\"indicative\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"subjunctive\",\"value\":\"subjunctive\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"optative\",\"value\":\"optative (poetic)\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"imperative\",\"value\":\"imperative (poetic)\"},{\"role\":\"label\",\"tense\":\"pluperfect\",\"mood\":\"indicative\",\"value\":\"pluperfect indicative\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἕσταίην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇς\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἕσταίης\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕσταθι\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἕσταίη\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτω\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταίτην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστάτην\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἑσταῖμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστᾶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταῖεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάντων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστασαν\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"infinitive\"},{\"role\":\"data\",\"tense\":\"perfect\",\"mood\":\"infinitive\",\"value\":\"ἑστάναι\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"participle\"},{\"role\":\"data\",\"tense\":\"perfect\",\"value\":\"ἑστώς, ἑστῶσᾰ, ἑστός\",\"reflink\":{\"text\":\"(see declension)\",\"href\":\"verbpdgm64\"}}]}]}]}";
 
 var paradigm18 = "{\"ID\":\"verbpdgm18\",\"partOfSpeech\":\"verb\",\"title\":\"Present System Active of Contract Verbs in -\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"indicative\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"subjunctive\",\"value\":\"subjunctive\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"optative\",\"value\":\"optative\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"optative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"imperative\",\"value\":\"imperative\"},{\"role\":\"label\",\"tense\":\"imperfect\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"imperfect indicative\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ποιῶ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ποιῶ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"(ποιοῖμι)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ποιοίην\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἐποίουν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ποιεῖς\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ποιῇς\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"(ποιοῖς)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ποιοίης\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ποίει\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἐποίεις\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ποιεῖ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ποιῇ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"(ποιοῖ)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ποιοίη\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ποιείτω\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἐποίει\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ποιεῖτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ποιῆτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ποιοῖτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"(ποιοίητον)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ποιεῖτον\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἐποιεῖτον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ποιεῖτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ποιῆτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ποιοίτην\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"(ποιοιήτην)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ποιείτων\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἐποιείτην\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ποιοῦμεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ποιῶμεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ποιοῖμεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"(ποιοίημεν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἐποιούμεθα\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ποιεῖτε\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ποιῆτε\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ποιοῖτε\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"(ποιοίητε)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ποιεῖτε\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἐποιεῖτε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ποιοῦσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ποιῶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ποιοῖεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"(ποιοίησαν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ποιούντων\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἐποιοῦντο\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"infinitive\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"infinitive\",\"value\":\"ποιεῖν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"participle\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"ποιῶν, ποιοῦσᾰ, ποιοῦν\",\"reflink\":{\"text\":\"(see declension)\",\"href\":\"inflect:#verb|type:paradigm|paradigm_id:verbpdgm55\"}}]}]}]}";
 
@@ -8495,7 +8811,8 @@ class GreekLanguageDataset extends LanguageDataset {
 
     this.features = this.model.typeFeatures;
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], GreekLanguageDataset.languageID));
-    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], GreekLanguageDataset.languageID));
+    this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], GreekLanguageDataset.languageID));
+    this.features.set(Feature.types.hdwd, new Feature(Feature.types.hdwd, [], GreekLanguageDataset.languageID));
     this.features.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID));
 
     // Create an importer with default values for every feature
@@ -8593,10 +8910,13 @@ class GreekLanguageDataset extends LanguageDataset {
       let item = data[i];
       let form = item[n.form];
 
-      let features = [partOfSpeech];
+      let features = [
+        partOfSpeech,
+        this.features.get(Feature.types.fullForm).createFromImporter(form)
+      ];
 
       if (item[n.hdwd]) {
-        features.push(this.features.get(Feature.types.word).createFromImporter(item[n.hdwd]));
+        features.push(this.features.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]));
       }
       if (item[n.grmClass]) { features.push(this.features.get(Feature.types.grmClass).createFromImporter(item[n.grmClass])); }
       if (item[n.person]) { features.push(this.features.get(Feature.types.person).createFromImporter(item[n.person])); }
@@ -8813,20 +9133,20 @@ class GreekLanguageDataset extends LanguageDataset {
    */
   getPronounGroupingLemmas (grammarClass) {
     let values = this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : [];
-    return new Feature(Feature.types.word, values, this.languageID)
+    return new Feature(Feature.types.fullForm, values, this.languageID)
   }
 
-  getObligatoryMatches (inflection) {
-    let obligatoryMatches = [];
+  static getObligatoryMatchList (inflection) {
     if (inflection.hasFeatureValue(Feature.types.part, constants.POFS_PRONOUN)) {
-      obligatoryMatches.push(Feature.types.grmClass);
+      // If it is a pronoun, it must match a grammatical class
+      return [Feature.types.grmClass]
     } else if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word);
+      // Not a pronoun, but the other form-based word
+      return [Feature.types.fullForm]
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part);
+      return [Feature.types.part]
     }
-    return obligatoryMatches
   }
 
   getOptionalMatches (inflection) {
@@ -9563,10 +9883,10 @@ class GroupFeatureType extends FeatureType {
 
   /**
    * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
-   * @returns {GrmFeature[] | GrmFeature[][]} A sorted array of feature values.
+   * @returns {Feature[] | Feature[][]} A sorted array of feature values.
    */
   getOrderedFeatures (ancestorFeatures) {
-    return this.getOrderedValues(ancestorFeatures).map((value) => new GrmFeature(value, this.type, this.languageID))
+    return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(this.type, value, this.languageID))
   }
 
   /**

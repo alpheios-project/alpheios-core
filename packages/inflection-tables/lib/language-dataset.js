@@ -123,11 +123,27 @@ export default class LanguageDataset {
   }
 
   /**
-   * Should be redefined in child classes
-   * @return {Array}
+   * Checks for obligatory matches between an inflection and an item.
+   * @param {Inflection} inflection - An inflection object.
+   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm
+   * @return {Object} A results in the following format:
+   *   {Feature[]} matchedItems - Features that matched (if any)
+   *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
-  getObligatoryMatches () {
-    return []
+  getObligatoryMatches (inflection, item) {
+    return this.constructor.checkMatches(this.constructor.getObligatoryMatchList(inflection), inflection, item)
+  }
+
+  static checkMatches (matchList, inflection, item) {
+    let matches = []
+    for (const feature of matchList) {
+      let match = item.featureMatch(inflection[feature])
+      if (match) {
+        matches.push(Feature.types.fullForm)
+      }
+    }
+    let result = (matches.length === matchList.length)
+    return { fullMatch: result, matchedItems: matches }
   }
 
   /**
@@ -144,7 +160,7 @@ export default class LanguageDataset {
    * @return {Inflection} A modified inflection data object
    */
   setInflectionConstraints (inflection) {
-    inflection.constraints.obligatoryMatches = this.getObligatoryMatches(inflection)
+    // inflection.constraints.obligatoryMatches = this.getObligatoryMatches(inflection)
     inflection.constraints.optionalMatches = this.getOptionalMatches(inflection)
     return inflection
   }
@@ -334,7 +350,7 @@ export default class LanguageDataset {
       matchData.suffixMatch = inflection.compareWithWord(item.value)
 
       // Check for obligatory matches
-      for (let featureName of inflection.constraints.obligatoryMatches) {
+      /* for (let featureName of inflection.constraints.obligatoryMatches) {
         if (inflection.hasOwnProperty(featureName) && item.featureMatch(featureName, inflection[featureName])) {
           // Add a matched feature name to a list of matched features
           matchData.matchedFeatures.push(featureName)
@@ -342,10 +358,13 @@ export default class LanguageDataset {
           // If an obligatory match is not found, there is no reason to check other items
           break
         }
-      }
+      } */
 
-      if (matchData.matchedFeatures.length < inflection.constraints.obligatoryMatches.length) {
-        // Not all obligatory matches are found, this is not a match
+      let obligatoryMatches = this.getObligatoryMatches(inflection, item)
+      if (obligatoryMatches.fullMatch) {
+        matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
+      } else {
+        // If obligatory features do not match, there is no reason to check other items
         break
       }
 

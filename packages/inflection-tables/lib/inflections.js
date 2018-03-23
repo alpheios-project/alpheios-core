@@ -1,4 +1,4 @@
-import { GrmFeature } from 'alpheios-data-models'
+import { Feature } from 'alpheios-data-models'
 // import LanguageDataset from './language-dataset.js'
 // import Form from './form.js'
 // import Suffix from './suffix.js'
@@ -71,9 +71,9 @@ export default class Inflections {
     let set = new Set()
     // Scan all selected suffixes to build a unique set of footnote indexes
     for (const item of this.items) {
-      if (item.hasOwnProperty(GrmFeature.types.footnote)) {
+      if (item.hasOwnProperty(Feature.types.footnote)) {
         // Footnote indexes are stored in an array
-        for (let index of item[GrmFeature.types.footnote]) {
+        for (let index of item[Feature.types.footnote]) {
           set.add(index)
         }
       }

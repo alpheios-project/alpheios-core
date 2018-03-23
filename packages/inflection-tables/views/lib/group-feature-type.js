@@ -1,4 +1,4 @@
-import { GrmFeature, FeatureType } from 'alpheios-data-models'
+import { Feature, FeatureType } from 'alpheios-data-models'
 import RowTitleCell from './row-title-cell'
 
 // TODO: Rebase on Feature instead of FeatureType
@@ -59,10 +59,10 @@ export default class GroupFeatureType extends FeatureType {
 
   /**
    * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
-   * @returns {GrmFeature[] | GrmFeature[][]} A sorted array of feature values.
+   * @returns {Feature[] | Feature[][]} A sorted array of feature values.
    */
   getOrderedFeatures (ancestorFeatures) {
-    return this.getOrderedValues(ancestorFeatures).map((value) => new GrmFeature(value, this.type, this.languageID))
+    return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(this.type, value, this.languageID))
   }
 
   /**

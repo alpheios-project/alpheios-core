@@ -107,7 +107,8 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     this.features = this.model.typeFeatures
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], GreekLanguageDataset.languageID))
-    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], GreekLanguageDataset.languageID))
+    this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], GreekLanguageDataset.languageID))
+    this.features.set(Feature.types.hdwd, new Feature(Feature.types.hdwd, [], GreekLanguageDataset.languageID))
     this.features.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
@@ -205,10 +206,13 @@ export default class GreekLanguageDataset extends LanguageDataset {
       let item = data[i]
       let form = item[n.form]
 
-      let features = [partOfSpeech]
+      let features = [
+        partOfSpeech,
+        this.features.get(Feature.types.fullForm).createFromImporter(form)
+      ]
 
       if (item[n.hdwd]) {
-        features.push(this.features.get(Feature.types.word).createFromImporter(item[n.hdwd]))
+        features.push(this.features.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]))
       }
       if (item[n.grmClass]) { features.push(this.features.get(Feature.types.grmClass).createFromImporter(item[n.grmClass])) }
       if (item[n.person]) { features.push(this.features.get(Feature.types.person).createFromImporter(item[n.person])) }
@@ -425,20 +429,20 @@ export default class GreekLanguageDataset extends LanguageDataset {
    */
   getPronounGroupingLemmas (grammarClass) {
     let values = this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : []
-    return new Feature(Feature.types.word, values, this.languageID)
+    return new Feature(Feature.types.fullForm, values, this.languageID)
   }
 
-  getObligatoryMatches (inflection) {
-    let obligatoryMatches = []
+  static getObligatoryMatchList (inflection) {
     if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
-      obligatoryMatches.push(Feature.types.grmClass)
+      // If it is a pronoun, it must match a grammatical class
+      return [Feature.types.grmClass]
     } else if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word)
+      // Not a pronoun, but the other form-based word
+      return [Feature.types.fullForm]
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part)
+      return [Feature.types.part]
     }
-    return obligatoryMatches
   }
 
   getOptionalMatches (inflection) {

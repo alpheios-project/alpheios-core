@@ -7,7 +7,7 @@ import { Constants, Feature, FeatureImporter, FeatureList, FeatureType, GreekLan
 
 /**
  * A return value for inflection queries. Stores suffixes, forms and corresponding footnotes.
- * Inflection data is grouped first by a part of speech within a [Models.GrmFeature.types.part] property object.
+ * Inflection data is grouped first by a part of speech within a [Models.Feature.types.part] property object.
  * Inside that object, it is grouped by type: suffixes, or forms.
  */
 class InflectionData {
@@ -101,9 +101,9 @@ class InflectionData {
     // let homonym = Models.Homonym.readObject(jsonObject.homonym)
 
     let lexicalData = new InflectionData()
-    lexicalData[Models.GrmFeature.types.part] = jsonObject[Models.GrmFeature.types.part]
+    lexicalData[Models.GrmFeature.types.part] = jsonObject[Models.Feature.types.part]
 
-    for (let part of lexicalData[Models.GrmFeature.types.part]) {
+    for (let part of lexicalData[Models.Feature.types.part]) {
       let partData = jsonObject[part]
       lexicalData[part] = {}
 
@@ -367,21 +367,16 @@ class Morpheme {
 
   /**
    * Checks if suffix has a feature that is a match to the one provided.
-   * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
-   * @param {GrmFeature | GrmFeature[]} features - One or several features we need to match with the ones stored
-   * inside the suffix object
-   * @returns {string | undefined} - If provided feature is a match, returns a value of a first feature that matched.
-   * If no match found, return undefined.
+   * @param {Feature} feature - A feature we need to match with the ones stored inside the morpheme object.
+   * @returns {string | undefined} - If provided feature is a match, returns a value of that value.
+   * If no match found, returns undefined.
    */
-  featureMatch (featureType, features) {
-    if (!featureType) { throw new Error(`No feature type information is provided for feature matching`) }
-    if (!features) { throw new Error(`No features information is provided for feature matching`) }
-    if (!Array.isArray(features)) { features = [features]; } // Convert a single feature to an array
+  featureMatch (feature) {
+    if (!feature) { return undefined }
+    const featureType = feature.type;
     if (this.features.hasOwnProperty(featureType)) {
-      for (let feature of features) {
-        if (feature.value === this.features[featureType]) {
-          return feature.value
-        }
+      if (feature.values.includes(this.features[featureType])) {
+        return feature.value
       }
     }
     return undefined
@@ -632,9 +627,9 @@ class Inflections {
     let set = new Set();
     // Scan all selected suffixes to build a unique set of footnote indexes
     for (const item of this.items) {
-      if (item.hasOwnProperty(GrmFeature.types.footnote)) {
+      if (item.hasOwnProperty(Feature.types.footnote)) {
         // Footnote indexes are stored in an array
-        for (let index of item[GrmFeature.types.footnote]) {
+        for (let index of item[Feature.types.footnote]) {
           set.add(index);
         }
       }
@@ -888,11 +883,27 @@ class LanguageDataset {
   }
 
   /**
-   * Should be redefined in child classes
-   * @return {Array}
+   * Checks for obligatory matches between an inflection and an item.
+   * @param {Inflection} inflection - An inflection object.
+   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm
+   * @return {Object} A results in the following format:
+   *   {Feature[]} matchedItems - Features that matched (if any)
+   *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
-  getObligatoryMatches () {
-    return []
+  getObligatoryMatches (inflection, item) {
+    return this.constructor.checkMatches(this.constructor.getObligatoryMatchList(inflection), inflection, item)
+  }
+
+  static checkMatches (matchList, inflection, item) {
+    let matches = [];
+    for (const feature of matchList) {
+      let match = item.featureMatch(inflection[feature]);
+      if (match) {
+        matches.push(Feature.types.fullForm);
+      }
+    }
+    let result = (matches.length === matchList.length);
+    return { fullMatch: result, matchedItems: matches }
   }
 
   /**
@@ -909,7 +920,7 @@ class LanguageDataset {
    * @return {Inflection} A modified inflection data object
    */
   setInflectionConstraints (inflection) {
-    inflection.constraints.obligatoryMatches = this.getObligatoryMatches(inflection);
+    // inflection.constraints.obligatoryMatches = this.getObligatoryMatches(inflection)
     inflection.constraints.optionalMatches = this.getOptionalMatches(inflection);
     return inflection
   }
@@ -1099,18 +1110,21 @@ class LanguageDataset {
       matchData.suffixMatch = inflection.compareWithWord(item.value);
 
       // Check for obligatory matches
-      for (let featureName of inflection.constraints.obligatoryMatches) {
+      /* for (let featureName of inflection.constraints.obligatoryMatches) {
         if (inflection.hasOwnProperty(featureName) && item.featureMatch(featureName, inflection[featureName])) {
           // Add a matched feature name to a list of matched features
-          matchData.matchedFeatures.push(featureName);
+          matchData.matchedFeatures.push(featureName)
         } else {
           // If an obligatory match is not found, there is no reason to check other items
           break
         }
-      }
+      } */
 
-      if (matchData.matchedFeatures.length < inflection.constraints.obligatoryMatches.length) {
-        // Not all obligatory matches are found, this is not a match
+      let obligatoryMatches = this.getObligatoryMatches(inflection, item);
+      if (obligatoryMatches.fullMatch) {
+        matchData.matchedFeatures.push(...obligatoryMatches.matchedItems);
+      } else {
+        // If obligatory features do not match, there is no reason to check other items
         break
       }
 
@@ -2803,7 +2817,7 @@ class LatinLanguageDataset extends LanguageDataset {
 
     this.features = this.model.typeFeatures;
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], LatinLanguageDataset.languageID));
-    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], LatinLanguageDataset.languageID));
+    this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], LatinLanguageDataset.languageID));
 
     // Create an importer with default values for every feature
     for (let feature of this.features.values()) {
@@ -3057,7 +3071,7 @@ class LatinLanguageDataset extends LanguageDataset {
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
       let features = [
         partOfSpeech,
-        this.features.get(Feature.types.word).createFromImporter(lemma)
+        this.features.get(Feature.types.fullForm).createFromImporter(lemma)
       ];
       if (item[3]) {
         features.push(this.features.get(Feature.types.voice).createFromImporter(item[3]));
@@ -3144,15 +3158,13 @@ class LatinLanguageDataset extends LanguageDataset {
     return this
   }
 
-  getObligatoryMatches (inflection) {
-    let obligatoryMatches = [];
+  static getObligatoryMatchList (inflection) {
     if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word);
+      return [Feature.types.fullForm]
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part);
+      return [Feature.types.part]
     }
-    return obligatoryMatches
   }
 
   getOptionalMatches (inflection) {
@@ -3233,7 +3245,7 @@ var paradigm15 = "{\"ID\":\"verbpdgm15\",\"partOfSpeech\":\"verb\",\"title\":\"P
 
 var paradigm16 = "{\"ID\":\"verbpdgm16\",\"partOfSpeech\":\"verb\",\"title\":\"Future Perfect Indicative, Infinitive, Participle\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"periphrastic active\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"simple active (rare)\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"mood\":\"indicative\",\"value\":\"middle-passive\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"singular\",\"mood\":\"indicative\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυκὼς (-υῖα) ἔσομαι\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"τεθνήξω\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελύσομαι\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυμένος (-η) ἔσομαι\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"singular\",\"mood\":\"indicative\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυκὼς (-υῖα) ἔσῃ\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"τεθνήξεις\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελύσῃ\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυμένος (-η) ἔσῃ\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"singular\",\"mood\":\"indicative\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκὼς (-υῖα, -ὸς) ἔσται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"τεθνήξει\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελύσεται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένος (-η, -ον) ἔσται\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"dual\",\"mood\":\"indicative\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυκότε (-υία) ἔσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"τεθνήξετον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελύσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυμένω (-ᾱ) ἔσεσθον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"dual\",\"mood\":\"indicative\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκότε (-υία) ἔσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"τεθνήξετον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελύσεσθον\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένω (-ᾱ) ἔσεσθον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυκότες (-υῖαι) ἐσόμεθα\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"τεθνήξομεν\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυσόμεθα\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"λελυμένοι (-αι) ἐσόμεθα\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυκότες (-υῖαι) ἔσεσθε\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"τεθνήξετε\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελύσεσθε\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"λελυμένοι (-αι) ἔσεσθε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκότες (-υῖαι) ἔσονται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"τεθνήξουσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελύσονται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένοι (-αι) ἔσονται\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"number\":\"plural\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυκότα ἔσται\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"λελυμένᾰ ἔσται\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"active infinitive\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"active\",\"mood\":\"infinitive\",\"value\":\"periphrastic:\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"middle-passive infinitive\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"mood\":\"infinitive\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"future_perfect\",\"mood\":\"indicative\",\"value\":\"middle-passive participle\"},{\"role\":\"label\",\"tense\":\"future_perfect\",\"voice\":\"mediopassive middle\",\"value\":\"\"}]}]}]}";
 
-var paradigm17 = "{\"ID\":\"verbpdgm17\",\"partOfSpeech\":\"verb\",\"title\":\"Athematic Perfects\\n          (in addition to forms from )\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"indicative\",\"value\":\"indicative\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"subjunctive\",\"value\":\"subjunctive\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"optative\",\"value\":\"optative (poetic)\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"imperative\",\"value\":\"imperative (poetic)\"},{\"role\":\"label\",\"tense\":\"pluperfect\",\"mood\":\"indicative\",\"value\":\"pluperfect indicative\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἕσταίην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇς\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἕσταίης\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕσταθι\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἕσταίη\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτω\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταίτην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστάτην\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἑσταῖμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστᾶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταῖεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάντων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστασαν\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"infinitive\"},{\"role\":\"data\",\"tense\":\"perfect\",\"mood\":\"infinitive\",\"value\":\"ἑστάναι\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"participle\"},{\"role\":\"data\",\"tense\":\"perfect\",\"value\":\"ἑστώς, ἑστῶσᾰ, ἑστός\",\"reflink\":{\"text\":\"(see declension)\",\"href\":\"verbpdgm64\"}}]}]}]}";
+var paradigm17 = "{\"ID\":\"verbpdgm17\",\"partOfSpeech\":\"verb\",\"title\":\"Athematic Perfects\\r\\n          (in addition to forms from )\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"indicative\",\"value\":\"indicative\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"subjunctive\",\"value\":\"subjunctive\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"optative\",\"value\":\"optative (poetic)\"},{\"role\":\"label\",\"tense\":\"perfect\",\"mood\":\"imperative\",\"value\":\"imperative (poetic)\"},{\"role\":\"label\",\"tense\":\"pluperfect\",\"mood\":\"indicative\",\"value\":\"pluperfect indicative\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἕσταίην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇς\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἕσταίης\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕσταθι\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"singular\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῇ\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἕσταίη\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτω\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"dual\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστατον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτον\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταίτην\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάτων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστάτην\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ἑσταῖμεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἕσταμεν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῆτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ἑσταῖτε\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ἕστατε\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἕστατε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"number\":\"plural\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἑστᾶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ἑστῶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ἑσταῖεν\"},{\"role\":\"data\",\"tense\":\"perfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ἑστάντων\"},{\"role\":\"data\",\"tense\":\"pluperfect\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἕστασαν\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"infinitive\"},{\"role\":\"data\",\"tense\":\"perfect\",\"mood\":\"infinitive\",\"value\":\"ἑστάναι\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"perfect\",\"value\":\"participle\"},{\"role\":\"data\",\"tense\":\"perfect\",\"value\":\"ἑστώς, ἑστῶσᾰ, ἑστός\",\"reflink\":{\"text\":\"(see declension)\",\"href\":\"verbpdgm64\"}}]}]}]}";
 
 var paradigm18 = "{\"ID\":\"verbpdgm18\",\"partOfSpeech\":\"verb\",\"title\":\"Present System Active of Contract Verbs in -\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"indicative\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"subjunctive\",\"value\":\"subjunctive\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"optative\",\"value\":\"optative\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"optative\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"imperative\",\"value\":\"imperative\"},{\"role\":\"label\",\"tense\":\"imperfect\",\"voice\":\"active\",\"mood\":\"indicative\",\"value\":\"imperfect indicative\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"singular\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ποιῶ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ποιῶ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"(ποιοῖμι)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ποιοίην\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἐποίουν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ποιεῖς\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ποιῇς\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"(ποιοῖς)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ποιοίης\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ποίει\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἐποίεις\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ποιεῖ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ποιῇ\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"(ποιοῖ)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ποιοίη\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ποιείτω\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"singular\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἐποίει\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"dual\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ποιεῖτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ποιῆτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ποιοῖτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"(ποιοίητον)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ποιεῖτον\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἐποιεῖτον\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ποιεῖτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ποιῆτον\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ποιοίτην\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"(ποιοιήτην)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ποιείτων\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"dual\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἐποιείτην\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"plural\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"value\":\"1st\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ποιοῦμεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"subjunctive\",\"value\":\"ποιῶμεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"ποιοῖμεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"optative\",\"value\":\"(ποιοίημεν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"imperative\",\"value\":\"\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"1st\",\"mood\":\"indicative\",\"value\":\"ἐποιούμεθα\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"value\":\"2nd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ποιεῖτε\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"subjunctive\",\"value\":\"ποιῆτε\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"ποιοῖτε\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"optative\",\"value\":\"(ποιοίητε)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"imperative\",\"value\":\"ποιεῖτε\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"2nd\",\"mood\":\"indicative\",\"value\":\"ἐποιεῖτε\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"value\":\"3rd\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ποιοῦσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"subjunctive\",\"value\":\"ποιῶσῐ(ν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"ποιοῖεν\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"optative\",\"value\":\"(ποιοίησαν)\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"imperative\",\"value\":\"ποιούντων\"},{\"role\":\"data\",\"tense\":\"imperfect\",\"voice\":\"active\",\"number\":\"plural\",\"person\":\"3rd\",\"mood\":\"indicative\",\"value\":\"ἐποιοῦντο\"}]}]},\"subTables\":[{\"rows\":[{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"infinitive\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"mood\":\"infinitive\",\"value\":\"ποιεῖν\"}]},{\"cells\":[{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"\"},{\"role\":\"label\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"participle\"},{\"role\":\"data\",\"tense\":\"present\",\"voice\":\"active\",\"value\":\"ποιῶν, ποιοῦσᾰ, ποιοῦν\",\"reflink\":{\"text\":\"(see declension)\",\"href\":\"inflect:#verb|type:paradigm|paradigm_id:verbpdgm55\"}}]}]}]}";
 
@@ -3365,7 +3377,8 @@ class GreekLanguageDataset extends LanguageDataset {
 
     this.features = this.model.typeFeatures;
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], GreekLanguageDataset.languageID));
-    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], GreekLanguageDataset.languageID));
+    this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], GreekLanguageDataset.languageID));
+    this.features.set(Feature.types.hdwd, new Feature(Feature.types.hdwd, [], GreekLanguageDataset.languageID));
     this.features.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID));
 
     // Create an importer with default values for every feature
@@ -3463,10 +3476,13 @@ class GreekLanguageDataset extends LanguageDataset {
       let item = data[i];
       let form = item[n.form];
 
-      let features = [partOfSpeech];
+      let features = [
+        partOfSpeech,
+        this.features.get(Feature.types.fullForm).createFromImporter(form)
+      ];
 
       if (item[n.hdwd]) {
-        features.push(this.features.get(Feature.types.word).createFromImporter(item[n.hdwd]));
+        features.push(this.features.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]));
       }
       if (item[n.grmClass]) { features.push(this.features.get(Feature.types.grmClass).createFromImporter(item[n.grmClass])); }
       if (item[n.person]) { features.push(this.features.get(Feature.types.person).createFromImporter(item[n.person])); }
@@ -3683,20 +3699,20 @@ class GreekLanguageDataset extends LanguageDataset {
    */
   getPronounGroupingLemmas (grammarClass) {
     let values = this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : [];
-    return new Feature(Feature.types.word, values, this.languageID)
+    return new Feature(Feature.types.fullForm, values, this.languageID)
   }
 
-  getObligatoryMatches (inflection) {
-    let obligatoryMatches = [];
+  static getObligatoryMatchList (inflection) {
     if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
-      obligatoryMatches.push(Feature.types.grmClass);
+      // If it is a pronoun, it must match a grammatical class
+      return [Feature.types.grmClass]
     } else if (inflection.constraints.fullFormBased) {
-      obligatoryMatches.push(Feature.types.word);
+      // Not a pronoun, but the other form-based word
+      return [Feature.types.fullForm]
     } else {
       // Default value for suffix matching
-      obligatoryMatches.push(Feature.types.part);
+      return [Feature.types.part]
     }
-    return obligatoryMatches
   }
 
   getOptionalMatches (inflection) {
@@ -6262,10 +6278,10 @@ class GroupFeatureType extends FeatureType {
 
   /**
    * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
-   * @returns {GrmFeature[] | GrmFeature[][]} A sorted array of feature values.
+   * @returns {Feature[] | Feature[][]} A sorted array of feature values.
    */
   getOrderedFeatures (ancestorFeatures) {
-    return this.getOrderedValues(ancestorFeatures).map((value) => new GrmFeature(value, this.type, this.languageID))
+    return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(this.type, value, this.languageID))
   }
 
   /**

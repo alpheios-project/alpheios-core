@@ -110,21 +110,16 @@ export default class Morpheme {
 
   /**
    * Checks if suffix has a feature that is a match to the one provided.
-   * @param {string} featureType - Sets a type of a feature we need to match with the ones stored inside the suffix
-   * @param {GrmFeature | GrmFeature[]} features - One or several features we need to match with the ones stored
-   * inside the suffix object
-   * @returns {string | undefined} - If provided feature is a match, returns a value of a first feature that matched.
-   * If no match found, return undefined.
+   * @param {Feature} feature - A feature we need to match with the ones stored inside the morpheme object.
+   * @returns {string | undefined} - If provided feature is a match, returns a value of that value.
+   * If no match found, returns undefined.
    */
-  featureMatch (featureType, features) {
-    if (!featureType) { throw new Error(`No feature type information is provided for feature matching`) }
-    if (!features) { throw new Error(`No features information is provided for feature matching`) }
-    if (!Array.isArray(features)) { features = [features] } // Convert a single feature to an array
+  featureMatch (feature) {
+    if (!feature) { return undefined }
+    const featureType = feature.type
     if (this.features.hasOwnProperty(featureType)) {
-      for (let feature of features) {
-        if (feature.value === this.features[featureType]) {
-          return feature.value
-        }
+      if (feature.values.includes(this.features[featureType])) {
+        return feature.value
       }
     }
     return undefined
