@@ -27,6 +27,7 @@ module.exports = {
     },
     tasks: [
       {
+        mode: 'development',
         context: path.resolve(__dirname, '../../src/'),
         entry: './plugin.js',
         externals: ['alpheios-data-models', 'alpheios-inflection-tables'],
@@ -43,7 +44,8 @@ module.exports = {
             },
             {
               test: /\.json$/,
-              use: 'raw-loader'
+              use: 'raw-loader',
+              type: 'javascript/auto' // To prevent running Webpack's default JSON parser on the output of raw-loader
             },
             {
               test: /\.(jpg|png)$/,

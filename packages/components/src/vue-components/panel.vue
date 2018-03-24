@@ -410,6 +410,8 @@
         width: 40px;
         height: 40px;
         margin: 0 5px;
+        padding-top: 5px;
+        text-align: center;
         cursor: pointer;
         fill: $alpheios-link-color-dark-bg;
         stroke: $alpheios-link-color-dark-bg;
@@ -540,6 +542,7 @@
         margin: 20px 5px 20px;
         width: 40px;
         height: 40px;
+        text-align: center;
         background: transparent no-repeat center center;
         background-size: contain;
     }

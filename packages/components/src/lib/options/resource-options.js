@@ -131,7 +131,7 @@ export default class ResourceOptions {
     )
   }
 
- /**
+  /**
   * Parse a stored setting name into its component parts
   * (for simplicity of the data structure, setting names are stored under
   * keys which combine the setting and the language)
