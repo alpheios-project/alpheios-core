@@ -6,10 +6,12 @@
   "scripts": {
     "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "standard --fix && node ./build/node/build.js",
+    "build-dev": "standard --fix && node ./build/node/build.js all development",
     "lint": "standard --fix",
     "buildstyles": "node ./build/node/build.js styles",
     "buildimages": "node ./build/node/build.js images",
-    "buildwebpack": "node ./build/node/build.js webpack"
+    "buildwebpack": "node ./build/node/build.js webpack",
+    "buildwebpack-dev": "node ./build/node/build.js webpack development"
   },
   "repository": {
     "type": "git",

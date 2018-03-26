@@ -27,7 +27,6 @@ module.exports = {
     },
     tasks: [
       {
-        mode: 'development',
         context: path.resolve(__dirname, '../../src/'),
         entry: './plugin.js',
         externals: ['alpheios-data-models', 'alpheios-inflection-tables'],

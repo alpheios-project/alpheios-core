@@ -23,14 +23,30 @@ let readDir = function (dir, extensions, excludedDirs) {
   return files
 }
 
-let run = function (tasks, pathToProjectRoot) {
+let run = async function (tasks, pathToProjectRoot) {
   'use strict'
-  for (let task of tasks) {
-    optimize(task, pathToProjectRoot)
-  }
+  return new Promise((resolve, reject) => {
+    let results = []
+    let startTime = new Date().getTime()
+    for (let task of tasks) {
+      results.push(optimize(task, pathToProjectRoot))
+    }
+    Promise.all(results).then(values => {
+      console.log() // Inserts an empty line
+      console.log(chalk.blue('Image task:'))
+      for (const value of values) {
+        for (const result of value) {
+          console.log(result)
+        }
+      }
+      let duration = new Date().getTime() - startTime
+      console.log(chalk.blue(`Image task completed in ${duration} ms`))
+      resolve()
+    })
+  })
 }
 
-let optimize = function (config, pathToProjectRoot) {
+let optimize = async function (config, pathToProjectRoot) {
   const projectRoot = path.resolve(__dirname, pathToProjectRoot)
   const source = config.source || 'src/images'
   const sourcePath = path.join(projectRoot, source)
@@ -49,6 +65,7 @@ let optimize = function (config, pathToProjectRoot) {
 
   let fileList = new Map()
   let tasks = []
+  let results = []
   for (let sourceFile of files) {
     let filename = path.basename(sourceFile)
     let relativePath = path.relative(sourcePath, path.dirname(sourceFile))
@@ -81,7 +98,7 @@ let optimize = function (config, pathToProjectRoot) {
           fileItem.sizeReduction = Math.round((fileItem.targetSize - fileItem.sourceSize) / fileItem.sourceSize * 10000) / 100
         },
         error => {
-          console.error(`Image cannot be optimized: ${error}`)
+          results.push(`Image cannot be optimized: ${error}`)
         })
     }
   }
@@ -89,18 +106,17 @@ let optimize = function (config, pathToProjectRoot) {
   Promise.all(tasks).then(
     () => {
       if (files && files.length > 0) {
-        console.log() // Inserts an empty line
-        console.log(chalk.blue('IMAGE TASK'))
         for (let fileItem of fileList.values()) {
           if (!fileItem.skipped) {
-            console.log(`${fileItem.target} ${chalk.yellow('[' + bytes.format(fileItem.targetSize) + ']')} ${chalk.magenta('[' + fileItem.sizeReduction + '%]')} ${chalk.green('[created]')}`)
+            results.push(`${fileItem.target} ${chalk.yellow('[' + bytes.format(fileItem.targetSize) + ']')} ${chalk.magenta('[' + fileItem.sizeReduction + '%]')} ${chalk.green('[created]')}`)
           } else {
-            console.log(`${fileItem.target} ${chalk.cyan('[up to date]')}`)
+            results.push(`${fileItem.target} ${chalk.cyan('[up to date]')}`)
           }
         }
       }
     }
   )
+  return results
 }
 
 module.exports = {
