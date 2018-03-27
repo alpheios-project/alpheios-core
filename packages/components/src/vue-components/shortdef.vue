@@ -10,7 +10,7 @@
     props: ['definition'],
     methods: {},
     mounted () {
-      console.log('ShortDef is mounted')
+      //console.log('ShortDef is mounted')
     }
   }
 </script>
