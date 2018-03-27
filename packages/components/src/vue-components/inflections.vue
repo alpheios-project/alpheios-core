@@ -37,15 +37,15 @@
                 <widetable :data="selectedView.wideTable"></widetable>
                 <widesubtables :data="selectedView.wideSubTables"></widesubtables>
             </template>
-            <template v-show="!selectedView.hasComponentData">
-            <div :id="elementIDs.wideView" class=""></div>
+            <div v-show="!selectedView.hasComponentData">
+                <div :id="elementIDs.wideView" class=""></div>
                 <div :id="elementIDs.footnotes" class="alpheios-inflections__footnotes">
                     <template v-for="footnote in footnotes">
                         <dt>{{footnote.index}}</dt>
                         <dd>{{footnote.text}}</dd>
                     </template>
                 </div>
-            </template>
+            </div>
         </div>
     </div>
 </template>
