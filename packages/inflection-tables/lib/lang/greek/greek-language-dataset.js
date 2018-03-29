@@ -438,7 +438,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     }
   }
 
-  getOptionalMatches (inflection) {
+  static getOptionalMatchList (inflection) {
     const featureOptions = [
       Feature.types.grmCase,
       Feature.types.declension,

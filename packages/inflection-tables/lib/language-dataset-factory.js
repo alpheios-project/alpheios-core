@@ -59,7 +59,7 @@ export default class LanguageDatasetFactory {
       for (let inflection of homonym.inflections) {
         // Set grammar rules for an inflection
         inflection.setConstraints()
-        dataset.setInflectionConstraints(inflection)
+        // dataset.setInflectionConstraints(inflection)
       }
       return dataset.getInflectionData(homonym)
     } else {

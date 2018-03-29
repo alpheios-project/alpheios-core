@@ -6314,28 +6314,31 @@ class LanguageDataset {
    *   {Feature[]} matchedItems - Features that matched (if any)
    *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
-  getObligatoryMatches (inflection, item) {
-    return this.constructor.checkMatches(this.constructor.getObligatoryMatchList(inflection), inflection, item)
-  }
-
-  static checkMatches (matchList, inflection, item) {
-    let matches = [];
-    for (const feature of matchList) {
-      let match = item.featureMatch(inflection[feature]);
-      if (match) {
-        matches.push(Feature.types.fullForm);
-      }
-    }
-    let result = (matches.length === matchList.length);
-    return { fullMatch: result, matchedItems: matches }
+  static getObligatoryMatches (inflection, item) {
+    return this.checkMatches(this.getObligatoryMatchList(inflection), inflection, item)
   }
 
   /**
-   * Should be redefined in child classes
-   * @return {Array}
+   * Checks for optional matches between an inflection and an item.
+   * @param {Inflection} inflection - An inflection object.
+   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm
+   * @return {Object} A results in the following format:
+   *   {Feature[]} matchedItems - Features that matched (if any)
+   *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
-  getOptionalMatches (inflection) {
-    return []
+  static getOptionalMatches (inflection, item) {
+    return this.checkMatches(this.getOptionalMatchList(inflection), inflection, item)
+  }
+
+  static checkMatches (matchList, inflection, item) {
+    let matches = matchList.reduce((acc, f) => {
+      if (inflection.hasOwnProperty(f) && item.featureMatch(inflection[f])) {
+        acc.push(f);
+      }
+      return acc
+    }, []);
+    let result = (matches.length === matchList.length);
+    return { fullMatch: result, matchedItems: matches }
   }
 
   /**
@@ -6343,11 +6346,10 @@ class LanguageDataset {
    * @param {Inflection} inflection - An inflection data object
    * @return {Inflection} A modified inflection data object
    */
-  setInflectionConstraints (inflection) {
-    // inflection.constraints.obligatoryMatches = this.getObligatoryMatches(inflection)
-    inflection.constraints.optionalMatches = this.getOptionalMatches(inflection);
+  /* setInflectionConstraints (inflection) {
+    inflection.constraints.optionalMatches = this.constructor.getOptionalMatches(inflection)
     return inflection
-  }
+  } */
 
   getInflectionData (homonym) {
     // Add support for languages
@@ -6516,10 +6518,6 @@ class LanguageDataset {
    * additional information about a match. if no matches found, returns null.
    */
   matcher (inflections, item) {
-    // I'm not sure if we ever want to restrict what we consider optional matches
-    // so this is just a placeholder for now
-    let matchOptional = true;
-
     // Any of those features must match between an inflection and an ending
     let bestMatchData = null; // information about the best match we would be able to find
 
@@ -6530,21 +6528,10 @@ class LanguageDataset {
      */
     for (let inflection of inflections) {
       let matchData = new MatchData(); // Create a match profile
-      let optionalMatches = matchOptional ? inflection.constraints.optionalMatches : [];
       matchData.suffixMatch = inflection.compareWithWord(item.value);
 
       // Check for obligatory matches
-      /* for (let featureName of inflection.constraints.obligatoryMatches) {
-        if (inflection.hasOwnProperty(featureName) && item.featureMatch(featureName, inflection[featureName])) {
-          // Add a matched feature name to a list of matched features
-          matchData.matchedFeatures.push(featureName)
-        } else {
-          // If an obligatory match is not found, there is no reason to check other items
-          break
-        }
-      } */
-
-      let obligatoryMatches = this.getObligatoryMatches(inflection, item);
+      const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item);
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems);
       } else {
@@ -6552,14 +6539,11 @@ class LanguageDataset {
         break
       }
 
-      // Check optional matches now
-      for (let feature of optionalMatches) {
-        if (item.featureMatch(feature)) {
-          matchData.matchedFeatures.push(feature);
-        }
-      }
+      // Check for optional matches
+      const optionalMatches = this.constructor.getOptionalMatches(inflection, item);
+      matchData.matchedFeatures.push(...optionalMatches.matchedItems);
 
-      if (matchData.suffixMatch && (matchData.matchedFeatures.length === inflection.constraints.obligatoryMatches.length + optionalMatches.length)) {
+      if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
         // This is a full match
         matchData.fullMatch = true;
 
@@ -8588,7 +8572,7 @@ class LatinLanguageDataset extends LanguageDataset {
     }
   }
 
-  getOptionalMatches (inflection) {
+  static getOptionalMatchList (inflection) {
     const featureOptions = [
       Feature.types.grmCase,
       Feature.types.declension,
@@ -9129,7 +9113,7 @@ class GreekLanguageDataset extends LanguageDataset {
     }
   }
 
-  getOptionalMatches (inflection) {
+  static getOptionalMatchList (inflection) {
     const featureOptions = [
       Feature.types.grmCase,
       Feature.types.declension,
@@ -9201,7 +9185,7 @@ class LanguageDatasetFactory {
       for (let inflection of homonym.inflections) {
         // Set grammar rules for an inflection
         inflection.setConstraints();
-        dataset.setInflectionConstraints(inflection);
+        // dataset.setInflectionConstraints(inflection)
       }
       return dataset.getInflectionData(homonym)
     } else {
