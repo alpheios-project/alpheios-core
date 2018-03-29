@@ -42,9 +42,6 @@ export default class LanguageDataset {
     let item = new ClassType(itemValue)
     item.extendedLangData = extendedLangData
 
-    // Build all possible combinations of features
-    let multiValueFeatures = []
-
     // Go through all features provided
     for (let feature of features) {
       // If this is a footnote. Footnotes should go in a flat array
@@ -52,41 +49,15 @@ export default class LanguageDataset {
       if (feature.type === GrmFeature.types.footnote) {
         item[GrmFeature.types.footnote] = item[GrmFeature.types.footnote] || []
         item[GrmFeature.types.footnote].push(feature.value)
-        continue
-      }
-
-      // If this ending has several grammatical feature values then they will be in an array
-      if (Array.isArray(feature)) {
-        if (feature.length > 0) {
-          if (feature[0]) {
-            let type = feature[0].type
-            // Store all multi-value features to create a separate copy of a a Suffix object for each of them
-            multiValueFeatures.push({type: type, features: feature})
-          }
-        } else {
-          // Array is empty
-          throw new Error('An empty array is provided as a feature argument to the "addSuffix" method.')
-        }
       } else {
-        item.features[feature.type] = feature.value
+        item.features[feature.type] = feature
       }
-    }
-
-    let items = []
-    // Create a copy of an Suffix object for each multi-value item
-    if (multiValueFeatures.length > 0) {
-      for (let featureGroup of multiValueFeatures) {
-        let endingItems = item.split(featureGroup.type, featureGroup.features)
-        items.push(...endingItems)
-      }
-    } else {
-      items.push(item)
     }
 
     if (!this.pos.has(partOfSpeech)) {
       this.pos.set(partOfSpeech, new InflectionSet(partOfSpeech))
     }
-    this.pos.get(partOfSpeech).addInflectionItems(items)
+    this.pos.get(partOfSpeech).addInflectionItem(item)
   }
 
   addParadigms (partOfSpeech, paradigms) {
@@ -370,8 +341,7 @@ export default class LanguageDataset {
 
       // Check optional matches now
       for (let feature of optionalMatches) {
-        let matchedValue = item.featureMatch(feature, inflection[feature])
-        if (matchedValue) {
+        if (item.featureMatch(feature)) {
           matchData.matchedFeatures.push(feature)
         }
       }

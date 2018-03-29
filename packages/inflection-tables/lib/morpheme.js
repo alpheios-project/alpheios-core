@@ -109,20 +109,31 @@ export default class Morpheme {
   }
 
   /**
-   * Checks if suffix has a feature that is a match to the one provided.
+   * Checks if a morpheme has at least one common feature value with a `feature`.
    * @param {Feature} feature - A feature we need to match with the ones stored inside the morpheme object.
-   * @returns {string | undefined} - If provided feature is a match, returns a value of that value.
-   * If no match found, returns undefined.
+   * @returns {boolean} - True if a `feature` has at least one value in common with a morpheme, false otherwise.
    */
   featureMatch (feature) {
-    if (!feature) { return undefined }
-    const featureType = feature.type
-    if (this.features.hasOwnProperty(featureType)) {
-      if (feature.values.includes(this.features[featureType])) {
-        return feature.value
+    const matchingValues = this.matchingValues(feature)
+    return matchingValues.length > 0
+  }
+
+  /**
+   * Returns a list of values that are the same between a morpheme and a feature (an intersection).
+   * @param {Feature} feature
+   * @return {string[]}
+   */
+  matchingValues (feature) {
+    let matches = []
+    if (feature && this.features.hasOwnProperty(feature.type)) {
+      const morphemeValue = this.features[feature.type]
+      for (const featureValue of feature.values) {
+        if (morphemeValue.values.includes(featureValue)) {
+          matches.push(featureValue)
+        }
       }
     }
-    return undefined
+    return matches
   }
 
   /**

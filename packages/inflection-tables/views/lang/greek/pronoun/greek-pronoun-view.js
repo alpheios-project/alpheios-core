@@ -36,13 +36,13 @@ export default class GreekPronounView extends GreekView {
     )
 
     // This is just a placeholder. Lemma values will be generated dynamically
-    this.featureTypes.lemmas = new Feature(Feature.types.word, [], this.languageID)
+    this.featureTypes.lemmas = new Feature(Feature.types.hdwd, [], this.languageID)
 
     this.features = {
       numbers: new GroupFeatureType(this.featureTypes.numbers, 'Number'),
       cases: new GroupFeatureType(GreekLanguageModel.typeFeature(Feature.types.grmCase), 'Case'),
       genders: new GroupFeatureType(this.featureTypes.genders, 'Gender'),
-      persons: new GroupFeatureType(GreekLanguageModel.typeFeature(Feature.types.grmCase), 'Case')
+      persons: new GroupFeatureType(GreekLanguageModel.typeFeature(Feature.types.person), 'Person')
     }
 
     this.features.genders.getTitle = function getTitle (featureValue) {
@@ -112,7 +112,13 @@ export default class GreekPronounView extends GreekView {
       let inflectionSet = inflectionData.pos.get(this.partOfSpeech)
       if (inflectionSet.types.has(this.inflectionType)) {
         let inflections = inflectionSet.types.get(this.inflectionType)
-        let found = inflections.items.find(form => this.classes.includes(form.features[Feature.types.grmClass]))
+        let found = inflections.items.find(form => {
+          let match = false
+          for (const value of form.features[Feature.types.grmClass].values) {
+            match = match || this.classes.includes(value)
+          }
+          return match
+        })
         if (found) {
           return true
         }

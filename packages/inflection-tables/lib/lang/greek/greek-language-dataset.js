@@ -115,6 +115,9 @@ export default class GreekLanguageDataset extends LanguageDataset {
     for (let feature of this.features.values()) {
       feature.addImporter(new FeatureImporter(feature.values, true))
     }
+    // Custom importers for Greek-specific feature values
+    this.features.get(Feature.types.gender).getImporter()
+      .map('masculine feminine neuter', [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
   }
 
   static get languageID () {
@@ -191,15 +194,6 @@ export default class GreekLanguageDataset extends LanguageDataset {
       dialect: 9,
       footnote: 10
     }
-
-    // Custom importers
-    // TODO: decide on the best way to keep mulitple values and re-enable later
-    /* languageModel.features[Feature.types.gender].addImporter(impName)
-      .map('masculine feminine neuter', [
-        languageModel.features[Feature.types.gender][Constants.GEND_MASCULINE],
-        languageModel.features[Feature.types.gender][Constants.GEND_FEMININE],
-        languageModel.features[Feature.types.gender][Constants.GEND_NEUTER]
-      ]) */
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -422,14 +416,13 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   /**
-   * Returns a feature type with lemmas that are used to group values within inflection tables,
+   * Returns an array of lemmas that are used to group values within inflection tables,
    * such as for demonstrative pronouns
    * @param {string} grammarClass - A name of a pronoun class
-   * @return {Feature} An object with lemma values
+   * @return {string[]} An array of lemma values
    */
   getPronounGroupingLemmas (grammarClass) {
-    let values = this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : []
-    return new Feature(Feature.types.fullForm, values, this.languageID)
+    return this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : []
   }
 
   static getObligatoryMatchList (inflection) {

@@ -94,30 +94,6 @@ export default class GroupFeatureType extends FeatureType {
   }
 
   /**
-   * Returns true if an ending grammatical feature defined by featureType has a value that is listed in a featureValues array.
-   * This function is used with Array.prototype.filter().
-   * If you want to provide a custom grouping for any particular feature type, redefine this function
-   * to implement a custom grouping logic.
-   * @param {string | string[]} featureValues - a list of possible values of a type specified by featureType that
-   * this ending should have.
-   * @param {Suffix} suffix - an ending we need to filter out.
-   * @returns {boolean} True if suffix has a value of a grammatical feature specified.
-   */
-  filter (featureValues, suffix) {
-    // If not an array, convert it to array for uniformity
-    if (!Array.isArray(featureValues)) {
-      featureValues = [featureValues]
-    }
-    for (const value of featureValues) {
-      if (suffix.features[this.type] === value) {
-        return true
-      }
-    }
-
-    return false
-  }
-
-  /**
    * Whether this feature forms a columns group.
    * @returns {boolean} True if this feature forms a column.
    */

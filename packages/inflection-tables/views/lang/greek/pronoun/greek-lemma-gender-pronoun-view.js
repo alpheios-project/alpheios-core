@@ -11,7 +11,8 @@ export default class GreekLemmaGenderPronounView extends GreekPronounView {
     super(inflectionData, locale, GreekLemmaGenderPronounView.classes[0])
 
     // Add lemmas
-    this.featureTypes.lemmas = this.dataset.getPronounGroupingLemmas(GreekLemmaGenderPronounView.classes[0])
+    const lemmaValues = this.dataset.getPronounGroupingLemmas(GreekLemmaGenderPronounView.classes[0])
+    this.featureTypes.lemmas = new Feature(Feature.types.hdwd, lemmaValues, GreekLemmaGenderPronounView.languageID)
     this.features.lemmas = new GroupFeatureType(this.featureTypes.lemmas, 'Lemma')
 
     /*

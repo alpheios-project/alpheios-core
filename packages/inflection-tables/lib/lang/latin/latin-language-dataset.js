@@ -1,7 +1,7 @@
 /*
  * Latin language data module
  */
-import { Constants, LatinLanguageModel, Feature, FeatureImporter } from 'alpheios-data-models'
+import { Constants, Feature, FeatureImporter } from 'alpheios-data-models'
 import LanguageDataset from '../../../lib/language-dataset.js'
 import Suffix from '../../../lib/suffix.js'
 import Form from '../../../lib/form.js'
@@ -38,14 +38,12 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
     // Create importer mapping for special language-specific values
     this.features.get(Feature.types.declension).getImporter()
-      .map('1st 2nd', LatinLanguageModel.typeFeature(Feature.types.declension)
-        .createFeatures([Constants.ORD_1ST, Constants.ORD_2ND]))
+      .map('1st 2nd', [Constants.ORD_1ST, Constants.ORD_2ND])
     this.features.get(Feature.types.gender).getImporter()
-      .map('masculine feminine', LatinLanguageModel.typeFeature(Feature.types.declension)
-        .createFeatures([Constants.GEND_MASCULINE, Constants.GEND_FEMININE]))
+      .map('masculine feminine', [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
 
     this.features.get(Feature.types.tense).getImporter()
-      .map('future_perfect', LatinLanguageModel.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_FUTURE_PERFECT))
+      .map('future_perfect', Constants.TENSE_FUTURE_PERFECT)
   }
 
   static get languageID () {

@@ -27,8 +27,16 @@ export default class InflectionSet {
   }
 
   /**
+   * Adds a single inflection item to the set
+   * @param {Suffix | Form | Paradigm} inflection
+   */
+  addInflectionItem (inflection) {
+    this.addInflectionItems([inflection])
+  }
+
+  /**
    * Adds an array of inflection items of the same type.
-   * @param {Object[]} inflections
+   * @param {Suffix[] | Form[] | Paradigm[]} inflections
    */
   addInflectionItems (inflections) {
     let classType = inflections[0].constructor.ClassType
