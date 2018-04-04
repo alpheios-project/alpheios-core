@@ -52,6 +52,14 @@ export default class ContentOptions {
           {value: 'ara', text: 'Arabic'},
           {value: 'per', text: 'Persian'}
         ]
+      },
+      verboseMode: {
+        defaultValue: 'normal',
+        labelText: 'Log Level',
+        values: [
+          { value: 'verbose', text: 'Verbose' },
+          { value: 'normal', text: 'Normal' }
+        ]
       }
     }
   }

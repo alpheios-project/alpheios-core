@@ -41,7 +41,6 @@ export default class UIController {
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
-    this.verboseMode = false
     this.manifest = manifest
     this.template = template
 
@@ -71,7 +70,7 @@ export default class UIController {
             options: false,
             info: true
           },
-          verboseMode: this.verboseMode,
+          verboseMode: this.state.verboseMode,
           grammarRes: {},
           lexemes: [],
           inflectionComponentData: {
@@ -283,6 +282,9 @@ export default class UIController {
             case 'preferredLanguage':
               this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
               break
+            case 'verboseMode':
+              this.uiController.updateVerboseMode()
+              break
           }
         },
         resourceSettingChange: function (name, value) {
@@ -303,6 +305,7 @@ export default class UIController {
         this.state.activateUI()
         console.log('UI options are loaded')
         this.updateLanguage(this.options.items.preferredLanguage.currentValue)
+        this.updateVerboseMode()
       })
     })
 
@@ -347,7 +350,7 @@ export default class UIController {
            */
           requestStartTime: 0,
           settings: this.options.items,
-          verboseMode: this.verboseMode,
+          verboseMode: this.state.verboseMode,
           defDataReady: false,
           inflDataReady: false,
           morphDataReady: false,
@@ -510,7 +513,8 @@ export default class UIController {
   static get settingValues () {
     return {
       uiTypePanel: 'panel',
-      uiTypePopup: 'popup'
+      uiTypePopup: 'popup',
+      verboseMode: 'verbose'
     }
   }
 
@@ -713,6 +717,13 @@ export default class UIController {
     this.panel.enableInflections(LanguageModelFactory.getLanguageModel(languageID).canInflect())
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(languageID)
     console.log(`Current language is ${this.state.currentLanguage}`)
+  }
+
+  updateVerboseMode () {
+    this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
+    this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
+    this.panel.panelData.verboseMode = this.state.verboseMode
+    this.popup.popupData.verboseMode = this.state.verboseMode
   }
 
   updateInflections (inflectionData, homonym) {

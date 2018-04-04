@@ -57,6 +57,7 @@
   import Morph from './morph.vue'
   import Setting from './setting.vue'
   import interact from 'interactjs'
+  import Logger from '../lib/log/logger'
 
   // Embeddable SVG icons
   import CloseIcon from '../images/inline-icons/close.svg'
@@ -119,6 +120,10 @@
     },
 
     computed: {
+      logger: function() {
+        console.log(`Verbose = ${this.data.verboseMode}`)
+        return Logger.getLogger(this.data.verboseMode)
+      },
       requestStartTime: function () {
         return this.data.requestStartTime
       },
@@ -165,7 +170,7 @@
         let rightSide = placementTargetX + this.exactWidth / 2
         if (this.widthDm !== 'auto') {
           // Popup is too wide and was restricted in height
-          console.log(`Setting position left for a set width`)
+          this.logger.log(`Setting position left for a set width`)
           left = this.data.viewportMargin
         } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin
           && leftSide > this.data.viewportMargin) {
@@ -192,14 +197,14 @@
         }
 
         let time = new Date().getTime()
-        console.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
+        this.logger.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
         let top = this.positionTopValue
         let placementTargetY = this.data.targetRect.top
         let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
         let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
         if (this.heightDm !== 'auto') {
           // Popup is too wide and was restricted in height
-          console.log(`Setting position top for a set height`)
+          this.logger.log(`Setting position top for a set height`)
           top = this.data.viewportMargin
         } else if (placementTargetY + this.data.placementMargin + this.exactHeight < viewportHeight - this.data.viewportMargin - horizontalScrollbarWidth) {
           // Place it below a selection
@@ -218,7 +223,7 @@
           top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
         }
         time = new Date().getTime()
-        console.log(`${time}: position top getter, return value is ${top}, offsetHeight is ${this.exactHeight}`)
+        this.logger.log(`${time}: position top getter, return value is ${top}, offsetHeight is ${this.exactHeight}`)
         return `${top}px`
       },
 
@@ -231,7 +236,7 @@
           let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
           let maxWidth = viewportWidth - 2*this.data.viewportMargin - verticalScrollbarWidth
           if (newWidth >= maxWidth) {
-            console.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
+            this.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
             this.widthValue = maxWidth
             this.exactWidth = this.widthValue
           } else {
@@ -243,17 +248,17 @@
       heightDm: {
         get: function () {
           let time = new Date().getTime()
-          console.log(`${time}: height getter, return value is ${this.heightValue}`)
+          this.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
           return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
         },
         set: function (newHeight) {
           let time = new Date().getTime()
-          console.log(`${time}: height setter, offsetHeight is ${newHeight}`)
+          this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
           let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
           let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
           let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
           if (newHeight >= maxHeight) {
-            console.log(`Popup is too tall, limiting its height to ${maxHeight}px`)
+            this.logger.log(`Popup is too tall, limiting its height to ${maxHeight}px`)
             this.heightValue = maxHeight
             this.exactHeight = this.heightValue
           } else {
@@ -271,7 +276,7 @@
       },
 
       closePopup () {
-        console.log(`Closing a popup and resetting its dimensions`)
+        this.logger.log(`Closing a popup and resetting its dimensions`)
         this.$emit('close')
       },
 
@@ -380,24 +385,24 @@
         // Update dimensions only if there was any significant change in a popup size
         if (this.$el.offsetWidth >= this.exactWidth + this.resizeDelta
           || this.$el.offsetWidth <= this.exactWidth - this.resizeDelta) {
-          console.log(`${time}: dimensions update, offsetWidth is ${this.$el.offsetWidth}, previous exactWidth is ${this.exactWidth}`)
+          this.logger.log(`${time}: dimensions update, offsetWidth is ${this.$el.offsetWidth}, previous exactWidth is ${this.exactWidth}`)
           this.exactWidth = this.$el.offsetWidth
           this.widthDm = this.$el.offsetWidth
           this.resizeCount++
-          console.log(`Resize counter value is ${this.resizeCount}`)
+          this.logger.log(`Resize counter value is ${this.resizeCount}`)
         }
         if (this.$el.offsetHeight >= this.exactHeight + this.resizeDelta
           || this.$el.offsetHeight <= this.exactHeight - this.resizeDelta) {
-          console.log(`${time}: dimensions update, offsetHeight is ${this.$el.offsetHeight}, previous exactHeight is ${this.exactHeight}`)
+          this.logger.log(`${time}: dimensions update, offsetHeight is ${this.$el.offsetHeight}, previous exactHeight is ${this.exactHeight}`)
           this.exactHeight = this.$el.offsetHeight
           this.heightDm = this.$el.offsetHeight
           this.resizeCount++
-          console.log(`Resize counter value is ${this.resizeCount}`)
+          this.logger.log(`Resize counter value is ${this.resizeCount}`)
         }
       },
 
       resetPopupDimensions () {
-        console.log('Resetting popup dimensions')
+        this.logger.log('Resetting popup dimensions')
         // this.contentHeight = 0
         this.resizeCount = 0
         this.widthValue = 0
@@ -419,7 +424,7 @@
     },
 
     mounted () {
-      console.log('mounted')
+      this.logger.log('mounted')
       this.interactInstance = interact(this.$el)
         .resizable(this.resizableSettings())
         .draggable(this.draggableSettings())
@@ -432,7 +437,7 @@
     updated () {
       if (this.visible) {
         let time = new Date().getTime()
-        console.log(`${time}: component is updated`)
+        this.logger.log(`${time}: component is updated`)
         this.updatePopupDimensions()
       }
     },
@@ -449,29 +454,29 @@
       },
 
       requestStartTime () {
-        console.log(`Request start time has been updated`)
-        console.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
+        this.logger.log(`Request start time has been updated`)
+        this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
         // There is a new request coming in, reset popup dimensions
         this.resetPopupDimensions()
       }
 
       /*inflDataReady: function() {
         let time = new Date().getTime()
-        console.log(`${time}: inflection data became available`)
+        this.logger.log(`${time}: inflection data became available`)
       },
 
       defDataReady: function() {
         let time = new Date().getTime()
-        console.log(`${time}: definition data became available`)
+        this.logger.log(`${time}: definition data became available`)
       },*/
 
       // It still does not catch all popup data changes. That makes a popup resizing jerky.
       // Its safer to use an `updated()` callback instead.
       /*updates: function() {
-        console.log(`Content height updated, visibility is ${this.visible}`)
+        this.logger.log(`Content height updated, visibility is ${this.visible}`)
         if (this.visible) {
           let time = new Date().getTime()
-          console.log(`${time}: content height updated, offsetHeight is ${this.$el.offsetHeight}`)
+          this.logger.log(`${time}: content height updated, offsetHeight is ${this.$el.offsetHeight}`)
           this.updatePopupDimensions()
         }
       },*/
