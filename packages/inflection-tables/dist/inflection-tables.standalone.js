@@ -8884,6 +8884,7 @@ class View {
 
 let classNames = {
   cell: 'infl-cell',
+  rowTitleCell: 'row-title-cell',
   widthPrefix: 'infl-cell--sp',
   fullWidth: 'infl-cell--fw',
   header: 'infl-cell--hdr',
@@ -8941,6 +8942,7 @@ class RowTitleCell {
     // Generate HTML representation for a wide view node
     this.wNode = document.createElement('div');
     this.wNode.classList.add(classNames.cell);
+    this.wNode.classList.add(classNames.rowTitleCell);
     if (this.feature.formsColumn) {
       this.wNode.classList.add(classNames.header);
     }
@@ -9610,6 +9612,10 @@ class Row {
    */
   get length () {
     return this.cells.length
+  }
+
+  get empty () {
+    return this.cells.filter(c => !c.empty).length === 0
   }
 
   /**
@@ -10332,6 +10338,7 @@ class Table {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex]);
       }
     }
+    rows = rows.filter(r => !r.empty);
     return rows
   }
 

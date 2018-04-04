@@ -5388,6 +5388,7 @@
 
   let classNames = {
     cell: 'infl-cell',
+    rowTitleCell: 'row-title-cell',
     widthPrefix: 'infl-cell--sp',
     fullWidth: 'infl-cell--fw',
     header: 'infl-cell--hdr',
@@ -9373,6 +9374,7 @@
       // Generate HTML representation for a wide view node
       this.wNode = document.createElement('div');
       this.wNode.classList.add(classNames.cell);
+      this.wNode.classList.add(classNames.rowTitleCell);
       if (this.feature.formsColumn) {
         this.wNode.classList.add(classNames.header);
       }
@@ -9723,6 +9725,10 @@
      */
     get length () {
       return this.cells.length
+    }
+
+    get empty () {
+      return this.cells.filter(c => !c.empty).length === 0
     }
 
     /**
@@ -10599,6 +10605,7 @@
           rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex]);
         }
       }
+      rows = rows.filter(r => !r.empty);
       return rows
     }
 
