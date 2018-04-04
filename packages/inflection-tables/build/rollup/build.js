@@ -23,14 +23,14 @@ const defaultPlugins = [
 
 // Standalone bundle
 rollup.rollup({
-  entry: 'index.js',
-  moduleName: 'InflectionTables',
+  input: 'index.js',
   plugins: defaultPlugins
 }).then(bundle => {
   bundle.write({
+    name: 'InflectionTables',
     format: 'es',
-    dest: 'dist/inflection-tables.standalone.js',
-    sourceMap: true
+    file: 'dist/inflection-tables.standalone.js',
+    sourcemap: true
   })
 }).catch(reason => {
   'use strict'
@@ -39,15 +39,19 @@ rollup.rollup({
 
 // Module bundle
 rollup.rollup({
-  entry: 'index.js',
-  external: ['alpheios-data-models'],
-  moduleName: 'InflectionTables',
+  input: 'index.js',
+  external: [
+    'alpheios-data-models',
+    'intl-messageformat',
+    'uuid'
+  ],
   plugins: defaultPlugins
 }).then(bundle => {
   bundle.write({
+    name: 'InflectionTables',
     format: 'es',
-    dest: 'dist/inflection-tables.module-external.js',
-    sourceMap: false
+    file: 'dist/inflection-tables.module-external.js',
+    sourcemap: true
   })
 }).catch(reason => {
   'use strict'
@@ -56,13 +60,13 @@ rollup.rollup({
 
 // Test bundle
 rollup.rollup({
-  entry: 'tests/controller.js',
-  moduleName: 'InflectionTablesTest',
+  input: 'tests/controller.js',
   plugins: defaultPlugins
 }).then(bundle => {
   bundle.write({
+    name: 'InflectionTablesTest',
     format: 'umd',
-    dest: 'tests/test-bundle.js'
+    file: 'tests/test-bundle.js'
   })
 }).catch(reason => {
   'use strict'

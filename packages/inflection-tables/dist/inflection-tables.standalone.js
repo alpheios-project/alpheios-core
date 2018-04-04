@@ -1948,7 +1948,9 @@ class GreekLanguageModel extends LanguageModel {
     );
     for (const matchingForm of matchingForms) {
       if (matchingForm.features.hasOwnProperty(Feature.types.grmClass)) {
-        matchingValues.add(matchingForm.features[Feature.types.grmClass]);
+        for (const value of matchingForm.features[Feature.types.grmClass].values) {
+          matchingValues.add(value);
+        }
       }
     }
     if (matchingValues.size > 0) {
@@ -2288,9 +2290,10 @@ class Feature {
       // Single value with no sort order
       normalized = [[data, this.defaultSortOrder]];
     } else if (!Array.isArray(data[0])) {
-      // Multiple values without sort order
+      // Multiple values without any sort order, default sort order will be used
       normalized = data.map((v, i) => [v, i + 1]);
     } else {
+      // Value has all the data, including a sort order
       normalized = data;
     }
     return normalized.map(d => { return { value: d[0], sortOrder: Number.parseInt(d[1]) } })
@@ -2633,7 +2636,12 @@ class Feature {
     if (!Array.isArray(foreignData)) {
       foreignData = [foreignData];
     }
-    const values = foreignData.map(fv => importer.get(fv));
+    let values = foreignData.map(fv => importer.get(fv));
+    /*
+    Some values may be mapped into multiple values. For them an importer will return an array of values instead of a single value.
+    The values will be a multidimensional array that will require flattening.
+     */
+    values = values.reduce((acc, cv) => acc.concat(cv), []);
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues)
   }
 }
@@ -4063,7 +4071,6 @@ var papaparse = createCommonjsModule(function (module, exports) {
 	}
 }(this, function()
 {
-	'use strict';
 
 	var global = (function () {
 		// alternative method, similar to `Function('return this')()`
@@ -4289,8 +4296,6 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 	function JsonToCsv(_input, _config)
 	{
-		var _output = '';
-		var _fields = [];
 
 		// Default configuration
 
@@ -4762,12 +4767,9 @@ var papaparse = createCommonjsModule(function (module, exports) {
 	{
 		config = config || {};
 		ChunkStreamer.call(this, config);
-
-		var string;
 		var remaining;
 		this.stream = function(s)
 		{
-			string = s;
 			remaining = s;
 			return this._nextChunk();
 		};
@@ -5635,6 +5637,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 /*
  * Latin language data module
  */
+
 /*
  Define grammatical features of a language. Those grammatical features definitions will also be used by morphological
  analyzer's language modules as well.
@@ -6180,15 +6183,7 @@ var verbParticipleParadigmRulesCSV = "ID ref,Match order,Part of speech,Stem typ
 /*
  * Greek language data module
  */
-/* import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
-import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
-import verbSuffixesCSV from './data/verb/suffixes.csv';
-import verbFootnotesCSV from './data/verb/footnotes.csv'; */
 
-// Verb paradigm tables
-// Verb paradigm rules and footnotes
-// Verb participle paradigm tables
-// Verb participle rules
 // region Definition of grammatical features
 /*
  Define grammatical features of a language. Those grammatical features definitions will also be used by morphological
@@ -6649,8 +6644,6 @@ Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
 
-/* jslint esnext: true */
-
 // Purposely using the same implementation as the Intl.js `Intl` polyfill.
 // Copyright 2013 Andy Earnshaw, MIT License
 
@@ -6691,15 +6684,13 @@ Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
 
-/* jslint esnext: true */
-
-function Compiler$1(locales, formats, pluralFn) {
+function Compiler(locales, formats, pluralFn) {
     this.locales  = locales;
     this.formats  = formats;
     this.pluralFn = pluralFn;
 }
 
-Compiler$1.prototype.compile = function (ast) {
+Compiler.prototype.compile = function (ast) {
     this.pluralStack        = [];
     this.currentPlural      = null;
     this.pluralNumberFormat = null;
@@ -6707,7 +6698,7 @@ Compiler$1.prototype.compile = function (ast) {
     return this.compileMessage(ast);
 };
 
-Compiler$1.prototype.compileMessage = function (ast) {
+Compiler.prototype.compileMessage = function (ast) {
     if (!(ast && ast.type === 'messageFormatPattern')) {
         throw new Error('Message AST is not of type: "messageFormatPattern"');
     }
@@ -6737,7 +6728,7 @@ Compiler$1.prototype.compileMessage = function (ast) {
     return pattern;
 };
 
-Compiler$1.prototype.compileMessageText = function (element) {
+Compiler.prototype.compileMessageText = function (element) {
     // When this `element` is part of plural sub-pattern and its value contains
     // an unescaped '#', use a `PluralOffsetString` helper to properly output
     // the number with the correct offset in the string.
@@ -6759,7 +6750,7 @@ Compiler$1.prototype.compileMessageText = function (element) {
     return element.value.replace(/\\#/g, '#');
 };
 
-Compiler$1.prototype.compileArgument = function (element) {
+Compiler.prototype.compileArgument = function (element) {
     var format = element.format;
 
     if (!format) {
@@ -6808,7 +6799,7 @@ Compiler$1.prototype.compileArgument = function (element) {
     }
 };
 
-Compiler$1.prototype.compileOptions = function (element) {
+Compiler.prototype.compileOptions = function (element) {
     var format      = element.format,
         options     = format.options,
         optionsHash = {};
@@ -6891,7 +6882,6 @@ SelectFormat.prototype.getOption = function (value) {
 };
 
 var parser = (function() {
-  "use strict";
 
   /*
    * Generated by PEG.js 0.9.0.
@@ -6921,8 +6911,6 @@ var parser = (function() {
 
   function peg$parse(input) {
     var options = arguments.length > 1 ? arguments[1] : {},
-        parser  = this,
-
         peg$FAILED = {},
 
         peg$startRuleFunctions = { start: peg$parsestart },
@@ -8272,8 +8260,6 @@ Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
 
-/* jslint esnext: true */
-
 // -- MessageFormat --------------------------------------------------------
 
 function MessageFormat(message, locales, formats) {
@@ -8422,7 +8408,7 @@ MessageFormat.prototype.resolvedOptions = function () {
 };
 
 MessageFormat.prototype._compilePattern = function (ast, locales, formats, pluralFn) {
-    var compiler = new Compiler$1(locales, formats, pluralFn);
+    var compiler = new Compiler(locales, formats, pluralFn);
     return compiler.compile(ast);
 };
 
@@ -11712,8 +11698,6 @@ class GreekParadigmView extends GreekView {
   }
 }
 
-// Latin views
-// Greek views
 /**
  * A set of inflection table views that represent all possible forms of inflection data. A new ViewSet instance
  * mast be created for each new inflection data piece.
