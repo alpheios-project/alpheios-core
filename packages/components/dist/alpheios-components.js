@@ -1072,7 +1072,6 @@ exports.default = {
   },
   data: function data() {
     return {
-      navbarID: 'alpheios-panel__nav',
       inflectionsPanelID: 'alpheios-panel__inflections-panel'
     };
   },
@@ -1327,13 +1326,6 @@ exports.default = {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /***/ }),
 
@@ -1363,67 +1355,15 @@ var _interactjs = __webpack_require__(/*! interactjs */ "../node_modules/interac
 
 var _interactjs2 = _interopRequireDefault(_interactjs);
 
+var _logger = __webpack_require__(/*! ../lib/log/logger */ "./lib/log/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
 var _close = __webpack_require__(/*! ../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
 
 var _close2 = _interopRequireDefault(_close);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
   name: 'Popup',
@@ -1483,6 +1423,10 @@ exports.default = {
   },
 
   computed: {
+    logger: function logger() {
+      console.log('Verbose = ' + this.data.verboseMode);
+      return _logger2.default.getLogger(this.data.verboseMode);
+    },
     requestStartTime: function requestStartTime() {
       return this.data.requestStartTime;
     },
@@ -1529,7 +1473,7 @@ exports.default = {
       var rightSide = placementTargetX + this.exactWidth / 2;
       if (this.widthDm !== 'auto') {
         // Popup is too wide and was restricted in height
-        console.log('Setting position left for a set width');
+        this.logger.log('Setting position left for a set width');
         left = this.data.viewportMargin;
       } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin && leftSide > this.data.viewportMargin) {
         // We can center it with the target
@@ -1555,14 +1499,14 @@ exports.default = {
       }
 
       var time = new Date().getTime();
-      console.log(time + ': position top calculation, offsetHeight is ' + this.exactHeight);
+      this.logger.log(time + ': position top calculation, offsetHeight is ' + this.exactHeight);
       var top = this.positionTopValue;
       var placementTargetY = this.data.targetRect.top;
       var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
       var horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight;
       if (this.heightDm !== 'auto') {
         // Popup is too wide and was restricted in height
-        console.log('Setting position top for a set height');
+        this.logger.log('Setting position top for a set height');
         top = this.data.viewportMargin;
       } else if (placementTargetY + this.data.placementMargin + this.exactHeight < viewportHeight - this.data.viewportMargin - horizontalScrollbarWidth) {
         // Place it below a selection
@@ -1581,7 +1525,7 @@ exports.default = {
         top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2);
       }
       time = new Date().getTime();
-      console.log(time + ': position top getter, return value is ' + top + ', offsetHeight is ' + this.exactHeight);
+      this.logger.log(time + ': position top getter, return value is ' + top + ', offsetHeight is ' + this.exactHeight);
       return top + 'px';
     },
 
@@ -1594,7 +1538,7 @@ exports.default = {
         var verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
         var maxWidth = viewportWidth - 2 * this.data.viewportMargin - verticalScrollbarWidth;
         if (newWidth >= maxWidth) {
-          console.log('Popup is too wide, limiting its width to ' + maxWidth + 'px');
+          this.logger.log('Popup is too wide, limiting its width to ' + maxWidth + 'px');
           this.widthValue = maxWidth;
           this.exactWidth = this.widthValue;
         } else {
@@ -1606,17 +1550,17 @@ exports.default = {
     heightDm: {
       get: function get() {
         var time = new Date().getTime();
-        console.log(time + ': height getter, return value is ' + this.heightValue);
+        this.logger.log(time + ': height getter, return value is ' + this.heightValue);
         return this.heightValue === 'auto' ? 'auto' : this.heightValue + 'px';
       },
       set: function set(newHeight) {
         var time = new Date().getTime();
-        console.log(time + ': height setter, offsetHeight is ' + newHeight);
+        this.logger.log(time + ': height setter, offsetHeight is ' + newHeight);
         var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
         var horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight;
         var maxHeight = viewportHeight - 2 * this.data.viewportMargin - horizontalScrollbarWidth;
         if (newHeight >= maxHeight) {
-          console.log('Popup is too tall, limiting its height to ' + maxHeight + 'px');
+          this.logger.log('Popup is too tall, limiting its height to ' + maxHeight + 'px');
           this.heightValue = maxHeight;
           this.exactHeight = this.heightValue;
         } else {
@@ -1633,7 +1577,7 @@ exports.default = {
       }
     },
     closePopup: function closePopup() {
-      console.log('Closing a popup and resetting its dimensions');
+      this.logger.log('Closing a popup and resetting its dimensions');
       this.$emit('close');
     },
     closeNotifications: function closeNotifications() {
@@ -1742,22 +1686,22 @@ exports.default = {
 
       // Update dimensions only if there was any significant change in a popup size
       if (this.$el.offsetWidth >= this.exactWidth + this.resizeDelta || this.$el.offsetWidth <= this.exactWidth - this.resizeDelta) {
-        console.log(time + ': dimensions update, offsetWidth is ' + this.$el.offsetWidth + ', previous exactWidth is ' + this.exactWidth);
+        this.logger.log(time + ': dimensions update, offsetWidth is ' + this.$el.offsetWidth + ', previous exactWidth is ' + this.exactWidth);
         this.exactWidth = this.$el.offsetWidth;
         this.widthDm = this.$el.offsetWidth;
         this.resizeCount++;
-        console.log('Resize counter value is ' + this.resizeCount);
+        this.logger.log('Resize counter value is ' + this.resizeCount);
       }
       if (this.$el.offsetHeight >= this.exactHeight + this.resizeDelta || this.$el.offsetHeight <= this.exactHeight - this.resizeDelta) {
-        console.log(time + ': dimensions update, offsetHeight is ' + this.$el.offsetHeight + ', previous exactHeight is ' + this.exactHeight);
+        this.logger.log(time + ': dimensions update, offsetHeight is ' + this.$el.offsetHeight + ', previous exactHeight is ' + this.exactHeight);
         this.exactHeight = this.$el.offsetHeight;
         this.heightDm = this.$el.offsetHeight;
         this.resizeCount++;
-        console.log('Resize counter value is ' + this.resizeCount);
+        this.logger.log('Resize counter value is ' + this.resizeCount);
       }
     },
     resetPopupDimensions: function resetPopupDimensions() {
-      console.log('Resetting popup dimensions');
+      this.logger.log('Resetting popup dimensions');
       // this.contentHeight = 0
       this.resizeCount = 0;
       this.widthValue = 0;
@@ -1777,7 +1721,7 @@ exports.default = {
   },
 
   mounted: function mounted() {
-    console.log('mounted');
+    this.logger.log('mounted');
     this.interactInstance = (0, _interactjs2.default)(this.$el).resizable(this.resizableSettings()).draggable(this.draggableSettings()).on('resizemove', this.resizeListener);
   },
 
@@ -1788,7 +1732,7 @@ exports.default = {
   updated: function updated() {
     if (this.visible) {
       var time = new Date().getTime();
-      console.log(time + ': component is updated');
+      this.logger.log(time + ': component is updated');
       this.updatePopupDimensions();
     }
   },
@@ -1806,28 +1750,28 @@ exports.default = {
     },
 
     requestStartTime: function requestStartTime() {
-      console.log('Request start time has been updated');
-      console.log('Popup position is ' + this.data.settings.popupPosition.currentValue);
+      this.logger.log('Request start time has been updated');
+      this.logger.log('Popup position is ' + this.data.settings.popupPosition.currentValue);
       // There is a new request coming in, reset popup dimensions
       this.resetPopupDimensions();
     }
 
     /*inflDataReady: function() {
       let time = new Date().getTime()
-      console.log(`${time}: inflection data became available`)
+      this.logger.log(`${time}: inflection data became available`)
     },
      defDataReady: function() {
       let time = new Date().getTime()
-      console.log(`${time}: definition data became available`)
+      this.logger.log(`${time}: definition data became available`)
     },*/
 
     // It still does not catch all popup data changes. That makes a popup resizing jerky.
     // Its safer to use an `updated()` callback instead.
     /*updates: function() {
-      console.log(`Content height updated, visibility is ${this.visible}`)
+      this.logger.log(`Content height updated, visibility is ${this.visible}`)
       if (this.visible) {
         let time = new Date().getTime()
-        console.log(`${time}: content height updated, offsetHeight is ${this.$el.offsetHeight}`)
+        this.logger.log(`${time}: content height updated, offsetHeight is ${this.$el.offsetHeight}`)
         this.updatePopupDimensions()
       }
     },*/
@@ -1836,6 +1780,61 @@ exports.default = {
 };
 
 // Embeddable SVG icons
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -2074,7 +2073,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.alpheios-panel {\n  width: 400px;\n  height: 100vh;\n  top: 0;\n  z-index: 2000;\n  position: fixed;\n  background: #FFF;\n  resize: both;\n  opacity: 0.95;\n  direction: ltr;\n  display: grid;\n  grid-template-columns: auto 50px;\n  grid-template-rows: 40px auto 60px;\n  grid-template-areas: \"header header\" \"content sidebar\" \"content sidebar\";\n}\n.alpheios-panel[data-notification-visible=\"true\"] {\n  grid-template-areas: \"header header\" \"content sidebar\" \"notifications sidebar\";\n}\n.alpheios-panel.alpheios-panel-left {\n  left: 0;\n  border-right: 1px solid #D1D1D0;\n}\n.alpheios-panel.alpheios-panel-right {\n  right: 0;\n  border-left: 1px solid #D1D1D0;\n  grid-template-columns: 50px auto;\n  grid-template-areas: \"header header\" \"sidebar content\" \"sidebar content\";\n}\n.alpheios-panel.alpheios-panel-right[data-notification-visible=\"true\"] {\n  grid-template-areas: \"header header\" \"sidebar content\" \"sidebar notifications\";\n}\n.alpheios-panel__header {\n  position: relative;\n  display: flex;\n  flex-wrap: nowrap;\n  box-sizing: border-box;\n  grid-area: header;\n  border-bottom: 1px solid #D1D1D0;\n}\n.alpheios-panel-left .alpheios-panel__header {\n  direction: ltr;\n  padding: 0 0 0 10px;\n}\n.alpheios-panel-right .alpheios-panel__header {\n  direction: rtl;\n  padding: 0 10px 0 0;\n}\n.alpheios-panel__header-logo {\n  flex-grow: 0;\n}\n.alpheios-panel__header-title {\n  flex-grow: 1;\n  padding: 10px 20px;\n  direction: ltr;\n}\n.alpheios-panel__header-selection {\n  font-size: 16px;\n  font-weight: 700;\n  color: #4E6476;\n}\n.alpheios-panel__header-word {\n  font-size: 14px;\n  position: relative;\n  top: -1px;\n}\n.auk .alpheios-panel__header-logo-img {\n  width: auto;\n  height: 30px;\n  margin-top: 4px;\n}\n.alpheios-panel__header-action-btn,\n.alpheios-panel__header-action-btn.active:hover,\n.alpheios-panel__header-action-btn.active:focus {\n  display: block;\n  width: 40px;\n  height: 40px;\n  margin: 0 5px;\n  padding-top: 5px;\n  text-align: center;\n  cursor: pointer;\n  fill: #D1D1D0;\n  stroke: #D1D1D0;\n}\n.alpheios-panel__header-action-btn:hover,\n.alpheios-panel__header-action-btn:focus,\n.alpheios-panel__header-action-btn.active {\n  fill: #5BC8DC;\n  stroke: #5BC8DC;\n}\n.alpheios-panel__header-action-btn.alpheios-panel__header-action-btn--narrow {\n  margin: 0;\n}\n.alpheios-panel__body {\n  display: flex;\n  height: calc(100vh - 40px);\n}\n.alpheios-panel-left .alpheios-panel__body {\n  flex-direction: row;\n}\n.alpheios-panel-right .alpheios-panel__body {\n  flex-direction: row-reverse;\n}\n.alpheios-panel__content {\n  overflow: auto;\n  grid-area: content;\n  direction: ltr;\n  box-sizing: border-box;\n  display: flex;\n}\n.alpheios-panel__notifications {\n  display: none;\n  position: relative;\n  padding: 10px 20px;\n  background: #BCE5F0;\n  grid-area: notifications;\n  overflow: hidden;\n}\n.alpheios-panel__notifications-close-btn {\n  position: absolute;\n  right: 5px;\n  top: 5px;\n  display: block;\n  width: 20px;\n  height: 20px;\n  margin: 0;\n  cursor: pointer;\n  fill: #D1D1D0;\n  stroke: #D1D1D0;\n}\n.alpheios-panel__notifications-close-btn:hover,\n.alpheios-panel__notifications-close-btn:focus {\n  fill: #5BC8DC;\n  stroke: #5BC8DC;\n}\n.alpheios-panel__notifications--lang-switcher {\n  font-size: 12px;\n  float: right;\n  margin: -20px 10px 0 0;\n  display: inline-block;\n}\n.alpheios-panel__notifications--lang-switcher .uk-select {\n  width: 120px;\n  height: 25px;\n}\n.alpheios-panel__notifications--important {\n  background: #73CDDE;\n}\n[data-notification-visible=\"true\"] .alpheios-panel__notifications {\n  display: block;\n}\n.alpheios-panel__tab-panel {\n  display: flex;\n  flex-direction: column;\n  padding: 20px;\n}\n.alpheios-panel__tab-panel--fw {\n  width: 100%;\n}\n.alpheios-panel__tab-panel--no-padding {\n  padding: 0;\n}\n.alpheios-panel__message {\n  margin-bottom: 0.5rem;\n}\n.alpheios-panel__options-item {\n  margin-bottom: 0.5rem;\n  max-width: 300px;\n}\n.alpheios-panel__contentitem {\n  margin-bottom: 1em;\n}\n.alpheios-panel__nav {\n  width: 50px;\n  /* Required for calculation of required inflection table width*/\n  grid-area: sidebar;\n}\n.alpheios-panel-left .alpheios-panel__nav {\n  border-left: 1px solid #D1D1D0;\n}\n.alpheios-panel-right .alpheios-panel__nav {\n  border-right: 1px solid #D1D1D0;\n}\n.alpheios-panel__nav-btn {\n  cursor: pointer;\n  margin: 20px 5px 20px;\n  width: 40px;\n  height: 40px;\n  text-align: center;\n  background: transparent no-repeat center center;\n  background-size: contain;\n}\n.alpheios-panel__nav-btn.alpheios-panel__nav-btn--short {\n  margin: -10px 5px 20px;\n}\n.alpheios-panel__nav-btn,\n.alpheios-panel__nav-btn.active:hover,\n.alpheios-panel__nav-btn.active:focus {\n  fill: #D1D1D0;\n  stroke: #D1D1D0;\n}\n.alpheios-panel__nav-btn:hover,\n.alpheios-panel__nav-btn:focus,\n.alpheios-panel__nav-btn.active {\n  fill: #5BC8DC;\n  stroke: #5BC8DC;\n}\n", ""]);
+exports.push([module.i, "\n.alpheios-panel {\n  width: 400px;\n  height: 100vh;\n  top: 0;\n  z-index: 2000;\n  position: fixed;\n  background: #FFF;\n  resize: both;\n  opacity: 0.95;\n  direction: ltr;\n  display: grid;\n  grid-template-columns: auto;\n  grid-template-rows: 40px 20px auto 60px;\n  grid-template-areas: \"header\" \"title\" \"content\" \"content\";\n}\n.alpheios-panel[data-notification-visible=\"true\"] {\n  grid-template-areas: \"header\" \"title\" \"content\" \"notifications\";\n}\n.alpheios-panel.alpheios-panel-left {\n  left: 0;\n  border-right: 1px solid #D1D1D0;\n}\n.alpheios-panel.alpheios-panel-right {\n  right: 0;\n  border-left: 1px solid #D1D1D0;\n  grid-template-columns: auto;\n  grid-template-areas: \"header\" \"title\" \"content\" \"content\";\n}\n.alpheios-panel.alpheios-panel-right[data-notification-visible=\"true\"] {\n  grid-template-areas: \"header\" \"title\" \"content\" \"notifications\";\n}\n.alpheios-panel__header {\n  position: relative;\n  display: flex;\n  flex-wrap: nowrap;\n  box-sizing: border-box;\n  grid-area: header;\n  flex-direction: row;\n  justify-content: space-between;\n  border-bottom: 1px solid #D1D1D0;\n}\n.alpheios-panel-left .alpheios-panel__header {\n  direction: ltr;\n  padding: 0 0 0 10px;\n}\n.alpheios-panel-right .alpheios-panel__header {\n  direction: rtl;\n  padding: 0 10px 0 0;\n}\n.alpheios-panel__header-logo {\n  flex-grow: 0;\n  justify-content: flex-start;\n}\n.alpheios-panel__header-selection {\n  font-size: 16px;\n  font-weight: 700;\n  color: #4E6476;\n}\n.alpheios-panel__header-word {\n  font-size: 14px;\n  position: relative;\n  top: -1px;\n}\n.auk .alpheios-panel__header-logo-img {\n  width: auto;\n  height: 30px;\n  padding-top: 5px;\n}\n.alpheios-panel__header-action-btn,\n.alpheios-panel__header-action-btn.active:hover,\n.alpheios-panel__header-action-btn.active:focus {\n  display: block;\n  width: 40px;\n  height: 40px;\n  margin: 0 5px;\n  padding-top: 5px;\n  text-align: center;\n  cursor: pointer;\n  fill: #D1D1D0;\n  stroke: #D1D1D0;\n}\n.alpheios-panel__header-action-btn:hover,\n.alpheios-panel__header-action-btn:focus,\n.alpheios-panel__header-action-btn.active {\n  fill: #5BC8DC;\n  stroke: #5BC8DC;\n}\n.alpheios-panel__header-action-btn.alpheios-panel__header-action-btn--narrow {\n  margin: 0;\n}\n.alpheios-panel__body {\n  display: flex;\n  height: calc(100vh - 40px);\n}\n.alpheios-panel-left .alpheios-panel__body {\n  flex-direction: row;\n}\n.alpheios-panel-right .alpheios-panel__body {\n  flex-direction: row-reverse;\n}\n.alpheios-panel__content {\n  overflow: auto;\n  grid-area: content;\n  direction: ltr;\n  box-sizing: border-box;\n  display: flex;\n}\n.alpheios-panel__notifications {\n  display: none;\n  position: relative;\n  padding: 10px 20px;\n  background: #BCE5F0;\n  grid-area: notifications;\n  overflow: hidden;\n}\n.alpheios-panel__notifications-close-btn {\n  position: absolute;\n  right: 5px;\n  top: 5px;\n  display: block;\n  width: 20px;\n  height: 20px;\n  margin: 0;\n  cursor: pointer;\n  fill: #D1D1D0;\n  stroke: #D1D1D0;\n}\n.alpheios-panel__notifications-close-btn:hover,\n.alpheios-panel__notifications-close-btn:focus {\n  fill: #5BC8DC;\n  stroke: #5BC8DC;\n}\n.alpheios-panel__notifications--lang-switcher {\n  font-size: 12px;\n  float: right;\n  margin: -20px 10px 0 0;\n  display: inline-block;\n}\n.alpheios-panel__notifications--lang-switcher .uk-select {\n  width: 120px;\n  height: 25px;\n}\n.alpheios-panel__notifications--important {\n  background: #73CDDE;\n}\n[data-notification-visible=\"true\"] .alpheios-panel__notifications {\n  display: block;\n}\n.alpheios-panel__tab-panel {\n  display: flex;\n  flex-direction: column;\n  padding: 20px;\n}\n.alpheios-panel__tab-panel--fw {\n  width: 100%;\n}\n.alpheios-panel__tab-panel--no-padding {\n  padding: 0;\n}\n.alpheios-panel__message {\n  margin-bottom: 0.5rem;\n}\n.alpheios-panel__options-item {\n  margin-bottom: 0.5rem;\n  max-width: 300px;\n}\n.alpheios-panel__contentitem {\n  margin-bottom: 1em;\n}\n.alpheios-panel__header-btn-group--center {\n  direction: ltr;\n  display: flex;\n  flex-wrap: nowrap;\n  box-sizing: border-box;\n}\n.alpheios-panel__header-btn-group--end {\n  display: flex;\n  flex-wrap: nowrap;\n  justify-content: flex-end;\n  box-sizing: border-box;\n}\n.alpheios-panel__header-nav-btn {\n  display: block;\n  width: 40px;\n  height: 40px;\n  margin: 0 5px;\n  padding-top: 5px;\n  text-align: center;\n  cursor: pointer;\n  background: transparent no-repeat center center;\n  background-size: contain;\n}\n.alpheios-panel__header-nav-btn.alpheios-panel__header-nav-btn--short {\n  margin: -10px 5px 20px;\n}\n.alpheios-panel__header-nav-btn,\n.alpheios-panel__header-nav-btn.active:hover,\n.alpheios-panel__header-nav-btn.active:focus {\n  fill: #D1D1D0;\n  stroke: #D1D1D0;\n}\n.alpheios-panel__header-nav-btn:hover,\n.alpheios-panel__header-nav-btn:focus,\n.alpheios-panel__header-nav-btn.active {\n  fill: #5BC8DC;\n  stroke: #5BC8DC;\n}\n", ""]);
 
 // exports
 
@@ -10589,7 +10588,117 @@ var render = function() {
       _c("div", { staticClass: "alpheios-panel__header" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "alpheios-panel__header-title" }, [
+        _c(
+          "span",
+          { staticClass: "alpheios-panel__header-btn-group--center" },
+          [
+            _c(
+              "span",
+              {
+                staticClass: "alpheios-panel__header-nav-btn",
+                class: { active: _vm.data.tabs.info },
+                attrs: { title: _vm.data.l10n.messages.TOOLTIP_HELP },
+                on: {
+                  click: function($event) {
+                    _vm.changeTab("info")
+                  }
+                }
+              },
+              [_c("info-icon", { staticClass: "icon" })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "alpheios-panel__header-nav-btn",
+                class: { active: _vm.data.tabs.definitions },
+                attrs: { title: _vm.data.l10n.messages.TOOLTIP_DEFINITIONS },
+                on: {
+                  click: function($event) {
+                    _vm.changeTab("definitions")
+                  }
+                }
+              },
+              [_c("definitions-icon", { staticClass: "icon" })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "alpheios-panel__header-nav-btn",
+                class: { active: _vm.data.tabs.inflections },
+                attrs: { title: _vm.data.l10n.messages.TOOLTIP_INFLECT },
+                on: {
+                  click: function($event) {
+                    _vm.changeTab("inflections")
+                  }
+                }
+              },
+              [_c("inflections-icon", { staticClass: "icon" })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "alpheios-panel__header-nav-btn",
+                class: { active: _vm.data.tabs.grammar },
+                attrs: { title: _vm.data.l10n.messages.TOOLTIP_GRAMMAR },
+                on: {
+                  click: function($event) {
+                    _vm.changeTab("grammar")
+                  }
+                }
+              },
+              [_c("grammar-icon", { staticClass: "icon" })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "alpheios-panel__header-nav-btn",
+                class: { active: _vm.data.tabs.options },
+                attrs: { title: _vm.data.l10n.messages.TOOLTIP_OPTIONS },
+                on: {
+                  click: function($event) {
+                    _vm.changeTab("options")
+                  }
+                }
+              },
+              [_c("options-icon", { staticClass: "icon" })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.data.verboseMode,
+                    expression: "data.verboseMode"
+                  }
+                ],
+                staticClass: "alpheios-panel__header-nav-btn",
+                class: { active: _vm.data.tabs.status },
+                attrs: { title: _vm.data.l10n.messages.TOOLTIP_STATUS },
+                on: {
+                  click: function($event) {
+                    _vm.changeTab("status")
+                  }
+                }
+              },
+              [_c("status-icon", { staticClass: "icon" })],
+              1
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("span", { staticClass: "alpheios-panel__header-btn-group--end" }, [
           _c(
             "span",
             {
@@ -10597,202 +10706,59 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.data.status.selectedText,
-                  expression: "data.status.selectedText"
+                  value: _vm.attachToLeftVisible,
+                  expression: "attachToLeftVisible"
                 }
               ],
-              staticClass: "alpheios-panel__header-selection"
-            },
-            [_vm._v(_vm._s(_vm.data.status.selectedText))]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.data.status.languageName && _vm.data.verboseMode,
-                  expression: "data.status.languageName && data.verboseMode"
-                }
-              ],
-              staticClass: "alpheios-panel__header-text"
-            },
-            [_vm._v("(" + _vm._s(_vm.data.status.languageName) + ")")]
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.attachToLeftVisible,
-                expression: "attachToLeftVisible"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow",
-            attrs: { title: _vm.data.l10n.messages.TOOLTIP_MOVE_PANEL_LEFT },
-            on: {
-              click: function($event) {
-                _vm.setPosition("left")
-              }
-            }
-          },
-          [_c("attach-left-icon")],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.attachToRightVisible,
-                expression: "attachToRightVisible"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow",
-            attrs: { title: _vm.data.l10n.messages.TOOLTIP_MOVE_PANEL_RIGHT },
-            on: {
-              click: function($event) {
-                _vm.setPosition("right")
-              }
-            }
-          },
-          [_c("attach-right-icon")],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            staticClass: "alpheios-panel__header-action-btn",
-            attrs: { title: _vm.data.l10n.messages.TOOLTIP_CLOSE_PANEL },
-            on: { click: _vm.close }
-          },
-          [_c("close-icon")],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "alpheios-panel__nav", attrs: { id: _vm.navbarID } },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "alpheios-panel__nav-btn",
-              class: { active: _vm.data.tabs.info },
-              attrs: { title: _vm.data.l10n.messages.TOOLTIP_HELP },
-              on: {
-                click: function($event) {
-                  _vm.changeTab("info")
-                }
-              }
-            },
-            [_c("info-icon", { staticClass: "icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "alpheios-panel__nav-btn",
-              class: { active: _vm.data.tabs.definitions },
-              attrs: { title: _vm.data.l10n.messages.TOOLTIP_DEFINITIONS },
-              on: {
-                click: function($event) {
-                  _vm.changeTab("definitions")
-                }
-              }
-            },
-            [_c("definitions-icon", { staticClass: "icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "alpheios-panel__nav-btn",
-              class: { active: _vm.data.tabs.inflections },
-              attrs: { title: _vm.data.l10n.messages.TOOLTIP_INFLECT },
-              on: {
-                click: function($event) {
-                  _vm.changeTab("inflections")
-                }
-              }
-            },
-            [_c("inflections-icon", { staticClass: "icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
               staticClass:
-                "alpheios-panel__nav-btn alpheios-panel__nav-btn--short",
-              class: { active: _vm.data.tabs.grammar },
-              attrs: { title: _vm.data.l10n.messages.TOOLTIP_GRAMMAR },
+                "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow",
+              attrs: { title: _vm.data.l10n.messages.TOOLTIP_MOVE_PANEL_LEFT },
               on: {
                 click: function($event) {
-                  _vm.changeTab("grammar")
+                  _vm.setPosition("left")
                 }
               }
             },
-            [_c("grammar-icon", { staticClass: "icon" })],
+            [_c("attach-left-icon")],
             1
           ),
           _vm._v(" "),
           _c(
-            "div",
-            {
-              staticClass: "alpheios-panel__nav-btn",
-              class: { active: _vm.data.tabs.options },
-              attrs: { title: _vm.data.l10n.messages.TOOLTIP_OPTIONS },
-              on: {
-                click: function($event) {
-                  _vm.changeTab("options")
-                }
-              }
-            },
-            [_c("options-icon", { staticClass: "icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
+            "span",
             {
               directives: [
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.data.verboseMode,
-                  expression: "data.verboseMode"
+                  value: _vm.attachToRightVisible,
+                  expression: "attachToRightVisible"
                 }
               ],
-              staticClass: "alpheios-panel__nav-btn",
-              class: { active: _vm.data.tabs.status },
-              attrs: { title: _vm.data.l10n.messages.TOOLTIP_STATUS },
+              staticClass:
+                "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow",
+              attrs: { title: _vm.data.l10n.messages.TOOLTIP_MOVE_PANEL_RIGHT },
               on: {
                 click: function($event) {
-                  _vm.changeTab("status")
+                  _vm.setPosition("right")
                 }
               }
             },
-            [_c("status-icon", { staticClass: "icon" })],
+            [_c("attach-right-icon")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-panel__header-action-btn",
+              attrs: { title: _vm.data.l10n.messages.TOOLTIP_CLOSE_PANEL },
+              on: { click: _vm.close }
+            },
+            [_c("close-icon")],
             1
           )
-        ]
-      ),
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "alpheios-panel__content" }, [
         _c(
@@ -10958,6 +10924,14 @@ var render = function() {
             _c("setting", {
               attrs: {
                 data: _vm.data.settings.uiType,
+                classes: ["alpheios-panel__options-item"]
+              },
+              on: { change: _vm.settingChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                data: _vm.data.settings.verboseMode,
                 classes: ["alpheios-panel__options-item"]
               },
               on: { change: _vm.settingChanged }
@@ -23856,7 +23830,6 @@ class UIController {
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
-    this.verboseMode = false
     this.manifest = manifest
     this.template = template
 
@@ -23886,7 +23859,7 @@ class UIController {
             options: false,
             info: true
           },
-          verboseMode: this.verboseMode,
+          verboseMode: this.state.verboseMode,
           grammarRes: {},
           lexemes: [],
           inflectionComponentData: {
@@ -24098,6 +24071,9 @@ class UIController {
             case 'preferredLanguage':
               this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
               break
+            case 'verboseMode':
+              this.uiController.updateVerboseMode()
+              break
           }
         },
         resourceSettingChange: function (name, value) {
@@ -24118,6 +24094,7 @@ class UIController {
         this.state.activateUI()
         console.log('UI options are loaded')
         this.updateLanguage(this.options.items.preferredLanguage.currentValue)
+        this.updateVerboseMode()
       })
     })
 
@@ -24162,7 +24139,7 @@ class UIController {
            */
           requestStartTime: 0,
           settings: this.options.items,
-          verboseMode: this.verboseMode,
+          verboseMode: this.state.verboseMode,
           defDataReady: false,
           inflDataReady: false,
           morphDataReady: false,
@@ -24325,7 +24302,8 @@ class UIController {
   static get settingValues () {
     return {
       uiTypePanel: 'panel',
-      uiTypePopup: 'popup'
+      uiTypePopup: 'popup',
+      verboseMode: 'verbose'
     }
   }
 
@@ -24528,6 +24506,13 @@ class UIController {
     this.panel.enableInflections(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID).canInflect())
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(languageID)
     console.log(`Current language is ${this.state.currentLanguage}`)
+  }
+
+  updateVerboseMode () {
+    this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
+    this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
+    this.panel.panelData.verboseMode = this.state.verboseMode
+    this.popup.popupData.verboseMode = this.state.verboseMode
   }
 
   updateInflections (inflectionData, homonym) {
@@ -24837,6 +24822,52 @@ class MessageBundle {
 
 /***/ }),
 
+/***/ "./lib/log/logger.js":
+/*!***************************!*\
+  !*** ./lib/log/logger.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Logger; });
+/**
+ * A simple proxy for the console log functionality
+ */
+class Logger {
+  /**
+   * get a proxied logger object
+   * (if not in verbose mode, only errors will be allowed through)
+   * @param {boolean} verbose - set to true for verbose logging
+   */
+  static getLogger (verbose = false) {
+    return {
+      log: (...data) => {
+        if (verbose) {
+          console.log(...data)
+        }
+      },
+      warn: (...data) => {
+        if (verbose) {
+          console.warn(...data)
+        }
+      },
+      error: (...data) => {
+        console.error(...data)
+      },
+      info: (...data) => {
+        if (verbose) {
+          console.info(...data)
+        }
+      }
+    }
+  }
+}
+
+
+/***/ }),
+
 /***/ "./lib/options/content-options.js":
 /*!****************************************!*\
   !*** ./lib/options/content-options.js ***!
@@ -24900,6 +24931,14 @@ class ContentOptions {
           {value: 'grc', text: 'Greek'},
           {value: 'ara', text: 'Arabic'},
           {value: 'per', text: 'Persian'}
+        ]
+      },
+      verboseMode: {
+        defaultValue: 'normal',
+        labelText: 'Log Level',
+        values: [
+          { value: 'verbose', text: 'Verbose' },
+          { value: 'normal', text: 'Normal' }
         ]
       }
     }
