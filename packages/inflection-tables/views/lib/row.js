@@ -37,6 +37,10 @@ export default class Row {
     return this.cells.length
   }
 
+  get empty () {
+    return this.cells.filter(c => !c.empty).length === 0
+  }
+
   /**
    * Returns a portion of a cells array starting from `from` item and up to, but not including, `upto` element.
    * It does not create new copies of cells to populate a newly created array; this array contains references to

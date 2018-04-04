@@ -270,6 +270,7 @@ export default class Table {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex])
       }
     }
+    rows = rows.filter(r => !r.empty)
     return rows
   }
 

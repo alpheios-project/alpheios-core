@@ -28,6 +28,7 @@ export default class RowTitleCell {
     // Generate HTML representation for a wide view node
     this.wNode = document.createElement('div')
     this.wNode.classList.add(Styles.classNames.cell)
+    this.wNode.classList.add(Styles.classNames.rowTitleCell)
     if (this.feature.formsColumn) {
       this.wNode.classList.add(Styles.classNames.header)
     }

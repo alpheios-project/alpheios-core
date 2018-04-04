@@ -1,5 +1,6 @@
 let classNames = {
   cell: 'infl-cell',
+  rowTitleCell: 'row-title-cell',
   widthPrefix: 'infl-cell--sp',
   fullWidth: 'infl-cell--fw',
   header: 'infl-cell--hdr',
