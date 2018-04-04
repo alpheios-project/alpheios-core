@@ -4,6 +4,10 @@ import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
 
 export default class HTMLSelector extends MediaSelector {
+  /**
+   * @param {Event} event - Event object with information about text selection.
+   * @param {string} defaultLanguageCode - A language code in ISO 639-3 format.
+   */
   constructor (event, defaultLanguageCode) {
     super(event)
     this.targetRect = {

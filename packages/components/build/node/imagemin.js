@@ -23,13 +23,13 @@ let readDir = function (dir, extensions, excludedDirs) {
   return files
 }
 
-let run = async function (tasks, pathToProjectRoot) {
+let run = async function (config) {
   'use strict'
   return new Promise((resolve, reject) => {
     let results = []
     let startTime = new Date().getTime()
-    for (let task of tasks) {
-      results.push(optimize(task, pathToProjectRoot))
+    for (let task of config.tasks) {
+      results.push(optimize(task))
     }
     Promise.all(results).then(values => {
       console.log() // Inserts an empty line
@@ -46,8 +46,8 @@ let run = async function (tasks, pathToProjectRoot) {
   })
 }
 
-let optimize = async function (config, pathToProjectRoot) {
-  const projectRoot = path.resolve(__dirname, pathToProjectRoot)
+let optimize = async function (config) {
+  const projectRoot = process.cwd()
   const source = config.source || 'src/images'
   const sourcePath = path.join(projectRoot, source)
   const target = config.target || 'dist/images/'

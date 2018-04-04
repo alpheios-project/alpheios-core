@@ -55,14 +55,14 @@ if (mode === 'production') {
 
 if (taskName === 'all') {
   // Run all build tasks in a sequence
-  let imageminResult = imagemin.run(config.image, config.pathToProjectRoot)
+  let imageminResult = imagemin.run(config.image)
   let sassResult = sass.run(config.style)
   Promise.all([imageminResult, sassResult]).then(() => {
     webpack.run(webpackTasks)
   })
 } else if (taskName === 'images') {
   // Optimizes images for web
-  imagemin.run(config.image, config.pathToProjectRoot)
+  imagemin.run(config.image)
 } else if (taskName === 'styles') {
   // Creates output scss files
   sass.run(config.style)

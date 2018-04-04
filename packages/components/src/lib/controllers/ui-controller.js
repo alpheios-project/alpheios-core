@@ -26,12 +26,14 @@ export default class UIController {
    * @param {ContentOptions} options - content options  (API definition pending)
    * @param {ResourceOptions} resourceOptions - resource options  (API definition pending)
    * @param {Object} manifest - parent application info details  (API definition pending)
+   * In some environments manifest data may not be available. Then a `{}` default value
+   * will be used.
    * @param {Object} template - object with the following properties:
    *                            html: HTML string for the container of the Alpheios components
    *                            panelId: the id of the wrapper for the panel component
    *                            popupId: the id of the wrapper for the popup component
    */
-  constructor (state, options, resourceOptions, manifest,
+  constructor (state, options, resourceOptions, manifest = {},
     template = {html: Template, panelId: 'alpheios-panel', popupId: 'alpheios-popup'}) {
     this.state = state
     this.options = options

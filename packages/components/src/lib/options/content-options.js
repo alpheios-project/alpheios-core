@@ -5,6 +5,10 @@ export default class ContentOptions {
     this.saver = saver
   }
 
+  static get storageDomian () {
+    return 'alpheios-content-options'
+  }
+
   static get defaults () {
     return {
       locale: {
@@ -100,8 +104,7 @@ export default class ContentOptions {
         callbackFunc(this)
       },
       error => {
-        console.error(`Cannot retrieve options for Alpheios extension from storage: ${error}. Default values
-          will be used instead`)
+        console.error(`Cannot retrieve options for Alpheios extension from storage: ${error}, will use default values`)
         callbackFunc(this)
       }
     )

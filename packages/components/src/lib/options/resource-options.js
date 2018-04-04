@@ -10,12 +10,21 @@ let codes = {
 export default class ResourceOptions {
   /**
    * ResourceOptions is a class which encapsulates defaults and user preferences
-   * for settings related to language specific resources such as Lexicons and Grammars
+   * for settings related to language specific resources such as Lexicons and Grammars.
+   * @param {Function} loader - An async function with no arguments. Returns a promise
+   * that is resolved with an object. Each property in this object corresponds to a single option.
+   * Property name is a key, and property value is an option value.
+   * @param {Function} saver - An async function that takes option is an argument
+   * and returns a promise.
    */
   constructor (loader, saver) {
     this.items = ResourceOptions.initItems(this)
     this.loader = loader
     this.saver = saver
+  }
+
+  static get storageDomian () {
+    return 'alpheios-resource-options'
   }
 
   static get defaults () {

@@ -5,12 +5,12 @@ const fs = require('fs')
 const bytes = require('bytes')
 const chalk = require('chalk')
 
-let run = async function (tasks, pathToProjectRoot) {
+let run = async function (config) {
   'use strict'
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     let results = []
     let startTime = new Date().getTime()
-    for (let task of tasks) {
+    for (let task of config.tasks) {
       let destFileName = task.target || 'dist/styles/style.css'
       results.push(compileScss({
         src: task.source || 'src/styles/style.scss',
@@ -41,6 +41,7 @@ let compileScss = async function (options) {
 
   return new Promise(resolve => {
     let results = []
+    const projectRoot = process.cwd()
     // render the result
     sass.render({
       file: options.src,
@@ -58,7 +59,7 @@ let compileScss = async function (options) {
             if (err) resolve(err)
             // log successful compilation to terminal
             let size = fs.statSync(options.cssFileName).size
-            resolve(`${options.cssFileName} ${chalk.yellow('[' + bytes.format(size) + ']')} ${chalk.green('[created]')}`)
+            resolve(`${path.join(projectRoot, options.cssFileName)} ${chalk.yellow('[' + bytes.format(size) + ']')} ${chalk.green('[created]')}`)
           })
         })
 
@@ -67,7 +68,7 @@ let compileScss = async function (options) {
             if (err) resolve(err)
             // log successful compilation to terminal
             let size = fs.statSync(options.cssMapFileName).size
-            resolve(`${options.cssMapFileName} ${chalk.yellow('[' + bytes.format(size) + ']')} ${chalk.green('[created]')}`)
+            resolve(`${path.join(projectRoot, options.cssMapFileName)} ${chalk.yellow('[' + bytes.format(size) + ']')} ${chalk.green('[created]')}`)
           })
         })
 

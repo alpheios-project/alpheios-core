@@ -1,19 +1,23 @@
 const path = require('path')
+const projectRoot = process.cwd()
 
 module.exports = {
-  pathToProjectRoot: '../..',
-  style: [
-    { source: 'src/styles/style.scss', target: 'dist/styles/style.css', style: 'compressed', sourceMap: true }
-  ],
-  image: [
-    { source: 'src/images', target: 'dist/images', extensions: ['jpg', 'png', 'svg'], excludedDirs: ['inline-icons'] }
-  ],
+  style: {
+    tasks: [
+      { source: 'src/styles/style.scss', target: 'dist/styles/style.css', style: 'compressed', sourceMap: true }
+    ]
+  },
+  image: {
+    tasks: [
+      {source: 'src/images', target: 'dist/images', extensions: ['jpg', 'png', 'svg'], excludedDirs: ['inline-icons']}
+    ]
+  },
   webpack: {
     common: {
       resolve: {
         alias: {
           // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
-          'alpheios-data-models': path.resolve(__dirname, '../../node_modules/alpheios-data-models/dist/alpheios-data-models.js')
+          'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js')
         },
         mainFields: ['moduleExternal', 'module', 'main']
       },
@@ -22,16 +26,18 @@ module.exports = {
         'alpheios-data-models': 'alpheios-data-models',
         'alpheios-inflection-tables': 'alpheios-inflection-tables',
         'alpheios-experience': 'alpheios-experience',
-        'alpheios-res-client': 'alpheios-res-client'
+        'alpheios-res-client': 'alpheios-res-client',
+        'intl-messageformat': 'intl-messageformat',
+        'uuid': 'uuid'
       }
     },
     tasks: [
       {
-        context: path.resolve(__dirname, '../../src/'),
+        context: path.join(projectRoot, 'src/'),
         entry: './plugin.js',
         externals: ['alpheios-data-models', 'alpheios-inflection-tables'],
         output: {
-          path: path.resolve(__dirname, '../../dist'),
+          path: path.join(projectRoot, 'dist/'),
           filename: 'alpheios-components.js',
           libraryTarget: 'umd'
         },
@@ -78,19 +84,21 @@ module.exports = {
             },
             {
               test: /\.scss$/,
-              use: [{
-                loader: 'style-loader'
-              }, {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true
+              use: [
+                'style-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    sourceMap: true
+                  }
+                },
+                {
+                  loader: 'sass-loader',
+                  options: {
+                    sourceMap: true
+                  }
                 }
-              }, {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true
-                }
-              }]
+              ]
             },
             {
               test: /\.vue$/,
@@ -101,17 +109,23 @@ module.exports = {
                 }
               }
             },
+            // Seems to require babel-polyfill in higher level libraries. Need to figure out. Do we really need it?
+            /* {
+              test: /\.js$/,
+              include: path.join(projectRoot, 'src/'),
+              use: [
+                {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['babel-preset-env']
+                  }
+                }
+              ]
+            }, */
             {
               test: /\.js$/,
-              include: path.resolve(__dirname, '../src'),
-              use: [{
-                loader: 'babel-loader',
-                options: {
-                  presets: [
-                    ['es2015', {modules: false}]
-                  ]
-                }
-              }]
+              use: ['source-map-loader'],
+              enforce: 'pre'
             }
           ]
         }

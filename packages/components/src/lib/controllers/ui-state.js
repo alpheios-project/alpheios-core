@@ -2,24 +2,51 @@
  * Interface for a State Object to manage Alpheios UI State
  */
 export default class UIStateAPI {
+  constructor () {
+    this.watchers = new Map()
+  }
+
+  static get statuses () {
+    return {
+      script: {
+        PENDING: Symbol.for('Alpheios_Status_Pending'), // Script has not been fully initialized yet
+        ACTIVE: Symbol.for('Alpheios_Status_Active'), // Script is loaded and active
+        DEACTIVATED: Symbol.for('Alpheios_Status_Deactivated'), // Script has been loaded, but is deactivated
+        DISABLED: Symbol.for('Alpheios_Status_Disabled') // Script has been loaded, but it is disabled
+      },
+      panel: {
+        OPEN: Symbol.for('Alpheios_Status_PanelOpen'), // Panel is open
+        CLOSED: Symbol.for('Alpheios_Status_PanelClosed') // Panel is closed
+      }
+    }
+  }
+
   /**
-   * Method to use to set a general property on the state
+   * SetItem provides a monitored way to change a TabScript state. If value is assigned to a data property directly
+   * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
+   * and if there is a watcher function registered for a changed property name,
+   * this function will be called on every property change, passing a changed property name as an argument.
    * @param key
    * @param value
    * @return {UIStateAPI}
    */
   setItem (key, value) {
-    throw new Error('Unimplemented')
+    this[key] = value
+    if (this.watchers && this.watchers.has(key)) {
+      this.watchers.get(key)(key, this)
+    }
+    return this
   }
 
   /**
    * Sets a watcher function that is called every time a property is changed using a setItem() method.
    * @param {String} property - A name of a property that should be monitored
    * @param {Function} watchFunc - A function that will be called every time a property changes
-   * @return {State} Reference to self for chaining
+   * @return {UIStateAPI} Reference to self for chaining
    */
   setWatcher (property, watchFunc) {
-    throw new Error('Unimplemented')
+    this.watchers.set(property, watchFunc)
+    return this
   }
 
   /**
