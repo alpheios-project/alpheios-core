@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Alpheios UI Compononents",
   "main": "dist/alpheios-components.js",
   "scripts": {
@@ -78,7 +78,7 @@
     "source-map-loader": "^0.2.3",
     "standard": "^11.0.1",
     "style-loader": "^0.20.3",
-    "uikit": "^3.0.0-beta.39",
+    "uikit": "^3.0.0-beta.41",
     "url-loader": "^1.0.1",
     "uuid": "^3.2.1",
     "vue": "^2.5.16",
