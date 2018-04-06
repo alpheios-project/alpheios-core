@@ -126,4 +126,12 @@ export default class GreekPronounView extends GreekView {
     }
     return false
   }
+
+  static getMorphemes (inflectionData) {
+    return inflectionData.pos.get(this.partOfSpeech)
+      .types.get(this.inflectionType).items
+      .filter(item => item.features.hasOwnProperty(Feature.types.grmClass) &&
+            item.features[Feature.types.grmClass].hasSomeValues(this.classes)
+      )
+  }
 }
