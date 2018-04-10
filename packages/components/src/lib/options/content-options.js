@@ -5,7 +5,7 @@ export default class ContentOptions {
     this.saver = saver
   }
 
-  static get storageDomian () {
+  static get storageDomain () {
     return 'alpheios-content-options'
   }
 

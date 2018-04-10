@@ -24885,7 +24885,7 @@ class ContentOptions {
     this.saver = saver
   }
 
-  static get storageDomian () {
+  static get storageDomain () {
     return 'alpheios-content-options'
   }
 
@@ -25177,7 +25177,7 @@ class ResourceOptions {
     this.saver = saver
   }
 
-  static get storageDomian () {
+  static get storageDomain () {
     return 'alpheios-resource-options'
   }
 

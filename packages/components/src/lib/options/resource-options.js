@@ -23,7 +23,7 @@ export default class ResourceOptions {
     this.saver = saver
   }
 
-  static get storageDomian () {
+  static get storageDomain () {
     return 'alpheios-resource-options'
   }
 
