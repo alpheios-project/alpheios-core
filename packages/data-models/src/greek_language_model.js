@@ -263,7 +263,9 @@ export default class GreekLanguageModel extends LanguageModel {
     )
     for (const matchingForm of matchingForms) {
       if (matchingForm.features.hasOwnProperty(Feature.types.grmClass)) {
-        matchingValues.add(matchingForm.features[Feature.types.grmClass])
+        for (const value of matchingForm.features[Feature.types.grmClass].values) {
+          matchingValues.add(value)
+        }
       }
     }
     if (matchingValues.size > 0) {

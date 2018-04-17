@@ -62,9 +62,10 @@ export default class Feature {
       // Single value with no sort order
       normalized = [[data, this.defaultSortOrder]]
     } else if (!Array.isArray(data[0])) {
-      // Multiple values without sort order
+      // Multiple values without any sort order, default sort order will be used
       normalized = data.map((v, i) => [v, i + 1])
     } else {
+      // Value has all the data, including a sort order
       normalized = data
     }
     return normalized.map(d => { return { value: d[0], sortOrder: Number.parseInt(d[1]) } })
@@ -407,7 +408,12 @@ export default class Feature {
     if (!Array.isArray(foreignData)) {
       foreignData = [foreignData]
     }
-    const values = foreignData.map(fv => importer.get(fv))
+    let values = foreignData.map(fv => importer.get(fv))
+    /*
+    Some values may be mapped into multiple values. For them an importer will return an array of values instead of a single value.
+    The values will be a multidimensional array that will require flattening.
+     */
+    values = values.reduce((acc, cv) => acc.concat(cv), [])
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues)
   }
 }
