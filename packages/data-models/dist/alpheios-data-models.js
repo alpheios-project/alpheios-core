@@ -492,6 +492,13 @@ class DefinitionSet {
   }
 
   /**
+   * clear accumulated short definitions
+   */
+  clearShortDefs () {
+    this.shortDefs = [];
+  }
+
+  /**
    * Appends one or more definitions to a list of full definitions.
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
    * @return {Definition[]} A list of full definitions this object has.
@@ -503,6 +510,13 @@ class DefinitionSet {
       this.fullDefs = this.fullDefs.concat(definitions);
     }
     return this.fullDefs
+  }
+
+  /**
+   * clear accumulated full definitions
+   */
+  clearFullDefs () {
+    this.fullDefs = [];
   }
 }
 
