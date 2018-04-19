@@ -20,6 +20,8 @@ export default class LexicalQuery extends Query {
     } else {
       this.canReset = false
     }
+
+    console.log('IS test Lexical Query')
   }
 
   static create (selector, options) {
