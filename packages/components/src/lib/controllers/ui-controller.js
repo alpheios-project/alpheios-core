@@ -384,7 +384,8 @@ export default class UIController {
         uiController: this
       },
       mounted () {
-        console.log('**************mounted ui controller popup', this.translations)
+        console.log('**************mounted ui controller popup translations', this.translations)
+        console.log('**************mounted ui controller popup definitions', this.definitions)
       },
       methods: {
         setTargetRect: function (targetRect) {
