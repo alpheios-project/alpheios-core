@@ -115,7 +115,8 @@ export default class LexicalQuery extends Query {
         }
       }))
 
-      console.log('Lexaical Query lexeme', lexeme.lemma)
+      console.log('Lexical Query lexeme', lexeme.lemma)
+      this.lemmaTranslations.fetchTranslations(lexeme.lemma, 'eng')
     }
 
     // Handle definition responses
