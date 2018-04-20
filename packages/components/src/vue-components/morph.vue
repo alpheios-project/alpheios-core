@@ -30,10 +30,8 @@
         </div>
       </div>
       
-      <div v-if="translations" class="alpheios-lemma__translations">
-        <div v-for="translation in translations[lex.lemma.key]" class="alpheios-morph__definition" :data-lemmakey="lex.lemma.key">
-          {{ translation.meanings }}
-        </div>
+      <div v-if="translations" class="alpheios-lemma__translations" :data-lemmakey="lex.lemma.key">
+        {{ translations[lex.lemma.key].meanings }}
       </div><!-- alpheios-lemma__translations -->
 
       <div class="alpheios-morph__inflections">
