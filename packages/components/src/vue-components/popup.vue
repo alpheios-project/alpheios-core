@@ -119,7 +119,7 @@
       },
       translations: {
         type: Object,
-        required: false
+        required: true
       }
     },
 
@@ -436,6 +436,8 @@
         .resizable(this.resizableSettings())
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
+
+      console.log('******************************IS POPUP mounted', this)
     },
 
     /**

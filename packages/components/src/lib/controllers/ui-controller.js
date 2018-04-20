@@ -732,8 +732,7 @@ export default class UIController {
     this.popup.popupData.translationsDataReady = true
     this.popup.popupData.updates = this.popup.popupData.updates + 1
 
-    console.log('****************fire updateTranslations 2', this.popup.definitions)
-    console.log('****************fire updateTranslations 2', this.popup.translations, this.state.currentLanguage)
+    console.log('****************fire updateTranslations 2', this.popup.translations)
   }
 
   updateLanguage (currentLanguage) {
