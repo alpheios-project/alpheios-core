@@ -437,7 +437,8 @@
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
 
-      console.log('******************************IS POPUP mounted', this.translations)
+      console.log('******************************IS POPUP mounted translations', this.translations)
+      console.log('******************************IS POPUP mounted definitions', this.definitions)
     },
 
     /**
