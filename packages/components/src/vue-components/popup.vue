@@ -465,8 +465,11 @@
         this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
         // There is a new request coming in, reset popup dimensions
         this.resetPopupDimensions()
-      }
+      },
 
+      translationsDataReady: function(value) {
+        this.logger.log(`${time}: translation data became available`, this.translations)
+      }
       /*inflDataReady: function() {
         let time = new Date().getTime()
         this.logger.log(`${time}: inflection data became available`)
