@@ -124,6 +124,7 @@ export default class LexicalQuery extends Query {
     this.lemmaTranslations.fetchTranslations(lemmaList, 'eng')
       .then(res => {
         console.log('translations ready')
+        this.ui.updateTranslations(this.homonym)
       })
     // Handle definition responses
     for (let definitionRequest of definitionRequests) {
