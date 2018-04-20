@@ -310,7 +310,7 @@ export default class UIController {
     })
 
     // Create a Vue instance for a popup
-    console.log('*********************adding POPUP ui')
+    console.log('*********************adding POPUP ui', this.template.popupId)
     this.popup = new Vue({
       el: `#${this.template.popupId}`,
       components: { popup: Popup },
