@@ -30,7 +30,7 @@
         </div>
       </div>
       
-      <div v-if="translations" class="alpheios-lemma__translations" :data-lemmakey="lex.lemma.key">
+      <div v-if="translations && translations[lex.lemma.key]" class="alpheios-lemma__translations" :data-lemmakey="lex.lemma.key">
         {{ translations[lex.lemma.key].meanings }}
       </div><!-- alpheios-lemma__translations -->
 
