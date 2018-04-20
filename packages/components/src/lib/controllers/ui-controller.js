@@ -733,7 +733,8 @@ export default class UIController {
     this.popup.popupData.updates = this.popup.popupData.updates + 1
 
     console.log('****************fire updateTranslations 1', this.popup.translations)
-    console.log('****************fire updateTranslations 2', this.popup.translations['Cupido-lat-noun-masculine-3rd-religion-common-Ox.Lat.Dict.'].meanings)
+    console.log('****************fire updateTranslations 2', this.popup.translations['Cupido-lat-noun-masculine-3rd-religion-common-Ox.Lat.Dict.'])
+    console.log('****************fire updateTranslations 3', this.popup.translations['Cupido-lat-noun-masculine-3rd-religion-common-Ox.Lat.Dict.'].meanings)
   }
 
   updateLanguage (currentLanguage) {
