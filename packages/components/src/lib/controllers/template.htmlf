@@ -1,5 +1,6 @@
 <div id="alpheios-popup" >
-    <popup :messages="messages" :definitions="definitions" :visible="visible" :lexemes="lexemes" :linkedfeatures="linkedFeatures"
+    <popup :messages="messages" :definitions="definitions" :visible="visible" :lexemes="lexemes" :translation="translations"
+    	   :linkedfeatures="linkedFeatures"
            :data="popupData" @close="close" @closepopupnotifications="clearNotifications" @showpaneltab="showPanelTab"
            @sendfeature="sendFeature" @settingchange="settingChange">
     </popup>
