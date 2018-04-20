@@ -29,6 +29,11 @@
           <shortdef :definition="definition"></shortdef>
         </div>
       </div>
+      
+      <div v-if="lex.lemma.translation" class="alpheios-lemma__translations">
+        {{ lex.lemma.translation.meanings }}
+      </div><!-- alpheios-lemma__translations -->
+
       <div class="alpheios-morph__inflections">
         <div class="alpheios-morph__inflset" v-for="inflset in lex.getGroupedInflections()">
           <div class="alpheios-morph__forms">
@@ -77,9 +82,6 @@
           </div>
         </div>
       </div><!-- end alpheios-morph__inflections -->
-      <div class="alpheios-lemma__translations">
-        <span v-if="lex.lemma.translation">{{ lex.lemma.translation.meanings }}</span>
-      </div><!-- alpheios-lemma__translations -->
     </div>
   </div>
 </template>
@@ -266,5 +268,12 @@
 
   .alpheios-morph__groupitem:last-child:after {
     content: ':';
+  }
+
+  .alpheios-lemma__translations {
+    padding: 5px 0 0 22px;
+    font-style: italic;
+    color: #585858;
+    font-weight: bold;
   }
 </style>
