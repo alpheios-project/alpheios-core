@@ -91,6 +91,8 @@ export default class LexicalQuery extends Query {
       lexiconOpts = {}
     }
 
+    let lemmaList = []
+
     for (let lexeme of this.homonym.lexemes) {
       // Short definition requests
       let requests = this.lexicons.fetchShortDefs(lexeme.lemma, lexiconOpts)
@@ -114,10 +116,12 @@ export default class LexicalQuery extends Query {
           complete: false
         }
       }))
+
+      lemmaList.push(lexeme.lemma)
     }
 
-    console.log('******** Lexical Query lexeme', this.homonym.lexemes)
-    this.lemmaTranslations.fetchTranslations(this.homonym.lexemes, 'eng')
+    console.log('******** Lexical Query lexeme', lemmaList)
+    this.lemmaTranslations.fetchTranslations(lemmaList, 'eng')
 
     // Handle definition responses
     for (let definitionRequest of definitionRequests) {
