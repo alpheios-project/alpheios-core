@@ -78,7 +78,7 @@
         </div>
       </div><!-- end alpheios-morph__inflections -->
       <div class="alpheios-lemma__translations">
-        {{ lex.lemma.translation }}
+        <span v-if="lex.lemma.translation">{{ lex.lemma.translation.meanings }}</span>
       </div><!-- alpheios-lemma__translations -->
     </div>
   </div>
