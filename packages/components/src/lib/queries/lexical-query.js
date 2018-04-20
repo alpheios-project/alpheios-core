@@ -121,11 +121,17 @@ export default class LexicalQuery extends Query {
     }
 
     // this.lemmaTranslations.fetchTranslations(lemmaList, 'eng')
-    this.lemmaTranslations.fetchTranslations(lemmaList, 'eng')
-      .then(res => {
+    this.lemmaTranslations.fetchTranslations(lemmaList, 'eng').then(
+      res => {
         console.log('translations ready')
         this.ui.updateTranslations(this.homonym)
-      })
+        this.finalize('Success')
+      },
+      error => {
+        console.error(`Translations request failed: ${error}`)
+        this.finalize(error)
+      }
+    )
     // Handle definition responses
     for (let definitionRequest of definitionRequests) {
       definitionRequest.request.then(
