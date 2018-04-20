@@ -317,6 +317,9 @@ export default class UIController {
         messages: [],
         lexemes: [],
         definitions: {},
+
+        translations: {},
+
         linkedFeatures: [],
         visible: false,
         popupData: {
@@ -354,6 +357,9 @@ export default class UIController {
           defDataReady: false,
           inflDataReady: false,
           morphDataReady: false,
+
+          translationsDataReady: false,
+
           showProviders: false,
           updates: 0,
           classes: {
@@ -446,11 +452,16 @@ export default class UIController {
 
         clearContent: function () {
           this.definitions = {}
+          this.translations = {}
+
           this.lexemes = []
           this.popupData.providers = []
           this.popupData.defDataReady = false
           this.popupData.inflDataReady = false
           this.popupData.morphDataReady = false
+
+          this.popupData.translationsDataReady = false
+
           this.popupData.showProviders = false
           this.clearNotifications()
           this.clearStatus()
@@ -708,6 +719,20 @@ export default class UIController {
     this.popup.definitions = definitions
     this.popup.popupData.defDataReady = hasFullDefs
     this.popup.popupData.updates = this.popup.popupData.updates + 1
+  }
+
+  updateTranslations (homonym) {
+    let translations = {}
+    for (let lexeme of homonym.lexemes) {
+      if (lexeme.lemma.translation !== undefined) {
+        translations[lexeme.lemma.key] = lexeme.lemma.translation
+      }
+    }
+    this.popup.translations = translations
+    this.popup.popupData.translationsDataReady = true
+    this.popup.popupData.updates = this.popup.popupData.updates + 1
+
+    console.log('fire updateTranslations')
   }
 
   updateLanguage (currentLanguage) {
