@@ -26,7 +26,7 @@
             {{data.l10n.messages.PLACEHOLDER_POPUP_DATA}}
         </div>
         <div v-show="morphDataReady" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small">
-            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions"
+            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions" :translations="translations"
                    :linkedfeatures="linkedfeatures" @sendfeature="sendFeature">
             </morph>
 
@@ -115,6 +115,10 @@
       },
       visible: {
         type: Boolean,
+        required: true
+      },
+      translations: {
+        type: Object,
         required: true
       }
     },
