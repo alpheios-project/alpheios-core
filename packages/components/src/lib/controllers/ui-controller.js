@@ -319,7 +319,7 @@ export default class UIController {
         lexemes: [],
         definitions: {},
 
-        translations: {},
+        translations: 'blbla',
 
         linkedFeatures: [],
         visible: false,
