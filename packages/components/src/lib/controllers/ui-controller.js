@@ -310,7 +310,6 @@ export default class UIController {
     })
 
     // Create a Vue instance for a popup
-    console.log('*********************adding POPUP ui', this.template.popupId)
     this.popup = new Vue({
       el: `#${this.template.popupId}`,
       components: { popup: Popup },
@@ -382,10 +381,6 @@ export default class UIController {
         panel: this.panel,
         options: this.options,
         uiController: this
-      },
-      mounted () {
-        console.log('**************mounted ui controller popup translations', this.translations)
-        console.log('**************mounted ui controller popup definitions', this.definitions)
       },
       methods: {
         setTargetRect: function (targetRect) {
