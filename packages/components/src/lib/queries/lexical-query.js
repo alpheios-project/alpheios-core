@@ -11,6 +11,9 @@ export default class LexicalQuery extends Query {
     this.maAdapter = options.maAdapter
     this.langData = options.langData
     this.lexicons = options.lexicons
+
+    this.lemmaTranslations = options.lemmaTranslations
+
     this.langOpts = options.langOpts
     this.resourceOptions = options.resourceOptions
     this.l10n = options.l10n
@@ -20,8 +23,6 @@ export default class LexicalQuery extends Query {
     } else {
       this.canReset = false
     }
-
-    console.log('IS test Lexical Query')
   }
 
   static create (selector, options) {
@@ -113,6 +114,8 @@ export default class LexicalQuery extends Query {
           complete: false
         }
       }))
+
+      console.log('Lexaical Query lexeme', lexeme.lemma)
     }
 
     // Handle definition responses
