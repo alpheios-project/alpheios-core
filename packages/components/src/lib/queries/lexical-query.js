@@ -120,7 +120,8 @@ export default class LexicalQuery extends Query {
       lemmaList.push(lexeme.lemma)
     }
 
-    this.lemmaTranslations.fetchTranslations(lemmaList, this.selector.languageCode, 'eng').then(
+    let userLang = navigator.language || navigator.userLanguage
+    this.lemmaTranslations.fetchTranslations(lemmaList, this.selector.languageCode, userLang).then(
       res => {
         console.log('translations ready')
         this.ui.updateTranslations(this.homonym)
