@@ -119,7 +119,7 @@
       },
       translations: {
         type: Object,
-        required: true
+        required: false
       }
     },
 
@@ -137,6 +137,9 @@
       },
       defDataReady: function () {
         return this.data.defDataReady
+      },
+      translationsDataReady: function () {
+        return this.data.translationsDataReady
       },
       morphDataReady: function () {
         return this.data.morphDataReady
