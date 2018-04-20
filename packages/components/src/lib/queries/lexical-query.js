@@ -120,7 +120,6 @@ export default class LexicalQuery extends Query {
       lemmaList.push(lexeme.lemma)
     }
 
-    console.log('******** Lexical Query lexeme', lemmaList)
     this.lemmaTranslations.fetchTranslations(lemmaList, 'eng')
 
     // Handle definition responses

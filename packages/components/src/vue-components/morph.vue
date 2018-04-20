@@ -76,7 +76,10 @@
             </div><!-- end groupinflections -->
           </div>
         </div>
-      </div>
+      </div><!-- end alpheios-morph__inflections -->
+      <div class="alpheios-lemma__translations">
+        {{ lex.lemma.translation }}
+      </div><!-- alpheios-lemma__translations -->
     </div>
   </div>
 </template>
