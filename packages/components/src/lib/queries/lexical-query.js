@@ -121,7 +121,7 @@ export default class LexicalQuery extends Query {
     }
 
     let userLang = navigator.language || navigator.userLanguage
-    console.log('userLang', userLang)
+
     this.lemmaTranslations.fetchTranslations(lemmaList, this.selector.languageCode, userLang).then(
       res => {
         console.log('translations ready')
