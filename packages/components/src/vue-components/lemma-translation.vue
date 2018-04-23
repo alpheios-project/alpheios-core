@@ -1,9 +1,9 @@
 <template>
   <div class="alpheios-lemma__translations">
-    <div v-if="translations && translations[lemmakey]" :data-lemmakey="lemmakey">
+    <div v-if="translations && translations[lemmakey]" :data-lemmakey="lemmakey" class="hasValue">
       {{ translations[lemmakey].meanings }}
     </div>
-    <div v-if="!translations || !translations[lemmakey]">
+    <div v-if="!translations || !translations[lemmakey]" class="noValue">
       There is no translations for lemma
     </div>
   </div>
