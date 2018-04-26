@@ -1,5 +1,6 @@
 import LMF from './language_model_factory.js'
 import Feature from './feature.js'
+import Translation from './translation.js'
 
 /**
  * Lemma, a canonical form of a word.
@@ -11,6 +12,8 @@ class Lemma {
    * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {Object} features - the grammatical features of a lemma.
+
+   * @param {Translation} transaltions - translations from python service
    */
   constructor (word, languageID, principalParts = [], features = {}) {
     if (!word) {
@@ -112,6 +115,22 @@ class Lemma {
    */
   get key () {
     return [this.word, LMF.getLanguageCodeFromId(this.languageID), ...Object.values(this.features)].join('-')
+  }
+
+  /**
+   * Sets a translation from python service.
+   * @param {Translation} translation - A translation object
+   */
+  addTranslation (translation) {
+    if (!translation) {
+      throw new Error('translation data cannot be empty.')
+    }
+
+    if (!(translation instanceof Translation)) {
+      throw new Error('translation data must be a Translation object.')
+    }
+
+    this.translation = translation
   }
 }
 

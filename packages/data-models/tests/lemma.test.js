@@ -3,6 +3,8 @@ import * as Constants from '../src/constants.js'
 import Lemma from '../src/lemma.js'
 import Feature from '../src/feature.js'
 
+import Translation from '../src/translation.js'
+
 describe('Lemma object', () => {
   let lemma, word, lemmaWithParts
 
@@ -47,6 +49,23 @@ describe('Lemma object', () => {
   // test('Should not allow unsupported languages', () => {
   //  expect(() => new Lemma('someword', 'egyptian')).toThrowError(/not supported/)
   // })
+
+  test('addTranslation - empty translation should give an error', () => {
+    expect(() => lemma.addTranslation()).toThrowError(/empty/)
+  })
+
+  test('addTranslation - not Translation object should give an error', () => {
+    expect(() => lemma.addTranslation('test translation')).toThrowError(/Translation object/)
+  })
+
+  test('addTranslation - should append Translation object as an attribute without errors', () => {
+    let testTranslation = new Translation(lemma, [])
+    lemma.addTranslation(testTranslation)
+
+    expect(lemma.translation).not.toBe(undefined)
+    expect(lemma.translation.lemma instanceof Lemma).toBeTruthy()
+    expect(Array.isArray(lemma.translation.meanings)).toBeTruthy()
+  })
 
   afterAll(() => {
     // Clean a test environment up

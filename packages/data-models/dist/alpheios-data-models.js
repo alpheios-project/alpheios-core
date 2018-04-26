@@ -2841,6 +2841,38 @@ class FeatureList {
 }
 
 /**
+ * stores a scope of lemma translations from python service
+ * Contains a primary Lemma object
+ */
+class Translation {
+  /**
+   * Initializes a Translation object.
+   * @param {Lemma} lemma - A lemma object.
+   * @param [] meanings - A set of definitions.
+
+   */
+  constructor (lemma, meanings = '') {
+    if (!lemma) {
+      throw new Error('Lemma should not be empty.')
+    }
+    this.lemma = lemma;
+    this.meanings = meanings;
+  }
+
+  static readTranslationFromJSONList (lemma, translationsList) {
+    if (!translationsList || !Array.isArray(translationsList)) {
+      throw new Error('Recieved not proper translation list', translationsList)
+    }
+    let curTranslations = translationsList.find(function (element) { return element.in === lemma.word });
+    return new Translation(lemma, curTranslations.translations.join(', '))
+  }
+
+  static loadTranslations (lemma, translationsList) {
+    lemma.addTranslation(this.readTranslationFromJSONList(lemma, translationsList));
+  }
+}
+
+/**
  * Lemma, a canonical form of a word.
  */
 class Lemma {
@@ -2850,6 +2882,8 @@ class Lemma {
    * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {Object} features - the grammatical features of a lemma.
+
+   * @param {Translation} transaltions - translations from python service
    */
   constructor (word, languageID, principalParts = [], features = {}) {
     if (!word) {
@@ -2951,6 +2985,22 @@ class Lemma {
    */
   get key () {
     return [this.word, LanguageModelFactory.getLanguageCodeFromId(this.languageID), ...Object.values(this.features)].join('-')
+  }
+
+  /**
+   * Sets a translation from python service.
+   * @param {Translation} translation - A translation object
+   */
+  addTranslation (translation) {
+    if (!translation) {
+      throw new Error('translation data cannot be empty.')
+    }
+
+    if (!(translation instanceof Translation)) {
+      throw new Error('translation data must be a Translation object.')
+    }
+
+    this.translation = translation;
   }
 }
 
@@ -3378,5 +3428,5 @@ class ResourceProvider {
   }
 }
 
-export { constants as Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, ResourceProvider };
+export { constants as Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, ResourceProvider, Translation };
 //# sourceMappingURL=alpheios-data-models.js.map
