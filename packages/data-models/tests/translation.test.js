@@ -10,8 +10,7 @@ describe('Translation object', () => {
 
     word = 'cupido'
     lemma = new Lemma(word, 'lat')
-
-    translation = new Translation(lemma, ['test meanings'])
+    translation = new Translation(lemma, 'lat', ['test meanings'])
   })
 
   test('Should not allow empty arguments', () => {
@@ -20,8 +19,9 @@ describe('Translation object', () => {
 
   test('Should be initialized properly', () => {
     expect(translation).toEqual({
-      lemma: lemma,
-      meanings: ['test meanings']
+      lemmaWord: 'cupido',
+      languageCode: 'lat',
+      glosses: ['test meanings']
     })
   })
 
@@ -39,7 +39,7 @@ describe('Translation object', () => {
         ]
       }
     ]
-    let res = Translation.readTranslationFromJSONList(lemma, testJSON)
+    let res = Translation.readTranslationFromJSONList(lemma, 'lat', testJSON)
     expect(res instanceof Translation).toBeTruthy()
   })
 
@@ -53,8 +53,8 @@ describe('Translation object', () => {
         ]
       }
     ]
-    let expected = Translation.readTranslationFromJSONList(lemma, testJSON)
-    Translation.loadTranslations(lemma, testJSON)
+    let expected = Translation.readTranslationFromJSONList(lemma, 'lat', testJSON)
+    Translation.loadTranslations(lemma, 'lat', testJSON)
 
     expect(lemma.translation).not.toBe(undefined)
     expect(lemma.translation).toEqual(expected)

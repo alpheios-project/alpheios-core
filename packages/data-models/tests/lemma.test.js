@@ -63,8 +63,8 @@ describe('Lemma object', () => {
     lemma.addTranslation(testTranslation)
 
     expect(lemma.translation).not.toBe(undefined)
-    expect(lemma.translation.lemma instanceof Lemma).toBeTruthy()
-    expect(Array.isArray(lemma.translation.meanings)).toBeTruthy()
+    expect(lemma.translation.lemmaWord).toEqual(lemma.word)
+    expect(Array.isArray(lemma.translation.glosses)).toBeTruthy()
   })
 
   afterAll(() => {
