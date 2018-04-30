@@ -1,3 +1,5 @@
 language: node_js
 node_js:
   - "node"
+notifications:
+  slack: alpheiosproject:9WEA6UNyLr3U0bWIJctp1rqS
