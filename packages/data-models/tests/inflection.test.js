@@ -34,8 +34,16 @@ describe('Inflection object', () => {
 
   // grm": {"fullFormBased": false, "suffixBased": false}
 
-  test('Should not allow empty arguments', () => {
+  test('Should not allow empty language', () => {
     expect(() => new Inflection('stem', '')).toThrowError(/empty/)
+  })
+
+  test('Should not allow empty stem and suffix', () => {
+    expect(() => new Inflection(null, grc, null)).toThrowError(/stem or suffix/)
+  })
+
+  test('Should allow empty stem if suffix', () => {
+    expect(() => new Inflection(null, grc, 'suff')).not.toThrowError()
   })
 
   test('Should not allow unsupported languages', () => {
@@ -51,6 +59,25 @@ describe('Inflection object', () => {
         '_data': [{value: 'masculine', sortOrder: 1}]
       }
     })
+  })
+
+  test('form should work with a stem only', () => {
+    expect(inflection.form).toEqual('stem')
+  })
+
+  test('form should work with a stem and suffix', () => {
+    inflection = new Inflection('stem', grc, 'suff')
+    expect(inflection.form).toEqual('stemsuff')
+  })
+
+  test('form should work with a stem and prefix', () => {
+    inflection = new Inflection('stem', grc, null, 'pref')
+    expect(inflection.form).toEqual('prefstem')
+  })
+
+  test('form should work with a suffix only', () => {
+    inflection = new Inflection(null, grc, 'suff')
+    expect(inflection.form).toEqual('suff')
   })
 
   test('feature method should throw an error if no arguments are provided', () => {

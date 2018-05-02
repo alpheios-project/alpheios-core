@@ -3037,11 +3037,10 @@ class Inflection {
      * @param {prefix} prefix - a prefix of a word
      * @param {example} example - example
      */
-  constructor (stem, language, suffix = null, prefix = null, example = null) {
-    if (!stem) {
-      throw new Error('Stem should not be empty.')
+  constructor (stem = null, language, suffix = null, prefix = null, example = null) {
+    if (!stem && !suffix) {
+      throw new Error('At least stem or suffix must be defined')
     }
-
     if (!language) {
       throw new Error('Language should not be empty.')
     }
@@ -3076,7 +3075,7 @@ class Inflection {
 
   get form () {
     let form = this.prefix ? this.prefix : '';
-    form = form + this.stem;
+    form = this.stem ? form + this.stem : form;
     form = this.suffix ? form + this.suffix : form;
     return form
   }
@@ -3140,7 +3139,7 @@ class Inflection {
       }
 
       if (!LanguageModelFactory.compareLanguages(element.languageID, this.languageID)) {
-        throw new Error(`Language "${element.languageID.toString()}" of a feature does not match 
+        throw new Error(`Language "${element.languageID.toString()}" of a feature does not match
           a language "${this.languageID.toString()}" of an Inflection object.`)
       }
 

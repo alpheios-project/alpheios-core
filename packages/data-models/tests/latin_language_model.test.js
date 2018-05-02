@@ -27,4 +27,8 @@ describe('LanguageModelFactory object', () => {
   test('normalizes accents', () => {
     expect(latinModel.normalizeWord('tantulō')).toEqual('tantulo')
   })
+
+  test('grammar features', () => {
+    expect(latinModel.grammarFeatures()).toEqual(['part of speech', 'case', 'mood', 'declension', 'tense'])
+  })
 })
