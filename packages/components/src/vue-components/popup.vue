@@ -445,7 +445,7 @@
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
 
-      // console.log('******************************IS POPUP mounted ', this.$parent.uiController)
+      console.log('******************************IS POPUP mounted ', this)
     },
 
     /**
