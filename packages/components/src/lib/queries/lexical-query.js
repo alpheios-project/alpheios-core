@@ -177,7 +177,6 @@ export default class LexicalQuery extends Query {
         return
       }
       this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE)
-      console.log('************ ln10 message example', this.ui.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE)
       if (typeof result === 'object' && result instanceof Error) {
         console.error(`LexicalQuery failed: ${result.message}`)
       } else {
