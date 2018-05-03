@@ -1,8 +1,10 @@
 <template>
 	<div class="alpheios-lookup_form">
-		<input class="uk-input lookup_input" type="text" placeholder="Type text" v-model="lookuptext">
+		<input class="uk-input lookup_input" type="text" placeholder="Type text" v-model="lookuptext"
+			@keyup.enter="lookup"
+		>
 		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" 
-			@click="lookup" @keyup.enter.native="lookup"
+			@click="lookup" 
 		>
 			Lookup
 		</button>
