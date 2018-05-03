@@ -4,7 +4,7 @@
 			@keyup.enter="lookup"
 		>
 		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" 
-			@click="lookup" 
+			@click="lookup" v-if="l10nmessages"
 		>
 			{{ l10nmessages.LABEL_LOOKUP_BUTTON}}
 		</button>
@@ -18,7 +18,8 @@
     name: 'Lookup',
     data () {
       return {
-      	lookuptext: ''
+      	lookuptext: '',
+      	defaultButtonLabel: 'Search'
       }
     },
     props: {
@@ -29,6 +30,14 @@
       l10nmessages: {
         type: Object,
         required: true
+      }
+    },
+    computed: {
+      buttonLabel: function () {
+      	if (this.l10nmessages && this.l10nmessages.LABEL_LOOKUP_BUTTON) {
+      	  return this.l10nmessages.LABEL_LOOKUP_BUTTON
+      	}
+      	return this.defaultButtonLabel
       }
     },
     methods: {
