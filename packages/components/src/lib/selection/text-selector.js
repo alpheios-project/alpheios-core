@@ -1,4 +1,5 @@
 import TextQuoteSelector from './w3c/text-quote-selector'
+
 import ContentOptions from '../options/content-options'
 import {LanguageModelFactory} from 'alpheios-data-models'
 /**
