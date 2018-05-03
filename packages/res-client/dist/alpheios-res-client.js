@@ -1,52 +1,116 @@
-import { LanguageModelFactory, ResourceProvider } from 'alpheios-data-models';
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("alpheios-data-models"));
+	else if(typeof define === 'function' && define.amd)
+		define(["alpheios-data-models"], factory);
+	else {
+		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./driver.js");
+/******/ })
+/************************************************************************/
+/******/ ({
 
-/**
- * Base Adapter Class for a Resource Service
- */
-class BaseResourceAdapter {
-  /**
-   * get resources from the provider
-   * @param {Object} keyObj the object containing the data for lookup
-   * @return {Object[]} an array of results
-   */
-  async getResources (keyObj) {
-    return []
-  }
+/***/ "../node_modules/papaparse/papaparse.js":
+/*!**********************************************!*\
+  !*** ../node_modules/papaparse/papaparse.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-  static getProviders (lang) {
-    return new Map()
-  }
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var papaparse = createCommonjsModule(function (module, exports) {
-/*!
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*@license
 	Papa Parse
-	v4.3.7
+	v4.4.0
 	https://github.com/mholt/PapaParse
 	License: MIT
 */
 (function(root, factory)
 {
-	if (typeof undefined === 'function' && undefined.amd)
+	/* globals define */
+	if (true)
 	{
 		// AMD. Register as an anonymous module.
-		undefined([], factory);
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	}
-	else {
-		// Node. Does not work with strict CommonJS, but
-		// only CommonJS-like environments that support module.exports,
-		// like Node.
-		module.exports = factory();
-	}
+	else {}
 }(this, function()
 {
 	'use strict';
 
-	var global = (function () {
+	var global = (function() {
 		// alternative method, similar to `Function('return this')()`
 		// but without using `eval` (which is disabled when
 		// using Content Security Policy).
@@ -201,7 +265,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		}
 		else
 		{
-			document.addEventListener('DOMContentLoaded', function () {
+			document.addEventListener('DOMContentLoaded', function() {
 				LOADED_SYNC = true;
 			}, true);
 		}
@@ -270,9 +334,6 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 	function JsonToCsv(_input, _config)
 	{
-		var _output = '';
-		var _fields = [];
-
 		// Default configuration
 
 		/** whether to surround every datum with quotes */
@@ -316,8 +377,8 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 				if (!_input.fields)
 					_input.fields =  _input.data[0] instanceof Array
-									? _input.fields
-									: objectKeys(_input.data[0]);
+						? _input.fields
+						: objectKeys(_input.data[0]);
 
 				if (!(_input.data[0] instanceof Array) && typeof _input.data[0] !== 'object')
 					_input.data = [_input.data];	// handles input like [1,2,3] or ['asdf']
@@ -420,7 +481,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			if (typeof str === 'undefined' || str === null)
 				return '';
 
-			str = str.toString().replace(quoteCharRegex, _quoteChar+_quoteChar);
+			str = str.toString().replace(quoteCharRegex, _quoteChar + _quoteChar);
 
 			var needsQuotes = (typeof _quotes === 'boolean' && _quotes)
 							|| (_quotes instanceof Array && _quotes[col])
@@ -445,8 +506,8 @@ var papaparse = createCommonjsModule(function (module, exports) {
 	function ChunkStreamer(config)
 	{
 		this._handle = null;
-		this._paused = false;
 		this._finished = false;
+		this._completed = false;
 		this._input = null;
 		this._baseIndex = 0;
 		this._partialLine = '';
@@ -461,7 +522,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		};
 		replaceConfig.call(this, config);
 
-		this.parseChunk = function(chunk)
+		this.parseChunk = function(chunk, isFakeChunk)
 		{
 			// First chunk pre-processing
 			if (this.isFirstChunk && isFunction(this._config.beforeFirstChunk))
@@ -502,10 +563,10 @@ var papaparse = createCommonjsModule(function (module, exports) {
 					finished: finishedIncludingPreview
 				});
 			}
-			else if (isFunction(this._config.chunk))
+			else if (isFunction(this._config.chunk) && !isFakeChunk)
 			{
 				this._config.chunk(results, this._handle);
-				if (this._paused)
+				if (this._handle.paused() || this._handle.aborted())
 					return;
 				results = undefined;
 				this._completeResults = undefined;
@@ -517,8 +578,10 @@ var papaparse = createCommonjsModule(function (module, exports) {
 				this._completeResults.meta = results.meta;
 			}
 
-			if (finishedIncludingPreview && isFunction(this._config.complete) && (!results || !results.meta.aborted))
+			if (!this._completed && finishedIncludingPreview && isFunction(this._config.complete) && (!results || !results.meta.aborted)) {
 				this._config.complete(this._completeResults, this._input);
+				this._completed = true;
+			}
 
 			if (!finishedIncludingPreview && (!results || !results.meta.paused))
 				this._nextChunk();
@@ -621,7 +684,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			if (this._config.chunkSize)
 			{
 				var end = this._start + this._config.chunkSize - 1;	// minus one because byte range is inclusive
-				xhr.setRequestHeader('Range', 'bytes='+this._start+'-'+end);
+				xhr.setRequestHeader('Range', 'bytes=' + this._start + '-' + end);
 				xhr.setRequestHeader('If-None-Match', 'webkit-no-cache'); // https://bugs.webkit.org/show_bug.cgi?id=82672
 			}
 
@@ -640,7 +703,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 		this._chunkLoaded = function()
 		{
-			if (xhr.readyState != 4)
+			if (xhr.readyState !== 4)
 				return;
 
 			if (xhr.status < 200 || xhr.status >= 400)
@@ -656,15 +719,15 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		this._chunkError = function(errorMessage)
 		{
 			var errorText = xhr.statusText || errorMessage;
-			this._sendError(errorText);
+			this._sendError(new Error(errorText));
 		};
 
 		function getFileSize(xhr)
 		{
 			var contentRange = xhr.getResponseHeader('Content-Range');
 			if (contentRange === null) { // no content range, then finish!
-					return -1;
-					}
+				return -1;
+			}
 			return parseInt(contentRange.substr(contentRange.lastIndexOf('/') + 1));
 		}
 	}
@@ -731,7 +794,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 		this._chunkError = function()
 		{
-			this._sendError(reader.error.message);
+			this._sendError(reader.error);
 		};
 
 	}
@@ -744,11 +807,9 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		config = config || {};
 		ChunkStreamer.call(this, config);
 
-		var string;
 		var remaining;
 		this.stream = function(s)
 		{
-			string = s;
 			remaining = s;
 			return this._nextChunk();
 		};
@@ -774,6 +835,19 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 		var queue = [];
 		var parseOnData = true;
+		var streamHasEnded = false;
+
+		this.pause = function()
+		{
+			ChunkStreamer.prototype.pause.apply(this, arguments);
+			this._input.pause();
+		};
+
+		this.resume = function()
+		{
+			ChunkStreamer.prototype.resume.apply(this, arguments);
+			this._input.resume();
+		};
 
 		this.stream = function(stream)
 		{
@@ -784,8 +858,16 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			this._input.on('error', this._streamError);
 		};
 
+		this._checkIsFinished = function()
+		{
+			if (streamHasEnded && queue.length === 1) {
+				this._finished = true;
+			}
+		};
+
 		this._nextChunk = function()
 		{
+			this._checkIsFinished();
 			if (queue.length)
 			{
 				this.parseChunk(queue.shift());
@@ -805,6 +887,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 				if (parseOnData)
 				{
 					parseOnData = false;
+					this._checkIsFinished();
 					this.parseChunk(queue.shift());
 				}
 			}
@@ -817,13 +900,13 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		this._streamError = bindFunction(function(error)
 		{
 			this._streamCleanUp();
-			this._sendError(error.message);
+			this._sendError(error);
 		}, this);
 
 		this._streamEnd = bindFunction(function()
 		{
 			this._streamCleanUp();
-			this._finished = true;
+			streamHasEnded = true;
 			this._streamData('');
 		}, this);
 
@@ -939,10 +1022,10 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		this.resume = function()
 		{
 			_paused = false;
-			self.streamer.parseChunk(_input);
+			self.streamer.parseChunk(_input, true);
 		};
 
-		this.aborted = function ()
+		this.aborted = function()
 		{
 			return _aborted;
 		};
@@ -961,7 +1044,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		{
 			if (_results && _delimiterError)
 			{
-				addError('Delimiter', 'UndetectableDelimiter', 'Unable to auto-detect delimiting character; defaulted to \''+Papa.DefaultDelimiter+'\'');
+				addError('Delimiter', 'UndetectableDelimiter', 'Unable to auto-detect delimiting character; defaulted to \'' + Papa.DefaultDelimiter + '\'');
 				_delimiterError = false;
 			}
 
@@ -989,7 +1072,15 @@ var papaparse = createCommonjsModule(function (module, exports) {
 				return;
 			for (var i = 0; needsHeaderRow() && i < _results.data.length; i++)
 				for (var j = 0; j < _results.data[i].length; j++)
-					_fields.push(_results.data[i][j]);
+				{
+					var header = _results.data[i][j];
+
+					if (_config.trimHeaders) {
+						header = header.trim();
+					}
+
+					_fields.push(header);
+				}
 			_results.data.splice(0, 1);
 		}
 
@@ -998,7 +1089,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			if (_config.dynamicTypingFunction && _config.dynamicTyping[field] === undefined) {
 				_config.dynamicTyping[field] = _config.dynamicTypingFunction(field);
 			}
-			return (_config.dynamicTyping[field] || _config.dynamicTyping) === true
+			return (_config.dynamicTyping[field] || _config.dynamicTyping) === true;
 		}
 
 		function parseDynamic(field, value)
@@ -1009,8 +1100,12 @@ var papaparse = createCommonjsModule(function (module, exports) {
 					return true;
 				else if (value === 'false' || value === 'FALSE')
 					return false;
-				else
-					return tryParseFloat(value);
+				else if(FLOAT.test(value)) {
+					return parseFloat(value);
+				}
+				else {
+					return (value === '' ? null : value);
+				}
 			}
 			return value;
 		}
@@ -1024,7 +1119,8 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			{
 				var row = _config.header ? {} : [];
 
-				for (var j = 0; j < _results.data[i].length; j++)
+				var j;
+				for (j = 0; j < _results.data[i].length; j++)
 				{
 					var field = j;
 					var value = _results.data[i][j];
@@ -1080,7 +1176,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 				{
 					if (skipEmptyLines && preview.data[j].length === 1 && preview.data[j][0].length === 0) {
 						emptyLinesCount++;
-						continue
+						continue;
 					}
 					var fieldCount = preview.data[j].length;
 					avgFieldCount += fieldCount;
@@ -1113,12 +1209,12 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			return {
 				successful: !!bestDelim,
 				bestDelimiter: bestDelim
-			}
+			};
 		}
 
 		function guessLineEndings(input)
 		{
-			input = input.substr(0, 1024*1024);	// max length 1 MB
+			input = input.substr(0, 1024 * 1024);	// max length 1 MB
 
 			var r = input.split('\r');
 
@@ -1137,12 +1233,6 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			}
 
 			return numWithN >= r.length / 2 ? '\r\n' : '\r';
-		}
-
-		function tryParseFloat(val)
-		{
-			var isNumber = FLOAT.test(val);
-			return isNumber ? parseFloat(val) : val;
 		}
 
 		function addError(type, code, msg, row)
@@ -1171,11 +1261,16 @@ var papaparse = createCommonjsModule(function (module, exports) {
 		var step = config.step;
 		var preview = config.preview;
 		var fastMode = config.fastMode;
+		var quoteChar;
 		/** Allows for no quoteChar by setting quoteChar to undefined in config */
-		if (config.quoteChar === undefined){
-			var quoteChar = '"';
+		if (config.quoteChar === undefined) {
+			quoteChar = '"';
 		} else {
-			var quoteChar = config.quoteChar;
+			quoteChar = config.quoteChar;
+		}
+		var escapeChar = quoteChar;
+		if (config.escapeChar !== undefined) {
+			escapeChar = config.escapeChar;
 		}
 
 		// Delimiter must be valid
@@ -1193,7 +1288,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			comments = false;
 
 		// Newline must be valid: \r, \n, or \r\n
-		if (newline != '\n' && newline != '\r' && newline != '\r\n')
+		if (newline !== '\n' && newline !== '\r' && newline !== '\r\n')
 			newline = '\n';
 
 		// We're gonna need these at the Parser scope
@@ -1226,7 +1321,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 				var rows = input.split(newline);
 				for (var i = 0; i < rows.length; i++)
 				{
-					var row = rows[i];
+					row = rows[i];
 					cursor += row.length;
 					if (i !== rows.length - 1)
 						cursor += newline.length;
@@ -1255,7 +1350,8 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 			var nextDelim = input.indexOf(delim, cursor);
 			var nextNewline = input.indexOf(newline, cursor);
-			var quoteCharRegex = new RegExp(quoteChar+quoteChar, 'g');
+			var quoteCharRegex = new RegExp(escapeChar.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&') + quoteChar, 'g');
+			var quoteSearch;
 
 			// Parser loop
 			for (;;)
@@ -1264,7 +1360,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 				if (input[cursor] === quoteChar)
 				{
 					// Start our search for the closing quote where the cursor is
-					var quoteSearch = cursor;
+					quoteSearch = cursor;
 
 					// Skip the opening quote
 					cursor++;
@@ -1272,7 +1368,7 @@ var papaparse = createCommonjsModule(function (module, exports) {
 					for (;;)
 					{
 						// Find closing quote
-						var quoteSearch = input.indexOf(quoteChar, quoteSearch+1);
+						quoteSearch = input.indexOf(quoteChar, quoteSearch + 1);
 
 						//No other quotes are found - no other delimiters
 						if (quoteSearch === -1)
@@ -1291,34 +1387,45 @@ var papaparse = createCommonjsModule(function (module, exports) {
 						}
 
 						// Closing quote at EOF
-						if (quoteSearch === inputLen-1)
+						if (quoteSearch === inputLen - 1)
 						{
 							var value = input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar);
 							return finish(value);
 						}
 
 						// If this quote is escaped, it's part of the data; skip it
-						if (input[quoteSearch+1] === quoteChar)
+						// If the quote character is the escape character, then check if the next character is the escape character
+						if (quoteChar === escapeChar &&  input[quoteSearch + 1] === escapeChar)
 						{
 							quoteSearch++;
 							continue;
 						}
 
-						// Closing quote followed by delimiter
-						if (input[quoteSearch+1] === delim)
+						// If the quote character is not the escape character, then check if the previous character was the escape character
+						if (quoteChar !== escapeChar && quoteSearch !== 0 && input[quoteSearch - 1] === escapeChar)
+						{
+							continue;
+						}
+
+						var spacesBetweenQuoteAndDelimiter = extraSpaces(nextDelim);
+
+						// Closing quote followed by delimiter or 'unnecessary steps + delimiter'
+						if (input[quoteSearch + 1 + spacesBetweenQuoteAndDelimiter] === delim)
 						{
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
-							cursor = quoteSearch + 1 + delimLen;
+							cursor = quoteSearch + 1 + spacesBetweenQuoteAndDelimiter + delimLen;
 							nextDelim = input.indexOf(delim, cursor);
 							nextNewline = input.indexOf(newline, cursor);
 							break;
 						}
 
-						// Closing quote followed by newline
-						if (input.substr(quoteSearch+1, newlineLen) === newline)
+						var spacesBetweenQuoteAndNewLine = extraSpaces(nextNewline);
+
+						// Closing quote followed by newline or 'unnecessary spaces + newLine'
+						if (input.substr(quoteSearch + 1 + spacesBetweenQuoteAndNewLine, newlineLen) === newline)
 						{
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
-							saveRow(quoteSearch + 1 + newlineLen);
+							saveRow(quoteSearch + 1 + spacesBetweenQuoteAndNewLine + newlineLen);
 							nextDelim = input.indexOf(delim, cursor);	// because we may have skipped the nextDelim in the quoted field
 
 							if (stepIsFunction)
@@ -1405,6 +1512,21 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			}
 
 			/**
+             * checks if there are extra spaces after closing quote and given index without any text
+             * if Yes, returns the number of spaces
+             */
+			function extraSpaces(index) {
+				var spaceLength = 0;
+				if (index !== -1) {
+					var textBetweenClosingQuoteAndIndex = input.substring(quoteSearch + 1, index);
+					if (textBetweenClosingQuoteAndIndex && textBetweenClosingQuoteAndIndex.trim() === '') {
+						spaceLength = textBetweenClosingQuoteAndIndex.length;
+					}
+				}
+				return spaceLength;
+			}
+
+			/**
 			 * Appends the remaining input from cursor to the end into
 			 * row, saves the row, calls step, and returns the results.
 			 */
@@ -1456,7 +1578,8 @@ var papaparse = createCommonjsModule(function (module, exports) {
 			function doStep()
 			{
 				step(returnable());
-				data = [], errors = [];
+				data = [];
+				errors = [];
 			}
 		};
 
@@ -1611,11 +1734,97 @@ var papaparse = createCommonjsModule(function (module, exports) {
 
 	return Papa;
 }));
-});
 
-var DefaultConfig = "{\r\n  \"https://github.com/alpheios-project/grammar-bennett\": {\r\n    \"base_url\": \"https://grammars.alpheios.net/bennett/\",\r\n    \"index_url\": \"https://grammars.alpheios.net/bennett/index/alph-index-bennett\",\r\n    \"description\": \"New Latin Grammar, by Charles E. Bennett\",\r\n    \"rights\": \"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\r\n    \"langs\": {\r\n      \"source\": \"lat\",\r\n      \"target\": \"en\"\r\n    }\r\n  },\r\n  \"https://github.com/alpheios-project/grammar-smyth\": {\r\n    \"base_url\": \"https://grammars.alpheios.net/smyth/xhtml/\",\r\n    \"index_url\": \"https://grammars.alpheios.net/smyth/index/alph-index-smyth\",\r\n    \"description\": \"Smyth's Greek Grammar For Colleges\",\r\n    \"rights\": \"Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth.\",\r\n    \"langs\": {\r\n      \"source\": \"grc\",\r\n      \"target\": \"en\"\r\n    }\r\n  }\r\n}\r\n";
 
-class GrammarResAdapter extends BaseResourceAdapter {
+/***/ }),
+
+/***/ "./base_adapter.js":
+/*!*************************!*\
+  !*** ./base_adapter.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * Base Adapter Class for a Resource Service
+ */
+class BaseResourceAdapter {
+  /**
+   * get resources from the provider
+   * @param {Object} keyObj the object containing the data for lookup
+   * @return {Object[]} an array of results
+   */
+  async getResources (keyObj) {
+    return []
+  }
+
+  static getProviders (lang) {
+    return new Map()
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (BaseResourceAdapter);
+
+
+/***/ }),
+
+/***/ "./driver.js":
+/*!*******************!*\
+  !*** ./driver.js ***!
+  \*******************/
+/*! exports provided: Grammars, GrammarResAdapter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./grammar/grammar_adapter */ "./grammar/grammar_adapter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GrammarResAdapter", function() { return _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _grammars__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./grammars */ "./grammars.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Grammars", function() { return _grammars__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./grammar/config.json":
+/*!*****************************!*\
+  !*** ./grammar/config.json ***!
+  \*****************************/
+/*! exports provided: https://github.com/alpheios-project/grammar-bennett, https://github.com/alpheios-project/grammar-smyth, default */
+/***/ (function(module) {
+
+module.exports = {"https://github.com/alpheios-project/grammar-bennett":{"base_url":"https://grammars.alpheios.net/bennett/","index_url":"https://grammars.alpheios.net/bennett/index/alph-index-bennett","description":"New Latin Grammar, by Charles E. Bennett","rights":"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.","langs":{"source":"lat","target":"en"}},"https://github.com/alpheios-project/grammar-smyth":{"base_url":"https://grammars.alpheios.net/smyth/xhtml/","index_url":"https://grammars.alpheios.net/smyth/index/alph-index-smyth","description":"Smyth's Greek Grammar For Colleges","rights":"Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth.","langs":{"source":"grc","target":"en"}}};
+
+/***/ }),
+
+/***/ "./grammar/grammar_adapter.js":
+/*!************************************!*\
+  !*** ./grammar/grammar_adapter.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _base_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../base_adapter.js */ "./base_adapter.js");
+/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! papaparse */ "../node_modules/papaparse/papaparse.js");
+/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config.json */ "./grammar/config.json");
+var _config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/Object.assign({}, _config_json__WEBPACK_IMPORTED_MODULE_3__, {"default": _config_json__WEBPACK_IMPORTED_MODULE_3__});
+
+
+
+
+
+class GrammarResAdapter extends _base_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * A Client Adapter for the Alpheios V1 Lexicon service
    * @constructor
@@ -1624,9 +1833,9 @@ class GrammarResAdapter extends BaseResourceAdapter {
    * @param {Object} config - JSON configuration object override
    */
   constructor (resid = null, config = null) {
-    super();
-    this.resid = resid;
-    this.index = null;
+    super()
+    this.resid = resid
+    this.index = null
     // this is a bit of a hack to enable inclusion of a JSON config file
     // in a way that works both pre and post-rollup. Our rollup config
     // will stringify the file and then we can parse it but if we want to
@@ -1634,15 +1843,15 @@ class GrammarResAdapter extends BaseResourceAdapter {
     // which works with the raw ES6 import
     if (config == null) {
       try {
-        let fullconfig = JSON.parse(DefaultConfig);
-        this.config = fullconfig[resid];
+        let fullconfig = JSON.parse(_config_json__WEBPACK_IMPORTED_MODULE_3__)
+        this.config = fullconfig[resid]
       } catch (e) {
-        this.config = DefaultConfig[resid];
+        this.config = _config_json__WEBPACK_IMPORTED_MODULE_3__[resid]
       }
     } else {
-      this.config = config;
+      this.config = config
     }
-    this.provider = new ResourceProvider(this.resid, this.config.rights);
+    this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["ResourceProvider"](this.resid, this.config.rights)
   }
 
   /**
@@ -1652,30 +1861,30 @@ class GrammarResAdapter extends BaseResourceAdapter {
   async getResources (keyObj) {
     // TODO figure out the best way to handle initial reading of the data file
     if (this.index === null && this.getConfig('index_url')) {
-      let url = this.getConfig('index_url');
-      let unparsed = await this._loadData(url);
-      let parsed = papaparse.parse(unparsed, {});
-      this.index = this._fillMap(parsed.data);
+      let url = this.getConfig('index_url')
+      let unparsed = await this._loadData(url)
+      let parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, {})
+      this.index = this._fillMap(parsed.data)
     }
 
-    let found = [];
-    let key = keyObj.type;
+    let found = []
+    let key = keyObj.type
     if (keyObj.value) {
-      key = `${key}-${keyObj.value}`;
+      key = `${key}-${keyObj.value}`
     }
     if (this.index) {
-      found = this._lookupInDataIndex(this.index, key);
+      found = this._lookupInDataIndex(this.index, key)
     }
-    let baseUrl = this.getConfig('base_url');
-    let resources = [];
+    let baseUrl = this.getConfig('base_url')
+    let resources = []
     for (let url of found) {
-      let res = {};
+      let res = {}
       if (baseUrl) {
-        res.url = `${baseUrl}${url}`;
+        res.url = `${baseUrl}${url}`
       } else {
-        res.url = url;
+        res.url = url
       }
-      resources.push(ResourceProvider.getProxy(this.provider, res));
+      resources.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["ResourceProvider"].getProxy(this.provider, res))
     }
     return resources
   }
@@ -1687,16 +1896,16 @@ class GrammarResAdapter extends BaseResourceAdapter {
    * @return {string} the index entry as a text string
    */
   _lookupInDataIndex (data, key) {
-    let found = data.get(key);
+    let found = data.get(key)
     // legacy , look for key preceded by alph-
     if (!found) {
-      key = `alph-${key}`;
-      found = data.get(key);
+      key = `alph-${key}`
+      found = data.get(key)
     }
     // final fallback try for an index
     if (!found) {
-      key = `alph-general-index`;
-      found = data.get(key);
+      key = `alph-general-index`
+      found = data.get(key)
     }
     if (found) {
       return [found]
@@ -1715,12 +1924,12 @@ class GrammarResAdapter extends BaseResourceAdapter {
     return new Promise((resolve, reject) => {
       window.fetch(url).then(
         function (response) {
-          let text = response.text();
-          resolve(text);
+          let text = response.text()
+          resolve(text)
         }
       ).catch((error) => {
-        reject(error);
-      });
+        reject(error)
+      })
     })
   }
 
@@ -1732,12 +1941,12 @@ class GrammarResAdapter extends BaseResourceAdapter {
    * @return {Map} the filled map
    */
   _fillMap (rows) {
-    let data = new Map();
+    let data = new Map()
     for (let row of rows) {
       if (data.has(row[0])) {
-        data.get(row[0]).push(row[1]);
+        data.get(row[0]).push(row[1])
       } else {
-        data.set(row[0], [ row[1] ]);
+        data.set(row[0], [ row[1] ])
       }
     }
     return data
@@ -1756,23 +1965,43 @@ class GrammarResAdapter extends BaseResourceAdapter {
    * @override BaseAdapter#getProviders
    */
   static getProviders (language) {
-    let fullconfig;
-    let grammars = new Map();
+    let fullconfig
+    let grammars = new Map()
     try {
-      fullconfig = JSON.parse(DefaultConfig);
+      fullconfig = JSON.parse(_config_json__WEBPACK_IMPORTED_MODULE_3__)
     } catch (e) {
-      fullconfig = DefaultConfig;
+      fullconfig = _config_json__WEBPACK_IMPORTED_MODULE_3__
     }
     for (let l of Object.keys(fullconfig)) {
       if (fullconfig[l].langs.source === language) {
-        grammars.set(l, fullconfig[l].description);
+        grammars.set(l, fullconfig[l].description)
       }
     }
     return grammars
   }
 }
+/* harmony default export */ __webpack_exports__["default"] = (GrammarResAdapter);
 
-let grammars = new Map(); // Maps a language ID into an array of grammars
+
+/***/ }),
+
+/***/ "./grammars.js":
+/*!*********************!*\
+  !*** ./grammars.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Grammars; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./grammar/grammar_adapter */ "./grammar/grammar_adapter.js");
+
+
+
+let grammars = new Map() // Maps a language ID into an array of grammars
 
 class Grammars {
   /**
@@ -1793,42 +2022,42 @@ class Grammars {
    * a Definition object or resolved with an error if request cannot be made/failed/timeout expired.
    */
   static fetchResources (feature, requestOptions) {
-    let options = Object.assign(Grammars.defaults, requestOptions);
+    let options = Object.assign(Grammars.defaults, requestOptions)
 
-    let requests = [];
+    let requests = []
     try {
-      let adapters = Grammars.getGrammarAdapters(feature.languageID);
+      let adapters = Grammars.getGrammarAdapters(feature.languageID)
       if (!adapters || adapters.length === 0) { return [] } // No adapters found for this language
       requests = adapters.map(adapter => {
-        console.log(`Preparing a request to "${adapter.config.description}"`);
+        console.log(`Preparing a request to "${adapter.config.description}"`)
         return new Promise((resolve, reject) => {
-          let timeout = 0;
+          let timeout = 0
           if (options.timeout > 0) {
             timeout = window.setTimeout(() => {
-              reject(new Error(`Timeout of ${options.timeout} ms has been expired for a request to "${adapter.config.description}"`));
-            }, options.timeout);
+              reject(new Error(`Timeout of ${options.timeout} ms has been expired for a request to "${adapter.config.description}"`))
+            }, options.timeout)
           }
 
           try {
             adapter.getResources(feature)
               .then(value => {
-                console.log(`A url has been returned from "${adapter.config.description}"`, value);
-                if (timeout) { window.clearTimeout(timeout); }
+                console.log(`A url has been returned from "${adapter.config.description}"`, value)
+                if (timeout) { window.clearTimeout(timeout) }
                 // value is a Definition object wrapped in a Proxy
-                resolve(value);
+                resolve(value)
               }).catch(error => {
-                if (timeout) { window.clearTimeout(timeout); }
-                reject(error);
-              });
+                if (timeout) { window.clearTimeout(timeout) }
+                reject(error)
+              })
           } catch (error) {
-            reject(error);
+            reject(error)
           }
         })
-      });
+      })
 
       return requests
     } catch (error) {
-      console.log(`Unable to fetch resources due to: ${error}`);
+      console.log(`Unable to fetch resources due to: ${error}`)
       return []
     }
   }
@@ -1841,13 +2070,29 @@ class Grammars {
   static getGrammarAdapters (languageID) {
     if (!grammars.has(languageID)) {
       // As getLexicons need a language code, let's convert a language ID to a code
-      let languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID);
+      let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
 
-      let grammarsList = GrammarResAdapter.getProviders(languageCode);
-      grammars.set(languageID, Array.from(grammarsList.keys()).map(id => new GrammarResAdapter(id)));
+      let grammarsList = _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__["default"].getProviders(languageCode)
+      grammars.set(languageID, Array.from(grammarsList.keys()).map(id => new _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__["default"](id)))
     }
     return grammars.get(languageID)
   }
 }
 
-export { Grammars, GrammarResAdapter };
+
+/***/ }),
+
+/***/ "alpheios-data-models":
+/*!***************************************!*\
+  !*** external "alpheios-data-models" ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
+
+/***/ })
+
+/******/ });
+});
+//# sourceMappingURL=alpheios-res-client.js.map
