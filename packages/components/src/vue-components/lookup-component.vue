@@ -21,6 +21,7 @@
     },
     methods: {
       'lookup': function () {
+      	console.log('*********************lookup', this.lookuptext)
         if (this.lookuptext.length === 0) {
           return null
         }

@@ -42,8 +42,8 @@ export default class LexicalQuery extends Query {
   static createForLookup (textSelector) {
     let manifest = { version: '1.0', name: 'Alpheios Embedded Library' }
     let template = { html: Template, panelId: 'alpheios-panel-embedded', popupId: 'alpheios-popup-embedded' }
-    let options = new ContentOptions()
-    let resourceOptions = new ResourceOptions()
+    let options = new ContentOptions(this.optionSaver, this.optionLoader)
+    let resourceOptions = new ResourceOptions(this.optionSaver, this.optionLoader)
     let state = new State()
 
     let uiController = new UIController(state, options, resourceOptions, manifest, template)
@@ -60,6 +60,18 @@ export default class LexicalQuery extends Query {
 
       resourceOptions: resourceOptions,
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
+    })
+  }
+
+  optionSaver () {
+    return new Promise((resolve, reject) => {
+      reject(new Error('save not implemented'))
+    })
+  }
+
+  optionLoader () {
+    return new Promise((resolve, reject) => {
+      reject(new Error('load not implemented'))
     })
   }
 
