@@ -2,7 +2,7 @@
 	<div class="alpheios-lookup_form">
 		<input class="uk-input lookup_input" type="text" placeholder="Type text" v-model="lookuptext">
 		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" 
-			@click="lookup" @keyup.enter="lookup"
+			@click="lookup" @keyup.enter.native="lookup"
 		>
 			Lookup
 		</button>
@@ -27,7 +27,6 @@
     },
     methods: {
       'lookup': function () {
-      	console.log('*********************lookup', this.lookuptext)
         if (this.lookuptext.length === 0) {
           return null
         }
@@ -38,6 +37,7 @@
           	targetRect: {top: 10, left: 10}
           }, this.uiController)
           .getData()
+        this.lookuptext = ''
       }
     }
   }
