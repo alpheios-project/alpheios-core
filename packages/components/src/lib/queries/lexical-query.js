@@ -49,7 +49,12 @@ export default class LexicalQuery extends Query {
     uiController.updateLanguage(textSelector.languageCode)
 
     return Query.create(LexicalQuery, textSelector, {
-      htmlSelector: htmlSelector,
+      htmlSelector: {
+        targetRect: {
+          top: 0,
+          left: 0
+        }
+      },
       uiController: uiController,
       maAdapter: new AlpheiosTuftsAdapter(),
       lexicons: Lexicons,
@@ -75,8 +80,6 @@ export default class LexicalQuery extends Query {
 
   async getData () {
     this.languageID = LMF.getLanguageIdFromCode(this.selector.languageCode)
-    console.log('**************lexical query getData 1', this.htmlSelector.targetRect)
-    console.log('**************lexical query getData 2', this.ui.setTargetRect(this.htmlSelector.targetRect))
     this.ui.setTargetRect(this.htmlSelector.targetRect).newLexicalRequest().message(`Please wait while data is retrieved ...`)
     this.ui.showStatusInfo(this.selector.normalizedText, this.languageID)
     let iterator = this.iterations()

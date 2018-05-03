@@ -34,10 +34,7 @@
         }
         let textSelector = TextSelector.createObjectFromText(this.lookuptext)
         LexicalQuery
-          .createForLookup(textSelector,
-          {
-          	targetRect: {top: 10, left: 10}
-          }, this.uiController)
+          .createForLookup(textSelector, this.uiController)
           .getData()
         this.lookuptext = ''
       }
