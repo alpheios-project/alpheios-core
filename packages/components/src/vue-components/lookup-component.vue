@@ -33,7 +33,7 @@
           .createForLookup(textSelector,
           {
           	targetRect: {top: 10, left: 10}
-          }, uiController)
+          }, this.uiController)
           .getData()
       }
     }
