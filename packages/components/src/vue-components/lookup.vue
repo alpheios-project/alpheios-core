@@ -4,9 +4,9 @@
 			@keyup.enter="lookup"
 		>
 		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" 
-			@click="lookup" v-if="l10nmessages"
+			@click="lookup" 
 		>
-			{{ l10nmessages.LABEL_LOOKUP_BUTTON}}
+			{{ buttonLabel }}
 		</button>
 	</div>
 </template>
