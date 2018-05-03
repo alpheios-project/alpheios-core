@@ -2,7 +2,8 @@
     <div ref="popup" class="alpheios-popup auk" v-bind:class="data.classes" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}"
          v-show="visible" :data-notification-visible="data.notification.visible">
         <span class="alpheios-popup__close-btn" @click="closePopup" :title="data.l10n.messages.TOOLTIP_POPUP_CLOSE">
-            <close-icon></close-icon>
+            <!-- <close-icon></close-icon> -->
+            <svg-icon icon="close"></svg-icon>
         </span>
         <div class="alpheios-popup__header">
             <div class="alpheios-popup__header-text">
@@ -66,6 +67,7 @@
 
   // Embeddable SVG icons
   import CloseIcon from '../images/inline-icons/close.svg'
+  import SvgIcon from './svg-icon.vue'
 
   export default {
     name: 'Popup',
@@ -74,7 +76,8 @@
       setting: Setting,
       closeIcon: CloseIcon,
       alphTooltip: Tooltip,
-      lookup: Lookup
+      lookup: Lookup,
+      svgIcon: SvgIcon
     },
     data: function () {
       return {
