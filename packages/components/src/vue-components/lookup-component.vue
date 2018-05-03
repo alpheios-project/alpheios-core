@@ -12,7 +12,7 @@
 </template>
 <script>
   import TextSelector from '../lib/selection/text-selector'
-  import LexicalQuery from '../lib/queries/lexical-query'
+  import LexicalQueryLookup from '../lib/queries/lexical-query-lookup'
 
   export default {
     name: 'LookupComponent',
@@ -33,7 +33,7 @@
           return null
         }
         let textSelector = TextSelector.createObjectFromText(this.lookuptext)
-        LexicalQuery
+        LexicalQueryLookup
           .createForLookup(textSelector, this.uiController)
           .getData()
         this.lookuptext = ''

@@ -1,16 +1,6 @@
-import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym } from 'alpheios-data-models'
 import { LanguageDatasetFactory as LDF } from 'alpheios-inflection-tables'
 import Query from './query.js'
-
-import {LemmaTranslations} from 'alpheios-lemma-client'
-import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
-import {Lexicons} from 'alpheios-lexicon-client'
-
-import ResourceOptions from '../options/resource-options'
-// import ContentOptions from '../options/content-options'
-// import UIController from '../controllers/ui-controller'
-// import Template from '../controllers/template.htmlf'
-// import State from '../controllers/ui-state'
 
 export default class LexicalQuery extends Query {
   constructor (name, selector, options) {
@@ -37,45 +27,6 @@ export default class LexicalQuery extends Query {
 
   static create (selector, options) {
     return Query.create(LexicalQuery, selector, options)
-  }
-
-  static createForLookup (textSelector, uiController) {
-    // let manifest = { version: '1.0', name: 'Alpheios Embedded Library' }
-    // let template = { html: Template, panelId: 'alpheios-panel-embedded', popupId: 'alpheios-popup-embedded' }
-    // let options = new ContentOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
-    let resourceOptions = new ResourceOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
-    // let state = new State()
-
-    uiController.updateLanguage(textSelector.languageCode)
-
-    return Query.create(LexicalQuery, textSelector, {
-      htmlSelector: {
-        targetRect: {
-          top: 0,
-          left: 0
-        }
-      },
-      uiController: uiController,
-      maAdapter: new AlpheiosTuftsAdapter(),
-      lexicons: Lexicons,
-
-      lemmaTranslations: LemmaTranslations,
-
-      resourceOptions: resourceOptions,
-      langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-    })
-  }
-
-  static optionSaver () {
-    return new Promise((resolve, reject) => {
-      reject(new Error('save not implemented'))
-    })
-  }
-
-  static optionLoader () {
-    return new Promise((resolve, reject) => {
-      reject(new Error('load not implemented'))
-    })
   }
 
   async getData () {
