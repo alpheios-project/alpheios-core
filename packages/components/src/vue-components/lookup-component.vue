@@ -29,7 +29,7 @@
         LexicalQuery
           .createForLookup(textSelector,
           {
-          	target: {top: 146, left: 129}
+          	targetRect: {top: 146, left: 129}
           })
           .getData()
       }
