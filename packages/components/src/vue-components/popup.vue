@@ -62,6 +62,7 @@
   import Logger from '../lib/log/logger'
 
   import Lookup from './lookup.vue'
+  import Tooltip from './tooltip.vue'
 
   // Embeddable SVG icons
   import CloseIcon from '../images/inline-icons/close.svg'
@@ -72,7 +73,8 @@
       morph: Morph,
       setting: Setting,
       closeIcon: CloseIcon,
-      lookup: Lookup
+      lookup: Lookup,
+      alphTooltip: Tooltip
     },
     data: function () {
       return {
