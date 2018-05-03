@@ -183,7 +183,6 @@ export default class LexicalQuery extends Query {
         console.log('LexicalQuery completed successfully')
       }
 
-      console.log('**************Lexical Query homonym', this.homonym)
       // we might have previous requests which succeeded so go ahead and try
       // to show language info. It will catch empty data.
       this.ui.showLanguageInfo(this.homonym)
