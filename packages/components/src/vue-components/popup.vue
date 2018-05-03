@@ -444,8 +444,6 @@
         .resizable(this.resizableSettings())
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
-
-      console.log('******************************IS POPUP mounted ', this)
     },
 
     /**
