@@ -6,7 +6,7 @@
 		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" 
 			@click="lookup" 
 		>
-			Lookup
+			{{ l10nmessages.LABEL_LOOKUP_BUTTON}}
 		</button>
 	</div>
 </template>
@@ -15,7 +15,7 @@
   import LexicalQueryLookup from '../lib/queries/lexical-query-lookup'
 
   export default {
-    name: 'LookupComponent',
+    name: 'Lookup',
     data () {
       return {
       	lookuptext: ''
@@ -23,6 +23,10 @@
     },
     props: {
       uiController: {
+        type: Object,
+        required: true
+      },
+      l10nmessages: {
         type: Object,
         required: true
       }

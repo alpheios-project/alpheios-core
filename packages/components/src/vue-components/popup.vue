@@ -52,7 +52,7 @@
                      v-show="data.notification.showLanguageSwitcher"></setting>
         </div>
 
-        <lookup-component :uiController="uiController"></lookup-component>
+        <lookup :uiController="uiController" :l10nmessages="data.l10n.messages"></lookup>
     </div>
 </template>
 <script>
@@ -61,7 +61,7 @@
   import interact from 'interactjs'
   import Logger from '../lib/log/logger'
 
-  import LookupComponent from './lookup-component.vue'
+  import Lookup from './lookup.vue'
 
   // Embeddable SVG icons
   import CloseIcon from '../images/inline-icons/close.svg'
@@ -72,7 +72,7 @@
       morph: Morph,
       setting: Setting,
       closeIcon: CloseIcon,
-      lookupComponent: LookupComponent
+      lookup: Lookup
     },
     data: function () {
       return {

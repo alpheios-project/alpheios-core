@@ -292,5 +292,10 @@
     "message": "Send Experiences to remote server",
     "description": "send exp data context menu label",
     "component": "UI"
+  },
+  "LABEL_LOOKUP_BUTTON": {
+    "message": "Lookup",
+    "description": "lookup button in lookup.vue",
+    "component": "Popup"
   }
 }
