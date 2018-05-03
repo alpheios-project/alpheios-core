@@ -1,13 +1,21 @@
 <template>
 	<div class="alpheios-lookup_form">
-		<input class="uk-input lookup_input" type="text" placeholder="Type text">
-		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1">Lookup</button>
+		<input class="uk-input lookup_input" type="text" placeholder="Type text" v-model="lookuptext">
+		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" @click="lookup">Lookup</button>
 	</div>
 </template>
 <script>
   export default {
     name: 'LookupComponent',
-    props: {
+    data () {
+      return {
+      	lookuptext: ''
+      }
+    },
+    methods: {
+      'lookup': function () {
+      	console.log('looking for', this.lookuptext)
+      }
     }
   }
 </script>
@@ -24,7 +32,13 @@
 		    height: 30px;
 		    font-size: 14px;
 		    margin-bottom: 10px;
+		    vertical-align: top;
 		}
+
+		.uk-button {
+			font-size: 12px;
+    		vertical-align: top;
+    	}
     }
 </style>
 
