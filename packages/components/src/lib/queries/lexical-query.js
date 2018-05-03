@@ -42,8 +42,8 @@ export default class LexicalQuery extends Query {
   static createForLookup (textSelector) {
     let manifest = { version: '1.0', name: 'Alpheios Embedded Library' }
     let template = { html: Template, panelId: 'alpheios-panel-embedded', popupId: 'alpheios-popup-embedded' }
-    let options = new ContentOptions(this.optionSaver, this.optionLoader)
-    let resourceOptions = new ResourceOptions(this.optionSaver, this.optionLoader)
+    let options = new ContentOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
+    let resourceOptions = new ResourceOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
     let state = new State()
 
     let uiController = new UIController(state, options, resourceOptions, manifest, template)
@@ -63,13 +63,13 @@ export default class LexicalQuery extends Query {
     })
   }
 
-  optionSaver () {
+  static optionSaver () {
     return new Promise((resolve, reject) => {
       reject(new Error('save not implemented'))
     })
   }
 
-  optionLoader () {
+  static optionLoader () {
     return new Promise((resolve, reject) => {
       reject(new Error('load not implemented'))
     })
