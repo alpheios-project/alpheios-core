@@ -62,6 +62,7 @@ export default class TextSelector {
     let options = new ContentOptions()
     textSelector.languageCode = options.items.preferredLanguage.currentValue
     textSelector.languageID = LanguageModelFactory.getLanguageIdFromCode(textSelector.languageCode)
+    textSelector.model = LanguageModelFactory.getLanguageModel(textSelector.languageID)
     return textSelector
   }
 
