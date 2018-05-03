@@ -1,12 +1,16 @@
 <template>
 	<div class="alpheios-lookup_form">
 		<input class="uk-input lookup_input" type="text" placeholder="Type text" v-model="lookuptext">
-		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" @click="lookup">Lookup</button>
+		<button class="uk-button uk-button-primary uk-button-small" type="button" tabindex="-1" 
+			@click="lookup" @keyup.enter="lookup"
+		>
+			Lookup
+		</button>
 	</div>
 </template>
 <script>
   import TextSelector from '../lib/selection/text-selector'
-
+  import LexicalQuery from '../lib/queries/lexical-query'
 
   export default {
     name: 'LookupComponent',
@@ -17,12 +21,11 @@
     },
     methods: {
       'lookup': function () {
-        // console.log('looking for', this.lookuptext)
         if (this.lookuptext.length === 0) {
           return null
         }
         let textSelector = TextSelector.createObjectFromText(this.lookuptext)
-        console.log('*********** lookup textSelector', textSelector)
+        LexicalQuery.createForLookup(textSelector).getData()
       }
     }
   }
