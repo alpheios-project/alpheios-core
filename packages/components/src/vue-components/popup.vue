@@ -129,6 +129,9 @@
     },
 
     computed: {
+      uiController: function () {
+        return this.$parent.uiController
+      },
       logger: function() {
         console.log(`Verbose = ${this.data.verboseMode}`)
         return Logger.getLogger(this.data.verboseMode)
@@ -442,7 +445,7 @@
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
 
-      console.log('******************************IS POPUP mounted ', this.$parent.uiController)
+      // console.log('******************************IS POPUP mounted ', this.$parent.uiController)
     },
 
     /**
