@@ -34,7 +34,9 @@
     },
     computed: {
       buttonLabel: function () {
-      	console.log('**********************button label', this.ui.l10n.messages.LABEL_LOOKUP_BUTTON)
+      	if (this.uiController) {
+      	  console.log('**********************button label', this.uiController.l10n.messages.LABEL_LOOKUP_BUTTON)
+      	}
 
       	if (this.l10nmessages && this.l10nmessages.LABEL_LOOKUP_BUTTON) {
       	  return this.l10nmessages.LABEL_LOOKUP_BUTTON
