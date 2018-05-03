@@ -6,6 +6,7 @@ describe('lemma-translation.test.js', () => {
   let lemmaKey = 'capio-lat-verb-3rd-very frequent-Ox.Lat.Dict.-transitive'
   let translations = {}
   translations[lemmaKey] = {glosses: ['taking/seizing; [usus ~ => getting ownership by continued possession];']}
+
   let translationsNoValue = {}
 
   it('show hasValue for lemmakey with translations', () => {
