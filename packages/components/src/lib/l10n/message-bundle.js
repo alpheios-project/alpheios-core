@@ -19,6 +19,8 @@ export default class MessageBundle {
 
     this._locale = locale
     this.messages = {}
+    console.warn('**********************MessageBundle')
+    console.warn('**********************MessageBundle', typeof messagesJSON)
     let jsonObject = JSON.parse(messagesJSON)
     for (const [key, message] of Object.entries(jsonObject)) {
       if (!this.hasOwnProperty(key)) {

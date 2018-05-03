@@ -6,7 +6,7 @@ import UIController from '../../src/lib/controllers/ui-controller'
 import State from '../../src/lib/controllers/ui-state'
 import ContentOptionsfrom from '../../src/lib/options/content-options'
 import ResourceOptions from '../../src/lib/options/resource-options'
-import Template from '../../src/lib/controllers/template.htmlf'
+// import Template from '../../src/lib/controllers/template.htmlf'
 
 describe('lookup.test.js', () => {
   let spy
@@ -26,10 +26,9 @@ describe('lookup.test.js', () => {
 
   let options = new ContentOptionsfrom(optionSaver, optionLoader)
   let resourceOptions = new ResourceOptions(optionSaver, optionLoader)
-  let manifest = { version: '1.0', name: 'Alpheios Embedded Library' }
-  let template = { html: Template, panelId: 'alpheios-panel-embedded', popupId: 'alpheios-popup-embedded' }
 
-  let uiController = new UIController(state, options, resourceOptions, manifest, template)
+  let uiController = new UIController(state, options, resourceOptions)
+  uiController.updateLanguage('eng')
 
   it('If there is an empty uiController - error is thrown', () => {
     spy = jest.spyOn(console, 'error')
