@@ -36,6 +36,7 @@
         LexicalQueryLookup
           .createForLookup(textSelector, this.uiController)
           .getData()
+
         this.lookuptext = ''
       }
     }

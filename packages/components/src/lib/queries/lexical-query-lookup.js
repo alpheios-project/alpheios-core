@@ -11,15 +11,11 @@ import ResourceOptions from '../options/resource-options'
 export default class LexicalQueryLookup extends LexicalQuery {
   static createForLookup (textSelector, uiController) {
     let resourceOptions = new ResourceOptions(LexicalQueryLookup.optionSaver, LexicalQueryLookup.optionLoader)
+
     uiController.updateLanguage(textSelector.languageCode)
 
-    return Query.create(LexicalQuery, textSelector, {
-      htmlSelector: {
-        targetRect: {
-          top: 0,
-          left: 0
-        }
-      },
+    return Query.create(LexicalQueryLookup, textSelector, {
+      htmlSelector: LexicalQueryLookup.getDumpHTMLSelector(),
       uiController: uiController,
       maAdapter: new AlpheiosTuftsAdapter(),
       lexicons: Lexicons,
@@ -41,5 +37,14 @@ export default class LexicalQueryLookup extends LexicalQuery {
     return new Promise((resolve, reject) => {
       reject(new Error('load not implemented'))
     })
+  }
+
+  static getDumpHTMLSelector () {
+    return {
+      targetRect: {
+        top: 0,
+        left: 0
+      }
+    }
   }
 }
