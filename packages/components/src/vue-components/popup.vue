@@ -52,7 +52,7 @@
                      v-show="data.notification.showLanguageSwitcher"></setting>
         </div>
 
-        <lookup :uiController="uiController" :l10nmessages="data.l10n.messages"></lookup>
+        <lookup :uiController="uiController"></lookup>
     </div>
 </template>
 <script>
