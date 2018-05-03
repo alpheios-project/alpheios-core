@@ -7,10 +7,10 @@ import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
 import {Lexicons} from 'alpheios-lexicon-client'
 
 import ResourceOptions from '../options/resource-options'
-import ContentOptions from '../options/content-options'
-import UIController from '../controllers/ui-controller'
-import Template from '../controllers/template.htmlf'
-import State from '../controllers/ui-state'
+// import ContentOptions from '../options/content-options'
+// import UIController from '../controllers/ui-controller'
+// import Template from '../controllers/template.htmlf'
+// import State from '../controllers/ui-state'
 
 export default class LexicalQuery extends Query {
   constructor (name, selector, options) {
@@ -39,14 +39,12 @@ export default class LexicalQuery extends Query {
     return Query.create(LexicalQuery, selector, options)
   }
 
-  static createForLookup (textSelector, htmlSelector) {
-    let manifest = { version: '1.0', name: 'Alpheios Embedded Library' }
-    let template = { html: Template, panelId: 'alpheios-panel-embedded', popupId: 'alpheios-popup-embedded' }
-    let options = new ContentOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
+  static createForLookup (textSelector, htmlSelector, uiController) {
+    // let manifest = { version: '1.0', name: 'Alpheios Embedded Library' }
+    // let template = { html: Template, panelId: 'alpheios-panel-embedded', popupId: 'alpheios-popup-embedded' }
+    // let options = new ContentOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
     let resourceOptions = new ResourceOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
-    let state = new State()
-
-    let uiController = new UIController(state, options, resourceOptions, manifest, template)
+    // let state = new State()
 
     uiController.updateLanguage(textSelector.languageCode)
 

@@ -52,7 +52,7 @@
                      v-show="data.notification.showLanguageSwitcher"></setting>
         </div>
 
-        <lookup-component></lookup-component>
+        <lookup-component :uiController="uiController"></lookup-component>
     </div>
 </template>
 <script>

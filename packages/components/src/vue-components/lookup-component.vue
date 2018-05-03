@@ -19,6 +19,9 @@
       	lookuptext: ''
       }
     },
+    props: {
+      uiController
+    },
     methods: {
       'lookup': function () {
       	console.log('*********************lookup', this.lookuptext)
@@ -29,8 +32,8 @@
         LexicalQuery
           .createForLookup(textSelector,
           {
-          	targetRect: {top: 146, left: 129}
-          })
+          	targetRect: {top: 10, left: 10}
+          }, uiController)
           .getData()
       }
     }
