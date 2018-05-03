@@ -39,7 +39,7 @@ export default class LexicalQuery extends Query {
     return Query.create(LexicalQuery, selector, options)
   }
 
-  static createForLookup (textSelector) {
+  static createForLookup (textSelector, htmlSelector) {
     let manifest = { version: '1.0', name: 'Alpheios Embedded Library' }
     let template = { html: Template, panelId: 'alpheios-panel-embedded', popupId: 'alpheios-popup-embedded' }
     let options = new ContentOptions(LexicalQuery.optionSaver, LexicalQuery.optionLoader)
@@ -51,7 +51,7 @@ export default class LexicalQuery extends Query {
     uiController.updateLanguage(textSelector.languageCode)
 
     return Query.create(LexicalQuery, textSelector, {
-      htmlSelector: null,
+      htmlSelector: htmlSelector,
       uiController: uiController,
       maAdapter: new AlpheiosTuftsAdapter(),
       lexicons: Lexicons,

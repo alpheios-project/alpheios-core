@@ -26,7 +26,12 @@
           return null
         }
         let textSelector = TextSelector.createObjectFromText(this.lookuptext)
-        LexicalQuery.createForLookup(textSelector).getData()
+        LexicalQuery
+          .createForLookup(textSelector,
+          {
+          	target: {top: 146, left: 129}
+          })
+          .getData()
       }
     }
   }
