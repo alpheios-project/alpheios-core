@@ -20,7 +20,10 @@
       }
     },
     props: {
-      uiController
+      uiController: {
+        type: Object,
+        required: true
+      }
     },
     methods: {
       'lookup': function () {
