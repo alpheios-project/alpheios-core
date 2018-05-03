@@ -6,7 +6,7 @@
 </template>
 <script>
   import TextSelector from '../lib/selection/text-selector'
-  import ContentOptions from '../lib/options/content-options'
+
 
   export default {
     name: 'LookupComponent',
@@ -21,12 +21,7 @@
         if (this.lookuptext.length === 0) {
           return null
         }
-        let options = new ContentOptions()
-
-        let textSelector = TextSelector.readObject({
-          text: this.lookuptext,
-          languageCode: options.items.preferredLanguage.currentValue
-        })
+        let textSelector = TextSelector.createObjectFromText(this.lookuptext)
         console.log('*********** lookup textSelector', textSelector)
       }
     }

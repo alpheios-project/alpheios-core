@@ -1,5 +1,6 @@
 import TextQuoteSelector from './w3c/text-quote-selector'
-
+import ContentOptions from '../options/content-options'
+import {LanguageModelFactory} from 'alpheios-data-models'
 /**
  * This is a general-purpose, media abstract selector that
  * @property {string} selectedText - Selected text (usually a single word)
@@ -51,6 +52,16 @@ export default class TextSelector {
     textSelector.text = jsonObject.text
     textSelector.languageCode = jsonObject.languageCode
     // textSelector.language = TextSelector.getLanguage(textSelector.languageCode)
+    return textSelector
+  }
+
+  static createObjectFromText (text) {
+    let textSelector = new TextSelector()
+    textSelector.text = text
+
+    let options = new ContentOptions()
+    textSelector.languageCode = options.items.preferredLanguage.currentValue
+    textSelector.languageID = LanguageModelFactory.getLanguageIdFromCode(textSelector.languageCode)
     return textSelector
   }
 
