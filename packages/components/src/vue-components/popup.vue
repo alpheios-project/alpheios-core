@@ -51,6 +51,8 @@
                      :classes="['alpheios-popup__notifications--lang-switcher']" @change="settingChanged"
                      v-show="data.notification.showLanguageSwitcher"></setting>
         </div>
+
+        <lookup-component></lookup-component>
     </div>
 </template>
 <script>
@@ -58,6 +60,8 @@
   import Setting from './setting.vue'
   import interact from 'interactjs'
   import Logger from '../lib/log/logger'
+
+  import LookupComponent from './lookup-component.vue'
 
   // Embeddable SVG icons
   import CloseIcon from '../images/inline-icons/close.svg'
@@ -68,6 +72,7 @@
       morph: Morph,
       setting: Setting,
       closeIcon: CloseIcon,
+      lookupComponent: LookupComponent
     },
     data: function () {
       return {
