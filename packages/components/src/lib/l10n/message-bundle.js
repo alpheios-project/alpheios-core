@@ -21,6 +21,7 @@ export default class MessageBundle {
     this.messages = {}
     console.warn('**********************MessageBundle')
     console.warn('**********************MessageBundle', typeof messagesJSON)
+    console.warn('**********************MessageBundle', messagesJSON)
     let jsonObject = JSON.parse(messagesJSON)
     for (const [key, message] of Object.entries(jsonObject)) {
       if (!this.hasOwnProperty(key)) {
