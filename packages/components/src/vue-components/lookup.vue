@@ -43,7 +43,7 @@
         }
         let textSelector = TextSelector.createObjectFromText(this.lookuptext)
         LexicalQueryLookup
-          .createForLookup(textSelector, this.uiController)
+          .create(textSelector, this.uiController)
           .getData()
 
         this.lookuptext = ''
