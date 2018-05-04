@@ -3,6 +3,7 @@ import { LanguageModelFactory } from 'alpheios-data-models'
 export default class MediaSelector {
   constructor (event) {
     this.target = event.target // A selected text area in a document
+    this.location = event.target.ownerDocument.location.href
   }
 
   /**

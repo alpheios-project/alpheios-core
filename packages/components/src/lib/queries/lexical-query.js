@@ -11,11 +11,10 @@ export default class LexicalQuery extends Query {
     this.maAdapter = options.maAdapter
     this.langData = options.langData
     this.lexicons = options.lexicons
-
+    this.langOpts = options.langOpts || []
+    this.resourceOptions = options.resourceOptions || []
+    this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
-
-    this.langOpts = options.langOpts
-    this.resourceOptions = options.resourceOptions
     this.l10n = options.l10n
     let langID = LMF.getLanguageIdFromCode(this.selector.languageCode)
     if (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast) {
@@ -33,6 +32,7 @@ export default class LexicalQuery extends Query {
     this.languageID = LMF.getLanguageIdFromCode(this.selector.languageCode)
     this.ui.setTargetRect(this.htmlSelector.targetRect).newLexicalRequest().message(`Please wait while data is retrieved ...`)
     this.ui.showStatusInfo(this.selector.normalizedText, this.languageID)
+    this.ui.updateWordAnnotationData(this.selector.data)
     let iterator = this.iterations()
 
     let result = iterator.next()
@@ -70,6 +70,15 @@ export default class LexicalQuery extends Query {
       this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
     }
 
+    let lexiconFullOpts = this.getLexiconOptions('lexicons')
+    let lexiconShortOpts = this.getLexiconOptions('lexiconsShort')
+
+    // if lexicon options are set for short definitions, we want to override any
+    // short definitions provided by the maAdapter
+    if (lexiconShortOpts.allow) {
+      this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
+    }
+
     this.ui.updateMorphology(this.homonym)
     this.ui.updateDefinitions(this.homonym)
     // Update status info with data from a morphological analyzer
@@ -80,22 +89,12 @@ export default class LexicalQuery extends Query {
     this.ui.updateInflections(this.lexicalData, this.homonym)
 
     let definitionRequests = []
-    let lexiconOpts =
-      this.resourceOptions.items.lexicons.filter(
-        (l) => this.resourceOptions.parseKey(l.name).language === this.selector.languageCode
-      ).map((l) => { return {allow: l.currentValue} }
-      )
-    if (lexiconOpts.length > 0) {
-      lexiconOpts = lexiconOpts[0]
-    } else {
-      lexiconOpts = {}
-    }
 
     let lemmaList = []
 
     for (let lexeme of this.homonym.lexemes) {
       // Short definition requests
-      let requests = this.lexicons.fetchShortDefs(lexeme.lemma, lexiconOpts)
+      let requests = this.lexicons.fetchShortDefs(lexeme.lemma, lexiconShortOpts)
       definitionRequests = definitionRequests.concat(requests.map(request => {
         return {
           request: request,
@@ -106,7 +105,7 @@ export default class LexicalQuery extends Query {
         }
       }))
       // Full definition requests
-      requests = this.lexicons.fetchFullDefs(lexeme.lemma, lexiconOpts)
+      requests = this.lexicons.fetchFullDefs(lexeme.lemma, lexiconFullOpts)
       definitionRequests = definitionRequests.concat(requests.map(request => {
         return {
           request: request,
@@ -120,19 +119,6 @@ export default class LexicalQuery extends Query {
       lemmaList.push(lexeme.lemma)
     }
 
-    let userLang = navigator.language || navigator.userLanguage
-
-    this.lemmaTranslations.fetchTranslations(lemmaList, this.selector.languageCode, userLang).then(
-      res => {
-        console.log('translations ready')
-        this.ui.updateTranslations(this.homonym)
-        this.finalize('Success')
-      },
-      error => {
-        console.error(`Translations request failed: ${error}`)
-        this.finalize(error)
-      }
-    )
     // Handle definition responses
     for (let definitionRequest of definitionRequests) {
       definitionRequest.request.then(
@@ -161,6 +147,15 @@ export default class LexicalQuery extends Query {
       )
     }
     yield 'Retrieval of short and full definitions complete'
+
+    let userLang = navigator.language || navigator.userLanguage
+
+    if (this.lemmaTranslations) {
+      yield this.lemmaTranslations.fetchTranslations(lemmaList, this.selector.languageCode, userLang)
+      this.ui.updateTranslations(this.homonym)
+    }
+
+    yield 'Retrieval of lemma translations completed'
   }
 
   finalize (result) {
@@ -188,5 +183,24 @@ export default class LexicalQuery extends Query {
     }
     Query.destroy(this)
     return result
+  }
+
+  getLexiconOptions (lexiconKey) {
+    let allOptions
+    let siteMatch = this.siteOptions.filter((s) => this.selector.location.match(new RegExp(s.uriMatch)))
+    if (siteMatch.length > 0 && siteMatch[0].resourceOptions.items[lexiconKey]) {
+      allOptions = [...siteMatch[0].resourceOptions.items[lexiconKey], ...this.resourceOptions.items[lexiconKey]]
+    } else {
+      allOptions = this.resourceOptions.items[lexiconKey] || []
+    }
+    let lexiconOpts = allOptions.filter((l) => this.resourceOptions.parseKey(l.name).group === this.selector.languageCode
+    ).map((l) => { return {allow: l.currentValue} }
+    )
+    if (lexiconOpts.length > 0) {
+      lexiconOpts = lexiconOpts[0]
+    } else {
+      lexiconOpts = {}
+    }
+    return lexiconOpts
   }
 }

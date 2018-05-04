@@ -1,24 +1,43 @@
 <template>
     <div ref="popup" class="alpheios-popup auk" v-bind:class="data.classes" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}"
          v-show="visible" :data-notification-visible="data.notification.visible">
-        <span class="alpheios-popup__close-btn" @click="closePopup" :title="data.l10n.messages.TOOLTIP_POPUP_CLOSE">
-            <close-icon></close-icon>
-        </span>
+         <alph-tooltip
+          tooltipDirection = "left"
+          :additionalStyles = "additionalStylesTootipCloseIcon"
+          :tooltipText = "data.l10n.messages.TOOLTIP_POPUP_CLOSE">
+          <span class="alpheios-popup__close-btn" @click="closePopup">
+              <close-icon></close-icon>
+          </span>
+         </alph-tooltip>
         <div class="alpheios-popup__header">
             <div class="alpheios-popup__header-text">
                 <span v-show="data.status.selectedText" class="alpheios-popup__header-selection">{{data.status.selectedText}}</span>
                 <span v-show="data.status.languageName && data.verboseMode" class="alpheios-popup__header-word">({{data.status.languageName}})</span>
             </div>
             <div class="uk-button-group alpheios-popup__button-area">
-                <button @click="showPanelTab('inflections')" v-show="data.inflDataReady"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_INFLECT}}
-                </button>
-                <button @click="showPanelTab('definitions')" v-show="data.defDataReady"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_DEFINE}}
-                </button>
-                <button @click="showPanelTab('options')"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_OPTIONS}}
-                </button>
+                <alph-tooltip v-show="data.hasTreebank" tooltipDirection="bottom" :tooltipText="data.l10n.messages.TOOLTIP_TREEBANK">
+                    <button @click="showPanelTab('treebank')" v-show="data.hasTreebank"
+                            class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_TREEBANK}}
+                    </button>
+                </alph-tooltip>
+
+                <alph-tooltip v-show="data.inflDataReady" tooltipDirection="bottom" :tooltipText="data.l10n.messages.TOOLTIP_SHOW_INFLECTIONS">
+                  <button @click="showPanelTab('inflections')" v-show="data.inflDataReady"
+                          class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_INFLECT}}
+                  </button>
+                </alph-tooltip>
+
+                <alph-tooltip v-show="data.defDataReady" tooltipDirection="bottom" :tooltipText="data.l10n.messages.TOOLTIP_SHOW_DEFINITIONS">
+                  <button @click="showPanelTab('definitions')" v-show="data.defDataReady"
+                          class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_DEFINE}}
+                  </button>
+                </alph-tooltip>
+
+                <alph-tooltip tooltipDirection="bottom-right" :tooltipText="data.l10n.messages.TOOLTIP_SHOW_OPTIONS">
+                  <button @click="showPanelTab('options')"
+                          class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_OPTIONS}}
+                  </button>
+                </alph-tooltip>
             </div>
         </div>
         <div v-show="!morphDataReady"
@@ -43,9 +62,11 @@
         </div>
         <div class="alpheios-popup__notifications uk-text-small" :class="notificationClasses"
              v-show="data.notification.important">
-            <span @click="closeNotifications" class="alpheios-popup__notifications-close-btn">
-                <close-icon></close-icon>
-            </span>
+
+              <span @click="closeNotifications" class="alpheios-popup__notifications-close-btn">
+                  <close-icon></close-icon>
+              </span>
+
             <span v-html="data.notification.text"></span>
             <setting :data="data.settings.preferredLanguage" :show-title="false"
                      :classes="['alpheios-popup__notifications--lang-switcher']" @change="settingChanged"
@@ -282,6 +303,13 @@
             this.heightValue = 'auto'
           }
         }
+      },
+
+      additionalStylesTootipCloseIcon: function () {
+        return {
+          top: '2px',
+          right: '50px'
+        }
       }
     },
 
@@ -441,16 +469,14 @@
     },
 
     mounted () {
-      this.logger.log('mounted')
-      this.interactInstance = interact(this.$el)
-        .resizable(this.resizableSettings())
-        .draggable(this.draggableSettings())
-        .on('resizemove', this.resizeListener)
+      if (this.data.draggable && this.data.resizable) {
+        this.interactInstance = interact(this.$el)
+          .resizable(this.resizableSettings())
+          .draggable(this.draggableSettings())
+          .on('resizemove', this.resizeListener)
+      }
     },
 
-    /**
-     *
-     */
     updated () {
       if (this.visible) {
         let time = new Date().getTime()

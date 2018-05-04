@@ -45,6 +45,11 @@
     "description": "tooltip for grammar tab",
     "component": "Panel"
   },
+  "TOOLTIP_TREEBANK": {
+    "message": "Diagram",
+    "description": "tooltip for treebank tab",
+    "component": "Panel"
+  },
   "TOOLTIP_OPTIONS": {
     "message": "Options",
     "description": "tooltip for settings tab",
@@ -55,6 +60,23 @@
     "description": "tooltip for status tab",
     "component": "Panel"
   },
+
+  "TOOLTIP_SHOW_INFLECTIONS": {
+    "message": "Show inflections",
+    "description": "tooltip for button inflections",
+    "component": "Popup"
+  },
+  "TOOLTIP_SHOW_DEFINITIONS": {
+    "message": "Show definitions",
+    "description": "tooltip for button definitions",
+    "component": "Popup"
+  },
+  "TOOLTIP_SHOW_OPTIONS": {
+    "message": "Show options",
+    "description": "tooltip for button options",
+    "component": "Popup"
+  },
+
   "PLACEHOLDER_DEFINITIONS":  {
     "message": "Lookup a word to show definitions...",
     "description": "placeholder for definitions panel",
@@ -85,6 +107,18 @@
     "description": "label for collapse table button on inflections panel",
     "component": "Panel"
   },
+
+  "TOOLTIP_INFLECT_SHOWFULL": {
+    "message": "Show full Table",
+    "description": "tooltip for show full table button on inflections panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT_COLLAPSE": {
+    "message": "Show collapsed table",
+    "description": "tooltip for collapse table button on inflections panel",
+    "component": "Panel"
+  },
+
   "LABEL_INFLECT_HIDEEMPTY": {
     "message": "Hide empty columns",
     "description": "label for hide empty columns button on inflections panel",
@@ -95,6 +129,18 @@
     "description": "label for show empty columns button on inflections panel",
     "component": "Panel"
   },
+
+  "TOOLTIP_INFLECT_HIDEEMPTY": {
+    "message": "Show table without empty columns",
+    "description": "tooltip for hide empty columns button on inflections panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT_SHOWEMPTY": {
+    "message": "Show table with empty columns",
+    "description": "tooltip for show empty columns button on inflections panel",
+    "component": "Panel"
+  },
+
   "TEXT_INFO_GETTINGSTARTED": {
     "message": "Getting Started",
     "description": "info text",
@@ -148,6 +194,11 @@
   "TOOLTIP_POPUP_CLOSE": {
     "message": "Close Popup",
     "description": "tooltip for closing the popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_TREEBANK": {
+    "message": "Diagram",
+    "description": "label for treebank button on popup",
     "component": "Popup"
   },
   "LABEL_POPUP_INFLECT": {

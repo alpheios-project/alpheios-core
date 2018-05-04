@@ -1,17 +1,14 @@
 {
   "name": "alpheios-components",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Alpheios UI Compononents",
-  "main": "dist/alpheios-components.js",
+  "main": "dist/alpheios-components.min.js",
   "scripts": {
     "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build": "standard --fix && node ./build/node/build.js",
-    "build-dev": "standard --fix && node ./build/node/build.js all development",
-    "lint": "standard --fix",
-    "buildstyles": "node ./build/node/build.js styles",
-    "buildimages": "node ./build/node/build.js images",
-    "buildwebpack": "node ./build/node/build.js webpack",
-    "buildwebpack-dev": "node ./build/node/build.js webpack development"
+    "build": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+    "build-prod": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
+    "build-dev": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+    "lint": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -28,9 +25,7 @@
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
-    "alpheios-lemma-client": "git://github.com/alpheios-project/lemma-client.git",
-    "alpheios-lexicon-client": "git://github.com/alpheios-project/lexicon-client.git",
-    "alpheios-morph-client": "git://github.com/alpheios-project/morph-client.git",
+    "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "autoprefixer": "^8.4.1",
     "babel-core": "^6.26.3",
@@ -41,13 +36,13 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.22.0",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
     "copy-webpack-plugin": "^4.5.1",
     "coveralls": "^3.0.1",
     "css-loader": "^0.28.11",
+    "dom-anchor-text-quote": "*",
     "element-closest": "^2.0.2",
     "eslint": "^4.19.0",
     "eslint-plugin-import": "^2.11.0",
@@ -68,6 +63,7 @@
     "jest": "^22.4.3",
     "jest-serializer-vue": "^1.0.0",
     "jest-vue-preprocessor": "^1.4.0",
+    "mini-css-extract-plugin": "^0.4.0",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.9.0",
     "optimize-css-assets-webpack-plugin": "^4.0.1",
@@ -76,18 +72,19 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.1.4",
     "raw-loader": "^0.5.1",
-    "sass-loader": "^6.0.7",
+    "sass-loader": "^7.0.1",
     "semver": "^5.5.0",
     "shelljs": "^0.8.1",
     "source-map-loader": "^0.2.3",
     "standard": "^11.0.1",
-    "style-loader": "^0.20.3",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "uikit": "^3.0.0-beta.42",
     "url-loader": "^1.0.1",
     "uuid": "^3.2.1",
     "vue": "^2.5.16",
     "vue-jest": "^2.5.0",
-    "vue-loader": "^14.2.2",
+    "vue-loader": "^15.0.6",
     "vue-style-loader": "^4.1.0",
     "vue-svg-loader": "^0.5.0",
     "vue-template-compiler": "^2.5.16",
@@ -96,6 +93,7 @@
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^3.1.4",
     "webpack-merge": "^4.1.0",
+    "wrap-range-text": "*",
     "zip-folder": "^1.0.0"
   },
   "peerDependencies": {
@@ -103,12 +101,14 @@
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
     "alpheios-res-client": "github:alpheios-project/res-client",
+    "dom-anchor-text-quote": "4.0.2",
     "intl-messageformat": "2.x.x",
-    "uuid": "3.x.x"
+    "uuid": "3.x.x",
+    "wrap-range-text": ""
   },
   "engines": {
-    "node": ">= 8.9.0",
-    "npm": ">= 5.4.2"
+    "node": ">= 9.10.1",
+    "npm": ">= 5.6.0"
   },
   "jest": {
     "verbose": true,
@@ -121,8 +121,7 @@
       "!node_modules/alpheios-data-models/"
     ],
     "moduleNameMapper": {
-      "^vue$": "vue/dist/vue.common.js",
-      "\\.(jpg|jpeg|png)$": "<rootDir>/_mocks_/fileMock.js"
+      "^vue$": "vue/dist/vue.common.js"
     },
     "moduleFileExtensions": [
       "js",

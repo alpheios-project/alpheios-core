@@ -20,16 +20,22 @@
                     </select>
                 </div>
                 <div class="alpheios-inflections__control-btn-cont uk-button-group">
-                  <button v-show="false"
-                        class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
-                        @click="hideEmptyColsClick">
-                    {{buttons.hideEmptyCols.text}}
-                  </button>
-                  <button v-if="canCollapse"
-                        class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
-                        @click="hideNoSuffixGroupsClick">
-                    {{buttons.hideNoSuffixGroups.text}}
-                  </button>
+
+                  <alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideEmptyCols.tooltipText">
+                    <button v-show="false"
+                          class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
+                          @click="hideEmptyColsClick">
+                      {{buttons.hideEmptyCols.text}}
+                    </button>
+                  </alph-tooltip>
+
+                  <alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideNoSuffixGroups.tooltipText">
+                    <button v-if="canCollapse"
+                          class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
+                          @click="hideNoSuffixGroupsClick">
+                      {{buttons.hideNoSuffixGroups.text}}
+                    </button>
+                  </alph-tooltip>
                 </div>
             </div>
 
@@ -54,6 +60,8 @@
   import WideTable from './inflections-table-wide.vue'
   import WideSubTables from './inflections-subtables-wide.vue'
 
+  import Tooltip from './tooltip.vue'
+
   // Other dependencies
   import { ViewSet, L10n} from 'alpheios-inflection-tables'
 
@@ -61,7 +69,8 @@
     name: 'Inflections',
     components: {
       widetable: WideTable,
-      widesubtables: WideSubTables
+      widesubtables: WideSubTables,
+      alphTooltip: Tooltip
     },
 
     props: {
@@ -100,13 +109,21 @@
             contentHidden: true,
             text: '',
             shownText: this.messages.LABEL_INFLECT_HIDEEMPTY,
-            hiddenText: this.messages.LABEL_INFLECT_SHOWEMPTY
+            hiddenText: this.messages.LABEL_INFLECT_SHOWEMPTY,
+
+            tooltipText: '',
+            shownTooltip: this.messages.TOOLTIP_INFLECT_HIDEEMPTY,
+            hiddenTooltip: this.messages.TOOLTIP_INFLECT_SHOWEMPTY
           },
           hideNoSuffixGroups: {
             noSuffMatchHidden: true,
             text: '',
             shownText: this.messages.LABEL_INFLECT_COLLAPSE,
-            hiddenText: this.messages.LABEL_INFLECT_SHOWFULL
+            hiddenText: this.messages.LABEL_INFLECT_SHOWFULL,
+
+            tooltipText: '',
+            shownTooltip: this.messages.TOOLTIP_INFLECT_COLLAPSE,
+            hiddenTooltip: this.messages.TOOLTIP_INFLECT_SHOWFULL
           }
         }
       }
@@ -304,8 +321,11 @@
       setDefaults () {
         this.buttons.hideEmptyCols.contentHidden = true
         this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.hiddenText
+        this.buttons.hideEmptyCols.tooltipText = this.buttons.hideEmptyCols.hiddenTooltip
+
         this.buttons.hideNoSuffixGroups.contentHidden = true
         this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.hiddenText
+        this.buttons.hideNoSuffixGroups.tooltipText = this.buttons.hideNoSuffixGroups.hiddenTooltip
         return this
       },
 
@@ -313,9 +333,11 @@
         this.buttons.hideEmptyCols.contentHidden = !this.buttons.hideEmptyCols.contentHidden
         if (this.buttons.hideEmptyCols.contentHidden) {
           this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.hiddenText
+          this.buttons.hideEmptyCols.tooltipText = this.buttons.hideEmptyCols.hiddenTooltip
           this.selectedView.hideEmptyColumns()
         } else {
           this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.shownText
+          this.buttons.hideEmptyCols.tooltipText = this.buttons.hideEmptyCols.shownTooltip
           this.selectedView.showEmptyColumns()
         }
         this.displayInflections()
@@ -325,9 +347,11 @@
         this.buttons.hideNoSuffixGroups.contentHidden = !this.buttons.hideNoSuffixGroups.contentHidden
         if (this.buttons.hideNoSuffixGroups.contentHidden) {
           this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.hiddenText
+          this.buttons.hideNoSuffixGroups.tooltipText = this.buttons.hideNoSuffixGroups.hiddenTooltip
           this.selectedView.hideNoSuffixGroups()
         } else {
           this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.shownText
+          this.buttons.hideNoSuffixGroups.tooltipText = this.buttons.hideNoSuffixGroups.shownTooltip
           this.selectedView.showNoSuffixGroups()
         }
         this.displayInflections()

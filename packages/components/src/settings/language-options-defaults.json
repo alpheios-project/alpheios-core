@@ -1,0 +1,136 @@
+{
+  "domain": "alpheios-resource-options",
+  "items": {
+    "lexicons": {
+      "labelText": "Lexicons (Full Definitions)",
+      "group": {
+        "grc": {
+          "defaultValue": [
+            "https://github.com/alpheios-project/lsj"
+          ],
+          "labelText": "Greek Lexicons",
+          "multiValue": true,
+          "values": [
+            {
+              "value": "https://github.com/alpheios-project/ml",
+              "text": "Middle Liddell"
+            },
+            {
+              "value": "https://github.com/alpheios-project/lsj",
+              "text": "Liddell, Scott, Jones"
+            },
+            {
+              "value": "https://github.com/alpheios-project/aut",
+              "text": "Autenrieth Homeric Lexicon"
+            },
+            {
+              "value": "https://github.com/alpheios-project/dod",
+              "text": "Dodson"
+            },
+            {
+              "value": "https://github.com/alpheios-project/as",
+              "text": "Abbott-Smith"
+            }
+          ]
+        },
+        "lat": {
+          "defaultValue": [
+            "https://github.com/alpheios-project/ls"
+          ],
+          "labelText": "Latin Lexicons",
+          "multiValue": true,
+          "values": [
+            {
+              "value": "https://github.com/alpheios-project/ls",
+              "text": "Lewis & Short"
+            }
+          ]
+        },
+        "ara": {
+          "defaultValue": [
+            "https://github.com/alpheios-project/lan"
+          ],
+          "labelText": "Arabic Lexicons",
+          "multiValue": true,
+          "values": [
+            {
+              "value": "https://github.com/alpheios-project/lan",
+              "text": "Lane"
+            },
+            {
+              "value": "https://github.com/alpheios-project/sal",
+              "text": "Salmone"
+            }
+          ]
+        },
+        "per": {
+          "defaultValue": [
+            "https://github.com/alpheios-project/stg"
+          ],
+          "labelText": "Persian Lexicons",
+          "multiValue": true,
+          "values": [
+            {
+              "value": "https://github.com/alpheios-project/stg",
+              "text": "Steingass"
+            }
+          ]
+        }
+      }
+    },
+    "lexiconsShort": {
+      "labelText": "Lexicons (Short Definitions)",
+      "group": {
+        "grc": {
+          "defaultValue": [
+            "https://github.com/alpheios-project/lsj"
+          ],
+          "labelText": "Greek Lexicons",
+          "multiValue": true,
+          "values": [
+            {
+              "value": "https://github.com/alpheios-project/ml",
+              "text": "Middle Liddell"
+            },
+            {
+              "value": "https://github.com/alpheios-project/lsj",
+              "text": "Liddell, Scott, Jones"
+            },
+            {
+              "value": "https://github.com/alpheios-project/aut",
+              "text": "Autenrieth Homeric Lexicon"
+            },
+            {
+              "value": "https://github.com/alpheios-project/dod",
+              "text": "Dodson"
+            },
+            {
+              "value": "https://github.com/alpheios-project/as",
+              "text": "Abbott-Smith"
+            }
+          ]
+        },
+        "per": {
+          "defaultValue": [
+            "https://github.com/alpheios-project/stg"
+          ],
+          "labelText": "Persian Lexicons",
+          "multiValue": true,
+          "values": [
+            {
+              "value": "https://github.com/alpheios-project/stg",
+              "text": "Steingass"
+            }
+          ]
+        }
+      }
+    },
+    "treebanks": {
+      "labelText": "Treebanks",
+      "defaultValue": [],
+      "labelText": "Latin Treebanks",
+      "multiValue": true,
+      "values": [ ]
+    }
+  }
+}

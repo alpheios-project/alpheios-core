@@ -1,0 +1,25 @@
+{
+  "domain": "alpheios-ui-options",
+  "items": {
+    "skin": {
+      "defaultValue": "default",
+      "labelText": "Skin",
+      "values": [
+        {
+          "value": "default",
+          "text": "Alpheios Default Skin"
+        }
+      ]
+    },
+    "popup": {
+      "defaultValue": "popup",
+      "labelText": "Popup layout",
+      "values": [
+        {
+          "value": "popup",
+          "text": "Default Popup Layout"
+        }
+      ]
+    }
+  }
+}

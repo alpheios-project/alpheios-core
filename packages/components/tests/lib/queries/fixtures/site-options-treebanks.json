@@ -1,0 +1,22 @@
+[
+  {
+    "uriMatch": "https?://example.org",
+    "options": [
+      {
+        "domain": "alpheios-resource-options",
+        "items": {
+          "treebanks": {
+            "labelText": "Treebanks",
+            "defaultValue": "https://alpheios.net/treebanks/xx",
+            "multiValue": false,
+            "values": [
+                { "value": "https://alpheios.net/treebanks/xx",
+                  "test": "Example Site Treebank"
+                }
+              ]
+          }
+        }
+      }
+    ]
+  }
+]

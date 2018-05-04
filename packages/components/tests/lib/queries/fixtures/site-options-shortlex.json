@@ -1,0 +1,25 @@
+[
+  {
+    "uriMatch": "https?://example.org",
+    "options": [
+      {
+        "domain": "alpheios-resource-options",
+        "items": {
+          "lexiconsShort": {
+            "labelText": "Lexicons (Short Definitions)",
+            "group": {
+              "lat": {
+                "defaultValue": [ "https://github.com/alpheios-project/xx" ],
+                "values": [
+                  { "value": "https://github.com/alpheios-project/xx",
+                    "test": "Example Site Lexcion"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+]
