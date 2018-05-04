@@ -122,7 +122,7 @@
     ],
     "moduleNameMapper": {
       "^vue$": "vue/dist/vue.common.js",
-      "\\.(jpg|jpeg|png)$": "<rootDir>/_mocks_/fileMock.js"
+      "\\.(jpg|jpeg|png|svg)$": "<rootDir>/_mocks_/fileMock.js"
     },
     "moduleFileExtensions": [
       "js",

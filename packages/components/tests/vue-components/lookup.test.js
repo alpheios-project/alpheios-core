@@ -37,7 +37,7 @@ describe('lookup.test.js', () => {
   })
 
   it('If there is not empty uiController - the button with message LABEL_LOOKUP_BUTTON is rendered', () => {
-    mount(Lookup, {
+    let cmp = mount(Lookup, {
       propsData: {
         uiController: uiController
       }
