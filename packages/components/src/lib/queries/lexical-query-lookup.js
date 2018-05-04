@@ -6,7 +6,7 @@ import {LemmaTranslations} from 'alpheios-lemma-client'
 import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
 import {Lexicons} from 'alpheios-lexicon-client'
 
-import ResourceOptions from '../options/resource-options'
+// import ResourceOptions from '../options/resource-options'
 import HTMLSelector from '../selection/media/html-selector'
 
 /**
@@ -22,7 +22,8 @@ export default class LexicalQueryLookup extends LexicalQuery {
    */
 
   static createForLookup (textSelector, uiController) {
-    let resourceOptions = new ResourceOptions(LexicalQueryLookup.optionSaver, LexicalQueryLookup.optionLoader)
+    // let resourceOptions = new ResourceOptions(LexicalQueryLookup.optionSaver, LexicalQueryLookup.optionLoader)
+    let resourceOptions = uiController.resourceOptions
 
     uiController.updateLanguage(textSelector.languageCode)
 
