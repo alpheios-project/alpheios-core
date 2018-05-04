@@ -1,5 +1,4 @@
 import LexicalQuery from './lexical-query.js'
-import Query from './query.js'
 import { Constants } from 'alpheios-data-models'
 
 import {LemmaTranslations} from 'alpheios-lemma-client'
@@ -24,8 +23,7 @@ export default class LexicalQueryLookup extends LexicalQuery {
     let resourceOptions = uiController.resourceOptions
 
     uiController.updateLanguage(textSelector.languageCode)
-
-    return Query.create(LexicalQueryLookup, textSelector, {
+    let options = {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
       uiController: uiController,
       maAdapter: new AlpheiosTuftsAdapter(),
@@ -35,6 +33,7 @@ export default class LexicalQueryLookup extends LexicalQuery {
 
       resourceOptions: resourceOptions,
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-    })
+    }
+    return LexicalQuery.create(textSelector, options)
   }
 }
