@@ -193,4 +193,17 @@ export default class HTMLSelector extends MediaSelector {
     // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
   }
+
+  /**
+   * @getDumpHTMLSelector - it creates an object with the minimum data for imitating HTMLSelector
+   */
+
+  static getDumpHTMLSelector () {
+    return {
+      targetRect: {
+        top: 0,
+        left: 0
+      }
+    }
+  }
 }

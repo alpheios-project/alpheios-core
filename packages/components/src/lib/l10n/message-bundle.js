@@ -19,17 +19,8 @@ export default class MessageBundle {
 
     this._locale = locale
     this.messages = {}
-    // console.warn('**********************MessageBundle')
-    // console.warn('**********************MessageBundle', messagesJSON)
-    // console.warn('**********************MessageBundle', typeof messagesJSON)
-    // console.warn('**********************MessageBundle', messagesJSON.substr(0, 100))
-    let jsonObject
 
-    if (typeof (messagesJSON) === 'string') {
-      jsonObject = JSON.parse(messagesJSON)
-    } else {
-      jsonObject = messagesJSON
-    }
+    let jsonObject = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
     // let jsonObject = JSON.parse(messagesJSON)
     for (const [key, message] of Object.entries(jsonObject)) {
       if (!this.hasOwnProperty(key)) {

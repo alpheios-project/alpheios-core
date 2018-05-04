@@ -7,6 +7,7 @@ import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
 import {Lexicons} from 'alpheios-lexicon-client'
 
 import ResourceOptions from '../options/resource-options'
+import HTMLSelector from '../selection/media/html-selector'
 
 /**
    * It is a subclass of the LexicalQuery class created for lookup component (lookup.vue).
@@ -26,7 +27,7 @@ export default class LexicalQueryLookup extends LexicalQuery {
     uiController.updateLanguage(textSelector.languageCode)
 
     return Query.create(LexicalQueryLookup, textSelector, {
-      htmlSelector: LexicalQueryLookup.getDumpHTMLSelector(),
+      htmlSelector: HTMLSelector.getDumpHTMLSelector(),
       uiController: uiController,
       maAdapter: new AlpheiosTuftsAdapter(),
       lexicons: Lexicons,
@@ -56,18 +57,5 @@ export default class LexicalQueryLookup extends LexicalQuery {
     return new Promise((resolve, reject) => {
       reject(new Error('load not implemented'))
     })
-  }
-
-  /**
-   * @getDumpHTMLSelector - it creates an object with the minimum data for imitating HTMLSelector
-   */
-
-  static getDumpHTMLSelector () {
-    return {
-      targetRect: {
-        top: 0,
-        left: 0
-      }
-    }
   }
 }
