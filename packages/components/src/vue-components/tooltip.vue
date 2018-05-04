@@ -30,23 +30,22 @@
     },
     computed: {
       directionClass: function() {
-        if (this.tooltipDirection.toLowerCase() === 'top') {
-          return { 'alph_tooltip-top': true }
-        }
-        if (this.tooltipDirection.toLowerCase() === 'bottom') {
-          return { 'alph_tooltip-bottom': true }
-        }
-        if (this.tooltipDirection.toLowerCase() === 'left') {
-          return { 'alph_tooltip-left': true }
-        }
-        if (this.tooltipDirection.toLowerCase() === 'right') {
-          return { 'alph_tooltip-right': true }
-        }
-        if (this.tooltipDirection.toLowerCase() === 'bottom-right') {
-          return { 'alph_tooltip-bottom-right': true }
-        }
+        const tooltipDirection = this.tooltipDirection.toLowerCase()
 
-        return { 'alph_tooltip-bottom': true }
+        switch (tooltipDirection) {
+          case 'top':
+            return { 'alph_tooltip-top': true }
+          case 'bottom':
+            return { 'alph_tooltip-bottom': true }
+          case 'left':
+            return { 'alph_tooltip-left': true }
+          case 'right':
+            return { 'alph_tooltip-right': true }
+          case 'bottom-right':
+            return { 'alph_tooltip-bottom-right': true }
+          default:
+            return { 'alph_tooltip-bottom': true }
+        }
       }
     }
   }
