@@ -6,7 +6,6 @@ import {LemmaTranslations} from 'alpheios-lemma-client'
 import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
 import {Lexicons} from 'alpheios-lexicon-client'
 
-// import ResourceOptions from '../options/resource-options'
 import HTMLSelector from '../selection/media/html-selector'
 
 /**
@@ -22,7 +21,6 @@ export default class LexicalQueryLookup extends LexicalQuery {
    */
 
   static createForLookup (textSelector, uiController) {
-    // let resourceOptions = new ResourceOptions(LexicalQueryLookup.optionSaver, LexicalQueryLookup.optionLoader)
     let resourceOptions = uiController.resourceOptions
 
     uiController.updateLanguage(textSelector.languageCode)
@@ -37,26 +35,6 @@ export default class LexicalQueryLookup extends LexicalQuery {
 
       resourceOptions: resourceOptions,
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-    })
-  }
-
-  /**
-   * @optionSaver - it is a dump promise (similiar as in embedded)
-   */
-
-  static optionSaver () {
-    return new Promise((resolve, reject) => {
-      reject(new Error('save not implemented'))
-    })
-  }
-
-  /**
-   * @optionLoader - it is a dump promise (similiar as in embedded)
-   */
-
-  static optionLoader () {
-    return new Promise((resolve, reject) => {
-      reject(new Error('load not implemented'))
     })
   }
 }
