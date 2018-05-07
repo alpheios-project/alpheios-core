@@ -96,7 +96,8 @@
       closeIcon: CloseIcon,
       alphTooltip: Tooltip,
       lookup: Lookup
-    },
+    }
+    ,
     data: function () {
       return {
         resizable: true,
