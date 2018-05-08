@@ -1,6 +1,5 @@
 import TextQuoteSelector from './w3c/text-quote-selector'
 
-import ContentOptions from '../options/content-options'
 import {LanguageModelFactory} from 'alpheios-data-models'
 /**
  * This is a general-purpose, media abstract selector that
@@ -12,6 +11,7 @@ import {LanguageModelFactory} from 'alpheios-data-models'
 export default class TextSelector {
   constructor () {
     this.text = '' // Calculated?
+    this.options = {}
     this.languageCode = ''
     this.languageID = undefined
     this.model = undefined
@@ -58,14 +58,15 @@ export default class TextSelector {
     return textSelector
   }
 
-  static createObjectFromText (text) {
+  static createObjectFromText (text, options) {
     let textSelector = new TextSelector()
     textSelector.text = text
 
-    let options = new ContentOptions()
-    textSelector.languageCode = options.items.preferredLanguage.currentValue
-    textSelector.languageID = LanguageModelFactory.getLanguageIdFromCode(textSelector.languageCode)
-    textSelector.model = LanguageModelFactory.getLanguageModel(textSelector.languageID)
+    if (options) {
+      textSelector.languageCode = options.items.preferredLanguage.currentValue
+      textSelector.languageID = LanguageModelFactory.getLanguageIdFromCode(textSelector.languageCode)
+      textSelector.model = LanguageModelFactory.getLanguageModel(textSelector.languageID)
+    }
     return textSelector
   }
 

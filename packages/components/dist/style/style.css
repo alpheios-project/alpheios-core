@@ -7641,6 +7641,24 @@ div.alpheios-morph__block {
 
 
 
+.alpheios-lookup_form {
+  margin: 15px 10px 5px;
+  text-align: center;
+}
+.alpheios-lookup_form .uk-input {
+    width: 80%;
+    line-height: 28px;
+    height: 30px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    vertical-align: top;
+}
+.alpheios-lookup_form .uk-button {
+    font-size: 12px;
+    vertical-align: top;
+}
+
+
 .alpheios-popup {
   display: flex;
   flex-direction: column;
