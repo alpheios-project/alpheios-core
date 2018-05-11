@@ -41,7 +41,7 @@
         return classList.join(' ')
       },
       decorate(data,type) {
-        let decorated = data[type].value
+        let decorated = typeof(data[type]) === 'string' ? data[type] : data[type].value
         if (this.decorators.includes('abbreviate')) {
           decorated = data[type].toLocaleStringAbbr()
         }
