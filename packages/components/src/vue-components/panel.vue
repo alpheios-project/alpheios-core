@@ -173,7 +173,7 @@
   import StatusIcon from '../images/inline-icons/status.svg';
   import OptionsIcon from '../images/inline-icons/options.svg';
   import GrammarIcon from '../images/inline-icons/resources.svg';
-  import TreebankIcon from '../images/inline-icons/tree.svg';
+  import TreebankIcon from '../images/inline-icons/sitemap.svg';
   import InfoIcon from '../images/inline-icons/info.svg';
 
   export default {
