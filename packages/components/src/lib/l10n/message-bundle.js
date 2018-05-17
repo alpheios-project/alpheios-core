@@ -1,4 +1,5 @@
-import IntlMessageFormat from 'intl-messageformat'
+import Message from './message.js'
+// TODO: Deal with situations when message is not available, but is requested
 
 /**
  * Combines messages with the same locale code into a single message bundle.
@@ -6,7 +7,7 @@ import IntlMessageFormat from 'intl-messageformat'
 export default class MessageBundle {
   /**
    * Creates a message bundle (a list of messages) for a locale.
-   * @param {String} messagesJSON - Messages for a locale in a JSON format.
+   * @param {String} messagesJSON - Messages for a locale as a JSON string or as an object.
    * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
    */
   constructor (messagesJSON, locale) {
@@ -18,42 +19,39 @@ export default class MessageBundle {
     }
 
     this._locale = locale
+    /**
+     * An object whose properties are messages. Each message has a get() method and,
+     * if a message has any parameters, a format() method.
+     * @type {{get: Function, [format]: Function}}
+     */
     this.messages = {}
 
-    let jsonObject = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
-    // let jsonObject = JSON.parse(messagesJSON)
-    for (const [key, message] of Object.entries(jsonObject)) {
-      if (!this.hasOwnProperty(key)) {
-        this[key] = message
-        this[key].formatFunc = new IntlMessageFormat(message.message, this._locale)
+    let messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
+    this.append(messages)
+  }
 
-        if (message.params && Array.isArray(message.params) && message.params.length > 0) {
-          // This message has parameters
-          this.messages[key] = {
-            format (options) {
-              return message.formatFunc.format(options)
-            },
-            get (...options) {
-              let params = {}
-              // TODO: Add checks
-              for (let [index, param] of message.params.entries()) {
-                params[param] = options[index]
-              }
-              return message.formatFunc.format(params)
-            }
-          }
-        } else {
-          // A message without parameters
-          Object.defineProperty(this.messages, key, {
-            get () {
-              return message.formatFunc.format()
-            },
-            enumerable: true,
-            configurable: true // So it can be deleted
-          })
-        }
+  /**
+   * Appends a series of messages from a JSON string
+   * @param {string} messagesJSON - A JSON string
+   */
+  appendFromJSON (messagesJSON) {
+    let messages = JSON.parse(messagesJSON)
+    this.append(messages)
+  }
+
+  /**
+   * Appends a series of messages from an object. Object properties are message names, and
+   * values are message objects.
+   * @param {object} messages - An object containing messages.
+   */
+  append (messages) {
+    for (const [key, messageObj] of Object.entries(messages)) {
+      if (!this.hasOwnProperty(key)) {
+        let message = new Message(messageObj, this._locale)
+        this[key] = message
+        message.defineProperties(this.messages, key)
       } else {
-        console.warn(`A key name "{key} is reserved. It can not be used as a message key and will be ignored"`)
+        console.warn(`A key name "{$key}" is reserved or already used. A message will be ignored"`)
       }
     }
   }
