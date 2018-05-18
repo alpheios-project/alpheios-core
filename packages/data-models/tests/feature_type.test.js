@@ -83,7 +83,7 @@ describe('FeatureType', () => {
   test('orderedFeatures() should return type features in an indexed order.', () => {
     expect(featureType.orderedFeatures).toMatchObject([
       {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'first'}]},
-      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'second'}, {'sortOrder': 2, 'value': 'third'}]},
+      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 2, 'value': 'second'}, {'sortOrder': 1, 'value': 'third'}]},
       {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'fourth'}]}
     ])
   })

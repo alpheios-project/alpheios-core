@@ -85,22 +85,15 @@ class Lexeme {
   static getSortByTwoLemmaFeatures (primary, secondary) {
     return (a, b) => {
       if (a.lemma.features[primary] && b.lemma.features[primary]) {
-        if (a.lemma.features[primary].sortOrder < b.lemma.features[primary].sortOrder) {
-          return 1
-        } else if (a.lemma.features[primary].sortOrder > b.lemma.features[primary].sortOrder) {
-          return -1
+        let primarySort = a.lemma.features[primary].compareTo(b.lemma.features[primary])
+        if (primarySort !== 0) {
+          return primarySort
         } else if (a.lemma.features[secondary] && b.lemma.features[secondary]) {
-          if (a.lemma.features[secondary].sortOrder < b.lemma.features[secondary].sortOrder) {
-            return 1
-          } else if (a.lemma.features[secondary].sortOrder > b.lemma.features[secondary].sortOrder) {
-            return -1
-          } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
-            return -1
-          } else if (!a.lemma.features[secondary] && b.lemma.features[secondary]) {
-            return 1
-          } else {
-            return 0
-          }
+          return a.lemma.features[secondary].compareTo(b.lemma.features[secondary])
+        } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
+          return -1
+        } else if (!a.lemma.features[secondary] && b.lemma.features[secondary]) {
+          return 1
         }
       } else if (a.lemma.features[primary] && !b.lemma.features[primary]) {
         return -1

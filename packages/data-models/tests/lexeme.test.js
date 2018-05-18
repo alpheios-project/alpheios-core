@@ -51,31 +51,41 @@ describe('Lexeme object', () => {
     let mockLexemeOne = {
       lemma: {
         features: {
-          freq: new Feature(Feature.types.frequency, [''], Constants.LANG_GREEK, 5),
-          pofs: new Feature(Feature.types.part, [''], Constants.LANG_GREEK, 5)
+          freq: new Feature(Feature.types.frequency, [['most frequent', 5]], Constants.LANG_GREEK, 1),
+          pofs: new Feature(Feature.types.part, ['least important pofs', 1], Constants.LANG_GREEK, 1)
         }
       }
     }
     let mockLexemeTwo = {
       lemma: {
         features: {
-          freq: new Feature(Feature.types.frequency, [''], Constants.LANG_GREEK, 5),
-          pofs: new Feature(Feature.types.part, [''], Constants.LANG_GREEK, 5)
+          freq: new Feature(Feature.types.frequency, [['less frequent', 3]], Constants.LANG_GREEK, 1),
+          pofs: new Feature(Feature.types.part, [['more important pofs', 6]], Constants.LANG_GREEK, 1)
         }
       }
     }
     let mockLexemeThree = {
       lemma: {
         features: {
-          pofs: new Feature(Feature.types.part, [''], Constants.LANG_GREEK, 7)
+          pofs: new Feature(Feature.types.part, [['most important pofs', 7]], Constants.LANG_GREEK, 1)
+        }
+      }
+    }
+    let mockLexemeFour = {
+      lemma: {
+        features: {
+          freq: new Feature(Feature.types.frequency, [['most frequent', 5]], Constants.LANG_GREEK, 1),
+          pofs: new Feature(Feature.types.part, [['more important pofs', 6]], Constants.LANG_GREEK, 1)
         }
       }
     }
     let lexemes = [ mockLexemeOne, mockLexemeTwo ]
     let sortFunc = Lexeme.getSortByTwoLemmaFeatures('freq', 'pofs')
-    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeOne])
+    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeOne, mockLexemeTwo])
     lexemes = [ mockLexemeTwo, mockLexemeThree ]
     expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTwo, mockLexemeThree])
+    lexemes = [ mockLexemeOne, mockLexemeFour ]
+    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeFour, mockLexemeOne])
   })
 
   test('isPopulated', () => {

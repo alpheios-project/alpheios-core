@@ -63,7 +63,8 @@ export default class Feature {
       normalized = [[data, this.defaultSortOrder]]
     } else if (!Array.isArray(data[0])) {
       // Multiple values without any sort order, default sort order will be used
-      normalized = data.map((v, i) => [v, i + 1])
+      // we reverse because sortOrder is numeric descending (i.e. 2 is before 1)
+      normalized = data.map((v, i) => [v, data.length - i])
     } else {
       // Value has all the data, including a sort order
       normalized = data
@@ -154,7 +155,18 @@ export default class Feature {
    * Sort order is deterministic.
    */
   sort () {
-    this._data.sort((a, b) => a.sortOrder !== b.sortOrder ? a.sortOrder - b.sortOrder : a.value.localeCompare(b.value))
+    this._data.sort((a, b) => a.sortOrder !== b.sortOrder ? b.sortOrder - a.sortOrder : a.value.localeCompare(b.value))
+  }
+
+  /**
+   * Compares a feature's values to another feature's values for sorting
+   * @param {Feature} otherFeature the feature to compare this feature's values to
+   * @return {integer} >=1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
+   */
+  compareTo (otherFeature) {
+    // the data values are sorted upon construction and insertion so we only should need to look at the first values
+    // feature sortOrders are descending (i.e. 5 sorts higher than 1)
+    return otherFeature._data[0].sortOrder - this._data[0].sortOrder
   }
 
   get items () {

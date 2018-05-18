@@ -39,4 +39,31 @@ describe('Feature object', () => {
     let b = new Feature(Feature.types.note, 'valuea', Constants.LANG_LATIN)
     expect(a.isEqual(b)).toBeFalsy()
   })
+
+  it('expects to Feature a to be sorted after Feature b', () => {
+    let a = new Feature(Feature.types.frequency, [['lower', 1]], Constants.LANG_GREEK)
+    let b = new Feature(Feature.types.frequency, [['higher', 2]], Constants.LANG_GREEK)
+    expect(a.compareTo(b)).toBeGreaterThan(0)
+    expect([a, b].sort((a, b) => a.compareTo(b))).toEqual([b, a])
+  })
+
+  it('expects to Feature a to be sorted before Feature b', () => {
+    let a = new Feature(Feature.types.frequency, [['lower', 3]], Constants.LANG_GREEK)
+    let b = new Feature(Feature.types.frequency, [['higher', 1]], Constants.LANG_GREEK)
+    expect(a.compareTo(b)).toBeLessThan(0)
+    expect([a, b].sort((a, b) => a.compareTo(b))).toEqual([a, b])
+  })
+
+  it('expects to Feature a to be sorted the same as Feature b', () => {
+    let a = new Feature(Feature.types.frequency, [['same', 1]], Constants.LANG_GREEK)
+    let b = new Feature(Feature.types.frequency, [['same', 1]], Constants.LANG_GREEK)
+    expect(a.compareTo(b)).toEqual(0)
+    expect([a, b].sort((a, b) => a.compareTo(b))).toEqual([a, b])
+  })
+  it('expects to multi-valued Features to sort correctly', () => {
+    let a = new Feature(Feature.types.frequency, [['lower', 1], ['highest', 3]], Constants.LANG_GREEK)
+    let b = new Feature(Feature.types.frequency, [['higher', 2]], Constants.LANG_GREEK)
+    expect(a.compareTo(b)).toBeLessThan(0)
+    expect([a, b].sort((a, b) => a.compareTo(b))).toEqual([a, b])
+  })
 })

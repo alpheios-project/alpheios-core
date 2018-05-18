@@ -903,7 +903,8 @@ class Feature {
       normalized = [[data, this.defaultSortOrder]]
     } else if (!Array.isArray(data[0])) {
       // Multiple values without any sort order, default sort order will be used
-      normalized = data.map((v, i) => [v, i + 1])
+      // we reverse because sortOrder is numeric descending (i.e. 2 is before 1)
+      normalized = data.map((v, i) => [v, data.length - i])
     } else {
       // Value has all the data, including a sort order
       normalized = data
@@ -994,7 +995,18 @@ class Feature {
    * Sort order is deterministic.
    */
   sort () {
-    this._data.sort((a, b) => a.sortOrder !== b.sortOrder ? a.sortOrder - b.sortOrder : a.value.localeCompare(b.value))
+    this._data.sort((a, b) => a.sortOrder !== b.sortOrder ? b.sortOrder - a.sortOrder : a.value.localeCompare(b.value))
+  }
+
+  /**
+   * Compares a feature's values to another feature's values for sorting
+   * @param {Feature} otherFeature the feature to compare this feature's values to
+   * @return {integer} >=1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
+   */
+  compareTo (otherFeature) {
+    // the data values are sorted upon construction and insertion so we only should need to look at the first values
+    // feature sortOrders are descending (i.e. 5 sorts higher than 1)
+    return otherFeature._data[0].sortOrder - this._data[0].sortOrder
   }
 
   get items () {
@@ -3789,22 +3801,15 @@ class Lexeme {
   static getSortByTwoLemmaFeatures (primary, secondary) {
     return (a, b) => {
       if (a.lemma.features[primary] && b.lemma.features[primary]) {
-        if (a.lemma.features[primary].sortOrder < b.lemma.features[primary].sortOrder) {
-          return 1
-        } else if (a.lemma.features[primary].sortOrder > b.lemma.features[primary].sortOrder) {
-          return -1
+        let primarySort = a.lemma.features[primary].compareTo(b.lemma.features[primary])
+        if (primarySort !== 0) {
+          return primarySort
         } else if (a.lemma.features[secondary] && b.lemma.features[secondary]) {
-          if (a.lemma.features[secondary].sortOrder < b.lemma.features[secondary].sortOrder) {
-            return 1
-          } else if (a.lemma.features[secondary].sortOrder > b.lemma.features[secondary].sortOrder) {
-            return -1
-          } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
-            return -1
-          } else if (!a.lemma.features[secondary] && b.lemma.features[secondary]) {
-            return 1
-          } else {
-            return 0
-          }
+          return a.lemma.features[secondary].compareTo(b.lemma.features[secondary])
+        } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
+          return -1
+        } else if (!a.lemma.features[secondary] && b.lemma.features[secondary]) {
+          return 1
         }
       } else if (a.lemma.features[primary] && !b.lemma.features[primary]) {
         return -1
