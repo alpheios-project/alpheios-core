@@ -1,14 +1,14 @@
 <template>
-	<div class="alph_tooltip">
-		<slot></slot>
-		<span class="tooltiptext"
-			v-bind:class="directionClass"
-			v-bind:style="additionalStyles"
+  <div class="alph_tooltip">
+    <slot></slot>
+    <span class="tooltiptext"
+      v-bind:class="directionClass"
+      v-bind:style="additionalStyles"
       v-if="tooltipText"
-		>
-			{{ tooltipText }}
-		</span>
-	</div>
+    >
+      {{ tooltipText }}
+    </span>
+  </div>
 </template>
 <script>
   export default {
@@ -20,12 +20,12 @@
         default: 'bottom'
       },
       tooltipText: {
-      	type: String,
-      	required: true
+        type: String,
+        required: true
       },
       additionalStyles: {
-      	type: Object,
-      	required: false
+        type: Object,
+        required: false
       }
     },
     computed: {
@@ -43,6 +43,10 @@
             return { 'alph_tooltip-right': true }
           case 'bottom-right':
             return { 'alph_tooltip-bottom-right': true }
+          case 'top-right':
+            return { 'alph_tooltip-top-right': true }
+          case 'top-left':
+            return { 'alph_tooltip-top-left': true }
           default:
             return { 'alph_tooltip-bottom': true }
         }

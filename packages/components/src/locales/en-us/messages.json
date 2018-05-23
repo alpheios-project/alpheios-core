@@ -221,6 +221,11 @@
     "description": "placeholder text for popup data",
     "component": "Popup"
   },
+  "PLACEHOLDER_NO_LANGUAGE_POPUP_DATA": {
+    "message": "Lexical data couldn't be populated because page language is not defined",
+    "description": "placeholder text for popup data when language is not defined",
+    "component": "Popup"
+  },
   "LABEL_POPUP_CREDITS": {
     "message": "Credits:",
     "description": "label for credits on popup",
@@ -348,5 +353,45 @@
     "message": "Lookup",
     "description": "lookup button in lookup.vue",
     "component": "Popup"
+  },
+  "TOOLTIP_LOOKUP_BUTTON": {
+    "message": "Lookup word",
+    "description": "Tooltip for the lookup button in lookup.vue",
+    "component": "Lookup"
+  },
+  "LABEL_LOOKUP_SETTINGS": {
+    "message": "Using Language...",
+    "description": "Settings link-label in the lookup block in lookup.vue",
+    "component": "Lookup"
+  },
+  "LABEL_RESKIN_SETTINGS": {
+    "message": "Reskin settings",
+    "description": "Label for Reskin component",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_SMALLFONT": {
+    "message": "Small font",
+    "description": "Tooltip for small font icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_MEDIUMFONT": {
+    "message": "Medium font",
+    "description": "Tooltip for medium font icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_LARGEFONT": {
+    "message": "Large font",
+    "description": "Tooltip for large font icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_LIGHTBG": {
+    "message": "Light background",
+    "description": "Tooltip for light colors schema icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_DARKBG": {
+    "message": "Dark background",
+    "description": "Tooltip for dark colors schema icon",
+    "component": "ReskinFontColor"
   }
 }

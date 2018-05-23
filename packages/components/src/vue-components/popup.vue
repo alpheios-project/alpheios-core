@@ -1,5 +1,5 @@
 <template>
-    <div ref="popup" class="alpheios-popup auk" v-bind:class="data.classes" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}"
+    <div ref="popup" class="alpheios-popup auk" v-bind:class="divClasses" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}"
          v-show="visible" :data-notification-visible="data.notification.visible">
          <alph-tooltip
           tooltipDirection = "left"
@@ -40,9 +40,14 @@
                 </alph-tooltip>
             </div>
         </div>
-        <div v-show="!morphDataReady"
+        <div v-show="!morphDataReady && !noLanguage"
              class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small">
             {{data.l10n.messages.PLACEHOLDER_POPUP_DATA}}
+        </div>
+
+        <div v-show="noLanguage && !morphDataReady"
+             class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small">
+            {{data.l10n.messages.PLACEHOLDER_NO_LANGUAGE_POPUP_DATA}}
         </div>
         <div v-show="morphDataReady" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small">
             <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions" :translations="translations"
@@ -72,7 +77,7 @@
                      :classes="['alpheios-popup__notifications--lang-switcher']" @change="settingChanged"
                      v-show="data.notification.showLanguageSwitcher"></setting>
         </div>
-        <lookup :uiController="uiController"></lookup>
+        <lookup :uiController="uiController" :parentLanguage="currentLanguageName"></lookup>
     </div>
 </template>
 <script>
@@ -115,9 +120,11 @@
         heightValue: 0,
         exactWidth: 0,
         exactHeight: 0,
-        resizeDelta: 10, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
+        resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
         resizeCount: 0, // Should not exceed `resizeCountMax`
         resizeCountMax: 100, // Max number of resize iteration
+        updateDimensionsTimeout: null,
+        divClasses: ''
       }
     },
     props: {
@@ -148,9 +155,22 @@
       translations: {
         type: Object,
         required: true
+      },
+      classesChanged: {
+        type: Number,
+        required: false,
+        default: 0
       }
     },
-
+    created () {
+      let vm = this
+      this.$on('updatePopupDimensions', function() {
+        vm.updatePopupDimensions()
+      })
+      this.$on('changeStyleClass', function(name, type) {
+        vm.uiOptionChanged(name, type)
+      })
+    },
     computed: {
       uiController: function () {
         return this.$parent.uiController
@@ -174,6 +194,12 @@
       },
       morphDataReady: function () {
         return this.data.morphDataReady
+      },
+      noLanguage: function () {
+        return this.data.currentLanguageName === undefined
+      },
+      currentLanguageName: function() {
+        return this.data.currentLanguageName
       },
       notificationClasses: function () {
         return {
@@ -314,6 +340,10 @@
     },
 
     methods: {
+      uiOptionChanged: function (name, value) {
+        this.$emit('ui-option-change', name, value)
+      },
+
       clearMessages() {
         while (this.messages.length >0) {
           this.messages.pop()
@@ -374,6 +404,7 @@
             restriction: document.body,
             elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
           },
+          ignoreFrom: 'input, textarea, a[href], select, option',
           onmove: this.dragMoveListener
         }
       },
@@ -427,6 +458,13 @@
           return
         }
 
+        let innerDif = this.$el.querySelector("#alpheios-lexical-data-container").clientHeight - this.$el.querySelector("#alpheios-morph-component").clientHeight
+
+        if (this.heightDm !== 'auto' && innerDif > this.resizeDelta) {
+          this.heightDm ='auto'
+          return
+        }
+
         // Update dimensions only if there was any significant change in a popup size
         if (this.$el.offsetWidth >= this.exactWidth + this.resizeDelta
           || this.$el.offsetWidth <= this.exactWidth - this.resizeDelta) {
@@ -436,6 +474,7 @@
           this.resizeCount++
           this.logger.log(`Resize counter value is ${this.resizeCount}`)
         }
+
         if (this.$el.offsetHeight >= this.exactHeight + this.resizeDelta
           || this.$el.offsetHeight <= this.exactHeight - this.resizeDelta) {
           this.logger.log(`${time}: dimensions update, offsetHeight is ${this.$el.offsetHeight}, previous exactHeight is ${this.exactHeight}`)
@@ -481,7 +520,16 @@
       if (this.visible) {
         let time = new Date().getTime()
         this.logger.log(`${time}: component is updated`)
-        this.updatePopupDimensions()
+
+        let vm = this
+        clearTimeout(this.updateDimensionsTimeout)
+        let timeoutDuration = 0
+        if (this.resizeCount > 1) {
+          timeoutDuration = 1000
+        }
+        this.updateDimensionsTimeout = setTimeout(function () {
+          vm.updatePopupDimensions()
+        }, timeoutDuration)
       }
     },
 
@@ -506,27 +554,12 @@
       translationsDataReady: function(value) {
         let time = new Date().getTime()
         this.logger.log(`${time}: translation data became available`, this.translations)
-      }
-      /*inflDataReady: function() {
-        let time = new Date().getTime()
-        this.logger.log(`${time}: inflection data became available`)
       },
 
-      defDataReady: function() {
-        let time = new Date().getTime()
-        this.logger.log(`${time}: definition data became available`)
-      },*/
+      classesChanged: function (value) {
+        this.divClasses = this.data.classes.join(' ')
+      }
 
-      // It still does not catch all popup data changes. That makes a popup resizing jerky.
-      // Its safer to use an `updated()` callback instead.
-      /*updates: function() {
-        this.logger.log(`Content height updated, visibility is ${this.visible}`)
-        if (this.visible) {
-          let time = new Date().getTime()
-          this.logger.log(`${time}: content height updated, offsetHeight is ${this.$el.offsetHeight}`)
-          this.updatePopupDimensions()
-        }
-      },*/
     }
   }
 </script>
@@ -677,7 +710,7 @@
     .alpheios-popup__more-btn {
         float: right;
         margin-bottom: 10px;
-        font-size: 0.675 * $alpheios-base-font-size !important;
+        font-size: 0.675 * $alpheios-base-font-size;
     }
     .alpheios-popup__morph-cont-providers-source {
       font-size: smaller;

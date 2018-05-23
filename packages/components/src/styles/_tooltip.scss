@@ -26,7 +26,7 @@
 .alph_tooltip-top {
     bottom: 125%;
     left: 50%;
-    margin-left: -60px;
+    margin-left: -50%;
 }
 
 .alph_tooltip-top::after {
@@ -35,6 +35,39 @@
     top: 100%;
     left: 50%;
     margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.alph_tooltip-top-right {
+    bottom: 125%;
+    right: 0;
+    margin-left: -50%;
+}
+
+.alph_tooltip-top-right::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 15%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.alph_tooltip-top-left {
+    bottom: 125%;
+    left: 0;
+}
+
+.alph_tooltip-top-left::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-left: 5px;
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
@@ -59,7 +92,7 @@
 .alph_tooltip-bottom {
     top: 135%;
     left: 50%;
-    margin-left: -60px;
+    margin-left: -50%;
 }
 
 .alph_tooltip-bottom::after {
@@ -76,7 +109,7 @@
 .alph_tooltip-bottom-right {
     top: 135%;
     right: 0;
-    margin-left: -60px;
+    margin-left: -50%;
 }
 
 .alph_tooltip-bottom-right::after {

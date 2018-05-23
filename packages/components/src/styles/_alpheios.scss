@@ -17,5 +17,27 @@ $alpheios-link-hover-color: #5BC8DC;
 $alpheios-copy-color: #666666;
 $alpheios-sidebar-header-gradient: linear-gradient(to bottom, #9E9C9A 0%,#D1D1D0 100%);
 $alpheios-sidebar-header-border-color: #B8B7B5;
+
 $alpheios-highlight-color: #F6D918;
 $alpheios-highlight-dark-color: #E49A0D;
+
+/*************** font sizes **************/
+$alpheios-small-font-size: 12px;
+$alpheios-base-font-size: 16px;
+$alpheios-large-font-size: 20px;
+
+/*************** dark schema colors **************/
+$alpheios-color_schema_dark_background: #282828;
+$alpheios-color_schema_dark_color: #f2f2f2;
+$alpheios-color_schema_dark_link_color: #b1d1d7;
+
+$alpheios-color_schema_dark_table_border: #f2f2f2;
+$alpheios-color_schema_dark_background_hover: #686868;
+
+/*************** light schema colors **************/
+$alpheios-color_schema_light_background: #fff;
+$alpheios-color_schema_light_color: #0e2233;
+$alpheios-color_schema_light_link_color: #3e8d9c;
+
+$alpheios-color_schema_light_table_border: #0e2233;
+$alpheios-color_schema_light_background_hover: #d3d3d3;

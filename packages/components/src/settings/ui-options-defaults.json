@@ -20,6 +20,39 @@
           "text": "Default Popup Layout"
         }
       ]
+    },
+    "fontSize": {
+      "defaultValue": "medium",
+      "labelText": "Font size",
+      "values": [
+        {
+          "value": "small",
+          "text": "Small font size"
+        },
+        {
+          "value": "medium",
+          "text": "Medium font size"
+        },
+        {
+          "value": "large",
+          "text": "Large font size"
+        }
+      ]
+    },
+    "colorSchema": {
+      "defaultValue": "light",
+      "labelText": "Color schema",
+      "values": [
+        {
+          "value": "light",
+          "text": "Light color schema"
+        },
+        {
+          "value": "dark",
+          "text": "Dark color schema"
+        }
+      ]
     }
+
   }
 }

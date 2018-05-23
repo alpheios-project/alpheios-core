@@ -152,7 +152,8 @@ export default class UIController {
         options: this.options,
         resourceOptions: this.resourceOptions,
         currentPanelComponent: this.template.defaultPanelComponent,
-        uiController: this
+        uiController: this,
+        classesChanged: 0
       },
       methods: {
         isOpen: function () {
@@ -177,6 +178,7 @@ export default class UIController {
 
         setPositionTo: function (position) {
           this.options.items.panelPosition.setValue(position)
+          this.classesChanged += 1
         },
 
         attachToLeft: function () {
@@ -327,8 +329,9 @@ export default class UIController {
           console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
           this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
         },
+
         uiOptionChange: function (name, value) {
-          this.uiController.uiOptions.items[name].setTextValue(value)
+          if (name === 'fontSize' || name === 'colorSchema') { this.uiController.uiOptions.items[name].setValue(value) } else { this.uiController.uiOptions.items[name].setTextValue(value) }
           switch (name) {
             case 'skin':
               this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
@@ -337,6 +340,12 @@ export default class UIController {
               this.uiController.popup.close() // Close an old popup
               this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
               this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
+              break
+            case 'fontSize':
+              this.uiController.updateFontSizeClass(value)
+              break
+            case 'colorSchema':
+              this.uiController.updateColorSchemaClass(value)
               break
           }
         }
@@ -425,12 +434,16 @@ export default class UIController {
           status: {
             selectedText: '',
             languageName: ''
-          }
+          },
+          currentLanguage: null,
+          resourceSettings: this.resourceOptions.items
         },
         panel: this.panel,
         options: this.options,
+        resourceOptions: this.resourceOptions,
         currentPopupComponent: this.template.defaultPopupComponent,
-        uiController: this
+        uiController: this,
+        classesChanged: 0
       },
       methods: {
         setTargetRect: function (targetRect) {
@@ -565,6 +578,40 @@ export default class UIController {
               break
             case 'preferredLanguage':
               this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
+              break
+          }
+        },
+
+        resourceSettingChange: function (name, value) {
+          let keyinfo = this.resourceOptions.parseKey(name)
+          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
+          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+        },
+
+        uiOptionChange: function (name, value) {
+          // TODO this should really be handled within OptionsItem
+          // the difference between value and textValues is a little confusing
+          // see issue #73
+          if (name === 'fontSize' || name === 'colorSchema') {
+            this.uiController.uiOptions.items[name].setValue(value)
+          } else {
+            this.uiController.uiOptions.items[name].setTextValue(value)
+          }
+
+          switch (name) {
+            case 'skin':
+              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
+              break
+            case 'popup':
+              this.uiController.popup.close() // Close an old popup
+              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
+              this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
+              break
+            case 'fontSize':
+              this.uiController.updateFontSizeClass(value)
+              break
+            case 'colorSchema':
+              this.uiController.updateColorSchemaClass(value)
               break
           }
         }
@@ -813,6 +860,8 @@ export default class UIController {
     this.panel.requestGrammar({ type: 'table-of-contents', value: '', languageID: languageID })
     this.panel.enableInflections(LanguageModelFactory.getLanguageModel(languageID).canInflect())
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(languageID)
+
+    Vue.set(this.popup.popupData, 'currentLanguageName', UIController.getLanguageName(languageID))
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
@@ -851,9 +900,51 @@ export default class UIController {
     if (!UIController.hasRegularBaseFontSize()) {
       classes.push(this.constructor.defaults.irregularBaseFontSizeClassName)
     }
-    classes.push(`auk--${this.uiOptions.items.skin.currentValue}`)
-    this.panel.panelData.classes = classes
-    this.popup.popupData.classes = classes
+    if (this.uiOptions.items.skin !== undefined) {
+      classes.push(`auk--${this.uiOptions.items.skin.currentValue}`)
+    }
+    if (this.uiOptions.items.fontSize !== undefined) {
+      classes.push(`alpheios-font_${this.uiOptions.items.fontSize.currentValue}_class`)
+    }
+    if (this.uiOptions.items.colorSchema !== undefined) {
+      classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.currentValue}_class`)
+    }
+
+    Vue.set(this.popup.popupData, 'classes', classes)
+    Vue.set(this.panel.panelData, 'classes', classes)
+    Vue.set(this.popup, 'classesChanged', this.popup.classesChanged + 1)
+    Vue.set(this.panel, 'classesChanged', this.panel.classesChanged + 1)
+  }
+
+  updateStyleClass (prefix, type) {
+    let popupClasses = this.popup.popupData.classes
+    popupClasses.forEach(function (item, index) {
+      if (item.indexOf(prefix) === 0) {
+        popupClasses[index] = `${prefix}${type}_class`
+      }
+    })
+    Vue.set(this.popup.popupData, 'classes', popupClasses)
+    // this.popup.classesChanged += 1
+    Vue.set(this.popup, 'classesChanged', this.popup.classesChanged + 1)
+
+    let panelClasses = this.panel.panelData.classes
+    panelClasses.forEach(function (item, index) {
+      if (item.indexOf(prefix) === 0) {
+        panelClasses[index] = `${prefix}${type}_class`
+      }
+    })
+
+    Vue.set(this.panel.panelData, 'classes', panelClasses)
+    // this.panel.classesChanged += 1
+    Vue.set(this.panel, 'classesChanged', this.panel.classesChanged + 1)
+  }
+
+  updateFontSizeClass (type) {
+    this.updateStyleClass('alpheios-font_', type)
+  }
+
+  updateColorSchemaClass (type) {
+    this.updateStyleClass('alpheios-color_schema_', type)
   }
 
   changeSkin () {

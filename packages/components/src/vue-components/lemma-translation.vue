@@ -1,7 +1,10 @@
 <template>
   <div class="alpheios-lemma__translations">
-    <div v-if="translations && translations[lemmakey]" :data-lemmakey="lemmakey" class="hasValue">
-      <span v-for="gloss in translations[lemmakey].glosses">{{ gloss }}</span>
+    <div v-if="translations && translations[lemmakey] && translations[lemmakey].glosses && translations[lemmakey].glosses.length > 0" :data-lemmakey="lemmakey" class="hasValue">
+      <p v-for="(gloss, gindex) in translations[lemmakey].glosses">
+        <span v-if="translations[lemmakey].glosses.length > 1" class="translation_index">-</span>
+        <span>{{ gloss }}</span>
+      </p>
     </div>
   </div>
 </template>

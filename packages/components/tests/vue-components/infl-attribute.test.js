@@ -1,11 +1,11 @@
 /* eslint-env jest */
-import { shallow } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import InflectionAttribute from '../../src/vue-components/infl-attribute.vue'
 
 describe('infl-attribute.test.js', () => {
   let cmp
   beforeEach(() => {
-    cmp = shallow(InflectionAttribute, {
+    cmp = shallowMount(InflectionAttribute, {
       propsData: {
         data: {
           'gender': {
@@ -27,7 +27,7 @@ describe('infl-attribute.test.js', () => {
   })
 
   it('expects element not to be created if the type does not exist in data', () => {
-    let mockCmp = shallow(InflectionAttribute, {
+    let mockCmp = shallowMount(InflectionAttribute, {
       propsData: {
         data: {
           'gender': {

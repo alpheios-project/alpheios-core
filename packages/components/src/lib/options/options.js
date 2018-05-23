@@ -1,5 +1,4 @@
 import OptionItem from './options-item.js'
-
 /**
  * A set of options grouped by domain. Domain name should be passed in `defaults.domain`.
  */
@@ -13,19 +12,19 @@ export default class Options {
    *    {Object} items - An object that represents options that are exposed to the user. Each property is an option name.
    * @param {Function<StorageAdapter>} StorageAdapter - A storage adapter implementation
    */
-  constructor (defaults, StorageAdapter) {
-    if (!defaults || !defaults.domain || !defaults.items) {
+  constructor (defaults = null, StorageAdapter = null) {
+    if (defaults !== null && (!defaults.domain || !defaults.items)) {
       throw new Error(`Defaults have no obligatory "domain" and "items" properties`)
     }
-    if (!StorageAdapter) {
-      throw new Error(`No storage adapter implementation provided`)
+    // if defaults aren't provided, properties need to be initialized separately
+    if (defaults !== null && StorageAdapter !== null) {
+      this.storageAdapter = new StorageAdapter(defaults.domain)
+      this.domain = defaults.domain
+      for (const key of Object.keys(defaults)) {
+        this[key] = defaults[key]
+      }
+      this.items = Options.initItems(this.items, this.storageAdapter)
     }
-    for (const key of Object.keys(defaults)) {
-      this[key] = defaults[key]
-    }
-    this.storageAdapter = new StorageAdapter(defaults.domain)
-
-    this.items = Options.initItems(this.items, this.storageAdapter)
   }
 
   static initItems (defaults, storageAdapter) {
@@ -41,6 +40,29 @@ export default class Options {
       }
     }
     return items
+  }
+
+  /**
+   * Clone an existing Options object applying a new StorageAdapter
+   * @param {Function<StorageAdapter>} StorageAdapter - A storage adapter implementation
+   * @return {Options} the cloned Options object
+   */
+  clone (StorageAdapter) {
+    let obj = new Options(null, null)
+    obj.storageAdapter = new StorageAdapter(this.domain)
+    obj.domain = this.domain
+    obj.items = {}
+    for (let item of this.names) {
+      if (Array.isArray(this.items[item])) {
+        obj.items[item] = []
+        for (let option of this.items[item]) {
+          obj.items[item].push(new OptionItem(JSON.parse(JSON.stringify(option)), option.name, obj.storageAdapter))
+        }
+      } else {
+        obj.items[item] = new OptionItem(JSON.parse(JSON.stringify(this.items[item])), item, obj.storageAdapter)
+      }
+    }
+    return obj
   }
 
   get names () {

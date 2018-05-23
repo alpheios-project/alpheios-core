@@ -1,0 +1,62 @@
+div.alpheios-color_schema_dark_class {
+	background: $alpheios-color_schema_dark_background;
+	color: $alpheios-color_schema_dark_color;
+
+	.uk-form-label,
+	h3,
+	.alpheios-info .alpheios-info__helptext p,
+	.alpheios-info,
+	.alpheios-popup__header-selection,
+	.alpheios-definition__text,
+	.alpheios-morph__lexemes {
+		color: $alpheios-color_schema_dark_color;
+	}
+
+	.uk-link,
+	.alpheios-lookup__settings-link,
+	.alpheios-popup__providers-link,
+	.alpheios-morph__linkedattr {
+		color: $alpheios-color_schema_dark_link_color;
+	}
+
+	.uk-button-primary {
+		background-color: $alpheios-color_schema_dark_color;
+		color: $alpheios-toolbar-active-color;
+	}
+
+	.infl-cell,
+	.infl-table {
+		border-color: $alpheios-color_schema_dark_table_border;
+	}
+
+	.infl-suff--suffix-match {
+	    color: $alpheios-color_schema_dark_color;
+	}
+    .infl-cell--hl {
+        background: $alpheios-color_schema_dark_background_hover;
+    }
+
+    .alph_tooltip .tooltiptext {
+    	background-color: $alpheios-color_schema_dark_color;
+		color: $alpheios-color_schema_dark_background;
+    }
+
+	.alph_tooltip-top::after {
+		border-color: $alpheios-color_schema_dark_color transparent transparent transparent;
+	}
+	.alph_tooltip-top-right::after {
+		border-color: $alpheios-color_schema_dark_color transparent transparent transparent;
+	}
+	.alph_tooltip-right::after {
+		border-color: transparent $alpheios-color_schema_dark_color transparent transparent;
+	}
+	.alph_tooltip-bottom::after {
+		border-color: transparent transparent $alpheios-color_schema_dark_color transparent;
+	}
+	.alph_tooltip-bottom-right::after {
+		border-color: transparent transparent $alpheios-color_schema_dark_color transparent;
+	}
+	.alph_tooltip-left::after {
+		border-color: transparent transparent transparent $alpheios-color_schema_dark_color;
+	}
+}

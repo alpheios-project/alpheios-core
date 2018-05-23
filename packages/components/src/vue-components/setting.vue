@@ -1,6 +1,6 @@
 <template>
-    <div :class="classes">
-        <label class="uk-form-label" v-show="showTitle">{{data.labelText}}</label>
+      <div :class="classes" v-if="Object.keys(data).length > 0">
+        <label class="uk-form-label alpheios-setting__label" v-show="showTitle">{{data.labelText}}</label>
         <select v-model="selected" class="uk-select" multiple v-if="data.multiValue">
             <option v-for="item in data.textValues()">{{item}}</option>
         </select>
@@ -33,7 +33,11 @@
     computed: {
       selected: {
         get: function () {
-          return this.data.currentTextValue()
+          let rv
+          if (typeof this.data.currentTextValue === 'function') {
+              rv = this.data.currentTextValue()
+          }
+          return rv
         },
         set: function (newValue) {
           this.$emit('change', this.data.name, newValue)
@@ -43,5 +47,7 @@
   }
 </script>
 <style lang="scss">
-
+  .alpheios-setting__label {
+    display: block;
+  }
 </style>

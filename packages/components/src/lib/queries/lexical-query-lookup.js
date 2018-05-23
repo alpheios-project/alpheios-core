@@ -19,10 +19,11 @@ export default class LexicalQueryLookup extends LexicalQuery {
    * @param {UIController} uiController - ui controller for re-rendering popup/panel (passed fro current rendered popup)
    */
 
-  static create (textSelector, uiController) {
-    let resourceOptions = uiController.resourceOptions
+  static create (textSelector, uiController, resourceOptions) {
+    if (resourceOptions === undefined) {
+      resourceOptions = uiController.resourceOptions
+    }
 
-    uiController.updateLanguage(textSelector.languageCode)
     let options = {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
       uiController: uiController,

@@ -1,12 +1,12 @@
 /* eslint-env jest */
-import { shallow } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Grammar from '../../src/vue-components/grammar.vue'
 
 describe('grammar.test.js', () => {
   let cmp
 
   beforeEach(() => {
-    cmp = shallow(Grammar, {
+    cmp = shallowMount(Grammar, {
       propsData: {
         res: {
           url: 'foo',

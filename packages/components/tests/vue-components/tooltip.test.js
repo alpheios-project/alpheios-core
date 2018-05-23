@@ -5,8 +5,8 @@ import LemmaTranslation from '../../src/vue-components/tooltip.vue'
 describe('tooltip.test.js', () => {
   let spy
   let testTooltipText = 'test tooltip text'
-  let testDirection = 'bottom-right'
-  let testDirectionClass = 'alph_tooltip-bottom-right'
+  let testDirection = 'top'
+  let testDirectionClass = 'alph_tooltip-top'
   let testAdditionalStyles = {color: '#dd0000'}
 
   it('If there is an empty tooltipText - error is thrown', () => {
@@ -101,6 +101,16 @@ describe('tooltip.test.js', () => {
       }
     })
     expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-right').exists()).toBeTruthy()
+  })
+
+  it('If there is a tooltipDirection = top-right - tooltip has class alph_tooltip-top-right', () => {
+    let cmp = mount(LemmaTranslation, {
+      propsData: {
+        tooltipText: testTooltipText,
+        tooltipDirection: 'top-right'
+      }
+    })
+    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-top-right').exists()).toBeTruthy()
   })
 
   it('If there is a tooltipDirection = bottom-right - tooltip has class alph_tooltip-bottom-right', () => {

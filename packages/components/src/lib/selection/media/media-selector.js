@@ -1,4 +1,4 @@
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 
 export default class MediaSelector {
   constructor (event) {
@@ -34,7 +34,9 @@ export default class MediaSelector {
   getLanguageCode (defaultLanguageCode) {
     let code = this.getLanguageCodeFromSource() || defaultLanguageCode
     let langId = LanguageModelFactory.getLanguageIdFromCode(code)
-    if (langId) {
+    if (langId === Constants.LANG_UNDEFINED) {
+      code = defaultLanguageCode
+    } else if (langId) {
       code = LanguageModelFactory.getLanguageCodeFromId(langId)
     } else {
       code = defaultLanguageCode

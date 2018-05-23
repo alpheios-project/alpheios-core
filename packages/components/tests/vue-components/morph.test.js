@@ -222,13 +222,16 @@ describe('morph.test.js', () => {
   })
 
   it('expects types to be defined upon creation', () => {
-    expect(cmp.vm.types).toBeTruthy()
-    expect(cmp.vm.types.grmCase).toBeTruthy()
+    let morphInner = cmp.vm.$children[0]
+    expect(morphInner.types).toBeTruthy()
+    expect(morphInner.types.grmCase).toBeTruthy()
   })
 
   it('expects to showLexeme only if a lexeme is populated', () => {
-    expect(cmp.vm.showLexeme(cmp.vm.lexemes[0])).toBeTruthy()
-    expect(cmp.vm.showLexeme(cmp.vm.lexemes[1])).toBeFalsy()
+    let morphInner = cmp.vm.$children[0]
+
+    expect(morphInner.showLexeme(cmp.vm.lexemes[0])).toBeTruthy()
+    expect(morphInner.showLexeme(cmp.vm.lexemes[1])).toBeFalsy()
     let entries = cmp.find('div').findAll('div.alpheios-morph__dictentry')
     expect(entries.length).toEqual(3)
     expect(entries.at(0).isVisible()).toBeTruthy()
@@ -289,19 +292,32 @@ describe('morph.test.js', () => {
   })
 
   it('expected featureList to return a object with  a list of features for rendering', () => {
-    expect(cmp.vm.featureList(mockLexemeNoun.lemma, ['age', 'frequency'], 'extras')).toEqual({ extras: { value: '(ancient, frequent)' } })
+    let morphInner = cmp.vm.$children[0]
+    expect(morphInner.featureList(mockLexemeNoun.lemma, ['age', 'frequency'], 'extras')).toEqual({ extras: { value: '(ancient, frequent)' } })
   })
 
   it('expects extra lemma features to be rendered', () => {
-    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="extras"]')
+    let elem
+    if (cmp.find('.morph-inner-v1').exists() === false) {
+      elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="extras"]')
+    } else {
+      elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__features').find('[data-feature="extras"]')
+    }
+
     expect(elem.exists()).toBeTruthy()
     expect(elem.text()).toEqual('(ancient, frequent)')
   })
 
   it('expects extra lemma features to be empty', () => {
-    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div.alpheios-morph__morphdata').find('[data-feature="extras"]')
-    expect(elem.exists()).toBeTruthy()
-    expect(elem.text()).toEqual('')
+    let elem
+    if (cmp.find('.morph-inner-v1').exists() === false) {
+      elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div.alpheios-morph__morphdata').find('[data-feature="extras"]')
+      expect(elem.exists()).toBeTruthy()
+      expect(elem.text()).toEqual('')
+    } else {
+      elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).find('div.alpheios-morph__features').find('[data-feature="extras"]')
+      expect(elem.exists()).toBeFalsy()
+    }
   })
 
   it('expects lemma feature note to be rendered in brackets', () => {
@@ -311,7 +327,14 @@ describe('morph.test.js', () => {
   })
 
   it('expects lemma feature source to be rendered in brackets', () => {
-    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="source"]')
+    let elem
+    if (cmp.find('.morph-inner-v1').exists() === false) {
+      elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="source"]')
+    } else {
+      elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__features').find('[data-feature="source"]')
+    }
+
+    // let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(0).find('div.alpheios-morph__morphdata').find('[data-feature="source"]')
     expect(elem.exists()).toBeTruthy()
     expect(elem.text()).toEqual('[foo source]')
   })
@@ -362,9 +385,12 @@ describe('morph.test.js', () => {
   })
 
   it('expects a group separator to be present for case inflections with number, tense, or voice features', () => {
-    let elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).findAll('div.alpheios-morph__inflections div.alpheios-morph__inflset div.alpheios-morph__inflgroup')
-    expect(elem.at(0).find('.alpheios-morph__inline .alpheios-morph__groupseparator').exists()).toBeFalsy()
-    expect(elem.at(1).find('.alpheios-morph__inline .alpheios-morph__groupseparator').text()).toEqual(':')
+    let elem
+    if (cmp.find('.morph-inner-v1').exists() === false) {
+      elem = cmp.find('div').findAll('div.alpheios-morph__dictentry').at(2).findAll('div.alpheios-morph__inflections div.alpheios-morph__inflset div.alpheios-morph__inflgroup')
+      expect(elem.at(0).find('.alpheios-morph__inline .alpheios-morph__groupseparator').exists()).toBeFalsy()
+      expect(elem.at(1).find('.alpheios-morph__inline .alpheios-morph__groupseparator').text()).toEqual(':')
+    }
   })
 
   it('expects gender not to be shown for inflection group only if it is different than the lemma gender', () => {

@@ -1,5 +1,5 @@
 <template>
-    <div class="alpheios-panel auk" :class="classes" :style="this.data.styles"
+    <div class="alpheios-panel auk" :class="divClasses" :style="this.data.styles"
          data-component="alpheios-panel" data-resizable="true" v-show="data.isOpen"
         :data-notification-visible="data.notification.important"> <!-- Show only important notifications for now -->
 
@@ -85,7 +85,11 @@
         </div>
 
         <div class="alpheios-panel__content">
-            <div v-show="data.tabs.definitions" class="alpheios-panel__tab-panel">
+
+            <div v-show="data.tabs.definitions" class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw">
+                <div class="alpheios-lookup__panel">
+                  <lookup :uiController="uiController"></lookup>
+                </div>
                 <div v-show="data.shortDefinitions.length < 1 && data.fullDefinitions.length < 1">
                   {{data.l10n.messages.PLACEHOLDER_DEFINITIONS}}</div>
                 <div class="alpheios-panel__contentitem" v-for="definition in data.shortDefinitions">
@@ -116,6 +120,7 @@
                 </div>
             </div>
             <div v-show="data.tabs.options" class="alpheios-panel__tab-panel">
+                <reskin-font-color :messages="data.l10n.messages"></reskin-font-color>
                 <setting :data="data.settings.preferredLanguage" @change="settingChanged"
                          :classes="['alpheios-panel__options-item']"></setting>
                 <setting :data="data.settings.panelPosition" @change="settingChanged"
@@ -135,7 +140,10 @@
                   v-if="languageSetting.values.length > 1"
                   v-for="languageSetting in data.resourceSettings.lexicons"></setting>
             </div>
-            <div v-show="data.tabs.info" class="alpheios-panel__tab-panel">
+            <div v-show="data.tabs.info" class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding">
+                <div class="alpheios-lookup__panel">
+                  <lookup :uiController="uiController" :parentLanguage="data.infoComponentData.languageName"></lookup>
+                </div>
                 <info :data="data.infoComponentData" :messages="data.l10n.messages"></info>
             </div>
         </div>
@@ -163,6 +171,8 @@
   import Locales from '../locales/locales'
 
   import Tooltip from './tooltip.vue'
+  import Lookup from './lookup.vue'
+  import ReskinFontColor from './reskin-font-color.vue'
 
   // Embeddable SVG icons
   import AttachLeftIcon from '../images/inline-icons/attach-left.svg';
@@ -196,23 +206,38 @@
       infoIcon: InfoIcon,
       grammarIcon: GrammarIcon,
       treebankIcon: TreebankIcon,
-      alphTooltip: Tooltip
+      alphTooltip: Tooltip,
+      lookup: Lookup,
+      reskinFontColor: ReskinFontColor
     },
     data: function () {
       return {
         inflectionsPanelID: 'alpheios-panel__inflections-panel',
-        positionLeftClassName: 'alpheios-panel-left',
-        positionRightClassName: 'alpheios-panel-right',
+        // positionLeftClassName: 'alpheios-panel-left',
+        // positionRightClassName: 'alpheios-panel-right',
+        positionClassVariants: {
+          left: 'alpheios-panel-left',
+          right: 'alpheios-panel-right'
+        },
+        divClasses: ''
       }
     },
     props: {
       data: {
         type: Object,
         required: true
+      },
+      classesChanged: {
+        type: Number,
+        required: false,
+        default: 0
       }
     },
 
     computed: {
+      uiController: function () {
+        return this.$parent.uiController
+      },
       classes: function () {
         // Find index of an existing position class and replace it with an updated value
         const positionLeftIndex = this.data.classes.findIndex(v => v === this.positionLeftClassName)
@@ -275,8 +300,19 @@
           top: '2px',
           right: '50px'
         }
+      },
+
+      positionClasses: function () {
+        return this.positionClassVariants[this.data.settings.panelPosition.currentValue]
       }
     },
+    watch: {
+      classesChanged: function (value) {
+        this.divClasses = this.data.classes.join(' ') + ' ' + this.positionClasses
+        this.setContentWidth('auto')
+      }
+    },
+
     methods: {
       updateZIndex: function (zIndexMax) {
         if (zIndexMax >= this.zIndex) {
@@ -299,6 +335,7 @@
       },
 
       changeTab (name) {
+        this.setContentWidth('auto')
         this.$emit('changetab', name)
       },
 
@@ -337,6 +374,10 @@
       },
 
       setContentWidth: function (width) {
+        if (width === 'auto') {
+          this.$el.style.removeProperty('width')
+          return
+        }
         let widthDelta = parseInt(this.navbarWidth, 10)
           + parseInt(this.inflPanelLeftPadding, 10)
           + parseInt(this.inflPanelRightPadding, 10)
@@ -354,7 +395,12 @@
           this.$el.style.width = width
       }
     },
-
+    created: function () {
+      let vm = this
+      vm.$on('changeStyleClass', (name, type) => {
+        vm.uiOptionChanged(name, type)
+      })
+    },
     mounted: function () {
       // Determine paddings and sidebar width for calculation of a panel width to fit content
       let navbar = this.$el.querySelector(`#${this.navbarID}`)
@@ -463,15 +509,14 @@
         justify-content: space-between;
         border-bottom: 1px solid $alpheios-link-color-dark-bg;
     }
-
     .alpheios-panel-left .alpheios-panel__header {
         direction: ltr;
-        padding: 0 0 0 10px;
+        /*padding: 0 0 0 10px;*/
     }
 
     .alpheios-panel-right .alpheios-panel__header {
         direction: rtl;
-        padding: 0 10px 0 0;
+        /*padding: 0 10px 0 0;*/
     }
 
     .alpheios-panel__header-logo {
@@ -501,14 +546,19 @@
     .alpheios-panel__header-action-btn.active:hover,
     .alpheios-panel__header-action-btn.active:focus {
         display: block;
-        width: 40px;
-        height: 40px;
-        margin: 0 5px;
-        padding-top: 5px;
+        width: 20px;
+        height: 20px;
         text-align: center;
         cursor: pointer;
         fill: $alpheios-link-color-dark-bg;
         stroke: $alpheios-link-color-dark-bg;
+        margin: 10px 15px;
+        svg {
+          width: 20px;
+          height: 20px;
+          display: inline-block;
+          vertical-align: top;
+        }
     }
 
     .alpheios-panel__header-action-btn:hover,
@@ -516,10 +566,6 @@
     .alpheios-panel__header-action-btn.active {
         fill: $alpheios-link-hover-color;
         stroke: $alpheios-link-hover-color;
-    }
-
-    .alpheios-panel__header-action-btn.alpheios-panel__header-action-btn--narrow {
-        margin: 0;
     }
 
     .alpheios-panel__body {
@@ -541,6 +587,13 @@
         direction: ltr;
         box-sizing: border-box;
         display: flex;
+        flex-flow: wrap;
+    }
+
+    .alpheios-lookup__panel {
+      display: block;
+      border-bottom: 1px solid;
+      margin-bottom: 20px;
     }
 
     .alpheios-panel__notifications {
@@ -605,6 +658,10 @@
         padding: 0;
     }
 
+    .alpheios-panel__content_no_top_padding {
+      padding-top: 0;
+    }
+
     .alpheios-panel__message {
         margin-bottom: 0.5rem;
     }
@@ -633,14 +690,20 @@
 
     .alpheios-panel__header-nav-btn {
         display: block;
-        width: 40px;
-        height: 40px;
-        margin: 0 5px;
-        padding-top: 5px;
+        width: 20px;
+        height: 20px;
         text-align: center;
         cursor: pointer;
         background: transparent no-repeat center center;
         background-size: contain;
+        margin: 10px 15px;
+
+        svg {
+          width: 20px;
+          height: 20px;
+          display: inline-block;
+          vertical-align: top;
+        }
     }
 
     .alpheios-panel__header-nav-btn.alpheios-panel__header-nav-btn--short {

@@ -1,0 +1,139 @@
+@mixin font-class($baseFontSize) {
+    font-size: $baseFontSize;
+
+    .uk-form-label {
+    	font-size: $baseFontSize * 0.85;
+    }
+
+    .uk-h3, h3 {
+    	font-size: $baseFontSize * 1.18;
+    }
+
+    .uk-text-small {
+    	font-size: $baseFontSize * 0.9;
+    }
+
+    .alpheios-info .alpheios-info__versiontext,
+    .alpheios-info__currentlanguage {
+    	font-size: $baseFontSize * 0.675;
+    }
+
+    .alpheios-info .alpheios-info__helptext p {
+    	font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+    	font-size: $baseFontSize;
+    }
+
+    .infl-cell {
+    	font-size: $baseFontSize * 0.75;
+    }
+
+    .uk-select.alpheios-inflections__view-selector {
+    	font-size: $baseFontSize * 0.675;
+    }
+    .uk-select:not([multiple]):not([size]) {
+    	height: $baseFontSize * 2.5;
+    }
+    .alpheios-panel__header-action-btn,
+    .alpheios-panel__header-action-btn.active:hover,
+    .alpheios-panel__header-action-btn.active:focus,
+    .alpheios-panel__header-nav-btn {
+        width: $baseFontSize * 1.25;
+        height: $baseFontSize * 1.25;
+        margin: 25px - $baseFontSize 15px;
+
+        svg {
+          width: $baseFontSize * 1.25;
+          height: $baseFontSize * 1.25;
+        }
+    }
+
+    .alph_tooltip .tooltiptext {
+    	font-size: $baseFontSize * 0.75;
+    	width: $baseFontSize * 7.5;
+    }
+
+    $baseSize: $baseFontSize + 12px;
+
+	.alpheios-skin_properties_item {
+		font-size: $baseFontSize;
+        width: $baseSize;
+        height: $baseSize;
+        line-height: $baseSize;
+        border-radius: $baseSize/2;
+	}
+
+	.alpheios-skin_properties_item__small_font {
+		font-size: $baseFontSize * 0.8;
+        width: $baseSize * 0.8;
+        height: $baseSize * 0.8;
+        line-height: $baseSize * 0.8;
+        border-radius: $baseSize * 0.8 * 0.5;
+	}
+
+    .alpheios-skin_properties_item__large_font {
+		font-size: $baseFontSize * 1.2;
+        width: $baseSize * 1.2;
+        height: $baseSize * 1.2;
+        line-height: $baseSize * 1.2;
+        border-radius: $baseSize * 1.2;
+	}
+
+	.uk-button {
+		font-family: Arial,Helvetica Neue,Helvetica,sans-serif !important;
+	}
+
+	.alpheios-popup__more-btn,
+	.uk-button.alpheios-lookup__button {
+		font-size: $baseFontSize * 0.7;
+		line-height: $baseFontSize * 1.75;
+	}
+
+	.uk-input.alpheios-lookup__input {
+		height: $baseFontSize * 2;
+	}
+
+	.alpheios-popup__header-selection {
+		font-size: $baseFontSize;
+	}
+
+	.alpheios-morph__dictentry .alpheios-morph__formtext {
+		font-size: $baseFontSize * 1.1;
+	}
+
+	.alpheios-popup__providers-link,
+	a.alpheios-lookup__settings-link {
+		font-size: $baseFontSize * 0.7;
+	}
+}
+
+
+
+.auk.alpheios-panel.alpheios-font_medium_class {
+    @include font-class($alpheios-base-font-size);
+}
+.auk.alpheios-popup.alpheios-font_medium_class {
+    @include font-class($alpheios-base-font-size);
+}
+
+.auk.alpheios-panel.alpheios-font_small_class {
+    @include font-class($alpheios-small-font-size);
+}
+.auk.alpheios-popup.alpheios-font_small_class {
+    @include font-class($alpheios-small-font-size);
+}
+
+.auk.alpheios-panel.alpheios-font_large_class {
+    @include font-class($alpheios-large-font-size);
+
+    .alpheios-panel__header-action-btn,
+    .alpheios-panel__header-action-btn.active:hover,
+    .alpheios-panel__header-action-btn.active:focus,
+    .alpheios-panel__header-nav-btn {
+    	margin-right: 10px;
+    	margin-left: 10px;
+    }
+}
+
+.auk.alpheios-popup.alpheios-font_large_class {
+    @include font-class($alpheios-large-font-size);
+}

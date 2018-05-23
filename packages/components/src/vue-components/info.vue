@@ -33,16 +33,16 @@
   @import "../styles/alpheios";
 
   .alpheios-info {
-    font-family: $alpheios-font-family !important;
-    font-size: $alpheios-base-font-size !important;
-    color: $alpheios-copy-color !important;
+    font-family: $alpheios-font-family;
+    font-size: $alpheios-base-font-size;
+    color: $alpheios-copy-color;
   }
 
   .alpheios-info .alpheios-info__helptext p {
     font-size: 0.875*$alpheios-base-font-size;
-    font-family: $alpheios-font-family !important;
-    font-size: $alpheios-base-font-size !important;
-    color: $alpheios-copy-color !important;
+    font-family: $alpheios-font-family;
+    font-size: $alpheios-base-font-size;
+    color: $alpheios-copy-color;
   }
 
   .alpheios-info .alpheios-info__versiontext {
