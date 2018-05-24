@@ -5,6 +5,7 @@
       :definitions = "definitions"
       :linkedfeatures = "linkedfeatures"
       :translations = "translations"
+      @sendfeature = "sendFeature"
     ></morph-inner>
   </div><!--alpheios-morph__lexemes-->
 </template>
@@ -34,6 +35,11 @@
           required: false,
           default: () => {}
         }
+    },
+    methods: {
+      sendFeature (data) {
+        this.$emit('sendfeature',data)
+      },
     }
   }
 </script>
