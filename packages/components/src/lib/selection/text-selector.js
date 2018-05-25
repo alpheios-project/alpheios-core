@@ -1,7 +1,7 @@
 import TextQuoteSelector from './w3c/text-quote-selector'
 import {LanguageModelFactory} from 'alpheios-data-models'
 /**
- * This is a general-purpose, media abstract selector that
+ * This is a general-purpose, media abstract selector.
  * @property {string} selectedText - Selected text (usually a single word)
  * @property {string} normalizedSelectedText - Selected text after normalization
  * @property {string} languageID - A language ID of a selection
@@ -11,9 +11,12 @@ export default class TextSelector {
   /**
    * @param {symbol} languageID - A language ID of a selector
    */
-  constructor (languageID = null) {
+  constructor (languageID) {
     this.text = '' // Calculated?
-    this.languageID = languageID
+    this.languageID = languageID || null
+    if (!this.languageID) {
+      console.warn(`Creating a TextSelector without any language assigned`)
+    }
     this.model = undefined
     this.location = ''
     this.data = {}

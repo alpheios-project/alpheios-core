@@ -1,3 +1,4 @@
+/* global MouseEvent, TouchEvent */
 import 'element-closest' // To polyfill Element.closest() if required
 import {Constants, LanguageModelFactory} from 'alpheios-data-models'
 import TextSelector from '../text-selector'
@@ -5,18 +6,74 @@ import MediaSelector from './media-selector'
 
 export default class HTMLSelector extends MediaSelector {
   /**
-   * @param {Event} event - Event object with information about text selection.
-   * @param {string} defaultLanguageCode - A language code in ISO 639-3 format.
+   * @param {PointerEvent | MouseEvent | TouchEvent} event - Event object with information about text selection.
+   *        event might be different depending on a platform:
+   *          PointerEvent is a universal event that works for mouse, finger, and stylus events.
+   *                      This is a type of event we need to support for the future. However, it is not supported
+   *                      by Safari (both OSX and iOS) at the moment of writing (2018-05).
+   *          MouseEvent is received from mouse enabled devices (desktops, notebooks, etc.). In future we should
+   *                      probably use PointerEvent instead of it.
+   *          TouchEvent is received on finger controlled devices when a platform does not support pointer events.
+   *                      It is supported currently for compatibility with Safari only. Once Safari will start
+   *                      supporting pointer events, we should switch to those.
+   * @param {string} defaultLanguageCode - A language code in ISO 639-3 format. It takes a language code
+   *        instead of a standard language ID because HTMLSelector operates with HTML sources, and those
+   *        have language codes as means of language identification.
    */
   constructor (event, defaultLanguageCode) {
     super(event)
-    this.targetRect = {
-      top: event.clientY,
-      left: event.clientX
+
+    // Determine a language ID based on an environment of a target
+    this.languageID = this.getLanguageID(defaultLanguageCode)
+
+    // TODO: Recognize if pointer events are supported
+    //    if (event instanceof PointerEvent) {
+    //      console.log('This is a pointer event')
+    //    } else
+    if (MouseEvent && event instanceof MouseEvent) {
+      /*
+      * We do not handle mouse events other than `doubleclick` now.
+      * For double clicks, selection is made by the browser automatically.
+      * If we want to support other mouse events, we have to create a selection manually.
+      */
+      console.log('This is a mouse event')
+      this.targetRect = {
+        top: event.clientY,
+        left: event.clientX
+      }
+    } else if (TouchEvent && event instanceof TouchEvent) {
+      console.log('This is a touch event')
+      this.targetRect = {
+        top: event.changedTouches[0].clientY,
+        left: event.changedTouches[0].clientX
+      }
+
+      // We need to create a selection for a touch position
+
+      // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
+      // moment of writing (2018-05).
+      // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
+      let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
+
+      /**
+       * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
+       * So we don't care where an end selector positions would be and set it just to the same position as a start.
+       * Selection methods will determine exact word boundaries and will adjust the selection.
+       */
+      range.setEnd(range.startContainer, range.startOffset)
+
+      let sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+    } else {
+      console.error(`Unsupported by HTMLSelector event of "${event.constructor.name}" type`)
     }
-    this.defaultLanguageCode = defaultLanguageCode
+
     this.setDataAttributes()
     this.wordSeparator = new Map()
+    // A word separator function, when called, will adjust a selection so it will match exact word boundaries
+    // TODO: Word separator functions are called in `createTextSelector`. Thus, selection will not be
+    // adjusted before `createTextSelector` is called. Should we do it earlier, in a constructor?
     this.wordSeparator.set(Constants.LANG_UNIT_WORD, this.doSpaceSeparatedWordSelection.bind(this))
     this.wordSeparator.set(Constants.LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
   }
@@ -26,16 +83,15 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   createTextSelector () {
-    let textSelector = new TextSelector(LanguageModelFactory.getLanguageIdFromCode(this.getLanguageCode(this.defaultLanguageCode)))
+    let textSelector = new TextSelector(this.languageID)
     textSelector.model = LanguageModelFactory.getLanguageModel(this.languageID)
     textSelector.location = this.location
     textSelector.data = this.data
-    // textSelector.language = TextSelector.getLanguage(textSelector.languageCode)
 
     if (this.wordSeparator.has(textSelector.model.baseUnit)) {
       textSelector = this.wordSeparator.get(textSelector.model.baseUnit)(textSelector)
     } else {
-      console.warn(`No word separator function found for a "${textSelector.model.baseUnit}" base unit`)
+      console.warn(`No word separator function found for a "${textSelector.model.baseUnit.toString()}" base unit`)
     }
     return textSelector
   }
@@ -89,19 +145,19 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   /**
-   * Helper method for {@link #findSelection} which
-   * identifies target word and surrounding
-   * context for languages whose words are
-   * space-separated
+   * Helper method for {@link #findSelection} which identifies target word and
+   * surrounding context for languages whose words are space-separated.
+   * It does not use an end point of a selection. It takes a beginning of a selection
+   * and obtains a word where a start selection position is.
    * @see #findSelection
    * @private
    */
   doSpaceSeparatedWordSelection (textSelector) {
     let selection = HTMLSelector.getSelection(this.target)
-    let anchor = selection.anchorNode
-    let focus = selection.focusNode
-    let anchorText = anchor.data
-    let ro
+    let anchor = selection.anchorNode // A node where is a beginning of a selection
+    let focus = selection.focusNode // A node where the end of a selection
+    let anchorText = anchor.data // A text of an anchor node?
+    let ro // An offset from the beginning of a selection
     let invalidAnchor = false
     // firefox's implementation of getSelection is buggy and can result
     // in incomplete data - sometimes the anchor text doesn't contain the focus data
@@ -122,15 +178,16 @@ export default class HTMLSelector extends MediaSelector {
     //   convert punctuation to spaces
     anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
 
-    // find word
-    let wordStart = anchorText.lastIndexOf(' ', ro)
-    let wordEnd = anchorText.indexOf(' ', wordStart + 1)
+    // Determine word boundaries
+    let wordStart = anchorText.lastIndexOf(' ', ro) + 1 // Try to find a space char before a beginning of a selection
+    let wordEnd = anchorText.indexOf(' ', wordStart + 1) // Try to find a space char after a beginning of a selection
 
     if (wordStart === -1) {
       // if we don't have any spaces in the text and the browser identified
       // an invalid anchor node (i.e. one which doesn't contain the focus node text)
       // then just assume the focusNode is a single word and the click was inside it, so
       // set the wordStart to the beginning
+      // TODO: Should we set it to the beginning at the node even if `ro` is not zero?
       wordStart = invalidAnchor ? 0 : ro
     }
 
@@ -230,5 +287,20 @@ export default class HTMLSelector extends MediaSelector {
         left: 0
       }
     }
+  }
+
+  selectTextRange (obj, start, stop) {
+    let startNode = obj.firstChild
+    let endNode = obj.firstChild
+
+    startNode.nodeValue = startNode.nodeValue.trim()
+
+    let range = document.createRange()
+    range.setStart(startNode, start)
+    range.setEnd(endNode, stop + 1)
+
+    let sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
   }
 }
