@@ -26,6 +26,8 @@ export default class HTMLSelector extends MediaSelector {
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
+    let messageBox = document.querySelector('#alpheios-pwa-test-pointer-message-box') // Test code, remove for prod
+
     // TODO: Recognize if pointer events are supported
     //    if (event instanceof PointerEvent) {
     //      console.log('This is a pointer event')
@@ -47,6 +49,10 @@ export default class HTMLSelector extends MediaSelector {
         top: event.changedTouches[0].clientY,
         left: event.changedTouches[0].clientX
       }
+      if (messageBox) {
+        messageBox.innerHTML += `HTML Selector selection update start<br>`
+        messageBox.scrollTop = messageBox.scrollHeight
+      }
 
       // We need to create a selection for a touch position
 
@@ -65,6 +71,11 @@ export default class HTMLSelector extends MediaSelector {
       let sel = window.getSelection()
       sel.removeAllRanges()
       sel.addRange(range)
+
+      if (messageBox) {
+        messageBox.innerHTML += `HTML Selector selection update end<br>`
+        messageBox.scrollTop = messageBox.scrollHeight
+      }
     } else {
       console.error(`Unsupported by HTMLSelector event of "${event.constructor.name}" type`)
     }
@@ -74,8 +85,17 @@ export default class HTMLSelector extends MediaSelector {
     // A word separator function, when called, will adjust a selection so it will match exact word boundaries
     // TODO: Word separator functions are called in `createTextSelector`. Thus, selection will not be
     // adjusted before `createTextSelector` is called. Should we do it earlier, in a constructor?
+
+    if (messageBox) {
+      messageBox.innerHTML += `HTML Selector word selection start<br>`
+      messageBox.scrollTop = messageBox.scrollHeight
+    }
     this.wordSeparator.set(Constants.LANG_UNIT_WORD, this.doSpaceSeparatedWordSelection.bind(this))
     this.wordSeparator.set(Constants.LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
+    if (messageBox) {
+      messageBox.innerHTML += `HTML Selector word selection end<br>`
+      messageBox.scrollTop = messageBox.scrollHeight
+    }
   }
 
   static getSelector (target, defaultLanguageCode) {
