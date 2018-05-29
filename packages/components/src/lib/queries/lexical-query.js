@@ -63,6 +63,9 @@ export default class LexicalQuery extends Query {
         this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_READY)
       } else {
         this.ui.addImportantMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND)
+        // Need to notify a UI controller that there is no morph data on this word in an analyzer
+        // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
+        if (this.ui.morphologyDataNotFound) { this.ui.morphologyDataNotFound(true) }
         this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
       }
     } else {
