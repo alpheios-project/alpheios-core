@@ -62,6 +62,6 @@ export default class LatinImperativeView extends LatinVerbMoodView {
   }
 
   static suffixCellFilter (suffix) {
-    return suffix.features[Feature.types.mood].includes(Constants.MOOD_IMPERATIVE)
+    return suffix.features[Feature.types.mood].values.includes(Constants.MOOD_IMPERATIVE)
   }
 }

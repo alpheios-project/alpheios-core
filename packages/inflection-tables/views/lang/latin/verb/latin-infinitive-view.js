@@ -60,6 +60,6 @@ export default class LatinInfinitiveView extends LatinVerbMoodView {
   }
 
   static suffixCellFilter (suffix) {
-    return suffix.features[Feature.types.mood].includes(Constants.MOOD_INFINITIVE)
+    return suffix.features[Feature.types.mood].values.includes(Constants.MOOD_INFINITIVE)
   }
 }
