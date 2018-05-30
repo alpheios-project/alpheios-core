@@ -1,5 +1,6 @@
 import LanguageModel from './language_model.js'
 import * as Constants from './constants.js'
+import Feature from './feature.js'
 
 let typeFeatures = new Map()
 let typeFeaturesInitialized = false
@@ -73,5 +74,40 @@ export default class ArabicLanguageModel extends LanguageModel {
    */
   static getPunctuation () {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r"
+  }
+
+  /**
+   * Aggregate inflections for display according to language model characteristics
+   */
+  static aggregateInflectionsForDisplay (inflections) {
+    // TODO at some point we might want to be able to check the provider in here
+    // because this really only applies to the specifics of the Aramorph parser
+    let aggregated = []
+    let aggregates = { [Constants.POFS_NOUN]: [], [Constants.POFS_ADJECTIVE]: [], [Constants.POFS_NOUN_PROPER]: [] }
+    for (let infl of inflections) {
+      if (infl[Feature.types.morph] && infl[Feature.types.morph].value.match(/ADJ[uaiNK]/)) {
+        aggregates[Constants.POFS_ADJECTIVE].push(infl)
+      } else if (infl[Feature.types.morph] && infl[Feature.types.morph].value.match(/NOUN[uaiNK]/)) {
+        aggregates[Constants.POFS_NOUN].push(infl)
+      } else if (infl[Feature.types.morph] && infl[Feature.types.morph].value.match(/NOUN_PROP[uaiNK]/)) {
+        aggregates[Constants.POFS_NOUN_PROPER].push(infl)
+      } else {
+        // we are also going to keep the examples out of the display for now
+        infl.example = null
+        aggregated.push(infl)
+      }
+    }
+    for (let type of Object.keys(aggregates)) {
+      let base = aggregated.filter((i) => i[Feature.types.part].value === type)
+      if (base.length !== 1) {
+        // if we don't have the base form then we don't really know what to do here
+        // so just put the inflection back in the ones available for display
+        aggregated.push(...aggregates[type])
+      }
+      // we may decide we want to keep the extra suffix and morph information
+      // from the alternate inflections but for now we just will drop it from
+      // the inflections that are displayed
+    }
+    return aggregated
   }
 }

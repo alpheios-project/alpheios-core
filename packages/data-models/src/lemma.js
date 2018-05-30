@@ -1,6 +1,7 @@
 import LMF from './language_model_factory.js'
 import Feature from './feature.js'
 import Translation from './translation.js'
+import uuidv4 from 'uuid/v4'
 
 /**
  * Lemma, a canonical form of a word.
@@ -31,6 +32,7 @@ class Lemma {
     this.word = word
     this.principalParts = principalParts
     this.features = {}
+    this.ID = uuidv4()
   }
 
   get language () {
@@ -107,14 +109,6 @@ class Lemma {
     for (let feature of features) {
       this.addFeature(feature)
     }
-  }
-
-  /**
-   * Get a string which can be used as a unique key to identify this lemma
-   * @return {string} the key
-   */
-  get key () {
-    return [this.word, LMF.getLanguageCodeFromId(this.languageID), ...Object.values(this.features)].join('-')
   }
 
   /**

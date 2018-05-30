@@ -454,9 +454,10 @@ class LanguageModel {
    */
   static groupInflectionsForDisplay (inflections) {
     let grouped = new Map()
+    let aggregated = this.aggregateInflectionsForDisplay(inflections)
 
     // group inflections by part of speech
-    for (let infl of inflections) {
+    for (let infl of aggregated) {
       let groupingKey = new InflectionGroupingKey(infl,
         [Feature.types.part, Feature.types.declension, Feature.types.dialect, Feature.types.comparison],
         {
@@ -563,6 +564,16 @@ class LanguageModel {
       kv[1].inflections = Array.from(inflgrp.values())
     }
     return Array.from(grouped.values())
+  }
+
+  /**
+   * Aggregate inflections for display according to language model characteristics
+   * @param {Inflection[]} inflections an array of inflections
+   * @return Inflection[] the aggregated inflections
+   */
+  static aggregateInflectionsForDisplay (inflections) {
+    // default is just to do nothing
+    return inflections
   }
 
   /**

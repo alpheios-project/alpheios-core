@@ -1,7 +1,5 @@
 /* eslint-env jest */
-import * as Constants from '../src/constants.js'
 import Lemma from '../src/lemma.js'
-import Feature from '../src/feature.js'
 
 import Translation from '../src/translation.js'
 
@@ -18,6 +16,7 @@ describe('Lemma object', () => {
 
   test('Should be initialized properly', () => {
     expect(lemma).toEqual({
+      ID: expect.anything(),
       word: word,
       languageCode: 'lat',
       languageID: expect.anything(),
@@ -25,6 +24,7 @@ describe('Lemma object', () => {
       features: {}
     })
     expect(lemmaWithParts).toEqual({
+      ID: expect.anything(),
       word: word,
       languageCode: 'lat',
       languageID: expect.anything(),
@@ -36,14 +36,6 @@ describe('Lemma object', () => {
 
   test('Should not allow empty arguments', () => {
     expect(() => new Lemma()).toThrowError(/empty/)
-  })
-
-  test('key', () => {
-    lemma.addFeatures([
-      new Feature(Feature.types.part, 'noun', Constants.LANG_LATIN),
-      new Feature(Feature.types.tense, 'present', Constants.LANG_LATIN)
-    ])
-    expect(lemma.key).toEqual('someword-lat-noun-present')
   })
 
   // test('Should not allow unsupported languages', () => {
