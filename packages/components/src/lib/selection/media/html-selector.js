@@ -1,4 +1,4 @@
-/* global MouseEvent, TouchEvent */
+/* global MouseEvent, PointerEvent, TouchEvent */
 import 'element-closest' // To polyfill Element.closest() if required
 import {Constants, LanguageModelFactory} from 'alpheios-data-models'
 import TextSelector from '../text-selector'
@@ -28,11 +28,42 @@ export default class HTMLSelector extends MediaSelector {
 
     let messageBox = document.querySelector('#alpheios-pwa-test-pointer-message-box') // Test code, remove for prod
 
-    // TODO: Recognize if pointer events are supported
-    //    if (event instanceof PointerEvent) {
-    //      console.log('This is a pointer event')
-    //    } else
-    if (MouseEvent && event instanceof MouseEvent) {
+    // Pointer events should be checked before mouse events, because a pointer event is an instance of MouseEvent too
+    if (PointerEvent && event instanceof PointerEvent) {
+      console.log('This is a pointer event')
+      this.targetRect = {
+        top: event.clientY,
+        left: event.clientX
+      }
+
+      if (messageBox) {
+        messageBox.innerHTML += `HTML Selector selection update start<br>`
+        messageBox.scrollTop = messageBox.scrollHeight
+      }
+
+      // We need to create a selection for a touch position
+
+      // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
+      // moment of writing (2018-05).
+      // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
+      let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
+
+      /**
+       * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
+       * So we don't care where an end selector positions would be and set it just to the same position as a start.
+       * Selection methods will determine exact word boundaries and will adjust the selection.
+       */
+      range.setEnd(range.startContainer, range.startOffset)
+
+      let sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+
+      if (messageBox) {
+        messageBox.innerHTML += `HTML Selector selection update end<br>`
+        messageBox.scrollTop = messageBox.scrollHeight
+      }
+    } else if (MouseEvent && event instanceof MouseEvent) {
       /*
       * We do not handle mouse events other than `doubleclick` now.
       * For double clicks, selection is made by the browser automatically.
