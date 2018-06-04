@@ -3,6 +3,7 @@ import 'element-closest' // To polyfill Element.closest() if required
 import {Constants, LanguageModelFactory} from 'alpheios-data-models'
 import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
+import HTMLConsole from '../../log/html-console.js'
 
 export default class HTMLSelector extends MediaSelector {
   /**
@@ -26,8 +27,6 @@ export default class HTMLSelector extends MediaSelector {
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
-    let messageBox = document.querySelector('#alpheios-pwa-test-pointer-message-box') // Test code, remove for prod
-
     // Pointer events should be checked before mouse events, because a pointer event is an instance of MouseEvent too
     if (PointerEvent && event instanceof PointerEvent) {
       console.log('This is a pointer event')
@@ -36,11 +35,7 @@ export default class HTMLSelector extends MediaSelector {
         left: event.clientX
       }
 
-      if (messageBox) {
-        messageBox.innerHTML += `HTML Selector selection update start<br>`
-        messageBox.scrollTop = messageBox.scrollHeight
-      }
-
+      HTMLConsole.instance.log('HTML Selector selection update start')
       // We need to create a selection for a touch position
 
       // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
@@ -58,11 +53,7 @@ export default class HTMLSelector extends MediaSelector {
       let sel = window.getSelection()
       sel.removeAllRanges()
       sel.addRange(range)
-
-      if (messageBox) {
-        messageBox.innerHTML += `HTML Selector selection update end<br>`
-        messageBox.scrollTop = messageBox.scrollHeight
-      }
+      HTMLConsole.instance.log('HTML Selector selection update end')
     } else if (MouseEvent && event instanceof MouseEvent) {
       /*
       * We do not handle mouse events other than `doubleclick` now.
@@ -80,10 +71,7 @@ export default class HTMLSelector extends MediaSelector {
         top: event.changedTouches[0].clientY,
         left: event.changedTouches[0].clientX
       }
-      if (messageBox) {
-        messageBox.innerHTML += `HTML Selector selection update start<br>`
-        messageBox.scrollTop = messageBox.scrollHeight
-      }
+      HTMLConsole.instance.log('HTML Selector selection update start')
 
       // We need to create a selection for a touch position
 
@@ -103,10 +91,7 @@ export default class HTMLSelector extends MediaSelector {
       sel.removeAllRanges()
       sel.addRange(range)
 
-      if (messageBox) {
-        messageBox.innerHTML += `HTML Selector selection update end<br>`
-        messageBox.scrollTop = messageBox.scrollHeight
-      }
+      HTMLConsole.instance.log('HTML Selector selection update end')
     } else {
       console.error(`Unsupported by HTMLSelector event of "${event.constructor.name}" type`)
     }
@@ -117,16 +102,10 @@ export default class HTMLSelector extends MediaSelector {
     // TODO: Word separator functions are called in `createTextSelector`. Thus, selection will not be
     // adjusted before `createTextSelector` is called. Should we do it earlier, in a constructor?
 
-    if (messageBox) {
-      messageBox.innerHTML += `HTML Selector word selection start<br>`
-      messageBox.scrollTop = messageBox.scrollHeight
-    }
+    HTMLConsole.instance.log('HTML Selector word selection start')
     this.wordSeparator.set(Constants.LANG_UNIT_WORD, this.doSpaceSeparatedWordSelection.bind(this))
     this.wordSeparator.set(Constants.LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
-    if (messageBox) {
-      messageBox.innerHTML += `HTML Selector word selection end<br>`
-      messageBox.scrollTop = messageBox.scrollHeight
-    }
+    HTMLConsole.instance.log('HTML Selector word selection end')
   }
 
   static getSelector (target, defaultLanguageCode) {
