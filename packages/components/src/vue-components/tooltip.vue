@@ -37,6 +37,10 @@
             return { 'alph_tooltip-top': true }
           case 'bottom':
             return { 'alph_tooltip-bottom': true }
+          case 'bottom-wide':
+            return { 'alph_tooltip-bottom-wide': true }
+          case 'bottom-narrow':
+            return { 'alph_tooltip-bottom-narrow': true }
           case 'left':
             return { 'alph_tooltip-left': true }
           case 'right':

@@ -37,26 +37,29 @@ div.alpheios-color_schema_light_class {
     }
 
     .alph_tooltip .tooltiptext {
-    	background-color: $alpheios-color_schema_light_color;
-		color: $alpheios-color_schema_light_background;
+    	background-color: $alpheios-tooltip-bg;
+		color: $alpheios-tooltip-color;
+		border: 1px solid $alpheios-tooltip-color;
     }
 
 	.alph_tooltip-top::after {
-		border-color: $alpheios-color_schema_light_color transparent transparent transparent;
+		border-color: $alpheios-tooltip-color transparent transparent transparent;
 	}
 	.alph_tooltip-top-right::after {
-		border-color: $alpheios-color_schema_light_color transparent transparent transparent;
+		border-color: $alpheios-tooltip-color transparent transparent transparent;
 	}
 	.alph_tooltip-right::after {
-		border-color: transparent $alpheios-color_schema_light_color transparent transparent;
+		border-color: transparent $alpheios-tooltip-color transparent transparent;
 	}
-	.alph_tooltip-bottom::after {
-		border-color: transparent transparent $alpheios-color_schema_light_color transparent;
+	.alph_tooltip-bottom::after,
+	.alph_tooltip-bottom-wide::after,
+	.alph_tooltip-bottom-narrow::after {
+		border-color: transparent transparent $alpheios-tooltip-color transparent;
 	}
 	.alph_tooltip-bottom-right::after {
-		border-color: transparent transparent $alpheios-color_schema_light_color transparent;
+		border-color: transparent transparent $alpheios-tooltip-color transparent;
 	}
 	.alph_tooltip-left::after {
-		border-color: transparent transparent transparent $alpheios-color_schema_light_color;
+		border-color: transparent transparent transparent $alpheios-tooltip-color;
 	}
 }
