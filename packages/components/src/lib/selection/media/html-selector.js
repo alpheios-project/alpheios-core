@@ -1,22 +1,12 @@
-/* global MouseEvent, PointerEvent, TouchEvent */
 import 'element-closest' // To polyfill Element.closest() if required
 import {Constants, LanguageModelFactory} from 'alpheios-data-models'
 import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
-import HTMLConsole from '../../log/html-console.js'
 
 export default class HTMLSelector extends MediaSelector {
   /**
-   * @param {PointerEvent | MouseEvent | TouchEvent} event - Event object with information about text selection.
-   *        event might be different depending on a platform:
-   *          PointerEvent is a universal event that works for mouse, finger, and stylus events.
-   *                      This is a type of event we need to support for the future. However, it is not supported
-   *                      by Safari (both OSX and iOS) at the moment of writing (2018-05).
-   *          MouseEvent is received from mouse enabled devices (desktops, notebooks, etc.). In future we should
-   *                      probably use PointerEvent instead of it.
-   *          TouchEvent is received on finger controlled devices when a platform does not support pointer events.
-   *                      It is supported currently for compatibility with Safari only. Once Safari will start
-   *                      supporting pointer events, we should switch to those.
+   * @param {PointerEvt} event - Event object with information about text selection.
+   *                             A custom pointer event or its children.
    * @param {string} defaultLanguageCode - A language code in ISO 639-3 format. It takes a language code
    *        instead of a standard language ID because HTMLSelector operates with HTML sources, and those
    *        have language codes as means of language identification.
@@ -27,85 +17,36 @@ export default class HTMLSelector extends MediaSelector {
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
-    // Pointer events should be checked before mouse events, because a pointer event is an instance of MouseEvent too
-    if (PointerEvent && event instanceof PointerEvent) {
-      console.log('This is a pointer event')
-      this.targetRect = {
-        top: event.clientY,
-        left: event.clientX
-      }
-
-      HTMLConsole.instance.log('HTML Selector selection update start')
-      // We need to create a selection for a touch position
-
-      // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
-      // moment of writing (2018-05).
-      // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
-      let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
-
-      /**
-       * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
-       * So we don't care where an end selector positions would be and set it just to the same position as a start.
-       * Selection methods will determine exact word boundaries and will adjust the selection.
-       */
-      range.setEnd(range.startContainer, range.startOffset)
-
-      let sel = window.getSelection()
-      sel.removeAllRanges()
-      sel.addRange(range)
-      HTMLConsole.instance.log('HTML Selector selection update end')
-    } else if (MouseEvent && event instanceof MouseEvent) {
-      /*
-      * We do not handle mouse events other than `doubleclick` now.
-      * For double clicks, selection is made by the browser automatically.
-      * If we want to support other mouse events, we have to create a selection manually.
-      */
-      console.log('This is a mouse event')
-      this.targetRect = {
-        top: event.clientY,
-        left: event.clientX
-      }
-    } else if (TouchEvent && event instanceof TouchEvent) {
-      console.log('This is a touch event')
-      this.targetRect = {
-        top: event.changedTouches[0].clientY,
-        left: event.changedTouches[0].clientX
-      }
-      HTMLConsole.instance.log('HTML Selector selection update start')
-
-      // We need to create a selection for a touch position
-
-      // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
-      // moment of writing (2018-05).
-      // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
-      let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
-
-      /**
-       * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
-       * So we don't care where an end selector positions would be and set it just to the same position as a start.
-       * Selection methods will determine exact word boundaries and will adjust the selection.
-       */
-      range.setEnd(range.startContainer, range.startOffset)
-
-      let sel = window.getSelection()
-      sel.removeAllRanges()
-      sel.addRange(range)
-
-      HTMLConsole.instance.log('HTML Selector selection update end')
-    } else {
-      console.error(`Unsupported by HTMLSelector event of "${event.constructor.name}" type`)
+    this.targetRect = {
+      top: event.end.client.y,
+      left: event.end.client.x
     }
 
+    // We need to create a selection for a touch position
+
+    // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
+    // moment of writing (2018-05).
+    // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
+    let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
+
+    /**
+     * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
+     * So we don't care where an end selector positions would be and set it just to the same position as a start.
+     * Selection methods will determine exact word boundaries and will adjust the selection.
+     */
+    range.setEnd(range.startContainer, range.startOffset)
+
+    let sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
     this.setDataAttributes()
     this.wordSeparator = new Map()
     // A word separator function, when called, will adjust a selection so it will match exact word boundaries
     // TODO: Word separator functions are called in `createTextSelector`. Thus, selection will not be
     // adjusted before `createTextSelector` is called. Should we do it earlier, in a constructor?
 
-    HTMLConsole.instance.log('HTML Selector word selection start')
     this.wordSeparator.set(Constants.LANG_UNIT_WORD, this.doSpaceSeparatedWordSelection.bind(this))
     this.wordSeparator.set(Constants.LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
-    HTMLConsole.instance.log('HTML Selector word selection end')
   }
 
   static getSelector (target, defaultLanguageCode) {
