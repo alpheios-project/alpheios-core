@@ -11,8 +11,8 @@ export default class MouseDblClick extends PointerEvt {
     return 'alphExcludeDblClickCpe'
   }
 
-  setEndPoint (clientX, clientY, path) {
-    super.setEndPoint(clientX, clientY, path)
+  setEndPoint (clientX, clientY, target, path) {
+    super.setEndPoint(clientX, clientY, target, path)
     this.done = true
     return this
   }

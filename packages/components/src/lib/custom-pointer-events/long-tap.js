@@ -14,8 +14,8 @@ export default class LongTap extends PointerEvt {
     return 'alphExcludeLongTapCpe'
   }
 
-  setEndPoint (clientX, clientY, path) {
-    super.setEndPoint(clientX, clientY, path)
+  setEndPoint (clientX, clientY, target, path) {
+    super.setEndPoint(clientX, clientY, target, path)
     this.done = this.mvmntDist <= this.mvmntThreshold && this.duration >= this.durationThreshold
   }
 

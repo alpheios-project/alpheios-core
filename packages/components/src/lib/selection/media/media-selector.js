@@ -5,7 +5,7 @@ export default class MediaSelector {
    * @param {PointerEvt} event - A custom pointer event or its children
    */
   constructor (event) {
-    this.target = event.end.path[0] // A selected text area in a document
+    this.target = event.end.target // A selected text area in a document
     this.location = this.target.ownerDocument.location.href
   }
 

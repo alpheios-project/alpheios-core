@@ -13,13 +13,14 @@ export default class HTMLSelector extends MediaSelector {
    */
   constructor (event, defaultLanguageCode) {
     super(event)
+    this.event = event
 
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
     this.targetRect = {
-      top: event.end.client.y,
-      left: event.end.client.x
+      top: this.event.end.client.y,
+      left: this.event.end.client.x
     }
 
     // We need to create a selection for a touch position
@@ -49,8 +50,8 @@ export default class HTMLSelector extends MediaSelector {
     this.wordSeparator.set(Constants.LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
   }
 
-  static getSelector (target, defaultLanguageCode) {
-    return new HTMLSelector(target, defaultLanguageCode).createTextSelector()
+  static getSelector (event, defaultLanguageCode) {
+    return new HTMLSelector(event, defaultLanguageCode).createTextSelector()
   }
 
   createTextSelector () {

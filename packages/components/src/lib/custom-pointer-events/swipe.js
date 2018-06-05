@@ -41,8 +41,8 @@ export default class Swipe extends PointerEvt {
     return this.direction === Swipe.directions.LEFT
   }
 
-  setEndPoint (clientX, clientY, path) {
-    super.setEndPoint(clientX, clientY, path)
+  setEndPoint (clientX, clientY, target, path) {
+    super.setEndPoint(clientX, clientY, target, path)
     this.done = this.mvmntDist <= this.mvmntThreshold && this.duration >= this.durationThreshold
 
     if (this.mvmntXAbs > this.mvmntThreshold || this.mvmntYAbs > this.mvmntThreshold) {

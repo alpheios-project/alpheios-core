@@ -1,26 +1,12 @@
+import EventElement from './event-element.js'
 import HTMLConsole from '../log/html-console.js'
 
 export default class PointerEvt {
   constructor () {
     this.tracking = false
-    this.start = {
-      client: {
-        x: null,
-        y: null
-      },
-      time: null,
-      path: null,
-      excluded: false
-    }
-    this.end = {
-      client: {
-        x: null,
-        y: null
-      },
-      time: null,
-      path: null,
-      excluded: false
-    }
+    this.start = new EventElement()
+    this.end = new EventElement()
+
     /**
      * Whether a pointer event is complete or not. This depends on the event type.
      * For example, a long tap event is complete if tap duration is longer than a threshold value,
@@ -29,8 +15,6 @@ export default class PointerEvt {
      * @type {boolean}
      */
     this.done = false
-
-    this._domEvt = null
   }
 
   static get excludeAllCpeDataAttr () {
@@ -45,24 +29,26 @@ export default class PointerEvt {
     return window.PointerEvent
   }
 
-  setPoint (type, clientX, clientY, path = []) {
+  setPoint (type, clientX, clientY, target, path = []) {
     this[type].time = new Date().getTime()
     this[type].client.x = clientX
     this[type].client.y = clientY
+    this[type].target = target
     if (!Array.isArray(path)) { path = [path] }
     this[type].path = path
+    console.log(`setPoint, target ownerDocument is: `, target.ownerDocument)
+    console.log(`setPoint, path[0] ownerDocument is: `, path[0].ownerDocument)
     this[type].excluded = this[type].path.some(element =>
       element.dataset && (element.dataset[this.constructor.excludeCpeDataAttr] || element.dataset[this.constructor.excludeAllCpeDataAttr]))
-  }
-
-  setStartPoint (clientX, clientY, path) {
-    this.setPoint('start', clientX, clientY, path)
     return this
   }
 
-  setEndPoint (clientX, clientY, path) {
-    this.setPoint('end', clientX, clientY, path)
-    return this
+  setStartPoint (clientX, clientY, target, path) {
+    return this.setPoint('start', clientX, clientY, target, path)
+  }
+
+  setEndPoint (clientX, clientY, target, path) {
+    return this.setPoint('end', clientX, clientY, target, path)
   }
 
   get type () {
@@ -93,20 +79,13 @@ export default class PointerEvt {
     return Math.sqrt(Math.pow(this.mvmntX, 2) + Math.pow(this.mvmntY, 2))
   }
 
-  get domEvent () {
-    if (this._domEvt) {
-      return this._domEvt
-    }
-  }
-
   static pointerDownListener (event, domEvt) {
     console.log(`Pointer down`, domEvt)
-    event.setStartPoint(domEvt.clientX, domEvt.clientY)
+    event.setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
   }
 
   static pointerUpListener (event, domEvt) {
-    event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.path)
-    event._domEvt = domEvt
+    event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
     console.log(`Pointer up, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`, domEvt)
     HTMLConsole.instance.log(`Pointer up, [x,y]: [${event.end.client.x}, ${event.end.client.y}], movement: ${event.mvmntDist},` +
       `duration: ${event.duration}, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
@@ -115,12 +94,11 @@ export default class PointerEvt {
 
   static touchStartListener (event, domEvt) {
     console.log(`Touch start`, domEvt)
-    event.setStartPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY)
+    event.setStartPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
   }
 
   static touchEndListener (event, domEvt) {
-    event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.path)
-    event._domEvt = domEvt
+    event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
     console.log(`Touch end, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`, domEvt)
     HTMLConsole.instance.log(`Touch end, [x,y]: [${event.end.client.x}, ${event.end.client.y}], movement: ${event.mvmntDist},` +
       `duration: ${event.duration}, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
@@ -129,11 +107,13 @@ export default class PointerEvt {
   }
 
   static dblClickListener (event, domEvt) {
-    console.log(`Mouse double click`, domEvt)
-    event.setStartPoint(domEvt.clientX, domEvt.clientY).setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.path)
+    event
+      .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+      .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+    console.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], ` +
+      `type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
     HTMLConsole.instance.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], ` +
       `type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
-    event._domEvt = domEvt
     if (!event.end.excluded) {
       event.evtHandler(event)
     }
