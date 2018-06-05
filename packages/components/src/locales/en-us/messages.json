@@ -217,7 +217,7 @@
     "component": "Popup"
   },
   "PLACEHOLDER_POPUP_DATA": {
-    "message": "No lexical data is available yet",
+    "message": "Lexical data is loading",
     "description": "placeholder text for popup data",
     "component": "Popup"
   },
