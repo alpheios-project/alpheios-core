@@ -36,8 +36,6 @@ export default class PointerEvt {
     this[type].target = target
     if (!Array.isArray(path)) { path = [path] }
     this[type].path = path
-    console.log(`setPoint, target ownerDocument is: `, target.ownerDocument)
-    console.log(`setPoint, path[0] ownerDocument is: `, path[0].ownerDocument)
     this[type].excluded = this[type].path.some(element =>
       element.dataset && (element.dataset[this.constructor.excludeCpeDataAttr] || element.dataset[this.constructor.excludeAllCpeDataAttr]))
     return this
