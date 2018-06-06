@@ -12,16 +12,24 @@ export default class HTMLSelector extends MediaSelector {
    *        have language codes as means of language identification.
    */
   constructor (event, defaultLanguageCode) {
-    super(event)
+    super()
     this.event = event
 
-    // Determine a language ID based on an environment of a target
-    this.languageID = this.getLanguageID(defaultLanguageCode)
-
+    /**
+     * Pointer event has two elements: `start` (where a pointer was down) and
+     * `end` (where a pointer was up). If pointer was moved, they will be different.
+     * It makes more sense to use `end` for our purposes.
+     * @type {HTMLElement}
+     */
+    this.target = event.end.target
     this.targetRect = {
       top: this.event.end.client.y,
       left: this.event.end.client.x
     }
+    this.location = this.target.ownerDocument.location.href
+
+    // Determine a language ID based on an environment of a target
+    this.languageID = this.getLanguageID(defaultLanguageCode)
 
     // We need to create a selection for a touch position
 

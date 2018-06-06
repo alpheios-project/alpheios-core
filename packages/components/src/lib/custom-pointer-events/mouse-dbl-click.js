@@ -7,8 +7,8 @@ export default class MouseDblClick extends PointerEvt {
     this.evtHandler = evtHandler
   }
 
-  static get excludeCpeDataAttr () {
-    return 'alphExcludeDblClickCpe'
+  static excludeCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeDblClickCpe')
   }
 
   setEndPoint (clientX, clientY, target, path) {

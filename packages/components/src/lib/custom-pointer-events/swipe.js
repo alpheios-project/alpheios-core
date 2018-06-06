@@ -11,8 +11,8 @@ export default class Swipe extends PointerEvt {
     this.direction = Swipe.directions.NONE
   }
 
-  static get excludeCpeDataAttr () {
-    return 'alphExcludeSwipeCpe'
+  static excludeCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeSwipeCpe')
   }
 
   static get directions () {

@@ -17,12 +17,18 @@ export default class PointerEvt {
     this.done = false
   }
 
-  static get excludeAllCpeDataAttr () {
-    return 'alphExcludeAllCpe'
+  static alpheiosIgnoreAllTest (dataset) {
+    const attrName = 'alpheiosIgnore'
+    const attrValue = 'all'
+    return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue
   }
 
-  static get excludeCpeDataAttr () {
-    return ''
+  static excludeAllCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeAllCpe')
+  }
+
+  static excludeCpeTest (dataset) {
+    return false
   }
 
   static get pointerEventSupported () {
@@ -37,7 +43,12 @@ export default class PointerEvt {
     if (!Array.isArray(path)) { path = [path] }
     this[type].path = path
     this[type].excluded = this[type].path.some(element =>
-      element.dataset && (element.dataset[this.constructor.excludeCpeDataAttr] || element.dataset[this.constructor.excludeAllCpeDataAttr]))
+      element.dataset && (
+        this.constructor.alpheiosIgnoreAllTest(element.dataset) ||
+        element.dataset[this.constructor.excludeCpeDataAttr] ||
+        element.dataset[this.constructor.excludeAllCpeDataAttr]
+      )
+    )
     return this
   }
 

@@ -2,14 +2,6 @@ import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 
 export default class MediaSelector {
   /**
-   * @param {PointerEvt} event - A custom pointer event or its children
-   */
-  constructor (event) {
-    this.target = event.end.target // A selected text area in a document
-    this.location = this.target.ownerDocument.location.href
-  }
-
-  /**
    * Creates a selection from a specific target and a default language code. Should be implemented in a subclass.
    * @param target
    * @param defaultLanguageCode

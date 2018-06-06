@@ -10,8 +10,8 @@ export default class LongTap extends PointerEvt {
     this.durationThreshold = durationThreshold
   }
 
-  static get excludeCpeDataAttr () {
-    return 'alphExcludeLongTapCpe'
+  static excludeCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeLongTapCpe')
   }
 
   setEndPoint (clientX, clientY, target, path) {
