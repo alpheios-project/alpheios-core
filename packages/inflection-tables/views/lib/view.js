@@ -112,14 +112,8 @@ export default class View {
     this.footnotes = this.getFootnotes(this.inflectionData)
     // Table is already created during a view construction
     this.table.messages = this.messages
-
-    console.log('***************** view render 1', this.constructor)
-    console.log('***************** view render 21', this.constructor.partOfSpeech)
-
     for (let lexeme of this.inflectionData.homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
-        console.log('***************** view render 3', inflection['part of speech'].values)
-
         if (inflection['part of speech'].values.includes(this.constructor.partOfSpeech)) {
           let form = inflection.prefix ? `${inflection.prefix} - ` : ''
           form = form + inflection.stem
@@ -128,8 +122,6 @@ export default class View {
         }
       }
     }
-
-    console.log('***************** view render 4', this.forms)
     this.table.construct(this.constructor.getMorphemes(this.inflectionData)).constructViews().addEventListeners()
     return this
   }
