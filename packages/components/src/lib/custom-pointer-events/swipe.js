@@ -50,7 +50,7 @@ export default class Swipe extends PointerEvt {
       completed = true
       if (this.mvmntX > this.mvmntThreshold && this.mvmntYAbs < this.mvmntThreshold) {
         this.direction = Swipe.directions.RIGHT
-      } else if (this.mvmntX > this.mvmntThreshold && this.mvmntYAbs < this.mvmntThreshold) {
+      } else if (-this.mvmntX > this.mvmntThreshold && this.mvmntYAbs < this.mvmntThreshold) {
         this.direction = Swipe.directions.LEFT
       } else if (this.mvmntY > this.mvmntThreshold && this.mvmntXAbs < this.mvmntThreshold) {
         this.direction = Swipe.directions.DOWN
