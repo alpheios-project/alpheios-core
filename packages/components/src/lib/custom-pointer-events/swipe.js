@@ -1,4 +1,5 @@
 import PointerEvt from './pointer-evt.js'
+import HTMLConsole from '../log/html-console.js'
 
 export default class Swipe extends PointerEvt {
   constructor (element, evtHandler, mvmntThreshold = 100, durationThreshold = 600) {
@@ -43,11 +44,10 @@ export default class Swipe extends PointerEvt {
 
   setEndPoint (clientX, clientY, target, path) {
     super.setEndPoint(clientX, clientY, target, path)
-    this.done = this.mvmntDist <= this.mvmntThreshold && this.duration >= this.durationThreshold
-
+    let completed = false
     if (this.mvmntXAbs > this.mvmntThreshold || this.mvmntYAbs > this.mvmntThreshold) {
       // This is a swipe
-      this.done = true
+      completed = true
       if (this.mvmntX > this.mvmntThreshold && this.mvmntYAbs < this.mvmntThreshold) {
         this.direction = Swipe.directions.RIGHT
       } else if (this.mvmntX > this.mvmntThreshold && this.mvmntYAbs < this.mvmntThreshold) {
@@ -58,6 +58,12 @@ export default class Swipe extends PointerEvt {
         this.direction = Swipe.directions.UP
       }
     }
+
+    if (!(this.start.excluded || this.end.excluded)) {
+      HTMLConsole.instance.log(`Swipe (${completed ? 'completed' : 'not completed'}), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
+        `direction: ${this.direction}, duration: ${this.duration}`)
+    }
+    return completed && !this.start.excluded && !this.end.excluded
   }
 
   static listen (selector, evtHandler, mvmntThreshold, durationThreshold) {

@@ -1,20 +1,10 @@
 import EventElement from './event-element.js'
-import HTMLConsole from '../log/html-console.js'
 
 export default class PointerEvt {
   constructor () {
     this.tracking = false
     this.start = new EventElement()
     this.end = new EventElement()
-
-    /**
-     * Whether a pointer event is complete or not. This depends on the event type.
-     * For example, a long tap event is complete if tap duration is longer than a threshold value,
-     * swipe is complete if movement distance is greater than a threshold and swipe duration
-     * is within a certain time limit.
-     * @type {boolean}
-     */
-    this.done = false
   }
 
   static alpheiosIgnoreAllTest (dataset) {
@@ -45,8 +35,8 @@ export default class PointerEvt {
     this[type].excluded = this[type].path.some(element =>
       element.dataset && (
         this.constructor.alpheiosIgnoreAllTest(element.dataset) ||
-        element.dataset[this.constructor.excludeCpeDataAttr] ||
-        element.dataset[this.constructor.excludeAllCpeDataAttr]
+        this.constructor.excludeAllCpeTest(element.dataset) ||
+        this.constructor.excludeCpeTest(element.dataset)
       )
     )
     return this
@@ -57,7 +47,7 @@ export default class PointerEvt {
   }
 
   setEndPoint (clientX, clientY, target, path) {
-    return this.setPoint('end', clientX, clientY, target, path)
+    this.setPoint('end', clientX, clientY, target, path)
   }
 
   get type () {
@@ -94,11 +84,9 @@ export default class PointerEvt {
   }
 
   static pointerUpListener (event, domEvt) {
-    event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    console.log(`Pointer up, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`, domEvt)
-    HTMLConsole.instance.log(`Pointer up, [x,y]: [${event.end.client.x}, ${event.end.client.y}], movement: ${event.mvmntDist},` +
-      `duration: ${event.duration}, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
-    if (event.done && !event.end.excluded) { event.evtHandler(event) }
+    const valid = event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+    console.log(`Pointer up, excluded: ${event.end.excluded}`, domEvt)
+    if (valid) { event.evtHandler(event) }
   }
 
   static touchStartListener (event, domEvt) {
@@ -107,25 +95,18 @@ export default class PointerEvt {
   }
 
   static touchEndListener (event, domEvt) {
-    event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
-    console.log(`Touch end, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`, domEvt)
-    HTMLConsole.instance.log(`Touch end, [x,y]: [${event.end.client.x}, ${event.end.client.y}], movement: ${event.mvmntDist},` +
-      `duration: ${event.duration}, type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
+    const valid = event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
+    console.log(`Touch end, excluded: ${event.end.excluded}`, domEvt)
 
-    if (event.done && !event.end.excluded) { event.evtHandler(event) }
+    if (valid) { event.evtHandler(event) }
   }
 
   static dblClickListener (event, domEvt) {
-    event
+    const valid = event
       .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
       .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    console.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], ` +
-      `type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
-    HTMLConsole.instance.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], ` +
-      `type: ${event.constructor.name}, excluded: ${event.end.excluded}, done: ${event.done}`)
-    if (!event.end.excluded) {
-      event.evtHandler(event)
-    }
+    console.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], excluded: ${event.end.excluded}`)
+    if (valid) { event.evtHandler(event) }
   }
 
   static addUpDownListeners (element, event) {
