@@ -73,10 +73,6 @@
   /*
  * Hide the overflow in IE.
  */
-  /*
- * Hide `alt` text for lazy load images
- * Selector for background while loading img[data-src*='.jpg'][src*='data:image'] { background: grey; }
- */
   /* Block elements
  ========================================================================== */
   /*
@@ -89,7 +85,6 @@
   /*
  * Sizes
  */
-  /* Tablet landscape and bigger */
   /* Lists
  ========================================================================== */
   /*
@@ -166,11 +161,10 @@
   /* Primary
  ========================================================================== */
   /* Tablet landscape and bigger */
-  /* Desktop and bigger */
   /* Hero
  ========================================================================== */
+  /* Phone landscape and bigger */
   /* Tablet landscape and bigger */
-  /* Desktop and bigger */
   /* Divider
  ========================================================================== */
   /* Bullet
@@ -489,10 +483,8 @@
  * 1. Remove default style. Also works in Firefox
  * 2. Style
  * 3. Remove default style in IE 10/11
- * 4. Set `color` for options in the select dropdown, because the inherited `color` might be too light.
  */
   /* 3 */
-  /* 4 */
   /*
  * Disabled
  */
@@ -1024,7 +1016,6 @@
  ========================================================================== */
   /* Title
  ========================================================================== */
-  /* Tablet landscape and bigger */
   /* Meta
  ========================================================================== */
   /* ========================================================================
@@ -2136,11 +2127,11 @@
   /*
  * 1. Wrap long words onto the next line and break them if they are too long to fit
  * 2. Legacy `word-wrap` as fallback for `overflow-wrap`
- * 3. Fix `overflow-wrap` which doesn't work with table cells in Chrome, Opera, IE11 and Edge
+ * 3. Add a hyphen where the word breaks
+ * 4. Fix `overflow-wrap` which doesn't work with table cells in Chrome, Opera, IE11 and Edge
  *    Must use `break-all` to support IE11 and Edge
- * Note: Not using `hyphens: auto;` because it hyphenates text even if not needed
  */
-  /* 3 */
+  /* 4 */
   /* ========================================================================
    Component: Column
  ========================================================================== */
@@ -2192,9 +2183,6 @@
  ========================================================================== */
   /* Attachment
  ========================================================================== */
-  /*
- * 1. Fix bug introduced in Chrome 67: the background image is not visible if any element on the page uses `translate3d`
- */
   /*
  * Exclude touch devices because `fixed` doesn't work on iOS and Android
  */
@@ -2272,6 +2260,18 @@
  *    to fix 1px glitch when combined with overlays and transitions in Webkit
  * 6. Clip child elements
  */
+  /* Height
+ ========================================================================== */
+  /*
+ * Only works if parent element has a height set
+ */
+  /*
+ * Useful to create image teasers
+ */
+  /*
+ * Pixel
+ * Useful for `overflow: auto`
+ */
   /* Responsive objects
  ========================================================================== */
   /*
@@ -2311,22 +2311,35 @@
  */
   /* Drop cap
  ========================================================================== */
+  /* Leader
+ ========================================================================== */
   /*
- * 1. Firefox doesn't apply `::first-letter` if the first letter is inside child elements
- *    https://bugzilla.mozilla.org/show_bug.cgi?id=214004
- * 2. In Firefox, a floating `::first-letter` doesn't have a line box and there for no `line-height`
- *    https://bugzilla.mozilla.org/show_bug.cgi?id=317933
- * 3. Caused by 1.: Edge creates two nested `::first-letter` containers, one for each selector
- *    This doubles the `font-size` exponential when using the `em` unit.
+ * 1. Place element in text flow
+ * 2. Never break into a new line
+ * 3. Get a string back with as many repeating characters to fill the container
+ * 4. Prevent wrapping. Overflowing characters will be clipped by the container
  */
-  /* 2 */
-  /* 3 */
+  /*
+ * Hide if media does not match
+ */
+  /* Pass fill character to JS */
   /* Logo
  ========================================================================== */
   /*
  * 1. Required for `a`
  */
   /* Hover + Focus */
+  /* SVG
+ ========================================================================== */
+  /*
+ * 1. Fill all SVG elements with the current text color if no `fill` attribute is set
+ * 2. Set the fill and stroke color of all SVG elements to the current text color
+ * 3. Fix for uppercase attribute names in Edge. Will be fixed in Windows 10 builds 16251+
+ */
+  /* 1 */
+  /*
+ * Fix Firefox blurry SVG rendering: https://bugzilla.mozilla.org/show_bug.cgi?id=1046835
+ */
   /* Disabled State
  ========================================================================== */
   /* Drag State
@@ -2634,8 +2647,6 @@
     box-sizing: border-box; }
   .auk svg:not(:root) {
     overflow: hidden; }
-  .auk img:not([src]) {
-    visibility: hidden; }
   .auk p,
   .auk ul,
   .auk ol,
@@ -2690,11 +2701,6 @@
   .auk h6, .auk .uk-h6 {
     font-size: 0.875rem;
     line-height: 1.4; }
-  @media (min-width: 960px) {
-    .auk h1, .auk .uk-h1 {
-      font-size: 2.625rem; }
-    .auk h2, .auk .uk-h2 {
-      font-size: 2rem; } }
   .auk ul,
   .auk ol {
     padding-left: 30px; }
@@ -2819,19 +2825,16 @@
     line-height: 1.2; }
   @media (min-width: 960px) {
     .auk .uk-heading-primary {
-      font-size: 3.75rem; } }
-  @media (min-width: 1200px) {
-    .auk .uk-heading-primary {
       font-size: 3.75rem;
       line-height: 1.1; } }
   .auk .uk-heading-hero {
     font-size: 4rem;
     line-height: 1.1; }
-  @media (min-width: 960px) {
+  @media (min-width: 640px) {
     .auk .uk-heading-hero {
-      font-size: 8rem;
+      font-size: 6rem;
       line-height: 1; } }
-  @media (min-width: 1200px) {
+  @media (min-width: 960px) {
     .auk .uk-heading-hero {
       font-size: 8rem;
       line-height: 1; } }
@@ -3389,8 +3392,6 @@
     background-position: 100% 50%; }
   .auk .uk-select:not([multiple]):not([size])::-ms-expand {
     display: none; }
-  .auk .uk-select:not([multiple]):not([size]) option {
-    color: #444; }
   .auk .uk-select:not([multiple]):not([size]):disabled {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%201%209%206%2015%206%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%2013%209%208%2015%208%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E%0A"); }
   .auk .uk-radio,
@@ -3529,12 +3530,12 @@
     color: #666666; }
   .auk .uk-form-icon:not(a):not(button):not(input) {
     pointer-events: none; }
-  .auk .uk-form-icon:not(.uk-form-icon-flip) ~ .uk-input {
+  .auk .uk-form-icon:not(.uk-form-icon-flip) + .uk-input {
     padding-left: 40px !important; }
   .auk .uk-form-icon-flip {
     right: 0;
     left: auto; }
-  .auk .uk-form-icon-flip ~ .uk-input {
+  .auk .uk-form-icon-flip + .uk-input {
     padding-right: 40px !important; }
   .auk .uk-button {
     /* 1 */
@@ -4301,9 +4302,6 @@
   .auk .uk-article-title {
     font-size: 2.625rem;
     line-height: 1.2; }
-  @media (min-width: 960px) {
-    .auk .uk-article-title {
-      font-size: 2.625rem; } }
   .auk .uk-article-meta {
     font-size: 0.875rem;
     line-height: 1.4;
@@ -4313,9 +4311,6 @@
     .auk .uk-article-meta a:hover {
       color: #666666;
       text-decoration: none; }
-  .auk .uk-comment-body {
-    overflow-wrap: break-word;
-    word-wrap: break-word; }
   .auk .uk-comment-header {
     margin-bottom: 20px; }
   .auk .uk-comment-body::before,
@@ -4427,9 +4422,9 @@
     background-color: transparent; }
   .auk .uk-search-default .uk-search-icon {
     width: 40px; }
-  .auk .uk-search-default .uk-search-icon:not(.uk-search-icon-flip) ~ .uk-search-input {
+  .auk .uk-search-default .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input {
     padding-left: 40px; }
-  .auk .uk-search-default .uk-search-icon-flip ~ .uk-search-input {
+  .auk .uk-search-default .uk-search-icon-flip + .uk-search-input {
     padding-right: 40px; }
   .auk .uk-search-navbar {
     width: 400px; }
@@ -4439,9 +4434,9 @@
     font-size: 1.5rem; }
   .auk .uk-search-navbar .uk-search-icon {
     width: 40px; }
-  .auk .uk-search-navbar .uk-search-icon:not(.uk-search-icon-flip) ~ .uk-search-input {
+  .auk .uk-search-navbar .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input {
     padding-left: 40px; }
-  .auk .uk-search-navbar .uk-search-icon-flip ~ .uk-search-input {
+  .auk .uk-search-navbar .uk-search-icon-flip + .uk-search-input {
     padding-right: 40px; }
   .auk .uk-search-large {
     width: 500px; }
@@ -4451,9 +4446,9 @@
     font-size: 2.625rem; }
   .auk .uk-search-large .uk-search-icon {
     width: 80px; }
-  .auk .uk-search-large .uk-search-icon:not(.uk-search-icon-flip) ~ .uk-search-input {
+  .auk .uk-search-large .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input {
     padding-left: 80px; }
-  .auk .uk-search-large .uk-search-icon-flip ~ .uk-search-input {
+  .auk .uk-search-large .uk-search-icon-flip + .uk-search-input {
     padding-right: 80px; }
   .auk .uk-search-toggle {
     color: #999; }
@@ -6344,7 +6339,11 @@
     /* 1 */
     overflow-wrap: break-word;
     /* 2 */
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    /* 3 */
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto; }
   .auk th.uk-text-break,
   .auk td.uk-text-break {
     word-break: break-all; }
@@ -6470,9 +6469,7 @@
   .auk .uk-background-norepeat {
     background-repeat: no-repeat; }
   .auk .uk-background-fixed {
-    background-attachment: fixed;
-    /* 1 */
-    backface-visibility: hidden; }
+    background-attachment: fixed; }
   @media (pointer: coarse) {
     .auk .uk-background-fixed {
       background-attachment: scroll; } }
@@ -6640,6 +6637,24 @@
   .auk .uk-inline-clip {
     /* 6 */
     overflow: hidden; }
+  .auk [class*='uk-height'] {
+    box-sizing: border-box; }
+  .auk .uk-height-1-1 {
+    height: 100%; }
+  .auk .uk-height-viewport {
+    min-height: 100vh; }
+  .auk .uk-height-small {
+    height: 150px; }
+  .auk .uk-height-medium {
+    height: 300px; }
+  .auk .uk-height-large {
+    height: 450px; }
+  .auk .uk-height-max-small {
+    max-height: 150px; }
+  .auk .uk-height-max-medium {
+    max-height: 300px; }
+  .auk .uk-height-max-large {
+    max-height: 450px; }
   .auk .uk-preserve-width,
   .auk .uk-preserve-width audio,
   .auk .uk-preserve-width canvas,
@@ -6716,14 +6731,22 @@
     font-size: 4.5em;
     line-height: 1;
     margin-bottom: -2px; }
-
-@-moz-document url-prefix() {
-  .auk .uk-dropcap::first-letter,
-  .auk .uk-dropcap > p:first-of-type::first-letter {
-    margin-top: 1.1%; } }
-  @supports (-ms-ime-align: auto) {
-    .auk .uk-dropcap > p:first-of-type::first-letter {
-      font-size: 1em; } }
+  .auk .uk-leader {
+    overflow: hidden; }
+  .auk .uk-leader-fill::after {
+    /* 1 */
+    display: inline-block;
+    margin-left: 15px;
+    /* 2 */
+    width: 0;
+    /* 3 */
+    content: attr(data-fill);
+    /* 4 */
+    white-space: nowrap; }
+  .auk .uk-leader-fill.uk-leader-hide::after {
+    display: none; }
+  .auk .var-leader-fill:before {
+    content: "."; }
   .auk .uk-logo {
     font-size: 1.5rem;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -6738,6 +6761,15 @@
     text-decoration: none; }
   .auk .uk-logo-inverse {
     display: none; }
+  .auk .uk-svg,
+  .auk .uk-svg:not(.uk-preserve) [fill*='#']:not(.uk-preserve),
+  .auk .uk-svg:not(.uk-preserve) [FILL*='#']:not(.uk-preserve) {
+    fill: currentcolor; }
+  .auk .uk-svg:not(.uk-preserve) [stroke*='#']:not(.uk-preserve),
+  .auk .uk-svg:not(.uk-preserve) [STROKE*='#']:not(.uk-preserve) {
+    stroke: currentcolor; }
+  .auk .uk-svg {
+    transform: translate(0, 0); }
   .auk .uk-disabled {
     pointer-events: none; }
   .auk .uk-drag,

@@ -64,6 +64,7 @@
 
   // Other dependencies
   import { ViewSet, L10n} from 'alpheios-inflection-tables'
+  import HTMLConsole from '../lib/log/html-console'
 
   export default {
     name: 'Inflections',
@@ -232,6 +233,7 @@
       isVisible: function (visibility) {
         if (visibility) {
           // If container is become visible, update parent with its width
+          HTMLConsole.instance.log(`Emitting contentWidth of ${this.htmlElements.wideView.offsetWidth}`)
           this.$emit('contentwidth', this.htmlElements.wideView.offsetWidth)
         }
       },
@@ -257,6 +259,7 @@
         // Hide empty columns by default
         // TODO: change inflection library to take that as an option
         this.selectedView.render().hideEmptyColumns().hideNoSuffixGroups()
+        HTMLConsole.instance.log(`renderInflections completed`)
         return this
       },
 
@@ -315,6 +318,7 @@
             })
           }
         }
+        HTMLConsole.instance.log(`displayInflections completed`)
         return this
       },
 
