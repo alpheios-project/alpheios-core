@@ -25,11 +25,18 @@ export default class PointerEvt {
     return window.PointerEvent
   }
 
-  setPoint (type, clientX, clientY, target, path = []) {
+  setPoint (type, clientX, clientY, target, path) {
     this[type].time = new Date().getTime()
     this[type].client.x = clientX
     this[type].client.y = clientY
     this[type].target = target
+    if (!path) {
+      /*
+      This is probably an iOS where `event.path` does not exist.
+      We'll build path manually then.
+       */
+      path = this.constructor.buildPath(target)
+    }
     if (!Array.isArray(path)) { path = [path] }
     this[type].path = path
     this[type].excluded = this[type].path.some(element =>
@@ -40,6 +47,22 @@ export default class PointerEvt {
       )
     )
     return this
+  }
+
+  /**
+   * Recursive function that builds a `path` array for an element. The first element in path is
+   * an element itself, the second element is its parent and so on up until the root element
+   * (the one that has no `parentElement` property).
+   * @param {Element} element - an HTML element we want to path for
+   * @param {Element[]} path - an array of elements in a path
+   * @return {Element[]} A path array
+   */
+  static buildPath (element, path = []) {
+    path.push(element)
+    if (element.parentElement) {
+      path = this.buildPath(element.parentElement, path)
+    }
+    return path
   }
 
   setStartPoint (clientX, clientY, target, path) {
