@@ -67,12 +67,12 @@ describe('Inflection object', () => {
 
   test('form should work with a stem and suffix', () => {
     inflection = new Inflection('stem', grc, 'suff')
-    expect(inflection.form).toEqual('stemsuff')
+    expect(inflection.form).toEqual('stem - suff')
   })
 
   test('form should work with a stem and prefix', () => {
     inflection = new Inflection('stem', grc, null, 'pref')
-    expect(inflection.form).toEqual('prefstem')
+    expect(inflection.form).toEqual('pref - stem')
   })
 
   test('form should work with a suffix only', () => {

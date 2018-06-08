@@ -2453,6 +2453,8 @@ const i18n = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+
 
 
 /*
@@ -2524,9 +2526,23 @@ class Inflection {
   }
 
   get form () {
-    let form = this.prefix ? this.prefix : ''
-    form = this.stem ? form + this.stem : form
-    form = this.suffix ? form + this.suffix : form
+    let form, prefix, suffix, divider, stem
+
+    stem = this.stem ? this.stem : ''
+    divider = this.stem ? ' - ' : ''
+
+    if (this.model.direction === _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_DIR_RTL"]) {
+      prefix = this.prefix ? divider + this.prefix : ''
+      suffix = this.suffix ? this.suffix + divider : ''
+
+      form = suffix + stem + prefix
+    } else {
+      prefix = this.prefix ? this.prefix + divider : ''
+      suffix = this.suffix ? divider + this.suffix : ''
+
+      form = prefix + stem + suffix
+    }
+
     return form
   }
 
