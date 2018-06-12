@@ -60,10 +60,20 @@ describe('Feature object', () => {
     expect(a.compareTo(b)).toEqual(0)
     expect([a, b].sort((a, b) => a.compareTo(b))).toEqual([a, b])
   })
+
   it('expects to multi-valued Features to sort correctly', () => {
     let a = new Feature(Feature.types.frequency, [['lower', 1], ['highest', 3]], Constants.LANG_GREEK)
     let b = new Feature(Feature.types.frequency, [['higher', 2]], Constants.LANG_GREEK)
     expect(a.compareTo(b)).toBeLessThan(0)
     expect([a, b].sort((a, b) => a.compareTo(b))).toEqual([a, b])
+  })
+
+  it('expects toLocaleStringAbbr to return abbreviation if defined', () => {
+    let f = new Feature(Feature.types.gender, 'feminine', Constants.LANG_LATIN)
+    expect(f.toLocaleStringAbbr()).toEqual('f.')
+  })
+  it('expects toLocaleStringAbbr to return value if no abbreviation defined', () => {
+    let f = new Feature(Feature.types.gender, 'unknown', Constants.LANG_LATIN)
+    expect(f.toLocaleStringAbbr()).toEqual('unknown')
   })
 })

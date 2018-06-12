@@ -365,8 +365,7 @@ export default class Feature {
    * @return {string[]}
    */
   toLocaleStringAbbr (lang = 'en') {
-    // TODO: Should it return a string instead of array? This function is used in morph.vue.
-    return this.values.map(v => i18n.i18n[lang][v].abbr)
+    return this.values.map(v => i18n.i18n[lang][v] ? i18n.i18n[lang][v].abbr : v).join(this.constructor.joinSeparator)
   }
 
   /**

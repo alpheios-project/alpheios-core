@@ -61,7 +61,7 @@ describe('Feature object', () => {
 
   test('toLocaleStringAbbr returns value', () => {
     let f = new GrmFeature('feminine', Feature.types.gender, 'lat')
-    expect(f.toLocaleStringAbbr('en')).toEqual('f')
+    expect(f.toLocaleStringAbbr('en')).toEqual('f.')
   })
 
   test('hasValue', () => {
