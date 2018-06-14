@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-components1": "standard --fix && jest tests/inflection.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-c1": "standard --fix && jest tests/feature.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
 
     "build": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
     "build-prod": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
@@ -69,7 +69,10 @@
   },
   "dependencies": {},
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "moduleNameMapper": {
+      "^@[/](.+)": "<rootDir>/src/$1"
+    }
   },
   "peerDependencies": {
     "intl-messageformat": "^2.1.0",

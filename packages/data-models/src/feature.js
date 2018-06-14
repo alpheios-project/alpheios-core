@@ -295,7 +295,7 @@ export default class Feature {
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      console.warn(`Value "${value} already exists. If you want to change it, use "getValue" to access it directly.`)
+      console.warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
     }
     return this
   }
@@ -309,11 +309,11 @@ export default class Feature {
   addValues (data) {
     let normalizedData = this.constructor.dataValuesFromInput(data)
     let values = normalizedData.map(v => v.value)
-    if (!this.hasValue(values)) {
+    if (!this.hasSomeValues(values)) {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      console.warn(`One or several values from "${values} already exist. If you want to change it, use "getValue" to access a value directly.`)
+      console.warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
     }
     return this
   }
