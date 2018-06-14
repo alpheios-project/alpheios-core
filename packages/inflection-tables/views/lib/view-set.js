@@ -72,6 +72,10 @@ export default class ViewSet {
     this.partsOfSpeech = Array.from(new Set(this.matchingViews.map(view => view.constructor.partOfSpeech)))
   }
 
+  get hasMatchingViews () {
+    return this.matchingViews.length > 0
+  }
+
   getViews (partOfSpeech = undefined) {
     if (partOfSpeech) {
       return this.matchingViews.filter(view => view.constructor.partOfSpeech === partOfSpeech)
