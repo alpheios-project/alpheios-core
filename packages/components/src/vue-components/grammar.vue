@@ -37,6 +37,8 @@
     .alpheios-grammar__frame-cont {
         flex: 1 1 100vh;
         position: relative;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
     }
 
     .alpheios-grammar__frame {
