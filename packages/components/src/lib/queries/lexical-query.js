@@ -56,6 +56,7 @@ export default class LexicalQuery extends Query {
 
   * iterations () {
     let formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageCode), [])
+    this.ui.updateLanguage(this.selector.languageCode)
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
       this.homonym = yield this.maAdapter.getHomonym(this.selector.languageCode, this.selector.normalizedText)

@@ -3,6 +3,12 @@
  */
 export default class UIStateAPI {
   constructor () {
+    /**
+     * A language of a latest lexical query
+     * @type {Language}
+     */
+    this.selectionLang = undefined
+
     this.watchers = new Map()
   }
 

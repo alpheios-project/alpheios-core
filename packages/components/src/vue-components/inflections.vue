@@ -19,7 +19,7 @@
                         <option v-for="view in views" :value="view.id">{{view.name}}</option>
                     </select>
                 </div>
-                <div class="alpheios-inflections__control-btn-cont uk-button-group">
+                <div v-show="hasInflectionData" class="alpheios-inflections__control-btn-cont uk-button-group">
 
                   <alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideEmptyCols.tooltipText">
                     <button v-show="false"
@@ -91,6 +91,11 @@
 
     data: function () {
       return {
+        events: {
+          EVENT: 'event',
+          DATA_UPDATE: 'dataUpdate'
+        },
+        hasInflectionData: false,
         partsOfSpeech: [],
         selectedPartOfSpeech: [],
         views: [],
@@ -197,6 +202,8 @@
     watch: {
 
       inflectionData: function (inflectionData) {
+        // Clear the panel when new inflections arrive
+        this.clearInflections().setDefaults()
         if (inflectionData) {
           this.viewSet = new ViewSet(inflectionData, this.locale)
 
@@ -210,6 +217,7 @@
           }
 
           if (this.views.length > 0) {
+            this.hasInflectionData = true
             this.selectedView = this.views[0]
             if (!this.selectedView.hasComponentData) {
               // Rendering is not required for component-enabled views
@@ -219,6 +227,8 @@
             this.selectedView = ''
           }
         }
+        // Notify parent of inflection data change
+        this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.viewSet)
       },
       /*
       An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
@@ -249,11 +259,11 @@
     methods: {
       clearInflections: function () {
         for (let element of Object.values(this.htmlElements)) { element.innerHTML = '' }
+        this.hasInflectionData = false
         return this
       },
 
       renderInflections: function () {
-        this.clearInflections().setDefaults()
         // Hide empty columns by default
         // TODO: change inflection library to take that as an option
         this.selectedView.render().hideEmptyColumns().hideNoSuffixGroups()
