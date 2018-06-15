@@ -38,6 +38,10 @@ class Lexeme {
       }
     }
 
+    if (meaning !== null && !(meaning instanceof DefinitionSet)) {
+      throw new Error('Meaning should be of DefinitionSet object type.')
+    }
+
     this.lemma = lemma
     this.inflections = inflections
     this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID)

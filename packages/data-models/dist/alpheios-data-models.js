@@ -2332,7 +2332,7 @@ class Homonym {
    * @param {string} form - the form which produces the homonyms
    */
   constructor (lexemes, form) {
-    if (!lexemes) {
+    if (!lexemes || (Array.isArray(lexemes) && lexemes.length === 0)) {
       throw new Error('Lexemes data should not be empty.')
     }
 
@@ -4058,6 +4058,10 @@ class Lexeme {
       if (!(inflection instanceof _inflection_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('All inflection data should be of Inflection object type.')
       }
+    }
+
+    if (meaning !== null && !(meaning instanceof _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"])) {
+      throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
     this.lemma = lemma

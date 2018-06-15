@@ -8,7 +8,7 @@ class Homonym {
    * @param {string} form - the form which produces the homonyms
    */
   constructor (lexemes, form) {
-    if (!lexemes) {
+    if (!lexemes || (Array.isArray(lexemes) && lexemes.length === 0)) {
       throw new Error('Lexemes data should not be empty.')
     }
 
