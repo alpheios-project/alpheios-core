@@ -9,6 +9,8 @@ export default class Paradigm {
     this.partOfSpeech = partOfSpeech
     this.title = table.title
     this.table = table.table
+    this.hasCredits = !!table.credits
+    this.creditsText = table.credits ? table.credits : ''
     this.subTables = table.subTables
     this.rules = []
   }

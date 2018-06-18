@@ -616,10 +616,14 @@ const config = {
       rulesFileName: 'rules.csv',
       footnotesFileName: 'footnotes.csv',
       createParadigmTables () {
-        // let forms = []
-        // let footnotes = []
-        // let footnoteBase = 0
+        const creditsText = 'Verb paradigm tables derived from <a href="http://ucbclassics.dreamhosters.com/ancgreek/">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>' +
+          '©1999-2005 The Regents of the University of California.'
         let data = readFile(path.join(__dirname, config.greek.inputBaseDir, config.greek.paradigm.inputFileName))
+        /*
+           Replace all spans in titles so that they won't be parsed by xml2json because in that case it will be impossible to restore
+           an order of fragments.
+         */
+        data = data.replace(/<span.*?>(.*?)<\/span>/g, '$1')
         const json = xmlToJSON.parseString(data)
 
         // Rules of matching
@@ -694,6 +698,7 @@ const config = {
           if (index.length === 1) { index = '0' + index }
           tableObject.partOfSpeech = verbRuleIDs.includes(tableObject.ID) ? 'verb' : 'verb_participle'
           tableObject.title = tableEntry['title'][0]['_text']
+          tableObject.credits = creditsText
           tableObject.table = undefined
           tableObject.subTables = []
           for (const tableData of tableEntry['table']) {
@@ -714,10 +719,8 @@ const config = {
                 if (cellData['_attr'].hasOwnProperty('mood')) { cell.mood = cellData['_attr']['mood']['_value'] }
                 if (cell.role === 'data') {
                   cell.value = ''
-                  if (cellData.hasOwnProperty('span') &&
-                    cellData['span'][0].hasOwnProperty('_text') &&
-                    !Array.isArray(cellData['span'][0]['_text'])) {
-                    cell.value = cellData['span'][0]['_text']
+                  if (cellData.hasOwnProperty('_text')) {
+                    cell.value = cellData['_text']
                   }
                   if (cellData.hasOwnProperty('reflink')) {
                     cell.reflink = {}
@@ -743,6 +746,19 @@ const config = {
               tableData['_attr'].hasOwnProperty('role') &&
               tableData['_attr']['role']['_value'] === 'sub') {
               // This is a sub table
+              /*
+              This is a sub table
+              A first column of a sub table can be empty. It shall be removed then.
+               */
+              let firstColEmpty = true
+              for (const row of table.rows) {
+                firstColEmpty = firstColEmpty && !row.cells[0].value
+              }
+              if (firstColEmpty) {
+                for (let row of table.rows) {
+                  row.cells.shift()
+                }
+              }
               tableObject.subTables.push(table)
             } else {
               // This is a main table
@@ -818,7 +834,7 @@ try {
   if (langName === LANG_LATIN || langName === LANG_ALL) {
     let lCfg = config[LANG_LATIN]
     let posCfg
-     // Nouns
+    // Nouns
     if (posName === POS_NOUN || posName === POS_ALL) {
       posCfg = lCfg[POS_NOUN]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))

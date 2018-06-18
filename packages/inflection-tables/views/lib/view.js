@@ -29,6 +29,17 @@ export default class View {
 
     this.forms = new Set()
     this.table = {}
+
+    /**
+     * Whether this view has any credits
+     * @type {boolean}
+     */
+    this.hasCredits = false
+    /**
+     * A text of a credits string
+     * @type {string}
+     */
+    this.creditsText = ''
   }
 
   /**
