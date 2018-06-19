@@ -9081,7 +9081,6 @@ class ViewSet {
       ]
     ])
     this.inflectionData = inflectionData
-    console.log('Viewset constructor')
     this.languageID = this.inflectionData.languageID
     this.locale = locale
     this.matchingViews = []
