@@ -29,6 +29,6 @@ describe('LanguageModelFactory object', () => {
   })
 
   test('grammar features', () => {
-    expect(latinModel.grammarFeatures()).toEqual(['part of speech', 'case', 'mood', 'declension', 'tense'])
+    expect(latinModel.grammarFeatures()).toEqual(['part of speech', 'case', 'mood', 'declension', 'tense', 'conjugation'])
   })
 })

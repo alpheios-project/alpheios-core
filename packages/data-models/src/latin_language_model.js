@@ -124,7 +124,7 @@ export default class LatinLanguageModel extends LanguageModel {
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
-    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense]
+    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense, Feature.types.conjugation]
   }
 
   /**
