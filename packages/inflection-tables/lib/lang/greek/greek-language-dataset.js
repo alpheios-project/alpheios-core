@@ -317,7 +317,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     ])
   }
 
-  getParadigms (partOfSpeech, paradigms, rulesData) {
+  setParadigmData (partOfSpeech, paradigms, rulesData, suppParadigmTables) {
     // An order of columns in a data CSV file
     const n = {
       id: 0,
@@ -364,6 +364,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     }
     for (let paradigm of paradigms.values()) {
       paradigm.sortRules()
+      paradigm.addSuppTables(suppParadigmTables)
     }
     return Array.from(paradigms.values())
   }
@@ -398,17 +399,23 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // Verbs
     // Paradigms
+    const verbParadigmTables = this.constructor.verbParadigmTables
+    const verbParticipleParadigmTables = this.constructor.verbParticipleParadigmTables
+    const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
+
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    paradigms = this.getParadigms(
-      partOfSpeech, this.constructor.verbParadigmTables, papaparse.parse(verbParadigmRulesCSV, {}).data)
+    paradigms = this.setParadigmData(
+      partOfSpeech, verbParadigmTables,
+      papaparse.parse(verbParadigmRulesCSV, {}).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
     this.addFootnotes(partOfSpeech, Paradigm, papaparse.parse(verbParadigmFootnotesCSV, {}).data)
 
     // Verb Participles
     // Paradigms
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
-    paradigms = this.getParadigms(
-      partOfSpeech, this.constructor.verbParticipleParadigmTables, papaparse.parse(verbParticipleParadigmRulesCSV, {}).data)
+    paradigms = this.setParadigmData(
+      partOfSpeech, verbParticipleParadigmTables,
+      papaparse.parse(verbParticipleParadigmRulesCSV, {}).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
 
     this.dataLoaded = true

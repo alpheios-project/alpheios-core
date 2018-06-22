@@ -5,6 +5,7 @@ import ParadigmRule from './paradigm-rule.js'
 export default class Paradigm {
   constructor (languageID, partOfSpeech, table) {
     this.id = uuidv4()
+    this.paradigmID = table.ID
     this.languageID = languageID
     this.partOfSpeech = partOfSpeech
     this.title = table.title
@@ -13,6 +14,8 @@ export default class Paradigm {
     this.creditsText = table.credits ? table.credits : ''
     this.subTables = table.subTables
     this.rules = []
+
+    this._suppTables = new Map()
   }
 
   static get ClassType () {
@@ -25,6 +28,30 @@ export default class Paradigm {
 
   sortRules () {
     this.rules.sort((a, b) => b.matchOrder - a.matchOrder)
+  }
+
+  addSuppTables (suppTables) {
+    for (const subTable of this.subTables) {
+      for (const row of subTable.rows) {
+        for (const cell of row.cells) {
+          if (cell.hasOwnProperty('reflink')) {
+            if (suppTables.has(cell.reflink.id)) {
+              this._suppTables.set(cell.reflink.id, suppTables.get(cell.reflink.id))
+            } else {
+              console.warn(`"${cell.reflink.id}" supplemental table is not found`)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  get hasSuppTables () {
+    return this._suppTables.size > 0
+  }
+
+  get suppTablesList () {
+    return Array.from(this._suppTables.values())
   }
 
   /**

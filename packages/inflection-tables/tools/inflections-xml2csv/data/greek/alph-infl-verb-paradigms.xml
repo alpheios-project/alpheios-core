@@ -1380,7 +1380,7 @@
             <cell role="label" tense="aorist" voice="active"/>
             <cell role="label" tense="aorist" voice="active">participle</cell>
             <cell role="data" tense="aorist" voice="active" pofs="verb_participle">
-               <span xml:lang="grc">βουλεύσας, βουλεύσασᾰ, βουλεῦσαν</span> <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="inflect:#verb|type:paradigm|paradigm_id:verbpdgm58">(see declension</reflink></cell>
+               <span xml:lang="grc">βουλεύσας, βουλεύσασᾰ, βουλεῦσαν</span> <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="inflect:#verb|type:paradigm|paradigm_id:verbpdgm58">(see declension)</reflink></cell>
          </row>
       </table>
    </infl-paradigm>

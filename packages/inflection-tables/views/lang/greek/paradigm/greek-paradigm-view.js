@@ -25,6 +25,9 @@ export default class GreekParadigmView extends GreekView {
     this.wideTable = this.paradigm.table
     this.wideSubTables = this.paradigm.subTables
 
+    this.hasSuppTables = this.paradigm.hasSuppTables
+    this.suppTables = this.paradigm.suppTablesList
+
     this.hasCredits = this.paradigm.hasCredits
     this.creditsText = this.paradigm.creditsText
   }

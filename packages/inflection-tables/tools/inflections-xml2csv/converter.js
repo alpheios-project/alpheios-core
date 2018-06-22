@@ -729,7 +729,7 @@ const config = {
                     }
                     if (cellData['reflink'][0].hasOwnProperty('_attr') &&
                       cellData['reflink'][0]['_attr'].hasOwnProperty('href')) {
-                      cell.reflink.href = cellData['reflink'][0]['_attr']['href']['_value']
+                      cell.reflink.id = cellData['reflink'][0]['_attr']['href']['_value'].replace(/.*paradigm_id:(.*)/, '$1')
                     }
                   }
                 } else if (cell.role === 'label') {
