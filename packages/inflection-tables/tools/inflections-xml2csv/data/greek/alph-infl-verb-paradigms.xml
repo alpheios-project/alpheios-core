@@ -8401,7 +8401,13 @@
             <cell role="label" tense="present" voice="active"/>
             <cell role="label" tense="present" voice="active">participles</cell>
             <cell role="data" tense="present" voice="active" pofs="verb_participle">
-               <span xml:lang="grc">ὤν, οὖσᾰ, ὄν</span> <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="inflect:#verb|type:paradigm|paradigm_id:verbpdgm57">decl.</reflink>), fut.<span xml:lang="grc">ἐσόμενος, -η, -ον</span>.(see <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="inflect:#verb|type:paradigm|paradigm_id:verbpdgm65">(see declension)</reflink></cell>
+               <span xml:lang="grc">ὤν, οὖσᾰ, ὄν</span> <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="inflect:#verb|type:paradigm|paradigm_id:verbpdgm57">(see declension)</reflink></cell>
+         </row>
+         <row role="data">
+            <cell role="label" tense="present" voice="active"/>
+            <cell role="label" tense="present" voice="active">future participles</cell>
+            <cell role="data" tense="present" voice="active" pofs="verb_participle">
+               <span xml:lang="grc">ἐσόμενος, -η, -ον</span> <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="inflect:#verb|type:paradigm|paradigm_id:verbpdgm65">(see declension)</reflink></cell>
          </row>
       </table>
    </infl-paradigm>
