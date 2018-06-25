@@ -2160,7 +2160,6 @@ class GreekLanguageDataset extends _lib_language_dataset__WEBPACK_IMPORTED_MODUL
 
     // Verbs
     // Paradigms
-    console.log(`before adding paradigms!`)
     const verbParadigmTables = this.constructor.verbParadigmTables
     const verbParticipleParadigmTables = this.constructor.verbParticipleParadigmTables
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
@@ -3671,21 +3670,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Paradigm {
-  constructor (languageID, partOfSpeech, table) {
+  constructor (languageID, partOfSpeech, paradigm) {
     this.id = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
-
-    console.log(`Paradigm constructor`)
-    this.paradigmID = table.ID
+    this.paradigmID = paradigm.ID
     this.languageID = languageID
     this.partOfSpeech = partOfSpeech
-    this.title = table.title
-    this.table = table.table
-    this.hasCredits = !!table.credits
-    this.creditsText = table.credits ? table.credits : ''
-    this.subTables = table.subTables
+    this.title = paradigm.title
+    this.table = paradigm.table
+    this.hasCredits = !!paradigm.credits
+    this.creditsText = paradigm.credits ? paradigm.credits : ''
+    this.subTables = paradigm.subTables
     this.rules = []
 
-    this._suppTables = new Map()
+    /**
+     * Sometimes paradigm sub tables may have links to another paradigms.
+     * Those supplemental paradigms will be saved in the map.
+     * @type {Map<{string} paradigmID, {Paradigm} paradigm>}
+     * @private
+     */
+    this._suppParadigms = new Map()
   }
 
   static get ClassType () {
@@ -3700,14 +3703,18 @@ class Paradigm {
     this.rules.sort((a, b) => b.matchOrder - a.matchOrder)
   }
 
-  addSuppTables (suppTables) {
-    console.log(`Add supp tables`)
+  /**
+   * Scans paradigm sub tables for other paradigm tables links and, if found,
+   * stores paradigms the found links refers to into a `_suppParadigms` prop.
+   * @param {Map<{string} paradigmID, {Paradigm} paradigm>} paradigmMap - A map of all known paradigms.
+   */
+  addSuppTables (paradigmMap) {
     for (const subTable of this.subTables) {
       for (const row of subTable.rows) {
         for (const cell of row.cells) {
           if (cell.hasOwnProperty('reflink')) {
-            if (suppTables.has(cell.reflink.id)) {
-              this._suppTables.set(cell.reflink.id, suppTables.get(cell.reflink.id))
+            if (paradigmMap.has(cell.reflink.id)) {
+              this._suppParadigms.set(cell.reflink.id, paradigmMap.get(cell.reflink.id))
             } else {
               console.warn(`"${cell.reflink.id}" supplemental table is not found`)
             }
@@ -3717,12 +3724,28 @@ class Paradigm {
     }
   }
 
-  get hasSuppTables () {
-    return this._suppTables.size > 0
+  /**
+   * Whether this paradigm has any linked paradigms stored.
+   * @return {boolean}
+   */
+  get hasSuppParadigms () {
+    return this._suppParadigms.size > 0
   }
 
-  get suppTablesList () {
-    return Array.from(this._suppTables.values())
+  /**
+   * Returns an array of linked paradigms.
+   * @return {Paradigm[]}
+   */
+  get suppParadigmList () {
+    return Array.from(this._suppParadigms.values())
+  }
+
+  /**
+   * Returns linked paradigms in a map.
+   * @return {Map<{string}, paradigmID, {Paradigm}, paradigm>}
+   */
+  get suppParadigmsMap () {
+    return this._suppParadigms
   }
 
   /**
@@ -5808,8 +5831,23 @@ class GreekParadigmView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_3__["def
     this.wideTable = this.paradigm.table
     this.wideSubTables = this.paradigm.subTables
 
-    this.hasSuppTables = this.paradigm.hasSuppTables
-    this.suppTables = this.paradigm.suppTablesList
+    /**
+     * Whether there are any linked paradigms for this view
+     * @type {boolean}
+     */
+    this.hasSuppParadigms = this.paradigm.hasSuppParadigms
+
+    /**
+     * An array of linked paradigms
+     * @type {Paradigm[]}
+     */
+    this.suppParadigms = this.paradigm.suppParadigmList
+
+    /**
+     * Linked paradigms in a map
+     * @type {Map<{string}, paradigmID, {Paradigm}, paradigm>}
+     */
+    this.suppParadigmsMap = this.paradigm.suppParadigmsMap
 
     this.hasCredits = this.paradigm.hasCredits
     this.creditsText = this.paradigm.creditsText

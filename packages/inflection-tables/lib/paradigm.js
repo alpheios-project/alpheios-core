@@ -3,19 +3,25 @@ import uuidv4 from 'uuid/v4'
 import ParadigmRule from './paradigm-rule.js'
 
 export default class Paradigm {
-  constructor (languageID, partOfSpeech, table) {
+  constructor (languageID, partOfSpeech, paradigm) {
     this.id = uuidv4()
-    this.paradigmID = table.ID
+    this.paradigmID = paradigm.ID
     this.languageID = languageID
     this.partOfSpeech = partOfSpeech
-    this.title = table.title
-    this.table = table.table
-    this.hasCredits = !!table.credits
-    this.creditsText = table.credits ? table.credits : ''
-    this.subTables = table.subTables
+    this.title = paradigm.title
+    this.table = paradigm.table
+    this.hasCredits = !!paradigm.credits
+    this.creditsText = paradigm.credits ? paradigm.credits : ''
+    this.subTables = paradigm.subTables
     this.rules = []
 
-    this._suppTables = new Map()
+    /**
+     * Sometimes paradigm sub tables may have links to another paradigms.
+     * Those supplemental paradigms will be saved in the map.
+     * @type {Map<{string} paradigmID, {Paradigm} paradigm>}
+     * @private
+     */
+    this._suppParadigms = new Map()
   }
 
   static get ClassType () {
@@ -30,13 +36,18 @@ export default class Paradigm {
     this.rules.sort((a, b) => b.matchOrder - a.matchOrder)
   }
 
-  addSuppTables (suppTables) {
+  /**
+   * Scans paradigm sub tables for other paradigm tables links and, if found,
+   * stores paradigms the found links refers to into a `_suppParadigms` prop.
+   * @param {Map<{string} paradigmID, {Paradigm} paradigm>} paradigmMap - A map of all known paradigms.
+   */
+  addSuppTables (paradigmMap) {
     for (const subTable of this.subTables) {
       for (const row of subTable.rows) {
         for (const cell of row.cells) {
           if (cell.hasOwnProperty('reflink')) {
-            if (suppTables.has(cell.reflink.id)) {
-              this._suppTables.set(cell.reflink.id, suppTables.get(cell.reflink.id))
+            if (paradigmMap.has(cell.reflink.id)) {
+              this._suppParadigms.set(cell.reflink.id, paradigmMap.get(cell.reflink.id))
             } else {
               console.warn(`"${cell.reflink.id}" supplemental table is not found`)
             }
@@ -46,12 +57,28 @@ export default class Paradigm {
     }
   }
 
-  get hasSuppTables () {
-    return this._suppTables.size > 0
+  /**
+   * Whether this paradigm has any linked paradigms stored.
+   * @return {boolean}
+   */
+  get hasSuppParadigms () {
+    return this._suppParadigms.size > 0
   }
 
-  get suppTablesList () {
-    return Array.from(this._suppTables.values())
+  /**
+   * Returns an array of linked paradigms.
+   * @return {Paradigm[]}
+   */
+  get suppParadigmList () {
+    return Array.from(this._suppParadigms.values())
+  }
+
+  /**
+   * Returns linked paradigms in a map.
+   * @return {Map<{string}, paradigmID, {Paradigm}, paradigm>}
+   */
+  get suppParadigmsMap () {
+    return this._suppParadigms
   }
 
   /**

@@ -25,8 +25,23 @@ export default class GreekParadigmView extends GreekView {
     this.wideTable = this.paradigm.table
     this.wideSubTables = this.paradigm.subTables
 
-    this.hasSuppTables = this.paradigm.hasSuppTables
-    this.suppTables = this.paradigm.suppTablesList
+    /**
+     * Whether there are any linked paradigms for this view
+     * @type {boolean}
+     */
+    this.hasSuppParadigms = this.paradigm.hasSuppParadigms
+
+    /**
+     * An array of linked paradigms
+     * @type {Paradigm[]}
+     */
+    this.suppParadigms = this.paradigm.suppParadigmList
+
+    /**
+     * Linked paradigms in a map
+     * @type {Map<{string}, paradigmID, {Paradigm}, paradigm>}
+     */
+    this.suppParadigmsMap = this.paradigm.suppParadigmsMap
 
     this.hasCredits = this.paradigm.hasCredits
     this.creditsText = this.paradigm.creditsText
