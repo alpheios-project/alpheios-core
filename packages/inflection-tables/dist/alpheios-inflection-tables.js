@@ -791,6 +791,28 @@ class Inflections {
 
 /***/ }),
 
+/***/ "./lib/lang/greek/data/adjective/footnotes.csv":
+/*!*****************************************************!*\
+  !*** ./lib/lang/greek/data/adjective/footnotes.csv ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "Index,Text\r\n1,\"All adjectives said to be of the \"\"1st Declension\"\" = α- Declension feminine unless noted otherwise.\"\r\n2,\"All masculines, \"\"feminines\"\" and neuters said to be of the \"\"2nd Declension\"\" are  o- Declension adjectives unless noted otherwise\"\r\n3,Irregular Declension\r\n4,ε-stem contracts of the α- Declension\r\n5,ε-stem contracts of the o- Declension\r\n6,\"See . There are no truly regular feminine adjectives in this Declension, but some regular \"\"Adjectives of Two Endings\"\" and some irregulars.\"\r\n7,\"Same as former, but w/ (ν)\"\r\n8,\"The most common \"\"endings\"\" of the nominative case of these \"\"3rd declension\"\" adjectives are not really endings at all, but a lengthening of the vowel before the final consonant of the stem (e.g.  \"\"-ων-\"\"for the stem ending in  \"\"-ον-\"\",  \"\"-ωρ-\"\"for the \"\"ορ-\"\"stem, and \"\"-ην-\"\"for the \"\"εν-\"\"stem)\"\r\n9,Uncontracted form of ες-stem's ε + ending. See  and 292 D\r\n10,where -εέ- (the stem's ε and the initial ε of the ending) contract w/o the rest of the ending joining in the contraction. See also 292 D.\r\n11,Compound adjectives in -ης not accented on the last syllable show recessive accent (noyt on the ending) in the contracted forms. See  c.\r\n12,\"Contraction of \"\"-ο(σ)α\"\"\"\r\n13,\"Consonant Declension Adjs w/ a separate form for the feminine ...--. In adjs w/ stems ending in ντ- , that \"\"ντ-\"\" becomes \"\"σσ-\"\" before those endings, w/ \"\"α\"\" lengthened to \"\"η\"\" in the oblique cases --See .\"\r\n14,See 292 d.\r\n15,See 293 d. Accusative Plurals of Comparatives borrowing the Nominative form\r\n16,See Tables in  for uncontracted forms of 1st and 2nd Declensions (in parenthetheses)\r\n17,See  for uncontracted stems in υ\r\n18,Not used as feminine ending"
+
+/***/ }),
+
+/***/ "./lib/lang/greek/data/adjective/suffixes.csv":
+/*!****************************************************!*\
+  !*** ./lib/lang/greek/data/adjective/suffixes.csv ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "Ending,Number,Case,Declension,Gender,Type,Primary,Footnote\r\nα,dual,accusative,1st,feminine,regular,primary,\r\nά,dual,accusative,1st,feminine,regular,,\r\nᾶ,dual,accusative,1st,feminine,regular,,4\r\nέα,dual,accusative,1st,feminine,irregular,,16\r\nαιν,dual,dative,1st,feminine,regular,primary,\r\nαῖv,dual,dative,1st,feminine,regular,,\r\nέαιν,dual,dative,1st,feminine,irregular,,16\r\nαιν,dual,genitive,1st,feminine,regular,primary,\r\nαῖv,dual,genitive,1st,feminine,regular,,\r\nέαιν,dual,genitive,1st,feminine,irregular,,16\r\nα,dual,nominative,1st,feminine,regular,primary,\r\nά,dual,nominative,1st,feminine,regular,,\r\nᾶ,dual,nominative,1st,feminine,regular,,4\r\nέα,dual,nominative,1st,feminine,irregular,,16\r\nα,dual,vocative,1st,feminine,regular,primary,\r\nά,dual,vocative,1st,feminine,regular,,\r\nᾶ,dual,vocative,1st,feminine,regular,,4\r\nέα,dual,vocative,1st,feminine,irregular,,16\r\nας,plural,accusative,1st,feminine,regular,primary,\r\nάς,plural,accusative,1st,feminine,regular,,\r\nᾶς,plural,accusative,1st,feminine,regular,,4\r\nέας,plural,accusative,1st,feminine,irregular,,16\r\nαις,plural,dative,1st,feminine,regular,primary,\r\nαῖς,plural,dative,1st,feminine,regular,,4\r\nέαις,plural,dative,1st,feminine,irregular,,16\r\nων,plural,genitive,1st,feminine,regular,,\r\nῶν,plural,genitive,1st,feminine,regular,primary,\r\nέων,plural,genitive,1st,feminine,irregular,,16\r\nάων,plural,genitive,1st,feminine,irregular,,\r\nαι,plural,nominative,1st,feminine,regular,primary,\r\nαί,plural,nominative,1st,feminine,regular,,\r\nαῖ,plural,nominative,1st,feminine,regular,,4\r\nεαι,plural,nominative,1st,feminine,irregular,,16\r\nέαι,plural,nominative,1st,feminine,irregular,,16\r\nαι,plural,vocative,1st,feminine,regular,primary,\r\nαί,plural,vocative,1st,feminine,regular,,\r\nαῖ,plural,vocative,1st,feminine,regular,,4\r\nεαι,plural,vocative,1st,feminine,irregular,,16\r\nέαι,plural,vocative,1st,feminine,irregular,,16\r\nαν,singular,accusative,1st,feminine,regular,primary,\r\nην,singular,accusative,1st,feminine,regular,,\r\nάν,singular,accusative,1st,feminine,regular,,\r\nήν,singular,accusative,1st,feminine,regular,,\r\nᾶν,singular,accusative,1st,feminine,regular,,4\r\nῆν,singular,accusative,1st,feminine,regular,,4\r\nέαν,singular,accusative,1st,feminine,irregular,,16\r\nᾳ,singular,dative,1st,feminine,regular,primary,\r\nῃ,singular,dative,1st,feminine,regular,,\r\nᾷ,singular,dative,1st,feminine,regular,,\r\nῇ,singular,dative,1st,feminine,regular,,\r\nέᾳ,singular,dative,1st,feminine,irregular,,16\r\nας,singular,genitive,1st,feminine,regular,primary,\r\nης,singular,genitive,1st,feminine,regular,,\r\nᾶς,singular,genitive,1st,feminine,regular,,\r\nῆς,singular,genitive,1st,feminine,regular,,\r\nέας,singular,genitive,1st,feminine,irregular,,16\r\nα,singular,nominative,1st,feminine,regular,primary,\r\nη,singular,nominative,1st,feminine,regular,,\r\nά,singular,nominative,1st,feminine,regular,,\r\nή,singular,nominative,1st,feminine,regular,,\r\nῆ,singular,nominative,1st,feminine,regular,,4\r\nᾶ,singular,nominative,1st,feminine,regular,,4\r\nέα,singular,nominative,1st,feminine,irregular,,16\r\nα,singular,vocative,1st,feminine,regular,primary,\r\nη,singular,vocative,1st,feminine,regular,,\r\nά,singular,vocative,1st,feminine,regular,,\r\nή,singular,vocative,1st,feminine,regular,,\r\nᾶ,singular,vocative,1st,feminine,regular,,4\r\nῆ,singular,vocative,1st,feminine,regular,,4\r\nέα,singular,vocative,1st,feminine,irregular,,16\r\nω,dual,accusative,2nd,masculine feminine,regular,primary,\r\nώ,dual,accusative,2nd,masculine feminine,regular,,\r\nέω,dual,accusative,2nd,masculine feminine,irregular,,16\r\nόω,dual,accusative,2nd,masculine feminine,irregular,,16\r\nοιν,dual,dative,2nd,masculine feminine,regular,primary,\r\nοῖν,dual,dative,2nd,masculine feminine,regular,,\r\nῳν,dual,dative,2nd,masculine feminine,regular,,\r\nέοιν,dual,dative,2nd,masculine feminine,irregular,,16\r\nόοιν,dual,dative,2nd,masculine feminine,irregular,,16\r\nοιν,dual,genitive,2nd,masculine feminine,regular,primary,\r\nοῖν,dual,genitive,2nd,masculine feminine,regular,,\r\nῳν,dual,genitive,2nd,masculine feminine,regular,,\r\nέοιν,dual,genitive,2nd,masculine feminine,irregular,,16\r\nόοιν,dual,genitive,2nd,masculine feminine,irregular,,16\r\nω,dual,nominative,2nd,masculine feminine,regular,primary,\r\nώ,dual,nominative,2nd,masculine feminine,regular,,\r\nέω,dual,nominative,2nd,masculine feminine,irregular,,16\r\nόω,dual,nominative,2nd,masculine feminine,irregular,,16\r\nω,dual,vocative,2nd,masculine feminine,regular,primary,\r\nώ,dual,vocative,2nd,masculine feminine,regular,,\r\nέω,dual,vocative,2nd,masculine feminine,irregular,,16\r\nόω,dual,vocative,2nd,masculine feminine,irregular,,16\r\nω,dual,accusative,2nd,neuter,regular,primary,\r\nώ,dual,accusative,2nd,neuter,regular,,\r\nέω,dual,accusative,2nd,neuter,irregular,,16\r\nοιν,dual,dative,2nd,neuter,regular,primary,\r\nοῖν,dual,dative,2nd,neuter,regular,,\r\nῳν,dual,dative,2nd,neuter,regular,,\r\nέοιν,dual,dative,2nd,neuter,irregular,,16\r\nόοιν,dual,dative,2nd,neuter,irregular,,16\r\nοιν,dual,genitive,2nd,neuter,regular,primary,\r\nοῖν,dual,genitive,2nd,neuter,regular,,\r\nῳν,dual,genitive,2nd,neuter,regular,,\r\nέοιν,dual,genitive,2nd,neuter,irregular,,16\r\nόοιν,dual,genitive,2nd,neuter,irregular,,16\r\nω,dual,nominative,2nd,neuter,regular,primary,\r\nώ,dual,nominative,2nd,neuter,regular,,\r\nέω,dual,nominative,2nd,neuter,irregular,,16\r\nόω,dual,nominative,2nd,neuter,irregular,,16\r\nω,dual,vocative,2nd,neuter,regular,primary,\r\nώ,dual,vocative,2nd,neuter,regular,,\r\nέω,dual,vocative,2nd,neuter,irregular,,16\r\nόω,dual,vocative,2nd,neuter,irregular,,16\r\nους,plural,accusative,2nd,masculine feminine,regular,primary,\r\nούς,plural,accusative,2nd,masculine feminine,regular,,\r\nοῦς,plural,accusative,2nd,masculine feminine,regular,,5\r\nέους,plural,accusative,2nd,masculine feminine,irregular,,16\r\nόους,plural,accusative,2nd,masculine feminine,irregular,,16\r\nοις,plural,dative,2nd,masculine feminine,regular,primary,\r\nοῖς,plural,dative,2nd,masculine feminine,regular,,\r\nῳς,plural,dative,2nd,masculine feminine,regular,,\r\nέοις,plural,dative,2nd,masculine feminine,irregular,,16\r\nόοις,plural,dative,2nd,masculine feminine,irregular,,16\r\nοῖσι,plural,dative,2nd,masculine feminine,irregular,,\r\nοῖσιν,plural,dative,2nd,masculine feminine,irregular,,\r\nῃσιν,plural,dative,2nd,masculine feminine,irregular,,\r\nων,plural,genitive,2nd,masculine feminine,regular,primary,\r\nῶν,plural,genitive,2nd,masculine feminine,regular,,\r\nέων,plural,genitive,2nd,masculine feminine,irregular,,16\r\nόων,plural,genitive,2nd,masculine feminine,irregular,,16\r\nοι,plural,nominative,2nd,masculine feminine,regular,primary,\r\nοί,plural,nominative,2nd,masculine feminine,regular,,\r\nοῖ,plural,nominative,2nd,masculine feminine,regular,,5\r\nῳ,plural,nominative,2nd,masculine feminine,regular,,\r\nεοι,plural,nominative,2nd,masculine feminine,irregular,,16\r\nόοι,plural,nominative,2nd,masculine feminine,irregular,,16\r\nοι,plural,vocative,2nd,masculine feminine,regular,primary,\r\nοί,plural,vocative,2nd,masculine feminine,regular,,\r\nοῖ,plural,vocative,2nd,masculine feminine,regular,,5\r\nῳ,plural,vocative,2nd,masculine feminine,regular,,\r\nεοι,plural,vocative,2nd,masculine feminine,irregular,,16\r\nόοι,plural,vocative,2nd,masculine feminine,irregular,,16\r\nα,plural,accusative,2nd,neuter,regular,primary,\r\nά,plural,accusative,2nd,neuter,regular,,\r\nᾶ,plural,accusative,2nd,neuter,regular,,5\r\nεα,plural,accusative,2nd,neuter,irregular,,16\r\nόα,plural,accusative,2nd,neuter,irregular,,16\r\nοις,plural,dative,2nd,neuter,regular,primary,\r\nοῖς,plural,dative,2nd,neuter,regular,,\r\nῳς,plural,dative,2nd,neuter,regular,,\r\nέοις,plural,dative,2nd,neuter,irregular,,16\r\nόοις,plural,dative,2nd,neuter,irregular,,16\r\nοῖσι,plural,dative,2nd,neuter,irregular,,\r\nοῖσιν,plural,dative,2nd,neuter,irregular,,\r\nων,plural,genitive,2nd,neuter,regular,primary,\r\nῶν,plural,genitive,2nd,neuter,regular,,\r\nέων,plural,genitive,2nd,neuter,irregular,,16\r\nόων,plural,genitive,2nd,neuter,irregular,,16\r\nα,plural,nominative,2nd,neuter,regular,primary,\r\nά,plural,nominative,2nd,neuter,regular,,\r\nᾶ,plural,nominative,2nd,neuter,regular,,5\r\nεα,plural,nominative,2nd,neuter,irregular,,16\r\nόα,plural,nominative,2nd,neuter,irregular,,16\r\nα,plural,vocative,2nd,neuter,regular,primary,\r\nά,plural,vocative,2nd,neuter,regular,,\r\nᾶ,plural,vocative,2nd,neuter,regular,,5\r\nεα,plural,vocative,2nd,neuter,irregular,,16\r\nόα,plural,vocative,2nd,neuter,irregular,,16\r\nον,singular,accusative,2nd,masculine feminine,regular,primary,\r\nόν,singular,accusative,2nd,masculine feminine,regular,,\r\nοῦν,singular,accusative,2nd,masculine feminine,regular,,5\r\nων,singular,accusative,2nd,masculine feminine,regular,,\r\nεον,singular,accusative,2nd,masculine feminine,irregular,,16\r\nόον,singular,accusative,2nd,masculine feminine,irregular,,16\r\nῳ,singular,dative,2nd,masculine feminine,regular,primary,\r\nῷ,singular,dative,2nd,masculine feminine,regular,,\r\nέῳ,singular,dative,2nd,masculine feminine,irregular,,16\r\nόῳ,singular,dative,2nd,masculine feminine,irregular,,16\r\nου,singular,genitive,2nd,masculine feminine,regular,primary,\r\nοῦ,singular,genitive,2nd,masculine feminine,regular,,\r\nω,singular,genitive,2nd,masculine feminine,regular,,\r\nέου,singular,genitive,2nd,masculine feminine,irregular,,16\r\nόου,singular,genitive,2nd,masculine feminine,irregular,,16\r\nοῖο,singular,genitive,2nd,masculine feminine,irregular,,\r\nος,singular,nominative,2nd,masculine feminine,regular,primary,2\r\nός,singular,nominative,2nd,masculine feminine,regular,,\r\nοῦς,singular,nominative,2nd,masculine feminine,regular,,5\r\nως,singular,nominative,2nd,masculine feminine,regular,,\r\nεος,singular,nominative,2nd,masculine feminine,irregular,,16\r\nόος,singular,nominative,2nd,masculine feminine,irregular,,16\r\nε,singular,vocative,2nd,masculine feminine,regular,primary,\r\nέ,singular,vocative,2nd,masculine feminine,regular,,\r\nοῦς,singular,vocative,2nd,masculine feminine,regular,,5\r\nως,singular,vocative,2nd,masculine feminine,regular,,\r\nεος,singular,vocative,2nd,masculine feminine,irregular,,16\r\nόος,singular,vocative,2nd,masculine feminine,irregular,,16\r\nον,singular,accusative,2nd,neuter,regular,primary,\r\nόν,singular,accusative,2nd,neuter,regular,,\r\nων,singular,accusative,2nd,neuter,regular,,\r\nοῦν,singular,accusative,2nd,neuter,regular,,5\r\nεον,singular,accusative,2nd,neuter,irregular,,16\r\nόον,singular,accusative,2nd,neuter,irregular,,16\r\nῳ,singular,dative,2nd,neuter,regular,primary,\r\nῷ,singular,dative,2nd,neuter,regular,,\r\nέῳ,singular,dative,2nd,neuter,irregular,,16\r\nόῳ,singular,dative,2nd,neuter,irregular,,16\r\nου,singular,genitive,2nd,neuter,regular,primary,\r\nοῦ,singular,genitive,2nd,neuter,regular,,\r\nω,singular,genitive,2nd,neuter,regular,,\r\nέου,singular,genitive,2nd,neuter,irregular,,16\r\nόου,singular,genitive,2nd,neuter,irregular,,16\r\nοῖο,singular,genitive,2nd,neuter,irregular,,\r\nον,singular,nominative,2nd,neuter,regular,primary,2\r\nόν,singular,nominative,2nd,neuter,regular,,\r\nων,singular,nominative,2nd,neuter,regular,,\r\nοῦν,singular,nominative,2nd,neuter,regular,,5\r\nεον,singular,nominative,2nd,neuter,irregular,,16\r\nόον,singular,nominative,2nd,neuter,irregular,,16\r\nον,singular,vocative,2nd,neuter,regular,primary,\r\nόν,singular,vocative,2nd,neuter,regular,,\r\nων,singular,vocative,2nd,neuter,regular,,\r\nοῦν,singular,vocative,2nd,neuter,regular,,5\r\nεον,singular,vocative,2nd,neuter,irregular,,16\r\nόον,singular,vocative,2nd,neuter,irregular,,16\r\nα,dual,accusative,3rd,feminine,regular,primary,\r\nαινα,dual,accusative,3rd,feminine,regular,,\r\nέινα,dual,accusative,3rd,feminine,regular,,\r\nέσσα,dual,accusative,3rd,feminine,regular,,\r\nαιν,dual,dative,3rd,feminine,regular,primary,\r\nαιναιν,dual,dative,3rd,feminine,regular,,\r\nέιναιν,dual,dative,3rd,feminine,regular,,\r\nέσσαιν,dual,dative,3rd,feminine,regular,,\r\nαιν,dual,genitive,3rd,feminine,regular,primary,\r\nαιναιν,dual,genitive,3rd,feminine,regular,,\r\nέιναιν,dual,genitive,3rd,feminine,regular,,\r\nέσσαιν,dual,genitive,3rd,feminine,regular,,\r\nα,dual,nominative,3rd,feminine,regular,primary,\r\nαινα,dual,nominative,3rd,feminine,regular,,\r\nέινα,dual,nominative,3rd,feminine,regular,,\r\nέσσα,dual,nominative,3rd,feminine,regular,,\r\nα,dual,vocative,3rd,feminine,regular,primary,\r\nαινα,dual,vocative,3rd,feminine,regular,,\r\nέινα,dual,vocative,3rd,feminine,regular,,\r\nέσσα,dual,vocative,3rd,feminine,regular,,\r\nε,dual,accusative,3rd,masculine feminine,regular,primary,\r\nεῖ,dual,accusative,3rd,masculine feminine,regular,,\r\nέε,dual,accusative,3rd,masculine feminine,irregular,,9\r\nανε,dual,accusative,3rd,masculine feminine,regular,,18\r\nενε,dual,accusative,3rd,masculine feminine,regular,,18\r\nεντε,dual,accusative,3rd,masculine feminine,regular,,18\r\nοιν,dual,dative,3rd,masculine feminine,regular,primary,\r\nοῖν,dual,dative,3rd,masculine feminine,regular,,\r\nέοιν,dual,dative,3rd,masculine feminine,irregular,,9\r\nάνοιν,dual,dative,3rd,masculine feminine,regular,,18\r\nένοιν,dual,dative,3rd,masculine feminine,regular,,18\r\nέντοιν,dual,dative,3rd,masculine feminine,regular,,18\r\nοιν,dual,genitive,3rd,masculine feminine,regular,primary,\r\nοῖν,dual,genitive,3rd,masculine feminine,regular,,\r\nέοιν,dual,genitive,3rd,masculine feminine,irregular,,9\r\nάνοιν,dual,genitive,3rd,masculine feminine,regular,,18\r\nένοιν,dual,genitive,3rd,masculine feminine,regular,,18\r\nέντοιν,dual,genitive,3rd,masculine feminine,regular,,18\r\nε,dual,nominative,3rd,masculine feminine,regular,primary,\r\nεῖ,dual,nominative,3rd,masculine feminine,regular,,\r\nέε,dual,nominative,3rd,masculine feminine,irregular,,9\r\nανε,dual,nominative,3rd,masculine feminine,regular,,18\r\nενε,dual,nominative,3rd,masculine feminine,regular,,18\r\nεντε,dual,nominative,3rd,masculine feminine,regular,,18\r\nε,dual,vocative,3rd,masculine feminine,regular,primary,\r\nεῖ,dual,vocative,3rd,masculine feminine,regular,,\r\nέε,dual,vocative,3rd,masculine feminine,irregular,,9\r\nε,dual,accusative,3rd,neuter,regular,primary,\r\nεῖ,dual,accusative,3rd,neuter,regular,,\r\nέε,dual,accusative,3rd,neuter,regular,,\r\nανε,dual,accusative,3rd,neuter,regular,,\r\nενε,dual,accusative,3rd,neuter,regular,,\r\nεντε,dual,accusative,3rd,neuter,regular,,\r\nοιν,dual,dative,3rd,neuter,regular,primary,\r\nοῖν,dual,dative,3rd,neuter,regular,,\r\nέοιν,dual,dative,3rd,neuter,regular,,\r\nάνοιν,dual,dative,3rd,neuter,regular,,\r\nένοιν,dual,dative,3rd,neuter,regular,,\r\nέντοιν,dual,dative,3rd,neuter,regular,,\r\nοιν,dual,genitive,3rd,neuter,regular,primary,\r\nοῖν,dual,genitive,3rd,neuter,regular,,\r\nέοιν,dual,genitive,3rd,neuter,regular,,\r\nάνοιν,dual,genitive,3rd,neuter,regular,,\r\nένοιν,dual,genitive,3rd,neuter,regular,,\r\nέντοιν,dual,genitive,3rd,neuter,regular,,\r\nε,dual,nominative,3rd,neuter,regular,primary,\r\nεῖ,dual,nominative,3rd,neuter,regular,,\r\nέε,dual,nominative,3rd,neuter,regular,,\r\nανε,dual,nominative,3rd,neuter,regular,,\r\nενε,dual,nominative,3rd,neuter,regular,,\r\nεντε,dual,nominative,3rd,neuter,regular,,\r\nανε,dual,vocative,3rd,neuter,regular,,18\r\nενε,dual,vocative,3rd,neuter,regular,,18\r\nεντε,dual,vocative,3rd,neuter,regular,,18\r\nε,dual,vocative,3rd,neuter,regular,primary,\r\nεῖ,dual,vocative,3rd,neuter,regular,,\r\nέε,dual,vocative,3rd,neuter,regular,,\r\nανε,dual,vocative,3rd,neuter,regular,,\r\nενε,dual,vocative,3rd,neuter,regular,,\r\nεντε,dual,vocative,3rd,neuter,regular,,\r\nας,plural,accusative,3rd,feminine,regular,primary,\r\nείας,plural,accusative,3rd,feminine,regular,,\r\nέα,plural,accusative,3rd,feminine,irregular,,9\r\nαίνας,plural,accusative,3rd,feminine,regular,,\r\nείνας,plural,accusative,3rd,feminine,regular,,\r\nέσσας,plural,accusative,3rd,feminine,regular,,\r\nαις,plural,dative,3rd,feminine,regular,primary,\r\nείαις,plural,dative,3rd,feminine,regular,,\r\nαίναις,plural,dative,3rd,feminine,regular,,\r\nείναις,plural,dative,3rd,feminine,regular,,\r\nέσσαις,plural,dative,3rd,feminine,regular,,\r\nῶν,plural,genitive,3rd,feminine,regular,primary,\r\nων,plural,genitive,3rd,feminine,regular,,\r\nειῶν,plural,genitive,3rd,feminine,regular,,\r\nαινῶν,plural,genitive,3rd,feminine,regular,,\r\nεινῶν,plural,genitive,3rd,feminine,regular,,\r\nεσσῶν,plural,genitive,3rd,feminine,regular,,\r\nάων,plural,genitive,3rd,feminine,irregular,,\r\nαι,plural,nominative,3rd,feminine,regular,primary,\r\nεῖαι,plural,nominative,3rd,feminine,regular,,\r\nέα,plural,nominative,3rd,feminine,irregular,,9\r\nαιναι,plural,nominative,3rd,feminine,regular,,\r\nειναι,plural,nominative,3rd,feminine,regular,,\r\nεσσαι,plural,nominative,3rd,feminine,regular,,\r\nαι,plural,vocative,3rd,feminine,regular,primary,\r\nεῖαι,plural,vocative,3rd,feminine,regular,,\r\nέα,plural,vocative,3rd,feminine,irregular,,9\r\nαιναι,plural,vocative,3rd,feminine,regular,,\r\nειναι,plural,vocative,3rd,feminine,regular,,\r\nεσσαι,plural,vocative,3rd,feminine,regular,,\r\nες,plural,accusative,3rd,masculine feminine,irregular,,15\r\nας,plural,accusative,3rd,masculine feminine,regular,primary,\r\nεῖς,plural,accusative,3rd,masculine feminine,regular,,\r\nους,plural,accusative,3rd,masculine feminine,regular,,\r\nεας,plural,accusative,3rd,masculine feminine,irregular,,\r\nῖας,plural,accusative,3rd,masculine feminine,irregular,,10\r\nανας,plural,accusative,3rd,masculine feminine,regular,,18\r\nενας,plural,accusative,3rd,masculine feminine,regular,,18\r\nεντας,plural,accusative,3rd,masculine feminine,regular,,18\r\nσι,plural,dative,3rd,masculine feminine,regular,primary,\r\nσιν,plural,dative,3rd,masculine feminine,regular,primary,7\r\nέσι,plural,dative,3rd,masculine feminine,irregular,,\r\nέσιν,plural,dative,3rd,masculine feminine,regular,,7\r\nέσσι,plural,dative,3rd,masculine feminine,irregular,,9 14\r\nέσσιν,plural,dative,3rd,masculine feminine,irregular,,7 9\r\nασι,plural,dative,3rd,masculine feminine,regular,,18\r\nασιν,plural,dative,3rd,masculine feminine,regular,,7 18\r\nεσι,plural,dative,3rd,masculine feminine,regular,,18\r\nεσιν,plural,dative,3rd,masculine feminine,regular,,7 18\r\nων,plural,genitive,3rd,masculine feminine,regular,primary,\r\nῶν,plural,genitive,3rd,masculine feminine,regular,,\r\nέων,plural,genitive,3rd,masculine feminine,regular,,\r\nάνων,plural,genitive,3rd,masculine feminine,regular,,18\r\nένων,plural,genitive,3rd,masculine feminine,regular,,18\r\nέντων,plural,genitive,3rd,masculine feminine,regular,,18\r\nάων,plural,genitive,3rd,masculine feminine,irregular,,\r\nες,plural,nominative,3rd,masculine feminine,regular,primary,12\r\nεῖς,plural,nominative,3rd,masculine feminine,regular,,\r\nους,plural,nominative,3rd,masculine feminine,regular,,\r\nέες,plural,nominative,3rd,masculine feminine,irregular,,9 14 17\r\nανες,plural,nominative,3rd,masculine feminine,regular,,18\r\nενες,plural,nominative,3rd,masculine feminine,regular,,18\r\nεντες,plural,nominative,3rd,masculine feminine,regular,,18\r\nες,plural,vocative,3rd,masculine feminine,regular,primary,\r\nεῖς,plural,vocative,3rd,masculine feminine,regular,,\r\nέες,plural,vocative,3rd,masculine feminine,irregular,,9\r\nους,plural,vocative,3rd,masculine feminine,regular,,\r\nανες,plural,vocative,3rd,masculine feminine,regular,,18\r\nενες,plural,vocative,3rd,masculine feminine,regular,,18\r\nεντες,plural,vocative,3rd,masculine feminine,regular,,18\r\nα,plural,accusative,3rd,neuter,regular,primary,\r\nῆ,plural,accusative,3rd,neuter,regular,,\r\nέα,plural,accusative,3rd,neuter,regular,,\r\nω,plural,accusative,3rd,neuter,regular,,12\r\nανα,plural,accusative,3rd,neuter,regular,,\r\nενα,plural,accusative,3rd,neuter,regular,,\r\nεντα,plural,accusative,3rd,neuter,regular,,\r\nσι,plural,dative,3rd,neuter,regular,primary,\r\nσιν,plural,dative,3rd,neuter,regular,,7\r\nέσι,plural,dative,3rd,neuter,regular,,\r\nέσιν,plural,dative,3rd,neuter,regular,,7\r\nέσσι,plural,dative,3rd,neuter,irregular,,9\r\nέσσιν,plural,dative,3rd,neuter,irregular,,7 9\r\nασι,plural,dative,3rd,neuter,regular,,\r\nασιν,plural,dative,3rd,neuter,regular,,7\r\nεσι,plural,dative,3rd,neuter,regular,,\r\nεσιν,plural,dative,3rd,neuter,regular,,7\r\nων,plural,genitive,3rd,neuter,regular,primary,\r\nῶν,plural,genitive,3rd,neuter,regular,,\r\nέων,plural,genitive,3rd,neuter,regular,,\r\nάνων,plural,genitive,3rd,neuter,regular,,\r\nένων,plural,genitive,3rd,neuter,regular,,\r\nέντων,plural,genitive,3rd,neuter,regular,,\r\nάων,plural,genitive,3rd,neuter,irregular,,\r\nα,plural,nominative,3rd,neuter,regular,primary,\r\nῆ,plural,nominative,3rd,neuter,regular,,\r\nέα,plural,nominative,3rd,neuter,irregular,,\r\nω,plural,nominative,3rd,neuter,regular,,12\r\nανα,plural,nominative,3rd,neuter,regular,,\r\nενα,plural,nominative,3rd,neuter,regular,,\r\nεντα,plural,nominative,3rd,neuter,regular,,\r\nα,plural,vocative,3rd,neuter,regular,primary,\r\nῆ,plural,vocative,3rd,neuter,regular,,\r\nέα,plural,vocative,3rd,neuter,regular,,\r\nω,plural,vocative,3rd,neuter,regular,,12\r\nανα,plural,vocative,3rd,neuter,regular,,\r\nενα,plural,vocative,3rd,neuter,regular,,\r\nεντα,plural,vocative,3rd,neuter,regular,,\r\nαν,singular,accusative,3rd,feminine,regular,primary,\r\nεῖαν,singular,accusative,3rd,feminine,regular,,\r\nαιναν,singular,accusative,3rd,feminine,regular,,\r\nειναν,singular,accusative,3rd,feminine,regular,,\r\nεσσαν,singular,accusative,3rd,feminine,regular,,\r\nᾳ,singular,dative,3rd,feminine,regular,primary,\r\nῃ,singular,dative,3rd,feminine,regular,,\r\nείᾳ,singular,dative,3rd,feminine,regular,,\r\nαινῃ,singular,dative,3rd,feminine,regular,,\r\nεινῃ,singular,dative,3rd,feminine,regular,,\r\nεσσῃ,singular,dative,3rd,feminine,regular,,\r\nας,singular,genitive,3rd,feminine,regular,primary,\r\nης,singular,genitive,3rd,feminine,regular,,\r\nείας,singular,genitive,3rd,feminine,regular,,\r\nαινης,singular,genitive,3rd,feminine,regular,,\r\nεινης,singular,genitive,3rd,feminine,regular,,\r\nεσσης,singular,genitive,3rd,feminine,regular,,\r\nα,singular,nominative,3rd,feminine,regular,primary,\r\nεῖα,singular,nominative,3rd,feminine,regular,,\r\nαινα,singular,nominative,3rd,feminine,regular,,\r\nεινα,singular,nominative,3rd,feminine,regular,,\r\nεσσα,singular,nominative,3rd,feminine,regular,,\r\nα,singular,vocative,3rd,feminine,regular,primary,\r\nεῖα,singular,vocative,3rd,feminine,regular,,\r\nαινα,singular,vocative,3rd,feminine,regular,,\r\nεινα,singular,vocative,3rd,feminine,regular,,\r\nεσσα,singular,vocative,3rd,feminine,regular,,\r\nύν,singular,accusative,3rd,masculine feminine,regular,primary,\r\nα,singular,accusative,3rd,masculine feminine,regular,primary,\r\nῆ,singular,accusative,3rd,masculine feminine,regular,,\r\nν,singular,accusative,3rd,masculine feminine,regular,,\r\nω,singular,accusative,3rd,masculine feminine,regular,,12\r\nέα,singular,accusative,3rd,masculine feminine,irregular,,9\r\nᾶ,singular,accusative,3rd,masculine feminine,regular,,14\r\nανα,singular,accusative,3rd,masculine feminine,regular,,18\r\nενα,singular,accusative,3rd,masculine feminine,regular,,18\r\nεντα,singular,accusative,3rd,masculine feminine,regular,,18\r\nι,singular,dative,3rd,masculine feminine,regular,primary,\r\nεῖ,singular,dative,3rd,masculine feminine,regular,primary,\r\nέι,singular,dative,3rd,masculine feminine,irregular,,9\r\nεϊ,singular,dative,3rd,masculine feminine,irregular,,9\r\nέϊ,singular,dative,3rd,masculine feminine,irregular,,17 18\r\nει,singular,dative,3rd,masculine feminine,irregular,,9\r\nί,singular,dative,3rd,masculine feminine,regular,,\r\nανι,singular,dative,3rd,masculine feminine,regular,,\r\nενι,singular,dative,3rd,masculine feminine,regular,,\r\nεντι,singular,dative,3rd,masculine feminine,regular,,\r\nος,singular,genitive,3rd,masculine feminine,regular,primary,\r\nός,singular,genitive,3rd,masculine feminine,regular,,\r\nοῦς,singular,genitive,3rd,masculine feminine,regular,,\r\nέος,singular,genitive,3rd,masculine feminine,irregular,,9\r\nῖος,singular,genitive,3rd,masculine feminine,irregular,,9\r\nανος,singular,genitive,3rd,masculine feminine,regular,,18\r\nενος,singular,genitive,3rd,masculine feminine,regular,,18\r\nεντος,singular,genitive,3rd,masculine feminine,regular,,18\r\nύς,singular,nominative,3rd,masculine feminine,regular,primary,\r\n_,singular,nominative,3rd,masculine feminine,regular,primary,8\r\nς,singular,nominative,3rd,masculine feminine,regular,,8\r\nής,singular,nominative,3rd,masculine feminine,regular,,\r\nης,singular,nominative,3rd,masculine feminine,regular,,11\r\nας,singular,nominative,3rd,masculine feminine,regular,,18\r\nην,singular,nominative,3rd,masculine feminine,regular,,18\r\nεις,singular,nominative,3rd,masculine feminine,regular,,18\r\nν,singular,vocative,3rd,masculine feminine,regular,primary,\r\nύ,singular,vocative,3rd,masculine feminine,regular,primary,\r\n_,singular,vocative,3rd,masculine feminine,regular,primary,8\r\nές,singular,vocative,3rd,masculine feminine,regular,,\r\nί,singular,vocative,3rd,masculine feminine,regular,,\r\nαν,singular,vocative,3rd,masculine feminine,regular,,18\r\nεν,singular,vocative,3rd,masculine feminine,regular,,18\r\n_,singular,accusative,3rd,neuter,regular,primary,\r\nύ,singular,accusative,3rd,neuter,regular,primary,\r\nές,singular,accusative,3rd,neuter,regular,,\r\nαν,singular,accusative,3rd,neuter,regular,,\r\nεν,singular,accusative,3rd,neuter,regular,,\r\nεῖ,singular,dative,3rd,neuter,regular,,\r\nι,singular,dative,3rd,neuter,regular,primary,\r\nί,singular,dative,3rd,neuter,regular,,\r\nεϊ,singular,dative,3rd,neuter,irregular,,\r\nέϊ,singular,dative,3rd,neuter,irregular,,17\r\nανι,singular,dative,3rd,neuter,regular,,\r\nενι,singular,dative,3rd,neuter,regular,,\r\nεντι,singular,dative,3rd,neuter,regular,,\r\nος,singular,genitive,3rd,neuter,regular,primary,\r\nός,singular,genitive,3rd,neuter,regular,,\r\nέος,singular,genitive,3rd,neuter,regular,,\r\nοῦς,singular,genitive,3rd,neuter,regular,,\r\nανος,singular,genitive,3rd,neuter,regular,,\r\nενος,singular,genitive,3rd,neuter,regular,,\r\nεντος,singular,genitive,3rd,neuter,regular,,\r\n_,singular,nominative,3rd,neuter,regular,primary,8\r\nύ,singular,nominative,3rd,neuter,regular,primary,\r\nές,singular,nominative,3rd,neuter,regular,,\r\nες,singular,nominative,3rd,neuter,regular,,11\r\nαν,singular,nominative,3rd,neuter,regular,,\r\nεν,singular,nominative,3rd,neuter,regular,,\r\n_,singular,vocative,3rd,neuter,regular,primary,\r\nύ,singular,vocative,3rd,neuter,regular,primary,\r\nές,singular,vocative,3rd,neuter,regular,,\r\nαν,singular,vocative,3rd,neuter,regular,,\r\nεν,singular,vocative,3rd,neuter,regular,,"
+
+/***/ }),
+
 /***/ "./lib/lang/greek/data/noun/footnotes.csv":
 /*!************************************************!*\
   !*** ./lib/lang/greek/data/noun/footnotes.csv ***!
@@ -1606,162 +1628,170 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GreekLanguageDataset; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_language_dataset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../lib/language-dataset */ "./lib/language-dataset.js");
-/* harmony import */ var _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../lib/extended-greek-data */ "./lib/extended-greek-data.js");
-/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../lib/suffix.js */ "./lib/suffix.js");
-/* harmony import */ var _lib_form_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../lib/form.js */ "./lib/form.js");
-/* harmony import */ var _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../lib/paradigm.js */ "./lib/paradigm.js");
-/* harmony import */ var _data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./data/noun/suffixes.csv */ "./lib/lang/greek/data/noun/suffixes.csv");
-/* harmony import */ var _data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./data/noun/footnotes.csv */ "./lib/lang/greek/data/noun/footnotes.csv");
-/* harmony import */ var _data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./data/pronoun/forms.csv */ "./lib/lang/greek/data/pronoun/forms.csv");
-/* harmony import */ var _data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./data/pronoun/footnotes.csv */ "./lib/lang/greek/data/pronoun/footnotes.csv");
-/* harmony import */ var _data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-01.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-01.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-02.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-02.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-03.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-03.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-04.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-04.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-05.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-05.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-06.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-06.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-07.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-07.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-08.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-08.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-09.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-09.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-10.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-10.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-11.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-11.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-12.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-12.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-13.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-13.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-14.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-14.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-15.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-15.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-16.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-16.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-17.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-17.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-18.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-18.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-19.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-19.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-20.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-20.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-21.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-21.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-22.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-22.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-23.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-23.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-24.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-24.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-25.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-25.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_34__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-26.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-26.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_35__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-27.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-27.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-28.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-28.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_37__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-29.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-29.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-30.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-30.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-31.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-31.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-32.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-32.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_41__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-33.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-33.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-34.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-34.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_43__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-35.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-35.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-36.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-36.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_45__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-37.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-37.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-38.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-38.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-39.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-39.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-40.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-40.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-41.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-41.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-42.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-42.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-43.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-43.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-44.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-44.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-45.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-45.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-46.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-46.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-47.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-47.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-48.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-48.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-49.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-49.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-50.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-50.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-51.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-51.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-52.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-52.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-53.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-53.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ./data/verb/paradigm/rules.csv */ "./lib/lang/greek/data/verb/paradigm/rules.csv");
-/* harmony import */ var _data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ./data/verb/paradigm/footnotes.csv */ "./lib/lang/greek/data/verb/paradigm/footnotes.csv");
-/* harmony import */ var _data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-54.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-54.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_65__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-55.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-55.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_66__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-56.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-56.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_67__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-57.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-57.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_68__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-58.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-58.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_69__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-59.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-59.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_70__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-60.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-60.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_71__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-61.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-61.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_72__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-62.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-62.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_73__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-63.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-63.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_74__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-64.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-64.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_75__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-65.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-65.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_76__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-66.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-66.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_77___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_77__);
-/* harmony import */ var _data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! ./data/verb-participle/paradigm/rules.csv */ "./lib/lang/greek/data/verb-participle/paradigm/rules.csv");
-/* harmony import */ var _data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_78___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_78__);
-/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! papaparse */ "./node_modules/papaparse/papaparse.js");
-/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_79___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_79__);
+/* harmony import */ var _lib_language_dataset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lib/language-dataset */ "./lib/language-dataset.js");
+/* harmony import */ var _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @lib/extended-greek-data */ "./lib/extended-greek-data.js");
+/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lib/suffix.js */ "./lib/suffix.js");
+/* harmony import */ var _lib_form_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lib/form.js */ "./lib/form.js");
+/* harmony import */ var _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @lib/paradigm.js */ "./lib/paradigm.js");
+/* harmony import */ var _lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @lib/lang/greek/data/noun/suffixes.csv */ "./lib/lang/greek/data/noun/suffixes.csv");
+/* harmony import */ var _lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @lib/lang/greek/data/noun/footnotes.csv */ "./lib/lang/greek/data/noun/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @lib/lang/greek/data/adjective/suffixes.csv */ "./lib/lang/greek/data/adjective/suffixes.csv");
+/* harmony import */ var _lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @lib/lang/greek/data/adjective/footnotes.csv */ "./lib/lang/greek/data/adjective/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @lib/lang/greek/data/pronoun/forms.csv */ "./lib/lang/greek/data/pronoun/forms.csv");
+/* harmony import */ var _lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @lib/lang/greek/data/pronoun/footnotes.csv */ "./lib/lang/greek/data/pronoun/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-01.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-01.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-02.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-02.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-03.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-03.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-04.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-04.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-05.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-05.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-06.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-06.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-07.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-07.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-08.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-08.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-09.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-09.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-10.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-10.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-11.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-11.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-12.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-12.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-13.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-13.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-14.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-14.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-15.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-15.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-16.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-16.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-17.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-17.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-18.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-18.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_29__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-19.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-19.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-20.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-20.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_31__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-21.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-21.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-22.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-22.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-23.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-23.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_34__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-24.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-24.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_35__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-25.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-25.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_36__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-26.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-26.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_37__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-27.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-27.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_38__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-28.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-28.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_39__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-29.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-29.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_40__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-30.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-30.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_41__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-31.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-31.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_42__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-32.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-32.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-33.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-33.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_44__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-34.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-34.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_45__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-35.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-35.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_46__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-36.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-36.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-37.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-37.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_48__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-38.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-38.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-39.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-39.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_50__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-40.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-40.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_51__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-41.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-41.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_52__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-42.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-42.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-43.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-43.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_54__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-44.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-44.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_55__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-45.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-45.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_56__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-46.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-46.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_57__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-47.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-47.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_58__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-48.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-48.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_59__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-49.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-49.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-50.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-50.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-51.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-51.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-52.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-52.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_63__);
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-53.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-53.json");
+/* harmony import */ var _data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ./data/verb/paradigm/rules.csv */ "./lib/lang/greek/data/verb/paradigm/rules.csv");
+/* harmony import */ var _data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_65__);
+/* harmony import */ var _data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ./data/verb/paradigm/footnotes.csv */ "./lib/lang/greek/data/verb/paradigm/footnotes.csv");
+/* harmony import */ var _data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-54.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-54.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-55.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-55.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_68__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-56.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-56.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_69__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-57.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-57.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_70__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-58.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-58.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_71__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-59.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-59.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_72__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-60.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-60.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_73__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-61.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-61.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_74__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-62.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-62.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_75__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-63.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-63.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_76__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-64.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-64.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_77___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_77__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-65.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-65.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_78___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_78__);
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-66.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-66.json");
+/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_79___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_79__);
+/* harmony import */ var _data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(/*! ./data/verb-participle/paradigm/rules.csv */ "./lib/lang/greek/data/verb-participle/paradigm/rules.csv");
+/* harmony import */ var _data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_80___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_80__);
+/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(/*! papaparse */ "./node_modules/papaparse/papaparse.js");
+/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_81___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_81__);
 /*
  * Greek language data module
  */
+
+
+
+
 
 
 
@@ -2003,78 +2033,78 @@ class GreekLanguageDataset extends _lib_language_dataset__WEBPACK_IMPORTED_MODUL
   static get verbParadigmTables () {
     const partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB
     return new Map([
-      ['verbpdgm1', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_10___default.a))],
-      ['verbpdgm2', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_11___default.a))],
-      ['verbpdgm3', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_12___default.a))],
-      ['verbpdgm4', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_13___default.a))],
-      ['verbpdgm5', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_14___default.a))],
-      ['verbpdgm6', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_15___default.a))],
-      ['verbpdgm7', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_16___default.a))],
-      ['verbpdgm8', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_17___default.a))],
-      ['verbpdgm9', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_18___default.a))],
-      ['verbpdgm10', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_19___default.a))],
-      ['verbpdgm11', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_20___default.a))],
-      ['verbpdgm12', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_21___default.a))],
-      ['verbpdgm13', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_22___default.a))],
-      ['verbpdgm14', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_23___default.a))],
-      ['verbpdgm15', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_24___default.a))],
-      ['verbpdgm16', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_25___default.a))],
-      ['verbpdgm17', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_26___default.a))],
-      ['verbpdgm18', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_27___default.a))],
-      ['verbpdgm19', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_28___default.a))],
-      ['verbpdgm20', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_29___default.a))],
-      ['verbpdgm21', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_30___default.a))],
-      ['verbpdgm22', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_31___default.a))],
-      ['verbpdgm23', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_32___default.a))],
-      ['verbpdgm24', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_33___default.a))],
-      ['verbpdgm25', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_34___default.a))],
-      ['verbpdgm26', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_35___default.a))],
-      ['verbpdgm27', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_36___default.a))],
-      ['verbpdgm28', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_37___default.a))],
-      ['verbpdgm29', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_38___default.a))],
-      ['verbpdgm30', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_39___default.a))],
-      ['verbpdgm31', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_40___default.a))],
-      ['verbpdgm32', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_41___default.a))],
-      ['verbpdgm33', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_42___default.a))],
-      ['verbpdgm34', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_43___default.a))],
-      ['verbpdgm35', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_44___default.a))],
-      ['verbpdgm36', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_45___default.a))],
-      ['verbpdgm37', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_46___default.a))],
-      ['verbpdgm38', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_47___default.a))],
-      ['verbpdgm39', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_48___default.a))],
-      ['verbpdgm40', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_49___default.a))],
-      ['verbpdgm41', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_50___default.a))],
-      ['verbpdgm42', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_51___default.a))],
-      ['verbpdgm43', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_52___default.a))],
-      ['verbpdgm44', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_53___default.a))],
-      ['verbpdgm45', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_54___default.a))],
-      ['verbpdgm46', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_55___default.a))],
-      ['verbpdgm47', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_56___default.a))],
-      ['verbpdgm48', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_57___default.a))],
-      ['verbpdgm49', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_58___default.a))],
-      ['verbpdgm50', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_59___default.a))],
-      ['verbpdgm51', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_60___default.a))],
-      ['verbpdgm52', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_61___default.a))],
-      ['verbpdgm53', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_62___default.a))]
+      ['verbpdgm1', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_12___default.a))],
+      ['verbpdgm2', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_13___default.a))],
+      ['verbpdgm3', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_14___default.a))],
+      ['verbpdgm4', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_15___default.a))],
+      ['verbpdgm5', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_16___default.a))],
+      ['verbpdgm6', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_17___default.a))],
+      ['verbpdgm7', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_18___default.a))],
+      ['verbpdgm8', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_19___default.a))],
+      ['verbpdgm9', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_20___default.a))],
+      ['verbpdgm10', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_21___default.a))],
+      ['verbpdgm11', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_22___default.a))],
+      ['verbpdgm12', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_23___default.a))],
+      ['verbpdgm13', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_24___default.a))],
+      ['verbpdgm14', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_25___default.a))],
+      ['verbpdgm15', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_26___default.a))],
+      ['verbpdgm16', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_27___default.a))],
+      ['verbpdgm17', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_28___default.a))],
+      ['verbpdgm18', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_29___default.a))],
+      ['verbpdgm19', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_30___default.a))],
+      ['verbpdgm20', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_31___default.a))],
+      ['verbpdgm21', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_32___default.a))],
+      ['verbpdgm22', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_33___default.a))],
+      ['verbpdgm23', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_34___default.a))],
+      ['verbpdgm24', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_35___default.a))],
+      ['verbpdgm25', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_36___default.a))],
+      ['verbpdgm26', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_37___default.a))],
+      ['verbpdgm27', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_38___default.a))],
+      ['verbpdgm28', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_39___default.a))],
+      ['verbpdgm29', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_40___default.a))],
+      ['verbpdgm30', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_41___default.a))],
+      ['verbpdgm31', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_42___default.a))],
+      ['verbpdgm32', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_43___default.a))],
+      ['verbpdgm33', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_44___default.a))],
+      ['verbpdgm34', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_45___default.a))],
+      ['verbpdgm35', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_46___default.a))],
+      ['verbpdgm36', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_47___default.a))],
+      ['verbpdgm37', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_48___default.a))],
+      ['verbpdgm38', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_49___default.a))],
+      ['verbpdgm39', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_50___default.a))],
+      ['verbpdgm40', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_51___default.a))],
+      ['verbpdgm41', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_52___default.a))],
+      ['verbpdgm42', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_53___default.a))],
+      ['verbpdgm43', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_54___default.a))],
+      ['verbpdgm44', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_55___default.a))],
+      ['verbpdgm45', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_56___default.a))],
+      ['verbpdgm46', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_57___default.a))],
+      ['verbpdgm47', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_58___default.a))],
+      ['verbpdgm48', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_59___default.a))],
+      ['verbpdgm49', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_60___default.a))],
+      ['verbpdgm50', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_61___default.a))],
+      ['verbpdgm51', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_62___default.a))],
+      ['verbpdgm52', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_63___default.a))],
+      ['verbpdgm53', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_64___default.a))]
     ])
   }
 
   static get verbParticipleParadigmTables () {
     const partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB_PARTICIPLE
     return new Map([
-      ['verbpdgm54', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_65___default.a))],
-      ['verbpdgm55', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_66___default.a))],
-      ['verbpdgm56', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_67___default.a))],
-      ['verbpdgm57', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_68___default.a))],
-      ['verbpdgm58', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_69___default.a))],
-      ['verbpdgm59', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_70___default.a))],
-      ['verbpdgm60', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_71___default.a))],
-      ['verbpdgm61', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_72___default.a))],
-      ['verbpdgm62', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_73___default.a))],
-      ['verbpdgm63', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_74___default.a))],
-      ['verbpdgm64', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_75___default.a))],
-      ['verbpdgm65', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_76___default.a))],
-      ['verbpdgm66', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_77___default.a))]
+      ['verbpdgm54', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_67___default.a))],
+      ['verbpdgm55', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_68___default.a))],
+      ['verbpdgm56', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_69___default.a))],
+      ['verbpdgm57', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_70___default.a))],
+      ['verbpdgm58', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_71___default.a))],
+      ['verbpdgm59', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_72___default.a))],
+      ['verbpdgm60', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_73___default.a))],
+      ['verbpdgm61', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_74___default.a))],
+      ['verbpdgm62', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_75___default.a))],
+      ['verbpdgm63', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_76___default.a))],
+      ['verbpdgm64', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_77___default.a))],
+      ['verbpdgm65', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_78___default.a))],
+      ['verbpdgm66', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_79___default.a))]
     ])
   }
 
@@ -2146,16 +2176,23 @@ class GreekLanguageDataset extends _lib_language_dataset__WEBPACK_IMPORTED_MODUL
 
     // Nouns
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NOUN)
-    suffixes = papaparse__WEBPACK_IMPORTED_MODULE_79___default.a.parse(_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default.a, {})
+    suffixes = papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default.a, {})
     this.addSuffixes(partOfSpeech, suffixes.data)
-    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_79___default.a.parse(_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default.a, {})
+    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default.a, {})
+    this.addFootnotes(partOfSpeech, _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__["default"], footnotes.data)
+
+    // Adjective
+    partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE)
+    suffixes = papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8___default.a, {})
+    this.addSuffixes(partOfSpeech, suffixes.data)
+    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default.a, {})
     this.addFootnotes(partOfSpeech, _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__["default"], footnotes.data)
 
     // Pronouns
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_PRONOUN)
-    forms = papaparse__WEBPACK_IMPORTED_MODULE_79___default.a.parse(_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_8___default.a, {})
+    forms = papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_10___default.a, {})
     this.addPronounForms(partOfSpeech, forms.data)
-    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_79___default.a.parse(_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default.a, {})
+    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_11___default.a, {})
     this.addFootnotes(partOfSpeech, _lib_form_js__WEBPACK_IMPORTED_MODULE_4__["default"], footnotes.data)
 
     // Verbs
@@ -2167,16 +2204,16 @@ class GreekLanguageDataset extends _lib_language_dataset__WEBPACK_IMPORTED_MODUL
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParadigmTables,
-      papaparse__WEBPACK_IMPORTED_MODULE_79___default.a.parse(_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_63___default.a, {}).data, verbAndParticipleParadigmTables)
+      papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_65___default.a, {}).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
-    this.addFootnotes(partOfSpeech, _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"], papaparse__WEBPACK_IMPORTED_MODULE_79___default.a.parse(_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_64___default.a, {}).data)
+    this.addFootnotes(partOfSpeech, _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"], papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_66___default.a, {}).data)
 
     // Verb Participles
     // Paradigms
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB_PARTICIPLE)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParticipleParadigmTables,
-      papaparse__WEBPACK_IMPORTED_MODULE_79___default.a.parse(_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_78___default.a, {}).data, verbAndParticipleParadigmTables)
+      papaparse__WEBPACK_IMPORTED_MODULE_81___default.a.parse(_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_80___default.a, {}).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
 
     this.dataLoaded = true
@@ -8459,10 +8496,13 @@ var Writable = __webpack_require__(/*! ./_stream_writable */ "./node_modules/rea
 
 util.inherits(Duplex, Readable);
 
-var keys = objectKeys(Writable.prototype);
-for (var v = 0; v < keys.length; v++) {
-  var method = keys[v];
-  if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+{
+  // avoid scope creep, the keys array can then be collected
+  var keys = objectKeys(Writable.prototype);
+  for (var v = 0; v < keys.length; v++) {
+    var method = keys[v];
+    if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+  }
 }
 
 function Duplex(options) {
@@ -8480,6 +8520,16 @@ function Duplex(options) {
 
   this.once('end', onend);
 }
+
+Object.defineProperty(Duplex.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
 
 // the no-half-open enforcer
 function onend() {
@@ -8523,12 +8573,6 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
-  }
-}
 
 /***/ }),
 
@@ -9476,6 +9520,16 @@ Readable.prototype.wrap = function (stream) {
   return this;
 };
 
+Object.defineProperty(Readable.prototype, 'readableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._readableState.highWaterMark;
+  }
+});
+
 // exposed for testing purposes only.
 Readable._fromList = fromList;
 
@@ -9598,12 +9652,6 @@ function endReadableNT(state, stream) {
     state.endEmitted = true;
     stream.readable = false;
     stream.emit('end');
-  }
-}
-
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
   }
 }
 
@@ -10219,6 +10267,16 @@ function decodeChunk(state, chunk, encoding) {
   }
   return chunk;
 }
+
+Object.defineProperty(Writable.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
 
 // if we're already writing something, then just put this
 // in the queue, and wait our turn.  Otherwise, call _write
@@ -11189,9 +11247,33 @@ Stream.prototype.pipe = function(dest, options) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+
+/*<replacement>*/
 
 var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer;
+/*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
   encoding = '' + encoding;
@@ -11303,10 +11385,10 @@ StringDecoder.prototype.fillLast = function (buf) {
 };
 
 // Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
-// continuation byte.
+// continuation byte. If an invalid byte is detected, -2 is returned.
 function utf8CheckByte(byte) {
   if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
-  return -1;
+  return byte >> 6 === 0x02 ? -1 : -2;
 }
 
 // Checks at most 3 bytes at the end of a Buffer in order to detect an
@@ -11320,13 +11402,13 @@ function utf8CheckIncomplete(self, buf, i) {
     if (nb > 0) self.lastNeed = nb - 1;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) self.lastNeed = nb - 2;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) {
@@ -11340,7 +11422,7 @@ function utf8CheckIncomplete(self, buf, i) {
 // Validates as many continuation bytes for a multi-byte UTF-8 character as
 // needed or are available. If we see a non-continuation byte where we expect
 // one, we "replace" the validated continuation bytes we've seen so far with
-// UTF-8 replacement characters ('\ufffd'), to match v8's UTF-8 decoding
+// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
 // behavior. The continuation byte check is included three times in the case
 // where all of the continuation bytes for a character exist in the same buffer.
 // It is also done this way as a slight performance increase instead of using a
@@ -11348,17 +11430,17 @@ function utf8CheckIncomplete(self, buf, i) {
 function utf8CheckExtraBytes(self, buf, p) {
   if ((buf[0] & 0xC0) !== 0x80) {
     self.lastNeed = 0;
-    return '\ufffd'.repeat(p);
+    return '\ufffd';
   }
   if (self.lastNeed > 1 && buf.length > 1) {
     if ((buf[1] & 0xC0) !== 0x80) {
       self.lastNeed = 1;
-      return '\ufffd'.repeat(p + 1);
+      return '\ufffd';
     }
     if (self.lastNeed > 2 && buf.length > 2) {
       if ((buf[2] & 0xC0) !== 0x80) {
         self.lastNeed = 2;
-        return '\ufffd'.repeat(p + 2);
+        return '\ufffd';
       }
     }
   }
@@ -11389,11 +11471,11 @@ function utf8Text(buf, i) {
   return buf.toString('utf8', i, end);
 }
 
-// For UTF-8, a replacement character for each buffered byte of a (partial)
-// character needs to be added to the output.
+// For UTF-8, a replacement character is added when ending on a partial
+// character.
 function utf8End(buf) {
   var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + '\ufffd'.repeat(this.lastTotal - this.lastNeed);
+  if (this.lastNeed) return r + '\ufffd';
   return r;
 }
 
@@ -12321,6 +12403,153 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./views/lang/greek/adjective/greek-adjective-simplified-view.js":
+/*!***********************************************************************!*\
+  !*** ./views/lang/greek/adjective/greek-adjective-simplified-view.js ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GreekAdjectiveSimplifiedView; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lib/suffix.js */ "./lib/suffix.js");
+/* harmony import */ var _views_lang_greek_adjective_greek_adjective_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @views/lang/greek/adjective/greek-adjective-view */ "./views/lang/greek/adjective/greek-adjective-view.js");
+
+
+
+
+class GreekAdjectiveSimplifiedView extends _views_lang_greek_adjective_greek_adjective_view__WEBPACK_IMPORTED_MODULE_2__["default"] {
+  constructor (inflectionData, locale) {
+    super(inflectionData, locale)
+    this.id = 'adjectiveDeclensionSimplified'
+    this.name = 'adjective declension simplified'
+    this.title = 'Adjective declension (simplified)'
+    this.partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE
+    this.inflectionType = _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+    const genderMasculine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE
+    const genderFeminine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE
+    const genderNeuter = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER
+
+    this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
+      if (ancestorFeatures) {
+        if (ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_2ND || ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD) {
+          return [[genderMasculine, genderFeminine], genderNeuter]
+        }
+      }
+      return [genderMasculine, genderFeminine, genderNeuter]
+    }
+
+    this.createTable()
+
+    this.table.suffixCellFilter = GreekAdjectiveSimplifiedView.suffixCellFilter
+  }
+
+  static get partOfSpeech () {
+    return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE
+  }
+
+  static get inflectionType () {
+    return _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+
+  /**
+   * Determines wither this view can be used to display an inflection table of any data
+   * within an `inflectionData` object.
+   * By default a view can be used if a view and an inflection data piece have the same language,
+   * the same part of speech, and the view is enabled for lexemes within an inflection data.
+   * @param inflectionData
+   * @return {boolean}
+   */
+  static matchFilter (inflectionData) {
+    if (alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].compareLanguages(GreekAdjectiveSimplifiedView.languageID, inflectionData.languageID)) {
+      return inflectionData.pos.has(GreekAdjectiveSimplifiedView.partOfSpeech)
+    }
+  }
+
+  static suffixCellFilter (suffix) {
+    if (suffix.extendedLangData && suffix.extendedLangData[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]) {
+      return suffix.extendedLangData[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC].primary
+    } else {
+      console.warn(`Greek morpheme "${suffix.value}" has no extended language data attached.`)
+      return false
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./views/lang/greek/adjective/greek-adjective-view.js":
+/*!************************************************************!*\
+  !*** ./views/lang/greek/adjective/greek-adjective-view.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GreekAdjectiveView; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lib/suffix.js */ "./lib/suffix.js");
+/* harmony import */ var _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @views/lang/greek/greek-view.js */ "./views/lang/greek/greek-view.js");
+
+
+
+
+class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
+  constructor (inflectionData, locale) {
+    super(inflectionData, locale)
+    this.id = 'adjectiveDeclension'
+    this.name = 'adjective declension'
+    this.title = 'Adjective declension'
+    this.partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE
+    this.inflectionType = _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+    const genderMasculine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE
+    const genderFeminine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE
+    const genderNeuter = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER
+
+    this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
+      if (ancestorFeatures) {
+        if (ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_2ND || ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD) {
+          return [[genderMasculine, genderFeminine], genderNeuter]
+        }
+      }
+      return [genderMasculine, genderFeminine, genderNeuter]
+    }
+
+    this.createTable()
+  }
+
+  static get partOfSpeech () {
+    return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE
+  }
+
+  static get inflectionType () {
+    return _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+
+  /**
+   * Determines wither this view can be used to display an inflection table of any data
+   * within an `inflectionData` object.
+   * By default a view can be used if a view and an inflection data piece have the same language,
+   * the same part of speech, and the view is enabled for lexemes within an inflection data.
+   * @param inflectionData
+   * @return {boolean}
+   */
+  static matchFilter (inflectionData) {
+    if (alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].compareLanguages(GreekAdjectiveView.languageID, inflectionData.languageID)) {
+      return inflectionData.pos.has(GreekAdjectiveView.partOfSpeech)
+    }
+  }
+}
+
+
+/***/ }),
+
 /***/ "./views/lang/greek/greek-view.js":
 /*!****************************************!*\
   !*** ./views/lang/greek/greek-view.js ***!
@@ -13124,6 +13353,7 @@ class LatinAdjectiveView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_3__["de
     // Feature that are different from base class values
     this.features.declensions = new _lib_group_feature_type__WEBPACK_IMPORTED_MODULE_4__["default"](this.language_features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension], 'Declension',
       [ alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_1ST, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_2ND, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD ])
+
     this.features.declensions.getTitle = _latin_view_js__WEBPACK_IMPORTED_MODULE_3__["default"].getDeclensionTitle
 
     this.createTable()
@@ -15833,25 +16063,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ViewSet; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lang_latin_noun_latin_noun_view_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lang/latin/noun/latin-noun-view.js */ "./views/lang/latin/noun/latin-noun-view.js");
-/* harmony import */ var _lang_latin_adjective_latin_adjective_view_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lang/latin/adjective/latin-adjective-view.js */ "./views/lang/latin/adjective/latin-adjective-view.js");
-/* harmony import */ var _lang_latin_verb_latin_voice_conjugation_mood_view_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lang/latin/verb/latin-voice-conjugation-mood-view.js */ "./views/lang/latin/verb/latin-voice-conjugation-mood-view.js");
-/* harmony import */ var _lang_latin_verb_latin_voice_mood_conjugation_view_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../lang/latin/verb/latin-voice-mood-conjugation-view.js */ "./views/lang/latin/verb/latin-voice-mood-conjugation-view.js");
-/* harmony import */ var _lang_latin_verb_latin_conjugation_voice_mood_view_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../lang/latin/verb/latin-conjugation-voice-mood-view.js */ "./views/lang/latin/verb/latin-conjugation-voice-mood-view.js");
-/* harmony import */ var _lang_latin_verb_latin_conjugation_mood_voice_view_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lang/latin/verb/latin-conjugation-mood-voice-view.js */ "./views/lang/latin/verb/latin-conjugation-mood-voice-view.js");
-/* harmony import */ var _lang_latin_verb_latin_mood_voice_conjugation_view_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lang/latin/verb/latin-mood-voice-conjugation-view.js */ "./views/lang/latin/verb/latin-mood-voice-conjugation-view.js");
-/* harmony import */ var _lang_latin_verb_latin_mood_conjugation_voice_view_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../lang/latin/verb/latin-mood-conjugation-voice-view.js */ "./views/lang/latin/verb/latin-mood-conjugation-voice-view.js");
-/* harmony import */ var _lang_latin_verb_latin_imperative_view_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../lang/latin/verb/latin-imperative-view.js */ "./views/lang/latin/verb/latin-imperative-view.js");
-/* harmony import */ var _lang_latin_noun_latin_supine_view_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../lang/latin/noun/latin-supine-view.js */ "./views/lang/latin/noun/latin-supine-view.js");
-/* harmony import */ var _lang_latin_verb_latin_verb_participle_view_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lang/latin/verb/latin-verb-participle-view.js */ "./views/lang/latin/verb/latin-verb-participle-view.js");
-/* harmony import */ var _lang_latin_verb_latin_infinitive_view_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../lang/latin/verb/latin-infinitive-view.js */ "./views/lang/latin/verb/latin-infinitive-view.js");
-/* harmony import */ var _lang_greek_noun_greek_noun_view_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../lang/greek/noun/greek-noun-view.js */ "./views/lang/greek/noun/greek-noun-view.js");
-/* harmony import */ var _lang_greek_noun_greek_noun_simplified_view_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../lang/greek/noun/greek-noun-simplified-view.js */ "./views/lang/greek/noun/greek-noun-simplified-view.js");
-/* harmony import */ var _lang_greek_pronoun_greek_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../lang/greek/pronoun/greek-gender-pronoun-view.js */ "./views/lang/greek/pronoun/greek-gender-pronoun-view.js");
-/* harmony import */ var _lang_greek_pronoun_greek_lemma_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../lang/greek/pronoun/greek-lemma-gender-pronoun-view.js */ "./views/lang/greek/pronoun/greek-lemma-gender-pronoun-view.js");
-/* harmony import */ var _lang_greek_pronoun_greek_person_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../lang/greek/pronoun/greek-person-gender-pronoun-view.js */ "./views/lang/greek/pronoun/greek-person-gender-pronoun-view.js");
-/* harmony import */ var _lang_greek_pronoun_greek_person_pronoun_view_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../lang/greek/pronoun/greek-person-pronoun-view.js */ "./views/lang/greek/pronoun/greek-person-pronoun-view.js");
-/* harmony import */ var _lang_greek_paradigm_greek_paradigm_view_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../lang/greek/paradigm/greek-paradigm-view.js */ "./views/lang/greek/paradigm/greek-paradigm-view.js");
+/* harmony import */ var _views_lang_latin_noun_latin_noun_view_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @views/lang/latin/noun/latin-noun-view.js */ "./views/lang/latin/noun/latin-noun-view.js");
+/* harmony import */ var _views_lang_latin_adjective_latin_adjective_view_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @views/lang/latin/adjective/latin-adjective-view.js */ "./views/lang/latin/adjective/latin-adjective-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_voice_conjugation_mood_view_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @views/lang/latin/verb/latin-voice-conjugation-mood-view.js */ "./views/lang/latin/verb/latin-voice-conjugation-mood-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_voice_mood_conjugation_view_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @views/lang/latin/verb/latin-voice-mood-conjugation-view.js */ "./views/lang/latin/verb/latin-voice-mood-conjugation-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_conjugation_voice_mood_view_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @views/lang/latin/verb/latin-conjugation-voice-mood-view.js */ "./views/lang/latin/verb/latin-conjugation-voice-mood-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_conjugation_mood_voice_view_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @views/lang/latin/verb/latin-conjugation-mood-voice-view.js */ "./views/lang/latin/verb/latin-conjugation-mood-voice-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_mood_voice_conjugation_view_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @views/lang/latin/verb/latin-mood-voice-conjugation-view.js */ "./views/lang/latin/verb/latin-mood-voice-conjugation-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_mood_conjugation_voice_view_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @views/lang/latin/verb/latin-mood-conjugation-voice-view.js */ "./views/lang/latin/verb/latin-mood-conjugation-voice-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_imperative_view_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @views/lang/latin/verb/latin-imperative-view.js */ "./views/lang/latin/verb/latin-imperative-view.js");
+/* harmony import */ var _views_lang_latin_noun_latin_supine_view_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @views/lang/latin/noun/latin-supine-view.js */ "./views/lang/latin/noun/latin-supine-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_verb_participle_view_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @views/lang/latin/verb/latin-verb-participle-view.js */ "./views/lang/latin/verb/latin-verb-participle-view.js");
+/* harmony import */ var _views_lang_latin_verb_latin_infinitive_view_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @views/lang/latin/verb/latin-infinitive-view.js */ "./views/lang/latin/verb/latin-infinitive-view.js");
+/* harmony import */ var _views_lang_greek_noun_greek_noun_view_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @views/lang/greek/noun/greek-noun-view.js */ "./views/lang/greek/noun/greek-noun-view.js");
+/* harmony import */ var _views_lang_greek_noun_greek_noun_simplified_view_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @views/lang/greek/noun/greek-noun-simplified-view.js */ "./views/lang/greek/noun/greek-noun-simplified-view.js");
+/* harmony import */ var _views_lang_greek_adjective_greek_adjective_view_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @views/lang/greek/adjective/greek-adjective-view.js */ "./views/lang/greek/adjective/greek-adjective-view.js");
+/* harmony import */ var _views_lang_greek_adjective_greek_adjective_simplified_view_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @views/lang/greek/adjective/greek-adjective-simplified-view.js */ "./views/lang/greek/adjective/greek-adjective-simplified-view.js");
+/* harmony import */ var _views_lang_greek_pronoun_greek_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @views/lang/greek/pronoun/greek-gender-pronoun-view.js */ "./views/lang/greek/pronoun/greek-gender-pronoun-view.js");
+/* harmony import */ var _views_lang_greek_pronoun_greek_lemma_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @views/lang/greek/pronoun/greek-lemma-gender-pronoun-view.js */ "./views/lang/greek/pronoun/greek-lemma-gender-pronoun-view.js");
+/* harmony import */ var _views_lang_greek_pronoun_greek_person_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @views/lang/greek/pronoun/greek-person-gender-pronoun-view.js */ "./views/lang/greek/pronoun/greek-person-gender-pronoun-view.js");
+/* harmony import */ var _views_lang_greek_pronoun_greek_person_pronoun_view_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @views/lang/greek/pronoun/greek-person-pronoun-view.js */ "./views/lang/greek/pronoun/greek-person-pronoun-view.js");
+/* harmony import */ var _views_lang_greek_paradigm_greek_paradigm_view_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @views/lang/greek/paradigm/greek-paradigm-view.js */ "./views/lang/greek/paradigm/greek-paradigm-view.js");
 
 // Latin views
 
@@ -15876,6 +16108,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 /**
  * A set of inflection table views that represent all possible forms of inflection data. A new ViewSet instance
  * mast be created for each new inflection data piece.
@@ -15886,30 +16122,32 @@ class ViewSet {
       [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN,
         [
-          _lang_latin_noun_latin_noun_view_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-          _lang_latin_adjective_latin_adjective_view_js__WEBPACK_IMPORTED_MODULE_2__["default"],
-          _lang_latin_verb_latin_voice_conjugation_mood_view_js__WEBPACK_IMPORTED_MODULE_3__["default"],
-          _lang_latin_verb_latin_voice_mood_conjugation_view_js__WEBPACK_IMPORTED_MODULE_4__["default"],
-          _lang_latin_verb_latin_conjugation_voice_mood_view_js__WEBPACK_IMPORTED_MODULE_5__["default"],
-          _lang_latin_verb_latin_conjugation_mood_voice_view_js__WEBPACK_IMPORTED_MODULE_6__["default"],
-          _lang_latin_verb_latin_mood_voice_conjugation_view_js__WEBPACK_IMPORTED_MODULE_7__["default"],
-          _lang_latin_verb_latin_mood_conjugation_voice_view_js__WEBPACK_IMPORTED_MODULE_8__["default"],
-          _lang_latin_verb_latin_imperative_view_js__WEBPACK_IMPORTED_MODULE_9__["default"],
-          _lang_latin_noun_latin_supine_view_js__WEBPACK_IMPORTED_MODULE_10__["default"],
-          _lang_latin_verb_latin_verb_participle_view_js__WEBPACK_IMPORTED_MODULE_11__["default"],
-          _lang_latin_verb_latin_infinitive_view_js__WEBPACK_IMPORTED_MODULE_12__["default"]
+          _views_lang_latin_noun_latin_noun_view_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+          _views_lang_latin_adjective_latin_adjective_view_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+          _views_lang_latin_verb_latin_voice_conjugation_mood_view_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+          _views_lang_latin_verb_latin_voice_mood_conjugation_view_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+          _views_lang_latin_verb_latin_conjugation_voice_mood_view_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+          _views_lang_latin_verb_latin_conjugation_mood_voice_view_js__WEBPACK_IMPORTED_MODULE_6__["default"],
+          _views_lang_latin_verb_latin_mood_voice_conjugation_view_js__WEBPACK_IMPORTED_MODULE_7__["default"],
+          _views_lang_latin_verb_latin_mood_conjugation_voice_view_js__WEBPACK_IMPORTED_MODULE_8__["default"],
+          _views_lang_latin_verb_latin_imperative_view_js__WEBPACK_IMPORTED_MODULE_9__["default"],
+          _views_lang_latin_noun_latin_supine_view_js__WEBPACK_IMPORTED_MODULE_10__["default"],
+          _views_lang_latin_verb_latin_verb_participle_view_js__WEBPACK_IMPORTED_MODULE_11__["default"],
+          _views_lang_latin_verb_latin_infinitive_view_js__WEBPACK_IMPORTED_MODULE_12__["default"]
         ]
       ],
       [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK,
         [
-          _lang_greek_noun_greek_noun_view_js__WEBPACK_IMPORTED_MODULE_13__["default"],
-          _lang_greek_noun_greek_noun_simplified_view_js__WEBPACK_IMPORTED_MODULE_14__["default"],
-          _lang_greek_pronoun_greek_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_15__["default"],
-          _lang_greek_pronoun_greek_person_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_17__["default"],
-          _lang_greek_pronoun_greek_person_pronoun_view_js__WEBPACK_IMPORTED_MODULE_18__["default"],
-          _lang_greek_pronoun_greek_lemma_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_16__["default"],
-          _lang_greek_paradigm_greek_paradigm_view_js__WEBPACK_IMPORTED_MODULE_19__["default"]
+          _views_lang_greek_noun_greek_noun_view_js__WEBPACK_IMPORTED_MODULE_13__["default"],
+          _views_lang_greek_noun_greek_noun_simplified_view_js__WEBPACK_IMPORTED_MODULE_14__["default"],
+          _views_lang_greek_adjective_greek_adjective_view_js__WEBPACK_IMPORTED_MODULE_15__["default"],
+          _views_lang_greek_adjective_greek_adjective_simplified_view_js__WEBPACK_IMPORTED_MODULE_16__["default"],
+          _views_lang_greek_pronoun_greek_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_17__["default"],
+          _views_lang_greek_pronoun_greek_person_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_19__["default"],
+          _views_lang_greek_pronoun_greek_person_pronoun_view_js__WEBPACK_IMPORTED_MODULE_20__["default"],
+          _views_lang_greek_pronoun_greek_lemma_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_18__["default"],
+          _views_lang_greek_paradigm_greek_paradigm_view_js__WEBPACK_IMPORTED_MODULE_21__["default"]
         ]
       ]
     ])
