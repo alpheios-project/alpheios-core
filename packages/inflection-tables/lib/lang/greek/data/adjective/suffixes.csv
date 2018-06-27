@@ -1,0 +1,514 @@
+Ending,Number,Case,Declension,Gender,Type,Primary,Footnote
+α,dual,accusative,1st,feminine,regular,primary,
+ά,dual,accusative,1st,feminine,regular,,
+ᾶ,dual,accusative,1st,feminine,regular,,4
+έα,dual,accusative,1st,feminine,irregular,,16
+αιν,dual,dative,1st,feminine,regular,primary,
+αῖv,dual,dative,1st,feminine,regular,,
+έαιν,dual,dative,1st,feminine,irregular,,16
+αιν,dual,genitive,1st,feminine,regular,primary,
+αῖv,dual,genitive,1st,feminine,regular,,
+έαιν,dual,genitive,1st,feminine,irregular,,16
+α,dual,nominative,1st,feminine,regular,primary,
+ά,dual,nominative,1st,feminine,regular,,
+ᾶ,dual,nominative,1st,feminine,regular,,4
+έα,dual,nominative,1st,feminine,irregular,,16
+α,dual,vocative,1st,feminine,regular,primary,
+ά,dual,vocative,1st,feminine,regular,,
+ᾶ,dual,vocative,1st,feminine,regular,,4
+έα,dual,vocative,1st,feminine,irregular,,16
+ας,plural,accusative,1st,feminine,regular,primary,
+άς,plural,accusative,1st,feminine,regular,,
+ᾶς,plural,accusative,1st,feminine,regular,,4
+έας,plural,accusative,1st,feminine,irregular,,16
+αις,plural,dative,1st,feminine,regular,primary,
+αῖς,plural,dative,1st,feminine,regular,,4
+έαις,plural,dative,1st,feminine,irregular,,16
+ων,plural,genitive,1st,feminine,regular,,
+ῶν,plural,genitive,1st,feminine,regular,primary,
+έων,plural,genitive,1st,feminine,irregular,,16
+άων,plural,genitive,1st,feminine,irregular,,
+αι,plural,nominative,1st,feminine,regular,primary,
+αί,plural,nominative,1st,feminine,regular,,
+αῖ,plural,nominative,1st,feminine,regular,,4
+εαι,plural,nominative,1st,feminine,irregular,,16
+έαι,plural,nominative,1st,feminine,irregular,,16
+αι,plural,vocative,1st,feminine,regular,primary,
+αί,plural,vocative,1st,feminine,regular,,
+αῖ,plural,vocative,1st,feminine,regular,,4
+εαι,plural,vocative,1st,feminine,irregular,,16
+έαι,plural,vocative,1st,feminine,irregular,,16
+αν,singular,accusative,1st,feminine,regular,primary,
+ην,singular,accusative,1st,feminine,regular,,
+άν,singular,accusative,1st,feminine,regular,,
+ήν,singular,accusative,1st,feminine,regular,,
+ᾶν,singular,accusative,1st,feminine,regular,,4
+ῆν,singular,accusative,1st,feminine,regular,,4
+έαν,singular,accusative,1st,feminine,irregular,,16
+ᾳ,singular,dative,1st,feminine,regular,primary,
+ῃ,singular,dative,1st,feminine,regular,,
+ᾷ,singular,dative,1st,feminine,regular,,
+ῇ,singular,dative,1st,feminine,regular,,
+έᾳ,singular,dative,1st,feminine,irregular,,16
+ας,singular,genitive,1st,feminine,regular,primary,
+ης,singular,genitive,1st,feminine,regular,,
+ᾶς,singular,genitive,1st,feminine,regular,,
+ῆς,singular,genitive,1st,feminine,regular,,
+έας,singular,genitive,1st,feminine,irregular,,16
+α,singular,nominative,1st,feminine,regular,primary,
+η,singular,nominative,1st,feminine,regular,,
+ά,singular,nominative,1st,feminine,regular,,
+ή,singular,nominative,1st,feminine,regular,,
+ῆ,singular,nominative,1st,feminine,regular,,4
+ᾶ,singular,nominative,1st,feminine,regular,,4
+έα,singular,nominative,1st,feminine,irregular,,16
+α,singular,vocative,1st,feminine,regular,primary,
+η,singular,vocative,1st,feminine,regular,,
+ά,singular,vocative,1st,feminine,regular,,
+ή,singular,vocative,1st,feminine,regular,,
+ᾶ,singular,vocative,1st,feminine,regular,,4
+ῆ,singular,vocative,1st,feminine,regular,,4
+έα,singular,vocative,1st,feminine,irregular,,16
+ω,dual,accusative,2nd,masculine feminine,regular,primary,
+ώ,dual,accusative,2nd,masculine feminine,regular,,
+έω,dual,accusative,2nd,masculine feminine,irregular,,16
+όω,dual,accusative,2nd,masculine feminine,irregular,,16
+οιν,dual,dative,2nd,masculine feminine,regular,primary,
+οῖν,dual,dative,2nd,masculine feminine,regular,,
+ῳν,dual,dative,2nd,masculine feminine,regular,,
+έοιν,dual,dative,2nd,masculine feminine,irregular,,16
+όοιν,dual,dative,2nd,masculine feminine,irregular,,16
+οιν,dual,genitive,2nd,masculine feminine,regular,primary,
+οῖν,dual,genitive,2nd,masculine feminine,regular,,
+ῳν,dual,genitive,2nd,masculine feminine,regular,,
+έοιν,dual,genitive,2nd,masculine feminine,irregular,,16
+όοιν,dual,genitive,2nd,masculine feminine,irregular,,16
+ω,dual,nominative,2nd,masculine feminine,regular,primary,
+ώ,dual,nominative,2nd,masculine feminine,regular,,
+έω,dual,nominative,2nd,masculine feminine,irregular,,16
+όω,dual,nominative,2nd,masculine feminine,irregular,,16
+ω,dual,vocative,2nd,masculine feminine,regular,primary,
+ώ,dual,vocative,2nd,masculine feminine,regular,,
+έω,dual,vocative,2nd,masculine feminine,irregular,,16
+όω,dual,vocative,2nd,masculine feminine,irregular,,16
+ω,dual,accusative,2nd,neuter,regular,primary,
+ώ,dual,accusative,2nd,neuter,regular,,
+έω,dual,accusative,2nd,neuter,irregular,,16
+οιν,dual,dative,2nd,neuter,regular,primary,
+οῖν,dual,dative,2nd,neuter,regular,,
+ῳν,dual,dative,2nd,neuter,regular,,
+έοιν,dual,dative,2nd,neuter,irregular,,16
+όοιν,dual,dative,2nd,neuter,irregular,,16
+οιν,dual,genitive,2nd,neuter,regular,primary,
+οῖν,dual,genitive,2nd,neuter,regular,,
+ῳν,dual,genitive,2nd,neuter,regular,,
+έοιν,dual,genitive,2nd,neuter,irregular,,16
+όοιν,dual,genitive,2nd,neuter,irregular,,16
+ω,dual,nominative,2nd,neuter,regular,primary,
+ώ,dual,nominative,2nd,neuter,regular,,
+έω,dual,nominative,2nd,neuter,irregular,,16
+όω,dual,nominative,2nd,neuter,irregular,,16
+ω,dual,vocative,2nd,neuter,regular,primary,
+ώ,dual,vocative,2nd,neuter,regular,,
+έω,dual,vocative,2nd,neuter,irregular,,16
+όω,dual,vocative,2nd,neuter,irregular,,16
+ους,plural,accusative,2nd,masculine feminine,regular,primary,
+ούς,plural,accusative,2nd,masculine feminine,regular,,
+οῦς,plural,accusative,2nd,masculine feminine,regular,,5
+έους,plural,accusative,2nd,masculine feminine,irregular,,16
+όους,plural,accusative,2nd,masculine feminine,irregular,,16
+οις,plural,dative,2nd,masculine feminine,regular,primary,
+οῖς,plural,dative,2nd,masculine feminine,regular,,
+ῳς,plural,dative,2nd,masculine feminine,regular,,
+έοις,plural,dative,2nd,masculine feminine,irregular,,16
+όοις,plural,dative,2nd,masculine feminine,irregular,,16
+οῖσι,plural,dative,2nd,masculine feminine,irregular,,
+οῖσιν,plural,dative,2nd,masculine feminine,irregular,,
+ῃσιν,plural,dative,2nd,masculine feminine,irregular,,
+ων,plural,genitive,2nd,masculine feminine,regular,primary,
+ῶν,plural,genitive,2nd,masculine feminine,regular,,
+έων,plural,genitive,2nd,masculine feminine,irregular,,16
+όων,plural,genitive,2nd,masculine feminine,irregular,,16
+οι,plural,nominative,2nd,masculine feminine,regular,primary,
+οί,plural,nominative,2nd,masculine feminine,regular,,
+οῖ,plural,nominative,2nd,masculine feminine,regular,,5
+ῳ,plural,nominative,2nd,masculine feminine,regular,,
+εοι,plural,nominative,2nd,masculine feminine,irregular,,16
+όοι,plural,nominative,2nd,masculine feminine,irregular,,16
+οι,plural,vocative,2nd,masculine feminine,regular,primary,
+οί,plural,vocative,2nd,masculine feminine,regular,,
+οῖ,plural,vocative,2nd,masculine feminine,regular,,5
+ῳ,plural,vocative,2nd,masculine feminine,regular,,
+εοι,plural,vocative,2nd,masculine feminine,irregular,,16
+όοι,plural,vocative,2nd,masculine feminine,irregular,,16
+α,plural,accusative,2nd,neuter,regular,primary,
+ά,plural,accusative,2nd,neuter,regular,,
+ᾶ,plural,accusative,2nd,neuter,regular,,5
+εα,plural,accusative,2nd,neuter,irregular,,16
+όα,plural,accusative,2nd,neuter,irregular,,16
+οις,plural,dative,2nd,neuter,regular,primary,
+οῖς,plural,dative,2nd,neuter,regular,,
+ῳς,plural,dative,2nd,neuter,regular,,
+έοις,plural,dative,2nd,neuter,irregular,,16
+όοις,plural,dative,2nd,neuter,irregular,,16
+οῖσι,plural,dative,2nd,neuter,irregular,,
+οῖσιν,plural,dative,2nd,neuter,irregular,,
+ων,plural,genitive,2nd,neuter,regular,primary,
+ῶν,plural,genitive,2nd,neuter,regular,,
+έων,plural,genitive,2nd,neuter,irregular,,16
+όων,plural,genitive,2nd,neuter,irregular,,16
+α,plural,nominative,2nd,neuter,regular,primary,
+ά,plural,nominative,2nd,neuter,regular,,
+ᾶ,plural,nominative,2nd,neuter,regular,,5
+εα,plural,nominative,2nd,neuter,irregular,,16
+όα,plural,nominative,2nd,neuter,irregular,,16
+α,plural,vocative,2nd,neuter,regular,primary,
+ά,plural,vocative,2nd,neuter,regular,,
+ᾶ,plural,vocative,2nd,neuter,regular,,5
+εα,plural,vocative,2nd,neuter,irregular,,16
+όα,plural,vocative,2nd,neuter,irregular,,16
+ον,singular,accusative,2nd,masculine feminine,regular,primary,
+όν,singular,accusative,2nd,masculine feminine,regular,,
+οῦν,singular,accusative,2nd,masculine feminine,regular,,5
+ων,singular,accusative,2nd,masculine feminine,regular,,
+εον,singular,accusative,2nd,masculine feminine,irregular,,16
+όον,singular,accusative,2nd,masculine feminine,irregular,,16
+ῳ,singular,dative,2nd,masculine feminine,regular,primary,
+ῷ,singular,dative,2nd,masculine feminine,regular,,
+έῳ,singular,dative,2nd,masculine feminine,irregular,,16
+όῳ,singular,dative,2nd,masculine feminine,irregular,,16
+ου,singular,genitive,2nd,masculine feminine,regular,primary,
+οῦ,singular,genitive,2nd,masculine feminine,regular,,
+ω,singular,genitive,2nd,masculine feminine,regular,,
+έου,singular,genitive,2nd,masculine feminine,irregular,,16
+όου,singular,genitive,2nd,masculine feminine,irregular,,16
+οῖο,singular,genitive,2nd,masculine feminine,irregular,,
+ος,singular,nominative,2nd,masculine feminine,regular,primary,2
+ός,singular,nominative,2nd,masculine feminine,regular,,
+οῦς,singular,nominative,2nd,masculine feminine,regular,,5
+ως,singular,nominative,2nd,masculine feminine,regular,,
+εος,singular,nominative,2nd,masculine feminine,irregular,,16
+όος,singular,nominative,2nd,masculine feminine,irregular,,16
+ε,singular,vocative,2nd,masculine feminine,regular,primary,
+έ,singular,vocative,2nd,masculine feminine,regular,,
+οῦς,singular,vocative,2nd,masculine feminine,regular,,5
+ως,singular,vocative,2nd,masculine feminine,regular,,
+εος,singular,vocative,2nd,masculine feminine,irregular,,16
+όος,singular,vocative,2nd,masculine feminine,irregular,,16
+ον,singular,accusative,2nd,neuter,regular,primary,
+όν,singular,accusative,2nd,neuter,regular,,
+ων,singular,accusative,2nd,neuter,regular,,
+οῦν,singular,accusative,2nd,neuter,regular,,5
+εον,singular,accusative,2nd,neuter,irregular,,16
+όον,singular,accusative,2nd,neuter,irregular,,16
+ῳ,singular,dative,2nd,neuter,regular,primary,
+ῷ,singular,dative,2nd,neuter,regular,,
+έῳ,singular,dative,2nd,neuter,irregular,,16
+όῳ,singular,dative,2nd,neuter,irregular,,16
+ου,singular,genitive,2nd,neuter,regular,primary,
+οῦ,singular,genitive,2nd,neuter,regular,,
+ω,singular,genitive,2nd,neuter,regular,,
+έου,singular,genitive,2nd,neuter,irregular,,16
+όου,singular,genitive,2nd,neuter,irregular,,16
+οῖο,singular,genitive,2nd,neuter,irregular,,
+ον,singular,nominative,2nd,neuter,regular,primary,2
+όν,singular,nominative,2nd,neuter,regular,,
+ων,singular,nominative,2nd,neuter,regular,,
+οῦν,singular,nominative,2nd,neuter,regular,,5
+εον,singular,nominative,2nd,neuter,irregular,,16
+όον,singular,nominative,2nd,neuter,irregular,,16
+ον,singular,vocative,2nd,neuter,regular,primary,
+όν,singular,vocative,2nd,neuter,regular,,
+ων,singular,vocative,2nd,neuter,regular,,
+οῦν,singular,vocative,2nd,neuter,regular,,5
+εον,singular,vocative,2nd,neuter,irregular,,16
+όον,singular,vocative,2nd,neuter,irregular,,16
+α,dual,accusative,3rd,feminine,regular,primary,
+αινα,dual,accusative,3rd,feminine,regular,,
+έινα,dual,accusative,3rd,feminine,regular,,
+έσσα,dual,accusative,3rd,feminine,regular,,
+αιν,dual,dative,3rd,feminine,regular,primary,
+αιναιν,dual,dative,3rd,feminine,regular,,
+έιναιν,dual,dative,3rd,feminine,regular,,
+έσσαιν,dual,dative,3rd,feminine,regular,,
+αιν,dual,genitive,3rd,feminine,regular,primary,
+αιναιν,dual,genitive,3rd,feminine,regular,,
+έιναιν,dual,genitive,3rd,feminine,regular,,
+έσσαιν,dual,genitive,3rd,feminine,regular,,
+α,dual,nominative,3rd,feminine,regular,primary,
+αινα,dual,nominative,3rd,feminine,regular,,
+έινα,dual,nominative,3rd,feminine,regular,,
+έσσα,dual,nominative,3rd,feminine,regular,,
+α,dual,vocative,3rd,feminine,regular,primary,
+αινα,dual,vocative,3rd,feminine,regular,,
+έινα,dual,vocative,3rd,feminine,regular,,
+έσσα,dual,vocative,3rd,feminine,regular,,
+ε,dual,accusative,3rd,masculine feminine,regular,primary,
+εῖ,dual,accusative,3rd,masculine feminine,regular,,
+έε,dual,accusative,3rd,masculine feminine,irregular,,9
+ανε,dual,accusative,3rd,masculine feminine,regular,,18
+ενε,dual,accusative,3rd,masculine feminine,regular,,18
+εντε,dual,accusative,3rd,masculine feminine,regular,,18
+οιν,dual,dative,3rd,masculine feminine,regular,primary,
+οῖν,dual,dative,3rd,masculine feminine,regular,,
+έοιν,dual,dative,3rd,masculine feminine,irregular,,9
+άνοιν,dual,dative,3rd,masculine feminine,regular,,18
+ένοιν,dual,dative,3rd,masculine feminine,regular,,18
+έντοιν,dual,dative,3rd,masculine feminine,regular,,18
+οιν,dual,genitive,3rd,masculine feminine,regular,primary,
+οῖν,dual,genitive,3rd,masculine feminine,regular,,
+έοιν,dual,genitive,3rd,masculine feminine,irregular,,9
+άνοιν,dual,genitive,3rd,masculine feminine,regular,,18
+ένοιν,dual,genitive,3rd,masculine feminine,regular,,18
+έντοιν,dual,genitive,3rd,masculine feminine,regular,,18
+ε,dual,nominative,3rd,masculine feminine,regular,primary,
+εῖ,dual,nominative,3rd,masculine feminine,regular,,
+έε,dual,nominative,3rd,masculine feminine,irregular,,9
+ανε,dual,nominative,3rd,masculine feminine,regular,,18
+ενε,dual,nominative,3rd,masculine feminine,regular,,18
+εντε,dual,nominative,3rd,masculine feminine,regular,,18
+ε,dual,vocative,3rd,masculine feminine,regular,primary,
+εῖ,dual,vocative,3rd,masculine feminine,regular,,
+έε,dual,vocative,3rd,masculine feminine,irregular,,9
+ε,dual,accusative,3rd,neuter,regular,primary,
+εῖ,dual,accusative,3rd,neuter,regular,,
+έε,dual,accusative,3rd,neuter,regular,,
+ανε,dual,accusative,3rd,neuter,regular,,
+ενε,dual,accusative,3rd,neuter,regular,,
+εντε,dual,accusative,3rd,neuter,regular,,
+οιν,dual,dative,3rd,neuter,regular,primary,
+οῖν,dual,dative,3rd,neuter,regular,,
+έοιν,dual,dative,3rd,neuter,regular,,
+άνοιν,dual,dative,3rd,neuter,regular,,
+ένοιν,dual,dative,3rd,neuter,regular,,
+έντοιν,dual,dative,3rd,neuter,regular,,
+οιν,dual,genitive,3rd,neuter,regular,primary,
+οῖν,dual,genitive,3rd,neuter,regular,,
+έοιν,dual,genitive,3rd,neuter,regular,,
+άνοιν,dual,genitive,3rd,neuter,regular,,
+ένοιν,dual,genitive,3rd,neuter,regular,,
+έντοιν,dual,genitive,3rd,neuter,regular,,
+ε,dual,nominative,3rd,neuter,regular,primary,
+εῖ,dual,nominative,3rd,neuter,regular,,
+έε,dual,nominative,3rd,neuter,regular,,
+ανε,dual,nominative,3rd,neuter,regular,,
+ενε,dual,nominative,3rd,neuter,regular,,
+εντε,dual,nominative,3rd,neuter,regular,,
+ανε,dual,vocative,3rd,neuter,regular,,18
+ενε,dual,vocative,3rd,neuter,regular,,18
+εντε,dual,vocative,3rd,neuter,regular,,18
+ε,dual,vocative,3rd,neuter,regular,primary,
+εῖ,dual,vocative,3rd,neuter,regular,,
+έε,dual,vocative,3rd,neuter,regular,,
+ανε,dual,vocative,3rd,neuter,regular,,
+ενε,dual,vocative,3rd,neuter,regular,,
+εντε,dual,vocative,3rd,neuter,regular,,
+ας,plural,accusative,3rd,feminine,regular,primary,
+είας,plural,accusative,3rd,feminine,regular,,
+έα,plural,accusative,3rd,feminine,irregular,,9
+αίνας,plural,accusative,3rd,feminine,regular,,
+είνας,plural,accusative,3rd,feminine,regular,,
+έσσας,plural,accusative,3rd,feminine,regular,,
+αις,plural,dative,3rd,feminine,regular,primary,
+είαις,plural,dative,3rd,feminine,regular,,
+αίναις,plural,dative,3rd,feminine,regular,,
+είναις,plural,dative,3rd,feminine,regular,,
+έσσαις,plural,dative,3rd,feminine,regular,,
+ῶν,plural,genitive,3rd,feminine,regular,primary,
+ων,plural,genitive,3rd,feminine,regular,,
+ειῶν,plural,genitive,3rd,feminine,regular,,
+αινῶν,plural,genitive,3rd,feminine,regular,,
+εινῶν,plural,genitive,3rd,feminine,regular,,
+εσσῶν,plural,genitive,3rd,feminine,regular,,
+άων,plural,genitive,3rd,feminine,irregular,,
+αι,plural,nominative,3rd,feminine,regular,primary,
+εῖαι,plural,nominative,3rd,feminine,regular,,
+έα,plural,nominative,3rd,feminine,irregular,,9
+αιναι,plural,nominative,3rd,feminine,regular,,
+ειναι,plural,nominative,3rd,feminine,regular,,
+εσσαι,plural,nominative,3rd,feminine,regular,,
+αι,plural,vocative,3rd,feminine,regular,primary,
+εῖαι,plural,vocative,3rd,feminine,regular,,
+έα,plural,vocative,3rd,feminine,irregular,,9
+αιναι,plural,vocative,3rd,feminine,regular,,
+ειναι,plural,vocative,3rd,feminine,regular,,
+εσσαι,plural,vocative,3rd,feminine,regular,,
+ες,plural,accusative,3rd,masculine feminine,irregular,,15
+ας,plural,accusative,3rd,masculine feminine,regular,primary,
+εῖς,plural,accusative,3rd,masculine feminine,regular,,
+ους,plural,accusative,3rd,masculine feminine,regular,,
+εας,plural,accusative,3rd,masculine feminine,irregular,,
+ῖας,plural,accusative,3rd,masculine feminine,irregular,,10
+ανας,plural,accusative,3rd,masculine feminine,regular,,18
+ενας,plural,accusative,3rd,masculine feminine,regular,,18
+εντας,plural,accusative,3rd,masculine feminine,regular,,18
+σι,plural,dative,3rd,masculine feminine,regular,primary,
+σιν,plural,dative,3rd,masculine feminine,regular,primary,7
+έσι,plural,dative,3rd,masculine feminine,irregular,,
+έσιν,plural,dative,3rd,masculine feminine,regular,,7
+έσσι,plural,dative,3rd,masculine feminine,irregular,,9 14
+έσσιν,plural,dative,3rd,masculine feminine,irregular,,7 9
+ασι,plural,dative,3rd,masculine feminine,regular,,18
+ασιν,plural,dative,3rd,masculine feminine,regular,,7 18
+εσι,plural,dative,3rd,masculine feminine,regular,,18
+εσιν,plural,dative,3rd,masculine feminine,regular,,7 18
+ων,plural,genitive,3rd,masculine feminine,regular,primary,
+ῶν,plural,genitive,3rd,masculine feminine,regular,,
+έων,plural,genitive,3rd,masculine feminine,regular,,
+άνων,plural,genitive,3rd,masculine feminine,regular,,18
+ένων,plural,genitive,3rd,masculine feminine,regular,,18
+έντων,plural,genitive,3rd,masculine feminine,regular,,18
+άων,plural,genitive,3rd,masculine feminine,irregular,,
+ες,plural,nominative,3rd,masculine feminine,regular,primary,12
+εῖς,plural,nominative,3rd,masculine feminine,regular,,
+ους,plural,nominative,3rd,masculine feminine,regular,,
+έες,plural,nominative,3rd,masculine feminine,irregular,,9 14 17
+ανες,plural,nominative,3rd,masculine feminine,regular,,18
+ενες,plural,nominative,3rd,masculine feminine,regular,,18
+εντες,plural,nominative,3rd,masculine feminine,regular,,18
+ες,plural,vocative,3rd,masculine feminine,regular,primary,
+εῖς,plural,vocative,3rd,masculine feminine,regular,,
+έες,plural,vocative,3rd,masculine feminine,irregular,,9
+ους,plural,vocative,3rd,masculine feminine,regular,,
+ανες,plural,vocative,3rd,masculine feminine,regular,,18
+ενες,plural,vocative,3rd,masculine feminine,regular,,18
+εντες,plural,vocative,3rd,masculine feminine,regular,,18
+α,plural,accusative,3rd,neuter,regular,primary,
+ῆ,plural,accusative,3rd,neuter,regular,,
+έα,plural,accusative,3rd,neuter,regular,,
+ω,plural,accusative,3rd,neuter,regular,,12
+ανα,plural,accusative,3rd,neuter,regular,,
+ενα,plural,accusative,3rd,neuter,regular,,
+εντα,plural,accusative,3rd,neuter,regular,,
+σι,plural,dative,3rd,neuter,regular,primary,
+σιν,plural,dative,3rd,neuter,regular,,7
+έσι,plural,dative,3rd,neuter,regular,,
+έσιν,plural,dative,3rd,neuter,regular,,7
+έσσι,plural,dative,3rd,neuter,irregular,,9
+έσσιν,plural,dative,3rd,neuter,irregular,,7 9
+ασι,plural,dative,3rd,neuter,regular,,
+ασιν,plural,dative,3rd,neuter,regular,,7
+εσι,plural,dative,3rd,neuter,regular,,
+εσιν,plural,dative,3rd,neuter,regular,,7
+ων,plural,genitive,3rd,neuter,regular,primary,
+ῶν,plural,genitive,3rd,neuter,regular,,
+έων,plural,genitive,3rd,neuter,regular,,
+άνων,plural,genitive,3rd,neuter,regular,,
+ένων,plural,genitive,3rd,neuter,regular,,
+έντων,plural,genitive,3rd,neuter,regular,,
+άων,plural,genitive,3rd,neuter,irregular,,
+α,plural,nominative,3rd,neuter,regular,primary,
+ῆ,plural,nominative,3rd,neuter,regular,,
+έα,plural,nominative,3rd,neuter,irregular,,
+ω,plural,nominative,3rd,neuter,regular,,12
+ανα,plural,nominative,3rd,neuter,regular,,
+ενα,plural,nominative,3rd,neuter,regular,,
+εντα,plural,nominative,3rd,neuter,regular,,
+α,plural,vocative,3rd,neuter,regular,primary,
+ῆ,plural,vocative,3rd,neuter,regular,,
+έα,plural,vocative,3rd,neuter,regular,,
+ω,plural,vocative,3rd,neuter,regular,,12
+ανα,plural,vocative,3rd,neuter,regular,,
+ενα,plural,vocative,3rd,neuter,regular,,
+εντα,plural,vocative,3rd,neuter,regular,,
+αν,singular,accusative,3rd,feminine,regular,primary,
+εῖαν,singular,accusative,3rd,feminine,regular,,
+αιναν,singular,accusative,3rd,feminine,regular,,
+ειναν,singular,accusative,3rd,feminine,regular,,
+εσσαν,singular,accusative,3rd,feminine,regular,,
+ᾳ,singular,dative,3rd,feminine,regular,primary,
+ῃ,singular,dative,3rd,feminine,regular,,
+είᾳ,singular,dative,3rd,feminine,regular,,
+αινῃ,singular,dative,3rd,feminine,regular,,
+εινῃ,singular,dative,3rd,feminine,regular,,
+εσσῃ,singular,dative,3rd,feminine,regular,,
+ας,singular,genitive,3rd,feminine,regular,primary,
+ης,singular,genitive,3rd,feminine,regular,,
+είας,singular,genitive,3rd,feminine,regular,,
+αινης,singular,genitive,3rd,feminine,regular,,
+εινης,singular,genitive,3rd,feminine,regular,,
+εσσης,singular,genitive,3rd,feminine,regular,,
+α,singular,nominative,3rd,feminine,regular,primary,
+εῖα,singular,nominative,3rd,feminine,regular,,
+αινα,singular,nominative,3rd,feminine,regular,,
+εινα,singular,nominative,3rd,feminine,regular,,
+εσσα,singular,nominative,3rd,feminine,regular,,
+α,singular,vocative,3rd,feminine,regular,primary,
+εῖα,singular,vocative,3rd,feminine,regular,,
+αινα,singular,vocative,3rd,feminine,regular,,
+εινα,singular,vocative,3rd,feminine,regular,,
+εσσα,singular,vocative,3rd,feminine,regular,,
+ύν,singular,accusative,3rd,masculine feminine,regular,primary,
+α,singular,accusative,3rd,masculine feminine,regular,primary,
+ῆ,singular,accusative,3rd,masculine feminine,regular,,
+ν,singular,accusative,3rd,masculine feminine,regular,,
+ω,singular,accusative,3rd,masculine feminine,regular,,12
+έα,singular,accusative,3rd,masculine feminine,irregular,,9
+ᾶ,singular,accusative,3rd,masculine feminine,regular,,14
+ανα,singular,accusative,3rd,masculine feminine,regular,,18
+ενα,singular,accusative,3rd,masculine feminine,regular,,18
+εντα,singular,accusative,3rd,masculine feminine,regular,,18
+ι,singular,dative,3rd,masculine feminine,regular,primary,
+εῖ,singular,dative,3rd,masculine feminine,regular,primary,
+έι,singular,dative,3rd,masculine feminine,irregular,,9
+εϊ,singular,dative,3rd,masculine feminine,irregular,,9
+έϊ,singular,dative,3rd,masculine feminine,irregular,,17 18
+ει,singular,dative,3rd,masculine feminine,irregular,,9
+ί,singular,dative,3rd,masculine feminine,regular,,
+ανι,singular,dative,3rd,masculine feminine,regular,,
+ενι,singular,dative,3rd,masculine feminine,regular,,
+εντι,singular,dative,3rd,masculine feminine,regular,,
+ος,singular,genitive,3rd,masculine feminine,regular,primary,
+ός,singular,genitive,3rd,masculine feminine,regular,,
+οῦς,singular,genitive,3rd,masculine feminine,regular,,
+έος,singular,genitive,3rd,masculine feminine,irregular,,9
+ῖος,singular,genitive,3rd,masculine feminine,irregular,,9
+ανος,singular,genitive,3rd,masculine feminine,regular,,18
+ενος,singular,genitive,3rd,masculine feminine,regular,,18
+εντος,singular,genitive,3rd,masculine feminine,regular,,18
+ύς,singular,nominative,3rd,masculine feminine,regular,primary,
+_,singular,nominative,3rd,masculine feminine,regular,primary,8
+ς,singular,nominative,3rd,masculine feminine,regular,,8
+ής,singular,nominative,3rd,masculine feminine,regular,,
+ης,singular,nominative,3rd,masculine feminine,regular,,11
+ας,singular,nominative,3rd,masculine feminine,regular,,18
+ην,singular,nominative,3rd,masculine feminine,regular,,18
+εις,singular,nominative,3rd,masculine feminine,regular,,18
+ν,singular,vocative,3rd,masculine feminine,regular,primary,
+ύ,singular,vocative,3rd,masculine feminine,regular,primary,
+_,singular,vocative,3rd,masculine feminine,regular,primary,8
+ές,singular,vocative,3rd,masculine feminine,regular,,
+ί,singular,vocative,3rd,masculine feminine,regular,,
+αν,singular,vocative,3rd,masculine feminine,regular,,18
+εν,singular,vocative,3rd,masculine feminine,regular,,18
+_,singular,accusative,3rd,neuter,regular,primary,
+ύ,singular,accusative,3rd,neuter,regular,primary,
+ές,singular,accusative,3rd,neuter,regular,,
+αν,singular,accusative,3rd,neuter,regular,,
+εν,singular,accusative,3rd,neuter,regular,,
+εῖ,singular,dative,3rd,neuter,regular,,
+ι,singular,dative,3rd,neuter,regular,primary,
+ί,singular,dative,3rd,neuter,regular,,
+εϊ,singular,dative,3rd,neuter,irregular,,
+έϊ,singular,dative,3rd,neuter,irregular,,17
+ανι,singular,dative,3rd,neuter,regular,,
+ενι,singular,dative,3rd,neuter,regular,,
+εντι,singular,dative,3rd,neuter,regular,,
+ος,singular,genitive,3rd,neuter,regular,primary,
+ός,singular,genitive,3rd,neuter,regular,,
+έος,singular,genitive,3rd,neuter,regular,,
+οῦς,singular,genitive,3rd,neuter,regular,,
+ανος,singular,genitive,3rd,neuter,regular,,
+ενος,singular,genitive,3rd,neuter,regular,,
+εντος,singular,genitive,3rd,neuter,regular,,
+_,singular,nominative,3rd,neuter,regular,primary,8
+ύ,singular,nominative,3rd,neuter,regular,primary,
+ές,singular,nominative,3rd,neuter,regular,,
+ες,singular,nominative,3rd,neuter,regular,,11
+αν,singular,nominative,3rd,neuter,regular,,
+εν,singular,nominative,3rd,neuter,regular,,
+_,singular,vocative,3rd,neuter,regular,primary,
+ύ,singular,vocative,3rd,neuter,regular,primary,
+ές,singular,vocative,3rd,neuter,regular,,
+αν,singular,vocative,3rd,neuter,regular,,
+εν,singular,vocative,3rd,neuter,regular,,

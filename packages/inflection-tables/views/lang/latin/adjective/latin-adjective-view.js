@@ -16,6 +16,7 @@ export default class LatinAdjectiveView extends LatinView {
     // Feature that are different from base class values
     this.features.declensions = new GroupFeatureType(this.language_features[Feature.types.declension], 'Declension',
       [ Constants.ORD_1ST, Constants.ORD_2ND, Constants.ORD_3RD ])
+
     this.features.declensions.getTitle = LatinView.getDeclensionTitle
 
     this.createTable()

@@ -2,15 +2,19 @@
  * Greek language data module
  */
 import { Constants, Feature, Lemma, FeatureImporter } from 'alpheios-data-models'
-import LanguageDataset from '../../../lib/language-dataset'
-import ExtendedGreekData from '../../../lib/extended-greek-data'
-import Suffix from '../../../lib/suffix.js'
-import Form from '../../../lib/form.js'
-import Paradigm from '../../../lib/paradigm.js'
-import nounSuffixesCSV from './data/noun/suffixes.csv'
-import nounFootnotesCSV from './data/noun/footnotes.csv'
-import pronounFormsCSV from './data/pronoun/forms.csv'
-import pronounFootnotesCSV from './data/pronoun/footnotes.csv'
+import LanguageDataset from '@lib/language-dataset'
+import ExtendedGreekData from '@lib/extended-greek-data'
+import Suffix from '@lib/suffix.js'
+import Form from '@lib/form.js'
+import Paradigm from '@lib/paradigm.js'
+import nounSuffixesCSV from '@lib/lang/greek/data/noun/suffixes.csv'
+import nounFootnotesCSV from '@lib/lang/greek/data/noun/footnotes.csv'
+
+import adjectiveSuffixesCSV from '@lib/lang/greek/data/adjective/suffixes.csv'
+import adjectiveFootnotesCSV from '@lib/lang/greek/data/adjective/footnotes.csv'
+
+import pronounFormsCSV from '@lib/lang/greek/data/pronoun/forms.csv'
+import pronounFootnotesCSV from '@lib/lang/greek/data/pronoun/footnotes.csv'
 /* import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 import verbSuffixesCSV from './data/verb/suffixes.csv';
@@ -388,6 +392,13 @@ export default class GreekLanguageDataset extends LanguageDataset {
     suffixes = papaparse.parse(nounSuffixesCSV, {})
     this.addSuffixes(partOfSpeech, suffixes.data)
     footnotes = papaparse.parse(nounFootnotesCSV, {})
+    this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
+
+    // Adjective
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
+    this.addSuffixes(partOfSpeech, suffixes.data)
+    footnotes = papaparse.parse(adjectiveFootnotesCSV, {})
     this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
 
     // Pronouns

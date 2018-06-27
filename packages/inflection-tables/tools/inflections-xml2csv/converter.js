@@ -486,6 +486,90 @@ const config = {
       }
     },
 
+    adjective: {
+      inputFN: 'alph-infl-adjective.xml',
+      outputSubDir: 'adjective/',
+      suffixes: {
+        outputFN: 'suffixes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.greek.outputBaseDir, config.greek.adjective.outputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set']
+          let result = []
+
+          for (const group of data) {
+            for (const suffix of group['infl-ending']) {
+              let type = suffix['_attr']['type']['_value']
+              let primary = ''
+              let typeArray = type.split(' ')
+
+              if (typeArray.length > 2) {
+                throw new Error('Type value is expected to contain up to two word.')
+              } else if (typeArray.length > 1) {
+                // Array probably contain two values, one of which is 'primary'
+                let primaryIndex = typeArray.indexOf('primary')
+                if (primaryIndex > -1) {
+                  primary = 'primary'
+                  typeArray.splice(primaryIndex, 1)
+                  type = typeArray[0]
+                } else {
+                  throw new Error('Type value is expected to contain up to two words, ' +
+                    'one of them should be "primary".')
+                }
+              }
+
+              let footnote = ''
+              if (suffix['_attr'].hasOwnProperty('footnote')) {
+                // There can be multiple footnotes separated by spaces
+                footnote = config.greek.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+              }
+
+              result.push({
+                'Ending': suffix['_text'],
+                'Number': group['_attr']['num']['_value'],
+                'Case': group['_attr']['case']['_value'],
+                'Declension': group['_attr']['decl']['_value'],
+                'Gender': group['_attr']['gend']['_value'],
+                'Type': type,
+                'Primary': primary,
+                'Footnote': footnote
+              })
+            }
+          }
+          return csvParser.unparse(result)
+        }
+      },                       
+      footnotes: {
+        outputFN: 'footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.greek.outputBaseDir, config.greek.adjective.outputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          for (let i = 0; i < data.length; i++) {
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': data[i]['_text']
+            })
+          }
+          // Sort result according to index number.
+          result = result.sort((a, b) => parseInt(a.Index, 10) - parseInt(b.Index, 10))
+          return csvParser.unparse(result)
+        }
+      }
+    },
+
     pronoun: {
       inputFiles: [
         { name: 'alph-infl-pronoun-dem.xml', class: 'demonstrative' },
@@ -895,6 +979,14 @@ try {
     // Nouns
     if (posName === POS_NOUN || posName === POS_ALL) {
       posCfg = lCfg[POS_NOUN]
+      data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
+      json = xmlToJSON.parseString(data)
+      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+    }
+
+    if (posName === POS_ADJECTIVE || posName === POS_ALL) {
+      posCfg = lCfg[POS_ADJECTIVE]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
       writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
