@@ -217,8 +217,9 @@ export default class GreekLanguageModel extends LanguageModel {
       suffixBased: false,
       pronounClassRequired: false
     }
+    let formBasedList = [Constants.POFS_PRONOUN, Constants.POFS_NUMERAL, Constants.POFS_ARTICLE]
     if (inflection.hasOwnProperty(Feature.types.part)) {
-      if (inflection[Feature.types.part].value === Constants.POFS_PRONOUN) {
+      if (formBasedList.includes(inflection[Feature.types.part].value)) {
         constraints.fullFormBased = true
       } else {
         constraints.suffixBased = true

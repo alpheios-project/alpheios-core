@@ -2061,8 +2061,9 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
       suffixBased: false,
       pronounClassRequired: false
     }
+    let formBasedList = [_constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PRONOUN"], _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_NUMERAL"], _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_ARTICLE"]]
     if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part)) {
-      if (inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PRONOUN"]) {
+      if (formBasedList.includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value)) {
         constraints.fullFormBased = true
       } else {
         constraints.suffixBased = true
