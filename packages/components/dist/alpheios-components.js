@@ -8145,6 +8145,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Grammar',
@@ -8152,7 +8154,7 @@ __webpack_require__.r(__webpack_exports__);
     res: {
       type: Object,
       required: true
-    },
+    }
   }
 });
 
@@ -11118,12 +11120,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.res
     ? _c("div", { staticClass: "alpheios-grammar" }, [
-        _vm.res.url
-          ? _c("iframe", {
-              staticClass: "alpheios-grammar__frame alpheios-text__smaller",
-              attrs: { src: _vm.res.url }
-            })
-          : _vm._e(),
+        _c("div", { staticClass: "alpheios-grammar__frame-cont" }, [
+          _vm.res.url
+            ? _c("iframe", {
+                staticClass: "alpheios-grammar__frame",
+                attrs: { src: _vm.res.url, scrolling: "yes" }
+              })
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _vm.res.provider
           ? _c("div", { staticClass: "alpheios-grammar__provider" }, [
@@ -26191,6 +26195,70 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 
 /***/ }),
 
+/***/ "./lib/controllers/language.js":
+/*!*************************************!*\
+  !*** ./lib/controllers/language.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Language; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+
+
+// TODO: Add language name to a language model?
+const languageNames = new Map([
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_ARABIC, 'Arabic'],
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN, 'Persian']
+])
+
+const UNKNOWN_LANGUAGE_NAME = ''
+
+// TODO: Shall we move it to data models?
+class Language {
+  /**
+   * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
+   */
+  constructor (language) {
+    this.ID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_UNDEFINED
+    this.code = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_UNDEFINED
+    this.name = UNKNOWN_LANGUAGE_NAME
+    this.model = undefined
+    this.set(language)
+  }
+
+  /**
+   * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
+   */
+  set (language) {
+    if (language) {
+      this.ID = (typeof language === 'symbol') ? language : alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(language)
+      this.code = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.ID)
+      this.name = languageNames.has(this.ID) ? languageNames.get(this.ID) : UNKNOWN_LANGUAGE_NAME
+      this.model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(this.ID)
+    }
+  }
+
+  /**
+   * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
+   */
+  is (language) {
+    if (language) {
+      const languageID = (typeof language === 'symbol') ? language : alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(language)
+      return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].compareLanguages(this.ID, languageID)
+    }
+    return false
+  }
+}
+
+
+/***/ }),
+
 /***/ "./lib/controllers/template.htmlf":
 /*!****************************************!*\
   !*** ./lib/controllers/template.htmlf ***!
@@ -27211,6 +27279,12 @@ __webpack_require__.r(__webpack_exports__);
  */
 class UIStateAPI {
   constructor () {
+    /**
+     * A language of a latest lexical query
+     * @type {Language}
+     */
+    this.selectionLang = undefined
+
     this.watchers = new Map()
   }
 
@@ -27316,6 +27390,415 @@ class UIStateAPI {
   changeTab (tabName) {
     console.log('changeTab is not implemented')
     return this
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/custom-pointer-events/event-element.js":
+/*!****************************************************!*\
+  !*** ./lib/custom-pointer-events/event-element.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EventElement; });
+/**
+ * Represents either a start or an end point within a pointer event
+ */
+class EventElement {
+  constructor () {
+    /**
+     * Coordinates within a client area. Can be either integer or floating point number depending on the platform.
+     * @type {{x: number, y: number}}
+     */
+    this.client = {
+      x: null,
+      y: null
+    }
+
+    /**
+     * Event target. The same as path[0] but, because on iOS path[0] misses some properties
+     * such as `ownerDocument`. In order to access those properties we have to store event target
+     * in addition to `path`.
+     * @type {HTMLElement}
+     */
+    this.target = null
+
+    /**
+     *  When event took place. An integer number of milliseconds since 1 January 1970 UTC.
+     * @type {number}
+     */
+    this.time = 0
+
+    /**
+     * The first element in an array is the element where an event happened.
+     * The second on is its parent and so on, up until the latest HTML element in hierarchy.
+     * @type {HTMLElement[]}
+     */
+    this.path = []
+
+    /**
+     * Whether this element is excluded from processing an event with special data attribute of the current
+     * element or the one of its parents.
+     * @type {boolean}
+     */
+    this.excluded = false
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/custom-pointer-events/long-tap.js":
+/*!***********************************************!*\
+  !*** ./lib/custom-pointer-events/long-tap.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LongTap; });
+/* harmony import */ var _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pointer-evt.js */ "./lib/custom-pointer-events/pointer-evt.js");
+/* harmony import */ var _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../log/html-console.js */ "./lib/log/html-console.js");
+
+
+
+class LongTap extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor (element, evtHandler, mvmntThreshold = 5, durationThreshold = 125) {
+    super()
+    this.element = element
+    this.evtHandler = evtHandler
+
+    this.mvmntThreshold = mvmntThreshold
+    this.durationThreshold = durationThreshold
+  }
+
+  static excludeCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeLongTapCpe')
+  }
+
+  setEndPoint (clientX, clientY, target, path) {
+    super.setEndPoint(clientX, clientY, target, path)
+    const completed = this.mvmntDist <= this.mvmntThreshold && this.duration >= this.durationThreshold
+
+    if (!(this.start.excluded || this.end.excluded)) {
+      _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__["default"].instance.log(`Long tap (${completed ? 'completed' : 'not completed'}), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
+        `duration: ${this.duration}`)
+    }
+    return completed && !this.start.excluded && !this.end.excluded
+  }
+
+  static listen (selector, evtHandler, mvmntThreshold, durationThreshold) {
+    let elements = document.querySelectorAll(selector)
+    for (const element of elements) {
+      this.addUpDownListeners(element, new this(element, evtHandler, mvmntThreshold, durationThreshold))
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/custom-pointer-events/mouse-dbl-click.js":
+/*!******************************************************!*\
+  !*** ./lib/custom-pointer-events/mouse-dbl-click.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MouseDblClick; });
+/* harmony import */ var _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pointer-evt.js */ "./lib/custom-pointer-events/pointer-evt.js");
+/* harmony import */ var _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../log/html-console.js */ "./lib/log/html-console.js");
+
+
+
+class MouseDblClick extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor (element, evtHandler) {
+    super()
+    this.element = element
+    this.evtHandler = evtHandler
+  }
+
+  static excludeCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeDblClickCpe')
+  }
+
+  setEndPoint (clientX, clientY, target, path) {
+    super.setEndPoint(clientX, clientY, target, path)
+    if (!(this.start.excluded || this.end.excluded)) {
+      _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__["default"].instance.log(`Mouse double click (completed), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
+        `duration: ${this.duration}`)
+    }
+    return !(this.start.excluded || this.end.excluded)
+  }
+
+  static listen (selector, evtHandler) {
+    let elements = document.querySelectorAll(selector)
+    for (const element of elements) {
+      this.addDblClickListener(element, new this(element, evtHandler))
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/custom-pointer-events/pointer-evt.js":
+/*!**************************************************!*\
+  !*** ./lib/custom-pointer-events/pointer-evt.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PointerEvt; });
+/* harmony import */ var _event_element_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./event-element.js */ "./lib/custom-pointer-events/event-element.js");
+
+
+class PointerEvt {
+  constructor () {
+    this.tracking = false
+    this.start = new _event_element_js__WEBPACK_IMPORTED_MODULE_0__["default"]()
+    this.end = new _event_element_js__WEBPACK_IMPORTED_MODULE_0__["default"]()
+  }
+
+  static alpheiosIgnoreAllTest (dataset) {
+    const attrName = 'alpheiosIgnore'
+    const attrValue = 'all'
+    return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue
+  }
+
+  static excludeAllCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeAllCpe')
+  }
+
+  static excludeCpeTest (dataset) {
+    return false
+  }
+
+  static get pointerEventSupported () {
+    return window.PointerEvent
+  }
+
+  setPoint (type, clientX, clientY, target, path) {
+    this[type].time = new Date().getTime()
+    this[type].client.x = clientX
+    this[type].client.y = clientY
+    this[type].target = target
+    if (!path) {
+      /*
+      This is probably an iOS where `event.path` does not exist.
+      We'll build path manually then.
+       */
+      path = this.constructor.buildPath(target)
+    }
+    if (!Array.isArray(path)) { path = [path] }
+    this[type].path = path
+    this[type].excluded = this[type].path.some(element =>
+      element.dataset && (
+        this.constructor.alpheiosIgnoreAllTest(element.dataset) ||
+        this.constructor.excludeAllCpeTest(element.dataset) ||
+        this.constructor.excludeCpeTest(element.dataset)
+      )
+    )
+    return this
+  }
+
+  /**
+   * Recursive function that builds a `path` array for an element. The first element in path is
+   * an element itself, the second element is its parent and so on up until the root element
+   * (the one that has no `parentElement` property).
+   * @param {Element} element - an HTML element we want to path for
+   * @param {Element[]} path - an array of elements in a path
+   * @return {Element[]} A path array
+   */
+  static buildPath (element, path = []) {
+    path.push(element)
+    if (element.parentElement) {
+      path = this.buildPath(element.parentElement, path)
+    }
+    return path
+  }
+
+  setStartPoint (clientX, clientY, target, path) {
+    return this.setPoint('start', clientX, clientY, target, path)
+  }
+
+  setEndPoint (clientX, clientY, target, path) {
+    this.setPoint('end', clientX, clientY, target, path)
+  }
+
+  get type () {
+    return this.constructor.name
+  }
+
+  get duration () {
+    return this.end.time - this.start.time
+  }
+
+  get mvmntX () {
+    return this.end.client.x - this.start.client.x
+  }
+
+  get mvmntY () {
+    return this.end.client.y - this.start.client.y
+  }
+
+  get mvmntXAbs () {
+    return Math.abs(this.mvmntX)
+  }
+
+  get mvmntYAbs () {
+    return Math.abs(this.mvmntY)
+  }
+
+  get mvmntDist () {
+    return Math.sqrt(Math.pow(this.mvmntX, 2) + Math.pow(this.mvmntY, 2))
+  }
+
+  static pointerDownListener (event, domEvt) {
+    console.log(`Pointer down`, domEvt)
+    event.setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+  }
+
+  static pointerUpListener (event, domEvt) {
+    const valid = event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+    console.log(`Pointer up, excluded: ${event.end.excluded}`, domEvt)
+    if (valid) { event.evtHandler(event) }
+  }
+
+  static touchStartListener (event, domEvt) {
+    console.log(`Touch start`, domEvt)
+    event.setStartPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
+  }
+
+  static touchEndListener (event, domEvt) {
+    const valid = event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
+    console.log(`Touch end, excluded: ${event.end.excluded}`, domEvt)
+
+    if (valid) { event.evtHandler(event) }
+  }
+
+  static dblClickListener (event, domEvt) {
+    const valid = event
+      .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+      .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+    console.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], excluded: ${event.end.excluded}`)
+    if (valid) { event.evtHandler(event) }
+  }
+
+  static addUpDownListeners (element, event) {
+    if (this.pointerEventSupported) {
+      // Will use pointer events
+      element.addEventListener('pointerdown', this.pointerDownListener.bind(this, event), {passive: true})
+      element.addEventListener('pointerup', this.pointerUpListener.bind(this, event), {passive: true})
+    } else {
+      element.addEventListener('touchstart', this.touchStartListener.bind(this, event), {passive: true})
+      element.addEventListener('touchend', this.touchEndListener.bind(this, event), {passive: true})
+    }
+  }
+
+  static addDblClickListener (element, event) {
+    element.addEventListener('dblclick', this.dblClickListener.bind(this, event), {passive: true})
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/custom-pointer-events/swipe.js":
+/*!********************************************!*\
+  !*** ./lib/custom-pointer-events/swipe.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Swipe; });
+/* harmony import */ var _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pointer-evt.js */ "./lib/custom-pointer-events/pointer-evt.js");
+/* harmony import */ var _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../log/html-console.js */ "./lib/log/html-console.js");
+
+
+
+class Swipe extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor (element, evtHandler, mvmntThreshold = 100, durationThreshold = 600) {
+    super()
+    this.element = element
+    this.evtHandler = evtHandler
+
+    this.mvmntThreshold = mvmntThreshold
+    this.durationThreshold = durationThreshold
+    this.direction = Swipe.directions.NONE
+  }
+
+  static excludeCpeTest (dataset) {
+    return dataset.hasOwnProperty('alphExcludeSwipeCpe')
+  }
+
+  static get directions () {
+    return {
+      UP: 'up',
+      RIGHT: 'right',
+      DOWN: 'down',
+      LEFT: 'left',
+      NONE: 'none'
+    }
+  }
+
+  isDirectedUp () {
+    return this.direction === Swipe.directions.UP
+  }
+
+  isDirectedRight () {
+    return this.direction === Swipe.directions.RIGHT
+  }
+
+  isDirectedDown () {
+    return this.direction === Swipe.directions.DOWN
+  }
+
+  isDirectedLeft () {
+    return this.direction === Swipe.directions.LEFT
+  }
+
+  setEndPoint (clientX, clientY, target, path) {
+    super.setEndPoint(clientX, clientY, target, path)
+    let completed = false
+    if (this.mvmntXAbs > this.mvmntThreshold || this.mvmntYAbs > this.mvmntThreshold) {
+      // This is a swipe
+      completed = true
+      if (this.mvmntX > this.mvmntThreshold && this.mvmntYAbs < this.mvmntThreshold) {
+        this.direction = Swipe.directions.RIGHT
+      } else if (-this.mvmntX > this.mvmntThreshold && this.mvmntYAbs < this.mvmntThreshold) {
+        this.direction = Swipe.directions.LEFT
+      } else if (this.mvmntY > this.mvmntThreshold && this.mvmntXAbs < this.mvmntThreshold) {
+        this.direction = Swipe.directions.DOWN
+      } else if (-this.mvmntY > this.mvmntThreshold && this.mvmntXAbs < this.mvmntThreshold) {
+        this.direction = Swipe.directions.UP
+      }
+    }
+
+    if (!(this.start.excluded || this.end.excluded)) {
+      _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__["default"].instance.log(`Swipe (${completed ? 'completed' : 'not completed'}), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
+        `direction: ${this.direction}, duration: ${this.duration}`)
+    }
+    return completed && !this.start.excluded && !this.end.excluded
+  }
+
+  static listen (selector, evtHandler, mvmntThreshold, durationThreshold) {
+    let elements = document.querySelectorAll(selector)
+    for (const element of elements) {
+      this.addUpDownListeners(element, new this(element, evtHandler, mvmntThreshold, durationThreshold))
+    }
   }
 }
 
@@ -27608,6 +28091,97 @@ class Message {
         enumerable: true,
         configurable: true // So it can be deleted
       })
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/log/html-console.js":
+/*!*********************************!*\
+  !*** ./lib/log/html-console.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HTMLConsole; });
+let instance = null
+
+class HTMLConsole {
+  constructor (selector = null, enabled = true) {
+    this.selector = selector || this.constructor.defs.consoleSel
+    this.enabled = enabled
+
+    this.node = document.querySelector(this.selector)
+    if (!this.node) {
+      console.warn(`Cannot find HTML console node "${this.selector}". Console will be disabled`)
+      this.enabled = false
+    }
+  }
+
+  static get defs () {
+    return {
+      consoleSel: '#alpheios-html-console',
+      entryClNm: 'alpheios-html-console-entry',
+      separatorClNm: 'alpheios-html-console-separator'
+    }
+  }
+
+  static createInstance (selector, enabled) {
+    instance = new HTMLConsole(selector, enabled)
+    return instance
+  }
+
+  static get instance () {
+    if (!instance) {
+      instance = new HTMLConsole()
+    }
+    return instance
+  }
+
+  log (message) {
+    if (this.enabled) {
+      this.node.innerHTML += `<div class="${this.constructor.defs.entryClNm}">${message}</div>`
+      this.node.scrollTop = this.node.scrollHeight // Scroll to bottom
+    }
+  }
+
+  separator () {
+    if (this.enabled) {
+      this.node.innerHTML += `<div class="${this.constructor.defs.separatorClNm}"></div>`
+      this.node.scrollTop = this.node.scrollHeight // Scroll to bottom
+    }
+  }
+
+  clear () {
+    let records = this.node.querySelectorAll(`.${this.constructor.defs.entryClNm}, ${this.constructor.defs.separatorClNm}`)
+    for (let record of records) {
+      this.node.removeChild(record)
+    }
+  }
+
+  enable (enabled) {
+    if (enabled) {
+      this.show()
+    } else {
+      this.hide()
+    }
+  }
+
+  show () {
+    if (this.node && !this.enabled) {
+      this.node.style.display = 'block'
+      this.enabled = true
+    }
+  }
+
+  hide () {
+    if (this.node && this.enabled) {
+      this.node.style.display = 'none'
+      this.enabled = false
     }
   }
 }
@@ -28434,6 +29008,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
   * iterations () {
     let formLexeme = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](this.selector.normalizedText, this.selector.languageCode), [])
+    this.ui.updateLanguage(this.selector.languageCode)
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
       this.homonym = yield this.maAdapter.getHomonym(this.selector.languageCode, this.selector.normalizedText)
@@ -28441,6 +29016,9 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
         this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_READY)
       } else {
         this.ui.addImportantMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND)
+        // Need to notify a UI controller that there is no morph data on this word in an analyzer
+        // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
+        if (this.ui.morphologyDataNotFound) { this.ui.morphologyDataNotFound(true) }
         this.homonym = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]([formLexeme], this.selector.normalizedText)
       }
     } else {
@@ -28805,7 +29383,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _text_selector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../text-selector */ "./lib/selection/text-selector.js");
 /* harmony import */ var _media_selector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./media-selector */ "./lib/selection/media/media-selector.js");
-/* global MouseEvent, TouchEvent */
  // To polyfill Element.closest() if required
 
 
@@ -28813,82 +29390,61 @@ __webpack_require__.r(__webpack_exports__);
 
 class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default"] {
   /**
-   * @param {PointerEvent | MouseEvent | TouchEvent} event - Event object with information about text selection.
-   *        event might be different depending on a platform:
-   *          PointerEvent is a universal event that works for mouse, finger, and stylus events.
-   *                      This is a type of event we need to support for the future. However, it is not supported
-   *                      by Safari (both OSX and iOS) at the moment of writing (2018-05).
-   *          MouseEvent is received from mouse enabled devices (desktops, notebooks, etc.). In future we should
-   *                      probably use PointerEvent instead of it.
-   *          TouchEvent is received on finger controlled devices when a platform does not support pointer events.
-   *                      It is supported currently for compatibility with Safari only. Once Safari will start
-   *                      supporting pointer events, we should switch to those.
+   * @param {PointerEvt} event - Event object with information about text selection.
+   *                             A custom pointer event or its children.
    * @param {string} defaultLanguageCode - A language code in ISO 639-3 format. It takes a language code
    *        instead of a standard language ID because HTMLSelector operates with HTML sources, and those
    *        have language codes as means of language identification.
    */
   constructor (event, defaultLanguageCode) {
-    super(event)
+    super()
+    this.event = event
+
+    /**
+     * Pointer event has two elements: `start` (where a pointer was down) and
+     * `end` (where a pointer was up). If pointer was moved, they will be different.
+     * It makes more sense to use `end` for our purposes.
+     * @type {HTMLElement}
+     */
+    this.target = event.end.target
+    this.targetRect = {
+      top: this.event.end.client.y,
+      left: this.event.end.client.x
+    }
+    this.location = this.target.ownerDocument.location.href
 
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
-    // TODO: Recognize if pointer events are supported
-    //    if (event instanceof PointerEvent) {
-    //      console.log('This is a pointer event')
-    //    } else
+    // We need to create a selection for a touch position
 
-    if (this.constructor.isMouseEvent(event)) {
-      /*
-      * We do not handle mouse events other than `doubleclick` now.
-      * For double clicks, selection is made by the browser automatically.
-      * If we want to support other mouse events, we have to create a selection manually.
-      */
-      console.log('This is a mouse event')
+    // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
+    // moment of writing (2018-05).
+    // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
+    let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
 
-      this.targetRect = {
-        top: event.clientY,
-        left: event.clientX
-      }
-    } else if (TouchEvent && event instanceof TouchEvent) {
-      console.log('This is a touch event')
-      this.targetRect = {
-        top: event.changedTouches[0].clientY,
-        left: event.changedTouches[0].clientX
-      }
-
-      // We need to create a selection for a touch position
-
-      // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
-      // moment of writing (2018-05).
-      // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
-      let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
-
-      /**
+    /**
        * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
        * So we don't care where an end selector positions would be and set it just to the same position as a start.
        * Selection methods will determine exact word boundaries and will adjust the selection.
        */
-      range.setEnd(range.startContainer, range.startOffset)
+    range.setEnd(range.startContainer, range.startOffset)
 
-      let sel = window.getSelection()
-      sel.removeAllRanges()
-      sel.addRange(range)
-    } else {
-      console.error(`Unsupported by HTMLSelector event of "${event.constructor.name}" type`)
-    }
-
+    let sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
     this.setDataAttributes()
     this.wordSeparator = new Map()
     // A word separator function, when called, will adjust a selection so it will match exact word boundaries
     // TODO: Word separator functions are called in `createTextSelector`. Thus, selection will not be
     // adjusted before `createTextSelector` is called. Should we do it earlier, in a constructor?
+
     this.wordSeparator.set(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_UNIT_WORD, this.doSpaceSeparatedWordSelection.bind(this))
     this.wordSeparator.set(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_UNIT_CHAR, this.doCharacterBasedWordSelection.bind(this))
   }
 
-  static getSelector (target, defaultLanguageCode) {
-    return new HTMLSelector(target, defaultLanguageCode).createTextSelector()
+  static getSelector (event, defaultLanguageCode) {
+    return new HTMLSelector(event, defaultLanguageCode).createTextSelector()
   }
 
   createTextSelector () {
@@ -29112,15 +29668,6 @@ class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default
     sel.removeAllRanges()
     sel.addRange(range)
   }
-
-  /**
-   * Test if the event is a mouse event
-   * @param {Event} event the event to test
-   * @return true if MouseEvents are possible and it is one; otherwise false
-   */
-  static isMouseEvent (event) {
-    return MouseEvent && event instanceof MouseEvent
-  }
 }
 
 
@@ -29141,11 +29688,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class MediaSelector {
-  constructor (event) {
-    this.target = event.target // A selected text area in a document
-    this.location = event.target.ownerDocument.location.href
-  }
-
   /**
    * Creates a selection from a specific target and a default language code. Should be implemented in a subclass.
    * @param target
@@ -29371,7 +29913,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************!*\
   !*** ./plugin.js ***!
   \*******************/
-/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style */
+/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29406,41 +29948,66 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_controllers_ui_state_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/controllers/ui-state.js */ "./lib/controllers/ui-state.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return _lib_controllers_ui_state_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony import */ var _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/controllers/language.js */ "./lib/controllers/language.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Language", function() { return _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnnotationQuery", function() { return _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnnotationQuery", function() { return _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LocalStorageArea", function() { return _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
-/* harmony import */ var _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./lib/options/extension-sync-storage.js */ "./lib/options/extension-sync-storage.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ExtensionSyncStorage", function() { return _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LocalStorageArea", function() { return _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "ContentOptionDefaults", function() { return _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___default.a; });
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "LanguageOptionDefaults", function() { return _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___default.a; });
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "UIOptionDefaults", function() { return _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___default.a; });
-/* harmony import */ var _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./lib/options/defaults-loader.js */ "./lib/options/defaults-loader.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DefaultsLoader", function() { return _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
+/* harmony import */ var _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./lib/options/extension-sync-storage.js */ "./lib/options/extension-sync-storage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ExtensionSyncStorage", function() { return _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./lib/options/options.js */ "./lib/options/options.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Options", function() { return _lib_options_options_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "ContentOptionDefaults", function() { return _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___default.a; });
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "LanguageOptionDefaults", function() { return _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___default.a; });
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "UIOptionDefaults", function() { return _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___default.a; });
+/* harmony import */ var _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./lib/options/defaults-loader.js */ "./lib/options/defaults-loader.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DefaultsLoader", function() { return _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
+
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./lib/options/options.js */ "./lib/options/options.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Options", function() { return _lib_options_options_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+
+/* harmony import */ var _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./lib/log/logger.js */ "./lib/log/logger.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
+
+/* harmony import */ var _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./lib/log/html-console.js */ "./lib/log/html-console.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLConsole", function() { return _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
+
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MouseDblClick", function() { return _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
+
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LongTap", function() { return _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
+
+/* harmony import */ var _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./lib/custom-pointer-events/swipe.js */ "./lib/custom-pointer-events/swipe.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Swipe", function() { return _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
 
 // The following import will not probably used by any client directly,
 // but is required to include Scss file specified in there to a MiniCssExtractPlugin bundle
+
+
+
+
+
+
+
 
 
 

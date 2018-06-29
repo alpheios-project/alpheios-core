@@ -38,12 +38,12 @@ export default class HTMLSelector extends MediaSelector {
     // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
     let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
 
-      /**
+    /**
        * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
        * So we don't care where an end selector positions would be and set it just to the same position as a start.
        * Selection methods will determine exact word boundaries and will adjust the selection.
        */
-      range.setEnd(range.startContainer, range.startOffset)
+    range.setEnd(range.startContainer, range.startOffset)
 
     let sel = window.getSelection()
     sel.removeAllRanges()
