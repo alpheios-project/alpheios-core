@@ -226,6 +226,11 @@
     "description": "placeholder text for popup data when language is not defined",
     "component": "Popup"
   },
+  "PLACEHOLDER_NO_DATA_POPUP_DATA": {
+    "message": "Lexical data couldn't be populated  for unknown reason",
+    "description": "placeholder text for popup data",
+    "component": "Popup"
+  },
   "LABEL_POPUP_CREDITS": {
     "message": "Credits:",
     "description": "label for credits on popup",
@@ -393,5 +398,21 @@
     "message": "Dark background",
     "description": "Tooltip for dark colors schema icon",
     "component": "ReskinFontColor"
+  },
+  "INFLECTIONS_CREDITS_TITLE": {
+    "message": "Credits",
+    "description": "Title of credits section on inflection tables panel",
+    "component": "InflectionTables"
+  },
+  "INFLECTIONS_PARADIGMS_EXPLANATORY_HINT": {
+    "message": "The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>",
+    "description": "A hint that indicates that the current table is representative pattern for verbs similar to the one chosen",
+    "component": "InflectionTables",
+    "params": ["word"]
+  },
+  "INFLECTIONS_MAIN_TABLE_LINK_TEXT": {
+    "message": "Back to main",
+    "description": "A link pointing to a main inflection table",
+    "component": "InflectionTables"
   }
 }

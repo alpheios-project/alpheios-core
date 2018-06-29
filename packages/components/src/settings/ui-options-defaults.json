@@ -21,6 +21,21 @@
         }
       ]
     },
+    "panelOnActivate": {
+      "defaultValue": false,
+      "labelText": "Panel on activate",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Open"
+        },
+        {
+          "value": false,
+          "text": "Close"
+        }
+      ]
+    },
     "fontSize": {
       "defaultValue": "medium",
       "labelText": "Font size",

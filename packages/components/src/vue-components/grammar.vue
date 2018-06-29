@@ -1,9 +1,9 @@
 <template>
-  <div class="alpheios-grammar">
-    <div class="alpheios-grammar__frame-cont">
-      <iframe class="alpheios-grammar__frame" :src="res.url" scrolling="yes"></iframe>
-    </div>
-    <div class="alpheios-grammar__provider" v-if="res.provider">{{ res.provider.toString() }}</div>
+  <div class="alpheios-grammar" v-if="res">
+      <div class="alpheios-grammar__frame-cont">
+          <iframe class="alpheios-grammar__frame" :src="res.url" v-if="res.url" scrolling="yes"></iframe>
+      </div>
+      <div class="alpheios-grammar__provider" v-if="res.provider">{{ res.provider.toString() }}</div>
   </div>
 </template>
 <script>

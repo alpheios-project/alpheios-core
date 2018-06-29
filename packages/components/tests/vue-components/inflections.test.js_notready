@@ -1,0 +1,116 @@
+/* eslint-env jest */
+/* eslint-disable no-unused-vars */
+import { shallowMount, mount } from '@vue/test-utils'
+import Inflections from '@/vue-components/inflections.vue'
+
+import L10n from '@/lib/l10n/l10n'
+import Locales from '@/locales/locales'
+import enUS from '@/locales/en-us/messages.json'
+import enGB from '@/locales/en-gb/messages.json'
+
+import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+
+describe('tooltip.test.js', () => {
+  let l10n = new L10n()
+    .addMessages(enUS, Locales.en_US)
+    .addMessages(enGB, Locales.en_GB)
+    .setLocale(Locales.en_US)
+
+  it('1 Inflections - renders a vue instance (min requirements)', () => {
+    let cmp = shallowMount(Inflections, {
+      propsData: {
+        data: {},
+        locale: '',
+        messages: {}
+      }
+    })
+    expect(cmp.isVueInstance()).toBeTruthy()
+  })
+  it('2 Inflections - renders a vue instance (with data)', () => {
+    let tense = { type: 'tense',
+      _data: [{ value: 'perfect', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let partOfSpeach = { type: 'part of speach',
+      _data: [{ value: 'verb', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let voice = { type: 'voice',
+      _data: [{ value: 'active', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let mood = { type: 'mood',
+      _data: [{ value: 'indicative', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let number = { type: 'number',
+      _data: [{ value: 'singular', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let person = { type: 'person',
+      _data: [{ value: '3rd', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let conjugation = { type: 'conjugation',
+      _data: [{ value: '3rd', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let fullform = { type: 'full form',
+      _data: [{ value: 'cepit', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+    let word = { type: 'word',
+      _data: [{ value: 'capio', sortOrder: 1 }],
+      get value () { return this._data[0].value }
+    }
+
+    let cmp = mount(Inflections, {
+      propsData: {
+        data: {
+          enabled: true,
+          inflectionData: {}
+        },
+        messages: l10n.messages,
+        locale: 'en-US'
+      }
+    })
+
+    cmp.setProps({
+      data: {
+        enabled: true,
+        inflectionData: {
+          homonym: {
+            targetWord: 'cepit',
+            lexemes: [
+              {
+                inflections: [{
+                  conjugation: conjugation,
+                  constraints: {},
+                  'full form': fullform,
+                  mood: mood,
+                  number: number,
+                  'part of speach': partOfSpeach,
+                  person: person,
+                  stem: 'cep',
+                  suffix: 'it',
+                  tense: tense,
+                  voice: voice,
+                  word: word,
+                  languageCode: 'lat',
+                  languageID: LMF.getLanguageIdFromCode('lat')
+                }],
+                meaning: {},
+                lemma: {
+                  ID: 'l1',
+                  word: 'capio',
+                  principalParts: ['capio', 'capere', 'cepi', 'captus']
+                }
+              }
+            ]
+          }
+        }
+      }
+    })
+
+  })
+})

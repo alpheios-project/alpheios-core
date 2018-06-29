@@ -63,4 +63,9 @@ div.alpheios-color_schema_dark_class {
 	.alph_tooltip-left::after {
 		border-color: transparent transparent transparent $alpheios-tooltip-color;
 	}
+
+	.alpheios-morph__dictentry .lemma_index {
+		color: $alpheios-white-color;
+		background: $alpheios-toolbar-color;
+	}
 }

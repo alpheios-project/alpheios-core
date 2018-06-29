@@ -38,4 +38,16 @@ export default class StorageAdapter {
   get (keys) {
     return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
   }
+
+  /**
+   * A wrapper around a local storage `removeItem()` function.
+   * It allows to remove one key-value pair from local storage.
+   * @param {String} key - key of the item to be removed.
+   * If a particular item exists, it will be removed.
+   * @return {Promise} - A promise that is resolved with with true if a key was removed
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  remove (key) {
+    return new Promise((resolve, reject) => reject(new Error(`Remove method should be implemented in a subclass`)))
+  }
 }

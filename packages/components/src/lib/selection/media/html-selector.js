@@ -38,12 +38,12 @@ export default class HTMLSelector extends MediaSelector {
     // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
     let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
 
-    /**
-     * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
-     * So we don't care where an end selector positions would be and set it just to the same position as a start.
-     * Selection methods will determine exact word boundaries and will adjust the selection.
-     */
-    range.setEnd(range.startContainer, range.startOffset)
+      /**
+       * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
+       * So we don't care where an end selector positions would be and set it just to the same position as a start.
+       * Selection methods will determine exact word boundaries and will adjust the selection.
+       */
+      range.setEnd(range.startContainer, range.startOffset)
 
     let sel = window.getSelection()
     sel.removeAllRanges()
@@ -107,8 +107,8 @@ export default class HTMLSelector extends MediaSelector {
    * @return {string | undefined} Language code of a text piece or undefined if language cannot be determined.
    */
   getLanguageCodeFromSource () {
-    let languageCode = this.target.getAttribute('lang') || this.target.getAttribute('xml:lang')
-    if (!languageCode) {
+    let languageCode = typeof this.target.getAttribute === 'function' ? this.target.getAttribute('lang') || this.target.getAttribute('xml:lang') : null
+    if (!languageCode && (typeof this.target.getAttribute === 'function')) {
       // If no attribute of target element found, check its ancestors
       let closestLangElement = this.target.closest('[lang]') || this.target.closest('[xml\\:lang]')
       if (closestLangElement) {

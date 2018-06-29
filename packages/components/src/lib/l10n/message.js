@@ -44,6 +44,7 @@ export default class Message {
    */
   defineProperties (messages, key) {
     let self = this
+
     if (this.hasParameters) {
       messages[key] = {
         format (options) {

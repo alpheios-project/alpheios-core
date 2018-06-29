@@ -9,7 +9,17 @@ describe('lemma-translation.test.js', () => {
 
   let translationsNoValue = {}
 
-  it('show hasValue for lemmakey with translations', () => {
+  it('1 LemmaTranslation - renders a vue instance (min requirements)', () => {
+    let cmp = mount(LemmaTranslation, {
+      propsData: {
+        lemmakey: '',
+        translations: []
+      }
+    })
+    expect(cmp.isVueInstance()).toBeTruthy()
+  })
+
+  it('2 LemmaTranslation - show hasValue for lemmakey with translations', () => {
     let cmpWithValue = mount(LemmaTranslation, {
       propsData: {
         lemmakey: lemmaKey,
@@ -20,7 +30,7 @@ describe('lemma-translation.test.js', () => {
     expect(cmpWithValue.find('.alpheios-lemma__translations .hasValue').exists()).toBeTruthy()
   })
 
-  it('hasValue div contains translation for lemmakey with translations', () => {
+  it('3 LemmaTranslation - hasValue div contains translation for lemmakey with translations', () => {
     let cmpWithValue = mount(LemmaTranslation, {
       propsData: {
         lemmakey: lemmaKey,
@@ -31,7 +41,7 @@ describe('lemma-translation.test.js', () => {
     expect(cmpWithValue.find('.alpheios-lemma__translations .hasValue').text()).toEqual('taking/seizing; [usus ~ => getting ownership by continued possession];')
   })
 
-  it('do not show for lemmakey with empty translations', () => {
+  it('4 LemmaTranslation - do not show for lemmakey with empty translations', () => {
     let cmpNoValue = mount(LemmaTranslation, {
       propsData: {
         lemmakey: lemmaKey,

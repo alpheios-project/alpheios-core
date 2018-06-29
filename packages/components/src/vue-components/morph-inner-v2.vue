@@ -8,9 +8,9 @@
     <div class="alpheios-morph__inflections" v-if="inflections.length >0">
       <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflection">
         <div class="alpheios-morph__forms">
-          <span class="alpheios-morph__formtext" data-grouplevel="1" data-feature="prefix" v-if="inflset.groupingKey.prefix">{{inflset.groupingKey.prefix}} </span>
-          <span class="alpheios-morph__formtext" data-grouplevel="1" data-feature="stem">{{inflset.groupingKey.stem}}</span>
-          <span class="alpheios-morph__formtext" data-grouplevel="1" data-feature="suffix" v-if="inflset.groupingKey.suffix"> -{{inflset.groupingKey.suffix}}</span>
+          <span class="alpheios-morph__formtext alpheios-text__large" data-grouplevel="1" data-feature="prefix" v-if="inflset.groupingKey.prefix">{{inflset.groupingKey.prefix}} </span>
+          <span class="alpheios-morph__formtext alpheios-text__large" data-grouplevel="1" data-feature="stem">{{inflset.groupingKey.stem}}</span>
+          <span class="alpheios-morph__formtext alpheios-text__large" data-grouplevel="1" data-feature="suffix" v-if="inflset.groupingKey.suffix"> -{{inflset.groupingKey.suffix}}</span>
           <span class="alpheios-morph__inflfeatures">
             <inflectionattribute :data="inflset.groupingKey" :type="types.part" :linkedfeatures="linkedfeatures" :grouplevel="1" @sendfeature="sendFeature"
               v-if="! featureMatch(lex.lemma.features[types.part],inflset.groupingKey[types.part])"/>
@@ -57,10 +57,10 @@
     <div class="alpheios-morph__features">
 
       <span>
-        <span class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem"
+        <span class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem alpheios-text__large"
           v-if="! lex.lemma.principalParts.includes(lex.lemma.word)"
           :lang="languageCode(lex.lemma.languageID)">{{ lex.lemma.word }}</span>
-        <span class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem">
+        <span class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem alpheios-text__large">
           <span class="alpheios-morph__listitem"
             v-for="part in lex.lemma.principalParts" :lang="languageCode(lex.lemma.languageID)">{{ part }}</span>
         </span>
@@ -90,7 +90,7 @@
     </div><!--alpheios-morph__definition_list-->
 
     <div v-if="translations && translations[lex.lemma.ID] && translations[lex.lemma.ID].glosses && translations[lex.lemma.ID].glosses.length > 0" class="alpheios-morph__translation_list">
-      <!-- <p class="block_title">translations ({{ translations[lex.lemma.ID].languageCode}})</p> -->
+      <!-- <p class="block_title alpheios-text__smaller">translations ({{ translations[lex.lemma.ID].languageCode}})</p> -->
       <lemmatranslation :translations="translations" :lemmakey="lex.lemma.ID"></lemmatranslation>
     </div><!--alpheios-morph__translation_list-->
 
@@ -211,22 +211,8 @@
     font-weight: bold;
   }
 
-  .alpheios-morph__dictentry .alpheios-morph__formtext {
-/*    font-size: larger;*/
-  }
-
   .alpheios-morph__dictentry .alpheios-morph__forms .alpheios-morph__formtext {
     font-size: inherit;
-  }
-
-  .alpheios-morph__source {
-    font-size: smaller;
-    color: $alpheios-toolbar-color;
-    font-style: italic;
-  }
-
-  .alpheios-morph__dial {
-      font-size: smaller;
   }
 
   .alpheios-morph__attr {
@@ -252,18 +238,6 @@
   .alpheios-morph__inflset {
       margin-left: .5em;
       margin-top: .5em;
-  }
-
-  .alpheios-morph__inflset h5 {
-      display: none;
-      font-size: $alpheios-base-font-size;
-      line-height: 1;
-      margin-bottom: .5em;
-  }
-
-  .alpheios-morph__inflset:first-child h5 {
-      color: $alpheios-toolbar-color;
-      display: block;
   }
 
   .alpheios-morph__morphdata {
@@ -379,7 +353,6 @@
       .block_title {
         margin: 0;
         color: $alpheios-toolbar-color;
-        font-size: 10px;
         text-align: right;
       }
     }

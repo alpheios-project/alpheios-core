@@ -23,11 +23,11 @@
             </div>
         </div>
         <div v-show="!morphDataReady"
-             class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small">
+             class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios--text-small">
             {{data.l10n.messages.PLACEHOLDER_POPUP_DATA}}
         </div>
-        <div v-show="morphDataReady" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small">
-            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions" :morphDataReady="morphDataReady"
+        <div v-show="morphDataReady" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-text-small">
+            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions"
                    :linkedfeatures="linkedfeatures" @sendfeature="sendFeature">
             </morph>
 
@@ -42,7 +42,7 @@
             <img class="alpheios-popup__logo" src="../images/icon.png">
             <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
         </div>
-        <div class="alpheios-popup__notifications uk-text-small" :class="notificationClasses"
+        <div class="alpheios-popup__notifications alpheios-text-small" :class="notificationClasses"
              v-show="data.notification.important">
             <span @click="closeNotifications" class="alpheios-popup__notifications-close-btn">
                 <close-icon></close-icon>

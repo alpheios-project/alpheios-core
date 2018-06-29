@@ -1,7 +1,7 @@
 <template>
   <div class="alph_tooltip">
     <slot></slot>
-    <span class="tooltiptext"
+    <span class="tooltiptext alpheios-text__smaller"
       v-bind:class="directionClass"
       v-bind:style="additionalStyles"
       v-if="tooltipText"
@@ -41,6 +41,8 @@
             return { 'alph_tooltip-bottom-wide': true }
           case 'bottom-narrow':
             return { 'alph_tooltip-bottom-narrow': true }
+          case 'bottom-narrow2':
+            return { 'alph_tooltip-bottom-narrow2': true }
           case 'left':
             return { 'alph_tooltip-left': true }
           case 'right':

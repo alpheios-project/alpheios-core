@@ -1,4 +1,5 @@
 /* global Node */
+/* global Event */
 import {Lexeme, Feature, Definition, LanguageModelFactory, Constants} from 'alpheios-data-models'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
@@ -331,7 +332,12 @@ export default class UIController {
         },
 
         uiOptionChange: function (name, value) {
-          if (name === 'fontSize' || name === 'colorSchema') { this.uiController.uiOptions.items[name].setValue(value) } else { this.uiController.uiOptions.items[name].setTextValue(value) }
+          if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
+            this.uiController.uiOptions.items[name].setValue(value)
+          } else {
+            this.uiController.uiOptions.items[name].setTextValue(value)
+          }
+
           switch (name) {
             case 'skin':
               this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
@@ -359,10 +365,13 @@ export default class UIController {
 
     this.options.load(() => {
       this.resourceOptions.load(() => {
-        this.state.activateUI()
-        console.log('UI options are loaded')
-        this.updateLanguage(this.options.items.preferredLanguage.currentValue)
-        this.updateVerboseMode()
+        this.uiOptions.load(() => {
+          this.state.activateUI()
+          console.log('UI options are loaded')
+          document.body.dispatchEvent(new Event('Alpheios_Options_Loaded'))
+          this.updateLanguage(this.options.items.preferredLanguage.currentValue)
+          this.updateVerboseMode()
+        })
       })
     })
 
@@ -812,7 +821,7 @@ export default class UIController {
         }
         this.panel.panelData.shortDefinitions.push(...lexeme.meaning.shortDefs)
         this.updateProviders(homonym)
-      } else if (Object.entries(lexeme.lemma.features).size > 0) {
+      } else if (Object.entries(lexeme.lemma.features).length > 0) {
         definitions[lexeme.lemma.ID] = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
       }
 
@@ -859,6 +868,7 @@ export default class UIController {
     let languageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguage)
     this.panel.requestGrammar({ type: 'table-of-contents', value: '', languageID: languageID })
     this.panel.enableInflections(LanguageModelFactory.getLanguageModel(languageID).canInflect())
+
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(languageID)
 
     Vue.set(this.popup.popupData, 'currentLanguageName', UIController.getLanguageName(languageID))
@@ -866,7 +876,6 @@ export default class UIController {
   }
 
   updateVerboseMode () {
-    this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
     this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
     this.panel.panelData.verboseMode = this.state.verboseMode
     this.popup.popupData.verboseMode = this.state.verboseMode
@@ -918,13 +927,14 @@ export default class UIController {
 
   updateStyleClass (prefix, type) {
     let popupClasses = this.popup.popupData.classes
+
     popupClasses.forEach(function (item, index) {
       if (item.indexOf(prefix) === 0) {
         popupClasses[index] = `${prefix}${type}_class`
       }
     })
     Vue.set(this.popup.popupData, 'classes', popupClasses)
-    // this.popup.classesChanged += 1
+
     Vue.set(this.popup, 'classesChanged', this.popup.classesChanged + 1)
 
     let panelClasses = this.panel.panelData.classes
@@ -935,7 +945,6 @@ export default class UIController {
     })
 
     Vue.set(this.panel.panelData, 'classes', panelClasses)
-    // this.panel.classesChanged += 1
     Vue.set(this.panel, 'classesChanged', this.panel.classesChanged + 1)
   }
 

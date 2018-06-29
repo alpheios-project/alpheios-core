@@ -1,80 +1,81 @@
 /* eslint-env jest */
-import { shallowMount } from '@vue/test-utils'
-import InflectionAttribute from '../../src/vue-components/infl-attribute.vue'
+/* eslint-disable no-unused-vars */
+import { mount } from '@vue/test-utils'
+import InflectionAttribute from '@/vue-components/infl-attribute.vue'
+import Vue from 'vue/dist/vue'
 
-describe('infl-attribute.test.js', () => {
-  let cmp
+describe('tooltip.test.js', () => {
+  console.error = function () {}
+  console.log = function () {}
+  console.warn = function () {}
+
   beforeEach(() => {
-    cmp = shallowMount(InflectionAttribute, {
+    jest.spyOn(console, 'error')
+  })
+  afterEach(() => {
+    jest.resetModules()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
+
+  it('1 InflectionAttribute - renders a vue instance (min requirements)', () => {
+    let cmp = mount(InflectionAttribute, {
       propsData: {
-        data: {
-          'gender': {
-            value: 'feminine',
-            toLocaleStringAbbr: () => { return 'f' }
-          }
-        },
-        type: 'gender',
-        grouplevel: 1,
-        linkedfeatures: ['declension']
+        data: {},
+        type: ''
       }
     })
+    expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('expects element to be created', () => {
-    let elem = cmp.find('[data-feature="gender"]')
-    expect(elem.text()).toEqual('feminine')
-    expect(elem.attributes()['data-grouplevel']).toEqual('1')
-  })
-
-  it('expects element not to be created if the type does not exist in data', () => {
-    let mockCmp = shallowMount(InflectionAttribute, {
+  it('2 InflectionAttribute - renders a vue instance (min requirements)', () => {
+    let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
-          'gender': {
-            value: 'feminine',
-            toLocaleStringAbbr: () => { return 'f' }
-          }
+          fooType: 'fooValue'
         },
-        type: 'tense',
-        grouplevel: 1,
-        linkedfeatures: ['declension']
+        type: 'fooType',
+        grouplevel: 2
       }
     })
-    expect(mockCmp.find('[data-feature="tense"]').exists()).toBeFalsy()
+    expect(cmp.find('span').text()).toEqual('fooValue')
+    expect(cmp.find('span').attributes()['data-feature']).toEqual('fooType')
+    expect(cmp.find('span').attributes()['data-grouplevel']).toEqual('2')
   })
 
-  it('expects attributeClass method to obey linkedfeatures', () => {
-    expect(cmp.vm.attributeClass('declension')).toEqual('alpheios-morph__linkedattr')
-    expect(cmp.vm.attributeClass('gender')).toEqual('alpheios-morph__attr')
-  })
-
-  it('expects attributeClass method to append extra classes', () => {
-    expect(cmp.vm.attributeClass('declension', ['mockclass'])).toEqual('alpheios-morph__linkedattr mockclass')
-  })
-
-  it('expects sendFeature to emit sendfeature', () => {
-    let mockFeature = { type: 'declension', value: '1st' }
-    cmp.vm.sendFeature([mockFeature])
-    expect(cmp.emitted('sendfeature')).toBeTruthy()
-    expect(cmp.emitted('sendfeature')[0]).toEqual([mockFeature])
-  })
-
-  it('expects decorators to be applied', () => {
-    cmp.vm.decorators = ['appendtype']
-    let mockData = {
-      'footype': {
-        value: 'foo',
-        toLocaleStringAbbr: () => { return 'f' }
+  it('3 InflectionAttribute - renders a vue instance (min requirements)', async () => {
+    let cmp = mount(InflectionAttribute, {
+      propsData: {
+        data: {
+          fooType: {
+            value: 'fooValue',
+            type: 'fooType2'
+          },
+          features: {
+            fooType2: {
+              type: 'fooType2'
+            }
+          }
+        },
+        type: 'fooType',
+        grouplevel: 2,
+        linkedfeatures: ['fooType2']
       }
-    }
-    expect(cmp.vm.decorate(mockData, 'footype')).toEqual('foo footype')
-    cmp.vm.decorators = ['appendtype', 'parenthesize']
-    expect(cmp.vm.decorate(mockData, 'footype')).toEqual('(foo footype)')
-    cmp.vm.decorators = ['brackets']
-    expect(cmp.vm.decorate(mockData, 'footype')).toEqual('[foo]')
-    cmp.vm.decorators = ['abbreviate']
-    expect(cmp.vm.decorate(mockData, 'footype')).toEqual('f')
-    cmp.vm.decorators = ['abbreviate', 'parenthesize']
-    expect(cmp.vm.decorate(mockData, 'footype')).toEqual('(f)')
+    })
+
+    cmp.find('span').trigger('click')
+
+    await Vue.nextTick()
+
+    expect(cmp.emitted()['sendfeature']).toBeTruthy()
+    expect(cmp.emitted()['sendfeature'][0]).toEqual([{ value: 'fooValue', type: 'fooType2' }])
   })
+
+/*  it('3 InflectionAttribute - check required props', () => {
+    let cmp = mount(InflectionAttribute)
+
+    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "data"'))
+    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "type"'))
+  }) */
 })

@@ -279,8 +279,6 @@
  ========================================================================== */
   /* Caption
  ========================================================================== */
-  /* Row
- ========================================================================== */
   /* Alignment modifier
  ========================================================================== */
   /* Style modifiers
@@ -294,6 +292,8 @@
   /*
  * Hover
  */
+  /* Active state
+ ========================================================================== */
   /* Size modifier
  ========================================================================== */
   /* Justify modifier
@@ -3007,9 +3007,6 @@
     font-size: 0.875rem;
     text-align: left;
     color: #999; }
-  .auk .uk-table > tr.uk-active,
-  .auk .uk-table tbody tr.uk-active {
-    background: #ffd; }
   .auk .uk-table-middle,
   .auk .uk-table-middle td {
     vertical-align: middle !important; }
@@ -3024,6 +3021,9 @@
     border-bottom: 1px solid #e5e5e5; }
   .auk .uk-table-hover > tr:hover,
   .auk .uk-table-hover tbody tr:hover {
+    background: #ffd; }
+  .auk .uk-table > tr.uk-active,
+  .auk .uk-table tbody tr.uk-active {
     background: #ffd; }
   .auk .uk-table-small th,
   .auk .uk-table-small td {
@@ -7412,431 +7412,305 @@
 .sense-spacer2 {
   padding-left: 3em; }
 
-.auk.alpheios-panel.alpheios-font_medium_class {
-  font-size: 16px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-form-label {
-    font-size: 13.6px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-h3, .auk.alpheios-panel.alpheios-font_medium_class h3 {
-    font-size: 18.88px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-text-small {
-    font-size: 14.4px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-info .alpheios-info__versiontext,
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-info__currentlanguage {
-    font-size: 10.8px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-info .alpheios-info__helptext p {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
-    font-size: 16px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .infl-cell {
-    font-size: 12px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-select.alpheios-inflections__view-selector {
-    font-size: 10.8px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-select:not([multiple]):not([size]) {
-    height: 40px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-action-btn,
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:hover,
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:focus,
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-nav-btn {
-    width: 20px;
-    height: 20px;
-    margin: 9px 15px; }
-    .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-action-btn svg,
-    .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:hover svg,
-    .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:focus svg,
-    .auk.alpheios-panel.alpheios-font_medium_class .alpheios-panel__header-nav-btn svg {
-      width: 20px;
-      height: 20px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alph_tooltip .tooltiptext {
-    font-size: 12px;
-    width: 120px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-skin_properties_item {
+.auk.alpheios-font_medium_class {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: normal;
+  color: #333333;
+  /** TODO Remove this when we port inflection tables to Vue **/ }
+  .auk.alpheios-font_medium_class h3 {
+    font-size: 16px .auk.alpheios-font_medium_class h3 1.25; }
+  .auk.alpheios-font_medium_class p, .auk.alpheios-font_medium_class span, .auk.alpheios-font_medium_class div, .auk.alpheios-font_medium_class a {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px;
-    width: 28px;
-    height: 28px;
-    line-height: 28px;
-    border-radius: 14px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-skin_properties_item__small_font {
-    font-size: 12.8px;
-    width: 22.4px;
-    height: 22.4px;
-    line-height: 22.4px;
-    border-radius: 11.2px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-skin_properties_item__large_font {
-    font-size: 19.2px;
-    width: 33.6px;
-    height: 33.6px;
-    line-height: 33.6px;
-    border-radius: 33.6px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-button {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif !important; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-popup__more-btn,
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-button.alpheios-lookup__button {
+    line-height: normal;
+    color: #333333; }
+  .auk.alpheios-font_medium_class .uk-form-label {
+    font-size: 13.6px; }
+  .auk.alpheios-font_medium_class .uk-button {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important; }
+  .auk.alpheios-font_medium_class .uk-button-small {
     font-size: 11.2px;
     line-height: 28px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .uk-input.alpheios-lookup__input {
-    height: 32px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-popup__header-selection {
-    font-size: 16px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-morph__dictentry .alpheios-morph__formtext {
-    font-size: 17.6px; }
-  .auk.alpheios-panel.alpheios-font_medium_class .alpheios-popup__providers-link,
-  .auk.alpheios-panel.alpheios-font_medium_class a.alpheios-lookup__settings-link {
-    font-size: 11.2px; }
-
-.auk.alpheios-popup.alpheios-font_medium_class {
-  font-size: 16px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-form-label {
-    font-size: 13.6px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-h3, .auk.alpheios-popup.alpheios-font_medium_class h3 {
-    font-size: 18.88px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-text-small {
-    font-size: 14.4px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-info .alpheios-info__versiontext,
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-info__currentlanguage {
-    font-size: 10.8px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-info .alpheios-info__helptext p {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
-    font-size: 16px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .infl-cell {
-    font-size: 12px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-select.alpheios-inflections__view-selector {
-    font-size: 10.8px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-select:not([multiple]):not([size]) {
+  .auk.alpheios-font_medium_class .uk-input {
+    height: 28px; }
+  .auk.alpheios-font_medium_class .uk-select:not([multiple]):not([size]) {
     height: 40px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-action-btn,
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:hover,
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:focus,
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-nav-btn {
-    width: 20px;
-    height: 20px;
-    margin: 9px 15px; }
-    .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-action-btn svg,
-    .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:hover svg,
-    .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:focus svg,
-    .auk.alpheios-popup.alpheios-font_medium_class .alpheios-panel__header-nav-btn svg {
-      width: 20px;
-      height: 20px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alph_tooltip .tooltiptext {
-    font-size: 12px;
-    width: 120px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-skin_properties_item {
-    font-size: 16px;
-    width: 28px;
-    height: 28px;
-    line-height: 28px;
-    border-radius: 14px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-skin_properties_item__small_font {
-    font-size: 12.8px;
-    width: 22.4px;
-    height: 22.4px;
-    line-height: 22.4px;
-    border-radius: 11.2px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-skin_properties_item__large_font {
-    font-size: 19.2px;
-    width: 33.6px;
-    height: 33.6px;
-    line-height: 33.6px;
-    border-radius: 33.6px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-button {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif !important; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-popup__more-btn,
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-button.alpheios-lookup__button {
-    font-size: 11.2px;
-    line-height: 28px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .uk-input.alpheios-lookup__input {
-    height: 32px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-popup__header-selection {
+  .auk.alpheios-font_medium_class .alpheios-text__smallest {
+    font-size: 10.8px; }
+  .auk.alpheios-font_medium_class .alpheios-text__smaller {
+    font-size: 12px; }
+  .auk.alpheios-font_medium_class .alpheios-text__small {
+    font-size: 14px; }
+  .auk.alpheios-font_medium_class .alpheios-text__medium {
     font-size: 16px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-morph__dictentry .alpheios-morph__formtext {
+  .auk.alpheios-font_medium_class .alpheios-text__large {
     font-size: 17.6px; }
-  .auk.alpheios-popup.alpheios-font_medium_class .alpheios-popup__providers-link,
-  .auk.alpheios-popup.alpheios-font_medium_class a.alpheios-lookup__settings-link {
-    font-size: 11.2px; }
-
-.auk.alpheios-panel.alpheios-font_small_class {
-  font-size: 12px; }
-  .auk.alpheios-panel.alpheios-font_small_class .uk-form-label {
-    font-size: 10.2px; }
-  .auk.alpheios-panel.alpheios-font_small_class .uk-h3, .auk.alpheios-panel.alpheios-font_small_class h3 {
-    font-size: 14.16px; }
-  .auk.alpheios-panel.alpheios-font_small_class .uk-text-small {
-    font-size: 10.8px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-info .alpheios-info__versiontext,
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-info__currentlanguage {
-    font-size: 8.1px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-info .alpheios-info__helptext p {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
-    font-size: 12px; }
-  .auk.alpheios-panel.alpheios-font_small_class .infl-cell {
-    font-size: 9px; }
-  .auk.alpheios-panel.alpheios-font_small_class .uk-select.alpheios-inflections__view-selector {
-    font-size: 8.1px; }
-  .auk.alpheios-panel.alpheios-font_small_class .uk-select:not([multiple]):not([size]) {
-    height: 30px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-action-btn,
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-action-btn.active:hover,
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-action-btn.active:focus,
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-nav-btn {
-    width: 15px;
-    height: 15px;
-    margin: 13px 15px; }
-    .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-action-btn svg,
-    .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-action-btn.active:hover svg,
-    .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-action-btn.active:focus svg,
-    .auk.alpheios-panel.alpheios-font_small_class .alpheios-panel__header-nav-btn svg {
-      width: 15px;
-      height: 15px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alph_tooltip .tooltiptext {
-    font-size: 9px;
-    width: 90px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-skin_properties_item {
-    font-size: 12px;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-    border-radius: 12px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-skin_properties_item__small_font {
-    font-size: 9.6px;
-    width: 19.2px;
-    height: 19.2px;
-    line-height: 19.2px;
-    border-radius: 9.6px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-skin_properties_item__large_font {
-    font-size: 14.4px;
-    width: 28.8px;
-    height: 28.8px;
-    line-height: 28.8px;
-    border-radius: 28.8px; }
-  .auk.alpheios-panel.alpheios-font_small_class .uk-button {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif !important; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-popup__more-btn,
-  .auk.alpheios-panel.alpheios-font_small_class .uk-button.alpheios-lookup__button {
-    font-size: 8.4px;
-    line-height: 21px; }
-  .auk.alpheios-panel.alpheios-font_small_class .uk-input.alpheios-lookup__input {
-    height: 24px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-popup__header-selection {
-    font-size: 12px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-morph__dictentry .alpheios-morph__formtext {
-    font-size: 13.2px; }
-  .auk.alpheios-panel.alpheios-font_small_class .alpheios-popup__providers-link,
-  .auk.alpheios-panel.alpheios-font_small_class a.alpheios-lookup__settings-link {
-    font-size: 8.4px; }
-
-.auk.alpheios-popup.alpheios-font_small_class {
-  font-size: 12px; }
-  .auk.alpheios-popup.alpheios-font_small_class .uk-form-label {
-    font-size: 10.2px; }
-  .auk.alpheios-popup.alpheios-font_small_class .uk-h3, .auk.alpheios-popup.alpheios-font_small_class h3 {
-    font-size: 14.16px; }
-  .auk.alpheios-popup.alpheios-font_small_class .uk-text-small {
-    font-size: 10.8px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-info .alpheios-info__versiontext,
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-info__currentlanguage {
-    font-size: 8.1px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-info .alpheios-info__helptext p {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
-    font-size: 12px; }
-  .auk.alpheios-popup.alpheios-font_small_class .infl-cell {
-    font-size: 9px; }
-  .auk.alpheios-popup.alpheios-font_small_class .uk-select.alpheios-inflections__view-selector {
-    font-size: 8.1px; }
-  .auk.alpheios-popup.alpheios-font_small_class .uk-select:not([multiple]):not([size]) {
-    height: 30px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-action-btn,
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-action-btn.active:hover,
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-action-btn.active:focus,
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-nav-btn {
-    width: 15px;
-    height: 15px;
-    margin: 13px 15px; }
-    .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-action-btn svg,
-    .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-action-btn.active:hover svg,
-    .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-action-btn.active:focus svg,
-    .auk.alpheios-popup.alpheios-font_small_class .alpheios-panel__header-nav-btn svg {
-      width: 15px;
-      height: 15px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alph_tooltip .tooltiptext {
-    font-size: 9px;
-    width: 90px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-skin_properties_item {
-    font-size: 12px;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-    border-radius: 12px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-skin_properties_item__small_font {
-    font-size: 9.6px;
-    width: 19.2px;
-    height: 19.2px;
-    line-height: 19.2px;
-    border-radius: 9.6px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-skin_properties_item__large_font {
-    font-size: 14.4px;
-    width: 28.8px;
-    height: 28.8px;
-    line-height: 28.8px;
-    border-radius: 28.8px; }
-  .auk.alpheios-popup.alpheios-font_small_class .uk-button {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif !important; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-popup__more-btn,
-  .auk.alpheios-popup.alpheios-font_small_class .uk-button.alpheios-lookup__button {
-    font-size: 8.4px;
-    line-height: 21px; }
-  .auk.alpheios-popup.alpheios-font_small_class .uk-input.alpheios-lookup__input {
-    height: 24px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-popup__header-selection {
-    font-size: 12px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-morph__dictentry .alpheios-morph__formtext {
-    font-size: 13.2px; }
-  .auk.alpheios-popup.alpheios-font_small_class .alpheios-popup__providers-link,
-  .auk.alpheios-popup.alpheios-font_small_class a.alpheios-lookup__settings-link {
-    font-size: 8.4px; }
-
-.auk.alpheios-panel.alpheios-font_large_class {
-  font-size: 20px; }
-  .auk.alpheios-panel.alpheios-font_large_class .uk-form-label {
-    font-size: 17px; }
-  .auk.alpheios-panel.alpheios-font_large_class .uk-h3, .auk.alpheios-panel.alpheios-font_large_class h3 {
-    font-size: 23.6px; }
-  .auk.alpheios-panel.alpheios-font_large_class .uk-text-small {
-    font-size: 18px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-info .alpheios-info__versiontext,
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-info__currentlanguage {
-    font-size: 13.5px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-info .alpheios-info__helptext p {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+  .auk.alpheios-font_medium_class .alpheios-text__larger {
     font-size: 20px; }
-  .auk.alpheios-panel.alpheios-font_large_class .infl-cell {
+  .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn,
+  .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:hover,
+  .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:focus,
+  .auk.alpheios-font_medium_class .alpheios-panel__header-nav-btn {
+    width: 20px;
+    height: 20px;
+    margin: 9px 15px; }
+    .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn svg,
+    .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:hover svg,
+    .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:focus svg,
+    .auk.alpheios-font_medium_class .alpheios-panel__header-nav-btn svg {
+      width: 20px;
+      height: 20px; }
+  .auk.alpheios-font_medium_class .infl-cell, .auk.alpheios-font_medium_class .infl-cell span {
+    font-size: 12px; }
+  .auk.alpheios-font_medium_class .infl-cell sup {
+    font-size: 10.8px; }
+  .auk.alpheios-font_medium_class .alpheios-morph__dictentry .lemma_index {
+    font-size: 14px;
+    line-height: 20.8px;
+    width: 20.8px;
+    height: 20.8px;
+    border-radius: 12.8px; }
+  .auk.alpheios-font_medium_class .alpheios-morph__morphdata {
+    margin-left: 35.8px; }
+  .auk.alpheios-font_medium_class .alpheios-morph__listitem,
+  .auk.alpheios-font_medium_class .alpheios-popup__header-selection {
+    font-size: 20.8px; }
+  .auk.alpheios-font_medium_class .alpheios-skin_panel {
+    padding-top: 16px; }
+  .auk.alpheios-font_medium_class .alpheios-checkbox-block {
+    line-height: 22px; }
+    .auk.alpheios-font_medium_class .alpheios-checkbox-block label {
+      padding-left: 22px;
+      min-height: 16px; }
+      .auk.alpheios-font_medium_class .alpheios-checkbox-block label::before {
+        height: 16px;
+        width: 16px; }
+      .auk.alpheios-font_medium_class .alpheios-checkbox-block label::after {
+        height: 5px;
+        width: 9px;
+        left: 4px;
+        top: 7px; }
+  .auk.alpheios-font_medium_class .alpheios-skin_properties_item {
+    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 14px; }
+  .auk.alpheios-font_medium_class .alpheios-skin_properties_item__small_font {
+    font-size: 12.8px;
+    width: 22.4px;
+    height: 22.4px;
+    line-height: 22.4px;
+    border-radius: 11.2px; }
+  .auk.alpheios-font_medium_class .alpheios-skin_properties_item__large_font {
+    font-size: 19.2px;
+    width: 33.6px;
+    height: 33.6px;
+    line-height: 33.6px;
+    border-radius: 33.6px; }
+
+.auk.alpheios-font_small_class {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: normal;
+  color: #333333;
+  /** TODO Remove this when we port inflection tables to Vue **/ }
+  .auk.alpheios-font_small_class h3 {
+    font-size: 12px .auk.alpheios-font_small_class h3 1.25; }
+  .auk.alpheios-font_small_class p, .auk.alpheios-font_small_class span, .auk.alpheios-font_small_class div, .auk.alpheios-font_small_class a {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: normal;
+    color: #333333; }
+  .auk.alpheios-font_small_class .uk-form-label {
+    font-size: 10.2px; }
+  .auk.alpheios-font_small_class .uk-button {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important; }
+  .auk.alpheios-font_small_class .uk-button-small {
+    font-size: 8.4px;
+    line-height: 21px; }
+  .auk.alpheios-font_small_class .uk-input {
+    height: 21px; }
+  .auk.alpheios-font_small_class .uk-select:not([multiple]):not([size]) {
+    height: 30px; }
+  .auk.alpheios-font_small_class .alpheios-text__smallest {
+    font-size: 8.1px; }
+  .auk.alpheios-font_small_class .alpheios-text__smaller {
+    font-size: 9px; }
+  .auk.alpheios-font_small_class .alpheios-text__small {
+    font-size: 10.5px; }
+  .auk.alpheios-font_small_class .alpheios-text__medium {
+    font-size: 12px; }
+  .auk.alpheios-font_small_class .alpheios-text__large {
+    font-size: 13.2px; }
+  .auk.alpheios-font_small_class .alpheios-text__larger {
     font-size: 15px; }
-  .auk.alpheios-panel.alpheios-font_large_class .uk-select.alpheios-inflections__view-selector {
-    font-size: 13.5px; }
-  .auk.alpheios-panel.alpheios-font_large_class .uk-select:not([multiple]):not([size]) {
+  .auk.alpheios-font_small_class .alpheios-panel__header-action-btn,
+  .auk.alpheios-font_small_class .alpheios-panel__header-action-btn.active:hover,
+  .auk.alpheios-font_small_class .alpheios-panel__header-action-btn.active:focus,
+  .auk.alpheios-font_small_class .alpheios-panel__header-nav-btn {
+    width: 15px;
+    height: 15px;
+    margin: 13px 15px; }
+    .auk.alpheios-font_small_class .alpheios-panel__header-action-btn svg,
+    .auk.alpheios-font_small_class .alpheios-panel__header-action-btn.active:hover svg,
+    .auk.alpheios-font_small_class .alpheios-panel__header-action-btn.active:focus svg,
+    .auk.alpheios-font_small_class .alpheios-panel__header-nav-btn svg {
+      width: 15px;
+      height: 15px; }
+  .auk.alpheios-font_small_class .infl-cell, .auk.alpheios-font_small_class .infl-cell span {
+    font-size: 9px; }
+  .auk.alpheios-font_small_class .infl-cell sup {
+    font-size: 8.1px; }
+  .auk.alpheios-font_small_class .alpheios-morph__dictentry .lemma_index {
+    font-size: 10.5px;
+    line-height: 15.6px;
+    width: 15.6px;
+    height: 15.6px;
+    border-radius: 9.6px; }
+  .auk.alpheios-font_small_class .alpheios-morph__morphdata {
+    margin-left: 30.6px; }
+  .auk.alpheios-font_small_class .alpheios-morph__listitem,
+  .auk.alpheios-font_small_class .alpheios-popup__header-selection {
+    font-size: 15.6px; }
+  .auk.alpheios-font_small_class .alpheios-skin_panel {
+    padding-top: 12px; }
+  .auk.alpheios-font_small_class .alpheios-checkbox-block {
+    line-height: 16.5px; }
+    .auk.alpheios-font_small_class .alpheios-checkbox-block label {
+      padding-left: 16.5px;
+      min-height: 12px; }
+      .auk.alpheios-font_small_class .alpheios-checkbox-block label::before {
+        height: 12px;
+        width: 12px; }
+      .auk.alpheios-font_small_class .alpheios-checkbox-block label::after {
+        height: 3.75px;
+        width: 6.75px;
+        left: 3px;
+        top: 5.25px; }
+  .auk.alpheios-font_small_class .alpheios-skin_properties_item {
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 12px; }
+  .auk.alpheios-font_small_class .alpheios-skin_properties_item__small_font {
+    font-size: 9.6px;
+    width: 19.2px;
+    height: 19.2px;
+    line-height: 19.2px;
+    border-radius: 9.6px; }
+  .auk.alpheios-font_small_class .alpheios-skin_properties_item__large_font {
+    font-size: 14.4px;
+    width: 28.8px;
+    height: 28.8px;
+    line-height: 28.8px;
+    border-radius: 28.8px; }
+
+.auk.alpheios-font_large_class {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: normal;
+  color: #333333;
+  /** TODO Remove this when we port inflection tables to Vue **/ }
+  .auk.alpheios-font_large_class h3 {
+    font-size: 20px .auk.alpheios-font_large_class h3 1.25; }
+  .auk.alpheios-font_large_class p, .auk.alpheios-font_large_class span, .auk.alpheios-font_large_class div, .auk.alpheios-font_large_class a {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 20px;
+    line-height: normal;
+    color: #333333; }
+  .auk.alpheios-font_large_class .uk-form-label {
+    font-size: 17px; }
+  .auk.alpheios-font_large_class .uk-button {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important; }
+  .auk.alpheios-font_large_class .uk-button-small {
+    font-size: 14px;
+    line-height: 35px; }
+  .auk.alpheios-font_large_class .uk-input {
+    height: 35px; }
+  .auk.alpheios-font_large_class .uk-select:not([multiple]):not([size]) {
     height: 50px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn,
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover,
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus,
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-nav-btn {
+  .auk.alpheios-font_large_class .alpheios-text__smallest {
+    font-size: 13.5px; }
+  .auk.alpheios-font_large_class .alpheios-text__smaller {
+    font-size: 15px; }
+  .auk.alpheios-font_large_class .alpheios-text__small {
+    font-size: 17.5px; }
+  .auk.alpheios-font_large_class .alpheios-text__medium {
+    font-size: 20px; }
+  .auk.alpheios-font_large_class .alpheios-text__large {
+    font-size: 22px; }
+  .auk.alpheios-font_large_class .alpheios-text__larger {
+    font-size: 25px; }
+  .auk.alpheios-font_large_class .alpheios-panel__header-action-btn,
+  .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover,
+  .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus,
+  .auk.alpheios-font_large_class .alpheios-panel__header-nav-btn {
     width: 25px;
     height: 25px;
     margin: 5px 15px; }
-    .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn svg,
-    .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover svg,
-    .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus svg,
-    .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-nav-btn svg {
+    .auk.alpheios-font_large_class .alpheios-panel__header-action-btn svg,
+    .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover svg,
+    .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus svg,
+    .auk.alpheios-font_large_class .alpheios-panel__header-nav-btn svg {
       width: 25px;
       height: 25px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alph_tooltip .tooltiptext {
-    font-size: 15px;
-    width: 150px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-skin_properties_item {
+  .auk.alpheios-font_large_class .infl-cell, .auk.alpheios-font_large_class .infl-cell span {
+    font-size: 15px; }
+  .auk.alpheios-font_large_class .infl-cell sup {
+    font-size: 13.5px; }
+  .auk.alpheios-font_large_class .alpheios-morph__dictentry .lemma_index {
+    font-size: 17.5px;
+    line-height: 26px;
+    width: 26px;
+    height: 26px;
+    border-radius: 16px; }
+  .auk.alpheios-font_large_class .alpheios-morph__morphdata {
+    margin-left: 41px; }
+  .auk.alpheios-font_large_class .alpheios-morph__listitem,
+  .auk.alpheios-font_large_class .alpheios-popup__header-selection {
+    font-size: 26px; }
+  .auk.alpheios-font_large_class .alpheios-skin_panel {
+    padding-top: 20px; }
+  .auk.alpheios-font_large_class .alpheios-checkbox-block {
+    line-height: 27.5px; }
+    .auk.alpheios-font_large_class .alpheios-checkbox-block label {
+      padding-left: 27.5px;
+      min-height: 20px; }
+      .auk.alpheios-font_large_class .alpheios-checkbox-block label::before {
+        height: 20px;
+        width: 20px; }
+      .auk.alpheios-font_large_class .alpheios-checkbox-block label::after {
+        height: 6.25px;
+        width: 11.25px;
+        left: 5px;
+        top: 8.75px; }
+  .auk.alpheios-font_large_class .alpheios-skin_properties_item {
     font-size: 20px;
     width: 32px;
     height: 32px;
     line-height: 32px;
     border-radius: 16px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-skin_properties_item__small_font {
+  .auk.alpheios-font_large_class .alpheios-skin_properties_item__small_font {
     font-size: 16px;
     width: 25.6px;
     height: 25.6px;
     line-height: 25.6px;
     border-radius: 12.8px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-skin_properties_item__large_font {
+  .auk.alpheios-font_large_class .alpheios-skin_properties_item__large_font {
     font-size: 24px;
     width: 38.4px;
     height: 38.4px;
     line-height: 38.4px;
     border-radius: 38.4px; }
-  .auk.alpheios-panel.alpheios-font_large_class .uk-button {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif !important; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-popup__more-btn,
-  .auk.alpheios-panel.alpheios-font_large_class .uk-button.alpheios-lookup__button {
-    font-size: 14px;
-    line-height: 35px; }
-  .auk.alpheios-panel.alpheios-font_large_class .uk-input.alpheios-lookup__input {
-    height: 40px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-popup__header-selection {
-    font-size: 20px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-morph__dictentry .alpheios-morph__formtext {
-    font-size: 22px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-popup__providers-link,
-  .auk.alpheios-panel.alpheios-font_large_class a.alpheios-lookup__settings-link {
-    font-size: 14px; }
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn,
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover,
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus,
-  .auk.alpheios-panel.alpheios-font_large_class .alpheios-panel__header-nav-btn {
+  .auk.alpheios-font_large_class .alpheios-panel__header-action-btn,
+  .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover,
+  .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus,
+  .auk.alpheios-font_large_class .alpheios-panel__header-nav-btn {
     margin-right: 10px;
     margin-left: 10px; }
-
-.auk.alpheios-popup.alpheios-font_large_class {
-  font-size: 20px; }
-  .auk.alpheios-popup.alpheios-font_large_class .uk-form-label {
-    font-size: 17px; }
-  .auk.alpheios-popup.alpheios-font_large_class .uk-h3, .auk.alpheios-popup.alpheios-font_large_class h3 {
-    font-size: 23.6px; }
-  .auk.alpheios-popup.alpheios-font_large_class .uk-text-small {
-    font-size: 18px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-info .alpheios-info__versiontext,
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-info__currentlanguage {
-    font-size: 13.5px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-info .alpheios-info__helptext p {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
-    font-size: 20px; }
-  .auk.alpheios-popup.alpheios-font_large_class .infl-cell {
-    font-size: 15px; }
-  .auk.alpheios-popup.alpheios-font_large_class .uk-select.alpheios-inflections__view-selector {
-    font-size: 13.5px; }
-  .auk.alpheios-popup.alpheios-font_large_class .uk-select:not([multiple]):not([size]) {
-    height: 50px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-action-btn,
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover,
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus,
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-nav-btn {
-    width: 25px;
-    height: 25px;
-    margin: 5px 15px; }
-    .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-action-btn svg,
-    .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover svg,
-    .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus svg,
-    .auk.alpheios-popup.alpheios-font_large_class .alpheios-panel__header-nav-btn svg {
-      width: 25px;
-      height: 25px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alph_tooltip .tooltiptext {
-    font-size: 15px;
-    width: 150px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-skin_properties_item {
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    border-radius: 16px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-skin_properties_item__small_font {
-    font-size: 16px;
-    width: 25.6px;
-    height: 25.6px;
-    line-height: 25.6px;
-    border-radius: 12.8px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-skin_properties_item__large_font {
-    font-size: 24px;
-    width: 38.4px;
-    height: 38.4px;
-    line-height: 38.4px;
-    border-radius: 38.4px; }
-  .auk.alpheios-popup.alpheios-font_large_class .uk-button {
-    font-family: Arial,Helvetica Neue,Helvetica,sans-serif !important; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-popup__more-btn,
-  .auk.alpheios-popup.alpheios-font_large_class .uk-button.alpheios-lookup__button {
-    font-size: 14px;
-    line-height: 35px; }
-  .auk.alpheios-popup.alpheios-font_large_class .uk-input.alpheios-lookup__input {
-    height: 40px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-popup__header-selection {
-    font-size: 20px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-morph__dictentry .alpheios-morph__formtext {
-    font-size: 22px; }
-  .auk.alpheios-popup.alpheios-font_large_class .alpheios-popup__providers-link,
-  .auk.alpheios-popup.alpheios-font_large_class a.alpheios-lookup__settings-link {
-    font-size: 14px; }
 
 div.alpheios-color_schema_dark_class {
   background: #282828;
@@ -7882,10 +7756,15 @@ div.alpheios-color_schema_dark_class {
     border-color: transparent transparent #4E6476 transparent; }
   div.alpheios-color_schema_dark_class .alph_tooltip-left::after {
     border-color: transparent transparent transparent #4E6476; }
+  div.alpheios-color_schema_dark_class .alpheios-morph__dictentry .lemma_index {
+    color: #fff;
+    background: #4E6476; }
 
 div.alpheios-color_schema_light_class {
   background: #fff;
   color: #0e2233; }
+  div.alpheios-color_schema_light_class a, div.alpheios-color_schema_light_class div, div.alpheios-color_schema_light_class p, div.alpheios-color_schema_light_class span {
+    color: #333333; }
   div.alpheios-color_schema_light_class .uk-form-label,
   div.alpheios-color_schema_light_class h3,
   div.alpheios-color_schema_light_class .alpheios-info .alpheios-info__helptext p,
@@ -7927,6 +7806,9 @@ div.alpheios-color_schema_light_class {
     border-color: transparent transparent #4E6476 transparent; }
   div.alpheios-color_schema_light_class .alph_tooltip-left::after {
     border-color: transparent transparent transparent #4E6476; }
+  div.alpheios-color_schema_light_class .alpheios-morph__dictentry .lemma_index {
+    color: #fff;
+    background: #4E6476; }
 
 .alph_tooltip {
   position: relative;
@@ -8021,9 +7903,14 @@ div.alpheios-color_schema_light_class {
   top: 135%;
   left: -75%; }
 
+.alph_tooltip-bottom-narrow2 {
+  top: 135%;
+  left: -165%; }
+
 .alph_tooltip-bottom::after,
 .alph_tooltip-bottom-wide::after,
-.alph_tooltip-bottom-narrow::after {
+.alph_tooltip-bottom-narrow::after,
+.alph_tooltip-bottom-narrow2::after {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -8062,6 +7949,168 @@ div.alpheios-color_schema_light_class {
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent transparent #555; }
+
+.auk.alpheios-font_large_class .multiselect,
+.auk.alpheios-font_medium_class .multiselect,
+.auk.alpheios-font_small_class .multiselect,
+.auk.alpheios-color_schema_light_class .multiselect,
+.auk.alpheios-color_schema_dark_class .multiselect {
+  max-width: 250px;
+  display: inline-block;
+  vertical-align: middle; }
+
+.auk.alpheios-font_large_class .multiselect__content-wrapper,
+.auk.alpheios-font_medium_class .multiselect__content-wrapper,
+.auk.alpheios-font_small_class .multiselect__content-wrapper,
+.auk.alpheios-color_schema_light_class .multiselect__content-wrapper,
+.auk.alpheios-color_schema_dark_class .multiselect__content-wrapper {
+  border: 1px solid #666666;
+  border-top: 0; }
+
+.auk.alpheios-font_large_class ul.multiselect__content,
+.auk.alpheios-font_medium_class ul.multiselect__content,
+.auk.alpheios-font_small_class ul.multiselect__content,
+.auk.alpheios-color_schema_light_class ul.multiselect__content,
+.auk.alpheios-color_schema_dark_class ul.multiselect__content {
+  padding: 0;
+  margin: 0; }
+
+.auk.alpheios-font_large_class .multiselect__tags,
+.auk.alpheios-font_medium_class .multiselect__tags,
+.auk.alpheios-font_small_class .multiselect__tags,
+.auk.alpheios-color_schema_light_class .multiselect__tags,
+.auk.alpheios-color_schema_dark_class .multiselect__tags {
+  border-radius: 2px;
+  border: 1px solid #666666; }
+
+.auk.alpheios-font_large_class .multiselect__select,
+.auk.alpheios-font_medium_class .multiselect__select,
+.auk.alpheios-font_small_class .multiselect__select,
+.auk.alpheios-color_schema_light_class .multiselect__select,
+.auk.alpheios-color_schema_dark_class .multiselect__select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%201%209%206%2015%206%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%2013%209%208%2015%208%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E%0A");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 25px;
+  height: 30px; }
+
+.auk.alpheios-font_large_class .multiselect__select::before,
+.auk.alpheios-font_medium_class .multiselect__select::before,
+.auk.alpheios-font_small_class .multiselect__select::before,
+.auk.alpheios-color_schema_light_class .multiselect__select::before,
+.auk.alpheios-color_schema_dark_class .multiselect__select::before {
+  display: none; }
+
+.auk.alpheios-font_large_class .multiselect__option::after,
+.auk.alpheios-font_medium_class .multiselect__option::after,
+.auk.alpheios-font_small_class .multiselect__option::after,
+.auk.alpheios-color_schema_light_class .multiselect__option::after,
+.auk.alpheios-color_schema_dark_class .multiselect__option::after {
+  display: none; }
+
+.auk.alpheios-font_large_class .multiselect__option--highlight,
+.auk.alpheios-font_large_class .multiselect__tag,
+.auk.alpheios-font_large_class .multiselect__tag-icon:focus,
+.auk.alpheios-font_large_class .multiselect__tag-icon:hover,
+.auk.alpheios-font_medium_class .multiselect__option--highlight,
+.auk.alpheios-font_medium_class .multiselect__tag,
+.auk.alpheios-font_medium_class .multiselect__tag-icon:focus,
+.auk.alpheios-font_medium_class .multiselect__tag-icon:hover,
+.auk.alpheios-font_small_class .multiselect__option--highlight,
+.auk.alpheios-font_small_class .multiselect__tag,
+.auk.alpheios-font_small_class .multiselect__tag-icon:focus,
+.auk.alpheios-font_small_class .multiselect__tag-icon:hover,
+.auk.alpheios-color_schema_light_class .multiselect__option--highlight,
+.auk.alpheios-color_schema_light_class .multiselect__tag,
+.auk.alpheios-color_schema_light_class .multiselect__tag-icon:focus,
+.auk.alpheios-color_schema_light_class .multiselect__tag-icon:hover,
+.auk.alpheios-color_schema_dark_class .multiselect__option--highlight,
+.auk.alpheios-color_schema_dark_class .multiselect__tag,
+.auk.alpheios-color_schema_dark_class .multiselect__tag-icon:focus,
+.auk.alpheios-color_schema_dark_class .multiselect__tag-icon:hover {
+  background: #4E6476; }
+
+.auk.alpheios-font_large_class .multiselect__option--highlight span,
+.auk.alpheios-font_large_class .multiselect__tag span,
+.auk.alpheios-font_large_class .multiselect__tag-icon:focus span,
+.auk.alpheios-font_large_class .multiselect__tag-icon:hover span,
+.auk.alpheios-font_medium_class .multiselect__option--highlight span,
+.auk.alpheios-font_medium_class .multiselect__tag span,
+.auk.alpheios-font_medium_class .multiselect__tag-icon:focus span,
+.auk.alpheios-font_medium_class .multiselect__tag-icon:hover span,
+.auk.alpheios-font_small_class .multiselect__option--highlight span,
+.auk.alpheios-font_small_class .multiselect__tag span,
+.auk.alpheios-font_small_class .multiselect__tag-icon:focus span,
+.auk.alpheios-font_small_class .multiselect__tag-icon:hover span,
+.auk.alpheios-color_schema_light_class .multiselect__option--highlight span,
+.auk.alpheios-color_schema_light_class .multiselect__tag span,
+.auk.alpheios-color_schema_light_class .multiselect__tag-icon:focus span,
+.auk.alpheios-color_schema_light_class .multiselect__tag-icon:hover span,
+.auk.alpheios-color_schema_dark_class .multiselect__option--highlight span,
+.auk.alpheios-color_schema_dark_class .multiselect__tag span,
+.auk.alpheios-color_schema_dark_class .multiselect__tag-icon:focus span,
+.auk.alpheios-color_schema_dark_class .multiselect__tag-icon:hover span {
+  color: #fff; }
+
+.auk.alpheios-font_large_class .multiselect__tag-icon:after,
+.auk.alpheios-font_medium_class .multiselect__tag-icon:after,
+.auk.alpheios-font_small_class .multiselect__tag-icon:after,
+.auk.alpheios-color_schema_light_class .multiselect__tag-icon:after,
+.auk.alpheios-color_schema_dark_class .multiselect__tag-icon:after {
+  content: "\D7";
+  color: #fff;
+  font-size: 13.4px; }
+
+div.alpheios-checkbox-block {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  line-height: 22px; }
+
+.alpheios-checkbox-block {
+  /*Unhide on the checked state*/
+  /*Adding focus styles on the outer-box of the fake checkbox*/ }
+  .alpheios-checkbox-block input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    left: -999px; }
+  .alpheios-checkbox-block label {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    vertical-align: middle;
+    /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
+    padding-left: 22px;
+    padding-top: 2px; }
+    .alpheios-checkbox-block label::before, .alpheios-checkbox-block label::after {
+      position: absolute;
+      content: "";
+      /*Needed for the line-height to take effect*/
+      display: inline-block; }
+    .alpheios-checkbox-block label::before {
+      height: 16px;
+      width: 16px;
+      border: 1px solid;
+      left: 0px;
+      /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+           *to vertically center it.
+           */
+      top: 3px; }
+    .alpheios-checkbox-block label::after {
+      height: 5px;
+      width: 9px;
+      border-left: 2px solid;
+      border-bottom: 2px solid;
+      transform: rotate(-45deg);
+      left: 4px;
+      top: 7px; }
+  .alpheios-checkbox-block input[type="checkbox"] + label::after {
+    content: none; }
+  .alpheios-checkbox-block input[type="checkbox"]:checked + label::after {
+    content: ""; }
+  .alpheios-checkbox-block input[type="checkbox"]:focus + label::before {
+    outline: #3b99fc auto 5px; }
 
 /*************** font sizes **************/
 /*************** dark schema colors **************/
@@ -8191,15 +8240,11 @@ div.alpheios-morph__block {
 }
 .alpheios-morph__dictentry .lemma_index {
     display: inline-block;
-    color: #fff;
-    background: #4E6476;
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
     text-align: center;
-    line-height: 20px;
     font-weight: bold;
     margin-right: 10px;
+    vertical-align: top;
+    margin-top: 3px;
 }
 .alpheios-morph__dictentry .alpheios-morph__features:before, .alpheios-morph__dictentry .alpheios-morph__features:after {
     content: '';
@@ -8243,6 +8288,12 @@ div.alpheios-morph__block {
       font-size: 10px;
       text-align: right;
 }
+.alpheios-morph__dictentry .alpheios-morph__definition {
+    margin-bottom: 5px;
+}
+.alpheios-morph__dictentry .alpheios-definition__text {
+    font-weight: normal;
+}
 .alpheios-morph__dictentry .alpheios-morph__inflset {
     margin-top: 0;
     margin-left: 7px;
@@ -8274,8 +8325,399 @@ div.alpheios-morph__block {
 }
 
 
+fieldset[disabled] .multiselect {
+  pointer-events: none;
+}
+.multiselect__spinner {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 48px;
+  height: 35px;
+  background: #fff;
+  display: block;
+}
+.multiselect__spinner:after, .multiselect__spinner:before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border-color: #41b883 transparent transparent;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 0 0 0 1px transparent;
+}
+.multiselect__spinner:before {
+  animation: a 2.4s cubic-bezier(0.41, 0.26, 0.2, 0.62);
+  animation-iteration-count: infinite;
+}
+.multiselect__spinner:after {
+  animation: a 2.4s cubic-bezier(0.51, 0.09, 0.21, 0.8);
+  animation-iteration-count: infinite;
+}
+.multiselect__loading-enter-active, .multiselect__loading-leave-active {
+  transition: opacity .4s ease-in-out;
+  opacity: 1;
+}
+.multiselect__loading-enter, .multiselect__loading-leave-active {
+  opacity: 0;
+}
+.multiselect, .multiselect__input, .multiselect__single {
+  font-family: inherit;
+  font-size: 16px;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+.multiselect {
+  box-sizing: content-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  text-align: left;
+  color: #35495e;
+}
+.multiselect * {
+  box-sizing: border-box;
+}
+.multiselect:focus {
+  outline: none;
+}
+.multiselect--disabled {
+  opacity: .6;
+}
+.multiselect--active {
+  z-index: 1;
+}
+.multiselect--active:not(.multiselect--above) .multiselect__current, .multiselect--active:not(.multiselect--above) .multiselect__input, .multiselect--active:not(.multiselect--above) .multiselect__tags {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.multiselect--active .multiselect__select {
+  transform: rotate(180deg);
+}
+.multiselect--above.multiselect--active .multiselect__current, .multiselect--above.multiselect--active .multiselect__input, .multiselect--above.multiselect--active .multiselect__tags {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.multiselect__input, .multiselect__single {
+  position: relative;
+  display: inline-block;
+  min-height: 20px;
+  line-height: 20px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0 0 5px;
+  width: 100%;
+  transition: border .1s ease;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  vertical-align: top;
+}
+.multiselect__input::-webkit-input-placeholder {
+  color: #35495e;
+}
+.multiselect__input:-ms-input-placeholder {
+  color: #35495e;
+}
+.multiselect__input::placeholder {
+  color: #35495e;
+}
+.multiselect__tag ~ .multiselect__input, .multiselect__tag ~ .multiselect__single {
+  width: auto;
+}
+.multiselect__input:hover, .multiselect__single:hover {
+  border-color: #cfcfcf;
+}
+.multiselect__input:focus, .multiselect__single:focus {
+  border-color: #a8a8a8;
+  outline: none;
+}
+.multiselect__single {
+  padding-left: 5px;
+  margin-bottom: 8px;
+}
+.multiselect__tags-wrap {
+  display: inline;
+}
+.multiselect__tags {
+  min-height: 40px;
+  display: block;
+  padding: 8px 40px 0 8px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+  font-size: 14px;
+}
+.multiselect__tag {
+  position: relative;
+  display: inline-block;
+  padding: 4px 26px 4px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  color: #fff;
+  line-height: 1;
+  background: #41b883;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+.multiselect__tag-icon {
+  cursor: pointer;
+  margin-left: 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-weight: 700;
+  font-style: normal;
+  width: 22px;
+  text-align: center;
+  line-height: 22px;
+  transition: all .2s ease;
+  border-radius: 5px;
+}
+.multiselect__tag-icon:after {
+  content: "\D7";
+  color: #266d4d;
+  font-size: 14px;
+}
+.multiselect__tag-icon:focus, .multiselect__tag-icon:hover {
+  background: #369a6e;
+}
+.multiselect__tag-icon:focus:after, .multiselect__tag-icon:hover:after {
+  color: #fff;
+}
+.multiselect__current {
+  min-height: 40px;
+  overflow: hidden;
+  padding: 8px 12px 0;
+  padding-right: 30px;
+  white-space: nowrap;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+}
+.multiselect__current, .multiselect__select {
+  line-height: 16px;
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+.multiselect__select {
+  position: absolute;
+  width: 40px;
+  height: 38px;
+  right: 1px;
+  top: 1px;
+  padding: 4px 8px;
+  text-align: center;
+  transition: transform .2s ease;
+}
+.multiselect__select:before {
+  position: relative;
+  right: 0;
+  top: 65%;
+  color: #999;
+  margin-top: 4px;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  border-color: #999 transparent transparent;
+  content: "";
+}
+.multiselect__placeholder {
+  color: #adadad;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-top: 2px;
+}
+.multiselect--active .multiselect__placeholder {
+  display: none;
+}
+.multiselect__content-wrapper {
+  position: absolute;
+  display: block;
+  background: #fff;
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+.multiselect__content {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  min-width: 100%;
+  vertical-align: top;
+}
+.multiselect--above .multiselect__content-wrapper {
+  bottom: 100%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: none;
+  border-top: 1px solid #e8e8e8;
+}
+.multiselect__content::webkit-scrollbar {
+  display: none;
+}
+.multiselect__element {
+  display: block;
+}
+.multiselect__option {
+  display: block;
+  padding: 12px;
+  min-height: 40px;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.multiselect__option:after {
+  top: 0;
+  right: 0;
+  position: absolute;
+  line-height: 40px;
+  padding-right: 12px;
+  padding-left: 20px;
+  font-size: 13px;
+}
+.multiselect__option--highlight {
+  background: #41b883;
+  outline: none;
+  color: #fff;
+}
+.multiselect__option--highlight:after {
+  content: attr(data-select);
+  background: #41b883;
+  color: #fff;
+}
+.multiselect__option--selected {
+  background: #f3f3f3;
+  color: #35495e;
+  font-weight: 700;
+}
+.multiselect__option--selected:after {
+  content: attr(data-selected);
+  color: silver;
+}
+.multiselect__option--selected.multiselect__option--highlight {
+  background: #ff6a6a;
+  color: #fff;
+}
+.multiselect__option--selected.multiselect__option--highlight:after {
+  background: #ff6a6a;
+  content: attr(data-deselect);
+  color: #fff;
+}
+.multiselect--disabled {
+  background: #ededed;
+  pointer-events: none;
+}
+.multiselect--disabled .multiselect__current, .multiselect--disabled .multiselect__select, .multiselect__option--disabled {
+  background: #ededed;
+  color: #a6a6a6;
+}
+.multiselect__option--disabled {
+  cursor: text;
+  pointer-events: none;
+}
+.multiselect__option--group {
+  background: #ededed;
+  color: #35495e;
+}
+.multiselect__option--group.multiselect__option--highlight {
+  background: #35495e;
+  color: #fff;
+}
+.multiselect__option--group.multiselect__option--highlight:after {
+  background: #35495e;
+}
+.multiselect__option--disabled.multiselect__option--highlight {
+  background: #dedede;
+}
+.multiselect__option--group-selected.multiselect__option--highlight {
+  background: #ff6a6a;
+  color: #fff;
+}
+.multiselect__option--group-selected.multiselect__option--highlight:after {
+  background: #ff6a6a;
+  content: attr(data-deselect);
+  color: #fff;
+}
+.multiselect-enter-active, .multiselect-leave-active {
+  transition: all .15s ease;
+}
+.multiselect-enter, .multiselect-leave-active {
+  opacity: 0;
+}
+.multiselect__strong {
+  margin-bottom: 8px;
+  line-height: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+[dir=rtl] .multiselect {
+  text-align: right;
+}
+[dir=rtl] .multiselect__select {
+  right: auto;
+  left: 1px;
+}
+[dir=rtl] .multiselect__tags {
+  padding: 8px 8px 0 40px;
+}
+[dir=rtl] .multiselect__content {
+  text-align: right;
+}
+[dir=rtl] .multiselect__option:after {
+  right: auto;
+  left: 0;
+}
+[dir=rtl] .multiselect__clear {
+  right: auto;
+  left: 12px;
+}
+[dir=rtl] .multiselect__spinner {
+  right: auto;
+  left: 1px;
+}
+@keyframes a {
+0% {
+    transform: rotate(0);
+}
+to {
+    transform: rotate(2turn);
+}
+}
+
+/*************** font sizes **************/
+/*************** dark schema colors **************/
+/*************** light schema colors **************/
+/*************** light schema colors tooltip **************/
 .alpheios-setting__label {
   display: block;
+}
+.alpheios-setting__label {
+  vertical-align: middle;
 }
 
 /*************** font sizes **************/
@@ -8293,9 +8735,6 @@ div.alpheios-morph__block {
 }
 .uk-input.alpheios-lookup__input {
   width: 70%;
-  line-height: 28px;
-  height: 30px;
-  font-size: 14px;
   margin-bottom: 10px;
   vertical-align: top;
 }
@@ -8303,7 +8742,6 @@ div.alpheios-morph__block {
     border-color: #5BC8DC;
 }
 .uk-button.alpheios-lookup__button {
-  font-size: 12px;
   vertical-align: top;
   display: block;
 }
@@ -8311,7 +8749,6 @@ div.alpheios-morph__block {
   text-align: left;
 }
 a.alpheios-lookup__settings-link {
-  font-size: 10.8px;
   display: block;
   padding-top: 5px;
 }
@@ -8447,8 +8884,8 @@ a.alpheios-lookup__settings-link {
 }
 .alpheios-popup__morph-cont-providers-header {
   display: inline-block;
-  color: #3E8D9C;
-  font-size: 12px;
+  /* color: $alpheios-link-color;
+    font-size: 0.75*$alpheios-base-font-size; */
   font-weight: 700;
   margin-top: 2px;
 }
@@ -8459,16 +8896,17 @@ a.alpheios-lookup__settings-link {
 img.alpheios-popup__logo {
   height: 16px;
   width: auto;
+  vertical-align: middle;
 }
 .alpheios-popup__more-btn {
   float: right;
   margin-bottom: 10px;
-  font-size: 10.8px;
+  /* font-size: 0.675 * $alpheios-base-font-size; */
 }
 .alpheios-popup__morph-cont-providers-source {
   font-size: smaller;
   font-weight: normal;
-  color: #4E6476;
+  /* color: $alpheios-toolbar-color; */
   font-style: italic;
   margin-left: .5em;
   margin-top: .5em;
@@ -8476,8 +8914,15 @@ img.alpheios-popup__logo {
 .alpheios-popup__providers {
   margin: 0 0 5px 10px;
 }
+
+/*
 .alpheios-popup__providers-link {
-  font-size: 10.8px;
+  font-size: 0.675*$alpheios-base-font-size;
+}*/
+.alpheios-popup__providers-link {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px 0 0;
 }
 
 
@@ -8506,24 +8951,59 @@ img.alpheios-popup__logo {
   font-weight: 700;
 }
 
-
+/*************** font sizes **************/
+/*************** dark schema colors **************/
+/*************** light schema colors **************/
+/*************** light schema colors tooltip **************/
 .infl-prdgm-tbl {
   display: table;
   border-top: 1px solid gray;
   border-left: 1px solid gray;
   margin-bottom: 30px;
 }
-.infl-prdgm-tbl-row {
+.infl-prdgm-tbl__row {
   display: table-row;
 }
-.infl-prdgm-tbl-cell {
+.infl-prdgm-tbl__cell {
   display: table-cell;
   padding: 2px 5px;
   border-right: 1px solid gray;
   border-bottom: 1px solid gray;
 }
-.infl-prdgm-tbl-cell--label {
+.infl-prdgm-tbl__cell--label {
   font-weight: 700;
+}
+
+
+h3.alpheios-inflections__supp-table-title {
+  font-size: 1rem;
+  line-height: 1;
+  margin: 1.5rem 0 0.6rem 0;
+  font-weight: 700;
+}
+.infl-supp-tbl__cont {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+.infl-prdgm-tbl--supp {
+  margin-bottom: 10px;
+}
+a.infl-supp-tbl__reflink {
+  float: right;
+}
+
+
+.alpheios-inflections__form-parts {
+	  display: inline-block;
+}
+.alpheios-inflections__forms-targetword {
+      font-weight: bold;
+}
+.alpheios-inflections__forms-cont {
+      padding-right: 30px;
+}
+.alpheios-inflections__control-btn-cont {
+      padding-left: 30px;
 }
 
 /*************** font sizes **************/
@@ -8699,7 +9179,7 @@ h3.alpheios-inflections__title {
   background-color: lightgray;
 }
 .infl-suff--suffix-match.infl-suff--full-feature-match {
-  background-color: #ffee77;
+  background-color: #F6D918;
   font-weight: 700;
 }
 .alpheios-inflections__footnotes {
@@ -8758,6 +9238,36 @@ h3.alpheios-inflections__title {
 .alpheios-inflections__footnote-popup-close-btn:active {
   fill: #5BC8DC;
   stroke: #5BC8DC;
+}
+.alpheios-inflections__credits-cont {
+  margin-bottom: 10px;
+}
+h3.alpheios-inflections__credits-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4E6476;
+  margin-bottom: 0;
+}
+.alpheios-inflections__credits-text {
+  font-size: 12px;
+  font-weight: normal;
+  color: #7E8897;
+  font-style: italic;
+  padding: 5px;
+}
+.alpheios-inflections__paradigms-expl {
+  font-size: 12px;
+  font-weight: normal;
+  color: #7E8897;
+  font-style: italic;
+  margin: 20px 0 10px;
+}
+.alpheios-inflections__paradigms-expl span {
+  color: #4E6476;
+  font-weight: 700;
+}
+.alpheios-inflections__supp-tables {
+  margin-top: 4rem;
 }
 
 /*************** font sizes **************/
@@ -8838,58 +9348,45 @@ h3.alpheios-inflections__title {
 /*************** dark schema colors **************/
 /*************** light schema colors **************/
 /*************** light schema colors tooltip **************/
-.alpheios-skin_panel {
+#alpheios-reskin-panel.alpheios-skin_panel {
   display: inline-block;
 }
 ul.alpheios-skin_properties {
   margin: 0;
-  padding: 0 30px 10px 0;
+  padding: 0 30px 10px 10px;
   list-style: none;
+  max-width: 250px;
+  display: inline-block;
 }
-.alpheios-skin_properties_item {
+#alpheios-reskin-panel .alpheios-skin_properties_item {
   display: inline-block;
   vertical-align: middle;
-  font-size: 16px;
-  width: 28px;
-  height: 28px;
   text-align: center;
-  line-height: 28px;
   color: #fff;
   background: #4E6476;
-  border-radius: 14px;
   cursor: pointer;
+  padding: 0;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  text-indent: 0;
+  list-style-type: none;
 }
-.alpheios-skin_properties_item__small_font {
-  font-size: 12.8px;
-  width: 22.4px;
-  height: 22.4px;
-  line-height: 22.4px;
-  border-radius: 11.2px;
-}
-.alpheios-skin_properties_item__large_font {
-  font-size: 19.2px;
-  width: 33.6px;
-  height: 33.6px;
-  line-height: 33.6px;
-  border-radius: 33.6px;
-}
-.alpheios-skin_properties_item__light_bg,
-.alpheios-skin_properties_item__dark_bg {
+#alpheios-reskin-panel .alpheios-skin_properties_item__light_bg,
+#alpheios-reskin-panel .alpheios-skin_properties_item__dark_bg {
   border-radius: 0;
   background: transparent;
 }
-.alpheios-skin_properties_item__light_bg svg,
-  .alpheios-skin_properties_item__dark_bg svg {
+#alpheios-reskin-panel .alpheios-skin_properties_item__light_bg svg,
+  #alpheios-reskin-panel .alpheios-skin_properties_item__dark_bg svg {
     width: 90%;
     height: 90%;
 }
-.alpheios-font_small_class .alpheios-skin_properties_item__small_font {
+.alpheios-font_small_class #alpheios-reskin-panel .alpheios-skin_properties_item__small_font {
   background: #7E8897;
 }
-.alpheios-font_medium_class .alpheios-skin_properties_item__medium_font {
+.alpheios-font_medium_class #alpheios-reskin-panel .alpheios-skin_properties_item__medium_font {
   background: #7E8897;
 }
-.alpheios-font_large_class .alpheios-skin_properties_item__large_font {
+.alpheios-font_large_class #alpheios-reskin-panel .alpheios-skin_properties_item__large_font {
   background: #7E8897;
 }
 
@@ -9008,6 +9505,7 @@ ul.alpheios-skin_properties {
   box-sizing: border-box;
   display: flex;
   flex-flow: wrap;
+  position: relative;
 }
 .alpheios-lookup__panel {
   display: block;
@@ -9121,6 +9619,21 @@ ul.alpheios-skin_properties {
 .alpheios-panel__header-nav-btn.active {
   fill: #5BC8DC;
   stroke: #5BC8DC;
+}
+.alpheios-panel__tab__options {
+  width: 100%;
+  max-width: 600px;
+}
+.alpheios-panel__options-item {
+  max-width: none;
+  width: 100%;
+}
+.alpheios-panel__options-item .alpheios-setting__label {
+  width: 100px;
+  display: inline-block;
+}
+.alpheios-panel__options-item select {
+  display: inline-block;
 }
 
 

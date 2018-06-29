@@ -1,21 +1,21 @@
 <template>
-  <div class="alpheios-lookup__form">
-    <input class="uk-input alpheios-lookup__input" type="text" :placeholder="inputPlaceholder" v-model="lookuptext"
+  <div class="alpheios-lookup__form" v-if="uiController">
+    <input class="uk-input alpheios-lookup__input" type="text" :placeholder="ln10Messages('LABEL_LOOKUP_BUTTON')" v-model="lookuptext"
       @keyup.enter="lookup"
     >
-    <alph-tooltip tooltipDirection="top-right" :tooltipText="tooltipLabel">
+    <alph-tooltip tooltipDirection="top-right" :tooltipText="ln10Messages('LABEL_LOOKUP_BUTTON')">
       <span class="alpheios-lookup__button_with_link">
       <button class="uk-button uk-button-primary uk-button-small alpheios-lookup__button" type="button" tabindex="-1"
         @click="lookup"
       >
-        {{ buttonLabel }}
+        {{ ln10Messages('LABEL_LOOKUP_BUTTON') }}
       </button>
-      <a class="alpheios-lookup__settings-link" @click="switchLookupSettings">{{ labelSettings }}</a>
+      <a class="alpheios-lookup__settings-link alpheios-text__smaller" @click="switchLookupSettings">{{ ln10Messages('LABEL_LOOKUP_SETTINGS') }}</a>
       </span>
     </alph-tooltip>
-    <div class="alpheios-lookup__settings">
+    <div class="alpheios-lookup__settings" v-if="uiController">
       <div class="alpheios-lookup__settings-items" v-show="showLanguageSettings">
-        <alph-setting :data="preferredLanguage" @change="settingChange" :classes="['alpheios-panel__options-item']"></alph-setting>
+        <alph-setting :data="lookupLanguage" @change="settingChange" :classes="['alpheios-panel__options-item']"></alph-setting>
 
         <alph-setting :data="lexicon" @change="resourceSettingChange" :classes="['alpheios-panel__options-item']"
          v-for="lexicon in lexiconsFiltered"/></alph-setting>
@@ -41,9 +41,6 @@
     data () {
       return {
         lookuptext: '',
-        defaultButtonLabel: 'Search',
-        defaultInputPlaceholder: 'Type text',
-        defaultLabelSettings: 'Settings',
         showLanguageSettings: false,
         initLanguage: null,
         currentLanguage: null,
@@ -59,44 +56,28 @@
       parentLanguage: {
         type: String,
         required: false
+      },
+      clearLookupText: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     created: function () {
-      this.options = this.uiController.options.clone(TempStorageArea)
-      this.resourceOptions = this.uiController.resourceOptions.clone(TempStorageArea)
-      if (this.parentLanguage) {
-        this.initLanguage = this.parentLanguage
-        this.currentLanguage = this.parentLanguage
-      } else {
-        this.currentLanguage = this.options.items.preferredLanguage.currentTextValue()
+      if (this.uiController) {
+        this.options = this.uiController.options.clone(TempStorageArea)
+        this.resourceOptions = this.uiController.resourceOptions.clone(TempStorageArea)
+        if (this.parentLanguage) {
+          this.initLanguage = this.parentLanguage
+          this.currentLanguage = this.parentLanguage
+        } else {
+          this.currentLanguage = this.options.items.preferredLanguage.currentTextValue()
+        }
+        this.options.items.lookupLanguage.setTextValue(this.currentLanguage)
+        console.log(`at creation current language is ${this.currentLanguage}`)
       }
-      console.log(`at creation current language is ${this.currentLanguage}`)
     },
     computed: {
-      buttonLabel: function () {
-        if (this.uiController && this.uiController.l10n) {
-          return this.uiController.l10n.messages.LABEL_LOOKUP_BUTTON
-        }
-        return this.defaultButtonLabel
-      },
-      tooltipLabel: function () {
-        if (this.uiController && this.uiController.l10n) {
-          return this.uiController.l10n.messages.TOOLTIP_LOOKUP_BUTTON
-        }
-        return this.defaultButtonLabel
-      },
-      inputPlaceholder: function () {
-        if (this.uiController && this.uiController.l10n) {
-          return this.uiController.l10n.messages.PLACEHOLDER_LOOKUP_INPUT
-        }
-        return this.defaultInputPlaceholder
-      },
-      labelSettings: function () {
-        if (this.uiController && this.uiController.l10n) {
-          return this.uiController.l10n.messages.LABEL_LOOKUP_SETTINGS
-        }
-        return this.defaultLabelSettings
-      },
       lexiconSettingName: function() {
         let lang = this.options.items.preferredLanguage.values.filter(v => v.text === this.currentLanguage)
         let settingName
@@ -108,26 +89,35 @@
       lexiconsFiltered: function () {
         return this.resourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
       },
-      preferredLanguage: function () {
-        let currentLanguage
+      lookupLanguage: function () {
+        // let currentLanguage
         if ((this.parentLanguage && this.parentLanguage !== null) && (this.parentLanguage !== this.initLanguage)) {
           this.initLanguage = this.parentLanguage
           this.currentLanguage = this.parentLanguage
-          this.options.items.preferredLanguage.setTextValue(this.parentLanguage)
+          this.options.items.lookupLanguage.setTextValue(this.parentLanguage)
         }
-        return this.options.items.preferredLanguage
+        return this.options.items.lookupLanguage
       }
 
+    },
+    watch: {
+      clearLookupText: function(value) {
+        if (value) {
+          this.lookuptext = ''
+          this.showLanguageSettings = false
+        }
+      }
     },
     methods: {
       'lookup': function () {
         if (this.lookuptext.length === 0) {
           return null
         }
+        let languageID = LanguageModelFactory.getLanguageIdFromCode(this.options.items.lookupLanguage.currentValue)
 
-        let languageID = LanguageModelFactory.getLanguageIdFromCode(this.options.items.preferredLanguage.currentValue)
         let textSelector = TextSelector.createObjectFromText(this.lookuptext, languageID)
 
+        this.uiController.updateLanguage(this.options.items.lookupLanguage.currentValue)
         LexicalQueryLookup
           .create(textSelector, this.uiController, this.resourceOptions)
           .getData()
@@ -143,13 +133,21 @@
       },
 
       settingChange: function (name, value) {
-        this.options.items.preferredLanguage.setTextValue(value)
+        this.options.items.lookupLanguage.setTextValue(value)
         this.currentLanguage = value
       },
 
       resourceSettingChange: function (name, value) {
         let keyinfo = this.resourceOptions.parseKey(name)
+
         this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+      },
+
+      ln10Messages: function (value, defaultValue = 'uknown') {
+        if (this.uiController && this.uiController.l10n && this.uiController.l10n.messages && this.uiController.l10n.messages[value]) {
+          return this.uiController.l10n.messages[value]
+        }
+        return defaultValue
       }
     }
   }
@@ -165,9 +163,6 @@
 
     .uk-input.alpheios-lookup__input {
       width: 70%;
-      line-height: 28px;
-      height: 30px;
-      font-size: 14px;
       margin-bottom: 10px;
       vertical-align: top;
 
@@ -177,7 +172,6 @@
     }
 
     .uk-button.alpheios-lookup__button {
-      font-size: 12px;
       vertical-align: top;
       display: block;
     }
@@ -187,7 +181,6 @@
     }
 
     a.alpheios-lookup__settings-link {
-      font-size: 0.675 * $alpheios-base-font-size;
       display: block;
       padding-top: 5px;
     }

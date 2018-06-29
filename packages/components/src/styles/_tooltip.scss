@@ -1,5 +1,5 @@
 .alph_tooltip {
-	position: relative;
+    position: relative;
     display: inline-block;
 }
 
@@ -105,9 +105,15 @@
     left: -75%;
 }
 
+.alph_tooltip-bottom-narrow2 {
+    top: 135%;
+    left: -165%;
+}
+
 .alph_tooltip-bottom::after,
 .alph_tooltip-bottom-wide::after,
-.alph_tooltip-bottom-narrow::after  {
+.alph_tooltip-bottom-narrow::after,
+.alph_tooltip-bottom-narrow2::after  {
     content: "";
     position: absolute;
     bottom: 100%;

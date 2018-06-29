@@ -1,147 +1,73 @@
 /* eslint-env jest */
+/* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import LemmaTranslation from '../../src/vue-components/tooltip.vue'
+import Tooltip from '@/vue-components/tooltip.vue'
 
 describe('tooltip.test.js', () => {
-  let spy
-  let testTooltipText = 'test tooltip text'
-  let testDirection = 'top'
-  let testDirectionClass = 'alph_tooltip-top'
-  let testAdditionalStyles = {color: '#dd0000'}
+  console.error = function () {}
+  console.log = function () {}
+  console.warn = function () {}
 
-  it('If there is an empty tooltipText - error is thrown', () => {
-    spy = jest.spyOn(console, 'error')
-
-    mount(LemmaTranslation, {})
-    expect(spy).toHaveBeenCalled()
+  beforeEach(() => {
+    jest.spyOn(console, 'error')
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'warn')
+  })
+  afterEach(() => {
+    jest.resetModules()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
   })
 
-  it('If there is an empty tooltipText - no tooltip is shown', () => {
-    let cmp = mount(LemmaTranslation, {})
-    expect(cmp.find('.alph_tooltip .tooltiptext').exists()).toBeFalsy()
-  })
-
-  it('TooltipText is printed in the tooltip span', () => {
-    let cmp = mount(LemmaTranslation, {
+  it('1 Tooltip - renders a vue instance (min requirements)', () => {
+    let cmp = mount(Tooltip, {
       propsData: {
-        tooltipText: testTooltipText
+        tooltipText: ''
       }
     })
-    expect(cmp.find('.alph_tooltip .tooltiptext').exists()).toBeTruthy()
-    expect(cmp.find('.alph_tooltip .tooltiptext').text()).toEqual(testTooltipText)
+    expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('If there is an empty tooltipDirection - tooltip is shown bottom', () => {
-    let cmp = mount(LemmaTranslation, {
+  it('2 Tooltip - renders a vue instance (min requirements)', () => {
+    let cmp = mount(Tooltip, {
       propsData: {
-        tooltipText: testTooltipText
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-bottom').exists()).toBeTruthy()
-  })
-
-  it('If there is a not empty tooltipDirection - directionClass is calculated based on it', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: testDirection
+        tooltipText: 'foo tooltip'
       }
     })
 
-    let computedDirectionClass = {}
-    computedDirectionClass[testDirectionClass] = true
-    expect(cmp.vm.directionClass).toEqual(computedDirectionClass)
-  })
+    expect(cmp.find('.tooltiptext').text()).toEqual('foo tooltip')
+    expect(cmp.vm.tooltipDirection).toEqual('bottom')
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom': true })
 
-  it('If there is a not empty tooltipDirection - tooltip direction class is printed', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: testDirection
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.' + testDirectionClass).exists()).toBeTruthy()
-  })
-
-  it('If there is a tooltipDirection = top - tooltip has class alph_tooltip-top', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: 'top'
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-top').exists()).toBeTruthy()
-  })
-
-  it('If there is a tooltipDirection = bottom - tooltip has class alph_tooltip-bottom', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: 'bottom'
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-bottom').exists()).toBeTruthy()
-  })
-
-  it('If there is a tooltipDirection = left - tooltip has class alph_tooltip-left', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: 'left'
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-left').exists()).toBeTruthy()
-  })
-
-  it('If there is a tooltipDirection = left - tooltip has class alph_tooltip-right', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: 'right'
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-right').exists()).toBeTruthy()
-  })
-
-  it('If there is a tooltipDirection = top-right - tooltip has class alph_tooltip-top-right', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: 'top-right'
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-top-right').exists()).toBeTruthy()
-  })
-
-  it('If there is a tooltipDirection = bottom-right - tooltip has class alph_tooltip-bottom-right', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: 'bottom-right'
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-bottom-right').exists()).toBeTruthy()
-  })
-
-  it('If there is a tooltipDirection is not from available values - tooltip has class alph_tooltip-bottom', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        tooltipDirection: 'incorrect'
-      }
-    })
-    expect(cmp.find('.alph_tooltip .tooltiptext.alph_tooltip-bottom').exists()).toBeTruthy()
-  })
-
-  it('If there is a not empty additionalStyles - tooltip span applies them', () => {
-    let cmp = mount(LemmaTranslation, {
-      propsData: {
-        tooltipText: testTooltipText,
-        additionalStyles: testAdditionalStyles
-      }
+    cmp.setProps({
+      tooltipDirection: 'top'
     })
 
-    let checkStyleKey = Object.keys(testAdditionalStyles)[0]
-    expect(cmp.find('.alph_tooltip .tooltiptext').attributes()['style']).toContain(checkStyleKey + ':')
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top': true })
+
+    cmp.setProps({
+      tooltipDirection: 'foo value'
+    })
+
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom': true })
+
+    cmp.setProps({
+      tooltipDirection: 'TOP'
+    })
+
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top': true })
+
+    cmp.setProps({
+      additionalStyles: { color: 'red' }
+    })
+
+    expect(cmp.find('.tooltiptext').element.style.color).toEqual('red')
+  })
+
+  it('3 Tooltip - check required props', () => {
+    let cmp = mount(Tooltip)
+
+    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "tooltipText"'))
   })
 })

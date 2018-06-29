@@ -2,69 +2,70 @@
 import Logger from '../../../src/lib/log/logger'
 
 describe('logger.test.js', () => {
-  let spy
+  console.error = function () {}
+  console.log = function () {}
+  console.warn = function () {}
+  console.info = function () {}
 
   beforeEach(() => {
+    jest.spyOn(console, 'error')
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'warn')
+    jest.spyOn(console, 'info')
+  })
+  afterEach(() => {
+    jest.resetModules()
+    jest.clearAllMocks()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
   })
 
   it('logs in verbose mode', () => {
-    spy = jest.spyOn(console, 'log')
     let logger = Logger.getLogger(true)
     logger.log('test', 'test1')
-    expect(spy).toHaveBeenCalled()
+    expect(console.log).toHaveBeenCalled()
   })
 
   it('does not log if not in verbose mode', () => {
-    spy = jest.spyOn(console, 'log')
     let logger = Logger.getLogger(false)
     logger.log('test2')
-    expect(spy).not.toHaveBeenCalled()
+    expect(console.log).not.toHaveBeenCalled()
   })
 
   it('infos in verbose mode', () => {
-    spy = jest.spyOn(console, 'info')
     let logger = Logger.getLogger(true)
     logger.info('test3')
-    expect(spy).toHaveBeenCalled()
+    expect(console.info).toHaveBeenCalled()
   })
 
   it('does not info if not in verbose mode', () => {
-    spy = jest.spyOn(console, 'info')
     let logger = Logger.getLogger(false)
     logger.info('test4')
-    expect(spy).not.toHaveBeenCalled()
+    expect(console.info).not.toHaveBeenCalled()
   })
 
   it('warns in verbose mode', () => {
-    spy = jest.spyOn(console, 'warn')
     let logger = Logger.getLogger(true)
     logger.warn('test3')
-    expect(spy).toHaveBeenCalled()
+    expect(console.warn).toHaveBeenCalled()
   })
 
   it('does not warn if not in verbose mode', () => {
-    spy = jest.spyOn(console, 'warn')
     let logger = Logger.getLogger(false)
     logger.warn('test4')
-    expect(spy).not.toHaveBeenCalled()
+    expect(console.warn).not.toHaveBeenCalled()
   })
 
   it('errors in verbose mode', () => {
-    spy = jest.spyOn(console, 'error')
     let logger = Logger.getLogger(true)
     logger.error('test5')
-    expect(spy).toHaveBeenCalled()
+    expect(console.error).toHaveBeenCalled()
   })
 
   it('does error if not in verbose mode', () => {
-    spy = jest.spyOn(console, 'error')
     let logger = Logger.getLogger(false)
     logger.error('test6')
-    expect(spy).toHaveBeenCalled()
-  })
-
-  afterEach(() => {
-    spy.mockReset()
-    spy.mockRestore()
+    expect(console.error).toHaveBeenCalled()
   })
 })

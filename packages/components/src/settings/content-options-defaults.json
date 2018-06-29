@@ -92,6 +92,28 @@
           "text": "Normal"
         }
       ]
+    },
+    "lookupLanguage": {
+      "defaultValue": "lat",
+      "labelText": "Page language:",
+      "values": [
+        {
+          "value": "lat",
+          "text": "Latin"
+        },
+        {
+          "value": "grc",
+          "text": "Greek"
+        },
+        {
+          "value": "ara",
+          "text": "Arabic"
+        },
+        {
+          "value": "per",
+          "text": "Persian"
+        }
+      ]
     }
   }
 }

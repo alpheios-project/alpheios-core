@@ -1,7 +1,7 @@
 import LexicalQuery from './lexical-query.js'
 import { Constants } from 'alpheios-data-models'
 
-import {LemmaTranslations} from 'alpheios-lemma-client'
+// import {LemmaTranslations} from 'alpheios-lemma-client'
 import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
 import {Lexicons} from 'alpheios-lexicon-client'
 
@@ -30,7 +30,7 @@ export default class LexicalQueryLookup extends LexicalQuery {
       maAdapter: new AlpheiosTuftsAdapter(),
       lexicons: Lexicons,
 
-      lemmaTranslations: LemmaTranslations,
+      lemmaTranslations: null,
 
       resourceOptions: resourceOptions,
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized

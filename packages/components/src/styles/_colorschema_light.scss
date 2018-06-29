@@ -2,6 +2,10 @@ div.alpheios-color_schema_light_class {
 	background: $alpheios-color_schema_light_background;
 	color: $alpheios-color_schema_light_color;
 
+	a, div, p, span {
+		color: $alpheios-color_schema_light_text_color;
+	}
+
 	.uk-form-label,
 	h3,
 	.alpheios-info .alpheios-info__helptext p,
@@ -61,5 +65,10 @@ div.alpheios-color_schema_light_class {
 	}
 	.alph_tooltip-left::after {
 		border-color: transparent transparent transparent $alpheios-tooltip-color;
+	}
+
+	.alpheios-morph__dictentry .lemma_index {
+		color: $alpheios-white-color;
+		background: $alpheios-toolbar-color;
 	}
 }

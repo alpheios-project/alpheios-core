@@ -1,0 +1,67 @@
+  @mixin multiselect-class() {
+    .multiselect {
+      max-width: 250px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .multiselect__content-wrapper {
+      border: 1px solid $alpheios-multiselect-border;
+      border-top: 0;
+    }
+    ul.multiselect__content {
+      padding: 0;
+      margin: 0;
+    }
+
+    .multiselect__tags {
+      border-radius: 2px;
+      border: 1px solid $alpheios-multiselect-border;
+    }
+
+    .multiselect__select {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%201%209%206%2015%206%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%2013%209%208%2015%208%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E%0A");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+
+      width: 25px;
+      height: 30px;
+    }
+
+    .multiselect__select::before {
+      display: none;
+    }
+
+    .multiselect__option::after {
+      display: none;
+    }
+
+    .multiselect__option--highlight,
+    .multiselect__tag,
+    .multiselect__tag-icon:focus, 
+    .multiselect__tag-icon:hover {
+      background: $alpheios-multiselect-background;
+    }
+
+    .multiselect__option--highlight span,
+    .multiselect__tag span,
+    .multiselect__tag-icon:focus span, 
+    .multiselect__tag-icon:hover span {
+      color: $alpheios-multiselect-color;
+    }
+    
+    .multiselect__tag-icon:after {
+      content: "\D7";
+      color: $alpheios-multiselect-color;
+      font-size: 13.4px;
+    }
+}
+
+.#{$alpheios-uikit-namespace}.alpheios-font_large_class,
+.#{$alpheios-uikit-namespace}.alpheios-font_medium_class, 
+.#{$alpheios-uikit-namespace}.alpheios-font_small_class,
+.#{$alpheios-uikit-namespace}.alpheios-color_schema_light_class,
+.#{$alpheios-uikit-namespace}.alpheios-color_schema_dark_class {
+  @include multiselect-class();
+}

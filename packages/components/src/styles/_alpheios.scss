@@ -4,12 +4,15 @@ $alpheios-irregular-base-font-class: 'alpheios-irregular-base-font-size';
 $alpheios-font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 $alpheios-base-font-size: 16px;
 
+$alpheios-white-color: #fff;
+
 $alpheios-logo-color: #BCE5F0;
 $alpheios-tools-color: #0E2233;
 $alpheios-icon-color: #73CDDE;
 $alpheios-toolbar-color: #4E6476;
 $alpheios-toolbar-active-color: #7E8897;
 $alpheios-headers-color: #333333;
+$alpheios-uitext-color: #333333;
 $alpheios-link-color: #3E8D9C;
 $alpheios-link-color-dark-bg: #D1D1D0;
 $alpheios-link-color-dark-bg-disabled: #9E9C9A;
@@ -20,6 +23,10 @@ $alpheios-sidebar-header-border-color: #B8B7B5;
 
 $alpheios-highlight-color: #F6D918;
 $alpheios-highlight-dark-color: #E49A0D;
+
+$alpheios-multiselect-background: $alpheios-toolbar-color;
+$alpheios-multiselect-border: $alpheios-copy-color;
+$alpheios-multiselect-color: $alpheios-white-color;
 
 /*************** font sizes **************/
 $alpheios-small-font-size: 12px;
@@ -38,6 +45,8 @@ $alpheios-color_schema_dark_background_hover: #686868;
 $alpheios-color_schema_light_background: #fff;
 $alpheios-color_schema_light_color: #0e2233;
 $alpheios-color_schema_light_link_color: #3e8d9c;
+
+$alpheios-color_schema_light_text_color: $alpheios-uitext-color;
 
 $alpheios-color_schema_light_table_border: #0e2233;
 $alpheios-color_schema_light_background_hover: #d3d3d3;

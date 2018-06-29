@@ -209,8 +209,8 @@
 
   .alpheios-morph__linkedattr {
     color: $alpheios-link-color;
-  	font-weight: bold;
-  	cursor: pointer;
+    font-weight: bold;
+    cursor: pointer;
     padding-right: .25em;
   }
 
@@ -225,18 +225,6 @@
   .alpheios-morph__inflset {
       margin-left: .5em;
       margin-top: .5em;
-  }
-
-  .alpheios-morph__inflset h5 {
-      display: none;
-      font-size: $alpheios-base-font-size;
-      line-height: 1;
-      margin-bottom: .5em;
-  }
-
-  .alpheios-morph__inflset:first-child h5 {
-      color: $alpheios-toolbar-color;
-      display: block;
   }
 
   .alpheios-morph__morphdata {
