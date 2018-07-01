@@ -18,7 +18,7 @@
         <alph-setting :data="lookupLanguage" @change="settingChange" :classes="['alpheios-panel__options-item']"></alph-setting>
 
         <alph-setting :data="lexicon" @change="resourceSettingChange" :classes="['alpheios-panel__options-item']"
-         v-for="lexicon in lexiconsFiltered"/></alph-setting>
+         v-for="lexicon in lexiconsFiltered"></alph-setting>
       </div>
     </div>
   </div>

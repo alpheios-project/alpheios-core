@@ -14,6 +14,8 @@
 </template>
 <script>
   import Multiselect from 'vue-multiselect'
+  import "vue-multiselect-css";
+
   export default {
     name: 'Setting',
     components: {
@@ -74,7 +76,6 @@
   }
 </script>
 <style lang="scss">
-  @import "vue-multiselect-css";
   @import "../styles/alpheios";
 
   .alpheios-setting__label {

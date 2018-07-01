@@ -98,7 +98,7 @@
   // Embeddable SVG icons
   import CloseIcon from '../images/inline-icons/close.svg'
 
-  import { directive as onClickaway } from '@/directives/clickaway.js';
+  import { directive as onClickaway } from '../directives/clickaway.js';
 
   export default {
     name: 'Popup',

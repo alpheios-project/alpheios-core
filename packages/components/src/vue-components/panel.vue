@@ -188,7 +188,7 @@
   import TreebankIcon from '../images/inline-icons/sitemap.svg';
   import InfoIcon from '../images/inline-icons/info.svg';
 
-  import { directive as onClickaway } from '@/directives/clickaway.js';
+  import { directive as onClickaway } from '../directives/clickaway.js';
 
   export default {
     name: 'Panel',
