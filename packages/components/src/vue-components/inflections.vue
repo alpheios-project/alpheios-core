@@ -43,7 +43,8 @@
                 </div>
             </div>
 
-            <div v-show="showExplanatoryHint"
+            <div v-if="data.inflectionData"
+                 v-show="showExplanatoryHint"
                  class="alpheios-inflections__paradigms-expl"
                  v-html="messages.INFLECTIONS_PARADIGMS_EXPLANATORY_HINT.get(data.inflectionData.targetWord)">
             </div>

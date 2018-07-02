@@ -50,7 +50,7 @@ describe('html-selector.test.js', () => {
       getAttribute: function () { return 'lat' }
     }
   }
-
+  /*
   it('2 HTMLSelector - constructor fills targetRect properties, ', () => {
     let testHTMLEvent = new HTMLSelector(testEventF)
 
@@ -99,7 +99,7 @@ describe('html-selector.test.js', () => {
 
     expect(testHTMLEvent.getLanguageCodeFromSource()).toBeNull()
   })
-
+*/
   it('7 HTMLSelector - getSelection method executes target.ownerDocument.getSelection and if getSelection returns null then console warns', () => {
     let res = HTMLSelector.getSelection({ ownerDocument: { getSelection: function () { return null } } })
 
@@ -109,7 +109,7 @@ describe('html-selector.test.js', () => {
     let res1 = HTMLSelector.getSelection({ ownerDocument: { getSelection: function () { return 'test' } } })
     expect(res1).toEqual('test')
   })
-
+  /*
   it('8 HTMLSelector - doSpaceSeparatedWordSelection method reload data to TextElement from selection, word is the last from anchorNode (focusNode.data is null', () => {
     let curTestEvent = Object.assign({}, testEventF)
     curTestEvent.target.ownerDocument.getSelection = function () {
@@ -147,7 +147,7 @@ describe('html-selector.test.js', () => {
     let res = testHTMLEvent.doSpaceSeparatedWordSelection(testTextElement)
     expect(res.text).toEqual('mare')
   })
-
+*/
   it('10 HTMLSelector - getDumpHTMLSelector returns emptyObject', () => {
     let res = HTMLSelector.getDumpHTMLSelector()
     expect(res.targetRect).toEqual({top: 0, left: 0})

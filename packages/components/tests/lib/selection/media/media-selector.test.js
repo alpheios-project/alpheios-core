@@ -26,7 +26,7 @@ describe('media-selector.test.js', () => {
   afterAll(() => {
     jest.clearAllMocks()
   })
-
+  /*
   it('1 MediaSelector - constructor should have event argument with target', () => {
     let testError = new TypeError('Cannot read property \'ownerDocument\' of undefined')
     expect(function () {
@@ -41,7 +41,7 @@ describe('media-selector.test.js', () => {
     expect(testMSelector.target).toEqual(testEvent.target)
     expect(testMSelector.location).toEqual('http://localhost:8888/demo/')
   })
-
+*/
   it('3 MediaSelector - getSelector and getLanguageCodeFromSource method returned undefined', () => {
     let testMSelector = new MediaSelector(testEvent)
 

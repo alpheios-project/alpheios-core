@@ -139,7 +139,8 @@ describe('panel.test.js', () => {
 
     expect(cmp.find('.alpheios-panel__content').findAll('.alpheios-panel__tab-panel').length).not.toBeLessThan(7)
 
-    expect(cmp.find('.alpheios-panel__notifications').exists()).toBeFalsy()
+    expect(cmp.find('.alpheios-panel__notifications').exists()).toBeTruthy()
+    expect(cmp.find('.alpheios-panel__notifications').element.style.display).toEqual('none')
   })
 
   it('3 Panel - header tabs buttons', async () => {
@@ -361,8 +362,6 @@ describe('panel.test.js', () => {
 
     expect(cmp.find('.alpheios-panel__tab__info').find('.alpheios-lookup__settings-items').exists()).toBeTruthy()
     expect(cmp.find('.alpheios-panel__tab__info').find('.alpheios-lookup__settings-items').element.style.display).toEqual('none')
-
-    // expect(cmp.find('.alpheios-panel__tab__info').find(Lookup).vm.parentLanguage).toEqual('Latin')
 
     expect(cmp.find('.alpheios-panel__tab__info').find(Info).find('.alpheios-info__versiontext').text().indexOf('Foo name')).toBeGreaterThan(-1)
     expect(cmp.find('.alpheios-panel__tab__info').find(Info).find('.alpheios-info__versiontext').text().indexOf('Foo version')).toBeGreaterThan(-1)

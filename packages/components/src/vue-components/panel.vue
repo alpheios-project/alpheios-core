@@ -131,11 +131,11 @@
                          :classes="['alpheios-panel__options-item']"></setting>
                 <setting :data="data.settings.verboseMode" @change="settingChanged" v-if="data.settings"
                          :classes="['alpheios-panel__options-item']"></setting>
-                <setting :data="data.uiOptions.items.skin" @change="uiOptionChanged" v-if="data.uiOptions"
+                <setting :data="data.uiOptions.items.skin" @change="uiOptionChanged" v-if="data.uiOptions && data.uiOptions.items"
                          :classes="['alpheios-panel__options-item']"></setting>
-                <setting :data="data.uiOptions.items.popup" @change="uiOptionChanged" v-if="data.uiOptions"
+                <setting :data="data.uiOptions.items.popup" @change="uiOptionChanged" v-if="data.uiOptions && data.uiOptions.items"
                          :classes="['alpheios-panel__options-item']"></setting>
-                <setting :data="data.uiOptions.items.panelOnActivate" @change="uiOptionChanged" v-if="data.uiOptions"
+                <setting :data="data.uiOptions.items.panelOnActivate" @change="uiOptionChanged" v-if="data.uiOptions && data.uiOptions.items"
                          :classes="['alpheios-panel__options-item']"></setting>
                 <setting :data="languageSetting" @change="resourceSettingChanged" :classes="['alpheios-panel__options-item']"
                   :key="languageSetting.name"
