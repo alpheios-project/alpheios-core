@@ -57,6 +57,7 @@ export default class LanguageDataset {
     if (!this.pos.has(partOfSpeech)) {
       this.pos.set(partOfSpeech, new InflectionSet(partOfSpeech))
     }
+
     this.pos.get(partOfSpeech).addInflectionItem(item)
   }
 
@@ -124,6 +125,7 @@ export default class LanguageDataset {
       }
       return acc
     }, [])
+
     let result = (matches.length === matchList.length)
     return { fullMatch: result, matchedItems: matches }
   }
@@ -146,6 +148,7 @@ export default class LanguageDataset {
     for (let lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
         let partOfSpeech = inflection[GrmFeature.types.part]
+
         if (!partOfSpeech) {
           throw new Error('Part of speech data is missing in an inflection')
         }
@@ -275,13 +278,13 @@ export default class LanguageDataset {
         }
       }
     }
-
     return result
   }
 
   hasMatchingForms (partOfSpeech, inflection) {
     if (this.pos.has(partOfSpeech)) {
       let inflectionSet = this.pos.get(partOfSpeech)
+
       if (inflectionSet.types.has(Form)) {
         return inflectionSet.types.get(Form).items.find(item => this.matcher([inflection], item)) !== undefined
       }
@@ -319,6 +322,7 @@ export default class LanguageDataset {
 
       // Check for obligatory matches
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item)
+
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
@@ -336,6 +340,7 @@ export default class LanguageDataset {
 
         // There can be only one full match, no need to search any further
         item.match = matchData
+
         return item
       }
       bestMatchData = this.bestMatch(bestMatchData, matchData)

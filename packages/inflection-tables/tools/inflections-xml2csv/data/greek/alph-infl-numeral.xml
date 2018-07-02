@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="file:/C:/work/schemas/inflections.css"?>
+<infl-data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/work/schemas/infl-endings-ungrouped.xsd"
+    xml:lang="greek" footnote="foot-1">
+  <order-table>
+    <order-item attname="hdwd" order="1">εἱς - μία - ἑν (1)</order-item>
+    <order-item attname="hdwd" order="2">δύο (2)</order-item>
+    <order-item attname="hdwd" order="3">τρεῖς - τρία (3)</order-item>
+    <order-item attname="hdwd" order="4">τέτταρες - τέτταρα (4)</order-item>
+    <order-item attname="case" order="1">nominative</order-item>
+    <order-item attname="case" order="2">genitive</order-item>
+    <order-item attname="case" order="3">dative</order-item>
+    <order-item attname="case" order="4">accusative</order-item>
+    <order-item attname="case" order="5">vocative</order-item>
+    <order-item attname="gend" order="2">feminine</order-item>
+    <order-item attname="gend" order="1">masculine</order-item>
+    <order-item attname="gend" order="5">neuter</order-item>
+    <order-item attname="gend" order="3">masculine feminine</order-item>
+    <order-item attname="gend" order="4">masculine feminine neuter</order-item>
+    <order-item attname="type" order="2">regular</order-item>
+    <order-item attname="type" order="3">irregular</order-item>
+    <order-item attname="num" order="1">singular</order-item>
+    <order-item attname="num" order="2">dual</order-item>
+    <order-item attname="num" order="3">plural</order-item>
+  </order-table>
+  <infl-endings>
+    <infl-ending-set
+       num="dual" hdwd="δύο (2)"  case="accusative" gend="masculine feminine neuter">
+        <infl-ending
+            footnote="foot-3"   type="primary regular">δύο</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="δύο (2)"  case="dative" gend="masculine feminine neuter">
+        <infl-ending
+            footnote="foot-2 foot-3"   type="primary regular">δυοῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="δύο (2)"  case="genitive" gend="masculine feminine neuter">
+        <infl-ending
+            footnote="foot-2 foot-3"   type="primary regular">δυοῖν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="dual" hdwd="δύο (2)"  case="nominative" gend="masculine feminine neuter">
+        <infl-ending
+               type="primary regular">δύο</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="accusative" gend="feminine">
+        <infl-ending
+               type="primary regular">μίαν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="dative" gend="feminine">
+        <infl-ending
+               type="primary regular">μιᾷ</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="genitive" gend="feminine">
+        <infl-ending
+               type="primary regular">μιᾶς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="nominative" gend="feminine">
+        <infl-ending
+               type="primary regular">μία</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="accusative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἕνα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="dative" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑνί</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="genitive" gend="masculine">
+        <infl-ending
+               type="primary regular">ἑνός</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="nominative" gend="masculine">
+        <infl-ending
+               type="primary regular">εἷς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular"> ἕν  </infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑνί</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑνός</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="singular" hdwd="εἱς - μία - ἑν (1)"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">ἑν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="accusative" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τέτταρας</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="dative" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τέτταρσι</infl-ending>
+        <infl-ending
+               type="primary regular">τέτταρσιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="genitive" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τεττάρων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="nominative" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τέτταρες</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">τέτταρα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">τέτταρσι</infl-ending>
+        <infl-ending
+               type="primary regular">τέτταρσιν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">τεττάρων</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τέτταρες - τέτταρα (4)"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">τέτταρα</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="accusative" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τρεῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="dative" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τρισί</infl-ending>
+        <infl-ending
+               type="primary regular">τρισίν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="genitive" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τριῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="nominative" gend="masculine feminine">
+        <infl-ending
+               type="primary regular">τρεῖς</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="accusative" gend="neuter">
+        <infl-ending
+               type="primary regular">τρία</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="dative" gend="neuter">
+        <infl-ending
+               type="primary regular">τρισί</infl-ending>
+        <infl-ending
+               type="primary regular">τρισίν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="genitive" gend="neuter">
+        <infl-ending
+               type="primary regular">τριῶν</infl-ending>
+    </infl-ending-set>
+    <infl-ending-set
+       num="plural" hdwd="τρεῖς - τρία (3)"  case="nominative" gend="neuter">
+        <infl-ending
+               type="primary regular">τρία</infl-ending>
+    </infl-ending-set>
+  </infl-endings>
+<footnotes>
+    <footnote id="foot-3">See <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="grammar:smyth:s349">Smyth 349</reflink> D. for irregular uses of Cardinals as (Pro)nouns and as Adjectives</footnote>
+    <footnote id="foot-1">See <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="grammar:smyth:s349">Smyth 349</reflink>, g. The cardinals from 5 to 199 are indeclinable except for the first (units) numeral in 13 and 14  (3 and 4 respectively). Cardinals 200 and up (and all Ordinal #'s) follow the 1st and 2nd Declension Adjective Tables.</footnote>
+    <footnote id="foot-2">See <reflink xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="grammar:smyth:s349">Smyth 349</reflink>, D.  for uses of  δύο, δυοῖν (and δυεῖν) with gen and dat plurals</footnote>
+</footnotes>
+</infl-data>

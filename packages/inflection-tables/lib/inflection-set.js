@@ -40,9 +40,11 @@ export default class InflectionSet {
    */
   addInflectionItems (inflections) {
     let classType = inflections[0].constructor.ClassType
+
     if (!this.types.has(classType)) {
       this.types.set(classType, new Inflections(classType))
     }
+
     this.types.get(classType).addItems(inflections)
   }
 
@@ -57,6 +59,7 @@ export default class InflectionSet {
     if (!(inflectionsObject instanceof Inflections)) {
       throw new Error(`Inflection items object must be of InflectionItems type`)
     }
+
     const type = inflectionsObject.type
     if (!type) {
       throw new Error(`Inflection items must have a valid type`)

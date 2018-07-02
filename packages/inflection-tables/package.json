@@ -30,7 +30,7 @@
     "babyparse": "^0.4.6",
     "coveralls": "^3.0.1",
     "intl-messageformat": "^2.2.0",
-    "jest": "^23.2.0",
+    "jest": "^22.4.4",
     "papaparse": "^4.5.0",
     "raw-loader": "^0.5.1",
     "source-map-loader": "^0.2.3",

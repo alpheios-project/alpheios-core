@@ -35,6 +35,7 @@ export default class Table {
    */
   construct (suffixes) {
     this.suffixes = suffixes
+
     this.tree = this.groupByFeature(suffixes)
     this.headers = this.constructHeaders()
     this.columns = this.constructColumns()
@@ -155,12 +156,11 @@ export default class Table {
    */
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
     let currentFeature = this.features.items[currentLevel]
-
     let groups = []
     for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
       let cellGroup = tree.subgroups[index]
-
       // Iterate until it is the last row feature
+
       if (!currentFeature.isSameType(this.features.lastRowFeature)) {
         let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1)
         if (currentFeature.formsRow) {

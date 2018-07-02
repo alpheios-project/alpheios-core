@@ -570,6 +570,90 @@ const config = {
       }
     },
 
+    numeral: {
+      inputFN: 'alph-infl-numeral.xml',
+      outputSubDir: 'numeral/',
+      forms: {
+        outputFN: 'forms.csv',
+        get outputPath () {
+          return path.join(__dirname, config.greek.outputBaseDir, config.greek.numeral.outputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+          let data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set']
+          let result = []
+
+          for (const group of data) {
+
+            for (const form of group['infl-ending']) {
+              let type = form['_attr']['type']['_value']
+              let primary = ''
+              let typeArray = type.split(' ')
+              if (typeArray.length > 2) {
+                throw new Error('Type value is expected to contain up to two word.')
+              } else if (typeArray.length > 1) {
+                // Array probably contain two values, one of which is 'primary'
+                let primaryIndex = typeArray.indexOf('primary')
+                if (primaryIndex > -1) {
+                  primary = 'primary'
+                  typeArray.splice(primaryIndex, 1)
+                  type = typeArray[0]
+                } else {
+                  throw new Error('Type value is expected to contain up to two words, ' +
+                    'one of them should be "primary".')
+                }
+              }
+
+              let footnote = ''
+              if (form['_attr'].hasOwnProperty('footnote')) {
+                // There can be multiple footnotes separated by spaces
+                footnote = config.greek.numeral.footnotes.normalizeIndex(form['_attr']['footnote']['_value'])
+              }
+
+              result.push({
+                'Form': form['_text'],
+                'Headword': group['_attr']['hdwd']['_value'],
+                'Number': group['_attr']['num']['_value'],
+                'Case': group['_attr']['case']['_value'],
+                'Gender': group['_attr']['gend']['_value'],
+                'Type': type,
+                'Primary': primary,
+                'Footnote': footnote
+              })
+            }
+          }
+          return csvParser.unparse(result)
+        }
+      },
+      
+      footnotes: {
+        outputFN: 'footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.greek.outputBaseDir, config.greek.numeral.outputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          for (let i = 0; i < data.length; i++) {
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': data[i]['_text']
+            })
+          }
+          // Sort result according to index number.
+          result = result.sort((a, b) => parseInt(a.Index, 10) - parseInt(b.Index, 10))
+          return csvParser.unparse(result)
+        }
+      }
+    },
+
     pronoun: {
       inputFiles: [
         { name: 'alph-infl-pronoun-dem.xml', class: 'demonstrative' },
@@ -893,6 +977,7 @@ const POS_ALL = 'all'
 const POS_NOUN = 'noun'
 const POS_PRONOUN = 'pronoun'
 const POS_ADJECTIVE = 'adjective'
+const POS_NUMERAL = 'numeral'
 const POS_VERB = 'verb'
 const POS_LEMMA = 'lemma'
 const POS_PARADIGM = 'paradigm'
@@ -990,6 +1075,15 @@ try {
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
       writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+    }
+
+    // Numeral
+    if (posName === POS_NUMERAL || posName === POS_ALL) {
+      posCfg = lCfg[POS_NUMERAL]
+      data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
+      json = xmlToJSON.parseString(data)
+      writeData(posCfg.forms.get(json), posCfg.forms.outputPath)
       writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 

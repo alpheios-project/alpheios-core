@@ -2,19 +2,26 @@
  * Greek language data module
  */
 import { Constants, Feature, Lemma, FeatureImporter } from 'alpheios-data-models'
-import LanguageDataset from '@lib/language-dataset'
-import ExtendedGreekData from '@lib/extended-greek-data'
-import Suffix from '@lib/suffix.js'
-import Form from '@lib/form.js'
-import Paradigm from '@lib/paradigm.js'
-import nounSuffixesCSV from '@lib/lang/greek/data/noun/suffixes.csv'
-import nounFootnotesCSV from '@lib/lang/greek/data/noun/footnotes.csv'
 
-import adjectiveSuffixesCSV from '@lib/lang/greek/data/adjective/suffixes.csv'
-import adjectiveFootnotesCSV from '@lib/lang/greek/data/adjective/footnotes.csv'
+import LanguageDataset from '../../../lib/language-dataset.js'
+import ExtendedGreekData from '../../../lib/extended-greek-data'
+import Suffix from '../../../lib/suffix.js'
+import Form from '../../../lib/form.js'
+import Paradigm from '../../../lib/paradigm.js'
+import nounSuffixesCSV from './data/noun/suffixes.csv'
+import nounFootnotesCSV from './data/noun/footnotes.csv'
 
-import pronounFormsCSV from '@lib/lang/greek/data/pronoun/forms.csv'
-import pronounFootnotesCSV from '@lib/lang/greek/data/pronoun/footnotes.csv'
+import adjectiveSuffixesCSV from './data/adjective/suffixes.csv'
+import adjectiveFootnotesCSV from './data/adjective/footnotes.csv'
+
+import numeralFormsCSV from './data/numeral/forms.csv'
+import numeralFootnotesCSV from './data/numeral/footnotes.csv'
+
+import pronounFormsCSV from './data/pronoun/forms.csv'
+import pronounFootnotesCSV from './data/pronoun/footnotes.csv'
+
+import GroupFeatureType from '../../../views/lib/group-feature-type.js'
+
 /* import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 import verbSuffixesCSV from './data/verb/suffixes.csv';
@@ -175,6 +182,68 @@ export default class GreekLanguageDataset extends LanguageDataset {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
       this.addInflection(partOfSpeech.value, Suffix, suffixValue, features, extendedLangData)
+    }
+  }
+
+  // For numerals
+  addNumeralForms (partOfSpeech, data) {
+    // An order of columns in a data CSV file
+    // this.numeralGroupingLemmas = ['εἱς - μία - ἑν (1)', 'δύο (2)', 'τρεῖς - τρία (3)', 'τέτταρες - τέτταρα (4)']
+    this.numeralGroupingLemmas = []
+
+    const n = {
+      form: 0,
+      hdwd: 1,
+      number: 2,
+      grmCase: 3,
+      gender: 4,
+      type: 5,
+      primary: 6,
+      footnote: 7
+    }
+
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+      let item = data[i]
+      let form = item[n.form]
+
+      let features = [
+        partOfSpeech,
+        this.features.get(Feature.types.fullForm).createFromImporter(form)
+      ]
+
+      if (item[n.hdwd]) {
+        features.push(this.features.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]))
+
+        if (this.numeralGroupingLemmas.indexOf(item[n.hdwd]) === -1) { this.numeralGroupingLemmas.push(item[n.hdwd]) }
+      }
+
+      if (item[n.number]) { features.push(this.features.get(Feature.types.number).createFromImporter(item[n.number])) }
+      if (item[n.grmCase]) { features.push(this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase])) }
+      if (item[n.gender]) { features.push(this.features.get(Feature.types.gender).createFromImporter(item[n.gender])) }
+      if (item[n.type]) { features.push(this.features.get(Feature.types.type).createFromImporter(item[n.type])) }
+
+      let primary = (item[n.primary] === 'primary')
+
+      if (item[n.footnote]) {
+        // There can be multiple footnote indexes separated by spaces
+        let indexes = item[n.footnote].split(' ')
+        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+      }
+
+      let extendedGreekData = new ExtendedGreekData()
+      extendedGreekData.primary = primary
+      let extendedLangData = {
+        [Constants.STR_LANG_CODE_GRC]: extendedGreekData
+      }
+
+      this.numeralGroupingLemmas.sort((a, b) => {
+        let aN = parseInt(a.match(/[0-9]+/g)[0])
+        let bN = parseInt(b.match(/[0-9]+/g)[0])
+        return aN - bN
+      })
+
+      this.addInflection(partOfSpeech.value, Form, form, features, extendedLangData)
     }
   }
 
@@ -408,6 +477,13 @@ export default class GreekLanguageDataset extends LanguageDataset {
     footnotes = papaparse.parse(pronounFootnotesCSV, {})
     this.addFootnotes(partOfSpeech, Form, footnotes.data)
 
+    // Numerals
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
+    forms = papaparse.parse(numeralFormsCSV, {})
+    this.addNumeralForms(partOfSpeech, forms.data)
+    footnotes = papaparse.parse(numeralFootnotesCSV, {})
+    this.addFootnotes(partOfSpeech, Form, footnotes.data)
+
     // Verbs
     // Paradigms
     const verbParadigmTables = this.constructor.verbParadigmTables
@@ -443,10 +519,17 @@ export default class GreekLanguageDataset extends LanguageDataset {
     return this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : []
   }
 
+  getNumeralGroupingLemmas () {
+    return this.numeralGroupingLemmas
+  }
+
   static getObligatoryMatchList (inflection) {
     if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
       // If it is a pronoun, it must match a grammatical class
       return [Feature.types.grmClass]
+    } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_NUMERAL)) {
+      // If it is a numeral, it must match a part of speach
+      return [Feature.types.part]
     } else if (inflection.constraints.fullFormBased) {
       // Not a pronoun, but the other form-based word
       return [Feature.types.fullForm]
@@ -457,16 +540,34 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   static getOptionalMatchList (inflection) {
-    const featureOptions = [
-      Feature.types.grmCase,
-      Feature.types.declension,
+    let featureOptions = []
+
+    const GEND_MASCULINE_FEMININE = 'masculine feminine'
+    const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'
+    let wideGenders = new Feature(
       Feature.types.gender,
-      Feature.types.number,
-      Feature.types.voice,
-      Feature.types.mood,
-      Feature.types.tense,
-      Feature.types.person
-    ]
+      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
+      this.languageID
+    )
+
+    if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_NUMERAL) || inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
+      featureOptions = [
+        Feature.types.grmCase,
+        new GroupFeatureType(wideGenders, 'Gender'),
+        Feature.types.number
+      ]
+    } else {
+      featureOptions = [
+        Feature.types.grmCase,
+        Feature.types.declension,
+        Feature.types.gender,
+        Feature.types.number,
+        Feature.types.voice,
+        Feature.types.mood,
+        Feature.types.tense,
+        Feature.types.person
+      ]
+    }
     return featureOptions.filter(f => inflection[f])
   }
 }

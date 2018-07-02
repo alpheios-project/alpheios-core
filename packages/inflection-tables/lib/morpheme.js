@@ -125,17 +125,23 @@ export default class Morpheme {
    */
   matchingValues (feature) {
     let matches = []
+
     if (feature && this.features.hasOwnProperty(feature.type)) {
       const morphemeValue = this.features[feature.type]
-      for (const featureValue of feature.values) {
-        if (morphemeValue.values.includes(featureValue)) {
-          matches.push(featureValue)
+
+      if (morphemeValue.value === feature.value) {
+        matches.push(feature.value)
+      } else if (feature.isMultiple) {
+        for (const featureValue of feature.values) {
+          if (morphemeValue.values.includes(featureValue)) {
+            matches.push(featureValue)
+          }
         }
       }
     }
+
     return matches
   }
-
   /**
    * Find feature groups in Suffix.featureGroups that are the same between suffixes provided
    * @param suffixes
