@@ -9482,7 +9482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
 /* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/directives/clickaway.js */ "./directives/clickaway.js");
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../directives/clickaway.js */ "./directives/clickaway.js");
 //
 //
 //
@@ -10090,7 +10090,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lookup.vue */ "./vue-components/lookup.vue");
 /* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
 /* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/directives/clickaway.js */ "./directives/clickaway.js");
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../directives/clickaway.js */ "./directives/clickaway.js");
 //
 //
 //
@@ -10780,6 +10780,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "../node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_multiselect_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect-css */ "../node_modules/vue-multiselect/dist/vue-multiselect.min.css");
+/* harmony import */ var vue_multiselect_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_css__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -10794,6 +10796,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -14932,6 +14936,17 @@ function normalizeComponent (
   }
 }
 
+
+/***/ }),
+
+/***/ "../node_modules/vue-multiselect/dist/vue-multiselect.min.css":
+/*!********************************************************************!*\
+  !*** ../node_modules/vue-multiselect/dist/vue-multiselect.min.css ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -27593,6 +27608,7 @@ class PointerEvt {
     this[type].client.x = clientX
     this[type].client.y = clientY
     this[type].target = target
+    // TODO: Can also use composedPath() as probably a more standard approach
     if (!path) {
       /*
       This is probably an iOS where `event.path` does not exist.
@@ -27665,25 +27681,20 @@ class PointerEvt {
   }
 
   static pointerDownListener (event, domEvt) {
-    console.log(`Pointer down`, domEvt)
     event.setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
   }
 
   static pointerUpListener (event, domEvt) {
     const valid = event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    console.log(`Pointer up, excluded: ${event.end.excluded}`, domEvt)
     if (valid) { event.evtHandler(event) }
   }
 
   static touchStartListener (event, domEvt) {
-    console.log(`Touch start`, domEvt)
     event.setStartPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
   }
 
   static touchEndListener (event, domEvt) {
     const valid = event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
-    console.log(`Touch end, excluded: ${event.end.excluded}`, domEvt)
-
     if (valid) { event.evtHandler(event) }
   }
 
@@ -27691,7 +27702,6 @@ class PointerEvt {
     const valid = event
       .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
       .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    console.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], excluded: ${event.end.excluded}`)
     if (valid) { event.evtHandler(event) }
   }
 
@@ -29416,23 +29426,13 @@ class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
-    // We need to create a selection for a touch position
-
-    // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
-    // moment of writing (2018-05).
-    // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
-    let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
-
     /**
-       * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
-       * So we don't care where an end selector positions would be and set it just to the same position as a start.
-       * Selection methods will determine exact word boundaries and will adjust the selection.
-       */
-    range.setEnd(range.startContainer, range.startOffset)
-
-    let sel = window.getSelection()
-    sel.removeAllRanges()
-    sel.addRange(range)
+     * We need to create a selection for a click or touch position
+     * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
+     * So we don't care where an end selector positions would be and set it just to the same position as a start.
+     * Selection methods (do...WordSelection) will determine exact word boundaries and will adjust the selection.
+     */
+    HTMLSelector.createSelectionFromPoint(this.targetRect.left, this.targetRect.top)
     this.setDataAttributes()
     this.wordSeparator = new Map()
     // A word separator function, when called, will adjust a selection so it will match exact word boundaries
@@ -29459,6 +29459,55 @@ class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default
       console.warn(`No word separator function found for a "${textSelector.model.baseUnit.toString()}" base unit`)
     }
     return textSelector
+  }
+
+  /**
+   * Creates a selection from start and end coordinates. If no end coordinates given,
+   * they will be set to the same position as start point and an empty selection will be created.
+   * @param {number} startX
+   * @param {number} startY
+   * @param {number} endX
+   * @param {number} endY
+   * @return {Range | null} A range if one is successfully created or null in case of failure.
+   */
+  static createSelectionFromPoint (startX, startY, endX = startX, endY = startY) {
+    let doc = window.document
+    let start
+    let end
+    let range = null
+    /*
+      We should use `caretPositionFromPoint` as an ongoing standard but it is not supported in all browsers.
+      As a fallback, we'll use `caretRangeFromPoint`.
+    */
+    if (typeof doc.caretPositionFromPoint === 'function') {
+      start = doc.caretPositionFromPoint(startX, startY)
+      end = doc.caretPositionFromPoint(endX, endY)
+      range = doc.createRange()
+      range.setStart(start.offsetNode, start.offset)
+      range.setEnd(end.offsetNode, end.offset)
+    } else if (typeof doc.caretRangeFromPoint === 'function') {
+      start = doc.caretRangeFromPoint(startX, startY)
+      end = doc.caretRangeFromPoint(endX, endY)
+      range = doc.createRange()
+      range.setStart(start.startContainer, start.startOffset)
+      range.setEnd(end.startContainer, end.startOffset)
+    }
+
+    if (range && typeof window.getSelection === 'function') {
+      let sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+    } else if (typeof doc.body.createTextRange === 'function') {
+      range = doc.body.createTextRange()
+      range.moveToPoint(startX, startY)
+      let endRange = range.duplicate()
+      endRange.moveToPoint(endX, endY)
+      range.setEndPoint('EndToEnd', endRange)
+      range.select()
+    } else {
+      console.warn(`Cannot make a selection as neither getSelection() nor createTextRange() are supported`)
+    }
+    return range
   }
 
   /**

@@ -30,6 +30,7 @@ export default class PointerEvt {
     this[type].client.x = clientX
     this[type].client.y = clientY
     this[type].target = target
+    // TODO: Can also use composedPath() as probably a more standard approach
     if (!path) {
       /*
       This is probably an iOS where `event.path` does not exist.
@@ -102,25 +103,20 @@ export default class PointerEvt {
   }
 
   static pointerDownListener (event, domEvt) {
-    console.log(`Pointer down`, domEvt)
     event.setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
   }
 
   static pointerUpListener (event, domEvt) {
     const valid = event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    console.log(`Pointer up, excluded: ${event.end.excluded}`, domEvt)
     if (valid) { event.evtHandler(event) }
   }
 
   static touchStartListener (event, domEvt) {
-    console.log(`Touch start`, domEvt)
     event.setStartPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
   }
 
   static touchEndListener (event, domEvt) {
     const valid = event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
-    console.log(`Touch end, excluded: ${event.end.excluded}`, domEvt)
-
     if (valid) { event.evtHandler(event) }
   }
 
@@ -128,7 +124,6 @@ export default class PointerEvt {
     const valid = event
       .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
       .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    console.log(`Mouse double click, [x,y]: [${event.end.client.x}, ${event.end.client.y}], excluded: ${event.end.excluded}`)
     if (valid) { event.evtHandler(event) }
   }
 

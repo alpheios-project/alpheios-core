@@ -31,23 +31,13 @@ export default class HTMLSelector extends MediaSelector {
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
-    // We need to create a selection for a touch position
-
-    // Should use `caretPositionFromPoint` as an ongoing standard but it is not supported by Chrome at the
-    // moment of writing (2018-05).
-    // let start = document.caretPositionFromPoint(this.targetRect.left, this.targetRect.top)
-    let range = document.caretRangeFromPoint(this.targetRect.left, this.targetRect.top)
-
     /**
-       * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
-       * So we don't care where an end selector positions would be and set it just to the same position as a start.
-       * Selection methods will determine exact word boundaries and will adjust the selection.
-       */
-    range.setEnd(range.startContainer, range.startOffset)
-
-    let sel = window.getSelection()
-    sel.removeAllRanges()
-    sel.addRange(range)
+     * We need to create a selection for a click or touch position
+     * doSpaceSeparatedWordSelection() uses just a start point of a selection as a base to find word boundaries.
+     * So we don't care where an end selector positions would be and set it just to the same position as a start.
+     * Selection methods (do...WordSelection) will determine exact word boundaries and will adjust the selection.
+     */
+    HTMLSelector.createSelectionFromPoint(this.targetRect.left, this.targetRect.top)
     this.setDataAttributes()
     this.wordSeparator = new Map()
     // A word separator function, when called, will adjust a selection so it will match exact word boundaries
@@ -74,6 +64,55 @@ export default class HTMLSelector extends MediaSelector {
       console.warn(`No word separator function found for a "${textSelector.model.baseUnit.toString()}" base unit`)
     }
     return textSelector
+  }
+
+  /**
+   * Creates a selection from start and end coordinates. If no end coordinates given,
+   * they will be set to the same position as start point and an empty selection will be created.
+   * @param {number} startX
+   * @param {number} startY
+   * @param {number} endX
+   * @param {number} endY
+   * @return {Range | null} A range if one is successfully created or null in case of failure.
+   */
+  static createSelectionFromPoint (startX, startY, endX = startX, endY = startY) {
+    let doc = window.document
+    let start
+    let end
+    let range = null
+    /*
+      We should use `caretPositionFromPoint` as an ongoing standard but it is not supported in all browsers.
+      As a fallback, we'll use `caretRangeFromPoint`.
+    */
+    if (typeof doc.caretPositionFromPoint === 'function') {
+      start = doc.caretPositionFromPoint(startX, startY)
+      end = doc.caretPositionFromPoint(endX, endY)
+      range = doc.createRange()
+      range.setStart(start.offsetNode, start.offset)
+      range.setEnd(end.offsetNode, end.offset)
+    } else if (typeof doc.caretRangeFromPoint === 'function') {
+      start = doc.caretRangeFromPoint(startX, startY)
+      end = doc.caretRangeFromPoint(endX, endY)
+      range = doc.createRange()
+      range.setStart(start.startContainer, start.startOffset)
+      range.setEnd(end.startContainer, end.startOffset)
+    }
+
+    if (range && typeof window.getSelection === 'function') {
+      let sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+    } else if (typeof doc.body.createTextRange === 'function') {
+      range = doc.body.createTextRange()
+      range.moveToPoint(startX, startY)
+      let endRange = range.duplicate()
+      endRange.moveToPoint(endX, endY)
+      range.setEndPoint('EndToEnd', endRange)
+      range.select()
+    } else {
+      console.warn(`Cannot make a selection as neither getSelection() nor createTextRange() are supported`)
+    }
+    return range
   }
 
   /**
