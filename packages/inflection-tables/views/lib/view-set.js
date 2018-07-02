@@ -19,6 +19,8 @@ import GreekNounSimplifiedView from '@views/lang/greek/noun/greek-noun-simplifie
 
 import GreekNumeralView from '@views/lang/greek/numeral/greek-numeral-view.js'
 
+import GreekArticleView from '@views/lang/greek/article/greek-article-view.js'
+
 import GreekAdjectiveView from '@views/lang/greek/adjective/greek-adjective-view.js'
 import GreekAdjectiveSimplifiedView from '@views/lang/greek/adjective/greek-adjective-simplified-view.js'
 
@@ -58,6 +60,7 @@ export default class ViewSet {
           GreekNounView,
           GreekNounSimplifiedView,
           GreekNumeralView,
+          GreekArticleView,
           GreekAdjectiveView,
           GreekAdjectiveSimplifiedView,
           GreekGenderPronounView,

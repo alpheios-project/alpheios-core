@@ -14,6 +14,8 @@ import nounFootnotesCSV from './data/noun/footnotes.csv'
 import adjectiveSuffixesCSV from './data/adjective/suffixes.csv'
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv'
 
+import articleFormsCSV from './data/article/forms.csv'
+
 import numeralFormsCSV from './data/numeral/forms.csv'
 import numeralFootnotesCSV from './data/numeral/footnotes.csv'
 
@@ -182,6 +184,42 @@ export default class GreekLanguageDataset extends LanguageDataset {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
       this.addInflection(partOfSpeech.value, Suffix, suffixValue, features, extendedLangData)
+    }
+  }
+
+  addArticleForms (partOfSpeech, data) {
+    // An order of columns in a data CSV file
+    const n = {
+      form: 0,
+      number: 1,
+      grmCase: 2,
+      gender: 3,
+      type: 4,
+      primary: 5
+    }
+
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+      let item = data[i]
+      let formValue = item[n.form]
+
+      let primary = false
+      let features = [partOfSpeech,
+        this.features.get(Feature.types.number).createFromImporter(item[n.number]),
+        this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
+        this.features.get(Feature.types.gender).createFromImporter(item[n.gender]),
+        this.features.get(Feature.types.type).createFromImporter(item[n.type])]
+      if (item[n.primary] === 'primary') {
+        primary = true
+      }
+
+      let extendedGreekData = new ExtendedGreekData()
+      extendedGreekData.primary = primary
+      let extendedLangData = {
+        [Constants.STR_LANG_CODE_GRC]: extendedGreekData
+      }
+
+      this.addInflection(partOfSpeech.value, Form, formValue, features, extendedLangData)
     }
   }
 
@@ -470,6 +508,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
     footnotes = papaparse.parse(adjectiveFootnotesCSV, {})
     this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
 
+    // Articles
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
+    forms = papaparse.parse(articleFormsCSV, {})
+    this.addArticleForms(partOfSpeech, forms.data)
+
     // Pronouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     forms = papaparse.parse(pronounFormsCSV, {})
@@ -527,7 +570,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
       // If it is a pronoun, it must match a grammatical class
       return [Feature.types.grmClass]
-    } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_NUMERAL)) {
+    } else if ([Constants.POFS_NUMERAL, Constants.POFS_ARTICLE].includes(inflection[Feature.types.part].value)) {
       // If it is a numeral, it must match a part of speach
       return [Feature.types.part]
     } else if (inflection.constraints.fullFormBased) {
@@ -550,7 +593,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       this.languageID
     )
 
-    if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_NUMERAL) || inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
+    if ([Constants.POFS_PRONOUN, Constants.POFS_NUMERAL, Constants.POFS_ARTICLE].includes(inflection[Feature.types.part].value)) {
       featureOptions = [
         Feature.types.grmCase,
         new GroupFeatureType(wideGenders, 'Gender'),

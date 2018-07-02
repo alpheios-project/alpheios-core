@@ -142,6 +142,7 @@ export default class Morpheme {
 
     return matches
   }
+
   /**
    * Find feature groups in Suffix.featureGroups that are the same between suffixes provided
    * @param suffixes

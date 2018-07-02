@@ -224,6 +224,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       if (grammartype) {
         features.push(this.features.get(Feature.types.type).createFromImporter(grammartype))
       }
+
       this.addInflection(partOfSpeech.value, Suffix, suffix, features)
     }
   }
