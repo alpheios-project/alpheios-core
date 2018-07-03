@@ -86,4 +86,23 @@ describe('setting.test.js', () => {
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "data"'))
     expect(console.error).toBeCalledWith(expect.stringContaining('Invalid prop: type check failed for prop "classes". Expected Array, got String.'))
   })
+
+  it('7 Setting - checkbox', () => {
+    let cmp = mount(Setting, {
+      propsData: {
+        data: {
+          boolean: true,
+          currentValue: false,
+          textValues: function () { return [ { text: 'footext1', value: 'foovalue1' }, { text: 'footext2', value: 'foovalue2' } ] },
+          currentTextValue: function () { return [{ text: 'footext1', value: 'foovalue1' }] }
+        }
+      }
+    })
+
+    expect(cmp.vm.checkboxLabel).toEqual('footext1')
+    expect(cmp.vm.selected).toBeFalsy()
+
+    cmp.vm.checkboxClick()
+    expect(cmp.emitted()['change']).toBeTruthy()
+  })
 })

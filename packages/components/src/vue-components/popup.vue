@@ -1,5 +1,5 @@
 <template>
-    <div ref="popup" id="alpheios-popup-inner" class="alpheios-popup auk" v-bind:class="divClasses" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}"
+    <div ref="popup" id="alpheios-popup-inner" class="alpheios-popup auk" v-bind:class="divClasses" :style="mainstyles"
          v-show="visible" :data-notification-visible="data && data.notification && data.notification.visible" v-on-clickaway="attachTrackingClick">
          <alph-tooltip
           tooltipDirection = "left"
@@ -184,6 +184,9 @@
     computed: {
       uiController: function () {
         return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
+      },
+      mainstyles: function () {
+        return Object.assign({left: this.positionLeftDm, top: this.positionTopDm, width: this.widthDm, height: this.heightDm}, this.data ? this.data.styles : {})
       },
       logger: function() {
         let verbMode = false

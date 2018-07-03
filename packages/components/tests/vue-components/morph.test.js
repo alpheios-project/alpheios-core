@@ -47,4 +47,51 @@ describe('morph.test.js', () => {
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "lexemes"'))
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "morphDataReady"'))
   })
+
+  it('4 Morph - check non-required props', () => {
+    let cmp = mount(Morph, {
+      propsData: {
+        lexemes: [],
+        morphDataReady: false,
+        definitions: false,
+        translations: false,
+        linkedfeatures: false
+      }
+    })
+    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Invalid prop: type check failed for prop "definitions"'))
+    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Invalid prop: type check failed for prop "translations"'))
+    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Invalid prop: type check failed for prop "linkedfeatures"'))
+  })
+
+  it('5 Morph - sendFeature', () => {
+    let cmp = mount(Morph, {
+      propsData: {
+        lexemes: [],
+        morphDataReady: false
+      }
+    })
+
+    cmp.vm.sendFeature(false)
+    expect(cmp.emitted()['sendfeature']).toBeTruthy()
+  })
+
+  it('6 Morph - showLexeme', () => {
+    let cmp = mount(Morph, {
+      propsData: {
+        lexemes: [],
+        morphDataReady: false
+      }
+    })
+
+    let testLexeme = {}
+
+    let res = cmp.vm.showLexeme(testLexeme)
+    expect(res).toBeFalsy()
+
+    testLexeme = { isPopulated: jest.fn(() => 'test') }
+    res = cmp.vm.showLexeme(testLexeme)
+
+    expect(testLexeme.isPopulated).toBeCalled()
+    expect(res).toEqual('test')
+  })
 })

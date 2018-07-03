@@ -63,6 +63,46 @@ describe('tooltip.test.js', () => {
     })
 
     expect(cmp.find('.tooltiptext').element.style.color).toEqual('red')
+
+    cmp.setProps({
+      tooltipDirection: 'bottom-wide'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-wide': true })
+
+    cmp.setProps({
+      tooltipDirection: 'bottom-narrow'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-narrow': true })
+
+    cmp.setProps({
+      tooltipDirection: 'bottom-narrow2'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-narrow2': true })
+
+    cmp.setProps({
+      tooltipDirection: 'left'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-left': true })
+
+    cmp.setProps({
+      tooltipDirection: 'right'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-right': true })
+
+    cmp.setProps({
+      tooltipDirection: 'bottom-right'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-right': true })
+
+    cmp.setProps({
+      tooltipDirection: 'top-right'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top-right': true })
+
+    cmp.setProps({
+      tooltipDirection: 'top-left'
+    })
+    expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top-left': true })
   })
 
   it('3 Tooltip - check required props', () => {

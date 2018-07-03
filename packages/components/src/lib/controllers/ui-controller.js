@@ -445,7 +445,10 @@ export default class UIController {
             languageName: ''
           },
           currentLanguage: null,
-          resourceSettings: this.resourceOptions.items
+          resourceSettings: this.resourceOptions.items,
+          styles: {
+            zIndex: this.zIndex
+          }
         },
         panel: this.panel,
         options: this.options,

@@ -159,6 +159,7 @@ export default class HTMLSelector extends MediaSelector {
 
   static getSelection (target) {
     let selection = target.ownerDocument.getSelection()
+
     if (!selection) { console.warn(`Cannot get selection from a document`) }
     return selection
   }
@@ -173,6 +174,7 @@ export default class HTMLSelector extends MediaSelector {
    */
   doSpaceSeparatedWordSelection (textSelector) {
     let selection = HTMLSelector.getSelection(this.target)
+
     let anchor = selection.anchorNode // A node where is a beginning of a selection
     let focus = selection.focusNode // A node where the end of a selection
     let anchorText = anchor.data // A text of an anchor node?
@@ -182,6 +184,7 @@ export default class HTMLSelector extends MediaSelector {
     // in incomplete data - sometimes the anchor text doesn't contain the focus data
     // and sometimes the focus data and anchor text is just whitespaces
     // in these cases we just use the target textContent
+
     if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
       (focus.data && focus.data.match(/^\s*$/))) {
       anchorText = this.target.textContent
