@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Alpheios UI Compononents",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
@@ -115,7 +115,7 @@
     "wrap-range-text": ""
   },
   "engines": {
-    "node": ">= 9.10.1",
+    "node": ">= 10.5.0",
     "npm": ">= 5.6.0"
   },
   "jest": {
