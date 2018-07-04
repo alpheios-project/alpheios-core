@@ -9025,6 +9025,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -9089,6 +9090,7 @@ __webpack_require__.r(__webpack_exports__);
       return settingName
     },
     lexiconsFiltered: function () {
+      console.log(`Lexicons filtered`)
       return this.resourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
     },
     lookupLanguage: function () {
@@ -12031,7 +12033,7 @@ var render = function() {
               ])
             ]
           ),
-          _vm._v(" "),
+          _vm._v("\n  UIController\n  "),
           _vm.uiController
             ? _c("div", { staticClass: "alpheios-lookup__settings" }, [
                 _c(
@@ -12055,9 +12057,10 @@ var render = function() {
                       },
                       on: { change: _vm.settingChange }
                     }),
-                    _vm._v(" "),
+                    _vm._v("\n      Lexicons\n      "),
                     _vm._l(_vm.lexiconsFiltered, function(lexicon) {
                       return _c("alph-setting", {
+                        key: lexicon.name,
                         attrs: {
                           data: lexicon,
                           classes: ["alpheios-panel__options-item"]

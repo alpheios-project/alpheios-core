@@ -1,7 +1,7 @@
 #travis config
 language: node_js
 node_js: 
- - "9.10.1"
+ - "10.5.0"
 notifications:
   slack: alpheiosproject:9WEA6UNyLr3U0bWIJctp1rqS
 jobs:

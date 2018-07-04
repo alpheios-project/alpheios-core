@@ -16,9 +16,8 @@
     <div class="alpheios-lookup__settings" v-if="uiController">
       <div class="alpheios-lookup__settings-items" v-show="showLanguageSettings">
         <alph-setting :data="lookupLanguage" @change="settingChange" :classes="['alpheios-panel__options-item']"></alph-setting>
-
         <alph-setting :data="lexicon" @change="resourceSettingChange" :classes="['alpheios-panel__options-item']"
-         v-for="lexicon in lexiconsFiltered"></alph-setting>
+         v-for="lexicon in lexiconsFiltered" :key="lexicon.name"></alph-setting>
       </div>
     </div>
   </div>
@@ -87,6 +86,7 @@
         return settingName
       },
       lexiconsFiltered: function () {
+        console.log(`Lexicons filtered`)
         return this.resourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
       },
       lookupLanguage: function () {
