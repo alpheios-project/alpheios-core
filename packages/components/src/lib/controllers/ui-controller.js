@@ -13,7 +13,7 @@ import L10n from '../l10n/l10n'
 import Locales from '../../locales/locales'
 import enUS from '../../locales/en-us/messages.json'
 import enGB from '../../locales/en-gb/messages.json'
-import Template from './template.htmlf'
+import Template from '../../templates/template.htmlf'
 import { Grammars } from 'alpheios-res-client'
 import ResourceQuery from '../queries/resource-query'
 

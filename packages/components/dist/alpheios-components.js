@@ -26288,17 +26288,6 @@ class Language {
 
 /***/ }),
 
-/***/ "./lib/controllers/template.htmlf":
-/*!****************************************!*\
-  !*** ./lib/controllers/template.htmlf ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div id=\"alpheios-popup\" >\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @close=\"close\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
-
-/***/ }),
-
 /***/ "./lib/controllers/ui-controller.js":
 /*!******************************************!*\
   !*** ./lib/controllers/ui-controller.js ***!
@@ -26321,8 +26310,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
 /* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _template_htmlf__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./template.htmlf */ "./lib/controllers/template.htmlf");
-/* harmony import */ var _template_htmlf__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_template_htmlf__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../templates/template.htmlf */ "./templates/template.htmlf");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var alpheios_res_client__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alpheios-res-client */ "alpheios-res-client");
 /* harmony import */ var alpheios_res_client__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(alpheios_res_client__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _queries_resource_query__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../queries/resource-query */ "./lib/queries/resource-query.js");
@@ -26381,7 +26370,7 @@ class UIController {
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.manifest = manifest
     const templateDefaults = {
-      html: _template_htmlf__WEBPACK_IMPORTED_MODULE_8___default.a,
+      html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_8___default.a,
       panelId: 'alpheios-panel',
       panelComponents: {
         panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -30145,6 +30134,17 @@ module.exports = "{\r\n  \"domain\": \"alpheios-ui-options\",\r\n  \"items\": {\
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./templates/template.htmlf":
+/*!**********************************!*\
+  !*** ./templates/template.htmlf ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @close=\"close\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
