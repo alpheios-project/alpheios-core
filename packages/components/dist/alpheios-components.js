@@ -8580,6 +8580,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 // Subcomponents
 
@@ -11718,6 +11720,14 @@ var render = function() {
           ],
           1
         ),
+        _vm._v(" "),
+        _vm.selectedView.additionalTitle
+          ? _c(
+              "h4",
+              { staticClass: "alpheios-inflections__additional_title" },
+              [_vm._v(_vm._s(_vm.selectedView.additionalTitle))]
+            )
+          : _vm._e(),
         _vm._v(" "),
         _vm.data.inflectionData
           ? _c("div", {

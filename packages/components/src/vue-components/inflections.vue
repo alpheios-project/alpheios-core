@@ -43,6 +43,8 @@
                 </div>
             </div>
 
+            <h4 class="alpheios-inflections__additional_title" v-if="selectedView.additionalTitle">{{selectedView.additionalTitle}}</h4>
+
             <div v-if="data.inflectionData"
                  v-show="showExplanatoryHint"
                  class="alpheios-inflections__paradigms-expl"
@@ -452,21 +454,27 @@
     @import "../styles/alpheios";
 
     h3.alpheios-inflections__title {
-        font-size: 1.2rem;
         line-height: 1;
         margin: 0 0 0.6rem 0;
         font-weight: 700;
         text-align: center;
     }
 
+    h4.alpheios-inflections__additional_title {
+      line-height: 1.6;
+      font-weight: bold;
+      text-align: left;
+      margin: 0 0 0.6rem 0;
+    }
     .#{$alpheios-uikit-namespace} .uk-select.alpheios-inflections__view-selector {
         height: auto !important;
         max-width: 220px;
         font-size: .625rem;
+        line-height: 1.6;
     }
 
     .auk .uk-button-small.alpheios-inflections__control-btn {
-        line-height: 1.5;
+        line-height: 1.6;
         font-size: .625rem;
     }
 
@@ -476,6 +484,7 @@
         align-items: flex-end;
         justify-content: space-between;
         margin-bottom: 0.6rem;
+        margin-top: 10px;
     }
 
     .alpheios-inflections__form {

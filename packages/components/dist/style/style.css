@@ -7419,7 +7419,8 @@
   color: #333333;
   /** TODO Remove this when we port inflection tables to Vue **/ }
   .auk.alpheios-font_medium_class h3 {
-    font-size: 16px .auk.alpheios-font_medium_class h3 1.25; }
+    font-size: 16px;
+    line-height: 1.25; }
   .auk.alpheios-font_medium_class p, .auk.alpheios-font_medium_class span, .auk.alpheios-font_medium_class div, .auk.alpheios-font_medium_class a {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px;
@@ -7465,6 +7466,11 @@
     font-size: 12px; }
   .auk.alpheios-font_medium_class .infl-cell sup {
     font-size: 10.8px; }
+  .auk.alpheios-font_medium_class .alpheios-inflections__title {
+    font-size: 20px; }
+  .auk.alpheios-font_medium_class .alpheios-inflections__additional_title {
+    font-size: 14px;
+    font-weight: 700; }
   .auk.alpheios-font_medium_class .alpheios-morph__dictentry .lemma_index {
     font-size: 14px;
     line-height: 20.8px;
@@ -7517,7 +7523,8 @@
   color: #333333;
   /** TODO Remove this when we port inflection tables to Vue **/ }
   .auk.alpheios-font_small_class h3 {
-    font-size: 12px .auk.alpheios-font_small_class h3 1.25; }
+    font-size: 12px;
+    line-height: 1.25; }
   .auk.alpheios-font_small_class p, .auk.alpheios-font_small_class span, .auk.alpheios-font_small_class div, .auk.alpheios-font_small_class a {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 12px;
@@ -7563,6 +7570,11 @@
     font-size: 9px; }
   .auk.alpheios-font_small_class .infl-cell sup {
     font-size: 8.1px; }
+  .auk.alpheios-font_small_class .alpheios-inflections__title {
+    font-size: 15px; }
+  .auk.alpheios-font_small_class .alpheios-inflections__additional_title {
+    font-size: 10.5px;
+    font-weight: 700; }
   .auk.alpheios-font_small_class .alpheios-morph__dictentry .lemma_index {
     font-size: 10.5px;
     line-height: 15.6px;
@@ -7615,7 +7627,8 @@
   color: #333333;
   /** TODO Remove this when we port inflection tables to Vue **/ }
   .auk.alpheios-font_large_class h3 {
-    font-size: 20px .auk.alpheios-font_large_class h3 1.25; }
+    font-size: 20px;
+    line-height: 1.25; }
   .auk.alpheios-font_large_class p, .auk.alpheios-font_large_class span, .auk.alpheios-font_large_class div, .auk.alpheios-font_large_class a {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 20px;
@@ -7661,6 +7674,11 @@
     font-size: 15px; }
   .auk.alpheios-font_large_class .infl-cell sup {
     font-size: 13.5px; }
+  .auk.alpheios-font_large_class .alpheios-inflections__title {
+    font-size: 25px; }
+  .auk.alpheios-font_large_class .alpheios-inflections__additional_title {
+    font-size: 17.5px;
+    font-weight: 700; }
   .auk.alpheios-font_large_class .alpheios-morph__dictentry .lemma_index {
     font-size: 17.5px;
     line-height: 26px;
@@ -8778,19 +8796,25 @@ a.infl-supp-tbl__reflink {
 /*************** light schema colors **************/
 /*************** light schema colors tooltip **************/
 h3.alpheios-inflections__title {
-  font-size: 1.2rem;
   line-height: 1;
   margin: 0 0 0.6rem 0;
   font-weight: 700;
   text-align: center;
 }
+h4.alpheios-inflections__additional_title {
+  line-height: 1.6;
+  font-weight: bold;
+  text-align: left;
+  margin: 0 0 0.6rem 0;
+}
 .auk .uk-select.alpheios-inflections__view-selector {
   height: auto !important;
   max-width: 220px;
   font-size: .625rem;
+  line-height: 1.6;
 }
 .auk .uk-button-small.alpheios-inflections__control-btn {
-  line-height: 1.5;
+  line-height: 1.6;
   font-size: .625rem;
 }
 .alpheios-inflections__actions {
@@ -8799,6 +8823,7 @@ h3.alpheios-inflections__title {
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 0.6rem;
+  margin-top: 10px;
 }
 .alpheios-inflections__form {
   font-weight: bold;

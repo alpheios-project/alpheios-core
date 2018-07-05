@@ -5,7 +5,8 @@
     color: $alpheios-uitext-color;
 
     h3 {
-      font-size: $baseFontSize & 1.25;
+      font-size: $baseFontSize;
+      line-height: 1.25;
     }
 
     p,span,div,a {
@@ -79,6 +80,15 @@
     }
     .infl-cell sup {
         font-size: $baseFontSize * 0.675;
+    }
+
+    .alpheios-inflections__title {
+        font-size: $baseFontSize * 1.25;
+    }
+
+    .alpheios-inflections__additional_title {
+        font-size: $baseFontSize * 0.875;
+        font-weight: 700;
     }
 
     .alpheios-morph__dictentry .lemma_index {
