@@ -1,8 +1,8 @@
 import { Constants, LanguageModelFactory, Feature } from 'alpheios-data-models'
-import LanguageDatasetFactory from '../../../lib/language-dataset-factory.js'
-import View from '../../lib/view.js'
-import GroupFeatureType from '../../lib/group-feature-type.js'
-import Table from '../../lib/table.js'
+import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
+import View from '@views/lib/view.js'
+import GroupFeatureType from '@views/lib/group-feature-type.js'
+import Table from '@views/lib/table.js'
 
 export default class LatinView extends View {
   constructor (inflectionData, locale) {

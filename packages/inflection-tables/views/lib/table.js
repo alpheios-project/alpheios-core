@@ -116,7 +116,6 @@ export default class Table {
       ancestorFeatures.push(featureValue)
 
       // Suffixes that are selected for current combination of feature values
-
       let selectedSuffixes = suffixes.filter(s => s.featureMatch(featureValue))
 
       if (currentLevel < this.features.length - 1) {

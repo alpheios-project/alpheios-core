@@ -120,7 +120,9 @@ export default class LanguageDataset {
 
   static checkMatches (matchList, inflection, item) {
     let matches = matchList.reduce((acc, f) => {
-      if (inflection.hasOwnProperty(f) && item.featureMatch(inflection[f])) {
+      if (inflection.hasOwnProperty(f) && item.features.hasOwnProperty(f) && item.featureMatch(inflection[f])) {
+        acc.push(f)
+      } else if (!item.features.hasOwnProperty(f)) {
         acc.push(f)
       }
       return acc
@@ -143,6 +145,7 @@ export default class LanguageDataset {
   getInflectionData (homonym) {
     // Add support for languages
     let result = new InflectionData(homonym)
+
     let inflections = {}
 
     for (let lexeme of homonym.lexemes) {
@@ -237,6 +240,8 @@ export default class LanguageDataset {
             // If it is not full form based, then probably it is suffix base
             inflection.constraints.suffixBased = true
           }
+
+          inflection.constraints.irregularVerb = this.checkIrregularVerb(inflection)
         }
         if (paradigmBased) {
           inflectionSet.addInflectionItems(paradigms)
@@ -278,6 +283,7 @@ export default class LanguageDataset {
         }
       }
     }
+
     return result
   }
 
@@ -316,11 +322,13 @@ export default class LanguageDataset {
      But there could be multiple partial matches. So we should try to find the best match possible and return it.
      a fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
      */
+
     for (let inflection of inflections) {
       let matchData = new MatchData() // Create a match profile
-      matchData.suffixMatch = inflection.compareWithWord(item.value)
+      matchData.suffixMatch = inflection.compareWithWordDependsOnType(item.value, item.constructor.name)
 
       // Check for obligatory matches
+
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item)
 
       if (obligatoryMatches.fullMatch) {
@@ -332,6 +340,7 @@ export default class LanguageDataset {
 
       // Check for optional matches
       const optionalMatches = this.constructor.getOptionalMatches(inflection, item)
+
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
 
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
@@ -385,5 +394,9 @@ export default class LanguageDataset {
     } else {
       return matchB
     }
+  }
+
+  checkIrregularVerb (inflection) {
+    return false
   }
 }

@@ -1,22 +1,22 @@
 /*
  * Latin language data module
  */
-import { Constants, Feature, FeatureImporter } from 'alpheios-data-models'
-import LanguageDataset from '../../../lib/language-dataset.js'
-import Suffix from '../../../lib/suffix.js'
-import Form from '../../../lib/form.js'
-import nounSuffixesCSV from './data/noun/suffixes.csv'
-import nounFootnotesCSV from './data/noun/footnotes.csv'
-import pronounFormsCSV from './data/pronoun/forms.csv'
-import pronounFootnotesCSV from './data/pronoun/footnotes.csv'
-import adjectiveSuffixesCSV from './data/adjective/suffixes.csv'
-import adjectiveFootnotesCSV from './data/adjective/footnotes.csv'
-import verbSuffixesCSV from './data/verb/suffixes.csv'
-import verbFootnotesCSV from './data/verb/footnotes.csv'
-import verbFormsCSV from './data/verb/forms.csv'
-import verbFormFootnotesCSV from './data/verb/form_footnotes.csv'
-import verbParticipleSuffixesCSV from './data/participle/suffixes.csv'
-import verbSupineSuffixesCSV from './data/supine/suffixes.csv'
+import { Constants, Feature, FeatureImporter, Lemma } from 'alpheios-data-models'
+import LanguageDataset from '@lib/language-dataset.js'
+import Suffix from '@lib/suffix.js'
+import Form from '@lib/form.js'
+import nounSuffixesCSV from '@lib/lang/latin/data/noun/suffixes.csv'
+import nounFootnotesCSV from '@lib/lang/latin/data/noun/footnotes.csv'
+import pronounFormsCSV from '@lib/lang/latin/data/pronoun/forms.csv'
+import pronounFootnotesCSV from '@lib/lang/latin/data/pronoun/footnotes.csv'
+import adjectiveSuffixesCSV from '@lib/lang/latin/data/adjective/suffixes.csv'
+import adjectiveFootnotesCSV from '@lib/lang/latin/data/adjective/footnotes.csv'
+import verbSuffixesCSV from '@lib/lang/latin/data/verb/suffixes.csv'
+import verbFootnotesCSV from '@lib/lang/latin/data/verb/footnotes.csv'
+import verbFormsCSV from '@lib/lang/latin/data/verb/forms.csv'
+import verbFormFootnotesCSV from '@lib/lang/latin/data/verb/form_footnotes.csv'
+import verbParticipleSuffixesCSV from '@lib/lang/latin/data/participle/suffixes.csv'
+import verbSupineSuffixesCSV from '@lib/lang/latin/data/supine/suffixes.csv'
 import papaparse from 'papaparse'
 
 /*
@@ -30,6 +30,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     this.features = this.model.typeFeatures
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], LatinLanguageDataset.languageID))
     this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], LatinLanguageDataset.languageID))
+    this.features.set(Feature.types.hdwd, new Feature(Feature.types.hdwd, [], LatinLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
     for (let feature of this.features.values()) {
@@ -224,7 +225,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
       if (grammartype) {
         features.push(this.features.get(Feature.types.type).createFromImporter(grammartype))
       }
-
       this.addInflection(partOfSpeech.value, Suffix, suffix, features)
     }
   }
@@ -273,19 +273,33 @@ export default class LatinLanguageDataset extends LanguageDataset {
   // for Lemmas
   addVerbForms (partOfSpeech, data) {
     // First row are headers
+    this.verbsIrregularLemmas = []
+
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      let lemma = item[0]
-      // let principalParts = item[1].split(/_/)
+      let hdwd = item[0]
+      let principalParts = item[1].split(/_/)
+      let lemma = new Lemma(hdwd, LatinLanguageDataset.languageID, principalParts)
+
       let form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
       let features = [
-        partOfSpeech,
-        this.features.get(Feature.types.fullForm).createFromImporter(lemma)
+        partOfSpeech/*,
+        this.features.get(Feature.types.fullForm).createFromImporter(lemma.word) */
       ]
+
+      if (hdwd && lemma) {
+        features.push(this.features.get(Feature.types.hdwd).createFromImporter(hdwd))
+        if (this.verbsIrregularLemmas.filter(item => item.word === lemma.word).length === 0) {
+          this.verbsIrregularLemmas.push(lemma)
+        }
+      }
+
       if (item[3]) {
         features.push(this.features.get(Feature.types.voice).createFromImporter(item[3]))
+      } else {
+        features.push(this.features.get(Feature.types.voice).createFromImporter('-'))
       }
       if (item[4]) {
         features.push(this.features.get(Feature.types.mood).createFromImporter(item[4]))
@@ -348,10 +362,13 @@ export default class LatinLanguageDataset extends LanguageDataset {
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     suffixes = papaparse.parse(verbSuffixesCSV, {})
     this.addVerbSuffixes(partOfSpeech, suffixes.data)
+
     footnotes = papaparse.parse(verbFootnotesCSV, {})
     this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
+
     forms = papaparse.parse(verbFormsCSV, {})
     this.addVerbForms(partOfSpeech, forms.data)
+
     footnotes = papaparse.parse(verbFormFootnotesCSV, {})
     this.addFootnotes(partOfSpeech, Form, footnotes.data)
 
@@ -359,6 +376,10 @@ export default class LatinLanguageDataset extends LanguageDataset {
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
     suffixes = papaparse.parse(verbParticipleSuffixesCSV, {})
     this.addVerbParticipleSuffixes(partOfSpeech, suffixes.data)
+
+    // Verb Participles from irregular verbs
+    forms = papaparse.parse(verbFormsCSV, {})
+    this.addVerbForms(partOfSpeech, forms.data)
 
     // Verb Supine
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_SUPINE)
@@ -369,8 +390,17 @@ export default class LatinLanguageDataset extends LanguageDataset {
     return this
   }
 
+  checkIrregularVerb (inflection) {
+    if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE].includes(inflection[Feature.types.part].value) && inflection[Feature.types.word]) {
+      return this.verbsIrregularLemmas.filter(item => item.word === inflection[Feature.types.word].value).length > 0
+    }
+    return false
+  }
+
   static getObligatoryMatchList (inflection) {
-    if (inflection.constraints.fullFormBased) {
+    if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_VERB)) {
+      return [Feature.types.part]
+    } else if (inflection.constraints.fullFormBased) {
       return [Feature.types.fullForm]
     } else {
       // Default value for suffix matching
@@ -387,8 +417,21 @@ export default class LatinLanguageDataset extends LanguageDataset {
       Feature.types.voice,
       Feature.types.mood,
       Feature.types.tense,
-      Feature.types.person
+      Feature.types.person,
+      Feature.types.conjugation
     ]
-    return featureOptions.filter(f => inflection[f])
+
+    if (inflection.constraints.irregularVerb) {
+      return [
+        Feature.types.mood,
+        Feature.types.tense,
+        Feature.types.number,
+        Feature.types.person,
+        Feature.types.voice,
+        Feature.types.conjugation
+      ]
+    } else {
+      return featureOptions.filter(f => inflection[f])
+    }
   }
 }
