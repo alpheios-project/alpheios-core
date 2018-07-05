@@ -1,17 +1,11 @@
 /* eslint-env jest */
 'use strict'
-import * as Constants from '../src/constants.js'
-import LanguageModelFactory from '../src/language_model_factory.js'
-import Inflection from '../src/inflection.js'
-import Feature from '../src/feature.js'
+import * as Constants from '@/constants.js'
+import LanguageModelFactory from '@/language_model_factory.js'
+import Inflection from '@/inflection.js'
+import Feature from '@/feature.js'
 
 describe('Language Model object', () => {
-  test('groupForDisplay', () => {
-    // A fake test to match a requirement of test suite containing only one test
-    let something = true
-    expect(something).toBeTruthy()
-  })
-
   test('groupForDisplay', () => {
     let basemodel = LanguageModelFactory.getLanguageModel(Constants.LANG_LATIN)
     let one = new Inflection('nat', Constants.LANG_LATIN, 'urae', null, null)

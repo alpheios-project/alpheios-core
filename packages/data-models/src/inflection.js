@@ -109,6 +109,25 @@ class Inflection {
     }
   }
 
+  compareWithWordDependsOnType (word, className, normalize = true) {
+    const model = LMF.getLanguageModel(this.languageID)
+    let value
+
+    if (!this.constraints.irregularVerb) {
+      value = this.constraints.suffixBased ? this.suffix : this.form
+    } else {
+      if (className === 'Suffix') {
+        value = this.suffix
+      } else {
+        value = this[Feature.types.fullForm] ? this[Feature.types.fullForm].value : this.form
+      }
+    }
+
+    return normalize
+      ? model.normalizeWord(value) === model.normalizeWord(word)
+      : value === word
+  }
+
   compareWithWord (word, normalize = true) {
     const model = LMF.getLanguageModel(this.languageID)
     const value = this.constraints.suffixBased ? this.suffix : this.form

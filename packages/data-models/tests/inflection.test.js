@@ -1,57 +1,77 @@
 /* eslint-env jest */
-'use strict'
-import Inflection from '../src/inflection.js'
-import Feature from '../src/feature.js'
-import * as Constants from '../src/constants.js'
+/* eslint-disable no-unused-vars */
+import Inflection from '@/inflection.js'
+import Feature from '@/feature.js'
+import * as Constants from '@/constants.js'
 
-describe('Inflection object', () => {
-  let inflection, grc
+describe('inflection.test.js', () => {
+  console.error = function () {}
+  console.log = function () {}
+  console.warn = function () {}
 
-  beforeAll(() => {
-    // Create a test environment
-    grc = Constants.STR_LANG_CODE_GRC
-    inflection = new Inflection('stem', grc)
+  beforeEach(() => {
+    jest.spyOn(console, 'error')
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'warn')
+  })
+  afterEach(() => {
+    jest.resetModules()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
   })
 
-  test('Should be initialized properly', () => {
-    expect(inflection).toEqual({
-      stem: 'stem',
-      suffix: null,
-      prefix: null,
-      example: null,
+  it('1 Inflection - check required arguments for Inflection constructor', () => {
+    expect(function () {
+      let l = new Inflection()
+      console.log(l)
+    }).toThrowError(/stem or suffix must be defined/)
 
-      languageCode: grc,
-      languageID: Constants.LANG_GREEK,
-      model: expect.anything(),
-      constraints: {
-        fullFormBased: false,
-        suffixBased: false,
-        obligatoryMatches: expect.arrayContaining([]),
-        optionalMatches: expect.arrayContaining([])
-      }
-    })
+    expect(function () {
+      let l = new Inflection('foo')
+      console.log(l)
+    }).toThrowError(/Language should not be empty/)
+
+    expect(function () {
+      let l = new Inflection('foo', 'foolang')
+      console.log(l)
+    }).toThrowError(/language foolang not supported/)
+
+    expect(function () {
+      let l = new Inflection(null, 'grc', 'foo')
+      console.log(l)
+    }).not.toThrowError()
   })
 
-  // grm": {"fullFormBased": false, "suffixBased": false}
-
-  test('Should not allow empty language', () => {
-    expect(() => new Inflection('stem', '')).toThrowError(/empty/)
+  it('2 Inflection - form should work with a stem only', () => {
+    let inflection = new Inflection('stem', 'grc')
+    expect(inflection.form).toEqual('stem')
   })
 
-  test('Should not allow empty stem and suffix', () => {
-    expect(() => new Inflection(null, grc, null)).toThrowError(/stem or suffix/)
+  it('3 Inflection - form should work with a stem and suffix', () => {
+    let inflection = new Inflection('stem', 'grc', 'suffix')
+    expect(inflection.form).toEqual('stem - suffix')
   })
 
-  test('Should allow empty stem if suffix', () => {
-    expect(() => new Inflection(null, grc, 'suff')).not.toThrowError()
+  it('4 Inflection - form should work with a stem and prefix', () => {
+    let inflection = new Inflection('stem', 'grc', null, 'pref')
+    expect(inflection.form).toEqual('pref - stem')
   })
 
-  test('Should not allow unsupported languages', () => {
-    expect(() => new Inflection('stem', 'egyptian')).toThrowError(/not supported/) // eslint-disable-line  no-return-assign
+  it('5 Inflection - form should work with a suffix only', () => {
+    let inflection = new Inflection(null, 'grc', 'suff')
+    expect(inflection.form).toEqual('suff')
   })
 
-  test('feature method should add a single feature to the inflection', () => {
+  it('6 Inflection - form should work with a suffix only', () => {
+    let inflection = new Inflection(null, 'grc', 'suff')
+    expect(inflection.form).toEqual('suff')
+  })
+
+  it('7 Inflection - feature method should add a single feature to the inflection', () => {
+    let inflection = new Inflection('foo', 'grc')
     inflection.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK))
+
     expect(inflection).toMatchObject({
       gender: {
         languageID: Constants.LANG_GREEK,
@@ -61,40 +81,138 @@ describe('Inflection object', () => {
     })
   })
 
-  test('form should work with a stem only', () => {
-    expect(inflection.form).toEqual('stem')
+  it('8 Inflection - feature method should throw an error if no arguments are provided', () => {
+    let inflection = new Inflection('foo', 'grc')
+
+    expect(() => inflection.addFeature('')).toThrowError('feature data cannot be empty')
   })
 
-  test('form should work with a stem and suffix', () => {
-    inflection = new Inflection('stem', grc, 'suff')
-    expect(inflection.form).toEqual('stem - suff')
+  it('9 Inflection - feature method should throw an error if argument(s) are of the wrong type', () => {
+    let inflection = new Inflection('foo', 'grc')
+
+    expect(() => inflection.addFeature('some value')).toThrowError('feature data must be a Feature object')
   })
 
-  test('form should work with a stem and prefix', () => {
-    inflection = new Inflection('stem', grc, null, 'pref')
-    expect(inflection.form).toEqual('pref - stem')
+  it('10 Inflection - feature method should not allow a feature language to be different from a language of an inflection', () => {
+    let inflection = new Inflection('foo', 'grc')
+
+    expect(() => inflection.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_LATIN))).toThrowError('does not match a language')
   })
 
-  test('form should work with a suffix only', () => {
-    inflection = new Inflection(null, grc, 'suff')
-    expect(inflection.form).toEqual('suff')
+  it('11 Inflection - setConstraints method adds constraints to inflection based on features and language', () => {
+    let inflection = new Inflection('foo', 'grc')
+
+    expect(inflection.constraints.fullFormBased).toBeFalsy()
+    expect(inflection.constraints.suffixBased).toBeFalsy()
+    expect(inflection.constraints.pronounClassRequired).toBeUndefined()
+
+    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_NUMERAL, Constants.LANG_GREEK))
+    inflection.setConstraints()
+
+    expect(inflection.constraints.fullFormBased).toBeTruthy()
+    expect(inflection.constraints.pronounClassRequired).toBeFalsy()
   })
 
-  test('feature method should throw an error if no arguments are provided', () => {
-    expect(() => inflection.addFeature('')).toThrowError(/empty/) // eslint-disable-line no-return-assign
+  it('12.1 Inflection - compare with word suffixBased', () => {
+    let inflection1 = new Inflection('stem', 'grc', 'suffix')
+
+    inflection1.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_GREEK))
+    inflection1.setConstraints()
+
+    expect(inflection1.compareWithWord('foo')).toBeFalsy()
+    expect(inflection1.compareWithWord('suffix')).toBeTruthy()
   })
 
-  test('feature method should throw an error if argument(s) are of the wrong type', () => {
-    expect(() => inflection.addFeature('some value')).toThrowError(/Feature/) // eslint-disable-line no-return-assign
+  it('12.2 Inflection - compare with word formBased', () => {
+    let inflection2 = new Inflection('stem', 'grc', 'suffix')
+
+    inflection2.addFeature(new Feature(Feature.types.part, Constants.POFS_NUMERAL, Constants.LANG_GREEK))
+    inflection2.setConstraints()
+
+    expect(inflection2.compareWithWord('suffix')).toBeFalsy()
+    expect(inflection2.compareWithWord('stem - suffix')).toBeTruthy()
   })
 
-  test('feature method should not allow a feature language to be different from a language of an inflection', () => {
-    expect(() => inflection.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_LATIN))) // eslint-disable-line no-return-assign
-      .toThrowError(/not match/)
+  it('13 Inflection - readObject from JSON', () => {
+    let testJSON = {
+      stem: 'stem',
+      languageCode: 'lat',
+      suffix: 'suffix'
+    }
+
+    let inflection = Inflection.readObject(testJSON)
+
+    expect(inflection).toBeInstanceOf(Inflection)
+    expect(inflection.stem).toEqual('stem')
+    expect(inflection.suffix).toEqual('suffix')
+    expect(inflection.languageID).toEqual(Constants.LANG_LATIN)
   })
 
-  afterAll(() => {
-    // Clean a test environment up
-    inflection = undefined
+  it('14 Inflection - compareWithWordDependsOnType for non-verbs', () => {
+    let inflection = new Inflection('stem', 'lat', 'suffix')
+
+    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
+    inflection.setConstraints()
+
+    expect(inflection.compareWithWordDependsOnType('suffix', 'Suffix')).toBeTruthy()
+  })
+
+  it('15 Inflection - compareWithWordDependsOnType for only regular verb with suffix', () => {
+    let inflection = new Inflection('stem', 'lat', 'suffix')
+
+    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    inflection.setConstraints()
+
+    expect(inflection.compareWithWordDependsOnType('suffix', 'Suffix')).toBeTruthy()
+  })
+
+  it('16 Inflection - compareWithWordDependsOnType for irregular verb with suffix', () => {
+    let inflection = new Inflection('stem', 'lat', 'suffix')
+
+    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    inflection.setConstraints()
+    inflection.constraints.irregularVerb = true
+
+    expect(inflection.compareWithWordDependsOnType('suffix', 'Suffix')).toBeTruthy()
+  })
+
+  it('17 Inflection - compareWithWordDependsOnType for irregular verb with fullForm with form', () => {
+    let inflection = new Inflection('stem', 'lat', 'suffix')
+
+    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    inflection.addFeature(new Feature(Feature.types.fullForm, 'stemsuffix', Constants.LANG_LATIN))
+    inflection.setConstraints()
+    inflection.constraints.irregularVerb = true
+
+    expect(inflection.compareWithWordDependsOnType('stemsuffix', 'Form')).toBeTruthy()
+  })
+
+  it('18 Inflection - compareWithWordDependsOnType for irregular verb without fullForm with form', () => {
+    let inflection = new Inflection('stem', 'lat', 'suffix')
+
+    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    inflection.setConstraints()
+    inflection.constraints.irregularVerb = true
+
+    expect(inflection.compareWithWordDependsOnType('stem - suffix', 'Form')).toBeTruthy()
+  })
+
+  it('19 Inflection - hasFeatureValue', () => {
+    let inflection = new Inflection('stem', 'lat', 'suffix')
+    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+
+    expect(inflection.hasFeatureValue(Feature.types.part, Constants.POFS_VERB)).toBeTruthy()
+    expect(inflection.hasFeatureValue(Feature.types.fullForm, 'foo')).toBeFalsy()
+  })
+
+  it('20 Inflection - addFeatures', () => {
+    let inflection = new Inflection('stem', 'lat', 'suffix')
+
+    expect(() => { inflection.addFeatures('foo') }).toThrowError(/must be in an array/)
+
+    inflection.addFeatures([new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN), new Feature(Feature.types.fullForm, 'foo', Constants.LANG_LATIN)])
+
+    expect(inflection.hasFeatureValue(Feature.types.part, Constants.POFS_VERB)).toBeTruthy()
+    expect(inflection.hasFeatureValue(Feature.types.fullForm, 'foo')).toBeTruthy()
   })
 })

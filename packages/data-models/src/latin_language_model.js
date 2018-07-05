@@ -108,7 +108,9 @@ export default class LatinLanguageModel extends LanguageModel {
   }
 
   static get typeFeatures () {
-    if (!typeFeaturesInitialized) { this.initTypeFeatures() }
+    if (!typeFeaturesInitialized) {
+      this.initTypeFeatures()
+    }
     return typeFeatures
   }
 
@@ -194,7 +196,10 @@ export default class LatinLanguageModel extends LanguageModel {
       pronounClassRequired: false
     }
     if (inflection.hasOwnProperty(Feature.types.part)) {
-      if (inflection[Feature.types.part].value === Constants.POFS_PRONOUN) {
+      if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE].includes(inflection[Feature.types.part].value)) {
+        grammar.fullFormBased = true
+        grammar.suffixBased = true
+      } else if (inflection[Feature.types.part].value === Constants.POFS_PRONOUN) {
         grammar.fullFormBased = true
       } else {
         grammar.suffixBased = true
