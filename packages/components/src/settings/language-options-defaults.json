@@ -85,7 +85,7 @@
           "defaultValue": [
             "https://github.com/alpheios-project/lsj"
           ],
-          "labelText": "Greek Lexicons",
+          "labelText": "Greek Lexicons (short)",
           "multiValue": true,
           "values": [
             {
@@ -114,7 +114,7 @@
           "defaultValue": [
             "https://github.com/alpheios-project/stg"
           ],
-          "labelText": "Persian Lexicons",
+          "labelText": "Persian Lexicons (short)",
           "multiValue": true,
           "values": [
             {

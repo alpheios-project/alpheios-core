@@ -138,9 +138,11 @@
                 <setting :data="data.uiOptions.items.panelOnActivate" @change="uiOptionChanged" v-if="data.uiOptions && data.uiOptions.items"
                          :classes="['alpheios-panel__options-item']"></setting>
                 <setting :data="languageSetting" @change="resourceSettingChanged" :classes="['alpheios-panel__options-item']"
-                  :key="languageSetting.name"
-                  v-if="languageSetting.values.length > 1 && data.resourceSettings"
-                  v-for="languageSetting in data.resourceSettings.lexicons"></setting>
+                    :key="languageSetting.name"
+                    v-for="languageSetting in resourceSettingsLexicons"></setting>
+                <setting :data="languageSetting" @change="resourceSettingChanged" :classes="['alpheios-panel__options-item']"
+                    :key="languageSetting.name"
+                    v-for="languageSetting in resourceSettingsLexiconsShort"></setting>
             </div>
             <div v-show="data.tabs.info" class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info">
                 <div class="alpheios-lookup__panel" v-if="data.infoComponentData">
@@ -257,6 +259,12 @@
       },
       mainstyles: function () {
         return (this.data) ? this.data.styles : ''
+      },
+      resourceSettingsLexicons: function () {
+        return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
+      },
+      resourceSettingsLexiconsShort: function () {
+        return this.data.resourceSettings && this.data.resourceSettings.lexiconsShort ? this.data.resourceSettings.lexiconsShort.filter(item => item.values.length > 0) : []
       },
       classes: function () {
         // Find index of an existing position class and replace it with an updated value
