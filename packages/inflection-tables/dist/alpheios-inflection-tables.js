@@ -2429,6 +2429,13 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         new _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_15__["default"](wideGenders, 'Gender'),
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number
       ]
+    } else if (inflection.hasFeatureValue(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE)) {
+      featureOptions = [
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase,
+        new _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_15__["default"](wideGenders, 'Gender'),
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number,
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension
+      ]
     } else {
       featureOptions = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase,
@@ -12626,13 +12633,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GreekAdjectiveSimplifiedView; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lib/suffix.js */ "./lib/suffix.js");
-/* harmony import */ var _views_lang_greek_adjective_greek_adjective_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @views/lang/greek/adjective/greek-adjective-view */ "./views/lang/greek/adjective/greek-adjective-view.js");
+/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../lib/suffix.js */ "./lib/suffix.js");
+/* harmony import */ var _greek_adjective_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./greek-adjective-view */ "./views/lang/greek/adjective/greek-adjective-view.js");
 
 
 
 
-class GreekAdjectiveSimplifiedView extends _views_lang_greek_adjective_greek_adjective_view__WEBPACK_IMPORTED_MODULE_2__["default"] {
+class GreekAdjectiveSimplifiedView extends _greek_adjective_view__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor (inflectionData, locale) {
     super(inflectionData, locale)
     this.id = 'adjectiveDeclensionSimplified'
@@ -12640,18 +12647,6 @@ class GreekAdjectiveSimplifiedView extends _views_lang_greek_adjective_greek_adj
     this.title = 'Adjective declension (simplified)'
     this.partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE
     this.inflectionType = _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__["default"]
-    const genderMasculine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE
-    const genderFeminine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE
-    const genderNeuter = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER
-
-    this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
-      if (ancestorFeatures) {
-        if (ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_2ND || ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD) {
-          return [[genderMasculine, genderFeminine], genderNeuter]
-        }
-      }
-      return [genderMasculine, genderFeminine, genderNeuter]
-    }
 
     this.createTable()
 
@@ -12705,13 +12700,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GreekAdjectiveView; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lib/suffix.js */ "./lib/suffix.js");
-/* harmony import */ var _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @views/lang/greek/greek-view.js */ "./views/lang/greek/greek-view.js");
+/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../lib/suffix.js */ "./lib/suffix.js");
+/* harmony import */ var _greek_view_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../greek-view.js */ "./views/lang/greek/greek-view.js");
+/* harmony import */ var _lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../lib/group-feature-type.js */ "./views/lib/group-feature-type.js");
 
 
 
 
-class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
+
+class GreekAdjectiveView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor (inflectionData, locale) {
     super(inflectionData, locale)
     this.id = 'adjectiveDeclension'
@@ -12719,19 +12716,28 @@ class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORT
     this.title = 'Adjective declension'
     this.partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE
     this.inflectionType = _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__["default"]
-    const genderMasculine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE
-    const genderFeminine = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE
-    const genderNeuter = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER
 
+    const GEND_MASCULINE_FEMININE = 'masculine feminine'
+    const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'
+
+    let featureTypesGenders = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender,
+      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE, GEND_MASCULINE_FEMININE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
+      this.languageID
+    )
+    this.features.genders = new _lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_3__["default"](featureTypesGenders, 'Gender')
     this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
-      if (ancestorFeatures) {
-        if (ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_2ND || ancestorFeatures.value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD) {
-          return [[genderMasculine, genderFeminine], genderNeuter]
-        }
-      }
-      return [genderMasculine, genderFeminine, genderNeuter]
+      return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE, GEND_MASCULINE_FEMININE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER]
     }
 
+    this.features.genders.getTitle = function getTitle (featureValue) {
+      if (featureValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE) { return 'm.' }
+      if (featureValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE) { return 'f.' }
+      if (featureValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER) { return 'n.' }
+      if (featureValue === GEND_MASCULINE_FEMININE) { return 'm./f.' }
+      if (featureValue === GEND_MASCULINE_FEMININE_NEUTER) { return 'm./f./n.' }
+      return featureValue
+    }
     this.createTable()
   }
 
