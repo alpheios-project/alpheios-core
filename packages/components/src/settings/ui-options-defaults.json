@@ -22,7 +22,7 @@
       ]
     },
     "panelOnActivate": {
-      "defaultValue": false,
+      "defaultValue": true,
       "labelText": "Panel on activate",
       "boolean": true,
       "values": [
