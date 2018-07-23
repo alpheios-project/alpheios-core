@@ -99,6 +99,7 @@ export default class Paradigm {
           match = false
         }
       }
+
       return match ? {paradigm: this, rule: rule} : undefined
     }
   }

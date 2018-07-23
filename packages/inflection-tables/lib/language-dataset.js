@@ -283,7 +283,6 @@ export default class LanguageDataset {
         }
       }
     }
-
     return result
   }
 
@@ -330,7 +329,6 @@ export default class LanguageDataset {
       // Check for obligatory matches
 
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item)
-
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {

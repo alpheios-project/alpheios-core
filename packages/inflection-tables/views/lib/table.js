@@ -37,6 +37,7 @@ export default class Table {
     this.suffixes = suffixes
 
     this.tree = this.groupByFeature(suffixes)
+
     this.headers = this.constructHeaders()
     this.columns = this.constructColumns()
     this.rows = this.constructRows()

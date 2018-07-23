@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-c": "standard --fix && jest tests/views/lib/table.test.js --no-cache --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
     "build-prod": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
     "build-dev": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
@@ -26,17 +27,25 @@
   "homepage": "https://github.com/alpheios-project/inflection-tables#readme",
   "devDependencies": {
     "alpheios-data-models": "github:alpheios-project/data-models",
+    "alpheios-morph-client": "github:alpheios-project/morph-client",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "babyparse": "^0.4.6",
-    "coveralls": "^3.0.1",
+    "coveralls": "^3.0.2",
+    "html-loader": "^0.5.5",
+    "html-loader-jest": "^0.2.1",
+    "html-webpack-plugin": "^3.2.0",
+    "iconv-lite": "^0.4.23",
     "intl-messageformat": "^2.2.0",
     "jest": "^22.4.4",
+    "jest-serializer-vue": "^2.0.2",
+    "jest-vue-preprocessor": "^1.4.0",
     "papaparse": "^4.5.0",
     "raw-loader": "^0.5.1",
     "source-map-loader": "^0.2.3",
     "standard": "^11.0.1",
     "uglifyjs-webpack-plugin": "^1.2.7",
-    "uuid": "^3.3.0",
+    "uuid": "^3.3.2",
+    "whatwg-fetch": "^2.0.4",
     "xmldom": "^0.1.27",
     "xmltojson": "^1.3.5"
   },
@@ -46,7 +55,33 @@
     "uuid": "3.x.x"
   },
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "transform": {
+      "^.+\\.htmlf$": "html-loader-jest",
+      "^.+\\.jsx?$": "babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
+      ".*\\.(csv)$": "<rootDir>/csvTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "!node_modules/alpheios-data-models/"
+    ],
+    "moduleNameMapper": {
+      "^vue$": "vue/dist/vue.common.js",
+      "^@lib[/](.+)": "<rootDir>/lib/$1",
+      "^@views[/](.+)": "<rootDir>/views/$1",
+      "^@l10n[/](.+)": "<rootDir>/l10n/$1",
+      "^@tests[/](.+)": "<rootDir>/tests/$1"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/lib/lang/greek/data/",
+      "/lib/lang/latin/data/",
+      "/tools/",
+      "/views/styles/"
+    ]
   },
   "eslintConfig": {
     "env": {

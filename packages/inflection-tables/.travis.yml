@@ -1,5 +1,9 @@
+#travis config
 language: node_js
-node_js:
-  - "node"
+node_js: 
+ - "10.5.0"
 notifications:
   slack: alpheiosproject:9WEA6UNyLr3U0bWIJctp1rqS
+before_install:
+- export COVERALLS_SERVICE_NAME=travis-pro
+- export COVERALLS_REPO_TOKEN=lbICETbTq9pwotPwPQUHnmaeVaqF9xcVY

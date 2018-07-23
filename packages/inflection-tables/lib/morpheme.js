@@ -194,10 +194,10 @@ export default class Morpheme {
     for (let feature of Object.keys(this.features)) {
       if (commonGroups.indexOf(feature) >= 0) {
         commonValues[feature].add(suffix.features[feature])
-
         // Do not compare common groups
         continue
       }
+
       result = result && this.features[feature] === suffix.features[feature]
       // If feature mismatch discovered, do not check any further
       if (!result) {

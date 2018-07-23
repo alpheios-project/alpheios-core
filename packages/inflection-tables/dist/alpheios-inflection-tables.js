@@ -1664,168 +1664,168 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GreekLanguageDataset; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_language_dataset_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../lib/language-dataset.js */ "./lib/language-dataset.js");
-/* harmony import */ var _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../lib/extended-greek-data */ "./lib/extended-greek-data.js");
-/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../lib/suffix.js */ "./lib/suffix.js");
-/* harmony import */ var _lib_form_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../lib/form.js */ "./lib/form.js");
-/* harmony import */ var _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../lib/paradigm.js */ "./lib/paradigm.js");
-/* harmony import */ var _data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./data/noun/suffixes.csv */ "./lib/lang/greek/data/noun/suffixes.csv");
-/* harmony import */ var _data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./data/noun/footnotes.csv */ "./lib/lang/greek/data/noun/footnotes.csv");
-/* harmony import */ var _data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./data/adjective/suffixes.csv */ "./lib/lang/greek/data/adjective/suffixes.csv");
-/* harmony import */ var _data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./data/adjective/footnotes.csv */ "./lib/lang/greek/data/adjective/footnotes.csv");
-/* harmony import */ var _data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/article/forms.csv */ "./lib/lang/greek/data/article/forms.csv");
-/* harmony import */ var _data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./data/numeral/forms.csv */ "./lib/lang/greek/data/numeral/forms.csv");
-/* harmony import */ var _data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data/numeral/footnotes.csv */ "./lib/lang/greek/data/numeral/footnotes.csv");
-/* harmony import */ var _data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./data/pronoun/forms.csv */ "./lib/lang/greek/data/pronoun/forms.csv");
-/* harmony import */ var _data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./data/pronoun/footnotes.csv */ "./lib/lang/greek/data/pronoun/footnotes.csv");
-/* harmony import */ var _data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../views/lib/group-feature-type.js */ "./views/lib/group-feature-type.js");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-01.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-01.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-02.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-02.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-03.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-03.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-04.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-04.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-05.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-05.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-06.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-06.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-07.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-07.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-08.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-08.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-09.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-09.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-10.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-10.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-11.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-11.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-12.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-12.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-13.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-13.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-14.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-14.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-15.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-15.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-16.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-16.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-17.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-17.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-18.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-18.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-19.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-19.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-20.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-20.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-21.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-21.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-22.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-22.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-23.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-23.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-24.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-24.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-25.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-25.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-26.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-26.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-27.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-27.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-28.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-28.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-29.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-29.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-30.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-30.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-31.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-31.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-32.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-32.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-33.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-33.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-34.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-34.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-35.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-35.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-36.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-36.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-37.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-37.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-38.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-38.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-39.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-39.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-40.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-40.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-41.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-41.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-42.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-42.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-43.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-43.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-44.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-44.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-45.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-45.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-46.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-46.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-47.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-47.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-48.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-48.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-49.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-49.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-50.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-50.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-51.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-51.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-52.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-52.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67__);
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ./data/verb/paradigm/tables/paradigm-53.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-53.json");
-/* harmony import */ var _data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68__);
-/* harmony import */ var _data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ./data/verb/paradigm/rules.csv */ "./lib/lang/greek/data/verb/paradigm/rules.csv");
-/* harmony import */ var _data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69__);
-/* harmony import */ var _data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! ./data/verb/paradigm/footnotes.csv */ "./lib/lang/greek/data/verb/paradigm/footnotes.csv");
-/* harmony import */ var _data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-54.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-54.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-55.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-55.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-56.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-56.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-57.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-57.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-58.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-58.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-59.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-59.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-60.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-60.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-61.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-61.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-62.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-62.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-63.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-63.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-64.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-64.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-65.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-65.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82__);
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83__ = __webpack_require__(/*! ./data/verb-participle/paradigm/tables/paradigm-66.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-66.json");
-/* harmony import */ var _data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83__);
-/* harmony import */ var _data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84__ = __webpack_require__(/*! ./data/verb-participle/paradigm/rules.csv */ "./lib/lang/greek/data/verb-participle/paradigm/rules.csv");
-/* harmony import */ var _data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84___default = /*#__PURE__*/__webpack_require__.n(_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84__);
+/* harmony import */ var _lib_language_dataset_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lib/language-dataset.js */ "./lib/language-dataset.js");
+/* harmony import */ var _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @lib/extended-greek-data */ "./lib/extended-greek-data.js");
+/* harmony import */ var _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lib/suffix.js */ "./lib/suffix.js");
+/* harmony import */ var _lib_form_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lib/form.js */ "./lib/form.js");
+/* harmony import */ var _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @lib/paradigm.js */ "./lib/paradigm.js");
+/* harmony import */ var _lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @lib/lang/greek/data/noun/suffixes.csv */ "./lib/lang/greek/data/noun/suffixes.csv");
+/* harmony import */ var _lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @lib/lang/greek/data/noun/footnotes.csv */ "./lib/lang/greek/data/noun/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @lib/lang/greek/data/adjective/suffixes.csv */ "./lib/lang/greek/data/adjective/suffixes.csv");
+/* harmony import */ var _lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @lib/lang/greek/data/adjective/footnotes.csv */ "./lib/lang/greek/data/adjective/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _lib_lang_greek_data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @lib/lang/greek/data/article/forms.csv */ "./lib/lang/greek/data/article/forms.csv");
+/* harmony import */ var _lib_lang_greek_data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _lib_lang_greek_data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @lib/lang/greek/data/numeral/forms.csv */ "./lib/lang/greek/data/numeral/forms.csv");
+/* harmony import */ var _lib_lang_greek_data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _lib_lang_greek_data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @lib/lang/greek/data/numeral/footnotes.csv */ "./lib/lang/greek/data/numeral/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @lib/lang/greek/data/pronoun/forms.csv */ "./lib/lang/greek/data/pronoun/forms.csv");
+/* harmony import */ var _lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @lib/lang/greek/data/pronoun/footnotes.csv */ "./lib/lang/greek/data/pronoun/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @views/lib/group-feature-type.js */ "./views/lib/group-feature-type.js");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-01.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-01.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-02.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-02.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-03.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-03.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-04.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-04.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-05.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-05.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-06.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-06.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-07.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-07.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-08.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-08.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-09.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-09.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-10.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-10.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-11.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-11.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-12.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-12.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-13.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-13.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-14.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-14.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-15.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-15.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-16.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-16.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-17.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-17.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-18.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-18.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-19.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-19.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-20.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-20.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-21.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-21.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-22.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-22.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-23.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-23.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-24.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-24.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-25.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-25.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-26.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-26.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-27.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-27.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-28.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-28.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-29.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-29.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-30.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-30.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-31.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-31.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-32.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-32.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-33.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-33.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-34.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-34.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-35.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-35.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-36.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-36.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-37.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-37.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-38.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-38.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-39.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-39.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-40.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-40.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-41.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-41.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-42.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-42.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-43.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-43.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-44.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-44.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-45.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-45.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-46.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-46.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-47.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-47.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-48.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-48.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-49.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-49.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-50.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-50.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-51.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-51.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-52.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-52.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/tables/paradigm-53.json */ "./lib/lang/greek/data/verb/paradigm/tables/paradigm-53.json");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/rules.csv */ "./lib/lang/greek/data/verb/paradigm/rules.csv");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69__);
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! @lib/lang/greek/data/verb/paradigm/footnotes.csv */ "./lib/lang/greek/data/verb/paradigm/footnotes.csv");
+/* harmony import */ var _lib_lang_greek_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-54.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-54.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-55.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-55.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-56.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-56.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-57.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-57.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-58.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-58.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-59.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-59.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-60.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-60.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-61.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-61.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-62.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-62.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-63.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-63.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-64.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-64.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-65.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-65.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-66.json */ "./lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-66.json");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83__);
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84__ = __webpack_require__(/*! @lib/lang/greek/data/verb-participle/paradigm/rules.csv */ "./lib/lang/greek/data/verb-participle/paradigm/rules.csv");
+/* harmony import */ var _lib_lang_greek_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84___default = /*#__PURE__*/__webpack_require__.n(_lib_lang_greek_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84__);
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_85__ = __webpack_require__(/*! papaparse */ "./node_modules/papaparse/papaparse.js");
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_85___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_85__);
 /*
@@ -2013,6 +2013,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       let extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
       }
+
       this.addInflection(partOfSpeech.value, _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__["default"], suffixValue, features, extendedLangData)
     }
   }
@@ -2183,78 +2184,78 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   static get verbParadigmTables () {
     const partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB
     return new Map([
-      ['verbpdgm1', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16___default.a))],
-      ['verbpdgm2', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17___default.a))],
-      ['verbpdgm3', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18___default.a))],
-      ['verbpdgm4', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19___default.a))],
-      ['verbpdgm5', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20___default.a))],
-      ['verbpdgm6', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21___default.a))],
-      ['verbpdgm7', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22___default.a))],
-      ['verbpdgm8', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23___default.a))],
-      ['verbpdgm9', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24___default.a))],
-      ['verbpdgm10', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25___default.a))],
-      ['verbpdgm11', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26___default.a))],
-      ['verbpdgm12', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27___default.a))],
-      ['verbpdgm13', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28___default.a))],
-      ['verbpdgm14', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29___default.a))],
-      ['verbpdgm15', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30___default.a))],
-      ['verbpdgm16', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31___default.a))],
-      ['verbpdgm17', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32___default.a))],
-      ['verbpdgm18', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33___default.a))],
-      ['verbpdgm19', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34___default.a))],
-      ['verbpdgm20', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35___default.a))],
-      ['verbpdgm21', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36___default.a))],
-      ['verbpdgm22', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37___default.a))],
-      ['verbpdgm23', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38___default.a))],
-      ['verbpdgm24', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39___default.a))],
-      ['verbpdgm25', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40___default.a))],
-      ['verbpdgm26', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41___default.a))],
-      ['verbpdgm27', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42___default.a))],
-      ['verbpdgm28', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43___default.a))],
-      ['verbpdgm29', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44___default.a))],
-      ['verbpdgm30', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45___default.a))],
-      ['verbpdgm31', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46___default.a))],
-      ['verbpdgm32', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47___default.a))],
-      ['verbpdgm33', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48___default.a))],
-      ['verbpdgm34', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49___default.a))],
-      ['verbpdgm35', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50___default.a))],
-      ['verbpdgm36', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51___default.a))],
-      ['verbpdgm37', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52___default.a))],
-      ['verbpdgm38', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53___default.a))],
-      ['verbpdgm39', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54___default.a))],
-      ['verbpdgm40', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55___default.a))],
-      ['verbpdgm41', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56___default.a))],
-      ['verbpdgm42', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57___default.a))],
-      ['verbpdgm43', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58___default.a))],
-      ['verbpdgm44', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59___default.a))],
-      ['verbpdgm45', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60___default.a))],
-      ['verbpdgm46', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61___default.a))],
-      ['verbpdgm47', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62___default.a))],
-      ['verbpdgm48', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63___default.a))],
-      ['verbpdgm49', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64___default.a))],
-      ['verbpdgm50', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65___default.a))],
-      ['verbpdgm51', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66___default.a))],
-      ['verbpdgm52', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67___default.a))],
-      ['verbpdgm53', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68___default.a))]
+      ['verbpdgm1', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_01_json__WEBPACK_IMPORTED_MODULE_16___default.a))],
+      ['verbpdgm2', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_02_json__WEBPACK_IMPORTED_MODULE_17___default.a))],
+      ['verbpdgm3', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_03_json__WEBPACK_IMPORTED_MODULE_18___default.a))],
+      ['verbpdgm4', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_04_json__WEBPACK_IMPORTED_MODULE_19___default.a))],
+      ['verbpdgm5', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_05_json__WEBPACK_IMPORTED_MODULE_20___default.a))],
+      ['verbpdgm6', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_06_json__WEBPACK_IMPORTED_MODULE_21___default.a))],
+      ['verbpdgm7', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_07_json__WEBPACK_IMPORTED_MODULE_22___default.a))],
+      ['verbpdgm8', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_08_json__WEBPACK_IMPORTED_MODULE_23___default.a))],
+      ['verbpdgm9', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_09_json__WEBPACK_IMPORTED_MODULE_24___default.a))],
+      ['verbpdgm10', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_10_json__WEBPACK_IMPORTED_MODULE_25___default.a))],
+      ['verbpdgm11', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_11_json__WEBPACK_IMPORTED_MODULE_26___default.a))],
+      ['verbpdgm12', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_12_json__WEBPACK_IMPORTED_MODULE_27___default.a))],
+      ['verbpdgm13', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_13_json__WEBPACK_IMPORTED_MODULE_28___default.a))],
+      ['verbpdgm14', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_14_json__WEBPACK_IMPORTED_MODULE_29___default.a))],
+      ['verbpdgm15', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_15_json__WEBPACK_IMPORTED_MODULE_30___default.a))],
+      ['verbpdgm16', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_16_json__WEBPACK_IMPORTED_MODULE_31___default.a))],
+      ['verbpdgm17', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_17_json__WEBPACK_IMPORTED_MODULE_32___default.a))],
+      ['verbpdgm18', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_18_json__WEBPACK_IMPORTED_MODULE_33___default.a))],
+      ['verbpdgm19', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_19_json__WEBPACK_IMPORTED_MODULE_34___default.a))],
+      ['verbpdgm20', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_20_json__WEBPACK_IMPORTED_MODULE_35___default.a))],
+      ['verbpdgm21', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_21_json__WEBPACK_IMPORTED_MODULE_36___default.a))],
+      ['verbpdgm22', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_22_json__WEBPACK_IMPORTED_MODULE_37___default.a))],
+      ['verbpdgm23', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_23_json__WEBPACK_IMPORTED_MODULE_38___default.a))],
+      ['verbpdgm24', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_24_json__WEBPACK_IMPORTED_MODULE_39___default.a))],
+      ['verbpdgm25', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_25_json__WEBPACK_IMPORTED_MODULE_40___default.a))],
+      ['verbpdgm26', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_26_json__WEBPACK_IMPORTED_MODULE_41___default.a))],
+      ['verbpdgm27', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_27_json__WEBPACK_IMPORTED_MODULE_42___default.a))],
+      ['verbpdgm28', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_28_json__WEBPACK_IMPORTED_MODULE_43___default.a))],
+      ['verbpdgm29', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_29_json__WEBPACK_IMPORTED_MODULE_44___default.a))],
+      ['verbpdgm30', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_30_json__WEBPACK_IMPORTED_MODULE_45___default.a))],
+      ['verbpdgm31', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_31_json__WEBPACK_IMPORTED_MODULE_46___default.a))],
+      ['verbpdgm32', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_32_json__WEBPACK_IMPORTED_MODULE_47___default.a))],
+      ['verbpdgm33', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_33_json__WEBPACK_IMPORTED_MODULE_48___default.a))],
+      ['verbpdgm34', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_34_json__WEBPACK_IMPORTED_MODULE_49___default.a))],
+      ['verbpdgm35', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_35_json__WEBPACK_IMPORTED_MODULE_50___default.a))],
+      ['verbpdgm36', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_36_json__WEBPACK_IMPORTED_MODULE_51___default.a))],
+      ['verbpdgm37', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_37_json__WEBPACK_IMPORTED_MODULE_52___default.a))],
+      ['verbpdgm38', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_38_json__WEBPACK_IMPORTED_MODULE_53___default.a))],
+      ['verbpdgm39', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_39_json__WEBPACK_IMPORTED_MODULE_54___default.a))],
+      ['verbpdgm40', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_40_json__WEBPACK_IMPORTED_MODULE_55___default.a))],
+      ['verbpdgm41', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_41_json__WEBPACK_IMPORTED_MODULE_56___default.a))],
+      ['verbpdgm42', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_42_json__WEBPACK_IMPORTED_MODULE_57___default.a))],
+      ['verbpdgm43', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_43_json__WEBPACK_IMPORTED_MODULE_58___default.a))],
+      ['verbpdgm44', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_44_json__WEBPACK_IMPORTED_MODULE_59___default.a))],
+      ['verbpdgm45', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_45_json__WEBPACK_IMPORTED_MODULE_60___default.a))],
+      ['verbpdgm46', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_46_json__WEBPACK_IMPORTED_MODULE_61___default.a))],
+      ['verbpdgm47', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_47_json__WEBPACK_IMPORTED_MODULE_62___default.a))],
+      ['verbpdgm48', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_48_json__WEBPACK_IMPORTED_MODULE_63___default.a))],
+      ['verbpdgm49', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_49_json__WEBPACK_IMPORTED_MODULE_64___default.a))],
+      ['verbpdgm50', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_50_json__WEBPACK_IMPORTED_MODULE_65___default.a))],
+      ['verbpdgm51', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_51_json__WEBPACK_IMPORTED_MODULE_66___default.a))],
+      ['verbpdgm52', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_52_json__WEBPACK_IMPORTED_MODULE_67___default.a))],
+      ['verbpdgm53', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_paradigm_tables_paradigm_53_json__WEBPACK_IMPORTED_MODULE_68___default.a))]
     ])
   }
 
   static get verbParticipleParadigmTables () {
     const partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB_PARTICIPLE
     return new Map([
-      ['verbpdgm54', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71___default.a))],
-      ['verbpdgm55', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72___default.a))],
-      ['verbpdgm56', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73___default.a))],
-      ['verbpdgm57', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74___default.a))],
-      ['verbpdgm58', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75___default.a))],
-      ['verbpdgm59', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76___default.a))],
-      ['verbpdgm60', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77___default.a))],
-      ['verbpdgm61', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78___default.a))],
-      ['verbpdgm62', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79___default.a))],
-      ['verbpdgm63', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80___default.a))],
-      ['verbpdgm64', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81___default.a))],
-      ['verbpdgm65', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82___default.a))],
-      ['verbpdgm66', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83___default.a))]
+      ['verbpdgm54', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_54_json__WEBPACK_IMPORTED_MODULE_71___default.a))],
+      ['verbpdgm55', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_55_json__WEBPACK_IMPORTED_MODULE_72___default.a))],
+      ['verbpdgm56', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_56_json__WEBPACK_IMPORTED_MODULE_73___default.a))],
+      ['verbpdgm57', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_57_json__WEBPACK_IMPORTED_MODULE_74___default.a))],
+      ['verbpdgm58', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_58_json__WEBPACK_IMPORTED_MODULE_75___default.a))],
+      ['verbpdgm59', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_59_json__WEBPACK_IMPORTED_MODULE_76___default.a))],
+      ['verbpdgm60', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_60_json__WEBPACK_IMPORTED_MODULE_77___default.a))],
+      ['verbpdgm61', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_61_json__WEBPACK_IMPORTED_MODULE_78___default.a))],
+      ['verbpdgm62', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_62_json__WEBPACK_IMPORTED_MODULE_79___default.a))],
+      ['verbpdgm63', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_63_json__WEBPACK_IMPORTED_MODULE_80___default.a))],
+      ['verbpdgm64', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_64_json__WEBPACK_IMPORTED_MODULE_81___default.a))],
+      ['verbpdgm65', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_65_json__WEBPACK_IMPORTED_MODULE_82___default.a))],
+      ['verbpdgm66', new _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.languageID, partOfSpeech, JSON.parse(_lib_lang_greek_data_verb_participle_paradigm_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_83___default.a))]
     ])
   }
 
@@ -2326,35 +2327,35 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
     // Nouns
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NOUN)
-    suffixes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default.a, {})
+    suffixes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_noun_suffixes_csv__WEBPACK_IMPORTED_MODULE_6___default.a, {})
     this.addSuffixes(partOfSpeech, suffixes.data)
-    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default.a, {})
+    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_noun_footnotes_csv__WEBPACK_IMPORTED_MODULE_7___default.a, {})
     this.addFootnotes(partOfSpeech, _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__["default"], footnotes.data)
 
     // Adjective
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ADJECTIVE)
-    suffixes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8___default.a, {})
+    suffixes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_adjective_suffixes_csv__WEBPACK_IMPORTED_MODULE_8___default.a, {})
     this.addSuffixes(partOfSpeech, suffixes.data)
-    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default.a, {})
+    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_adjective_footnotes_csv__WEBPACK_IMPORTED_MODULE_9___default.a, {})
     this.addFootnotes(partOfSpeech, _lib_suffix_js__WEBPACK_IMPORTED_MODULE_3__["default"], footnotes.data)
 
     // Articles
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ARTICLE)
-    forms = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10___default.a, {})
+    forms = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_article_forms_csv__WEBPACK_IMPORTED_MODULE_10___default.a, {})
     this.addArticleForms(partOfSpeech, forms.data)
 
     // Pronouns
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_PRONOUN)
-    forms = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13___default.a, {})
+    forms = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_pronoun_forms_csv__WEBPACK_IMPORTED_MODULE_13___default.a, {})
     this.addPronounForms(partOfSpeech, forms.data)
-    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14___default.a, {})
+    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_pronoun_footnotes_csv__WEBPACK_IMPORTED_MODULE_14___default.a, {})
     this.addFootnotes(partOfSpeech, _lib_form_js__WEBPACK_IMPORTED_MODULE_4__["default"], footnotes.data)
 
     // Numerals
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NUMERAL)
-    forms = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11___default.a, {})
+    forms = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_numeral_forms_csv__WEBPACK_IMPORTED_MODULE_11___default.a, {})
     this.addNumeralForms(partOfSpeech, forms.data)
-    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12___default.a, {})
+    footnotes = papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_numeral_footnotes_csv__WEBPACK_IMPORTED_MODULE_12___default.a, {})
     this.addFootnotes(partOfSpeech, _lib_form_js__WEBPACK_IMPORTED_MODULE_4__["default"], footnotes.data)
 
     // Verbs
@@ -2366,16 +2367,16 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParadigmTables,
-      papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69___default.a, {}).data, verbAndParticipleParadigmTables)
+      papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_verb_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_69___default.a, {}).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
-    this.addFootnotes(partOfSpeech, _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"], papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70___default.a, {}).data)
+    this.addFootnotes(partOfSpeech, _lib_paradigm_js__WEBPACK_IMPORTED_MODULE_5__["default"], papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_verb_paradigm_footnotes_csv__WEBPACK_IMPORTED_MODULE_70___default.a, {}).data)
 
     // Verb Participles
     // Paradigms
     partOfSpeech = this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB_PARTICIPLE)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParticipleParadigmTables,
-      papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84___default.a, {}).data, verbAndParticipleParadigmTables)
+      papaparse__WEBPACK_IMPORTED_MODULE_85___default.a.parse(_lib_lang_greek_data_verb_participle_paradigm_rules_csv__WEBPACK_IMPORTED_MODULE_84___default.a, {}).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
 
     this.dataLoaded = true
@@ -2448,6 +2449,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.person
       ]
     }
+
     return featureOptions.filter(f => inflection[f])
   }
 }
@@ -3458,7 +3460,6 @@ class LanguageDataset {
         }
       }
     }
-
     return result
   }
 
@@ -3505,7 +3506,6 @@ class LanguageDataset {
       // Check for obligatory matches
 
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item)
-
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
@@ -3826,10 +3826,10 @@ class Morpheme {
     for (let feature of Object.keys(this.features)) {
       if (commonGroups.indexOf(feature) >= 0) {
         commonValues[feature].add(suffix.features[feature])
-
         // Do not compare common groups
         continue
       }
+
       result = result && this.features[feature] === suffix.features[feature]
       // If feature mismatch discovered, do not check any further
       if (!result) {
@@ -4066,6 +4066,7 @@ class Paradigm {
           match = false
         }
       }
+
       return match ? {paradigm: this, rule: rule} : undefined
     }
   }
@@ -8759,10 +8760,13 @@ var Writable = __webpack_require__(/*! ./_stream_writable */ "./node_modules/rea
 
 util.inherits(Duplex, Readable);
 
-var keys = objectKeys(Writable.prototype);
-for (var v = 0; v < keys.length; v++) {
-  var method = keys[v];
-  if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+{
+  // avoid scope creep, the keys array can then be collected
+  var keys = objectKeys(Writable.prototype);
+  for (var v = 0; v < keys.length; v++) {
+    var method = keys[v];
+    if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+  }
 }
 
 function Duplex(options) {
@@ -8780,6 +8784,16 @@ function Duplex(options) {
 
   this.once('end', onend);
 }
+
+Object.defineProperty(Duplex.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
 
 // the no-half-open enforcer
 function onend() {
@@ -8823,12 +8837,6 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
-  }
-}
 
 /***/ }),
 
@@ -9776,6 +9784,16 @@ Readable.prototype.wrap = function (stream) {
   return this;
 };
 
+Object.defineProperty(Readable.prototype, 'readableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._readableState.highWaterMark;
+  }
+});
+
 // exposed for testing purposes only.
 Readable._fromList = fromList;
 
@@ -9898,12 +9916,6 @@ function endReadableNT(state, stream) {
     state.endEmitted = true;
     stream.readable = false;
     stream.emit('end');
-  }
-}
-
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
   }
 }
 
@@ -10519,6 +10531,16 @@ function decodeChunk(state, chunk, encoding) {
   }
   return chunk;
 }
+
+Object.defineProperty(Writable.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
 
 // if we're already writing something, then just put this
 // in the queue, and wait our turn.  Otherwise, call _write
@@ -11489,9 +11511,33 @@ Stream.prototype.pipe = function(dest, options) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer;
+
+/*<replacement>*/
+
+var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/string_decoder/node_modules/safe-buffer/index.js").Buffer;
+/*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
   encoding = '' + encoding;
@@ -11603,10 +11649,10 @@ StringDecoder.prototype.fillLast = function (buf) {
 };
 
 // Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
-// continuation byte.
+// continuation byte. If an invalid byte is detected, -2 is returned.
 function utf8CheckByte(byte) {
   if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
-  return -1;
+  return byte >> 6 === 0x02 ? -1 : -2;
 }
 
 // Checks at most 3 bytes at the end of a Buffer in order to detect an
@@ -11620,13 +11666,13 @@ function utf8CheckIncomplete(self, buf, i) {
     if (nb > 0) self.lastNeed = nb - 1;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) self.lastNeed = nb - 2;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) {
@@ -11640,7 +11686,7 @@ function utf8CheckIncomplete(self, buf, i) {
 // Validates as many continuation bytes for a multi-byte UTF-8 character as
 // needed or are available. If we see a non-continuation byte where we expect
 // one, we "replace" the validated continuation bytes we've seen so far with
-// UTF-8 replacement characters ('\ufffd'), to match v8's UTF-8 decoding
+// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
 // behavior. The continuation byte check is included three times in the case
 // where all of the continuation bytes for a character exist in the same buffer.
 // It is also done this way as a slight performance increase instead of using a
@@ -11648,17 +11694,17 @@ function utf8CheckIncomplete(self, buf, i) {
 function utf8CheckExtraBytes(self, buf, p) {
   if ((buf[0] & 0xC0) !== 0x80) {
     self.lastNeed = 0;
-    return '\ufffd'.repeat(p);
+    return '\ufffd';
   }
   if (self.lastNeed > 1 && buf.length > 1) {
     if ((buf[1] & 0xC0) !== 0x80) {
       self.lastNeed = 1;
-      return '\ufffd'.repeat(p + 1);
+      return '\ufffd';
     }
     if (self.lastNeed > 2 && buf.length > 2) {
       if ((buf[2] & 0xC0) !== 0x80) {
         self.lastNeed = 2;
-        return '\ufffd'.repeat(p + 2);
+        return '\ufffd';
       }
     }
   }
@@ -11689,11 +11735,11 @@ function utf8Text(buf, i) {
   return buf.toString('utf8', i, end);
 }
 
-// For UTF-8, a replacement character for each buffered byte of a (partial)
-// character needs to be added to the output.
+// For UTF-8, a replacement character is added when ending on a partial
+// character.
 function utf8End(buf) {
   var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + '\ufffd'.repeat(this.lastTotal - this.lastNeed);
+  if (this.lastNeed) return r + '\ufffd';
   return r;
 }
 
@@ -11761,6 +11807,79 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
+
+/***/ }),
+
+/***/ "./node_modules/string_decoder/node_modules/safe-buffer/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/string_decoder/node_modules/safe-buffer/index.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable node/no-deprecated-api */
+var buffer = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js")
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+
 
 /***/ }),
 
@@ -16288,6 +16407,7 @@ class Table {
     this.suffixes = suffixes
 
     this.tree = this.groupByFeature(suffixes)
+
     this.headers = this.constructHeaders()
     this.columns = this.constructColumns()
     this.rows = this.constructRows()

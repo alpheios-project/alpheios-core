@@ -1,5 +1,6 @@
 /* eslint-env jest */
-const t = require('../../tests/test-bundle')
+/* eslint-disable no-unused-vars */
+const t = require('../test-bundle')
 
 describe('MessageBundle', () => {
   let localeEnUs = 'en-US'
