@@ -1,5 +1,6 @@
 import LMF from './language_model_factory'
 import Lexeme from './lexeme.js'
+import Lemma from './lemma.js'
 
 class Homonym {
   /**
@@ -24,6 +25,21 @@ class Homonym {
 
     this.lexemes = lexemes
     this.targetWord = form
+  }
+
+  /**
+   * Creates a simple form of inflection with one lexeme and zero or more inflections
+   * attached to it. The lexeme will have lemma whose `word` will be set to
+   * a homonym's target word.
+   * @param {string} word - A word that will populate homonym's `targetWord` prop and lemma `word` one.
+   * @param {symbol} languageID - A language identificator as defined in Constants.LANG_XXX.
+   * @param {Inflection[]} inflections - Zero or more inflection objects that will be attached to the lexeme
+   * @return {Homonym} A newly created homonym object.
+   */
+  static createSimpleForm (word, languageID, inflections = []) {
+    let lemma = new Lemma(word, languageID)
+    let lexeme = new Lexeme(lemma, inflections)
+    return new Homonym([lexeme], word)
   }
 
   static readObject (jsonObject) {

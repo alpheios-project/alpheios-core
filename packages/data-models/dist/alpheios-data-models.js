@@ -1536,7 +1536,7 @@ __webpack_require__.r(__webpack_exports__);
 class FeatureList {
   /**
    * Initializes a feature list.
-   * @param {FeatureType[]} features - Features that build the list (optional, can be set later).
+   * @param {Feature[]} features - Features that build the list (optional, can be set later).
    */
   constructor (features = []) {
     this._features = []
@@ -1609,6 +1609,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
+ * @deprecated Use Feature instead
  * Definition class for a (grammatical) feature. Stores type information and (optionally) all possible values of the feature.
  * It serves as a feature generator. If list of possible values is provided, it can generate a Feature object
  * each time a property that corresponds to a feature value is accessed. If no list of possible values provided,
@@ -2161,6 +2162,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 class GrmFeature {
   /**
+   * @deprecated Use Feature instead
    * Initializes a Feature object
    * @param {string | string[]} value - A single feature value or, if this feature could have multiple
    * values, an array of values.
@@ -2341,6 +2343,8 @@ GrmFeature.types = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
+/* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
+
 
 
 
@@ -2367,6 +2371,21 @@ class Homonym {
 
     this.lexemes = lexemes
     this.targetWord = form
+  }
+
+  /**
+   * Creates a simple form of inflection with one lexeme and zero or more inflections
+   * attached to it. The lexeme will have lemma whose `word` will be set to
+   * a homonym's target word.
+   * @param {string} word - A word that will populate homonym's `targetWord` prop and lemma `word` one.
+   * @param {symbol} languageID - A language identificator as defined in Constants.LANG_XXX.
+   * @param {Inflection[]} inflections - Zero or more inflection objects that will be attached to the lexeme
+   * @return {Homonym} A newly created homonym object.
+   */
+  static createSimpleForm (word, languageID, inflections = []) {
+    let lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__["default"](word, languageID)
+    let lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"](lemma, inflections)
+    return new Homonym([lexeme], word)
   }
 
   static readObject (jsonObject) {
@@ -3794,7 +3813,9 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   }
 
   static get typeFeatures () {
-    if (!typeFeaturesInitialized) { this.initTypeFeatures() }
+    if (!typeFeaturesInitialized) {
+      this.initTypeFeatures()
+    }
     return typeFeatures
   }
 
@@ -3940,6 +3961,7 @@ class Lemma {
       throw new Error('Language should not be empty.')
     }
 
+    // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
     ;({languageID: this.languageID, languageCode: this.languageCode} = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(languageID))
@@ -4107,6 +4129,7 @@ class Lexeme {
 
     this.lemma = lemma
     this.inflections = inflections
+    this.inflections.forEach(i => { i.lemma = lemma })
     this.meaning = meaning || new _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"](this.lemma.word, this.lemma.languageID)
   }
 

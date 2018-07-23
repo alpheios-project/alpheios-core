@@ -5,7 +5,7 @@
 class FeatureList {
   /**
    * Initializes a feature list.
-   * @param {FeatureType[]} features - Features that build the list (optional, can be set later).
+   * @param {Feature[]} features - Features that build the list (optional, can be set later).
    */
   constructor (features = []) {
     this._features = []

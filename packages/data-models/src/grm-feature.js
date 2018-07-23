@@ -7,6 +7,7 @@ import * as i18n from './i18n.js'
  */
 class GrmFeature {
   /**
+   * @deprecated Use Feature instead
    * Initializes a Feature object
    * @param {string | string[]} value - A single feature value or, if this feature could have multiple
    * values, an array of values.

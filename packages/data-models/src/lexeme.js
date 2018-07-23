@@ -44,6 +44,7 @@ class Lexeme {
 
     this.lemma = lemma
     this.inflections = inflections
+    this.inflections.forEach(i => { i.lemma = lemma })
     this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID)
   }
 

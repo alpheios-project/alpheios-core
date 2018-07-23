@@ -3,6 +3,7 @@ import FeatureImporter from './feature_importer.js'
 import LMF from './language_model_factory'
 
 /**
+ * @deprecated Use Feature instead
  * Definition class for a (grammatical) feature. Stores type information and (optionally) all possible values of the feature.
  * It serves as a feature generator. If list of possible values is provided, it can generate a Feature object
  * each time a property that corresponds to a feature value is accessed. If no list of possible values provided,

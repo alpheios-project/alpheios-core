@@ -25,6 +25,7 @@ class Lemma {
       throw new Error('Language should not be empty.')
     }
 
+    // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
     ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(languageID))
