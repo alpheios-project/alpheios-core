@@ -1,6 +1,6 @@
-import { Constants, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import LatinVerbIrregularView from '@views/lang/latin/verb/latin-verb-irregular.js'
-// import GroupFeatureType from '@views/lib/group-feature-type'
+import Form from '@lib/form.js'
 
 export default class LatinVerbParticipleIrregularView extends LatinVerbIrregularView {
   constructor (inflectionData, locale) {
@@ -11,14 +11,21 @@ export default class LatinVerbParticipleIrregularView extends LatinVerbIrregular
     this.title = 'Verb Participle Conjugation (Irregular)'
   }
 
-  static get partOfSpeech () {
-    return Constants.POFS_VERB_PARTICIPLE
+  static get viewID () {
+    return 'latin_verb_participle_irregular_view'
   }
 
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(LatinVerbParticipleIrregularView.languageID, inflectionData.languageID)) {
-      return inflectionData.partsOfSpeech.includes(LatinVerbParticipleIrregularView.partOfSpeech) &&
-             LatinVerbParticipleIrregularView.enabledForLexemes(inflectionData.homonym.lexemes)
-    }
+  static get partsOfSpeech () {
+    return [Constants.POFS_VERB_PARTICIPLE]
+  }
+
+  static get inflectionType () {
+    return Form
+  }
+
+  static matchFilter (homonym) {
+    return (this.languageID === homonym.languageID &&
+      homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech) &&
+      this.enabledForLexemes(homonym.lexemes))
   }
 }

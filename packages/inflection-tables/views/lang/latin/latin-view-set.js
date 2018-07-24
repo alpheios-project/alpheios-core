@@ -10,7 +10,9 @@ import LatinMoodVoiceConjugationView from '@views/lang/latin/verb/latin-mood-voi
 import LatinMoodConjugationVoiceView from '@views/lang/latin/verb/latin-mood-conjugation-voice-view.js'
 import LatinImperativeView from '@views/lang/latin/verb/latin-imperative-view.js'
 import LatinSupineView from '@views/lang/latin/noun/latin-supine-view.js'
+import LatinVerbIrregularView from '@views/lang/latin/verb/latin-verb-irregular.js'
 import LatinVerbParticipleView from '@views/lang/latin/verb/latin-verb-participle-view.js'
+import LatinVerbParticipleIrregularView from '@views/lang/latin/verb/latin-verb-participle-irregular.js'
 import LatinInfinitiveView from '@views/lang/latin/verb/latin-infinitive-view.js'
 /* eslint-enable */
 export default class LatinViewSet extends ViewSet {
@@ -29,6 +31,8 @@ export default class LatinViewSet extends ViewSet {
       LatinMoodVoiceConjugationView,
       LatinMoodConjugationVoiceView,
       LatinImperativeView,
+      LatinVerbIrregularView,
+      LatinVerbParticipleIrregularView,
       LatinSupineView,
       LatinVerbParticipleView,
       LatinInfinitiveView

@@ -1,6 +1,6 @@
 {
   "name": "alpheios-inflection-tables",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Inflection library for an Alpheios project",
   "main": "dist/alpheios-inflection-tables.min.js",
   "directories": {
@@ -38,8 +38,8 @@
     "iconv-lite": "^0.4.23",
     "intl-messageformat": "^2.2.0",
     "jest": "^23.4.1",
-    "jest-serializer-vue": "^2.0.2",
     "jest-raw-loader": "^1.0.1",
+    "jest-serializer-vue": "^2.0.2",
     "jest-vue-preprocessor": "^1.4.0",
     "papaparse": "^4.5.0",
     "regenerator-runtime": "^0.12.0",
@@ -51,7 +51,7 @@
     "xmltojson": "^1.3.5"
   },
   "peerDependencies": {
-    "alpheios-data-models": "github:alpheios-project/data-models#issue-components-40",
+    "alpheios-data-models": "github:alpheios-project/data-models",
     "intl-messageformat": "2.x.x",
     "uuid": "3.x.x"
   },

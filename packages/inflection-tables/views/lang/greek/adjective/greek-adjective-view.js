@@ -9,9 +9,6 @@ export default class GreekAdjectiveView extends GreekView {
     this.id = 'adjectiveDeclension'
     this.name = 'adjective declension'
     this.title = 'Adjective declension'
-    const genderMasculine = Constants.GEND_MASCULINE
-    const genderFeminine = Constants.GEND_FEMININE
-    const genderNeuter = Constants.GEND_NEUTER
 
     const GEND_MASCULINE_FEMININE = 'masculine feminine'
     const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'

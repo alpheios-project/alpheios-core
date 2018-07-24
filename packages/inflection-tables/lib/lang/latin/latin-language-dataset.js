@@ -277,7 +277,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   // for Lemmas
-  addVerbForms (partOfSpeech, data, pofsFootnotes) {
+  addVerbForms (partOfSpeech, data, pofsFootnotes = []) {
     let footnotes = []
     // First row are headers
     this.verbsIrregularLemmas = []
@@ -326,6 +326,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[8].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
       this.addInflection(partOfSpeech.value, Form, form, features, footnotes)
@@ -388,10 +389,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
     suffixes = papaparse.parse(verbParticipleSuffixesCSV, {})
     this.addVerbParticipleSuffixes(partOfSpeech, suffixes.data)
-
-    // Verb Participles from irregular verbs
-    forms = papaparse.parse(verbFormsCSV, {})
-    this.addVerbForms(partOfSpeech, forms.data)
 
     // Verb Supine
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_SUPINE)
