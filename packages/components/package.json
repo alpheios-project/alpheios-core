@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Alpheios UI Compononents",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
@@ -25,12 +25,12 @@
   "homepage": "https://github.com/alpheios-project/components#readme",
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.21",
-    "alpheios-data-models": "github:alpheios-project/data-models#issue-components-40",
+    "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
-    "alpheios-inflection-tables": "github:alpheios-project/inflection-tables#issue-components-40",
+    "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
     "alpheios-lemma-client": "github:alpheios-project/lemma-client",
     "alpheios-lexicon-client": "github:alpheios-project/lexicon-client",
-    "alpheios-morph-client": "github:alpheios-project/morph-client#issue-components-40",
+    "alpheios-morph-client": "github:alpheios-project/morph-client",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "autoprefixer": "^9.0.1",
@@ -50,7 +50,6 @@
     "css-loader": "^1.0.0",
     "dom-anchor-text-quote": "*",
     "element-closest": "^2.0.2",
-    "eslint": "^4.19.1",
     "eslint-plugin-import": "^2.13.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
