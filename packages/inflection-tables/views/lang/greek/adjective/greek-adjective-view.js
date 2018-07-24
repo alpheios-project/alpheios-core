@@ -1,16 +1,17 @@
-import { Constants, LanguageModelFactory, Feature } from 'alpheios-data-models'
-import Suffix from '../../../../lib/suffix.js'
-import GreekView from '../greek-view.js'
+import { Constants, Feature } from 'alpheios-data-models'
+import Suffix from '@lib/suffix.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type.js'
 
 export default class GreekAdjectiveView extends GreekView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale)
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale)
     this.id = 'adjectiveDeclension'
     this.name = 'adjective declension'
     this.title = 'Adjective declension'
-    this.partOfSpeech = Constants.POFS_ADJECTIVE
-    this.inflectionType = Suffix
+    const genderMasculine = Constants.GEND_MASCULINE
+    const genderFeminine = Constants.GEND_FEMININE
+    const genderNeuter = Constants.GEND_NEUTER
 
     const GEND_MASCULINE_FEMININE = 'masculine feminine'
     const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'
@@ -36,25 +37,11 @@ export default class GreekAdjectiveView extends GreekView {
     this.createTable()
   }
 
-  static get partOfSpeech () {
-    return Constants.POFS_ADJECTIVE
+  static get partsOfSpeech () {
+    return [Constants.POFS_ADJECTIVE]
   }
 
   static get inflectionType () {
     return Suffix
-  }
-
-  /**
-   * Determines wither this view can be used to display an inflection table of any data
-   * within an `inflectionData` object.
-   * By default a view can be used if a view and an inflection data piece have the same language,
-   * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param inflectionData
-   * @return {boolean}
-   */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(GreekAdjectiveView.languageID, inflectionData.languageID)) {
-      return inflectionData.pos.has(GreekAdjectiveView.partOfSpeech)
-    }
   }
 }

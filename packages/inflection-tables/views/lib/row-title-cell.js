@@ -27,17 +27,24 @@ export default class RowTitleCell {
   render () {
     // Generate HTML representation for a wide view node
     this.wNode = document.createElement('div')
-    this.wNode.classList.add(Styles.classNames.cell)
-    this.wNode.classList.add(Styles.classNames.rowTitleCell)
+    this.value = this.title
+    this.classes = {
+      [Styles.classNames.cell]: true,
+      [Styles.classNames.rowTitleCell]: true
+    }
+    this.wNode.classList.add(Styles.classNames.cell, Styles.classNames.rowTitleCell)
     if (this.feature.formsColumn) {
+      this.classes[Styles.classNames.header] = true
       this.wNode.classList.add(Styles.classNames.header)
     }
     if (this.feature.hasFullWidthRowTitle) {
       // This cell is taking an entire row
+      this.classes[Styles.classNames.fullWidth] = true
       this.wNode.classList.add(Styles.classNames.fullWidth)
     }
     if (this.feature.formsColumn && this.feature.groupFeatureList.titleColumnsQuantity > 1) {
-      this.wNode.classList.add(Styles.classNames.widthPrefix + this.feature.groupFeatureList.titleColumnsQuantity)
+      this.classes[`${Styles.classNames.widthPrefix}${this.feature.groupFeatureList.titleColumnsQuantity}`] = true
+      this.wNode.classList.add(`${Styles.classNames.widthPrefix}${this.feature.groupFeatureList.titleColumnsQuantity}`)
     }
     this.wNode.innerHTML = this.title
 
@@ -77,6 +84,21 @@ export default class RowTitleCell {
   }
 
   /**
+   * Same as `placeholder`, but generates a cell in Vue.js style
+   * @param {number} width - How many columns this cell should span
+   * @return {Object}
+   */
+  static placeholderCell (width = 1) {
+    return {
+      value: '', // This cell is empty
+      classes: {
+        [Styles.classNames.cell]: true,
+        [`${Styles.classNames.widthPrefix}${width}`]: true
+      }
+    }
+  }
+
+  /**
    * Some table layouts require multiple title cells to be shown for a row. These could be, for example, a title
    * cell for a parent category that will follow a title cell for a category that defines a row. In such situation a
    * title cell will have a parent, which will represent a parent cell object.
@@ -96,6 +118,7 @@ export default class RowTitleCell {
    * Highlights this row title cell
    */
   highlight () {
+    this.classes[Styles.classNames.highlight] = true
     this.wNode.classList.add(Styles.classNames.highlight)
     for (let nNode of this.nNodes) {
       nNode.classList.add(Styles.classNames.highlight)
@@ -106,6 +129,7 @@ export default class RowTitleCell {
    * Removes highlighting from this row title cell
    */
   clearHighlighting () {
+    this.classes[Styles.classNames.highlight] = false
     this.wNode.classList.remove(Styles.classNames.highlight)
     for (let nNode of this.nNodes) {
       nNode.classList.remove(Styles.classNames.highlight)

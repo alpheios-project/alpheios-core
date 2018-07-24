@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4'
-
+import {Feature} from 'alpheios-data-models'
 import ParadigmRule from './paradigm-rule.js'
 
 export default class Paradigm {
@@ -14,6 +14,26 @@ export default class Paradigm {
     this.creditsText = paradigm.credits ? paradigm.credits : ''
     this.subTables = paradigm.subTables
     this.rules = []
+
+    // Convert strin feature values to Feature objects for later comparison
+    for (let row of this.table.rows) {
+      for (let cell of row.cells) {
+        if (cell.role === 'data') {
+          let cellFeatures = []
+          for (const prop of Object.keys(cell)) {
+            // Eliminate "non-feature" keys
+            if (prop !== 'role' && prop !== 'value') {
+              cellFeatures.push(prop)
+            }
+          }
+          for (const feature of cellFeatures) {
+            const values = cell[feature].split(' ')
+            cell[feature] = new Feature(feature, values, this.languageID)
+          }
+          cell[Feature.types.part] = new Feature(Feature.types.part, this.partOfSpeech, this.languageID)
+        }
+      }
+    }
 
     /**
      * Sometimes paradigm sub tables may have links to another paradigms.
@@ -95,11 +115,8 @@ export default class Paradigm {
     for (const rule of this.rules) {
       let match = true
       for (const feature of rule.features) {
-        if (!inflection.hasOwnProperty(feature.type) || feature.value !== inflection[feature.type].value) {
-          match = false
-        }
+        match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value
       }
-
       return match ? {paradigm: this, rule: rule} : undefined
     }
   }

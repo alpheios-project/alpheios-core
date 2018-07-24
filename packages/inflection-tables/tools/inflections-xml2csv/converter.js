@@ -4,7 +4,7 @@ const {DOMParser} = require('xmldom')
 const xmlToJSON = require('xmltojson')
 // A workaround for Node.js environment
 xmlToJSON.stringToXML = (string) => new DOMParser().parseFromString(string, 'text/xml')
-const csvParser = require('babyparse')
+const csvParser = require('papaparse')
 
 const config = {
   latin: {
@@ -541,7 +541,7 @@ const config = {
           }
           return csvParser.unparse(result)
         }
-      },                       
+      },
       footnotes: {
         outputFN: 'footnotes.csv',
         get outputPath () {
@@ -640,7 +640,6 @@ const config = {
           let result = []
 
           for (const group of data) {
-
             for (const form of group['infl-ending']) {
               let type = form['_attr']['type']['_value']
               let primary = ''
@@ -681,7 +680,7 @@ const config = {
           return csvParser.unparse(result)
         }
       },
-      
+
       footnotes: {
         outputFN: 'footnotes.csv',
         get outputPath () {
@@ -833,6 +832,7 @@ const config = {
         }
       }
     },
+
     paradigm: {
       inputFileName: 'alph-infl-verb-paradigms.xml',
       outputVerbSubDir: 'verb/paradigm',
@@ -941,6 +941,9 @@ const config = {
                 if (cellData['_attr'].hasOwnProperty('num')) { cell.number = cellData['_attr']['num']['_value'] }
                 if (cellData['_attr'].hasOwnProperty('pers')) { cell.person = cellData['_attr']['pers']['_value'] }
                 if (cellData['_attr'].hasOwnProperty('mood')) { cell.mood = cellData['_attr']['mood']['_value'] }
+                if (cellData['_attr'].hasOwnProperty('num')) { cell.number = cellData['_attr']['num']['_value'] }
+                if (cellData['_attr'].hasOwnProperty('case')) { cell['case'] = cellData['_attr']['case']['_value'] }
+                if (cellData['_attr'].hasOwnProperty('gend')) { cell.gender = cellData['_attr']['gend']['_value'] }
                 if (cell.role === 'data') {
                   cell.value = ''
                   if (cellData.hasOwnProperty('_text')) {
@@ -1127,7 +1130,7 @@ try {
       writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
-    //adjecyive
+    // Adjective
     if (posName === POS_ADJECTIVE || posName === POS_ALL) {
       posCfg = lCfg[POS_ADJECTIVE]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))

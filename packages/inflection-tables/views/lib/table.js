@@ -22,22 +22,21 @@ export default class Table {
     this.cells = [] // Will be populated by groupByFeature()
 
     /*
-    This is a special filter function that, if defined will do additional filtering of suffixes within a cell.
+    This is a special filter function that, if defined will do additional filtering of morhpemes within a cell.
      */
-    this.suffixCellFilter = undefined
+    this.morphemeCellFilter = undefined
   }
 
   /**
    * Creates a table tree and other data structures (columns, rows, headers).
    * This function is chainabe.
-   * @param {Suffix[]} suffixes - An array of suffixes to build table from.
+   * @param {Morpheme[]} morphemes - An array of morphemes to build table from.
    * @returns {Table} Reference to self for chaining.
    */
-  construct (suffixes) {
-    this.suffixes = suffixes
+  construct (morphemes) {
+    this.morphemes = morphemes
 
-    this.tree = this.groupByFeature(suffixes)
-
+    this.tree = this.groupByFeature(morphemes)
     this.headers = this.constructHeaders()
     this.columns = this.constructColumns()
     this.rows = this.constructRows()
@@ -59,10 +58,10 @@ export default class Table {
   }
 
   /**
-   * Returns a number of columns with suffix cells in a table.
-   * @returns {number} A number of columns with suffix cells in a table.
+   * Returns a number of columns with data (suffix or morpheme) cells in a table.
+   * @returns {number} A number of columns with data cells in a table.
    */
-  get suffixColumnQty () {
+  get dataColumnQty () {
     if (!this.columns) {
       throw new Error('Columns are not populated yet.')
     }
@@ -81,10 +80,10 @@ export default class Table {
   }
 
   /**
-   * Returns a number of rows with suffix cells in a table.
+   * Returns a number of rows with data (suffix or morpheme) cells in a table.
    * @returns {number} A number of rows with suffix cells.
    */
-  get suffixRowQty () {
+  get dataRowQty () {
     if (!this.columns) {
       throw new Error('Columns are not populated yet.')
     }
@@ -92,18 +91,18 @@ export default class Table {
   }
 
   /**
-   * Groups all suffixes into a tree according to their grammatical features. There are several levels in this tree.
+   * Groups all morphemes into a tree according to their grammatical features. There are several levels in this tree.
    * Each level corresponds to a one grouping feature. The order of items in GroupingFeatures List object
    * defines an order of those levels.
    * Nodes on each level are values of a grammatical feature that forms this level. An order of those values
    * is determined by the order of values within a GroupFeatureType object of each feature.
    * This is a recursive function.
-   * @param {Suffix[]} suffixes - Suffixes to be grouped.
-   * @param {GrmFeature[]} ancestorFeatures - A list of feature values on levels above the current.
+   * @param {Morpheme[]} morphemes - Suffixes to be grouped.
+   * @param {Feature[]} ancestorFeatures - A list of feature values on levels above the current.
    * @param {number} currentLevel - At what level in a tree we are now. Used to stop recursion.
-   * @returns {NodeGroup} A top level group of suffixes that contain subgroups all way down to the last group.
+   * @returns {NodeGroup} A top level group of morphemes that contain subgroups all way down to the last group.
    */
-  groupByFeature (suffixes, ancestorFeatures = [], currentLevel = 0) {
+  groupByFeature (morphemes, ancestorFeatures = [], currentLevel = 0) {
     let group = new NodeGroup()
     group.groupFeatureType = this.features.items[currentLevel]
     group.ancestorFeatures = ancestorFeatures.slice()
@@ -117,25 +116,25 @@ export default class Table {
       ancestorFeatures.push(featureValue)
 
       // Suffixes that are selected for current combination of feature values
-      let selectedSuffixes = suffixes.filter(s => s.featureMatch(featureValue))
+      let selectedMorphemes = morphemes.filter(s => s.featureMatch(featureValue))
 
       if (currentLevel < this.features.length - 1) {
         // Divide to further groups
-        let subGroup = this.groupByFeature(selectedSuffixes, ancestorFeatures, currentLevel + 1)
+        let subGroup = this.groupByFeature(selectedMorphemes, ancestorFeatures, currentLevel + 1)
         group.subgroups.push(subGroup)
         group.cells = group.cells.concat(subGroup.cells)
       } else {
-        // This is the last level. This represent a cell with suffixes
-        // Split result has a list of suffixes in a table cell. We need to combine items with same endings.
-        if (selectedSuffixes.length > 0) {
-          if (this.suffixCellFilter) {
-            selectedSuffixes = selectedSuffixes.filter(this.suffixCellFilter)
+        // This is the last level. This represent a cell with morphemes
+        // Split result has a list of morphemes in a table cell. We need to combine items with same endings.
+        if (selectedMorphemes.length > 0) {
+          if (this.morphemeCellFilter) {
+            selectedMorphemes = selectedMorphemes.filter(this.morphemeCellFilter)
           }
 
-          selectedSuffixes = Suffix.combine(selectedSuffixes)
+          selectedMorphemes = Suffix.combine(selectedMorphemes)
         }
 
-        let cell = new Cell(selectedSuffixes, ancestorFeatures.slice())
+        let cell = new Cell(selectedMorphemes, ancestorFeatures.slice())
         group.subgroups.push(cell)
         group.cells.push(cell)
         this.cells.push(cell)
@@ -147,9 +146,9 @@ export default class Table {
   }
 
   /**
-   * Create columns out of a suffixes organized into a tree.
+   * Create columns out of a morphemes organized into a tree.
    * This is a recursive function.
-   * @param {NodeGroup} tree - A tree of suffixes.
+   * @param {NodeGroup} tree - A tree of morphemes.
    * @param {Column[]} columns - An array of columns to be constructed.
    * @param {number} currentLevel - Current recursion level.
    * @returns {Array} An array of columns of suffix cells.
@@ -201,7 +200,7 @@ export default class Table {
   /**
    * Creates an array of header cell rows.
    * This is a recursive function.
-   * @param {NodeGroup} tree - A tree of suffixes.
+   * @param {NodeGroup} tree - A tree of morphemes.
    * @param {Row[]} headers - An array of rows with header cells.
    * @param {number} currentLevel - Current recursion level.
    * @returns {Array} A two-dimensional array of header cell rows.
@@ -263,10 +262,10 @@ export default class Table {
    */
   constructRows () {
     let rows = []
-    for (let rowIndex = 0; rowIndex < this.suffixRowQty; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < this.dataRowQty; rowIndex++) {
       rows[rowIndex] = new Row()
       rows[rowIndex].titleCell = this.columns[0].cells[rowIndex].titleCell
-      for (let columnIndex = 0; columnIndex < this.suffixColumnQty; columnIndex++) {
+      for (let columnIndex = 0; columnIndex < this.dataColumnQty; columnIndex++) {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex])
       }
     }
@@ -327,7 +326,7 @@ export default class Table {
   }
 
   /**
-   * Check for any matched suffixes
+   * Check for any matched morphemes
    */
   _hasAnyMatches () {
     let hasMatches = false
@@ -343,7 +342,7 @@ export default class Table {
   }
 
   /**
-   * Hide groups that have no suffix matches.
+   * Hide groups that have no morpheme matches.
    */
   hideNoSuffixGroups () {
     for (let headerCell of this.headers[0].cells) {

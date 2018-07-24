@@ -23,7 +23,7 @@ export default class Inflections {
 
   /**
    * Adds suffix of form items
-   * @param {Suffix[] | Form[]} items
+   * @param {Suffix[] | Form[] | Paradigm[]} items
    */
   addItems (items) {
     if (!items) {
@@ -35,16 +35,40 @@ export default class Inflections {
     if (items.length === 0) {
       throw new Error(`Inflection items array must not be empty`)
     }
-    this.items.push(...items)
+    // Store only new items, avoid duplicates
+    for (const item of items) {
+      if (!this.hasItem(item)) {
+        this.items.push(item)
+      }
+    }
   }
 
   /**
-   * Adds a singe footnote object
+   * Adds a singe footnote object. If a footonte with the same index exists, it will be rewritten.
    * @param {string} index - A footnote index
    * @param {Footnote} footnote - A footnote object
    */
   addFootnote (index, footnote) {
     this.footnotesMap.set(index, footnote)
+  }
+
+  /**
+   * Checks if item with the same ID is already stored in array of inflection data.
+   * @param {Suffix | Form | Paradigm} morpheme - An item to be checked against stored in inflection data.
+   * @return {boolean} True if this item is stored in inflection data, false otherwise.
+   */
+  hasItem (morpheme) {
+    return this.items.some(i => i.id === morpheme.id)
+  }
+
+  /**
+   * Checks if an array of items has at least one element that matches an inflection.
+   *  A match is determined as a result of item's `match` function.
+   * @param {Inflection} inflection - An inflection to match against.
+   * @return {boolean} - True if there is at least one match, false otherwise
+   */
+  hasMatches (inflection) {
+    return this.items.some(i => i.matches(inflection))
   }
 
   /**
@@ -55,12 +79,7 @@ export default class Inflections {
    * Its format is dependent on the `match` function implementation.
    */
   getMatches (inflection) {
-    let results = []
-    for (const item of this.items) {
-      let result = item.matches(inflection)
-      if (result) { results.push(result) }
-    }
-    return results
+    return this.hasMatches(inflection) ? this.items.filter(i => i.matches(inflection)) : []
   }
 
   /**
@@ -69,7 +88,7 @@ export default class Inflections {
    */
   get footnotesInUse () {
     let set = new Set()
-    // Scan all selected suffixes to build a unique set of footnote indexes
+    // Scan all selected morphemes to build a unique set of footnote indexes
     for (const item of this.items) {
       if (item.hasOwnProperty(Feature.types.footnote)) {
         // Footnote indexes are stored in an array

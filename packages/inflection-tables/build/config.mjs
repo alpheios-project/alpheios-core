@@ -9,7 +9,7 @@ const webpack = {
       'alpheios-data-models': 'alpheios-data-models',
       'uuid': 'uuid'
     },
-    resolve:{
+    resolve: {
       alias: {
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
         '@lib': path.join(projectRoot, 'lib'),
@@ -23,12 +23,6 @@ const webpack = {
           test: /\.csv$/,
           use: ['raw-loader'],
           enforce: 'pre'
-        },
-        {
-          test: /\.json$/,
-          use: ['raw-loader'],
-          enforce: 'pre',
-          type: 'javascript/auto' // To prevent running Webpack's default JSON parser on the output of raw-loader
         }
       ]
     }

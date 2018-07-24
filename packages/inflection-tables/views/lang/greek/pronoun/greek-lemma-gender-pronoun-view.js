@@ -7,11 +7,11 @@ import Table from '../../../lib/table'
  * Used for demonstrative pronouns. Produces a table grouped into columns by lemma and gender
  */
 export default class GreekLemmaGenderPronounView extends GreekPronounView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale, GreekLemmaGenderPronounView.classes[0])
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale, GreekLemmaGenderPronounView.classes[0])
 
     // Add lemmas
-    const lemmaValues = this.dataset.getPronounGroupingLemmas(GreekLemmaGenderPronounView.classes[0])
+    const lemmaValues = this.constructor.dataset.getPronounGroupingLemmas(GreekLemmaGenderPronounView.classes[0])
     this.featureTypes.lemmas = new Feature(Feature.types.hdwd, lemmaValues, GreekLemmaGenderPronounView.languageID)
     this.features.lemmas = new GroupFeatureType(this.featureTypes.lemmas, 'Lemma')
 

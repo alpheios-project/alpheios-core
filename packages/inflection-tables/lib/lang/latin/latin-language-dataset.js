@@ -52,7 +52,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   // For noun and adjectives
-  addSuffixes (partOfSpeech, data) {
+  addSuffixes (partOfSpeech, data, pofsFootnotes) {
     // An order of columns in a data CSV file
     const n = {
       suffix: 0,
@@ -65,6 +65,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     }
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-'
+    let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -85,13 +86,14 @@ export default class LatinLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Suffix, suffix, features)
+      this.addInflection(partOfSpeech.value, Suffix, suffix, features, footnotes)
     }
   }
 
   // For pronouns
-  addPronounForms (partOfSpeech, data) {
+  addPronounForms (partOfSpeech, data, pofsFootnotes) {
     const n = {
       formSet: 0,
       headword: 1,
@@ -103,6 +105,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       form: 7,
       footnote: 8
     }
+    let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -135,15 +138,17 @@ export default class LatinLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Form, form, features)
+      this.addInflection(partOfSpeech.value, Form, form, features, footnotes)
     }
   }
 
   // For verbs
-  addVerbSuffixes (partOfSpeech, data) {
+  addVerbSuffixes (partOfSpeech, data, pofsFootnotes) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-'
+    let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -183,8 +188,9 @@ export default class LatinLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[9].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Suffix, suffix, features)
+      this.addInflection(partOfSpeech.value, Suffix, suffix, features, footnotes)
     }
   }
 
@@ -271,7 +277,8 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   // for Lemmas
-  addVerbForms (partOfSpeech, data) {
+  addVerbForms (partOfSpeech, data, pofsFootnotes) {
+    let footnotes = []
     // First row are headers
     this.verbsIrregularLemmas = []
 
@@ -319,58 +326,63 @@ export default class LatinLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[8].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Form, form, features)
+      this.addInflection(partOfSpeech.value, Form, form, features, footnotes)
     }
   }
 
   addFootnotes (partOfSpeech, classType, data) {
+    let footnotes = []
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
+      const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
+      footnotes.push(footnote)
     }
+    return footnotes
   }
 
   loadData () {
     let partOfSpeech
     let suffixes
     let forms
+    let footnotesData
     let footnotes
 
     // Nouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    footnotesData = papaparse.parse(nounFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
     suffixes = papaparse.parse(nounSuffixesCSV, {})
-    this.addSuffixes(partOfSpeech, suffixes.data)
-    footnotes = papaparse.parse(nounFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
+    this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Pronouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
+    footnotesData = papaparse.parse(pronounFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
     forms = papaparse.parse(pronounFormsCSV, {})
-    this.addPronounForms(partOfSpeech, forms.data)
-    footnotes = papaparse.parse(pronounFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Form, footnotes.data)
+    this.addPronounForms(partOfSpeech, forms.data, footnotes)
 
     // Adjectives
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    footnotesData = papaparse.parse(adjectiveFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
     suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
-    this.addSuffixes(partOfSpeech, suffixes.data)
-    footnotes = papaparse.parse(adjectiveFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
+    this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Verbs
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    suffixes = papaparse.parse(verbSuffixesCSV, {})
-    this.addVerbSuffixes(partOfSpeech, suffixes.data)
+    footnotesData = papaparse.parse(verbFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
 
-    footnotes = papaparse.parse(verbFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
+    suffixes = papaparse.parse(verbSuffixesCSV, {})
+    this.addVerbSuffixes(partOfSpeech, suffixes.data, footnotes)
+
+    footnotesData = papaparse.parse(verbFormFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
 
     forms = papaparse.parse(verbFormsCSV, {})
-    this.addVerbForms(partOfSpeech, forms.data)
-
-    footnotes = papaparse.parse(verbFormFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Form, footnotes.data)
+    this.addVerbForms(partOfSpeech, forms.data, footnotes)
 
     // Verb Participles
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)

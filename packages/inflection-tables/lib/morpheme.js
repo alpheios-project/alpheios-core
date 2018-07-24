@@ -1,4 +1,4 @@
-import * as Models from 'alpheios-data-models'
+import { Feature } from 'alpheios-data-models'
 import MatchData from './match-data'
 import ExtendedLanguageData from './extended-language-data'
 import uuidv4 from 'uuid/v4'
@@ -31,10 +31,19 @@ export default class Morpheme {
      */
     this.extendedLangData = {}
     this.match = undefined
+
+    /**
+     * @type {Footnote[]}
+     */
+    this.footnotes = []
   }
 
   static get ClassType () {
     return this
+  }
+
+  get hasFootnotes () {
+    return Boolean(this.footnotes.length)
   }
 
   static readObject (jsonObject) {
@@ -59,10 +68,10 @@ export default class Morpheme {
       }
     }
 
-    if (jsonObject[Models.GrmFeature.types.footnote]) {
-      suffix[Models.GrmFeature.types.footnote] = []
-      for (let footnote of jsonObject[Models.GrmFeature.types.footnote]) {
-        suffix[Models.GrmFeature.types.footnote].push(footnote)
+    if (jsonObject[Feature.types.footnote]) {
+      suffix[Feature.types.footnote] = []
+      for (let footnote of jsonObject[Feature.types.footnote]) {
+        suffix[Feature.types.footnote].push(footnote)
       }
     }
 
@@ -96,9 +105,15 @@ export default class Morpheme {
       }
     }
 
-    if (this.hasOwnProperty(Models.GrmFeature.types.footnote)) {
-      clone[Models.GrmFeature.types.footnote] = this[Models.GrmFeature.types.footnote]
+    if (this[Feature.types.footnote]) {
+      clone[Feature.types.footnote] = this[Feature.types.footnote]
     }
+
+    if (this.match) {
+      clone.match = this.match
+    }
+
+    clone.footnotes.push(...this.footnotes)
 
     for (const lang in this.extendedLangData) {
       if (this.extendedLangData.hasOwnProperty(lang)) {
@@ -119,23 +134,29 @@ export default class Morpheme {
   }
 
   /**
-   * Returns a list of values that are the same between a morpheme and a feature (an intersection).
-   * @param {Feature} feature
-   * @return {string[]}
+   * Returns a list of values that are the same between a morpheme and a comparisonFeature.
+   * Both morpheme and a comparisonFeature can have either single or multiple values.
+   * A match is found if morpheme has one or several values of a comparisonFeature.
+   * @param {Feature} comparisonFeature - A feature morpheme should be compared with.
+   * @return {string[]} A list of matching feature values
    */
-  matchingValues (feature) {
+  matchingValues (comparisonFeature) {
     let matches = []
 
-    if (feature && this.features.hasOwnProperty(feature.type)) {
-      const morphemeValue = this.features[feature.type]
+    if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) {
+      const morphemeValue = this.features[comparisonFeature.type]
 
-      if (morphemeValue.value === feature.value) {
-        matches.push(feature.value)
-      } else if (feature.isMultiple) {
-        for (const featureValue of feature.values) {
+      if (morphemeValue.isMultiple || comparisonFeature.isMultiple) {
+        // Either morphemeValue or comparisonFeature have multiple values
+        for (const featureValue of comparisonFeature.values) {
           if (morphemeValue.values.includes(featureValue)) {
             matches.push(featureValue)
           }
+        }
+      } else {
+        // Both features have single values
+        if (morphemeValue.value === comparisonFeature.value) {
+          matches.push(comparisonFeature.value)
         }
       }
     }
@@ -213,27 +234,34 @@ export default class Morpheme {
   }
 
   /**
-   * Splits a suffix that has multiple values of one or more grammatical features into an array of Suffix objects
-   * with each Suffix object having only a single value of those grammatical features. Initial multiple values
+   * Splits a morpheme that has multiple values of one or more grammatical features into an array of Morpheme objects
+   * with each Morpheme object having only a single value of those grammatical features. Initial multiple values
    * are stored in a featureGroups[featureType] property as an array of values.
-   * @param {string} featureType - A type of a feature
-   * @param {GrmFeature[]} featureValues - Multiple grammatical feature values.
-   * @returns {Suffix[]} - An array of suffixes.
+   * @param {Feature[]} features - Multiple grammatical feature values.
+   * @param {number} level - Iteration level for recursive call tracking.
+   * @returns {Morpheme[]} - An array of morphemes.
    */
-  split (featureType, featureValues) {
-    let copy = this.clone()
-    let values = []
-    featureValues.forEach(element => values.push(element.value))
-    copy.features[featureType] = featureValues[0].value
-    copy.featureGroups[featureType] = values
-    let suffixItems = [copy]
-    for (let i = 1; i < featureValues.length; i++) {
-      copy = this.clone()
-      copy.features[featureType] = featureValues[i].value
-      copy.featureGroups[featureType] = values
-      suffixItems.push(copy)
+  split (features, level = 0) {
+    // TODO: Not tested for multiple features (as there were no such cases yet)
+    let morphemes = []
+    const currentFeature = features[level]
+    for (const value of currentFeature.values) {
+      if (level < features.length - 1) {
+        let splitted = this.splitByFeature(features, level + 1)
+        for (let morpheme of splitted) {
+          morpheme.features[currentFeature.type] = currentFeature.createFeature(value)
+          morpheme.featureGroups[currentFeature.type] = currentFeature.values
+          morphemes.push(morpheme)
+        }
+      } else {
+        // The last level
+        let copy = this.clone()
+        copy.features[currentFeature.type] = currentFeature.createFeature(value)
+        copy.featureGroups[currentFeature.type] = currentFeature.values
+        morphemes.push(copy)
+      }
     }
-    return suffixItems
+    return morphemes
   }
 
   /**

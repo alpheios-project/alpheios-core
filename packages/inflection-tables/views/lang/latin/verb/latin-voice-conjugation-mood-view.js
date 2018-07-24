@@ -1,11 +1,11 @@
-import { LanguageModelFactory, Feature } from 'alpheios-data-models'
+import { Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinVerbView from './latin-verb-view.js'
 import Table from '../../../lib/table'
 
 export default class LatinVoiceConjugationMoodView extends LatinVerbView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale)
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale)
     this.id = 'verbVoiceConjugationMood'
     this.name = 'voice-conjugation-mood'
     this.title = 'Verb Conjugation'
@@ -15,20 +15,6 @@ export default class LatinVoiceConjugationMoodView extends LatinVerbView {
 
   static get inflectionType () {
     return Suffix
-  }
-
-  /**
-   * Determines wither this view can be used to display an inflection table of any data
-   * within an `inflectionData` object.
-   * By default a view can be used if a view and an inflection data piece have the same language,
-   * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param inflectionData
-   * @return {boolean}
-   */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(LatinVoiceConjugationMoodView.languageID, inflectionData.languageID)) {
-      return inflectionData.partsOfSpeech.includes(LatinVoiceConjugationMoodView.partOfSpeech)
-    }
   }
 
   createTable () {

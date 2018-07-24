@@ -1,7 +1,7 @@
 // Import in a browser-friendly way
 import * as Lib from '../../dist/inflection-tables.standalone.js'
 import Presenter from './presenter.js'
-import { Constants } from '../../node_modules/alpheios-data-models/dist/alpheios-data-models.js'
+import { Constants, LanguageModelFactory } from '../../node_modules/alpheios-data-models/dist/alpheios-data-models.js'
 import AlpheiosTuftsAdapter from '../../node_modules/alpheios-tufts-adapter/dist/alpheios-tufts-adapter.standalone.js'
 
 let langData = new Lib.LanguageDataList([Lib.LatinDataSet, Lib.GreekDataSet]).loadData()
@@ -30,7 +30,8 @@ selectList.addEventListener('change', event => {
 
 let show = function show (languageCode, word) {
   let maAdapter = new AlpheiosTuftsAdapter() // Morphological analyzer adapter
-  maAdapter.getHomonym(languageCode, word).then(
+  let languageID = LanguageModelFactory.getLanguageIdFromCode(languageCode)
+  maAdapter.getHomonym(languageID, word).then(
     (homonym) => {
       // Get matching suffixes from an inflection library
       let wordData = langData.getInflectionData(homonym)

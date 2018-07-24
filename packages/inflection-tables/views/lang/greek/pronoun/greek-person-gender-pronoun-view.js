@@ -7,8 +7,8 @@ import Table from '../../../lib/table'
  * Used for reflexive pronouns. Produces a table grouped into columns by person and gender
  */
 export default class GreekPersonGenderPronounView extends GreekPronounView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale, GreekPersonGenderPronounView.classes[0])
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale, GreekPersonGenderPronounView.classes[0])
 
     // Add persons
     this.featureTypes.persons = new Feature(
@@ -18,7 +18,7 @@ export default class GreekPersonGenderPronounView extends GreekPronounView {
         Constants.ORD_2ND,
         Constants.ORD_3RD
       ],
-      this.languageID)
+      this.constructor.languageID)
     this.features.persons = new GroupFeatureType(this.featureTypes.persons, 'Person')
 
     /*

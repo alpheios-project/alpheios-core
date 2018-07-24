@@ -1,21 +1,21 @@
-import { Constants, LanguageModelFactory, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type'
 import Table from '../../../lib/table'
 
 export default class LatinSupineView extends LatinView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale)
-    this.partOfSpeech = LatinSupineView.partOfSpeech
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale)
+    this.partOfSpeech = this.constructor.mainPartOfSpeech
     this.id = 'verbSupine'
     this.name = 'supine'
     this.title = 'Supine'
     this.features.moods = new GroupFeatureType(
-      new Feature(Feature.types.mood, [Constants.MOOD_SUPINE], this.model.languageID),
+      new Feature(Feature.types.mood, [Constants.MOOD_SUPINE], this.constructor.model.languageID),
       'Mood')
     this.language_features[Feature.types.grmCase] = new Feature(Feature.types.grmCase,
-      [Constants.CASE_ACCUSATIVE, Constants.CASE_ABLATIVE], this.model.languageID)
+      [Constants.CASE_ACCUSATIVE, Constants.CASE_ABLATIVE], this.constructor.model.languageID)
     this.features = {
       cases: new GroupFeatureType(this.language_features[Feature.types.grmCase], 'Case'),
       voices: new GroupFeatureType(this.language_features[Feature.types.voice], 'Voice'),
@@ -24,26 +24,16 @@ export default class LatinSupineView extends LatinView {
     this.createTable()
   }
 
-  static get partOfSpeech () {
-    return Constants.POFS_SUPINE
+  static get viewID () {
+    return 'latin_supine_view'
+  }
+
+  static get partsOfSpeech () {
+    return [Constants.POFS_SUPINE]
   }
 
   static get inflectionType () {
     return Suffix
-  }
-
-  /**
-   * Determines wither this view can be used to display an inflection table of any data
-   * within an `inflectionData` object.
-   * By default a view can be used if a view and an inflection data piece have the same language,
-   * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param inflectionData
-   * @return {boolean}
-   */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(LatinSupineView.languageID, inflectionData.languageID)) {
-      return inflectionData.partsOfSpeech.includes(LatinSupineView.partOfSpeech)
-    }
   }
 
   createTable () {

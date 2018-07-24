@@ -1,4 +1,4 @@
-import { Constants, GreekLanguageModel, Feature, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, GreekLanguageModel, Feature } from 'alpheios-data-models'
 import Form from '../../../../lib/form.js'
 import View from '../../../lib/view.js'
 import GreekView from '../greek-view.js'
@@ -14,8 +14,8 @@ export default class GreekPronounView extends GreekView {
    * @param {string} locale
    * @param {string} grammarClass - For what pronoun class a view will be created
    */
-  constructor (inflectionData, locale, grammarClass = 'Greek') {
-    super(inflectionData, locale)
+  constructor (homonym, inflectionData, locale, grammarClass = 'Greek') {
+    super(homonym, inflectionData, locale)
     this.id = GreekPronounView.getID(grammarClass)
     this.name = GreekPronounView.getName(grammarClass)
     this.title = GreekPronounView.getTitle(grammarClass)
@@ -26,17 +26,17 @@ export default class GreekPronounView extends GreekView {
     this.featureTypes.numbers = new Feature(
       Feature.types.number,
       [Constants.NUM_SINGULAR, Constants.NUM_DUAL, Constants.NUM_PLURAL],
-      this.languageID
+      this.constructor.languageID
     )
 
     this.featureTypes.genders = new Feature(
       Feature.types.gender,
       [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
-      this.languageID
+      this.constructor.languageID
     )
 
     // This is just a placeholder. Lemma values will be generated dynamically
-    this.featureTypes.lemmas = new Feature(Feature.types.hdwd, [], this.languageID)
+    this.featureTypes.lemmas = new Feature(Feature.types.hdwd, [], this.constructor.languageID)
 
     this.features = {
       numbers: new GroupFeatureType(this.featureTypes.numbers, 'Number'),
@@ -69,8 +69,8 @@ export default class GreekPronounView extends GreekView {
     }
   }
 
-  static get partOfSpeech () {
-    return Constants.POFS_PRONOUN
+  static get partsOfSpeech () {
+    return [Constants.POFS_PRONOUN]
   }
 
   static get inflectionType () {
@@ -87,31 +87,32 @@ export default class GreekPronounView extends GreekView {
   }
 
   static getID (grammarClass) {
-    return `${grammarClass}${View.toTitleCase(GreekPronounView.partOfSpeech)}Declension`
+    return `${grammarClass}${View.toTitleCase(GreekPronounView.mainPartOfSpeech)}Declension`
   }
 
   static getName (grammarClass) {
-    return `${grammarClass} ${GreekPronounView.partOfSpeech} declension`
+    return `${grammarClass} ${GreekPronounView.mainPartOfSpeech} declension`
   }
 
   static getTitle (grammarClass) {
-    return View.toTitleCase(`${grammarClass} ${GreekPronounView.partOfSpeech} Declension`).trim()
+    return View.toTitleCase(`${grammarClass} ${GreekPronounView.mainPartOfSpeech} Declension`).trim()
   }
+
+  // Select inflections that have a 'Form' type (form based) and find those whose grammar class matches a grammar class of the view
 
   /**
    * Determines wither this view can be used to display an inflection table of any data
    * within an `inflectionData` object.
    * By default a view can be used if a view and an inflection data piece have the same language,
    * the same part of speech, and the view is enabled for lexemes within an inflection data.
+   * @param homonym
    * @param inflectionData
    * @return {boolean}
    */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(this.languageID, inflectionData.languageID) &&
-      inflectionData.pos.has(this.partOfSpeech)) {
-      let inflectionSet = inflectionData.pos.get(this.partOfSpeech)
-      if (inflectionSet.types.has(this.inflectionType)) {
-        let inflections = inflectionSet.types.get(this.inflectionType)
+  static matchFilter (homonym, inflectionData) {
+    if (this.languageID === homonym.languageID && homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) {
+      if (inflectionData.types.has(this.inflectionType)) {
+        let inflections = inflectionData.types.get(this.inflectionType)
         let found = inflections.items.find(form => {
           let match = false
           for (const value of form.features[Feature.types.grmClass].values) {
@@ -127,11 +128,18 @@ export default class GreekPronounView extends GreekView {
     return false
   }
 
-  static getMorphemes (inflectionData) {
-    return inflectionData.pos.get(this.partOfSpeech)
-      .types.get(this.inflectionType).items
+  static getMatchingInstances (homonym, messages) {
+    let inflectionData = this.getInflectionsData(homonym)
+    if (this.matchFilter(homonym, inflectionData)) {
+      return [new this(homonym, inflectionData, messages)]
+    }
+    return []
+  }
+
+  getMorphemes () {
+    return this.inflectionData.types.get(this.constructor.inflectionType).items
       .filter(item => item.features.hasOwnProperty(Feature.types.grmClass) &&
-            item.features[Feature.types.grmClass].hasSomeValues(this.classes)
+            item.features[Feature.types.grmClass].hasSomeValues(this.constructor.classes)
       )
   }
 }

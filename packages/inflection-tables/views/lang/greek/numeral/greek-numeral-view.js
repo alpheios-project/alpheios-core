@@ -1,4 +1,4 @@
-import { Constants, LanguageModelFactory, GreekLanguageModel, Feature } from 'alpheios-data-models'
+import { Constants, GreekLanguageModel, Feature } from 'alpheios-data-models'
 import Form from '../../../../lib/form.js'
 import Table from '../../../lib/table'
 
@@ -6,13 +6,12 @@ import GreekView from '../greek-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type.js'
 
 export default class GreekNumeralView extends GreekView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale)
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale)
     this.id = 'numeralDeclension'
     this.name = 'numeral declension'
     this.title = 'Numeral declension'
-    this.partOfSpeech = Constants.POFS_NUMERAL
-    this.inflectionType = Form
+    this.partOfSpeech = this.constructor.mainPartOfSpeech
 
     this.featureTypes = {}
 
@@ -22,13 +21,13 @@ export default class GreekNumeralView extends GreekView {
     this.featureTypes.numbers = new Feature(
       Feature.types.number,
       [Constants.NUM_SINGULAR, Constants.NUM_DUAL, Constants.NUM_PLURAL],
-      this.languageID
+      this.constructor.languageID
     )
 
     this.featureTypes.genders = new Feature(
       Feature.types.gender,
       [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
-      this.languageID
+      this.constructor.languageID
     )
 
     const lemmaValues = this.dataset.getNumeralGroupingLemmas()
@@ -37,9 +36,9 @@ export default class GreekNumeralView extends GreekView {
     this.features = {
       lemmas: new GroupFeatureType(this.featureTypes.lemmas, 'Lemma'),
       genders: new GroupFeatureType(this.featureTypes.genders, 'Gender'),
-      types: new GroupFeatureType(this.model.typeFeature(Feature.types.type), 'Type'),
+      types: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.type), 'Type'),
       numbers: new GroupFeatureType(this.featureTypes.numbers, 'Number'),
-      cases: new GroupFeatureType(this.model.typeFeature(Feature.types.grmCase), 'Case')
+      cases: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.grmCase), 'Case')
     }
 
     this.features.genders.getTitle = function getTitle (featureValue) {
@@ -67,26 +66,12 @@ export default class GreekNumeralView extends GreekView {
     this.createTable()
   }
 
-  static get partOfSpeech () {
-    return Constants.POFS_NUMERAL
+  static get partsOfSpeech () {
+    return [Constants.POFS_NUMERAL]
   }
 
   static get inflectionType () {
     return Form
-  }
-
-  /**
-   * Determines wither this view can be used to display an inflection table of any data
-   * within an `inflectionData` object.
-   * By default a view can be used if a view and an inflection data piece have the same language,
-   * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param inflectionData
-   * @return {boolean}
-   */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(GreekNumeralView.languageID, inflectionData.languageID)) {
-      return inflectionData.pos.has(GreekNumeralView.partOfSpeech)
-    }
   }
 
   createTable () {
@@ -98,8 +83,8 @@ export default class GreekNumeralView extends GreekView {
     features.fullWidthRowTitles = [this.featureTypes.numbers]
   }
 
-  static getMorphemes (inflectionData) {
+  /* getMorphemes (inflectionData) {
     return inflectionData.pos.get(this.partOfSpeech)
-      .types.get(this.inflectionType).items
-  }
+      .types.get(this.constructor.inflectionType).items
+  } */
 }

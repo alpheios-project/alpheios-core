@@ -44,7 +44,7 @@ export default class L10n {
       console.warn(`Messages for "{locale}" are not found, returning a default "${this.defaultLocale}" instead`)
       locale = this.defaultLocale
     }
-    let messageBundle = new MessageBundle(locale, JSON.parse(messages.get(locale)))
+    let messageBundle = new MessageBundle(locale, messages.get(locale))
     messageBundles.set(locale, messageBundle)
     return messageBundle
   }

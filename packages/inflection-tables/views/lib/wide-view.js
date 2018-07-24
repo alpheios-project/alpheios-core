@@ -63,9 +63,56 @@ export default class WideView {
         this.nodes.appendChild(cell.wvNode)
       }
     }
-    this.nodes.style.gridTemplateColumns = 'repeat(' + (this.visibleColumnQty + this.titleColumnQty) + ', ' +
-      Styles.wideView.column.width + Styles.wideView.column.unit + ')'
+    this.nodes.style.gridTemplateColumns = this.style.gridTemplateColumns
 
     return this.nodes
+  }
+
+  /**
+   * Renders a table in a size suitable for Vue.js display
+   * @return {{rows: Array}}
+   */
+  renderTable () {
+    let table = {
+      rows: []
+    }
+
+    for (let row of this.headers) {
+      let cells = []
+      cells.push(row.titleCell)
+      for (let cell of row.cells) {
+        cells.push(cell)
+      }
+      table.rows.push({cells: cells})
+    }
+
+    for (let row of this.rows) {
+      let cells = []
+      let titleCells = row.titleCell.hierarchyList
+      if (titleCells.length < this.titleColumnQty) {
+        cells.push(RowTitleCell.placeholderCell(this.titleColumnQty - titleCells.length))
+      }
+      for (let titleCell of titleCells) {
+        cells.push(titleCell)
+      }
+
+      for (let cell of row.cells) {
+        cells.push(cell)
+      }
+      table.rows.push({cells: cells})
+    }
+    table.style = this.style
+
+    return table
+  }
+
+  /**
+   * Inline styles object to use with Vue.js components
+   * @return {{gridTemplateColumns: string}}
+   */
+  get style () {
+    return {
+      gridTemplateColumns: `repeat(${this.visibleColumnQty + this.titleColumnQty}, ${Styles.wideView.column.width}${Styles.wideView.column.unit})`
+    }
   }
 }

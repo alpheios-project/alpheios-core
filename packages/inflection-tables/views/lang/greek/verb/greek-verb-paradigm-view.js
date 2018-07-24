@@ -1,4 +1,4 @@
-import { Constants, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import Paradigm from '../../../../lib/paradigm.js'
 import View from '../../../lib/view.js'
 import GreekView from '../greek-view.js'
@@ -7,14 +7,15 @@ import GreekView from '../greek-view.js'
  * This is a base class for all pronoun views. This class should not be used to create tables. Its purpose
  * is to define common features and properties for all pronoun classes.
  */
-export default class GreekParadigmView extends GreekView {
+export default class GreekVerbParadigmView extends GreekView {
   /**
    * @param {Paradigm} paradigm
+   * @param {Homonym} homonym
    * @param {InflectionData} inflectionData
    * @param {string} locale
    */
-  constructor (paradigm, inflectionData, locale) {
-    super(inflectionData, locale)
+  constructor (paradigm, homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale)
     this.id = paradigm.id
     this.name = paradigm.title.toLowerCase()
     this.title = paradigm.title
@@ -47,8 +48,8 @@ export default class GreekParadigmView extends GreekView {
     this.creditsText = this.paradigm.creditsText
   }
 
-  static get partOfSpeech () {
-    return Constants.POFS_VERB
+  static get partsOfSpeech () {
+    return [Constants.POFS_VERB]
   }
 
   static get inflectionType () {
@@ -65,15 +66,15 @@ export default class GreekParadigmView extends GreekView {
   }
 
   static getID (grammarClass) {
-    return `${grammarClass}${View.toTitleCase(GreekParadigmView.partOfSpeech)}Paradigm`
+    return `${grammarClass}${View.toTitleCase(GreekVerbParadigmView.mainPartOfSpeech)}Paradigm`
   }
 
   static getName (grammarClass) {
-    return `${grammarClass} ${GreekParadigmView.partOfSpeech} paradigm`
+    return `${grammarClass} ${GreekVerbParadigmView.mainPartOfSpeech} paradigm`
   }
 
   static getTitle (grammarClass) {
-    return View.toTitleCase(`${grammarClass} ${GreekParadigmView.partOfSpeech} Paradigm`).trim()
+    return View.toTitleCase(`${grammarClass} ${GreekVerbParadigmView.mainPartOfSpeech} Paradigm`).trim()
   }
 
   /**
@@ -81,24 +82,29 @@ export default class GreekParadigmView extends GreekView {
    * within an `inflectionData` object.
    * By default a view can be used if a view and an inflection data piece have the same language,
    * the same part of speech, and the view is enabled for lexemes within an inflection data.
+   * @param homonym
    * @param inflectionData
    * @return {boolean}
    */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(this.languageID, inflectionData.languageID) &&
-      inflectionData.pos.has(this.partOfSpeech)) {
-      let inflectionSet = inflectionData.pos.get(this.partOfSpeech)
+  static matchFilter (homonym, inflectionData) {
+    return (this.languageID === homonym.languageID &&
+      homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) &&
+      inflectionData.types.has(this.inflectionType)
+
+    /* if (this.languageID === inflection.languageID && this.partsOfSpeech.includes(inflection[Feature.types.part].value)) {
+      let inflectionSet = inflectionData.pos.get(inflection[Feature.types.part].value)
       if (inflectionSet.types.has(this.inflectionType)) {
         return true
       }
     }
-    return false
+    return false */
   }
 
-  static getMatchingInstances (inflectionData, messages) {
-    if (this.matchFilter(inflectionData)) {
-      let paradigms = inflectionData.pos.get(this.partOfSpeech).types.get(this.inflectionType).items
-      return paradigms.map(paradigm => new this(paradigm, inflectionData, messages))
+  static getMatchingInstances (homonym, messages) {
+    let inflectionData = this.getInflectionsData(homonym)
+    if (this.matchFilter(homonym, inflectionData)) {
+      let paradigms = inflectionData.types.get(this.inflectionType).items
+      return paradigms.map(paradigm => new this(paradigm, homonym, inflectionData, messages))
     }
     return []
   }

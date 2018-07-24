@@ -49,6 +49,7 @@ export default class LanguageDatasetFactory {
 
   /**
    * Finds matching forms or suffixes for a homonym.
+   * @deprecated Will be removed when will have no usages
    * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
    * @return {InflectionData} A return value of an inflection query.
    */

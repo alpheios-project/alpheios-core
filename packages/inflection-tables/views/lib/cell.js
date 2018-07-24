@@ -3,17 +3,17 @@ import * as Styles from '../styles/styles'
 export default class Cell {
   /**
    * Creates a cell for an inflection table.
-   * @param {Suffix[]} suffixes - A list of suffixes that belongs to this cell.
+   * @param {Morpheme[]} morphemes - A list of morphemes that belongs to this cell.
    * @param {Feature[]} features - A list of features this cell corresponds to.
    */
-  constructor (suffixes, features) {
-    this.suffixes = suffixes
-    if (!this.suffixes) {
-      this.suffixes = []
+  constructor (morphemes, features) {
+    this.morphemes = morphemes
+    if (!this.morphemes) {
+      this.morphemes = []
     }
     this.features = features
-    this.empty = (this.suffixes.length === 0)
-    this.suffixMatches = !!this.suffixes.find(element => {
+    this.empty = (this.morphemes.length === 0)
+    this.suffixMatches = !!this.morphemes.find(element => {
       if (element.match && element.match.suffixMatch) {
         return element.match.suffixMatch
       }
@@ -27,34 +27,43 @@ export default class Cell {
     this.render()
   }
 
+  get isDataCell () {
+    return true
+  }
+
   /**
    * Renders an element's HTML representation.
    */
   render () {
     let element = document.createElement('div')
     element.classList.add(Styles.classNames.cell)
-    for (let [index, suffix] of this.suffixes.entries()) {
-      // Render each suffix
+    for (let [index, morpheme] of this.morphemes.entries()) {
+      // Render each morpheme
       let suffixElement = document.createElement('span')
       suffixElement.classList.add(Styles.classNames.suffix)
-      if (suffix.match && suffix.match.suffixMatch) {
+      if (morpheme.match && morpheme.match.suffixMatch) {
         suffixElement.classList.add(Styles.classNames.suffixMatch)
       }
-      if (suffix.match && suffix.match.fullMatch) {
+      if (morpheme.match && morpheme.match.fullMatch) {
         suffixElement.classList.add(Styles.classNames.suffixFullFeatureMatch)
       }
-      suffixElement.innerHTML = suffix.value ? suffix.value : '-'
+      suffixElement.innerHTML = morpheme.value || '-'
       element.appendChild(suffixElement)
 
-      if (suffix.footnote && suffix.footnote.length) {
+      if (morpheme.hasFootnotes) {
         let footnoteElement = document.createElement('a')
-        footnoteElement.innerHTML = `<sup>${suffix.footnote}</sup>`
-        footnoteElement.dataset.footnote = suffix.footnote
+        footnoteElement.innerHTML = `<sup>${morpheme.footnote}</sup>`
+        footnoteElement.dataset.footnote = morpheme.footnote
         element.appendChild(footnoteElement)
       }
-      if (index < this.suffixes.length - 1) {
+      if (index < this.morphemes.length - 1) {
         element.appendChild(document.createTextNode(', ')) // 00A0 is a non-breaking space
       }
+    }
+    this.value = element.innerHTML
+    this.classes = {
+      [Styles.classNames.cell]: true,
+      [Styles.classNames.highlight]: false
     }
     this.wNode = element
     this.nNode = element.cloneNode(true)
@@ -121,6 +130,7 @@ export default class Cell {
    */
   highlight () {
     if (!this.wNode.classList.contains(Styles.classNames.highlight)) {
+      this.classes[Styles.classNames.highlight] = true
       this.wNode.classList.add(Styles.classNames.highlight)
       this.nNode.classList.add(Styles.classNames.highlight)
     }
@@ -131,6 +141,7 @@ export default class Cell {
    */
   clearHighlighting () {
     if (this.wNode.classList.contains(Styles.classNames.highlight)) {
+      this.classes[Styles.classNames.highlight] = false
       this.wNode.classList.remove(Styles.classNames.highlight)
       this.nNode.classList.remove(Styles.classNames.highlight)
     }

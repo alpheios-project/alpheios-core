@@ -138,7 +138,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   // For noun and adjectives
-  addSuffixes (partOfSpeech, data) {
+  addSuffixes (partOfSpeech, data, pofsFootnotes) {
     // An order of columns in a data CSV file
     const n = {
       suffix: 0,
@@ -152,6 +152,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     }
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
     let noSuffixValue = '-'
+    let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -176,6 +177,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
       let extendedGreekData = new ExtendedGreekData()
@@ -184,7 +186,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
 
-      this.addInflection(partOfSpeech.value, Suffix, suffixValue, features, extendedLangData)
+      this.addInflection(partOfSpeech.value, Suffix, suffixValue, features, footnotes, extendedLangData)
     }
   }
 
@@ -220,12 +222,12 @@ export default class GreekLanguageDataset extends LanguageDataset {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
 
-      this.addInflection(partOfSpeech.value, Form, formValue, features, extendedLangData)
+      this.addInflection(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
     }
   }
 
   // For numerals
-  addNumeralForms (partOfSpeech, data) {
+  addNumeralForms (partOfSpeech, data, pofsFootnotes) {
     // An order of columns in a data CSV file
     // this.numeralGroupingLemmas = ['εἱς - μία - ἑν (1)', 'δύο (2)', 'τρεῖς - τρία (3)', 'τέτταρες - τέτταρα (4)']
     this.numeralGroupingLemmas = []
@@ -240,6 +242,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       primary: 6,
       footnote: 7
     }
+    let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -268,6 +271,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
       let extendedGreekData = new ExtendedGreekData()
@@ -282,12 +286,12 @@ export default class GreekLanguageDataset extends LanguageDataset {
         return aN - bN
       })
 
-      this.addInflection(partOfSpeech.value, Form, form, features, extendedLangData)
+      this.addInflection(partOfSpeech.value, Form, form, features, footnotes, extendedLangData)
     }
   }
 
   // For pronoun
-  addPronounForms (partOfSpeech, data) {
+  addPronounForms (partOfSpeech, data, pofsFootnotes) {
     this.pronounGroupingLemmas = new Map([
       ['demonstrative', ['ὅδε', 'οὗτος', 'ἐκεῖνος']]
     ])
@@ -306,6 +310,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       dialect: 9,
       footnote: 10
     }
+    let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -340,6 +345,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
       let extendedGreekData = new ExtendedGreekData()
@@ -347,85 +353,85 @@ export default class GreekLanguageDataset extends LanguageDataset {
       let extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
-      this.addInflection(partOfSpeech.value, Form, form, features, extendedLangData)
+      this.addInflection(partOfSpeech.value, Form, form, features, footnotes, extendedLangData)
     }
   }
 
   static get verbParadigmTables () {
     const partOfSpeech = Constants.POFS_VERB
     return new Map([
-      ['verbpdgm1', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm01))],
-      ['verbpdgm2', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm02))],
-      ['verbpdgm3', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm03))],
-      ['verbpdgm4', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm04))],
-      ['verbpdgm5', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm05))],
-      ['verbpdgm6', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm06))],
-      ['verbpdgm7', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm07))],
-      ['verbpdgm8', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm08))],
-      ['verbpdgm9', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm09))],
-      ['verbpdgm10', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm10))],
-      ['verbpdgm11', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm11))],
-      ['verbpdgm12', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm12))],
-      ['verbpdgm13', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm13))],
-      ['verbpdgm14', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm14))],
-      ['verbpdgm15', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm15))],
-      ['verbpdgm16', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm16))],
-      ['verbpdgm17', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm17))],
-      ['verbpdgm18', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm18))],
-      ['verbpdgm19', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm19))],
-      ['verbpdgm20', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm20))],
-      ['verbpdgm21', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm21))],
-      ['verbpdgm22', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm22))],
-      ['verbpdgm23', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm23))],
-      ['verbpdgm24', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm24))],
-      ['verbpdgm25', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm25))],
-      ['verbpdgm26', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm26))],
-      ['verbpdgm27', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm27))],
-      ['verbpdgm28', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm28))],
-      ['verbpdgm29', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm29))],
-      ['verbpdgm30', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm30))],
-      ['verbpdgm31', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm31))],
-      ['verbpdgm32', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm32))],
-      ['verbpdgm33', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm33))],
-      ['verbpdgm34', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm34))],
-      ['verbpdgm35', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm35))],
-      ['verbpdgm36', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm36))],
-      ['verbpdgm37', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm37))],
-      ['verbpdgm38', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm38))],
-      ['verbpdgm39', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm39))],
-      ['verbpdgm40', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm40))],
-      ['verbpdgm41', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm41))],
-      ['verbpdgm42', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm42))],
-      ['verbpdgm43', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm43))],
-      ['verbpdgm44', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm44))],
-      ['verbpdgm45', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm45))],
-      ['verbpdgm46', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm46))],
-      ['verbpdgm47', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm47))],
-      ['verbpdgm48', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm48))],
-      ['verbpdgm49', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm49))],
-      ['verbpdgm50', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm50))],
-      ['verbpdgm51', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm51))],
-      ['verbpdgm52', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm52))],
-      ['verbpdgm53', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm53))]
+      ['verbpdgm1', new Paradigm(this.languageID, partOfSpeech, paradigm01)],
+      ['verbpdgm2', new Paradigm(this.languageID, partOfSpeech, paradigm02)],
+      ['verbpdgm3', new Paradigm(this.languageID, partOfSpeech, paradigm03)],
+      ['verbpdgm4', new Paradigm(this.languageID, partOfSpeech, paradigm04)],
+      ['verbpdgm5', new Paradigm(this.languageID, partOfSpeech, paradigm05)],
+      ['verbpdgm6', new Paradigm(this.languageID, partOfSpeech, paradigm06)],
+      ['verbpdgm7', new Paradigm(this.languageID, partOfSpeech, paradigm07)],
+      ['verbpdgm8', new Paradigm(this.languageID, partOfSpeech, paradigm08)],
+      ['verbpdgm9', new Paradigm(this.languageID, partOfSpeech, paradigm09)],
+      ['verbpdgm10', new Paradigm(this.languageID, partOfSpeech, paradigm10)],
+      ['verbpdgm11', new Paradigm(this.languageID, partOfSpeech, paradigm11)],
+      ['verbpdgm12', new Paradigm(this.languageID, partOfSpeech, paradigm12)],
+      ['verbpdgm13', new Paradigm(this.languageID, partOfSpeech, paradigm13)],
+      ['verbpdgm14', new Paradigm(this.languageID, partOfSpeech, paradigm14)],
+      ['verbpdgm15', new Paradigm(this.languageID, partOfSpeech, paradigm15)],
+      ['verbpdgm16', new Paradigm(this.languageID, partOfSpeech, paradigm16)],
+      ['verbpdgm17', new Paradigm(this.languageID, partOfSpeech, paradigm17)],
+      ['verbpdgm18', new Paradigm(this.languageID, partOfSpeech, paradigm18)],
+      ['verbpdgm19', new Paradigm(this.languageID, partOfSpeech, paradigm19)],
+      ['verbpdgm20', new Paradigm(this.languageID, partOfSpeech, paradigm20)],
+      ['verbpdgm21', new Paradigm(this.languageID, partOfSpeech, paradigm21)],
+      ['verbpdgm22', new Paradigm(this.languageID, partOfSpeech, paradigm22)],
+      ['verbpdgm23', new Paradigm(this.languageID, partOfSpeech, paradigm23)],
+      ['verbpdgm24', new Paradigm(this.languageID, partOfSpeech, paradigm24)],
+      ['verbpdgm25', new Paradigm(this.languageID, partOfSpeech, paradigm25)],
+      ['verbpdgm26', new Paradigm(this.languageID, partOfSpeech, paradigm26)],
+      ['verbpdgm27', new Paradigm(this.languageID, partOfSpeech, paradigm27)],
+      ['verbpdgm28', new Paradigm(this.languageID, partOfSpeech, paradigm28)],
+      ['verbpdgm29', new Paradigm(this.languageID, partOfSpeech, paradigm29)],
+      ['verbpdgm30', new Paradigm(this.languageID, partOfSpeech, paradigm30)],
+      ['verbpdgm31', new Paradigm(this.languageID, partOfSpeech, paradigm31)],
+      ['verbpdgm32', new Paradigm(this.languageID, partOfSpeech, paradigm32)],
+      ['verbpdgm33', new Paradigm(this.languageID, partOfSpeech, paradigm33)],
+      ['verbpdgm34', new Paradigm(this.languageID, partOfSpeech, paradigm34)],
+      ['verbpdgm35', new Paradigm(this.languageID, partOfSpeech, paradigm35)],
+      ['verbpdgm36', new Paradigm(this.languageID, partOfSpeech, paradigm36)],
+      ['verbpdgm37', new Paradigm(this.languageID, partOfSpeech, paradigm37)],
+      ['verbpdgm38', new Paradigm(this.languageID, partOfSpeech, paradigm38)],
+      ['verbpdgm39', new Paradigm(this.languageID, partOfSpeech, paradigm39)],
+      ['verbpdgm40', new Paradigm(this.languageID, partOfSpeech, paradigm40)],
+      ['verbpdgm41', new Paradigm(this.languageID, partOfSpeech, paradigm41)],
+      ['verbpdgm42', new Paradigm(this.languageID, partOfSpeech, paradigm42)],
+      ['verbpdgm43', new Paradigm(this.languageID, partOfSpeech, paradigm43)],
+      ['verbpdgm44', new Paradigm(this.languageID, partOfSpeech, paradigm44)],
+      ['verbpdgm45', new Paradigm(this.languageID, partOfSpeech, paradigm45)],
+      ['verbpdgm46', new Paradigm(this.languageID, partOfSpeech, paradigm46)],
+      ['verbpdgm47', new Paradigm(this.languageID, partOfSpeech, paradigm47)],
+      ['verbpdgm48', new Paradigm(this.languageID, partOfSpeech, paradigm48)],
+      ['verbpdgm49', new Paradigm(this.languageID, partOfSpeech, paradigm49)],
+      ['verbpdgm50', new Paradigm(this.languageID, partOfSpeech, paradigm50)],
+      ['verbpdgm51', new Paradigm(this.languageID, partOfSpeech, paradigm51)],
+      ['verbpdgm52', new Paradigm(this.languageID, partOfSpeech, paradigm52)],
+      ['verbpdgm53', new Paradigm(this.languageID, partOfSpeech, paradigm53)]
     ])
   }
 
   static get verbParticipleParadigmTables () {
     const partOfSpeech = Constants.POFS_VERB_PARTICIPLE
     return new Map([
-      ['verbpdgm54', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm54))],
-      ['verbpdgm55', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm55))],
-      ['verbpdgm56', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm56))],
-      ['verbpdgm57', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm57))],
-      ['verbpdgm58', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm58))],
-      ['verbpdgm59', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm59))],
-      ['verbpdgm60', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm60))],
-      ['verbpdgm61', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm61))],
-      ['verbpdgm62', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm62))],
-      ['verbpdgm63', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm63))],
-      ['verbpdgm64', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm64))],
-      ['verbpdgm65', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm65))],
-      ['verbpdgm66', new Paradigm(this.languageID, partOfSpeech, JSON.parse(paradigm66))]
+      ['verbpdgm54', new Paradigm(this.languageID, partOfSpeech, paradigm54)],
+      ['verbpdgm55', new Paradigm(this.languageID, partOfSpeech, paradigm55)],
+      ['verbpdgm56', new Paradigm(this.languageID, partOfSpeech, paradigm56)],
+      ['verbpdgm57', new Paradigm(this.languageID, partOfSpeech, paradigm57)],
+      ['verbpdgm58', new Paradigm(this.languageID, partOfSpeech, paradigm58)],
+      ['verbpdgm59', new Paradigm(this.languageID, partOfSpeech, paradigm59)],
+      ['verbpdgm60', new Paradigm(this.languageID, partOfSpeech, paradigm60)],
+      ['verbpdgm61', new Paradigm(this.languageID, partOfSpeech, paradigm61)],
+      ['verbpdgm62', new Paradigm(this.languageID, partOfSpeech, paradigm62)],
+      ['verbpdgm63', new Paradigm(this.languageID, partOfSpeech, paradigm63)],
+      ['verbpdgm64', new Paradigm(this.languageID, partOfSpeech, paradigm64)],
+      ['verbpdgm65', new Paradigm(this.languageID, partOfSpeech, paradigm65)],
+      ['verbpdgm66', new Paradigm(this.languageID, partOfSpeech, paradigm66)]
     ])
   }
 
@@ -482,10 +488,13 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   addFootnotes (partOfSpeech, classType, data) {
+    let footnotes = []
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
+      const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
+      footnotes.push(footnote)
     }
+    return footnotes
   }
 
   loadData () {
@@ -493,21 +502,22 @@ export default class GreekLanguageDataset extends LanguageDataset {
     let suffixes
     let forms
     let paradigms
+    let pofsFootnotes
     let footnotes
 
     // Nouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    pofsFootnotes = papaparse.parse(nounFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Suffix, pofsFootnotes.data)
     suffixes = papaparse.parse(nounSuffixesCSV, {})
-    this.addSuffixes(partOfSpeech, suffixes.data)
-    footnotes = papaparse.parse(nounFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
+    this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Adjective
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    pofsFootnotes = papaparse.parse(adjectiveFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Suffix, pofsFootnotes.data)
     suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
-    this.addSuffixes(partOfSpeech, suffixes.data)
-    footnotes = papaparse.parse(adjectiveFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Suffix, footnotes.data)
+    this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Articles
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
@@ -516,17 +526,17 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // Pronouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
+    pofsFootnotes = papaparse.parse(pronounFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Form, pofsFootnotes.data)
     forms = papaparse.parse(pronounFormsCSV, {})
-    this.addPronounForms(partOfSpeech, forms.data)
-    footnotes = papaparse.parse(pronounFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Form, footnotes.data)
+    this.addPronounForms(partOfSpeech, forms.data, footnotes)
 
     // Numerals
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
+    pofsFootnotes = papaparse.parse(numeralFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Form, pofsFootnotes.data)
     forms = papaparse.parse(numeralFormsCSV, {})
-    this.addNumeralForms(partOfSpeech, forms.data)
-    footnotes = papaparse.parse(numeralFootnotesCSV, {})
-    this.addFootnotes(partOfSpeech, Form, footnotes.data)
+    this.addNumeralForms(partOfSpeech, forms.data, footnotes)
 
     // Verbs
     // Paradigms

@@ -29,6 +29,12 @@ export default class HeaderCell {
     let element = document.createElement('div')
     element.classList.add(Styles.classNames.cell, Styles.classNames.header, Styles.classNames.widthPrefix + this.span)
     element.innerHTML = this.title
+    this.value = this.title
+    this.classes = {
+      [Styles.classNames.cell]: true,
+      [Styles.classNames.header]: true,
+      [`${Styles.classNames.widthPrefix}${this.span}`]: true
+    }
     this.wNode = element
     this.nNode = element.cloneNode(true)
   }
@@ -70,6 +76,8 @@ export default class HeaderCell {
     let currentWidthClass = Styles.classNames.widthPrefix + this.span
     this.span += value
     let newWidthClass = Styles.classNames.widthPrefix + this.span
+    this.classes[currentWidthClass] = false
+    this.classes[newWidthClass] = true
     this.wNode.classList.replace(currentWidthClass, newWidthClass)
     this.nNode.classList.replace(currentWidthClass, newWidthClass)
   }
@@ -108,6 +116,7 @@ export default class HeaderCell {
    */
   highlight () {
     if (!this.wNode.classList.contains(Styles.classNames.highlight)) {
+      this.classes[Styles.classNames.highlight] = true
       this.wNode.classList.add(Styles.classNames.highlight)
       this.nNode.classList.add(Styles.classNames.highlight)
 
@@ -122,6 +131,7 @@ export default class HeaderCell {
    */
   clearHighlighting () {
     if (this.wNode.classList.contains(Styles.classNames.highlight)) {
+      this.classes[Styles.classNames.highlight] = false
       this.wNode.classList.remove(Styles.classNames.highlight)
       this.nNode.classList.remove(Styles.classNames.highlight)
 

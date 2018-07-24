@@ -1,6 +1,7 @@
-import { Feature, GrmFeature, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Feature, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import Suffix from './suffix.js'
 import Form from './form.js'
+import Paradigm from './paradigm.js'
 import Footnote from './footnote.js'
 import InflectionSet from './inflection-set.js'
 import InflectionData from './inflection-data.js'
@@ -28,34 +29,38 @@ export default class LanguageDataset {
   }
 
   /**
-   * Each grammatical feature can be either a single or an array of GrmFeature objects. The latter is the case when
+   * Each grammatical feature can be either a single or an array of Feature objects. The latter is the case when
    * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
    * 'feminine' genders.
    *
    * @param {string} partOfSpeech - A part of speech this inflection belongs to.
    * @param {Function} ClassType - either Suffix, Form, or Paradigm
    * @param {string | null} itemValue - A text of an item. It is either a string or null if there is no suffix.
-   * @param {Feature[]} features.
+   * @param {Feature[]} features - An array of Feature objects.
+   * @param {Footnote[]} footnotes - Footnotes in an array.
    * @param {ExtendedLanguageData} extendedLangData
    */
-  addInflection (partOfSpeech, ClassType, itemValue, features, extendedLangData = undefined) {
+  addInflection (partOfSpeech, ClassType, itemValue, features, footnotes = [], extendedLangData = undefined) {
     let item = new ClassType(itemValue)
     item.extendedLangData = extendedLangData
 
     // Go through all features provided
     for (let feature of features) {
-      // If this is a footnote. Footnotes should go in a flat array
-      // because we don't need to split by them
-      if (feature.type === GrmFeature.types.footnote) {
-        item[GrmFeature.types.footnote] = item[GrmFeature.types.footnote] || []
-        item[GrmFeature.types.footnote].push(feature.value)
+      /*
+      Footnotes are special because they are stored as both single or multi-value feature and
+      as an array of Footnote objects into a `footnote` prop (so they can be iterated over during table construction)
+       */
+      if (feature.type === Feature.types.footnote) {
+        item[Feature.types.footnote] = item[Feature.types.footnote] || []
+        item[Feature.types.footnote].push(...feature.values)
+        item.footnotes = footnotes
       } else {
         item.features[feature.type] = feature
       }
     }
 
     if (!this.pos.has(partOfSpeech)) {
-      this.pos.set(partOfSpeech, new InflectionSet(partOfSpeech))
+      this.pos.set(partOfSpeech, new InflectionSet(partOfSpeech, this.languageID))
     }
 
     this.pos.get(partOfSpeech).addInflectionItem(item)
@@ -63,7 +68,7 @@ export default class LanguageDataset {
 
   addParadigms (partOfSpeech, paradigms) {
     if (!this.pos.has(partOfSpeech.value)) {
-      this.pos.set(partOfSpeech.value, new InflectionSet(partOfSpeech.value))
+      this.pos.set(partOfSpeech.value, new InflectionSet(partOfSpeech.value, this.languageID))
     }
     this.pos.get(partOfSpeech.value).addInflectionItems(paradigms)
   }
@@ -74,6 +79,7 @@ export default class LanguageDataset {
    * @param {Function} classType - A class constructor of either a Suffix or a Form
    * @param {number} index - A footnote's index.
    * @param {string} text - A footnote's text.
+   * @return {Footnote} A footnote object that was added to the language dataset.
    */
   addFootnote (partOfSpeech, classType, index, text) {
     if (!index) {
@@ -89,9 +95,10 @@ export default class LanguageDataset {
     // this.footnotes.push(footnote)
 
     if (!this.pos.has(partOfSpeech)) {
-      this.pos.set(partOfSpeech, new InflectionSet(partOfSpeech))
+      this.pos.set(partOfSpeech, new InflectionSet(partOfSpeech, this.languageID))
     }
     this.pos.get(partOfSpeech).addFootnote(classType, index, footnote)
+    return footnote
   }
 
   /**
@@ -135,153 +142,239 @@ export default class LanguageDataset {
   /**
    * Sets inflection grammar properties based on inflection data
    * @param {Inflection} inflection - An inflection data object
+   * @param {Lemma} lemma
    * @return {Inflection} A modified inflection data object
    */
-  /* setInflectionConstraints (inflection) {
-    inflection.constraints.optionalMatches = this.constructor.getOptionalMatches(inflection)
-    return inflection
-  } */
+  setInflectionData (inflection, lemma) {
+    /*
+     Sets possible constraints by language model. It uses part of speech matching mostly.
+     However, language model cannot always determine those constraints reliably.
+     In that case it will return a list of all possible constraints and we would need
+     to verify with ones hold and which ones not. For example, verbs in Latin
+     can be both suffix based and full form based. A language model will return both
+     suffixBased and fullFormBased flags set to true and we will need to determine
+     which one of those makes sense for each particular verb.
+     */
+    inflection.constraints = this.model.getInflectionConstraints(inflection)
+    let partOfSpeech = inflection[Feature.types.part]
 
-  getInflectionData (homonym) {
-    // Add support for languages
-    let result = new InflectionData(homonym)
+    if (!partOfSpeech) {
+      throw new Error('Part of speech data is missing in an inflection')
+    }
 
-    let inflections = {}
+    if (!partOfSpeech.isSingle) {
+      throw new Error('Part of speech data should have only one value')
+    }
+    partOfSpeech = partOfSpeech.value
 
-    for (let lexeme of homonym.lexemes) {
-      for (let inflection of lexeme.inflections) {
-        let partOfSpeech = inflection[GrmFeature.types.part]
-
-        if (!partOfSpeech) {
-          throw new Error('Part of speech data is missing in an inflection')
-        }
-        /* if (!Array.isArray(partOfSpeech)) {
-          throw new Error('Part of speech data should be in an array format')
-        }
-        if (partOfSpeech.length === 0 && partOfSpeech.length > 1) {
-          throw new Error('Part of speech data should be an array with exactly one element')
-        }
-        partOfSpeech = partOfSpeech[0].value */
-        if (!partOfSpeech.isSingle) {
-          throw new Error('Part of speech data should have only one value')
-        }
-        partOfSpeech = partOfSpeech.value
-
-        if (inflection.constraints.pronounClassRequired) {
-          /*
-          A `class` grammatical feature is an obligatory match for Greek pronouns. Class, however, is not present in
-          the Inflection object at the time we receive it from a morphological analyzer because a morphological analyzer
-          does not provide such data. To fix this, for pronouns we need to figure out what the `class` feature value is
-          by finding an exact pronoun form match in inflection data and obtaining a corresponding `class` value.
-          The value found will then be attached to an Inflection object.
-           */
-          // Get a class this inflection belongs to
-          let grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.form)
-          if (!grmClasses) {
-            console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun. 
+    if (inflection.constraints.pronounClassRequired) {
+      /*
+      A `class` grammatical feature is an obligatory match for Greek pronouns. Class, however, is not present in
+      the Inflection object at the time we receive it from a morphological analyzer because a morphological analyzer
+      does not provide such data. To fix this, for pronouns we need to figure out what the `class` feature value is
+      by finding an exact pronoun form match in inflection data and obtaining a corresponding `class` value.
+      The value found will then be attached to an Inflection object.
+       */
+      // Get a class this inflection belongs to
+      let grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.form)
+      if (!grmClasses) {
+        console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun. 
               Table construction will probably fail`)
-          } else {
-            // One or more values found
-            inflection[GrmFeature.types.grmClass] = grmClasses
-          }
-        }
-
-        // add the lemma to the inflection
-        inflection[Feature.types.word] = new Feature(Feature.types.word, lexeme.lemma.word, lexeme.lemma.languageID)
-
-        // Group inflections by a part of speech
-        if (!inflections.hasOwnProperty(partOfSpeech)) {
-          inflections[partOfSpeech] = []
-        }
-        inflections[partOfSpeech].push(inflection)
+      } else {
+        // One or more values found
+        inflection[Feature.types.grmClass] = grmClasses
       }
     }
 
-    // Scan for matches for all parts of speech separately
-    for (const partOfSpeech in inflections) {
-      let inflectionSet = new InflectionSet(partOfSpeech)
-      if (inflections.hasOwnProperty(partOfSpeech)) {
-        let inflectionsGroup = inflections[partOfSpeech]
-        let sourceSet = this.pos.get(partOfSpeech)
-        if (!sourceSet) {
-          // There is no source data for this part of speech
-          console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
-          continue
-        }
+    // add the lemma to the inflection
+    inflection[Feature.types.word] = new Feature(Feature.types.word, lemma.word, lemma.languageID)
 
-        let paradigms = []
-        let paradigmIDs = []
-        let paradigmBased = false
+    if (!this.pos.get(partOfSpeech)) {
+      // There is no source data for this part of speech
+      console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
+      return inflection
+    }
 
-        /*
-        There might be cases when we don't know beforehand if an inflection is form based.
-        In this case, if `fullFormBased` constraint not set, we'll try to find matching forms within a source data.
-        If any found, `fullFormBased` constraint will be set to true.
-         */
-        for (let inflection of inflectionsGroup) {
-          let matchingParadigms = sourceSet.getMatchingParadigms(inflection)
-          if (matchingParadigms.length > 0) {
-            // Make sure all paradigms are unique
-            for (const paradigm of matchingParadigms) {
-              if (!paradigmIDs.includes(paradigm.id)) {
-                paradigms.push(paradigm)
-                paradigmIDs.push(paradigm.id)
-              }
-            }
-            inflection.constraints.paradigmBased = true
-            paradigmBased = true
-          }
+    // This cannot be determined by language model so we have to check it manually
+    inflection.constraints.paradigmBased = this.pos.get(partOfSpeech).hasMatchingItems(Paradigm, inflection)
 
-          if (!inflection.constraints.suffixBased && !paradigmBased) {
-            inflection.constraints.fullFormBased = this.hasMatchingForms(partOfSpeech, inflection)
-          }
+    /*
+    Check if inflection if full form based if `fullFormBased` flag is set
+    (i.e. inflection model knows it can be full form based)
+    or if no other flags are set (we don't know what type of inflection it is and want to check all to figure out).
+     */
+    if (inflection.constraints.fullFormBased || !(inflection.constraints.suffixBased || inflection.constraints.paradigmBased)) {
+      /*
+      If we don't know what inflection is based upon, let's assume
+      this inflection is full form based and let's try to find matching forms.
+      For this, we need set a `fullFormBased` flag on inflection temporarily
+      and clear it if no matching forms are found (because it cannot be based on full forms then).
+      This flag is required for matcher to compare full forms, not suffixes.
+       */
+      inflection.constraints.fullFormBased = true
+      const hasMatchingForms = this.hasMatchingForms(partOfSpeech, inflection)
+      if (!hasMatchingForms) {
+        // This cannot be a full form based inflection
+        inflection.constraints.fullFormBased = false
+      }
+    }
 
-          if (!inflection.constraints.fullFormBased && !paradigmBased) {
-            // If it is not full form based, then probably it is suffix base
-            inflection.constraints.suffixBased = true
-          }
+    /*
+    If we did not figure out what type of inflection it is,
+    then it is probably suffix based as this type is more prevalent
+     */
+    if (!inflection.constraints.fullFormBased && !inflection.constraints.paradigmBased) {
+      // If it is not full form based, then probably it is suffix base
+      inflection.constraints.suffixBased = true
+    }
+    return inflection
+  }
 
-          inflection.constraints.irregularVerb = this.checkIrregularVerb(inflection)
-        }
-        if (paradigmBased) {
-          inflectionSet.addInflectionItems(paradigms)
-        }
+  /**
+   * Build a map of inflections keyed by part of speech.
+   * Lexemes in homonym are sorted by a morph adapter, and we will rely on that sort order.
+   * An order of part of speech keys determines an order of parts of speech in the output.
+   * An order of inflections within a part of speech will be determined by an order of
+   * inflection table views within a ViewSet object.
+   * @deprecated Will be removed when will have no usages
+   * @param {Homonym} homonym - A homonym containing lexemes with inflections
+   * @return {Map<{string}, {Inflection[]}>} Maps on array of inflections to a part of speech
+   */
+  groupInflections (homonym) {
+    let inflections = new Map()
+    for (let lexeme of homonym.lexemes) {
+      for (let inflection of lexeme.inflections) {
+        // Inflections are grouped by part of speech
+        inflection = this.setInflectionData(inflection, lexeme.lemma)
+        let pofsValue = inflection[Feature.types.part].value
+        if (!inflections.has(pofsValue)) { inflections.set(pofsValue, []) }
+        inflections.get(pofsValue).push(inflection)
+      }
+    }
+    return inflections
+  }
 
-        // If at least one inflection in a group has a constraint, we'll search for data based on that criteria
-        let suffixBased = (inflectionsGroup.find(i => i.constraints.suffixBased) !== undefined)
-        let formBased = (inflectionsGroup.find(i => i.constraints.fullFormBased) !== undefined)
-
-        // Check for suffix matches
-        if (suffixBased) {
-          if (sourceSet.types.has(Suffix)) {
-            let items = sourceSet.types.get(Suffix).items.reduce(this['reducer'].bind(this, inflectionsGroup), [])
-            if (items.length > 0) {
-              inflectionSet.addInflectionItems(items)
-            }
-          }
-        }
-
-        // If there is at least on full form based inflection, search for full form items
-        if (formBased) {
-          let items = sourceSet.types.get(Form).items.reduce(this['reducer'].bind(this, inflectionsGroup), [])
-          if (items.length > 0) {
-            inflectionSet.addInflectionItems(items)
-          }
-        }
-
-        if (inflectionSet.hasTypes) {
-          for (const inflectionType of inflectionSet.inflectionTypes) {
-            let footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
-            const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
-            for (let footnote of footnotesSource.values()) {
-              if (footnotesInUse.includes(footnote.index)) {
-                inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
-              }
-            }
-          }
-          result.addInflectionSet(inflectionSet)
+  /**
+   * In order to use morphemes with Vue.js, each morpheme in a table has to be unique.
+   * However, a if morpheme has a feature with multiple values, that same morpheme will be
+   * included into multiple inflection table cells.
+   * To avoid that, we need to replace a single morpheme with multiple values of a feature by
+   * multiple morphemes each having features with single value only.
+   * @param {Suffix[]|Form[]|Paradigm[]} morphemes - An array of morpheme that might have features with multiple values
+   * @return {Suffix[]|Form[]|Paradigm[]} An array of morphemes where all features have single values
+   */
+  static splitMultiValMorphems (morphemes) {
+    let result = []
+    for (const morpheme of morphemes) {
+      let multivalFeatures = []
+      for (const featureName of Object.keys(morpheme.features)) {
+        if (morpheme.features[featureName].isMultiple) {
+          multivalFeatures.push(morpheme.features[featureName])
         }
       }
+
+      if (multivalFeatures.length > 0) {
+        result.push(...morpheme.split(multivalFeatures))
+      } else {
+        result.push(morpheme)
+      }
+    }
+    return result
+  }
+
+  /**
+   *
+   * @param pofsValue
+   * @param inflections
+   * @return {InflectionSet}
+   */
+  createInflectionSet (pofsValue, inflections) {
+    let inflectionSet = new InflectionSet(pofsValue, this.languageID)
+    inflectionSet.inflections = inflections
+
+    let sourceSet = this.pos.get(pofsValue)
+    if (!sourceSet) {
+      // There is no source data for this part of speech
+      console.warn(`There is no source data for the following part of speech: ${pofsValue}`)
+      return inflectionSet
+    }
+
+    /*
+      There might be cases when we don't know beforehand if an inflection is form based.
+      In this case, if `fullFormBased` constraint not set, we'll try to find matching forms within a source data.
+      If any found, `fullFormBased` constraint will be set to true.
+    */
+
+    // If at least one inflection in a group has a constraint, we'll search for data based on that criteria
+    let suffixBased = inflections.some(i => i.constraints.suffixBased)
+    let formBased = inflections.some(i => i.constraints.fullFormBased)
+    let paradigmBased = inflections.some(i => i.constraints.paradigmBased)
+
+    // Check for suffix matches
+    if (suffixBased) {
+      if (sourceSet.types.has(Suffix)) {
+        let items = sourceSet.types.get(Suffix).items.reduce(this['reducer'].bind(this, inflections), [])
+        if (items.length > 0) {
+          inflectionSet.addInflectionItems(this.constructor.splitMultiValMorphems(items))
+        }
+      }
+    }
+
+    // If there is at least on full form based inflection, search for full form items
+    if (formBased) {
+      let items = sourceSet.types.get(Form).items.reduce(this['reducer'].bind(this, inflections), [])
+      if (items.length > 0) {
+        inflectionSet.addInflectionItems(items)
+      }
+    }
+
+    // Get paradigm matches
+    if (paradigmBased) {
+      let paradigmIDs = []
+      for (let inflection of inflections) {
+        if (inflection.constraints.paradigmBased) {
+          let matchingParadigms = sourceSet.getMatchingItems(Paradigm, inflection)
+          // Make sure all paradigms are unique
+          for (const paradigm of matchingParadigms) {
+            if (!paradigmIDs.includes(paradigm.id)) {
+              inflectionSet.addInflectionItem(paradigm)
+              paradigmIDs.push(paradigm.id)
+            }
+          }
+        }
+      }
+    }
+
+    // Add footnotes
+    if (inflectionSet.hasTypes) {
+      for (const inflectionType of inflectionSet.inflectionTypes) {
+        let footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
+        const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
+        for (let footnote of footnotesSource.values()) {
+          if (footnotesInUse.includes(footnote.index)) {
+            inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
+          }
+        }
+      }
+    }
+
+    return inflectionSet
+  }
+
+  /**
+   * @deprecated Will be removed when will have no usages
+   * @param homonym
+   * @return {InflectionData}
+   */
+  getInflectionData (homonym) {
+    // Add support for languages
+    let result = new InflectionData(homonym)
+    let inflections = this.groupInflections(homonym)
+
+    // Scan for matches for all parts of speech separately
+    for (const [pofsValue, inflectionsGroup] of inflections.entries()) {
+      let inflectionSet = this.createInflectionSet(pofsValue, inflectionsGroup)
+      result.addInflectionSet(inflectionSet)
     }
     return result
   }

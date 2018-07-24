@@ -1,22 +1,22 @@
-import { Constants, LanguageModelFactory, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import LatinVerbMoodView from './latin-verb-mood-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type'
 import Table from '../../../lib/table'
 
 export default class LatinInfinitiveView extends LatinVerbMoodView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale)
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale)
     this.id = 'verbInfinitive'
     this.name = 'infinitive'
     this.title = 'Infinitive'
     this.features.moods = new GroupFeatureType(
-      new Feature(Feature.types.mood, [Constants.MOOD_INFINITIVE], this.model.languageID),
+      new Feature(Feature.types.mood, [Constants.MOOD_INFINITIVE], this.constructor.model.languageID),
       'Mood')
     this.language_features[Feature.types.tense] = new Feature(Feature.types.tense,
-      [Constants.TENSE_PRESENT, Constants.TENSE_PERFECT, Constants.TENSE_FUTURE], this.model.languageID)
+      [Constants.TENSE_PRESENT, Constants.TENSE_PERFECT, Constants.TENSE_FUTURE], this.constructor.model.languageID)
     this.features.tenses = new GroupFeatureType(this.language_features[Feature.types.tense], 'Tense')
     this.createTable()
-    this.table.suffixCellFilter = LatinInfinitiveView.suffixCellFilter
+    this.table.morphemeCellFilter = LatinInfinitiveView.morphemeCellFilter
   }
 
   createTable () {
@@ -31,19 +31,22 @@ export default class LatinInfinitiveView extends LatinVerbMoodView {
     features.fullWidthRowTitles = []
   }
 
+  static get viewID () {
+    return 'latin_infinitive_view'
+  }
+
   /**
    * Determines wither this view can be used to display an inflection table of any data
    * within an `inflectionData` object.
    * By default a view can be used if a view and an inflection data piece have the same language,
    * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param inflectionData
+   * @param homonym
    * @return {boolean}
    */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(LatinInfinitiveView.languageID, inflectionData.languageID)) {
-      return inflectionData.partsOfSpeech.includes(LatinInfinitiveView.partOfSpeech) &&
-        LatinInfinitiveView.enabledForLexemes(inflectionData.homonym.lexemes)
-    }
+  static matchFilter (homonym) {
+    return (this.languageID === homonym.languageID &&
+      homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech) &&
+      this.enabledForLexemes(homonym.lexemes))
   }
 
   static enabledForLexemes (lexemes) {
@@ -59,7 +62,7 @@ export default class LatinInfinitiveView extends LatinVerbMoodView {
     return false
   }
 
-  static suffixCellFilter (suffix) {
+  static morphemeCellFilter (suffix) {
     return suffix.features[Feature.types.mood].values.includes(Constants.MOOD_INFINITIVE)
   }
 }

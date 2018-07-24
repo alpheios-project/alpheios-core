@@ -1,18 +1,18 @@
-import { Constants, LanguageModelFactory, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type'
 import Table from '../../../lib/table'
 
 export default class LatinVerbParticipleView extends LatinView {
-  constructor (inflectionData, locale) {
-    super(inflectionData, locale)
-    this.partOfSpeech = LatinVerbParticipleView.partOfSpeech
+  constructor (homonym, inflectionData, locale) {
+    super(homonym, inflectionData, locale)
+    this.partOfSpeech = this.constructor.mainPartOfSpeech
     this.id = 'verbParticiple'
     this.name = 'participle'
     this.title = 'Participle'
     this.language_features[Feature.types.tense] = new Feature(Feature.types.tense,
-      [Constants.TENSE_PRESENT, Constants.TENSE_PERFECT, Constants.TENSE_FUTURE], this.model.languageID)
+      [Constants.TENSE_PRESENT, Constants.TENSE_PERFECT, Constants.TENSE_FUTURE], this.constructor.model.languageID)
     this.features = {
       tenses: new GroupFeatureType(this.language_features[Feature.types.tense], 'Tenses'),
       voices: new GroupFeatureType(this.language_features[Feature.types.voice], 'Voice'),
@@ -21,26 +21,16 @@ export default class LatinVerbParticipleView extends LatinView {
     this.createTable()
   }
 
-  static get partOfSpeech () {
-    return Constants.POFS_VERB_PARTICIPLE
+  static get viewID () {
+    return 'latin_verb_participle_view'
+  }
+
+  static get partsOfSpeech () {
+    return [Constants.POFS_VERB_PARTICIPLE, Constants.POFS_ADJECTIVE]
   }
 
   static get inflectionType () {
     return Suffix
-  }
-
-  /**
-   * Determines wither this view can be used to display an inflection table of any data
-   * within an `inflectionData` object.
-   * By default a view can be used if a view and an inflection data piece have the same language,
-   * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param inflectionData
-   * @return {boolean}
-   */
-  static matchFilter (inflectionData) {
-    if (LanguageModelFactory.compareLanguages(LatinVerbParticipleView.languageID, inflectionData.languageID)) {
-      return inflectionData.partsOfSpeech.includes(LatinVerbParticipleView.partOfSpeech)
-    }
   }
 
   createTable () {
