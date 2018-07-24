@@ -3,7 +3,7 @@
         <div v-show="! isEnabled" class="alpheios-inflections__placeholder">{{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}</div>
         <div v-show="isEnabled && ! isContentAvailable" class="alpheios-inflections__placeholder">{{messages.PLACEHOLDER_INFLECT}}</div>
 
-        <div v-show="isContentAvailable" class="alpheios-inflections__content">
+        <div v-show="isContentAvailable && sfCollapsed" class="alpheios-inflections__content">
             <h3 class="alpheios-inflections__title">{{selectedView.title}}</h3>
             <div v-show="partsOfSpeech.length > 1">
               <label class="uk-form-label">{{messages.LABEL_INFLECT_SELECT_POFS}}</label>
@@ -52,7 +52,7 @@
             </div>
 
             <template v-if="selectedView.hasComponentData">
-                <main-table-wide :data="selectedView.wideTable" :inflection-data="selectedView.inflectionData"></main-table-wide>
+                <main-table-wide :view="selectedView"></main-table-wide>
                 <sub-tables-wide :view="selectedView" @navigate="navigate"></sub-tables-wide>
             </template>
 
@@ -92,7 +92,8 @@
   import Tooltip from './tooltip.vue'
 
   // Other dependencies
-  import { ViewSet, L10n} from 'alpheios-inflection-tables'
+  import { Constants } from 'alpheios-data-models'
+  import { ViewSetFactory, L10n} from 'alpheios-inflection-tables'
 
   export default {
     name: 'Inflections',
@@ -122,6 +123,7 @@
 
     data: function () {
       return {
+        languageID: Constants.LANG_LATIN, // Default value
         events: {
           EVENT: 'event',
           DATA_UPDATE: 'dataUpdate'
@@ -162,19 +164,20 @@
             hiddenTooltip: this.messages.TOOLTIP_INFLECT_SHOWFULL
           }
         },
-        suppColors: ['rgb(208,255,254)', 'rgb(255,253,219)', 'rgb(228,255,222)', 'rgb(255,211,253)', 'rgb(255,231,211)']
+        suppColors: ['rgb(208,255,254)', 'rgb(255,253,219)', 'rgb(228,255,222)', 'rgb(255,211,253)', 'rgb(255,231,211)'],
+        sfCollapsed: true
       }
     },
 
     computed: {
       isEnabled: function () {
-        return this.data.enabled
+        return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled
       },
       isContentAvailable: function () {
-        return this.data.enabled && Boolean(this.data.inflectionData)
+        return this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews
       },
-      inflectionData: function () {
-        return this.data.inflectionData
+      inflectionViewSet: function () {
+        return this.data.inflectionViewSet
       },
       // Need this for a watcher that will monitor a parent container visibility state
       isVisible: function () {
@@ -186,7 +189,7 @@
         },
         set: function (newValue) {
           this.selectedPartOfSpeech = newValue
-          this.views = this.viewSet.getViews(this.selectedPartOfSpeech)
+          this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
 
           this.selectedView = this.views[0]
           if (!this.selectedView.hasComponentData) {
@@ -236,15 +239,11 @@
     },
 
     watch: {
-
-      inflectionData: function (inflectionData) {
-        // Clear the panel when new inflections arrive
+      inflectionViewSet: function () {
         this.clearInflections().setDefaults()
-        if (inflectionData) {
-          this.viewSet = new ViewSet(inflectionData, this.locale)
-
+        if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
           // Set colors for supplemental paradigm tables
-          for (let view of this.viewSet.getViews()) {
+          for (let view of this.data.inflectionViewSet.getViews()) {
             view.hlSuppParadigms = false
             if (view.hasSuppParadigms) {
               if (view.suppParadigms.length > 1) {
@@ -260,10 +259,10 @@
             }
           }
 
-          this.partsOfSpeech = this.viewSet.partsOfSpeech
+          this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
           if (this.partsOfSpeech.length > 0) {
             this.selectedPartOfSpeech = this.partsOfSpeech[0]
-            this.views = this.viewSet.getViews(this.selectedPartOfSpeech)
+            this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
           } else {
             this.selectedPartOfSpeech = []
             this.views = []
@@ -281,8 +280,9 @@
           }
         }
         // Notify parent of inflection data change
-        this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.viewSet)
+        this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.data.inflectionViewSet)
       },
+
       /*
       An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
       use this information to adjust a width of a container that displays an inflection component. However, a width
@@ -300,7 +300,7 @@
       },
       locale: function (locale) {
         if (this.data.inflectionData) {
-          this.viewSet.setLocale(this.locale)
+          this.data.inflectionViewSet.setLocale(this.locale)
           if (!this.selectedView.hasComponentData) {
             // Rendering is not required for component-enabled views
             this.renderInflections().displayInflections() // Re-render inflections for a different locale
@@ -338,7 +338,7 @@
               console.warn(`[data-footnote] attribute has no index value`)
               break
             }
-            let indexes = index.replace(/\s+/g, ' ').trim().split(' ')
+            let indexes = index.replace(/(?:\s|,)+/g, ' ').trim().split(' ')
             let popup = document.createElement('div')
             popup.classList.add(popupClassName, hiddenClassName)
             let title = document.createElement('div')
@@ -440,6 +440,10 @@
             console.warn(`Cannot find #${reflink} element. Navigation cancelled`)
           }
         }
+      },
+
+      sfCollapse: function (currentState) {
+        this.sfCollapsed = currentState
       }
     },
 
