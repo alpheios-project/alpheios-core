@@ -226,8 +226,7 @@
         positionClassVariants: {
           left: 'alpheios-panel-left',
           right: 'alpheios-panel-right'
-        },
-        divClasses: ''
+        }
       }
     },
     props: {
@@ -243,6 +242,9 @@
     },
 
     computed: {
+      divClasses () {
+        return (this.data && this.data.classes ? this.data.classes.join(' ') : '') + ' ' + this.positionClasses
+      },
       clearLookupText: function () {
         // always true to clear panels lookup
         return true
@@ -345,13 +347,6 @@
         return null
       }
     },
-    watch: {
-      classesChanged: function (value) {
-        this.divClasses = this.data.classes.join(' ') + ' ' + this.positionClasses
-        this.setContentWidth('auto')
-      }
-    },
-
     methods: {
       updateZIndex: function (zIndexMax) {
         if (zIndexMax >= this.zIndex) {

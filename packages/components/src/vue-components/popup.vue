@@ -133,8 +133,7 @@
         resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
         resizeCount: 0, // Should not exceed `resizeCountMax`
         resizeCountMax: 100, // Max number of resize iteration
-        updateDimensionsTimeout: null,
-        divClasses: ''
+        updateDimensionsTimeout: null
       }
     },
     props: {
@@ -182,6 +181,9 @@
       })
     },
     computed: {
+      divClasses () {
+        return this.data && this.data.classes ? this.data.classes.join(' ') : ''
+      },
       uiController: function () {
         return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
       },
@@ -593,10 +595,6 @@
       translationsDataReady: function(value) {
         let time = new Date().getTime()
         this.logger.log(`${time}: translation data became available`, this.translations)
-      },
-
-      classesChanged: function (value) {
-        this.divClasses = this.data.classes.join(' ')
       }
 
     }
