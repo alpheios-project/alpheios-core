@@ -13,10 +13,10 @@
             </div>
               <div class="alpheios-inflections__actions">
                 <word-forms
-                    :partOfSpeech = "selectedView.constructor.partOfSpeech"
-                    :targetWord = "data.inflectionData.homonym.targetWord"
-                    :lexemes = "data.inflectionData.homonym.lexemes"
-                    v-if="selectedView && data.inflectionData && data.inflectionData.homonym">
+                    :partOfSpeech = "selectedView.constructor.mainPartOfSpeech"
+                    :targetWord = "selectedView.homonym.targetWord"
+                    :lexemes = "selectedView.homonym.lexemes"
+                    v-if="selectedView && selectedView.homonym">
                 </word-forms>
                 <div v-show="views.length > 1">
                     <select v-model="viewSelector" class="uk-select alpheios-inflections__view-selector alpheios-text__smallest">

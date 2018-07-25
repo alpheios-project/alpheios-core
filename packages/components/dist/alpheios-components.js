@@ -11580,14 +11580,12 @@ var render = function() {
           "div",
           { staticClass: "alpheios-inflections__actions" },
           [
-            _vm.selectedView &&
-            _vm.data.inflectionData &&
-            _vm.data.inflectionData.homonym
+            _vm.selectedView && _vm.selectedView.homonym
               ? _c("word-forms", {
                   attrs: {
-                    partOfSpeech: _vm.selectedView.constructor.partOfSpeech,
-                    targetWord: _vm.data.inflectionData.homonym.targetWord,
-                    lexemes: _vm.data.inflectionData.homonym.lexemes
+                    partOfSpeech: _vm.selectedView.constructor.mainPartOfSpeech,
+                    targetWord: _vm.selectedView.homonym.targetWord,
+                    lexemes: _vm.selectedView.homonym.lexemes
                   }
                 })
               : _vm._e(),
