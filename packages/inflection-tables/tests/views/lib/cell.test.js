@@ -26,20 +26,20 @@ describe('cell.test.js', () => {
 
   const testLocale = 'en-US'
 
-  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
+  /*  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
     set: jest.fn()
   })
   Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
     set: jest.fn()
-  })
+  }) */
 
   L10n.getMessages = jest.fn((locale) => L10nJSON.getMessages(locale))
 
   beforeAll(async () => {
     maAdapter = new AlpheiosTuftsAdapter()
-    testHomonym = await maAdapter.getHomonym('grc', 'δύο')
+    testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
     testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
     testMorphemes = testInflectionData.pos.get('numeral').types.get(Form).items.slice(0, 1)
 
@@ -65,7 +65,7 @@ describe('cell.test.js', () => {
 
   it('1 Cell - constructor creates Cell with values from attributes and executes render', () => {
     let cell = new Cell(testMorphemes, testFeatures)
-    expect(cell.suffixes.length).toEqual(1)
+    expect(cell.morphemes.length).toEqual(1)
     expect(cell.features.length).toEqual(5)
     expect(cell.empty).toBeFalsy()
     expect(cell.suffixMatches).toBeTruthy()
@@ -75,7 +75,7 @@ describe('cell.test.js', () => {
 
   it('2 Cell - constructor saves empty array if suffixes are not defined', () => {
     let cell = new Cell(null, testFeatures)
-    expect(cell.suffixes.length).toEqual(0)
+    expect(cell.morphemes.length).toEqual(0)
   })
 
   it('3 Cell - index method sets index wNode and nNode', () => {

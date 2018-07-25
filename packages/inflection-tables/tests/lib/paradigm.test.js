@@ -33,7 +33,7 @@ describe('paradigm.test.js', () => {
     expect(paradigm.languageID).toEqual(Constants.LANG_GREEK)
     expect(paradigm.partOfSpeech).toEqual('verb')
     expect(paradigm.title).toEqual(paradigm01.title)
-    expect(paradigm.table).toEqual(paradigm01.table)
+
     expect(paradigm.hasCredits).toEqual(!!paradigm01.credits)
     expect(paradigm.creditsText).toEqual(paradigm01.credits ? paradigm01.credits : '')
     expect(paradigm.subTables).toEqual(paradigm01.subTables)

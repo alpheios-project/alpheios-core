@@ -3344,7 +3344,7 @@ class LanguageDataset {
      suffixBased and fullFormBased flags set to true and we will need to determine
      which one of those makes sense for each particular verb.
      */
-    inflection.constraints = this.model.getInflectionConstraints(inflection)
+
     let partOfSpeech = inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
 
     if (!partOfSpeech) {
@@ -3355,6 +3355,8 @@ class LanguageDataset {
       throw new Error('Part of speech data should have only one value')
     }
     partOfSpeech = partOfSpeech.value
+
+    inflection.constraints = this.model.getInflectionConstraints(inflection)
 
     if (inflection.constraints.pronounClassRequired) {
       /*
@@ -4106,12 +4108,21 @@ __webpack_require__.r(__webpack_exports__);
 
 class Paradigm {
   constructor (languageID, partOfSpeech, paradigm) {
+    // console.info('*********************paradigm', paradigm)
     this.id = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
     this.paradigmID = paradigm.ID
     this.languageID = languageID
     this.partOfSpeech = partOfSpeech
     this.title = paradigm.title
-    this.table = paradigm.table
+
+    // this.table = paradigm.table
+    this.table = { rows: [] }
+    paradigm.table.rows.forEach(row => {
+      let newRow = { cells: [] }
+      row.cells.forEach(cell => { newRow.cells.push(Object.assign({}, cell)) })
+      this.table.rows.push(newRow)
+    })
+
     this.hasCredits = !!paradigm.credits
     this.creditsText = paradigm.credits ? paradigm.credits : ''
     this.subTables = paradigm.subTables
@@ -16993,6 +17004,8 @@ class ViewSet {
       // this.matchingViews = [view]
       this.matchingViews.push(...this.constructor.views.reduce(
         (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.messages)), []))
+
+      console.info('****************this.matchingViews', this.matchingViews)
       /* for (const lexeme of this.homonym.lexemes) {
         // TODO: Can we handle combined data better?
         for (const inflection of lexeme.inflections) {
@@ -17210,6 +17223,8 @@ class View {
   static matchFilter (homonym) {
     // return (this.languageID === inflection.languageID && this.partsOfSpeech.includes(inflection[Feature.types.part].value))
     // Disable multiple parts of speech for now
+    console.info('*******************1', this.languageID, homonym.languageID)
+    console.info('*******************2', this.mainPartOfSpeech, homonym.inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech))
     return (this.languageID === homonym.languageID && homonym.inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech))
   }
 

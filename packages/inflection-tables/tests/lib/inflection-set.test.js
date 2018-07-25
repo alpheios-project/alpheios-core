@@ -68,31 +68,7 @@ describe('inflection-set.test.js', () => {
     expect(Array.from(infls.types.keys())).toEqual([Form])
   })
 
-  it('6 InflectionSet - addInflectionsObject throw Error if argument is empty', () => {
-    let infls = new InflectionSet('numeral')
-    expect(() => infls.addInflectionsObject()).toThrow(new Error(`Inflection items object must not be empty`))
-  })
-
-  it('7 InflectionSet - addInflectionsObject throw Error if argument is not Inflections', () => {
-    let infls = new InflectionSet('numeral')
-    expect(() => infls.addInflectionsObject('foo')).toThrow(new Error(`Inflection items object must be of InflectionItems type`))
-  })
-
-  it('8 InflectionSet - addInflectionsObject throw Error if Inflections doesn\'t have type', () => {
-    let infls = new InflectionSet('numeral')
-    expect(() => infls.addInflectionsObject(new Inflections())).toThrow(new Error(`Inflection items must have a valid type`))
-  })
-
-  it('9 InflectionSet - addInflectionsObject adds Inflections to types', () => {
-    let infls = new InflectionSet('numeral')
-    infls.addInflectionsObject(new Inflections(Form))
-
-    expect(infls.types.size).toEqual(1)
-    expect(Array.from(infls.types.keys())).toEqual([Form])
-    expect(infls.types.get(Form)).toBeInstanceOf(Inflections)
-  })
-
-  it('10 InflectionSet - addFootnote adds footnote to types', () => {
+  it('6 InflectionSet - addFootnote adds footnote to types', () => {
     let infls = new InflectionSet('numeral')
 
     infls.addFootnote(Form, 1, 'fooFootNote')
@@ -100,22 +76,5 @@ describe('inflection-set.test.js', () => {
     expect(infls.types.size).toEqual(1)
     expect(Array.from(infls.types.keys())).toEqual([Form])
     expect(infls.types.get(Form).footnotesMap.size).toEqual(1)
-  })
-
-  it('11 InflectionSet - getMatchingParadigms returns empty array if there are no Paradigms in types', () => {
-    let infls = new InflectionSet('verb')
-    expect(infls.getMatchingParadigms().length).toEqual(0)
-  })
-
-  it('12 InflectionSet - getMatchingParadigms executes getMatches for each Paradigm from types', () => {
-    let infls = new InflectionSet('verb')
-    let paradigm = new Paradigm(Constants.LANG_GREEK, 'verb', paradigm01)
-    paradigm.getMatches = jest.fn()
-    infls.addInflectionItem(paradigm)
-
-    let inflection = new Inflection('stem', 'grc', 'suffix')
-
-    let res = infls.getMatchingParadigms(inflection)
-    expect(infls.getMatchingParadigms().length).toEqual(0)
   })
 })

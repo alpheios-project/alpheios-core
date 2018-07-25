@@ -155,7 +155,7 @@ export default class LanguageDataset {
      suffixBased and fullFormBased flags set to true and we will need to determine
      which one of those makes sense for each particular verb.
      */
-    inflection.constraints = this.model.getInflectionConstraints(inflection)
+
     let partOfSpeech = inflection[Feature.types.part]
 
     if (!partOfSpeech) {
@@ -166,6 +166,8 @@ export default class LanguageDataset {
       throw new Error('Part of speech data should have only one value')
     }
     partOfSpeech = partOfSpeech.value
+
+    inflection.constraints = this.model.getInflectionConstraints(inflection)
 
     if (inflection.constraints.pronounClassRequired) {
       /*

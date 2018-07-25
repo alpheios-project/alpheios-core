@@ -4,12 +4,21 @@ import ParadigmRule from './paradigm-rule.js'
 
 export default class Paradigm {
   constructor (languageID, partOfSpeech, paradigm) {
+    // console.info('*********************paradigm', paradigm)
     this.id = uuidv4()
     this.paradigmID = paradigm.ID
     this.languageID = languageID
     this.partOfSpeech = partOfSpeech
     this.title = paradigm.title
-    this.table = paradigm.table
+
+    // this.table = paradigm.table
+    this.table = { rows: [] }
+    paradigm.table.rows.forEach(row => {
+      let newRow = { cells: [] }
+      row.cells.forEach(cell => { newRow.cells.push(Object.assign({}, cell)) })
+      this.table.rows.push(newRow)
+    })
+
     this.hasCredits = !!paradigm.credits
     this.creditsText = paradigm.credits ? paradigm.credits : ''
     this.subTables = paradigm.subTables

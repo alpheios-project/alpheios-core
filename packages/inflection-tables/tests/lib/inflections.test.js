@@ -58,10 +58,9 @@ describe('inflections.test.js', () => {
 
   it('7 Inflections - addItems adds all values from an argument to the items attribute', () => {
     let infls = new Inflections(Form)
-    infls.addItems(['fooItem1', 'fooItem2'])
-    expect(infls.items).toEqual([ 'fooItem1', 'fooItem2' ])
+    infls.addItems([{id: 'fooItem1'}, {id: 'fooItem2'}])
+    expect(infls.items).toEqual([{id: 'fooItem1'}, {id: 'fooItem2'}])
   })
-
   it('8 Inflections - addFootnote adds item to footnotesMap attribute', () => {
     let infls = new Inflections(Form)
     infls.addFootnote(1, 'fooFootNote')
@@ -79,7 +78,7 @@ describe('inflections.test.js', () => {
 
     infls.addItems([ formItem1, formItem2 ])
 
-    expect(infls.getMatches('fooInflection')).toEqual(['δύο1'])
+    expect(infls.getMatches('fooInflection')).toEqual([formItem1])
   })
 
   it('10 Inflections - footnotesInUse returns footnotes indexes', () => {

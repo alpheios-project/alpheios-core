@@ -24,18 +24,18 @@ describe('row.test.js', () => {
   let testMorphemes, testFeatures, testCells, testTitleCell
   const testLocale = 'en-US'
 
-  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
+  /*  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
     set: jest.fn()
   })
   Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
     set: jest.fn()
-  })
+  }) */
 
   beforeAll(async () => {
     let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym('grc', 'δύο')
+    let testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
     let testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
     testMorphemes = testInflectionData.pos.get('numeral').types.get(Form).items
 

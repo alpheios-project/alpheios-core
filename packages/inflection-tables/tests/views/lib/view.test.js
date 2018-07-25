@@ -26,14 +26,14 @@ describe('view.test.js', () => {
 
   const testLocale = 'en-US'
 
-  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
+  /*  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
     set: jest.fn()
   })
   Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
     set: jest.fn()
-  })
+  }) */
 
   L10n.getMessages = jest.fn((locale) => L10nJSON.getMessages(locale))
 
@@ -49,7 +49,7 @@ describe('view.test.js', () => {
 
   beforeAll(async () => {
     maAdapter = new AlpheiosTuftsAdapter()
-    testHomonym = await maAdapter.getHomonym('grc', 'δύο')
+    testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
     testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
   })
 
@@ -67,8 +67,8 @@ describe('view.test.js', () => {
 
   it('1 View - constructor creates View with default values', () => {
     let view = new View(testInflectionData, testLocale)
-    expect(view.languageID).toBeDefined()
-    expect(view.inflectionData.homonym.targetWord).toEqual(testHomonym.targetWord)
+
+    expect(view.homonym.targetWord).toEqual(testHomonym.targetWord)
     expect(view.messages).toBeInstanceOf(MessageBundle)
     expect(Object.keys(view.pageHeader).length).toEqual(0)
     expect(view.id).toBeDefined()
@@ -95,57 +95,35 @@ describe('view.test.js', () => {
     expect(L10n.getMessages).toHaveBeenCalledWith('en-GB')
   })
 
-  it('4 View - render methods executes getFootnotes, adds to forms and construct table', () => {
-    let view = new View(testInflectionData, testLocale)
-
-    view.getFootnotes = jest.fn()
-    view.table.construct = jest.fn(() => view.table)
-    view.table.constructViews = jest.fn(() => view.table)
-    view.table.addEventListeners = jest.fn()
-
-    view.render()
-
-    expect(view.getFootnotes).toHaveBeenCalledWith(view.inflectionData)
-  })
-
-  it('5 View - getMorphemes method returns all morphemes from inflectionData', () => {
-    expect(View.getMorphemes(testInflectionData).length).toBeGreaterThan(0)
-  })
-
-  it('6 View - getFootnotes method returns all footnotes from morphemes from inflectionData', () => {
-    let view = new View(testInflectionData, testLocale)
-    expect(view.getFootnotes(testInflectionData).size).toBeGreaterThan(0)
-  })
-
-  it('7 View - wideViewNodes method executes render for wideView', () => {
+  it('4 View - wideViewNodes method executes render for wideView', () => {
     let view = new View(testInflectionData, testLocale)
     view.table.wideView = { render: jest.fn() }
     let res = view.wideViewNodes
     expect(view.table.wideView.render).toHaveBeenCalled()
   })
 
-  it('8 View - narrowViewNodes method executes render for narrowView', () => {
+  it('5 View - narrowViewNodes method executes render for narrowView', () => {
     let view = new View(testInflectionData, testLocale)
     view.table.narrowView = { render: jest.fn() }
     let res = view.narrowViewNodes
     expect(view.table.narrowView.render).toHaveBeenCalled()
   })
 
-  it('9 View - hideEmptyColumns method executes hideEmptyColumns of the table', () => {
+  it('6 View - hideEmptyColumns method executes hideEmptyColumns of the table', () => {
     let view = new View(testInflectionData, testLocale)
     view.table.hideEmptyColumns = jest.fn()
     view.hideEmptyColumns()
     expect(view.table.hideEmptyColumns).toHaveBeenCalled()
   })
 
-  it('10 View - showEmptyColumns method executes showEmptyColumns of the table', () => {
+  it('7 View - showEmptyColumns method executes showEmptyColumns of the table', () => {
     let view = new View(testInflectionData, testLocale)
     view.table.showEmptyColumns = jest.fn()
     view.showEmptyColumns()
     expect(view.table.showEmptyColumns).toHaveBeenCalled()
   })
 
-  it('11 View - hideNoSuffixGroups method executes hideNoSuffixGroups of the table if table canCollapse', () => {
+  it('8 View - hideNoSuffixGroups method executes hideNoSuffixGroups of the table if table canCollapse', () => {
     let view = new View(testInflectionData, testLocale)
     view.table.hideNoSuffixGroups = jest.fn()
     view.table.canCollapse = true
@@ -153,7 +131,7 @@ describe('view.test.js', () => {
     expect(view.table.hideNoSuffixGroups).toHaveBeenCalled()
   })
 
-  it('12 View - hideNoSuffixGroups method doesn\'t execute hideNoSuffixGroups if table canCollapse = false', () => {
+  it('9 View - hideNoSuffixGroups method doesn\'t execute hideNoSuffixGroups if table canCollapse = false', () => {
     let view = new View(testInflectionData, testLocale)
     view.table.hideNoSuffixGroups = jest.fn()
     view.table.canCollapse = false
@@ -161,22 +139,22 @@ describe('view.test.js', () => {
     expect(view.table.hideNoSuffixGroups).not.toHaveBeenCalled()
   })
 
-  it('13 View - showNoSuffixGroups method executes showNoSuffixGroups of the table', () => {
+  it('10 View - showNoSuffixGroups method executes showNoSuffixGroups of the table', () => {
     let view = new View(testInflectionData, testLocale)
     view.table.showNoSuffixGroups = jest.fn()
     view.showNoSuffixGroups()
     expect(view.table.showNoSuffixGroups).toHaveBeenCalled()
   })
 
-  it('14 View - toSentenceCase - capitalize the string from argument', () => {
+  it('11 View - toSentenceCase - capitalize the string from argument', () => {
     expect(View.toSentenceCase('TEST')).toEqual('Test')
   })
 
-  it('15 View - toTitleCase - capitalize every word in the string', () => {
+  it('12 View - toTitleCase - capitalize every word in the string', () => {
     expect(View.toTitleCase('TEST this cAse')).toEqual('Test This Case')
   })
 
-  it('16 View - enabledForLexemes - returns true by default', () => {
+  it('13 View - enabledForLexemes - returns true by default', () => {
     expect(View.enabledForLexemes()).toBeTruthy()
   })
 })

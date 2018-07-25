@@ -16,21 +16,21 @@ describe('language-dataset-factory.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
-  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
+  /*  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
     set: jest.fn()
   })
   Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
     set: jest.fn()
-  })
+  }) */
 
   let maAdapter, testHomonymARA, testHomonymGRC
 
   beforeAll(async () => {
     maAdapter = new AlpheiosTuftsAdapter()
-    testHomonymARA = await maAdapter.getHomonym('ara', 'مَقَرٍ')
-    testHomonymGRC = await maAdapter.getHomonym('grc', 'δύο')
+    testHomonymARA = await maAdapter.getHomonym(Constants.LANG_ARABIC, 'مَقَرٍ')
+    testHomonymGRC = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
   })
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import { Homonym } from 'alpheios-data-models'
+import { Homonym, Constants } from 'alpheios-data-models'
 import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
 
 import InflectionData from '@lib/inflection-data.js'
@@ -19,7 +19,7 @@ describe('inflection-data.test.js', () => {
 
   beforeAll(async () => {
     maAdapter = new AlpheiosTuftsAdapter()
-    testHomonym = await maAdapter.getHomonym('grc', 'δύο')
+    testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
   })
 
   beforeEach(() => {
