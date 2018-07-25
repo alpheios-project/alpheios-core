@@ -13397,7 +13397,7 @@ class GreekNumeralView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_3__["defa
       this.constructor.languageID
     )
 
-    const lemmaValues = this.dataset.getNumeralGroupingLemmas()
+    const lemmaValues = this.constructor.dataset.getNumeralGroupingLemmas()
     this.featureTypes.lemmas = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.hdwd, lemmaValues, GreekNumeralView.languageID)
 
     this.features = {
@@ -14809,7 +14809,7 @@ class LatinVerbIrregularView extends _views_lang_latin_latin_view_js__WEBPACK_IM
     this.title = 'Verb Conjugation (Irregular)'
 
     const inflectionsWords = inflectionData.homonym.inflections.map(item => item[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word].value)
-    const lemma = this.dataset.verbsIrregularLemmas.filter(item => inflectionsWords.indexOf(item.word) > -1)[0]
+    const lemma = this.constructor.dataset.verbsIrregularLemmas.filter(item => inflectionsWords.indexOf(item.word) > -1)[0]
 
     this.additionalTitle = lemma.word + ', ' + lemma.principalParts
 

@@ -14,7 +14,7 @@ export default class LatinVerbIrregularView extends LatinView {
     this.title = 'Verb Conjugation (Irregular)'
 
     const inflectionsWords = inflectionData.homonym.inflections.map(item => item[Feature.types.word].value)
-    const lemma = this.dataset.verbsIrregularLemmas.filter(item => inflectionsWords.indexOf(item.word) > -1)[0]
+    const lemma = this.constructor.dataset.verbsIrregularLemmas.filter(item => inflectionsWords.indexOf(item.word) > -1)[0]
 
     this.additionalTitle = lemma.word + ', ' + lemma.principalParts
 

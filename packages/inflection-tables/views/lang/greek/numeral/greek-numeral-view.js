@@ -30,7 +30,7 @@ export default class GreekNumeralView extends GreekView {
       this.constructor.languageID
     )
 
-    const lemmaValues = this.dataset.getNumeralGroupingLemmas()
+    const lemmaValues = this.constructor.dataset.getNumeralGroupingLemmas()
     this.featureTypes.lemmas = new Feature(Feature.types.hdwd, lemmaValues, GreekNumeralView.languageID)
 
     this.features = {
