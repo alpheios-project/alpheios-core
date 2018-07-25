@@ -16,7 +16,7 @@ export default class GreekAdjectiveView extends GreekView {
     let featureTypesGenders = new Feature(
       Feature.types.gender,
       [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
-      this.languageID
+      this.constructor.languageID
     )
     this.features.genders = new GroupFeatureType(featureTypesGenders, 'Gender')
     this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {

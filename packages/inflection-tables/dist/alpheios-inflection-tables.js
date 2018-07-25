@@ -13000,7 +13000,7 @@ class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORT
     let featureTypesGenders = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](
       alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender,
       [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE, GEND_MASCULINE_FEMININE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
-      this.languageID
+      this.constructor.languageID
     )
     this.features.genders = new _lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_3__["default"](featureTypesGenders, 'Gender')
     this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
@@ -17005,7 +17005,6 @@ class ViewSet {
       this.matchingViews.push(...this.constructor.views.reduce(
         (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.messages)), []))
 
-      console.info('****************this.matchingViews', this.matchingViews)
       /* for (const lexeme of this.homonym.lexemes) {
         // TODO: Can we handle combined data better?
         for (const inflection of lexeme.inflections) {
@@ -17223,8 +17222,6 @@ class View {
   static matchFilter (homonym) {
     // return (this.languageID === inflection.languageID && this.partsOfSpeech.includes(inflection[Feature.types.part].value))
     // Disable multiple parts of speech for now
-    console.info('*******************1', this.languageID, homonym.languageID)
-    console.info('*******************2', this.mainPartOfSpeech, homonym.inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech))
     return (this.languageID === homonym.languageID && homonym.inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech))
   }
 
