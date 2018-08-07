@@ -8273,7 +8273,10 @@ div.alpheios-color_schema_light_class {
   div.alpheios-color_schema_light_class .infl-table {
     border-color: #333333; }
   div.alpheios-color_schema_light_class .infl-suff--suffix-match {
-    color: #333333; }
+    color: #333333;
+    background-color: lightblue; }
+  div.alpheios-color_schema_light_class .infl-suff--suffix-match.infl-suff--full-feature-match {
+    background-color: #F6D918; }
   div.alpheios-color_schema_light_class .infl-cell--hl {
     background: #d3d3d3; }
   div.alpheios-color_schema_light_class .alph_tooltip .tooltiptext {
