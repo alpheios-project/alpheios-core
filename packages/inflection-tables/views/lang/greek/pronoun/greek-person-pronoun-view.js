@@ -11,15 +11,7 @@ export default class GreekPersonPronounView extends GreekPronounView {
     super(homonym, inflectionData, locale, GreekPersonPronounView.classes[0])
 
     // Add persons
-    this.featureTypes.persons = new Feature(
-      Feature.types.person,
-      [
-        Constants.ORD_1ST,
-        Constants.ORD_2ND,
-        Constants.ORD_3RD
-      ],
-      this.constructor.languageID)
-    this.features.persons = new GroupFeatureType(this.featureTypes.persons, 'Person')
+    this.features.person = GroupFeatureType.createFromType(Feature.types.person, this.constructor.languageID, 'Person')
 
     /*
     Define tables and table features.

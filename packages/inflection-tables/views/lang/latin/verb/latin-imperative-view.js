@@ -1,6 +1,6 @@
 import { Constants, Feature } from 'alpheios-data-models'
 import LatinVerbMoodView from './latin-verb-mood-view.js'
-import GroupFeatureType from '../../../lib/group-feature-type'
+// import GroupFeatureType from '../../../lib/group-feature-type'
 import Table from '../../../lib/table'
 
 export default class LatinImperativeView extends LatinVerbMoodView {
@@ -9,14 +9,7 @@ export default class LatinImperativeView extends LatinVerbMoodView {
     this.id = 'verbImperative'
     this.name = 'imperative'
     this.title = 'Imperative'
-    this.features.moods = new GroupFeatureType(
-      new Feature(Feature.types.mood, [Constants.MOOD_IMPERATIVE], this.constructor.model.languageID),
-      'Mood')
-    this.language_features[Feature.types.person] = new Feature(Feature.types.person, [Constants.ORD_2ND, Constants.ORD_3RD], this.constructor.model.languageID)
-    this.features.persons = new GroupFeatureType(this.language_features[Feature.types.person], 'Person')
-    this.language_features[Feature.types.tense] = new Feature(Feature.types.tense,
-      [Constants.TENSE_PRESENT, Constants.TENSE_FUTURE], this.constructor.model.languageID)
-    this.features.tenses = new GroupFeatureType(this.language_features[Feature.types.tense], 'Tense')
+
     this.createTable()
     this.table.morphemeCellFilter = LatinImperativeView.morphemeCellFilter
   }
@@ -26,11 +19,19 @@ export default class LatinImperativeView extends LatinVerbMoodView {
       this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features
     features.columns = [
-      this.language_features[Feature.types.voice],
-      this.language_features[Feature.types.conjugation]]
-    features.rows = [this.language_features[Feature.types.tense], this.language_features[Feature.types.number], this.language_features[Feature.types.person]]
-    features.columnRowTitles = [this.language_features[Feature.types.number], this.language_features[Feature.types.person]]
-    features.fullWidthRowTitles = [this.language_features[Feature.types.tense]]
+      this.constructor.model.typeFeature(Feature.types.voice),
+      this.constructor.model.typeFeature(Feature.types.conjugation)
+    ]
+    features.rows = [
+      this.constructor.model.typeFeature(Feature.types.tense),
+      this.constructor.model.typeFeature(Feature.types.number),
+      this.constructor.model.typeFeature(Feature.types.person)
+    ]
+    features.columnRowTitles = [
+      this.constructor.model.typeFeature(Feature.types.number),
+      this.constructor.model.typeFeature(Feature.types.person)
+    ]
+    features.fullWidthRowTitles = [this.constructor.model.typeFeature(Feature.types.tense)]
   }
 
   static get viewID () {

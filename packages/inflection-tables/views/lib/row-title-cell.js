@@ -6,15 +6,15 @@ import * as Styles from '../styles/styles'
 export default class RowTitleCell {
   /**
    * Initializes a row title cell.
-   * @param {string} title - A text that will be shown within the cell.
+   * @param {string} featureValue - A text that will be shown within the cell.
    * @param {GroupFeatureType} groupingFeature - A grouping feature that specifies a row for which a title cell
    * is created.
    * @param {number} nvGroupQty - A number of narrow view groups. Because each group will be shown separately
    * and will have its own title cells, we need to create a copy of a title cell for each such group.
    */
-  constructor (title, groupingFeature, nvGroupQty) {
+  constructor (featureValue, groupingFeature, nvGroupQty) {
     this.parent = undefined
-    this.title = title
+    this.title = groupingFeature.getTitle(featureValue)
     this.feature = groupingFeature
     this.nvGroupQty = nvGroupQty
 

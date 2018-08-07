@@ -1,4 +1,4 @@
-import { Constants, GreekLanguageModel, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import Form from '../../../../lib/form.js'
 import View from '../../../lib/view.js'
 import GreekView from '../greek-view.js'
@@ -10,6 +10,7 @@ import GroupFeatureType from '../../../lib/group-feature-type.js'
  */
 export default class GreekPronounView extends GreekView {
   /**
+   * @param {Homonym} homonym
    * @param {InflectionData} inflectionData
    * @param {string} locale
    * @param {string} grammarClass - For what pronoun class a view will be created
@@ -21,52 +22,11 @@ export default class GreekPronounView extends GreekView {
     this.title = GreekPronounView.getTitle(grammarClass)
     this.featureTypes = {}
 
-    const GEND_MASCULINE_FEMININE = 'masculine feminine'
-    const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'
-    this.featureTypes.numbers = new Feature(
-      Feature.types.number,
-      [Constants.NUM_SINGULAR, Constants.NUM_DUAL, Constants.NUM_PLURAL],
-      this.constructor.languageID
-    )
+    this.lemmaTypeFeature = new Feature(Feature.types.hdwd, this.constructor.dataset.getNumeralGroupingLemmas(), GreekView.languageID)
+    this.features.lemmas = new GroupFeatureType(Feature.types.hdwd, this.constructor.languageID, 'Lemma',
+      this.constructor.dataset.getNumeralGroupingLemmaFeatures())
 
-    this.featureTypes.genders = new Feature(
-      Feature.types.gender,
-      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
-      this.constructor.languageID
-    )
-
-    // This is just a placeholder. Lemma values will be generated dynamically
-    this.featureTypes.lemmas = new Feature(Feature.types.hdwd, [], this.constructor.languageID)
-
-    this.features = {
-      numbers: new GroupFeatureType(this.featureTypes.numbers, 'Number'),
-      cases: new GroupFeatureType(GreekLanguageModel.typeFeature(Feature.types.grmCase), 'Case'),
-      genders: new GroupFeatureType(this.featureTypes.genders, 'Gender'),
-      persons: new GroupFeatureType(GreekLanguageModel.typeFeature(Feature.types.person), 'Person')
-    }
-
-    this.features.genders.getTitle = function getTitle (featureValue) {
-      if (featureValue === Constants.GEND_MASCULINE) { return 'm.' }
-      if (featureValue === Constants.GEND_FEMININE) { return 'f.' }
-      if (featureValue === Constants.GEND_NEUTER) { return 'n.' }
-      if (featureValue === GEND_MASCULINE_FEMININE) { return 'm./f.' }
-      if (featureValue === GEND_MASCULINE_FEMININE_NEUTER) { return 'm./f./n.' }
-      return featureValue
-    }
-
-    this.features.genders.filter = function filter (featureValues, suffix) {
-      // If not an array, convert it to array for uniformity
-      if (!Array.isArray(featureValues)) {
-        featureValues = [featureValues]
-      }
-      for (const value of featureValues) {
-        if (suffix.features[this.type] === value) {
-          return true
-        }
-      }
-
-      return false
-    }
+    this.features.genders.filter = this.constructor.genderFilter
   }
 
   static get partsOfSpeech () {
@@ -96,6 +56,19 @@ export default class GreekPronounView extends GreekView {
 
   static getTitle (grammarClass) {
     return View.toTitleCase(`${grammarClass} ${GreekPronounView.mainPartOfSpeech} Declension`).trim()
+  }
+
+  static genderFilter (featureValues, suffix) {
+    // If not an array, convert it to array for uniformity
+    if (!Array.isArray(featureValues)) {
+      featureValues = [featureValues]
+    }
+    for (const value of featureValues) {
+      if (suffix.features[this.type] === value) {
+        return true
+      }
+    }
+    return false
   }
 
   // Select inflections that have a 'Form' type (form based) and find those whose grammar class matches a grammar class of the view

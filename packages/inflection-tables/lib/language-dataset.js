@@ -1,4 +1,5 @@
 import { Feature, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import Morpheme from './morpheme.js'
 import Suffix from './suffix.js'
 import Form from './form.js'
 import Paradigm from './paradigm.js'
@@ -40,7 +41,7 @@ export default class LanguageDataset {
    * @param {Footnote[]} footnotes - Footnotes in an array.
    * @param {ExtendedLanguageData} extendedLangData
    */
-  addInflection (partOfSpeech, ClassType, itemValue, features, footnotes = [], extendedLangData = undefined) {
+  addInflectionData (partOfSpeech, ClassType, itemValue, features, footnotes = [], extendedLangData = undefined) {
     let item = new ClassType(itemValue)
     item.extendedLangData = extendedLangData
 
@@ -104,38 +105,58 @@ export default class LanguageDataset {
   /**
    * Checks for obligatory matches between an inflection and an item.
    * @param {Inflection} inflection - An inflection object.
-   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm
+   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm.
+   * @param {Morpheme.comparisonTypes} comparisonType - What matching algorithm to use (exact or partial).
    * @return {Object} A results in the following format:
    *   {Feature[]} matchedItems - Features that matched (if any)
    *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
-  static getObligatoryMatches (inflection, item) {
-    return this.checkMatches(this.getObligatoryMatchList(inflection), inflection, item)
+  static getObligatoryMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
+    return this.checkMatches(this.getObligatoryMatchList(inflection), inflection, item, comparisonType)
   }
 
   /**
    * Checks for optional matches between an inflection and an item.
    * @param {Inflection} inflection - An inflection object.
-   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm
+   * @param {Morpheme} item - An inflection data item: a Suffix, a Form, or a Paradigm.
+   * @param {Morpheme.comparisonTypes} comparisonType - What matching algorithm to use (exact or partial).
    * @return {Object} A results in the following format:
    *   {Feature[]} matchedItems - Features that matched (if any)
    *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
-  static getOptionalMatches (inflection, item) {
-    return this.checkMatches(this.getOptionalMatchList(inflection), inflection, item)
+  static getOptionalMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
+    return this.checkMatches(this.getOptionalMatchList(inflection), inflection, item, comparisonType)
   }
 
-  static checkMatches (matchList, inflection, item) {
-    let matches = matchList.reduce((acc, f) => {
-      if (inflection.hasOwnProperty(f) && item.features.hasOwnProperty(f) && item.featureMatch(inflection[f])) {
+  /**
+   * Checks if values of features from `featureList` are the same between an inflection
+   * and a morpheme. If item does not have a feature from `featureList`, such feature
+   * will be still counted as a match. It is required to produce a full match in cases
+   * when a morpheme has incomplete feature data.
+   * @param {string[]} featureList - A list of feature names that should be checked for matching values.
+   * @param {Inflection} inflection - An inflection object.
+   * @param {Suffix|Form|Paradigm|Morpheme} item - A morpheme object.
+   * @param {Morpheme.comparisonTypes} comparisonType - What matching algorithm to use (exact or partial).
+   * @return {{fullMatch: boolean, matchedItems: string[]}} Match results object:
+   * fullMatch: true if all features form a list are the same between an inflection and an item.
+   * matchItems: a list of feature names that are the same between an inflection and an item.
+   */
+  static checkMatches (featureList, inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
+    let fullMatchQty = featureList.length
+    let matches = featureList.reduce((acc, f) => {
+      if (inflection.hasOwnProperty(f) && item.features.hasOwnProperty(f) && item.featureMatch(inflection[f], comparisonType)) {
         acc.push(f)
-      } else if (!item.features.hasOwnProperty(f)) {
-        acc.push(f)
+      } else if (!inflection.hasOwnProperty(f) || !item.features.hasOwnProperty(f)) {
+        /*
+        If either inflection or item does not have a certain feature,
+        this feature is excluded from a comparison
+         */
+        fullMatchQty--
       }
       return acc
     }, [])
 
-    let result = (matches.length === matchList.length)
+    let result = (matches.length === fullMatchQty)
     return { fullMatch: result, matchedItems: matches }
   }
 
@@ -184,12 +205,14 @@ export default class LanguageDataset {
               Table construction will probably fail`)
       } else {
         // One or more values found
-        inflection[Feature.types.grmClass] = grmClasses
+        inflection.addFeature(grmClasses)
       }
     }
 
     // add the lemma to the inflection
-    inflection[Feature.types.word] = new Feature(Feature.types.word, lemma.word, lemma.languageID)
+    inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
+    // Check if this is an irregular word after a `word` feature is added
+    inflection.constraints.irregularVerb = this.checkIrregularVerb(inflection)
 
     if (!this.pos.get(partOfSpeech)) {
       // There is no source data for this part of speech
@@ -317,7 +340,7 @@ export default class LanguageDataset {
       if (sourceSet.types.has(Suffix)) {
         let items = sourceSet.types.get(Suffix).items.reduce(this['reducer'].bind(this, inflections), [])
         if (items.length > 0) {
-          inflectionSet.addInflectionItems(this.constructor.splitMultiValMorphems(items))
+          inflectionSet.addInflectionItems(items)
         }
       }
     }
@@ -422,7 +445,6 @@ export default class LanguageDataset {
       matchData.suffixMatch = inflection.compareWithWordDependsOnType(item.value, item.constructor.name)
 
       // Check for obligatory matches
-
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item)
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
@@ -431,11 +453,14 @@ export default class LanguageDataset {
         break
       }
 
-      // Check for optional matches
-      const optionalMatches = this.constructor.getOptionalMatches(inflection, item)
+      /*
+      Check for optional matches. Use `All_VALUES` matching algorithm
+      as multiple values in inflection and morpheme can go in different order.
+       */
+      // TODO: Do we need to fix order of values to be the same?
+      const optionalMatches = this.constructor.getOptionalMatches(inflection, item, Morpheme.comparisonTypes.ALL_VALUES)
 
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
-
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
         // This is a full match
         matchData.fullMatch = true

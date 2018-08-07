@@ -1,7 +1,7 @@
-import { Constants, Feature } from 'alpheios-data-models'
-import Suffix from '../../../../lib/suffix.js'
-import LatinView from '../latin-view.js'
-import GroupFeatureType from '../../../lib/group-feature-type'
+import { Constants } from 'alpheios-data-models'
+import Morpheme from '@lib/morpheme.js'
+import Suffix from '@lib/suffix.js'
+import LatinView from '@views/lang/latin/latin-view.js'
 
 export default class LatinNounView extends LatinView {
   constructor (homonym, inflectionData, locale) {
@@ -10,9 +10,11 @@ export default class LatinNounView extends LatinView {
     this.name = 'noun declension'
     this.title = 'Noun declension'
 
-    // Feature that are different from base class values
-    this.features.genders = new GroupFeatureType(this.language_features[Feature.types.gender], 'Gender',
-      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
+    this.features.genders.addFeature(LatinView.datasetConsts.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
+    this.features.genders.getOrderedFeatures = this.constructor.getOrderedGenders
+    this.features.genders.getTitle = this.constructor.getGenderTitle
+    this.features.genders.comparisonType = Morpheme.comparisonTypes.ALL_VALUES
+
     this.createTable()
   }
 
@@ -26,5 +28,21 @@ export default class LatinNounView extends LatinView {
 
   static get inflectionType () {
     return Suffix
+  }
+
+  static getOrderedGenders (ancestorFeatures) {
+    const ancestorValue = ancestorFeatures[ancestorFeatures.length - 1].value
+    if ([Constants.ORD_2ND, Constants.ORD_3RD, Constants.ORD_4TH].includes(ancestorValue)) {
+      return [
+        this.featureMap.get(LatinView.datasetConsts.GEND_MASCULINE_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    } else {
+      return [
+        this.featureMap.get(Constants.GEND_MASCULINE),
+        this.featureMap.get(Constants.GEND_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    }
   }
 }

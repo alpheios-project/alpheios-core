@@ -1,6 +1,7 @@
 import { Constants } from 'alpheios-data-models'
-import Suffix from '../../../../lib/suffix.js'
-import GreekView from '../greek-view.js'
+import Morpheme from '@lib/morpheme.js'
+import Suffix from '@lib/suffix.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 
 export default class GreekNounView extends GreekView {
   constructor (homonym, inflectionData, locale) {
@@ -8,19 +9,10 @@ export default class GreekNounView extends GreekView {
     this.id = 'nounDeclension'
     this.name = 'noun declension'
     this.title = 'Noun declension'
-    this.partOfSpeech = Constants.POFS_NOUN
-    let genderMasculine = Constants.GEND_MASCULINE
-    let genderFeminine = Constants.GEND_FEMININE
-    let genderNeuter = Constants.GEND_NEUTER
 
-    this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
-      if (ancestorFeatures) {
-        if (ancestorFeatures.value === Constants.ORD_2ND || ancestorFeatures.value === Constants.ORD_3RD) {
-          return [[genderMasculine, genderFeminine], genderNeuter]
-        }
-      }
-      return [genderMasculine, genderFeminine, genderNeuter]
-    }
+    this.features.genders.addFeature(GreekView.datasetConsts.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
+    this.features.genders.comparisonType = Morpheme.comparisonTypes.ALL_VALUES
+    this.features.genders.getOrderedValues = this.constructor.getOrderedGenders
 
     this.createTable()
   }
@@ -31,5 +23,21 @@ export default class GreekNounView extends GreekView {
 
   static get inflectionType () {
     return Suffix
+  }
+
+  static getOrderedGenders (ancestorFeatures) {
+    const ancestorValue = ancestorFeatures[ancestorFeatures.length - 1].value
+    if ([Constants.ORD_2ND, Constants.ORD_3RD].includes(ancestorValue)) {
+      return [
+        this.featureMap.get(GreekView.datasetConsts.GEND_MASCULINE_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    } else {
+      return [
+        this.featureMap.get(Constants.GEND_MASCULINE),
+        this.featureMap.get(Constants.GEND_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    }
   }
 }

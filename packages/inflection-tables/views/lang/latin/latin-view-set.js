@@ -1,5 +1,4 @@
 import ViewSet from '../../lib/view-set.js'
-/* eslint-disable */
 import LatinNounView from '@views/lang/latin/noun/latin-noun-view.js'
 import LatinAdjectiveView from '@views/lang/latin/adjective/latin-adjective-view.js'
 import LatinVoiceConjugationMoodView from '@views/lang/latin/verb/latin-voice-conjugation-mood-view.js'
@@ -11,10 +10,10 @@ import LatinMoodConjugationVoiceView from '@views/lang/latin/verb/latin-mood-con
 import LatinImperativeView from '@views/lang/latin/verb/latin-imperative-view.js'
 import LatinSupineView from '@views/lang/latin/noun/latin-supine-view.js'
 import LatinVerbIrregularView from '@views/lang/latin/verb/latin-verb-irregular.js'
+import LatinVerbIrregularVoiceView from '@views/lang/latin/verb/latin-verb-irregular-voice.js'
 import LatinVerbParticipleView from '@views/lang/latin/verb/latin-verb-participle-view.js'
 import LatinVerbParticipleIrregularView from '@views/lang/latin/verb/latin-verb-participle-irregular.js'
 import LatinInfinitiveView from '@views/lang/latin/verb/latin-infinitive-view.js'
-/* eslint-enable */
 export default class LatinViewSet extends ViewSet {
   /**
    * Returns a list of views available within a view set.
@@ -30,12 +29,13 @@ export default class LatinViewSet extends ViewSet {
       LatinConjugationMoodVoiceView,
       LatinMoodVoiceConjugationView,
       LatinMoodConjugationVoiceView,
+      LatinInfinitiveView,
       LatinImperativeView,
       LatinVerbIrregularView,
+      LatinVerbIrregularVoiceView,
       LatinVerbParticipleIrregularView,
       LatinSupineView,
-      LatinVerbParticipleView,
-      LatinInfinitiveView
+      LatinVerbParticipleView
     ]
   }
 }

@@ -11,13 +11,12 @@ export default class LatinVerbParticipleView extends LatinView {
     this.id = 'verbParticiple'
     this.name = 'participle'
     this.title = 'Participle'
-    this.language_features[Feature.types.tense] = new Feature(Feature.types.tense,
-      [Constants.TENSE_PRESENT, Constants.TENSE_PERFECT, Constants.TENSE_FUTURE], this.constructor.model.languageID)
-    this.features = {
-      tenses: new GroupFeatureType(this.language_features[Feature.types.tense], 'Tenses'),
-      voices: new GroupFeatureType(this.language_features[Feature.types.voice], 'Voice'),
-      conjugations: new GroupFeatureType(this.language_features[Feature.types.conjugation], 'Conjugation Stem')
-    }
+
+    this.features.tenses = new GroupFeatureType(Feature.types.tense, this.constructor.languageID, 'Tense', [
+      this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_PRESENT),
+      this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_PERFECT),
+      this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_FUTURE)
+    ])
     this.createTable()
   }
 
@@ -34,14 +33,14 @@ export default class LatinVerbParticipleView extends LatinView {
   }
 
   createTable () {
-    this.table = new Table([this.features.voices, this.features.conjugations,
-      this.features.tenses])
+    this.table = new Table([this.features.voices, this.features.conjugations, this.features.tenses])
     let features = this.table.features
     features.columns = [
-      this.language_features[Feature.types.voice],
-      this.language_features[Feature.types.conjugation]]
-    features.rows = [this.language_features[Feature.types.tense]]
-    features.columnRowTitles = [this.language_features[Feature.types.tense]]
+      this.constructor.model.typeFeature(Feature.types.voice),
+      this.constructor.model.typeFeature(Feature.types.conjugation)
+    ]
+    features.rows = [this.constructor.model.typeFeature(Feature.types.tense)]
+    features.columnRowTitles = [this.constructor.model.typeFeature(Feature.types.tense)]
     features.fullWidthRowTitles = []
   }
 }

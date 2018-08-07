@@ -1,4 +1,5 @@
-import { Constants, GreekLanguageModel, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
+import GreekView from '../greek-view.js'
 import GreekPronounView from './greek-pronoun-view.js'
 import Table from '../../../lib/table'
 
@@ -17,10 +18,19 @@ export default class GreekGenderPronounView extends GreekPronounView {
      */
     this.table = new Table([this.features.genders, this.features.numbers, this.features.cases])
     let features = this.table.features
-    features.columns = [this.featureTypes.genders]
-    features.rows = [this.featureTypes.numbers, GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.columnRowTitles = [GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.fullWidthRowTitles = [this.featureTypes.numbers]
+    features.columns = [
+      this.constructor.model.typeFeature(Feature.types.gender)
+    ]
+    features.rows = [
+      this.constructor.model.typeFeature(Feature.types.number),
+      this.constructor.model.typeFeature(Feature.types.grmCase)
+    ]
+    features.columnRowTitles = [
+      this.constructor.model.typeFeature(Feature.types.grmCase)
+    ]
+    features.fullWidthRowTitles = [
+      this.constructor.model.typeFeature(Feature.types.number)
+    ]
   }
 
   /**
@@ -35,6 +45,13 @@ export default class GreekGenderPronounView extends GreekPronounView {
       Constants.CLASS_INTERROGATIVE,
       Constants.CLASS_RECIPROCAL,
       Constants.CLASS_RELATIVE
+    ]
+  }
+
+  static getOrderedGenders () {
+    return [
+      this.featureMap.get(GreekView.datasetConsts.GEND_MASCULINE_FEMININE),
+      this.featureMap.get(Constants.GEND_NEUTER)
     ]
   }
 }

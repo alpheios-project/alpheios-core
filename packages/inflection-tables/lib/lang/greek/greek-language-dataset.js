@@ -22,7 +22,7 @@ import numeralFootnotesCSV from '@lib/lang/greek/data/numeral/footnotes.csv'
 import pronounFormsCSV from '@lib/lang/greek/data/pronoun/forms.csv'
 import pronounFootnotesCSV from '@lib/lang/greek/data/pronoun/footnotes.csv'
 
-import GroupFeatureType from '@views/lib/group-feature-type.js'
+// import GroupFeatureType from '@views/lib/group-feature-type.js'
 
 /* import adjectiveSuffixesCSV from './data/adjective/suffixes.csv';
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
@@ -118,23 +118,33 @@ export default class GreekLanguageDataset extends LanguageDataset {
   constructor () {
     super(GreekLanguageDataset.languageID)
 
-    this.features = this.model.typeFeatures
-    this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], GreekLanguageDataset.languageID))
-    this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], GreekLanguageDataset.languageID))
-    this.features.set(Feature.types.hdwd, new Feature(Feature.types.hdwd, [], GreekLanguageDataset.languageID))
-    this.features.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID))
+    this.typeFeatures = this.model.typeFeatures
+    this.typeFeatures.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], GreekLanguageDataset.languageID))
+    this.typeFeatures.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], GreekLanguageDataset.languageID))
+    this.typeFeatures.set(Feature.types.hdwd, new Feature(Feature.types.hdwd, [], GreekLanguageDataset.languageID))
+    this.typeFeatures.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (let feature of this.features.values()) {
+    for (let feature of this.typeFeatures.values()) {
       feature.addImporter(new FeatureImporter(feature.values, true))
     }
+
     // Custom importers for Greek-specific feature values
-    this.features.get(Feature.types.gender).getImporter()
-      .map('masculine feminine neuter', [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
+    this.typeFeatures.get(Feature.types.gender).getImporter()
+      .map(this.constructor.constants.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
+      .map(this.constructor.constants.GEND_MASCULINE_FEMININE_NEUTER, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
   }
 
   static get languageID () {
     return Constants.LANG_GREEK
+  }
+
+  static get constants () {
+    // TODO: Shall we move it to constants in data models?
+    return {
+      GEND_MASCULINE_FEMININE: 'masculine feminine',
+      GEND_MASCULINE_FEMININE_NEUTER: 'masculine feminine neuter'
+    }
   }
 
   // For noun and adjectives
@@ -165,18 +175,18 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let primary = false
       let features = [partOfSpeech,
-        this.features.get(Feature.types.number).createFromImporter(item[n.number]),
-        this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
-        this.features.get(Feature.types.declension).createFromImporter(item[n.declension]),
-        this.features.get(Feature.types.gender).createFromImporter(item[n.gender]),
-        this.features.get(Feature.types.type).createFromImporter(item[n.type])]
+        this.typeFeatures.get(Feature.types.number).createFromImporter(item[n.number]),
+        this.typeFeatures.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
+        this.typeFeatures.get(Feature.types.declension).createFromImporter(item[n.declension]),
+        this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender]),
+        this.typeFeatures.get(Feature.types.type).createFromImporter(item[n.type])]
       if (item[n.primary] === 'primary') {
         primary = true
       }
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
-        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        features.push(this.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
@@ -186,7 +196,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
 
-      this.addInflection(partOfSpeech.value, Suffix, suffixValue, features, footnotes, extendedLangData)
+      this.addInflectionData(partOfSpeech.value, Suffix, suffixValue, features, footnotes, extendedLangData)
     }
   }
 
@@ -208,10 +218,10 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let primary = false
       let features = [partOfSpeech,
-        this.features.get(Feature.types.number).createFromImporter(item[n.number]),
-        this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
-        this.features.get(Feature.types.gender).createFromImporter(item[n.gender]),
-        this.features.get(Feature.types.type).createFromImporter(item[n.type])]
+        this.typeFeatures.get(Feature.types.number).createFromImporter(item[n.number]),
+        this.typeFeatures.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
+        this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender]),
+        this.typeFeatures.get(Feature.types.type).createFromImporter(item[n.type])]
       if (item[n.primary] === 'primary') {
         primary = true
       }
@@ -222,7 +232,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
 
-      this.addInflection(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
+      this.addInflectionData(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
     }
   }
 
@@ -251,26 +261,26 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let features = [
         partOfSpeech,
-        this.features.get(Feature.types.fullForm).createFromImporter(form)
+        this.typeFeatures.get(Feature.types.fullForm).createFromImporter(form)
       ]
 
       if (item[n.hdwd]) {
-        features.push(this.features.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]))
+        features.push(this.typeFeatures.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]))
 
         if (this.numeralGroupingLemmas.indexOf(item[n.hdwd]) === -1) { this.numeralGroupingLemmas.push(item[n.hdwd]) }
       }
 
-      if (item[n.number]) { features.push(this.features.get(Feature.types.number).createFromImporter(item[n.number])) }
-      if (item[n.grmCase]) { features.push(this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase])) }
-      if (item[n.gender]) { features.push(this.features.get(Feature.types.gender).createFromImporter(item[n.gender])) }
-      if (item[n.type]) { features.push(this.features.get(Feature.types.type).createFromImporter(item[n.type])) }
+      if (item[n.number]) { features.push(this.typeFeatures.get(Feature.types.number).createFromImporter(item[n.number])) }
+      if (item[n.grmCase]) { features.push(this.typeFeatures.get(Feature.types.grmCase).createFromImporter(item[n.grmCase])) }
+      if (item[n.gender]) { features.push(this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender])) }
+      if (item[n.type]) { features.push(this.typeFeatures.get(Feature.types.type).createFromImporter(item[n.type])) }
 
       let primary = (item[n.primary] === 'primary')
 
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
-        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        features.push(this.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
@@ -286,7 +296,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         return aN - bN
       })
 
-      this.addInflection(partOfSpeech.value, Form, form, features, footnotes, extendedLangData)
+      this.addInflectionData(partOfSpeech.value, Form, form, features, footnotes, extendedLangData)
     }
   }
 
@@ -319,32 +329,32 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let features = [
         partOfSpeech,
-        this.features.get(Feature.types.fullForm).createFromImporter(form)
+        this.typeFeatures.get(Feature.types.fullForm).createFromImporter(form)
       ]
 
       if (item[n.hdwd]) {
-        features.push(this.features.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]))
+        features.push(this.typeFeatures.get(Feature.types.hdwd).createFromImporter(item[n.hdwd]))
       }
-      if (item[n.grmClass]) { features.push(this.features.get(Feature.types.grmClass).createFromImporter(item[n.grmClass])) }
-      if (item[n.person]) { features.push(this.features.get(Feature.types.person).createFromImporter(item[n.person])) }
-      if (item[n.number]) { features.push(this.features.get(Feature.types.number).createFromImporter(item[n.number])) }
-      if (item[n.grmCase]) { features.push(this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase])) }
-      if (item[n.gender]) { features.push(this.features.get(Feature.types.gender).createFromImporter(item[n.gender])) }
-      if (item[n.type]) { features.push(this.features.get(Feature.types.type).createFromImporter(item[n.type])) }
+      if (item[n.grmClass]) { features.push(this.typeFeatures.get(Feature.types.grmClass).createFromImporter(item[n.grmClass])) }
+      if (item[n.person]) { features.push(this.typeFeatures.get(Feature.types.person).createFromImporter(item[n.person])) }
+      if (item[n.number]) { features.push(this.typeFeatures.get(Feature.types.number).createFromImporter(item[n.number])) }
+      if (item[n.grmCase]) { features.push(this.typeFeatures.get(Feature.types.grmCase).createFromImporter(item[n.grmCase])) }
+      if (item[n.gender]) { features.push(this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender])) }
+      if (item[n.type]) { features.push(this.typeFeatures.get(Feature.types.type).createFromImporter(item[n.type])) }
 
       let primary = (item[n.primary] === 'primary')
 
       // Dialects could have multiple values
       let dialects = item[n.dialect].split(',')
       if (item[n.dialect] && dialects && dialects.length > 0) {
-        features.push(this.features.get(Feature.types.dialect).createFeatures(dialects))
+        features.push(this.typeFeatures.get(Feature.types.dialect).createFeatures(dialects))
       }
 
       // Footnotes. There can be multiple footnote indexes separated by commas
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[n.footnote].split(' ')
-        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        features.push(this.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
@@ -353,7 +363,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       let extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
-      this.addInflection(partOfSpeech.value, Form, form, features, footnotes, extendedLangData)
+      this.addInflectionData(partOfSpeech.value, Form, form, features, footnotes, extendedLangData)
     }
   }
 
@@ -458,11 +468,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
       let features = [partOfSpeech]
 
-      if (item[n.stemtype]) { features.push(this.features.get(Feature.types.stemtype).createFromImporter(item[n.stemtype])) }
-      if (item[n.voice]) { features.push(this.features.get(Feature.types.voice).createFromImporter(item[n.voice])) }
-      if (item[n.mood]) { features.push(this.features.get(Feature.types.mood).createFromImporter(item[n.mood])) }
-      if (item[n.tense]) { features.push(this.features.get(Feature.types.tense).createFromImporter(item[n.tense])) }
-      if (item[n.dialect]) { features.push(this.features.get(Feature.types.dialect).createFromImporter(item[n.dialect])) }
+      if (item[n.stemtype]) { features.push(this.typeFeatures.get(Feature.types.stemtype).createFromImporter(item[n.stemtype])) }
+      if (item[n.voice]) { features.push(this.typeFeatures.get(Feature.types.voice).createFromImporter(item[n.voice])) }
+      if (item[n.mood]) { features.push(this.typeFeatures.get(Feature.types.mood).createFromImporter(item[n.mood])) }
+      if (item[n.tense]) { features.push(this.typeFeatures.get(Feature.types.tense).createFromImporter(item[n.tense])) }
+      if (item[n.dialect]) { features.push(this.typeFeatures.get(Feature.types.dialect).createFromImporter(item[n.dialect])) }
 
       let lemma
       if (item[n.lemma]) {
@@ -506,33 +516,33 @@ export default class GreekLanguageDataset extends LanguageDataset {
     let footnotes
 
     // Nouns
-    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
     pofsFootnotes = papaparse.parse(nounFootnotesCSV, {})
     footnotes = this.addFootnotes(partOfSpeech, Suffix, pofsFootnotes.data)
     suffixes = papaparse.parse(nounSuffixesCSV, {})
     this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Adjective
-    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
     pofsFootnotes = papaparse.parse(adjectiveFootnotesCSV, {})
     footnotes = this.addFootnotes(partOfSpeech, Suffix, pofsFootnotes.data)
     suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
     this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Articles
-    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
+    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
     forms = papaparse.parse(articleFormsCSV, {})
     this.addArticleForms(partOfSpeech, forms.data)
 
     // Pronouns
-    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
+    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     pofsFootnotes = papaparse.parse(pronounFootnotesCSV, {})
     footnotes = this.addFootnotes(partOfSpeech, Form, pofsFootnotes.data)
     forms = papaparse.parse(pronounFormsCSV, {})
     this.addPronounForms(partOfSpeech, forms.data, footnotes)
 
     // Numerals
-    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
+    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
     pofsFootnotes = papaparse.parse(numeralFootnotesCSV, {})
     footnotes = this.addFootnotes(partOfSpeech, Form, pofsFootnotes.data)
     forms = papaparse.parse(numeralFormsCSV, {})
@@ -544,7 +554,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     const verbParticipleParadigmTables = this.constructor.verbParticipleParadigmTables
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
 
-    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
+    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParadigmTables,
       papaparse.parse(verbParadigmRulesCSV, {}).data, verbAndParticipleParadigmTables)
@@ -553,7 +563,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // Verb Participles
     // Paradigms
-    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
+    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParticipleParadigmTables,
       papaparse.parse(verbParticipleParadigmRulesCSV, {}).data, verbAndParticipleParadigmTables)
@@ -573,8 +583,16 @@ export default class GreekLanguageDataset extends LanguageDataset {
     return this.pronounGroupingLemmas.has(grammarClass) ? this.pronounGroupingLemmas.get(grammarClass) : []
   }
 
+  getPronounGroupingLemmaFeatures (grammarClass) {
+    return this.getPronounGroupingLemmas(grammarClass).map(lemma => new Feature(Feature.types.hdwd, lemma, GreekLanguageDataset.languageID))
+  }
+
   getNumeralGroupingLemmas () {
     return this.numeralGroupingLemmas
+  }
+
+  getNumeralGroupingLemmaFeatures () {
+    return this.numeralGroupingLemmas.map(lemma => new Feature(Feature.types.hdwd, lemma, GreekLanguageDataset.languageID))
   }
 
   static getObligatoryMatchList (inflection) {
@@ -596,24 +614,16 @@ export default class GreekLanguageDataset extends LanguageDataset {
   static getOptionalMatchList (inflection) {
     let featureOptions = []
 
-    const GEND_MASCULINE_FEMININE = 'masculine feminine'
-    const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'
-    let wideGenders = new Feature(
-      Feature.types.gender,
-      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
-      this.languageID
-    )
-
     if ([Constants.POFS_PRONOUN, Constants.POFS_NUMERAL, Constants.POFS_ARTICLE].includes(inflection[Feature.types.part].value)) {
       featureOptions = [
         Feature.types.grmCase,
-        new GroupFeatureType(wideGenders, 'Gender'),
+        Feature.types.gender,
         Feature.types.number
       ]
     } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_ADJECTIVE)) {
       featureOptions = [
         Feature.types.grmCase,
-        new GroupFeatureType(wideGenders, 'Gender'),
+        Feature.types.gender,
         Feature.types.number,
         Feature.types.declension
       ]

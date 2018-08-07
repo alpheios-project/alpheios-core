@@ -1,7 +1,6 @@
 import { Constants, Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
-import GroupFeatureType from '../../../lib/group-feature-type'
 import Table from '../../../lib/table'
 
 export default class LatinSupineView extends LatinView {
@@ -11,15 +10,11 @@ export default class LatinSupineView extends LatinView {
     this.id = 'verbSupine'
     this.name = 'supine'
     this.title = 'Supine'
-    this.features.moods = new GroupFeatureType(
-      new Feature(Feature.types.mood, [Constants.MOOD_SUPINE], this.constructor.model.languageID),
-      'Mood')
-    this.language_features[Feature.types.grmCase] = new Feature(Feature.types.grmCase,
-      [Constants.CASE_ACCUSATIVE, Constants.CASE_ABLATIVE], this.constructor.model.languageID)
+
     this.features = {
-      cases: new GroupFeatureType(this.language_features[Feature.types.grmCase], 'Case'),
-      voices: new GroupFeatureType(this.language_features[Feature.types.voice], 'Voice'),
-      conjugations: new GroupFeatureType(this.language_features[Feature.types.conjugation], 'Conjugation Stem')
+      cases: this.features.cases,
+      voices: this.features.voices,
+      conjugations: this.features.conjugations
     }
     this.createTable()
   }
@@ -41,10 +36,11 @@ export default class LatinSupineView extends LatinView {
       this.features.cases])
     let features = this.table.features
     features.columns = [
-      this.language_features[Feature.types.voice],
-      this.language_features[Feature.types.conjugation]]
-    features.rows = [this.language_features[Feature.types.grmCase]]
-    features.columnRowTitles = [this.language_features[Feature.types.grmCase]]
+      this.constructor.model.typeFeature(Feature.types.voice),
+      this.constructor.model.typeFeature(Feature.types.conjugation)
+    ]
+    features.rows = [this.constructor.model.typeFeature(Feature.types.grmCase)]
+    features.columnRowTitles = [this.constructor.model.typeFeature(Feature.types.grmCase)]
     features.fullWidthRowTitles = []
   }
 }

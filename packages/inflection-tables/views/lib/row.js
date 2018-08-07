@@ -6,7 +6,7 @@ export default class Row {
    * Populates row with cells
    * @param {Cell[]} cells - Cells that belong to this row
    */
-  constructor (cells) {
+  constructor (cells = []) {
     this.cells = cells
     if (!cells) {
       this.cells = []
@@ -39,6 +39,24 @@ export default class Row {
 
   get empty () {
     return this.cells.filter(c => !c.empty).length === 0
+  }
+
+  /**
+   * Cells are usually grouped into rows not by a single feature, but by combination of features.
+   * In such situations, a row might have not one, but several title cells.
+   * Those additional title cells will be stored in a `parent` property of each other.
+   * However, all parent feature values will be shown only for the first row in a group
+   * in the current table format. For other rows in a group parent values (the ones that are
+   * the same within a group) will be omitted and only. They will display only those feature values
+   * that are different between the rows in a group (i.e. the last grouping feature value).
+   * Thus, the first row in a group will have a title cell value and its parent values set.
+   * Other rows in a group will have only a title cell value set, but the parent value of it will be empty
+   * (this will indicate that those parent values will not be shown for rows that are not first in a group).
+   * This function checks if a current row is the first one in a group or not.
+   * @return {boolean}
+   */
+  get firstInGroup () {
+    return Boolean(this.titleCell && this.titleCell.parent)
   }
 
   /**

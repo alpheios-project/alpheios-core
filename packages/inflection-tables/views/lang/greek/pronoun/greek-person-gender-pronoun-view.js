@@ -1,4 +1,4 @@
-import { Constants, GreekLanguageModel, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import GreekPronounView from './greek-pronoun-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type.js'
 import Table from '../../../lib/table'
@@ -11,15 +11,7 @@ export default class GreekPersonGenderPronounView extends GreekPronounView {
     super(homonym, inflectionData, locale, GreekPersonGenderPronounView.classes[0])
 
     // Add persons
-    this.featureTypes.persons = new Feature(
-      Feature.types.person,
-      [
-        Constants.ORD_1ST,
-        Constants.ORD_2ND,
-        Constants.ORD_3RD
-      ],
-      this.constructor.languageID)
-    this.features.persons = new GroupFeatureType(this.featureTypes.persons, 'Person')
+    this.features.person = GroupFeatureType.createFromType(Feature.types.person, this.constructor.languageID, 'Person')
 
     /*
     Define tables and table features.
@@ -28,10 +20,20 @@ export default class GreekPersonGenderPronounView extends GreekPronounView {
      */
     this.table = new Table([this.features.persons, this.features.genders, this.features.numbers, this.features.cases])
     let features = this.table.features
-    features.columns = [this.featureTypes.persons, this.featureTypes.genders]
-    features.rows = [this.featureTypes.numbers, GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.columnRowTitles = [GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.fullWidthRowTitles = [this.featureTypes.numbers]
+    features.columns = [
+      this.constructor.model.typeFeature(Feature.types.person),
+      this.constructor.model.typeFeature(Feature.types.gender)
+    ]
+    features.rows = [
+      this.constructor.model.typeFeature(Feature.types.number),
+      this.constructor.model.typeFeature(Feature.types.grmCase)
+    ]
+    features.columnRowTitles = [
+      this.constructor.model.typeFeature(Feature.types.grmCase)
+    ]
+    features.fullWidthRowTitles = [
+      this.constructor.model.typeFeature(Feature.types.number)
+    ]
   }
 
   /**

@@ -42,6 +42,24 @@ export default class Morpheme {
     return this
   }
 
+  static get comparisonTypes () {
+    return {
+      /**
+       * Should have the same number of values. Every value should match its counterpart's value and its order.
+       */
+      EXACT: 'Exact Match',
+      /**
+       * Should have the same number of values. Every value should match a value of its counterpart.
+       * Same as `EXACT`, but does not compare value's order.
+       */
+      ALL_VALUES: 'All values',
+      /**
+       * At least one value between two features should be the same.
+       */
+      PARTIAL: 'Partial Match'
+    }
+  }
+
   get hasFootnotes () {
     return Boolean(this.footnotes.length)
   }
@@ -126,10 +144,11 @@ export default class Morpheme {
   /**
    * Checks if a morpheme has at least one common feature value with a `feature`.
    * @param {Feature} feature - A feature we need to match with the ones stored inside the morpheme object.
+   * @param {Morpheme.comparisonTypes} comparisonType - What matching algorithm to use (exact or partial).
    * @returns {boolean} - True if a `feature` has at least one value in common with a morpheme, false otherwise.
    */
-  featureMatch (feature) {
-    const matchingValues = this.matchingValues(feature)
+  featureMatch (feature, comparisonType) {
+    const matchingValues = this.matchingValues(feature, comparisonType)
     return matchingValues.length > 0
   }
 
@@ -138,26 +157,41 @@ export default class Morpheme {
    * Both morpheme and a comparisonFeature can have either single or multiple values.
    * A match is found if morpheme has one or several values of a comparisonFeature.
    * @param {Feature} comparisonFeature - A feature morpheme should be compared with.
+   * @param {Morpheme.comparisonTypes} comparisonType - What matching algorithm to use (exact or partial).
+   * An exact match requires all values of this and comparison features to be the same. This and comparison
+   * features should also have the same number and order of values.
+   * A partial match requires this and comparison features to have at least one intersecting feature value.
    * @return {string[]} A list of matching feature values
    */
-  matchingValues (comparisonFeature) {
+  matchingValues (comparisonFeature, comparisonType = Morpheme.comparisonTypes.EXACT) {
     let matches = []
 
     if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) {
       const morphemeValue = this.features[comparisonFeature.type]
 
-      if (morphemeValue.isMultiple || comparisonFeature.isMultiple) {
-        // Either morphemeValue or comparisonFeature have multiple values
-        for (const featureValue of comparisonFeature.values) {
-          if (morphemeValue.values.includes(featureValue)) {
-            matches.push(featureValue)
-          }
-        }
-      } else {
-        // Both features have single values
+      if (comparisonType === Morpheme.comparisonTypes.EXACT) {
+        // Match all values and their order
         if (morphemeValue.value === comparisonFeature.value) {
           matches.push(comparisonFeature.value)
         }
+      } else if (comparisonType === Morpheme.comparisonTypes.ALL_VALUES) {
+        // Match all values between themselves, ignore order
+        let match = true
+        for (const value of morphemeValue.values) {
+          match = match && comparisonFeature.values.includes(value)
+        }
+        if (match) {
+          matches.push(comparisonFeature.value)
+        }
+      } else if (comparisonType === Morpheme.comparisonTypes.PARTIAL) {
+        // At least one value should be the same
+        for (const cfValue of comparisonFeature.values) {
+          if (morphemeValue.values.includes(cfValue)) {
+            matches.push(comparisonFeature.value)
+          }
+        }
+      } else {
+        console.warn(`Comparison type "${comparisonType}" is not supported`)
       }
     }
 

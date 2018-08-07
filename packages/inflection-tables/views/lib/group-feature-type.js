@@ -1,5 +1,8 @@
-import { Feature, FeatureType } from 'alpheios-data-models'
-import RowTitleCell from './row-title-cell'
+import { LanguageModelFactory } from 'alpheios-data-models'
+import LDF from '@lib/language-dataset-factory.js'
+import Morpheme from '@lib/morpheme.js'
+import RowTitleCell from './row-title-cell.js'
+import HeaderCell from './header-cell.js'
 
 // TODO: Rebase on Feature instead of FeatureType
 /**
@@ -8,26 +11,29 @@ import RowTitleCell from './row-title-cell'
  * GroupFeatureType extends a Feature object so that it'll be able to store additional information
  * that is required for that.
  */
-export default class GroupFeatureType extends FeatureType {
+export default class GroupFeatureType {
   /**
    * GroupFeatureType extends FeatureType to serve as a grouping feature (i.e. a feature that forms
    * either a column or a row in an inflection table). For that, it adds some additional functionality,
    * such as custom feature orders that will allow to combine suffixes from several grammatical features
    * (i.e. masculine and feminine) into a one column of a table.
-   * @param {Feature} feature - A feature that defines a type of this item.
+   * @param {string} type - A type of a feature.
+   * @param {symbol} languageID - A language ID.
    * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
    * language-specific message bundle.
-   * @param {string[]} order - A custom sort order for this feature that redefines
-   * a default one stored in FeatureType object (optional).
-   * Use this parameter to redefine a default sort order for a type.
+   * @param {Feature[]} features - A list of feature values for this type (i.e. gender, declension, etc.).
+   * @param {Morpheme.comparisonTypes} comparisonType - What matching algorithm to use (exact or partial).
+   * Each feature value is stored in a Feature object.
    */
-  constructor (feature, titleMessageID, order = feature.values) {
-    super(feature.type, order, feature.languageID)
+  constructor (type, languageID, titleMessageID, features, comparisonType = Morpheme.comparisonTypes.EXACT) {
+    this.type = type
+    this.languageID = languageID
+    this.featureMap = new Map(features.map(f => [f.value, f]))
+    this.comparisonType = comparisonType
+    this.dataset = LDF.getDataset(this.languageID)
 
     this.groupTitle = titleMessageID
     this._groupType = undefined
-
-    this.groupFeatureList = undefined
 
     // Properties below are required to store information during tree creation
     this.subgroups = [] // Each value of the feature
@@ -42,27 +48,47 @@ export default class GroupFeatureType extends FeatureType {
   }
 
   /**
-   * Converts a list of Feature objects into a list of strings that represent their values. Keeps tha original
-   * array structure intact (work with up two two array levels).
-   * @param {Feature[] | Feature[][]} features - An array of feature objects.
-   * @return {string[] | strings[][]} A matching array of strings with feature values.
+   * Creates an instance of GroupFeatureType from a type feature of a language
+   * @param {string} type - A type of a feature.
+   * @param {symbol} languageID - A language ID
+   * @param {string} titleMessageID - A message ID of a title, used to get a formatted title from a
+   * language-specific message bundle.
+   * @return {GroupFeatureType} A newly created GroupFeatureType object.
    */
-  static featuresToValues (features) {
-    return features.map((feature) => {
-      if (Array.isArray(feature)) {
-        return feature.map((feature) => feature.value)
-      } else {
-        return feature.value
-      }
-    })
+  static createFromType (type, languageID, titleMessageID) {
+    return new GroupFeatureType(type, languageID, titleMessageID,
+      LanguageModelFactory.getLanguageModel(languageID).typeFeature(type).ownFeatures
+    )
+  }
+
+  /**
+   * Creates an instance of GroupFeatureType of the same type and with same feature set as the current one.
+   * Used when it is required to obtain a copy and modify certain characteristics of it
+   * so that the original won't be affected by the change.
+   * This function does not create a full copy of a GroupFeatureType object. It creates an object with only
+   * those properties that will be required during a view definition.
+   * @return {GroupFeatureType} - A new object with same type and same features as the current one.
+   */
+  createOfSameType () {
+    return this.constructor.createFromType(this.type, this.languageID, this.groupTitle)
+  }
+
+  addFeature (key, values) {
+    let typeFeature = LanguageModelFactory.getLanguageModel(this.languageID).typeFeature(this.type)
+    let newFeature = typeFeature.createFeatures(values)
+    this.featureMap.set(key, newFeature)
   }
 
   /**
    * This is a wrapper around orderedFeatures() that allows to set a custom feature order for particular columns.
+   * @param {Feature[]|[]} ancestorFeatures - An array of features in an inflection table tree before the current feature.
+   * A feature with the highest index in the array is the closest to the current one. The feature with zero index
+   * is the most far away. Ancestor features array is empty if the current feature is the first one in the list.
    * @returns {Feature[] | Feature[][]} A sorted array of feature values.
    */
-  getOrderedFeatures (ancestorFeatures) {
-    return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(this.type, value, this.languageID))
+  getOrderedFeatures (ancestorFeatures = []) {
+    return Array.from(this.featureMap.values())
+    // return this.getOrderedValues(ancestorFeatures).map((value) => new Feature(this.type, value, this.languageID))
   }
 
   /**
@@ -71,25 +97,22 @@ export default class GroupFeatureType extends FeatureType {
    * Redefine it to provide a custom grouping and sort order.
    * @returns {string[] | string[][]} A sorted array of feature values.
    */
-  getOrderedValues (ancestorFeatures) {
+  /* getOrderedValues (ancestorFeatures) {
     return this._orderIndex
-  }
+  } */
 
   /**
    * Returns a column or row title for a value of a feature provided.
    * Redefine it if you want to display custom titles instead of feature values.
-   * @param {Feature} featureValue - A feature object containing a feature value
+   * @param {string} featureValue - A value of a Feature object
    * @return {string} - A row or column title for a table
    */
   getTitle (featureValue) {
-    if (this.hasOwnProperty(featureValue)) {
-      if (Array.isArray(this[featureValue])) {
-        return this[featureValue].map((feature) => feature.value).join('/')
-      } else {
-        return this[featureValue].value
-      }
+    if (this.featureMap.has(featureValue)) {
+      return this.featureMap.get(featureValue).value
     } else {
-      return 'not available'
+      // Pass through for texts that are not feature values
+      return featureValue
     }
   }
 
@@ -132,7 +155,7 @@ export default class GroupFeatureType extends FeatureType {
    * @returns {Number} A number of groupes formed by this feature.
    */
   get size () {
-    return this.orderedValues.length
+    return this.featureMap.size
   }
 
   /**
@@ -145,12 +168,16 @@ export default class GroupFeatureType extends FeatureType {
   }
 
   /**
-   * Creates a title cell for a feature from the current group.
-   * @param {string} title - A text that will be shown within a cell.
+   * Creates a row title cell for a feature from the current group.
+   * @param {string} value - A text that will be shown within a cell.
    * @param {number} nvGroupQty - A number of narrow view groups.
    * @returns {RowTitleCell} A created RowTitleCell object.
    */
-  createTitleCell (title, nvGroupQty) {
-    return new RowTitleCell(title, this, nvGroupQty)
+  createRowTitleCell (value, nvGroupQty) {
+    return new RowTitleCell(value, this, nvGroupQty)
+  }
+
+  createHeaderCell (value, columnSpan) {
+    return new HeaderCell(value, this, columnSpan)
   }
 }

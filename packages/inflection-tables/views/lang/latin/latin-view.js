@@ -6,26 +6,27 @@ import Table from '@views/lib/table.js'
 export default class LatinView extends View {
   constructor (homonym, inflectionData, locale) {
     super(homonym, inflectionData, locale)
-    this.language_features = this.constructor.model.features
-    // limit regular verb moods
-    this.language_features[Feature.types.mood] =
-      new Feature(Feature.types.mood,
-        [ Constants.MOOD_INDICATIVE,
-          Constants.MOOD_SUBJUNCTIVE
-        ], LatinView.languageID)
 
-    /*
-        Default grammatical features of a view. It child views need to have different feature values, redefine
-        those values in child objects.
-         */
     this.features = {
-      numbers: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.number), 'Number'),
-      cases: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.grmCase), 'Case'),
-      declensions: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.declension), 'Declension'),
-      genders: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.gender), 'Gender'),
-      types: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.type), 'Type')
+      numbers: GroupFeatureType.createFromType(Feature.types.number, this.constructor.languageID, 'Number'),
+      cases: GroupFeatureType.createFromType(Feature.types.grmCase, this.constructor.languageID, 'Case'),
+      declensions: GroupFeatureType.createFromType(Feature.types.declension, this.constructor.languageID, 'Declension'),
+      genders: GroupFeatureType.createFromType(Feature.types.gender, this.constructor.languageID, 'Gender'),
+      types: GroupFeatureType.createFromType(Feature.types.type, this.constructor.languageID, 'Type'),
+      tenses: GroupFeatureType.createFromType(Feature.types.tense, this.constructor.languageID, 'Tense'),
+      voices: GroupFeatureType.createFromType(Feature.types.voice, this.constructor.languageID, 'Voice'),
+      moods: new GroupFeatureType(Feature.types.mood, this.constructor.languageID, 'Mood', [
+        this.constructor.model.typeFeature(Feature.types.mood).createFeature(Constants.MOOD_INDICATIVE),
+        this.constructor.model.typeFeature(Feature.types.mood).createFeature(Constants.MOOD_SUBJUNCTIVE)
+      ]),
+      persons: GroupFeatureType.createFromType(Feature.types.person, this.constructor.languageID, 'Person'),
+      conjugations: GroupFeatureType.createFromType(Feature.types.conjugation, this.constructor.languageID, 'Conjugation Stem')
     }
-    this.features.declensions.getTitle = LatinView.getDeclensionTitle
+    this.features.declensions.getTitle = this.constructor.getDeclensionTitle
+    this.features.genders.getTitle = this.constructor.getGenderTitle
+    this.features.conjugations.getTitle = this.constructor.getConjugationTitle
+    this.features.persons.getTitle = this.constructor.getOrdinalTitle
+    this.features.voices.getTitle = this.constructor.getVoiceTitle
   }
 
   /**
@@ -34,14 +35,6 @@ export default class LatinView extends View {
    */
   static get languageID () {
     return Constants.LANG_LATIN
-  }
-
-  static get consts () {
-    return {
-      genders: {
-        ORD_1ST_2ND: '1st 2nd'
-      }
-    }
   }
 
   /*
@@ -63,26 +56,78 @@ export default class LatinView extends View {
     features.fullWidthRowTitles = [this.constructor.model.typeFeature(Feature.types.number)]
   }
 
+  /*
+  GetTitle and getOrderFeatures methods will be attached to a GroupFeatureType, so `this` value
+  will point to a GroupFeatureType object, not to the View instance.
+   */
+
   /**
-   * Define declension group titles
-   * @param {String} featureValue - A value of a declension
-   * @return {string} - A title of a declension group, in HTML format
+   * Define ordinal group titles.
+   * @param {String} featureValue - A value of a declension.
+   * @return {string} - A title of a declension group.
+   */
+  static getOrdinalTitle (featureValue) {
+    switch (featureValue) {
+      case Constants.ORD_1ST: return `First`
+      case Constants.ORD_2ND: return `Second`
+      case Constants.ORD_3RD: return `Third`
+      case Constants.ORD_4TH: return `Fourth`
+      case Constants.ORD_5TH: return `Fifth`
+      default: return featureValue
+    }
+  }
+
+  /**
+   * Define declension group titles.
+   * @param {String} featureValue - A value of a declension.
+   * @return {string} - A title of a declension group.
    */
   static getDeclensionTitle (featureValue) {
-    if (featureValue === Constants.ORD_1ST) { return `First` }
-    if (featureValue === Constants.ORD_2ND) { return `Second` }
-    if (featureValue === Constants.ORD_3RD) { return `Third` }
-    if (featureValue === Constants.ORD_4TH) { return `Fourth` }
-    if (featureValue === Constants.ORD_5TH) { return `Fifth` }
+    switch (featureValue) {
+      case Constants.ORD_1ST: return `First<br>ā`
+      case Constants.ORD_2ND: return `Second<br>o`
+      case Constants.ORD_3RD: return `Third<br>(mutes, liquids, nasals, i)`
+      case Constants.ORD_4TH: return `Fourth<br>u`
+      case Constants.ORD_5TH: return `5th<br>ē`
+      default: return featureValue
+    }
+  }
 
-    if (this.hasOwnProperty(featureValue)) {
-      if (Array.isArray(this[featureValue])) {
-        return this[featureValue].map((feature) => feature.value).join('/')
-      } else {
-        return this[featureValue].value
-      }
-    } else {
-      return 'not available'
+  /**
+   * Define gender group titles.
+   * @param {String} featureValue - A value of a gender.
+   * @return {string} - A title of a declension group.
+   */
+  static getGenderTitle (featureValue) {
+    switch (featureValue) {
+      case Constants.GEND_MASCULINE: return `m.`
+      case Constants.GEND_FEMININE: return `f.`
+      case Constants.GEND_NEUTER: return `n.`
+      case LatinView.datasetConsts.GEND_MASCULINE_FEMININE: return `m./f.`
+      default: return featureValue
+    }
+  }
+
+  /**
+   * Define voice group titles.
+   * @param {String} featureValue - A value of a declension.
+   * @return {string} - A title of a declension group.
+   */
+  static getVoiceTitle (featureValue) {
+    switch (featureValue) {
+      case Constants.VOICE_ACTIVE: return `Active`
+      case Constants.VOICE_PASSIVE: return `Passive`
+      default: return featureValue
+    }
+  }
+
+  static getConjugationTitle (featureValue) {
+    switch (featureValue) {
+      case Constants.ORD_1ST: return `First<br><span class="infl-cell__conj-stem">ā</span>`
+      case Constants.ORD_2ND: return `Second<br><span class="infl-cell__conj-stem">ē</span>`
+      case Constants.ORD_3RD: return `Third<br><span class="infl-cell__conj-stem">e</span>`
+      case Constants.ORD_4TH: return `Fourth<br><span class="infl-cell__conj-stem">i</span>`
+      default: return featureValue
     }
   }
 }

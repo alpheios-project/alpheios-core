@@ -1,6 +1,5 @@
 import Suffix from '../../lib/suffix'
 import Cell from './cell'
-import HeaderCell from './header-cell'
 import Column from './column'
 import Row from './row'
 import GroupFeatureList from './group-feature-list'
@@ -116,7 +115,7 @@ export default class Table {
       ancestorFeatures.push(featureValue)
 
       // Suffixes that are selected for current combination of feature values
-      let selectedMorphemes = morphemes.filter(s => s.featureMatch(featureValue))
+      let selectedMorphemes = morphemes.filter(s => s.featureMatch(featureValue, group.groupFeatureType.comparisonType))
 
       if (currentLevel < this.features.length - 1) {
         // Divide to further groups
@@ -156,7 +155,7 @@ export default class Table {
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
     let currentFeature = this.features.items[currentLevel]
     let groups = []
-    for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
+    for (let [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
       let cellGroup = tree.subgroups[index]
       // Iterate until it is the last row feature
 
@@ -165,26 +164,30 @@ export default class Table {
         if (currentFeature.formsRow) {
           // TODO: Avoid creating extra cells
 
+          /**
+           * An array of cells that represent a group of rows. First cell in each group will show
+           * its title value of a row as well as all titles of parent values. As other cells in a group
+           * will have the same parent values, they will be omitted and only the current row title be shown.
+           * @type {{groups: Cell[], titleCell: RowTitleCell}}
+           */
           let group = {
-            titleText: featureValue,
             groups: currentResult,
-            titleCell: currentFeature.createTitleCell(featureValue, this.features.firstColumnFeature.size)
+            titleCell: currentFeature.createRowTitleCell(feature.value, this.features.firstColumnFeature.size)
           }
           group.groups[0].titleCell.parent = group.titleCell
           groups.push(group)
         } else if (currentFeature.isSameType(this.features.lastColumnFeature)) {
           let column = new Column(cellGroup.cells)
           column.groups = currentResult
-          column.header = featureValue
+          column.header = feature.value
           column.index = columns.length
           columns.push(column)
           column.headerCell = this.headers[this.headers.length - 1].cells[columns.length - 1]
         }
       } else {
         // Last level
-        cellGroup.titleCell = currentFeature.createTitleCell(featureValue, this.features.firstColumnFeature.size)
+        cellGroup.titleCell = currentFeature.createRowTitleCell(feature.value, this.features.firstColumnFeature.size)
         let group = {
-          titleText: featureValue,
           cell: cellGroup,
           titleCell: cellGroup.titleCell
         }
@@ -209,7 +212,7 @@ export default class Table {
     let currentFeature = this.features.columnFeatures[currentLevel]
 
     let cells = []
-    for (let [index, featureValue] of currentFeature.getOrderedValues(tree.ancestorFeatures).entries()) {
+    for (let [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
       let cellGroup = tree.subgroups[index]
 
       // Iterate over all column features (features that form columns)
@@ -221,7 +224,8 @@ export default class Table {
           columnSpan += cell.span
         }
 
-        let headerCell = new HeaderCell(featureValue, currentFeature, columnSpan)
+        // let headerCell = new HeaderCell(feature.value, currentFeature, columnSpan)
+        let headerCell = currentFeature.createHeaderCell(feature.value, columnSpan)
         headerCell.children = subCells
         for (let cell of subCells) {
           cell.parent = headerCell
@@ -230,21 +234,21 @@ export default class Table {
         if (!headers[currentLevel]) {
           headers[currentLevel] = new Row()
         }
-        headers[currentLevel].titleCell = currentFeature.createTitleCell(
+        headers[currentLevel].titleCell = currentFeature.createRowTitleCell(
           this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size)
 
         headers[currentLevel].add(headerCell)
         cells.push(headerCell)
       } else {
         // Last level
-        let headerCell = new HeaderCell(featureValue, currentFeature)
+        let headerCell = currentFeature.createHeaderCell(feature.value)
 
         if (!headers[currentLevel]) {
           headers[currentLevel] = new Row()
         }
 
         headers[currentLevel].add(headerCell)
-        headers[currentLevel].titleCell = currentFeature.createTitleCell(
+        headers[currentLevel].titleCell = currentFeature.createRowTitleCell(
           this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size)
         cells.push(headerCell)
       }
@@ -269,8 +273,22 @@ export default class Table {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex])
       }
     }
-    rows = rows.filter(r => !r.empty)
-    return rows
+    let filtered = []
+    for (let [index, row] of rows.entries()) {
+      if (!row.empty) {
+        filtered.push(row)
+      } else {
+        /*
+        This row is empty and will be removed. If it is a first row in a group,
+        parents of its titleCell shall be moved to the next row, if that row belongs to the same group
+        */
+        if (row.firstInGroup && index + 1 < rows.length && !rows[index + 1].firstInGroup) {
+          rows[index + 1].titleCell.parent = row.titleCell.parent
+        }
+      }
+    }
+    // rows = rows.filter(r => !r.empty)
+    return filtered
   }
 
   /**

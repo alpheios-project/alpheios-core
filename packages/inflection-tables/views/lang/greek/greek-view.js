@@ -13,12 +13,19 @@ export default class GreekView extends View {
     those values in child objects.
      */
     this.features = {
-      numbers: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.number), 'Number'),
-      cases: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.grmCase), 'Case'),
-      declensions: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.declension), 'Declension'),
-      genders: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.gender), 'Gender'),
-      types: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.type), 'Type')
+      numbers: GroupFeatureType.createFromType(Feature.types.number, this.constructor.languageID, 'Number'),
+      cases: GroupFeatureType.createFromType(Feature.types.grmCase, this.constructor.languageID, 'Case'),
+      declensions: GroupFeatureType.createFromType(Feature.types.declension, this.constructor.languageID, 'Declension Stem'),
+      genders: GroupFeatureType.createFromType(Feature.types.gender, this.constructor.languageID, 'Gender'),
+      types: GroupFeatureType.createFromType(Feature.types.type, this.constructor.languageID, 'Type')
     }
+    this.features.genders.addFeature(GreekView.datasetConsts.GEND_MASCULINE_FEMININE,
+      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
+    this.features.genders.addFeature(GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER,
+      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
+    this.features.declensions.getTitle = this.constructor.getDeclensionTitle
+    this.features.genders.getOrderedFeatures = this.constructor.getOrderedGenders
+    this.features.genders.getTitle = this.constructor.getGenderTitle
   }
 
   static get languageID () {
@@ -49,5 +56,50 @@ export default class GreekView extends View {
     features.fullWidthRowTitles = [
       this.constructor.model.typeFeature(Feature.types.number)
     ]
+  }
+
+  /*
+  GetTitle and getOrderFeatures methods will be attached to a GroupFeatureType, so `this` value
+  will point to a GroupFeatureType object, not to the View instance.
+   */
+
+  static getDeclensionTitle (featureValue) {
+    switch (featureValue) {
+      case Constants.ORD_1ST: return `First<br>α`
+      case Constants.ORD_2ND: return `Second<br>ο`
+      case Constants.ORD_3RD: return `Third<br>ι, ω`
+      case Constants.ORD_4TH: return `Fourth`
+      case Constants.ORD_5TH: return `Fifth`
+      default: return featureValue
+    }
+  }
+
+  static getOrderedGenders (ancestorFeatures) {
+    const ancestorValue = ancestorFeatures.length > 0 ? ancestorFeatures[ancestorFeatures.length - 1].value : ''
+    if (ancestorValue === Constants.ORD_2ND) {
+      return [
+        this.featureMap.get(GreekView.datasetConsts.GEND_MASCULINE_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    } else if (ancestorValue === Constants.ORD_3RD) {
+      return [
+        this.featureMap.get(GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER)
+      ]
+    } else {
+      return [
+        this.featureMap.get(Constants.GEND_MASCULINE),
+        this.featureMap.get(Constants.GEND_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    }
+  }
+
+  static getGenderTitle (featureValue) {
+    if (featureValue === Constants.GEND_MASCULINE) { return 'm.' }
+    if (featureValue === Constants.GEND_FEMININE) { return 'f.' }
+    if (featureValue === Constants.GEND_NEUTER) { return 'n.' }
+    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE) { return 'm./f.' }
+    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER) { return 'm./f./n.' }
+    return featureValue
   }
 }

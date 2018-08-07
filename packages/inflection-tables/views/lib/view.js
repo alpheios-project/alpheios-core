@@ -93,6 +93,9 @@ export default class View {
     return LanguageModelFactory.getLanguageModel(this.languageID)
   }
 
+  static get datasetConsts () {
+    return this.dataset.constructor.constants
+  }
   /**
    * Defines an inflection type (Suffix/Form) of a view. Should be redefined in child classes.
    * @return {Suffix|Form|Paradigm|undefined}
@@ -181,14 +184,18 @@ export default class View {
    * By default, it returns suffixes
    */
   getMorphemes () {
-    return this.inflectionData.types.get(this.constructor.inflectionType).items
+    return this.inflectionData.types.has(this.constructor.inflectionType)
+      ? this.inflectionData.types.get(this.constructor.inflectionType).items
+      : []
   }
 
   /**
    * A compatibility function to get footnotes for either suffixes or forms, depending on the view type
    */
   getFootnotes () {
-    return this.inflectionData.types.get(this.constructor.inflectionType).footnotesMap
+    return this.inflectionData.types.has(this.constructor.inflectionType)
+      ? this.inflectionData.types.get(this.constructor.inflectionType).footnotesMap
+      : new Map()
   }
 
   get wideViewNodes () {

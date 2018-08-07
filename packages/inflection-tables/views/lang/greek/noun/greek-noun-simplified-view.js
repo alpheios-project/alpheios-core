@@ -1,5 +1,7 @@
 import { Constants } from 'alpheios-data-models'
-import Suffix from '../../../../lib/suffix.js'
+import Morpheme from '@lib/morpheme.js'
+import Suffix from '@lib/suffix.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 import GreekNounView from './greek-noun-view'
 
 export default class GreekNounSimplifiedView extends GreekNounView {
@@ -8,19 +10,11 @@ export default class GreekNounSimplifiedView extends GreekNounView {
     this.id = 'nounDeclensionSimplified'
     this.name = 'noun declension simplified'
     this.title = 'Noun declension (simplified)'
-    this.partOfSpeech = Constants.POFS_NOUN
-    let genderMasculine = Constants.GEND_MASCULINE
-    let genderFeminine = Constants.GEND_FEMININE
-    let genderNeuter = Constants.GEND_NEUTER
 
-    this.features.genders.getOrderedValues = function getOrderedValues (ancestorFeatures) {
-      if (ancestorFeatures) {
-        if (ancestorFeatures.value === Constants.ORD_2ND || ancestorFeatures.value === Constants.ORD_3RD) {
-          return [[genderMasculine, genderFeminine], genderNeuter]
-        }
-      }
-      return [genderMasculine, genderFeminine, genderNeuter]
-    }
+    this.features.genders.addFeature(GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER,
+      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
+    this.features.genders.comparisonType = Morpheme.comparisonTypes.ALL_VALUES
+    this.features.genders.getOrderedValues = GreekView.getOrderedGenders
 
     this.createTable()
 

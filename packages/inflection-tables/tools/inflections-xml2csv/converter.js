@@ -6,6 +6,16 @@ const xmlToJSON = require('xmltojson')
 xmlToJSON.stringToXML = (string) => new DOMParser().parseFromString(string, 'text/xml')
 const csvParser = require('papaparse')
 
+/**
+ * Check if an object already exists in an array.
+ * @param {Object[]} array - Array of objects to check for duplicates.
+ * @param {Object} object - An object to compare with array elements.
+ * @return {boolean} True if object exists in an array, false otherwise.
+ */
+function hasDuplicates (array, object) {
+  return Boolean(array.find(e => Object.keys(object).every(key => e.hasOwnProperty(key) && object.hasOwnProperty(key) && e[key] === object[key])))
+}
+
 const config = {
   latin: {
     inputBaseDir: 'data/latin/',
@@ -173,6 +183,7 @@ const config = {
         }
       }
     },
+
     adjective: {
       inputFN: 'alph-infl-adjective.xml',
       outputSubDir: 'adjective/',
@@ -260,12 +271,17 @@ const config = {
             // Iterate over group's individual items
             if (group['infl-ending']) {
               for (const suffix of group['infl-ending']) {
+                if (group['_attr']['mood'] && ['verb_participle', 'gerundive', 'supine'].includes(group['_attr']['mood']['_value'])) {
+                  // Part of speech can be stored in the `mood` field. Filter out verb participles, gerundive, and supine
+                  continue
+                }
+
                 let footnote = ''
                 if (suffix['_attr'].hasOwnProperty('footnote')) {
                   // There can be multiple footnotes separated by spaces
                   footnote = config.latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
                 }
-                result.push({
+                const object = {
                   'Ending': suffix['_text'],
                   'Conjugation': group['_attr']['conj']['_value'],
                   'Voice': group['_attr']['voice']['_value'],
@@ -276,11 +292,19 @@ const config = {
                   'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
                   'Type': suffix['_attr']['type']['_value'],
                   'Footnote': footnote
-                })
+                }
+                if (!hasDuplicates(result, object)) {
+                  result.push(object)
+                }
               }
             } else {
+              if (group['_attr']['mood'] && ['verb_participle', 'gerundive', 'supine'].includes(group['_attr']['mood']['_value'])) {
+                // Part of speech can be stored in the `mood` field. Filter out verb participles, gerundive, and supine
+                continue
+              }
+
               // There is no ending defined for this group.
-              result.push({
+              const object = {
                 'Ending': '',
                 'Conjugation': group['_attr']['conj']['_value'],
                 'Voice': group['_attr']['voice']['_value'],
@@ -290,7 +314,10 @@ const config = {
                 'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
                 'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
                 'Footnote': ''
-              })
+              }
+              if (!hasDuplicates(result, object)) {
+                result.push(object)
+              }
             }
           }
           return csvParser.unparse(result)
@@ -326,13 +353,307 @@ const config = {
       }
     },
 
+    participle: {
+      inputFN: ['alph-verb-conj.xml', 'alph-verb-conj-supp.xml'],
+      outputSubDir: 'participle/',
+      suffixes: {
+        outputFN: 'suffixes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.participle.outputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set']
+          for (let d of json['infl-data']) {
+            data.push(...d['infl-endings'][0]['infl-ending-set'])
+          }
+
+          let result = []
+
+          for (const group of data) {
+            // Iterate over group's individual items
+            if (group['infl-ending']) {
+              for (const suffix of group['infl-ending']) {
+                if (group['_attr']['mood'] && group['_attr']['mood']['_value'] !== 'verb_participle') {
+                  // Part of speech can be stored in the `mood` field. Filter out anything that is not verb participles
+                  continue
+                }
+
+                let footnote = ''
+                if (suffix['_attr'].hasOwnProperty('footnote')) {
+                  // There can be multiple footnotes separated by spaces
+                  footnote = config.latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+                }
+                result.push({
+                  'Ending': suffix['_text'],
+                  'Conjugation': group['_attr']['conj']['_value'],
+                  'Voice': group['_attr']['voice']['_value'],
+                  'Mood': '', // Do not save mood value as it is a part of speech actually,
+                  'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                  'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                  'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                  'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
+                  'Type': suffix['_attr']['type']['_value'],
+                  'Footnote': footnote
+                })
+              }
+            } else {
+              // There is no ending defined for this group.
+              if (group['_attr']['mood'] && group['_attr']['mood']['_value'] !== 'verb_participle') {
+                // Part of speech can be stored in the `mood` field. Filter out anything that is not verb participles
+                continue
+              }
+
+              result.push({
+                'Ending': '',
+                'Conjugation': group['_attr']['conj']['_value'],
+                'Voice': group['_attr']['voice']['_value'],
+                'Mood': '', // Do not save mood value as it is a part of speech actually,
+                'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
+                'Footnote': ''
+              })
+            }
+          }
+          return csvParser.unparse(result)
+        }
+
+      },
+      footnotes: {
+        outputFN: 'footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.participle.outputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          // Skip the first item
+          for (let i = 1; i < data.length; i++) {
+            let text = data[i]['_text']
+            text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': text
+            })
+          }
+          return csvParser.unparse(result)
+        }
+      }
+    },
+
+    gerundive: {
+      inputFN: ['alph-verb-conj.xml', 'alph-verb-conj-supp.xml'],
+      outputSubDir: 'gerundive/',
+      suffixes: {
+        outputFN: 'suffixes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.gerundive.outputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set']
+          for (let d of json['infl-data']) {
+            data.push(...d['infl-endings'][0]['infl-ending-set'])
+          }
+
+          let result = []
+
+          for (const group of data) {
+            // Iterate over group's individual items
+            if (group['infl-ending']) {
+              for (const suffix of group['infl-ending']) {
+                if (group['_attr']['mood'] && group['_attr']['mood']['_value'] !== 'gerundive') {
+                  // Part of speech can be stored in the `mood` field. Filter out anything that is not verb participles
+                  continue
+                }
+
+                let footnote = ''
+                if (suffix['_attr'].hasOwnProperty('footnote')) {
+                  // There can be multiple footnotes separated by spaces
+                  footnote = config.latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+                }
+                result.push({
+                  'Ending': suffix['_text'],
+                  'Conjugation': group['_attr']['conj']['_value'],
+                  'Voice': group['_attr']['voice']['_value'],
+                  'Mood': '', // Do not save mood value as it is a part of speech actually,
+                  'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                  'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                  'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                  'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
+                  'Type': suffix['_attr']['type']['_value'],
+                  'Footnote': footnote
+                })
+              }
+            } else {
+              // There is no ending defined for this group.
+              if (group['_attr']['mood'] && group['_attr']['mood']['_value'] !== 'gerundive') {
+                // Part of speech can be stored in the `mood` field. Filter out anything that is not verb participles
+                continue
+              }
+
+              result.push({
+                'Ending': '',
+                'Conjugation': group['_attr']['conj']['_value'],
+                'Voice': group['_attr']['voice']['_value'],
+                'Mood': '', // Do not save mood value as it is a part of speech actually,
+                'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
+                'Footnote': ''
+              })
+            }
+          }
+          return csvParser.unparse(result)
+        }
+
+      },
+      footnotes: {
+        outputFN: 'footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.gerundive.outputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          // Skip the first item
+          for (let i = 1; i < data.length; i++) {
+            let text = data[i]['_text']
+            text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': text
+            })
+          }
+          return csvParser.unparse(result)
+        }
+      }
+    },
+
+    supine: {
+      inputFN: ['alph-verb-conj.xml', 'alph-verb-conj-supp.xml'],
+      outputSubDir: 'supine/',
+      suffixes: {
+        outputFN: 'suffixes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.supine.outputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0]['infl-endings'][0]['infl-ending-set']
+          for (let d of json['infl-data']) {
+            data.push(...d['infl-endings'][0]['infl-ending-set'])
+          }
+
+          let result = []
+
+          for (const group of data) {
+            // Iterate over group's individual items
+            if (group['infl-ending']) {
+              for (const suffix of group['infl-ending']) {
+                if (group['_attr']['mood'] && group['_attr']['mood']['_value'] !== 'supine') {
+                  // Part of speech can be stored in the `mood` field. Filter out anything that is not verb participles
+                  continue
+                }
+
+                let footnote = ''
+                if (suffix['_attr'].hasOwnProperty('footnote')) {
+                  // There can be multiple footnotes separated by spaces
+                  footnote = config.latin.noun.footnotes.normalizeIndex(suffix['_attr']['footnote']['_value'])
+                }
+                result.push({
+                  'Ending': suffix['_text'],
+                  'Conjugation': group['_attr']['conj']['_value'],
+                  'Voice': group['_attr']['voice']['_value'],
+                  'Mood': '', // Do not save mood value as it is a part of speech actually,
+                  'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                  'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                  'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                  'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
+                  'Type': suffix['_attr']['type']['_value'],
+                  'Footnote': footnote
+                })
+              }
+            } else {
+              // There is no ending defined for this group.
+              if (group['_attr']['mood'] && group['_attr']['mood']['_value'] !== 'supine') {
+                // Part of speech can be stored in the `mood` field. Filter out anything that is not verb participles
+                continue
+              }
+
+              result.push({
+                'Ending': '',
+                'Conjugation': group['_attr']['conj']['_value'],
+                'Voice': group['_attr']['voice']['_value'],
+                'Mood': '', // Do not save mood value as it is a part of speech actually,
+                'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                'Case': group['_attr']['case'] ? group['_attr']['case']['_value'] : '',
+                'Footnote': ''
+              })
+            }
+          }
+          return csvParser.unparse(result)
+        }
+
+      },
+      footnotes: {
+        outputFN: 'footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.supine.outputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          // Skip the first item
+          for (let i = 1; i < data.length; i++) {
+            let text = data[i]['_text']
+            text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': text
+            })
+          }
+          return csvParser.unparse(result)
+        }
+      }
+    },
+
     lemma: {
       inputFN: 'alph-verb-conj-irreg.xml',
-      outputSubDir: 'verb/',
-      forms: {
+      verbOutputSubDir: 'verb/',
+      verbForms: {
         outputFN: 'forms.csv',
         get outputPath () {
-          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.outputSubDir, this.outputFN)
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.verbOutputSubDir, this.outputFN)
         },
         get (json) {
           'use strict'
@@ -345,10 +666,15 @@ const config = {
               // Iterate over group's individual items
               if (group['infl-form']) {
                 for (const form of group['infl-form']) {
+                  // Part of speech is stored in the 'Mood' field
+                  const pofs = group['_attr']['mood'] ? group['_attr']['mood']['_value'] : ''
+                  // Filter out all parts of speech that are not word
+                  if (['verb_participle', 'gerundive', 'supine'].includes(pofs)) { continue }
+
                   let footnote = ''
                   if (form['_attr'].hasOwnProperty('footnote')) {
                     // There can be multiple footnotes separated by spaces
-                    footnote = config.latin.lemma.footnotes.normalizeIndex(form['_attr']['footnote']['_value'])
+                    footnote = config.latin.lemma.verbFootnotes.normalizeIndex(form['_attr']['footnote']['_value'])
                   }
                   result.push({
                     'Lemma': lemma,
@@ -369,10 +695,226 @@ const config = {
         }
 
       },
-      footnotes: {
+      verbFootnotes: {
         outputFN: 'form_footnotes.csv',
         get outputPath () {
-          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.outputSubDir, this.outputFN)
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.verbOutputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          for (let i = 0; i < data.length; i++) {
+            let text = data[i]['_text']
+            text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': text
+            })
+          }
+          return csvParser.unparse(result)
+        }
+      },
+      verbParticipleOutputSubDir: 'participle/',
+      verbParticipleForms: {
+        outputFN: 'forms.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.verbParticipleOutputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0]['conjugation']
+          let result = []
+          for (const conj of data) {
+            let [lemma, ...principalParts] = conj['hdwd-set'][0]['hdwd'][0]['_text'].split(/,/).map((h) => h.trim())
+            for (const group of conj['infl-form-set']) {
+              // Iterate over group's individual items
+              if (group['infl-form']) {
+                for (const form of group['infl-form']) {
+                  // Part of speech is stored in the 'Mood' field
+                  const pofs = group['_attr']['mood'] ? group['_attr']['mood']['_value'] : ''
+                  // Filter out all parts of speech that are not word
+                  if (pofs !== 'verb_participle') { continue }
+
+                  let footnote = ''
+                  if (form['_attr'].hasOwnProperty('footnote')) {
+                    // There can be multiple footnotes separated by spaces
+                    footnote = config.latin.lemma.verbParticipleFootnotes.normalizeIndex(form['_attr']['footnote']['_value'])
+                  }
+                  result.push({
+                    'Lemma': lemma,
+                    'PrincipalParts': principalParts.join('_'),
+                    'Form': form['_text'],
+                    'Voice': group['_attr']['voice'] ? group['_attr']['voice']['_value'] : '',
+                    'Mood': '', // There is no meaningful mood data, but it's better to have it compatible with verb reading function
+                    'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                    'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                    'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                    'Footnote': footnote
+                  })
+                }
+              }
+            }
+          }
+          return csvParser.unparse(result)
+        }
+
+      },
+      verbParticipleFootnotes: {
+        outputFN: 'form_footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.verbParticipleOutputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          for (let i = 0; i < data.length; i++) {
+            let text = data[i]['_text']
+            text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': text
+            })
+          }
+          return csvParser.unparse(result)
+        }
+      },
+      gerundiveOutputSubDir: 'gerundive/',
+      gerundiveForms: {
+        outputFN: 'forms.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.gerundiveOutputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0]['conjugation']
+          let result = []
+          for (const conj of data) {
+            let [lemma, ...principalParts] = conj['hdwd-set'][0]['hdwd'][0]['_text'].split(/,/).map((h) => h.trim())
+            for (const group of conj['infl-form-set']) {
+              // Iterate over group's individual items
+              if (group['infl-form']) {
+                for (const form of group['infl-form']) {
+                  // Part of speech is stored in the 'Mood' field
+                  const pofs = group['_attr']['mood'] ? group['_attr']['mood']['_value'] : ''
+                  // Filter out all parts of speech that are not word
+                  if (pofs !== 'gerundive') { continue }
+
+                  let footnote = ''
+                  if (form['_attr'].hasOwnProperty('footnote')) {
+                    // There can be multiple footnotes separated by spaces
+                    footnote = config.latin.lemma.verbParticipleFootnotes.normalizeIndex(form['_attr']['footnote']['_value'])
+                  }
+                  result.push({
+                    'Lemma': lemma,
+                    'PrincipalParts': principalParts.join('_'),
+                    'Form': form['_text'],
+                    'Voice': group['_attr']['voice'] ? group['_attr']['voice']['_value'] : '',
+                    'Mood': '', // There is no meaningful mood data, but it's better to have it compatible with verb reading function
+                    'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                    'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                    'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                    'Footnote': footnote
+                  })
+                }
+              }
+            }
+          }
+          return csvParser.unparse(result)
+        }
+
+      },
+      gerundiveFootnotes: {
+        outputFN: 'form_footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.gerundiveOutputSubDir, this.outputFN)
+        },
+        normalizeIndex (index) {
+          // There can be multiple footnotes separated by spaces
+          return index.replace(/[^\d\s]/g, '')
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0].footnotes[0].footnote
+          let result = []
+
+          for (let i = 0; i < data.length; i++) {
+            let text = data[i]['_text']
+            text = text.replace(/\s+/g, ' ') // Replace multiple whitespace characters with a single space
+            result.push({
+              'Index': this.normalizeIndex(data[i]['_attr'].id['_value']),
+              'Text': text
+            })
+          }
+          return csvParser.unparse(result)
+        }
+      },
+      supineOutputSubDir: 'supine/',
+      supineForms: {
+        outputFN: 'forms.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.supineOutputSubDir, this.outputFN)
+        },
+        get (json) {
+          'use strict'
+
+          let data = json['infl-data'][0]['conjugation']
+          let result = []
+          for (const conj of data) {
+            let [lemma, ...principalParts] = conj['hdwd-set'][0]['hdwd'][0]['_text'].split(/,/).map((h) => h.trim())
+            for (const group of conj['infl-form-set']) {
+              // Iterate over group's individual items
+              if (group['infl-form']) {
+                for (const form of group['infl-form']) {
+                  // Part of speech is stored in the 'Mood' field
+                  const pofs = group['_attr']['mood'] ? group['_attr']['mood']['_value'] : ''
+                  // Filter out all parts of speech that are not word
+                  if (pofs !== 'supine') { continue }
+
+                  let footnote = ''
+                  if (form['_attr'].hasOwnProperty('footnote')) {
+                    // There can be multiple footnotes separated by spaces
+                    footnote = config.latin.lemma.verbParticipleFootnotes.normalizeIndex(form['_attr']['footnote']['_value'])
+                  }
+                  result.push({
+                    'Lemma': lemma,
+                    'PrincipalParts': principalParts.join('_'),
+                    'Form': form['_text'],
+                    'Voice': group['_attr']['voice'] ? group['_attr']['voice']['_value'] : '',
+                    'Mood': '', // There is no meaningful mood data, but it's better to have it compatible with verb reading function
+                    'Tense': group['_attr']['tense'] ? group['_attr']['tense']['_value'] : '',
+                    'Number': group['_attr']['num'] ? group['_attr']['num']['_value'] : '',
+                    'Person': group['_attr']['pers'] ? group['_attr']['pers']['_value'] : '',
+                    'Footnote': footnote
+                  })
+                }
+              }
+            }
+          }
+          return csvParser.unparse(result)
+        }
+
+      },
+      supineFootnotes: {
+        outputFN: 'form_footnotes.csv',
+        get outputPath () {
+          return path.join(__dirname, config.latin.outputBaseDir, config.latin.lemma.supineOutputSubDir, this.outputFN)
         },
         normalizeIndex (index) {
           // There can be multiple footnotes separated by spaces
@@ -1039,6 +1581,9 @@ const POS_ADJECTIVE = 'adjective'
 const POS_ARTICLE = 'article'
 const POS_NUMERAL = 'numeral'
 const POS_VERB = 'verb'
+const POS_PARTICIPLE = 'participle'
+const POS_GERUNDIVE = 'gerundive'
+const POS_SUPINE = 'supine'
 const POS_LEMMA = 'lemma'
 const POS_PARADIGM = 'paradigm'
 
@@ -1093,15 +1638,52 @@ try {
     // Verbs
     if (posName === POS_VERB || posName === POS_ALL) {
       posCfg = lCfg[POS_VERB]
-      data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = {'infl-data': []}
-      for (let f of latin.verb.inputFN) {
-        let d = readFile(path.join(__dirname, latin.inputBaseDir, f))
+      for (let f of posCfg.inputFN) {
+        let d = readFile(path.join(__dirname, lCfg.inputBaseDir, f))
         let j = xmlToJSON.parseString(d)
         json['infl-data'] = json['infl-data'].concat(j['infl-data'])
       }
       writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      // Skip converting adjective footnotes. It has to be done manually because of HTML tags within footnote texts
+      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+    }
+
+    // Verb participles
+    if (posName === POS_PARTICIPLE || posName === POS_ALL) {
+      posCfg = lCfg[POS_PARTICIPLE]
+      json = {'infl-data': []}
+      for (let f of posCfg.inputFN) {
+        let d = readFile(path.join(__dirname, lCfg.inputBaseDir, f))
+        let j = xmlToJSON.parseString(d)
+        json['infl-data'] = json['infl-data'].concat(j['infl-data'])
+      }
+      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+    }
+
+    // Gerundive
+    if (posName === POS_GERUNDIVE || posName === POS_ALL) {
+      posCfg = lCfg[POS_GERUNDIVE]
+      json = {'infl-data': []}
+      for (let f of posCfg.inputFN) {
+        let d = readFile(path.join(__dirname, lCfg.inputBaseDir, f))
+        let j = xmlToJSON.parseString(d)
+        json['infl-data'] = json['infl-data'].concat(j['infl-data'])
+      }
+      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+    }
+
+    // Supine
+    if (posName === POS_SUPINE || posName === POS_ALL) {
+      posCfg = lCfg[POS_SUPINE]
+      json = {'infl-data': []}
+      for (let f of posCfg.inputFN) {
+        let d = readFile(path.join(__dirname, lCfg.inputBaseDir, f))
+        let j = xmlToJSON.parseString(d)
+        json['infl-data'] = json['infl-data'].concat(j['infl-data'])
+      }
+      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
       writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
@@ -1110,8 +1692,22 @@ try {
       posCfg = lCfg[POS_LEMMA]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
-      writeData(posCfg.forms.get(json), posCfg.forms.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+
+      // Verbs
+      writeData(posCfg.verbForms.get(json), posCfg.verbForms.outputPath)
+      writeData(posCfg.verbFootnotes.get(json), posCfg.verbFootnotes.outputPath)
+
+      // VerbParticiple
+      writeData(posCfg.verbParticipleForms.get(json), posCfg.verbParticipleForms.outputPath)
+      writeData(posCfg.verbParticipleFootnotes.get(json), posCfg.verbParticipleFootnotes.outputPath)
+
+      // Gerundive
+      writeData(posCfg.gerundiveForms.get(json), posCfg.gerundiveForms.outputPath)
+      writeData(posCfg.gerundiveFootnotes.get(json), posCfg.gerundiveFootnotes.outputPath)
+
+      // Supine
+      writeData(posCfg.supineForms.get(json), posCfg.supineForms.outputPath)
+      writeData(posCfg.supineFootnotes.get(json), posCfg.supineFootnotes.outputPath)
     }
   }
   // endregion Latin
@@ -1139,7 +1735,7 @@ try {
       writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
-    // article
+    // Article
     if (posName === POS_ARTICLE || posName === POS_ALL) {
       posCfg = lCfg[POS_ARTICLE]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))

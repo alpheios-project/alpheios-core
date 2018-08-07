@@ -16,7 +16,13 @@ import verbFootnotesCSV from '@lib/lang/latin/data/verb/footnotes.csv'
 import verbFormsCSV from '@lib/lang/latin/data/verb/forms.csv'
 import verbFormFootnotesCSV from '@lib/lang/latin/data/verb/form_footnotes.csv'
 import verbParticipleSuffixesCSV from '@lib/lang/latin/data/participle/suffixes.csv'
+import verbParticipleFormsCSV from '@lib/lang/latin/data/participle/forms.csv'
+import verbParticipleFormFootnotesCSV from '@lib/lang/latin/data/participle/form_footnotes.csv'
 import verbSupineSuffixesCSV from '@lib/lang/latin/data/supine/suffixes.csv'
+import verbSupineFormsCSV from '@lib/lang/latin/data/supine/forms.csv'
+import verbSupineFormFootnotesCSV from '@lib/lang/latin/data/supine/form_footnotes.csv'
+import gerundiveFormsCSV from '@lib/lang/latin/data/gerundive/forms.csv'
+import gerundiveFormFootnotesCSV from '@lib/lang/latin/data/gerundive/form_footnotes.csv'
 import papaparse from 'papaparse'
 
 /*
@@ -30,7 +36,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     this.features = this.model.typeFeatures
     this.features.set(Feature.types.footnote, new Feature(Feature.types.footnote, [], LatinLanguageDataset.languageID))
     this.features.set(Feature.types.fullForm, new Feature(Feature.types.fullForm, [], LatinLanguageDataset.languageID))
-    this.features.set(Feature.types.hdwd, new Feature(Feature.types.hdwd, [], LatinLanguageDataset.languageID))
+    this.features.set(Feature.types.word, new Feature(Feature.types.word, [], LatinLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
     for (let feature of this.features.values()) {
@@ -39,16 +45,25 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
     // Create importer mapping for special language-specific values
     this.features.get(Feature.types.declension).getImporter()
-      .map('1st 2nd', [Constants.ORD_1ST, Constants.ORD_2ND])
+      .map(this.constructor.constants.ORD_1ST_2ND, [Constants.ORD_1ST, Constants.ORD_2ND])
     this.features.get(Feature.types.gender).getImporter()
-      .map('masculine feminine', [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
+      .map(this.constructor.constants.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
 
     this.features.get(Feature.types.tense).getImporter()
       .map('future_perfect', Constants.TENSE_FUTURE_PERFECT)
+
+    this.verbsIrregularLemmas = []
   }
 
   static get languageID () {
     return Constants.LANG_LATIN
+  }
+
+  static get constants () {
+    return {
+      ORD_1ST_2ND: '1st 2nd',
+      GEND_MASCULINE_FEMININE: 'masculine feminine'
+    }
   }
 
   // For noun and adjectives
@@ -72,7 +87,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       const item = data[i]
       let suffix = item[n.suffix]
       // Handle special suffix values
-      if (suffix === noSuffixValue) {
+      if (!suffix || suffix === noSuffixValue) {
         suffix = null
       }
 
@@ -88,7 +103,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Suffix, suffix, features, footnotes)
+      this.addInflectionData(partOfSpeech.value, Suffix, suffix, features, footnotes)
     }
   }
 
@@ -140,7 +155,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Form, form, features, footnotes)
+      this.addInflectionData(partOfSpeech.value, Form, form, features, footnotes)
     }
   }
 
@@ -155,7 +170,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       const item = data[i]
       let suffix = item[0]
       // Handle special suffix values
-      if (suffix === noSuffixValue) {
+      if (!suffix || suffix === noSuffixValue) {
         suffix = null
       }
 
@@ -172,7 +187,9 @@ export default class LatinLanguageDataset extends LanguageDataset {
       ]
       columns.forEach((c, j) => {
         try {
-          features.push(this.features.get(c).createFromImporter(item[j + 1]))
+          if (item[j + 1]) {
+            features.push(this.features.get(c).createFromImporter(item[j + 1]))
+          }
         } catch (e) {
           // ignore empty or non-parsable values
         }
@@ -190,7 +207,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Suffix, suffix, features, footnotes)
+      this.addInflectionData(partOfSpeech.value, Suffix, suffix, features, footnotes)
     }
   }
 
@@ -203,7 +220,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       const item = data[i]
       let suffix = item[0]
       // Handle special suffix values
-      if (suffix === noSuffixValue) {
+      if (!suffix || suffix === noSuffixValue) {
         suffix = null
       }
 
@@ -220,7 +237,9 @@ export default class LatinLanguageDataset extends LanguageDataset {
       ]
       columns.forEach((c, j) => {
         try {
-          features.push(this.features.get(c).createFromImporter(item[j + 1]))
+          if (item[j + 1]) {
+            features.push(this.features.get(c).createFromImporter(item[j + 1]))
+          }
         } catch (e) {
           // ignore empty or non-parsable values
         }
@@ -231,7 +250,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       if (grammartype) {
         features.push(this.features.get(Feature.types.type).createFromImporter(grammartype))
       }
-      this.addInflection(partOfSpeech.value, Suffix, suffix, features)
+      this.addInflectionData(partOfSpeech.value, Suffix, suffix, features)
     }
   }
 
@@ -244,7 +263,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       const item = data[i]
       let suffix = item[0]
       // Handle special suffix values
-      if (suffix === noSuffixValue) {
+      if (!suffix || suffix === noSuffixValue) {
         suffix = null
       }
 
@@ -261,7 +280,9 @@ export default class LatinLanguageDataset extends LanguageDataset {
       ]
       columns.forEach((c, j) => {
         try {
-          features.push(this.features.get(c).createFromImporter(item[j + 1]))
+          if (item[j + 1]) {
+            features.push(this.features.get(c).createFromImporter(item[j + 1]))
+          }
         } catch (e) {
           // ignore empty or non-parsable values
         }
@@ -272,16 +293,14 @@ export default class LatinLanguageDataset extends LanguageDataset {
       if (grammartype) {
         features.push(this.features.get(Feature.types.type).createFromImporter(grammartype))
       }
-      this.addInflection(partOfSpeech.value, Suffix, suffix, features)
+      this.addInflectionData(partOfSpeech.value, Suffix, suffix, features)
     }
   }
 
-  // for Lemmas
+  // For Lemmas of verbs, verb participles, gerundive, and supine
   addVerbForms (partOfSpeech, data, pofsFootnotes = []) {
     let footnotes = []
     // First row are headers
-    this.verbsIrregularLemmas = []
-
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
       let hdwd = item[0]
@@ -297,7 +316,8 @@ export default class LatinLanguageDataset extends LanguageDataset {
       ]
 
       if (hdwd && lemma) {
-        features.push(this.features.get(Feature.types.hdwd).createFromImporter(hdwd))
+        // TODO: Shall we store it as `word` or as `hdwd`. Which one is more correct?
+        features.push(this.features.get(Feature.types.word).createFromImporter(hdwd))
         if (this.verbsIrregularLemmas.filter(item => item.word === lemma.word).length === 0) {
           this.verbsIrregularLemmas.push(lemma)
         }
@@ -305,8 +325,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
       if (item[3]) {
         features.push(this.features.get(Feature.types.voice).createFromImporter(item[3]))
-      } else {
-        features.push(this.features.get(Feature.types.voice).createFromImporter('-'))
       }
       if (item[4]) {
         features.push(this.features.get(Feature.types.mood).createFromImporter(item[4]))
@@ -329,7 +347,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
-      this.addInflection(partOfSpeech.value, Form, form, features, footnotes)
+      this.addInflectionData(partOfSpeech.value, Form, form, features, footnotes)
     }
   }
 
@@ -390,10 +408,27 @@ export default class LatinLanguageDataset extends LanguageDataset {
     suffixes = papaparse.parse(verbParticipleSuffixesCSV, {})
     this.addVerbParticipleSuffixes(partOfSpeech, suffixes.data)
 
+    footnotesData = papaparse.parse(verbParticipleFormFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
+    forms = papaparse.parse(verbParticipleFormsCSV, {})
+    this.addVerbForms(partOfSpeech, forms.data, footnotes)
+
     // Verb Supine
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_SUPINE)
     suffixes = papaparse.parse(verbSupineSuffixesCSV, {})
     this.addVerbSupineSuffixes(partOfSpeech, suffixes.data)
+
+    footnotesData = papaparse.parse(verbSupineFormFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
+    forms = papaparse.parse(verbSupineFormsCSV, {})
+    this.addVerbForms(partOfSpeech, forms.data, footnotes)
+
+    // Gerundive
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_GERUNDIVE)
+    footnotesData = papaparse.parse(gerundiveFormFootnotesCSV, {})
+    footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
+    forms = papaparse.parse(gerundiveFormsCSV, {})
+    this.addVerbForms(partOfSpeech, forms.data, footnotes)
 
     this.dataLoaded = true
     return this
@@ -407,7 +442,9 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   static getObligatoryMatchList (inflection) {
-    if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_VERB)) {
+    if (inflection.constraints.irregularVerb) {
+      return [Feature.types.fullForm, Feature.types.word]
+    } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_VERB)) {
       return [Feature.types.part]
     } else if (inflection.constraints.fullFormBased) {
       return [Feature.types.fullForm]

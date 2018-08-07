@@ -1,6 +1,7 @@
-import { Constants, GreekLanguageModel, Feature } from 'alpheios-data-models'
-import Form from '../../../../lib/form.js'
-import Table from '../../../lib/table'
+import { Constants, Feature } from 'alpheios-data-models'
+import Morpheme from '@lib/morpheme.js'
+import Form from '@lib/form.js'
+import Table from '@views/lib/table.js'
 
 import GreekView from '../greek-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type.js'
@@ -13,56 +14,14 @@ export default class GreekNumeralView extends GreekView {
     this.title = 'Numeral declension'
     this.partOfSpeech = this.constructor.mainPartOfSpeech
 
-    this.featureTypes = {}
+    this.lemmaTypeFeature = new Feature(Feature.types.hdwd, this.constructor.dataset.getNumeralGroupingLemmas(), GreekNumeralView.languageID)
+    this.features.lemmas = new GroupFeatureType(Feature.types.hdwd, this.constructor.languageID, 'Lemma',
+      this.constructor.dataset.getNumeralGroupingLemmaFeatures())
 
-    const GEND_MASCULINE_FEMININE = 'masculine feminine'
-    const GEND_MASCULINE_FEMININE_NEUTER = 'masculine feminine neuter'
-
-    this.featureTypes.numbers = new Feature(
-      Feature.types.number,
-      [Constants.NUM_SINGULAR, Constants.NUM_DUAL, Constants.NUM_PLURAL],
-      this.constructor.languageID
-    )
-
-    this.featureTypes.genders = new Feature(
-      Feature.types.gender,
-      [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, GEND_MASCULINE_FEMININE, Constants.GEND_NEUTER, GEND_MASCULINE_FEMININE_NEUTER],
-      this.constructor.languageID
-    )
-
-    const lemmaValues = this.constructor.dataset.getNumeralGroupingLemmas()
-    this.featureTypes.lemmas = new Feature(Feature.types.hdwd, lemmaValues, GreekNumeralView.languageID)
-
-    this.features = {
-      lemmas: new GroupFeatureType(this.featureTypes.lemmas, 'Lemma'),
-      genders: new GroupFeatureType(this.featureTypes.genders, 'Gender'),
-      types: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.type), 'Type'),
-      numbers: new GroupFeatureType(this.featureTypes.numbers, 'Number'),
-      cases: new GroupFeatureType(this.constructor.model.typeFeature(Feature.types.grmCase), 'Case')
-    }
-
-    this.features.genders.getTitle = function getTitle (featureValue) {
-      if (featureValue === Constants.GEND_MASCULINE) { return 'm.' }
-      if (featureValue === Constants.GEND_FEMININE) { return 'f.' }
-      if (featureValue === Constants.GEND_NEUTER) { return 'n.' }
-      if (featureValue === GEND_MASCULINE_FEMININE) { return 'm./f.' }
-      if (featureValue === GEND_MASCULINE_FEMININE_NEUTER) { return 'm./f./n.' }
-      return featureValue
-    }
-
-    this.features.genders.filter = function filter (featureValues, suffix) {
-      // If not an array, convert it to array for uniformity
-      if (!Array.isArray(featureValues)) {
-        featureValues = [featureValues]
-      }
-      for (const value of featureValues) {
-        if (suffix.features[this.type] === value) {
-          return true
-        }
-      }
-
-      return false
-    }
+    this.features.genders.getOrderedFeatures = this.constructor.getOrderedGenders
+    this.features.genders.getTitle = this.constructor.getGenderTitle
+    this.features.genders.filter = this.constructor.genderFilter
+    this.features.genders.comparisonType = Morpheme.comparisonTypes.PARTIAL
     this.createTable()
   }
 
@@ -77,14 +36,62 @@ export default class GreekNumeralView extends GreekView {
   createTable () {
     this.table = new Table([this.features.lemmas, this.features.genders, this.features.types, this.features.numbers, this.features.cases])
     let features = this.table.features
-    features.columns = [this.featureTypes.lemmas, this.featureTypes.genders, this.features.types]
-    features.rows = [this.featureTypes.numbers, GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.columnRowTitles = [GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.fullWidthRowTitles = [this.featureTypes.numbers]
+    features.columns = [
+      this.lemmaTypeFeature,
+      this.constructor.model.typeFeature(Feature.types.gender),
+      this.constructor.model.typeFeature(Feature.types.type)
+    ]
+    features.rows = [
+      this.constructor.model.typeFeature(Feature.types.number),
+      this.constructor.model.typeFeature(Feature.types.grmCase)
+    ]
+    features.columnRowTitles = [
+      this.constructor.model.typeFeature(Feature.types.grmCase)
+    ]
+    features.fullWidthRowTitles = [this.constructor.model.typeFeature(Feature.types.number)]
   }
 
-  /* getMorphemes (inflectionData) {
-    return inflectionData.pos.get(this.partOfSpeech)
-      .types.get(this.constructor.inflectionType).items
-  } */
+  static getOrderedGenders (ancestorFeatures) {
+    const lemmaValues = GreekView.dataset.getNumeralGroupingLemmas()
+    // Items below are lemmas
+    const ancestorValue = ancestorFeatures[ancestorFeatures.length - 1].value
+    if (ancestorValue === lemmaValues[1]) {
+      return [
+        this.featureMap.get(GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER)
+      ]
+    } else if ([lemmaValues[2], lemmaValues[3]].includes(ancestorValue)) {
+      return [
+        this.featureMap.get(GreekView.datasetConsts.GEND_MASCULINE_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    } else {
+      return [
+        this.featureMap.get(Constants.GEND_MASCULINE),
+        this.featureMap.get(Constants.GEND_FEMININE),
+        this.featureMap.get(Constants.GEND_NEUTER)
+      ]
+    }
+  }
+
+  static genderFilter (featureValues, suffix) {
+    // If not an array, convert it to array for uniformity
+    if (!Array.isArray(featureValues)) {
+      featureValues = [featureValues]
+    }
+    for (const value of featureValues) {
+      if (suffix.features[this.type] === value) {
+        return true
+      }
+    }
+    return false
+  }
+
+  static getGenderTitle (featureValue) {
+    if (featureValue === Constants.GEND_MASCULINE) { return 'm.' }
+    if (featureValue === Constants.GEND_FEMININE) { return 'f.' }
+    if (featureValue === Constants.GEND_NEUTER) { return 'n.' }
+    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE) { return 'm./f.' }
+    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER) { return 'm./f./n.' }
+    return featureValue
+  }
 }

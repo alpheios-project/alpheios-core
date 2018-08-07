@@ -1,6 +1,6 @@
 import { Constants, Feature } from 'alpheios-data-models'
 import LatinVerbMoodView from './latin-verb-mood-view.js'
-import GroupFeatureType from '../../../lib/group-feature-type'
+// import GroupFeatureType from '../../../lib/group-feature-type'
 import Table from '../../../lib/table'
 
 export default class LatinInfinitiveView extends LatinVerbMoodView {
@@ -9,12 +9,7 @@ export default class LatinInfinitiveView extends LatinVerbMoodView {
     this.id = 'verbInfinitive'
     this.name = 'infinitive'
     this.title = 'Infinitive'
-    this.features.moods = new GroupFeatureType(
-      new Feature(Feature.types.mood, [Constants.MOOD_INFINITIVE], this.constructor.model.languageID),
-      'Mood')
-    this.language_features[Feature.types.tense] = new Feature(Feature.types.tense,
-      [Constants.TENSE_PRESENT, Constants.TENSE_PERFECT, Constants.TENSE_FUTURE], this.constructor.model.languageID)
-    this.features.tenses = new GroupFeatureType(this.language_features[Feature.types.tense], 'Tense')
+
     this.createTable()
     this.table.morphemeCellFilter = LatinInfinitiveView.morphemeCellFilter
   }
@@ -24,10 +19,11 @@ export default class LatinInfinitiveView extends LatinVerbMoodView {
       this.features.tenses])
     let features = this.table.features
     features.columns = [
-      this.language_features[Feature.types.voice],
-      this.language_features[Feature.types.conjugation]]
-    features.rows = [this.language_features[Feature.types.tense]]
-    features.columnRowTitles = [this.language_features[Feature.types.tense]]
+      this.constructor.model.typeFeature(Feature.types.voice),
+      this.constructor.model.typeFeature(Feature.types.conjugation)
+    ]
+    features.rows = [this.constructor.model.typeFeature(Feature.types.tense)]
+    features.columnRowTitles = [this.constructor.model.typeFeature(Feature.types.tense)]
     features.fullWidthRowTitles = []
   }
 
