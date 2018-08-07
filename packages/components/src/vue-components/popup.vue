@@ -69,7 +69,7 @@
         </div>
         <div class="alpheios-popup__providers">
           <img class="alpheios-popup__logo" src="../images/icon.png">
-          <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
+          <a class="alpheios-popup__providers-link uk-link" v-on:click="switchProviders">{{providersLinkText}}</a>
         </div>
         <div class="alpheios-popup__notifications uk-text-small" :class="notificationClasses"
              v-show="data.notification.important" v-if="data && data.notification">
@@ -660,6 +660,7 @@
         cursor: pointer;
         fill: $alpheios-link-color-dark-bg;
         stroke: $alpheios-link-color-dark-bg;
+        background: inherit;
     }
 
     .alpheios-popup__close-btn:hover,

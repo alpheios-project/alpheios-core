@@ -2,35 +2,29 @@
     font-family: $alpheios-font-family;
     font-size: $baseFontSize;
     line-height: normal;
-    color: $alpheios-uitext-color;
 
     h3 {
       font-size: $baseFontSize;
       line-height: 1.25;
     }
 
-    p,span,div,a {
-      font-family: $alpheios-font-family;
+    p,span,div,a, input {
       font-size: $baseFontSize;
       line-height: normal;
-      color: $alpheios-uitext-color;
     }
+
     .uk-form-label {
         font-size: $baseFontSize * 0.85;
     }
 
-      .uk-button {
-            font-family: $alpheios-font-family !important;
-       }
-
-      .uk-button-small {
-            font-size: $baseFontSize * 0.7;
-            line-height: $baseFontSize * 1.75;
+    .uk-button-small {
+        font-size: $baseFontSize * 0.7;
+        line-height: $baseFontSize * 1.75;
     }
 
-      .uk-input {
-            height: $baseFontSize * 1.75;
-      }
+    .uk-input {
+        height: $baseFontSize * 1.75;
+    }
 
     .uk-select:not([multiple]):not([size]) {
         height: $baseFontSize * 2.5;

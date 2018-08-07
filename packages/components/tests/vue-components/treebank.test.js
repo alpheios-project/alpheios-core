@@ -37,8 +37,8 @@ describe('treebank.test.js', () => {
       propsData: {
         res: {
           word: {
-            src: 'http/example.com/SENTENCE/WORD',
-            ref: 'foo1-foo2'
+            src: 'http/example.com/DOC/SENTENCE/WORD',
+            ref: 'doc#foo1-foo2'
           }
         },
         messages: {},
@@ -50,9 +50,9 @@ describe('treebank.test.js', () => {
     cmp.setProps({
       visible: true
     })
-    expect(cmp.vm.srcUrl).toEqual('http/example.com/foo1/foo2')
+    expect(cmp.vm.srcUrl).toEqual('http/example.com/doc/foo1/foo2')
 
-    expect(cmp.find('iframe').attributes().src).toEqual('http/example.com/foo1/foo2')
+    expect(cmp.find('iframe').attributes().src).toEqual('http/example.com/doc/foo1/foo2')
     cmp.setProps({
       visible: false,
       res: {

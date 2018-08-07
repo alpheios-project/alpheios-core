@@ -702,8 +702,8 @@ describe('panel.test.js', () => {
             visible: false,
             data: {
               word: {
-                src: 'http://example.org/tb/SENTENCE/WORD',
-                ref: '1-2'
+                src: 'http://example.org/tb/DOC/SENTENCE/WORD',
+                ref: 'doc#1-2'
               }
             }
           },
@@ -730,13 +730,13 @@ describe('panel.test.js', () => {
     treebankC.vm.visible = false
     treebankC.vm.visible = true
 
-    expect(treebankC.vm.srcUrl).toEqual('http://example.org/tb/1/2')
+    expect(treebankC.vm.srcUrl).toEqual('http://example.org/tb/doc/1/2')
 
-    cmp.vm.data.treebankComponentData.data.word.ref = '10-20'
+    cmp.vm.data.treebankComponentData.data.word.ref = 'doc#10-20'
     treebankC.vm.visible = false
     treebankC.vm.visible = true
 
-    expect(treebankC.vm.srcUrl).toEqual('http://example.org/tb/10/20')
+    expect(treebankC.vm.srcUrl).toEqual('http://example.org/tb/doc/10/20')
 
     cmp.vm.data.treebankComponentData.data.word.ref = undefined
     cmp.vm.data.treebankComponentData.data.page = { src: 'http://example.org/tb/100/200' }

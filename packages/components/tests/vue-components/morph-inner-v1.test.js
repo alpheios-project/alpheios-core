@@ -454,4 +454,32 @@ describe('morph-inner-v1.test.js', () => {
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "count"'))
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "morphDataReady"'))
   })
+
+  it('9 Morph - renders with disambiguated class', () => {
+    let cmp = mount(MorphInner, {
+      propsData: {
+        lex:
+          {
+            inflections: [],
+            lemma: {
+              ID: '1',
+              features: {},
+              languageCode: 'lat',
+              languageID: LMF.getLanguageIdFromCode('lat'),
+              word: 'foo-word',
+              principalParts: [ 'part1', 'part2' ]
+            },
+            meaning: {},
+            isPopulated: () => { return true },
+            getGroupedInflections: () => { return [] },
+            disambiguated: true
+          },
+        index: 0,
+        count: 1,
+        morphDataReady: true
+      },
+      stubs: [ 'inflectionattribute' ]
+    })
+    expect(cmp.find('.alpheios-morph__dictentry-disambiguated').exists()).toBeTruthy()
+  })
 })

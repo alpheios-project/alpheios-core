@@ -3,55 +3,58 @@ $alpheios-irregular-base-font-class: 'alpheios-irregular-base-font-size';
 
 $alpheios-font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 $alpheios-base-font-size: 16px;
+$alpheios-base-font-color: #333333;
+$alpheios-base-background-color: #ffffff;
+$alpheios-base-border-color: #d3d3d3;
 
-$alpheios-white-color: #fff;
-
-$alpheios-logo-color: #BCE5F0;
+/************ UIKit vars ************************/
 $alpheios-tools-color: #0E2233;
-$alpheios-icon-color: #73CDDE;
-$alpheios-toolbar-color: #4E6476;
-$alpheios-toolbar-active-color: #7E8897;
-$alpheios-headers-color: #333333;
-$alpheios-uitext-color: #333333;
+$alpheios-copy-color: #666666;
+$alpheios-tools-color: #0E2233;
 $alpheios-link-color: #3E8D9C;
+$alpheios-toolbar-color: #4E6476;
+$alpheios-toolbar-text-color: #ffffff;
+$alpheios-link-hover-color: #5BC8DC;
 $alpheios-link-color-dark-bg: #D1D1D0;
 $alpheios-link-color-dark-bg-disabled: #9E9C9A;
-$alpheios-link-hover-color: #5BC8DC;
-$alpheios-copy-color: #666666;
+$alpheios-toolbar-active-color: #7E8897;
+$alpheios-logo-color: #BCE5F0;
+$alpheios-icon-color: #73CDDE;
+
 $alpheios-sidebar-header-gradient: linear-gradient(to bottom, #9E9C9A 0%,#D1D1D0 100%);
 $alpheios-sidebar-header-border-color: #B8B7B5;
 
 $alpheios-highlight-color: #F6D918;
 $alpheios-highlight-dark-color: #E49A0D;
 
+$alpheios-headers-color: #333333;
+
+/************ Multiselect vars ************************/
 $alpheios-multiselect-background: $alpheios-toolbar-color;
 $alpheios-multiselect-border: $alpheios-copy-color;
-$alpheios-multiselect-color: $alpheios-white-color;
+$alpheios-multiselect-color: $alpheios-toolbar-text-color;
 
-/*************** font sizes **************/
+/*********** Font styles ***********************/
 $alpheios-small-font-size: 12px;
 $alpheios-base-font-size: 16px;
 $alpheios-large-font-size: 20px;
 
-/*************** dark schema colors **************/
+/********** Light Schema ***********************/
+$alpheios-color_schema_light_background: $alpheios-base-background-color;
+$alpheios-color_schema_light_text_color: $alpheios-base-font-color;
+$alpheios-color_schema_light_background_hover: $alpheios-base-border-color;
+
+$alpheios-color_schema_light_tooltip-bg: #fcfcfa;
+$alpheios-color_schema_light_tooltip-color: $alpheios-toolbar-color;
+$alpheios-color_schema_light_tooltip-border: $alpheios-toolbar-color;
+
+/********** Dark Schema ***********************/
 $alpheios-color_schema_dark_background: #282828;
-$alpheios-color_schema_dark_color: #f2f2f2;
+$alpheios-color_schema_dark_text_color: #f2f2f2;
 $alpheios-color_schema_dark_link_color: #b1d1d7;
+
+$alpheios-color_schema_dark_tooltip-bg: #fcfcfa;
+$alpheios-color_schema_dark_tooltip-color: $alpheios-toolbar-color;
 
 $alpheios-color_schema_dark_table_border: #f2f2f2;
 $alpheios-color_schema_dark_background_hover: #686868;
-
-/*************** light schema colors **************/
-$alpheios-color_schema_light_background: #fff;
-$alpheios-color_schema_light_color: #0e2233;
-$alpheios-color_schema_light_link_color: #3e8d9c;
-
-$alpheios-color_schema_light_text_color: $alpheios-uitext-color;
-
-$alpheios-color_schema_light_table_border: #0e2233;
-$alpheios-color_schema_light_background_hover: #d3d3d3;
-
-/*************** light schema colors tooltip **************/
-$alpheios-tooltip-bg: #fcfcfa;
-$alpheios-tooltip-color: $alpheios-toolbar-color;
-$alpheios-tooltip-border: $alpheios-toolbar-color;

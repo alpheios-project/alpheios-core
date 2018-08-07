@@ -3,6 +3,9 @@
     position: relative;
     overflow: hidden;
     line-height: 22px;
+
+    max-width: 235px;
+    vertical-align: top;
   }
 
   .alpheios-checkbox-block {
@@ -16,7 +19,7 @@
       position: relative;
       display: inline-block;
       user-select: none;
-      vertical-align: middle;
+      vertical-align: top;
 
       /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
       padding-left: 22px;

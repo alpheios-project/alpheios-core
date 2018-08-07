@@ -17,10 +17,12 @@
     transition: opacity .6s;
 
     font-size: 12px;
+    display: none;
 }
 .alph_tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+    display: inline;
 }
 
 .alph_tooltip-top {

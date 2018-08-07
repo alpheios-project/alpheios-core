@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-morph__dictentry" v-if="lex">
+  <div :class="morphClass" v-if="lex">
     <div class="alpheios-morph__features">
 
       <p class="principal_parts">
@@ -160,6 +160,14 @@
       this.types = GrmFeature.types
     },
     computed: {
+      morphClass () {
+        let c = "alpheios-morph__dictentry"
+        if (this.lex.disambiguated) {
+          c = `${c} alpheios-morph__dictentry-disambiguated`
+        }
+        return c
+
+      },
       inflections: {
         get: function() {
           return (this.morphDataReady && this.lex.getGroupedInflections) ? this.lex.getGroupedInflections() : []

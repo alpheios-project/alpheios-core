@@ -801,6 +801,13 @@
       width: 100%;
     }
 
+
+    .alpheios-panel__options-item .uk-select:not([multiple]):not([size]) {
+      max-width: 235px;
+      display: inline-block;
+      vertical-align: top;
+    }
+  
     .alpheios-panel__options-item .alpheios-setting__label {
       width: 100px;
       display: inline-block;

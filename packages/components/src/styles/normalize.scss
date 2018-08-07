@@ -1,0 +1,53 @@
+.alpheios-popup,
+.alpheios-panel {
+    font-family: $alpheios-font-family;
+    font-size: $alpheios-base-font-size;
+    color: $alpheios-base-font-color;
+    background: $alpheios-base-background-color;
+    border-color: 1px solid $alpheios-base-border-color;
+    box-sizing: border-box;
+    overflow: auto;
+    margin: 0;
+
+    h1, h2, h3, h4, h5, h6, p, span, a {
+      font-family: inherit;
+      background: transparent;
+      color: $alpheios-base-font-color;
+      line-height: 1.15;
+      -webkit-text-size-adjust: 100%;
+      padding: 0;
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: inherit;
+      font-size: 100%;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    button,
+    select {
+      text-transform: none;
+    }
+
+    button,
+    [type="button"],
+    [type="reset"],
+    [type="submit"] {
+      -webkit-appearance: button;
+    }
+
+    textarea {
+      overflow: auto;
+    }
+
+    [type="checkbox"],
+    [type="radio"] {
+      box-sizing: border-box;
+      padding: 0;
+    }
+}

@@ -8,6 +8,7 @@ export default class LexicalQuery extends Query {
     this.htmlSelector = options.htmlSelector
     this.ui = options.uiController
     this.maAdapter = options.maAdapter
+    this.tbAdapter = options.tbAdapter
     this.langData = options.langData
     this.lexicons = options.lexicons
     this.langOpts = options.langOpts || []
@@ -52,21 +53,35 @@ export default class LexicalQuery extends Query {
   * iterations () {
     let formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
     this.ui.updateLanguage(this.selector.languageID)
+    if (this.tbAdapter && this.selector.data.treebank && this.selector.data.treebank.word) {
+      this.annotatedHomonym = yield this.tbAdapter.getHomonym(this.selector.languageID, this.selector.data.treebank.word.ref)
+    }
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
       this.homonym = yield this.maAdapter.getHomonym(this.selector.languageID, this.selector.normalizedText)
       if (this.homonym) {
+        if (this.annotatedHomonym) {
+          this.homonym = Homonym.disambiguate(this.homonym, [this.annotatedHomonym])
+        }
         this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_READY)
       } else {
-        this.ui.addImportantMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND)
-        // Need to notify a UI controller that there is no morph data on this word in an analyzer
-        // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
-        if (this.ui.morphologyDataNotFound) { this.ui.morphologyDataNotFound(true) }
-        this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
+        if (this.annotatedHomonym) {
+          this.homonym = this.annotatedHomonym
+        } else {
+          this.ui.addImportantMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND)
+          // Need to notify a UI controller that there is no morph data on this word in an analyzer
+          // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
+          if (this.ui.morphologyDataNotFound) { this.ui.morphologyDataNotFound(true) }
+          this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
+        }
       }
     } else {
-      // if we can reset then start with definitions of just the form first
-      this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
+      // if we can reset then start with definitions of the unanalyzed form
+      if (this.annotatedHomonym) {
+        this.homonym = this.annotatedHomonym
+      } else {
+        this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
+      }
     }
 
     let lexiconFullOpts = this.getLexiconOptions('lexicons')

@@ -1,6 +1,6 @@
   @mixin multiselect-class() {
     .multiselect {
-      max-width: 250px;
+      max-width: 235px;
       display: inline-block;
       vertical-align: middle;
     }
@@ -19,6 +19,21 @@
       border: 1px solid $alpheios-multiselect-border;
     }
 
+    .multiselect__tag {
+      background-color: $alpheios-toolbar-color;
+      
+      display: inline-block;
+      border-radius: 5px;
+      padding: 4px 26px 4px 10px;
+
+      position: relative;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      span {
+        color: $alpheios-toolbar-text-color;
+      }
+    }
     .multiselect__select {
       background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%201%209%206%2015%206%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%2013%209%208%2015%208%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E%0A");
       background-size: contain;
@@ -33,6 +48,17 @@
       display: none;
     }
 
+    .multiselect__content {
+      padding: 0;
+    }
+
+    .multiselect__single {
+      display: none;
+    }
+
+    .multiselect__option {
+      padding: 12px;
+    }
     .multiselect__option::after {
       display: none;
     }
@@ -42,6 +68,17 @@
     .multiselect__tag-icon:focus, 
     .multiselect__tag-icon:hover {
       background: $alpheios-multiselect-background;
+    }
+
+    .multiselect__option.multiselect__option--highlight {
+      background-color: $alpheios-toolbar-color;
+
+      &:after {
+        display: none;
+      }
+      span {
+        color: $alpheios-toolbar-text-color;
+      }
     }
 
     .multiselect__option--highlight span,
@@ -56,12 +93,33 @@
       color: $alpheios-multiselect-color;
       font-size: 13.4px;
     }
+
+  .multiselect__tag-icon {
+    border-radius: 5px;
+    bottom: 0;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: bold;
+    line-height: $alpheios-base-font-size * 1.4;
+    margin-left: 7px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    transition: all .2s ease;
+    width: $alpheios-base-font-size * 1.4;
+    color: $alpheios-toolbar-text-color;
+    &:hover {
+      background-color: $alpheios-toolbar-color;
+    }
+  }
 }
 
 .#{$alpheios-uikit-namespace}.alpheios-font_large_class,
 .#{$alpheios-uikit-namespace}.alpheios-font_medium_class, 
 .#{$alpheios-uikit-namespace}.alpheios-font_small_class,
 .#{$alpheios-uikit-namespace}.alpheios-color_schema_light_class,
-.#{$alpheios-uikit-namespace}.alpheios-color_schema_dark_class {
+.#{$alpheios-uikit-namespace}.alpheios-color_schema_dark_class,
+.#{$alpheios-uikit-namespace}.alpheios-panel {
   @include multiselect-class();
 }

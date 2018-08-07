@@ -1,6 +1,6 @@
 div.alpheios-color_schema_light_class {
 	background: $alpheios-color_schema_light_background;
-	color: $alpheios-color_schema_light_color;
+	color: $alpheios-color_schema_light_text_color;
 
 	a, div, p, span {
 		color: $alpheios-color_schema_light_text_color;
@@ -13,7 +13,7 @@ div.alpheios-color_schema_light_class {
 	.alpheios-popup__header-selection,
 	.alpheios-definition__text,
 	.alpheios-morph__lexemes {
-		color: $alpheios-color_schema_light_color;
+		color: $alpheios-color_schema_light_text_color;
 	}
 
 	.uk-link,
@@ -24,51 +24,55 @@ div.alpheios-color_schema_light_class {
 	}
 
 	.uk-button-primary {
-		background-color: $alpheios-toolbar-color;
+		background-color: $alpheios-color_schema_light_tooltip-color;
 		color: $alpheios-color_schema_light_background;
 	}
 
 	.infl-cell,
 	.infl-table {
-		border-color: $alpheios-color_schema_light_color;
+		border-color: $alpheios-color_schema_light_text_color;
 	}
 
 	.infl-suff--suffix-match {
-	    color: $alpheios-color_schema_light_color;
+	    color: $alpheios-color_schema_light_text_color;
 	}
     .infl-cell--hl {
         background: $alpheios-color_schema_light_background_hover;
     }
 
     .alph_tooltip .tooltiptext {
-    	background-color: $alpheios-tooltip-bg;
-		color: $alpheios-tooltip-color;
-		border: 1px solid $alpheios-tooltip-color;
+    	background-color: $alpheios-color_schema_light_tooltip-bg;
+		color: $alpheios-color_schema_light_tooltip-color;
+		border: 1px solid $alpheios-color_schema_light_tooltip-color;
     }
 
 	.alph_tooltip-top::after {
-		border-color: $alpheios-tooltip-color transparent transparent transparent;
+		border-color: $alpheios-color_schema_light_tooltip-color transparent transparent transparent;
 	}
 	.alph_tooltip-top-right::after {
-		border-color: $alpheios-tooltip-color transparent transparent transparent;
+		border-color: $alpheios-color_schema_light_tooltip-color transparent transparent transparent;
 	}
 	.alph_tooltip-right::after {
-		border-color: transparent $alpheios-tooltip-color transparent transparent;
+		border-color: transparent $alpheios-color_schema_light_tooltip-color transparent transparent;
 	}
 	.alph_tooltip-bottom::after,
 	.alph_tooltip-bottom-wide::after,
 	.alph_tooltip-bottom-narrow::after {
-		border-color: transparent transparent $alpheios-tooltip-color transparent;
+		border-color: transparent transparent $alpheios-color_schema_light_tooltip-color transparent;
 	}
 	.alph_tooltip-bottom-right::after {
-		border-color: transparent transparent $alpheios-tooltip-color transparent;
+		border-color: transparent transparent $alpheios-color_schema_light_tooltip-color transparent;
 	}
 	.alph_tooltip-left::after {
-		border-color: transparent transparent transparent $alpheios-tooltip-color;
+		border-color: transparent transparent transparent $alpheios-color_schema_light_tooltip-color;
 	}
 
 	.alpheios-morph__dictentry .lemma_index {
-		color: $alpheios-white-color;
+		color: $alpheios-toolbar-text-color;
 		background: $alpheios-toolbar-color;
 	}
+
+  .alpheios-morph__dictentry-disambiguated {
+    background: $alpheios-highlight-dark-color;
+  }
 }

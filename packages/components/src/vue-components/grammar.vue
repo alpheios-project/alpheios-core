@@ -23,22 +23,22 @@
     .alpheios-grammar {
         display: flex;
         flex-direction: column;
+        height: 100%;
     }
 
     .alpheios-grammar__provider {
-        flex: 1 1 auto;
-        font-size: 0.75*$alpheios-base-font-size;
+        flex: none;
         font-weight: normal;
-        color: $alpheios-toolbar-color;
         font-style: italic;
         padding: 5px;
+        font-size: 80%;
     }
 
     .alpheios-grammar__frame-cont {
-        flex: 1 1 100vh;
+        flex: 1 1 auto;
         position: relative;
         -webkit-overflow-scrolling: touch;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     .alpheios-grammar__frame {

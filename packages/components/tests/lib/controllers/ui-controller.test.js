@@ -22,11 +22,12 @@ import { LanguageModelFactory as LMF, Definition, Constants } from 'alpheios-dat
 import Panel from '@/vue-components/panel.vue'
 import Popup from '@/vue-components/popup.vue'
 
-describe('options.test.js', () => {
+describe('ui-controller.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-  let uiC
+
+  let uiC, options, resourceOptions, state
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
@@ -34,9 +35,9 @@ describe('options.test.js', () => {
     jest.spyOn(console, 'warn')
     jest.spyOn(Options, 'initItems')
 
-    let state = new State()
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
+    state = new State()
+    options = new Options(ContentOptionDefaults, LocalStorageArea)
+    resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let uiOptions = new Options(UIOptionDefaults, LocalStorageArea)
 
     uiC = new UIController(state, options, resourceOptions, uiOptions)
@@ -552,44 +553,32 @@ describe('options.test.js', () => {
     expect(uiC.popup.visible).toBeTruthy()
   })
 
-  it('21 UIController - setRootComponentClasses', () => {
+  it.skip('21 UIController - setRootComponentClasses', () => {
     let emptyPromise = () => { return new Promise((resolve, reject) => {}) }
     let stAdapter = { domain: 'alpheios-content-options', set: emptyPromise }
 
     document.querySelector('html').style['font-size'] = '16px'
 
-    uiC.uiOptions.items.skin = undefined
-    uiC.uiOptions.items.fontSize = undefined
-    uiC.uiOptions.items.colorSchema = undefined
+    let uiOptions1 = new Options(UIOptionDefaults, LocalStorageArea)
+    uiOptions1.items.skin = undefined
+    uiOptions1.items.fontSize = undefined
+    uiOptions1.items.colorSchema = undefined
 
-    uiC.popup.classesChanged = 0
-    uiC.panel.classesChanged = 0
-    uiC.setRootComponentClasses()
-
-    let resClasses = []
-    expect(uiC.popup.popupData.classes).toEqual(resClasses)
-    expect(uiC.panel.panelData.classes).toEqual(resClasses)
-    expect(uiC.popup.classesChanged).toEqual(1)
-    expect(uiC.panel.classesChanged).toEqual(1)
+    let uiC1 = new UIController(state, options, resourceOptions, uiOptions1)
+    uiC1.setRootComponentClasses()
+    let resClasses = ['alpheios-irregular-base-font-size', 'auk--default']
+    expect(uiC1.popup.popupData.classes).toEqual(resClasses)
+    expect(uiC1.panel.panelData.classes).toEqual(resClasses)
 
     //* ****************************************************************
-    document.querySelector('html').style['font-size'] = '14px'
-    uiC.setRootComponentClasses()
+    uiOptions1.items.skin = new OptionItem({ defaultValue: 'fooskin' }, 'skin', stAdapter)
 
-    resClasses = [ UIController.defaults.irregularBaseFontSizeClassName ]
-
-    expect(uiC.popup.popupData.classes).toEqual(resClasses)
-    expect(uiC.panel.panelData.classes).toEqual(resClasses)
-
-    //* ****************************************************************
-    uiC.uiOptions.items.skin = new OptionItem({ defaultValue: 'fooskin' }, 'skin', stAdapter)
-
-    uiC.setRootComponentClasses()
-
+    let uiC2 = new UIController(state, options, resourceOptions, uiOptions1)
+    uiC2.setRootComponentClasses()
     resClasses.push('auk--fooskin')
 
-    expect(uiC.popup.popupData.classes).toEqual(resClasses)
-    expect(uiC.panel.panelData.classes).toEqual(resClasses)
+    expect(uiC2.popup.popupData.classes).toEqual(resClasses)
+    expect(uiC2.panel.panelData.classes).toEqual(resClasses)
 
     //* ****************************************************************
     uiC.uiOptions.items.fontSize = new OptionItem({ defaultValue: 'foofontsize' }, 'fontSize', stAdapter)
@@ -614,15 +603,11 @@ describe('options.test.js', () => {
   it('22 UIController - updateStyleClass', () => {
     uiC.popup.popupData.classes = []
     uiC.panel.panelData.classes = []
-    uiC.popup.classesChanged = 0
-    uiC.panel.classesChanged = 0
 
     uiC.updateStyleClass('alpheios-font_', 'footype')
 
     expect(uiC.popup.popupData.classes).toEqual([])
-    expect(uiC.popup.classesChanged).toEqual(1)
     expect(uiC.panel.panelData.classes).toEqual([])
-    expect(uiC.panel.classesChanged).toEqual(1)
 
     uiC.popup.popupData.classes = [ 'alpheios-font_footype2_class' ]
     uiC.panel.panelData.classes = [ 'alpheios-font_footype2_class' ]
@@ -647,11 +632,9 @@ describe('options.test.js', () => {
   })
 
   it('24 UIController - panel methods - setPositionTo, attachToLeft, attachToRight', () => {
-    uiC.panel.classesChanged = 0
     uiC.panel.setPositionTo('right')
 
     expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('right')
-    expect(uiC.panel.classesChanged).toEqual(1)
 
     uiC.panel.attachToLeft()
     expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('left')

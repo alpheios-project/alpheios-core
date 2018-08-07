@@ -10,7 +10,7 @@
       >
         {{ ln10Messages('LABEL_LOOKUP_BUTTON') }}
       </button>
-      <a class="alpheios-lookup__settings-link alpheios-text__smaller" @click="switchLookupSettings">{{ ln10Messages('LABEL_LOOKUP_SETTINGS') }}</a>
+      <a class="alpheios-lookup__settings-link alpheios-text__smaller uk-link" @click="switchLookupSettings">{{ ln10Messages('LABEL_LOOKUP_SETTINGS') }}</a>
       </span>
     </alph-tooltip>
     <div class="alpheios-lookup__settings" v-if="uiController">
@@ -159,6 +159,7 @@
       margin: 15px 10px 5px;
 
       text-align: left;
+      overflow: hidden;
     }
 
     .uk-input.alpheios-lookup__input {
