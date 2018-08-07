@@ -8864,7 +8864,6 @@ h4.alpheios-inflections__additional_title {
 }
 .infl-cell--hdr {
   font-weight: 700;
-  text-transform: capitalize;
   text-align: center;
 }
 .infl-cell--hdr .infl-cell__conj-stem {
@@ -8971,6 +8970,9 @@ h4.alpheios-inflections__additional_title {
 .infl-suff--suffix-match.infl-suff--full-feature-match {
   background-color: #F6D918;
   font-weight: 700;
+}
+.row-title-cell {
+  text-transform: capitalize;
 }
 .alpheios-inflections__footnotes {
   display: none;

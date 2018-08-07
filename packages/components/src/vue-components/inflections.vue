@@ -539,7 +539,6 @@
 
     .infl-cell--hdr {
         font-weight: 700;
-        text-transform: capitalize;
         text-align: center;
     }
 
@@ -590,6 +589,10 @@
     .infl-suff--suffix-match.infl-suff--full-feature-match {
         background-color: $alpheios-highlight-color;
         font-weight: 700;
+    }
+
+    .row-title-cell {
+        text-transform: capitalize;
     }
 
     // endregion Tables
