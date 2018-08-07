@@ -10,7 +10,7 @@ export default class LatinView extends View {
     this.features = {
       numbers: GroupFeatureType.createFromType(Feature.types.number, this.constructor.languageID, 'Number'),
       cases: GroupFeatureType.createFromType(Feature.types.grmCase, this.constructor.languageID, 'Case'),
-      declensions: GroupFeatureType.createFromType(Feature.types.declension, this.constructor.languageID, 'Declension'),
+      declensions: GroupFeatureType.createFromType(Feature.types.declension, this.constructor.languageID, 'Declension Stem'),
       genders: GroupFeatureType.createFromType(Feature.types.gender, this.constructor.languageID, 'Gender'),
       types: GroupFeatureType.createFromType(Feature.types.type, this.constructor.languageID, 'Type'),
       tenses: GroupFeatureType.createFromType(Feature.types.tense, this.constructor.languageID, 'Tense'),

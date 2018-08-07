@@ -47,6 +47,7 @@ export default class LatinAdjectiveView extends LatinView {
       case Constants.ORD_3RD: return `Third<br>consonant and i`
       case Constants.ORD_4TH: return `Fourth`
       case Constants.ORD_5TH: return `Fifth`
+      default: return featureValue
     }
   }
 

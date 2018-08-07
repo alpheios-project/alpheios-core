@@ -5,6 +5,7 @@ import { Constants, Feature, FeatureImporter, Lemma } from 'alpheios-data-models
 import LanguageDataset from '@lib/language-dataset.js'
 import Suffix from '@lib/suffix.js'
 import Form from '@lib/form.js'
+// import ComparisonFeature from '@lib/comparison-feature.js'
 import nounSuffixesCSV from '@lib/lang/latin/data/noun/suffixes.csv'
 import nounFootnotesCSV from '@lib/lang/latin/data/noun/footnotes.csv'
 import pronounFormsCSV from '@lib/lang/latin/data/pronoun/forms.csv'

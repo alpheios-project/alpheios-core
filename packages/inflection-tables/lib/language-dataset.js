@@ -458,7 +458,7 @@ export default class LanguageDataset {
       as multiple values in inflection and morpheme can go in different order.
        */
       // TODO: Do we need to fix order of values to be the same?
-      const optionalMatches = this.constructor.getOptionalMatches(inflection, item, Morpheme.comparisonTypes.ALL_VALUES)
+      const optionalMatches = this.constructor.getOptionalMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
 
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {

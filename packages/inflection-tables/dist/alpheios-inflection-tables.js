@@ -2725,6 +2725,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import ComparisonFeature from '@lib/comparison-feature.js'
 
 
 
@@ -3772,7 +3773,7 @@ class LanguageDataset {
       as multiple values in inflection and morpheme can go in different order.
        */
       // TODO: Do we need to fix order of values to be the same?
-      const optionalMatches = this.constructor.getOptionalMatches(inflection, item, _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.ALL_VALUES)
+      const optionalMatches = this.constructor.getOptionalMatches(inflection, item, _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.PARTIAL)
 
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
@@ -14319,6 +14320,7 @@ class LatinAdjectiveView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["de
       case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD: return `Third<br>consonant and i`
       case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_4TH: return `Fourth`
       case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_5TH: return `Fifth`
+      default: return featureValue
     }
   }
 
@@ -14432,7 +14434,7 @@ class LatinView extends _views_lib_view_js__WEBPACK_IMPORTED_MODULE_1__["default
     this.features = {
       numbers: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number, this.constructor.languageID, 'Number'),
       cases: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase, this.constructor.languageID, 'Case'),
-      declensions: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension, this.constructor.languageID, 'Declension'),
+      declensions: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension, this.constructor.languageID, 'Declension Stem'),
       genders: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender, this.constructor.languageID, 'Gender'),
       types: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type, this.constructor.languageID, 'Type'),
       tenses: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.tense, this.constructor.languageID, 'Tense'),
