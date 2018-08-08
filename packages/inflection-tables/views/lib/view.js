@@ -211,6 +211,8 @@ export default class View {
    */
   hideEmptyColumns () {
     this.table.hideEmptyColumns()
+    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+    this.wideTable = this.table.wideView.renderTable()
     return this
   }
 
@@ -219,6 +221,8 @@ export default class View {
    */
   showEmptyColumns () {
     this.table.showEmptyColumns()
+    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+    this.wideTable = this.table.wideView.renderTable()
     return this
   }
 
@@ -228,6 +232,8 @@ export default class View {
   hideNoSuffixGroups () {
     if (this.table.canCollapse) {
       this.table.hideNoSuffixGroups()
+      this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+      this.wideTable = this.table.wideView.renderTable()
     }
     return this
   }
@@ -237,6 +243,8 @@ export default class View {
    */
   showNoSuffixGroups () {
     this.table.showNoSuffixGroups()
+    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+    this.wideTable = this.table.wideView.renderTable()
     return this
   }
 

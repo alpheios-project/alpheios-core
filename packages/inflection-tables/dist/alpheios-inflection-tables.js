@@ -15630,7 +15630,8 @@ class Cell {
     this.value = element.innerHTML
     this.classes = {
       [_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].cell]: true,
-      [_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].highlight]: false
+      [_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].highlight]: false,
+      [_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden]: false
     }
     this.wNode = element
     this.nNode = element.cloneNode(true)
@@ -15677,6 +15678,7 @@ class Cell {
    */
   hide () {
     if (!this.wNode.classList.contains(_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden)) {
+      this.classes[_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden] = true
       this.wNode.classList.add(_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden)
       this.nNode.classList.add(_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden)
     }
@@ -15687,6 +15689,7 @@ class Cell {
    */
   show () {
     if (this.wNode.classList.contains(_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden)) {
+      this.classes[_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden] = false
       this.wNode.classList.remove(_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden)
       this.nNode.classList.remove(_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].hidden)
     }
@@ -17724,6 +17727,8 @@ class View {
    */
   hideEmptyColumns () {
     this.table.hideEmptyColumns()
+    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+    this.wideTable = this.table.wideView.renderTable()
     return this
   }
 
@@ -17732,6 +17737,8 @@ class View {
    */
   showEmptyColumns () {
     this.table.showEmptyColumns()
+    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+    this.wideTable = this.table.wideView.renderTable()
     return this
   }
 
@@ -17741,6 +17748,8 @@ class View {
   hideNoSuffixGroups () {
     if (this.table.canCollapse) {
       this.table.hideNoSuffixGroups()
+      this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+      this.wideTable = this.table.wideView.renderTable()
     }
     return this
   }
@@ -17750,6 +17759,8 @@ class View {
    */
   showNoSuffixGroups () {
     this.table.showNoSuffixGroups()
+    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
+    this.wideTable = this.table.wideView.renderTable()
     return this
   }
 

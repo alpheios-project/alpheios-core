@@ -63,7 +63,8 @@ export default class Cell {
     this.value = element.innerHTML
     this.classes = {
       [Styles.classNames.cell]: true,
-      [Styles.classNames.highlight]: false
+      [Styles.classNames.highlight]: false,
+      [Styles.classNames.hidden]: false
     }
     this.wNode = element
     this.nNode = element.cloneNode(true)
@@ -110,6 +111,7 @@ export default class Cell {
    */
   hide () {
     if (!this.wNode.classList.contains(Styles.classNames.hidden)) {
+      this.classes[Styles.classNames.hidden] = true
       this.wNode.classList.add(Styles.classNames.hidden)
       this.nNode.classList.add(Styles.classNames.hidden)
     }
@@ -120,6 +122,7 @@ export default class Cell {
    */
   show () {
     if (this.wNode.classList.contains(Styles.classNames.hidden)) {
+      this.classes[Styles.classNames.hidden] = false
       this.wNode.classList.remove(Styles.classNames.hidden)
       this.nNode.classList.remove(Styles.classNames.hidden)
     }
