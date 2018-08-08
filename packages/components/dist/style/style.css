@@ -8980,6 +8980,22 @@ img.alpheios-popup__logo {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios-table-sf__title {
+  margin-bottom: 5px;
+  padding-left: 30px;
+}
+.infl-suff-footnote-link {
+  position: relative;
+}
+.alpheios-clickable {
+  cursor: pointer;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
 .infl-prdgm-tbl {
   display: table;
   border-top: 1px solid gray;

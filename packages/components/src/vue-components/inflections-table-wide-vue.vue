@@ -7,13 +7,13 @@
             <span v-show="!collapsed">[-]</span>
         </div>
 
-        <div v-show="!collapsed" :style="view.wideTable.style" class="infl-table infl-table--wide">
+        <div v-show="!collapsed" :style="tableStyle" class="infl-table infl-table--wide">
             <template v-for="row in view.wideTable.rows">
                 <div :class="cell.classes" v-for="cell in row.cells"
                      @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">
                     <template v-if="cell.isDataCell">
                         <template v-for="(morpheme, index) in cell.morphemes">
-                            <span class="infl-suff">
+                            <span :class="morphemeClasses(morpheme)">
                                 <template v-if="morpheme.value">{{morpheme.value}}</template>
                                 <template v-else>-</template>
                             </span>
@@ -37,9 +37,7 @@
                             <template v-if="index < cell.morphemes.length-1">, </template>
                         </template>
                     </template>
-                    <template v-else>
-                        {{cell.value}}
-                    </template>
+                    <span v-else v-html="cell.value"></span>
                 </div>
             </template>
         </div>
@@ -64,7 +62,21 @@
       }
     },
 
+    computed: {
+      tableStyle: function () {
+        return this.view.wideTable.style
+      }
+    },
+
     methods: {
+      morphemeClasses: function (morpheme) {
+        return {
+          ['infl-suff']: true,
+          ['infl-suff--suffix-match']: morpheme.match.suffixMatch,
+          ['infl-suff--full-feature-match']: morpheme.match.fullMatch,
+        }
+      },
+
       cellMouseOver: function (cell) {
         let wideTabe =  this.view.wideTable
         if (cell.isDataCell) {
@@ -92,5 +104,9 @@
 
     .infl-suff-footnote-link {
         position: relative;
+    }
+
+    .alpheios-clickable {
+        cursor: pointer;
     }
 </style>

@@ -57,6 +57,8 @@
             </template>
 
             <div v-show="!selectedView.hasComponentData">
+                <main-table-wide-vue :view="selectedView"></main-table-wide-vue>
+
                 <div :id="elementIDs.wideView" class=""></div>
                 <div :id="elementIDs.footnotes" class="alpheios-inflections__footnotes">
                     <template v-for="footnote in footnotes">
@@ -85,6 +87,7 @@
 <script>
   // Subcomponents
   import WideTable from './inflections-table-wide.vue'
+  import WideTableVue from './inflections-table-wide-vue.vue'
   import WideSubTables from './inflections-subtables-wide.vue'
   import WideSuppTable from './inflections-supp-table-wide.vue'
   import WordForms from './wordforms.vue'
@@ -99,6 +102,7 @@
     name: 'Inflections',
     components: {
       mainTableWide: WideTable,
+      mainTableWideVue: WideTableVue,
       subTablesWide: WideSubTables,
       suppTablesWide: WideSuppTable,
       alphTooltip: Tooltip,

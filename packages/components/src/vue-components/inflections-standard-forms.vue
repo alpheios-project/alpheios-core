@@ -27,7 +27,7 @@
   import { Constants } from 'alpheios-data-models'
   import { ViewSetFactory } from 'alpheios-inflection-tables'
 
-  import WideTable from './inflections-table-sf-wide.vue'
+  import WideTable from './inflections-table-wide-vue.vue'
 
   export default {
     name: 'InflectionStandardForms',
