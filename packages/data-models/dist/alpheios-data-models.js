@@ -3997,10 +3997,8 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_3__);
-
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
@@ -4035,7 +4033,7 @@ class Lemma {
     this.word = word
     this.principalParts = principalParts
     this.features = {}
-    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_3___default()()
+    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_2___default()()
   }
 
   get language () {
@@ -4123,7 +4121,7 @@ class Lemma {
       throw new Error('translation data cannot be empty.')
     }
 
-    if (!(translation instanceof _translation_js__WEBPACK_IMPORTED_MODULE_2__["default"])) {
+    if (translation.constructor.name !== 'Translation') {
       throw new Error('translation data must be a Translation object.')
     }
 
