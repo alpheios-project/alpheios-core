@@ -171,6 +171,38 @@ describe('lexeme.test.js', () => {
       }
     }
 
+    let mockLexemeEight = {
+      lemma: {
+        features: {
+          pofs: new Feature(Feature.types.part, [['more important pofs', 6]], Constants.LANG_GREEK, 1)
+        }
+      }
+    }
+
+    let mockLexemeNine = {
+      lemma: {
+        features: {
+          pofs: new Feature(Feature.types.part, [['less important pofs', 1]], Constants.LANG_GREEK, 1)
+        }
+      }
+    }
+
+    let mockLexemeTen = {
+      lemma: {
+        features: {
+          freq: new Feature(Feature.types.frequency, [['most frequent', 5]], Constants.LANG_GREEK, 2)
+        }
+      }
+    }
+
+    let mockLexemeEleven = {
+      lemma: {
+        features: {
+          freq: new Feature(Feature.types.frequency, [['less frequent', 4]], Constants.LANG_GREEK, 2)
+        }
+      }
+    }
+
     let lexemes = [ mockLexemeTwo, mockLexemeOne ] // freq=3, freq=5
     let sortFunc = Lexeme.getSortByTwoLemmaFeatures('freq', 'pofs')
 
@@ -202,6 +234,12 @@ describe('lexeme.test.js', () => {
 
     lexemes = [ mockLexemeSix, mockLexemeSeven ] // null, null
     expect(lexemes.sort(sortFunc)).toEqual([mockLexemeSix, mockLexemeSeven])
+
+    lexemes = [ mockLexemeEight, mockLexemeNine ] // freq=null, freq=null, pofs=6, pofs=1
+    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeEight, mockLexemeNine])
+
+    lexemes = [ mockLexemeTen, mockLexemeEleven ] // freq=5, freq=4, pofs=null, pofs=null
+    expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTen, mockLexemeEleven])
   })
   it('7 Lexeme - disambiguate', () => {
     let lemma2 = new Lemma('word', 'grc')

@@ -4292,8 +4292,16 @@ class Lexeme {
    */
   static getSortByTwoLemmaFeatures (primary, secondary) {
     return (a, b) => {
-      if (a.lemma.features[primary] && b.lemma.features[primary]) {
-        let primarySort = a.lemma.features[primary].compareTo(b.lemma.features[primary])
+      if ((a.lemma.features[primary] && b.lemma.features[primary]) ||
+          (!a.lemma.features[primary] && !b.lemma.features[[primary]])) {
+        let primarySort
+        if (a.lemma.features[primary] && b.lemma.features[primary]) {
+          // if both lemmas have the primary sort key, then sort
+          primarySort = a.lemma.features[primary].compareTo(b.lemma.features[primary])
+        } else {
+          // if neither lemma has the primary sort key, then the primary sort is equal
+          primarySort = 0
+        }
         if (primarySort !== 0) {
           return primarySort
         } else if (a.lemma.features[secondary] && b.lemma.features[secondary]) {
@@ -4302,6 +4310,9 @@ class Lexeme {
           return -1
         } else if (!a.lemma.features[secondary] && b.lemma.features[secondary]) {
           return 1
+        } else {
+          // neither have the secondary sort key so they are equal
+          return 0
         }
       } else if (a.lemma.features[primary] && !b.lemma.features[primary]) {
         return -1
