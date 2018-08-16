@@ -3,14 +3,15 @@ const webpack = {
     entry: './driver.js',
     externals: {
       'intl-messageformat': 'intl-messageformat'
-    }
+    },
+    target: "node"
   },
 
   production: {
-    output: {filename: 'alpheios-data-models.min.js'}
+    output: {filename: 'alpheios-data-models.node.min.js'}
   },
   development: {
-    output: {filename: 'alpheios-data-models.js'}
+    output: {filename: 'alpheios-data-models.node.js'}
   }
 }
 

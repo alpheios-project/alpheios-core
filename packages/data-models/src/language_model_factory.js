@@ -72,7 +72,7 @@ class LanguageModelFactory {
    */
   static getLanguageCodeFromId (languageID) {
     for (const languageModel of MODELS.values()) {
-      if (languageModel.languageID === languageID) {
+      if (languageModel.languageID.toString() === languageID.toString()) {
         return languageModel.languageCode
       }
     }

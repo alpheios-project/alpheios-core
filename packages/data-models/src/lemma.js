@@ -32,6 +32,7 @@ class Lemma {
     this.word = word
     this.principalParts = principalParts
     this.features = {}
+
     this.ID = uuidv4()
   }
 
