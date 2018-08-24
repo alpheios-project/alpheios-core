@@ -1,10 +1,10 @@
 import uuidv4 from 'uuid/v4'
-import {Feature} from 'alpheios-data-models'
+import { Feature } from 'alpheios-data-models'
 import ParadigmRule from './paradigm-rule.js'
+import ParadigmInflectionList from './paradigm-inflection-list.js'
 
 export default class Paradigm {
   constructor (languageID, partOfSpeech, paradigm) {
-    // console.info('*********************paradigm', paradigm)
     this.id = uuidv4()
     this.paradigmID = paradigm.ID
     this.languageID = languageID
@@ -24,7 +24,7 @@ export default class Paradigm {
     this.subTables = paradigm.subTables
     this.rules = []
 
-    // Convert strin feature values to Feature objects for later comparison
+    // Convert string feature values to Feature objects for later comparison
     for (let row of this.table.rows) {
       for (let cell of row.cells) {
         if (cell.role === 'data') {
@@ -53,10 +53,21 @@ export default class Paradigm {
     this._suppParadigms = new Map()
   }
 
-  static get ClassType () {
-    return this
+  /**
+   * Creates a list of items of the same type as self
+   * @return {ParadigmInflectionList}
+   */
+  static createList () {
+    return new ParadigmInflectionList(this)
   }
 
+  /**
+   * Adds a rule to the paradigm.
+   * @param {number} matchOrder
+   * @param {Feature[]} features
+   * @param {Lemma} lemma
+   * @param morphFlags
+   */
   addRule (matchOrder, features, lemma, morphFlags) {
     this.rules.push(new ParadigmRule(matchOrder, features, lemma, morphFlags))
   }
@@ -111,22 +122,11 @@ export default class Paradigm {
   }
 
   /**
-   * Checks wither an inflection matches any single rules within a `rules` array. Rules within a Paradigm
-   * are sorted according to the match order, highest first. This is an order an array of rules will be iterated by.
-   * In order for rule to be a match, an inflection should have all features with values equal to those
-   * listed within a rule.
-   * If rule is a match, an object with a paradigm and a rule that matched is returned.
+   * Returns an array of rules that matches an inflection or an empty array if not matching rules found.
    * @param {Inflection} inflection.
-   * @return {Object | undefined} An object with a paradigm and a matching rule if there is a match
-   * or false otherwise.
+   * @return {ParadigmRule[] | []} Array of matching rules or an empty array if no matches found.
    */
-  matches (inflection) {
-    for (const rule of this.rules) {
-      let match = true
-      for (const feature of rule.features) {
-        match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value
-      }
-      return match ? {paradigm: this, rule: rule} : undefined
-    }
+  matchingRules (inflection) {
+    return this.rules.filter(r => r.matches(inflection))
   }
 }

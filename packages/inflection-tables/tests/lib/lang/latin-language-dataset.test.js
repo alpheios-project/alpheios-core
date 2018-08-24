@@ -49,7 +49,7 @@ describe('greek-language-dataset.test.js', () => {
 
     expect(LLD.features.has(Feature.types.footnote)).toBeTruthy()
     expect(LLD.features.has(Feature.types.fullForm)).toBeTruthy()
-    expect(LLD.features.has(Feature.types.hdwd)).toBeTruthy()
+    expect(LLD.features.has(Feature.types.word)).toBeTruthy()
     expect(LLD.features.has(Feature.types.declension)).toBeTruthy()
     expect(LLD.features.has(Feature.types.gender)).toBeTruthy()
     expect(LLD.features.has(Feature.types.tense)).toBeTruthy()
@@ -58,21 +58,22 @@ describe('greek-language-dataset.test.js', () => {
     latinModelFeatures.forEach(feature => expect(LLD.features.has(feature.type)).toBeTruthy())
   })
 
-  it('2 LatinLanguageDataset - addSuffixes for adjectives executes addInflection for each line from csv  with specific arguments', () => {
+  it('2 LatinLanguageDataset - addSuffixes for adjectives executes addInflectionData for each line from csv  with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
     const suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addSuffixes(partOfSpeech, suffixes.data, [])
 
-    expect(LLD.addInflection).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
+    expect(LLD.addInflectionData).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = suffixes.data[suffixes.data.length - 1]
     let suffixValue = itemRow[0]
+    if (!suffixValue) { suffixValue = null } // This matches the current logic in `getSuffixes()` of `LatinLanguageDataset`
 
     let features = [partOfSpeech,
       LLD.features.get(Feature.types.number).createFromImporter(itemRow[1]),
@@ -82,20 +83,20 @@ describe('greek-language-dataset.test.js', () => {
       LLD.features.get(Feature.types.type).createFromImporter(itemRow[5])
     ]
 
-    expect(LLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
+    expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
   })
 
-  it('3 LatinLanguageDataset - addSuffixes for nouns executes addInflection for each line from csv  with specific arguments', () => {
+  it('3 LatinLanguageDataset - addSuffixes for nouns executes addInflectionData for each line from csv  with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
     const suffixes = papaparse.parse(nounSuffixesCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addSuffixes(partOfSpeech, suffixes.data, [])
 
-    expect(LLD.addInflection).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
+    expect(LLD.addInflectionData).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = suffixes.data[suffixes.data.length - 1]
@@ -109,20 +110,20 @@ describe('greek-language-dataset.test.js', () => {
       LLD.features.get(Feature.types.type).createFromImporter(itemRow[5])
     ]
 
-    expect(LLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
+    expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
   })
 
-  it('4 LatinLanguageDataset - addPronounForms for pronouns executes addInflection for each line from csv  with specific arguments', () => {
+  it('4 LatinLanguageDataset - addPronounForms for pronouns executes addInflectionData for each line from csv  with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     const forms = papaparse.parse(pronounFormsCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addPronounForms(partOfSpeech, forms.data, [])
 
-    expect(LLD.addInflection).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
+    expect(LLD.addInflectionData).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = forms.data[forms.data.length - 1]
@@ -136,20 +137,20 @@ describe('greek-language-dataset.test.js', () => {
       LLD.features.get(Feature.types.type).createFromImporter(itemRow[6])
     ]
 
-    expect(LLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [])
+    expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [])
   })
 
-  it('5 LatinLanguageDataset - addVerbSuffixes for verbs executes addInflection for each line from csv  with specific arguments', () => {
+  it('5 LatinLanguageDataset - addVerbSuffixes for verbs executes addInflectionData for each line from csv  with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     const suffixes = papaparse.parse(verbSuffixesCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addVerbSuffixes(partOfSpeech, suffixes.data, [])
 
-    expect(LLD.addInflection).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
+    expect(LLD.addInflectionData).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = suffixes.data[suffixes.data.length - 1]
@@ -160,101 +161,109 @@ describe('greek-language-dataset.test.js', () => {
       LLD.features.get(Feature.types.voice).createFromImporter(itemRow[2]),
       LLD.features.get(Feature.types.mood).createFromImporter(itemRow[3]),
       LLD.features.get(Feature.types.tense).createFromImporter(itemRow[4]),
-      LLD.features.get(Feature.types.number).createFromImporter(itemRow[5]),
-      LLD.features.get(Feature.types.person).createFromImporter(itemRow[6]),
-      LLD.features.get(Feature.types.case).createFromImporter(itemRow[7]),
+      // Add...() function will not create Feature objects for items whose values are empty
+      // LLD.features.get(Feature.types.number).createFromImporter(itemRow[5]),
+      // LLD.features.get(Feature.types.person).createFromImporter(itemRow[6]),
+      // LLD.features.get(Feature.types.case).createFromImporter(itemRow[7]),
       LLD.features.get(Feature.types.type).createFromImporter(itemRow[8])
     ]
 
-    expect(LLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
+    expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
   })
 
-  it('6 LatinLanguageDataset - addVerbParticipleSuffixes for verb participles executes addInflection for each line from csv  with specific arguments', () => {
+  it('6 LatinLanguageDataset - addVerbParticipleSuffixes for verb participles executes addInflectionData for each line from csv  with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
     const suffixes = papaparse.parse(verbParticipleSuffixesCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addVerbSuffixes(partOfSpeech, suffixes.data, [])
 
-    expect(LLD.addInflection).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
+    expect(LLD.addInflectionData).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = suffixes.data[suffixes.data.length - 1]
     let suffixValue = itemRow[0]
 
     let features = [partOfSpeech,
+      // Add...() function will not create Feature objects for items whose values are empty
       LLD.features.get(Feature.types.conjugation).createFromImporter(itemRow[1]),
       LLD.features.get(Feature.types.voice).createFromImporter(itemRow[2]),
-      LLD.features.get(Feature.types.mood).createFromImporter(itemRow[3]),
+      // LLD.features.get(Feature.types.mood).createFromImporter(itemRow[3]),
       LLD.features.get(Feature.types.tense).createFromImporter(itemRow[4]),
-      LLD.features.get(Feature.types.number).createFromImporter(itemRow[5]),
-      LLD.features.get(Feature.types.person).createFromImporter(itemRow[6]),
-      LLD.features.get(Feature.types.case).createFromImporter(itemRow[7]),
+      // LLD.features.get(Feature.types.number).createFromImporter(itemRow[5]),
+      // LLD.features.get(Feature.types.person).createFromImporter(itemRow[6]),
+      // LLD.features.get(Feature.types.case).createFromImporter(itemRow[7]),
       LLD.features.get(Feature.types.type).createFromImporter(itemRow[8])
     ]
 
-    expect(LLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
+    expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [])
   })
 
-  it('7 LatinLanguageDataset - addVerbSupineSuffixes for verb supines executes addInflection for each line from csv  with specific arguments', () => {
+  it('7 LatinLanguageDataset - addVerbSupineSuffixes for verb supines executes addInflectionData for each line from csv  with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_SUPINE)
     const suffixes = papaparse.parse(verbSupineSuffixesCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addVerbSupineSuffixes(partOfSpeech, suffixes.data)
 
-    expect(LLD.addInflection).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
+    expect(LLD.addInflectionData).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = suffixes.data[suffixes.data.length - 1]
     let suffixValue = itemRow[0]
+    if (!suffixValue || suffixValue === '-') {
+      suffixValue = null
+    }
 
+    // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
     let features = [partOfSpeech,
+      // Add...() function will not create Feature objects for items whose values are empty
       LLD.features.get(Feature.types.conjugation).createFromImporter(itemRow[1]),
       LLD.features.get(Feature.types.voice).createFromImporter(itemRow[2]),
-      LLD.features.get(Feature.types.mood).createFromImporter(itemRow[3]),
-      LLD.features.get(Feature.types.tense).createFromImporter(itemRow[4]),
-      LLD.features.get(Feature.types.number).createFromImporter(itemRow[5]),
-      LLD.features.get(Feature.types.person).createFromImporter(itemRow[6]),
-      LLD.features.get(Feature.types.case).createFromImporter(itemRow[7]),
-      LLD.features.get(Feature.types.type).createFromImporter(itemRow[8])
+      // LLD.features.get(Feature.types.mood).createFromImporter(itemRow[3]),
+      // LLD.features.get(Feature.types.tense).createFromImporter(itemRow[4]),
+      // LLD.features.get(Feature.types.number).createFromImporter(itemRow[5]),
+      // LLD.features.get(Feature.types.person).createFromImporter(itemRow[6]),
+      LLD.features.get(Feature.types.case).createFromImporter(itemRow[7])
+      // LLD.features.get(Feature.types.type).createFromImporter(itemRow[8])
     ]
 
-    expect(LLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features)
+    expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features)
   })
 
-  it('8 LatinLanguageDataset - addVerbForms for verbs executes addInflection for each line from csv with specific arguments', () => {
+  it('8 LatinLanguageDataset - addVerbForms for verbs executes addInflectionData for each line from csv with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     const forms = papaparse.parse(verbFormsCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addVerbForms(partOfSpeech, forms.data, [])
 
-    expect(LLD.addInflection).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
+    expect(LLD.addInflectionData).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = forms.data[forms.data.length - 1]
     let formValue = itemRow[2]
 
     let features = [partOfSpeech,
-      LLD.features.get(Feature.types.hdwd).createFromImporter(itemRow[0]),
-      LLD.features.get(Feature.types.voice).createFromImporter(itemRow[3] ? itemRow[3] : '-'),
+      LLD.features.get(Feature.types.word).createFromImporter(itemRow[0]),
+      // Add...() function will not create Feature objects for items whose values are empty
+      // LLD.features.get(Feature.types.voice).createFromImporter(itemRow[3] ? itemRow[3] : '-'),
       LLD.features.get(Feature.types.mood).createFromImporter(itemRow[4]),
       LLD.features.get(Feature.types.tense).createFromImporter(itemRow[5]),
       LLD.features.get(Feature.types.number).createFromImporter(itemRow[6]),
       LLD.features.get(Feature.types.person).createFromImporter(itemRow[7])
     ]
 
-    expect(LLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [])
+    expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [])
   })
 
   it('9 LatinLanguageDataset - verbsIrregularLemmas fills in addVerbForms with Lemmas', () => {
@@ -263,7 +272,7 @@ describe('greek-language-dataset.test.js', () => {
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     const forms = papaparse.parse(verbFormsCSV, {})
 
-    LLD.addInflection = jest.fn()
+    LLD.addInflectionData = jest.fn()
 
     LLD.addVerbForms(partOfSpeech, forms.data)
 

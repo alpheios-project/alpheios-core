@@ -3,7 +3,7 @@
 import { Constants, Inflection } from 'alpheios-data-models'
 
 import InflectionSet from '@lib/inflection-set.js'
-import Inflections from '@lib/inflections.js'
+import Inflections from '@lib/inflection-list.js'
 import Form from '@lib/form.js'
 import Paradigm from '@lib/paradigm.js'
 

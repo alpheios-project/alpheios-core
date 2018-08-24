@@ -34,8 +34,20 @@ export default class LatinVerbParticipleIrregularView extends LatinVerbIrregular
   }
 
   static matchFilter (homonym) {
-    return (this.languageID === homonym.languageID &&
+    return Boolean(
+      this.languageID === homonym.languageID &&
       homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech) &&
       this.enabledForLexemes(homonym.lexemes))
+  }
+
+  static enabledForLexemes (lexemes) {
+    for (let lexeme of lexemes) {
+      for (let inflection of lexeme.inflections) {
+        if (inflection.constraints && inflection.constraints.irregularVerb) {
+          return true
+        }
+      }
+    }
+    return false
   }
 }

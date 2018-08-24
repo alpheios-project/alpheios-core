@@ -62,7 +62,7 @@ describe('column.test.js', () => {
     testCells.push(new Cell([testMorphemes[8]], testFeatures))
 
     testGroupingFeature = new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)
-    testGroupFeatureType = new GroupFeatureType(testGroupingFeature, 'Gender')
+    testGroupFeatureType = new GroupFeatureType(Feature.types.gender, Constants.LANG_GREEK, 'Gender', [testGroupingFeature])
     testHeaderCell = new HeaderCell('masculine', testGroupFeatureType)
   })
 

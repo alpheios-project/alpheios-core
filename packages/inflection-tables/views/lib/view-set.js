@@ -37,7 +37,7 @@ export default class ViewSet {
       // let view = new LatinNounView(homonym, locale)
       // this.matchingViews = [view]
       this.matchingViews.push(...this.constructor.views.reduce(
-        (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.messages)), []))
+        (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.locale)), []))
 
       /* for (const lexeme of this.homonym.lexemes) {
         // TODO: Can we handle combined data better?

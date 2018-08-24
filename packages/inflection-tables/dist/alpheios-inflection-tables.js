@@ -544,147 +544,21 @@ class InflectionData {
 
 /***/ }),
 
-/***/ "./lib/inflection-set.js":
-/*!*******************************!*\
-  !*** ./lib/inflection-set.js ***!
-  \*******************************/
+/***/ "./lib/inflection-list.js":
+/*!********************************!*\
+  !*** ./lib/inflection-list.js ***!
+  \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InflectionSet; });
-/* harmony import */ var _inflections_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inflections.js */ "./lib/inflections.js");
-
-
-/**
- * Stores inflections data of different types {such as `Suffix`, `Form`, or `Paradigm`} in a `types` map. Items are grouped by type.
- * May also store inflections that corresponds to stored inflection data.
- */
-class InflectionSet {
-  constructor (partOfSpeech, languageID) {
-    this.languageID = languageID
-    this.partOfSpeech = partOfSpeech
-
-    // Stores inflections (i.e. a form of a word with grammatical features as returned by a morph analyzer
-    this.inflections = []
-
-    // Stores inflections data (suffixes, forms, and paradigms) for inflections
-    this.types = new Map()
-  }
-
-  /**
-   * Checks if an `InflectionSet` has any types stored. If it does not, it means that an `InflectionSet` is empty.
-   * @return {boolean}
-   */
-  get hasTypes () {
-    return this.types.size !== 0
-  }
-
-  /**
-   * Return a list of item types this set contains.
-   * @return {Function<Morpheme>[]}
-   */
-  get inflectionTypes () {
-    return Array.from(this.types.keys())
-  }
-
-  /**
-   * Checks whether an inflection set has any items of certain type that matches an inflection.
-   * @param {Function<Suffix> | Function<Form> | Function<Paradigm>} itemType - A type of an item.
-   * @param {Inflection} inflection - An inflection to match.
-   * @return {boolean} True if there are matches, false otherwise
-   */
-  hasMatchingItems (itemType, inflection) {
-    return (this.types.has(itemType) && this.types.get(itemType).hasMatches(inflection))
-  }
-
-  /**
-   * Returns an array of items of certain type that matches an inflection.
-   * @param {Function<Suffix> | Function<Form> | Function<Paradigm>} itemType - A type of an item.
-   * @param {Inflection} inflection - An inflection to match.
-   * @return {Suffix[] | Form[] | Paradigm[] | []} Array of items of a particular type if any matches found.
-   * An empty array otherwise.
-   */
-  getMatchingItems (itemType, inflection) {
-    return this.hasMatchingItems(itemType, inflection) ? this.types.get(itemType).getMatches(inflection) : []
-  }
-
-  /**
-   * Adds a single inflection item to the set
-   * @param {Suffix | Form | Paradigm} inflection
-   */
-  addInflectionItem (inflection) {
-    this.addInflectionItems([inflection])
-  }
-
-  /**
-   * Adds an array of inflection items of the same type.
-   * @param {Suffix[] | Form[] | Paradigm[]} items
-   */
-  addInflectionItems (items) {
-    let classType = items[0].constructor.ClassType
-
-    if (!this.types.has(classType)) {
-      this.types.set(classType, new _inflections_js__WEBPACK_IMPORTED_MODULE_0__["default"](classType))
-    }
-
-    this.types.get(classType).addItems(items)
-  }
-
-  /**
-   * Adds an InflectionSet to the existing one. All inflections of a foreign inflection set
-   * will be added to the current one. Inflection data items (Suffixes, Forms, Paradigms) will
-   * be added only if they do not exist in the current InflectionSet.
-   * @param inflectionSet
-   */
-  addInflectionSet (inflectionSet) {
-    if (this.languageID === inflectionSet.languageID && this.partOfSpeech === inflectionSet.partOfSpeech) {
-      this.inflections.push(...inflectionSet.inflections)
-      for (const items of this.types.values()) {
-        this.addInflectionItems(items)
-      }
-    } else {
-      console.warn(`Cannot add inflectionSet [languageID=${inflectionSet.languageID.toString()}, POFS=${inflectionSet.partOfSpeech}]` +
-        ` to [languageID=${this.languageID.toString()}, POFS=${this.partOfSpeech}]`)
-    }
-  }
-
-  /**
-   * Adds a footnote object to inflection data of a specific class type.
-   * @param {Suffix | Form | Paradigm} classType.
-   * @param {number} index - A footnote index.
-   * @param {Footnote} footnote - A Footnote object.
-   */
-  addFootnote (classType, index, footnote) {
-    if (!this.types.has(classType)) {
-      this.types.set(classType, new _inflections_js__WEBPACK_IMPORTED_MODULE_0__["default"](classType))
-    }
-    this.types.get(classType).addFootnote(index, footnote)
-  }
-}
-
-
-/***/ }),
-
-/***/ "./lib/inflections.js":
-/*!****************************!*\
-  !*** ./lib/inflections.js ***!
-  \****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Inflections; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InflectionList; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 
-// import LanguageDataset from './language-dataset.js'
-// import Form from './form.js'
-// import Suffix from './suffix.js'
 
-class Inflections {
+class InflectionList {
   constructor (type) {
     this.type = type
     this.items = [] // Suffixes or forms
@@ -745,22 +619,22 @@ class Inflections {
   /**
    * Checks if an array of items has at least one element that matches an inflection.
    *  A match is determined as a result of item's `match` function.
-   * @param {Inflection} inflection - An inflection to match against.
+   * @param {Inflection[]} inflections - One or several inflection to match against.
    * @return {boolean} - True if there is at least one match, false otherwise
    */
-  hasMatches (inflection) {
-    return this.items.some(i => i.matches(inflection))
+  hasMatches (inflections) {
+    return this.items.some(i => i.matches(inflections))
   }
 
   /**
    * Returns an array of items that `matches` an inflection. A match is determined as a result of item's `match`
    * function. Returned value is determined by item's `match` function as well.
-   * @param {Inflection} inflection - An inflection to match against.
-   * @return {Object[]} An array of objects. Each object is returned by a `match` function of an individual item.
+   * @param {Inflection[]} inflections - An inflection to match against.
+   * @return {Suffix[]|Form[]|Paradigm[]} An array of objects. Each object is returned by a `match` function of an individual item.
    * Its format is dependent on the `match` function implementation.
    */
-  getMatches (inflection) {
-    return this.hasMatches(inflection) ? this.items.filter(i => i.matches(inflection)) : []
+  getMatches (inflections) {
+    return this.items.filter(i => i.matches(inflections))
   }
 
   /**
@@ -779,6 +653,130 @@ class Inflections {
       }
     }
     return Array.from(set).sort((a, b) => parseInt(a) - parseInt(b))
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/inflection-set.js":
+/*!*******************************!*\
+  !*** ./lib/inflection-set.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InflectionSet; });
+/* harmony import */ var _inflection_list_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inflection-list.js */ "./lib/inflection-list.js");
+
+
+/**
+ * Stores inflections data of different types {such as `Suffix`, `Form`, or `Paradigm`} in a `types` map. Items are grouped by type.
+ * May also store inflections that corresponds to stored inflection data.
+ */
+class InflectionSet {
+  constructor (partOfSpeech, languageID) {
+    this.languageID = languageID
+    this.partOfSpeech = partOfSpeech
+
+    // Stores inflections (i.e. a form of a word with grammatical features as returned by a morph analyzer
+    this.inflections = []
+
+    // Stores inflections data (suffixes, forms, and paradigms) for inflections
+    this.types = new Map()
+  }
+
+  /**
+   * Checks if an `InflectionSet` has any types stored. If it does not, it means that an `InflectionSet` is empty.
+   * @return {boolean}
+   */
+  get hasTypes () {
+    return this.types.size !== 0
+  }
+
+  /**
+   * Return a list of item types this set contains.
+   * @return {Function<Morpheme>[]}
+   */
+  get inflectionTypes () {
+    return Array.from(this.types.keys())
+  }
+
+  /**
+   * Checks whether an inflection set has any items of certain type that matches an inflection.
+   * @param {Function<Suffix> | Function<Form> | Function<Paradigm>} itemType - A type of an item.
+   * @param {Inflection[]} inflections - One or several inflections to match.
+   * @return {boolean} True if there are matches, false otherwise
+   */
+  hasMatchingItems (itemType, inflections) {
+    return (this.types.has(itemType) && this.types.get(itemType).hasMatches(inflections))
+  }
+
+  /**
+   * Returns an array of items of certain type that matches an inflection.
+   * @param {Function<Suffix> | Function<Form> | Function<Paradigm>} itemType - A type of an item.
+   * @param {Inflection[]} inflections - One or several inflections to match.
+   * @return {Suffix[] | Form[] | Paradigm[] | []} Array of items of a particular type if any matches found.
+   * An empty array otherwise.
+   */
+  getMatchingItems (itemType, inflections) {
+    return this.types.has(itemType) ? this.types.get(itemType).getMatches(inflections) : []
+  }
+
+  /**
+   * Adds a single inflection item to the set
+   * @param {Suffix | Form | Paradigm} inflection
+   */
+  addInflectionItem (inflection) {
+    this.addInflectionItems([inflection])
+  }
+
+  /**
+   * Adds an array of inflection items of the same type.
+   * @param {Suffix[] | Form[] | Paradigm[]} items
+   */
+  addInflectionItems (items) {
+    // We assume all inflection items have the same type
+    let classType = items[0].constructor
+
+    if (!this.types.has(classType)) {
+      this.types.set(classType, classType.createList())
+    }
+
+    this.types.get(classType).addItems(items)
+  }
+
+  /**
+   * Adds an InflectionSet to the existing one. All inflections of a foreign inflection set
+   * will be added to the current one. Inflection data items (Suffixes, Forms, Paradigms) will
+   * be added only if they do not exist in the current InflectionSet.
+   * @param inflectionSet
+   */
+  addInflectionSet (inflectionSet) {
+    if (this.languageID === inflectionSet.languageID && this.partOfSpeech === inflectionSet.partOfSpeech) {
+      this.inflections.push(...inflectionSet.inflections)
+      for (const items of this.types.values()) {
+        this.addInflectionItems(items)
+      }
+    } else {
+      console.warn(`Cannot add inflectionSet [languageID=${inflectionSet.languageID.toString()}, POFS=${inflectionSet.partOfSpeech}]` +
+        ` to [languageID=${this.languageID.toString()}, POFS=${this.partOfSpeech}]`)
+    }
+  }
+
+  /**
+   * Adds a footnote object to inflection data of a specific class type.
+   * @param {Suffix | Form | Paradigm} classType.
+   * @param {number} index - A footnote index.
+   * @param {Footnote} footnote - A Footnote object.
+   */
+  addFootnote (classType, index, footnote) {
+    if (!this.types.has(classType)) {
+      this.types.set(classType, new _inflection_list_js__WEBPACK_IMPORTED_MODULE_0__["default"](classType))
+    }
+    this.types.get(classType).addFootnote(index, footnote)
   }
 }
 
@@ -891,7 +889,7 @@ module.exports = "Form,Headword,Class,Person,Number,Case,Gender,Type,Primary,Dia
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "ID ref,Match order,Part of speech,Stem type,Voice,Mood,Tense,Lemma,Morph flags,Dialect\r\nverbpdgm54,13,verb_participle,w_stem,active,,,,,\r\nverbpdgm54,12,verb_participle,reg_fut,,,,,,\r\nverbpdgm54,12,verb_participle,evw_pr,,,,,,\r\nverbpdgm55,12,verb_participle,ww_pr,,,,,,\r\nverbpdgm55,12,verb_participle,ew_fut,,,,,,\r\nverbpdgm55,12,verb_participle,ew_pr,,,,,,\r\nverbpdgm55,12,verb_participle,ow_pr,,,,,,\r\nverbpdgm56,12,verb_participle,aw_pr,,,,,,\r\nverbpdgm56,12,verb_participle,ajw_pr,,,,,,\r\nverbpdgm56,12,verb_participle,aw_fut,,,,,,\r\nverbpdgm57,12,verb_participle,aor2,,,,,,\r\nverbpdgm57,13,verb_participle,irreg_mi,,,present,εἰμί,,\r\nverbpdgm57,13,verb_participle,irreg_mi,,,present,εἶμι,,\r\nverbpdgm58,12,verb_participle,aor1,,,,,,\r\nverbpdgm59,12,verb_participle,ami_pr,,,,,,\r\nverbpdgm59,12,verb_participle,ath_h_aor,,,,,,\r\nverbpdgm59,12,verb_participle,ami_aor,,,,,,\r\nverbpdgm59,12,verb_participle,irreg_mi,,,,,,\r\nverbpdgm60,12,verb_participle,emi_pr,,,,,,\r\nverbpdgm60,13,verb_participle,emi_aor,active,,,,,\r\nverbpdgm60,12,verb_participle,aor_pass,,,,,,\r\nverbpdgm60,11,verb_participle,aor2_pass,,,,,,\r\nverbpdgm60,13,verb_participle,irreg_mi,active,,,,,\r\nverbpdgm61,12,verb_participle,omi_pr,,,,,,\r\nverbpdgm61,12,verb_participle,omi_aor,,,,,,\r\nverbpdgm61,12,verb_participle,ath_w_aor,,,,,,\r\nverbpdgm62,12,verb_participle,umi_pr,,,,,,\r\nverbpdgm62,12,verb_participle,ath_u_aor,,,,,,\r\nverbpdgm63,12,verb_participle,perf_act,,,,,,\r\nverbpdgm64,12,verb_participle,perf2_act,,,,,,\r\nverbpdgm65,13,verb_participle,w_stem,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,w_stem,middle,,,,,\r\nverbpdgm65,13,verb_participle,aor2,middle,,,,,\r\nverbpdgm65,13,verb_participle,aor1,middle,,,,,\r\nverbpdgm65,13,verb_participle,reg_fut,middle,,,,,\r\nverbpdgm65,13,verb_participle,ew_fut,middle,,,,,\r\nverbpdgm65,12,verb_participle,fut_perf,,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ew_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ew_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,evw_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,evw_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,aw_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,aw_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ajw_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ajw_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,emi_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,emi_pr,passive,,,,,\r\nverbpdgm65,13,verb_participle,emi_aor,middle,,,,,\r\nverbpdgm65,13,verb_participle,irreg_mi,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,irreg_mi,middle,,,,,\r\nverbpdgm65,13,verb_participle,omi_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,omi_pr,midle,,,,,\r\nverbpdgm65,13,verb_participle,omi_aor,middle,,,,,\r\nverbpdgm65,13,verb_participle,ami_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ami_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ami_short,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ami_short,middle,,,,,\r\nverbpdgm65,13,verb_participle,ami_aor,middle,,,,,\r\nverbpdgm65,13,verb_participle,umi_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,umi_pr,middle,,,,,\r\nverbpdgm66,12,verb_participle,perfp_vow,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_d,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_mp,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_g,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_l,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_gx,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_p,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_n,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_un,,,,,,"
+module.exports = "ID ref,Match order,Part of speech,Stem type,Voice,Mood,Tense,Lemma,Morph flags,Dialect\r\nverbpdgm54,13,verb_participle,w_stem,active,,,,,\r\nverbpdgm54,12,verb_participle,reg_fut,,,,,,\r\nverbpdgm54,12,verb_participle,evw_pr,,,,,,\r\nverbpdgm55,12,verb_participle,ww_pr,,,,,,\r\nverbpdgm55,12,verb_participle,ew_fut,,,,,,\r\nverbpdgm55,12,verb_participle,ew_pr,,,,,,\r\nverbpdgm55,12,verb_participle,ow_pr,,,,,,\r\nverbpdgm56,12,verb_participle,aw_pr,,,,,,\r\nverbpdgm56,12,verb_participle,ajw_pr,,,,,,\r\nverbpdgm56,12,verb_participle,aw_fut,,,,,,\r\nverbpdgm57,12,verb_participle,aor2,,,,,,\r\nverbpdgm57,14,verb_participle,irreg_mi,,,present,εἰμί,,\r\nverbpdgm57,14,verb_participle,irreg_mi,,,present,εἶμι,,\r\nverbpdgm58,12,verb_participle,aor1,,,,,,\r\nverbpdgm59,12,verb_participle,ami_pr,,,,,,\r\nverbpdgm59,12,verb_participle,ath_h_aor,,,,,,\r\nverbpdgm59,12,verb_participle,ami_aor,,,,,,\r\nverbpdgm59,12,verb_participle,irreg_mi,,,,,,\r\nverbpdgm60,12,verb_participle,emi_pr,,,,,,\r\nverbpdgm60,13,verb_participle,emi_aor,active,,,,,\r\nverbpdgm60,12,verb_participle,aor_pass,,,,,,\r\nverbpdgm60,11,verb_participle,aor2_pass,,,,,,\r\nverbpdgm60,13,verb_participle,irreg_mi,active,,,,,\r\nverbpdgm61,12,verb_participle,omi_pr,,,,,,\r\nverbpdgm61,12,verb_participle,omi_aor,,,,,,\r\nverbpdgm61,12,verb_participle,ath_w_aor,,,,,,\r\nverbpdgm62,12,verb_participle,umi_pr,,,,,,\r\nverbpdgm62,12,verb_participle,ath_u_aor,,,,,,\r\nverbpdgm63,12,verb_participle,perf_act,,,,,,\r\nverbpdgm64,12,verb_participle,perf2_act,,,,,,\r\nverbpdgm65,13,verb_participle,w_stem,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,w_stem,middle,,,,,\r\nverbpdgm65,13,verb_participle,aor2,middle,,,,,\r\nverbpdgm65,13,verb_participle,aor1,middle,,,,,\r\nverbpdgm65,13,verb_participle,reg_fut,middle,,,,,\r\nverbpdgm65,13,verb_participle,ew_fut,middle,,,,,\r\nverbpdgm65,12,verb_participle,fut_perf,,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ew_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ew_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,evw_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,evw_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,aw_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,aw_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ajw_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ajw_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ow_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,emi_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,emi_pr,passive,,,,,\r\nverbpdgm65,13,verb_participle,emi_aor,middle,,,,,\r\nverbpdgm65,13,verb_participle,irreg_mi,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,irreg_mi,middle,,,,,\r\nverbpdgm65,13,verb_participle,omi_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,omi_pr,midle,,,,,\r\nverbpdgm65,13,verb_participle,omi_aor,middle,,,,,\r\nverbpdgm65,13,verb_participle,ami_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ami_pr,middle,,,,,\r\nverbpdgm65,13,verb_participle,ami_short,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,ami_short,middle,,,,,\r\nverbpdgm65,13,verb_participle,ami_aor,middle,,,,,\r\nverbpdgm65,13,verb_participle,umi_pr,mediopassive,,,,,\r\nverbpdgm65,13,verb_participle,umi_pr,middle,,,,,\r\nverbpdgm66,12,verb_participle,perfp_vow,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_d,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_mp,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_g,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_l,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_gx,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_p,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_n,,,,,,\r\nverbpdgm66,12,verb_participle,perfp_un,,,,,,\r\n"
 
 /***/ }),
 
@@ -2485,7 +2483,7 @@ module.exports = "Index,Text\r\n1,\"Adjectives agree with the noun they modify i
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,"
+module.exports = "Ending,Number,Case,Declension,Gender,Type,Footnote\r\na,singular,nominative,1st 2nd,feminine,regular,\r\nus,singular,nominative,1st 2nd,masculine,regular,\r\n-,singular,nominative,1st 2nd,masculine,irregular,\r\num,singular,nominative,1st 2nd,neuter,regular,\r\n-,singular,nominative,1st 2nd,neuter,irregular,\r\nis,singular,nominative,3rd,feminine,regular,\r\n-,singular,nominative,3rd,feminine,irregular,6\r\n-,singular,nominative,3rd,masculine,regular,\r\nis,singular,nominative,3rd,masculine,irregular,5\r\ne,singular,nominative,3rd,neuter,regular,\r\n-,singular,nominative,3rd,neuter,irregular,6\r\nae,singular,genitive,1st 2nd,feminine,regular,\r\nīus,singular,genitive,1st 2nd,feminine,irregular,3\r\nī,singular,genitive,1st 2nd,masculine,regular,\r\nīus,singular,genitive,1st 2nd,masculine,irregular,3\r\nī,singular,genitive,1st 2nd,neuter,regular,\r\nīus,singular,genitive,1st 2nd,neuter,irregular,3\r\nis,singular,genitive,3rd,feminine,regular,\r\nis,singular,genitive,3rd,masculine,regular,\r\nis,singular,genitive,3rd,neuter,regular,\r\nae,singular,dative,1st 2nd,feminine,regular,\r\nī,singular,dative,1st 2nd,feminine,irregular,3\r\nō,singular,dative,1st 2nd,masculine,regular,\r\nī,singular,dative,1st 2nd,masculine,irregular,3\r\nō,singular,dative,1st 2nd,neuter,regular,\r\nī,singular,dative,1st 2nd,neuter,irregular,3\r\nī,singular,dative,3rd,feminine,regular,\r\nī,singular,dative,3rd,masculine,regular,\r\nī,singular,dative,3rd,neuter,regular,\r\nam,singular,accusative,1st 2nd,feminine,regular,\r\num,singular,accusative,1st 2nd,masculine,regular,\r\num,singular,accusative,1st 2nd,neuter,regular,\r\nem,singular,accusative,3rd,feminine,regular,\r\nem,singular,accusative,3rd,masculine,regular,\r\ne,singular,accusative,3rd,neuter,regular,\r\n-,singular,accusative,3rd,neuter,irregular,6\r\nā,singular,ablative,1st 2nd,feminine,regular,\r\nō,singular,ablative,1st 2nd,feminine,irregular,4\r\nō,singular,ablative,1st 2nd,masculine,regular,\r\nō,singular,ablative,1st 2nd,neuter,regular,\r\nī,singular,ablative,3rd,feminine,regular,\r\ne,singular,ablative,3rd,feminine,irregular,7\r\nī,singular,ablative,3rd,masculine,regular,\r\ne,singular,ablative,3rd,masculine,irregular,7\r\nī,singular,ablative,3rd,neuter,regular,\r\nae,singular,locative,1st 2nd,feminine,regular,\r\nī,singular,locative,1st 2nd,masculine,regular,\r\nī,singular,locative,1st 2nd,neuter,regular,\r\nī,singular,locative,3rd,feminine,regular,\r\ne,singular,locative,3rd,feminine,irregular,7\r\nī,singular,locative,3rd,masculine,regular,\r\nī,singular,locative,3rd,neuter,regular,\r\na,singular,vocative,1st 2nd,feminine,regular,\r\ne,singular,vocative,1st 2nd,masculine,regular,\r\nī,singular,vocative,1st 2nd,masculine,irregular,\r\n-,singular,vocative,1st 2nd,masculine,irregular,\r\num,singular,vocative,1st 2nd,neuter,regular,\r\n-,singular,vocative,1st 2nd,neuter,irregular,\r\nis,singular,vocative,3rd,feminine,regular,\r\n-,singular,vocative,3rd,masculine,regular,\r\ne,singular,vocative,3rd,neuter,regular,\r\n-,singular,vocative,3rd,neuter,irregular,6\r\nae,plural,nominative,1st 2nd,feminine,regular,\r\nī,plural,nominative,1st 2nd,masculine,regular,\r\na,plural,nominative,1st 2nd,neuter,regular,\r\nēs,plural,nominative,3rd,feminine,regular,\r\nēs,plural,nominative,3rd,masculine,regular,\r\nia,plural,nominative,3rd,neuter,regular,\r\nārum,plural,genitive,1st 2nd,feminine,regular,\r\nōrum,plural,genitive,1st 2nd,masculine,regular,\r\nōrum,plural,genitive,1st 2nd,neuter,regular,\r\nium,plural,genitive,3rd,feminine,regular,\r\num,plural,genitive,3rd,feminine,irregular,8\r\nium,plural,genitive,3rd,masculine,regular,\r\num,plural,genitive,3rd,masculine,irregular,8\r\nium,plural,genitive,3rd,neuter,regular,\r\num,plural,genitive,3rd,neuter,irregular,8\r\nīs,plural,dative,1st 2nd,feminine,regular,\r\nīs,plural,dative,1st 2nd,masculine,regular,\r\nīs,plural,dative,1st 2nd,neuter,regular,\r\nibus,plural,dative,3rd,feminine,regular,\r\nibus,plural,dative,3rd,masculine,regular,\r\nibus,plural,dative,3rd,neuter,regular,\r\nās,plural,accusative,1st 2nd,feminine,regular,\r\nōs,plural,accusative,1st 2nd,masculine,regular,\r\na,plural,accusative,1st 2nd,neuter,regular,\r\nīs,plural,accusative,3rd,feminine,regular,\r\nēs,plural,accusative,3rd,feminine,irregular,9\r\nīs,plural,accusative,3rd,masculine,regular,\r\nēs,plural,accusative,3rd,masculine,irregular,9\r\nia,plural,accusative,3rd,neuter,regular,\r\nīs,plural,ablative,1st 2nd,feminine,regular,\r\nīs,plural,ablative,1st 2nd,masculine,regular,\r\nīs,plural,ablative,1st 2nd,neuter,regular,\r\nibus,plural,ablative,3rd,feminine,regular,\r\nibus,plural,ablative,3rd,masculine,regular,\r\nibus,plural,ablative,3rd,neuter,regular,\r\nīs,plural,locative,1st 2nd,feminine,regular,\r\nīs,plural,locative,1st 2nd,masculine,regular,\r\nīs,plural,locative,1st 2nd,neuter,regular,\r\nibus,plural,locative,3rd,feminine,regular,\r\nibus,plural,locative,3rd,masculine,regular,\r\nibus,plural,locative,3rd,neuter,regular,\r\nae,plural,vocative,1st 2nd,feminine,regular,\r\nī,plural,vocative,1st 2nd,masculine,regular,\r\na,plural,vocative,1st 2nd,neuter,regular,\r\nēs,plural,vocative,3rd,feminine,regular,\r\nēs,plural,vocative,3rd,masculine,regular,\r\nia,plural,vocative,3rd,neuter,regular,\r\n"
 
 /***/ }),
 
@@ -2989,6 +2987,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       }
 
       let features = [partOfSpeech]
+      // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
       let columns = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation,
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice,
@@ -3009,11 +3008,6 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         }
       })
 
-      let grammartype = item[7]
-      // Type information can be empty if no ending is provided
-      if (grammartype) {
-        features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type).createFromImporter(grammartype))
-      }
       this.addInflectionData(partOfSpeech.value, _lib_suffix_js__WEBPACK_IMPORTED_MODULE_2__["default"], suffix, features)
     }
   }
@@ -3662,7 +3656,9 @@ class LanguageDataset {
 
     // If there is at least on full form based inflection, search for full form items
     if (formBased) {
-      let items = sourceSet.types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items.reduce(this['reducer'].bind(this, inflections), [])
+      // Match against form based inflection only
+      const formInflections = inflections.filter(i => i.constraints.fullFormBased)
+      let items = sourceSet.types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items.reduce(this['reducer'].bind(this, formInflections), [])
       if (items.length > 0) {
         inflectionSet.addInflectionItems(items)
       }
@@ -3670,19 +3666,8 @@ class LanguageDataset {
 
     // Get paradigm matches
     if (paradigmBased) {
-      let paradigmIDs = []
-      for (let inflection of inflections) {
-        if (inflection.constraints.paradigmBased) {
-          let matchingParadigms = sourceSet.getMatchingItems(_paradigm_js__WEBPACK_IMPORTED_MODULE_4__["default"], inflection)
-          // Make sure all paradigms are unique
-          for (const paradigm of matchingParadigms) {
-            if (!paradigmIDs.includes(paradigm.id)) {
-              inflectionSet.addInflectionItem(paradigm)
-              paradigmIDs.push(paradigm.id)
-            }
-          }
-        }
-      }
+      let paradigms = sourceSet.getMatchingItems(_paradigm_js__WEBPACK_IMPORTED_MODULE_4__["default"], inflections)
+      inflectionSet.addInflectionItems(paradigms)
     }
 
     // Add footnotes
@@ -3884,10 +3869,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Morpheme; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _match_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./match-data */ "./lib/match-data.js");
-/* harmony import */ var _extended_language_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./extended-language-data */ "./lib/extended-language-data.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid/v4 */ "./node_modules/uuid/v4.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _inflection_list_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection-list.js */ "./lib/inflection-list.js");
+/* harmony import */ var _match_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./match-data */ "./lib/match-data.js");
+/* harmony import */ var _extended_language_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./extended-language-data */ "./lib/extended-language-data.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid/v4 */ "./node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -3908,7 +3895,7 @@ class Morpheme {
     if (morphemeValue === undefined) {
       throw new Error('Morpheme value should not be empty.')
     }
-    this.id = uuid_v4__WEBPACK_IMPORTED_MODULE_3___default()()
+    this.id = uuid_v4__WEBPACK_IMPORTED_MODULE_4___default()()
     this.value = morphemeValue
     this.features = {}
     this.featureGroups = {}
@@ -3928,8 +3915,12 @@ class Morpheme {
     this.footnotes = []
   }
 
-  static get ClassType () {
-    return this
+  /**
+   * Creates a list of items of the same type as self
+   * @return {InflectionList}
+   */
+  static createList () {
+    return new _inflection_list_js__WEBPACK_IMPORTED_MODULE_1__["default"](this)
   }
 
   static get comparisonTypes () {
@@ -3955,7 +3946,7 @@ class Morpheme {
   }
 
   static readObject (jsonObject) {
-    let suffix = new this.ClassType(jsonObject.value)
+    let suffix = new this(jsonObject.value)
 
     if (jsonObject.features) {
       for (let key in jsonObject.features) {
@@ -3984,12 +3975,12 @@ class Morpheme {
     }
 
     if (jsonObject.match) {
-      suffix.match = _match_data__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(jsonObject.match)
+      suffix.match = _match_data__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.match)
     }
 
     for (const lang in jsonObject.extendedLangData) {
       if (jsonObject.extendedLangData.hasOwnProperty(lang)) {
-        suffix.extendedLangData[lang] = _extended_language_data__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.extendedLangData[lang])
+        suffix.extendedLangData[lang] = _extended_language_data__WEBPACK_IMPORTED_MODULE_3__["default"].readObject(jsonObject.extendedLangData[lang])
       }
     }
     return suffix
@@ -4001,7 +3992,7 @@ class Morpheme {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    let clone = new this.constructor.ClassType(this.value)
+    let clone = new this.constructor(this.value)
     for (const key in this.features) {
       if (this.features.hasOwnProperty(key)) {
         clone.features[key] = this.features[key]
@@ -4077,7 +4068,7 @@ class Morpheme {
         // At least one value should be the same
         for (const cfValue of comparisonFeature.values) {
           if (morphemeValue.values.includes(cfValue)) {
-            matches.push(comparisonFeature.value)
+            matches.push(cfValue)
           }
         }
       } else {
@@ -4250,6 +4241,81 @@ class Morpheme {
 
 /***/ }),
 
+/***/ "./lib/paradigm-inflection-list.js":
+/*!*****************************************!*\
+  !*** ./lib/paradigm-inflection-list.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ParadigmInflectionList; });
+/* harmony import */ var _inflection_list_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inflection-list.js */ "./lib/inflection-list.js");
+
+
+class ParadigmInflectionList extends _inflection_list_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Checks if an array of items has at least one element that matches an inflection.
+   *  A match is determined as a result of item's `match` function.
+   * @param {Inflection|Inflection[]} inflections - One or several inflection to match against.
+   * @return {boolean} - True if there is at least one match, false otherwise
+   */
+  hasMatches (inflections) {
+    if (!Array.isArray(inflections)) {
+      inflections = [inflections]
+    }
+    for (const inflection of inflections) {
+      if (this.items.some(i => i.matchingRules(inflection).length > 0)) {
+        // There is at least one matching rule
+        return true
+      }
+    }
+    return false
+  }
+
+  /**
+   * Returns an array of paradigms that `matches` an array of inflections.
+   * A match is determined by the paradigm's `match` function.
+   * Returned value is determined by item's `match` function as well.
+   * @param {Inflection[]} inflections - One or several inflections to match against paradigms.
+   * @return {Paradigm[]|[]} An array of paradigms that matches inflections. Only those paradigms are returned
+   * whose matching rules have the highest `matchOrder`. If no matches found, an empty array will be returned.
+   */
+  getMatches (inflections) {
+    // Select only those inflections that are paradigm based
+    inflections = inflections.filter(i => i.constraints && i.constraints.paradigmBased)
+    let matchingParadigm = []
+    // Get all matching paradigms for all inflections
+    let highestMatchOrder = Number.MIN_SAFE_INTEGER
+    for (const inflection of inflections) {
+      for (const paradigm of this.items) {
+        const matchingRules = paradigm.matchingRules(inflection)
+        if (matchingRules.length > 0) {
+          // There is one or several matching rules for this paradigm
+          const rulesMatchOrder = matchingRules.reduce((acc, rule) => rule.matchOrder > acc ? rule.matchOrder : acc, Number.MIN_SAFE_INTEGER)
+          if (rulesMatchOrder > highestMatchOrder) {
+            // This is the matching rule with the highers order. Scrap all previous matches and store this one
+            matchingParadigm = [paradigm]
+            highestMatchOrder = rulesMatchOrder
+          } else if (rulesMatchOrder === highestMatchOrder) {
+            // Rule with the same matchOrder as we already have stored.
+
+            // Check if there is the same paradigm in matches already
+            if (!matchingParadigm.find(p => p.id === paradigm.id)) {
+              matchingParadigm.push(paradigm)
+            }
+          }
+        }
+      }
+    }
+    return matchingParadigm
+  }
+}
+
+
+/***/ }),
+
 /***/ "./lib/paradigm-rule.js":
 /*!******************************!*\
   !*** ./lib/paradigm-rule.js ***!
@@ -4261,11 +4327,40 @@ class Morpheme {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ParadigmRule; });
 class ParadigmRule {
+  /**
+   * @param {number} matchOrder
+   * @param {Feature[]} features
+   * @param {Lemma} lemma
+   * @param morphFlags
+   */
   constructor (matchOrder, features, lemma, morphFlags) {
     this.matchOrder = matchOrder
     this.features = features
     this.lemma = lemma
     this.morphFlags = morphFlags
+  }
+
+  /**
+   * Checks if given inflection matches the rule.
+   * In order for rule to be considered a match, an inflection should have all features with values equal to those
+   * listed within a rule. If rule has a lemma, it should match a `word` property of an inflection
+   * (this property contains a target word).
+   * @param {Inflection} inflection
+   * @return {boolean}
+   */
+  matches (inflection) {
+    let match = true
+    for (const feature of this.features) {
+      match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value
+      if (!match) {
+        return false
+      }
+    }
+    if (match && this.lemma) {
+      // If there is lemma present in the rule, check that it will match the target word
+      match = match && inflection.word && inflection.word.value === this.lemma.word
+    }
+    return match
   }
 }
 
@@ -4287,13 +4382,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _paradigm_rule_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./paradigm-rule.js */ "./lib/paradigm-rule.js");
+/* harmony import */ var _paradigm_inflection_list_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./paradigm-inflection-list.js */ "./lib/paradigm-inflection-list.js");
+
 
 
 
 
 class Paradigm {
   constructor (languageID, partOfSpeech, paradigm) {
-    // console.info('*********************paradigm', paradigm)
     this.id = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
     this.paradigmID = paradigm.ID
     this.languageID = languageID
@@ -4313,7 +4409,7 @@ class Paradigm {
     this.subTables = paradigm.subTables
     this.rules = []
 
-    // Convert strin feature values to Feature objects for later comparison
+    // Convert string feature values to Feature objects for later comparison
     for (let row of this.table.rows) {
       for (let cell of row.cells) {
         if (cell.role === 'data') {
@@ -4342,10 +4438,21 @@ class Paradigm {
     this._suppParadigms = new Map()
   }
 
-  static get ClassType () {
-    return this
+  /**
+   * Creates a list of items of the same type as self
+   * @return {ParadigmInflectionList}
+   */
+  static createList () {
+    return new _paradigm_inflection_list_js__WEBPACK_IMPORTED_MODULE_3__["default"](this)
   }
 
+  /**
+   * Adds a rule to the paradigm.
+   * @param {number} matchOrder
+   * @param {Feature[]} features
+   * @param {Lemma} lemma
+   * @param morphFlags
+   */
   addRule (matchOrder, features, lemma, morphFlags) {
     this.rules.push(new _paradigm_rule_js__WEBPACK_IMPORTED_MODULE_2__["default"](matchOrder, features, lemma, morphFlags))
   }
@@ -4400,23 +4507,12 @@ class Paradigm {
   }
 
   /**
-   * Checks wither an inflection matches any single rules within a `rules` array. Rules within a Paradigm
-   * are sorted according to the match order, highest first. This is an order an array of rules will be iterated by.
-   * In order for rule to be a match, an inflection should have all features with values equal to those
-   * listed within a rule.
-   * If rule is a match, an object with a paradigm and a rule that matched is returned.
+   * Returns an array of rules that matches an inflection or an empty array if not matching rules found.
    * @param {Inflection} inflection.
-   * @return {Object | undefined} An object with a paradigm and a matching rule if there is a match
-   * or false otherwise.
+   * @return {ParadigmRule[] | []} Array of matching rules or an empty array if no matches found.
    */
-  matches (inflection) {
-    for (const rule of this.rules) {
-      let match = true
-      for (const feature of rule.features) {
-        match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value
-      }
-      return match ? {paradigm: this, rule: rule} : undefined
-    }
+  matchingRules (inflection) {
+    return this.rules.filter(r => r.matches(inflection))
   }
 }
 
@@ -7011,7 +7107,7 @@ module.exports = Array.isArray || function (arr) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*@license
 	Papa Parse
-	v4.5.0
+	v4.6.0
 	https://github.com/mholt/PapaParse
 	License: MIT
 */
@@ -7274,7 +7370,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		/** whether to write headers */
 		var _writeHeader = true;
 
-		/** delimiting character */
+		/** delimiting character(s) */
 		var _delimiter = ',';
 
 		/** newline character(s) */
@@ -7329,8 +7425,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 				return;
 
 			if (typeof _config.delimiter === 'string'
-				&& _config.delimiter.length === 1
-				&& Papa.BAD_DELIMITERS.indexOf(_config.delimiter) === -1)
+                && !Papa.BAD_DELIMITERS.filter(function(value) { return _config.delimiter.indexOf(value) !== -1; }).length)
 			{
 				_delimiter = _config.delimiter;
 			}
@@ -8012,8 +8107,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		 */
 		this.parse = function(input, baseIndex, ignoreLastRow)
 		{
+			var quoteChar = _config.quoteChar || '"';
 			if (!_config.newline)
-				_config.newline = guessLineEndings(input);
+				_config.newline = guessLineEndings(input, quoteChar);
 
 			_delimiterError = false;
 			if (!_config.delimiter)
@@ -8078,6 +8174,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 			_input = '';
 		};
 
+		function testEmptyLine(s) {
+			return _config.skipEmptyLines === 'greedy' ? s.join('').trim() === '' : s.length === 1 && s[0].length === 0;
+		}
+
 		function processResults()
 		{
 			if (_results && _delimiterError)
@@ -8089,7 +8189,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 			if (_config.skipEmptyLines)
 			{
 				for (var i = 0; i < _results.data.length; i++)
-					if (_results.data[i].length === 1 && _results.data[i][0] === '')
+					if (testEmptyLine(_results.data[i]))
 						_results.data.splice(i--, 1);
 			}
 
@@ -8218,7 +8318,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 				for (var j = 0; j < preview.data.length; j++)
 				{
-					if (skipEmptyLines && preview.data[j].length === 1 && preview.data[j][0].length === 0) {
+					if (skipEmptyLines && testEmptyLine(preview.data[j]))
+					{
 						emptyLinesCount++;
 						continue;
 					}
@@ -8256,9 +8357,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 			};
 		}
 
-		function guessLineEndings(input)
+		function guessLineEndings(input, quoteChar)
 		{
 			input = input.substr(0, 1024 * 1024);	// max length 1 MB
+			// Replace all the text inside quotes
+			var re = new RegExp(escapeRegExp(quoteChar) + '([^]*?)' + escapeRegExp(quoteChar), 'gm');
+			input = input.replace(re, '');
 
 			var r = input.split('\r');
 
@@ -8290,9 +8394,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		}
 	}
 
-
-
-
+	/** https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions */
+	function escapeRegExp(string)
+	{
+		return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+	}
 
 	/** The core parser implements speedy and correct CSV parsing */
 	function Parser(config)
@@ -8451,9 +8557,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 							continue;
 						}
 
-						var spacesBetweenQuoteAndDelimiter = extraSpaces(nextDelim);
+						// Check up to nextDelim or nextNewline, whichever is closest
+						var checkUpTo = nextNewline === -1 ? nextDelim : Math.min(nextDelim, nextNewline);
+						var spacesBetweenQuoteAndDelimiter = extraSpaces(checkUpTo);
 
-						// Closing quote followed by delimiter or 'unnecessary steps + delimiter'
+						// Closing quote followed by delimiter or 'unnecessary spaces + delimiter'
 						if (input[quoteSearch + 1 + spacesBetweenQuoteAndDelimiter] === delim)
 						{
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
@@ -15129,7 +15237,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
     super(homonym, inflectionData, locale)
 
     this.id = 'verbConjugationIrregularVoice'
-    this.name = 'verb-irregular'
+    this.name = 'verb-irregular-voice'
     this.title = 'Verb Conjugation (Irregular)'
 
     const inflectionsWords = this.homonym.inflections.map(item => item[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word].value)
@@ -15166,29 +15274,39 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
   }
 
   static matchFilter (homonym) {
-    return (this.languageID === homonym.languageID &&
-      homonym.inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech) &&
-      this.enabledForLexemes(homonym.lexemes) && this.enabledForHeadwords(homonym))
+    return Boolean(
+      this.languageID === homonym.languageID &&
+      homonym.inflections.some(i => this.enabledForInflection(i))
+    )
   }
 
-  static enabledForLexemes (lexemes) {
-    for (let lexeme of lexemes) {
-      for (let inflection of lexeme.inflections) {
-        if (inflection.constraints && inflection.constraints.irregularVerb) {
-          return true
-        }
-      }
-    }
-    return false
+  /**
+   * Checks whether this view shall be displayed for an inflection given.
+   * @param {Inflection} inflection - Inflection that is checked on matching this view.
+   * @return {boolean} - True if this view shall be displayed for an inflection, false otherwise.
+   */
+  static enabledForInflection (inflection) {
+    return Boolean(
+      inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech &&
+      inflection.constraints &&
+      inflection.constraints.irregularVerb && // Must be an irregular verb
+      inflection.word &&
+      this.enabledHdwds.includes(inflection.word.value) // Must match headwords for irregular verb voice table
+    )
   }
 
-  static enabledForHeadwords (homonym) {
-    for (let inflection of homonym.inflections) {
-      if (inflection.word && this.enabledHdwds.includes(inflection.word.value)) {
-        return true
-      }
-    }
-    return false
+  /**
+   * Gets inflection data for a homonym. For this view we need to use irregular verb inflections only.
+   * @param {Homonym} homonym - A homonym for which inflection data needs to be retrieved
+   * @return {InflectionSet} Resulting inflection set.
+   */
+  static getInflectionsData (homonym) {
+    // Select only those inflections that are required for this view
+    let inflections = homonym.inflections.filter(
+      i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech &&
+        i.constraints && i.constraints.irregularVerb
+    )
+    return this.dataset.createInflectionSet(this.mainPartOfSpeech, inflections)
   }
 }
 
@@ -15225,7 +15343,7 @@ class LatinVerbIrregularView extends _views_lang_latin_verb_latin_verb_irregular
 
     this.id = 'verbConjugationIrregular'
     this.name = 'verb-irregular'
-    this.title = 'Verb Conjugation (Irregular)'
+    this.title = 'Verb Conjugation (Irregular, Voice)'
 
     this.createTable()
   }
@@ -15243,18 +15361,21 @@ class LatinVerbIrregularView extends _views_lang_latin_verb_latin_verb_irregular
     features.fullWidthRowTitles = [this.features.tenses]
   }
 
-  static matchFilter (homonym) {
-    return (this.languageID === homonym.languageID &&
-      homonym.inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech) &&
-      this.enabledForLexemes(homonym.lexemes) && this.enabledForHeadwords(homonym))
-  }
-
-  static enabledForHeadwords (homonym) {
-    let excluded = true
-    for (const inflection of homonym.inflections) {
-      excluded = excluded && inflection.word && _views_lang_latin_verb_latin_verb_irregular_voice_js__WEBPACK_IMPORTED_MODULE_1__["default"].enabledHdwds.includes(inflection.word.value)
-    }
-    return !excluded
+  /**
+   * Checks whether this view shall be displayed for an inflection given.
+   * It should match all the requirements of an irregular verb view and
+   * should not match irregular verb voice view (either this or
+   * irregular verb voice view shall be shown for a single inflection).
+   * @param {Inflection} inflection - Inflection that is checked on matching this view.
+   * @return {boolean} - True if this view shall be displayed for an inflection, false otherwise.
+   */
+  static enabledForInflection (inflection) {
+    return Boolean(
+      inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech &&
+      inflection.constraints &&
+      inflection.constraints.irregularVerb &&
+      !_views_lang_latin_verb_latin_verb_irregular_voice_js__WEBPACK_IMPORTED_MODULE_1__["default"].enabledForInflection(inflection)
+    )
   }
 }
 
@@ -15336,9 +15457,21 @@ class LatinVerbParticipleIrregularView extends _views_lang_latin_verb_latin_verb
   }
 
   static matchFilter (homonym) {
-    return (this.languageID === homonym.languageID &&
+    return Boolean(
+      this.languageID === homonym.languageID &&
       homonym.inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech) &&
       this.enabledForLexemes(homonym.lexemes))
+  }
+
+  static enabledForLexemes (lexemes) {
+    for (let lexeme of lexemes) {
+      for (let inflection of lexeme.inflections) {
+        if (inflection.constraints && inflection.constraints.irregularVerb) {
+          return true
+        }
+      }
+    }
+    return false
   }
 }
 
@@ -17412,7 +17545,7 @@ class ViewSet {
       // let view = new LatinNounView(homonym, locale)
       // this.matchingViews = [view]
       this.matchingViews.push(...this.constructor.views.reduce(
-        (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.messages)), []))
+        (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.locale)), []))
 
       /* for (const lexeme of this.homonym.lexemes) {
         // TODO: Can we handle combined data better?
@@ -17643,13 +17776,13 @@ class View {
    * to return multiple views if necessary (e.g. paradigm view can return multiple instances of the view
    * with different data).
    * @param {Inflection} homonym - An inflection for which matching instances to be found.
-   * @param {MessageBundle} messages
+   * @param {string} locale
    * @return {View[] | []} Array of view instances or an empty array if view instance does not match inflection data.
    */
-  static getMatchingInstances (homonym, messages) {
+  static getMatchingInstances (homonym, locale) {
     if (this.matchFilter(homonym)) {
       let inflectionData = this.getInflectionsData(homonym)
-      return [new this(homonym, inflectionData, messages)]
+      return [new this(homonym, inflectionData, locale)]
     }
     return []
   }

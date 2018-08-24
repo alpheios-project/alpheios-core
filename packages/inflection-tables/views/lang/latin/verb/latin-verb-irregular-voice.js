@@ -14,7 +14,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     super(homonym, inflectionData, locale)
 
     this.id = 'verbConjugationIrregularVoice'
-    this.name = 'verb-irregular'
+    this.name = 'verb-irregular-voice'
     this.title = 'Verb Conjugation (Irregular)'
 
     const inflectionsWords = this.homonym.inflections.map(item => item[Feature.types.word].value)
@@ -51,28 +51,38 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   }
 
   static matchFilter (homonym) {
-    return (this.languageID === homonym.languageID &&
-      homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech) &&
-      this.enabledForLexemes(homonym.lexemes) && this.enabledForHeadwords(homonym))
+    return Boolean(
+      this.languageID === homonym.languageID &&
+      homonym.inflections.some(i => this.enabledForInflection(i))
+    )
   }
 
-  static enabledForLexemes (lexemes) {
-    for (let lexeme of lexemes) {
-      for (let inflection of lexeme.inflections) {
-        if (inflection.constraints && inflection.constraints.irregularVerb) {
-          return true
-        }
-      }
-    }
-    return false
+  /**
+   * Checks whether this view shall be displayed for an inflection given.
+   * @param {Inflection} inflection - Inflection that is checked on matching this view.
+   * @return {boolean} - True if this view shall be displayed for an inflection, false otherwise.
+   */
+  static enabledForInflection (inflection) {
+    return Boolean(
+      inflection[Feature.types.part].value === this.mainPartOfSpeech &&
+      inflection.constraints &&
+      inflection.constraints.irregularVerb && // Must be an irregular verb
+      inflection.word &&
+      this.enabledHdwds.includes(inflection.word.value) // Must match headwords for irregular verb voice table
+    )
   }
 
-  static enabledForHeadwords (homonym) {
-    for (let inflection of homonym.inflections) {
-      if (inflection.word && this.enabledHdwds.includes(inflection.word.value)) {
-        return true
-      }
-    }
-    return false
+  /**
+   * Gets inflection data for a homonym. For this view we need to use irregular verb inflections only.
+   * @param {Homonym} homonym - A homonym for which inflection data needs to be retrieved
+   * @return {InflectionSet} Resulting inflection set.
+   */
+  static getInflectionsData (homonym) {
+    // Select only those inflections that are required for this view
+    let inflections = homonym.inflections.filter(
+      i => i[Feature.types.part].value === this.mainPartOfSpeech &&
+        i.constraints && i.constraints.irregularVerb
+    )
+    return this.dataset.createInflectionSet(this.mainPartOfSpeech, inflections)
   }
 }

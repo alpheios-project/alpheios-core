@@ -50,37 +50,37 @@ describe('greek-language-dataset.test.js', () => {
     expect(GLD.languageID).toEqual(Constants.LANG_GREEK)
     expect(GLD.model).toEqual(GreekLanguageModel)
 
-    expect(GLD.features.has(Feature.types.footnote)).toBeTruthy()
-    expect(GLD.features.has(Feature.types.fullForm)).toBeTruthy()
-    expect(GLD.features.has(Feature.types.hdwd)).toBeTruthy()
-    expect(GLD.features.has(Feature.types.dialect)).toBeTruthy()
+    expect(GLD.typeFeatures.has(Feature.types.footnote)).toBeTruthy()
+    expect(GLD.typeFeatures.has(Feature.types.fullForm)).toBeTruthy()
+    expect(GLD.typeFeatures.has(Feature.types.hdwd)).toBeTruthy()
+    expect(GLD.typeFeatures.has(Feature.types.dialect)).toBeTruthy()
 
     let greekModelFeatures = GreekLanguageModel.typeFeatures
-    greekModelFeatures.forEach(feature => expect(GLD.features.has(feature.type)).toBeTruthy())
+    greekModelFeatures.forEach(feature => expect(GLD.typeFeatures.has(feature.type)).toBeTruthy())
   })
 
-  it('2 GreekLanguageDataset - addSuffixes for adjectives executes addInflection for each line from csv  with specific arguments', () => {
+  it('2 GreekLanguageDataset - addSuffixes for adjectives executes addInflectionData for each line from csv  with specific arguments', () => {
     let GLD = new GreekLanguageDataset()
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
     const suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
 
-    GLD.addInflection = jest.fn()
+    GLD.addInflectionData = jest.fn()
 
     let parsedAdjectiveSuffix = GLD.addSuffixes(partOfSpeech, suffixes.data, [])
 
-    expect(GLD.addInflection).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
+    expect(GLD.addInflectionData).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
 
     // check import using the first row
     let itemRow = suffixes.data[suffixes.data.length - 1]
     let suffixValue = itemRow[0]
 
     let features = [partOfSpeech,
-      GLD.features.get(Feature.types.number).createFromImporter(itemRow[1]),
-      GLD.features.get(Feature.types.grmCase).createFromImporter(itemRow[2]),
-      GLD.features.get(Feature.types.declension).createFromImporter(itemRow[3]),
-      GLD.features.get(Feature.types.gender).createFromImporter(itemRow[4]),
-      GLD.features.get(Feature.types.type).createFromImporter(itemRow[5])
+      GLD.typeFeatures.get(Feature.types.number).createFromImporter(itemRow[1]),
+      GLD.typeFeatures.get(Feature.types.grmCase).createFromImporter(itemRow[2]),
+      GLD.typeFeatures.get(Feature.types.declension).createFromImporter(itemRow[3]),
+      GLD.typeFeatures.get(Feature.types.gender).createFromImporter(itemRow[4]),
+      GLD.typeFeatures.get(Feature.types.type).createFromImporter(itemRow[5])
     ]
 
     let extendedGreekData = new ExtendedGreekData()
@@ -90,31 +90,31 @@ describe('greek-language-dataset.test.js', () => {
       [Constants.STR_LANG_CODE_GRC]: extendedGreekData
     }
 
-    expect(GLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [], extendedLangData)
+    expect(GLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [], extendedLangData)
   })
 
-  it('3 GreekLanguageDataset - addSuffixes for nouns executes addInflection for each line from csv with specific arguments', () => {
+  it('3 GreekLanguageDataset - addSuffixes for nouns executes addInflectionData for each line from csv with specific arguments', () => {
     let GLD = new GreekLanguageDataset()
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
     const suffixes = papaparse.parse(nounSuffixesCSV, {})
 
-    GLD.addInflection = jest.fn()
+    GLD.addInflectionData = jest.fn()
 
     let parsedAdjectiveSuffix = GLD.addSuffixes(partOfSpeech, suffixes.data, [])
 
-    expect(GLD.addInflection).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
+    expect(GLD.addInflectionData).toHaveBeenCalledTimes(suffixes.data.length - 1) // 1 for header
 
     // check import using the last row
     let itemRow = suffixes.data[suffixes.data.length - 1]
     let suffixValue = itemRow[0]
 
     let features = [partOfSpeech,
-      GLD.features.get(Feature.types.number).createFromImporter(itemRow[1]),
-      GLD.features.get(Feature.types.grmCase).createFromImporter(itemRow[2]),
-      GLD.features.get(Feature.types.declension).createFromImporter(itemRow[3]),
-      GLD.features.get(Feature.types.gender).createFromImporter(itemRow[4]),
-      GLD.features.get(Feature.types.type).createFromImporter(itemRow[5])
+      GLD.typeFeatures.get(Feature.types.number).createFromImporter(itemRow[1]),
+      GLD.typeFeatures.get(Feature.types.grmCase).createFromImporter(itemRow[2]),
+      GLD.typeFeatures.get(Feature.types.declension).createFromImporter(itemRow[3]),
+      GLD.typeFeatures.get(Feature.types.gender).createFromImporter(itemRow[4]),
+      GLD.typeFeatures.get(Feature.types.type).createFromImporter(itemRow[5])
     ]
 
     let extendedGreekData = new ExtendedGreekData()
@@ -124,28 +124,28 @@ describe('greek-language-dataset.test.js', () => {
       [Constants.STR_LANG_CODE_GRC]: extendedGreekData
     }
 
-    expect(GLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [], extendedLangData)
+    expect(GLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features, [], extendedLangData)
   })
 
-  it('4 GreekLanguageDataset - addArticleForms for articles executes addInflection for each line from csv with specific arguments', () => {
+  it('4 GreekLanguageDataset - addArticleForms for articles executes addInflectionData for each line from csv with specific arguments', () => {
     let GLD = new GreekLanguageDataset()
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
     const forms = papaparse.parse(articleFormsCSV, {})
 
-    GLD.addInflection = jest.fn()
+    GLD.addInflectionData = jest.fn()
     GLD.addArticleForms(partOfSpeech, forms.data, [])
 
-    expect(GLD.addInflection).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
+    expect(GLD.addInflectionData).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
 
     let itemRow = forms.data[forms.data.length - 1]
     let formValue = itemRow[0]
 
     let features = [partOfSpeech,
-      GLD.features.get(Feature.types.number).createFromImporter(itemRow[1]),
-      GLD.features.get(Feature.types.grmCase).createFromImporter(itemRow[2]),
-      GLD.features.get(Feature.types.gender).createFromImporter(itemRow[3]),
-      GLD.features.get(Feature.types.type).createFromImporter(itemRow[4])
+      GLD.typeFeatures.get(Feature.types.number).createFromImporter(itemRow[1]),
+      GLD.typeFeatures.get(Feature.types.grmCase).createFromImporter(itemRow[2]),
+      GLD.typeFeatures.get(Feature.types.gender).createFromImporter(itemRow[3]),
+      GLD.typeFeatures.get(Feature.types.type).createFromImporter(itemRow[4])
     ]
 
     let extendedGreekData = new ExtendedGreekData()
@@ -155,35 +155,35 @@ describe('greek-language-dataset.test.js', () => {
       [Constants.STR_LANG_CODE_GRC]: extendedGreekData
     }
 
-    expect(GLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
+    expect(GLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
   })
 
-  it('5 GreekLanguageDataset - addNumeralForms for numerals executes addInflection for each line from csv with specific arguments', () => {
+  it('5 GreekLanguageDataset - addNumeralForms for numerals executes addInflectionData for each line from csv with specific arguments', () => {
     let GLD = new GreekLanguageDataset()
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
     const forms = papaparse.parse(numeralFormsCSV, {})
 
-    GLD.addInflection = jest.fn()
+    GLD.addInflectionData = jest.fn()
     GLD.addNumeralForms(partOfSpeech, forms.data, [])
 
-    expect(GLD.addInflection).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
+    expect(GLD.addInflectionData).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
 
     let itemRow = forms.data[forms.data.length - 1]
     let formValue = itemRow[0]
 
     let features = [partOfSpeech,
-      GLD.features.get(Feature.types.fullForm).createFromImporter(formValue),
-      GLD.features.get(Feature.types.hdwd).createFromImporter(itemRow[1]),
-      GLD.features.get(Feature.types.number).createFromImporter(itemRow[2]),
-      GLD.features.get(Feature.types.grmCase).createFromImporter(itemRow[3]),
-      GLD.features.get(Feature.types.gender).createFromImporter(itemRow[4]),
-      GLD.features.get(Feature.types.type).createFromImporter(itemRow[5])
+      GLD.typeFeatures.get(Feature.types.fullForm).createFromImporter(formValue),
+      GLD.typeFeatures.get(Feature.types.hdwd).createFromImporter(itemRow[1]),
+      GLD.typeFeatures.get(Feature.types.number).createFromImporter(itemRow[2]),
+      GLD.typeFeatures.get(Feature.types.grmCase).createFromImporter(itemRow[3]),
+      GLD.typeFeatures.get(Feature.types.gender).createFromImporter(itemRow[4]),
+      GLD.typeFeatures.get(Feature.types.type).createFromImporter(itemRow[5])
     ]
 
     if (itemRow[7]) {
       let indexes = itemRow[7].split(' ')
-      features.push(GLD.features.get(Feature.types.footnote).createFeatures(indexes))
+      features.push(GLD.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
     }
 
     let extendedGreekData = new ExtendedGreekData()
@@ -193,13 +193,13 @@ describe('greek-language-dataset.test.js', () => {
       [Constants.STR_LANG_CODE_GRC]: extendedGreekData
     }
 
-    expect(GLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
+    expect(GLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
   })
 
   it('6 GreekLanguageDataset - numeralGroupingLemmas fills with data from numeralFormsCSV', () => {
     let GLD = new GreekLanguageDataset()
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
     const forms = papaparse.parse(numeralFormsCSV, {})
 
     GLD.addNumeralForms(partOfSpeech, forms.data, [])
@@ -219,45 +219,45 @@ describe('greek-language-dataset.test.js', () => {
     expect(GLD.numeralGroupingLemmas).toEqual(numeralGroupingLemmas)
   })
 
-  it('7 GreekLanguageDataset - addPronounForms for numerals executes addInflection for each line from csv with specific arguments', () => {
+  it('7 GreekLanguageDataset - addPronounForms for numerals executes addInflectionData for each line from csv with specific arguments', () => {
     let GLD = new GreekLanguageDataset()
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     const forms = papaparse.parse(pronounFormsCSV, {})
 
-    GLD.addInflection = jest.fn()
+    GLD.addInflectionData = jest.fn()
     GLD.addPronounForms(partOfSpeech, forms.data, [])
 
-    expect(GLD.addInflection).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
+    expect(GLD.addInflectionData).toHaveBeenCalledTimes(forms.data.length - 1) // 1 for header
 
     let itemRow = forms.data[forms.data.length - 1]
     let formValue = itemRow[0]
 
     let features = [partOfSpeech,
-      GLD.features.get(Feature.types.fullForm).createFromImporter(formValue)
+      GLD.typeFeatures.get(Feature.types.fullForm).createFromImporter(formValue)
     ]
     if (itemRow[1].length > 0) {
-      features.push(GLD.features.get(Feature.types.hdwd).createFromImporter(itemRow[1]))
+      features.push(GLD.typeFeatures.get(Feature.types.hdwd).createFromImporter(itemRow[1]))
     }
 
-    features.push(GLD.features.get(Feature.types.grmClass).createFromImporter(itemRow[2]))
+    features.push(GLD.typeFeatures.get(Feature.types.grmClass).createFromImporter(itemRow[2]))
     if (itemRow[3].length > 0) {
-      features.push(GLD.features.get(Feature.types.person).createFromImporter(itemRow[3]))
+      features.push(GLD.typeFeatures.get(Feature.types.person).createFromImporter(itemRow[3]))
     }
 
-    features.push(GLD.features.get(Feature.types.number).createFromImporter(itemRow[4]))
-    features.push(GLD.features.get(Feature.types.grmCase).createFromImporter(itemRow[5]))
-    features.push(GLD.features.get(Feature.types.gender).createFromImporter(itemRow[6]))
-    features.push(GLD.features.get(Feature.types.type).createFromImporter(itemRow[7]))
+    features.push(GLD.typeFeatures.get(Feature.types.number).createFromImporter(itemRow[4]))
+    features.push(GLD.typeFeatures.get(Feature.types.grmCase).createFromImporter(itemRow[5]))
+    features.push(GLD.typeFeatures.get(Feature.types.gender).createFromImporter(itemRow[6]))
+    features.push(GLD.typeFeatures.get(Feature.types.type).createFromImporter(itemRow[7]))
 
     let dialects = itemRow[9].split(',')
     if (itemRow[9] && dialects && dialects.length > 0) {
-      features.push(GLD.features.get(Feature.types.dialect).createFeatures(dialects))
+      features.push(GLD.typeFeatures.get(Feature.types.dialect).createFeatures(dialects))
     }
 
     if (itemRow[10]) {
       let indexes = itemRow[10].split(' ')
-      features.push(GLD.features.get(Feature.types.footnote).createFeatures(indexes))
+      features.push(GLD.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
     }
 
     let extendedGreekData = new ExtendedGreekData()
@@ -267,13 +267,13 @@ describe('greek-language-dataset.test.js', () => {
       [Constants.STR_LANG_CODE_GRC]: extendedGreekData
     }
 
-    expect(GLD.addInflection).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
+    expect(GLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [], extendedLangData)
   })
 
   it('8 GreekLanguageDataset - pronounGroupingLemmas filled while addPronounForms executed', () => {
     let GLD = new GreekLanguageDataset()
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     const forms = papaparse.parse(pronounFormsCSV, {})
 
     GLD.addPronounForms(partOfSpeech, forms.data, [])
@@ -297,7 +297,7 @@ describe('greek-language-dataset.test.js', () => {
     const verbParticipleParadigmTables = GreekLanguageDatasetJSON.verbParticipleParadigmTables
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB)
 
     let paradigmRules = papaparse.parse(verbParadigmRulesCSV, {}).data
 
@@ -320,7 +320,7 @@ describe('greek-language-dataset.test.js', () => {
     const verbParticipleParadigmTables = GreekLanguageDatasetJSON.verbParticipleParadigmTables
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
 
-    const partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
+    const partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
 
     let paradigmRules = papaparse.parse(verbParticipleParadigmRulesCSV, {}).data
 
@@ -343,7 +343,7 @@ describe('greek-language-dataset.test.js', () => {
     let partOfSpeech, footnotes
 
     // Numerals
-    partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
+    partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
     footnotes = papaparse.parse(numeralFootnotesCSV, {})
 
     GLD.addFootnotes(partOfSpeech, Suffix, footnotes.data)
@@ -361,7 +361,7 @@ describe('greek-language-dataset.test.js', () => {
     let partOfSpeech, footnotes
 
     // Noun
-    partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
     footnotes = papaparse.parse(nounFootnotesCSV, {})
 
     GLD.addFootnotes(partOfSpeech, Suffix, footnotes.data)
@@ -379,7 +379,7 @@ describe('greek-language-dataset.test.js', () => {
     let partOfSpeech, footnotes
 
     // Noun
-    partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
     footnotes = papaparse.parse(adjectiveFootnotesCSV, {})
 
     GLD.addFootnotes(partOfSpeech, Suffix, footnotes.data)
@@ -397,7 +397,7 @@ describe('greek-language-dataset.test.js', () => {
     let partOfSpeech, footnotes
 
     // Noun
-    partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
+    partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     footnotes = papaparse.parse(pronounFootnotesCSV, {})
 
     GLD.addFootnotes(partOfSpeech, Form, footnotes.data)
@@ -415,7 +415,7 @@ describe('greek-language-dataset.test.js', () => {
     let partOfSpeech, footnotes
 
     // Noun
-    partOfSpeech = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
+    partOfSpeech = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     footnotes = papaparse.parse(verbParadigmFootnotesCSV, {})
 
     GLD.addFootnotes(partOfSpeech, Paradigm, footnotes.data)
@@ -445,22 +445,22 @@ describe('greek-language-dataset.test.js', () => {
     GLD.setParadigmData = jest.fn()
     GLD.addParadigms = jest.fn()
 
-    let partOfSpeechNoun = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    let partOfSpeechNoun = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
     let suffixesNoun = papaparse.parse(nounSuffixesCSV, {})
     let footnotesNoun = papaparse.parse(nounFootnotesCSV, {})
 
-    let partOfSpeechAdjective = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    let partOfSpeechAdjective = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
     let suffixesAdjective = papaparse.parse(adjectiveSuffixesCSV, {})
     let footnotesAdjective = papaparse.parse(adjectiveFootnotesCSV, {})
 
-    let partOfSpeechArticles = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
+    let partOfSpeechArticles = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
     let formsArticles = papaparse.parse(articleFormsCSV, {})
 
-    let partOfSpeechPronoun = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
+    let partOfSpeechPronoun = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
     let formsPronoun = papaparse.parse(pronounFormsCSV, {})
     let footnotesPronoun = papaparse.parse(pronounFootnotesCSV, {})
 
-    let partOfSpeechNumeral = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
+    let partOfSpeechNumeral = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
     let formsNumeral = papaparse.parse(numeralFormsCSV, {})
     let footnotesNumeral = papaparse.parse(numeralFootnotesCSV, {})
 
@@ -468,7 +468,7 @@ describe('greek-language-dataset.test.js', () => {
     const verbParticipleParadigmTables = GreekLanguageDatasetJSON.verbParticipleParadigmTables
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
 
-    let partOfSpeechVerb = GLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
+    let partOfSpeechVerb = GLD.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     let footnoteVerb = papaparse.parse(verbParadigmFootnotesCSV, {})
 
     expect(GLD.dataLoaded).toBeFalsy()
@@ -577,7 +577,7 @@ describe('greek-language-dataset.test.js', () => {
     inflectionAdjective.addFeature(new Feature(Feature.types.gender, 'masculine feminine', Constants.LANG_GREEK))
     inflectionAdjective.addFeature(new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK))
 
-    expect(GreekLanguageDataset.getOptionalMatchList(inflectionAdjective)).toEqual([Feature.types.grmCase, Feature.types.number, Feature.types.declension])
+    expect(GreekLanguageDataset.getOptionalMatchList(inflectionAdjective)).toEqual([Feature.types.grmCase, Feature.types.gender, Feature.types.number, Feature.types.declension])
 
     let inflectionPronoun = new Inflection('ξηρή', 'grc')
     inflectionPronoun.addFeature(new Feature(Feature.types.part, Constants.POFS_PRONOUN, Constants.LANG_GREEK))
@@ -588,7 +588,7 @@ describe('greek-language-dataset.test.js', () => {
     inflectionPronoun.addFeature(new Feature(Feature.types.gender, 'masculine feminine', Constants.LANG_GREEK))
     inflectionPronoun.addFeature(new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK))
 
-    expect(GreekLanguageDataset.getOptionalMatchList(inflectionPronoun)).toEqual([Feature.types.grmCase, Feature.types.number])
+    expect(GreekLanguageDataset.getOptionalMatchList(inflectionPronoun)).toEqual([Feature.types.grmCase, Feature.types.gender, Feature.types.number])
 
     let inflectionArticle = new Inflection('ξηρή', 'grc')
     inflectionArticle.addFeature(new Feature(Feature.types.part, Constants.POFS_ARTICLE, Constants.LANG_GREEK))
@@ -599,7 +599,7 @@ describe('greek-language-dataset.test.js', () => {
     inflectionArticle.addFeature(new Feature(Feature.types.gender, 'masculine feminine', Constants.LANG_GREEK))
     inflectionArticle.addFeature(new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK))
 
-    expect(GreekLanguageDataset.getOptionalMatchList(inflectionArticle)).toEqual([Feature.types.grmCase, Feature.types.number])
+    expect(GreekLanguageDataset.getOptionalMatchList(inflectionArticle)).toEqual([Feature.types.grmCase, Feature.types.gender, Feature.types.number])
 
     let inflectionNumeral = new Inflection('ξηρή', 'grc')
     inflectionNumeral.addFeature(new Feature(Feature.types.part, Constants.POFS_NUMERAL, Constants.LANG_GREEK))
@@ -610,7 +610,7 @@ describe('greek-language-dataset.test.js', () => {
     inflectionNumeral.addFeature(new Feature(Feature.types.gender, 'masculine feminine', Constants.LANG_GREEK))
     inflectionNumeral.addFeature(new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK))
 
-    expect(GreekLanguageDataset.getOptionalMatchList(inflectionNumeral)).toEqual([Feature.types.grmCase, Feature.types.number])
+    expect(GreekLanguageDataset.getOptionalMatchList(inflectionNumeral)).toEqual([Feature.types.grmCase, Feature.types.gender, Feature.types.number])
 
     let inflectionVerb = new Inflection('ξηρή', 'grc')
     inflectionVerb.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))

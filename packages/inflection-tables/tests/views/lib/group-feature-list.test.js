@@ -11,11 +11,11 @@ describe('group-feature-list.test.js', () => {
   console.warn = function () {}
 
   let testGFT = []
-  testGFT.push(new GroupFeatureType(new Feature(Feature.types.hdwd, 'δύο (2)', Constants.LANG_GREEK), 'Lemma'))
-  testGFT.push(new GroupFeatureType(new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK), 'Gender'))
-  testGFT.push(new GroupFeatureType(new Feature(Feature.types.type, 'regular', Constants.LANG_GREEK), 'Type'))
-  testGFT.push(new GroupFeatureType(new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK), 'Number'))
-  testGFT.push(new GroupFeatureType(new Feature(Feature.types.case, 'nominative', Constants.LANG_GREEK), 'Case'))
+  testGFT.push(new GroupFeatureType(Feature.types.hdwd, Constants.LANG_GREEK, 'Lemma', [new Feature(Feature.types.hdwd, 'δύο (2)', Constants.LANG_GREEK)]))
+  testGFT.push(new GroupFeatureType(Feature.types.gender, Constants.LANG_GREEK, 'Gender', [new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)]))
+  testGFT.push(new GroupFeatureType(Feature.types.type, Constants.LANG_GREEK, 'Type', [new Feature(Feature.types.type, 'regular', Constants.LANG_GREEK)]))
+  testGFT.push(new GroupFeatureType(Feature.types.number, Constants.LANG_GREEK, 'Number', [new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK)]))
+  testGFT.push(new GroupFeatureType(Feature.types.case, Constants.LANG_GREEK, 'Case', [new Feature(Feature.types.case, 'nominative', Constants.LANG_GREEK)]))
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
@@ -49,7 +49,7 @@ describe('group-feature-list.test.js', () => {
     let GFL = new GroupFeatureList(testGFT)
 
     let ntestGFT = [] // testGFT.slice()
-    ntestGFT.push(new GroupFeatureType(new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK), 'Voice'))
+    ntestGFT.push(new GroupFeatureType(Feature.types.voice, Constants.LANG_GREEK, 'Voice', [new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK)]))
     expect(() => { GFL.columns = ntestGFT }).toThrow(new Error(`Feature of voice is not found.`))
   })
 
@@ -89,7 +89,7 @@ describe('group-feature-list.test.js', () => {
     let GFL = new GroupFeatureList(testGFT)
 
     let ntestGFT = [] // testGFT.slice()
-    ntestGFT.push(new GroupFeatureType(new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK), 'Voice'))
+    ntestGFT.push(new GroupFeatureType(Feature.types.voice, Constants.LANG_GREEK, 'Voice', [new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK)]))
     expect(() => { GFL.rows = ntestGFT }).toThrow(new Error(`Feature of voice is not found.`))
   })
 
@@ -113,7 +113,7 @@ describe('group-feature-list.test.js', () => {
     let GFL = new GroupFeatureList(testGFT)
 
     let ntestGFT = [] // testGFT.slice()
-    ntestGFT.push(new GroupFeatureType(new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK), 'Gender'))
+    ntestGFT.push(new GroupFeatureType(Feature.types.gender, Constants.LANG_GREEK, 'Gender', [new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)]))
 
     GFL.columnRowTitles = ntestGFT
     expect(testGFT.filter(feature => feature.type === 'gender').every(feature => feature.hasColumnRowTitle)).toBeTruthy()
@@ -124,7 +124,7 @@ describe('group-feature-list.test.js', () => {
     let GFL = new GroupFeatureList(testGFT)
 
     let ntestGFT = [] // testGFT.slice()
-    ntestGFT.push(new GroupFeatureType(new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK), 'Voice'))
+    ntestGFT.push(new GroupFeatureType(Feature.types.voice, Constants.LANG_GREEK, 'Voice', [new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK)]))
 
     expect(() => { GFL.columnRowTitles = ntestGFT }).toThrow(new Error(`Feature of voice is not found.`))
   })
@@ -133,7 +133,7 @@ describe('group-feature-list.test.js', () => {
     let GFL = new GroupFeatureList(testGFT)
 
     let ntestGFT = [] // testGFT.slice()
-    ntestGFT.push(new GroupFeatureType(new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK), 'Gender'))
+    ntestGFT.push(new GroupFeatureType(Feature.types.gender, Constants.LANG_GREEK, 'Gender', [new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)]))
 
     GFL.fullWidthRowTitles = ntestGFT
     expect(testGFT.filter(feature => feature.type === 'gender').every(feature => feature.hasFullWidthRowTitle)).toBeTruthy()
@@ -144,7 +144,7 @@ describe('group-feature-list.test.js', () => {
     let GFL = new GroupFeatureList(testGFT)
 
     let ntestGFT = [] // testGFT.slice()
-    ntestGFT.push(new GroupFeatureType(new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK), 'Voice'))
+    ntestGFT.push(new GroupFeatureType(Feature.types.voice, Constants.LANG_GREEK, 'Voice', [new Feature(Feature.types.voice, 'passive', Constants.LANG_GREEK)]))
 
     expect(() => { GFL.fullWidthRowTitles = ntestGFT }).toThrow(new Error(`Feature of voice is not found.`))
   })
@@ -155,7 +155,19 @@ describe('group-feature-list.test.js', () => {
   })
 
   it('16 GroupFeatureList - titleColumnsQuantity returns count of titled features', () => {
+    /*
+    It seems that testGFT can be affected by previous test and results of this test will depend on whether ib
+    be run on its own or in sequence. For stable results we can redefine testGFT inside this test.
+     */
+    let testGFT = []
+    testGFT.push(new GroupFeatureType(Feature.types.hdwd, Constants.LANG_GREEK, 'Lemma', [new Feature(Feature.types.hdwd, 'δύο (2)', Constants.LANG_GREEK)]))
+    testGFT.push(new GroupFeatureType(Feature.types.gender, Constants.LANG_GREEK, 'Gender', [new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)]))
+    testGFT.push(new GroupFeatureType(Feature.types.type, Constants.LANG_GREEK, 'Type', [new Feature(Feature.types.type, 'regular', Constants.LANG_GREEK)]))
+    testGFT.push(new GroupFeatureType(Feature.types.number, Constants.LANG_GREEK, 'Number', [new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK)]))
+    testGFT.push(new GroupFeatureType(Feature.types.case, Constants.LANG_GREEK, 'Case', [new Feature(Feature.types.case, 'nominative', Constants.LANG_GREEK)]))
+
     let GFL = new GroupFeatureList(testGFT)
+    GFL.columnRowTitles = testGFT.slice(0, 1)
     expect(GFL.titleColumnsQuantity).toEqual(1)
   })
 })

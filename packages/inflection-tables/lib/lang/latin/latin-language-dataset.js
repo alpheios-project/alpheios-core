@@ -269,6 +269,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       }
 
       let features = [partOfSpeech]
+      // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
       let columns = [
         Feature.types.conjugation,
         Feature.types.voice,
@@ -289,11 +290,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
         }
       })
 
-      let grammartype = item[7]
-      // Type information can be empty if no ending is provided
-      if (grammartype) {
-        features.push(this.features.get(Feature.types.type).createFromImporter(grammartype))
-      }
       this.addInflectionData(partOfSpeech.value, Suffix, suffix, features)
     }
   }

@@ -13,6 +13,7 @@ import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 
 import verbParadigmRulesCSV from '@lib/lang/greek/data/verb/paradigm/rules.csv'
 
+import Morpheme from '@lib/morpheme.js'
 import Suffix from '@lib/suffix.js'
 import Form from '@lib/form.js'
 import Paradigm from '@lib/paradigm.js'
@@ -62,7 +63,7 @@ describe('language-dataset.test.js', () => {
     expect(LD.footnotes).toBeDefined()
   })
 
-  it('3 LanguageDataset - addInflection creates and loads inflectionSet to LanguageDataset.pos', () => {
+  it('3 LanguageDataset - addInflectionData creates and loads inflectionSet to LanguageDataset.pos', () => {
     let LD = new LanguageDataset(languageIDLat)
 
     const partOfSpeech = new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, languageIDLat)
@@ -78,7 +79,7 @@ describe('language-dataset.test.js', () => {
     features.push(new Feature(Feature.types.footnote, '3', languageIDLat))
 
     expect(LD.pos.size).toEqual(0)
-    LD.addInflection(partOfSpeech.value, classType, itemValue, features)
+    LD.addInflectionData(partOfSpeech.value, classType, itemValue, features)
 
     expect(LD.pos.size).toEqual(1)
     expect(Array.from(LD.pos.keys())).toEqual(['adjective'])
@@ -86,7 +87,7 @@ describe('language-dataset.test.js', () => {
     expect(LD.pos.get('adjective').constructor.name).toEqual('InflectionSet')
     expect(LD.pos.get('adjective').partOfSpeech).toEqual('adjective')
     expect(Array.from(LD.pos.get('adjective').types.keys())).toEqual([Suffix])
-    expect(LD.pos.get('adjective').types.get(Suffix).constructor.name).toEqual('Inflections')
+    expect(LD.pos.get('adjective').types.get(Suffix).constructor.name).toEqual('InflectionList')
   })
 
   it('4 LanguageDataset - addParadigms adds Paradigm to LanguageDataset.pos', () => {
@@ -112,7 +113,7 @@ describe('language-dataset.test.js', () => {
     expect(LD.pos.get('verb').constructor.name).toEqual('InflectionSet')
     expect(LD.pos.get('verb').partOfSpeech).toEqual('verb')
     expect(Array.from(LD.pos.get('verb').types.keys())).toEqual([Paradigm])
-    expect(LD.pos.get('verb').types.get(Paradigm).constructor.name).toEqual('Inflections')
+    expect(LD.pos.get('verb').types.get(Paradigm).constructor.name).toEqual('ParadigmInflectionList')
   })
 
   it('5 LanguageDataset - addFootnote checks arguments - index and text are required', () => {
@@ -247,7 +248,8 @@ describe('language-dataset.test.js', () => {
     expect(result.matchedItems).toEqual([ Feature.types.grmCase, Feature.types.gender, Feature.types.number ])
   })
 
-  it('11 LanguageDataset - checkMatches checks matches of the feature and if morpheme hasn\'t current feature - it automaticaly adds as matched', () => {
+  // It now does not provide such comparison behavior
+  /* it('11 LanguageDataset - checkMatches checks matches of the feature and if morpheme hasn\'t current feature - it automaticaly adds as matched', () => {
     let matchList = [ Feature.types.grmCase, Feature.types.declension, Feature.types.gender, Feature.types.number ]
 
     let inflection = new Inflection('beat', 'lat', 'um')
@@ -266,7 +268,7 @@ describe('language-dataset.test.js', () => {
 
     expect(result.fullMatch).toBeTruthy()
     expect(result.matchedItems).toEqual([ Feature.types.grmCase, Feature.types.declension, Feature.types.gender, Feature.types.number ])
-  })
+  }) */
 
   it('12 LanguageDataset - setInflectionData - throw Error if even one inflection doesn\'t have part of speech feature', async () => {
     let maAdapter = new AlpheiosTuftsAdapter()
@@ -507,7 +509,7 @@ describe('language-dataset.test.js', () => {
     let formForCompare = new Form('ταῖν')
     formForCompare.features = {}
     formForCompare.features[Feature.types.part] = new Feature(Feature.types.part, 'article', languageIDGreek)
-    formForCompare.features[Feature.types.gender] = new Feature(Feature.types.gender, 'femine', languageIDGreek)
+    formForCompare.features[Feature.types.gender] = new Feature(Feature.types.gender, 'feminine', languageIDGreek)
 
     let res = LD.matcher(testHomonym.lexemes[0].inflections, formForCompare)
 
@@ -577,7 +579,7 @@ describe('language-dataset.test.js', () => {
     LanguageDataset.getObligatoryMatches('fooInflection', 'fooItem')
 
     expect(LanguageDataset.getObligatoryMatchList).toHaveBeenCalledWith('fooInflection')
-    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith('getObligatoryMatchList', 'fooInflection', 'fooItem')
+    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith('getObligatoryMatchList', 'fooInflection', 'fooItem', Morpheme.comparisonTypes.EXACT)
   })
 
   it('101 LanguageDataset - getOptionalMatches executes checkMatches with getOptionalMatchList', () => {
@@ -587,6 +589,6 @@ describe('language-dataset.test.js', () => {
     LanguageDataset.getOptionalMatches('fooInflection', 'fooItem')
 
     expect(LanguageDataset.getOptionalMatchList).toHaveBeenCalledWith('fooInflection')
-    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith('getOptionalMatchList', 'fooInflection', 'fooItem')
+    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith('getOptionalMatchList', 'fooInflection', 'fooItem', Morpheme.comparisonTypes.EXACT)
   })
 })

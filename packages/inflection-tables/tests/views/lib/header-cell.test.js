@@ -15,13 +15,13 @@ describe('header-cell.test.js', () => {
 
   beforeAll(() => {
     let testGroupingFeature = new Feature(Feature.types.gender, 'masculine', Constants.LANG_GREEK)
-    testGroupFeatureType = new GroupFeatureType(testGroupingFeature, 'Gender')
+    testGroupFeatureType = new GroupFeatureType(Feature.types.gender, Constants.LANG_GREEK, 'Gender', [testGroupingFeature])
 
     let testParentGroupingFeature = new Feature(Feature.types.hdwd, 'Εἱς - Μία - Ἑν (1)', Constants.LANG_GREEK)
-    testParentGroupFeatureType = new GroupFeatureType(testParentGroupingFeature, 'Lemma')
+    testParentGroupFeatureType = new GroupFeatureType(Feature.types.hdwd, Constants.LANG_GREEK, 'Lemma', [testParentGroupingFeature])
 
     let testChildGroupingFeature = new Feature(Feature.types.type, 'regular', Constants.LANG_GREEK)
-    testChildGroupFeatureType = new GroupFeatureType(testChildGroupingFeature, 'Type')
+    testChildGroupFeatureType = new GroupFeatureType(Feature.types.type, Constants.LANG_GREEK, 'Type', [testChildGroupingFeature])
   })
 
   beforeEach(() => {

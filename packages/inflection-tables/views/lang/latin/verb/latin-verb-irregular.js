@@ -14,7 +14,7 @@ export default class LatinVerbIrregularView extends LatinVerbIrregularVoiceView 
 
     this.id = 'verbConjugationIrregular'
     this.name = 'verb-irregular'
-    this.title = 'Verb Conjugation (Irregular)'
+    this.title = 'Verb Conjugation (Irregular, Voice)'
 
     this.createTable()
   }
@@ -32,17 +32,20 @@ export default class LatinVerbIrregularView extends LatinVerbIrregularVoiceView 
     features.fullWidthRowTitles = [this.features.tenses]
   }
 
-  static matchFilter (homonym) {
-    return (this.languageID === homonym.languageID &&
-      homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech) &&
-      this.enabledForLexemes(homonym.lexemes) && this.enabledForHeadwords(homonym))
-  }
-
-  static enabledForHeadwords (homonym) {
-    let excluded = true
-    for (const inflection of homonym.inflections) {
-      excluded = excluded && inflection.word && LatinVerbIrregularVoiceView.enabledHdwds.includes(inflection.word.value)
-    }
-    return !excluded
+  /**
+   * Checks whether this view shall be displayed for an inflection given.
+   * It should match all the requirements of an irregular verb view and
+   * should not match irregular verb voice view (either this or
+   * irregular verb voice view shall be shown for a single inflection).
+   * @param {Inflection} inflection - Inflection that is checked on matching this view.
+   * @return {boolean} - True if this view shall be displayed for an inflection, false otherwise.
+   */
+  static enabledForInflection (inflection) {
+    return Boolean(
+      inflection[Feature.types.part].value === this.mainPartOfSpeech &&
+      inflection.constraints &&
+      inflection.constraints.irregularVerb &&
+      !LatinVerbIrregularVoiceView.enabledForInflection(inflection)
+    )
   }
 }

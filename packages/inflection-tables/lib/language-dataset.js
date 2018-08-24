@@ -347,7 +347,9 @@ export default class LanguageDataset {
 
     // If there is at least on full form based inflection, search for full form items
     if (formBased) {
-      let items = sourceSet.types.get(Form).items.reduce(this['reducer'].bind(this, inflections), [])
+      // Match against form based inflection only
+      const formInflections = inflections.filter(i => i.constraints.fullFormBased)
+      let items = sourceSet.types.get(Form).items.reduce(this['reducer'].bind(this, formInflections), [])
       if (items.length > 0) {
         inflectionSet.addInflectionItems(items)
       }
@@ -355,19 +357,8 @@ export default class LanguageDataset {
 
     // Get paradigm matches
     if (paradigmBased) {
-      let paradigmIDs = []
-      for (let inflection of inflections) {
-        if (inflection.constraints.paradigmBased) {
-          let matchingParadigms = sourceSet.getMatchingItems(Paradigm, inflection)
-          // Make sure all paradigms are unique
-          for (const paradigm of matchingParadigms) {
-            if (!paradigmIDs.includes(paradigm.id)) {
-              inflectionSet.addInflectionItem(paradigm)
-              paradigmIDs.push(paradigm.id)
-            }
-          }
-        }
-      }
+      let paradigms = sourceSet.getMatchingItems(Paradigm, inflections)
+      inflectionSet.addInflectionItems(paradigms)
     }
 
     // Add footnotes

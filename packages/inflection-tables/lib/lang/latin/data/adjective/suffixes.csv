@@ -1,7 +1,9 @@
 Ending,Number,Case,Declension,Gender,Type,Footnote
 a,singular,nominative,1st 2nd,feminine,regular,
 us,singular,nominative,1st 2nd,masculine,regular,
+-,singular,nominative,1st 2nd,masculine,irregular,
 um,singular,nominative,1st 2nd,neuter,regular,
+-,singular,nominative,1st 2nd,neuter,irregular,
 is,singular,nominative,3rd,feminine,regular,
 -,singular,nominative,3rd,feminine,irregular,6
 -,singular,nominative,3rd,masculine,regular,
@@ -52,7 +54,9 @@ e,singular,locative,3rd,feminine,irregular,7
 a,singular,vocative,1st 2nd,feminine,regular,
 e,singular,vocative,1st 2nd,masculine,regular,
 ī,singular,vocative,1st 2nd,masculine,irregular,
+-,singular,vocative,1st 2nd,masculine,irregular,
 um,singular,vocative,1st 2nd,neuter,regular,
+-,singular,vocative,1st 2nd,neuter,irregular,
 is,singular,vocative,3rd,feminine,regular,
 -,singular,vocative,3rd,masculine,regular,
 e,singular,vocative,3rd,neuter,regular,

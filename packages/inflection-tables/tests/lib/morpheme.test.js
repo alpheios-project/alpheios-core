@@ -34,11 +34,7 @@ describe('morpheme.test.js', () => {
     expect(morpheme.match).toBeUndefined()
   })
 
-  it('3 Morpheme - ClassType returns Morpheme', () => {
-    expect(Morpheme.ClassType).toEqual(Morpheme)
-  })
-
-  it('4 Morpheme - readObject returns Morpheme objects with attributes from json', () => {
+  it('3 Morpheme - readObject returns Morpheme objects with attributes from json', () => {
     let jsonObject = {
       value: 'δύο',
       features: {
@@ -73,7 +69,7 @@ describe('morpheme.test.js', () => {
     })
   })
 
-  it('5 Morpheme - clone returns any class extended from Morpheme objects with the same attributes', () => {
+  it('4 Morpheme - clone returns any class extended from Morpheme objects with the same attributes', () => {
     let jsonObject = {
       value: 'δύο',
       features: {
@@ -99,7 +95,7 @@ describe('morpheme.test.js', () => {
     expect(clonedMorpheme.footnote).toEqual([ 'foovalue' ])
   })
 
-  it('6 Morpheme - featureMatch - compares feature with morpheme', () => {
+  it('5 Morpheme - featureMatch - compares feature with morpheme', () => {
     let jsonObject = {
       value: 'δύο',
       features: {
@@ -121,7 +117,7 @@ describe('morpheme.test.js', () => {
     expect(morpheme.featureMatch(featureForCompareSuccess)).toBeTruthy()
   })
 
-  it('7 Morpheme - matchingValues - return matched values for argument features', () => {
+  it('6 Morpheme - matchingValues - return matched values for argument features', () => {
     let jsonObject = {
       value: 'δύο',
       features: {
@@ -144,10 +140,10 @@ describe('morpheme.test.js', () => {
     expect(morpheme.matchingValues(featureForCompareSuccessSingle)).toEqual([ 'numeral' ])
 
     let featureForCompareSuccessMultiple = new Feature(Feature.types.part, ['numeral', 'verb'], Constants.LANG_GREEK)
-    expect(morpheme.matchingValues(featureForCompareSuccessMultiple)).toEqual([ 'numeral' ])
+    expect(morpheme.matchingValues(featureForCompareSuccessMultiple, Morpheme.comparisonTypes.PARTIAL)).toEqual([ 'numeral' ])
   })
 
-  it('8 Morpheme - getCommonGroups - compares features in featureGroups', () => {
+  it('7 Morpheme - getCommonGroups - compares features in featureGroups', () => {
     let suffixes = []
 
     let suffix1 = {
@@ -172,7 +168,7 @@ describe('morpheme.test.js', () => {
     expect(Morpheme.getCommonGroups(suffixes)).toEqual(['part of speech'])
   })
 
-  it('9 Morpheme - isInSameGroupWith - compares current morpheme with morpheme from argument - if there are no common groups - returns false', () => {
+  it('8 Morpheme - isInSameGroupWith - compares current morpheme with morpheme from argument - if there are no common groups - returns false', () => {
     let jsonObject = {
       value: 'δύο',
       features: {
@@ -193,7 +189,7 @@ describe('morpheme.test.js', () => {
     expect(morpheme.isInSameGroupWith(suffix1)).toBeFalsy()
   })
 
-  it('10 Morpheme - isInSameGroupWith - compares current morpheme with morpheme from argument - if value is not the same - returns false', () => {
+  it('9 Morpheme - isInSameGroupWith - compares current morpheme with morpheme from argument - if value is not the same - returns false', () => {
     let jsonObject = {
       value: 'δύο',
       features: {
@@ -215,7 +211,7 @@ describe('morpheme.test.js', () => {
     expect(morpheme.isInSameGroupWith(suffix1)).toBeFalsy()
   })
 
-  it('11 Morpheme - isInSameGroupWith - compares current morpheme with morpheme from argument - if value of features from common group is different - return false', () => {
+  it('10 Morpheme - isInSameGroupWith - compares current morpheme with morpheme from argument - if value of features from common group is different - return false', () => {
     let jsonObject = {
       value: 'δύο',
       features: {

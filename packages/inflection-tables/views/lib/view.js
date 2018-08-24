@@ -127,13 +127,13 @@ export default class View {
    * to return multiple views if necessary (e.g. paradigm view can return multiple instances of the view
    * with different data).
    * @param {Inflection} homonym - An inflection for which matching instances to be found.
-   * @param {MessageBundle} messages
+   * @param {string} locale
    * @return {View[] | []} Array of view instances or an empty array if view instance does not match inflection data.
    */
-  static getMatchingInstances (homonym, messages) {
+  static getMatchingInstances (homonym, locale) {
     if (this.matchFilter(homonym)) {
       let inflectionData = this.getInflectionsData(homonym)
-      return [new this(homonym, inflectionData, messages)]
+      return [new this(homonym, inflectionData, locale)]
     }
     return []
   }

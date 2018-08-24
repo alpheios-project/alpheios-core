@@ -1,9 +1,6 @@
 import { Feature } from 'alpheios-data-models'
-// import LanguageDataset from './language-dataset.js'
-// import Form from './form.js'
-// import Suffix from './suffix.js'
 
-export default class Inflections {
+export default class InflectionList {
   constructor (type) {
     this.type = type
     this.items = [] // Suffixes or forms
@@ -64,22 +61,22 @@ export default class Inflections {
   /**
    * Checks if an array of items has at least one element that matches an inflection.
    *  A match is determined as a result of item's `match` function.
-   * @param {Inflection} inflection - An inflection to match against.
+   * @param {Inflection[]} inflections - One or several inflection to match against.
    * @return {boolean} - True if there is at least one match, false otherwise
    */
-  hasMatches (inflection) {
-    return this.items.some(i => i.matches(inflection))
+  hasMatches (inflections) {
+    return this.items.some(i => i.matches(inflections))
   }
 
   /**
    * Returns an array of items that `matches` an inflection. A match is determined as a result of item's `match`
    * function. Returned value is determined by item's `match` function as well.
-   * @param {Inflection} inflection - An inflection to match against.
-   * @return {Object[]} An array of objects. Each object is returned by a `match` function of an individual item.
+   * @param {Inflection[]} inflections - An inflection to match against.
+   * @return {Suffix[]|Form[]|Paradigm[]} An array of objects. Each object is returned by a `match` function of an individual item.
    * Its format is dependent on the `match` function implementation.
    */
-  getMatches (inflection) {
-    return this.hasMatches(inflection) ? this.items.filter(i => i.matches(inflection)) : []
+  getMatches (inflections) {
+    return this.items.filter(i => i.matches(inflections))
   }
 
   /**

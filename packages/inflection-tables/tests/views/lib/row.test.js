@@ -53,7 +53,7 @@ describe('row.test.js', () => {
     testCells.push(new Cell([testMorphemes[8]], testFeatures))
 
     let testGroupingFeature = new Feature(Feature.types.case, 'nominative', Constants.LANG_GREEK)
-    let testGroupFeatureType = new GroupFeatureType(testGroupingFeature, 'Case')
+    let testGroupFeatureType = new GroupFeatureType(Feature.types.case, Constants.LANG_GREEK, 'Case', [testGroupingFeature])
     testTitleCell = new RowTitleCell('nominative', testGroupFeatureType, 4)
   })
 

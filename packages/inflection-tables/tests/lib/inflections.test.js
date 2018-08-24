@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { Feature } from 'alpheios-data-models'
 
-import Inflections from '@lib/inflections.js'
+import Inflections from '@lib/inflection-list.js'
 import Form from '@lib/form.js'
 
 describe('inflections.test.js', () => {

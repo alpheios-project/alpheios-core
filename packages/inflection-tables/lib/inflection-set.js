@@ -1,4 +1,4 @@
-import Inflections from './inflections.js'
+import InflectionList from './inflection-list.js'
 
 /**
  * Stores inflections data of different types {such as `Suffix`, `Form`, or `Paradigm`} in a `types` map. Items are grouped by type.
@@ -35,22 +35,22 @@ export default class InflectionSet {
   /**
    * Checks whether an inflection set has any items of certain type that matches an inflection.
    * @param {Function<Suffix> | Function<Form> | Function<Paradigm>} itemType - A type of an item.
-   * @param {Inflection} inflection - An inflection to match.
+   * @param {Inflection[]} inflections - One or several inflections to match.
    * @return {boolean} True if there are matches, false otherwise
    */
-  hasMatchingItems (itemType, inflection) {
-    return (this.types.has(itemType) && this.types.get(itemType).hasMatches(inflection))
+  hasMatchingItems (itemType, inflections) {
+    return (this.types.has(itemType) && this.types.get(itemType).hasMatches(inflections))
   }
 
   /**
    * Returns an array of items of certain type that matches an inflection.
    * @param {Function<Suffix> | Function<Form> | Function<Paradigm>} itemType - A type of an item.
-   * @param {Inflection} inflection - An inflection to match.
+   * @param {Inflection[]} inflections - One or several inflections to match.
    * @return {Suffix[] | Form[] | Paradigm[] | []} Array of items of a particular type if any matches found.
    * An empty array otherwise.
    */
-  getMatchingItems (itemType, inflection) {
-    return this.hasMatchingItems(itemType, inflection) ? this.types.get(itemType).getMatches(inflection) : []
+  getMatchingItems (itemType, inflections) {
+    return this.types.has(itemType) ? this.types.get(itemType).getMatches(inflections) : []
   }
 
   /**
@@ -66,10 +66,11 @@ export default class InflectionSet {
    * @param {Suffix[] | Form[] | Paradigm[]} items
    */
   addInflectionItems (items) {
-    let classType = items[0].constructor.ClassType
+    // We assume all inflection items have the same type
+    let classType = items[0].constructor
 
     if (!this.types.has(classType)) {
-      this.types.set(classType, new Inflections(classType))
+      this.types.set(classType, classType.createList())
     }
 
     this.types.get(classType).addItems(items)
@@ -101,7 +102,7 @@ export default class InflectionSet {
    */
   addFootnote (classType, index, footnote) {
     if (!this.types.has(classType)) {
-      this.types.set(classType, new Inflections(classType))
+      this.types.set(classType, new InflectionList(classType))
     }
     this.types.get(classType).addFootnote(index, footnote)
   }

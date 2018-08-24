@@ -1,4 +1,5 @@
 import { Feature } from 'alpheios-data-models'
+import InflectionList from './inflection-list.js'
 import MatchData from './match-data'
 import ExtendedLanguageData from './extended-language-data'
 import uuidv4 from 'uuid/v4'
@@ -38,8 +39,12 @@ export default class Morpheme {
     this.footnotes = []
   }
 
-  static get ClassType () {
-    return this
+  /**
+   * Creates a list of items of the same type as self
+   * @return {InflectionList}
+   */
+  static createList () {
+    return new InflectionList(this)
   }
 
   static get comparisonTypes () {
@@ -65,7 +70,7 @@ export default class Morpheme {
   }
 
   static readObject (jsonObject) {
-    let suffix = new this.ClassType(jsonObject.value)
+    let suffix = new this(jsonObject.value)
 
     if (jsonObject.features) {
       for (let key in jsonObject.features) {
@@ -111,7 +116,7 @@ export default class Morpheme {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    let clone = new this.constructor.ClassType(this.value)
+    let clone = new this.constructor(this.value)
     for (const key in this.features) {
       if (this.features.hasOwnProperty(key)) {
         clone.features[key] = this.features[key]
@@ -187,7 +192,7 @@ export default class Morpheme {
         // At least one value should be the same
         for (const cfValue of comparisonFeature.values) {
           if (morphemeValue.values.includes(cfValue)) {
-            matches.push(comparisonFeature.value)
+            matches.push(cfValue)
           }
         }
       } else {

@@ -17,10 +17,10 @@ describe('row-title-cell.test.js', () => {
 
   beforeAll(async () => {
     let testGroupingFeature = new Feature(Feature.types.case, 'nominative', Constants.LANG_GREEK)
-    testGroupFeatureType = new GroupFeatureType(testGroupingFeature, 'Case')
+    testGroupFeatureType = new GroupFeatureType(Feature.types.case, Constants.LANG_GREEK, 'Case', [testGroupingFeature])
 
     let testParentGroupingFeature = new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK)
-    testParentGroupFeatureType = new GroupFeatureType(testParentGroupingFeature, 'Number')
+    testParentGroupFeatureType = new GroupFeatureType(Feature.types.number, Constants.LANG_GREEK, 'Number', [testParentGroupingFeature])
   })
   beforeEach(() => {
     jest.spyOn(console, 'error')
