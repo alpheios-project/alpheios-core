@@ -7,7 +7,7 @@
             <span v-show="!collapsed">[-]</span>
         </div>
 
-        <div v-show="!collapsed" :style="tableStyle" class="infl-table infl-table--wide">
+        <div v-show="!collapsed" :style="tableStyle" class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
             <template v-for="row in view.wideTable.rows">
                 <div :class="cell.classes" v-for="cell in row.cells"
                      @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">

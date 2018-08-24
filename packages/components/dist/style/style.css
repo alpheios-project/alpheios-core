@@ -200,12 +200,6 @@
  */
   /* Iframe
  ========================================================================== */
-  /* Prevent the 300ms delay for touchscreen interactions
- ========================================================================== */
-  /*
- * Most browsers prevent the 300ms delay automatically for sites that use the `width=device-width` property.
- * For Safari on iOS 9.3+, IE 11 and Edge on desktops and IE 11 on Windows Phone 8.1 it must be applied manually.
- */
   /* Pass media breakpoints to JS
  ========================================================================== */
   /*
@@ -2125,16 +2119,10 @@
   /* Equal child widths
  ========================================================================== */
   /*
- *    Instead of 0, 1px is needed to make cell wrap into next row if predecessor is 100% wide
- *    and the grid gutter is 0 pixels wide
- */
-  /*
- * 1. Make `width: 1px` work, because according to the spec flex items won’t shrink
- *    below their minimum content size. To change this, set the min-width.
- *    Only needed for Firefox. All other browsers ignore this.
- *
- * 2. `width` is ignored when wrapping flex items in Safari
- *    https://github.com/philipwalton/flexbugs#11-min-and-max-size-declarations-are-ignored-when-wrapping-flex-items
+ * 1. Reset the `min-width`, which is set to auto by default, because
+ *    flex items won't shrink below their minimum intrinsic content size.
+ *    Using `1px` instead of `0`, so items still wrap into the next line,
+ *    if they have zero width and padding and the predecessor is 100% wide.
  */
   /* Phone landscape and bigger */
   /* Tablet landscape and bigger */
@@ -2837,15 +2825,6 @@
     display: none; }
   .auk iframe {
     border: 0; }
-  .auk a,
-  .auk area,
-  .auk button,
-  .auk input,
-  .auk label,
-  .auk select,
-  .auk summary,
-  .auk textarea {
-    touch-action: manipulation; }
   .auk .var-media-s::before {
     content: "640px"; }
   .auk .var-media-m::before {
@@ -3837,6 +3816,8 @@
   .auk .uk-container .uk-container {
     padding-left: 0;
     padding-right: 0; }
+  .auk .uk-container-xsmall {
+    max-width: 750px; }
   .auk .uk-container-small {
     max-width: 900px; }
   .auk .uk-container-large {
@@ -5955,14 +5936,10 @@
     width: calc(100% * 1 / 6.001); }
   .auk .uk-child-width-auto > * {
     width: auto; }
-  .auk .uk-child-width-expand > * {
-    width: 1px; }
   .auk .uk-child-width-expand > :not([class*='uk-width']) {
     flex: 1;
     /* 1 */
-    min-width: 0;
-    /* 2 */
-    flex-basis: 1px; }
+    min-width: 1px; }
   @media (min-width: 640px) {
     .auk .uk-child-width-1-1\@s > * {
       width: 100%; }
@@ -5978,12 +5955,9 @@
       width: calc(100% * 1 / 6.001); }
     .auk .uk-child-width-auto\@s > * {
       width: auto; }
-    .auk .uk-child-width-expand\@s > * {
-      width: 1px; }
     .auk .uk-child-width-expand\@s > :not([class*='uk-width']) {
       flex: 1;
-      min-width: 0;
-      flex-basis: 1px; } }
+      min-width: 1px; } }
   @media (min-width: 960px) {
     .auk .uk-child-width-1-1\@m > * {
       width: 100%; }
@@ -5999,12 +5973,9 @@
       width: calc(100% * 1 / 6.001); }
     .auk .uk-child-width-auto\@m > * {
       width: auto; }
-    .auk .uk-child-width-expand\@m > * {
-      width: 1px; }
     .auk .uk-child-width-expand\@m > :not([class*='uk-width']) {
       flex: 1;
-      min-width: 0;
-      flex-basis: 1px; } }
+      min-width: 1px; } }
   @media (min-width: 1200px) {
     .auk .uk-child-width-1-1\@l > * {
       width: 100%; }
@@ -6020,12 +5991,9 @@
       width: calc(100% * 1 / 6.001); }
     .auk .uk-child-width-auto\@l > * {
       width: auto; }
-    .auk .uk-child-width-expand\@l > * {
-      width: 1px; }
     .auk .uk-child-width-expand\@l > :not([class*='uk-width']) {
       flex: 1;
-      min-width: 0;
-      flex-basis: 1px; } }
+      min-width: 1px; } }
   @media (min-width: 1600px) {
     .auk .uk-child-width-1-1\@xl > * {
       width: 100%; }
@@ -6041,12 +6009,9 @@
       width: calc(100% * 1 / 6.001); }
     .auk .uk-child-width-auto\@xl > * {
       width: auto; }
-    .auk .uk-child-width-expand\@xl > * {
-      width: 1px; }
     .auk .uk-child-width-expand\@xl > :not([class*='uk-width']) {
       flex: 1;
-      min-width: 0;
-      flex-basis: 1px; } }
+      min-width: 1px; } }
   .auk [class*='uk-width'] {
     box-sizing: border-box;
     width: 100%;
@@ -6087,10 +6052,8 @@
   .auk .uk-width-auto {
     width: auto; }
   .auk .uk-width-expand {
-    width: 1px;
     flex: 1;
-    min-width: 0;
-    flex-basis: 1px; }
+    min-width: 1px; }
   @media (min-width: 640px) {
     .auk {
       /* Whole */
@@ -6139,10 +6102,8 @@
       .auk .uk-width-auto\@s {
         width: auto; }
       .auk .uk-width-expand\@s {
-        width: 1px;
         flex: 1;
-        min-width: 0;
-        flex-basis: 1px; } }
+        min-width: 1px; } }
   @media (min-width: 960px) {
     .auk {
       /* Whole */
@@ -6191,10 +6152,8 @@
       .auk .uk-width-auto\@m {
         width: auto; }
       .auk .uk-width-expand\@m {
-        width: 1px;
         flex: 1;
-        min-width: 0;
-        flex-basis: 1px; } }
+        min-width: 1px; } }
   @media (min-width: 1200px) {
     .auk {
       /* Whole */
@@ -6243,10 +6202,8 @@
       .auk .uk-width-auto\@l {
         width: auto; }
       .auk .uk-width-expand\@l {
-        width: 1px;
         flex: 1;
-        min-width: 0;
-        flex-basis: 1px; } }
+        min-width: 1px; } }
   @media (min-width: 1600px) {
     .auk {
       /* Whole */
@@ -6295,10 +6252,8 @@
       .auk .uk-width-auto\@xl {
         width: auto; }
       .auk .uk-width-expand\@xl {
-        width: 1px;
         flex: 1;
-        min-width: 0;
-        flex-basis: 1px; } }
+        min-width: 1px; } }
   .auk .uk-text-lead {
     font-size: 1.5rem;
     line-height: 1.5;

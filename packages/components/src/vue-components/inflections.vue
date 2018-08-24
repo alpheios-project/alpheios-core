@@ -194,7 +194,6 @@
         set: function (newValue) {
           this.selectedPartOfSpeech = newValue
           this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
-
           this.selectedView = this.views[0]
           if (!this.selectedView.hasComponentData) {
             // Rendering is not required for component-enabled views
