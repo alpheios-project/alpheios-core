@@ -353,6 +353,18 @@ export default class Feature {
   }
 
   /**
+   * Creates an array of Feature objects where each Feature object is matching one feature value
+   * form the values of this object.
+   * Useful when the current objects is a type feature and it is necessary to create an array
+   * of Feature objects for the type from it.
+   * @return {Feature[]} - An array of Feature objects. Each object represents one feature value
+   * from the current object.
+   */
+  get ownFeatures () {
+    return this.values.map(v => new Feature(this.type, v, this.languageID, 1, this.allowedValues))
+  }
+
+  /**
    * Create a copy of the feature object.
    */
   getCopy () {

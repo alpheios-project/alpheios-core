@@ -150,6 +150,10 @@ class LanguageModel {
     return this.languageCode
   }
 
+  /**
+   * Return a list of feature values that are allowed for each feature type
+   * @return {Map<string, string[]>}
+   */
   static get featureValues () {
     /*
     This could be a static variable, but then it will create a circular reference:
