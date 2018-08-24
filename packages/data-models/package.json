@@ -1,6 +1,6 @@
 {
   "name": "alpheios-data-models",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Alpheios Data Models",
   "main": "dist/alpheios-data-models.min.js",
   "directories": {
@@ -9,12 +9,9 @@
   "scripts": {
     "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-c1": "standard --fix && jest tests/greek_language_model.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    
     "build-lib": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
     "build-node": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
-
     "build": "npm run build-lib && npm run build-node",
-
     "build-prod": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
     "build-dev": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
     "lint": "standard --fix"
@@ -34,7 +31,7 @@
     "babel-jest": "^23.4.0",
     "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
-    "eslint": "^5.1.0",
+    "eslint": "^5.4.0",
     "intl-messageformat": "^2.1.0",
     "jest": "^23.4.0",
     "jest-fetch-mock": "1.6.5",
