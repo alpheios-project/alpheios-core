@@ -367,7 +367,7 @@ describe('lexical-query.test.js', () => {
   it('11 LexicalQuery - getLexiconOptions parses empty lexicons and returns {}', () => {
     let mockSelector = {
       location: 'http://example.org',
-      languageCode: 'lat'
+      languageID: Constants.LANG_LATIN
     }
     let languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let query = LexicalQuery.create(mockSelector, {

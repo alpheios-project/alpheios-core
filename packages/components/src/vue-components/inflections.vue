@@ -581,7 +581,7 @@
         cursor: pointer;
     }
 
-    .infl-suff--suffix-match {
+    .infl-suff.infl-suff--suffix-match {
         background-color: rgb(188, 230, 240);
     }
 
@@ -589,7 +589,7 @@
         background-color: lightgray;
     }
 
-    .infl-suff--suffix-match.infl-suff--full-feature-match {
+    .infl-suff.infl-suff--suffix-match.infl-suff--full-feature-match {
         background-color: $alpheios-highlight-color;
         font-weight: 700;
     }

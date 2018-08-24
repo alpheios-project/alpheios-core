@@ -143,6 +143,20 @@
     border-color: transparent transparent #555 transparent;
 }
 
+.alpheios-panel-right {
+    .alph_tooltip-bottom-right {
+        top: 135%;
+        right: auto;
+        margin-left:0;
+        left: 0
+    }
+    .alph_tooltip-bottom-right::after {
+        margin-left:0;
+        right: auto;
+        left: 15%;
+    }
+}
+
 .alph_tooltip-left {
     top: -5px;
     bottom: auto;

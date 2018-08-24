@@ -52,7 +52,7 @@
   },
   "TOOLTIP_OPTIONS": {
     "message": "Options",
-    "description": "tooltip for settings tab",
+    "description": "tooltip for options tab",
     "component": "Panel"
   },
   "TOOLTIP_STATUS": {
@@ -172,7 +172,7 @@
     "component": "Panel"
   },
   "TEXT_INFO_SETTINGS": {
-    "message": "Click the Settings wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').",
+    "message": "Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').",
     "description": "info text",
     "component": "Panel"
   },
@@ -370,7 +370,7 @@
     "component": "Lookup"
   },
   "LABEL_RESKIN_SETTINGS": {
-    "message": "Reskin settings",
+    "message": "Reskin options",
     "description": "Label for Reskin component",
     "component": "ReskinFontColor"
   },

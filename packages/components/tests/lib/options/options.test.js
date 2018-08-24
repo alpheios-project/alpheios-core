@@ -23,15 +23,23 @@ describe('options.test.js', () => {
     jest.clearAllMocks()
   })
 
-  window.localStorage = {
+  let localStorageMock = {
     values: {},
-    getItem: function (key) {
-      return this.values[key]
-    },
-    setItem: function (key, value) {
-      this.values[key] = value
-    }
+    getItem: jest.fn(key => localStorageMock.values[key]),
+    setItem: jest.fn((key, value) => {
+      localStorageMock.values[key] = value
+    }),
+    removeItem: jest.fn((key, value) => {
+      delete localStorageMock.values[key]
+    })
   }
+  Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock
+  })
+
+  Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock
+  })
 
   it('1 Options - constructor could create object without any arguments', () => {
     expect(function () {

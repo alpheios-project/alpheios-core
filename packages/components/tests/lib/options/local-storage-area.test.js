@@ -3,30 +3,29 @@ import LocalStorageArea from '@/lib/options/local-storage-area'
 // import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 
 describe('local-storage-area.test.js', () => {
-  window.localStorage = {
-    values: {},
-    getItem: function (key) {
-      return this.values[key]
-    },
-    setItem: function (key, value) {
-      this.values[key] = value
-    },
-    removeItem: function (key, value) {
-      delete this.values[key]
-    }
-  }
-
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
+
+  let localStorageMock = {
+    values: {},
+    getItem: jest.fn(key => localStorageMock.values[key]),
+    setItem: jest.fn((key, value) => {
+      localStorageMock.values[key] = value
+    }),
+    removeItem: jest.fn((key, value) => {
+      delete localStorageMock.values[key]
+    })
+  }
+
+  Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock
+  })
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
-
-    jest.spyOn(window.localStorage, 'getItem')
-    jest.spyOn(window.localStorage, 'setItem')
   })
   afterEach(() => {
     jest.resetModules()
@@ -39,6 +38,7 @@ describe('local-storage-area.test.js', () => {
     let stAdapter = new LocalStorageArea('alpheios-content-options')
 
     await stAdapter.get()
+
     expect(window.localStorage.getItem).toHaveBeenCalled()
   })
 

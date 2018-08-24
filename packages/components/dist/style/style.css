@@ -7610,6 +7610,17 @@
   border-style: solid;
   border-color: transparent transparent #555 transparent; }
 
+.alpheios-panel-right .alph_tooltip-bottom-right {
+  top: 135%;
+  right: auto;
+  margin-left: 0;
+  left: 0; }
+
+.alpheios-panel-right .alph_tooltip-bottom-right::after {
+  margin-left: 0;
+  right: auto;
+  left: 15%; }
+
 .alph_tooltip-left {
   top: -5px;
   bottom: auto;
@@ -8229,9 +8240,10 @@ div.alpheios-color_schema_light_class {
     border-color: #333333; }
   div.alpheios-color_schema_light_class .infl-suff--suffix-match {
     color: #333333;
-    background-color: lightblue; }
+    background: #bce6f0; }
   div.alpheios-color_schema_light_class .infl-suff--suffix-match.infl-suff--full-feature-match {
-    background-color: #F6D918; }
+    color: #333333;
+    background: #f6d918; }
   div.alpheios-color_schema_light_class .infl-cell--hl {
     background: #d3d3d3; }
   div.alpheios-color_schema_light_class .alph_tooltip .tooltiptext {
@@ -8285,7 +8297,11 @@ div.alpheios-color_schema_dark_class {
   div.alpheios-color_schema_dark_class .infl-table {
     border-color: #f2f2f2; }
   div.alpheios-color_schema_dark_class .infl-suff--suffix-match {
-    color: #282828; }
+    color: #333333;
+    background: #bce6f0; }
+  div.alpheios-color_schema_dark_class .infl-suff--suffix-match.infl-suff--full-feature-match {
+    color: #333333;
+    background: #f6d918; }
   div.alpheios-color_schema_dark_class .infl-cell--hl {
     background: #686868; }
   div.alpheios-color_schema_dark_class .alph_tooltip .tooltiptext {
@@ -8700,7 +8716,6 @@ to{transform:rotate(2turn)
 .alpheios-lookup__form {
   margin: 15px 10px 5px;
   text-align: left;
-  overflow: hidden;
 }
 .uk-input.alpheios-lookup__input {
   width: 70%;
@@ -9175,13 +9190,13 @@ h4.alpheios-inflections__additional_title {
 .infl-suff {
   cursor: pointer;
 }
-.infl-suff--suffix-match {
+.infl-suff.infl-suff--suffix-match {
   background-color: #bce6f0;
 }
 .infl-suff--full-feature-match {
   background-color: lightgray;
 }
-.infl-suff--suffix-match.infl-suff--full-feature-match {
+.infl-suff.infl-suff--suffix-match.infl-suff--full-feature-match {
   background-color: #F6D918;
   font-weight: 700;
 }
@@ -9290,7 +9305,7 @@ h3.alpheios-inflections__credits-title {
   flex: none;
   font-weight: normal;
   font-style: italic;
-  padding: 5px;
+  padding: 5px 10px;
   font-size: 80%;
 }
 .alpheios-grammar__frame-cont {
@@ -9510,7 +9525,7 @@ ul.alpheios-skin_properties {
   flex-direction: row-reverse;
 }
 .alpheios-panel__content {
-  overflow: auto;
+  overflow: visible;
   grid-area: content;
   direction: ltr;
   box-sizing: border-box;

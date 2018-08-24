@@ -1,6 +1,6 @@
 <template>
   <div class="alpheios-grammar" v-if="res">
-      <div class="alpheios-grammar__frame-cont">
+      <div class="alpheios-grammar__frame-cont" v-show="res.url">
           <iframe class="alpheios-grammar__frame" :src="res.url" v-if="res.url" scrolling="yes"></iframe>
       </div>
       <div class="alpheios-grammar__provider" v-if="res.provider">{{ res.provider.toString() }}</div>
@@ -30,7 +30,7 @@
         flex: none;
         font-weight: normal;
         font-style: italic;
-        padding: 5px;
+        padding: 5px 10px;
         font-size: 80%;
     }
 

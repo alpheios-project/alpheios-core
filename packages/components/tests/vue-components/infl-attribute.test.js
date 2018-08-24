@@ -3,8 +3,9 @@
 import { mount } from '@vue/test-utils'
 import InflectionAttribute from '@/vue-components/infl-attribute.vue'
 import Vue from 'vue/dist/vue'
+import { Feature, Constants } from 'alpheios-data-models'
 
-describe('tooltip.test.js', () => {
+describe('infl-attribute.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -72,10 +73,81 @@ describe('tooltip.test.js', () => {
     expect(cmp.emitted()['sendfeature'][0]).toEqual([{ value: 'fooValue', type: 'fooType2' }])
   })
 
-/*  it('3 InflectionAttribute - check required props', () => {
-    let cmp = mount(InflectionAttribute)
+  it('3 InflectionAttribute - attributeClass method creates class list from featureType and extra classes', () => {
+    let cmp = mount(InflectionAttribute, {
+      propsData: {
+        data: {},
+        type: '',
+        linkedfeatures: ['fooFeatureType']
+      }
+    })
 
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "data"'))
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "type"'))
-  }) */
+    let classList1 = cmp.vm.attributeClass('fooFeatureType')
+    expect(classList1).toEqual('alpheios-morph__linkedattr')
+
+    let classList2 = cmp.vm.attributeClass('anotherFooFeatureType')
+    expect(classList2).toEqual('alpheios-morph__attr')
+
+    let classList3 = cmp.vm.attributeClass('anotherFooFeatureType', ['someOtherClass'])
+    expect(classList3).toEqual('alpheios-morph__attr someOtherClass')
+  })
+
+  it('4 InflectionAttribute - decorate method formats data depending on the type and decorators', () => {
+    let cmp = mount(InflectionAttribute, {
+      propsData: {
+        data: {
+          'part of speech': new Feature(Feature.types.part, 'verb', Constants.LANG_GREEK),
+          'footype': 'foovalue'
+        },
+        type: 'part of speech',
+        decorators: ['brackets']
+      }
+    })
+
+    expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('[verb]')
+
+    cmp.vm.decorators = ['appendtype']
+
+    expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('verb part of speech')
+
+    cmp.vm.decorators = ['parenthesize']
+
+    expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('(foovalue)')
+
+    cmp.vm.decorators = ['abbreviate']
+
+    expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('foovalue')
+
+    expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('verb')
+  })
+
+  it('5 InflectionAttribute - sendFeature method check arguments and if passed an array - it takes only the first value', () => {
+    let cmp = mount(InflectionAttribute, {
+      propsData: {
+        data: {},
+        type: '',
+        linkedfeatures: ['part of speech']
+      }
+    })
+
+    let testFeature = new Feature(Feature.types.part, 'verb', Constants.LANG_GREEK)
+
+    cmp.vm.sendFeature([testFeature])
+    expect(cmp.emitted()['sendfeature'][0]).toEqual([testFeature])
+  })
+
+  it('6 InflectionAttribute - sendFeature method check arguments and if the type of passed feature is not in linked features - event won\'t be emitted', () => {
+    let cmp = mount(InflectionAttribute, {
+      propsData: {
+        data: {},
+        type: '',
+        linkedfeatures: ['part of speech']
+      }
+    })
+
+    let testFeature = new Feature(Feature.types.gender, 'femine', Constants.LANG_GREEK)
+
+    cmp.vm.sendFeature([testFeature])
+    expect(cmp.emitted()['sendfeature']).toBeFalsy()
+  })
 })

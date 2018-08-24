@@ -159,7 +159,7 @@
       margin: 15px 10px 5px;
 
       text-align: left;
-      overflow: hidden;
+      
     }
 
     .uk-input.alpheios-lookup__input {

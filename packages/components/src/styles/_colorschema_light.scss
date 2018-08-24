@@ -35,11 +35,14 @@ div.alpheios-color_schema_light_class {
 
 	.infl-suff--suffix-match {
 	    color: $alpheios-color_schema_light_text_color;
-		background-color: lightblue; // This is a temporary fix for partial suffix matches not being highlighted
+	    background: $alpheios-inflections__suffix_match_background;
 	}
+
 	.infl-suff--suffix-match.infl-suff--full-feature-match {
-		background-color: $alpheios-highlight-color;
+	    color: $alpheios-color_schema_light_text_color;
+	    background: $alpheios-inflections__suffix_full_match_background;
 	}
+
     .infl-cell--hl {
         background: $alpheios-color_schema_light_background_hover;
     }

@@ -36,8 +36,15 @@ div.alpheios-color_schema_dark_class {
 	}
 
 	.infl-suff--suffix-match {
-	    color: $alpheios-color_schema_dark_background;
+	    color: $alpheios-color_schema_light_text_color;
+	    background: $alpheios-inflections__suffix_match_background;
 	}
+
+	.infl-suff--suffix-match.infl-suff--full-feature-match {
+	    color: $alpheios-color_schema_light_text_color;
+	    background: $alpheios-inflections__suffix_full_match_background;
+	}
+	
     .infl-cell--hl {
         background: $alpheios-color_schema_dark_background_hover;
     }

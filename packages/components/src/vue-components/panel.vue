@@ -62,14 +62,14 @@
 
               <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_MOVE_PANEL_LEFT')" v-show="attachToLeftVisible">
                 <span @click="setPosition('left')" v-show="attachToLeftVisible"
-                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow left">
+                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left">
                     <attach-left-icon></attach-left-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_MOVE_PANEL_RIGHT')" v-show="attachToRightVisible">
                 <span @click="setPosition('right')" v-show="attachToRightVisible"
-                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow right">
+                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right">
                     <attach-right-icon></attach-right-icon>
                 </span>
               </alph-tooltip>
@@ -77,7 +77,7 @@
               <alph-tooltip
                 tooltipDirection = "bottom-right"
                 :tooltipText = "ln10Messages('TOOLTIP_CLOSE_PANEL')">
-                <span @click="close" class="alpheios-panel__header-action-btn close" >
+                <span @click="close" class="alpheios-panel__header-action-btn alpheios_close" >
                     <close-icon></close-icon>
                 </span>
               </alph-tooltip>
@@ -648,7 +648,7 @@
     }
 
     .alpheios-panel__content {
-        overflow: auto;
+        overflow: visible;
         grid-area: content;
         direction: ltr;
         box-sizing: border-box;
