@@ -1177,12 +1177,17 @@ class Feature {
   /**
    * Compares a feature's values to another feature's values for sorting
    * @param {Feature} otherFeature the feature to compare this feature's values to
-   * @return {integer} >=1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
+   * @return {integer} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
    */
   compareTo (otherFeature) {
     // the data values are sorted upon construction and insertion so we only should need to look at the first values
     // feature sortOrders are descending (i.e. 5 sorts higher than 1)
-    return otherFeature._data[0].sortOrder - this._data[0].sortOrder
+    if (otherFeature) {
+      return otherFeature._data[0].sortOrder - this._data[0].sortOrder
+    } else {
+      // if the other feature isn't defined, this one sorts first
+      return -1
+    }
   }
 
   get items () {
@@ -4227,6 +4232,7 @@ class Lexeme {
     }
 
     this.lemma = lemma
+    this.altLemmas = []
     this.inflections = []
     inflections.forEach(i => { this.addInflection(i) })
     this.meaning = meaning || new _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"](this.lemma.word, this.lemma.languageID)
@@ -4240,6 +4246,14 @@ class Lexeme {
   addInflection (inflection) {
     inflection.lemma = this.lemma
     this.inflections.push(inflection)
+  }
+
+  /**
+   * add an alternative lemma to the lexeme
+   * @param {Lemma} lemma
+   */
+  addAltLemma (lemma) {
+    this.altLemmas.push(lemma)
   }
 
   /**

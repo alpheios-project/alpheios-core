@@ -28,10 +28,7 @@
   "homepage": "https://github.com/alpheios-project/data-models#readme",
   "devDependencies": {
     "alpheios-node-build": "github:alpheios-project/node-build",
-    "babel-jest": "^23.4.0",
-    "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
-    "eslint": "^5.4.0",
     "intl-messageformat": "^2.1.0",
     "jest": "^23.4.0",
     "jest-fetch-mock": "1.6.5",

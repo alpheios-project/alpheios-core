@@ -267,4 +267,11 @@ describe('lexeme.test.js', () => {
     expect(lex.disambiguated).toBeFalsy()
     expect(lex.inflections).toEqual([inflection1, inflection2])
   })
+  it('8 Lexeme - adds alternate Lemmas', () => {
+    let lemma2 = new Lemma('word', 'grc')
+    let lex = new Lexeme(lemma, [])
+    expect(lex.altLemmas.length).toEqual(0)
+    lex.addAltLemma(lemma2)
+    expect(lex.altLemmas).toEqual([lemma2])
+  })
 })
