@@ -1644,8 +1644,9 @@ try {
         let j = xmlToJSON.parseString(d)
         json['infl-data'] = json['infl-data'].concat(j['infl-data'])
       }
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // Suffixes were edited manually. Running this conversion would erase those changes
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Verb participles

@@ -35,7 +35,9 @@ export default class View {
     this.hasPrerenderedTables = false // True if vue supports Vue.js components
 
     this.forms = new Set()
-    this.table = {}
+    this.table = {
+      options: {}
+    }
 
     /**
      * Whether this view has any credits
@@ -231,7 +233,8 @@ export default class View {
    *                  false - show groups with no morphemes in them.
    */
   emptyColumnsHidden (value) {
-    if (this.table.options.emptyColumnsHidden !== value) {
+    // Pre-rendered tables cannot collapse and expand
+    if (!this.hasPrerenderedTables && this.table.options.emptyColumnsHidden !== value) {
       // If settings were actually changed
       if (value) {
         this.table.hideEmptyColumns()
@@ -249,7 +252,8 @@ export default class View {
    *                  false - show groups with no suffix matches.
    */
   noSuffixMatchesGroupsHidden (value) {
-    if (this.table.options.noSuffixMatchesHidden !== value) {
+    // Pre-rendered tables cannot collapse and expand
+    if (!this.hasPrerenderedTables && this.table.options.noSuffixMatchesHidden !== value) {
       // If settings were actually changed
       if (value) {
         if (this.table.canCollapse) {
