@@ -90,8 +90,10 @@
                 <div class="alpheios-lookup__panel">
                   <lookup :uiController="uiController" :parentLanguage="lookupParentLanguage" :clearLookupText="clearLookupText"></lookup>
                 </div>
-                <div v-show="data.shortDefinitions.length < 1 && data.fullDefinitions.length < 1" v-if="data.shortDefinitions && data.fullDefinitions">
-                  {{ ln10Messages('PLACEHOLDER_DEFINITIONS') }}</div>
+                <div 
+                  v-if="showDefinitionsPlaceholder">
+                  {{ ln10Messages('PLACEHOLDER_DEFINITIONS') }}
+                </div>
                 <div class="alpheios-panel__contentitem" v-for="definition in data.shortDefinitions">
                     <shortdef :definition="definition"></shortdef>
                 </div>
@@ -267,6 +269,10 @@
       },
       resourceSettingsLexiconsShort: function () {
         return this.data.resourceSettings && this.data.resourceSettings.lexiconsShort ? this.data.resourceSettings.lexiconsShort.filter(item => item.values.length > 0) : []
+      },
+
+      showDefinitionsPlaceholder: function () {
+        return (!this.data.shortDefinitions || this.data.shortDefinitions.length === 0) && (!this.data.fullDefinitions  || this.data.fullDefinitions.length === 0)
       },
       classes: function () {
         // Find index of an existing position class and replace it with an updated value
