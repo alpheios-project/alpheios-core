@@ -9087,6 +9087,7 @@ h4.alpheios-inflections__additional_title {
   padding: 0 2px 0 5px;
   border-right: 1px solid #111;
   border-top: 1px solid #111;
+  position: relative;
 }
 .infl-cell.hidden {
   display: none;

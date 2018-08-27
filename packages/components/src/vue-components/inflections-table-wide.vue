@@ -1,79 +1,106 @@
 <template>
-    <div v-if="view.wideTable">
-        <div class="infl-prdgm-tbl">
-            <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
-                <div class="infl-prdgm-tbl__cell" :class="cellClasses(cell)" v-for="cell in row.cells">
-                    {{cell.value}}
+    <div v-if="view.wideView">
+        <h3 class="alpheios-inflections__title alpheios-table-sf__title alpheios-clickable"
+            @click="collapse">
+            {{view.title}}
+            <span v-show="collapsed">[+]</span>
+            <span v-show="!collapsed">[-]</span>
+        </h3>
+
+        <div v-show="!collapsed" :style="view.wideView.style" class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
+            <template v-for="row in view.wideView.rows">
+                <div :class="cell.classes" v-for="cell in row.cells"
+                     @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">
+                    <template v-if="cell.isDataCell">
+                        <template v-for="(morpheme, index) in cell.morphemes">
+                            <span :class="morphemeClasses(morpheme)">
+                                <template v-if="morpheme.value">{{morpheme.value}}</template>
+                                <template v-else>-</template>
+                            </span>
+                            <a v-if="morpheme.hasFootnotes" class="infl-suff-footnote-link"
+                               @click.stop.prevent="morpheme.footnotesPopupVisible = true">
+                                <sup v-for="(footnote, index) in morpheme.footnotes">
+                                    {{footnote.index}}<template v-if="index < morpheme.footnotes.length-1">, </template>
+                                </sup>
+                                <div v-show="morpheme.footnotesPopupVisible" class="alpheios-inflections__footnote-popup">
+                                    <div class="alpheios-inflections__footnote-popup-title">Footnotes:</div>
+                                    <template v-for="footnote in morpheme.footnotes">
+                                        <dt>{{footnote.index}}</dt>
+                                        <dd>{{footnote.text}}</dd>
+                                    </template>
+                                    <div class="alpheios-inflections__footnote-popup-close-btn"
+                                         @click.stop.prevent="morpheme.footnotesPopupVisible = false">
+                                        <svg viewBox="0 0 20 20"><path d="M16 16L4 4M16 4L4 16"></path></svg>
+                                    </div>
+                                </div>
+                            </a>
+                            <template v-if="index < cell.morphemes.length-1">, </template>
+                        </template>
+                    </template>
+                    <span v-else v-html="cell.value"></span>
                 </div>
-            </div>
+            </template>
         </div>
     </div>
 </template>
 <script>
 
   export default {
-    name: 'WideInflectionsTable',
+    name: 'WideInflectionsTableStandardForm',
     props: {
       // An inflection table view
       view: {
         type: [Object, Boolean],
+        required: true
+      },
+      noSuffixMatchesHidden: {
+        type: [Boolean],
         required: true
       }
     },
 
     data: function () {
       return {
-        elementIDs: {
-          wideView: 'alph-inflection-table-wide',
-          footnotes: 'alph-inflection-footnotes'
+        // table: this.view.wideView,
+        collapsed: false
+      }
+    },
+
+    methods: {
+      collapse: function () {
+        console.log('collapse clicked')
+        this.view.wideView.collapsed = !this.view.wideView.collapsed
+        this.collapsed = this.view.wideView.collapsed
+      },
+
+      morphemeClasses: function (morpheme) {
+        return {
+          ['infl-suff']: true,
+          ['infl-suff--suffix-match']: morpheme.match.suffixMatch,
+          ['infl-suff--full-feature-match']: morpheme.match.fullMatch,
+        }
+      },
+
+      cellMouseOver: function (cell) {
+        let wideView =  this.view.wideView
+        if (cell.isDataCell) {
+          cell.highlightRowAndColumn()
+          this.view.wideView = wideView
+        }
+      },
+
+      cellMouseLeave: function (cell) {
+        let wideView =  this.view.wideView
+        if (cell.isDataCell) {
+          cell.clearRowAndColumnHighlighting()
+          this.view.wideView = wideView
         }
       }
     },
 
-    computed: {
-    },
-
-    methods: {
-      cellClasses: function (cell) {
-        if (cell.role === 'label') {
-          return 'infl-prdgm-tbl-cell--label'
-        }
-
-        /*
-        If it is a data cell, we need to figure out if this is a cell with a full match and
-        highlight it accordingly. A full match is a cell which matches all features of the cell properties
-        with the ones in the inflection.
-        We do not check for suffix match because paradigm tables show example of a different word,
-        not the one selected by the user.
-         */
-        if (cell.role === 'data') {
-
-          let cellClassName = 'infl-prdgm-tbl-cell--data'
-          const fullMatchClassnName = 'infl-prdgm-tbl-cell--full-match'
-          // Get a list of cell feature properties
-          let comparativeFeatures = []
-          for (const prop of Object.keys(cell)) {
-            // Eliminate "non-feature" keys
-            if (prop !== 'role' && prop !== 'value') {
-              comparativeFeatures.push(prop)
-            }
-          }
-          for (const lexeme of this.view.homonym.lexemes) {
-            for (const inflection of lexeme.inflections) {
-              let fullMatch = true
-              for (const feature of comparativeFeatures) {
-                fullMatch = fullMatch && inflection.hasOwnProperty(feature) && cell[feature].hasValues(inflection[feature].values)
-                if (!fullMatch) { break } // If at least one feature does not match, there is no reason to check others
-              }
-              if (fullMatch) {
-                // If full match is found, there is no need to check other inflections
-                return `${cellClassName} ${fullMatchClassnName}`
-              }
-            }
-          }
-
-          return cellClassName
-        }
+    watch: {
+      noSuffixMatchesHidden: function (value) {
+        this.view.noSuffixMatchesGroupsHidden(value)
       }
     }
   }
@@ -81,31 +108,16 @@
 <style lang="scss">
     @import "../styles/alpheios";
 
-    .infl-prdgm-tbl {
-        display: table;
-        border-top: 1px solid gray;
-        border-left: 1px solid gray;
-        margin-bottom: 30px;
+    .alpheios-table-sf__title {
+        margin-bottom: 5px;
+        padding-left: 30px;
     }
 
-    .infl-prdgm-tbl__row {
-        display: table-row;
+    .infl-suff-footnote-link {
+        position: relative;
     }
 
-    .infl-prdgm-tbl__cell {
-        display: table-cell;
-        padding: 2px 5px;
-        border-right: 1px solid gray;
-        border-bottom: 1px solid gray;
-        min-width: 20px;
-    }
-
-    .infl-prdgm-tbl-cell--label {
-        font-weight: 700;
-    }
-
-    .infl-prdgm-tbl-cell--full-match {
-        background-color: $alpheios-highlight-color;
-        font-weight: 700;
+    .alpheios-clickable {
+        cursor: pointer;
     }
 </style>

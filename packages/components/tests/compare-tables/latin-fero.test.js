@@ -9,7 +9,7 @@ import Locales from '@/locales/locales'
 import enUS from '@/locales/en-us/messages.json'
 import enGB from '@/locales/en-gb/messages.json'
 
-import WideTableVue from '@/vue-components/inflections-table-wide-vue.vue'
+import WideTableVue from '@/vue-components/inflections-table-prerendered.vue'
 
 import { Constants } from 'alpheios-data-models'
 import { ViewSetFactory } from 'alpheios-inflection-tables'

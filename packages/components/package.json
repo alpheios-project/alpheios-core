@@ -124,6 +124,7 @@
   },
   "jest": {
     "verbose": true,
+    "testPathIgnorePatterns" : ["<rootDir>/node_modules/", "<rootDir>/tests/compare-tables/" ],
     "transform": {
       "^.+\\.htmlf$": "html-loader-jest",
       "^.+\\.jsx?$": "babel-jest",
@@ -135,7 +136,9 @@
     ],
     "moduleNameMapper": {
       "^vue$": "vue/dist/vue.common.js",
-      "^@[/](.+)": "<rootDir>/src/$1"
+      "^@[/](.+)": "<rootDir>/src/$1",
+      "alpheios-morph-client": "<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js",
+      "alpheios-inflection-tables": "<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js"
     },
     "moduleFileExtensions": [
       "js",

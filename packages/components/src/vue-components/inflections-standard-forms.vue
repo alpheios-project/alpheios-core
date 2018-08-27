@@ -27,7 +27,7 @@
   import { Constants } from 'alpheios-data-models'
   import { ViewSetFactory } from 'alpheios-inflection-tables'
 
-  import WideTable from './inflections-table-wide-vue.vue'
+  import WideTable from './inflections-table-wide.vue'
 
   export default {
     name: 'InflectionStandardForms',
@@ -72,13 +72,11 @@
         this.$emit('collapse', this.state.collapsed)
       },
       toggleSF: function (viewID) {
-        console.log(`Toggle SF`)
         let sfView = this.standardForm(viewID)
         sfView.state.collapsed = !sfView.state.collapsed
       },
       isSFCollapsed: function (viewID) {
         let state = this.standardForm(viewID).state.collapsed
-        console.log(`Collapsed: ${state}`)
         return state
       }
     }
