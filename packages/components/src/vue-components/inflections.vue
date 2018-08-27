@@ -4,8 +4,6 @@
         <div v-show="isEnabled && ! isContentAvailable" class="alpheios-inflections__placeholder">{{messages.PLACEHOLDER_INFLECT}}</div>
 
         <div :id="elementIDs.content" v-show="isContentAvailable && sfCollapsed" class="alpheios-inflections__content">
-            <!-- If we show table title over the table from within a wide view component, there is probably no sense to duplicate it here -->
-            <!--<h3 class="alpheios-inflections__title">{{selectedView.title}}</h3>-->
             <div v-show="partsOfSpeech.length > 1">
               <label class="uk-form-label">{{messages.LABEL_INFLECT_SELECT_POFS}}</label>
               <select v-model="partOfSpeechSelector" class="uk-select alpheios-inflections__view-selector alpheios-text__smallest">
@@ -24,15 +22,15 @@
                         <option v-for="view in views" :value="view.id">{{view.name}}</option>
                     </select>
                 </div>
-                <div v-show="hasInflectionData" class="alpheios-inflections__control-btn-cont uk-button-group">
-
-                  <alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideEmptyCols.tooltipText">
+                <div v-show="hasInflectionData && !selectedView.hasPrerenderedTables" class="alpheios-inflections__control-btn-cont uk-button-group">
+                  <!-- This button is never shown as of now -->
+                  <!--<alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideEmptyCols.tooltipText">
                     <button v-show="false"
                           class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
                           @click="hideEmptyColsClick">
                       {{buttons.hideEmptyCols.text}}
                     </button>
-                  </alph-tooltip>
+                  </alph-tooltip>-->
 
                   <alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideNoSuffixGroups.tooltipText">
                     <button v-if="canCollapse"
@@ -141,6 +139,7 @@
         selectedView: {},
         renderedView: {},
         elementIDs: {
+          panelInner: 'alpheios-panel-inner',
           content: 'alpheios-inflections__content',
           wideView: 'alph-inflection-table-wide',
           footnotes: 'alph-inflection-footnotes'
@@ -358,20 +357,20 @@
       },
 
       navigate (reflink) {
+        let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
+        if (!panel) {
+          console.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll cancelled`)
+        }
         if (reflink === 'top') {
           // Navigate to the top of the page
-          let parent = this.$el.offsetParent
-          if (parent) {
-            parent.scrollTop = 0
-          }
+          panel.scrollTop = 0
         } else {
           // Navigate to one of the supplemental tables
           const paddingTop = 20 // A margin between an element and a top of a visible area, in pixels
           let el = document.querySelector(`#${reflink}`)
           if (el) {
             const offset = Math.round(el.offsetTop)
-            let parent = el.offsetParent
-            parent.scrollTop = offset - paddingTop
+            panel.scrollTop = offset - paddingTop
           } else {
             console.warn(`Cannot find #${reflink} element. Navigation cancelled`)
           }

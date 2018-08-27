@@ -13,6 +13,7 @@ describe('inflections-table-wide.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
+  jest.setTimeout(30000) // Async test functions might not be fast enough to be executed within a standard Jest timeout of 5000 ms.
 
   let testView
 
