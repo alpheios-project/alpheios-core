@@ -10412,7 +10412,7 @@
       this.id = v4_1() // A unique ID of a view instance. Can be used as a value in view selectors.
       this.name = 'base view'
       this.title = 'Base View'
-      this.hasComponentData = false // True if vue supports Vue.js components
+      this.hasPrerenderedTables = false // True if vue supports Vue.js components
 
       this.forms = new Set()
       this.table = {}

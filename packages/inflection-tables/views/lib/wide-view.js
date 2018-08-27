@@ -7,18 +7,14 @@ import RowTitleCell from './row-title-cell'
 export default class WideView {
   /**
    * Initializes a wide view.
-   * @param {Column[]} columns - Table columns.
-   * @param {Row[]} rows - Table rows.
-   * @param {Row[]} headers - Table headers.
-   * @param {number} titleColumnQty - Number of title columns in a table.
+   * @param {Table} table - An inflection table object.
    */
-  constructor (columns, rows, headers, titleColumnQty) {
-    this.columns = columns
-    this.rows = rows
-    this.headers = headers
-    this.titleColumnQty = titleColumnQty
-    this.nodes = document.createElement('div')
-    this.nodes.classList.add(Styles.classNames.inflectionTable, Styles.classNames.wideView)
+  constructor (table) {
+    this.table = table
+    this.rows = [] // To store rows of view's inflection table
+
+    // Wither this view is collapsed in a UI component
+    this.collapsed = false
   }
 
   /**
@@ -27,7 +23,7 @@ export default class WideView {
    */
   get visibleColumnQty () {
     let qty = 0
-    for (let column of this.columns) {
+    for (let column of this.table.columns) {
       if (!column.hidden) {
         qty++
       }
@@ -36,60 +32,24 @@ export default class WideView {
   }
 
   /**
-   * Renders an HTML representation of a wide table view.
-   * @returns {HTMLElement} A rendered HTML Element.
-   */
-  render () {
-    // Remove any previously inserted nodes
-    this.nodes.innerHTML = ''
-
-    for (let row of this.headers) {
-      this.nodes.appendChild(row.titleCell.wvNode)
-      for (let cell of row.cells) {
-        this.nodes.appendChild(cell.wvNode)
-      }
-    }
-
-    for (let row of this.rows) {
-      let titleCells = row.titleCell.hierarchyList
-      if (titleCells.length < this.titleColumnQty) {
-        this.nodes.appendChild(RowTitleCell.placeholder(this.titleColumnQty - titleCells.length))
-      }
-      for (let titleCell of titleCells) {
-        this.nodes.appendChild(titleCell.wvNode)
-      }
-
-      for (let cell of row.cells) {
-        this.nodes.appendChild(cell.wvNode)
-      }
-    }
-    this.nodes.style.gridTemplateColumns = this.style.gridTemplateColumns
-
-    return this.nodes
-  }
-
-  /**
    * Renders a table in a size suitable for Vue.js display
    * @return {{rows: Array}}
    */
-  renderTable () {
-    let table = {
-      rows: []
-    }
-
-    for (let row of this.headers) {
+  render () {
+    this.rows = []
+    for (let row of this.table.headers) {
       let cells = []
       cells.push(row.titleCell)
       for (let cell of row.cells) {
         cells.push(cell)
       }
-      table.rows.push({cells: cells})
+      this.rows.push({cells: cells})
     }
 
-    for (let row of this.rows) {
+    for (let row of this.table.rows) {
       let cells = []
       let titleCells = row.titleCell.hierarchyList
-      if (titleCells.length < this.titleColumnQty) {
+      if (titleCells.length < this.table.titleColumnQty) {
         cells.push(RowTitleCell.placeholderCell(this.titleColumnQty - titleCells.length))
       }
       for (let titleCell of titleCells) {
@@ -99,11 +59,8 @@ export default class WideView {
       for (let cell of row.cells) {
         cells.push(cell)
       }
-      table.rows.push({cells: cells})
+      this.rows.push({cells: cells})
     }
-    table.style = this.style
-
-    return table
   }
 
   /**
@@ -112,7 +69,7 @@ export default class WideView {
    */
   get style () {
     return {
-      gridTemplateColumns: `repeat(${this.visibleColumnQty + this.titleColumnQty}, ${Styles.wideView.column.width}${Styles.wideView.column.unit})`
+      gridTemplateColumns: `repeat(${this.visibleColumnQty + this.table.titleColumnQty}, ${Styles.wideView.column.width}${Styles.wideView.column.unit})`
     }
   }
 }

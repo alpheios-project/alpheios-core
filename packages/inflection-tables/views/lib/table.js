@@ -4,8 +4,6 @@ import Column from './column'
 import Row from './row'
 import GroupFeatureList from './group-feature-list'
 import NodeGroup from './node-group'
-import NarrowView from './narrow-view'
-import WideView from './wide-view'
 
 /**
  * Represents an inflection table.
@@ -17,7 +15,6 @@ export default class Table {
    */
   constructor (features) {
     this.features = new GroupFeatureList(features)
-    this.emptyColumnsHidden = false
     this.cells = [] // Will be populated by groupByFeature()
 
     /*
@@ -30,29 +27,32 @@ export default class Table {
    * Creates a table tree and other data structures (columns, rows, headers).
    * This function is chainabe.
    * @param {Morpheme[]} morphemes - An array of morphemes to build table from.
+   * @param {Object} options - Table's options
    * @returns {Table} Reference to self for chaining.
    */
-  construct (morphemes) {
+  construct (morphemes, options = {
+    emptyColumnsHidden: true,
+    noSuffixMatchesHidden: true
+  }) {
     this.morphemes = morphemes
 
     this.tree = this.groupByFeature(morphemes)
     this.headers = this.constructHeaders()
     this.columns = this.constructColumns()
     this.rows = this.constructRows()
-    this.emptyColumnsHidden = false
+    this.options = options
     this.canCollapse = this._hasAnyMatches()
-    return this
-  }
 
-  /**
-   * Builds wide and narrow views of the table.
-   * This function is chainabe.
-   * @returns {Table} Reference to self for chaining.
-   */
-  constructViews () {
-    this.wideView = new WideView(this.columns, this.rows, this.headers, this.titleColumnQty)
-    this.narrowView = new NarrowView(
-      this.features.firstColumnFeature.size, this.columns, this.rows, this.headers, this.titleColumnQty)
+    if (this.options.emptyColumnsHidden) {
+      this.hideEmptyColumns()
+    } else {
+      this.showEmptyColumns()
+    }
+    if (this.options.noSuffixMatchesHidden) {
+      this.hideNoSuffixMatchesGroups()
+    } else {
+      this.showNoSuffixMatchesGroups()
+    }
     return this
   }
 
@@ -328,7 +328,7 @@ export default class Table {
         column.hide()
       }
     }
-    this.emptyColumnsHidden = true
+    this.options.emptyColumnsHidden = true
   }
 
   /**
@@ -340,7 +340,7 @@ export default class Table {
         column.show()
       }
     }
-    this.emptyColumnsHidden = false
+    this.options.emptyColumnsHidden = false
   }
 
   /**
@@ -362,7 +362,7 @@ export default class Table {
   /**
    * Hide groups that have no morpheme matches.
    */
-  hideNoSuffixGroups () {
+  hideNoSuffixMatchesGroups () {
     for (let headerCell of this.headers[0].cells) {
       let matches = !!headerCell.columns.find(column => column.suffixMatches)
       if (!matches) {
@@ -371,19 +371,19 @@ export default class Table {
         }
       }
     }
-    this.suffixMatchesHidden = true
+    this.options.noSuffixMatchesHidden = true
   }
 
   /**
    * Show groups that have no suffix matches.
    */
-  showNoSuffixGroups () {
+  showNoSuffixMatchesGroups () {
     for (let column of this.columns) {
       column.show()
     }
-    if (this.emptyColumnsHidden) {
+    if (this.options.emptyColumnsHidden) {
       this.hideEmptyColumns()
     }
-    this.suffixMatchesHidden = false
+    this.options.noSuffixMatchesHidden = false
   }
 }

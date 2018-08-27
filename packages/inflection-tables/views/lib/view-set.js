@@ -48,7 +48,6 @@ export default class ViewSet {
       } */
       this.updateMatchingViewsMap(this.matchingViews)
     }
-    this.matchingViews.forEach(v => v.render())
   }
   /**
    * Returns a list of views available within a view set. Should be redefined in descendant classes.

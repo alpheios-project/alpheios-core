@@ -19,7 +19,7 @@ export default class GreekVerbParadigmView extends GreekView {
     this.id = paradigm.id
     this.name = paradigm.title.toLowerCase()
     this.title = paradigm.title
-    this.hasComponentData = true
+    this.hasPrerenderedTables = true
     this.paradigm = paradigm
     this.featureTypes = {}
 

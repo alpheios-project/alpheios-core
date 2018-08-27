@@ -1,6 +1,7 @@
 import { Feature, Inflection, Homonym, LanguageModelFactory } from 'alpheios-data-models'
 import LDF from '../../lib/language-dataset-factory.js'
 import L10n from '../../l10n/l10n.js'
+import WideView from './wide-view'
 
 /**
  * Represents a single view.
@@ -31,7 +32,7 @@ export default class View {
     this.id = 'base_view'
     this.name = 'base view'
     this.title = 'Base View'
-    this.hasComponentData = false // True if vue supports Vue.js components
+    this.hasPrerenderedTables = false // True if vue supports Vue.js components
 
     this.forms = new Set()
     this.table = {}
@@ -46,6 +47,28 @@ export default class View {
      * @type {string}
      */
     this.creditsText = ''
+
+    this.initialized = false
+  }
+
+  /**
+   * Converts an InflectionData, returned from an inflection tables library, into an HTML representation of an inflection table.
+   * `messages` provides a translation for view's texts.
+   * @param {Object} options - Render options
+   */
+  initialize (options = {
+    emptyColumnsHidden: true,
+    noSuffixMatchesHidden: true
+  }) {
+    this.footnotes = this.getFootnotes()
+    this.table.messages = this.messages
+    this.morphemes = this.getMorphemes()
+
+    // TODO: do not construct table if constructed already
+    this.table.construct(this.morphemes, options)
+    this.wideView = new WideView(this.table)
+    this.initialized = true
+    return this
   }
 
   static get viewID () {
@@ -162,14 +185,17 @@ export default class View {
   /**
    * Converts an InflectionData, returned from an inflection tables library, into an HTML representation of an inflection table.
    * `messages` provides a translation for view's texts.
+   * @param {Object} options - Render options
    */
-  render () {
-    this.footnotes = this.getFootnotes()
-    this.table.messages = this.messages
-    this.morphemes = this.getMorphemes()
-    this.table.construct(this.morphemes).constructViews().addEventListeners()
-    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
-    this.wideTable = this.table.wideView.renderTable()
+  render (options = {
+    emptyColumnsHidden: true,
+    noSuffixMatchesHidden: true
+  }) {
+    console.log(`render call`)
+    if (!this.initialized) {
+      this.initialize(options)
+    }
+    this.wideView.render()
     return this
   }
 
@@ -198,54 +224,42 @@ export default class View {
       : new Map()
   }
 
-  get wideViewNodes () {
-    return this.table.wideView.render()
-  }
-
-  get narrowViewNodes () {
-    return this.table.narrowView.render()
-  }
-
   /**
-   * Hides all empty columns of the view.
+   * Hide or show column groups with no morphemes depending on the `value`.
+   * @param {boolean} value - Whether to hide or show column groups with no morphemes.
+   *                  true - hide groups with no morphemes in them;
+   *                  false - show groups with no morphemes in them.
    */
-  hideEmptyColumns () {
-    this.table.hideEmptyColumns()
-    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
-    this.wideTable = this.table.wideView.renderTable()
-    return this
-  }
-
-  /**
-   * Displays all previously hidden columns.
-   */
-  showEmptyColumns () {
-    this.table.showEmptyColumns()
-    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
-    this.wideTable = this.table.wideView.renderTable()
-    return this
-  }
-
-  /**
-   * Hides groups (formed by first column feature) that have no suffix matches.
-   */
-  hideNoSuffixGroups () {
-    if (this.table.canCollapse) {
-      this.table.hideNoSuffixGroups()
-      this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
-      this.wideTable = this.table.wideView.renderTable()
+  emptyColumnsHidden (value) {
+    if (this.table.options.emptyColumnsHidden !== value) {
+      // If settings were actually changed
+      if (value) {
+        this.table.hideEmptyColumns()
+      } else {
+        this.table.showEmptyColumns()
+      }
+      this.wideView.render()
     }
-    return this
   }
 
   /**
-   * Displays previously hidden groups with no suffix matches.
+   * Hide or show column groups with no morpheme matches depending on the `value`.
+   * @param {boolean} value - Whether to hide or show groups with not suffix matches.
+   *                  true - hide groups with no suffix matches;
+   *                  false - show groups with no suffix matches.
    */
-  showNoSuffixGroups () {
-    this.table.showNoSuffixGroups()
-    this.table.wideView.render() // This is a compatibility code that is required to render HTML nodes
-    this.wideTable = this.table.wideView.renderTable()
-    return this
+  noSuffixMatchesGroupsHidden (value) {
+    if (this.table.options.noSuffixMatchesHidden !== value) {
+      // If settings were actually changed
+      if (value) {
+        if (this.table.canCollapse) {
+          this.table.hideNoSuffixMatchesGroups()
+        }
+      } else {
+        this.table.showNoSuffixMatchesGroups()
+      }
+      this.wideView.render()
+    }
   }
 
   highlightRowAndColumn (cell) {

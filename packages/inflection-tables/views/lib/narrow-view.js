@@ -7,28 +7,20 @@ import NarrowViewGroup from './narrow-view-group'
 export default class NarrowView {
   /**
    * Initializes a narrow view.
-   * @param {number} groupQty - A number of visible groups (sub tables) within a narrow view.
-   * @param {Column[]} columns - Table columns.
-   * @param {Row[]} rows - Table rows.
-   * @param {Row[]} headers - Table headers.
-   * @param {number} titleColumnQty - Number of title columns in a table.
+   * @param {Table} table - An inflection table object.
    */
-  constructor (groupQty, columns, rows, headers, titleColumnQty) {
-    this.columns = columns
-    this.rows = rows
-    this.headers = headers
-    this.titleColumnQty = titleColumnQty
+  constructor (table) {
+    this.table = table
     this.groups = []
-    this.groupQty = groupQty
     this.groupSize = 0
-    if (groupQty) {
-      this.groupSize = this.columns.length / groupQty
+    if (this.table.features.firstColumnFeature.size) {
+      this.groupSize = this.table.columns.length / this.table.features.firstColumnFeature.size
     }
 
     this.nodes = document.createElement('div')
     this.nodes.classList.add(Styles.classNames.narrowViewsContainer)
 
-    for (let [index, headerCell] of this.headers[0].cells.entries()) {
+    for (let [index, headerCell] of this.table.headers[0].cells.entries()) {
       this.createGroup(index, headerCell)
     }
   }
@@ -37,8 +29,8 @@ export default class NarrowView {
    * Creates a group within a table.
    * @returns {NarrowViewGroup} A newly created group.
    */
-  createGroup (index, headerCell) {
-    let group = new NarrowViewGroup(index, this.headers, this.rows, this.titleColumnQty)
+  createGroup (index) {
+    let group = new NarrowViewGroup(index, this.table.headers, this.table.rows, this.table.titleColumnQty)
     this.nodes.appendChild(group.nodes)
     this.groups.push(group)
   }
