@@ -1604,6 +1604,11 @@ try {
   let data
   let json
 
+  /*
+  Since target CSV files are often edited manually and running conversion on them will ruin those edits,
+  all write operations are disabled by default.
+   */
+
   // region Latin
   if (langName === LANG_LATIN || langName === LANG_ALL) {
     let lCfg = config[LANG_LATIN]
@@ -1613,16 +1618,16 @@ try {
       posCfg = lCfg[POS_NOUN]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     if (posName === POS_PRONOUN || posName === POS_ALL) {
       posCfg = lCfg[POS_PRONOUN]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Adjectives
@@ -1658,8 +1663,8 @@ try {
         let j = xmlToJSON.parseString(d)
         json['infl-data'] = json['infl-data'].concat(j['infl-data'])
       }
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Gerundive
@@ -1671,8 +1676,8 @@ try {
         let j = xmlToJSON.parseString(d)
         json['infl-data'] = json['infl-data'].concat(j['infl-data'])
       }
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Supine
@@ -1684,8 +1689,8 @@ try {
         let j = xmlToJSON.parseString(d)
         json['infl-data'] = json['infl-data'].concat(j['infl-data'])
       }
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Lemmas
@@ -1695,20 +1700,20 @@ try {
       json = xmlToJSON.parseString(data)
 
       // Verbs
-      writeData(posCfg.verbForms.get(json), posCfg.verbForms.outputPath)
-      writeData(posCfg.verbFootnotes.get(json), posCfg.verbFootnotes.outputPath)
+      // writeData(posCfg.verbForms.get(json), posCfg.verbForms.outputPath)
+      // writeData(posCfg.verbFootnotes.get(json), posCfg.verbFootnotes.outputPath)
 
       // VerbParticiple
-      writeData(posCfg.verbParticipleForms.get(json), posCfg.verbParticipleForms.outputPath)
-      writeData(posCfg.verbParticipleFootnotes.get(json), posCfg.verbParticipleFootnotes.outputPath)
+      // writeData(posCfg.verbParticipleForms.get(json), posCfg.verbParticipleForms.outputPath)
+      // writeData(posCfg.verbParticipleFootnotes.get(json), posCfg.verbParticipleFootnotes.outputPath)
 
       // Gerundive
-      writeData(posCfg.gerundiveForms.get(json), posCfg.gerundiveForms.outputPath)
-      writeData(posCfg.gerundiveFootnotes.get(json), posCfg.gerundiveFootnotes.outputPath)
+      // writeData(posCfg.gerundiveForms.get(json), posCfg.gerundiveForms.outputPath)
+      // writeData(posCfg.gerundiveFootnotes.get(json), posCfg.gerundiveFootnotes.outputPath)
 
       // Supine
-      writeData(posCfg.supineForms.get(json), posCfg.supineForms.outputPath)
-      writeData(posCfg.supineFootnotes.get(json), posCfg.supineFootnotes.outputPath)
+      // writeData(posCfg.supineForms.get(json), posCfg.supineForms.outputPath)
+      // writeData(posCfg.supineFootnotes.get(json), posCfg.supineFootnotes.outputPath)
     }
   }
   // endregion Latin
@@ -1723,8 +1728,8 @@ try {
       posCfg = lCfg[POS_NOUN]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Adjective
@@ -1732,8 +1737,8 @@ try {
       posCfg = lCfg[POS_ADJECTIVE]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Article
@@ -1741,7 +1746,7 @@ try {
       posCfg = lCfg[POS_ARTICLE]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
-      writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
+      // writeData(posCfg.suffixes.get(json), posCfg.suffixes.outputPath)
     }
 
     // Numeral
@@ -1749,16 +1754,16 @@ try {
       posCfg = lCfg[POS_NUMERAL]
       data = readFile(path.join(__dirname, lCfg.inputBaseDir, posCfg.inputFN))
       json = xmlToJSON.parseString(data)
-      writeData(posCfg.forms.get(json), posCfg.forms.outputPath)
-      writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
+      // writeData(posCfg.forms.get(json), posCfg.forms.outputPath)
+      // writeData(posCfg.footnotes.get(json), posCfg.footnotes.outputPath)
     }
 
     // Pronouns
     if (posName === POS_PRONOUN || posName === POS_ALL) {
       posCfg = lCfg[POS_PRONOUN]
       const {forms, footnotes} = posCfg.forms.getFromFiles(posCfg.inputFiles, lCfg.inputBaseDir)
-      writeData(forms, posCfg.forms.outputPath)
-      writeData(footnotes, posCfg.footnotes.outputPath)
+      // writeData(forms, posCfg.forms.outputPath)
+      // writeData(footnotes, posCfg.footnotes.outputPath)
     }
 
     // Paradigms

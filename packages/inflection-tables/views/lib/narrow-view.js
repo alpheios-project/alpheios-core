@@ -13,6 +13,12 @@ export default class NarrowView {
     this.table = table
     this.groups = []
     this.groupSize = 0
+    /*
+    Narrow views splits a single inflection table into multiple ones using first feature in a list
+    of the ones that form columns. So each of resulting inflection tables will represent one value
+    of a first column feature.
+    The code below calculates how many columns would each of those tables have (when they are not collapsed)
+     */
     if (this.table.features.firstColumnFeature.size) {
       this.groupSize = this.table.columns.length / this.table.features.firstColumnFeature.size
     }

@@ -32,7 +32,7 @@ export default class View {
     this.id = 'base_view'
     this.name = 'base view'
     this.title = 'Base View'
-    this.hasPrerenderedTables = false // True if vue supports Vue.js components
+    this.hasPrerenderedTables = false // Indicates whether this view has a pre-rendered table, such as in case with Greek paradigms
 
     this.forms = new Set()
     this.table = {
@@ -54,9 +54,15 @@ export default class View {
   }
 
   /**
-   * Converts an InflectionData, returned from an inflection tables library, into an HTML representation of an inflection table.
-   * `messages` provides a translation for view's texts.
-   * @param {Object} options - Render options
+   * Performs an initialization of a table object that represents tables structures
+   * (stored within a Table object): cells and morphemes that are grouped into tree, rows, columns,
+   * and are related to each other in some other ways.
+   * Creates an instance of WideView class which represents a wide form of an inflection table
+   * (the one that is shown to desktop users)
+   * This should be done after constructor initialization is complete to let descendant-specific code
+   * complete its specific tasks before table structures are initialized. This is done only once for each view.
+   * @param {Object} options - Render options related to whether some columns of an inflection table
+   *                           should be hidden.
    */
   initialize (options = {
     emptyColumnsHidden: true,
@@ -185,8 +191,10 @@ export default class View {
   }
 
   /**
-   * Converts an InflectionData, returned from an inflection tables library, into an HTML representation of an inflection table.
-   * `messages` provides a translation for view's texts.
+   * Initializes table structures for the first time, if necessary
+   * (initialization is fulfilled once only, see `initialize()` method description for more details)
+   * and renders rows and columns of a wide view that represents
+   * a form of an inflection table shown to desktop users.
    * @param {Object} options - Render options
    */
   render (options = {
