@@ -121,8 +121,9 @@ describe('feature.test.js', () => {
     b = new Feature(Feature.types.note, 'valuea', Constants.LANG_LATIN)
     expect(a.isEqual(b)).toBeFalsy()
 
+    // expects isEqual to correctly not throw an error for a null value
     a = new Feature(Feature.types.note, 'valuea', Constants.LANG_GREEK)
-    b = new Feature(Feature.types.note, 'valuea', Constants.LANG_LATIN)
+    b = null
     expect(a.isEqual(b)).toBeFalsy()
   })
 

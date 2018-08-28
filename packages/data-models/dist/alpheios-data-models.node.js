@@ -1270,7 +1270,8 @@ class Feature {
    * @return {boolean} True if features are equal, false otherwise.
    */
   isEqual (feature) {
-    return this.type === feature.type &&
+    return feature &&
+      this.type === feature.type &&
       _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, feature.languageID) &&
       this.value === feature.value
   }
