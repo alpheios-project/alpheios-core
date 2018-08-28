@@ -2,26 +2,29 @@
   <div :class="morphClass" v-if="lex">
     <div class="alpheios-morph__features">
 
-      <p class="principal_parts">
-        <span class="lemma_index" v-if="count > 1">{{ index + 1 }}</span>
+      <p class="principal_parts" v-for="(lemma,lemmaIndex) in allLemmas">
+        <span class="lemma_index" v-if="lemmaIndex === 0 && count > 1">{{ index + 1 }}</span>
+        <span class="lemma_index_spacer" v-else-if="lemmaIndex > 0 && count > 1"> </span>
 
         <span class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem"
-          v-if="! lex.lemma.principalParts.includes(lex.lemma.word)"
-          :lang="languageCode(lex.lemma.languageID)">{{ lex.lemma.word }}</span>
+          v-if="! lemma.principalParts.includes(lemma.word)"
+          :lang="languageCode(lemma.languageID)">{{ lemma.word }}</span>
 
         <span class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem">
           <span class="alpheios-morph__listitem"
-            v-for="part in lex.lemma.principalParts" :lang="languageCode(lex.lemma.languageID)">{{ part }}</span>
+            v-for="part in lemma.principalParts" :lang="languageCode(lemma.languageID)">{{ part }}</span>
         </span>
-        <inflectionattribute :data="lex.lemma.features" :type="types.pronunciation" :linkedfeatures="linkedfeatures" :decorators="['brackets']"/>
+        <inflectionattribute :data="lemma.features" :type="types.pronunciation" :linkedfeatures="linkedfeatures" :decorators="['brackets']"/>
 
       <span
         class="feature_extras"
-        v-if="lex.lemma.features && (getFeature(lex.lemma,'frequency') || getFeature(lex.lemma,'age') || getFeature(lex.lemma,'area') || getFeature(lex.lemma,'geo'))">
-        <inflectionattribute :data="featureList(lex.lemma,['age','area','geo','frequency'],'extras')" :type="'extras'" @sendfeature="sendFeature"/>
+        v-if="lemma.features && (getFeature(lemma,'frequency') || getFeature(lemma,'age') || getFeature(lemma,'area') || getFeature(lemma,'geo'))">
+        <inflectionattribute :data="featureList(lemma,['age','area','geo','frequency'],'extras')" :type="'extras'" @sendfeature="sendFeature"/>
+      </span>
+      <span class="feature_source" v-if="lemma.features && getFeature(lemma,'source')">
+        <inflectionattribute :data="lemma.features" :type="types.source" :linkedfeatures="linkedfeatures" :decorators="['brackets']" @sendfeature="sendFeature"/>
       </span>
       </p><!-- principal_parts -->
-
 
       <div class="alpheios-morph__morphdata" v-if="lex.lemma.features">
         <span class="alpheios-morph__pofs">
@@ -34,9 +37,6 @@
         <inflectionattribute :data="lex.lemma.features" :type="types.conjugation" :linkedfeatures="linkedfeatures" :decorators="['appendtype']" @sendfeature="sendFeature"/>
         <inflectionattribute :data="lex.lemma.features" :type="types.note" :linkedfeatures="linkedfeatures" :decorators="['brackets']" @sendfeature="sendFeature"/>
       </div>
-      <p class="feature_source" v-if="lex.lemma.features && getFeature(lex.lemma,'source')">
-        <inflectionattribute :data="lex.lemma.features" :type="types.source" :linkedfeatures="linkedfeatures" :decorators="['brackets']" @sendfeature="sendFeature"/>
-      </p>
     </div><!--alpheios-morph__features-->
 
     <div v-if="definitions.length > 0" class="alpheios-morph__definition_list">
@@ -105,7 +105,7 @@
   </div><!--alpheios-morph__dictentry-->
 </template>
 <script>
-  import { LanguageModelFactory, GrmFeature } from 'alpheios-data-models'
+  import { LanguageModelFactory, Feature, GrmFeature } from 'alpheios-data-models'
   import ShortDef from './shortdef.vue'
   import InflectionAttribute from './infl-attribute.vue'
 
@@ -157,9 +157,26 @@
       }
     },
     created: function () {
-      this.types = GrmFeature.types
+      this.types = Feature.types
     },
     computed: {
+      allLemmas () {
+        if (this.lex.altLemmas && this.lex.altLemmas.length > 0) {
+          return [this.lex.lemma, ...this.lex.altLemmas].sort((a,b) => {
+            if (a.features[Feature.types.frequency]) {
+              return a.features[Feature.types.frequency].compareTo(b.features[Feature.types.frequency])
+            } else if (b.features[Feature.types.frequency]) {
+              // frequency of a isn't defined so sort b first
+              return 1
+            } else {
+              // equal
+              return 0
+            }
+          })
+        } else {
+          return [this.lex.lemma]
+        }
+      },
       morphClass () {
         let c = "alpheios-morph__dictentry"
         if (this.lex.disambiguated) {
@@ -199,7 +216,7 @@
         return letters.substr(index, 1) + '.'
       },
       featureList(lemma,features,name) {
-        let list = features.map(i => lemma.features[i] ? GrmFeature.toFeature(lemma.features[i]): null).filter(i => i)
+        let list = features.map(i => lemma.features[i] ? lemma.features[i]: null).filter(i => i)
         list = list.length > 0 ? `(${list.map((f)=>f).join(', ')})` : ''
         let returnObj = {}
         returnObj[name] = { value: list }
@@ -339,7 +356,7 @@
   .alpheios-morph__dictentry {
     margin-bottom: 15px;
 
-    .lemma_index {
+    .lemma_index, .lemma_index_spacer {
       display: inline-block;
       text-align: center;
       font-weight: bold;
@@ -357,22 +374,18 @@
       p {
         margin-bottom: 0;
         margin-top: 0;
-        &.feature_source {
-          text-align: right;
-          float: right;
-
-          .alpheios-morph__attr {
-            font-weight: bold;
-          }
-        }
         &.feature_extras {
           font-style: italic;
+        }
+      }
+      span.feature_source {
+        .alpheios-morph__attr {
+          font-size: smaller;
         }
       }
     }
 
     .alpheios-morph__morphdata,
-    p.feature_source,
     p.feature_extras,
     .alpheios-morph__definition_list,
     .alpheios-morph__translation_list,

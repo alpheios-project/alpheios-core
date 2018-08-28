@@ -12,7 +12,8 @@ const mockFeature = function (value, type, languageCode) {
     value: value,
     type: type,
     languageID: LMF.getLanguageIdFromCode(languageCode),
-    toLocaleStringAbbr: () => { return `${value}-mockabbrev` }
+    toLocaleStringAbbr: () => { return `${value}-mockabbrev` },
+    toString: () => { return value }
   }
 }
 
@@ -481,5 +482,52 @@ describe('morph-inner-v1.test.js', () => {
       stubs: [ 'inflectionattribute' ]
     })
     expect(cmp.find('.alpheios-morph__dictentry-disambiguated').exists()).toBeTruthy()
+  })
+
+  it('10 Morph - renders multiple lemmas per lexeme', () => {
+    let cmp = mount(MorphInner, {
+      propsData: {
+        lex:
+          {
+            inflections: [],
+            lemma: {
+              ID: '1',
+              features: {'frequency': { compareTo: () => { return 1 } }},
+              languageCode: 'lat',
+              languageID: LMF.getLanguageIdFromCode('lat'),
+              word: 'foo-word',
+              principalParts: [ 'part1', 'part2' ]
+            },
+            altLemmas: [
+              {
+                ID: '2',
+                features: {'frequency': { compareTo: () => { return -1 } }},
+                languageCode: 'lat',
+                languageID: LMF.getLanguageIdFromCode('lat'),
+                word: 'foo-word',
+                principalParts: [ 'part1a', 'part2a' ]
+              }
+            ],
+            meaning: {},
+            isPopulated: () => { return true },
+            getGroupedInflections: () => { return [] }
+          },
+        index: 0,
+        count: 1,
+        morphDataReady: true
+      },
+      stubs: { 'inflectionattribute': '<div class="inflectionattribute"></div>' }
+    })
+
+    let hasLemmaWordInPrincipalParts = false
+    let cntPParts = 0
+
+    let PP = cmp.findAll('.principal_parts')
+    expect(PP.length).toEqual(2)
+    let firstPP = PP.at(0).findAll('span.alpheios-morph__listitem')
+    let secondPP = PP.at(1).findAll('span.alpheios-morph__listitem')
+    // first Lemma of altLemmas sorts highest so it comes first
+    expect(firstPP.at(0).text()).toEqual('part1a')
+    expect(secondPP.at(0).text()).toEqual('part1')
   })
 })

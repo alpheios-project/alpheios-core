@@ -85,7 +85,7 @@
         font-weight: 700;
     }
 
-    .alpheios-morph__dictentry .lemma_index {
+    .alpheios-morph__dictentry .lemma_index, .alpheios-morph__dictentry .lemma_index_spacer {
         font-size: $baseFontSize * 0.875;
         line-height: $baseFontSize * 1.3;
         width: $baseFontSize * 1.3;

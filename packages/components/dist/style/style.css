@@ -7968,7 +7968,7 @@ div.alpheios-checkbox-block {
   .auk.alpheios-font_medium_class .alpheios-inflections__additional_title {
     font-size: 14px;
     font-weight: 700; }
-  .auk.alpheios-font_medium_class .alpheios-morph__dictentry .lemma_index {
+  .auk.alpheios-font_medium_class .alpheios-morph__dictentry .lemma_index, .auk.alpheios-font_medium_class .alpheios-morph__dictentry .lemma_index_spacer {
     font-size: 14px;
     line-height: 20.8px;
     width: 20.8px;
@@ -8067,7 +8067,7 @@ div.alpheios-checkbox-block {
   .auk.alpheios-font_small_class .alpheios-inflections__additional_title {
     font-size: 10.5px;
     font-weight: 700; }
-  .auk.alpheios-font_small_class .alpheios-morph__dictentry .lemma_index {
+  .auk.alpheios-font_small_class .alpheios-morph__dictentry .lemma_index, .auk.alpheios-font_small_class .alpheios-morph__dictentry .lemma_index_spacer {
     font-size: 10.5px;
     line-height: 15.6px;
     width: 15.6px;
@@ -8166,7 +8166,7 @@ div.alpheios-checkbox-block {
   .auk.alpheios-font_large_class .alpheios-inflections__additional_title {
     font-size: 17.5px;
     font-weight: 700; }
-  .auk.alpheios-font_large_class .alpheios-morph__dictentry .lemma_index {
+  .auk.alpheios-font_large_class .alpheios-morph__dictentry .lemma_index, .auk.alpheios-font_large_class .alpheios-morph__dictentry .lemma_index_spacer {
     font-size: 17.5px;
     line-height: 26px;
     width: 26px;
@@ -8461,7 +8461,7 @@ div.alpheios-morph__block {
 .alpheios-morph__dictentry {
   margin-bottom: 15px;
 }
-.alpheios-morph__dictentry .lemma_index {
+.alpheios-morph__dictentry .lemma_index, .alpheios-morph__dictentry .lemma_index_spacer {
     display: inline-block;
     text-align: center;
     font-weight: bold;
@@ -8478,18 +8478,13 @@ div.alpheios-morph__block {
     margin-bottom: 0;
     margin-top: 0;
 }
-.alpheios-morph__dictentry .alpheios-morph__features p.feature_source {
-      text-align: right;
-      float: right;
-}
-.alpheios-morph__dictentry .alpheios-morph__features p.feature_source .alpheios-morph__attr {
-        font-weight: bold;
-}
 .alpheios-morph__dictentry .alpheios-morph__features p.feature_extras {
       font-style: italic;
 }
+.alpheios-morph__dictentry .alpheios-morph__features span.feature_source .alpheios-morph__attr {
+    font-size: smaller;
+}
 .alpheios-morph__dictentry .alpheios-morph__morphdata,
-  .alpheios-morph__dictentry p.feature_source,
   .alpheios-morph__dictentry p.feature_extras,
   .alpheios-morph__dictentry .alpheios-morph__definition_list,
   .alpheios-morph__dictentry .alpheios-morph__translation_list,
