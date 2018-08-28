@@ -61,14 +61,12 @@
 
     data: function () {
       return {
-        // table: this.view.wideView,
         collapsed: false
       }
     },
 
     methods: {
       collapse: function () {
-        console.log('collapse clicked')
         this.view.wideView.collapsed = !this.view.wideView.collapsed
         this.collapsed = this.view.wideView.collapsed
       },

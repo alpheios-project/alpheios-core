@@ -22,7 +22,7 @@
                         <option v-for="view in views" :value="view.id">{{view.name}}</option>
                     </select>
                 </div>
-                <div v-show="hasInflectionData && !selectedView.hasPrerenderedTables" class="alpheios-inflections__control-btn-cont uk-button-group">
+                <div v-show="hasInflectionData && canCollapse" class="alpheios-inflections__control-btn-cont uk-button-group">
                   <!-- This button is never shown as of now -->
                   <!--<alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideEmptyCols.tooltipText">
                     <button v-show="false"
@@ -33,8 +33,7 @@
                   </alph-tooltip>-->
 
                   <alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideNoSuffixGroups.tooltipText">
-                    <button v-if="canCollapse"
-                          class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
+                    <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
                           @click="hideNoSuffixGroupsClick">
                       {{buttons.hideNoSuffixGroups.text}}
                     </button>
@@ -170,6 +169,7 @@
           }
         },
         suppColors: ['rgb(208,255,254)', 'rgb(255,253,219)', 'rgb(228,255,222)', 'rgb(255,211,253)', 'rgb(255,231,211)'],
+        canCollapse: false, // Whether a selected view can be expanded or collapsed (it can't if has no suffix matches)
         sfCollapsed: true
       }
     },
@@ -199,6 +199,7 @@
           if (!this.selectedView.hasPrerenderedTables) {
             // Rendering is not required for component-enabled views
             this.selectedView.render()
+            this.canCollapse = this.selectedView.canCollapse
           }
         }
       },
@@ -210,6 +211,7 @@
           this.selectedView = this.views.find(view => view.id === newValue)
           if (!this.selectedView.hasPrerenderedTables) {
             this.selectedView.render()
+            this.canCollapse = this.selectedView.canCollapse
           }
         }
       },
@@ -229,13 +231,6 @@
           forms = Array.from(this.selectedView.forms.values())
         }
         return forms
-      },
-      canCollapse: function () {
-        if (this.data.inflectionData && this.selectedView && this.selectedView.table) {
-          return this.selectedView.table.canCollapse
-        } else {
-          return true
-        }
       },
       showExplanatoryHint: function () {
         return this.selectedView && this.selectedView.constructor && this.selectedView.constructor.name === 'GreekParadigmView'
@@ -279,6 +274,7 @@
               // Rendering is not required for component-enabled views
               this.setDefaults()
               this.selectedView.render()
+              this.canCollapse = this.selectedView.canCollapse
             }
           } else {
             this.selectedView = ''

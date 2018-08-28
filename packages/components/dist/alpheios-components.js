@@ -8572,14 +8572,12 @@ __webpack_require__.r(__webpack_exports__);
 
   data: function () {
     return {
-      // table: this.view.wideView,
       collapsed: false
     }
   },
 
   methods: {
     collapse: function () {
-      console.log('collapse clicked')
       this.view.wideView.collapsed = !this.view.wideView.collapsed
       this.collapsed = this.view.wideView.collapsed
     },
@@ -8638,7 +8636,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alpheios-inflection-tables */ "alpheios-inflection-tables");
 /* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_7__);
-//
 //
 //
 //
@@ -8810,6 +8807,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       suppColors: ['rgb(208,255,254)', 'rgb(255,253,219)', 'rgb(228,255,222)', 'rgb(255,211,253)', 'rgb(255,231,211)'],
+      canCollapse: false, // Whether a selected view can be expanded or collapsed (it can't if has no suffix matches)
       sfCollapsed: true
     }
   },
@@ -8839,6 +8837,7 @@ __webpack_require__.r(__webpack_exports__);
         if (!this.selectedView.hasPrerenderedTables) {
           // Rendering is not required for component-enabled views
           this.selectedView.render()
+          this.canCollapse = this.selectedView.canCollapse
         }
       }
     },
@@ -8850,6 +8849,7 @@ __webpack_require__.r(__webpack_exports__);
         this.selectedView = this.views.find(view => view.id === newValue)
         if (!this.selectedView.hasPrerenderedTables) {
           this.selectedView.render()
+          this.canCollapse = this.selectedView.canCollapse
         }
       }
     },
@@ -8869,13 +8869,6 @@ __webpack_require__.r(__webpack_exports__);
         forms = Array.from(this.selectedView.forms.values())
       }
       return forms
-    },
-    canCollapse: function () {
-      if (this.data.inflectionData && this.selectedView && this.selectedView.table) {
-        return this.selectedView.table.canCollapse
-      } else {
-        return true
-      }
     },
     showExplanatoryHint: function () {
       return this.selectedView && this.selectedView.constructor && this.selectedView.constructor.name === 'GreekParadigmView'
@@ -8919,6 +8912,7 @@ __webpack_require__.r(__webpack_exports__);
             // Rendering is not required for component-enabled views
             this.setDefaults()
             this.selectedView.render()
+            this.canCollapse = this.selectedView.canCollapse
           }
         } else {
           this.selectedView = ''
@@ -11999,11 +11993,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value:
-                      _vm.hasInflectionData &&
-                      !_vm.selectedView.hasPrerenderedTables,
-                    expression:
-                      "hasInflectionData && !selectedView.hasPrerenderedTables"
+                    value: _vm.hasInflectionData && _vm.canCollapse,
+                    expression: "hasInflectionData && canCollapse"
                   }
                 ],
                 staticClass:
@@ -12019,23 +12010,21 @@ var render = function() {
                     }
                   },
                   [
-                    _vm.canCollapse
-                      ? _c(
-                          "button",
-                          {
-                            staticClass:
-                              "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn",
-                            on: { click: _vm.hideNoSuffixGroupsClick }
-                          },
-                          [
-                            _vm._v(
-                              "\n                  " +
-                                _vm._s(_vm.buttons.hideNoSuffixGroups.text) +
-                                "\n                "
-                            )
-                          ]
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn",
+                        on: { click: _vm.hideNoSuffixGroupsClick }
+                      },
+                      [
+                        _vm._v(
+                          "\n                  " +
+                            _vm._s(_vm.buttons.hideNoSuffixGroups.text) +
+                            "\n                "
                         )
-                      : _vm._e()
+                      ]
+                    )
                   ]
                 )
               ],
