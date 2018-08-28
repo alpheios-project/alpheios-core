@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Alpheios UI Compononents",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "acorn": "^2.7.0",
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
-    "alpheios-inflection-tables": "github:alpheios-project/inflection-tables#inflection-tables-vue",
+    "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
     "alpheios-lemma-client": "github:alpheios-project/lemma-client",
     "alpheios-lexicon-client": "github:alpheios-project/lexicon-client",
     "alpheios-morph-client": "github:alpheios-project/morph-client",
@@ -124,7 +124,9 @@
   },
   "jest": {
     "verbose": true,
-    "testPathIgnorePatterns" : ["<rootDir>/node_modules/"],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ],
     "transform": {
       "^.+\\.htmlf$": "html-loader-jest",
       "^.+\\.jsx?$": "babel-jest",
