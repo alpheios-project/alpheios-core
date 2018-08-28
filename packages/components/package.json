@@ -124,7 +124,7 @@
   },
   "jest": {
     "verbose": true,
-    "testPathIgnorePatterns" : ["<rootDir>/node_modules/", "<rootDir>/tests/compare-tables/" ],
+    "testPathIgnorePatterns" : ["<rootDir>/node_modules/"],
     "transform": {
       "^.+\\.htmlf$": "html-loader-jest",
       "^.+\\.jsx?$": "babel-jest",
