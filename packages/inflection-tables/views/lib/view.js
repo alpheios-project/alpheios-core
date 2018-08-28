@@ -191,6 +191,16 @@ export default class View {
   }
 
   /**
+   * Whether this inflection table can be expanded or collapsed.
+   * It usually can't if it has no suffix no matches.
+   * In this cause, a full table will always be shown.
+   * @return {boolean}
+   */
+  get canCollapse () {
+    return !this.hasPrerenderedTables && this.table.canCollapse
+  }
+
+  /**
    * Initializes table structures for the first time, if necessary
    * (initialization is fulfilled once only, see `initialize()` method description for more details)
    * and renders rows and columns of a wide view that represents
@@ -201,7 +211,6 @@ export default class View {
     emptyColumnsHidden: true,
     noSuffixMatchesHidden: true
   }) {
-    console.log(`render call`)
     if (!this.initialized) {
       this.initialize(options)
     }

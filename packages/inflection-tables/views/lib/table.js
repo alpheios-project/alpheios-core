@@ -42,6 +42,10 @@ export default class Table {
     this.rows = this.constructRows()
     this.options = options
     this.canCollapse = this._hasAnyMatches()
+    if (!this.canCollapse) {
+      // If table cannot be collapsed or expanded it should always be shown in full form
+      this.options.noSuffixMatchesHidden = false
+    }
 
     if (this.options.emptyColumnsHidden) {
       this.hideEmptyColumns()
