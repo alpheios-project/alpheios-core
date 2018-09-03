@@ -13282,6 +13282,28 @@ class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORT
   static get inflectionType () {
     return _lib_suffix_js__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
+
+  static getOrderedGenders (ancestorFeatures) {
+    const ancestorValue = ancestorFeatures.length > 0 ? ancestorFeatures[ancestorFeatures.length - 1].value : ''
+    if (ancestorValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_2ND) {
+      return [
+        this.featureMap.get(_views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].datasetConsts.GEND_MASCULINE_FEMININE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
+      ]
+    } else if (ancestorValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD) {
+      return [
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+        this.featureMap.get(_views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].datasetConsts.GEND_MASCULINE_FEMININE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
+      ]
+    } else {
+      return [
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
+      ]
+    }
+  }
 }
 
 
