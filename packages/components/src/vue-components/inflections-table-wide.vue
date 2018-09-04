@@ -3,11 +3,11 @@
         <h3 class="alpheios-inflections__title alpheios-table-sf__title alpheios-clickable"
             @click="collapse">
             {{view.title}}
-            <span v-show="collapsed">[+]</span>
-            <span v-show="!collapsed">[-]</span>
+            <span v-show="state.collapsed">[+]</span>
+            <span v-show="!state.collapsed">[-]</span>
         </h3>
 
-        <div v-show="!collapsed" :style="view.wideView.style" class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
+        <div v-show="!state.collapsed" :style="view.wideView.style" class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
             <template v-for="row in view.wideView.rows">
                 <div :class="cell.classes" v-for="cell in row.cells"
                      @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">
@@ -56,19 +56,26 @@
       noSuffixMatchesHidden: {
         type: [Boolean],
         required: true
+      },
+      collapsed: {
+        type: [Boolean],
+        default: true,
+        required: false
       }
     },
 
     data: function () {
       return {
-        collapsed: false
+        state: {
+          collapsed: true
+        }
       }
     },
 
     methods: {
       collapse: function () {
-        this.view.wideView.collapsed = !this.view.wideView.collapsed
-        this.collapsed = this.view.wideView.collapsed
+        this.state.collapsed = !this.state.collapsed
+        this.view.wideView.collapsed = this.state.collapsed
       },
 
       morphemeClasses: function (morpheme) {
@@ -100,6 +107,11 @@
       noSuffixMatchesHidden: function (value) {
         this.view.noSuffixMatchesGroupsHidden(value)
       }
+    },
+
+    mounted: function () {
+      // Set a default value by the parent component
+      this.state.collapsed = this.collapsed
     }
   }
 </script>

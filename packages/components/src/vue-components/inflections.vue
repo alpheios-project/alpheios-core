@@ -1,5 +1,7 @@
 <template>
     <div>
+        <standard-forms v-if="languageID" :language-id="languageID"></standard-forms>
+
         <div v-show="! isEnabled" class="alpheios-inflections__placeholder">{{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}</div>
         <div v-show="isEnabled && ! isContentAvailable" class="alpheios-inflections__placeholder">{{messages.PLACEHOLDER_INFLECT}}</div>
 
@@ -50,7 +52,7 @@
             </div>
 
             <div v-if="!selectedView.hasPrerenderedTables">
-                <main-table-wide-vue :view="selectedView"
+                <main-table-wide-vue :view="selectedView"  v-bind:collapsed="false"
                                      :no-suffix-matches-hidden="buttons.hideNoSuffixGroups.noSuffixMatchesHidden">
                 </main-table-wide-vue>
 
@@ -88,6 +90,7 @@
   import WideTableVue from './inflections-table-wide.vue'
   import WideSubTables from './inflections-subtables-wide.vue'
   import WideSuppTable from './inflections-supp-table-wide.vue'
+  import StandardForms from './inflections-standard-forms.vue'
   import WordForms from './wordforms.vue'
 
   import Tooltip from './tooltip.vue'
@@ -103,6 +106,7 @@
       mainTableWideVue: WideTableVue,
       subTablesWide: WideSubTables,
       suppTablesWide: WideSuppTable,
+      standardForms: StandardForms,
       alphTooltip: Tooltip,
       wordForms: WordForms
     },
@@ -125,7 +129,7 @@
 
     data: function () {
       return {
-        languageID: Constants.LANG_LATIN, // Default value
+        languageID: undefined,
         events: {
           EVENT: 'event',
           DATA_UPDATE: 'dataUpdate'
@@ -240,6 +244,9 @@
     watch: {
       inflectionViewSet: function () {
         this.clearInflections()
+        if (this.data.inflectionViewSet) {
+          this.languageID = this.data.inflectionViewSet.languageID
+        }
         if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
           // Set colors for supplemental paradigm tables
           for (let view of this.data.inflectionViewSet.getViews()) {

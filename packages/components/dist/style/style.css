@@ -9002,6 +9002,32 @@ a.infl-supp-tbl__reflink {
   float: right;
 }
 
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
+.alpheios-sf__title {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+.alpheios-sf__pofs-title {
+  font-weight: 700;
+  margin: 20px 0 10px;
+}
+.alpheios-sf__pofs-title-2 {
+  font-weight: 700;
+  margin: 10px 0;
+  padding-left: 30px;
+}
+.alpheios-clickable {
+  cursor: pointer;
+}
+.alpheios-sf h3.alpheios-inflections__title {
+  text-align: left;
+}
+
 
 .alpheios-inflections__form-parts {
 	  display: inline-block;
