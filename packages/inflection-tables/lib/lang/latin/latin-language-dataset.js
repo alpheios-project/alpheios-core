@@ -272,13 +272,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
       let columns = [
         Feature.types.conjugation,
-        Feature.types.voice,
-        Feature.types.mood,
-        Feature.types.tense,
-        Feature.types.number,
-        Feature.types.person,
-        Feature.types.case,
-        Feature.types.type
+        Feature.types.case
       ]
       columns.forEach((c, j) => {
         try {
