@@ -17,12 +17,17 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     this.name = 'verb-irregular-voice'
     this.title = 'Verb Conjugation (Irregular)'
 
-    const inflectionsWords = this.homonym.inflections.map(item => item[Feature.types.word].value)
-    const lemma = this.constructor.dataset.verbsIrregularLemmas.filter(item => inflectionsWords.indexOf(item.word) > -1)[0]
+    // Some irregular verbs can be unimplemented and shall be skipped
+    const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)
+    this.isImplemented = inflections.length > 0
+    if (this.isImplemented) {
+      const inflectionsWords = inflections.map(item => item[Feature.types.word].value)
+      const lemma = this.constructor.dataset.verbsIrregularLemmas.filter(item => inflectionsWords.indexOf(item.word) > -1)[0]
 
-    this.additionalTitle = lemma.word + ', ' + lemma.principalParts
+      this.additionalTitle = lemma.word + ', ' + lemma.principalParts
 
-    this.createTable()
+      this.createTable()
+    }
   }
 
   static get viewID () {

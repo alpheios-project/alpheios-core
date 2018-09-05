@@ -53,6 +53,10 @@ export default class LatinLanguageDataset extends LanguageDataset {
     this.features.get(Feature.types.tense).getImporter()
       .map('future_perfect', Constants.TENSE_FUTURE_PERFECT)
 
+    /**
+     * Contains a list of irregular verb lemmas for which we have data.
+     * @type {Array}
+     */
     this.verbsIrregularLemmas = []
   }
 
@@ -426,10 +430,33 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   checkIrregularVerb (inflection) {
-    if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE].includes(inflection[Feature.types.part].value) && inflection[Feature.types.word]) {
+    if (
+      inflection[Feature.types.part].value === Constants.POFS_VERB &&
+      inflection[Feature.types.conjugation] &&
+      inflection[Feature.types.conjugation].value === Constants.TYPE_IRREGULAR
+    ) {
+      // This is an irregular verb that was identified by a morphological analyzer
+      return true
+    } else if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE].includes(inflection[Feature.types.part].value) && inflection[Feature.types.word]) {
       return this.verbsIrregularLemmas.filter(item => item.word === inflection[Feature.types.word].value).length > 0
     }
     return false
+  }
+
+  /**
+   * Checks whether we implemented (i.e. have word data) a particular word (stored in inflection.word).
+   * Currently checks for unimplemented irregular verbs only.
+   * @param {Inflection} inflection - An inflection we need to check
+   * @return {boolean} - True if verb is implemented yet, false otherwise
+   */
+  isImplemented (inflection) {
+    /*
+    Identifies words that are not implemented. Currently those are irregular verbs that are not in our data CSV files.
+     */
+    return Boolean(
+      !this.checkIrregularVerb(inflection) ||
+      this.verbsIrregularLemmas.some(item => item.word === inflection[Feature.types.word].value)
+    )
   }
 
   static getObligatoryMatchList (inflection) {

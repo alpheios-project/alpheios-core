@@ -30,6 +30,15 @@ export default class LanguageDataset {
   }
 
   /**
+   * Checks weather a language dataset has data on a certain word (stored in inflection.word) or not.
+   * @param {Inflection} inflection - An inflection that needs to be checked.
+   * @return {boolean} True if word is supported, false otherwise
+   */
+  isImplemented (inflection) {
+    return true
+  }
+
+  /**
    * Each grammatical feature can be either a single or an array of Feature objects. The latter is the case when
    * an ending can belong to several grammatical features at once (i.e. belong to both 'masculine' and
    * 'feminine' genders.
@@ -188,6 +197,9 @@ export default class LanguageDataset {
     }
     partOfSpeech = partOfSpeech.value
 
+    // add the lemma to the inflection before setting inflection constraints
+    inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
+
     inflection.constraints = this.model.getInflectionConstraints(inflection)
 
     if (inflection.constraints.pronounClassRequired) {
@@ -209,10 +221,9 @@ export default class LanguageDataset {
       }
     }
 
-    // add the lemma to the inflection
-    inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
     // Check if this is an irregular word after a `word` feature is added
     inflection.constraints.irregularVerb = this.checkIrregularVerb(inflection)
+    inflection.constraints.implemented = this.isImplemented(inflection)
 
     if (!this.pos.get(partOfSpeech)) {
       // There is no source data for this part of speech
