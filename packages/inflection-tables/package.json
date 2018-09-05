@@ -1,6 +1,6 @@
 {
   "name": "alpheios-inflection-tables",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Inflection library for an Alpheios project",
   "main": "dist/alpheios-inflection-tables.min.js",
   "directories": {
