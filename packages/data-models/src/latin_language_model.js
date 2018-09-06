@@ -196,7 +196,7 @@ export default class LatinLanguageModel extends LanguageModel {
       pronounClassRequired: false
     }
     if (inflection.hasOwnProperty(Feature.types.part)) {
-      if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE].includes(inflection[Feature.types.part].value)) {
+      if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE, Constants.POFS_SUPINE, Constants.POFS_GERUNDIVE].includes(inflection[Feature.types.part].value)) {
         grammar.fullFormBased = true
         grammar.suffixBased = true
       } else if (inflection[Feature.types.part].value === Constants.POFS_PRONOUN) {
