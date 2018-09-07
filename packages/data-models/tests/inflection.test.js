@@ -182,7 +182,7 @@ describe('inflection.test.js', () => {
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflection.addFeature(new Feature(Feature.types.fullForm, 'stemsuffix', Constants.LANG_LATIN))
     inflection.setConstraints()
-    inflection.constraints.irregularVerb = true
+    inflection.constraints.irregular = true
 
     expect(inflection.compareWithWordDependsOnType('stemsuffix', 'Form')).toBeTruthy()
   })
@@ -192,7 +192,7 @@ describe('inflection.test.js', () => {
 
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflection.setConstraints()
-    inflection.constraints.irregularVerb = true
+    inflection.constraints.irregular = true
 
     expect(inflection.compareWithWordDependsOnType('stem - suffix', 'Form')).toBeTruthy()
   })
