@@ -56,6 +56,7 @@ class Inflection {
     this.constraints = {
       fullFormBased: false, // True this inflection stores and requires to use a full form of a word
       suffixBased: false, // True if only suffix is enough to identify this inflection
+      irregular: false, // Whether this word is an irregular one
       obligatoryMatches: [], // Names of features that should be matched in order to include a form or suffix to an inflection table
       optionalMatches: [] // Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
     }
@@ -112,7 +113,7 @@ class Inflection {
 
   compareWithWordDependsOnType (word, className, normalize = true) {
     let value
-    if (!this.constraints.irregularVerb) {
+    if (!this.constraints.irregular) {
       value = this.constraints.suffixBased ? this.suffix : this.form
     } else {
       if (className === 'Suffix') {
