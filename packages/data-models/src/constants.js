@@ -8,6 +8,7 @@ export const LANG_LATIN = Symbol('latin')
 export const LANG_GREEK = Symbol('greek')
 export const LANG_ARABIC = Symbol('arabic')
 export const LANG_PERSIAN = Symbol('persian')
+export const LANG_GEEZ = Symbol('ge\'ez')
 export const STR_LANG_CODE_UNDEFINED = 'undefined'
 export const STR_LANG_CODE_LAT = 'lat'
 export const STR_LANG_CODE_LA = 'la'
@@ -18,6 +19,7 @@ export const STR_LANG_CODE_FAS = 'fas'
 export const STR_LANG_CODE_PER = 'per'
 export const STR_LANG_CODE_FA_IR = 'fa-IR'
 export const STR_LANG_CODE_FA = 'fa'
+export const STR_LANG_CODE_GEZ = 'gez'
 // parts of speech
 export const POFS_ADJECTIVE = 'adjective'
 export const POFS_ADVERB = 'adverb'

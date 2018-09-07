@@ -16,6 +16,7 @@ import LatinLanguageModel from './latin_language_model.js'
 import GreekLanguageModel from './greek_language_model.js'
 import ArabicLanguageModel from './arabic_language_model.js'
 import PersianLanguageModel from './persian_language_model.js'
+import GeezLanguageModel from './geez_language_model.js'
 import ResourceProvider from './resource_provider.js'
 
 import Translation from './translation.js'
@@ -38,6 +39,7 @@ export {
   GreekLanguageModel,
   ArabicLanguageModel,
   PersianLanguageModel,
+  GeezLanguageModel,
   ResourceProvider,
 
   Translation }

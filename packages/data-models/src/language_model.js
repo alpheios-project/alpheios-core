@@ -206,6 +206,13 @@ class LanguageModel {
         ]
       ],
       [
+        Feature.types.number,
+        [
+          Constants.NUM_SINGULAR,
+          Constants.NUM_PLURAL
+        ]
+      ],
+      [
         Feature.types.age,
         []
       ],

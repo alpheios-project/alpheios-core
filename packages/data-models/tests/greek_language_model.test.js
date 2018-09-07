@@ -118,4 +118,9 @@ describe('greek_language_model.j', () => {
     expect(greekModel.getPronounClasses([form2], 'foo2')).toBeUndefined()
     expect(greekModel.getPronounClasses([form3], '')).toBeUndefined()
   })
+
+  it('3 GreekLanguageModel - alternateWordEncodings - additional encodings strip diacritics for inflections', () => {
+    let word = 'συνεχής'.normalize('NFD')
+    expect(greekModel.alternateWordEncodings(word, null, null, 'strippedDiacritics')).toEqual(['συνεχης'])
+  })
 })

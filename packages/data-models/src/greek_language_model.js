@@ -164,6 +164,9 @@ export default class GreekLanguageModel extends LanguageModel {
     //    precombined unicode (vowel length/diacritics preserved)
     // 2. When looking up a verb in the verb paradigm tables
     //    it set e_normalize to false, otherwise it was true...
+    if (!word) {
+      return []
+    }
     // make sure it's normalized to NFC and in lower case
     let normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
     let strippedVowelLength = normalized.replace(
@@ -191,8 +194,14 @@ export default class GreekLanguageModel extends LanguageModel {
       /\u{1FED}/ug, '\u{1FEF}').replace(
       /\u{1FEE}/ug, '\u{1FFD}').replace(
       /[\u{00A8}\u{0308}]/ug, '')
+    // to strip diacritics, rather than list all possible combined vowels with
+    // diacritis, decompose, remove the combining accents, and then recompose
+    let strippedDiacritics = normalized.normalize('NFD').replace(
+      /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}]/ug, '').normalize('NFC')
     if (encoding === 'strippedDiaeresis') {
       return [strippedDiaeresis]
+    } else if (encoding === 'strippedDiacritics') {
+      return [strippedDiacritics]
     } else {
       return [strippedVowelLength]
     }

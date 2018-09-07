@@ -256,4 +256,15 @@ describe('inflection.test.js', () => {
     inflection.addFeature(new Feature(Feature.types.number, Constants.NUM_SINGULAR, Constants.LANG_LATIN))
     expect(inflection.features).toEqual(new Set([Feature.types.part, Feature.types.voice, Feature.types.number]))
   })
+
+  it('23 Inflection - modelCompareWords respects normalization', () => {
+    let inflection = new Inflection('συνεχ', 'grc', 'ης')
+    let matched = inflection.modelCompareWords('συνεχής', 'συνεχης', true)
+    expect(inflection.modelCompareWords('συνεχής', 'συνεχης', true)).toBeTruthy()
+    // and are not equal if we don't normalize
+    expect(inflection.modelCompareWords('συνεχής', 'συνεχης', false)).toBeFalsy()
+    // make sure languages without stripped diacritics as alternate encodings also still work
+    inflection = new Inflection('cepit', 'lat', 'it')
+    expect(inflection.modelCompareWords('cepit', 'cepit', true)).toBeTruthy()
+  })
 })

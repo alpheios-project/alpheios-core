@@ -111,9 +111,7 @@ class Inflection {
   }
 
   compareWithWordDependsOnType (word, className, normalize = true) {
-    const model = LMF.getLanguageModel(this.languageID)
     let value
-
     if (!this.constraints.irregularVerb) {
       value = this.constraints.suffixBased ? this.suffix : this.form
     } else {
@@ -123,18 +121,40 @@ class Inflection {
         value = this[Feature.types.fullForm] ? this[Feature.types.fullForm].value : this.form
       }
     }
-
-    return normalize
-      ? model.normalizeWord(value) === model.normalizeWord(word)
-      : value === word
+    return this.modelCompareWords(word, value)
   }
 
   compareWithWord (word, normalize = true) {
-    const model = LMF.getLanguageModel(this.languageID)
     const value = this.constraints.suffixBased ? this.suffix : this.form
-    return normalize
-      ? model.normalizeWord(value) === model.normalizeWord(word)
-      : value === word
+    return this.modelCompareWords(word, value)
+  }
+
+  /**
+   * Compare to words (or partial words) delegating to the language model
+   * rules for normalization
+   * @param {String} wordA the first word
+   * @param {String} wordB the second word
+   * @param {Boolean} normalize whether or not to apply normalization
+   */
+  modelCompareWords (wordA, wordB, normalize = true) {
+    const model = LMF.getLanguageModel(this.languageID)
+    let matched = false
+    if (normalize) {
+      let altWordA = model.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
+      let altWordB = model.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
+      for (let i = 0; i < altWordA.length; i++) {
+        matched = altWordA[i] === altWordB[i]
+        if (matched) {
+          break
+        }
+      }
+      if (!matched) {
+        matched = model.normalizeWord(wordA) === model.normalizeWord(wordB)
+      }
+    } else {
+      matched = wordA === wordB
+    }
+    return matched
   }
 
   /**

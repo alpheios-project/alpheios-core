@@ -3,6 +3,7 @@ import LatinLanguageModel from './latin_language_model.js'
 import GreekLanguageModel from './greek_language_model.js'
 import ArabicLanguageModel from './arabic_language_model.js'
 import PersianLanguageModel from './persian_language_model.js'
+import GeezLanguageModel from './geez_language_model.js'
 import * as Constants from './constants.js'
 
 const MODELS = new Map([
@@ -11,7 +12,8 @@ const MODELS = new Map([
   [ Constants.STR_LANG_CODE_GRC, GreekLanguageModel ],
   [ Constants.STR_LANG_CODE_ARA, ArabicLanguageModel ],
   [ Constants.STR_LANG_CODE_AR, ArabicLanguageModel ],
-  [ Constants.STR_LANG_CODE_PER, PersianLanguageModel ]
+  [ Constants.STR_LANG_CODE_PER, PersianLanguageModel ],
+  [ Constants.STR_LANG_CODE_GEZ, GeezLanguageModel ]
 ])
 
 class LanguageModelFactory {
