@@ -57,6 +57,7 @@
         type: Symbol,
         required: true
       },
+
       // A passtrough to inflection-tables-wide
       messages: {
         type: Object,

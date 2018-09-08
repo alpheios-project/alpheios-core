@@ -2,7 +2,7 @@
     <div v-if="!view.isImplemented" class="alpheios-inflections__not-impl-msg">
         {{messages.INFLECT_MSG_TABLE_NOT_IMPLEMENTED}}
     </div>
-    <div v-else-if="view.wideView">
+    <div v-else-if="view.wideView && !view.isEmpty">
         <h3 class="alpheios-inflections__title alpheios-table-sf__title alpheios-clickable"
             @click="collapse">
             {{view.title}}
