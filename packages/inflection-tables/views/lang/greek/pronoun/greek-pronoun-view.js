@@ -74,16 +74,17 @@ export default class GreekPronounView extends GreekView {
   // Select inflections that have a 'Form' type (form based) and find those whose grammar class matches a grammar class of the view
 
   /**
-   * Determines wither this view can be used to display an inflection table of any data
+   * Determines whether this view can be used to display an inflection table of any data
    * within an `inflectionData` object.
    * By default a view can be used if a view and an inflection data piece have the same language,
    * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param homonym
+   * @param {symbol} languageID
+   * @param {Inflection[]} inflections
    * @param inflectionData
    * @return {boolean}
    */
-  static matchFilter (homonym, inflectionData) {
-    if (this.languageID === homonym.languageID && homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) {
+  static matchFilter (languageID, inflections, inflectionData) {
+    if (this.languageID === languageID && inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
         let inflections = inflectionData.types.get(this.inflectionType)
         let found = inflections.items.find(form => {
@@ -103,7 +104,7 @@ export default class GreekPronounView extends GreekView {
 
   static getMatchingInstances (homonym, messages) {
     let inflectionData = this.getInflectionsData(homonym)
-    if (this.matchFilter(homonym, inflectionData)) {
+    if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
       return [new this(homonym, inflectionData, messages)]
     }
     return []

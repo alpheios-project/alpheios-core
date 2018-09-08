@@ -54,10 +54,15 @@ export default class LatinLanguageDataset extends LanguageDataset {
       .map('future_perfect', Constants.TENSE_FUTURE_PERFECT)
 
     /**
-     * Contains a list of irregular verb lemmas for which we have data.
-     * @type {Array}
+     * A map of irregular form lemmas for which we have data.
+     * key - Part of speech name.
+     * value - array of lemmas.
+     * @type {Map<string, Lemma[]>}
      */
-    this.verbsIrregularLemmas = []
+    this.irregularLemmas = new Map()
+    for (const pofs of this.constructor.constants.IRREG_POFS) {
+      this.irregularLemmas.set(pofs, [])
+    }
   }
 
   static get languageID () {
@@ -66,6 +71,8 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
   static get constants () {
     return {
+      // Parts of speech that could have irregular forms
+      IRREG_POFS: [Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE, Constants.POFS_SUPINE, Constants.POFS_GERUNDIVE],
       ORD_1ST_2ND: '1st 2nd',
       GEND_MASCULINE_FEMININE: 'masculine feminine'
     }
@@ -292,7 +299,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     }
   }
 
-  // For Lemmas of verbs, verb participles, gerundive, and supine
+  // For Lemmas of verbs and verb participles
   addVerbForms (partOfSpeech, data, pofsFootnotes = []) {
     let footnotes = []
     // First row are headers
@@ -306,15 +313,13 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
       let features = [
-        partOfSpeech/*,
-        this.features.get(Feature.types.fullForm).createFromImporter(lemma.word) */
+        partOfSpeech
       ]
 
       if (hdwd && lemma) {
-        // TODO: Shall we store it as `word` or as `hdwd`. Which one is more correct?
         features.push(this.features.get(Feature.types.word).createFromImporter(hdwd))
-        if (this.verbsIrregularLemmas.filter(item => item.word === lemma.word).length === 0) {
-          this.verbsIrregularLemmas.push(lemma)
+        if (!this.irregularLemmas.get(partOfSpeech.value).some(item => item.word === lemma.word)) {
+          this.irregularLemmas.get(partOfSpeech.value).push(lemma)
         }
       }
 
@@ -338,6 +343,46 @@ export default class LatinLanguageDataset extends LanguageDataset {
       if (item[8]) {
         // There can be multiple footnote indexes separated by spaces
         let indexes = item[8].split(' ')
+        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
+      }
+      this.addInflectionData(partOfSpeech.value, Form, form, features, footnotes)
+    }
+  }
+
+  // For Lemmas of supine and gerundive
+  addSupineGerundiveForms (partOfSpeech, data, pofsFootnotes = []) {
+    let footnotes = []
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+      const item = data[i]
+      let lemmaWord = item[0]
+      let principalParts = item[1].split(/_/)
+      let form = item[2]
+
+      // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
+      let features = [
+        partOfSpeech/*,
+        this.features.get(Feature.types.fullForm).createFromImporter(lemma.word) */
+      ]
+
+      if (lemmaWord) {
+        let lemma = new Lemma(lemmaWord, LatinLanguageDataset.languageID, principalParts)
+        features.push(this.features.get(Feature.types.word).createFromImporter(lemmaWord))
+        if (!this.irregularLemmas.get(partOfSpeech.value).some(item => item.word === lemma.word)) {
+          this.irregularLemmas.get(partOfSpeech.value).push(lemma)
+        }
+      }
+
+      if (item[3]) {
+        features.push(this.features.get(Feature.types.case).createFromImporter(item[3]))
+      }
+
+      // Footnotes
+      if (item[4]) {
+        // There can be multiple footnote indexes separated by spaces
+        let indexes = item[4].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
 
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
@@ -416,20 +461,20 @@ export default class LatinLanguageDataset extends LanguageDataset {
     footnotesData = papaparse.parse(verbSupineFormFootnotesCSV, {skipEmptyLines: true})
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
     forms = papaparse.parse(verbSupineFormsCSV, {skipEmptyLines: true})
-    this.addVerbForms(partOfSpeech, forms.data, footnotes)
+    this.addSupineGerundiveForms(partOfSpeech, forms.data, footnotes)
 
     // Gerundive
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_GERUNDIVE)
     footnotesData = papaparse.parse(gerundiveFormFootnotesCSV, {skipEmptyLines: true})
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
     forms = papaparse.parse(gerundiveFormsCSV, {skipEmptyLines: true})
-    this.addVerbForms(partOfSpeech, forms.data, footnotes)
+    this.addSupineGerundiveForms(partOfSpeech, forms.data, footnotes)
 
     this.dataLoaded = true
     return this
   }
 
-  checkIrregularVerb (inflection) {
+  /* checkIrregularVerb (inflection) {
     if (
       inflection[Feature.types.part].value === Constants.POFS_VERB &&
       inflection[Feature.types.conjugation] &&
@@ -441,11 +486,37 @@ export default class LatinLanguageDataset extends LanguageDataset {
       return this.verbsIrregularLemmas.filter(item => item.word === inflection[Feature.types.word].value).length > 0
     }
     return false
+  } */
+
+  isIrregular (inflection) {
+    const pofs = inflection[Feature.types.part].value
+    if (this.irregularLemmas.has(pofs)) {
+      if (inflection[Feature.types.conjugation] && inflection[Feature.types.conjugation].value === Constants.TYPE_IRREGULAR) {
+        // This is an irregular verb that was identified by a morphological analyzer
+        return true
+      } else if (inflection[Feature.types.word]) {
+        return this.irregularLemmas.get(pofs).some(item => item.word === inflection[Feature.types.word].value)
+      }
+    }
+    return false
   }
 
   /**
    * Checks whether we implemented (i.e. have word data) a particular word (stored in inflection.word).
    * Currently checks for unimplemented irregular verbs only.
+   * @param {Inflection} inflection - An inflection we need to check
+   * @return {boolean} - True if verb is not implemented yet, false otherwise
+   */
+  /* isUnimplemented (inflection) {
+    return Boolean(
+      this.checkIrregularVerb(inflection) &&
+      !this.verbsIrregularLemmas.some(item => item.word === inflection[Feature.types.word].value)
+    )
+  } */
+
+  /**
+   * Checks whether we implemented (i.e. have word data) a particular word (stored in inflection.word).
+   * Currently those are irregular verbs that are not in our data CSV files.
    * @param {Inflection} inflection - An inflection we need to check
    * @return {boolean} - True if verb is implemented yet, false otherwise
    */
@@ -453,19 +524,39 @@ export default class LatinLanguageDataset extends LanguageDataset {
     /*
     Identifies words that are not implemented. Currently those are irregular verbs that are not in our data CSV files.
      */
+    const pofs = inflection[Feature.types.part].value
     return Boolean(
-      !this.checkIrregularVerb(inflection) ||
-      this.verbsIrregularLemmas.some(item => item.word === inflection[Feature.types.word].value)
+      !this.isIrregular(inflection) ||
+      this.irregularLemmas.get(pofs).some(item => item.word === inflection[Feature.types.word].value)
     )
   }
 
+  /**
+   * Returns a list of irregular lemmas matching one or more inflections.
+   * @param {Inflection[]} inflections - An array of inflections that will be used to search for matching lemmas.
+   * @return {Lemma[] | []} Array of matching Lemma objects or an empty array if nothing is found.
+   */
+  getMatchingIrregularLemmas (inflections) {
+    let lemmas = []
+    for (const inflection of inflections) {
+      const pofs = inflection[Feature.types.part].value
+      if (this.irregularLemmas.has(pofs)) {
+        let lemma = this.irregularLemmas.get(pofs).find(item => item.word === inflection[Feature.types.word].value)
+        if (lemma) {
+          lemmas.push(lemma)
+        }
+      }
+    }
+    return lemmas
+  }
+
   static getObligatoryMatchList (inflection) {
-    if (inflection.constraints.irregularVerb) {
-      return [Feature.types.fullForm, Feature.types.word]
+    if (inflection.constraints.irregular || Constants.POFS_SUPINE || Constants.POFS_GERUNDIVE) {
+      return [Feature.types.part, Feature.types.fullForm, Feature.types.word]
     } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_VERB)) {
       return [Feature.types.part]
     } else if (inflection.constraints.fullFormBased) {
-      return [Feature.types.fullForm]
+      return [Feature.types.part, Feature.types.fullForm]
     } else {
       // Default value for suffix matching
       return [Feature.types.part]
@@ -485,7 +576,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       Feature.types.conjugation
     ]
 
-    if (inflection.constraints.irregularVerb) {
+    if (inflection.constraints.irregular) {
       return [
         Feature.types.mood,
         Feature.types.tense,

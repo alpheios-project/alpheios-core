@@ -222,7 +222,11 @@ export default class LanguageDataset {
     }
 
     // Check if this is an irregular word after a `word` feature is added
-    inflection.constraints.irregularVerb = this.checkIrregularVerb(inflection)
+    inflection.constraints.irregular = this.isIrregular(inflection)
+    if (inflection.constraints.irregular) {
+      // Irregular words are always full form based
+      inflection.constraints.fullFormBased = true
+    }
     inflection.constraints.implemented = this.isImplemented(inflection)
 
     if (!this.pos.get(partOfSpeech)) {
@@ -516,7 +520,12 @@ export default class LanguageDataset {
     }
   }
 
-  checkIrregularVerb (inflection) {
+  /**
+   * Checks whether a word in an inflection is irregular or not.
+   * @param {Inflection} inflection - Inflection to be checked.
+   * @return {boolean} - True if the word is irregular, false otherwise.
+   */
+  isIrregular (inflection) {
     return false
   }
 }

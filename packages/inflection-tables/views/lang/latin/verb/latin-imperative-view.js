@@ -43,26 +43,20 @@ export default class LatinImperativeView extends LatinVerbMoodView {
    * within an `inflectionData` object.
    * By default a view can be used if a view and an inflection data piece have the same language,
    * the same part of speech, and the view is enabled for lexemes within an inflection data.
-   * @param homonym
+   * @param {symbol} languageID
+   * @param {Inflection[]} inflections
    * @return {boolean}
    */
-  static matchFilter (homonym) {
-    return (this.languageID === homonym.languageID &&
-      homonym.inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech) &&
-      this.enabledForLexemes(homonym.lexemes))
+  static matchFilter (languageID, inflections) {
+    return Boolean(
+      this.languageID === languageID &&
+      inflections.some(i => this.enabledForInflection(i)))
   }
 
-  static enabledForLexemes (lexemes) {
-    // default is true
-    for (let lexeme of lexemes) {
-      for (let inflection of lexeme.inflections) {
-        if (inflection[Feature.types.mood] &&
-          inflection[Feature.types.mood].values.includes(Constants.MOOD_IMPERATIVE)) {
-          return true
-        }
-      }
-    }
-    return false
+  static enabledForInflection (inflection) {
+    return inflection[Feature.types.part].value === this.mainPartOfSpeech &&
+      inflection[Feature.types.mood] &&
+      inflection[Feature.types.mood].values.includes(Constants.MOOD_IMPERATIVE)
   }
 
   static morphemeCellFilter (suffix) {

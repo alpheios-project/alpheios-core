@@ -1,7 +1,7 @@
-Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-fero,ferre_tuli_latus,lātum,,,,,,5
-fero,ferre_tuli_latus,lātū,,,,,,
-fero,ferre_tuli_latus,lātū,,,,,,
-eo,ire_ivi(ii)_itus,itum,,,,,,5
-eo,ire_ivi(ii)_itus,itū,,,,,,
-eo,ire_ivi(ii)_itus,itū,,,,,,
+Lemma,PrincipalParts,Form,Case,Footnote
+fero,ferre_tuli_latus,lātum,accusative,5
+fero,ferre_tuli_latus,lātū,dative,
+fero,ferre_tuli_latus,lātū,ablative,
+eo,ire_ivi(ii)_itus,itum,accusative,5
+eo,ire_ivi(ii)_itus,itū,ablative,
+eo,ire_ivi(ii)_itus,itū,dative,

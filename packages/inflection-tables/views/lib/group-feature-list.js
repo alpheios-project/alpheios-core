@@ -1,4 +1,5 @@
-import { FeatureList } from 'alpheios-data-models'
+import { Feature, FeatureList } from 'alpheios-data-models'
+import GroupFeatureType from './group-feature-type.js'
 
 /**
  * Holds a list of all grouping features of a table.
@@ -15,6 +16,17 @@ export default class GroupFeatureList extends FeatureList {
     this._rowFeatures = [] // Features that group cells into rows
 
     this.forEach((feature) => { feature.groupFeatureList = this })
+
+    // Data column represents a single column that holds data values in tables that has no features that form columns.
+    this._dataColFeature = null
+  }
+
+  /**
+   * Whether a list has any column features
+   * @return {boolean} True if list has any column features, false otherwise
+   */
+  get hasColumnFeatures () {
+    return this._columnFeatures.length > 0
   }
 
   /**
@@ -51,6 +63,10 @@ export default class GroupFeatureList extends FeatureList {
     }
   }
 
+  isFirstColumnFeature (groupFeature) {
+    return groupFeature.isSameType(this.firstColumnFeature)
+  }
+
   /**
    * Returns a last column feature item.
    * @returns {GroupFeatureType} A last column feature.
@@ -59,6 +75,10 @@ export default class GroupFeatureList extends FeatureList {
     if (this._columnFeatures && this._columnFeatures.length) {
       return this._columnFeatures[this._columnFeatures.length - 1]
     }
+  }
+
+  isLastColumnFeature (groupFeature) {
+    return groupFeature.isSameType(this.lastColumnFeature)
   }
 
   /**
@@ -71,7 +91,7 @@ export default class GroupFeatureList extends FeatureList {
 
   /**
    * Defines what features form rows. An order of items specifies an order in which columns be shown.
-   * @param {Feature[] | GroupingFeature[]} features - What features form rows and what order
+   * @param {Feature[] | GroupFeatureType[]} features - What features form rows and what order
    * these rows would follow.
    */
   set rows (features) {
@@ -87,6 +107,60 @@ export default class GroupFeatureList extends FeatureList {
   }
 
   /**
+   * Some tables has no features that form columns. In order to show them properly
+   * we need to create a single data column that will hold data values.
+   * @return {GroupFeatureType} - A data column feature.
+   */
+  createDataColumn () {
+    // Need to use a known type to pass a type check
+    let feature = new Feature('word', 'empty value', Symbol('data column language'))
+    feature.type = 'data column type' // To bypass a type check
+    this._dataColFeature = new GroupFeatureType('data column type', Symbol('data column language'), '', [feature])
+    this._dataColFeature.dataColumn = true
+    // this._columnFeatures.push(groupFeature)
+    return this._dataColFeature
+  }
+
+  /**
+   * Checks whether this table has a data column
+   * @return {boolean} True if data column exist, false otherwise.
+   */
+  get hasDataColumn () {
+    return Boolean(this._dataColFeature)
+  }
+
+  /**
+   * Get feature from a certain position. Will ignore data columns.
+   * @param {number} position - Position of a feature, starting from zero.
+   * @return {GroupFeatureType | null} A feature element or null if not found.
+   */
+  getFeature (position) {
+    if (position < this._features.length) {
+      return this._features[position]
+    } else {
+      console.warn(`Attempting to get feature that is out of bounds, position ${position}`)
+      return null
+    }
+  }
+
+  /**
+   * Get feature from a certain position, including data column.
+   * @param {number} position - Position of a feature, starting from zero.
+   * @return {GroupFeatureType | null} A feature element or null if not found.
+   */
+  getGroupingFeature (position) {
+    if (this.hasDataColumn) {
+      if (position === 0) {
+        return this._dataColFeature
+      } else if (position <= this._features.length) {
+        return this._features[position - 1]
+      }
+    } else {
+      return this.getFeature(position)
+    }
+  }
+
+  /**
    * Returns a first row feature item.
    * @returns {GroupFeatureType} A fist row feature.
    */
@@ -94,6 +168,10 @@ export default class GroupFeatureList extends FeatureList {
     if (this._rowFeatures && this._rowFeatures.length) {
       return this._rowFeatures[0]
     }
+  }
+
+  isFirstRowFeature (groupFeature) {
+    return groupFeature.isSameType(this.firstRowFeature)
   }
 
   /**
@@ -106,11 +184,15 @@ export default class GroupFeatureList extends FeatureList {
     }
   }
 
+  isLastRowFeature (groupFeature) {
+    return groupFeature.isSameType(this.lastRowFeature)
+  }
+
   /**
    * Defines what are the titles of suffix cell rows within a table body.
    * The number of such items defines how many left-side title columns this table would have (default is one).
    * Full width titles (see below) does not need to be specified here.
-   * @param {Feature | GroupingFeature} features - What suffix row titles this table would have.
+   * @param {Feature | GroupFeatureType} features - What suffix row titles this table would have.
    */
   set columnRowTitles (features) {
     for (let feature of features) {

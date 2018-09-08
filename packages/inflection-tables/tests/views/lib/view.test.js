@@ -76,7 +76,7 @@ describe('view.test.js', () => {
     expect(view.title).toBeDefined()
     expect(view.hasPrerenderedTables).toBeFalsy()
     expect(view.forms.size).toEqual(0)
-    expect(Object.keys(view.table).length).toEqual(0)
+    expect(Object.keys(view.table).length).toEqual(1) // This is `options`
     expect(view.hasCredits).toBeFalsy()
     expect(view.creditsText).toEqual('')
   })
@@ -157,7 +157,7 @@ describe('view.test.js', () => {
     expect(View.toTitleCase('TEST this cAse')).toEqual('Test This Case')
   })
 
-  it('13 View - enabledForLexemes - returns true by default', () => {
-    expect(View.enabledForLexemes()).toBeTruthy()
+  it('13 View - enabledForInflection - returns true by default', () => {
+    expect(View.enabledForInflection()).toBeTruthy()
   })
 })

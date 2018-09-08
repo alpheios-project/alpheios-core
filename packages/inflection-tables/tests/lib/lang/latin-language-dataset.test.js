@@ -439,19 +439,19 @@ describe('greek-language-dataset.test.js', () => {
     inflectionIrregular.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflectionIrregular.addFeature(new Feature(Feature.types.word, 'fero', Constants.LANG_LATIN))
 
-    expect(LLD.checkIrregularVerb(inflectionIrregular)).toBeTruthy()
+    expect(LLD.isIrregular(inflectionIrregular)).toBeTruthy()
 
     let inflectionRegular = new Inflection('placito', 'lat')
     inflectionRegular.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflectionRegular.addFeature(new Feature(Feature.types.word, 'placet', Constants.LANG_LATIN))
 
-    expect(LLD.checkIrregularVerb(inflectionRegular)).toBeFalsy()
+    expect(LLD.isIrregular(inflectionRegular)).toBeFalsy()
 
     let inflectionNoun = new Inflection('fero', 'lat')
     inflectionNoun.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
     inflectionNoun.addFeature(new Feature(Feature.types.word, 'fero', Constants.LANG_LATIN))
 
-    expect(LLD.checkIrregularVerb(inflectionNoun)).toBeFalsy()
+    expect(LLD.isIrregular(inflectionNoun)).toBeFalsy()
   })
 
   it('17 LatinLanguageDataset - getObligatoryMatchList  returns feature lists for different parts of speech', () => {
@@ -459,7 +459,11 @@ describe('greek-language-dataset.test.js', () => {
     inflectionNoun.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
     inflectionNoun.setConstraints()
 
-    expect(LatinLanguageDataset.getObligatoryMatchList(inflectionNoun)).toEqual([Feature.types.part])
+    expect(LatinLanguageDataset.getObligatoryMatchList(inflectionNoun)).toEqual([
+      Feature.types.part,
+      Feature.types.fullForm,
+      Feature.types.word
+    ])
 
     let inflectionAdjective = new Inflection('fero', 'lat')
     inflectionAdjective.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_LATIN))
@@ -495,11 +499,11 @@ describe('greek-language-dataset.test.js', () => {
     inflectionVerb.constraints.irregularVerb = true
 
     expect(LatinLanguageDataset.getOptionalMatchList(inflectionVerb)).toEqual([
+      Feature.types.number,
+      Feature.types.voice,
       Feature.types.mood,
       Feature.types.tense,
-      Feature.types.number,
       Feature.types.person,
-      Feature.types.voice,
       Feature.types.conjugation
     ])
   })

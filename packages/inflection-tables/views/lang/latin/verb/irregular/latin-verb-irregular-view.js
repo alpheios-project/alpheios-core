@@ -1,5 +1,7 @@
-import { Constants, Feature } from 'alpheios-data-models'
-import LatinVerbIrregularVoiceView from '@views/lang/latin/verb/latin-verb-irregular-voice.js'
+import { Feature } from 'alpheios-data-models'
+import LatinVerbIrregularBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js'
+import LatinVerbParicipleIrregularView from '@views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js'
+import LatinVerbSupineIrregularView from '@views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js'
 import Table from '@views/lib/table'
 
 /**
@@ -8,15 +10,18 @@ import Table from '@views/lib/table'
  * The only way to distinguish between them the two is to analyze a headword
  * which is stored in a `word` feature of an inflection.
  */
-export default class LatinVerbIrregularView extends LatinVerbIrregularVoiceView {
+export default class LatinVerbIrregularView extends LatinVerbIrregularBaseView {
   constructor (homonym, inflectionData, locale) {
     super(homonym, inflectionData, locale)
 
     this.id = 'verbConjugationIrregular'
     this.name = 'verb-irregular'
-    this.title = 'Verb Conjugation (Irregular, Voice)'
+    this.title = 'Verb Conjugation (Irregular)'
 
-    if (this.isImplemented) { // isImplemented is set by a parent view
+    // Some irregular verbs can be unimplemented and shall be skipped
+    const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)
+    this.isImplemented = inflections.length > 0
+    if (this.isImplemented) {
       this.createTable()
     }
   }
@@ -34,6 +39,12 @@ export default class LatinVerbIrregularView extends LatinVerbIrregularVoiceView 
     features.fullWidthRowTitles = [this.features.tenses]
   }
 
+  static matchFilter (languageID, inflections) {
+    return Boolean(
+      this.languageID === languageID && inflections.some(i => this.enabledForInflection(i))
+    )
+  }
+
   /**
    * Checks whether this view shall be displayed for an inflection given.
    * It should match all the requirements of an irregular verb view and
@@ -43,16 +54,20 @@ export default class LatinVerbIrregularView extends LatinVerbIrregularVoiceView 
    * @return {boolean} - True if this view shall be displayed for an inflection, false otherwise.
    */
   static enabledForInflection (inflection) {
-    if (inflection[Feature.types.conjugation] && inflection[Feature.types.conjugation].value === Constants.TYPE_IRREGULAR) {
-      // This is an irregular verb identified by a morphological analyzer. It sets conjugation value to TYPE_IRREGULAR
-      return true
-    }
-
     return Boolean(
       inflection[Feature.types.part].value === this.mainPartOfSpeech &&
       inflection.constraints &&
-      inflection.constraints.irregularVerb &&
-      !LatinVerbIrregularVoiceView.enabledForInflection(inflection)
+      inflection.constraints.irregular &&
+      inflection.word &&
+      !this.voiceEnabledHdwds.includes(inflection.word.value) // Must NOT match headwords for irregular verb voice table
     )
+  }
+
+  /**
+   * A list of constructors of linked views.
+   * @return {View[]}
+   */
+  static get linkedViewConstructors () {
+    return [LatinVerbParicipleIrregularView, LatinVerbSupineIrregularView]
   }
 }

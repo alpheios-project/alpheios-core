@@ -1,9 +1,9 @@
-import Suffix from '../../lib/suffix'
-import Cell from './cell'
-import Column from './column'
-import Row from './row'
-import GroupFeatureList from './group-feature-list'
-import NodeGroup from './node-group'
+import Suffix from '../../lib/suffix.js'
+import Cell from './cell.js'
+import Column from './column.js'
+import Row from './row.js'
+import GroupFeatureList from './group-feature-list.js'
+import NodeGroup from './node-group.js'
 
 /**
  * Represents an inflection table.
@@ -36,8 +36,9 @@ export default class Table {
   }) {
     this.morphemes = morphemes
 
+    this.hasHeaders = this.features.hasColumnFeatures
     this.tree = this.groupByFeature(morphemes)
-    this.headers = this.constructHeaders()
+    this.headers = this.hasHeaders ? this.constructHeaders() : []
     this.columns = this.constructColumns()
     this.rows = this.constructRows()
     this.options = options
@@ -107,44 +108,57 @@ export default class Table {
    */
   groupByFeature (morphemes, ancestorFeatures = [], currentLevel = 0) {
     let group = new NodeGroup()
-    group.groupFeatureType = this.features.items[currentLevel]
-    group.ancestorFeatures = ancestorFeatures.slice()
+    if (!this.features.hasColumnFeatures && !this.features.hasDataColumn) {
+      /*
+      Table has no column features and will have only one column with data values.
+      In that case we need to create a single placeholder column group.
+      Set placeholder's group feature to fake a last column.
+       */
+      group.groupFeatureType = this.features.createDataColumn()
+      let subGroup = this.groupByFeature(morphemes, ancestorFeatures, currentLevel)
+      group.subgroups.push(subGroup)
+      group.cells = group.cells.concat(subGroup.cells)
+    } else {
+      group.groupFeatureType = this.features.getFeature(currentLevel)
+      group.ancestorFeatures = ancestorFeatures.slice()
 
-    // Iterate over each value of the feature
-    for (const featureValue of group.groupFeatureType.getOrderedFeatures(ancestorFeatures)) {
-      if (ancestorFeatures.length > 0 && ancestorFeatures[ancestorFeatures.length - 1].type === group.groupFeatureType.type) {
-        // Remove previously inserted feature of the same type
-        ancestorFeatures.pop()
-      }
-      ancestorFeatures.push(featureValue)
+      // Iterate over each value of the feature
+      for (const featureValue of group.groupFeatureType.getOrderedFeatures(ancestorFeatures)) {
+        if (ancestorFeatures.length > 0 && ancestorFeatures[ancestorFeatures.length - 1].type === group.groupFeatureType.type) {
+          // Remove previously inserted feature of the same type
+          ancestorFeatures.pop()
+        }
+        ancestorFeatures.push(featureValue)
 
-      // Suffixes that are selected for current combination of feature values
-      let selectedMorphemes = morphemes.filter(s => s.featureMatch(featureValue, group.groupFeatureType.comparisonType))
+        // Suffixes that are selected for current combination of feature values
+        let selectedMorphemes = morphemes.filter(s => s.featureMatch(featureValue, group.groupFeatureType.comparisonType))
 
-      if (currentLevel < this.features.length - 1) {
-        // Divide to further groups
-        let subGroup = this.groupByFeature(selectedMorphemes, ancestorFeatures, currentLevel + 1)
-        group.subgroups.push(subGroup)
-        group.cells = group.cells.concat(subGroup.cells)
-      } else {
-        // This is the last level. This represent a cell with morphemes
-        // Split result has a list of morphemes in a table cell. We need to combine items with same endings.
-        if (selectedMorphemes.length > 0) {
-          if (this.morphemeCellFilter) {
-            selectedMorphemes = selectedMorphemes.filter(this.morphemeCellFilter)
+        if (currentLevel < this.features.length - 1) {
+          // Divide to further groups
+          let subGroup = this.groupByFeature(selectedMorphemes, ancestorFeatures, currentLevel + 1)
+          group.subgroups.push(subGroup)
+          group.cells = group.cells.concat(subGroup.cells)
+        } else {
+          // This is the last level. This represent a cell with morphemes
+          // Split result has a list of morphemes in a table cell. We need to combine items with same endings.
+          if (selectedMorphemes.length > 0) {
+            if (this.morphemeCellFilter) {
+              selectedMorphemes = selectedMorphemes.filter(this.morphemeCellFilter)
+            }
+
+            selectedMorphemes = Suffix.combine(selectedMorphemes)
           }
 
-          selectedMorphemes = Suffix.combine(selectedMorphemes)
+          let cell = new Cell(selectedMorphemes, ancestorFeatures.slice())
+          group.subgroups.push(cell)
+          group.cells.push(cell)
+          this.cells.push(cell)
+          cell.index = this.cells.length - 1
         }
-
-        let cell = new Cell(selectedMorphemes, ancestorFeatures.slice())
-        group.subgroups.push(cell)
-        group.cells.push(cell)
-        this.cells.push(cell)
-        cell.index = this.cells.length - 1
       }
+      ancestorFeatures.pop()
+      return group
     }
-    ancestorFeatures.pop()
     return group
   }
 
@@ -157,13 +171,13 @@ export default class Table {
    * @returns {Array} An array of columns of suffix cells.
    */
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
-    let currentFeature = this.features.items[currentLevel]
+    let currentFeature = this.features.getGroupingFeature(currentLevel)
     let groups = []
     for (let [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
       let cellGroup = tree.subgroups[index]
       // Iterate until it is the last row feature
 
-      if (!currentFeature.isSameType(this.features.lastRowFeature)) {
+      if (!this.features.isLastRowFeature(currentFeature)) {
         let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1)
         if (currentFeature.formsRow) {
           // TODO: Avoid creating extra cells
@@ -180,17 +194,23 @@ export default class Table {
           }
           group.groups[0].titleCell.parent = group.titleCell
           groups.push(group)
-        } else if (currentFeature.isSameType(this.features.lastColumnFeature)) {
+        } else if (currentFeature.dataColumn || this.features.isLastColumnFeature(currentFeature)) {
           let column = new Column(cellGroup.cells)
           column.groups = currentResult
           column.header = feature.value
           column.index = columns.length
           columns.push(column)
-          column.headerCell = this.headers[this.headers.length - 1].cells[columns.length - 1]
+          if (this.hasHeaders) {
+            // Don't need header cells for tables with no column features
+            column.headerCell = this.headers[this.headers.length - 1].cells[columns.length - 1]
+          }
         }
       } else {
-        // Last level
-        cellGroup.titleCell = currentFeature.createRowTitleCell(feature.value, this.features.firstColumnFeature.size)
+        // Last level, last row feature, will have a group consisting of a cell and a title cell
+        cellGroup.titleCell = currentFeature.createRowTitleCell(
+          feature.value,
+          this.features.firstColumnFeature && this.features.firstColumnFeature.size ? this.features.firstColumnFeature.size : 1
+        )
         let group = {
           cell: cellGroup,
           titleCell: cellGroup.titleCell
@@ -291,7 +311,6 @@ export default class Table {
         }
       }
     }
-    // rows = rows.filter(r => !r.empty)
     return filtered
   }
 

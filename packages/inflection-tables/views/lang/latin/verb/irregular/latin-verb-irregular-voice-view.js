@@ -1,6 +1,7 @@
-import { Constants, Feature } from 'alpheios-data-models'
-import LatinView from '@views/lang/latin/latin-view.js'
-import Form from '@lib/form.js'
+import { Feature } from 'alpheios-data-models'
+import LatinVerbIrregularBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js'
+import LatinVerbParicipleIrregularView from '@views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js'
+import LatinVerbSupineIrregularView from '@views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js'
 import Table from '@views/lib/table'
 
 /**
@@ -9,41 +10,26 @@ import Table from '@views/lib/table'
  * The only way to distinguish between them the two is to analyze a headword
  * which is stored in a `word` feature of an inflection.
  */
-export default class LatinVerbIrregularVoiceView extends LatinView {
+export default class LatinVerbIrregularVoiceView extends LatinVerbIrregularBaseView {
   constructor (homonym, inflectionData, locale) {
     super(homonym, inflectionData, locale)
 
     this.id = 'verbConjugationIrregularVoice'
     this.name = 'verb-irregular-voice'
-    this.title = 'Verb Conjugation (Irregular)'
+    this.title = 'Verb Conjugation (Irregular, with Voice Data)'
 
     // Some irregular verbs can be unimplemented and shall be skipped
     const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)
     this.isImplemented = inflections.length > 0
     if (this.isImplemented) {
-      const inflectionsWords = inflections.map(item => item[Feature.types.word].value)
-      const lemma = this.constructor.dataset.verbsIrregularLemmas.filter(item => inflectionsWords.indexOf(item.word) > -1)[0]
-
-      this.additionalTitle = lemma.word + ', ' + lemma.principalParts
-
+      let lemmas = this.constructor.dataset.getMatchingIrregularLemmas(inflections)
+      this.additionalTitle = lemmas.length > 0 ? `${lemmas[0].word}, ${lemmas[0].principalParts}` : ``
       this.createTable()
     }
   }
 
   static get viewID () {
     return 'latin_verb_irregular_voice_view'
-  }
-
-  static get partsOfSpeech () {
-    return [Constants.POFS_VERB]
-  }
-
-  static get inflectionType () {
-    return Form
-  }
-
-  static get enabledHdwds () {
-    return ['fero']
   }
 
   createTable () {
@@ -55,10 +41,9 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     features.fullWidthRowTitles = [this.features.tenses]
   }
 
-  static matchFilter (homonym) {
+  static matchFilter (languageID, inflections) {
     return Boolean(
-      this.languageID === homonym.languageID &&
-      homonym.inflections.some(i => this.enabledForInflection(i))
+      this.languageID === languageID && inflections.some(i => this.enabledForInflection(i))
     )
   }
 
@@ -71,23 +56,17 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     return Boolean(
       inflection[Feature.types.part].value === this.mainPartOfSpeech &&
       inflection.constraints &&
-      inflection.constraints.irregularVerb && // Must be an irregular verb
+      inflection.constraints.irregular && // Must be an irregular verb
       inflection.word &&
-      this.enabledHdwds.includes(inflection.word.value) // Must match headwords for irregular verb voice table
+      this.voiceEnabledHdwds.includes(inflection.word.value) // Must match headwords for irregular verb voice table
     )
   }
 
   /**
-   * Gets inflection data for a homonym. For this view we need to use irregular verb inflections only.
-   * @param {Homonym} homonym - A homonym for which inflection data needs to be retrieved
-   * @return {InflectionSet} Resulting inflection set.
+   * A list of constructors of linked views.
+   * @return {View[]}
    */
-  static getInflectionsData (homonym) {
-    // Select only those inflections that are required for this view
-    let inflections = homonym.inflections.filter(
-      i => i[Feature.types.part].value === this.mainPartOfSpeech &&
-        i.constraints && i.constraints.irregularVerb
-    )
-    return this.dataset.createInflectionSet(this.mainPartOfSpeech, inflections)
+  static get linkedViewConstructors () {
+    return [LatinVerbParicipleIrregularView, LatinVerbSupineIrregularView]
   }
 }

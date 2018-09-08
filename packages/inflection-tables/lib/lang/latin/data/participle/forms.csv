@@ -1,16 +1,16 @@
 Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-sum,esse_fui_futurus,futūrus,,,future,,,
-sum,esse_fui_futurus,-a,,,future,,,
-sum,esse_fui_futurus,-um,,,future,,,
+sum,esse_fui_futurus,futūrus,active,,future,,,
+sum,esse_fui_futurus,-a,active,,future,,,
+sum,esse_fui_futurus,-um,active,,future,,,
 fero,ferre_tuli_latus,ferēns,active,,present,,,
 fero,ferre_tuli_latus,-entis,active,,present,,,
 fero,ferre_tuli_latus,latūrus,active,,future,,,
 fero,ferre_tuli_latus,ferundus,passive,,future,,,4
 fero,ferre_tuli_latus,"lātus, -ta, -tum",passive,,perfect,,,8
-volo,velle_volui_-,volēns,,,present,,,
-volo,velle_volui_-,-entis,,,present,,,
-eo,ire_ivi(ii)_itus,iēns,,,present,,,
-eo,ire_ivi(ii)_itus,euntis,,,present,,,
-eo,ire_ivi(ii)_itus,itūrus,,,future,,,
+volo,velle_volui_-,volēns,active,,present,,,
+volo,velle_volui_-,-entis,active,,present,,,
+eo,ire_ivi(ii)_itus,iēns,active,,present,,,
+eo,ire_ivi(ii)_itus,euntis,active,,present,,,
+eo,ire_ivi(ii)_itus,itūrus,active,,future,,,
 eo,ire_ivi(ii)_itus,eundum,passive,,future,,,4
-possum,posse_potui_-,potēns,,,present,,,
+possum,posse_potui_-,potēns,active,,present,,,
