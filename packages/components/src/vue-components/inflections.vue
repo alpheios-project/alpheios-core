@@ -1,6 +1,6 @@
 <template>
     <div>
-        <standard-forms v-if="languageID" :language-id="languageID"></standard-forms>
+        <standard-forms v-if="languageID" :language-id="languageID" :messages="messages"></standard-forms>
 
         <div v-show="! isEnabled" class="alpheios-inflections__placeholder">{{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}</div>
         <div v-show="isEnabled && ! isContentAvailable" class="alpheios-inflections__placeholder">{{messages.PLACEHOLDER_INFLECT}}</div>
@@ -408,6 +408,18 @@
 </script>
 <style lang="scss">
     @import "../styles/alpheios";
+
+    .alpheios-panel__tab-panel.alpheios-panel__tab__inflections {
+        padding: 0 0 20px;
+    }
+
+    .alpheios-inflections__placeholder {
+        padding: 0 20px;
+    }
+
+    .alpheios-inflections__content {
+        padding: 0 20px;
+    }
 
     h3.alpheios-inflections__title {
         line-height: 1;
