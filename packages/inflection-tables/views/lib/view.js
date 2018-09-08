@@ -321,7 +321,7 @@ export default class View {
       .join(' ')
   }
 
-  static createStandardFormHomonym () {
+  static createStandardFormHomonym (formID) {
     let inflection = new Inflection('standard form stem', this.languageID, 'standard form suffix')
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
     let homonym = Homonym.createSimpleForm('standard form word', this.languageID, [inflection])
@@ -329,10 +329,9 @@ export default class View {
     return homonym
   }
 
-  static getStandardFormInstance (formID, messages) {
-    let homonym = this.createStandardFormHomonym()
+  static getStandardFormInstance (formID, locale = 'en-US') {
+    let homonym = this.createStandardFormHomonym(formID)
     let inflectionData = this.getInflectionsData(homonym)
-    // TODO: Find the best way to pass messages (the last argument)
-    return new this(homonym, inflectionData, messages).render()
+    return new this(homonym, inflectionData, locale).render()
   }
 }

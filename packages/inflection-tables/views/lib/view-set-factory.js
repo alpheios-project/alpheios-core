@@ -20,7 +20,7 @@ export default class ViewSetFactory {
     }
   }
 
-  static getStandardForm (languageID, viewID, formID, messages) {
-    return this.getConstructor(languageID).getStandardForm(viewID, formID, messages)
+  static getStandardForm (languageID, viewID, formID, locale) {
+    return this.getConstructor(languageID).getStandardForm(viewID, formID, locale)
   }
 }

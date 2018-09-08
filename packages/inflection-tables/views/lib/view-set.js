@@ -115,8 +115,8 @@ export default class ViewSet {
     return this.views.find(v => v.viewID === viewID)
   }
 
-  static getStandardForm (viewID, formID, messages) {
+  static getStandardForm (viewID, formID, locale) {
     let view = this.getViewByID(viewID)
-    return view ? view.getStandardFormInstance(formID, messages) : null
+    return view ? view.getStandardFormInstance(formID, locale) : null
   }
 }

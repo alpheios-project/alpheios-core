@@ -17,6 +17,10 @@ export default class GreekNounView extends GreekView {
     this.createTable()
   }
 
+  static get viewID () {
+    return 'greek_noun_view'
+  }
+
   static get partsOfSpeech () {
     return [Constants.POFS_NOUN]
   }

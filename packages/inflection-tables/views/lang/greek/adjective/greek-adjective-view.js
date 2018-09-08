@@ -12,6 +12,10 @@ export default class GreekAdjectiveView extends GreekView {
     this.createTable()
   }
 
+  static get viewID () {
+    return 'greek_adjective_view'
+  }
+
   static get partsOfSpeech () {
     return [Constants.POFS_ADJECTIVE]
   }

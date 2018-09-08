@@ -14,6 +14,10 @@ export default class GreekAdjectiveSimplifiedView extends GreekAdjectiveView {
     this.table.morphemeCellFilter = GreekAdjectiveSimplifiedView.morphemeCellFilter
   }
 
+  static get viewID () {
+    return 'greek_adjective_simplified_view'
+  }
+
   static get partsOfSpeech () {
     return [Constants.POFS_ADJECTIVE]
   }

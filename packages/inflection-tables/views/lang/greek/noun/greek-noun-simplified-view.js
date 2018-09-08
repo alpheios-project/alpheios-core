@@ -21,6 +21,10 @@ export default class GreekNounSimplifiedView extends GreekNounView {
     this.table.morphemeCellFilter = GreekNounSimplifiedView.morphemeCellFilter
   }
 
+  static get viewID () {
+    return 'greek_noun_simplified_view'
+  }
+
   static get partsOfSpeech () {
     return [Constants.POFS_NOUN]
   }

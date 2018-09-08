@@ -1,8 +1,8 @@
-import { Constants, Feature } from 'alpheios-data-models'
-import Form from '../../../../lib/form.js'
-import View from '../../../lib/view.js'
-import GreekView from '../greek-view.js'
-import GroupFeatureType from '../../../lib/group-feature-type.js'
+import { Constants, Feature, Homonym, Inflection } from 'alpheios-data-models'
+import Form from '@lib/form.js'
+import View from '@views/lib/view.js'
+import GroupFeatureType from '@views/lib/group-feature-type.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 
 /**
  * This is a base class for all pronoun views. This class should not be used to create tables. Its purpose
@@ -114,5 +114,15 @@ export default class GreekPronounView extends GreekView {
       .filter(item => item.features.hasOwnProperty(Feature.types.grmClass) &&
             item.features[Feature.types.grmClass].hasSomeValues(this.constructor.classes)
       )
+  }
+
+  static createStandardFormHomonym (formID) {
+    console.log(`standard form creation`)
+    const form = 'νώ'
+    let inflection = new Inflection(form, this.languageID)
+    inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
+    let homonym = Homonym.createSimpleForm('standard form word', this.languageID, [inflection])
+    inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
+    return homonym
   }
 }
