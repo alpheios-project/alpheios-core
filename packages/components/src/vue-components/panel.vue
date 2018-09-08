@@ -228,7 +228,12 @@
         positionClassVariants: {
           left: 'alpheios-panel-left',
           right: 'alpheios-panel-right'
-        }
+        },
+
+        inflPanelLeftPadding: 0,
+        inflPanelRightPadding: 0,
+        scrollPadding: 0,
+        defaultScrollPadding: 20
       }
     },
     props: {
@@ -421,13 +426,20 @@
           this.$el.style.removeProperty('width')
           return
         }
-        let widthDelta = parseInt(this.navbarWidth, 10)
-          + parseInt(this.inflPanelLeftPadding, 10)
-          + parseInt(this.inflPanelRightPadding, 10)
-        if (width > this.data.minWidth + widthDelta) {
+
+        this.calcWidthPaddings()
+        this.calcScrollPadding()
+
+        let widthDelta = this.navbarWidth
+          + this.inflPanelLeftPadding
+          + this.inflPanelRightPadding
+          + this.scrollPadding
+
+        if (width > this.data.minWidth - widthDelta) {
           let adjustedWidth = width + widthDelta
           // Max viewport width less some space to display page content
           let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
+
           if (adjustedWidth > maxWidth) { adjustedWidth = maxWidth }
           this.$el.style.width = `${adjustedWidth}px`
         }
@@ -447,6 +459,41 @@
 
       attachTrackingClick: function () {
         this.close()
+      },
+
+      calcScrollPadding: function () {
+        if (typeof this.$el.querySelector === 'function') {
+          this.scrollPadding = this.$el.scrollHeight > this.$el.offsetHeight ?
+                               this.defaultScrollPadding : 0
+        }
+      },
+
+      calcWidthPaddings: function () {
+        if (typeof this.$el.querySelector === 'function' && (this.inflPanelLeftPadding === 0 || this.inflPanelRightPadding === 0)) {
+          let navbar = this.$el.querySelector(`#${this.navbarID}`)
+          let inflectionsPanel = this.$el.querySelector(`#${this.inflectionsPanelID}`)
+          this.navbarWidth = 0
+          if (navbar) {
+            let width = window.getComputedStyle(navbar).getPropertyValue('width').match(/\d+/)
+            if (width && Array.isArray(width) && width.length > 0) { this.navbarWidth = width[0] }
+          }
+
+          if (inflectionsPanel) {
+            let resPl1 = window.getComputedStyle(inflectionsPanel).getPropertyValue('padding-left').match(/\d+/)
+            if (Array.isArray(resPl1)) {
+              this.inflPanelLeftPadding = inflectionsPanel ? parseInt(resPl1[0]) : 0
+            } else {
+              this.inflPanelLeftPadding = 0
+            }
+
+            let resPl2 = window.getComputedStyle(inflectionsPanel).getPropertyValue('padding-right').match(/\d+/)
+            if (Array.isArray(resPl2)) {
+              this.inflPanelRightPadding = inflectionsPanel ? parseInt(resPl2[0]) : 0
+            } else {
+              this.inflPanelRightPadding = 0
+            }
+          }
+        }
       }
     },
     created: function () {
@@ -461,28 +508,7 @@
         return
       }
       if (typeof this.$el.querySelector === 'function') {
-        let navbar = this.$el.querySelector(`#${this.navbarID}`)
-        let inflectionsPanel = this.$el.querySelector(`#${this.inflectionsPanelID}`)
-        this.navbarWidth = 0
-        if (navbar) {
-          let width = window.getComputedStyle(navbar).getPropertyValue('width').match(/\d+/)
-          if (width && Array.isArray(width) && width.length > 0) { this.navbarWidth = width[0] }
-        }
-
-        if (inflectionsPanel) {
-          let resPl1 = window.getComputedStyle(inflectionsPanel).getPropertyValue('padding-left').match(/\d+/)
-          if (Array.isArray(resPl1)) {
-            this.inflPanelLeftPadding = inflectionsPanel ? resPl1[0] : 0
-          } else {
-            this.inflPanelLeftPadding = 0
-          }
-          let resPl2 = window.getComputedStyle(inflectionsPanel).getPropertyValue('padding-right').match(/\d+/)
-          if (Array.isArray(resPl2)) {
-            this.inflPanelRightPadding = inflectionsPanel ? resPl2[0] : 0
-          } else {
-            this.inflPanelRightPadding = 0
-          }
-        }
+        this.calcWidthPaddings()
 
         // Initialize Interact.js: make panel resizable
         interact(this.$el)

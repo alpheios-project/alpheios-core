@@ -97,7 +97,8 @@ describe('infl-attribute.test.js', () => {
       propsData: {
         data: {
           'part of speech': new Feature(Feature.types.part, 'verb', Constants.LANG_GREEK),
-          'footype': 'foovalue'
+          'footype': 'foovalue',
+          'source': new Feature(Feature.types.source, 'http://example.org', Constants.LANG_GREEK)
         },
         type: 'part of speech',
         decorators: ['brackets']
@@ -119,6 +120,9 @@ describe('infl-attribute.test.js', () => {
     expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('foovalue')
 
     expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('verb')
+
+    cmp.vm.decorators = ['link']
+    expect(cmp.vm.decorate(cmp.vm.data, 'source')).toEqual('<a class="alpheios-morph__linkedattr" target="_blank" href="http://example.org">source</a>')
   })
 
   it('5 InflectionAttribute - sendFeature method check arguments and if passed an array - it takes only the first value', () => {

@@ -1,5 +1,8 @@
 <template>
-    <div v-if="view.wideView">
+    <div v-if="!view.isImplemented" class="alpheios-inflections__not-impl-msg">
+        {{messages.INFLECT_MSG_TABLE_NOT_IMPLEMENTED}}
+    </div>
+    <div v-else-if="view.wideView">
         <h3 class="alpheios-inflections__title alpheios-table-sf__title alpheios-clickable"
             @click="collapse">
             {{view.title}}
@@ -17,23 +20,7 @@
                                 <template v-if="morpheme.value">{{morpheme.value}}</template>
                                 <template v-else>-</template>
                             </span>
-                            <a v-if="morpheme.hasFootnotes" class="infl-suff-footnote-link"
-                               @click.stop.prevent="morpheme.footnotesPopupVisible = true">
-                                <sup v-for="(footnote, index) in morpheme.footnotes">
-                                    {{footnote.index}}<template v-if="index < morpheme.footnotes.length-1">, </template>
-                                </sup>
-                                <div v-show="morpheme.footnotesPopupVisible" class="alpheios-inflections__footnote-popup">
-                                    <div class="alpheios-inflections__footnote-popup-title">Footnotes:</div>
-                                    <template v-for="footnote in morpheme.footnotes">
-                                        <dt>{{footnote.index}}</dt>
-                                        <dd>{{footnote.text}}</dd>
-                                    </template>
-                                    <div class="alpheios-inflections__footnote-popup-close-btn"
-                                         @click.stop.prevent="morpheme.footnotesPopupVisible = false">
-                                        <svg viewBox="0 0 20 20"><path d="M16 16L4 4M16 4L4 16"></path></svg>
-                                    </div>
-                                </div>
-                            </a>
+                            <infl-footnote v-if="morpheme.hasFootnotes" :footnotes="morpheme.footnotes"></infl-footnote>
                             <template v-if="index < cell.morphemes.length-1">, </template>
                         </template>
                     </template>
@@ -44,13 +31,21 @@
     </div>
 </template>
 <script>
+  import InflFootnote from './infl-footnote.vue'
 
   export default {
     name: 'WideInflectionsTableStandardForm',
+    components: {
+      inflFootnote: InflFootnote
+    },
     props: {
       // An inflection table view
       view: {
         type: [Object, Boolean],
+        required: true
+      },
+      messages: {
+        type: Object,
         required: true
       },
       noSuffixMatchesHidden: {
@@ -123,11 +118,13 @@
         padding-left: 30px;
     }
 
-    .infl-suff-footnote-link {
-        position: relative;
-    }
-
     .alpheios-clickable {
         cursor: pointer;
+    }
+
+    .alpheios-inflections__not-impl-msg {
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 0.875rem;
     }
 </style>

@@ -67,6 +67,33 @@
   .alpheios-panel [type="radio"] {
     box-sizing: border-box;
     padding: 0; }
+  .alpheios-popup b,
+  .alpheios-panel b {
+    margin: 0;
+    padding: 0;
+    vertical-align: inherit;
+    font-size: inherit;
+    color: inherit;
+    letter-spacing: inherit; }
+  .alpheios-popup i,
+  .alpheios-panel i {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    text-align: inherit;
+    font-style: inherit; }
+  .alpheios-popup u,
+  .alpheios-panel u {
+    margin: 0;
+    padding: 0;
+    vertical-align: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: inherit;
+    color: inherit;
+    line-height: inherit; }
 
 .auk {
   /* ========================================================================
@@ -130,17 +157,22 @@
  * Remove the gap between embedded content and the bottom of their containers.
  */
   /*
- * Responsiveness
- * 1. Set a maximum width
- * 2. Auto scale the height. Only needed if `height` attribute is present
- * 2. Corrects `max-width` behavior if padding and border are used
+ * 1. Add responsiveness.
+ * 2. Auto-scale the height. Only needed if `height` attribute is present.
+ * 3. Corrects responsive `max-width` behavior if padding and border are used.
+ * 4. Exclude SVGs for IE11 because they don't preserve their aspect ratio.
  */
+  /* 4 */
   /*
  * Hide the overflow in IE.
  */
   /*
  * Hide `alt` text for lazy load images
  * Selector for background while loading img[data-src*='.jpg'][src*='data:image'] { background: grey; }
+ */
+  /*
+ * Iframe
+ * Remove border in all browsers
  */
   /* Block elements
  ========================================================================== */
@@ -198,8 +230,6 @@
   /*
  * Add the correct display in IE.
  */
-  /* Iframe
- ========================================================================== */
   /* Pass media breakpoints to JS
  ========================================================================== */
   /*
@@ -639,15 +669,14 @@
   /*
  * 1. Remove margins in Chrome, Safari and Opera.
  * 2. Remove borders for `button`.
- * 3. Remove border-radius in Chrome.
- * 4. Address `overflow` set to `hidden` in IE.
- * 5. Correct `font` properties and `color` not being inherited for `button`.
- * 6. Remove the inheritance of text transform in Edge, Firefox, and IE.
- * 7. Style
- * 8. `line-height` is used to create a height because it also centers the text vertically for `a` elements.
+ * 3. Address `overflow` set to `hidden` in IE.
+ * 4. Correct `font` properties and `color` not being inherited for `button`.
+ * 5. Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 6. Style
+ * 7. `line-height` is used to create a height because it also centers the text vertically for `a` elements.
  *    Better would be to use height and flexbox to center the text vertically but flexbox doesn't work in Firefox on `button` elements.
- * 9. Align text if button has a width
- * 10. Required for `a`.
+ * 8. Align text if button has a width
+ * 9. Required for `a`.
  */
   /*
  * Remove the inner border and padding in Firefox.
@@ -1891,8 +1920,8 @@
  * 3. Gutter
  */
   /*
- * 1. Space is allocated solely based on content dimensions: 0 0 auto
- * 2. Gutter
+ * Space is allocated based on content dimensions, but shrinks: 0 1 auto
+ * 1. Gutter
  */
   /* Items
  ========================================================================== */
@@ -2674,7 +2703,6 @@
   .auk audio,
   .auk canvas,
   .auk img,
-  .auk svg,
   .auk video {
     /* 1 */
     max-width: 100%;
@@ -2682,10 +2710,17 @@
     height: auto;
     /* 3 */
     box-sizing: border-box; }
+  @supports (display: block) {
+    .auk svg {
+      max-width: 100%;
+      height: auto;
+      box-sizing: border-box; } }
   .auk svg:not(:root) {
     overflow: hidden; }
   .auk img:not([src]) {
     visibility: hidden; }
+  .auk iframe {
+    border: 0; }
   .auk p,
   .auk ul,
   .auk ol,
@@ -2820,8 +2855,6 @@
     display: list-item; }
   .auk template {
     display: none; }
-  .auk iframe {
-    border: 0; }
   .auk .var-media-s::before {
     content: "640px"; }
   .auk .var-media-m::before {
@@ -3580,25 +3613,23 @@
     /* 2 */
     border: none;
     /* 3 */
-    border-radius: 0;
-    /* 4 */
     overflow: visible;
-    /* 5 */
+    /* 4 */
     font: inherit;
     color: inherit;
-    /* 6 */
+    /* 5 */
     text-transform: none;
-    /* 7 */
+    /* 6 */
     display: inline-block;
     box-sizing: border-box;
     padding: 0 30px;
     vertical-align: middle;
     font-size: 0.875rem;
-    /* 8 */
+    /* 7 */
     line-height: 38px;
-    /* 9 */
+    /* 8 */
     text-align: center;
-    /* 10 */
+    /* 9 */
     text-decoration: none;
     text-transform: uppercase;
     -webkit-transition: 0.1s ease-in-out;
@@ -3612,7 +3643,7 @@
     border: 0;
     padding: 0; }
   .auk .uk-button:hover {
-    /* 8 */
+    /* 9 */
     text-decoration: none; }
   .auk .uk-button:focus {
     outline: none; }
@@ -4645,7 +4676,7 @@
     align-items: center;
     /* 2 */
     box-sizing: border-box;
-    height: 80px;
+    min-height: 80px;
     padding: 0 15px;
     /* 3 */
     font-size: 0.875rem;
@@ -5536,8 +5567,6 @@
     margin-left: -10px; }
   .auk .uk-iconnav > * {
     /* 1 */
-    flex: none;
-    /* 2 */
     padding-left: 10px; }
   .auk .uk-iconnav > * > a {
     /* 1 */
@@ -6674,6 +6703,8 @@
     max-width: none; }
   .auk .uk-border-circle {
     border-radius: 50%; }
+  .auk .uk-border-pill {
+    border-radius: 500px; }
   .auk .uk-border-rounded {
     border-radius: 5px; }
   .auk .uk-inline-clip[class*='uk-border-'] {
@@ -7906,6 +7937,15 @@ div.alpheios-checkbox-block {
   .alpheios-checkbox-block input[type="checkbox"]:focus + label::before {
     outline: #3b99fc auto 5px; }
 
+.alpheios-checkbox-small label {
+  font-size: 90%;
+  padding-left: 18px;
+  line-height: 100%; }
+
+.alpheios-checkbox-small label::before {
+  height: 12px;
+  width: 12px; }
+
 .auk.alpheios-font_medium_class {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
@@ -7986,6 +8026,19 @@ div.alpheios-checkbox-block {
         width: 9px;
         left: 4px;
         top: 7px; }
+  .auk.alpheios-font_medium_class .alpheios-checkbox-block.alpheios-checkbox-small {
+    line-height: 20.8px; }
+    .auk.alpheios-font_medium_class .alpheios-checkbox-block.alpheios-checkbox-small label {
+      padding-left: 16px;
+      min-height: 12px; }
+      .auk.alpheios-font_medium_class .alpheios-checkbox-block.alpheios-checkbox-small label::before {
+        height: 12px;
+        width: 12px; }
+      .auk.alpheios-font_medium_class .alpheios-checkbox-block.alpheios-checkbox-small label::after {
+        height: 3.68px;
+        width: 7.2px;
+        left: 2.88px;
+        top: 5.12px; }
   .auk.alpheios-font_medium_class .alpheios-skin_properties_item {
     font-size: 16px;
     width: 28px;
@@ -8085,6 +8138,19 @@ div.alpheios-checkbox-block {
         width: 6.75px;
         left: 3px;
         top: 5.25px; }
+  .auk.alpheios-font_small_class .alpheios-checkbox-block.alpheios-checkbox-small {
+    line-height: 15.6px; }
+    .auk.alpheios-font_small_class .alpheios-checkbox-block.alpheios-checkbox-small label {
+      padding-left: 12px;
+      min-height: 9px; }
+      .auk.alpheios-font_small_class .alpheios-checkbox-block.alpheios-checkbox-small label::before {
+        height: 9px;
+        width: 9px; }
+      .auk.alpheios-font_small_class .alpheios-checkbox-block.alpheios-checkbox-small label::after {
+        height: 2.76px;
+        width: 5.4px;
+        left: 2.16px;
+        top: 3.84px; }
   .auk.alpheios-font_small_class .alpheios-skin_properties_item {
     font-size: 12px;
     width: 24px;
@@ -8184,6 +8250,19 @@ div.alpheios-checkbox-block {
         width: 11.25px;
         left: 5px;
         top: 8.75px; }
+  .auk.alpheios-font_large_class .alpheios-checkbox-block.alpheios-checkbox-small {
+    line-height: 26px; }
+    .auk.alpheios-font_large_class .alpheios-checkbox-block.alpheios-checkbox-small label {
+      padding-left: 20px;
+      min-height: 15px; }
+      .auk.alpheios-font_large_class .alpheios-checkbox-block.alpheios-checkbox-small label::before {
+        height: 15px;
+        width: 15px; }
+      .auk.alpheios-font_large_class .alpheios-checkbox-block.alpheios-checkbox-small label::after {
+        height: 4.6px;
+        width: 9px;
+        left: 3.6px;
+        top: 6.4px; }
   .auk.alpheios-font_large_class .alpheios-skin_properties_item {
     font-size: 20px;
     width: 32px;
@@ -8751,6 +8830,12 @@ a.alpheios-lookup__settings-link {
 .alpheios-panel__options-item .uk-textarea {
   max-width: 250px;
 }
+.alpheios-override-lang {
+  margin-bottom: 10px;
+}
+.alpheios-override-lang__label {
+  padding-bottom: 10px;
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
@@ -8944,6 +9029,14 @@ img.alpheios-popup__logo {
   font-weight: 700;
 }
 
+
+.infl-suff-footnote-link {
+  position: relative;
+}
+.alpheios-inflections__footnote-popup {
+  cursor: move;
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -8953,11 +9046,13 @@ img.alpheios-popup__logo {
   margin-bottom: 5px;
   padding-left: 30px;
 }
-.infl-suff-footnote-link {
-  position: relative;
-}
 .alpheios-clickable {
   cursor: pointer;
+}
+.alpheios-inflections__not-impl-msg {
+  margin-top: 30px;
+  padding: 20px;
+  font-size: 0.875rem;
 }
 
 /************ UIKit vars ************************/
@@ -9331,7 +9426,7 @@ h3.alpheios-inflections__credits-title {
   flex: none;
   font-weight: normal;
   font-style: italic;
-  padding: 5px 10px;
+  padding: 5px 10px 20px;
   font-size: 80%;
 }
 .alpheios-grammar__frame-cont {

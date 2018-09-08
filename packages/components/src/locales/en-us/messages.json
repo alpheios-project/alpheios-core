@@ -140,12 +140,12 @@
     "description": "tooltip for show empty columns button on inflections panel",
     "component": "Panel"
   },
-
-  "TEXT_INFO_GETTINGSTARTED": {
-    "message": "Getting Started",
-    "description": "info text",
+  "INFLECT_MSG_TABLE_NOT_IMPLEMENTED": {
+    "message": "This table has not been implemented yet",
+    "description": "tooltip to show instead of inflection table if the latter is not implemented",
     "component": "Panel"
   },
+
   "TEXT_INFO_GETTINGSTARTED": {
     "message": "Getting Started",
     "description": "info text",
@@ -227,7 +227,7 @@
     "component": "Popup"
   },
   "PLACEHOLDER_NO_DATA_POPUP_DATA": {
-    "message": "Lexical data couldn't be populated  for unknown reason",
+    "message": "Lexical query produced no results",
     "description": "placeholder text for popup data",
     "component": "Popup"
   },
@@ -414,5 +414,10 @@
     "message": "Back to main",
     "description": "A link pointing to a main inflection table",
     "component": "InflectionTables"
+  },
+  "INFL_ATTRIBUTE_LINK_TEXT_SOURCE": {
+    "message": "Source",
+    "description": "A link pointing to the source of a lemma or inflection",
+    "component": "InflAttribute"
   }
 }

@@ -128,6 +128,27 @@
         }
    }
 
+   .alpheios-checkbox-block.alpheios-checkbox-small {
+        line-height: $baseFontSize * 1.3;
+
+        label {
+            padding-left: $baseFontSize;
+            min-height: $baseFontSize * 0.75;
+
+            &::before{
+              height: $baseFontSize * 0.75;
+              width: $baseFontSize * 0.75;
+            }
+
+            &::after {
+              height: $baseFontSize * 0.23;
+              width: $baseFontSize * 0.45;
+              left: $baseFontSize * 0.18;
+              top: $baseFontSize * 0.32;
+            }
+        }
+   }
+
   $baseSize: $baseFontSize + 12px;
 
     .alpheios-skin_properties_item {

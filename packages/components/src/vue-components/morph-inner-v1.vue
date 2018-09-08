@@ -22,7 +22,7 @@
         <inflectionattribute :data="featureList(lemma,['age','area','geo','frequency'],'extras')" :type="'extras'" @sendfeature="sendFeature"/>
       </span>
       <span class="feature_source" v-if="lemma.features && getFeature(lemma,'source')">
-        <inflectionattribute :data="lemma.features" :type="types.source" :linkedfeatures="linkedfeatures" :decorators="['brackets']" @sendfeature="sendFeature"/>
+        <inflectionattribute :data="lemma.features" :type="types.source" :linkedfeatures="linkedfeatures" :decorators="['link','brackets']" @sendfeature="sendFeature"/>
       </span>
       </p><!-- principal_parts -->
 

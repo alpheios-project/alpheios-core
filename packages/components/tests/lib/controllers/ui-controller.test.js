@@ -164,7 +164,7 @@ describe('ui-controller.test.js', () => {
 
   it('6 UIController - showLanguageInfo methods', () => {
     uiC.showLanguageInfo()
-    let languageName = l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN
+    let languageName = UIController.getLanguageName(LMF.getLanguageIdFromCode(uiC.panel.options.items.preferredLanguage.currentValue))
 
     expect(uiC.panel.panelData.notification.visible).toBeTruthy()
     expect(uiC.panel.panelData.notification.important).toBeTruthy()
@@ -192,6 +192,17 @@ describe('ui-controller.test.js', () => {
     expect(uiC.popup.popupData.notification.visible).toBeTruthy()
     expect(uiC.popup.popupData.notification.important).toBeFalsy()
     expect(uiC.popup.popupData.notification.showLanguageSwitcher).toBeFalsy()
+
+    // in this case, the language shown in the language notification should be
+    // the language actually tried, not the default from options
+    let testHomonymNoLexemes = {
+      languageID: LMF.getLanguageIdFromCode('grc')
+    }
+    uiC.showLanguageInfo(testHomonymNoLexemes)
+    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
+    expect(uiC.panel.panelData.notification.important).toBeTruthy()
+    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeTruthy()
+    expect(uiC.popup.popupData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(UIController.getLanguageName(testHomonymNoLexemes.languageID)))
   })
 
   it('7 UIController - showStatusInfo methods', () => {

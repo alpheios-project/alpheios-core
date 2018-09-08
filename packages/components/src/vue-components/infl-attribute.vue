@@ -1,5 +1,5 @@
 <template>
-  <span @click="sendFeature(data[type],['alpheios-text__medium'])" :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel" v-if="data[type]">{{ decorate(data,type) }}</span>
+  <span @click="sendFeature(data[type],['alpheios-text__medium'])" :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel" v-if="data[type]" v-html="decorate(data,type)"></span>
 </template>
 <script>
   export default {
@@ -27,6 +27,10 @@
         type: Array,
         required: false,
         default: () => [""]
+      },
+      messages: {
+        type: Object,
+        required: false
       }
     },
     methods: {
@@ -44,6 +48,10 @@
         let decorated = typeof(data[type]) === 'string' ? data[type] : data[type].value
         if (this.decorators.includes('abbreviate') && data[type].value) {
           decorated = data[type].toLocaleStringAbbr()
+        }
+        if (this.decorators.includes('link') && data[type].value && data[type].value.match(/^http/)) {
+          let linkText = this.messages ? this.messages[`INFL_ATTRIBUTE_LINK_TEXT_TYPE`] : type
+          decorated = `<a class="alpheios-morph__linkedattr" target="_blank" href="${data[type].value}">${linkText}</a>`
         }
         if (this.decorators.includes('appendtype')) {
           decorated = `${decorated} ${type}`

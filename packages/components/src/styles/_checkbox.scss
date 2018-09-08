@@ -74,3 +74,16 @@
         outline: rgb(59, 153, 252) auto 5px;
     }
   }
+
+  .alpheios-checkbox-small {
+    label {
+      font-size: 90%;
+      padding-left: 18px;
+      line-height: 100%;
+    }
+
+    label::before{
+          height: 12px;
+          width: 12px;
+    }
+  }

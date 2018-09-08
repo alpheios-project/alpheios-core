@@ -50,4 +50,34 @@
       box-sizing: border-box;
       padding: 0;
     }
+
+    b {
+      margin: 0;
+      padding: 0;
+      vertical-align: inherit;
+      font-size: inherit;
+      color: inherit;
+      letter-spacing: inherit;
+    }
+
+    i {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      margin: 0;
+      padding: 0;
+      text-align: inherit;
+      font-style: inherit;
+   }
+
+   u {
+      margin: 0;
+      padding: 0;
+      vertical-align: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      text-decoration: inherit;
+      color: inherit;
+      line-height: inherit;
+  }
 }

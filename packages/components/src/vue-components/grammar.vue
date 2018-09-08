@@ -30,7 +30,7 @@
         flex: none;
         font-weight: normal;
         font-style: italic;
-        padding: 5px 10px;
+        padding: 5px 10px 20px;
         font-size: 80%;
     }
 

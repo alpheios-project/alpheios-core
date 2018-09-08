@@ -127,8 +127,9 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.showLanguageSettings).toBeFalsy()
     expect(cmp.find('.alpheios-lookup__settings-items').element.style.display).toEqual('none')
 
-    cmp.find('.alpheios-lookup__settings-link').trigger('click')
+    // cmp.find('.alpheios-lookup__settings-link').trigger('click')
 
+    cmp.vm.switchLookupSettings()
     expect(cmp.vm.showLanguageSettings).toBeTruthy()
     expect(cmp.find('.alpheios-lookup__settings-items').element.style.display).not.toEqual('none')
 
@@ -165,5 +166,104 @@ describe('lookup.test.js', () => {
     let cmp = mount(Lookup)
 
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "uiController"'))
+  })
+
+  it('7 Lookup - override language check - not checked by default', () => {
+    let options = new Options(ContentOptionDefaults, TempStorageArea)
+    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+
+    let cmp = mount(Lookup, {
+      propsData: {
+        uiController: { l10n: l10n, options: options, resourceOptions: resourceOptions }
+      }
+    })
+
+    expect(cmp.vm.overrideLanguage).toBeFalsy()
+    expect(cmp.vm.uiController.options.items.lookupLangOverride.currentValue).toBeFalsy()
+    expect(cmp.vm.showLanguageSettings).toBeFalsy()
+  })
+
+  it('8 Lookup - override language check - checkboxClick method changes options (true)', () => {
+    let options = new Options(ContentOptionDefaults, TempStorageArea)
+    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+
+    let cmp = mount(Lookup, {
+      propsData: {
+        uiController: { l10n: l10n, options: options, resourceOptions: resourceOptions }
+      }
+    })
+
+    jest.spyOn(cmp.vm, 'updateUIbyOverrideLanguage')
+    jest.spyOn(cmp.vm, 'switchLookupSettings')
+
+    cmp.vm.checkboxClick()
+
+    expect(cmp.vm.overrideLanguage).toBeTruthy()
+    expect(cmp.vm.uiController.options.items.lookupLangOverride.currentValue).toBeTruthy()
+    expect(cmp.vm.updateUIbyOverrideLanguage).toBeCalled()
+    expect(cmp.vm.switchLookupSettings).toBeCalled()
+    expect(cmp.vm.showLanguageSettings).toBeTruthy()
+  })
+
+  it('8 Lookup - override language check - checkboxClick method changes options (false)', () => {
+    let options = new Options(ContentOptionDefaults, TempStorageArea)
+    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+
+    let cmp = mount(Lookup, {
+      propsData: {
+        uiController: { l10n: l10n, options: options, resourceOptions: resourceOptions }
+      }
+    })
+
+    cmp.vm.checkboxClick()
+
+    cmp.vm.checkboxClick()
+    expect(cmp.vm.overrideLanguage).toBeFalsy()
+    expect(cmp.vm.uiController.options.items.lookupLangOverride.currentValue).toBeFalsy()
+    expect(cmp.vm.currentLanguage).toEqual(cmp.vm.options.items.preferredLanguage.currentTextValue())
+    expect(cmp.vm.options.items.lookupLanguage.currentValue).toEqual(cmp.vm.options.items.preferredLanguage.currentValue)
+  })
+
+  it('9 Lookup - watch clearLookupText - clears lookuptext and restore show language data from override language check', () => {
+    let options = new Options(ContentOptionDefaults, TempStorageArea)
+    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+
+    let cmp = mount(Lookup, {
+      propsData: {
+        uiController: { l10n: l10n, options: options, resourceOptions: resourceOptions }
+      }
+    })
+
+    cmp.vm.lookuptext = 'some text'
+    cmp.vm.checkboxClick()
+    cmp.vm.showLanguageSettings = false
+
+    cmp.vm.clearLookupText = true
+
+    expect(cmp.vm.lookuptext).toEqual('')
+    expect(cmp.vm.showLanguageSettings).toBeTruthy()
+    expect(cmp.vm.overrideLanguage).toBeTruthy()
+  })
+
+  it('9 Lookup - watch uiController.options.items.lookupLangOverride.currentValue - syncing overrideLanguage', async () => {
+    let options = new Options(ContentOptionDefaults, TempStorageArea)
+    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+
+    let cmp = mount(Lookup, {
+      propsData: {
+        uiController: { l10n: l10n, options: options, resourceOptions: resourceOptions }
+      }
+    })
+    jest.spyOn(cmp.vm, 'updateUIbyOverrideLanguage')
+
+    expect(cmp.vm.overrideLanguage).toBeFalsy()
+    expect(cmp.vm.uiController.options.items.lookupLangOverride.currentValue).toBeFalsy()
+
+    cmp.vm.uiController.options.items.lookupLangOverride.setValue(true)
+
+    setTimeout(() => {
+      expect(cmp.vm.overrideLanguage).toBeTruthy()
+      expect(cmp.vm.updateUIbyOverrideLanguage).toBeCalled()
+    }, 500)
   })
 })
