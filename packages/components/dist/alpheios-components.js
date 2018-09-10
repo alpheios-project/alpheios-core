@@ -8619,6 +8619,96 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8636,6 +8726,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Symbol,
       required: true
     },
+
     // A passtrough to inflection-tables-wide
     messages: {
       type: Object,
@@ -8663,27 +8754,25 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
-    standardForm: function (viewID, formID = 0) {
+    standardForm: function (options) {
       const locale = 'en-US'
-      if (!this.views.has(viewID)) {
-        let view = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__["ViewSetFactory"].getStandardForm(this.languageId, viewID, formID, locale)
-        this.views.set(viewID, {
-          view: view,
-          state: {
-            collapsed: true
-          }
-        })
+      if (!this.views.has(options)) {
+        let view = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__["ViewSetFactory"].getStandardForm(this.languageId, options, locale)
+        this.views.set(options, view)
       }
-      return this.views.get(viewID)
+      return this.views.get(options)
     },
+
     collapseTogle: function () {
       this.state.collapsed = !this.state.collapsed
       this.$emit('collapse', this.state.collapsed)
     },
+
     toggleSF: function (viewID) {
       let sfView = this.standardForm(viewID)
       sfView.state.collapsed = !sfView.state.collapsed
     },
+
     isSFCollapsed: function (viewID) {
       let state = this.standardForm(viewID).state.collapsed
       return state
@@ -8902,16 +8991,18 @@ __webpack_require__.r(__webpack_exports__);
             comparativeFeatures.push(prop)
           }
         }
-        for (const lexeme of this.view.homonym.lexemes) {
-          for (const inflection of lexeme.inflections) {
-            let fullMatch = true
-            for (const feature of comparativeFeatures) {
-              fullMatch = fullMatch && inflection.hasOwnProperty(feature) && cell[feature].hasValues(inflection[feature].values)
-              if (!fullMatch) { break } // If at least one feature does not match, there is no reason to check others
-            }
-            if (fullMatch) {
-              // If full match is found, there is no need to check other inflections
-              return `${cellClassName} ${fullMatchClassnName}`
+        if (this.view.homonym && this.view.homonym.lexemes) {
+          for (const lexeme of this.view.homonym.lexemes) {
+            for (const inflection of lexeme.inflections) {
+              let fullMatch = true
+              for (const feature of comparativeFeatures) {
+                fullMatch = fullMatch && inflection.hasOwnProperty(feature) && cell[feature].hasValues(inflection[feature].values)
+                if (!fullMatch) { break } // If at least one feature does not match, there is no reason to check others
+              }
+              if (fullMatch) {
+                // If full match is found, there is no need to check other inflections
+                return `${cellClassName} ${fullMatchClassnName}`
+              }
             }
           }
         }
@@ -8935,6 +9026,16 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _infl_footnote_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./infl-footnote.vue */ "./vue-components/infl-footnote.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9010,6 +9111,50 @@ __webpack_require__.r(__webpack_exports__);
       this.view.wideView.collapsed = this.state.collapsed
     },
 
+    cellClasses: function (cell) {
+      if (cell.role === 'label') {
+        return 'infl-prdgm-tbl-cell--label'
+      }
+
+      /*
+      If it is a data cell, we need to figure out if this is a cell with a full match and
+      highlight it accordingly. A full match is a cell which matches all features of the cell properties
+      with the ones in the inflection.
+      We do not check for suffix match because paradigm tables show example of a different word,
+      not the one selected by the user.
+       */
+      if (cell.role === 'data') {
+
+        let cellClassName = 'infl-prdgm-tbl-cell--data'
+        const fullMatchClassnName = 'infl-prdgm-tbl-cell--full-match'
+        // Get a list of cell feature properties
+        let comparativeFeatures = []
+        for (const prop of Object.keys(cell)) {
+          // Eliminate "non-feature" keys
+          if (prop !== 'role' && prop !== 'value') {
+            comparativeFeatures.push(prop)
+          }
+        }
+        if (this.view.homonym && this.view.homonym.lexemes) {
+          for (const lexeme of this.view.homonym.lexemes) {
+            for (const inflection of lexeme.inflections) {
+              let fullMatch = true
+              for (const feature of comparativeFeatures) {
+                fullMatch = fullMatch && inflection.hasOwnProperty(feature) && cell[feature].hasValues(inflection[feature].values)
+                if (!fullMatch) { break } // If at least one feature does not match, there is no reason to check others
+              }
+              if (fullMatch) {
+                // If full match is found, there is no need to check other inflections
+                return `${cellClassName} ${fullMatchClassnName}`
+              }
+            }
+          }
+        }
+
+        return cellClassName
+      }
+    },
+
     morphemeClasses: function (morpheme) {
       return {
         ['infl-suff']: true,
@@ -9072,6 +9217,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_9__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12061,7 +12212,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("latin_noun_view").view,
+                        view: _vm.standardForm({ viewID: "latin_noun_view" }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12073,7 +12224,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("latin_adjective_view").view,
+                        view: _vm.standardForm({
+                          viewID: "latin_adjective_view"
+                        }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12085,8 +12238,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("latin_verb_participle_view")
-                          .view,
+                        view: _vm.standardForm({
+                          viewID: "latin_verb_participle_view"
+                        }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12094,7 +12248,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("latin_infinitive_view").view,
+                        view: _vm.standardForm({
+                          viewID: "latin_infinitive_view"
+                        }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12102,7 +12258,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("latin_imperative_view").view,
+                        view: _vm.standardForm({
+                          viewID: "latin_imperative_view"
+                        }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12110,7 +12268,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("latin_supine_view").view,
+                        view: _vm.standardForm({ viewID: "latin_supine_view" }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12180,16 +12338,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("greek_noun_view").view,
-                        messages: _vm.messages,
-                        "no-suffix-matches-hidden": false
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("wide-table", {
-                      attrs: {
-                        view: _vm.standardForm("greek_noun_simplified_view")
-                          .view,
+                        view: _vm.standardForm({ viewID: "greek_noun_view" }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12201,7 +12350,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("greek_adjective_view").view,
+                        view: _vm.standardForm({
+                          viewID: "greek_adjective_view"
+                        }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12209,9 +12360,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm(
-                          "greek_adjective_simplified_view"
-                        ).view,
+                        view: _vm.standardForm({
+                          viewID: "greek_adjective_simplified_view"
+                        }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12223,8 +12374,902 @@ var render = function() {
                     _vm._v(" "),
                     _c("wide-table", {
                       attrs: {
-                        view: _vm.standardForm("greek_person_pronoun_view")
-                          .view,
+                        view: _vm.standardForm({
+                          viewID: "greek_person_pronoun_view",
+                          form: "νώ"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_person_gender_pronoun_view",
+                          form: "ἡμᾶς"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_gender_pronoun_view",
+                          form: "ἀλλήλᾱ"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_lemma_gender_pronoun_view",
+                          form: "τούτω"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_gender_pronoun_view",
+                          form: "οἷς"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_gender_pronoun_view",
+                          form: "ὥτινε"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_gender_pronoun_view",
+                          form: "τίνε"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_gender_pronoun_view",
+                          form: "τινοῖν"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_gender_pronoun_view",
+                          form: "αὐτά"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title" }, [
+                      _vm._v("Articles")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_article_view",
+                          form: "τοῦ"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title" }, [
+                      _vm._v("Numerals")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_numeral_view",
+                          form: "δύο"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title" }, [
+                      _vm._v("Verb Paradigms")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l2" }, [
+                      _vm._v("ω Verbs")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("Regular ω Verbs")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm1"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm2"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm3"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm4"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm5"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm6"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm7"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm8"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm9"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm10"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm11"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm12"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm13"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm14"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm15"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm16"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("Present System of Contract Verbs (-εω, -αω, -οω)")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm17"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm18"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm19"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm20"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm21"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm22"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm23"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm24"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm25"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm26"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("Second Aorist of βαίνω, γιγνώσκω, ἁλίσκομαι, δύω")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm27"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l2" }, [
+                      _vm._v("μι Verbs")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("τίθημι")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm28"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm29"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm30"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm31"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("ἵημι")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm32"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm33"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm34"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm35"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("δίδωμι")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm36"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm37"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm38"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm39"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("ἵστημι")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm40"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm41"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm42"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l3" }, [
+                      _vm._v("Other")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm43"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm44"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm45"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm46"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm47"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm48"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm49"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm50"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm51"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm52"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_paradigm_view",
+                          paradigmID: "verbpdgm53"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alpheios-sf__pofs-title-l2" }, [
+                      _vm._v("Participles")
+                    ]),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm54"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm55"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm56"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm57"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm58"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm59"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm60"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm61"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm62"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm63"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm64"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm65"
+                        }),
+                        messages: _vm.messages,
+                        "no-suffix-matches-hidden": false
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("wide-table", {
+                      attrs: {
+                        view: _vm.standardForm({
+                          viewID: "greek_verb_participle_paradigm_view",
+                          paradigmID: "verbpdgm66"
+                        }),
                         messages: _vm.messages,
                         "no-suffix-matches-hidden": false
                       }
@@ -12472,124 +13517,169 @@ var render = function() {
             "\n"
         )
       ])
-    : _vm.view.wideView
-      ? _c("div", [
-          _c(
-            "h3",
-            {
-              staticClass:
-                "alpheios-inflections__title alpheios-table-sf__title alpheios-clickable",
-              on: { click: _vm.collapse }
-            },
-            [
-              _vm._v("\n        " + _vm._s(_vm.view.title) + "\n        "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.state.collapsed,
-                      expression: "state.collapsed"
-                    }
-                  ]
-                },
-                [_vm._v("[+]")]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: !_vm.state.collapsed,
-                      expression: "!state.collapsed"
-                    }
-                  ]
-                },
-                [_vm._v("[-]")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: !_vm.state.collapsed,
-                  expression: "!state.collapsed"
-                }
-              ],
-              staticClass: "infl-table infl-table--wide",
-              style: _vm.view.wideView.style,
-              attrs: { id: "alpheios-wide-vue-table" }
-            },
-            [
-              _vm._l(_vm.view.wideView.rows, function(row) {
-                return _vm._l(row.cells, function(cell) {
-                  return _c(
-                    "div",
-                    {
-                      class: cell.classes,
-                      on: {
-                        mouseover: function($event) {
-                          $event.stopPropagation()
-                          $event.preventDefault()
-                          _vm.cellMouseOver(cell)
-                        },
-                        mouseleave: function($event) {
-                          $event.stopPropagation()
-                          $event.preventDefault()
-                          _vm.cellMouseLeave(cell)
-                        }
+    : _vm.view.wideView && !_vm.view.isEmpty
+      ? _c(
+          "div",
+          [
+            _c(
+              "h3",
+              {
+                staticClass:
+                  "alpheios-inflections__title alpheios-table-sf__title alpheios-clickable",
+                on: { click: _vm.collapse }
+              },
+              [
+                _vm._v("\n        " + _vm._s(_vm.view.title) + "\n        "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.state.collapsed,
+                        expression: "state.collapsed"
                       }
-                    },
-                    [
-                      cell.isDataCell
-                        ? [
-                            _vm._l(cell.morphemes, function(morpheme, index) {
-                              return [
-                                _c(
-                                  "span",
-                                  { class: _vm.morphemeClasses(morpheme) },
-                                  [
-                                    morpheme.value
-                                      ? [_vm._v(_vm._s(morpheme.value))]
-                                      : [_vm._v("-")]
-                                  ],
-                                  2
-                                ),
-                                _vm._v(" "),
-                                morpheme.hasFootnotes
-                                  ? _c("infl-footnote", {
-                                      attrs: { footnotes: morpheme.footnotes }
-                                    })
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                index < cell.morphemes.length - 1
-                                  ? [_vm._v(", ")]
-                                  : _vm._e()
-                              ]
+                    ]
+                  },
+                  [_vm._v("[+]")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.state.collapsed,
+                        expression: "!state.collapsed"
+                      }
+                    ]
+                  },
+                  [_vm._v("[-]")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            !_vm.state.collapsed
+              ? [
+                  !_vm.view.hasPrerenderedTables
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "infl-table infl-table--wide",
+                          style: _vm.view.wideView.style,
+                          attrs: { id: "alpheios-wide-vue-table" }
+                        },
+                        [
+                          _vm._l(_vm.view.wideView.rows, function(row) {
+                            return _vm._l(row.cells, function(cell) {
+                              return _c(
+                                "div",
+                                {
+                                  class: cell.classes,
+                                  on: {
+                                    mouseover: function($event) {
+                                      $event.stopPropagation()
+                                      $event.preventDefault()
+                                      _vm.cellMouseOver(cell)
+                                    },
+                                    mouseleave: function($event) {
+                                      $event.stopPropagation()
+                                      $event.preventDefault()
+                                      _vm.cellMouseLeave(cell)
+                                    }
+                                  }
+                                },
+                                [
+                                  cell.isDataCell
+                                    ? [
+                                        _vm._l(cell.morphemes, function(
+                                          morpheme,
+                                          index
+                                        ) {
+                                          return [
+                                            _c(
+                                              "span",
+                                              {
+                                                class: _vm.morphemeClasses(
+                                                  morpheme
+                                                )
+                                              },
+                                              [
+                                                morpheme.value
+                                                  ? [
+                                                      _vm._v(
+                                                        _vm._s(morpheme.value)
+                                                      )
+                                                    ]
+                                                  : [_vm._v("-")]
+                                              ],
+                                              2
+                                            ),
+                                            _vm._v(" "),
+                                            morpheme.hasFootnotes
+                                              ? _c("infl-footnote", {
+                                                  attrs: {
+                                                    footnotes:
+                                                      morpheme.footnotes
+                                                  }
+                                                })
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            index < cell.morphemes.length - 1
+                                              ? [_vm._v(", ")]
+                                              : _vm._e()
+                                          ]
+                                        })
+                                      ]
+                                    : _c("span", {
+                                        domProps: {
+                                          innerHTML: _vm._s(cell.value)
+                                        }
+                                      })
+                                ],
+                                2
+                              )
                             })
-                          ]
-                        : _c("span", {
-                            domProps: { innerHTML: _vm._s(cell.value) }
                           })
-                    ],
-                    2
-                  )
-                })
-              })
-            ],
-            2
-          )
-        ])
+                        ],
+                        2
+                      )
+                    : !_vm.state.collapsed
+                      ? _c(
+                          "div",
+                          { staticClass: "infl-prdgm-tbl" },
+                          _vm._l(_vm.view.wideTable.rows, function(row) {
+                            return _c(
+                              "div",
+                              { staticClass: "infl-prdgm-tbl__row" },
+                              _vm._l(row.cells, function(cell) {
+                                return _c(
+                                  "div",
+                                  {
+                                    staticClass: "infl-prdgm-tbl__cell",
+                                    class: _vm.cellClasses(cell)
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                    " +
+                                        _vm._s(cell.value) +
+                                        "\n                "
+                                    )
+                                  ]
+                                )
+                              })
+                            )
+                          })
+                        )
+                      : _vm._e()
+                ]
+              : _vm._e()
+          ],
+          2
+        )
       : _vm._e()
 }
 var staticRenderFns = []
@@ -12884,6 +13974,22 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
+                  _vm._l(_vm.selectedView.linkedViews, function(linkedView) {
+                    return _vm.selectedView.linkedViews
+                      ? [
+                          _c("main-table-wide-vue", {
+                            attrs: {
+                              view: linkedView,
+                              messages: _vm.messages,
+                              "no-suffix-matches-hidden":
+                                _vm.buttons.hideNoSuffixGroups
+                                  .noSuffixMatchesHidden
+                            }
+                          })
+                        ]
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
@@ -12902,7 +14008,7 @@ var render = function() {
                     2
                   )
                 ],
-                1
+                2
               )
             : [
                 _c("prerendered-table-wide", {

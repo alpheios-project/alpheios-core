@@ -9054,6 +9054,29 @@ img.alpheios-popup__logo {
   padding: 20px;
   font-size: 0.875rem;
 }
+.infl-prdgm-tbl {
+  display: table;
+  border-top: 1px solid gray;
+  border-left: 1px solid gray;
+  margin-bottom: 30px;
+}
+.infl-prdgm-tbl__row {
+  display: table-row;
+}
+.infl-prdgm-tbl__cell {
+  display: table-cell;
+  padding: 2px 5px;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+  min-width: 20px;
+}
+.infl-prdgm-tbl-cell--label {
+  font-weight: 700;
+}
+.infl-prdgm-tbl-cell--full-match {
+  background-color: #F6D918;
+  font-weight: 700;
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
@@ -9115,6 +9138,19 @@ div.alpheios-sf div.alpheios-sf__title {
   text-transform: uppercase;
   font-size: 1rem;
 }
+.alpheios-sf__pofs-title {
+  font-weight: 700;
+}
+.alpheios-sf__pofs-title-l2 {
+  font-weight: 700;
+  margin-top: 0.2rem;
+  margin-left: 1rem;
+}
+.alpheios-sf__pofs-title-l3 {
+  font-weight: 700;
+  margin-top: 0.2rem;
+  margin-left: 2rem;
+}
 div.alpheios-sf div.alpheios-sf__title .alpheios-sf__title-collapse {
   font-weight: 400;
   font-size: 0.875rem;
@@ -9123,11 +9159,6 @@ div.alpheios-sf div.alpheios-sf__title .alpheios-sf__title-collapse {
   left: 0.2rem;
   color: #4E6476;
 }
-.alpheios-sf__pofs-title-2 {
-  font-weight: 700;
-  margin: 0.6rem 0;
-  padding-left: 2rem;
-}
 .alpheios-clickable {
   cursor: pointer;
 }
@@ -9135,7 +9166,7 @@ div.alpheios-sf div.alpheios-sf__title .alpheios-sf__title-collapse {
   text-align: left;
   font-weight: normal;
   font-size: 1rem;
-  margin: 0 0 0.2rem 1.5rem;
+  margin: 0 0 0.2rem 3rem;
 }
 
 
