@@ -11,34 +11,19 @@ export default class GreekLemmaGenderPronounView extends GreekPronounView {
     super(homonym, inflectionData, locale, GreekLemmaGenderPronounView.classes[0])
 
     // Add lemmas
-    this.lemmaTypeFeature = new Feature(
+    /* this.lemmaTypeFeature = new Feature(
       Feature.types.hdwd,
       this.constructor.dataset.getPronounGroupingLemmas(GreekLemmaGenderPronounView.classes[0]),
       GreekPronounView.languageID
-    )
+    ) */
     this.features.lemmas = new GroupFeatureType(Feature.types.hdwd, this.constructor.languageID, 'Lemma',
       this.constructor.dataset.getPronounGroupingLemmaFeatures(GreekLemmaGenderPronounView.classes[0]))
 
-    /*
-    Define tables and table features.
-    Features should go as: column features first, row features last. This specifies the order of grouping
-    in which a table tree will be built.
-     */
-    this.table = new Table([this.features.lemmas, this.features.genders, this.features.numbers, this.features.cases])
-    let features = this.table.features
-    features.columns = [
-      this.lemmaTypeFeature,
-      this.constructor.model.typeFeature(Feature.types.gender)]
-    features.rows = [
-      this.constructor.model.typeFeature(Feature.types.number),
-      this.constructor.model.typeFeature(Feature.types.grmCase)
-    ]
-    features.columnRowTitles = [
-      this.constructor.model.typeFeature(Feature.types.grmCase)
-    ]
-    features.fullWidthRowTitles = [
-      this.constructor.model.typeFeature(Feature.types.number)
-    ]
+    this.createTable()
+  }
+
+  static get viewID () {
+    return 'greek_lemma_gender_pronoun_view'
   }
 
   /**
@@ -47,6 +32,20 @@ export default class GreekLemmaGenderPronounView extends GreekPronounView {
    */
   static get classes () {
     return [Constants.CLASS_DEMONSTRATIVE]
+  }
+
+  createTable () {
+    /*
+    Define tables and table features.
+    Features should go as: column features first, row features last. This specifies the order of grouping
+    in which a table tree will be built.
+     */
+    this.table = new Table([this.features.lemmas, this.features.genders, this.features.numbers, this.features.cases])
+    let features = this.table.features
+    features.columns = [this.features.lemmas, this.features.genders]
+    features.rows = [this.features.numbers, this.features.cases]
+    features.columnRowTitles = [this.features.cases]
+    features.fullWidthRowTitles = [this.features.numbers]
   }
 
   static getOrderedGenders () {

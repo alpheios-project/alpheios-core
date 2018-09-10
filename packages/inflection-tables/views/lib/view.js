@@ -121,7 +121,7 @@ export default class View {
   }
 
   /**
-   * Returns a dataset for a view data
+   * Returns a language dataset for a view data.
    * @return {LanguageDataset}
    */
   static get dataset () {
@@ -144,10 +144,11 @@ export default class View {
 
   /**
    * Checks wither an inflection table has any data.
+   * If view has no pre-rendered tables, a presence of table object with correct row items is checked.
    * @return {boolean} True if table has no inflection data, false otherwise.
    */
   get isEmpty () {
-    return !this.table || !this.table.rows || this.table.rows.length === 0
+    return !this.hasPrerenderedTables && (!this.table || !this.table.rows || this.table.rows.length === 0)
   }
 
   sameAs (view) {
@@ -292,6 +293,7 @@ export default class View {
       }
       this.wideView.render()
     }
+    return this
   }
 
   /**
@@ -313,6 +315,7 @@ export default class View {
       }
       this.wideView.render()
     }
+    return this
   }
 
   highlightRowAndColumn (cell) {
@@ -342,7 +345,7 @@ export default class View {
       .join(' ')
   }
 
-  static createStandardFormHomonym (formID) {
+  static createStandardFormHomonym (options = {}) {
     let inflection = new Inflection('standard form stem', this.languageID, 'standard form suffix')
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
     let homonym = Homonym.createSimpleForm('standard form word', this.languageID, [inflection])
@@ -350,9 +353,10 @@ export default class View {
     return homonym
   }
 
-  static getStandardFormInstance (formID, locale = 'en-US') {
-    let homonym = this.createStandardFormHomonym(formID)
+  static getStandardFormInstance (options, locale = 'en-US') {
+    let homonym = this.createStandardFormHomonym(options)
     let inflectionData = this.getInflectionsData(homonym)
-    return new this(homonym, inflectionData, locale).render()
+    // Standard form tables should have no suffix matches columns visible
+    return new this(homonym, inflectionData, locale).render().noSuffixMatchesGroupsHidden(false)
   }
 }

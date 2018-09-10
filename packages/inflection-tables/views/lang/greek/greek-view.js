@@ -17,7 +17,8 @@ export default class GreekView extends View {
       cases: GroupFeatureType.createFromType(Feature.types.grmCase, this.constructor.languageID, 'Case'),
       declensions: GroupFeatureType.createFromType(Feature.types.declension, this.constructor.languageID, 'Declension Stem'),
       genders: GroupFeatureType.createFromType(Feature.types.gender, this.constructor.languageID, 'Gender'),
-      types: GroupFeatureType.createFromType(Feature.types.type, this.constructor.languageID, 'Type')
+      types: GroupFeatureType.createFromType(Feature.types.type, this.constructor.languageID, 'Type'),
+      persons: GroupFeatureType.createFromType(Feature.types.person, this.constructor.languageID, 'Person')
     }
     this.features.genders.addFeature(GreekView.datasetConsts.GEND_MASCULINE_FEMININE,
       [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])

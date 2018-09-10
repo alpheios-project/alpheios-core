@@ -1,7 +1,7 @@
 import { Constants, Feature } from 'alpheios-data-models'
-import Paradigm from '../../../../lib/paradigm.js'
-import View from '../../../lib/view.js'
-import GreekView from '../greek-view.js'
+import Paradigm from '@lib/paradigm.js'
+import View from '@views/lib/view.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 
 /**
  * This is a base class for all pronoun views. This class should not be used to create tables. Its purpose
@@ -25,6 +25,7 @@ export default class GreekVerbParadigmView extends GreekView {
 
     this.wideTable = this.paradigm.table
     this.wideSubTables = this.paradigm.subTables
+    this.wideView = this.wideTable // For compatibility with non-prerendered tables
 
     /**
      * Whether there are any linked paradigms for this view
@@ -46,6 +47,10 @@ export default class GreekVerbParadigmView extends GreekView {
 
     this.hasCredits = this.paradigm.hasCredits
     this.creditsText = this.paradigm.creditsText
+  }
+
+  static get viewID () {
+    return 'greek_verb_paradigm_view'
   }
 
   static get partsOfSpeech () {
@@ -110,7 +115,7 @@ export default class GreekVerbParadigmView extends GreekView {
     return []
   }
 
-  render () {
+  render (options) {
     // Do nothing as there is no need to render anything
     return this
   }
@@ -133,5 +138,15 @@ export default class GreekVerbParadigmView extends GreekView {
 
   showNoSuffixGroups () {
     return this
+  }
+
+  static getStandardFormInstance (options, locale = 'en-US') {
+    if (!options || !options.paradigmID) {
+      throw new Error(`Obligatory options property, "paradigmID", is missing`)
+    }
+    let paradigm = this.dataset.pos.get(this.mainPartOfSpeech).types.get(Paradigm).getByID(options.paradigmID)
+    if (paradigm) {
+      return new this(paradigm, null, null, locale).render().noSuffixMatchesGroupsHidden(false)
+    }
   }
 }

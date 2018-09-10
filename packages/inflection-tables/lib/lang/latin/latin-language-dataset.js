@@ -474,20 +474,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
     return this
   }
 
-  /* checkIrregularVerb (inflection) {
-    if (
-      inflection[Feature.types.part].value === Constants.POFS_VERB &&
-      inflection[Feature.types.conjugation] &&
-      inflection[Feature.types.conjugation].value === Constants.TYPE_IRREGULAR
-    ) {
-      // This is an irregular verb that was identified by a morphological analyzer
-      return true
-    } else if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE].includes(inflection[Feature.types.part].value) && inflection[Feature.types.word]) {
-      return this.verbsIrregularLemmas.filter(item => item.word === inflection[Feature.types.word].value).length > 0
-    }
-    return false
-  } */
-
   isIrregular (inflection) {
     const pofs = inflection[Feature.types.part].value
     if (this.irregularLemmas.has(pofs)) {
@@ -500,19 +486,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
     }
     return false
   }
-
-  /**
-   * Checks whether we implemented (i.e. have word data) a particular word (stored in inflection.word).
-   * Currently checks for unimplemented irregular verbs only.
-   * @param {Inflection} inflection - An inflection we need to check
-   * @return {boolean} - True if verb is not implemented yet, false otherwise
-   */
-  /* isUnimplemented (inflection) {
-    return Boolean(
-      this.checkIrregularVerb(inflection) &&
-      !this.verbsIrregularLemmas.some(item => item.word === inflection[Feature.types.word].value)
-    )
-  } */
 
   /**
    * Checks whether we implemented (i.e. have word data) a particular word (stored in inflection.word).

@@ -1,4 +1,4 @@
-import { Constants, Feature, Homonym, Inflection } from 'alpheios-data-models'
+import { Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
 import Form from '@lib/form.js'
 import View from '@views/lib/view.js'
 import GroupFeatureType from '@views/lib/group-feature-type.js'
@@ -46,6 +46,19 @@ export default class GreekPronounView extends GreekView {
     return []
   }
 
+  /**
+   * Returns a class of view from a list of inflections.
+   * Currently returns a class of a first inflection from the list.
+   * @param {Inflection} inflections - A list of inflections.
+   * @return {string} A name of a view's class name or an empty string if class cannot be determined.
+   */
+  static getClassFromInflection (inflections) {
+    if (inflections && inflections.length > 0 && inflections[0][Feature.types.grmClass]) {
+      return inflections[0][Feature.types.grmClass].value
+    }
+    return ''
+  }
+
   static getID (grammarClass) {
     return `${grammarClass}${View.toTitleCase(GreekPronounView.mainPartOfSpeech)}Declension`
   }
@@ -70,8 +83,6 @@ export default class GreekPronounView extends GreekView {
     }
     return false
   }
-
-  // Select inflections that have a 'Form' type (form based) and find those whose grammar class matches a grammar class of the view
 
   /**
    * Determines whether this view can be used to display an inflection table of any data
@@ -117,12 +128,13 @@ export default class GreekPronounView extends GreekView {
       )
   }
 
-  static createStandardFormHomonym (formID) {
-    console.log(`standard form creation`)
-    const form = 'νώ'
-    let inflection = new Inflection(form, this.languageID)
+  static createStandardFormHomonym (options = {}) {
+    if (!options || !options.form) {
+      throw new Error(`Obligatory options property, "form", is missing`)
+    }
+    let inflection = new Inflection(options.form, this.languageID)
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
-    let homonym = Homonym.createSimpleForm('standard form word', this.languageID, [inflection])
+    let homonym = Homonym.createSimpleForm(options.form, this.languageID, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }

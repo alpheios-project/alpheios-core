@@ -573,6 +573,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
     return this
   }
 
+  isIrregular (inflection) {
+    // All pronouns are irregular right now
+    return inflection[Feature.types.part].value === Constants.POFS_PRONOUN
+  }
+
   /**
    * Returns an array of lemmas that are used to group values within inflection tables,
    * such as for demonstrative pronouns
@@ -598,13 +603,13 @@ export default class GreekLanguageDataset extends LanguageDataset {
   static getObligatoryMatchList (inflection) {
     if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
       // If it is a pronoun, it must match a grammatical class
-      return [Feature.types.grmClass]
+      return [Feature.types.part, Feature.types.grmClass]
     } else if ([Constants.POFS_NUMERAL, Constants.POFS_ARTICLE].includes(inflection[Feature.types.part].value)) {
       // If it is a numeral, it must match a part of speach
       return [Feature.types.part]
     } else if (inflection.constraints.fullFormBased) {
       // Not a pronoun, but the other form-based word
-      return [Feature.types.fullForm]
+      return [Feature.types.part, Feature.types.fullForm]
     } else {
       // Default value for suffix matching
       return [Feature.types.part]

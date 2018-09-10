@@ -21,6 +21,15 @@ export default class ParadigmInflectionList extends InflectionList {
   }
 
   /**
+   * Finds a paradigm object by its paradigmID.
+   * @param {string} paradigmID - A paradigmID string value matching the one stored in Paradigm.paradigmID.
+   * @return {Paradigm}
+   */
+  getByID (paradigmID) {
+    return this.items.find(i => i.paradigmID === paradigmID)
+  }
+
+  /**
    * Returns an array of paradigms that `matches` an array of inflections.
    * A match is determined by the paradigm's `match` function.
    * Returned value is determined by item's `match` function as well.

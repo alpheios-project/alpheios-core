@@ -451,7 +451,7 @@ export default class LanguageDataset {
       matchData.suffixMatch = inflection.compareWithWordDependsOnType(item.value, item.constructor.name)
 
       // Check for obligatory matches
-      const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item)
+      const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
@@ -459,11 +459,6 @@ export default class LanguageDataset {
         break
       }
 
-      /*
-      Check for optional matches. Use `All_VALUES` matching algorithm
-      as multiple values in inflection and morpheme can go in different order.
-       */
-      // TODO: Do we need to fix order of values to be the same?
       const optionalMatches = this.constructor.getOptionalMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
 
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)

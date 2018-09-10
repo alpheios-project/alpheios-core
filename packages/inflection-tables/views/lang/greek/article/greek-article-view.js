@@ -14,6 +14,10 @@ export default class GreekArticleView extends GreekView {
     this.createTable()
   }
 
+  static get viewID () {
+    return 'greek_article_view'
+  }
+
   static get partsOfSpeech () {
     return [Constants.POFS_ARTICLE]
   }

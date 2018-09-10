@@ -25,6 +25,10 @@ export default class GreekNumeralView extends GreekView {
     this.createTable()
   }
 
+  static get viewID () {
+    return 'greek_numeral_view'
+  }
+
   static get partsOfSpeech () {
     return [Constants.POFS_NUMERAL]
   }

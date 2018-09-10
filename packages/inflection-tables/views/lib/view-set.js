@@ -115,8 +115,11 @@ export default class ViewSet {
     return this.views.find(v => v.viewID === viewID)
   }
 
-  static getStandardForm (viewID, formID, locale) {
-    let view = this.getViewByID(viewID)
-    return view ? view.getStandardFormInstance(formID, locale) : null
+  static getStandardForm (options, locale) {
+    if (!options || !options.viewID) {
+      throw new Error(`Obligatory options property, "viewID", is missing`)
+    }
+    let view = this.getViewByID(options.viewID)
+    return view ? view.getStandardFormInstance(options, locale) : null
   }
 }

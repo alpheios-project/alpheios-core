@@ -1,6 +1,5 @@
-import { Constants, GreekLanguageModel, Feature } from 'alpheios-data-models'
+import { Constants } from 'alpheios-data-models'
 import GreekPronounView from './greek-pronoun-view.js'
-import GroupFeatureType from '../../../lib/group-feature-type.js'
 import Table from '../../../lib/table'
 
 /**
@@ -10,9 +9,14 @@ export default class GreekPersonPronounView extends GreekPronounView {
   constructor (homonym, inflectionData, locale) {
     super(homonym, inflectionData, locale, GreekPersonPronounView.classes[0])
 
-    // Add persons
-    this.features.persons = GroupFeatureType.createFromType(Feature.types.person, this.constructor.languageID, 'Person')
+    this.createTable()
+  }
 
+  static get viewID () {
+    return 'greek_person_pronoun_view'
+  }
+
+  createTable () {
     /*
     Define tables and table features.
     Features should go as: column features first, row features last. This specifies the order of grouping
@@ -20,14 +24,10 @@ export default class GreekPersonPronounView extends GreekPronounView {
      */
     this.table = new Table([this.features.persons, this.features.numbers, this.features.cases])
     let features = this.table.features
-    features.columns = [this.featureTypes.persons]
-    features.rows = [this.featureTypes.numbers, GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.columnRowTitles = [GreekLanguageModel.typeFeature(Feature.types.grmCase)]
-    features.fullWidthRowTitles = [this.featureTypes.numbers]
-  }
-
-  static get viewID () {
-    return 'greek_person_pronoun_view'
+    features.columns = [this.features.persons]
+    features.rows = [this.features.numbers, this.features.cases]
+    features.columnRowTitles = [this.features.cases]
+    features.fullWidthRowTitles = [this.features.numbers]
   }
 
   /**

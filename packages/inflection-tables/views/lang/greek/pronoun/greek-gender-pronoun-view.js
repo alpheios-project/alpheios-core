@@ -1,4 +1,4 @@
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants } from 'alpheios-data-models'
 import GreekView from '../greek-view.js'
 import GreekPronounView from './greek-pronoun-view.js'
 import Table from '../../../lib/table'
@@ -9,28 +9,13 @@ import Table from '../../../lib/table'
  */
 export default class GreekGenderPronounView extends GreekPronounView {
   constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+    super(homonym, inflectionData, locale, GreekPronounView.getClassFromInflection(inflectionData.inflections))
 
-    /*
-    Define tables and table features.
-    Features should go as: column features first, row features last. This specifies the order of grouping
-    in which a table tree will be built.
-     */
-    this.table = new Table([this.features.genders, this.features.numbers, this.features.cases])
-    let features = this.table.features
-    features.columns = [
-      this.constructor.model.typeFeature(Feature.types.gender)
-    ]
-    features.rows = [
-      this.constructor.model.typeFeature(Feature.types.number),
-      this.constructor.model.typeFeature(Feature.types.grmCase)
-    ]
-    features.columnRowTitles = [
-      this.constructor.model.typeFeature(Feature.types.grmCase)
-    ]
-    features.fullWidthRowTitles = [
-      this.constructor.model.typeFeature(Feature.types.number)
-    ]
+    this.createTable()
+  }
+
+  static get viewID () {
+    return 'greek_gender_pronoun_view'
   }
 
   /**
@@ -46,6 +31,20 @@ export default class GreekGenderPronounView extends GreekPronounView {
       Constants.CLASS_RECIPROCAL,
       Constants.CLASS_RELATIVE
     ]
+  }
+
+  createTable () {
+    /*
+    Define tables and table features.
+    Features should go as: column features first, row features last. This specifies the order of grouping
+    in which a table tree will be built.
+     */
+    this.table = new Table([this.features.genders, this.features.numbers, this.features.cases])
+    let features = this.table.features
+    features.columns = [this.features.genders]
+    features.rows = [this.features.numbers, this.features.cases]
+    features.columnRowTitles = [this.features.cases]
+    features.fullWidthRowTitles = [this.features.numbers]
   }
 
   static getOrderedGenders () {
