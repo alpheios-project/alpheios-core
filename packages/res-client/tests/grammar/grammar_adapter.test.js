@@ -17,7 +17,7 @@ describe('BaseAdapter object', () => {
   })
 
   test('default config', () => {
-    let adapter = new GrammarResAdapter(bennett, {base_url: 'dummyurl'})
+    let adapter = new GrammarResAdapter(bennett, { base_url: 'dummyurl' })
     expect(adapter.getConfig('base_url')).toEqual('dummyurl')
   })
 
@@ -34,7 +34,7 @@ describe('BaseAdapter object', () => {
     let dummyResponse = 'alph-case-locative|part5.htm#alph-case-locative'
     window.fetch.mockResponse(dummyResponse)
     let response = await adapter.getResources(mockFeature)
-    expect(response[0].url).toEqual('https://grammars.alpheios.net/bennett/part5.htm#alph-case-locative')
+    expect(response[0].url).toEqual(expect.stringMatching(/^https:\/\/grammars.alpheios.net\/bennett\/part5.htm\?ts=\d+#alph-case-locative$/))
     expect(response[0].provider).toBeTruthy()
     response = await adapter.getResources(mockFeature2)
     expect(response).toEqual([])

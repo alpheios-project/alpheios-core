@@ -55,15 +55,22 @@ class GrammarResAdapter extends BaseResourceAdapter {
       found = this._lookupInDataIndex(this.index, key)
     }
     let baseUrl = this.getConfig('base_url')
+    let timestamp = new Date().getTime()
     let resources = []
-    for (let url of found) {
-      let res = {}
-      if (baseUrl) {
-        res.url = `${baseUrl}${url}`
-      } else {
-        res.url = url
+    for (let item of found) {
+      for (let url of item) {
+        let [file, anchor] = url.split('#')
+        if (file && anchor) {
+          url = `${file}?ts=${timestamp}#${anchor}`
+        }
+        let res = {}
+        if (baseUrl) {
+          res.url = `${baseUrl}${url}`
+        } else {
+          res.url = url
+        }
+        resources.push(ResourceProvider.getProxy(this.provider, res))
       }
-      resources.push(ResourceProvider.getProxy(this.provider, res))
     }
     return resources
   }
