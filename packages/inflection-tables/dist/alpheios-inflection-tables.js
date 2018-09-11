@@ -17805,8 +17805,20 @@ __webpack_require__.r(__webpack_exports__);
 
 class ViewSetFactory {
   static create (homonym, locale) {
-    let Constructor = this.getConstructor(homonym.languageID)
-    return new Constructor(homonym, locale)
+    let viewSet
+    try {
+      let Constructor = this.getConstructor(homonym.languageID)
+      viewSet = new Constructor(homonym, locale)
+    } catch (e) {
+      console.error(`Cannot build inflection tables: ${e}`)
+      // Create an empty ViewSet with no inflection data
+      viewSet = new _view_set_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
+    }
+    return viewSet
+  }
+
+  static hasInflectionsEnabled (languageID) {
+    return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID).canInflect()
   }
 
   static getConstructor (languageID) {
@@ -17853,43 +17865,35 @@ class ViewSet {
    * @param {Homonym} homonym - Data about inflections we need to build views for
    * @param {string} locale - A locale's IETF language tag (ex. `en-US`)
    */
-  constructor (homonym, locale) {
+  constructor (homonym = undefined, locale = 'en-US') {
     this.homonym = homonym
-    this.languageID = homonym.languageID
-    this.dataset = _lib_language_dataset_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getDataset(homonym.languageID)
-
-    /**
-     * Whether inflections are enabled for the homonym's language
-     */
-    this.enabled = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.languageID).canInflect()
-    this.inflectionData = null
     this.locale = locale
     this.matchingViews = []
     this.matchingViewsMap = new Map()
+    this.inflectionData = null
+    this.enabled = false
 
-    if (this.enabled) {
-      // this.inflectionData = LanguageDatasetFactory.getInflectionData(this.homonym)
+    if (this.homonym) {
+      this.languageID = homonym.languageID
+      this.dataset = _lib_language_dataset_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getDataset(homonym.languageID)
 
-      for (let lexeme of homonym.lexemes) {
-        for (let inflection of lexeme.inflections) {
-          // Inflections are grouped by part of speech
-          inflection = this.dataset.setInflectionData(inflection, lexeme.lemma)
+      /**
+       * Whether inflections are enabled for the homonym's language
+       */
+      this.enabled = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.languageID).canInflect()
+
+      if (this.enabled) {
+        for (let lexeme of homonym.lexemes) {
+          for (let inflection of lexeme.inflections) {
+            // Inflections are grouped by part of speech
+            inflection = this.dataset.setInflectionData(inflection, lexeme.lemma)
+          }
         }
+
+        this.matchingViews.push(...this.constructor.views.reduce(
+          (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.locale)), []))
+        this.updateMatchingViewsMap(this.matchingViews)
       }
-
-      // let view = new LatinNounView(homonym, locale)
-      // this.matchingViews = [view]
-      this.matchingViews.push(...this.constructor.views.reduce(
-        (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.locale)), []))
-
-      /* for (const lexeme of this.homonym.lexemes) {
-        // TODO: Can we handle combined data better?
-        for (const inflection of lexeme.inflections) {
-          matchingInstances.push(...this.constructor.views.reduce(
-            (acc, view) => acc.concat(...view.getMatchingInstances(inflection, this.inflectionData, this.messages)), []))
-        }
-      } */
-      this.updateMatchingViewsMap(this.matchingViews)
     }
   }
   /**
