@@ -22,7 +22,7 @@ export default class GreekNounSimplifiedView extends GreekNounView {
   }
 
   static get viewID () {
-    return 'greek_noun_simplified_view'
+    return 'aaa'
   }
 
   static get partsOfSpeech () {

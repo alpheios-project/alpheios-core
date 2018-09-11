@@ -13721,7 +13721,7 @@ class GreekNounSimplifiedView extends _greek_noun_view__WEBPACK_IMPORTED_MODULE_
   }
 
   static get viewID () {
-    return 'greek_noun_simplified_view'
+    return 'aaa'
   }
 
   static get partsOfSpeech () {
