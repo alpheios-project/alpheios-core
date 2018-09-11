@@ -4,6 +4,7 @@ import { Constants } from 'alpheios-data-models'
 // import {LemmaTranslations} from 'alpheios-lemma-client'
 import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
 import {Lexicons} from 'alpheios-lexicon-client'
+import {LemmaTranslations} from 'alpheios-lemma-client'
 
 import HTMLSelector from '../selection/media/html-selector'
 
@@ -24,13 +25,19 @@ export default class LexicalQueryLookup extends LexicalQuery {
       resourceOptions = uiController.resourceOptions
     }
 
+    // Check to see if Lemma Translations should be enabled for a query
+    // Experimental
+    let lemmaTranslations
+    if (textSelector.languageID === Constants.LANG_LATIN && uiController.state.lemmaTranslationLang) {
+      lemmaTranslations = { adapter: LemmaTranslations, locale: uiController.state.lemmaTranslationLang }
+    }
     let options = {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
       uiController: uiController,
       maAdapter: new AlpheiosTuftsAdapter(),
       lexicons: Lexicons,
 
-      lemmaTranslations: null,
+      lemmaTranslations: lemmaTranslations,
 
       resourceOptions: resourceOptions,
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized

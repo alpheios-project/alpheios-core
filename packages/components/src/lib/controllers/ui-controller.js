@@ -98,12 +98,15 @@ export default class UIController {
             treebank: false
           },
           verboseMode: this.state.verboseMode,
+          grammarAvailable: false,
           grammarRes: {},
           lexemes: [],
           inflectionComponentData: {
             visible: false,
             inflectionViewSet: null
           },
+          inflectionsWaitState: false,
+          inflectionsEnabled: false,
           shortDefinitions: [],
           fullDefinitions: '',
           inflections: {
@@ -304,18 +307,27 @@ export default class UIController {
 
         settingChange: function (name, value) {
           console.log('Change inside instance', name, value)
-          this.options.items[name].setTextValue(value)
+          // TODO we need to refactor handling of boolean options
+          if (name === 'enableLemmaTranslations') {
+            this.options.items[name].setValue(value)
+          } else {
+            this.options.items[name].setTextValue(value)
+          }
           switch (name) {
             case 'locale':
               if (this.uiController.presenter) {
                 this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
               }
+              this.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
               this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
               break
             case 'verboseMode':
               this.uiController.updateVerboseMode()
+              break
+            case 'enableLemmaTranslations':
+              this.uiController.updateLemmaTranslations()
               break
           }
         },
@@ -368,6 +380,7 @@ export default class UIController {
           this.options.items.lookupLangOverride.setValue(false)
           this.updateLanguage(currentLanguageID)
           this.updateVerboseMode()
+          this.updateLemmaTranslations()
         })
       })
     })
@@ -520,7 +533,6 @@ export default class UIController {
         },
 
         newLexicalRequest: function () {
-          console.log('Starting a new lexical request within a popup')
           this.popupData.requestStartTime = new Date().getTime()
         },
 
@@ -586,6 +598,7 @@ export default class UIController {
               if (this.uiController.presenter) {
                 this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
               }
+              this.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
               this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
@@ -643,7 +656,8 @@ export default class UIController {
     return {
       uiTypePanel: 'panel',
       uiTypePopup: 'popup',
-      verboseMode: 'verbose'
+      verboseMode: 'verbose',
+      enableLemmaTranslations: false
     }
   }
 
@@ -769,8 +783,12 @@ export default class UIController {
     return this
   }
 
-  newLexicalRequest () {
+  newLexicalRequest (languageID) {
+    console.log(`new lexical request`)
     this.popup.newLexicalRequest()
+    this.panel.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
+    this.panel.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
+    this.panel.panelData.grammarAvailable = false
     this.clear().open().changeTab('definitions')
     return this
   }
@@ -806,6 +824,7 @@ export default class UIController {
   updateGrammar (urls) {
     if (urls.length > 0) {
       this.panel.panelData.grammarRes = urls[0]
+      this.panel.panelData.grammarAvailable = true
     } else {
       this.panel.panelData.grammarRes = { provider: this.l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND }
     }
@@ -892,13 +911,33 @@ export default class UIController {
     this.popup.popupData.verboseMode = this.state.verboseMode
   }
 
+  updateLemmaTranslations () {
+    if (this.options.items.enableLemmaTranslations.currentValue && !this.options.items.locale.currentValue.match(/en-/)) {
+      this.state.setItem('lemmaTranslationLang', this.options.items.locale.currentValue)
+    } else {
+      this.state.setItem('lemmaTranslationLang', null)
+    }
+  }
+
   updateInflections (homonym) {
     this.inflectionsViewSet = ViewSetFactory.create(homonym, this.options.items.locale.currentValue)
+
     this.panel.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet
     if (this.inflectionsViewSet.hasMatchingViews) {
       this.addMessage(this.l10n.messages.TEXT_NOTICE_INFLDATA_READY)
     }
+    this.panel.panelData.inflectionsWaitState = false
     this.popup.popupData.inflDataReady = this.inflDataReady
+  }
+
+  lexicalRequestSucceeded () {
+    console.log(`lexical request succeeded`)
+    this.panel.panelData.inflectionsWaitState = false
+  }
+
+  lexicalRequestFailed (rqstLanID) {
+    console.log(`lexical request failed, lang ID is ${rqstLanID}`)
+    this.panel.panelData.inflectionsWaitState = false
   }
 
   get inflDataReady () {

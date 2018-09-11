@@ -311,12 +311,14 @@ describe('lexical-query.test.js', () => {
 
   it('9 LexicalQuery - getData executes fetchTranslations and it executes updateTranslations', async () => {
     let curUI = Object.assign({}, testUI)
+    let mockLemmaTranslations = Object.assign({}, testLemmaTranslations)
+    let userLang = 'fr'
     let query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
       htmlSelector: testHtmlSelector,
       maAdapter: Object.assign({}, testMaAdapter),
       lexicons: Object.assign({}, testLexiconAdapter),
-      lemmaTranslations: Object.assign({}, testLemmaTranslations)
+      lemmaTranslations: { adapter: mockLemmaTranslations, locale: userLang }
     })
 
     query.canReset = false
@@ -324,15 +326,13 @@ describe('lexical-query.test.js', () => {
 
     query.LDFAdapter = Object.assign({}, testLDFAdapter)
 
-    jest.spyOn(query.lemmaTranslations, 'fetchTranslations')
+    jest.spyOn(query.lemmaTranslations.adapter, 'fetchTranslations')
     jest.spyOn(curUI, 'updateTranslations')
 
     await query.getData()
 
-    let userLang = navigator.language || navigator.userLanguage
-
     const langCode = LMF.getLanguageCodeFromId(testTextSelector.languageID)
-    expect(query.lemmaTranslations.fetchTranslations).toHaveBeenCalledWith([{ word: 'foo lemma' }], langCode, userLang)
+    expect(query.lemmaTranslations.adapter.fetchTranslations).toHaveBeenCalledWith([{ word: 'foo lemma' }], langCode, userLang)
     expect(curUI.updateTranslations).toHaveBeenCalledWith(testHomonym)
   })
 

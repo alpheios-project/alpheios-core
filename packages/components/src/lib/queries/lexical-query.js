@@ -26,7 +26,7 @@ export default class LexicalQuery extends Query {
 
   async getData () {
     this.languageID = this.selector.languageID
-    this.ui.setTargetRect(this.htmlSelector.targetRect).newLexicalRequest().message(`Please wait while data is retrieved ...`)
+    this.ui.setTargetRect(this.htmlSelector.targetRect).newLexicalRequest(this.languageID).message(`Please wait while data is retrieved ...`)
     this.ui.showStatusInfo(this.selector.normalizedText, this.languageID)
     this.ui.updateWordAnnotationData(this.selector.data)
     let iterator = this.iterations()
@@ -159,11 +159,9 @@ export default class LexicalQuery extends Query {
     }
     yield 'Retrieval of short and full definitions complete'
 
-    let userLang = navigator.language || navigator.userLanguage
-
     if (this.lemmaTranslations) {
       const languageCode = LMF.getLanguageCodeFromId(this.selector.languageID)
-      yield this.lemmaTranslations.fetchTranslations(lemmaList, languageCode, userLang)
+      yield this.lemmaTranslations.adapter.fetchTranslations(lemmaList, languageCode, this.lemmaTranslations.locale)
       this.ui.updateTranslations(this.homonym)
     }
 
@@ -185,8 +183,10 @@ export default class LexicalQuery extends Query {
       }
       this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE)
       if (typeof result === 'object' && result instanceof Error) {
+        this.ui.lexicalRequestFailed(this.languageID)
         console.error(`LexicalQuery failed: ${result.message}`)
       } else {
+        this.ui.lexicalRequestSucceeded()
         console.log('LexicalQuery completed successfully')
       }
       // we might have previous requests which succeeded so go ahead and try

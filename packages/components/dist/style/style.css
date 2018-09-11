@@ -9232,6 +9232,9 @@ h4.alpheios-inflections__additional_title {
   line-height: 1.2;
   justify-content: flex-start;
 }
+.alpheios-inflections__placeholder {
+  text-align: center;
+}
 .infl-table {
   display: grid;
   border-left: 1px solid #111;
@@ -9466,6 +9469,84 @@ h3.alpheios-inflections__credits-title {
 .alpheios-inflections__supp-tables {
   margin-top: 4rem;
 }
+.alpheios-inflections__progress-wrapper {
+  height: 1.2rem;
+  margin: 0 1rem 2rem;
+  font-size: 0.875rem;
+}
+.alpheios-inflections__progress-border {
+  border: 2px solid #73CDDE;
+  min-width: 300px;
+  height: 100%;
+  padding: 2px;
+}
+.alpheios-inflections__progress-whitespace {
+  overflow: hidden;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.alpheios-inflections__progress-line {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #73CDDE;
+  animation: cssload-slide 5.75s steps(40) infinite;
+}
+.alpheios-inflections__progress-whitespace div.alpheios-inflections__progress-text,
+.alpheios-inflections__progress-text {
+  text-transform: uppercase;
+  color: #666666;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 300px;
+  font-size: 13px;
+  top: 3px;
+}
+@keyframes cssload-slide {
+0% {
+    left: -100%;
+}
+100% {
+    left: 100%;
+}
+}
+@-o-keyframes cssload-slide {
+0% {
+    left: -100%;
+}
+100% {
+    left: 100%;
+}
+}
+@-ms-keyframes cssload-slide {
+0% {
+    left: -100%;
+}
+100% {
+    left: 100%;
+}
+}
+@-webkit-keyframes cssload-slide {
+0% {
+    left: -100%;
+}
+100% {
+    left: 100%;
+}
+}
+@-moz-keyframes cssload-slide {
+0% {
+    left: -100%;
+}
+100% {
+    left: 100%;
+}
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
@@ -9480,8 +9561,7 @@ h3.alpheios-inflections__credits-title {
 .alpheios-grammar__provider {
   flex: none;
   font-weight: normal;
-  font-style: italic;
-  padding: 5px 10px 20px;
+  padding: 20px 25px 20px;
   font-size: 80%;
 }
 .alpheios-grammar__frame-cont {
@@ -9759,6 +9839,7 @@ ul.alpheios-skin_properties {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  width: 100%;
 }
 .alpheios-panel__tab-panel--fw {
   width: 100%;
@@ -9841,6 +9922,9 @@ ul.alpheios-skin_properties {
 }
 .alpheios-panel__options-item select {
   display: inline-block;
+}
+.alpheios-panel__tab__inflections {
+  width: 100%;
 }
 
 

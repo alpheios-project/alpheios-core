@@ -82,7 +82,7 @@
     "description": "placeholder for definitions panel",
     "component": "Panel"
   },
-  "PLACEHOLDER_INFLECT":  {
+  "PLACEHOLDER_INFLECT_IN_PROGRESS":  {
     "message": "Lookup a word to show inflections...",
     "description": "placeholder for inflections panel",
     "component": "Panel"

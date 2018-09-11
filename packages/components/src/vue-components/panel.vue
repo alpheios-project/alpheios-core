@@ -23,14 +23,14 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_INFLECT')">
+              <alph-tooltip v-show="data.inflectionsEnabled" tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_INFLECT')">
                 <span v-bind:class="{ active: data.tabs.inflections }" @click="changeTab('inflections')"
                   class="alpheios-panel__header-nav-btn">
                   <inflections-icon class="icon"></inflections-icon>
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_GRAMMAR')">
+              <alph-tooltip v-show="data.grammarAvailable" tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_GRAMMAR')">
                 <span v-bind:class="{ active: data.tabs.grammar }" @click="changeTab('grammar')"
                   class="alpheios-panel__header-nav-btn">
                   <grammar-icon class="icon"></grammar-icon>
@@ -90,7 +90,7 @@
                 <div class="alpheios-lookup__panel">
                   <lookup :uiController="uiController" :parentLanguage="lookupParentLanguage" :clearLookupText="clearLookupText"></lookup>
                 </div>
-                <div 
+                <div
                   v-if="showDefinitionsPlaceholder">
                   {{ ln10Messages('PLACEHOLDER_DEFINITIONS') }}
                 </div>
@@ -101,8 +101,8 @@
             </div>
             <div v-show="inflectionsTabVisible" :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections" v-if="data.inflectionComponentData && data.settings && data.l10n">
                 <inflections class="alpheios-panel-inflections"
-                             :data="data.inflectionComponentData" :locale="data.settings.locale.currentValue"
-                             :messages="data.l10n.messages" @contentwidth="setContentWidth">
+                             :inflections-enabled="data.inflectionsEnabled" :data="data.inflectionComponentData" :locale="data.settings.locale.currentValue"
+                             :messages="data.l10n.messages" :wait-state="data.inflectionsWaitState" @contentwidth="setContentWidth">
                 </inflections>
             </div>
             <div v-show="data.tabs.grammar" class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
@@ -145,6 +145,10 @@
                 <setting :data="languageSetting" @change="resourceSettingChanged" :classes="['alpheios-panel__options-item']"
                     :key="languageSetting.name"
                     v-for="languageSetting in resourceSettingsLexiconsShort"></setting>
+                <setting :data="data.settings.enableLemmaTranslations" @change="settingChanged" v-if="data.settings"
+                         :classes="['alpheios-panel__options-item']"></setting>
+                <setting :data="data.settings.locale" @change="settingChanged" v-if="data.settings"
+                         :classes="['alpheios-panel__options-item']"></setting>
             </div>
             <div v-show="data.tabs.info" class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info">
                 <div class="alpheios-lookup__panel" v-if="data.infoComponentData">
@@ -747,6 +751,7 @@
         display: flex;
         flex-direction: column;
         padding: 20px;
+        width: 100%;
     }
 
     .alpheios-panel__tab-panel--fw {
@@ -839,12 +844,17 @@
       display: inline-block;
       vertical-align: top;
     }
-  
+
     .alpheios-panel__options-item .alpheios-setting__label {
       width: 100px;
       display: inline-block;
     }
+
     .alpheios-panel__options-item select {
       display: inline-block;
+    }
+
+    .alpheios-panel__tab__inflections {
+        width: 100%;
     }
 </style>

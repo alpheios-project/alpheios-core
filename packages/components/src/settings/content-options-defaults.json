@@ -1,6 +1,21 @@
 {
   "domain": "alpheios-content-options",
   "items": {
+    "enableLemmaTranslations": {
+      "defaultValue": false,
+      "labelText": "Experimental: Enable Latin Lemma Translations",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
+    },
     "locale": {
       "defaultValue": "en-US",
       "labelText": "UI Locale:",
@@ -10,8 +25,28 @@
           "text": "English (US)"
         },
         {
-          "value": "en-GB",
-          "text": "English (GB)"
+          "value": "fr",
+          "text": "French"
+        },
+        {
+          "value": "de",
+          "text": "German"
+        },
+        {
+          "value": "it",
+          "text": "Italian"
+        },
+        {
+          "value": "pt",
+          "text": "Portuguese"
+        },
+        {
+          "value": "es",
+          "text": "Spanish"
+        },
+        {
+          "value": "ca",
+          "text": "Catalonian"
         }
       ]
     },
