@@ -2716,11 +2716,11 @@ const i18n = {
     },
     present: {
       full: 'present',
-      abbr: 'pr.'
+      abbr: 'pres.'
     },
     imperfect: {
       full: 'imperfect',
-      abbr: 'imp.'
+      abbr: 'impf.'
     },
     perfect: {
       full: 'perfect',
@@ -2728,7 +2728,7 @@ const i18n = {
     },
     pluperfect: {
       full: 'pluperfect',
-      abbr: 'pluperf.'
+      abbr: 'plup.'
     },
     plusquamperfect: {
       full: 'plusquamperfect',
@@ -2756,7 +2756,7 @@ const i18n = {
     },
     infinitive: {
       full: 'infinitive',
-      abbr: 'inf.'
+      abbr: 'infin.'
     },
     imperative: {
       full: 'imperative',
@@ -2768,7 +2768,7 @@ const i18n = {
     },
     participle: {
       full: 'participle',
-      abbr: 'par.'
+      abbr: 'part.'
     },
     optative: {
       full: 'optative',
