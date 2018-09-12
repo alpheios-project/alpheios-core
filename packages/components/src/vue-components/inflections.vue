@@ -1,7 +1,5 @@
 <template>
     <div :id="elementIDs.content">
-        <standard-forms v-if="languageID" :language-id="languageID" :messages="messages"></standard-forms>
-
         <div v-if="waitState" class="alpheios-inflections__placeholder">
             <div class="alpheios-inflections__progress-wrapper">
                 <div class="alpheios-inflections__progress-border">
@@ -91,6 +89,8 @@
         <div v-else class="alpheios-inflections__placeholder">
             {{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}
         </div>
+
+        <inflection-browser v-if="languageID" :language-id="languageID" :messages="messages"></inflection-browser>
     </div>
 </template>
 <script>
@@ -99,7 +99,7 @@
   import WideTableVue from './inflections-table-wide.vue'
   import WideSubTables from './inflections-subtables-wide.vue'
   import WideSuppTable from './inflections-supp-table-wide.vue'
-  import StandardForms from './inflections-standard-forms.vue'
+  import InflectionBrowser from './inflections-browser.vue'
   import WordForms from './wordforms.vue'
 
   import Tooltip from './tooltip.vue'
@@ -117,7 +117,7 @@
       mainTableWideVue: WideTableVue,
       subTablesWide: WideSubTables,
       suppTablesWide: WideSuppTable,
-      standardForms: StandardForms,
+      inflectionBrowser: InflectionBrowser,
       alphTooltip: Tooltip,
       wordForms: WordForms
     },

@@ -9125,33 +9125,32 @@ a.infl-supp-tbl__reflink {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
-.alpheios-sf {
-  padding: 0 20px 1rem;
-  margin-bottom: 4rem;
-  border-bottom: 1px solid #d3d3d3;
+.alpheios-ib {
+  padding: 1rem 20px 0.2rem;
+  border-top: 1px solid #d3d3d3;
 }
-.alpheios-sf__title,
-div.alpheios-sf div.alpheios-sf__title {
+.alpheios-ib__title,
+div.alpheios-ib div.alpheios-ib__title {
   color: #4E6476;
   font-weight: 700;
   margin: 1rem 0 0.6rem;
   text-transform: uppercase;
   font-size: 1rem;
 }
-.alpheios-sf__pofs-title {
+.alpheios-ib__pofs-title {
   font-weight: 700;
 }
-.alpheios-sf__pofs-title-l2 {
+.alpheios-ib__pofs-title-l2 {
   font-weight: 700;
   margin-top: 0.2rem;
   margin-left: 1rem;
 }
-.alpheios-sf__pofs-title-l3 {
+.alpheios-ib__pofs-title-l3 {
   font-weight: 700;
   margin-top: 0.2rem;
   margin-left: 2rem;
 }
-div.alpheios-sf div.alpheios-sf__title .alpheios-sf__title-collapse {
+div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
   font-weight: 400;
   font-size: 0.875rem;
   position: relative;
@@ -9162,7 +9161,7 @@ div.alpheios-sf div.alpheios-sf__title .alpheios-sf__title-collapse {
 .alpheios-clickable {
   cursor: pointer;
 }
-.alpheios-sf .alpheios-inflections__title.alpheios-table-sf__title {
+.alpheios-ib .alpheios-inflections__title.alpheios-table-sf__title {
   text-align: left;
   font-weight: normal;
   font-size: 1rem;
