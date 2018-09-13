@@ -262,7 +262,7 @@ describe('ui-controller.test.js', () => {
   it('12 UIController - newLexicalRequest methods', () => {
     let oldRT = uiC.popup.popupData.requestStartTime
 
-    uiC.newLexicalRequest()
+    uiC.newLexicalRequest(latID)
     expect(uiC.popup.popupData.requestStartTime).toBeGreaterThan(oldRT)
 
     expect(uiC.popup.definitions).toEqual({})

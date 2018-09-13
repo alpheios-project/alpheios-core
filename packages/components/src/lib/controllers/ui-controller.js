@@ -933,7 +933,8 @@ export default class UIController {
     this.panel.panelData.inflectionsWaitState = false
   }
 
-  lexicalRequestFailed () {
+  lexicalRequestFailed (rqstLanID) {
+    console.log(`lexical request failed, lang ID is ${rqstLanID}`)
     this.panel.panelData.inflectionsWaitState = false
   }
 

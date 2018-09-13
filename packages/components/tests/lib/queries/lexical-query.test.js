@@ -45,6 +45,8 @@ describe('lexical-query.test.js', () => {
         }
       }
     },
+    lexicalRequestSucceeded: function () { },
+    lexicalRequestFailed: function () { },
     showStatusInfo: function () { },
     updateWordAnnotationData: function () { },
 
