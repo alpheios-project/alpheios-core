@@ -2,6 +2,7 @@ import { Feature, Inflection, Homonym, LanguageModelFactory } from 'alpheios-dat
 import LDF from '../../lib/language-dataset-factory.js'
 import L10n from '../../l10n/l10n.js'
 import WideView from './wide-view'
+import Form from '@lib/form.js'
 
 /**
  * Represents a single view.
@@ -151,6 +152,17 @@ export default class View {
     return !this.hasPrerenderedTables && (!this.table || !this.table.rows || this.table.rows.length === 0)
   }
 
+  /**
+   * Sets a title of a view.
+   * This method is chainable.
+   * @param {string} title - A title to set.
+   * @return {View} A view instance (for chaining).
+   */
+  setTitle (title) {
+    this.title = title
+    return this
+  }
+
   sameAs (view) {
     return this.id === view.id
   }
@@ -251,10 +263,10 @@ export default class View {
     return this
   }
 
-  static getInflectionsData (homonym) {
+  static getInflectionsData (homonym, options) {
     // Select inflections this view needs
     let inflections = homonym.inflections.filter(i => i[Feature.types.part].value === this.mainPartOfSpeech)
-    return this.dataset.createInflectionSet(this.mainPartOfSpeech, inflections)
+    return this.dataset.createInflectionSet(this.mainPartOfSpeech, inflections, options)
   }
 
   /**
@@ -345,18 +357,27 @@ export default class View {
       .join(' ')
   }
 
-  static createStandardFormHomonym (options = {}) {
-    let inflection = new Inflection('standard form stem', this.languageID, 'standard form suffix')
+  static createStandardFormHomonym (options) {
+    if (this.inflectionType === Form && !options.form) {
+      throw new Error(`Obligatory options property, "form", is missing`)
+    }
+    const stem = options.form ? options.form : 'stem'
+    const suffix = options.suffix ? options.suffix : 'suffix'
+    let inflection = new Inflection(stem, this.languageID, suffix)
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
-    let homonym = Homonym.createSimpleForm('standard form word', this.languageID, [inflection])
+    let homonym = Homonym.createSimpleForm(stem, this.languageID, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }
 
   static getStandardFormInstance (options, locale = 'en-US') {
     let homonym = this.createStandardFormHomonym(options)
-    let inflectionData = this.getInflectionsData(homonym)
+    let inflectionData = this.getInflectionsData(homonym, { showMatches: false })
     // Standard form tables should have no suffix matches columns visible
-    return new this(homonym, inflectionData, locale).render().noSuffixMatchesGroupsHidden(false)
+    let view = new this(homonym, inflectionData, locale)
+    if (options.title) {
+      view.setTitle(options.title)
+    }
+    return view.render().noSuffixMatchesGroupsHidden(false)
   }
 }

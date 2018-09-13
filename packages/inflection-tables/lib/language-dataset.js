@@ -328,7 +328,7 @@ export default class LanguageDataset {
    * @param inflections
    * @return {InflectionSet}
    */
-  createInflectionSet (pofsValue, inflections) {
+  createInflectionSet (pofsValue, inflections, options) {
     let inflectionSet = new InflectionSet(pofsValue, this.languageID)
     inflectionSet.inflections = inflections
 
@@ -353,7 +353,7 @@ export default class LanguageDataset {
     // Check for suffix matches
     if (suffixBased) {
       if (sourceSet.types.has(Suffix)) {
-        let items = sourceSet.types.get(Suffix).items.reduce(this['reducer'].bind(this, inflections), [])
+        let items = sourceSet.types.get(Suffix).items.reduce(this.reducerGen(inflections, options), [])
         if (items.length > 0) {
           inflectionSet.addInflectionItems(items)
         }
@@ -364,7 +364,7 @@ export default class LanguageDataset {
     if (formBased) {
       // Match against form based inflection only
       const formInflections = inflections.filter(i => i.constraints.fullFormBased)
-      let items = sourceSet.types.get(Form).items.reduce(this['reducer'].bind(this, formInflections), [])
+      let items = sourceSet.types.get(Form).items.reduce(this.reducerGen(formInflections, options), [])
       if (items.length > 0) {
         inflectionSet.addInflectionItems(items)
       }
@@ -421,22 +421,31 @@ export default class LanguageDataset {
     return false
   }
 
-  reducer (inflections, accumulator, item) {
-    let result = this.matcher(inflections, item)
-    if (result) {
-      accumulator.push(result)
+  reducerGen (inflections, options) {
+    const instance = this
+    function reducerFn (accumulator, item) {
+      let result = instance['matcher'](inflections, item, options)
+      if (result) {
+        accumulator.push(result)
+      }
+      return accumulator
     }
-    return accumulator
+    return reducerFn.bind(this)
   }
 
   /**
    * Decides whether a suffix is a match to any of inflections, and if it is, what type of match it is.
    * @param {Inflection[]} inflections - an array of inflection objects to be matched against a suffix.
    * @param {Suffix} item - a suffix to be matched with inflections.
+   * @param {Object} options - An options object that may contain the following properties:
+   *        showMatches - whether to display form or suffix matches. Default: true
    * @returns {Suffix | null} if a match is found, returns a suffix object modified with some
    * additional information about a match. if no matches found, returns null.
    */
-  matcher (inflections, item) {
+  matcher (inflections, item, options = {}) {
+    if (!options.hasOwnProperty('showMatches')) {
+      options.showMatches = true // Default value
+    }
     // Any of those features must match between an inflection and an ending
     let bestMatchData = null // information about the best match we would be able to find
 
@@ -448,6 +457,7 @@ export default class LanguageDataset {
 
     for (let inflection of inflections) {
       let matchData = new MatchData() // Create a match profile
+      matchData.showMatches = options.showMatches
       matchData.suffixMatch = inflection.compareWithWordDependsOnType(item.value, item.constructor.name)
 
       // Check for obligatory matches

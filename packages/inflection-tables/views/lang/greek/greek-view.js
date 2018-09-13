@@ -20,6 +20,7 @@ export default class GreekView extends View {
       types: GroupFeatureType.createFromType(Feature.types.type, this.constructor.languageID, 'Type'),
       persons: GroupFeatureType.createFromType(Feature.types.person, this.constructor.languageID, 'Person')
     }
+    this.features.numbers.getOrderedFeatures = this.constructor.getOrderedNumbers
     this.features.genders.addFeature(GreekView.datasetConsts.GEND_MASCULINE_FEMININE,
       [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
     this.features.genders.addFeature(GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER,
@@ -27,6 +28,7 @@ export default class GreekView extends View {
     this.features.declensions.getTitle = this.constructor.getDeclensionTitle
     this.features.genders.getOrderedFeatures = this.constructor.getOrderedGenders
     this.features.genders.getTitle = this.constructor.getGenderTitle
+    this.features.persons.getTitle = this.constructor.getOrdinalTitle
   }
 
   static get languageID () {
@@ -64,6 +66,17 @@ export default class GreekView extends View {
   will point to a GroupFeatureType object, not to the View instance.
    */
 
+  static getOrdinalTitle (featureValue) {
+    switch (featureValue) {
+      case Constants.ORD_1ST: return `First`
+      case Constants.ORD_2ND: return `Second`
+      case Constants.ORD_3RD: return `Third`
+      case Constants.ORD_4TH: return `Fourth`
+      case Constants.ORD_5TH: return `Fifth`
+      default: return featureValue
+    }
+  }
+
   static getDeclensionTitle (featureValue) {
     switch (featureValue) {
       case Constants.ORD_1ST: return `First<br>α`
@@ -93,6 +106,14 @@ export default class GreekView extends View {
         this.featureMap.get(Constants.GEND_NEUTER)
       ]
     }
+  }
+
+  static getOrderedNumbers () {
+    return [
+      this.featureMap.get(Constants.NUM_SINGULAR),
+      this.featureMap.get(Constants.NUM_DUAL),
+      this.featureMap.get(Constants.NUM_PLURAL)
+    ]
   }
 
   static getGenderTitle (featureValue) {
