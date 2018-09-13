@@ -29438,7 +29438,6 @@ class UIController {
   }
 
   newLexicalRequest (languageID) {
-    console.log(`new lexical request`)
     this.popup.newLexicalRequest()
     this.panel.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__["ViewSetFactory"].hasInflectionsEnabled(languageID)
     this.panel.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
@@ -29585,12 +29584,10 @@ class UIController {
   }
 
   lexicalRequestSucceeded () {
-    console.log(`lexical request succeeded`)
     this.panel.panelData.inflectionsWaitState = false
   }
 
-  lexicalRequestFailed (rqstLanID) {
-    console.log(`lexical request failed, lang ID is ${rqstLanID}`)
+  lexicalRequestFailed () {
     this.panel.panelData.inflectionsWaitState = false
   }
 
@@ -30789,7 +30786,6 @@ class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__[
     return new Promise((resolve, reject) => {
       try {
         let result = null
-        console.log('*******in removeAttribute', key)
         if (key) {
           let keys = window.localStorage.getItem(`${this.domain}-keys`)
           if (keys) {
@@ -31273,7 +31269,6 @@ class AnnotationQuery extends _query_js__WEBPACK_IMPORTED_MODULE_0__["default"] 
   }
 
   finalize (result) {
-    console.log('Finalizing AnnotationQuery')
     _query_js__WEBPACK_IMPORTED_MODULE_0__["default"].destroy(this)
     return result
   }
@@ -31566,7 +31561,6 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
         console.error(`LexicalQuery failed: ${result.message}`)
       } else {
         this.ui.lexicalRequestSucceeded()
-        console.log('LexicalQuery completed successfully')
       }
       // we might have previous requests which succeeded so go ahead and try
       // to show language info. It will catch empty data.

@@ -26,7 +26,6 @@ export default class AnnotationQuery extends Query {
   }
 
   finalize (result) {
-    console.log('Finalizing AnnotationQuery')
     Query.destroy(this)
     return result
   }

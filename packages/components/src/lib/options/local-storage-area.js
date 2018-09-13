@@ -48,7 +48,6 @@ export default class LocalStorageArea extends StorageAdapter {
     return new Promise((resolve, reject) => {
       try {
         let result = null
-        console.log('*******in removeAttribute', key)
         if (key) {
           let keys = window.localStorage.getItem(`${this.domain}-keys`)
           if (keys) {
