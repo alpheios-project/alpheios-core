@@ -8,7 +8,7 @@
         </div>
         <div v-if="!collapsed[constants.LANG_LATIN.toString()]">
             <div class="alpheios-ib__pofs-title">Nouns</div>
-            <wide-table :view="latinInflView({ viewID: 'latin_noun_view'})" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="latinInflView({ viewID: 'latin_noun_view' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <div class="alpheios-ib__pofs-title">Adjectives</div>
             <wide-table :view="latinInflView({ viewID: 'latin_adjective_view'})" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <div class="alpheios-ib__pofs-title">Verbs</div>
@@ -16,6 +16,14 @@
             <wide-table :view="latinInflView({ viewID: 'latin_infinitive_view'})" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <wide-table :view="latinInflView({ viewID: 'latin_imperative_view'})" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <wide-table :view="latinInflView({ viewID: 'latin_supine_view'})" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <div class="alpheios-ib__pofs-title-l2">Irregular verbs</div>
+            <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'sum', title: 'Sum (esse,fui,futurus)' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'fero', title: 'Fero (ferre, tuli, latus)' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'volo', title: 'Volo (velle, volui)' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'eo', title: 'Eo (ire, ivi(ii), itus)' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'possum', title: 'Possum (posse, potui)' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'prosum', title: 'Prosum (prodesse, profui, profuturus)' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'absum', title: 'Absum (abesse, afui, afuturus)' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
         </div>
 
 
@@ -32,15 +40,15 @@
             <wide-table :view="greekInflView({ viewID: 'greek_adjective_view'})" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <wide-table :view="greekInflView({ viewID: 'greek_adjective_simplified_view'})" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <div class="alpheios-ib__pofs-title">Pronouns</div>
-            <wide-table :view="greekInflView({ viewID: 'greek_person_pronoun_view', form: 'νώ' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_person_gender_pronoun_view', form: 'ἡμᾶς' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'ἀλλήλᾱ' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_lemma_gender_pronoun_view', form: 'τούτω' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'οἷς' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'ὥτινε' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'τίνε' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'τινοῖν' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
-            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'αὐτά' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_person_pronoun_view', form: 'νώ', title: 'Personal Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_person_gender_pronoun_view', form: 'ἡμᾶς', title: 'Reflexive Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'ἀλλήλᾱ', title: 'Reciprocal Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_lemma_gender_pronoun_view', form: 'τούτω', title: 'Demonstrative Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'οἷς', title: 'Relative Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'ὥτινε', title: 'General Relative Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'τίνε', title: 'Interrogative Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'τινοῖν', title: 'Indefinite Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
+            <wide-table :view="greekInflView({ viewID: 'greek_gender_pronoun_view', form: 'αὐτά', title: 'Intensive Pronoun Declension' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <div class="alpheios-ib__pofs-title">Articles</div>
             <wide-table :view="greekInflView({ viewID: 'greek_article_view', form: 'τοῦ' })" :messages="messages" :no-suffix-matches-hidden="false"></wide-table>
             <div class="alpheios-ib__pofs-title">Numerals</div>
@@ -143,8 +151,8 @@
 
     props: {
       languageId: {
-        type: Symbol,
-        required: true
+        type: [Symbol],
+        required: false
       },
 
       // A passtrough to inflection-tables-wide
@@ -170,23 +178,16 @@
       }
     },
 
-    computed: {
-      isLatin: function () {
-        return this.languageId === Constants.LANG_LATIN
-      },
-
-      isGreek: function () {
-        return this.languageId === Constants.LANG_GREEK
-      }
-    },
-
     watch: {
       languageId: function (newValue, oldValue) {
-        this.languageId = newValue
-        this.collapsed[oldValue.toString()] = false
-        this.collapsed[newValue.toString()] = true
+        if (oldValue) {
+          this.collapsed[oldValue.toString()] = true
+        }
+        if (newValue) {
+          this.languageId = newValue
+          this.collapsed[newValue.toString()] = false
+        }
       }
-
     },
 
     methods: {
@@ -238,8 +239,10 @@
     },
 
     mounted: function () {
-      // Set a group that will be opened initially
-      this.collapsed[this.languageId.toString()] = false
+      if (this.languageId) {
+        // Set a group that will be opened initially
+        this.collapsed[this.languageId.toString()] = false
+      }
     }
   }
 </script>

@@ -8708,6 +8708,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8723,8 +8731,8 @@ __webpack_require__.r(__webpack_exports__);
 
   props: {
     languageId: {
-      type: Symbol,
-      required: true
+      type: [Symbol],
+      required: false
     },
 
     // A passtrough to inflection-tables-wide
@@ -8750,24 +8758,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
-  computed: {
-    isLatin: function () {
-      return this.languageId === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN
-    },
-
-    isGreek: function () {
-      return this.languageId === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK
-    }
-  },
-
   watch: {
     languageId: function (newValue, oldValue) {
-      console.log(`language ID value changed to ${newValue.toString()}, old value is ${oldValue.toString()}`)
-      this.languageId = newValue
-      this.collapsed[oldValue.toString()] = false
-      this.collapsed[newValue.toString()] = true
+      if (oldValue) {
+        this.collapsed[oldValue.toString()] = true
+      }
+      if (newValue) {
+        this.languageId = newValue
+        this.collapsed[newValue.toString()] = false
+      }
     }
-
   },
 
   methods: {
@@ -8819,8 +8819,10 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   mounted: function () {
-    // Set a group that will be opened initially
-    this.collapsed[this.languageId.toString()] = false
+    if (this.languageId) {
+      // Set a group that will be opened initially
+      this.collapsed[this.languageId.toString()] = false
+    }
   }
 });
 
@@ -9156,54 +9158,19 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     cellClasses: function (cell) {
-      if (cell.role === 'label') {
-        return 'infl-prdgm-tbl-cell--label'
-      }
-
-      /*
-      If it is a data cell, we need to figure out if this is a cell with a full match and
-      highlight it accordingly. A full match is a cell which matches all features of the cell properties
-      with the ones in the inflection.
-      We do not check for suffix match because paradigm tables show example of a different word,
-      not the one selected by the user.
-       */
-      if (cell.role === 'data') {
-
-        let cellClassName = 'infl-prdgm-tbl-cell--data'
-        const fullMatchClassnName = 'infl-prdgm-tbl-cell--full-match'
-        // Get a list of cell feature properties
-        let comparativeFeatures = []
-        for (const prop of Object.keys(cell)) {
-          // Eliminate "non-feature" keys
-          if (prop !== 'role' && prop !== 'value') {
-            comparativeFeatures.push(prop)
-          }
-        }
-        if (this.view.homonym && this.view.homonym.lexemes) {
-          for (const lexeme of this.view.homonym.lexemes) {
-            for (const inflection of lexeme.inflections) {
-              let fullMatch = true
-              for (const feature of comparativeFeatures) {
-                fullMatch = fullMatch && inflection.hasOwnProperty(feature) && cell[feature].hasValues(inflection[feature].values)
-                if (!fullMatch) { break } // If at least one feature does not match, there is no reason to check others
-              }
-              if (fullMatch) {
-                // If full match is found, there is no need to check other inflections
-                return `${cellClassName} ${fullMatchClassnName}`
-              }
-            }
-          }
-        }
-
-        return cellClassName
+      switch (cell.role) {
+        case 'label':
+          return 'infl-prdgm-tbl-cell--label'
+        case 'data':
+          return 'infl-prdgm-tbl-cell--data'
       }
     },
 
     morphemeClasses: function (morpheme) {
       return {
         ['infl-suff']: true,
-        ['infl-suff--suffix-match']: morpheme.match.suffixMatch,
-        ['infl-suff--full-feature-match']: morpheme.match.fullMatch,
+        ['infl-suff--suffix-match']: morpheme.match.showMatches && morpheme.match.suffixMatch,
+        ['infl-suff--full-feature-match']: morpheme.match.showMatches && morpheme.match.fullMatch,
       }
     },
 
@@ -12319,6 +12286,94 @@ var render = function() {
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
               }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
+              _vm._v("Irregular verbs")
+            ]),
+            _vm._v(" "),
+            _c("wide-table", {
+              attrs: {
+                view: _vm.latinInflView({
+                  viewID: "latin_verb_irregular_view",
+                  form: "sum",
+                  title: "Sum (esse,fui,futurus)"
+                }),
+                messages: _vm.messages,
+                "no-suffix-matches-hidden": false
+              }
+            }),
+            _vm._v(" "),
+            _c("wide-table", {
+              attrs: {
+                view: _vm.latinInflView({
+                  viewID: "latin_verb_irregular_view",
+                  form: "fero",
+                  title: "Fero (ferre, tuli, latus)"
+                }),
+                messages: _vm.messages,
+                "no-suffix-matches-hidden": false
+              }
+            }),
+            _vm._v(" "),
+            _c("wide-table", {
+              attrs: {
+                view: _vm.latinInflView({
+                  viewID: "latin_verb_irregular_view",
+                  form: "volo",
+                  title: "Volo (velle, volui)"
+                }),
+                messages: _vm.messages,
+                "no-suffix-matches-hidden": false
+              }
+            }),
+            _vm._v(" "),
+            _c("wide-table", {
+              attrs: {
+                view: _vm.latinInflView({
+                  viewID: "latin_verb_irregular_view",
+                  form: "eo",
+                  title: "Eo (ire, ivi(ii), itus)"
+                }),
+                messages: _vm.messages,
+                "no-suffix-matches-hidden": false
+              }
+            }),
+            _vm._v(" "),
+            _c("wide-table", {
+              attrs: {
+                view: _vm.latinInflView({
+                  viewID: "latin_verb_irregular_view",
+                  form: "possum",
+                  title: "Possum (posse, potui)"
+                }),
+                messages: _vm.messages,
+                "no-suffix-matches-hidden": false
+              }
+            }),
+            _vm._v(" "),
+            _c("wide-table", {
+              attrs: {
+                view: _vm.latinInflView({
+                  viewID: "latin_verb_irregular_view",
+                  form: "prosum",
+                  title: "Prosum (prodesse, profui, profuturus)"
+                }),
+                messages: _vm.messages,
+                "no-suffix-matches-hidden": false
+              }
+            }),
+            _vm._v(" "),
+            _c("wide-table", {
+              attrs: {
+                view: _vm.latinInflView({
+                  viewID: "latin_verb_irregular_view",
+                  form: "absum",
+                  title: "Absum (abesse, afui, afuturus)"
+                }),
+                messages: _vm.messages,
+                "no-suffix-matches-hidden": false
+              }
             })
           ],
           1
@@ -12427,7 +12482,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_person_pronoun_view",
-                  form: "νώ"
+                  form: "νώ",
+                  title: "Personal Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12438,7 +12494,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_person_gender_pronoun_view",
-                  form: "ἡμᾶς"
+                  form: "ἡμᾶς",
+                  title: "Reflexive Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12449,7 +12506,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_gender_pronoun_view",
-                  form: "ἀλλήλᾱ"
+                  form: "ἀλλήλᾱ",
+                  title: "Reciprocal Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12460,7 +12518,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_lemma_gender_pronoun_view",
-                  form: "τούτω"
+                  form: "τούτω",
+                  title: "Demonstrative Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12471,7 +12530,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_gender_pronoun_view",
-                  form: "οἷς"
+                  form: "οἷς",
+                  title: "Relative Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12482,7 +12542,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_gender_pronoun_view",
-                  form: "ὥτινε"
+                  form: "ὥτινε",
+                  title: "General Relative Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12493,7 +12554,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_gender_pronoun_view",
-                  form: "τίνε"
+                  form: "τίνε",
+                  title: "Interrogative Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12504,7 +12566,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_gender_pronoun_view",
-                  form: "τινοῖν"
+                  form: "τινοῖν",
+                  title: "Indefinite Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -12515,7 +12578,8 @@ var render = function() {
               attrs: {
                 view: _vm.greekInflView({
                   viewID: "greek_gender_pronoun_view",
-                  form: "αὐτά"
+                  form: "αὐτά",
+                  title: "Intensive Pronoun Declension"
                 }),
                 messages: _vm.messages,
                 "no-suffix-matches-hidden": false
@@ -13987,11 +14051,9 @@ var render = function() {
               )
             ]),
       _vm._v(" "),
-      _vm.languageID
-        ? _c("inflection-browser", {
-            attrs: { "language-id": _vm.languageID, messages: _vm.messages }
-          })
-        : _vm._e()
+      _c("inflection-browser", {
+        attrs: { "language-id": _vm.languageID, messages: _vm.messages }
+      })
     ],
     1
   )
@@ -15088,14 +15150,6 @@ var render = function() {
                 _c(
                   "alph-tooltip",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.data.inflectionsEnabled,
-                        expression: "data.inflectionsEnabled"
-                      }
-                    ],
                     attrs: {
                       tooltipDirection: "bottom-narrow",
                       tooltipText: _vm.ln10Messages("TOOLTIP_INFLECT")

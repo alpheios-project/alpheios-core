@@ -90,7 +90,7 @@
             {{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}
         </div>
 
-        <inflection-browser v-if="languageID" :language-id="languageID" :messages="messages"></inflection-browser>
+        <inflection-browser :language-id="languageID" :messages="messages"></inflection-browser>
     </div>
 </template>
 <script>
@@ -431,6 +431,7 @@
 
     .alpheios-inflections__placeholder {
         padding: 0 20px;
+        margin-bottom: 1rem;
     }
 
     .alpheios-inflections__content {

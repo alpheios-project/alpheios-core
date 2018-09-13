@@ -9073,10 +9073,6 @@ img.alpheios-popup__logo {
 .infl-prdgm-tbl-cell--label {
   font-weight: 700;
 }
-.infl-prdgm-tbl-cell--full-match {
-  background-color: #F6D918;
-  font-weight: 700;
-}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
@@ -9192,6 +9188,7 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
 }
 .alpheios-inflections__placeholder {
   padding: 0 20px;
+  margin-bottom: 1rem;
 }
 .alpheios-inflections__content {
   padding: 0 20px;
