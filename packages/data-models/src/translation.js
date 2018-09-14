@@ -1,3 +1,4 @@
+import ResourceProvider from './resource_provider.js'
 /**
  * stores a scope of lemma translations from python service
  * Contains a primary Lemma object
@@ -18,16 +19,21 @@ class Translation {
     this.glosses = translations
   }
 
-  static readTranslationFromJSONList (lemma, languageCode, translationsList) {
+  static readTranslationFromJSONList (lemma, languageCode, translationsList, provider) {
     if (!translationsList || !Array.isArray(translationsList)) {
       throw new Error('Recieved not proper translation list', translationsList)
     }
     let curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
-    return new Translation(lemma, languageCode, curTranslations.translations)
+    let translation = new Translation(lemma, languageCode, curTranslations.translations)
+    if (provider) {
+      return ResourceProvider.getProxy(provider, translation)
+    } else {
+      return translation
+    }
   }
 
-  static loadTranslations (lemma, languageCode, translationsList) {
-    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList))
+  static loadTranslations (lemma, languageCode, translationsList, provider) {
+    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList, provider))
   }
 }
 export default Translation

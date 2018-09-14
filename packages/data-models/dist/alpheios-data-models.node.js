@@ -4648,6 +4648,8 @@ class ResourceProvider {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+
 /**
  * stores a scope of lemma translations from python service
  * Contains a primary Lemma object
@@ -4668,16 +4670,21 @@ class Translation {
     this.glosses = translations
   }
 
-  static readTranslationFromJSONList (lemma, languageCode, translationsList) {
+  static readTranslationFromJSONList (lemma, languageCode, translationsList, provider) {
     if (!translationsList || !Array.isArray(translationsList)) {
       throw new Error('Recieved not proper translation list', translationsList)
     }
     let curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
-    return new Translation(lemma, languageCode, curTranslations.translations)
+    let translation = new Translation(lemma, languageCode, curTranslations.translations)
+    if (provider) {
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].getProxy(provider, translation)
+    } else {
+      return translation
+    }
   }
 
-  static loadTranslations (lemma, languageCode, translationsList) {
-    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList))
+  static loadTranslations (lemma, languageCode, translationsList, provider) {
+    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList, provider))
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Translation);

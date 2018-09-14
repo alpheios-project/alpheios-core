@@ -60,6 +60,23 @@ describe('Translation object', () => {
     expect(lemma.translation).toEqual(expected)
   })
 
+  test('loadTranslations - adds Translation object with provider to lemma from JSON translations list', () => {
+    let testJSON = [
+      {
+        'in': 'cupido',
+        'map': 'cupido',
+        'translations': [
+          'to desire/love/wish/longing (passionate); to lust; to greed, appetite; to desire for gain;'
+        ]
+      }
+    ]
+    let mockProvider = { toString: () => 'dummy provider', provider: 'dummy' }
+    Translation.loadTranslations(lemma, 'lat', testJSON, mockProvider)
+    expect(lemma.translation).not.toBe(undefined)
+    expect(lemma.translation.provider).toEqual(mockProvider)
+    expect(lemma.translation.lemmaWord).toEqual('cupido')
+  })
+
   afterAll(() => {
     // Clean a test environment up
     lemma = undefined
