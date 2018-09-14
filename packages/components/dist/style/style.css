@@ -9054,6 +9054,29 @@ img.alpheios-popup__logo {
   padding: 20px;
   font-size: 0.875rem;
 }
+.alpheios-inflections__table-ctrl-cont {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.2rem;
+  justify-content: space-between;
+}
+.alpheios-inflections__table-ctrl-cell {
+  flex-grow: 1;
+}
+div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-cell {
+  font-size: 0.875rem;
+}
+.alpheios-inflections__table-ctrl-btn-cont {
+  margin-left: 0.2rem;
+}
+.auk .uk-button-small.alpheios-inflections__control-btn {
+  line-height: 1.6;
+  font-size: .625rem;
+  white-space: nowrap;
+}
+.auk .uk-button-small.alpheios-inflections__control-btn--right {
+  margin-left: .5rem;
+}
 .infl-prdgm-tbl {
   display: table;
   border-top: 1px solid gray;
@@ -9174,9 +9197,6 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
 .alpheios-inflections__forms-cont {
       padding-right: 30px;
 }
-.alpheios-inflections__control-btn-cont {
-      padding-left: 30px;
-}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
@@ -9210,10 +9230,6 @@ h4.alpheios-inflections__additional_title {
   max-width: 220px;
   font-size: .625rem;
   line-height: 1.6;
-}
-.auk .uk-button-small.alpheios-inflections__control-btn {
-  line-height: 1.6;
-  font-size: .625rem;
 }
 .alpheios-inflections__actions {
   display: flex;

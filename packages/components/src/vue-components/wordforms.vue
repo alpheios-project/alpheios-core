@@ -64,7 +64,4 @@
     .alpheios-inflections__forms-cont {
       padding-right: 30px;
     }
-    .alpheios-inflections__control-btn-cont {
-      padding-left: 30px;
-    }
 </style>

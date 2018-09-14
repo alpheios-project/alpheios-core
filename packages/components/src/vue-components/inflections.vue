@@ -31,14 +31,6 @@
                         <option v-for="view in views" :value="view.id">{{view.name}}</option>
                     </select>
                 </div>
-                <div v-show="selectedView.isImplemented && hasInflectionData && canCollapse" class="alpheios-inflections__control-btn-cont uk-button-group">
-                    <alph-tooltip tooltipDirection="bottom-right" :tooltipText="buttons.hideNoSuffixGroups.tooltipText">
-                        <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn"
-                                @click="hideNoSuffixGroupsClick">
-                            {{buttons.hideNoSuffixGroups.text}}
-                        </button>
-                    </alph-tooltip>
-                </div>
             </div>
 
             <h4 class="alpheios-inflections__additional_title" v-if="selectedView.additionalTitle">{{selectedView.additionalTitle}}</h4>
@@ -50,13 +42,11 @@
             </div>
 
             <div v-if="!selectedView.hasPrerenderedTables">
-                <main-table-wide-vue :view="selectedView" :messages="messages" v-bind:collapsed="false"
-                                     :no-suffix-matches-hidden="buttons.hideNoSuffixGroups.noSuffixMatchesHidden">
+                <main-table-wide-vue :view="selectedView" :messages="messages" v-bind:collapsed="false" @widthchange="updateWidth">
                 </main-table-wide-vue>
 
                 <template v-if="selectedView.linkedViews" v-for="linkedView in selectedView.linkedViews">
-                    <main-table-wide-vue :view="linkedView" :messages="messages"
-                                         :no-suffix-matches-hidden="buttons.hideNoSuffixGroups.noSuffixMatchesHidden">
+                    <main-table-wide-vue :view="linkedView" :messages="messages" @widthchange="updateWidth">
                     </main-table-wide-vue>
                 </template>
 
@@ -90,7 +80,8 @@
             {{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}
         </div>
 
-        <inflection-browser :language-id="languageID" :messages="messages"></inflection-browser>
+        <!--Disable until components#40 be approved-->
+        <!--<inflection-browser :language-id="languageID" :messages="messages"></inflection-browser>-->
     </div>
 </template>
 <script>
@@ -174,28 +165,6 @@
         htmlElements: {
           content: undefined,
         },
-        buttons: {
-          hideEmptyCols: {
-            contentHidden: true,
-            text: '',
-            shownText: this.messages.LABEL_INFLECT_HIDEEMPTY,
-            hiddenText: this.messages.LABEL_INFLECT_SHOWEMPTY,
-
-            tooltipText: '',
-            shownTooltip: this.messages.TOOLTIP_INFLECT_HIDEEMPTY,
-            hiddenTooltip: this.messages.TOOLTIP_INFLECT_SHOWEMPTY
-          },
-          hideNoSuffixGroups: {
-            noSuffixMatchesHidden: true,
-            text: '',
-            shownText: this.messages.LABEL_INFLECT_COLLAPSE,
-            hiddenText: this.messages.LABEL_INFLECT_SHOWFULL,
-
-            tooltipText: '',
-            shownTooltip: this.messages.TOOLTIP_INFLECT_COLLAPSE,
-            hiddenTooltip: this.messages.TOOLTIP_INFLECT_SHOWFULL
-          }
-        },
         suppColors: ['rgb(208,255,254)', 'rgb(255,253,219)', 'rgb(228,255,222)', 'rgb(255,211,253)', 'rgb(255,231,211)'],
         canCollapse: false // Whether a selected view can be expanded or collapsed (it can't if has no suffix matches)
       }
@@ -223,13 +192,7 @@
           this.selectedPartOfSpeech = newValue
           this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
           this.selectedView = this.views[0]
-          if (this.selectedView.isRenderable) {
-            // Rendering is not required for component-enabled views
-            this.selectedView.render()
-            this.canCollapse = this.selectedView.canCollapse
-
-            this.updateWidth()
-          }
+          this.prepareView(this.selectedView)
         }
       },
       viewSelector: {
@@ -238,11 +201,7 @@
         },
         set: function (newValue) {
           this.selectedView = this.views.find(view => view.id === newValue)
-          if (this.selectedView.isRenderable) {
-            this.selectedView.render()
-            this.canCollapse = this.selectedView.canCollapse
-            this.updateWidth()
-          }
+          this.prepareView(this.selectedView)
         }
       },
       inflectionTable: function () {
@@ -303,12 +262,7 @@
           if (this.views.length > 0) {
             this.hasInflectionData = true
             this.selectedView = this.views[0]
-            if (this.selectedView.isRenderable) {
-              // Rendering is not required for component-enabled views
-              this.setDefaults()
-              this.selectedView.render()
-              this.canCollapse = this.selectedView.canCollapse
-            }
+            this.prepareView(this.selectedView)
           } else {
             this.selectedView = ''
           }
@@ -344,53 +298,17 @@
     },
 
     methods: {
+      prepareView (view) {
+        if (view.isRenderable) {
+          // Rendering is not required for component-enabled views
+          this.selectedView.render()
+        }
+      },
+
       updateWidth: function () {
         Vue.nextTick(() => {
           this.$emit('contentwidth', this.htmlElements.content.offsetWidth + 1)
         })
-      },
-
-      clearInflections: function () {
-        // for (let element of Object.values(this.htmlElements)) { element.innerHTML = '' }
-        this.hasInflectionData = false
-        return this
-      },
-
-      setDefaults () {
-        this.buttons.hideEmptyCols.contentHidden = true
-        this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.hiddenText
-        this.buttons.hideEmptyCols.tooltipText = this.buttons.hideEmptyCols.hiddenTooltip
-
-        this.buttons.hideNoSuffixGroups.contentHidden = true
-        this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.hiddenText
-        this.buttons.hideNoSuffixGroups.tooltipText = this.buttons.hideNoSuffixGroups.hiddenTooltip
-        return this
-      },
-
-      hideEmptyColsClick () {
-        this.buttons.hideEmptyCols.contentHidden = !this.buttons.hideEmptyCols.contentHidden
-        this.selectedView.emptyColumnsHidden(this.buttons.hideEmptyCols.contentHidden)
-        if (this.buttons.hideEmptyCols.contentHidden) {
-          this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.hiddenText
-          this.buttons.hideEmptyCols.tooltipText = this.buttons.hideEmptyCols.hiddenTooltip
-        } else {
-          this.buttons.hideEmptyCols.text = this.buttons.hideEmptyCols.shownText
-          this.buttons.hideEmptyCols.tooltipText = this.buttons.hideEmptyCols.shownTooltip
-        }
-        this.updateWidth()
-      },
-
-      hideNoSuffixGroupsClick () {
-        this.buttons.hideNoSuffixGroups.noSuffixMatchesHidden = !this.buttons.hideNoSuffixGroups.noSuffixMatchesHidden
-        this.selectedView.noSuffixMatchesGroupsHidden(this.buttons.hideNoSuffixGroups.noSuffixMatchesHidden)
-        if (this.buttons.hideNoSuffixGroups.noSuffixMatchesHidden) {
-          this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.hiddenText
-          this.buttons.hideNoSuffixGroups.tooltipText = this.buttons.hideNoSuffixGroups.hiddenTooltip
-        } else {
-          this.buttons.hideNoSuffixGroups.text = this.buttons.hideNoSuffixGroups.shownText
-          this.buttons.hideNoSuffixGroups.tooltipText = this.buttons.hideNoSuffixGroups.shownTooltip
-        }
-        this.updateWidth()
       },
 
       navigate (reflink) {
@@ -456,11 +374,6 @@
         max-width: 220px;
         font-size: .625rem;
         line-height: 1.6;
-    }
-
-    .auk .uk-button-small.alpheios-inflections__control-btn {
-        line-height: 1.6;
-        font-size: .625rem;
     }
 
     .alpheios-inflections__actions {
