@@ -7,10 +7,10 @@ import AlpheiosTuftsAdapter from '../../node_modules/alpheios-tufts-adapter/dist
 let langData = new Lib.LanguageDataList([Lib.LatinDataSet, Lib.GreekDataSet]).loadData()
 
 let testCases = [
-  {word: 'cupidinibus', value: 'latin_noun_cupidinibus', type: 'noun', language: 'Latin', languageCode: Constants.STR_LANG_CODE_LAT},
-  {word: 'mare', value: 'latin_noun_adj_mare', type: 'noun, adjective', language: 'Latin', languageCode: Constants.STR_LANG_CODE_LAT},
-  {word: 'cepit', value: 'latin_verb_cepit', type: 'regular verb', language: 'Latin', languageCode: Constants.STR_LANG_CODE_LAT},
-  {word: 'φιλόσοφος', value: 'greek_noun_pilsopo', type: 'noun', language: 'Greek', languageCode: Constants.STR_LANG_CODE_GRC}
+  { word: 'cupidinibus', value: 'latin_noun_cupidinibus', type: 'noun', language: 'Latin', languageCode: Constants.STR_LANG_CODE_LAT },
+  { word: 'mare', value: 'latin_noun_adj_mare', type: 'noun, adjective', language: 'Latin', languageCode: Constants.STR_LANG_CODE_LAT },
+  { word: 'cepit', value: 'latin_verb_cepit', type: 'regular verb', language: 'Latin', languageCode: Constants.STR_LANG_CODE_LAT },
+  { word: 'φιλόσοφος', value: 'greek_noun_pilsopo', type: 'noun', language: 'Greek', languageCode: Constants.STR_LANG_CODE_GRC }
 ]
 let selectList = document.querySelector('#test-selector')
 

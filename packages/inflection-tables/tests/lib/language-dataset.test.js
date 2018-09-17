@@ -561,15 +561,15 @@ describe('language-dataset.test.js', () => {
   it('28 LanguageDataset - bestMatch - compares suffixMatch and returns with truthy value if only one has true value', async () => {
     let LD = new LanguageDataset(languageIDGreek)
 
-    expect(LD.bestMatch({id: 1, suffixMatch: true}, {id: 2, suffixMatch: false}).id).toEqual(1)
-    expect(LD.bestMatch({id: 1, suffixMatch: false}, {id: 2, suffixMatch: true}).id).toEqual(2)
+    expect(LD.bestMatch({ id: 1, suffixMatch: true }, { id: 2, suffixMatch: false }).id).toEqual(1)
+    expect(LD.bestMatch({ id: 1, suffixMatch: false }, { id: 2, suffixMatch: true }).id).toEqual(2)
   })
 
   it('29 LanguageDataset - bestMatch - if both suffixMatch are true then we it compares length of matchedFeatures', async () => {
     let LD = new LanguageDataset(languageIDGreek)
 
-    expect(LD.bestMatch({id: 1, suffixMatch: true, matchedFeatures: ['feature1']}, {id: 2, suffixMatch: true, matchedFeatures: []}).id).toEqual(1)
-    expect(LD.bestMatch({id: 1, suffixMatch: true, matchedFeatures: []}, {id: 2, suffixMatch: true, matchedFeatures: ['feature1']}).id).toEqual(2)
+    expect(LD.bestMatch({ id: 1, suffixMatch: true, matchedFeatures: ['feature1'] }, { id: 2, suffixMatch: true, matchedFeatures: [] }).id).toEqual(1)
+    expect(LD.bestMatch({ id: 1, suffixMatch: true, matchedFeatures: [] }, { id: 2, suffixMatch: true, matchedFeatures: ['feature1'] }).id).toEqual(2)
   })
 
   it('100 LanguageDataset - getObligatoryMatches executes checkMatches with getObligatoryMatchList', () => {

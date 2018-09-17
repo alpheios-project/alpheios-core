@@ -43,7 +43,7 @@ export default class WideView {
       for (let cell of row.cells) {
         cells.push(cell)
       }
-      this.rows.push({cells: cells})
+      this.rows.push({ cells: cells })
     }
 
     for (let row of this.table.rows) {
@@ -59,7 +59,7 @@ export default class WideView {
       for (let cell of row.cells) {
         cells.push(cell)
       }
-      this.rows.push({cells: cells})
+      this.rows.push({ cells: cells })
     }
   }
 

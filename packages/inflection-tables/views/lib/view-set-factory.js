@@ -1,4 +1,4 @@
-import {Constants, LanguageModelFactory as LMF} from 'alpheios-data-models'
+import { Constants, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import ViewSet from './view-set.js'
 import LatinViewSet from '../lang/latin/latin-view-set.js'
 import GreekViewSet from '../lang/greek/greek-view-set.js'

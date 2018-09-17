@@ -410,64 +410,64 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
     // Nouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
-    footnotesData = papaparse.parse(nounFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(nounFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
-    suffixes = papaparse.parse(nounSuffixesCSV, {skipEmptyLines: true})
+    suffixes = papaparse.parse(nounSuffixesCSV, { skipEmptyLines: true })
     this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Pronouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
-    footnotesData = papaparse.parse(pronounFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(pronounFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
-    forms = papaparse.parse(pronounFormsCSV, {skipEmptyLines: true})
+    forms = papaparse.parse(pronounFormsCSV, { skipEmptyLines: true })
     this.addPronounForms(partOfSpeech, forms.data, footnotes)
 
     // Adjectives
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    footnotesData = papaparse.parse(adjectiveFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(adjectiveFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
-    suffixes = papaparse.parse(adjectiveSuffixesCSV, {skipEmptyLines: true})
+    suffixes = papaparse.parse(adjectiveSuffixesCSV, { skipEmptyLines: true })
     this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Verbs
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    footnotesData = papaparse.parse(verbFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(verbFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
 
-    suffixes = papaparse.parse(verbSuffixesCSV, {skipEmptyLines: true})
+    suffixes = papaparse.parse(verbSuffixesCSV, { skipEmptyLines: true })
     this.addVerbSuffixes(partOfSpeech, suffixes.data, footnotes)
 
-    footnotesData = papaparse.parse(verbFormFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(verbFormFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
 
-    forms = papaparse.parse(verbFormsCSV, {skipEmptyLines: true})
+    forms = papaparse.parse(verbFormsCSV, { skipEmptyLines: true })
     this.addVerbForms(partOfSpeech, forms.data, footnotes)
 
     // Verb Participles
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
-    suffixes = papaparse.parse(verbParticipleSuffixesCSV, {skipEmptyLines: true})
+    suffixes = papaparse.parse(verbParticipleSuffixesCSV, { skipEmptyLines: true })
     this.addVerbParticipleSuffixes(partOfSpeech, suffixes.data)
 
-    footnotesData = papaparse.parse(verbParticipleFormFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(verbParticipleFormFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
-    forms = papaparse.parse(verbParticipleFormsCSV, {skipEmptyLines: true})
+    forms = papaparse.parse(verbParticipleFormsCSV, { skipEmptyLines: true })
     this.addVerbForms(partOfSpeech, forms.data, footnotes)
 
     // Verb Supine
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_SUPINE)
-    suffixes = papaparse.parse(verbSupineSuffixesCSV, {skipEmptyLines: true})
+    suffixes = papaparse.parse(verbSupineSuffixesCSV, { skipEmptyLines: true })
     this.addVerbSupineSuffixes(partOfSpeech, suffixes.data)
 
-    footnotesData = papaparse.parse(verbSupineFormFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(verbSupineFormFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
-    forms = papaparse.parse(verbSupineFormsCSV, {skipEmptyLines: true})
+    forms = papaparse.parse(verbSupineFormsCSV, { skipEmptyLines: true })
     this.addSupineGerundiveForms(partOfSpeech, forms.data, footnotes)
 
     // Gerundive
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_GERUNDIVE)
-    footnotesData = papaparse.parse(gerundiveFormFootnotesCSV, {skipEmptyLines: true})
+    footnotesData = papaparse.parse(gerundiveFormFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
-    forms = papaparse.parse(gerundiveFormsCSV, {skipEmptyLines: true})
+    forms = papaparse.parse(gerundiveFormsCSV, { skipEmptyLines: true })
     this.addSupineGerundiveForms(partOfSpeech, forms.data, footnotes)
 
     this.dataLoaded = true
