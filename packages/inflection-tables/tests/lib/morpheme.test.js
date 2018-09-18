@@ -63,6 +63,7 @@ describe('morpheme.test.js', () => {
     expect(morpheme.footnote).toEqual([ 'foovalue' ])
     expect(morpheme.match).toEqual({
       formMatch: false,
+      morphologyMatch: false,
       suffixMatch: false,
       fullMatch: false,
       matchedFeatures: []

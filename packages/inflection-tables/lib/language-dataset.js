@@ -137,6 +137,10 @@ export default class LanguageDataset {
     return this.checkMatches(this.getOptionalMatchList(inflection), inflection, item, comparisonType)
   }
 
+  static getMorphologyMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
+    return this.checkMatches(this.getMorphologyMatchList(inflection), inflection, item, comparisonType)
+  }
+
   /**
    * Checks if values of features from `featureList` are the same between an inflection
    * and a morpheme. If item does not have a feature from `featureList`, such feature
@@ -469,9 +473,17 @@ export default class LanguageDataset {
         break
       }
 
+      /*
+      Check for optional matches. Use `All_VALUES` matching algorithm
+      as multiple values in inflection and morpheme can go in different order.
+       */
       const optionalMatches = this.constructor.getOptionalMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
 
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
+
+      const morphologyMatches = this.constructor.getMorphologyMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
+      matchData.morphologyMatch = morphologyMatches.fullMatch
+
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
         // This is a full match
         matchData.fullMatch = true

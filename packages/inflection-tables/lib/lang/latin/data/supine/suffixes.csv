@@ -1,9 +1,3 @@
-Ending,Conjugation,Case,Footnote
-um,1st,accusative,
-um,2nd,accusative,
-um,3rd,accusative,
-um,4th,accusative,
-ū,1st,ablative,
-ū,2nd,ablative,
-ū,3rd,ablative,
-ū,4th,ablative,
+Ending,Case,Footnote
+um,accusative,
+ū,ablative,

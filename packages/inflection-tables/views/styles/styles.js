@@ -5,6 +5,7 @@ let classNames = {
   fullWidth: 'infl-cell--fw',
   header: 'infl-cell--hdr',
   highlight: 'infl-cell--hl',
+  morphologyMatch: 'infl-cell--morph-match',
   hidden: 'hidden',
   suffix: 'infl-suff',
   suffixMatch: 'infl-suff--suffix-match',

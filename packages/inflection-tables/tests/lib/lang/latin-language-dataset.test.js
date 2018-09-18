@@ -41,6 +41,8 @@ describe('greek-language-dataset.test.js', () => {
     jest.clearAllMocks()
   })
 
+  // TODO: We probably need to test not with real CSV files, but with some test samples.
+  // Otherwise every change in CSV data will require us to update our test
   it('1 LatinLanguageDataset - constructor creates with features', () => {
     let LLD = new LatinLanguageDataset()
 
@@ -62,7 +64,7 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    const suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
+    const suffixes = papaparse.parse(adjectiveSuffixesCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
@@ -90,7 +92,7 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
-    const suffixes = papaparse.parse(nounSuffixesCSV, {})
+    const suffixes = papaparse.parse(nounSuffixesCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
@@ -117,7 +119,7 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
-    const forms = papaparse.parse(pronounFormsCSV, {})
+    const forms = papaparse.parse(pronounFormsCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
@@ -144,7 +146,7 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    const suffixes = papaparse.parse(verbSuffixesCSV, {})
+    const suffixes = papaparse.parse(verbSuffixesCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
@@ -175,7 +177,7 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
-    const suffixes = papaparse.parse(verbParticipleSuffixesCSV, {})
+    const suffixes = papaparse.parse(verbParticipleSuffixesCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
@@ -206,7 +208,7 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_SUPINE)
-    const suffixes = papaparse.parse(verbSupineSuffixesCSV, {})
+    const suffixes = papaparse.parse(verbSupineSuffixesCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
@@ -223,15 +225,7 @@ describe('greek-language-dataset.test.js', () => {
 
     // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
     let features = [partOfSpeech,
-      // Add...() function will not create Feature objects for items whose values are empty
-      LLD.features.get(Feature.types.conjugation).createFromImporter(itemRow[1]),
-      LLD.features.get(Feature.types.voice).createFromImporter(itemRow[2]),
-      // LLD.features.get(Feature.types.mood).createFromImporter(itemRow[3]),
-      // LLD.features.get(Feature.types.tense).createFromImporter(itemRow[4]),
-      // LLD.features.get(Feature.types.number).createFromImporter(itemRow[5]),
-      // LLD.features.get(Feature.types.person).createFromImporter(itemRow[6]),
-      LLD.features.get(Feature.types.case).createFromImporter(itemRow[7])
-      // LLD.features.get(Feature.types.type).createFromImporter(itemRow[8])
+      LLD.features.get(Feature.types.case).createFromImporter(itemRow[1])
     ]
 
     expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features)
@@ -241,7 +235,7 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    const forms = papaparse.parse(verbFormsCSV, {})
+    const forms = papaparse.parse(verbFormsCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
@@ -270,14 +264,15 @@ describe('greek-language-dataset.test.js', () => {
     let LLD = new LatinLanguageDataset()
 
     const partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    const forms = papaparse.parse(verbFormsCSV, {})
+    const forms = papaparse.parse(verbFormsCSV, { skipEmptyLines: true })
 
     LLD.addInflectionData = jest.fn()
 
     LLD.addVerbForms(partOfSpeech, forms.data)
 
-    expect(LLD.verbsIrregularLemmas.length).toBeGreaterThan(0)
-    LLD.verbsIrregularLemmas.forEach(lemma => { expect(lemma).toBeInstanceOf(Lemma) })
+    let verbIrregularLemmas = LLD.irregularLemmas.get(Constants.POFS_VERB)
+    expect(verbIrregularLemmas.length).toBeGreaterThan(0)
+    verbIrregularLemmas.forEach(lemma => { expect(lemma).toBeInstanceOf(Lemma) })
   })
 
   it('10 LatinLanguageDataset - addFootnotes executes addFootnote for each row with specific arguments (Noun)', () => {
@@ -289,7 +284,7 @@ describe('greek-language-dataset.test.js', () => {
 
     // Noun
     partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
-    footnotes = papaparse.parse(nounFootnotesCSV, {})
+    footnotes = papaparse.parse(nounFootnotesCSV, { skipEmptyLines: true })
 
     LLD.addFootnotes(partOfSpeech, Suffix, footnotes.data)
 
@@ -307,7 +302,7 @@ describe('greek-language-dataset.test.js', () => {
 
     // Noun
     partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
-    footnotes = papaparse.parse(pronounFootnotesCSV, {})
+    footnotes = papaparse.parse(pronounFootnotesCSV, { skipEmptyLines: true })
 
     LLD.addFootnotes(partOfSpeech, Form, footnotes.data)
 
@@ -325,7 +320,7 @@ describe('greek-language-dataset.test.js', () => {
 
     // Noun
     partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    footnotes = papaparse.parse(adjectiveFootnotesCSV, {})
+    footnotes = papaparse.parse(adjectiveFootnotesCSV, { skipEmptyLines: true })
 
     LLD.addFootnotes(partOfSpeech, Suffix, footnotes.data)
 
@@ -343,7 +338,7 @@ describe('greek-language-dataset.test.js', () => {
 
     // Noun
     partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    footnotes = papaparse.parse(verbFootnotesCSV, {})
+    footnotes = papaparse.parse(verbFootnotesCSV, { skipEmptyLines: true })
 
     LLD.addFootnotes(partOfSpeech, Suffix, footnotes.data)
 
@@ -361,7 +356,7 @@ describe('greek-language-dataset.test.js', () => {
 
     // Noun
     partOfSpeech = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    footnotes = papaparse.parse(verbFormFootnotesCSV, {})
+    footnotes = papaparse.parse(verbFormFootnotesCSV, { skipEmptyLines: true })
 
     LLD.addFootnotes(partOfSpeech, Form, footnotes.data)
 
@@ -382,29 +377,29 @@ describe('greek-language-dataset.test.js', () => {
     LLD.addVerbSupineSuffixes = jest.fn()
 
     let partOfSpeechNoun = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
-    let suffixesNoun = papaparse.parse(nounSuffixesCSV, {})
-    let footnotesNoun = papaparse.parse(nounFootnotesCSV, {})
+    let suffixesNoun = papaparse.parse(nounSuffixesCSV, { skipEmptyLines: true })
+    let footnotesNoun = papaparse.parse(nounFootnotesCSV, { skipEmptyLines: true })
 
     let partOfSpeechPronoun = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
-    let formsPronoun = papaparse.parse(pronounFormsCSV, {})
-    let footnotesPronoun = papaparse.parse(pronounFootnotesCSV, {})
+    let formsPronoun = papaparse.parse(pronounFormsCSV, { skipEmptyLines: true })
+    let footnotesPronoun = papaparse.parse(pronounFootnotesCSV, { skipEmptyLines: true })
 
     let partOfSpeechAdjective = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    let suffixesAdjective = papaparse.parse(adjectiveSuffixesCSV, {})
-    let footnotesAdjective = papaparse.parse(adjectiveFootnotesCSV, {})
+    let suffixesAdjective = papaparse.parse(adjectiveSuffixesCSV, { skipEmptyLines: true })
+    let footnotesAdjective = papaparse.parse(adjectiveFootnotesCSV, { skipEmptyLines: true })
 
     let partOfSpeechVerb = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    let suffixesVerb = papaparse.parse(verbSuffixesCSV, {})
-    let footnotesVerb = papaparse.parse(verbFootnotesCSV, {})
-    let formsVerb = papaparse.parse(verbFormsCSV, {})
-    let footnotesVerbForms = papaparse.parse(verbFormFootnotesCSV, {})
+    let suffixesVerb = papaparse.parse(verbSuffixesCSV, { skipEmptyLines: true })
+    let footnotesVerb = papaparse.parse(verbFootnotesCSV, { skipEmptyLines: true })
+    let formsVerb = papaparse.parse(verbFormsCSV, { skipEmptyLines: true })
+    let footnotesVerbForms = papaparse.parse(verbFormFootnotesCSV, { skipEmptyLines: true })
 
     let partOfSpeechVerbParticiple = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
-    let suffixesVerbParticiple = papaparse.parse(verbParticipleSuffixesCSV, {})
-    let formsVerbParticiple = papaparse.parse(verbFormsCSV, {})
+    let suffixesVerbParticiple = papaparse.parse(verbParticipleSuffixesCSV, { skipEmptyLines: true })
+    let formsVerbParticiple = papaparse.parse(verbFormsCSV, { skipEmptyLines: true })
 
     let partOfSpeechSupine = LLD.features.get(Feature.types.part).createFeature(Constants.POFS_SUPINE)
-    let suffixesSupine = papaparse.parse(verbSupineSuffixesCSV, {})
+    let suffixesSupine = papaparse.parse(verbSupineSuffixesCSV, { skipEmptyLines: true })
 
     expect(LLD.dataLoaded).toBeFalsy()
     LLD.loadData()
@@ -455,29 +450,26 @@ describe('greek-language-dataset.test.js', () => {
   })
 
   it('17 LatinLanguageDataset - getObligatoryMatchList  returns feature lists for different parts of speech', () => {
-    let inflectionNoun = new Inflection('fero', 'lat')
+    // TODO: Probably need to set constraints manually because otherwise its results depends on `setConstraints()` and this is not what we're testing
+    let inflectionNoun = new Inflection('word', 'lat')
     inflectionNoun.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
     inflectionNoun.setConstraints()
 
-    expect(LatinLanguageDataset.getObligatoryMatchList(inflectionNoun)).toEqual([
-      Feature.types.part,
-      Feature.types.fullForm,
-      Feature.types.word
-    ])
+    expect(LatinLanguageDataset.getObligatoryMatchList(inflectionNoun)).toEqual([Feature.types.part])
 
-    let inflectionAdjective = new Inflection('fero', 'lat')
+    let inflectionAdjective = new Inflection('word', 'lat')
     inflectionAdjective.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_LATIN))
     inflectionAdjective.setConstraints()
 
     expect(LatinLanguageDataset.getObligatoryMatchList(inflectionAdjective)).toEqual([Feature.types.part])
 
-    let inflectionPronoun = new Inflection('fero', 'lat')
+    let inflectionPronoun = new Inflection('word', 'lat')
     inflectionPronoun.addFeature(new Feature(Feature.types.part, Constants.POFS_PRONOUN, Constants.LANG_LATIN))
     inflectionPronoun.setConstraints()
 
-    expect(LatinLanguageDataset.getObligatoryMatchList(inflectionPronoun)).toEqual([Feature.types.fullForm])
+    expect(LatinLanguageDataset.getObligatoryMatchList(inflectionPronoun)).toEqual([Feature.types.part, Feature.types.fullForm])
 
-    let inflectionVerb = new Inflection('fero', 'lat')
+    let inflectionVerb = new Inflection('word', 'lat')
     inflectionVerb.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflectionVerb.setConstraints()
 
@@ -496,14 +488,14 @@ describe('greek-language-dataset.test.js', () => {
     inflectionVerb.addFeature(new Feature(Feature.types.person, '1st', Constants.LANG_LATIN))
     inflectionVerb.addFeature(new Feature(Feature.types.conjugation, '3rd', Constants.LANG_LATIN))
     inflectionVerb.setConstraints()
-    inflectionVerb.constraints.irregularVerb = true
+    inflectionVerb.constraints.irregular = true
 
     expect(LatinLanguageDataset.getOptionalMatchList(inflectionVerb)).toEqual([
-      Feature.types.number,
-      Feature.types.voice,
       Feature.types.mood,
       Feature.types.tense,
+      Feature.types.number,
       Feature.types.person,
+      Feature.types.voice,
       Feature.types.conjugation
     ])
   })

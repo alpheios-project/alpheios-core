@@ -75,6 +75,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       IRREG_POFS: [Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE, Constants.POFS_SUPINE, Constants.POFS_GERUNDIVE],
       ORD_1ST_2ND: '1st 2nd',
       GEND_MASCULINE_FEMININE: 'masculine feminine'
+
     }
   }
 
@@ -282,7 +283,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
       let features = [partOfSpeech]
       // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
       let columns = [
-        Feature.types.conjugation,
         Feature.types.case
       ]
       columns.forEach((c, j) => {
@@ -524,7 +524,10 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   static getObligatoryMatchList (inflection) {
-    if (inflection.constraints.irregular || Constants.POFS_SUPINE || Constants.POFS_GERUNDIVE) {
+    if (inflection.constraints.irregular ||
+      inflection.hasFeatureValue(Feature.types.part, Constants.POFS_SUPINE) ||
+      inflection.hasFeatureValue(Feature.types.part, Constants.POFS_GERUNDIVE)
+    ) {
       return [Feature.types.part, Feature.types.fullForm, Feature.types.word]
     } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_VERB)) {
       return [Feature.types.part]
@@ -537,6 +540,38 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   static getOptionalMatchList (inflection) {
+    const featureOptions = [
+      Feature.types.grmCase,
+      Feature.types.declension,
+      Feature.types.gender,
+      Feature.types.number,
+      Feature.types.voice,
+      Feature.types.mood,
+      Feature.types.tense,
+      Feature.types.person,
+      Feature.types.conjugation
+    ]
+
+    if (inflection.constraints.irregular) {
+      return [
+        Feature.types.mood,
+        Feature.types.tense,
+        Feature.types.number,
+        Feature.types.person,
+        Feature.types.voice,
+        Feature.types.conjugation
+      ]
+    } else {
+      return featureOptions.filter(f => inflection[f])
+    }
+  }
+
+  /**
+   * Returns a list of features that should be the same for the morphology match.
+   * @param {Inflection} inflection - An inflection for which a list needs to be built.
+   * @return {string[]} An array of feature names.
+   */
+  static getMorphologyMatchList (inflection) {
     const featureOptions = [
       Feature.types.grmCase,
       Feature.types.declension,

@@ -647,4 +647,41 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     return featureOptions.filter(f => inflection[f])
   }
+
+  /**
+   * Returns a list of features that should be the same for the morphology match.
+   * @param {Inflection} inflection - An inflection for which a list needs to be built.
+   * @return {string[]} An array of feature names.
+   */
+  static getMorphologyMatchList (inflection) {
+    let featureOptions = []
+
+    if ([Constants.POFS_PRONOUN, Constants.POFS_NUMERAL, Constants.POFS_ARTICLE].includes(inflection[Feature.types.part].value)) {
+      featureOptions = [
+        Feature.types.grmCase,
+        Feature.types.gender,
+        Feature.types.number
+      ]
+    } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_ADJECTIVE)) {
+      featureOptions = [
+        Feature.types.grmCase,
+        Feature.types.gender,
+        Feature.types.number,
+        Feature.types.declension
+      ]
+    } else {
+      featureOptions = [
+        Feature.types.grmCase,
+        Feature.types.declension,
+        Feature.types.gender,
+        Feature.types.number,
+        Feature.types.voice,
+        Feature.types.mood,
+        Feature.types.tense,
+        Feature.types.person
+      ]
+    }
+
+    return featureOptions.filter(f => inflection[f])
+  }
 }
