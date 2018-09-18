@@ -13,6 +13,10 @@ export default class LatinVoiceMoodConjugationView extends LatinVerbView {
     this.createTable()
   }
 
+  static get viewID () {
+    return 'latin_voice_mood_conjugation_view'
+  }
+
   static get inflectionType () {
     return Suffix
   }
