@@ -515,7 +515,7 @@ describe('greek-language-dataset.test.js', () => {
     let inflectionPronoun = new Inflection('foo', 'grc')
     inflectionPronoun.addFeature(new Feature(Feature.types.part, Constants.POFS_PRONOUN, Constants.LANG_GREEK))
 
-    expect(GreekLanguageDataset.getObligatoryMatchList(inflectionPronoun)).toEqual([Feature.types.grmClass])
+    expect(GreekLanguageDataset.getObligatoryMatchList(inflectionPronoun)).toEqual([Feature.types.part, Feature.types.grmClass])
 
     let inflectionNumeral = new Inflection('foo', 'grc')
     inflectionNumeral.addFeature(new Feature(Feature.types.part, Constants.POFS_NUMERAL, Constants.LANG_GREEK))

@@ -16,6 +16,8 @@ import MessageBundle from '@l10n/message-bundle.js'
 
 import Form from '@lib/form.js'
 
+jest.setTimeout(30000)
+
 describe('view.test.js', () => {
   console.error = function () {}
   console.log = function () {}
