@@ -3913,13 +3913,13 @@ class LanguageDataset {
    * @param {Inflection[]} inflections - an array of inflection objects to be matched against a suffix.
    * @param {Suffix} item - a suffix to be matched with inflections.
    * @param {Object} options - An options object that may contain the following properties:
-   *        showMatches - whether to display form or suffix matches. Default: true
+   *        findMatches - whether to find form or suffix matches. Default: true
    * @returns {Suffix | null} if a match is found, returns a suffix object modified with some
    * additional information about a match. if no matches found, returns null.
    */
   matcher (inflections, item, options = {}) {
-    if (!options.hasOwnProperty('showMatches')) {
-      options.showMatches = true // Default value
+    if (!options.hasOwnProperty('findMatches')) {
+      options.findMatches = true // Default value
     }
     // Any of those features must match between an inflection and an ending
     let bestMatchData = null // information about the best match we would be able to find
@@ -3932,7 +3932,6 @@ class LanguageDataset {
 
     for (let inflection of inflections) {
       let matchData = new _match_data_js__WEBPACK_IMPORTED_MODULE_8__["default"]() // Create a match profile
-      matchData.showMatches = options.showMatches
       matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
 
       // Check for obligatory matches
@@ -3960,7 +3959,9 @@ class LanguageDataset {
         matchData.fullMatch = true
 
         // There can be only one full match, no need to search any further
-        item.match = matchData
+        if (options.findMatches) {
+          item.match = matchData
+        }
 
         return item
       }
@@ -3968,7 +3969,9 @@ class LanguageDataset {
     }
     if (bestMatchData) {
       // There is some match found
-      item.match = bestMatchData
+      if (options.findMatches) {
+        item.match = bestMatchData
+      }
       return item
     }
     return null
@@ -16336,9 +16339,8 @@ class Cell {
         element.appendChild(document.createTextNode(', ')) // 00A0 is a non-breaking space
       }
     }
-    const morphologyMatch = this.morphemes.length > 0 && this.morphemes.every(m => m.match.morphologyMatch)
-    if (morphologyMatch) {
-    }
+    const morphologyMatch = this.morphemes.length > 0 && this.morphemes.every(m => m.match && m.match.morphologyMatch)
+
     this.value = element.innerHTML
     this.classes = {
       [_styles_styles__WEBPACK_IMPORTED_MODULE_0__["classNames"].cell]: true,
@@ -18515,7 +18517,7 @@ class View {
 
   static getStandardFormInstance (options, locale = 'en-US') {
     let homonym = this.createStandardFormHomonym(options)
-    let inflectionData = this.getInflectionsData(homonym, { showMatches: false })
+    let inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
     let view = new this(homonym, inflectionData, locale)
     if (options.title) {
