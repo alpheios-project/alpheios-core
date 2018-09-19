@@ -47,6 +47,7 @@ describe('lexical-query.test.js', () => {
     },
     lexicalRequestSucceeded: function () { },
     lexicalRequestFailed: function () { },
+    lexicalRequestComplete: function () { },
     showStatusInfo: function () { },
     updateWordAnnotationData: function () { },
 
@@ -79,7 +80,8 @@ describe('lexical-query.test.js', () => {
     languageID: testTextSelector.languageID,
     lexemes: [{
       isPopulated: function () { return true },
-      lemma: { word: 'foo lemma' }
+      lemma: { word: 'foo lemma' },
+      meaning: { appendShortDefs: () => {}, appendFullDefs: () => {} }
     }],
     disambiguate: function () { }
 
@@ -129,6 +131,15 @@ describe('lexical-query.test.js', () => {
       return [
         new Promise((resolve, reject) => { resolve(testDefinition) })
       ]
+    }
+  }
+
+  let testLexiconAdapterNoRequests = {
+    fetchFullDefs: function () {
+      return [ ]
+    },
+    fetchShortDefs: function () {
+      return [ ]
     }
   }
 
@@ -363,7 +374,7 @@ describe('lexical-query.test.js', () => {
       siteOptions: allSiteOptions,
       langOpts: {}
     })
-    expect(query.getLexiconOptions('lexiconsShort')).toEqual({allow: ['https://github.com/alpheios-project/xx']})
+    expect(query.getLexiconOptions('lexiconsShort')).toEqual({ allow: ['https://github.com/alpheios-project/xx'] })
   })
 
   it('11 LexicalQuery - getLexiconOptions parses empty lexicons and returns {}', () => {
@@ -428,5 +439,47 @@ describe('lexical-query.test.js', () => {
     await query.getData()
     expect(query.tbAdapter.getHomonym).not.toHaveBeenCalled()
     expect(query.maAdapter.getHomonym).toHaveBeenCalledWith(mockSelector.languageID, mockSelector.normalizedText)
+  })
+
+  it('14 LexicalQuery - it finalizes if no definition requests are made', async () => {
+    let curUI = Object.assign({}, testUI)
+    let query = LexicalQuery.create(testTextSelector, {
+      uiController: curUI,
+      htmlSelector: testHtmlSelector,
+      maAdapter: Object.assign({}, testMaAdapter),
+      lexicons: Object.assign({}, testLexiconAdapterNoRequests)
+    })
+
+    query.canReset = false
+    query.getLexiconOptions = function () { return { allow: false } }
+
+    query.LDFAdapter = Object.assign({}, testLDFAdapter)
+
+    jest.spyOn(query, 'finalize')
+
+    await query.getData()
+    expect(query.finalize).toHaveBeenCalledWith('Success-NoDefs')
+  })
+
+  it('14 LexicalQuery - it finalizes if definition requests are made', async () => {
+    let curUI = Object.assign({}, testUI)
+    let query = LexicalQuery.create(testTextSelector, {
+      uiController: curUI,
+      htmlSelector: testHtmlSelector,
+      maAdapter: Object.assign({}, testMaAdapter),
+      lexicons: Object.assign({}, testLexiconAdapter)
+    })
+
+    query.canReset = false
+    query.getLexiconOptions = function () { return { allow: false } }
+
+    query.LDFAdapter = Object.assign({}, testLDFAdapter)
+
+    jest.spyOn(query, 'finalize')
+    jest.spyOn(curUI, 'updateDefinitions')
+
+    await query.getData()
+    expect(curUI.updateDefinitions).toHaveBeenCalled()
+    expect(query.finalize).toHaveBeenCalledWith('Success')
   })
 })

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
 import WordForms from '@/vue-components/wordforms.vue'
-import {LanguageModelFactory as LMF} from 'alpheios-data-models'
+import { LanguageModelFactory as LMF } from 'alpheios-data-models'
 
 describe('wordforms.test.js', () => {
   console.error = function () {}

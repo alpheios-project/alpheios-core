@@ -128,6 +128,10 @@
         }
    }
 
+   .alpheios-popup-lexdataloading__progress-text {
+        font-size: $baseFontSize * 0.8;
+   }
+   
    .alpheios-checkbox-block.alpheios-checkbox-small {
         line-height: $baseFontSize * 1.3;
 
@@ -148,6 +152,7 @@
             }
         }
    }
+
 
   $baseSize: $baseFontSize + 12px;
 

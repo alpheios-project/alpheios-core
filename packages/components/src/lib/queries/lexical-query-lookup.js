@@ -2,9 +2,9 @@ import LexicalQuery from './lexical-query.js'
 import { Constants } from 'alpheios-data-models'
 
 // import {LemmaTranslations} from 'alpheios-lemma-client'
-import {AlpheiosTuftsAdapter} from 'alpheios-morph-client'
-import {Lexicons} from 'alpheios-lexicon-client'
-import {LemmaTranslations} from 'alpheios-lemma-client'
+import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+import { Lexicons } from 'alpheios-lexicon-client'
+import { LemmaTranslations } from 'alpheios-lemma-client'
 
 import HTMLSelector from '../selection/media/html-selector'
 

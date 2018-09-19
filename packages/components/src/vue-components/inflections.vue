@@ -42,7 +42,7 @@
             </div>
 
             <div v-if="!selectedView.hasPrerenderedTables">
-                <main-table-wide-vue :view="selectedView" :messages="messages" v-bind:collapsed="false" @widthchange="updateWidth">
+                <main-table-wide-vue :view="selectedView" :messages="messages" :collapsed="mainTableCollapsed" @widthchange="updateWidth">
                 </main-table-wide-vue>
 
                 <template v-if="selectedView.linkedViews" v-for="linkedView in selectedView.linkedViews">
@@ -76,12 +76,13 @@
                 <div v-html="selectedView.creditsText" class="alpheios-inflections__credits-text"></div>
             </div>
         </div>
-        <div v-else class="alpheios-inflections__placeholder">
+        <div v-else-if="!inflectionBrowserEnabled" class="alpheios-inflections__placeholder">
             {{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}
         </div>
 
-        <!--Disable until components#40 be approved-->
-        <!--<inflection-browser :language-id="languageID" :messages="messages"></inflection-browser>-->
+        <inflection-browser v-if="inflectionBrowserEnabled" :language-id="languageID" :messages="messages"
+                            :infl-browser-tables-collapsed="inflBrowserTablesCollapsed" @interaction="inflTableInteraction">
+        </inflection-browser>
     </div>
 </template>
 <script>
@@ -118,6 +119,19 @@
       inflectionsEnabled: {
         type: Boolean,
         default: false,
+        required: false
+      },
+
+      // Whether a inflection browser component is enabled or not (depends on the language)
+      inflectionBrowserEnabled: {
+        type: Boolean,
+        default: true,
+        required: false
+      },
+
+      inflBrowserTablesCollapsed: {
+        type: Boolean,
+        default: true,
         required: false
       },
 
@@ -158,6 +172,7 @@
         selectedViewName: '',
         selectedView: {},
         renderedView: {},
+        mainTableCollapsed: false,
         elementIDs: {
           panelInner: 'alpheios-panel-inner',
           footnotes: 'alph-inflection-footnotes'
@@ -233,22 +248,6 @@
           this.languageID = this.data.inflectionViewSet.languageID
         }
         if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
-          // Set colors for supplemental paradigm tables
-          for (let view of this.data.inflectionViewSet.getViews()) {
-            view.hlSuppParadigms = false
-            if (view.hasSuppParadigms) {
-              if (view.suppParadigms.length > 1) {
-                // Highlight tables and links only if more than one linked table present
-                view.hlSuppParadigms = true
-                view.suppHlColors = new Map()
-                let currentColorIdx = 0
-                for (let paradigm of view.suppParadigms) {
-                  view.suppHlColors.set(paradigm.paradigmID, this.suppColors[currentColorIdx])
-                  currentColorIdx = (currentColorIdx + 1 < this.suppColors.length ) ? currentColorIdx + 1 : 0
-                }
-              }
-            }
-          }
 
           this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
           if (this.partsOfSpeech.length > 0) {
@@ -303,12 +302,22 @@
           // Rendering is not required for component-enabled views
           this.selectedView.render()
         }
+        this.mainTableCollapsed = false
       },
 
       updateWidth: function () {
         Vue.nextTick(() => {
           this.$emit('contentwidth', this.htmlElements.content.offsetWidth + 1)
         })
+      },
+
+      inflTableInteraction: function () {
+        this.mainTableCollapsed = true
+        Vue.nextTick()
+          .then(() => {
+            this.mainTableCollapsed = null
+          })
+
       },
 
       navigate (reflink) {
@@ -354,6 +363,7 @@
 
     .alpheios-inflections__content {
         padding: 0 20px;
+        border-bottom: 1px solid $alpheios-base-border-color;
     }
 
     h3.alpheios-inflections__title {
@@ -394,107 +404,6 @@
     .alpheios-inflections__placeholder {
         text-align: center;
     }
-
-    // region Tables
-    .infl-table {
-        display: grid;
-        border-left: 1px solid #111;
-        border-bottom: 1px solid #111;
-        margin-bottom: 1rem;
-    }
-
-    .infl-table--wide {
-        /* Data flow order: number- case - declension - gender - type*/
-        grid-auto-flow: row;
-        grid-template-columns: repeat(21, 1fr); /* Default value, will be redefined in JS if necessary */
-    }
-
-    .infl-table--narrow {
-        /* Data flow order: declension - number- case - gender - type*/
-        grid-auto-flow: row;
-        grid-template-columns: repeat(6, 1fr); /* Default value, will be redefined in JS if necessary */
-    }
-
-    .infl-table.hidden {
-        display: none;
-    }
-
-    .infl-table-narrow-views-cont {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .infl-cell {
-        font-size: 12px;
-        padding: 0 2px 0 5px;
-        border-right: 1px solid #111;
-        border-top: 1px solid #111;
-        position: relative;
-    }
-
-    .infl-cell.hidden {
-        display: none;
-    }
-
-    .infl-cell--hdr {
-        font-weight: 700;
-        text-align: center;
-    }
-
-    .infl-cell--hdr .infl-cell__conj-stem {
-        text-transform: none;
-    }
-
-    .infl-cell--fw {
-        grid-column: 1 / -1;
-        font-style: italic;
-        text-transform: capitalize;
-    }
-
-    .infl-cell.infl-cell--sep {
-        height: 50px;
-    }
-
-    .infl-cell--sp0 {
-        display: none;
-    }
-
-    @for $i from 1 through 24 {
-        .infl-cell--sp#{$i} {
-            grid-column-end: span #{$i};
-        }
-    }
-
-    .infl-cell--hl {
-        background: lightgray;
-    }
-
-    .infl-cell__conj-stem {
-        text-transform: none;
-    }
-
-    .infl-suff {
-        cursor: pointer;
-    }
-
-    .infl-suff.infl-suff--suffix-match {
-        background-color: rgb(188, 230, 240);
-    }
-
-    .infl-suff--full-feature-match {
-        background-color: lightgray;
-    }
-
-    .infl-suff.infl-suff--suffix-match.infl-suff--full-feature-match {
-        background-color: $alpheios-highlight-color;
-        font-weight: 700;
-    }
-
-    .row-title-cell {
-        text-transform: capitalize;
-    }
-
-    // endregion Tables
 
     // region Footnotes
     .alpheios-inflections__footnotes {

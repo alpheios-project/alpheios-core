@@ -1,4 +1,4 @@
-import {Constants, LanguageModelFactory} from 'alpheios-data-models'
+import { Constants, LanguageModelFactory } from 'alpheios-data-models'
 
 // TODO: Add language name to a language model?
 const languageNames = new Map([

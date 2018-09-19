@@ -63,7 +63,7 @@ describe('options.test.js', () => {
   })
 
   it('4 Options - parse defaults to object\'s properties', () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ {text: 'English (US)', value: 'en-US'} ] }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-content-options',
       items: { locale: testOption },
@@ -79,7 +79,7 @@ describe('options.test.js', () => {
   })
 
   it('5 Options - names returns an array of items keys', () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ {text: 'English (US)', value: 'en-US'} ] }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-content-options',
       items: { locale: testOption },
@@ -91,7 +91,7 @@ describe('options.test.js', () => {
   })
 
   it('6 Options - load reload options from storageAdapter and executes callBackFn ', async () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ {text: 'English (US)', value: 'en-US'} ] }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-test-options',
       items: { locale6: testOption },
@@ -109,7 +109,7 @@ describe('options.test.js', () => {
   })
 
   it('7 Options - if there is a grouped property in storageAdapter it will be parsed and saved ', async () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', group: { foo: {text: 'English (US)', value: 'en-US'} } }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', group: { foo: { text: 'English (US)', value: 'en-US' } } }
     let testDefaults = {
       domain: 'alpheios-test-options7',
       items: { locale7: testOption },
@@ -126,7 +126,7 @@ describe('options.test.js', () => {
   })
 
   it('8 Options - if there is a grouped property in storageAdapter it will be parsed. if there is no key as in option it would be ignored', async () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', group: { foo: {defaultValue: 'en-US', text: 'English (US)', value: 'en-US'} } }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', group: { foo: { defaultValue: 'en-US', text: 'English (US)', value: 'en-US' } } }
     let testDefaults = {
       domain: 'alpheios-test-options7',
       items: { locale9: testOption },
@@ -144,7 +144,7 @@ describe('options.test.js', () => {
   })
 
   it('9 Options - if in load method storageAdapter.get throw a error then console.error will be executed and callBackFn will be executed', async () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ {text: 'English (US)', value: 'en-US'} ] }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-test-options',
       items: { locale6: testOption },
@@ -169,7 +169,7 @@ describe('options.test.js', () => {
   })
 
   it('10 Options - parseKey parses a string to object', () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ {text: 'English (US)', value: 'en-US'} ] }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-content-options',
       items: { locale: testOption },
@@ -182,7 +182,7 @@ describe('options.test.js', () => {
   })
 
   it('11 Options - clone method returns cloned object (single items)', () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ {text: 'English (US)', value: 'en-US'} ] }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-content-options',
       items: { locale: testOption },
@@ -197,12 +197,12 @@ describe('options.test.js', () => {
     expect(res.storageAdapter.domain).toEqual(opt.domain)
     expect(res.items.locale.defaultValue).toEqual('en-US')
     expect(res.items.locale.labelText).toEqual('UI Locale:')
-    expect(res.items.locale.values).toEqual([ {text: 'English (US)', value: 'en-US'} ])
+    expect(res.items.locale.values).toEqual([ { text: 'English (US)', value: 'en-US' } ])
     expect(res.items.locale.currentValue).toEqual(opt.items.locale.currentValue)
   })
 
   it('12 Options - clone method returns cloned object (single items)', () => {
-    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', group: { foo: {defaultValue: 'en-US', text: 'English (US)', value: 'en-US'} } }
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', group: { foo: { defaultValue: 'en-US', text: 'English (US)', value: 'en-US' } } }
     let testDefaults = {
       domain: 'alpheios-content-options',
       items: { locale: testOption },

@@ -130,15 +130,15 @@ export default class PointerEvt {
   static addUpDownListeners (element, event) {
     if (this.pointerEventSupported) {
       // Will use pointer events
-      element.addEventListener('pointerdown', this.pointerDownListener.bind(this, event), {passive: true})
-      element.addEventListener('pointerup', this.pointerUpListener.bind(this, event), {passive: true})
+      element.addEventListener('pointerdown', this.pointerDownListener.bind(this, event), { passive: true })
+      element.addEventListener('pointerup', this.pointerUpListener.bind(this, event), { passive: true })
     } else {
-      element.addEventListener('touchstart', this.touchStartListener.bind(this, event), {passive: true})
-      element.addEventListener('touchend', this.touchEndListener.bind(this, event), {passive: true})
+      element.addEventListener('touchstart', this.touchStartListener.bind(this, event), { passive: true })
+      element.addEventListener('touchend', this.touchEndListener.bind(this, event), { passive: true })
     }
   }
 
   static addDblClickListener (element, event) {
-    element.addEventListener('dblclick', this.dblClickListener.bind(this, event), {passive: true})
+    element.addEventListener('dblclick', this.dblClickListener.bind(this, event), { passive: true })
   }
 }

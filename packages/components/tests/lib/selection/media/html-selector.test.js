@@ -150,11 +150,11 @@ describe('html-selector.test.js', () => {
 */
   it('10 HTMLSelector - getDumpHTMLSelector returns emptyObject', () => {
     let res = HTMLSelector.getDumpHTMLSelector()
-    expect(res.targetRect).toEqual({top: 0, left: 0})
+    expect(res.targetRect).toEqual({ top: 0, left: 0 })
   })
 
   it('11 HTMLSelector - selectTextRange', () => {
     let res = HTMLSelector.getDumpHTMLSelector()
-    expect(res.targetRect).toEqual({top: 0, left: 0})
+    expect(res.targetRect).toEqual({ top: 0, left: 0 })
   })
 })

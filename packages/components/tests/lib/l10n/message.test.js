@@ -58,6 +58,6 @@ describe('message.test.js', () => {
     m2.defineProperties(mb.messages, 'TEXT_NOTICE_DEFSDATA_READY')
 
     expect(typeof mb.messages['TEXT_NOTICE_DEFSDATA_READY'].format).toEqual('function')
-    expect(mb.messages['TEXT_NOTICE_DEFSDATA_READY'].format({requestType: 'foo type', lemma: 'foo lemma'})).toEqual(m2.formatFunc.format({requestType: 'foo type', lemma: 'foo lemma'}))
+    expect(mb.messages['TEXT_NOTICE_DEFSDATA_READY'].format({ requestType: 'foo type', lemma: 'foo lemma' })).toEqual(m2.formatFunc.format({ requestType: 'foo type', lemma: 'foo lemma' }))
   })
 })

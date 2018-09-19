@@ -1,5 +1,5 @@
 import TextQuoteSelector from './w3c/text-quote-selector'
-import {LanguageModelFactory} from 'alpheios-data-models'
+import { LanguageModelFactory } from 'alpheios-data-models'
 /**
  * This is a general-purpose, media abstract selector.
  * @property {string} selectedText - Selected text (usually a single word)

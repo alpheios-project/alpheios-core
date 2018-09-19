@@ -39,7 +39,7 @@ export default class OptionItem {
   }
 
   addValue (value, text) {
-    this.values.push({value: value, text: text})
+    this.values.push({ value: value, text: text })
     return this
   }
 

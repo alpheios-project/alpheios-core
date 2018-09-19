@@ -5,7 +5,7 @@ import LemmaTranslation from '../../src/vue-components/lemma-translation.vue'
 describe('lemma-translation.test.js', () => {
   let lemmaKey = 'capio-lat-verb-3rd-very frequent-Ox.Lat.Dict.-transitive'
   let translations = {}
-  translations[lemmaKey] = {glosses: ['taking/seizing; [usus ~ => getting ownership by continued possession];']}
+  translations[lemmaKey] = { glosses: ['taking/seizing; [usus ~ => getting ownership by continued possession];'] }
 
   let translationsNoValue = {}
 

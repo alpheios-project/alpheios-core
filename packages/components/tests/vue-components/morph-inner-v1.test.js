@@ -492,7 +492,7 @@ describe('morph-inner-v1.test.js', () => {
             inflections: [],
             lemma: {
               ID: '1',
-              features: {'frequency': { compareTo: () => { return 1 } }},
+              features: { 'frequency': { compareTo: () => { return 1 } } },
               languageCode: 'lat',
               languageID: LMF.getLanguageIdFromCode('lat'),
               word: 'foo-word',
@@ -501,7 +501,7 @@ describe('morph-inner-v1.test.js', () => {
             altLemmas: [
               {
                 ID: '2',
-                features: {'frequency': { compareTo: () => { return -1 } }},
+                features: { 'frequency': { compareTo: () => { return -1 } } },
                 languageCode: 'lat',
                 languageID: LMF.getLanguageIdFromCode('lat'),
                 word: 'foo-word',

@@ -1,5 +1,5 @@
 /* global Node, Event */
-import {Lexeme, Feature, Definition, LanguageModelFactory, Constants} from 'alpheios-data-models'
+import { Lexeme, Feature, Definition, LanguageModelFactory, Constants } from 'alpheios-data-models'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
@@ -21,7 +21,9 @@ const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
   [Constants.LANG_GREEK, 'Greek'],
   [Constants.LANG_ARABIC, 'Arabic'],
-  [Constants.LANG_PERSIAN, 'Persian']
+  [Constants.LANG_PERSIAN, 'Persian'],
+  [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
+
 ])
 
 export default class UIController {
@@ -107,6 +109,10 @@ export default class UIController {
           },
           inflectionsWaitState: false,
           inflectionsEnabled: false,
+          // Whether inflection browser is enabled for a language. We always show an inflection browser for now.
+          inflectionBrowserEnabled: true,
+          // Whether all table in an inflection browser should be collapsed
+          inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
           inflections: {
@@ -746,7 +752,7 @@ export default class UIController {
     let langID
     let langCode // eslint-disable-line
     // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
-    ;({languageID: langID, languageCode: langCode} = LanguageModelFactory.getLanguageAttrs(language))
+    ;({ languageID: langID, languageCode: langCode } = LanguageModelFactory.getLanguageAttrs(language))
     return languageNames.has(langID) ? languageNames.get(langID) : ''
   }
 
@@ -788,6 +794,7 @@ export default class UIController {
     this.panel.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
     this.panel.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
     this.panel.panelData.grammarAvailable = false
+    this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
     this.clear().open().changeTab('definitions')
     return this
   }
@@ -811,11 +818,16 @@ export default class UIController {
       if (l.provider) {
         providers.set(l.provider, 1)
       }
-      l.meaning.shortDefs.forEach((d) => {
-        if (d.provider) {
-          providers.set(d.provider, 1)
-        }
-      })
+      if (l.meaning && l.meaning.shortDefs) {
+        l.meaning.shortDefs.forEach((d) => {
+          if (d.provider) {
+            providers.set(d.provider, 1)
+          }
+        })
+      }
+      if (l.lemma && l.lemma.translation && l.lemma.translation.provider) {
+        providers.set(l.lemma.translation.provider, 1)
+      }
     })
     this.popup.popupData.providers = Array.from(providers.keys())
   }
@@ -876,6 +888,7 @@ export default class UIController {
     this.popup.translations = translations
     this.popup.popupData.translationsDataReady = true
     this.popup.popupData.updates = this.popup.popupData.updates + 1
+    this.updateProviders(homonym)
   }
 
   updatePageAnnotationData (data) {
@@ -929,12 +942,16 @@ export default class UIController {
     this.popup.popupData.inflDataReady = this.inflDataReady
   }
 
+  lexicalRequestComplete () {
+    this.panel.panelData.inflBrowserTablesCollapsed = null // Reset inflection browser tables state
+    this.popup.popupData.morphDataReady = true
+  }
+
   lexicalRequestSucceeded () {
     this.panel.panelData.inflectionsWaitState = false
   }
 
-  lexicalRequestFailed (rqstLanID) {
-    console.log(`lexical request failed, lang ID is ${rqstLanID}`)
+  lexicalRequestFailed () {
     this.panel.panelData.inflectionsWaitState = false
   }
 

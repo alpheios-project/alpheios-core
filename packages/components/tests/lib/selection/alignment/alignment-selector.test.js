@@ -29,7 +29,7 @@ describe('alignment-selector.test.js', () => {
   })
 
   it('1 AlignmentSelector - constructor applies settings, ', () => {
-    let alignment = new AlignmentSelector(document, {highlightClass: 'mockClass2'})
+    let alignment = new AlignmentSelector(document, { highlightClass: 'mockClass2' })
     // uses override highlightClass
     expect(alignment.settings.highlightClass).toEqual('mockClass2')
     // uses defaults for focusEvent and blurEvent
@@ -40,7 +40,7 @@ describe('alignment-selector.test.js', () => {
   it('2 AlignmentSelector - responds to focus event, ', () => {
     let mockEvent = document.createEvent('Event')
     mockEvent.initEvent('mouseenter', true, true)
-    let alignment = new AlignmentSelector(document, {highlightClass: 'mockClass2'})
+    let alignment = new AlignmentSelector(document, { highlightClass: 'mockClass2' })
     alignment.activate()
     jest.spyOn(alignment, 'focus')
     document.querySelector('#word1').dispatchEvent(mockEvent)
@@ -53,7 +53,7 @@ describe('alignment-selector.test.js', () => {
     let mockBlurEvent = document.createEvent('Event')
     mockFocusEvent.initEvent('mouseenter', true, true)
     mockBlurEvent.initEvent('mouseleave', true, true)
-    let alignment = new AlignmentSelector(document, {highlightClass: 'mockClass2'})
+    let alignment = new AlignmentSelector(document, { highlightClass: 'mockClass2' })
     alignment.activate()
     jest.spyOn(alignment, 'blur')
     document.querySelector('#word1').dispatchEvent(mockFocusEvent)
@@ -65,7 +65,7 @@ describe('alignment-selector.test.js', () => {
   it('3 AlignmentSelector - halts if disabled, ', () => {
     let mockEvent = document.createEvent('Event')
     mockEvent.initEvent('mouseenter', true, true)
-    let alignment = new AlignmentSelector(document, {highlightClass: 'mockClass2'})
+    let alignment = new AlignmentSelector(document, { highlightClass: 'mockClass2' })
     alignment.activate()
     jest.spyOn(alignment, 'focus')
     document.querySelector('#translation').classList.add('alpheios-alignment__disabled')
