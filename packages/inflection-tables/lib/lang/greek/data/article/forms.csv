@@ -1,8 +1,12 @@
 Form,Number,Case,Gender,Type,Primary
 τά,dual,accusative,feminine,regular,primary
+τώ,dual,accusative,feminine,regular,primary
 ταῖν,dual,dative,feminine,regular,primary
+τοῖν,dual,dative,feminine,regular,primary
 ταῖν,dual,genitive,feminine,regular,primary
+τοῖν,dual,genitive,feminine,regular,primary
 τά,dual,nominative,feminine,regular,primary
+τώ,dual,nominative,feminine,regular,primary
 τώ,dual,accusative,masculine,regular,primary
 τοῖν,dual,dative,masculine,regular,primary
 τοῖν,dual,genitive,masculine,regular,primary

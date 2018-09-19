@@ -103,7 +103,7 @@ export default class LatinView extends View {
       case Constants.GEND_MASCULINE: return `m.`
       case Constants.GEND_FEMININE: return `f.`
       case Constants.GEND_NEUTER: return `n.`
-      case LatinView.datasetConsts.GEND_MASCULINE_FEMININE: return `m./f.`
+      case LatinView.datasetConsts.GEND_MASCULINE_FEMININE: return `f./m.`
       default: return featureValue
     }
   }

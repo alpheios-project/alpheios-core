@@ -120,8 +120,8 @@ export default class GreekView extends View {
     if (featureValue === Constants.GEND_MASCULINE) { return 'm.' }
     if (featureValue === Constants.GEND_FEMININE) { return 'f.' }
     if (featureValue === Constants.GEND_NEUTER) { return 'n.' }
-    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE) { return 'm./f.' }
-    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER) { return 'm./f./n.' }
+    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE) { return 'f./m.' }
+    if (featureValue === GreekView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER) { return 'f./m./n.' }
     return featureValue
   }
 }
