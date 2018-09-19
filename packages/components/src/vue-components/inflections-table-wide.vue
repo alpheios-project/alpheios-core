@@ -12,13 +12,6 @@
 
         <template v-if="!state.collapsed">
             <div v-if="view.isImplemented && !view.hasPrerenderedTables" class="alpheios-inflections__table-ctrl-cont">
-                <div v-show="!view.canCollapse" class="alpheios-inflections__table-ctrl-cell uk-text-right">
-                    {{messages.INFLECT_MSG_TABLE_CANT_COLLAPSE}}
-                </div>
-
-                <div v-show="view.canCollapse && state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell">
-                    {{messages.INFLECT_MSG_TABLE_COLLAPSED}}
-                </div>
                 <div v-show="view.canCollapse && state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
                     <alph-tooltip tooltipDirection="bottom-right"
                                   :tooltipText="messages.TOOLTIP_INFLECT_SHOWFULL">
@@ -29,9 +22,6 @@
                     </alph-tooltip>
                 </div>
 
-                <div v-show="view.canCollapse && !state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell">
-                    {{messages.INFLECT_MSG_TABLE_EXPANDED}}
-                </div>
                 <div v-show="view.canCollapse && !state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
                     <alph-tooltip tooltipDirection="bottom-right"
                                   :tooltipText="messages.TOOLTIP_INFLECT_COLLAPSE">
@@ -41,7 +31,6 @@
                         </button>
                     </alph-tooltip>
                 </div>
-
             </div>
 
             <div v-if="!view.hasPrerenderedTables" :style="view.wideView.style"
@@ -242,7 +231,7 @@
         display: flex;
         width: 100%;
         margin-bottom: 0.2rem;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
 
     .alpheios-inflections__table-ctrl-cell {

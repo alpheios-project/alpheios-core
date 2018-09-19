@@ -109,7 +109,7 @@
   },
 
   "TOOLTIP_INFLECT_SHOWFULL": {
-    "message": "Show full Table",
+    "message": "Show full table",
     "description": "tooltip for show full table button on inflections panel",
     "component": "Panel"
   },
@@ -143,21 +143,6 @@
   "INFLECT_MSG_TABLE_NOT_IMPLEMENTED": {
     "message": "This table has not been implemented yet",
     "description": "tooltip to show instead of inflection table if the latter is not implemented",
-    "component": "Panel"
-  },
-  "INFLECT_MSG_TABLE_EXPANDED": {
-    "message": "This table shows all its columns. Click 'Collapse' to show the ones with matching endings only",
-    "description": "a message shown for inflection tables that are expanded",
-    "component": "Panel"
-  },
-  "INFLECT_MSG_TABLE_COLLAPSED": {
-    "message": "This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table",
-    "description": "a message shown for inflection tables that are collapsed",
-    "component": "Panel"
-  },
-  "INFLECT_MSG_TABLE_CANT_COLLAPSE": {
-    "message": "This table shows all its columns",
-    "description": "a message shown for inflection tables that cannot be collapsed or expanded",
     "component": "Panel"
   },
 

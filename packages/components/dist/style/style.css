@@ -9153,7 +9153,7 @@ img.alpheios-popup__logo {
   display: flex;
   width: 100%;
   margin-bottom: 0.2rem;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 .alpheios-inflections__table-ctrl-cell {
   flex-grow: 1;
