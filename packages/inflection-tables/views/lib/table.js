@@ -42,7 +42,8 @@ export default class Table {
     this.columns = this.constructColumns()
     this.rows = this.constructRows()
     this.options = options
-    this.canCollapse = this._hasAnyMatches()
+    // A table can collapse if there are some columns with suffix matches and some without
+    this.canCollapse = this._canCollapse()
     if (!this.canCollapse) {
       // If table cannot be collapsed or expanded it should always be shown in full form
       this.options.noSuffixMatchesHidden = false
@@ -367,19 +368,21 @@ export default class Table {
   }
 
   /**
-   * Check for any matched morphemes
+   * Checks wither a table can be collapsed
+   * @return {boolean} True if a table can collapse, false otherwise
+   * @private
    */
-  _hasAnyMatches () {
-    let hasMatches = false
+  _canCollapse () {
+    let colsWithMatches = 0
     if (this.headers.length > 0) {
       for (let headerCell of this.headers[0].cells) {
-        hasMatches = !!headerCell.columns.find(column => column.suffixMatches)
-        if (hasMatches) {
-          break
+        if (headerCell.columns.some(column => column.suffixMatches)) {
+          colsWithMatches++
         }
       }
     }
-    return hasMatches
+    // A table can collapse if it has all columns with matches, but not every column has matches in it.
+    return colsWithMatches > 0 && colsWithMatches < this.headers[0].cells.length
   }
 
   /**

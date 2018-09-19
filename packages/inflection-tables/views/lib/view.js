@@ -288,6 +288,10 @@ export default class View {
       : new Map()
   }
 
+  get isEmptyColumnsHidden () {
+    return this.table.options.emptyColumnsHidden
+  }
+
   /**
    * Hide or show column groups with no morphemes depending on the `value`.
    * @param {boolean} value - Whether to hide or show column groups with no morphemes.
@@ -306,6 +310,10 @@ export default class View {
       this.wideView.render()
     }
     return this
+  }
+
+  get isNoSuffixMatchesGroupsHidden () {
+    return this.table.options.noSuffixMatchesHidden
   }
 
   /**
