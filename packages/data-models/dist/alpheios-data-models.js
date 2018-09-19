@@ -2885,11 +2885,24 @@ class Inflection {
     this.example = example
   }
 
+  /**
+   * Returns a full form of a word using ' - ' as a divider for suffix-based inflections.
+   * @return {string} A word form.
+   */
   get form () {
-    let form, prefix, suffix, divider, stem
+    const divider = this.stem ? ' - ' : ''
+    return this.getForm(divider)
+  }
 
-    stem = this.stem ? this.stem : ''
-    divider = this.stem ? ' - ' : ''
+  /**
+   * Returns a full form of a word using user specified divider for suffix-based inflections.
+   * @param {string} divider - A divider to use between stem and suffix.
+   * @return {string} A word form.
+   */
+  getForm (divider = '') {
+    let form, prefix, suffix
+
+    let stem = this.stem ? this.stem : ''
 
     if (this.model.direction === _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_DIR_RTL"]) {
       prefix = this.prefix ? divider + this.prefix : ''
@@ -2925,7 +2938,23 @@ class Inflection {
     }
   }
 
-  compareWithWordDependsOnType (word, className, normalize = true) {
+  /**
+   * Compares if two words are the same. Options allows to specify
+   * comparison algorithms for cases when word info is not fully correct.
+   * @param {string} word - A word or suffix to compare with inflection.
+   * @param {string} className - A type of word: 'Suffix' or "Form'.
+   * @param {comparison} options - These settings define comparison algorithm:
+   *        'normalize' - normalize word and inflection before comparison.
+   *        'fuzzySuffix' - if suffix contained in a 'word' does not match our suffix data,
+   *                        try to find a match by checking if inflection full form
+   *                        ends with this suffix.
+   * @return {boolean} True for match, false otherwise.
+   */
+  smartWordCompare (word, className, options = {}) {
+    // Default values
+    if (!options.hasOwnProperty(`normalize`)) { options.normalize = true }
+    if (!options.hasOwnProperty(`fuzzySuffix`)) { options.fuzzySuffix = false }
+
     let value
     if (!this.constraints.irregular) {
       value = this.constraints.suffixBased ? this.suffix : this.form
@@ -2936,12 +2965,23 @@ class Inflection {
         value = this[_feature_js__WEBPACK_IMPORTED_MODULE_0__["default"].types.fullForm] ? this[_feature_js__WEBPACK_IMPORTED_MODULE_0__["default"].types.fullForm].value : this.form
       }
     }
-    return this.modelCompareWords(word, value)
+
+    let matchResult = this.modelCompareWords(word, value, options.normalize)
+
+    if (!matchResult && className === 'Suffix' && options.fuzzySuffix) {
+      let form = this.getForm()
+      if (form && word && form.length >= word.length) {
+        let altSuffix = form.substring(form.length - word.length)
+        matchResult = this.modelCompareWords(word, altSuffix, options.normalize)
+      }
+    }
+
+    return matchResult
   }
 
   compareWithWord (word, normalize = true) {
     const value = this.constraints.suffixBased ? this.suffix : this.form
-    return this.modelCompareWords(word, value)
+    return this.modelCompareWords(word, value, normalize)
   }
 
   /**
@@ -4674,8 +4714,6 @@ class ResourceProvider {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-
 /**
  * stores a scope of lemma translations from python service
  * Contains a primary Lemma object
@@ -4696,21 +4734,16 @@ class Translation {
     this.glosses = translations
   }
 
-  static readTranslationFromJSONList (lemma, languageCode, translationsList, provider) {
+  static readTranslationFromJSONList (lemma, languageCode, translationsList) {
     if (!translationsList || !Array.isArray(translationsList)) {
       throw new Error('Recieved not proper translation list', translationsList)
     }
     let curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
-    let translation = new Translation(lemma, languageCode, curTranslations.translations)
-    if (provider) {
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].getProxy(provider, translation)
-    } else {
-      return translation
-    }
+    return new Translation(lemma, languageCode, curTranslations.translations)
   }
 
-  static loadTranslations (lemma, languageCode, translationsList, provider) {
-    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList, provider))
+  static loadTranslations (lemma, languageCode, translationsList) {
+    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList))
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Translation);

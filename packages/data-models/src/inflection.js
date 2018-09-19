@@ -71,11 +71,24 @@ class Inflection {
     this.example = example
   }
 
+  /**
+   * Returns a full form of a word using ' - ' as a divider for suffix-based inflections.
+   * @return {string} A word form.
+   */
   get form () {
-    let form, prefix, suffix, divider, stem
+    const divider = this.stem ? ' - ' : ''
+    return this.getForm(divider)
+  }
 
-    stem = this.stem ? this.stem : ''
-    divider = this.stem ? ' - ' : ''
+  /**
+   * Returns a full form of a word using user specified divider for suffix-based inflections.
+   * @param {string} divider - A divider to use between stem and suffix.
+   * @return {string} A word form.
+   */
+  getForm (divider = '') {
+    let form, prefix, suffix
+
+    let stem = this.stem ? this.stem : ''
 
     if (this.model.direction === Constants.LANG_DIR_RTL) {
       prefix = this.prefix ? divider + this.prefix : ''
@@ -111,7 +124,23 @@ class Inflection {
     }
   }
 
-  compareWithWordDependsOnType (word, className, normalize = true) {
+  /**
+   * Compares if two words are the same. Options allows to specify
+   * comparison algorithms for cases when word info is not fully correct.
+   * @param {string} word - A word or suffix to compare with inflection.
+   * @param {string} className - A type of word: 'Suffix' or "Form'.
+   * @param {comparison} options - These settings define comparison algorithm:
+   *        'normalize' - normalize word and inflection before comparison.
+   *        'fuzzySuffix' - if suffix contained in a 'word' does not match our suffix data,
+   *                        try to find a match by checking if inflection full form
+   *                        ends with this suffix.
+   * @return {boolean} True for match, false otherwise.
+   */
+  smartWordCompare (word, className, options = {}) {
+    // Default values
+    if (!options.hasOwnProperty(`normalize`)) { options.normalize = true }
+    if (!options.hasOwnProperty(`fuzzySuffix`)) { options.fuzzySuffix = false }
+
     let value
     if (!this.constraints.irregular) {
       value = this.constraints.suffixBased ? this.suffix : this.form
@@ -122,12 +151,23 @@ class Inflection {
         value = this[Feature.types.fullForm] ? this[Feature.types.fullForm].value : this.form
       }
     }
-    return this.modelCompareWords(word, value)
+
+    let matchResult = this.modelCompareWords(word, value, options.normalize)
+
+    if (!matchResult && className === 'Suffix' && options.fuzzySuffix) {
+      let form = this.getForm()
+      if (form && word && form.length >= word.length) {
+        let altSuffix = form.substring(form.length - word.length)
+        matchResult = this.modelCompareWords(word, altSuffix, options.normalize)
+      }
+    }
+
+    return matchResult
   }
 
   compareWithWord (word, normalize = true) {
     const value = this.constraints.suffixBased ? this.suffix : this.form
-    return this.modelCompareWords(word, value)
+    return this.modelCompareWords(word, value, normalize)
   }
 
   /**
