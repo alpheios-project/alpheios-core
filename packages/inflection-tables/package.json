@@ -1,6 +1,6 @@
 {
   "name": "alpheios-inflection-tables",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Inflection library for an Alpheios project",
   "main": "dist/alpheios-inflection-tables.min.js",
   "directories": {
@@ -44,7 +44,7 @@
     "papaparse": "^4.6.0",
     "regenerator-runtime": "^0.12.1",
     "standard": "^12.0.1",
-    "uglifyjs-webpack-plugin": "^2.0.0",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "uuid": "^3.3.2",
     "whatwg-fetch": "^3.0.0",
     "xmldom": "^0.1.27",
