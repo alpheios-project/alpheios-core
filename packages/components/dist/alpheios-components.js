@@ -9328,10 +9328,16 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     morphemeClasses: function (morpheme) {
-      return {
-        ['infl-suff']: true,
-        ['infl-suff--suffix-match']: morpheme.match.showMatches && morpheme.match.suffixMatch,
-        ['infl-suff--full-match']: morpheme.match.showMatches && morpheme.match.fullMatch,
+      if (this.inflBrowserTable) {
+        return {
+          ['infl-suff']: true
+        }
+      } else {
+        return {
+          ['infl-suff']: true,
+          ['infl-suff--suffix-match']: morpheme.match.suffixMatch,
+          ['infl-suff--full-match']: morpheme.match.fullMatch
+        }
       }
     },
 

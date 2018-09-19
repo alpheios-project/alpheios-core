@@ -168,10 +168,16 @@
       },
 
       morphemeClasses: function (morpheme) {
-        return {
-          ['infl-suff']: true,
-          ['infl-suff--suffix-match']: morpheme.match.showMatches && morpheme.match.suffixMatch,
-          ['infl-suff--full-match']: morpheme.match.showMatches && morpheme.match.fullMatch,
+        if (this.inflBrowserTable) {
+          return {
+            ['infl-suff']: true
+          }
+        } else {
+          return {
+            ['infl-suff']: true,
+            ['infl-suff--suffix-match']: morpheme.match.suffixMatch,
+            ['infl-suff--full-match']: morpheme.match.fullMatch
+          }
         }
       },
 
@@ -255,7 +261,6 @@
 
     .auk .uk-button-small.alpheios-inflections__control-btn {
         line-height: 1.6;
-        font-size: .625rem;
         white-space: nowrap;
     }
 

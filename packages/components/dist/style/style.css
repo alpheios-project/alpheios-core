@@ -9166,7 +9166,6 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
 }
 .auk .uk-button-small.alpheios-inflections__control-btn {
   line-height: 1.6;
-  font-size: .625rem;
   white-space: nowrap;
 }
 .auk .uk-button-small.alpheios-inflections__control-btn--right {
@@ -9474,7 +9473,6 @@ h4.alpheios-inflections__additional_title {
 .auk .uk-select.alpheios-inflections__view-selector {
   height: auto !important;
   max-width: 220px;
-  font-size: .625rem;
   line-height: 1.6;
 }
 .alpheios-inflections__actions {

@@ -382,7 +382,6 @@
     .#{$alpheios-uikit-namespace} .uk-select.alpheios-inflections__view-selector {
         height: auto !important;
         max-width: 220px;
-        font-size: .625rem;
         line-height: 1.6;
     }
 
