@@ -48,7 +48,7 @@ class Inflection {
     this.stem = stem
     this.languageID = undefined
     this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLanguageAttrs(language))
     this.model = LMF.getLanguageModel(this.languageID)
     this.features = new Set() // Names of features of this inflection
 

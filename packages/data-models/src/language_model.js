@@ -509,7 +509,7 @@ class LanguageModel {
           // grouping on adverbs without case or tense
           // everything else
         }
-        let groupingKey = new InflectionGroupingKey(infl, [keyprop], {isCaseInflectionSet: isCaseInflectionSet})
+        let groupingKey = new InflectionGroupingKey(infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
         let groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)

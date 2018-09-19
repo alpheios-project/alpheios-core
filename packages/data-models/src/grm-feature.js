@@ -37,7 +37,7 @@ class GrmFeature {
     this.type = type
     this.languageID = undefined
     this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLanguageAttrs(language))
     this.sortOrder = sortOrder
   }
 

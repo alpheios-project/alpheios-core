@@ -18,7 +18,7 @@ describe('FeatureImporter object', () => {
     let importer = new FeatureImporter()
     importer.map('value1', 'valueOne').map('value2', 'valueTwo')
     expect(importer).toEqual({
-      hash: {'value1': 'valueOne', 'value2': 'valueTwo'},
+      hash: { 'value1': 'valueOne', 'value2': 'valueTwo' },
       returnUnknown: false
     })
   })
@@ -28,7 +28,7 @@ describe('FeatureImporter object', () => {
     importer.map('value1', 'valueOne').map('value2', 'valueTwo')
     importer.map('value1', 'newValueOne')
     expect(importer).toEqual({
-      hash: {'value1': 'newValueOne', 'value2': 'valueTwo'},
+      hash: { 'value1': 'newValueOne', 'value2': 'valueTwo' },
       returnUnknown: false
     })
   })

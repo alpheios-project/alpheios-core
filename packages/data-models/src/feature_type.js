@@ -35,7 +35,7 @@ class FeatureType {
     this.type = type
     this.languageID = undefined
     this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = LMF.getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLanguageAttrs(language))
 
     /*
      This is a sort order index for a grammatical feature values. It is determined by the order of values in

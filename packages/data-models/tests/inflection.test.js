@@ -76,7 +76,7 @@ describe('inflection.test.js', () => {
       gender: {
         languageID: Constants.LANG_GREEK,
         type: 'gender',
-        '_data': [{value: 'masculine', sortOrder: 1}]
+        '_data': [{ value: 'masculine', sortOrder: 1 }]
       }
     })
   })

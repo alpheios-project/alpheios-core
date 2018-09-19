@@ -15,11 +15,11 @@ describe('FeatureType', () => {
   test('Should be initialized properly', () => {
     expect(featureType).toMatchObject({
       '_orderIndex': ['first', ['second', 'third'], 'fourth'],
-      '_orderLookup': {'first': 0, 'second': 1, 'third': 1, 'fourth': 2},
-      'first': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'first'}]},
-      'second': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'second'}]},
-      'third': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'third'}]},
-      'fourth': {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'fourth'}]},
+      '_orderLookup': { 'first': 0, 'second': 1, 'third': 1, 'fourth': 2 },
+      'first': { 'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{ 'sortOrder': 1, 'value': 'first' }] },
+      'second': { 'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{ 'sortOrder': 1, 'value': 'second' }] },
+      'third': { 'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{ 'sortOrder': 1, 'value': 'third' }] },
+      'fourth': { 'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{ 'sortOrder': 1, 'value': 'fourth' }] },
       'languageCode': 'lat',
       'languageID': Constants.LANG_LATIN,
       'type': Feature.types.declension
@@ -43,7 +43,7 @@ describe('FeatureType', () => {
     expect(featureType.get(value)).toMatchObject({
       'languageID': Constants.LANG_LATIN,
       'type': Feature.types.declension,
-      '_data': [{'sortOrder': 1, 'value': 'some value'}]
+      '_data': [{ 'sortOrder': 1, 'value': 'some value' }]
     })
   })
 
@@ -67,7 +67,7 @@ describe('FeatureType', () => {
     featureType.addImporter('some value')
     expect(featureType).toMatchObject({
       'importer': {
-        'some value': {hash: {}}
+        'some value': { hash: {} }
       }
     })
   })
@@ -82,9 +82,9 @@ describe('FeatureType', () => {
 
   test('orderedFeatures() should return type features in an indexed order.', () => {
     expect(featureType.orderedFeatures).toMatchObject([
-      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'first'}]},
-      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 2, 'value': 'second'}, {'sortOrder': 1, 'value': 'third'}]},
-      {'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{'sortOrder': 1, 'value': 'fourth'}]}
+      { 'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{ 'sortOrder': 1, 'value': 'first' }] },
+      { 'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{ 'sortOrder': 2, 'value': 'second' }, { 'sortOrder': 1, 'value': 'third' }] },
+      { 'languageID': Constants.LANG_LATIN, 'type': 'declension', '_data': [{ 'sortOrder': 1, 'value': 'fourth' }] }
     ])
   })
 
@@ -93,7 +93,7 @@ describe('FeatureType', () => {
   })
 
   test('orderLookup method should return a new properly initialized Importer object', () => {
-    expect(featureType.orderLookup).toEqual({'first': 0, 'second': 1, 'third': 1, 'fourth': 2})
+    expect(featureType.orderLookup).toEqual({ 'first': 0, 'second': 1, 'third': 1, 'fourth': 2 })
   })
 
   test('order setter should change an order of items properly', () => {
@@ -104,7 +104,7 @@ describe('FeatureType', () => {
     featureType.order = [[f4, f2], f3, f1]
     expect(featureType).toEqual(expect.objectContaining({
       '_orderIndex': [['fourth', 'second'], 'third', 'first'],
-      '_orderLookup': {'first': 2, 'fourth': 0, 'second': 0, 'third': 1}
+      '_orderLookup': { 'first': 2, 'fourth': 0, 'second': 0, 'third': 1 }
     }))
   })
 

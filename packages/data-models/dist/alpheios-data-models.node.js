@@ -1643,7 +1643,7 @@ class FeatureType {
     this.type = type
     this.languageID = undefined
     this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = _language_model_factory__WEBPACK_IMPORTED_MODULE_2__["default"].getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory__WEBPACK_IMPORTED_MODULE_2__["default"].getLanguageAttrs(language))
 
     /*
      This is a sort order index for a grammatical feature values. It is determined by the order of values in
@@ -2315,7 +2315,7 @@ class GrmFeature {
     this.type = type
     this.languageID = undefined
     this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(language))
     this.sortOrder = sortOrder
   }
 
@@ -2836,7 +2836,7 @@ class Inflection {
     this.stem = stem
     this.languageID = undefined
     this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageAttrs(language))
     this.model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
     this.features = new Set() // Names of features of this inflection
 
@@ -3722,7 +3722,7 @@ class LanguageModel {
           // grouping on adverbs without case or tense
           // everything else
         }
-        let groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [keyprop], {isCaseInflectionSet: isCaseInflectionSet})
+        let groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
         let groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)
@@ -4230,7 +4230,7 @@ class Lemma {
     // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
-    ;({languageID: this.languageID, languageCode: this.languageCode} = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(languageID))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(languageID))
 
     this.word = word
     this.principalParts = principalParts
@@ -4688,6 +4688,8 @@ class ResourceProvider {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+
 /**
  * stores a scope of lemma translations from python service
  * Contains a primary Lemma object
@@ -4708,16 +4710,21 @@ class Translation {
     this.glosses = translations
   }
 
-  static readTranslationFromJSONList (lemma, languageCode, translationsList) {
+  static readTranslationFromJSONList (lemma, languageCode, translationsList, provider) {
     if (!translationsList || !Array.isArray(translationsList)) {
       throw new Error('Recieved not proper translation list', translationsList)
     }
     let curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
-    return new Translation(lemma, languageCode, curTranslations.translations)
+    let translation = new Translation(lemma, languageCode, curTranslations.translations)
+    if (provider) {
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].getProxy(provider, translation)
+    } else {
+      return translation
+    }
   }
 
-  static loadTranslations (lemma, languageCode, translationsList) {
-    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList))
+  static loadTranslations (lemma, languageCode, translationsList, provider) {
+    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList, provider))
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Translation);

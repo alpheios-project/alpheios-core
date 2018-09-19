@@ -15,7 +15,7 @@ describe('GroupingKey object', () => {
       new Feature(Feature.types.part, 'verb', Constants.LANG_LATIN),
       new Feature(Feature.types.gender, ['feminine', 'masculine'], Constants.LANG_LATIN)
     ])
-    let groupingKey = new InflectionGroupingKey(one, [Feature.types.part, Feature.types.gender], {foo: 'bar'})
+    let groupingKey = new InflectionGroupingKey(one, [Feature.types.part, Feature.types.gender], { foo: 'bar' })
     let stringValue = groupingKey.toString()
     expect(stringValue).toEqual('bar feminine,masculine verb')
   })
