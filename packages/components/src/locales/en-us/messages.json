@@ -109,12 +109,12 @@
   },
 
   "TOOLTIP_INFLECT_SHOWFULL": {
-    "message": "Show full table",
+    "message": "This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table",
     "description": "tooltip for show full table button on inflections panel",
     "component": "Panel"
   },
   "TOOLTIP_INFLECT_COLLAPSE": {
-    "message": "Show collapsed table",
+    "message": "This table shows all its columns. Click 'Collapse' to show the ones with matching endings only",
     "description": "tooltip for collapse table button on inflections panel",
     "component": "Panel"
   },
