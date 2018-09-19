@@ -373,6 +373,20 @@ class LanguageModel {
     return []
   }
 
+  /**
+   * Compare two words with language specific logic
+   * @param {String} wordA
+   * @param {String} wordB
+   * @param {Boolean} normalize - whether or not to apply normalization algorithms
+   */
+  static compareWords (wordA, wordB, normalize = true) {
+    if (normalize) {
+      return this.normalizeWord(wordA) === this.normalizeWord(wordB)
+    } else {
+      return wordA === wordB
+    }
+  }
+
   alternateWordEncodings (word, preceding, following, encoding) {
     console.warn(`Please use static "alternateWordEncodings" instead`)
     return this.constructor.alternateWordEncodings(word, preceding, following, encoding)

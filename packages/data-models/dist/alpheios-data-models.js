@@ -2267,9 +2267,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
       form => {
         let match = false
         if (form.value) {
-          match = normalize
-            ? GreekLanguageModel.normalizeWord(form.value) === GreekLanguageModel.normalizeWord(word)
-            : form.value === word
+          match = GreekLanguageModel.compareWords(form.value, word, normalize)
         }
         return match
       }
@@ -2284,6 +2282,29 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     if (matchingValues.size > 0) {
       return new _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"](_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
     }
+  }
+
+  /**
+   * @override LanguageModel#compareWords
+   */
+  static compareWords (wordA, wordB, normalize = true) {
+    let matched = false
+    if (normalize) {
+      let altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
+      let altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
+      for (let i = 0; i < altWordA.length; i++) {
+        matched = altWordA[i] === altWordB[i]
+        if (matched) {
+          break
+        }
+      }
+      if (!matched) {
+        matched = GreekLanguageModel.normalizeWord(wordA) === GreekLanguageModel.normalizeWord(wordB)
+      }
+    } else {
+      matched = wordA === wordB
+    }
+    return matched
   }
 }
 
@@ -2993,23 +3014,7 @@ class Inflection {
    */
   modelCompareWords (wordA, wordB, normalize = true) {
     const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
-    let matched = false
-    if (normalize) {
-      let altWordA = model.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
-      let altWordB = model.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
-      for (let i = 0; i < altWordA.length; i++) {
-        matched = altWordA[i] === altWordB[i]
-        if (matched) {
-          break
-        }
-      }
-      if (!matched) {
-        matched = model.normalizeWord(wordA) === model.normalizeWord(wordB)
-      }
-    } else {
-      matched = wordA === wordB
-    }
-    return matched
+    return model.compareWords(wordA, wordB, normalize)
   }
 
   /**
@@ -3610,6 +3615,20 @@ class LanguageModel {
    */
   static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
     return []
+  }
+
+  /**
+   * Compare two words with language specific logic
+   * @param {String} wordA
+   * @param {String} wordB
+   * @param {Boolean} normalize - whether or not to apply normalization algorithms
+   */
+  static compareWords (wordA, wordB, normalize = true) {
+    if (normalize) {
+      return this.normalizeWord(wordA) === this.normalizeWord(wordB)
+    } else {
+      return wordA === wordB
+    }
   }
 
   alternateWordEncodings (word, preceding, following, encoding) {

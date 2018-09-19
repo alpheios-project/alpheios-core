@@ -179,23 +179,7 @@ class Inflection {
    */
   modelCompareWords (wordA, wordB, normalize = true) {
     const model = LMF.getLanguageModel(this.languageID)
-    let matched = false
-    if (normalize) {
-      let altWordA = model.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
-      let altWordB = model.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
-      for (let i = 0; i < altWordA.length; i++) {
-        matched = altWordA[i] === altWordB[i]
-        if (matched) {
-          break
-        }
-      }
-      if (!matched) {
-        matched = model.normalizeWord(wordA) === model.normalizeWord(wordB)
-      }
-    } else {
-      matched = wordA === wordB
-    }
-    return matched
+    return model.compareWords(wordA, wordB, normalize)
   }
 
   /**

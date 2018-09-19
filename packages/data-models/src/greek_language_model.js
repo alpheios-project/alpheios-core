@@ -264,9 +264,7 @@ export default class GreekLanguageModel extends LanguageModel {
       form => {
         let match = false
         if (form.value) {
-          match = normalize
-            ? GreekLanguageModel.normalizeWord(form.value) === GreekLanguageModel.normalizeWord(word)
-            : form.value === word
+          match = GreekLanguageModel.compareWords(form.value, word, normalize)
         }
         return match
       }
@@ -281,5 +279,28 @@ export default class GreekLanguageModel extends LanguageModel {
     if (matchingValues.size > 0) {
       return new Feature(Feature.types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
     }
+  }
+
+  /**
+   * @override LanguageModel#compareWords
+   */
+  static compareWords (wordA, wordB, normalize = true) {
+    let matched = false
+    if (normalize) {
+      let altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
+      let altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
+      for (let i = 0; i < altWordA.length; i++) {
+        matched = altWordA[i] === altWordB[i]
+        if (matched) {
+          break
+        }
+      }
+      if (!matched) {
+        matched = GreekLanguageModel.normalizeWord(wordA) === GreekLanguageModel.normalizeWord(wordB)
+      }
+    } else {
+      matched = wordA === wordB
+    }
+    return matched
   }
 }

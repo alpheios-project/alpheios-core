@@ -111,4 +111,10 @@ describe('latin_language_model.js', () => {
       pronounClassRequired: false
     }))
   })
+
+  it('11 compareWords respects normalization', () => {
+    expect(latinModel.compareWords('erās', 'eras', true)).toBeTruthy()
+    // and are not equal if we don't normalize
+    expect(latinModel.compareWords('erās', 'eras', false)).toBeFalsy()
+  })
 })

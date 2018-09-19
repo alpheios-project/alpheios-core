@@ -119,8 +119,14 @@ describe('greek_language_model.j', () => {
     expect(greekModel.getPronounClasses([form3], '')).toBeUndefined()
   })
 
-  it('3 GreekLanguageModel - alternateWordEncodings - additional encodings strip diacritics for inflections', () => {
+  it('11 GreekLanguageModel - alternateWordEncodings - additional encodings strip diacritics for inflections', () => {
     let word = 'συνεχής'.normalize('NFD')
     expect(greekModel.alternateWordEncodings(word, null, null, 'strippedDiacritics')).toEqual(['συνεχης'])
+  })
+
+  it('12 compareWords respects normalization', () => {
+    expect(greekModel.compareWords('συνεχής', 'συνεχης', true)).toBeTruthy()
+    // and are not equal if we don't normalize
+    expect(greekModel.compareWords('συνεχής', 'συνεχης', false)).toBeFalsy()
   })
 })
