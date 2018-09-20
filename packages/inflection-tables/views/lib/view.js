@@ -194,7 +194,7 @@ export default class View {
   static getMatchingInstances (homonym, locale) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       let inflectionData = this.getInflectionsData(homonym)
-      return [new this(homonym, inflectionData, locale)]
+      return [new this(homonym, inflectionData, locale).render()]
     }
     return []
   }
@@ -380,7 +380,7 @@ export default class View {
 
   static getStandardFormInstance (options, locale = 'en-US') {
     let homonym = this.createStandardFormHomonym(options)
-    let inflectionData = this.getInflectionsData(homonym, { findMatches: true })
+    let inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
     let view = new this(homonym, inflectionData, locale)
     if (options.title) {

@@ -61,15 +61,16 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   /**
    * Gets inflection data for a homonym. For this view we need to use irregular verb inflections only.
    * @param {Homonym} homonym - A homonym for which inflection data needs to be retrieved
+   * @param {Object} options
    * @return {InflectionSet} Resulting inflection set.
    */
-  static getInflectionsData (homonym) {
+  static getInflectionsData (homonym, options) {
     // Select only those inflections that are required for this view
     let inflections = homonym.inflections.filter(
       i => i[Feature.types.part].value === this.mainPartOfSpeech &&
         i.constraints && i.constraints.irregular
     )
-    return this.dataset.createInflectionSet(this.mainPartOfSpeech, inflections)
+    return this.dataset.createInflectionSet(this.mainPartOfSpeech, inflections, options)
   }
 
   /**
