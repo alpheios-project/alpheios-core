@@ -121,6 +121,7 @@
         this.state.collapsed = !this.state.collapsed
         this.view.wideView.collapsed = this.state.collapsed
         this.$emit('interaction')
+        this.$emit('widthchange') // When view is open, we might need to adjust a panel width
       },
 
       hideNoSuffixGroups: function () {

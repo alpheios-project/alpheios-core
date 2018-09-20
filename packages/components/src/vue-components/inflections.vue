@@ -81,7 +81,8 @@
         </div>
 
         <inflection-browser v-if="inflectionBrowserEnabled" :language-id="languageID" :messages="messages"
-                            :infl-browser-tables-collapsed="inflBrowserTablesCollapsed" @interaction="inflTableInteraction">
+                            :infl-browser-tables-collapsed="inflBrowserTablesCollapsed"
+                            @widthchange="updateWidth" @interaction="inflTableInteraction">
         </inflection-browser>
     </div>
 </template>
@@ -180,7 +181,6 @@
         htmlElements: {
           content: undefined,
         },
-        suppColors: ['rgb(208,255,254)', 'rgb(255,253,219)', 'rgb(228,255,222)', 'rgb(255,211,253)', 'rgb(255,231,211)'],
         canCollapse: false // Whether a selected view can be expanded or collapsed (it can't if has no suffix matches)
       }
     },
