@@ -11,7 +11,7 @@
         </h3>
 
         <template v-if="!state.collapsed">
-            <div v-if="view.isImplemented && !view.hasPrerenderedTables" class="alpheios-inflections__table-ctrl-cont">
+            <div v-if="view.isImplemented && !view.hasPrerenderedTables && !inflBrowserTable" class="alpheios-inflections__table-ctrl-cont">
                 <div v-show="view.canCollapse && state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
                     <alph-tooltip tooltipDirection="bottom-right"
                                   :tooltipText="messages.TOOLTIP_INFLECT_SHOWFULL">
