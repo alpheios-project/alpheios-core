@@ -39,8 +39,8 @@ export default class GreekAdjectiveView extends GreekView {
       ]
     } else {
       return [
-        this.featureMap.get(Constants.GEND_MASCULINE),
         this.featureMap.get(Constants.GEND_FEMININE),
+        this.featureMap.get(Constants.GEND_MASCULINE),
         this.featureMap.get(Constants.GEND_NEUTER)
       ]
     }

@@ -50,8 +50,8 @@ export default class GreekLemmaGenderPronounView extends GreekPronounView {
 
   static getOrderedGenders () {
     return [
-      this.featureMap.get(Constants.GEND_MASCULINE),
       this.featureMap.get(Constants.GEND_FEMININE),
+      this.featureMap.get(Constants.GEND_MASCULINE),
       this.featureMap.get(Constants.GEND_NEUTER),
       this.featureMap.get(GreekPronounView.datasetConsts.GEND_MASCULINE_FEMININE_NEUTER)
     ]

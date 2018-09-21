@@ -13520,8 +13520,8 @@ class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORT
       ]
     } else {
       return [
-        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
       ]
     }
@@ -13774,8 +13774,8 @@ class GreekView extends _lib_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
       ]
     } else {
       return [
-        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
       ]
     }
@@ -13921,8 +13921,8 @@ class GreekNounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MO
       ]
     } else {
       return [
-        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
       ]
     }
@@ -14021,8 +14021,8 @@ class GreekNumeralView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["defa
       ]
     } else {
       return [
-        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+        this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
         this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
       ]
     }
@@ -14045,8 +14045,8 @@ class GreekNumeralView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["defa
     if (featureValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE) { return 'm.' }
     if (featureValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE) { return 'f.' }
     if (featureValue === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER) { return 'n.' }
-    if (featureValue === _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["default"].datasetConsts.GEND_MASCULINE_FEMININE) { return 'm./f.' }
-    if (featureValue === _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["default"].datasetConsts.GEND_MASCULINE_FEMININE_NEUTER) { return 'm./f./n.' }
+    if (featureValue === _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["default"].datasetConsts.GEND_MASCULINE_FEMININE) { return 'f./m.' }
+    if (featureValue === _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["default"].datasetConsts.GEND_MASCULINE_FEMININE_NEUTER) { return 'f./m./n.' }
     return featureValue
   }
 }
@@ -14120,8 +14120,8 @@ class GreekGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
 
   static getOrderedGenders () {
     return [
-      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
       this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
       this.featureMap.get(_greek_view_js__WEBPACK_IMPORTED_MODULE_1__["default"].datasetConsts.GEND_MASCULINE_FEMININE),
       this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER),
       this.featureMap.get(_greek_view_js__WEBPACK_IMPORTED_MODULE_1__["default"].datasetConsts.GEND_MASCULINE_FEMININE_NEUTER)
@@ -14199,8 +14199,8 @@ class GreekLemmaGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORT
 
   static getOrderedGenders () {
     return [
-      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
       this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
       this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER),
       this.featureMap.get(_greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_1__["default"].datasetConsts.GEND_MASCULINE_FEMININE_NEUTER)
     ]
@@ -14266,8 +14266,8 @@ class GreekPersonGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPOR
 
   static getOrderedGenders () {
     return [
-      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
       this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_FEMININE),
+      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_MASCULINE),
       this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].GEND_NEUTER)
     ]
   }
