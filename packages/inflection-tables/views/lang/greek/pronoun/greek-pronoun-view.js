@@ -52,9 +52,9 @@ export default class GreekPronounView extends GreekView {
    * @param {Inflection} inflections - A list of inflections.
    * @return {string} A name of a view's class name or an empty string if class cannot be determined.
    */
-  static getClassFromInflection (inflections) {
+  static getClassesFromInflection (inflections) {
     if (inflections && inflections.length > 0 && inflections[0][Feature.types.grmClass]) {
-      return inflections[0][Feature.types.grmClass].value
+      return inflections[0][Feature.types.grmClass].values
     }
     return ''
   }
