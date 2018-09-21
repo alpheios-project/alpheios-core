@@ -14350,7 +14350,9 @@ var render = function() {
             ? [
                 _vm.view.wideView
                   ? _c("div", [
-                      _vm.view.isImplemented && !_vm.view.hasPrerenderedTables
+                      _vm.view.isImplemented &&
+                      !_vm.view.hasPrerenderedTables &&
+                      !_vm.inflBrowserTable
                         ? _c(
                             "div",
                             {
@@ -16041,7 +16043,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("info-icon", { staticClass: "icon" })],
+                      [_c("info-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
@@ -16067,7 +16069,9 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("definitions-icon", { staticClass: "icon" })],
+                      [
+                        _c("definitions-icon", { staticClass: "alpheios-icon" })
+                      ],
                       1
                     )
                   ]
@@ -16093,7 +16097,9 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("inflections-icon", { staticClass: "icon" })],
+                      [
+                        _c("inflections-icon", { staticClass: "alpheios-icon" })
+                      ],
                       1
                     )
                   ]
@@ -16127,7 +16133,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("grammar-icon", { staticClass: "icon" })],
+                      [_c("grammar-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
@@ -16161,7 +16167,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("treebank-icon", { staticClass: "icon" })],
+                      [_c("treebank-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
@@ -16187,7 +16193,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("options-icon", { staticClass: "icon" })],
+                      [_c("options-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
@@ -16221,7 +16227,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("status-icon", { staticClass: "icon" })],
+                      [_c("status-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
