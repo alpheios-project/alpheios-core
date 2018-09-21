@@ -9,7 +9,9 @@ export default class GreekAdjectiveView extends GreekView {
     this.name = 'adjective declension'
     this.title = 'Adjective declension'
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

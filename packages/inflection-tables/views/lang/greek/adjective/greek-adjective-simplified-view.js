@@ -9,9 +9,10 @@ export default class GreekAdjectiveSimplifiedView extends GreekAdjectiveView {
     this.name = 'adjective declension simplified'
     this.title = 'Adjective declension (simplified)'
 
-    this.createTable()
-
-    this.table.morphemeCellFilter = GreekAdjectiveSimplifiedView.morphemeCellFilter
+    if (this.isImplemented) {
+      this.createTable()
+      this.table.morphemeCellFilter = GreekAdjectiveSimplifiedView.morphemeCellFilter
+    }
   }
 
   static get viewID () {

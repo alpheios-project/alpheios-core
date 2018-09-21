@@ -10,8 +10,10 @@ export default class LatinInfinitiveView extends LatinVerbMoodView {
     this.name = 'infinitive'
     this.title = 'Infinitive'
 
-    this.createTable()
-    this.table.morphemeCellFilter = LatinInfinitiveView.morphemeCellFilter
+    if (this.isImplemented) {
+      this.createTable()
+      this.table.morphemeCellFilter = LatinInfinitiveView.morphemeCellFilter
+    }
   }
 
   createTable () {

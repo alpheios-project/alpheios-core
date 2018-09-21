@@ -9,7 +9,9 @@ export default class GreekPersonPronounView extends GreekPronounView {
   constructor (homonym, inflectionData, locale) {
     super(homonym, inflectionData, locale, GreekPersonPronounView.classes[0])
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

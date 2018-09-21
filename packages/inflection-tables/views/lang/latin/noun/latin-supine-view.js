@@ -14,7 +14,10 @@ export default class LatinSupineView extends LatinView {
     this.features = {
       cases: this.features.cases
     }
-    this.createTable()
+
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

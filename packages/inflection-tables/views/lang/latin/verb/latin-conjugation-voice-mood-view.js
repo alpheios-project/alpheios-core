@@ -10,7 +10,9 @@ export default class LatinConjugationVoiceMoodView extends LatinVerbView {
     this.name = 'conjugation-voice-mood'
     this.title = 'Verb Conjugation'
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

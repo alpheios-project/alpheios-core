@@ -22,7 +22,10 @@ export default class GreekNumeralView extends GreekView {
     this.features.genders.getTitle = this.constructor.getGenderTitle
     this.features.genders.filter = this.constructor.genderFilter
     this.features.genders.comparisonType = Morpheme.comparisonTypes.PARTIAL
-    this.createTable()
+
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

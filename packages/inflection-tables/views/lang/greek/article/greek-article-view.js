@@ -11,7 +11,9 @@ export default class GreekArticleView extends GreekView {
     this.name = 'article declension'
     this.title = 'Article Declension'
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

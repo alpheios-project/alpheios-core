@@ -116,7 +116,7 @@ export default class GreekPronounView extends GreekView {
   static getMatchingInstances (homonym, messages) {
     let inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
-      return [new this(homonym, inflectionData, messages)]
+      return [new this(homonym, inflectionData, messages).render()]
     }
     return []
   }

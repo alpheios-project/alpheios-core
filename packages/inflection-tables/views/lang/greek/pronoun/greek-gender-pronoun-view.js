@@ -11,7 +11,9 @@ export default class GreekGenderPronounView extends GreekPronounView {
   constructor (homonym, inflectionData, locale) {
     super(homonym, inflectionData, locale, GreekPronounView.getClassFromInflection(inflectionData.inflections))
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

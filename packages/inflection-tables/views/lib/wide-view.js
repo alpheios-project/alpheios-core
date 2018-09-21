@@ -50,7 +50,7 @@ export default class WideView {
       let cells = []
       let titleCells = row.titleCell.hierarchyList
       if (titleCells.length < this.table.titleColumnQty) {
-        cells.push(RowTitleCell.placeholderCell(this.titleColumnQty - titleCells.length))
+        cells.push(RowTitleCell.placeholder(this.titleColumnQty - titleCells.length))
       }
       for (let titleCell of titleCells) {
         cells.push(titleCell)

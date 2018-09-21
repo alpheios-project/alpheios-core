@@ -10,8 +10,10 @@ export default class LatinImperativeView extends LatinVerbMoodView {
     this.name = 'imperative'
     this.title = 'Imperative'
 
-    this.createTable()
-    this.table.morphemeCellFilter = LatinImperativeView.morphemeCellFilter
+    if (this.isImplemented) {
+      this.createTable()
+      this.table.morphemeCellFilter = LatinImperativeView.morphemeCellFilter
+    }
   }
 
   createTable () {

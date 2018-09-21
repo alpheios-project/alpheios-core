@@ -19,40 +19,12 @@ export default class HeaderCell {
     this.children = []
     this.columns = []
 
-    this.render()
-  }
-
-  /**
-   * Renders an element's HTML representation.
-   */
-  render () {
-    let element = document.createElement('div')
-    element.classList.add(Styles.classNames.cell, Styles.classNames.header, Styles.classNames.widthPrefix + this.span)
-    element.innerHTML = this.title
     this.value = this.title
     this.classes = {
       [Styles.classNames.cell]: true,
       [Styles.classNames.header]: true,
       [`${Styles.classNames.widthPrefix}${this.span}`]: true
     }
-    this.wNode = element
-    this.nNode = element.cloneNode(true)
-  }
-
-  /**
-   * Returns an HTML element for a wide view
-   * @returns {HTMLElement} HTML element for a wide view's cell.
-   */
-  get wvNode () {
-    return this.wNode
-  }
-
-  /**
-   * Returns an HTML element for a narrow view
-   * @returns {HTMLElement} HTML element for a narrow view's cell.
-   */
-  get nvNode () {
-    return this.nNode
   }
 
   /**
@@ -78,8 +50,6 @@ export default class HeaderCell {
     let newWidthClass = Styles.classNames.widthPrefix + this.span
     this.classes[currentWidthClass] = false
     this.classes[newWidthClass] = true
-    this.wNode.classList.replace(currentWidthClass, newWidthClass)
-    this.nNode.classList.replace(currentWidthClass, newWidthClass)
   }
 
   /**
@@ -115,11 +85,9 @@ export default class HeaderCell {
    * Highlights a header cell, its parent and children
    */
   highlight () {
-    if (!this.wNode.classList.contains(Styles.classNames.highlight)) {
+    if (!this.highlighted) {
       this.classes[Styles.classNames.highlight] = true
-      this.wNode.classList.add(Styles.classNames.highlight)
-      this.nNode.classList.add(Styles.classNames.highlight)
-
+      this.highlighted = true
       if (this.parent) {
         this.parent.highlight()
       }
@@ -130,11 +98,9 @@ export default class HeaderCell {
    * Removes highlighting from a header cell, its parent and children
    */
   clearHighlighting () {
-    if (this.wNode.classList.contains(Styles.classNames.highlight)) {
+    if (this.highlighted) {
       this.classes[Styles.classNames.highlight] = false
-      this.wNode.classList.remove(Styles.classNames.highlight)
-      this.nNode.classList.remove(Styles.classNames.highlight)
-
+      this.highlighted = false
       if (this.parent) {
         this.parent.clearHighlighting()
       }

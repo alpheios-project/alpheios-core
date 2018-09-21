@@ -103,7 +103,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
       let inflectionData = this.getInflectionsData(homonym)
       let view = new this(homonym, inflectionData, locale)
       view.createLinkedViews()
-      return [view]
+      return [view.render()]
     }
     return []
   }

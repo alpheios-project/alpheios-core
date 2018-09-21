@@ -16,9 +16,10 @@ export default class GreekNounSimplifiedView extends GreekNounView {
     this.features.genders.comparisonType = Morpheme.comparisonTypes.ALL_VALUES
     this.features.genders.getOrderedValues = GreekView.getOrderedGenders
 
-    this.createTable()
-
-    this.table.morphemeCellFilter = GreekNounSimplifiedView.morphemeCellFilter
+    if (this.isImplemented) {
+      this.createTable()
+      this.table.morphemeCellFilter = GreekNounSimplifiedView.morphemeCellFilter
+    }
   }
 
   static get viewID () {

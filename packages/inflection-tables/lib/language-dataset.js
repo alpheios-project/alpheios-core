@@ -121,7 +121,7 @@ export default class LanguageDataset {
    *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
   static getObligatoryMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    return this.checkMatches(this.getObligatoryMatchList(inflection), inflection, item, comparisonType)
+    return this.checkMatches(inflection.matchFeatures.obligatory, inflection, item, comparisonType)
   }
 
   /**
@@ -134,11 +134,11 @@ export default class LanguageDataset {
    *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
   static getOptionalMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    return this.checkMatches(this.getOptionalMatchList(inflection), inflection, item, comparisonType)
+    return this.checkMatches(inflection.matchFeatures.optional, inflection, item, comparisonType)
   }
 
   static getMorphologyMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    return this.checkMatches(this.getMorphologyMatchList(inflection), inflection, item, comparisonType)
+    return this.checkMatches(inflection.matchFeatures.morphology, inflection, item, comparisonType)
   }
 
   /**
@@ -241,6 +241,13 @@ export default class LanguageDataset {
 
     // This cannot be determined by language model so we have to check it manually
     inflection.constraints.paradigmBased = this.pos.get(partOfSpeech).hasMatchingItems(Paradigm, inflection)
+
+    // Set match features data
+    inflection.matchFeatures = {
+      obligatory: this.constructor.getObligatoryMatchList(inflection),
+      optional: this.constructor.getOptionalMatchList(inflection),
+      morphology: this.constructor.getMorphologyMatchList(inflection)
+    }
 
     /*
     Check if inflection if full form based if `fullFormBased` flag is set
@@ -461,7 +468,9 @@ export default class LanguageDataset {
 
     for (let inflection of inflections) {
       let matchData = new MatchData() // Create a match profile
-      matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
+      if (options.findMatches) {
+        matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
+      }
 
       // Check for obligatory matches
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
@@ -477,11 +486,12 @@ export default class LanguageDataset {
       as multiple values in inflection and morpheme can go in different order.
        */
       const optionalMatches = this.constructor.getOptionalMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
-
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
 
-      const morphologyMatches = this.constructor.getMorphologyMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
-      matchData.morphologyMatch = morphologyMatches.fullMatch
+      if (options.findMatches) {
+        const morphologyMatches = this.constructor.getMorphologyMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
+        matchData.morphologyMatch = morphologyMatches.fullMatch
+      }
 
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
         // This is a full match
@@ -496,6 +506,7 @@ export default class LanguageDataset {
       }
       bestMatchData = this.bestMatch(bestMatchData, matchData)
     }
+
     if (bestMatchData) {
       // There is some match found
       if (options.findMatches) {

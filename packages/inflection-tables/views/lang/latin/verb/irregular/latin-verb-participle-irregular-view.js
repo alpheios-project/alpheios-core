@@ -13,7 +13,9 @@ export default class LatinVerbParticipleIrregularView extends LatinVerbIrregular
     this.name = 'verb-participle-irregular'
     this.title = 'Verb Participle Conjugation (Irregular)'
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

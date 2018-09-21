@@ -17,7 +17,10 @@ export default class LatinVerbParticipleView extends LatinView {
       this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_PERFECT),
       this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_FUTURE)
     ])
-    this.createTable()
+
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

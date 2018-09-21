@@ -10,7 +10,9 @@ export default class LatinVerbGerundiveIrregularView extends LatinVerbIrregularB
     this.name = 'verb-gerundive-irregular'
     this.title = 'Verb Gerundive Conjugation (Irregular)'
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

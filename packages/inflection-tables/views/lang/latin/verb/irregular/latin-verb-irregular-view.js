@@ -18,9 +18,6 @@ export default class LatinVerbIrregularView extends LatinVerbIrregularBaseView {
     this.name = 'verb-irregular'
     this.title = 'Verb Conjugation (Irregular)'
 
-    // Some irregular verbs can be unimplemented and shall be skipped
-    const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)
-    this.isImplemented = inflections.length > 0
     if (this.isImplemented) {
       this.createTable()
     }

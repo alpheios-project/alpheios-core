@@ -15,7 +15,9 @@ export default class LatinNounView extends LatinView {
     this.features.genders.getTitle = this.constructor.getGenderTitle
     this.features.genders.comparisonType = Morpheme.comparisonTypes.ALL_VALUES
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

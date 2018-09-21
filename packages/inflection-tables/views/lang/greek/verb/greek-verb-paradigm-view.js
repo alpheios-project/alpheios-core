@@ -19,7 +19,6 @@ export default class GreekVerbParadigmView extends GreekView {
     this.id = paradigm.id
     this.name = paradigm.title.toLowerCase()
     this.title = paradigm.title
-    this.hasPrerenderedTables = true
     this.paradigm = paradigm
     this.featureTypes = {}
 
@@ -61,6 +60,9 @@ export default class GreekVerbParadigmView extends GreekView {
     return Paradigm
   }
 
+  static get hasPrerenderedTables () {
+    return true
+  }
   /**
    * What classes of pronouns this view should be used with.
    * Should be defined in descendants.

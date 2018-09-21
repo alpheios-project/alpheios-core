@@ -18,69 +18,17 @@ export default class RowTitleCell {
     this.feature = groupingFeature
     this.nvGroupQty = nvGroupQty
 
-    this.render()
-  }
-
-  /**
-   * Renders an element's HTML representation.
-   */
-  render () {
-    // Generate HTML representation for a wide view node
-    this.wNode = document.createElement('div')
     this.value = this.title
     this.classes = {
       [Styles.classNames.cell]: true,
-      [Styles.classNames.rowTitleCell]: true
+      [Styles.classNames.rowTitleCell]: true,
+      [Styles.classNames.header]: this.feature.formsColumn,
+      [Styles.classNames.fullWidth]: this.feature.hasFullWidthRowTitle
     }
-    this.wNode.classList.add(Styles.classNames.cell, Styles.classNames.rowTitleCell)
-    if (this.feature.formsColumn) {
-      this.classes[Styles.classNames.header] = true
-      this.wNode.classList.add(Styles.classNames.header)
-    }
-    if (this.feature.hasFullWidthRowTitle) {
-      // This cell is taking an entire row
-      this.classes[Styles.classNames.fullWidth] = true
-      this.wNode.classList.add(Styles.classNames.fullWidth)
-    }
+
     if (this.feature.formsColumn && this.feature.groupFeatureList.titleColumnsQuantity > 1) {
       this.classes[`${Styles.classNames.widthPrefix}${this.feature.groupFeatureList.titleColumnsQuantity}`] = true
-      this.wNode.classList.add(`${Styles.classNames.widthPrefix}${this.feature.groupFeatureList.titleColumnsQuantity}`)
     }
-    this.wNode.innerHTML = this.title
-
-    // Copy HTML representation to all narrow view nodes (each narrow view group has its own node)
-    this.nNodes = [] // Narrow nodes, one for each group
-    for (let i = 0; i < this.nvGroupQty; i++) {
-      this.nNodes.push(this.wNode.cloneNode(true))
-    }
-  }
-
-  /**
-   * Returns an HTML element for a wide view
-   * @returns {HTMLElement} HTML element for a wide view's cell.
-   */
-  get wvNode () {
-    return this.wNode
-  }
-
-  /**
-   * Returns an array HTML element for narrow view groups
-   * @returns {HTMLElement[]} Array of HTML elements for narrow view group's cells.
-   */
-  getNvNode (index) {
-    return this.nNodes[index]
-  }
-
-  /**
-   * Generates an empty cell placeholder of a certain width. Useful for situation when empty title cells need to be
-   * inserted into a table structure (i.e. when title cells occupy multiple columns.
-   * @param {number} width - A number of columns placeholder cell will occupy.
-   * @returns {HTMLElement} HTML element of a placeholder cell.
-   */
-  static placeholder (width = 1) {
-    let placeholder = document.createElement('div')
-    placeholder.classList.add(Styles.classNames.cell, Styles.classNames.widthPrefix + width)
-    return placeholder
   }
 
   /**
@@ -88,7 +36,13 @@ export default class RowTitleCell {
    * @param {number} width - How many columns this cell should span
    * @return {Object}
    */
-  static placeholderCell (width = 1) {
+  /**
+  * Generates an empty cell placeholder of a certain width. Useful for situation when empty title cells need to be
+  * inserted into a table structure (i.e. when title cells occupy multiple columns).
+  * @param {number} width - A number of columns placeholder cell will occupy.
+  * @returns {Object}
+   */
+  static placeholder (width = 1) {
     return {
       value: '', // This cell is empty
       classes: {
@@ -118,10 +72,9 @@ export default class RowTitleCell {
    * Highlights this row title cell
    */
   highlight () {
-    this.classes[Styles.classNames.highlight] = true
-    this.wNode.classList.add(Styles.classNames.highlight)
-    for (let nNode of this.nNodes) {
-      nNode.classList.add(Styles.classNames.highlight)
+    if (!this.highlighted) {
+      this.classes[Styles.classNames.highlight] = true
+      this.highlighted = true
     }
   }
 
@@ -129,10 +82,9 @@ export default class RowTitleCell {
    * Removes highlighting from this row title cell
    */
   clearHighlighting () {
-    this.classes[Styles.classNames.highlight] = false
-    this.wNode.classList.remove(Styles.classNames.highlight)
-    for (let nNode of this.nNodes) {
-      nNode.classList.remove(Styles.classNames.highlight)
+    if (this.highlighted) {
+      this.classes[Styles.classNames.highlight] = false
+      this.highlighted = false
     }
   }
 }

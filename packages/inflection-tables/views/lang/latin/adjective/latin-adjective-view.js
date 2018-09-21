@@ -17,7 +17,9 @@ export default class LatinAdjectiveView extends LatinView {
     this.features.genders.getOrderedFeatures = this.constructor.getOrderedGenders
     this.features.genders.getTitle = this.constructor.getGenderTitle
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

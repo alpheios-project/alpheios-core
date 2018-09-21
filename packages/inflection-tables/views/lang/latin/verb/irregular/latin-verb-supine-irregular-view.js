@@ -13,7 +13,9 @@ export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBase
     this.name = 'verb-supine-irregular'
     this.title = 'Verb Supine Conjugation (Irregular)'
 
-    this.createTable()
+    if (this.isImplemented) {
+      this.createTable()
+    }
   }
 
   static get viewID () {

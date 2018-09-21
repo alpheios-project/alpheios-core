@@ -316,34 +316,6 @@ export default class Table {
   }
 
   /**
-   * Adds event listeners to each cell object.
-   */
-  addEventListeners () {
-    for (let cell of this.cells) {
-      cell.addEventListener('mouseenter', this.highlightRowAndColumn.bind(this))
-      cell.addEventListener('mouseleave', this.clearRowAndColumnHighlighting.bind(this))
-    }
-  }
-
-  /**
-   * Highlights a row and a column this cell is in.
-   * @param {Event} event - An event that triggers this function.
-   */
-  highlightRowAndColumn (event) {
-    let index = event.currentTarget.dataset.index
-    this.cells[index].highlightRowAndColumn()
-  }
-
-  /**
-   * Removes highlighting from row and a column this cell is in.
-   * @param {Event} event - An event that triggers this function.
-   */
-  clearRowAndColumnHighlighting (event) {
-    let index = event.currentTarget.dataset.index
-    this.cells[index].clearRowAndColumnHighlighting()
-  }
-
-  /**
    * Hides empty columns in a table.
    */
   hideEmptyColumns () {
