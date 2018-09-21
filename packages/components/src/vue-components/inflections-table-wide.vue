@@ -2,7 +2,7 @@
     <div v-if="!view.isImplemented" class="alpheios-inflections__not-impl-msg">
         {{messages.INFLECT_MSG_TABLE_NOT_IMPLEMENTED}}
     </div>
-    <div v-else-if="view.wideView && !view.isEmpty">
+    <div v-else>
         <h3 class="alpheios-inflections__title alpheios-table-sf__title alpheios-clickable"
             @click="collapse">
             {{view.title}}
@@ -11,51 +11,53 @@
         </h3>
 
         <template v-if="!state.collapsed">
-            <div v-if="view.isImplemented && !view.hasPrerenderedTables && !inflBrowserTable" class="alpheios-inflections__table-ctrl-cont">
-                <div v-show="view.canCollapse && state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
-                    <alph-tooltip tooltipDirection="bottom-right"
-                                  :tooltipText="messages.TOOLTIP_INFLECT_SHOWFULL">
-                        <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right"
-                                @click="showNoSuffixGroups">
-                            {{messages.LABEL_INFLECT_SHOWFULL}}
-                        </button>
-                    </alph-tooltip>
+            <div v-if="view.wideView">
+                <div v-if="view.isImplemented && !view.hasPrerenderedTables && !inflBrowserTable" class="alpheios-inflections__table-ctrl-cont">
+                    <div v-show="view.canCollapse && state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
+                        <alph-tooltip tooltipDirection="bottom-right"
+                                      :tooltipText="messages.TOOLTIP_INFLECT_SHOWFULL">
+                            <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right"
+                                    @click="showNoSuffixGroups">
+                                {{messages.LABEL_INFLECT_SHOWFULL}}
+                            </button>
+                        </alph-tooltip>
+                    </div>
+
+                    <div v-show="view.canCollapse && !state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
+                        <alph-tooltip tooltipDirection="bottom-right"
+                                      :tooltipText="messages.TOOLTIP_INFLECT_COLLAPSE">
+                            <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right"
+                                    @click="hideNoSuffixGroups">
+                                {{messages.LABEL_INFLECT_COLLAPSE}}
+                            </button>
+                        </alph-tooltip>
+                    </div>
                 </div>
 
-                <div v-show="view.canCollapse && !state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
-                    <alph-tooltip tooltipDirection="bottom-right"
-                                  :tooltipText="messages.TOOLTIP_INFLECT_COLLAPSE">
-                        <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right"
-                                @click="hideNoSuffixGroups">
-                            {{messages.LABEL_INFLECT_COLLAPSE}}
-                        </button>
-                    </alph-tooltip>
-                </div>
-            </div>
-
-            <div v-if="!view.hasPrerenderedTables" :style="view.wideView.style"
-                 class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
-                <template v-for="row in view.wideView.rows">
-                    <div :class="cellClasses(cell)" v-for="cell in row.cells"
-                         @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">
-                        <template v-if="cell.isDataCell">
-                            <template v-for="(morpheme, index) in cell.morphemes">
+                <div v-if="!view.hasPrerenderedTables" :style="view.wideView.style"
+                     class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
+                    <template v-for="row in view.wideView.rows">
+                        <div :class="cellClasses(cell)" v-for="cell in row.cells"
+                             @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">
+                            <template v-if="cell.isDataCell">
+                                <template v-for="(morpheme, index) in cell.morphemes">
                             <span :class="morphemeClasses(morpheme)">
                                 <template v-if="morpheme.value">{{morpheme.value}}</template>
                                 <template v-else>-</template>
                             </span>
-                                <infl-footnote v-if="morpheme.hasFootnotes" :footnotes="morpheme.footnotes"></infl-footnote>
-                                <template v-if="index < cell.morphemes.length-1">, </template>
+                                    <infl-footnote v-if="morpheme.hasFootnotes" :footnotes="morpheme.footnotes"></infl-footnote>
+                                    <template v-if="index < cell.morphemes.length-1">, </template>
+                                </template>
                             </template>
-                        </template>
-                        <span v-else v-html="cell.value"></span>
-                    </div>
-                </template>
-            </div>
-            <div v-else-if="!state.collapsed" class="infl-prdgm-tbl">
-                <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
-                    <div class="infl-prdgm-tbl__cell" :class="prerenderedCellClasses(cell)" v-for="cell in row.cells">
-                        {{cell.value}}
+                            <span v-else v-html="cell.value"></span>
+                        </div>
+                    </template>
+                </div>
+                <div v-else-if="!state.collapsed" class="infl-prdgm-tbl">
+                    <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
+                        <div class="infl-prdgm-tbl__cell" :class="prerenderedCellClasses(cell)" v-for="cell in row.cells">
+                            {{cell.value}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,21 +105,23 @@
         },
         classes: {
           fullMorphologyMatch: 'infl-cell--morph-match'
+        },
+        options: {
+          emptyColumnsHidden: true,
+          noSuffixMatchesHidden: true
         }
       }
     },
 
     methods: {
       initView: function () {
-        if (this.view.isRenderable) {
-          // Rendering is not required for component-enabled views
-          this.view.render()
-        }
-        this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
-        this.$emit('widthchange')
+        // this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
       },
 
       collapse: function () {
+        if (!this.view.isRendered) {
+          this.view.render(this.options)
+        }
         this.state.collapsed = !this.state.collapsed
         this.view.wideView.collapsed = this.state.collapsed
         this.$emit('interaction')
@@ -201,6 +205,10 @@
     },
 
     mounted: function () {
+      if (this.inflBrowserTable) {
+        this.options.noSuffixMatchesHidden = false
+      }
+
       // Set a default value by the parent component
       if (this.collapsed !== null) {
         this.state.collapsed = this.collapsed

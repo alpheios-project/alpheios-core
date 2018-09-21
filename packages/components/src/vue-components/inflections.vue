@@ -206,8 +206,8 @@
         set: function (newValue) {
           this.selectedPartOfSpeech = newValue
           this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
-          this.selectedView = this.views[0]
-          this.prepareView(this.selectedView)
+          this.selectedView = this.views[0].render()
+          this.mainTableCollapsed = false
         }
       },
       viewSelector: {
@@ -215,8 +215,8 @@
           return this.selectedView ? this.selectedView.id : ''
         },
         set: function (newValue) {
-          this.selectedView = this.views.find(view => view.id === newValue)
-          this.prepareView(this.selectedView)
+          this.selectedView = this.views.find(view => view.id === newValue).render()
+          this.mainTableCollapsed = false
         }
       },
       inflectionTable: function () {
@@ -260,8 +260,8 @@
 
           if (this.views.length > 0) {
             this.hasInflectionData = true
-            this.selectedView = this.views[0]
-            this.prepareView(this.selectedView)
+            this.selectedView = this.views[0].render()
+            this.mainTableCollapsed = false
           } else {
             this.selectedView = ''
           }
@@ -297,14 +297,6 @@
     },
 
     methods: {
-      prepareView (view) {
-        if (view.isRenderable) {
-          // Rendering is not required for component-enabled views
-          this.selectedView.render()
-        }
-        this.mainTableCollapsed = false
-      },
-
       updateWidth: function () {
         Vue.nextTick(() => {
           this.$emit('contentwidth', this.htmlElements.content.offsetWidth + 1)
