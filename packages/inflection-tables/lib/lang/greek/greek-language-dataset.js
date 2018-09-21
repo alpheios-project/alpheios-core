@@ -660,7 +660,9 @@ export default class GreekLanguageDataset extends LanguageDataset {
       featureOptions = [
         Feature.types.grmCase,
         Feature.types.gender,
-        Feature.types.number
+        Feature.types.number,
+        Feature.types.person
+
       ]
     } else if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_ADJECTIVE)) {
       featureOptions = [
