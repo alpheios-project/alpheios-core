@@ -6,7 +6,7 @@
             <span class='alpheios-ib__title-collapse' v-show="collapsed[constants.LANG_LATIN.toString()]">[+]</span>
             <span class='alpheios-ib__title-collapse' v-show="!collapsed[constants.LANG_LATIN.toString()]">[-]</span>
         </div>
-        <div v-if="!collapsed[constants.LANG_LATIN.toString()]">
+        <div v-show="!collapsed[constants.LANG_LATIN.toString()]">
             <div class="alpheios-ib__pofs-title">Nouns</div>
             <wide-table :view="latinInflView({ viewID: 'latin_noun_view' })" :infl-browser-table="true" :messages="messages" :no-suffix-matches-hidden="false" :collapsed="inflBrowserTablesCollapsed" @widthchange="inflTableWidthUpd" @interaction="inflTableInteraction"></wide-table>
             <div class="alpheios-ib__pofs-title">Adjectives</div>
@@ -40,7 +40,7 @@
             <span class='alpheios-ib__title-collapse' v-show="collapsed[constants.LANG_GREEK.toString()]">[+]</span>
             <span class='alpheios-ib__title-collapse' v-show="!collapsed[constants.LANG_GREEK.toString()]">[-]</span>
         </div>
-        <div v-if="!collapsed[constants.LANG_GREEK.toString()]">
+        <div v-show="!collapsed[constants.LANG_GREEK.toString()]">
             <div class="alpheios-ib__pofs-title">Nouns</div>
             <wide-table :view="greekInflView({ viewID: 'greek_noun_view'})" :infl-browser-table="true" :messages="messages" :no-suffix-matches-hidden="false" :collapsed="inflBrowserTablesCollapsed" @widthchange="inflTableWidthUpd" @interaction="inflTableInteraction"></wide-table>
             <wide-table :view="greekInflView({ viewID: 'greek_noun_simplified_view'})" :infl-browser-table="true" :messages="messages" :no-suffix-matches-hidden="false" :collapsed="inflBrowserTablesCollapsed" @widthchange="inflTableWidthUpd" @interaction="inflTableInteraction"></wide-table>
@@ -168,7 +168,7 @@
         type: Object,
         required: true
       },
-      
+
       inflBrowserTablesCollapsed: {
         type: Boolean,
         required: false,
@@ -233,7 +233,7 @@
       greekInflView: function (options) {
         return this.inflView(this.constants.LANG_GREEK, options)
       },
-      
+
       greekParadigmView: function (paradigmOptions) {
         paradigmOptions.viewID = 'greek_verb_paradigm_view'
         return this.greekInflView(paradigmOptions)
