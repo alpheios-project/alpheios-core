@@ -8868,7 +8868,6 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.views.has(key)) {
         let view = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__["ViewSetFactory"].getStandardForm(languageID, options, locale)
         this.views.set(key, view)
-        console.log(`Getting view for ${key}`)
       }
       return this.views.get(key)
     },
@@ -9280,15 +9279,12 @@ __webpack_require__.r(__webpack_exports__);
 
   methods: {
     initView: function () {
-       console.log("in init view")
       // this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
     },
 
     collapse: function () {
       if (!this.view.isRendered) {
-        console.log("in collapse before render")
         this.view.render(this.options)
-        console.log("in collapse after render")
       }
       this.state.collapsed = !this.state.collapsed
       this.view.wideView.collapsed = this.state.collapsed
@@ -9619,9 +9615,7 @@ __webpack_require__.r(__webpack_exports__);
       set: function (newValue) {
         this.selectedPartOfSpeech = newValue
         this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
-        console.log("Before render in pofs selector set")
         this.selectedView = this.views[0].render()
-        console.log("After render in pofs selector set")
         this.mainTableCollapsed = false
       }
     },
@@ -9667,9 +9661,7 @@ __webpack_require__.r(__webpack_exports__);
         this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
         if (this.partsOfSpeech.length > 0) {
           this.selectedPartOfSpeech = this.partsOfSpeech[0]
-          console.log("Before getting views")
           this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
-          console.log("After getting views")
         } else {
           this.selectedPartOfSpeech = []
           this.views = []
@@ -9677,9 +9669,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (this.views.length > 0) {
           this.hasInflectionData = true
-          console.log("Before render")
           this.selectedView = this.views[0].render()
-          console.log("After render")
           this.mainTableCollapsed = false
         } else {
           this.selectedView = ''
@@ -9709,9 +9699,7 @@ __webpack_require__.r(__webpack_exports__);
         this.data.inflectionViewSet.setLocale(this.locale)
         if (this.selectedView.isRenderable) {
           // Rendering is not required for component-enabled views
-          console.log("before render in locale")
           this.selectedView.render() // Re-render inflections for a different locale
-          console.log("after render in locale")
         }
       }
     }
@@ -9719,7 +9707,6 @@ __webpack_require__.r(__webpack_exports__);
 
   methods: {
     updateWidth: function () {
-      console.log("in update width")
       vue_dist_vue__WEBPACK_IMPORTED_MODULE_9___default.a.nextTick(() => {
         this.$emit('contentwidth', this.htmlElements.content.offsetWidth + 1)
       })
@@ -30570,12 +30557,9 @@ class UIController {
   }
 
   updateInflections (homonym) {
-    console.log('before creating viewset')
     this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__["ViewSetFactory"].create(homonym, this.options.items.locale.currentValue)
 
-    console.log('before adding viewset')
     this.panel.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet
-    console.log('after adding viewset')
     if (this.inflectionsViewSet.hasMatchingViews) {
       this.addMessage(this.l10n.messages.TEXT_NOTICE_INFLDATA_READY)
     }
