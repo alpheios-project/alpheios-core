@@ -1,9 +1,12 @@
 <template>
-    <div v-if="view.wideTable">
-        <h3 class="alpheios-inflections__title alpheios-table-sf__title">
-            {{view.title}}
-        </h3>
+  <div v-if="view.wideTable">
+    <h3 class="alpheios-inflections__title alpheios-table-sf__title" @click="collapse">
+        {{view.title}}
+      <span v-show="state.collapsed">[+]</span>
+      <span v-show="!state.collapsed">[-]</span>
+    </h3>
 
+    <template v-if="!state.collapsed">
         <div class="infl-prdgm-tbl">
             <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
                 <div class="infl-prdgm-tbl__cell" :class="cellClasses(cell)" v-for="cell in row.cells">
@@ -11,7 +14,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </template>
+  </div>
 </template>
 <script>
 
@@ -22,11 +26,19 @@
       view: {
         type: [Object, Boolean],
         required: true
-      }
+      },
+      collapsed: {
+        type: [Boolean],
+        default: true,
+        required: false
+      },
     },
 
     data: function () {
       return {
+        state: {
+          collapsed: true,
+        },
         elementIDs: {
           wideView: 'alph-inflection-table-wide',
           footnotes: 'alph-inflection-footnotes'
@@ -36,8 +48,27 @@
 
     computed: {
     },
-
+    watch: {
+      collapsed: function (state) {
+        if (this.collapsed !== null) {
+          this.state.collapsed = state
+          this.$emit('prerenderedinteraction')
+        }
+      }
+    },
+    mounted: function () {
+      // Set a default value by the parent component
+      if (this.collapsed !== null) {
+        this.state.collapsed = this.collapsed
+      }
+    },
     methods: {
+      collapse: function () {
+        this.state.collapsed = !this.state.collapsed
+        this.$emit('prerenderedinteraction')
+        this.$emit('widthchange') // When view is open, we might need to adjust a panel width
+      },
+
       cellClasses: function (cell) {
         if (cell.role === 'label') {
           return 'infl-prdgm-tbl-cell--label'

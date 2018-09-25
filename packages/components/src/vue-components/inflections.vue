@@ -58,10 +58,10 @@
                 </div>
             </div>
             <template v-else>
-                <prerendered-table-wide :view="selectedView"></prerendered-table-wide>
-                <sub-tables-wide :view="selectedView" @navigate="navigate"></sub-tables-wide>
+                <prerendered-table-wide :view="selectedView" :collapsed="mainTableCollapsed" @prerenderedinteraction="prerenderedInteraction"></prerendered-table-wide>
+                <sub-tables-wide v-show="!prerenderedCollapsed" :view="selectedView" @navigate="navigate"></sub-tables-wide>
 
-                <div v-show="selectedView.hasSuppParadigms" class="alpheios-inflections__supp-tables">
+                <div v-show="selectedView.hasSuppParadigms && !prerenderedCollapsed" class="alpheios-inflections__supp-tables">
                     <h3 class="alpheios-inflections__title">{{messages.INFLECTIONS_SUPPLEMENTAL_SECTION_HEADER}}</h3>
                     <template v-for="paradigm of selectedView.suppParadigms">
                         <supp-tables-wide :data="paradigm"
@@ -71,7 +71,7 @@
                 </div>
             </template>
 
-            <div v-show="selectedView.hasCredits" class="alpheios-inflections__credits-cont">
+            <div v-show="selectedView.hasCredits && !prerenderedCollapsed" class="alpheios-inflections__credits-cont">
                 <h3 class="alpheios-inflections__credits-title">{{messages.INFLECTIONS_CREDITS_TITLE}}</h3>
                 <div v-html="selectedView.creditsText" class="alpheios-inflections__credits-text"></div>
             </div>
@@ -174,6 +174,7 @@
         selectedView: {},
         renderedView: {},
         mainTableCollapsed: false,
+        prerenderedCollapsed: false,
         elementIDs: {
           panelInner: 'alpheios-panel-inner',
           footnotes: 'alph-inflection-footnotes'
@@ -208,6 +209,7 @@
           this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
           this.selectedView = this.views[0].render()
           this.mainTableCollapsed = false
+          this.prerenderedCollapsed = false
         }
       },
       viewSelector: {
@@ -217,6 +219,7 @@
         set: function (newValue) {
           this.selectedView = this.views.find(view => view.id === newValue).render()
           this.mainTableCollapsed = false
+          this.prerenderedCollapsed = false
         }
       },
       inflectionTable: function () {
@@ -262,6 +265,7 @@
             this.hasInflectionData = true
             this.selectedView = this.views[0].render()
             this.mainTableCollapsed = false
+            this.prerenderedCollapsed = false
           } else {
             this.selectedView = ''
           }
@@ -310,6 +314,9 @@
             this.mainTableCollapsed = null
           })
 
+      },
+      prerenderedInteraction: function() {
+        this.prerenderedCollapsed = ! this.prerenderedCollapsed
       },
 
       navigate (reflink) {
