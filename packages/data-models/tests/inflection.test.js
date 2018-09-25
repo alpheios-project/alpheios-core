@@ -133,22 +133,7 @@ describe('inflection.test.js', () => {
     expect(inflection2.compareWithWord('stem - suffix')).toBeTruthy()
   })
 
-  it('13 Inflection - readObject from JSON', () => {
-    let testJSON = {
-      stem: 'stem',
-      languageCode: 'lat',
-      suffix: 'suffix'
-    }
-
-    let inflection = Inflection.readObject(testJSON)
-
-    expect(inflection).toBeInstanceOf(Inflection)
-    expect(inflection.stem).toEqual('stem')
-    expect(inflection.suffix).toEqual('suffix')
-    expect(inflection.languageID).toEqual(Constants.LANG_LATIN)
-  })
-
-  it('14 Inflection - smartWordCompare for non-verbs', () => {
+  it('13 Inflection - smartWordCompare for non-verbs', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
 
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
@@ -157,7 +142,7 @@ describe('inflection.test.js', () => {
     expect(inflection.smartWordCompare('suffix', 'Suffix')).toBeTruthy()
   })
 
-  it('15 Inflection - smartWordCompare for only regular verb with suffix', () => {
+  it('14 Inflection - smartWordCompare for only regular verb with suffix', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
 
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
@@ -166,7 +151,7 @@ describe('inflection.test.js', () => {
     expect(inflection.smartWordCompare('suffix', 'Suffix')).toBeTruthy()
   })
 
-  it('16 Inflection - smartWordCompare for irregular verb with suffix', () => {
+  it('15 Inflection - smartWordCompare for irregular verb with suffix', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
 
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
@@ -176,7 +161,7 @@ describe('inflection.test.js', () => {
     expect(inflection.smartWordCompare('suffix', 'Suffix')).toBeTruthy()
   })
 
-  it('17 Inflection - smartWordCompare for irregular verb with fullForm with form', () => {
+  it('16 Inflection - smartWordCompare for irregular verb with fullForm with form', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
 
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
@@ -187,7 +172,7 @@ describe('inflection.test.js', () => {
     expect(inflection.smartWordCompare('stemsuffix', 'Form')).toBeTruthy()
   })
 
-  it('18 Inflection - smartWordCompare for irregular verb without fullForm with form', () => {
+  it('17 Inflection - smartWordCompare for irregular verb without fullForm with form', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
 
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
@@ -197,7 +182,7 @@ describe('inflection.test.js', () => {
     expect(inflection.smartWordCompare('stem - suffix', 'Form')).toBeTruthy()
   })
 
-  it('19 Inflection - hasFeatureValue', () => {
+  it('18 Inflection - hasFeatureValue', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
 
@@ -205,7 +190,7 @@ describe('inflection.test.js', () => {
     expect(inflection.hasFeatureValue(Feature.types.fullForm, 'foo')).toBeFalsy()
   })
 
-  it('20 Inflection - addFeatures', () => {
+  it('19 Inflection - addFeatures', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
 
     expect(() => { inflection.addFeatures('foo') }).toThrowError(/must be in an array/)
@@ -216,7 +201,7 @@ describe('inflection.test.js', () => {
     expect(inflection.hasFeatureValue(Feature.types.fullForm, 'foo')).toBeTruthy()
   })
 
-  it('21 Inflection - disambiguatedBy', () => {
+  it('20 Inflection - disambiguatedBy', () => {
     let inflection1 = new Inflection('stem', 'lat', 'suffix')
     inflection1.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflection1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_LATIN))
@@ -249,7 +234,7 @@ describe('inflection.test.js', () => {
     expect(inflection1.disambiguatedBy(inflection4)).toBeFalsy()
   })
 
-  it('22 Inflection - features is populated', () => {
+  it('21 Inflection - features is populated', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
     inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflection.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_LATIN))
@@ -257,7 +242,7 @@ describe('inflection.test.js', () => {
     expect(inflection.features).toEqual(new Set([Feature.types.part, Feature.types.voice, Feature.types.number]))
   })
 
-  it('23 Inflection - modelCompareWords respects normalization', () => {
+  it('22 Inflection - modelCompareWords respects normalization', () => {
     let inflection = new Inflection('συνεχ', 'grc', 'ης')
     let matched = inflection.modelCompareWords('συνεχής', 'συνεχης', true)
     expect(inflection.modelCompareWords('συνεχής', 'συνεχης', true)).toBeTruthy()

@@ -104,21 +104,7 @@ describe('lexeme.test.js', () => {
     expect(res[0]).toBeInstanceOf(InflectionGroup)
   })
 
-  it('5 Lexeme - create Lexeme from readObject method', () => {
-    let testJson = {
-      lemma: lemma,
-      inflections: [ inflection1, inflection2 ],
-      meaning: definition
-    }
-
-    let lex = Lexeme.readObject(testJson)
-    expect(lex).toBeInstanceOf(Lexeme)
-    expect(lex.lemma).toBeInstanceOf(Lemma)
-    expect(lex.inflections[0]).toBeInstanceOf(Inflection)
-    expect(lex.meaning).toBeInstanceOf(DefinitionSet)
-  })
-
-  it('6 Lexeme - Sorting on feature order', () => {
+  it('5 Lexeme - Sorting on feature order', () => {
     let mockLexemeOne = {
       lemma: {
         features: {
@@ -241,7 +227,8 @@ describe('lexeme.test.js', () => {
     lexemes = [ mockLexemeTen, mockLexemeEleven ] // freq=5, freq=4, pofs=null, pofs=null
     expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTen, mockLexemeEleven])
   })
-  it('7 Lexeme - disambiguate', () => {
+
+  it('6 Lexeme - disambiguate', () => {
     let lemma2 = new Lemma('word', 'grc')
     lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     lemma2.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
@@ -267,7 +254,8 @@ describe('lexeme.test.js', () => {
     expect(lex.disambiguated).toBeFalsy()
     expect(lex.inflections).toEqual([inflection1, inflection2])
   })
-  it('8 Lexeme - adds alternate Lemmas', () => {
+
+  it('7 Lexeme - adds alternate Lemmas', () => {
     let lemma2 = new Lemma('word', 'grc')
     let lex = new Lexeme(lemma, [])
     expect(lex.altLemmas.length).toEqual(0)
