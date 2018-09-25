@@ -69,8 +69,6 @@ describe('cell.test.js', () => {
     expect(cell.features.length).toEqual(5)
     expect(cell.empty).toBeFalsy()
     expect(cell.suffixMatches).toBeTruthy()
-    expect(cell.wNode).toBeInstanceOf(window.HTMLDivElement)
-    expect(cell.nNode).toBeInstanceOf(window.HTMLDivElement)
   })
 
   it('2 Cell - constructor saves empty array if suffixes are not defined', () => {
@@ -82,66 +80,49 @@ describe('cell.test.js', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.index = 100
     expect(cell._index).toEqual(100)
-    expect(cell.wNode.dataset.index).toEqual('100')
-    expect(cell.nNode.dataset.index).toEqual('100')
   })
 
-  it('4 Cell - addEventListener method executes addEventListener for wNode and nNode', () => {
-    let cell = new Cell(testMorphemes, testFeatures)
-    cell.wNode.addEventListener = jest.fn()
-    cell.nNode.addEventListener = jest.fn()
-
-    cell.addEventListener('fooType', 'fooListener')
-
-    expect(cell.wNode.addEventListener).toHaveBeenCalledWith('fooType', 'fooListener')
-    expect(cell.nNode.addEventListener).toHaveBeenCalledWith('fooType', 'fooListener')
-  })
-
-  it('5 Cell - hide adds hidden styles for wNode and nNode', () => {
+  it('4 Cell - hide adds hidden styles for wNode and nNode', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.hide()
-    expect(cell.wNode.classList.contains(Styles.classNames.hidden)).toBeTruthy()
-    expect(cell.nNode.classList.contains(Styles.classNames.hidden)).toBeTruthy()
+    expect(cell.hidden).toBeTruthy()
   })
 
-  it('6 Cell - show removes hidden styles for wNode and nNode', () => {
+  it('5 Cell - show removes hidden styles for wNode and nNode', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.hide()
 
     cell.show()
-    expect(cell.wNode.classList.contains(Styles.classNames.hidden)).toBeFalsy()
-    expect(cell.nNode.classList.contains(Styles.classNames.hidden)).toBeFalsy()
+    expect(cell.hidden).toBeFalsy()
   })
 
-  it('7 Cell - highlight adds highlight styles for wNode and nNode', () => {
+  it('6 Cell - highlight adds highlight styles for wNode and nNode', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.highlight()
-    expect(cell.wNode.classList.contains(Styles.classNames.highlight)).toBeTruthy()
-    expect(cell.nNode.classList.contains(Styles.classNames.highlight)).toBeTruthy()
+    expect(cell.highlighted).toBeTruthy()
   })
 
-  it('8 Cell - clearHighlighting removes highlight styles for wNode and nNode', () => {
+  it('7 Cell - clearHighlighting removes highlight styles for wNode and nNode', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.highlight()
 
     cell.clearHighlighting()
-    expect(cell.wNode.classList.contains(Styles.classNames.highlight)).toBeFalsy()
-    expect(cell.nNode.classList.contains(Styles.classNames.highlight)).toBeFalsy()
+    expect(cell.highlighted).toBeFalsy()
   })
 
-  it('9 Cell - highlightRowAndColumn throw error if column is not defined', () => {
+  it('8 Cell - highlightRowAndColumn throw error if column is not defined', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     expect(() => cell.highlightRowAndColumn()).toThrow(new Error('Column is undefined.'))
   })
 
-  it('10 Cell - highlightRowAndColumn throw error if row is not defined', () => {
+  it('9 Cell - highlightRowAndColumn throw error if row is not defined', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.column = 'fooColumn'
 
     expect(() => cell.highlightRowAndColumn()).toThrow(new Error('Row is undefined.'))
   })
 
-  it('11 Cell - highlightRowAndColumn executes highlight methods for column and row', () => {
+  it('10 Cell - highlightRowAndColumn executes highlight methods for column and row', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.column = { highlight: jest.fn() }
     cell.row = { highlight: jest.fn() }
@@ -151,19 +132,19 @@ describe('cell.test.js', () => {
     expect(cell.row.highlight).toHaveBeenCalled()
   })
 
-  it('12 Cell - clearRowAndColumnHighlighting throw error if column is not defined', () => {
+  it('11 Cell - clearRowAndColumnHighlighting throw error if column is not defined', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     expect(() => cell.clearRowAndColumnHighlighting()).toThrow(new Error('Column is undefined.'))
   })
 
-  it('13 Cell - clearRowAndColumnHighlighting throw error if row is not defined', () => {
+  it('12 Cell - clearRowAndColumnHighlighting throw error if row is not defined', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.column = 'fooColumn'
 
     expect(() => cell.clearRowAndColumnHighlighting()).toThrow(new Error('Row is undefined.'))
   })
 
-  it('14 Cell - clearRowAndColumnHighlighting executes clearHighlighting methods for column and row', () => {
+  it('13 Cell - clearRowAndColumnHighlighting executes clearHighlighting methods for column and row', () => {
     let cell = new Cell(testMorphemes, testFeatures)
     cell.column = { clearHighlighting: jest.fn() }
     cell.row = { clearHighlighting: jest.fn() }

@@ -45,9 +45,6 @@ describe('header-cell.test.js', () => {
 
     expect(headerCell.children.length).toEqual(0)
     expect(headerCell.columns.length).toEqual(0)
-
-    expect(headerCell.wNode).toBeInstanceOf(window.HTMLDivElement)
-    expect(headerCell.nNode).toBeInstanceOf(window.HTMLDivElement)
   })
 
   it('2 HeaderCell - addColumn adds column to column attribute and to parent cell too', () => {
@@ -65,14 +62,8 @@ describe('header-cell.test.js', () => {
 
   it('3 HeaderCell - changeSpan adds value to span and changes classList in wNode,nNode ', () => {
     let headerCell = new HeaderCell('masculine', testGroupFeatureType)
-
-    headerCell.wNode.classList.replace = jest.fn()
-    headerCell.nNode.classList.replace = jest.fn()
-
     headerCell.changeSpan(10)
 
-    expect(headerCell.wNode.classList.replace).toHaveBeenCalled()
-    expect(headerCell.nNode.classList.replace).toHaveBeenCalled()
     expect(headerCell.span).toEqual(11)
   })
 
@@ -102,13 +93,8 @@ describe('header-cell.test.js', () => {
     headerCell.parent = parentHeaderCell
     parentHeaderCell.highlight = jest.fn()
 
-    headerCell.wNode.classList.add = jest.fn()
-    headerCell.nNode.classList.add = jest.fn()
-
     headerCell.highlight()
 
-    expect(headerCell.wNode.classList.add).toHaveBeenCalled()
-    expect(headerCell.nNode.classList.add).toHaveBeenCalled()
     expect(parentHeaderCell.highlight).toHaveBeenCalled()
   })
 
@@ -122,13 +108,8 @@ describe('header-cell.test.js', () => {
 
     parentHeaderCell.clearHighlighting = jest.fn()
 
-    headerCell.wNode.classList.remove = jest.fn()
-    headerCell.nNode.classList.remove = jest.fn()
-
     headerCell.clearHighlighting()
 
-    expect(headerCell.wNode.classList.remove).toHaveBeenCalled()
-    expect(headerCell.nNode.classList.remove).toHaveBeenCalled()
     expect(parentHeaderCell.clearHighlighting).toHaveBeenCalled()
   })
 })

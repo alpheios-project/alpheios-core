@@ -360,4 +360,13 @@ export default class Morpheme {
     }
     return suffixA
   }
+
+  toString () {
+    let string = `${this.constructor.name} value: ${this.value}, id: ${this.id}\n  features:  `
+    for (const [feature, value] of Object.entries(this.features)) {
+      string += `${feature}: ${value.value}, `
+    }
+    if (this.match) { string += `\n  ${this.match}` }
+    return string
+  }
 }

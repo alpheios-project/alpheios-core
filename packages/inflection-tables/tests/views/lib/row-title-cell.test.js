@@ -40,21 +40,9 @@ describe('row-title-cell.test.js', () => {
     expect(rowTitleCell.title).toEqual('nominative')
     expect(rowTitleCell.feature.type).toEqual('case')
     expect(rowTitleCell.nvGroupQty).toEqual(4)
-
-    expect(rowTitleCell.wNode).toBeInstanceOf(window.HTMLDivElement)
-    expect(rowTitleCell.nNodes.length).toBeGreaterThan(0)
   })
 
-  it('2 RowTitleCell - getNvNode returns vNode by index', () => {
-    let rowTitleCell = new RowTitleCell('nominative', testGroupFeatureType, 4)
-    expect(rowTitleCell.getNvNode(0)).toBeInstanceOf(window.HTMLDivElement)
-  })
-
-  it('3 RowTitleCell - placeholder returns window.HTMLDivElement', () => {
-    expect(RowTitleCell.placeholder()).toBeInstanceOf(window.HTMLDivElement)
-  })
-
-  it('4 RowTitleCell - hierarchyList returns an array of this and all parentCells', () => {
+  it('2 RowTitleCell - hierarchyList returns an array of this and all parentCells', () => {
     let rowTitleCell = new RowTitleCell('nominative', testGroupFeatureType, 4)
     expect(rowTitleCell.hierarchyList.length).toEqual(1)
 
@@ -64,27 +52,20 @@ describe('row-title-cell.test.js', () => {
     expect(rowTitleCell.hierarchyList.length).toEqual(2)
   })
 
-  it('5 RowTitleCell - highlight adds class to wNode and all nNodes', () => {
+  it('3 RowTitleCell - highlight should set a highlighted flag', () => {
     let rowTitleCell = new RowTitleCell('nominative', testGroupFeatureType, 4)
-    rowTitleCell.wNode.classList.add = jest.fn()
-    rowTitleCell.nNodes.forEach(nNode => { nNode.classList.add = jest.fn() })
 
     rowTitleCell.highlight()
 
-    expect(rowTitleCell.wNode.classList.add).toHaveBeenCalled()
-    rowTitleCell.nNodes.forEach(nNode => { expect(nNode.classList.add).toHaveBeenCalled() })
+    expect(rowTitleCell.highlighted).toBeTruthy()
   })
 
-  it('6 RowTitleCell - clearHighlighting removes class from wNode and all nNodes', () => {
+  it('4 RowTitleCell - clearHighlighting should clear a highlighted flag', () => {
     let rowTitleCell = new RowTitleCell('nominative', testGroupFeatureType, 4)
     rowTitleCell.highlight()
-
-    rowTitleCell.wNode.classList.remove = jest.fn()
-    rowTitleCell.nNodes.forEach(nNode => { nNode.classList.remove = jest.fn() })
 
     rowTitleCell.clearHighlighting()
 
-    expect(rowTitleCell.wNode.classList.remove).toHaveBeenCalled()
-    rowTitleCell.nNodes.forEach(nNode => { expect(nNode.classList.remove).toHaveBeenCalled() })
+    expect(rowTitleCell.highlighted).toBeFalsy()
   })
 })

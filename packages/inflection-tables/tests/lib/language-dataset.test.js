@@ -572,7 +572,7 @@ describe('language-dataset.test.js', () => {
     expect(LD.bestMatch({ id: 1, suffixMatch: true, matchedFeatures: [] }, { id: 2, suffixMatch: true, matchedFeatures: ['feature1'] }).id).toEqual(2)
   })
 
-  it('100 LanguageDataset - getObligatoryMatches executes checkMatches with getObligatoryMatchList', () => {
+  it('100 LanguageDataset - getObligatoryMatches executes checkMatches with list of features from an inflection', () => {
     LanguageDataset.checkMatches = jest.fn()
     LanguageDataset.getObligatoryMatchList = jest.fn(() => 'getObligatoryMatchList')
 

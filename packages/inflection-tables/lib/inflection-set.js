@@ -11,6 +11,7 @@ export default class InflectionSet {
 
     // Stores inflections (i.e. a form of a word with grammatical features as returned by a morph analyzer
     this.inflections = []
+    this.isImplemented = false // Whether we implemented support for inflections from this set
 
     // Stores inflections data (suffixes, forms, and paradigms) for inflections
     this.types = new Map()

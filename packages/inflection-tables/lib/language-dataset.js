@@ -121,7 +121,7 @@ export default class LanguageDataset {
    *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
   static getObligatoryMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    return this.checkMatches(inflection.matchFeatures.obligatory, inflection, item, comparisonType)
+    return this.checkMatches(inflection.constraints.obligatoryMatches, inflection, item, comparisonType)
   }
 
   /**
@@ -134,11 +134,11 @@ export default class LanguageDataset {
    *   {boolean} matchResult - True if all obligatory matches are fulfilled, false otherwise.
    */
   static getOptionalMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    return this.checkMatches(inflection.matchFeatures.optional, inflection, item, comparisonType)
+    return this.checkMatches(inflection.constraints.optionalMatches, inflection, item, comparisonType)
   }
 
   static getMorphologyMatches (inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    return this.checkMatches(inflection.matchFeatures.morphology, inflection, item, comparisonType)
+    return this.checkMatches(inflection.constraints.morphologyMatches, inflection, item, comparisonType)
   }
 
   /**
@@ -230,53 +230,56 @@ export default class LanguageDataset {
     if (inflection.constraints.irregular) {
       // Irregular words are always full form based
       inflection.constraints.fullFormBased = true
+      // inflection.constraints.suffixBased = false // Turn this on to not show regular tables for irregular verbs
     }
     inflection.constraints.implemented = this.isImplemented(inflection)
 
-    if (!this.pos.get(partOfSpeech)) {
-      // There is no source data for this part of speech
-      console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
-      return inflection
-    }
-
-    // This cannot be determined by language model so we have to check it manually
-    inflection.constraints.paradigmBased = this.pos.get(partOfSpeech).hasMatchingItems(Paradigm, inflection)
-
-    // Set match features data
-    inflection.matchFeatures = {
-      obligatory: this.constructor.getObligatoryMatchList(inflection),
-      optional: this.constructor.getOptionalMatchList(inflection),
-      morphology: this.constructor.getMorphologyMatchList(inflection)
-    }
-
-    /*
-    Check if inflection if full form based if `fullFormBased` flag is set
-    (i.e. inflection model knows it can be full form based)
-    or if no other flags are set (we don't know what type of inflection it is and want to check all to figure out).
-     */
-    if (inflection.constraints.fullFormBased || !(inflection.constraints.suffixBased || inflection.constraints.paradigmBased)) {
-      /*
-      If we don't know what inflection is based upon, let's assume
-      this inflection is full form based and let's try to find matching forms.
-      For this, we need set a `fullFormBased` flag on inflection temporarily
-      and clear it if no matching forms are found (because it cannot be based on full forms then).
-      This flag is required for matcher to compare full forms, not suffixes.
-       */
-      inflection.constraints.fullFormBased = true
-      const hasMatchingForms = this.hasMatchingForms(partOfSpeech, inflection)
-      if (!hasMatchingForms) {
-        // This cannot be a full form based inflection
-        inflection.constraints.fullFormBased = false
+    if (inflection.constraints.implemented) {
+      if (!this.pos.get(partOfSpeech)) {
+        // There is no source data for this part of speech
+        console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
+        return inflection
       }
-    }
 
-    /*
-    If we did not figure out what type of inflection it is,
-    then it is probably suffix based as this type is more prevalent
-     */
-    if (!inflection.constraints.fullFormBased && !inflection.constraints.paradigmBased) {
-      // If it is not full form based, then probably it is suffix base
-      inflection.constraints.suffixBased = true
+      // This cannot be determined by language model so we have to check it manually
+      inflection.constraints.paradigmBased = this.pos.get(partOfSpeech).hasMatchingItems(Paradigm, inflection)
+
+      // Set match features data
+      inflection.constraints.obligatoryMatches = this.constructor.getObligatoryMatchList(inflection)
+      inflection.constraints.optionalMatches = this.constructor.getOptionalMatchList(inflection)
+      inflection.constraints.morphologyMatches = this.constructor.getMorphologyMatchList(inflection)
+
+      /*
+      Check if inflection if full form based if `fullFormBased` flag is set
+      (i.e. inflection model knows it can be full form based)
+      or if no other flags are set (we don't know what type of inflection it is and want to check all to figure out).
+       */
+      if (inflection.constraints.fullFormBased || !(inflection.constraints.suffixBased || inflection.constraints.paradigmBased)) {
+        /*
+        If we don't know what inflection is based upon, let's assume
+        this inflection is full form based and let's try to find matching forms.
+        For this, we need set a `fullFormBased` flag on inflection temporarily
+        and clear it if no matching forms are found (because it cannot be based on full forms then).
+        This flag is required for matcher to compare full forms, not suffixes.
+         */
+        inflection.constraints.fullFormBased = true
+        const hasMatchingForms = this.hasMatchingForms(partOfSpeech, inflection)
+        if (hasMatchingForms) {
+          // inflection.constraints.suffixBased = false // Enable this to not show regular tables for form-based words
+        } else {
+          // This cannot be a full form based inflection
+          inflection.constraints.fullFormBased = false
+        }
+      }
+
+      /*
+      If we did not figure out what type of inflection it is,
+      then it is probably suffix based as this type is more prevalent
+       */
+      if (!inflection.constraints.fullFormBased && !inflection.constraints.paradigmBased) {
+        // If it is not full form based, then probably it is suffix base
+        inflection.constraints.suffixBased = true
+      }
     }
     return inflection
   }
@@ -341,60 +344,63 @@ export default class LanguageDataset {
    */
   createInflectionSet (pofsValue, inflections, options) {
     let inflectionSet = new InflectionSet(pofsValue, this.languageID)
-    inflectionSet.inflections = inflections
+    inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
+    inflectionSet.isImplemented = inflectionSet.inflections.length > 0
 
-    let sourceSet = this.pos.get(pofsValue)
-    if (!sourceSet) {
-      // There is no source data for this part of speech
-      console.warn(`There is no source data for the following part of speech: ${pofsValue}`)
-      return inflectionSet
-    }
+    if (inflectionSet.isImplemented) {
+      let sourceSet = this.pos.get(pofsValue)
+      if (!sourceSet) {
+        // There is no source data for this part of speech
+        console.warn(`There is no source data for the following part of speech: ${pofsValue}`)
+        return inflectionSet
+      }
 
-    /*
-      There might be cases when we don't know beforehand if an inflection is form based.
-      In this case, if `fullFormBased` constraint not set, we'll try to find matching forms within a source data.
-      If any found, `fullFormBased` constraint will be set to true.
-    */
+      /*
+        There might be cases when we don't know beforehand if an inflection is form based.
+        In this case, if `fullFormBased` constraint not set, we'll try to find matching forms within a source data.
+        If any found, `fullFormBased` constraint will be set to true.
+      */
 
-    // If at least one inflection in a group has a constraint, we'll search for data based on that criteria
-    let suffixBased = inflections.some(i => i.constraints.suffixBased)
-    let formBased = inflections.some(i => i.constraints.fullFormBased)
-    let paradigmBased = inflections.some(i => i.constraints.paradigmBased)
+      // If at least one inflection in a group has a constraint, we'll search for data based on that criteria
+      let suffixBased = inflections.some(i => i.constraints.suffixBased)
+      let formBased = inflections.some(i => i.constraints.fullFormBased)
+      let paradigmBased = inflections.some(i => i.constraints.paradigmBased)
 
-    // Check for suffix matches
-    if (suffixBased) {
-      if (sourceSet.types.has(Suffix)) {
-        let items = sourceSet.types.get(Suffix).items.reduce(this.reducerGen(inflections, options), [])
+      // Check for suffix matches
+      if (suffixBased) {
+        if (sourceSet.types.has(Suffix)) {
+          let items = sourceSet.types.get(Suffix).items.reduce(this.reducerGen(inflectionSet.inflections, options), [])
+          if (items.length > 0) {
+            inflectionSet.addInflectionItems(items)
+          }
+        }
+      }
+
+      // If there is at least on full form based inflection, search for full form items
+      if (formBased) {
+        // Match against form based inflection only
+        const formInflections = inflectionSet.inflections.filter(i => i.constraints.fullFormBased)
+        let items = sourceSet.types.get(Form).items.reduce(this.reducerGen(formInflections, options), [])
         if (items.length > 0) {
           inflectionSet.addInflectionItems(items)
         }
       }
-    }
 
-    // If there is at least on full form based inflection, search for full form items
-    if (formBased) {
-      // Match against form based inflection only
-      const formInflections = inflections.filter(i => i.constraints.fullFormBased)
-      let items = sourceSet.types.get(Form).items.reduce(this.reducerGen(formInflections, options), [])
-      if (items.length > 0) {
-        inflectionSet.addInflectionItems(items)
+      // Get paradigm matches
+      if (paradigmBased) {
+        let paradigms = sourceSet.getMatchingItems(Paradigm, inflections)
+        inflectionSet.addInflectionItems(paradigms)
       }
-    }
 
-    // Get paradigm matches
-    if (paradigmBased) {
-      let paradigms = sourceSet.getMatchingItems(Paradigm, inflections)
-      inflectionSet.addInflectionItems(paradigms)
-    }
-
-    // Add footnotes
-    if (inflectionSet.hasTypes) {
-      for (const inflectionType of inflectionSet.inflectionTypes) {
-        let footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
-        const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
-        for (let footnote of footnotesSource.values()) {
-          if (footnotesInUse.includes(footnote.index)) {
-            inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
+      // Add footnotes
+      if (inflectionSet.hasTypes) {
+        for (const inflectionType of inflectionSet.inflectionTypes) {
+          let footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
+          const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
+          for (let footnote of footnotesSource.values()) {
+            if (footnotesInUse.includes(footnote.index)) {
+              inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
+            }
           }
         }
       }

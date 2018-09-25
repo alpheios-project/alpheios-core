@@ -19,4 +19,9 @@ export default class MatchData {
     }
     return matchData
   }
+
+  toString () {
+    return `MatchData: suffixMatch: ${this.suffixMatch}, formMatch: ${this.formMatch}, fullMatch: ${this.fullMatch}, morphologyMatch: ${this.morphologyMatch},` +
+      ` matchedFeatures: [${this.matchedFeatures}]`
+  }
 }
