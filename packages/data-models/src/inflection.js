@@ -50,15 +50,17 @@ class Inflection {
     this.languageCode = undefined
     ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLanguageAttrs(language))
     this.model = LMF.getLanguageModel(this.languageID)
-    this.features = new Set() // Names of features of this inflection
+    this.features = new Set() // Stores names of features of this inflection, feature objects themselves are stored as props
 
+    // TODO: Separate constraints to a class of its own to share definition with language model and provide `clone()` method?
     // A grammar constraints object
     this.constraints = {
       fullFormBased: false, // True this inflection stores and requires to use a full form of a word
       suffixBased: false, // True if only suffix is enough to identify this inflection
       irregular: false, // Whether this word is an irregular one
-      obligatoryMatches: [], // Names of features that should be matched in order to include a form or suffix to an inflection table
-      optionalMatches: [] // Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
+      obligatoryMatches: [], // {string[]} Names of features that should be matched in order to include a form or suffix to an inflection table
+      optionalMatches: [], // {string[]} Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
+      morphologyMatches: [] // {string[]} These features should match for a morphology match
     }
 
     // Suffix may not be present in every word. If missing, it will be set to null.
@@ -69,6 +71,21 @@ class Inflection {
 
     // Example may not be provided
     this.example = example
+  }
+
+  clone () {
+    let clone = new Inflection(this.stem, this.languageID, this.suffix, this.prefix, this.example)
+    // Features are not modified right now so we can share them
+    clone.addFeatures(Array.from(this.features).map(f => this[f]))
+    clone.constraints = {
+      fullFormBased: this.constraints.fullFormBased,
+      suffixBased: this.constraints.suffixBased,
+      irregular: this.constraints.irregular,
+      obligatoryMatches: this.constraints.obligatoryMatches ? Array.from(this.constraints.obligatoryMatches) : [],
+      optionalMatches: this.constraints.obligatoryMatches ? Array.from(this.constraints.obligatoryMatches) : [],
+      morphologyMatches: this.constraints.morphologyMatches ? Array.from(this.constraints.morphologyMatches) : []
+    }
+    return clone
   }
 
   /**
@@ -205,14 +222,6 @@ class Inflection {
     return matched
   }
 
-  static readObject (jsonObject) {
-    let inflection =
-      new Inflection(
-        jsonObject.stem, jsonObject.languageCode, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
-    inflection.languageID = LMF.getLanguageIdFromCode(inflection.languageCode)
-    return inflection
-  }
-
   /**
    * @deprecated Use `addFeature` instead
    * Sets a grammatical feature in an inflection. Some features can have multiple values, In this case
@@ -293,6 +302,23 @@ class Inflection {
       return this[featureName].values.includes(featureValue)
     }
     return false
+  }
+
+  toString () {
+    let string = `Inflection stem: ${this.stem}, prefix: ${this.prefix}, suffix: ${this.suffix}, langID: ${this.languageID.toString()}\n  features:  `
+    for (const feature of this.features.values()) {
+      string += `${feature}: ${this[feature].value}, `
+    }
+    string += `\n  constraints:  `
+    for (const [key, value] of Object.entries(this.constraints)) {
+      if (Array.isArray(value)) {
+        string += `${key}: [${value}], `
+      } else {
+        string += `${key}: ${value}, `
+      }
+    }
+    string += `\n  example: ${this.example}`
+    return string
   }
 }
 export default Inflection
