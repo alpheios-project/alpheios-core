@@ -316,7 +316,19 @@
 
       },
       prerenderedInteraction: function() {
-        this.prerenderedCollapsed = ! this.prerenderedCollapsed
+        // this is a bit of  hack -- prerendered tables collapsed state
+        // should follow the main table collapsed state but
+        // the prerendered tables are a group of sibling tables and we
+        // are only tracking state in a property on the main one we have
+        // to keep a separate property for the sub and supplementary and credits
+        // pieces to follow. So we use a simple toggle for that state
+        // but it should always be overridden by the main table state which is
+        // more fully captured
+        if (this.mainTableCollapsed) {
+          this.prerenderedCollapsed = true
+        } else {
+          this.prerenderedCollapsed = ! this.prerenderedCollapsed
+        }
       },
 
       navigate (reflink) {
