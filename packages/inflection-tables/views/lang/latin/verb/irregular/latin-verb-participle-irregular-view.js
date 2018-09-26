@@ -1,8 +1,9 @@
-import { Constants } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import LatinVerbIrregularBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js'
 import LatinVerbIrregularView from '@views/lang/latin/verb/irregular/latin-verb-irregular-view.js'
 import LatinVerbIrregularVoiceView from '@views/lang/latin/verb/irregular/latin-verb-irregular-voice-view.js'
 import LatinVerbSupineIrregularView from '@views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js'
+import GroupFeatureType from '@views/lib/group-feature-type'
 import Table from '@views/lib/table'
 
 export default class LatinVerbParticipleIrregularView extends LatinVerbIrregularBaseView {
@@ -12,6 +13,11 @@ export default class LatinVerbParticipleIrregularView extends LatinVerbIrregular
     this.id = 'verbParticipleConjugationIrregular'
     this.name = 'verb-participle-irregular'
     this.title = 'Verb Participle Conjugation (Irregular)'
+    this.features.tenses = new GroupFeatureType(Feature.types.tense, this.constructor.languageID, 'Tense', [
+      this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_PRESENT),
+      this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_PERFECT),
+      this.constructor.model.typeFeature(Feature.types.tense).createFeature(Constants.TENSE_FUTURE)
+    ])
 
     if (this.isImplemented) {
       this.createTable()
