@@ -9316,7 +9316,9 @@ __webpack_require__.r(__webpack_exports__);
         this.view.render(this.options)
       }
       this.state.collapsed = !this.state.collapsed
-      this.view.wideView.collapsed = this.state.collapsed
+      if (this.view.isImplemented) {
+        this.view.wideView.collapsed = this.state.collapsed
+      }
       this.$emit('interaction')
       this.$emit('widthchange') // When view is open, we might need to adjust a panel width
     },
