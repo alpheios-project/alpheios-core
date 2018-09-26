@@ -586,6 +586,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
     if (inflection.constraints.irregular) {
       return [
+        Feature.types.grmCase,
         Feature.types.mood,
         Feature.types.tense,
         Feature.types.number,
