@@ -8347,8 +8347,6 @@ div.alpheios-color_schema_light_class {
   div.alpheios-color_schema_light_class .alpheios-morph__dictentry .lemma_index {
     color: #ffffff;
     background: #4E6476; }
-  div.alpheios-color_schema_light_class .alpheios-morph__dictentry-disambiguated {
-    background: #E49A0D; }
 
 div.alpheios-color_schema_dark_class {
   background: #282828;
@@ -8405,8 +8403,6 @@ div.alpheios-color_schema_dark_class {
   div.alpheios-color_schema_dark_class .alpheios-morph__dictentry .lemma_index {
     color: #4E6476;
     background: #ffffff; }
-  div.alpheios-color_schema_dark_class .alpheios-morph__dictentry-disambiguated {
-    background: #F6D918; }
 
 .alpheios-word {
   transition: background-color 1s ease-out; }

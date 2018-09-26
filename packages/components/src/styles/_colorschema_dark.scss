@@ -44,7 +44,7 @@ div.alpheios-color_schema_dark_class {
 	    color: $alpheios-color_schema_light_text_color;
 	    background: $alpheios-inflections__suffix_full_match_background;
 	}
-	
+
     .infl-cell--hl {
         background: $alpheios-color_schema_dark_background_hover;
     }
@@ -81,8 +81,4 @@ div.alpheios-color_schema_dark_class {
 		color: $alpheios-toolbar-color;
 		background: $alpheios-toolbar-text-color;
 	}
-  
-  .alpheios-morph__dictentry-disambiguated {
-    background: $alpheios-highlight-color;
-  }
 }
