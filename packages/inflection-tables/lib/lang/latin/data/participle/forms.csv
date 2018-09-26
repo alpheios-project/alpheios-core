@@ -6,7 +6,9 @@ fero,ferre_tuli_latus,ferēns,active,,present,,,
 fero,ferre_tuli_latus,-entis,active,,present,,,
 fero,ferre_tuli_latus,latūrus,active,,future,,,
 fero,ferre_tuli_latus,ferendus,passive,,future,,,4
-fero,ferre_tuli_latus,"lātus, -a, -um",passive,,perfect,,,8
+fero,ferre_tuli_latus,lātus,passive,,perfect,,,8
+fero,ferre_tuli_latus,lāta,passive,,perfect,,,8
+fero,ferre_tuli_latus,lātum,passive,,perfect,,,8
 volo,velle_volui_-,volēns,active,,present,,,
 volo,velle_volui_-,-entis,active,,present,,,
 eo,ire_ivi(ii)_itus,iēns,active,,present,,,
