@@ -55,6 +55,7 @@ class Lexeme {
    */
   addInflection (inflection) {
     inflection.lemma = this.lemma
+    inflection.lexeme = this
     this.inflections.push(inflection)
   }
 

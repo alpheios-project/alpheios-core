@@ -2906,6 +2906,10 @@ class Inflection {
 
     // Example may not be provided
     this.example = example
+
+    // A lemma this inflection belongs to. Is set by `Lexeme.addInflection()`
+    // TODO: make sure inflections are not set directly or this data will not be set
+    this.lemma = null
   }
 
   clone () {
@@ -2920,6 +2924,8 @@ class Inflection {
       optionalMatches: this.constraints.obligatoryMatches ? Array.from(this.constraints.obligatoryMatches) : [],
       morphologyMatches: this.constraints.morphologyMatches ? Array.from(this.constraints.morphologyMatches) : []
     }
+    // A clone will share the same lexeme with an original item
+    clone.lemma = this.lemma
     return clone
   }
 
@@ -4491,6 +4497,7 @@ class Lexeme {
    */
   addInflection (inflection) {
     inflection.lemma = this.lemma
+    inflection.lexeme = this
     this.inflections.push(inflection)
   }
 
