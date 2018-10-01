@@ -1,5 +1,3 @@
-import * as Styles from '../styles/styles'
-
 /**
  * A cell in a header row, a column title cell.
  */
@@ -20,11 +18,6 @@ export default class HeaderCell {
     this.columns = []
 
     this.value = this.title
-    this.classes = {
-      [Styles.classNames.cell]: true,
-      [Styles.classNames.header]: true,
-      [`${Styles.classNames.widthPrefix}${this.span}`]: true
-    }
   }
 
   /**
@@ -45,11 +38,7 @@ export default class HeaderCell {
    * @param value
    */
   changeSpan (value) {
-    let currentWidthClass = Styles.classNames.widthPrefix + this.span
     this.span += value
-    let newWidthClass = Styles.classNames.widthPrefix + this.span
-    this.classes[currentWidthClass] = false
-    this.classes[newWidthClass] = true
   }
 
   /**
@@ -86,7 +75,6 @@ export default class HeaderCell {
    */
   highlight () {
     if (!this.highlighted) {
-      this.classes[Styles.classNames.highlight] = true
       this.highlighted = true
       if (this.parent) {
         this.parent.highlight()
@@ -99,7 +87,6 @@ export default class HeaderCell {
    */
   clearHighlighting () {
     if (this.highlighted) {
-      this.classes[Styles.classNames.highlight] = false
       this.highlighted = false
       if (this.parent) {
         this.parent.clearHighlighting()

@@ -47,6 +47,7 @@ export default class View {
     this.table = {
       options: {}
     }
+    this.wideView = new WideView()
 
     /**
      * Whether this view has any credits
@@ -217,14 +218,15 @@ export default class View {
     emptyColumnsHidden: true,
     noSuffixMatchesHidden: true
   }) {
+    console.log(`view render call`)
     if (!this.isRendered && this.isRenderable) {
+      console.log(`view render rendering`)
       this.footnotes = this.getFootnotes()
       this.table.messages = this.messages
       this.morphemes = this.getMorphemes()
 
       this.table.construct(this.morphemes, options)
-      this.wideView = new WideView(this.table)
-      this.wideView.render()
+      this.wideView.render(this.table)
 
       // Render linked views (if any)
       for (const view of this.linkedViews) {

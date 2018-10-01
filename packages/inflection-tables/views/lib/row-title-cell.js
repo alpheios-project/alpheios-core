@@ -1,5 +1,3 @@
-import * as Styles from '../styles/styles'
-
 /**
  * A cell that specifies a title for a row in an inflection table.
  */
@@ -17,17 +15,15 @@ export default class RowTitleCell {
     this.title = groupingFeature.getTitle(featureValue)
     this.feature = groupingFeature
     this.nvGroupQty = nvGroupQty
+    this.span = 1
+    this.formsColumn = this.feature.formsColumn
+    this.fullWidth = this.feature.hasFullWidthRowTitle
+    this.titleColumnsQuantity = this.feature.groupFeatureList.titleColumnsQuantity
 
     this.value = this.title
-    this.classes = {
-      [Styles.classNames.cell]: true,
-      [Styles.classNames.rowTitleCell]: true,
-      [Styles.classNames.header]: this.feature.formsColumn,
-      [Styles.classNames.fullWidth]: this.feature.hasFullWidthRowTitle
-    }
 
     if (this.feature.formsColumn && this.feature.groupFeatureList.titleColumnsQuantity > 1) {
-      this.classes[`${Styles.classNames.widthPrefix}${this.feature.groupFeatureList.titleColumnsQuantity}`] = true
+      this.span = this.titleColumnsQuantity
     }
   }
 
@@ -39,16 +35,13 @@ export default class RowTitleCell {
   /**
   * Generates an empty cell placeholder of a certain width. Useful for situation when empty title cells need to be
   * inserted into a table structure (i.e. when title cells occupy multiple columns).
-  * @param {number} width - A number of columns placeholder cell will occupy.
+  * @param {number} span - A number of columns a placeholder cell would occupy.
   * @returns {Object}
    */
-  static placeholder (width = 1) {
+  static placeholder (span = 1) {
     return {
       value: '', // This cell is empty
-      classes: {
-        [Styles.classNames.cell]: true,
-        [`${Styles.classNames.widthPrefix}${width}`]: true
-      }
+      span: span
     }
   }
 
@@ -72,19 +65,13 @@ export default class RowTitleCell {
    * Highlights this row title cell
    */
   highlight () {
-    if (!this.highlighted) {
-      this.classes[Styles.classNames.highlight] = true
-      this.highlighted = true
-    }
+    this.highlighted = true
   }
 
   /**
    * Removes highlighting from this row title cell
    */
   clearHighlighting () {
-    if (this.highlighted) {
-      this.classes[Styles.classNames.highlight] = false
-      this.highlighted = false
-    }
+    this.highlighted = false
   }
 }

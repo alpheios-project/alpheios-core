@@ -1,4 +1,3 @@
-import * as Styles from '../styles/styles'
 import RowTitleCell from './row-title-cell'
 
 /**
@@ -7,10 +6,8 @@ import RowTitleCell from './row-title-cell'
 export default class WideView {
   /**
    * Initializes a wide view.
-   * @param {Table} table - An inflection table object.
    */
-  constructor (table) {
-    this.table = table
+  constructor () {
     this.rows = [] // To store rows of view's inflection table
 
     // Wither this view is collapsed in a UI component
@@ -31,13 +28,19 @@ export default class WideView {
     return qty
   }
 
+  get titleColumnQty () {
+    return this.table.titleColumnQty
+  }
+
   /**
    * Renders a table in a size suitable for Vue.js display
+   * @param {Table} table - An inflection table object.
    * @return {{rows: Array}}
    */
-  render () {
+  render (table) {
     this.rows = []
-    for (let row of this.table.headers) {
+    this.table = table
+    for (let row of table.headers) {
       let cells = []
       cells.push(row.titleCell)
       for (let cell of row.cells) {
@@ -46,7 +49,7 @@ export default class WideView {
       this.rows.push({ cells: cells })
     }
 
-    for (let row of this.table.rows) {
+    for (let row of table.rows) {
       let cells = []
       let titleCells = row.titleCell.hierarchyList
       if (titleCells.length < this.table.titleColumnQty) {
@@ -60,16 +63,6 @@ export default class WideView {
         cells.push(cell)
       }
       this.rows.push({ cells: cells })
-    }
-  }
-
-  /**
-   * Inline styles object to use with Vue.js components
-   * @return {{gridTemplateColumns: string}}
-   */
-  get style () {
-    return {
-      gridTemplateColumns: `repeat(${this.visibleColumnQty + this.table.titleColumnQty}, ${Styles.wideView.column.width}${Styles.wideView.column.unit})`
     }
   }
 }

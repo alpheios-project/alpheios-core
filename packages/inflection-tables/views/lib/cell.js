@@ -1,5 +1,3 @@
-import * as Styles from '../styles/styles'
-
 export default class Cell {
   /**
    * Creates a cell for an inflection table.
@@ -26,13 +24,6 @@ export default class Cell {
     this._index = undefined
     this.hidden = false
     this.highlighted = false
-
-    this.classes = {
-      [Styles.classNames.cell]: true,
-      [Styles.classNames.morphologyMatch]: this.morphologyMatch,
-      [Styles.classNames.highlight]: false,
-      [Styles.classNames.hidden]: false
-    }
   }
 
   get isDataCell () {
@@ -51,40 +42,28 @@ export default class Cell {
    * Hides an element.
    */
   hide () {
-    if (!this.hidden) {
-      this.classes[Styles.classNames.hidden] = true
-      this.hidden = true
-    }
+    this.hidden = true
   }
 
   /**
    * Shows a previously hidden element.
    */
   show () {
-    if (this.hidden) {
-      this.classes[Styles.classNames.hidden] = false
-      this.hidden = false
-    }
+    this.hidden = false
   }
 
   /**
    * Highlights a cell with color.
    */
   highlight () {
-    if (!this.highlighted) {
-      this.classes[Styles.classNames.highlight] = true
-      this.highlighted = true
-    }
+    this.highlighted = true
   }
 
   /**
    * Removes highlighting from a previously highlighted cell.
    */
   clearHighlighting () {
-    if (this.highlighted) {
-      this.classes[Styles.classNames.highlight] = false
-      this.highlighted = false
-    }
+    this.highlighted = false
   }
 
   /**
