@@ -154,7 +154,7 @@
       cellClasses: function (cell) {
         let classes = {
           ['infl-cell']: true,
-          ['infl-cell--morph-match']: this.morphologyMatch,
+          ['infl-cell--morph-match']: cell.morphologyMatch,
           ['infl-cell--hl']: cell.highlighted,
           ['hidden']: cell.hidden
         }
