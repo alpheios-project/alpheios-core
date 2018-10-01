@@ -2699,11 +2699,11 @@ const i18n = {
     },
     singular: {
       full: 'singular',
-      abbr: 's.'
+      abbr: 'sing.'
     },
     plural: {
       full: 'plural',
-      abbr: 'p.'
+      abbr: 'plur.'
     },
     dual: {
       full: 'dual',
