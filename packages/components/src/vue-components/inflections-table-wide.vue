@@ -35,32 +35,35 @@
                     </div>
                 </div>
 
-                <div v-if="!view.hasPrerenderedTables" :style="view.wideView.style"
-                     class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
-                    <template v-for="row in view.wideView.rows">
-                        <div :class="cellClasses(cell)" v-for="cell in row.cells"
-                             @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">
-                            <template v-if="cell.isDataCell">
-                                <template v-for="(morpheme, index) in cell.morphemes">
-                            <span :class="morphemeClasses(morpheme)">
-                                <template v-if="morpheme.value">{{morpheme.value}}</template>
-                                <template v-else>-</template>
-                            </span>
-                                    <infl-footnote v-if="morpheme.hasFootnotes" :footnotes="morpheme.footnotes"></infl-footnote>
-                                    <template v-if="index < cell.morphemes.length-1">, </template>
+                <template v-if="!view.hasPrerenderedTables" >
+                    <div :style="tableStyles" class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
+                        <template v-for="row in view.wideView.rows">
+                            <div :class="cellClasses(cell)" v-for="cell in row.cells"
+                                 @mouseover.stop.prevent="cellMouseOver(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)">
+                                <template v-if="cell.isDataCell">
+                                    <template v-for="(morpheme, index) in cell.morphemes">
+                                    <span :class="morphemeClasses(morpheme)">
+                                        <template v-if="morpheme.value">{{morpheme.value}}</template>
+                                        <template v-else>-</template>
+                                    </span>
+                                        <infl-footnote v-if="morpheme.hasFootnotes" :footnotes="morpheme.footnotes"></infl-footnote>
+                                        <template v-if="index < cell.morphemes.length-1">, </template>
+                                    </template>
                                 </template>
-                            </template>
-                            <span v-else v-html="cell.value"></span>
-                        </div>
-                    </template>
-                </div>
-                <div v-else-if="!state.collapsed" class="infl-prdgm-tbl">
-                    <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
-                        <div class="infl-prdgm-tbl__cell" :class="prerenderedCellClasses(cell)" v-for="cell in row.cells">
-                            {{cell.value}}
+                                <span v-else v-html="cell.value"></span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="infl-prdgm-tbl">
+                        <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
+                            <div class="infl-prdgm-tbl__cell" :class="prerenderedCellClasses(cell)" v-for="cell in row.cells">
+                                {{cell.value}}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </template>
             </div>
         </template>
     </div>
@@ -114,6 +117,14 @@
       }
     },
 
+    computed: {
+      tableStyles: function ()  {
+        return {
+          gridTemplateColumns: `repeat(${this.view.wideView.visibleColumnQty + this.view.wideView.titleColumnQty}, 1fr)`
+        }
+      }
+    },
+
     methods: {
       collapse: function () {
         if (!this.view.isRendered) {
@@ -141,11 +152,33 @@
 
       // Cell classes for regular tables
       cellClasses: function (cell) {
-        let classes = cell.classes
+        let classes = {
+          ['infl-cell']: true,
+          ['infl-cell--morph-match']: this.morphologyMatch,
+          ['infl-cell--hl']: cell.highlighted,
+          ['hidden']: cell.hidden
+        }
+
+        if (cell.constructor.name === 'HeaderCell') {
+          classes['infl-cell--hdr'] = true
+          classes[`infl-cell--sp${cell.span}`] = true
+        }
+
+        if (cell.constructor.name === 'RowTitleCell') {
+          classes['row-title-cell'] = true
+          classes['infl-cell--hdr'] = cell.formsColumn
+          if (cell.fullWidth) {
+            classes['infl-cell--fw'] = true
+          } else {
+            classes[`infl-cell--sp${cell.span}`] = true
+          }
+        }
+
         if (this.inflBrowserTable) {
           // Do not show full morphology matches in an inflection browser
-          classes[this.classes.fullMorphologyMatch] = false
+          classes['infl-cell--morph-match'] = false
         }
+
         return classes
       },
 
@@ -175,18 +208,14 @@
       },
 
       cellMouseOver: function (cell) {
-        let wideView =  this.view.wideView
         if (cell.isDataCell) {
           cell.highlightRowAndColumn()
-          this.view.wideView = wideView
         }
       },
 
       cellMouseLeave: function (cell) {
-        let wideView =  this.view.wideView
         if (cell.isDataCell) {
           cell.clearRowAndColumnHighlighting()
-          this.view.wideView = wideView
         }
       }
     },

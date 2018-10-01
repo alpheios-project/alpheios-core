@@ -205,6 +205,7 @@
           return this.selectedPartOfSpeech
         },
         set: function (newValue) {
+          console.log(`inflection partofSpeechSelector setter`)
           this.selectedPartOfSpeech = newValue
           this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
           this.selectedView = this.views[0].render()
@@ -217,6 +218,7 @@
           return this.selectedView ? this.selectedView.id : ''
         },
         set: function (newValue) {
+          console.log(`inflection viewSelector setter`)
           this.selectedView = this.views.find(view => view.id === newValue).render()
           this.mainTableCollapsed = false
           this.prerenderedCollapsed = false
@@ -246,6 +248,7 @@
 
     watch: {
       inflectionViewSet: function () {
+        console.log(`inflectionViewSet changed`)
         this.hasInflectionData = false
         if (this.data.inflectionViewSet) {
           this.languageID = this.data.inflectionViewSet.languageID

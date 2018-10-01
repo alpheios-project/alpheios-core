@@ -296,7 +296,7 @@
           return this.data.top
         }
 
-        let time = new Date().getTime()
+        let time = Date.now()
         this.logger.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
         let top = this.positionTopValue
         let placementTargetY = this.data.targetRect.top
@@ -322,7 +322,7 @@
           // There is no space neither above nor below. Center it vertically.
           top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
         }
-        time = new Date().getTime()
+        time = Date.now()
         this.logger.log(`${time}: position top getter, return value is ${top}, offsetHeight is ${this.exactHeight}`)
         return `${top}px`
       },
@@ -347,12 +347,12 @@
 
       heightDm: {
         get: function () {
-          let time = new Date().getTime()
+          let time = Date.now()
           this.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
           return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
         },
         set: function (newHeight) {
-          let time = new Date().getTime()
+          let time = Date.now()
           this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
           /*
           let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -520,7 +520,7 @@
        * It seems that calling it even without `nextTick()` is enough for updating a popup dimensions.
        */
       updatePopupDimensions () {
-        let time = new Date().getTime()
+        let time = Date.now()
 
         if (this.resizeCount >= this.resizeCountMax) {
           // Skip resizing if maximum number reached to avoid infinite loops
@@ -598,7 +598,7 @@
 
     updated () {
       if (this.visible) {
-        let time = new Date().getTime()
+        let time = Date.now()
         this.logger.log(`${time}: component is updated`)
 
         let vm = this
@@ -632,7 +632,7 @@
       },
 
       translationsDataReady: function(value) {
-        let time = new Date().getTime()
+        let time = Date.now()
         this.logger.log(`${time}: translation data became available`, this.translations)
       }
 

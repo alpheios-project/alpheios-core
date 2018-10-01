@@ -31,9 +31,10 @@
     },
     data () {
       return {
+        target: null,
         footnotesPopupVisible: false,
         draggable: true,
-        interactInstance: undefined,
+        interactInstance: null,
         popupAlignmentStyles: {transform: undefined},
         inflpopup: null,
         inflpanel: null,
@@ -42,12 +43,26 @@
       }
     },
     mounted () {
-      if (this.draggable) {
-        this.interactInstance = interact(this.$el.querySelector('.alpheios-inflections__footnote-popup'))
-          .draggable(this.draggableSettings())
-      }
+      this.target = this.$el.querySelector('.alpheios-inflections__footnote-popup')
+    },
+    beforeDestroy () {
+      this.$_alpheios_cleanup()
     },
     methods: {
+      // Named according to Vue style guide: https://vuejs.org/v2/style-guide/#Private-property-names-essential
+      $_alpheios_init () {
+        if (this.draggable && !this.interactInstance) {
+          this.interactInstance = interact(this.target)
+            .draggable(this.draggableSettings())
+        }
+      },
+
+      $_alpheios_cleanup () {
+        if (this.interactInstance) {
+          this.interactInstance.unset()
+        }
+      },
+
       draggableSettings: function () {
         return {
           inertia: true,
@@ -60,6 +75,7 @@
           onmove: this.dragMoveListener
         }
       },
+
       dragMoveListener (event) {
         const target = event.target
         const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
@@ -107,16 +123,18 @@
           this.popupAlignmentStyles.transform = 'translateX(-' + this.deltaLeftXBound(popupBR, panelBR) + 'px)'
         }
       },
-      async showPopup () {
+
+      showPopup () {
+        this.$_alpheios_init()
         this.footnotesPopupVisible = true
-        await Vue.nextTick()
-        this.checkBounds()
+        Vue.nextTick().then(() => this.checkBounds())
       },
+
       hidePopup () {
         this.footnotesPopupVisible = false
+        this.$_alpheios_cleanup()
         this.popupAlignmentStyles.transform = undefined
       }
-
     }
   }
 
