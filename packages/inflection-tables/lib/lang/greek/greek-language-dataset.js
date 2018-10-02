@@ -517,35 +517,35 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // Nouns
     partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
-    pofsFootnotes = papaparse.parse(nounFootnotesCSV, {})
+    pofsFootnotes = papaparse.parse(nounFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, pofsFootnotes.data)
-    suffixes = papaparse.parse(nounSuffixesCSV, {})
+    suffixes = papaparse.parse(nounSuffixesCSV, { skipEmptyLines: true })
     this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Adjective
     partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    pofsFootnotes = papaparse.parse(adjectiveFootnotesCSV, {})
+    pofsFootnotes = papaparse.parse(adjectiveFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, pofsFootnotes.data)
-    suffixes = papaparse.parse(adjectiveSuffixesCSV, {})
+    suffixes = papaparse.parse(adjectiveSuffixesCSV, { skipEmptyLines: true })
     this.addSuffixes(partOfSpeech, suffixes.data, footnotes)
 
     // Articles
     partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ARTICLE)
-    forms = papaparse.parse(articleFormsCSV, {})
+    forms = papaparse.parse(articleFormsCSV, { skipEmptyLines: true })
     this.addArticleForms(partOfSpeech, forms.data)
 
     // Pronouns
     partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_PRONOUN)
-    pofsFootnotes = papaparse.parse(pronounFootnotesCSV, {})
+    pofsFootnotes = papaparse.parse(pronounFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Form, pofsFootnotes.data)
-    forms = papaparse.parse(pronounFormsCSV, {})
+    forms = papaparse.parse(pronounFormsCSV, { skipEmptyLines: true })
     this.addPronounForms(partOfSpeech, forms.data, footnotes)
 
     // Numerals
     partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NUMERAL)
-    pofsFootnotes = papaparse.parse(numeralFootnotesCSV, {})
+    pofsFootnotes = papaparse.parse(numeralFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Form, pofsFootnotes.data)
-    forms = papaparse.parse(numeralFormsCSV, {})
+    forms = papaparse.parse(numeralFormsCSV, { skipEmptyLines: true })
     this.addNumeralForms(partOfSpeech, forms.data, footnotes)
 
     // Verbs
@@ -557,16 +557,16 @@ export default class GreekLanguageDataset extends LanguageDataset {
     partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParadigmTables,
-      papaparse.parse(verbParadigmRulesCSV, {}).data, verbAndParticipleParadigmTables)
+      papaparse.parse(verbParadigmRulesCSV, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
-    this.addFootnotes(partOfSpeech, Paradigm, papaparse.parse(verbParadigmFootnotesCSV, {}).data)
+    this.addFootnotes(partOfSpeech, Paradigm, papaparse.parse(verbParadigmFootnotesCSV, { skipEmptyLines: true }).data)
 
     // Verb Participles
     // Paradigms
     partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
     paradigms = this.setParadigmData(
       partOfSpeech, verbParticipleParadigmTables,
-      papaparse.parse(verbParticipleParadigmRulesCSV, {}).data, verbAndParticipleParadigmTables)
+      papaparse.parse(verbParticipleParadigmRulesCSV, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
     this.addParadigms(partOfSpeech, paradigms)
 
     this.dataLoaded = true

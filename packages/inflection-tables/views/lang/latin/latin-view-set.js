@@ -25,12 +25,8 @@ export default class LatinViewSet extends ViewSet {
     return [
       LatinNounView,
       LatinAdjectiveView,
-      LatinVoiceConjugationMoodView,
-      LatinVoiceMoodConjugationView,
-      LatinConjugationVoiceMoodView,
-      LatinConjugationMoodVoiceView,
-      LatinMoodVoiceConjugationView,
-      LatinMoodConjugationVoiceView,
+      LatinVerbParticipleView,
+      LatinSupineView,
       LatinInfinitiveView,
       LatinImperativeView,
       LatinVerbIrregularView,
@@ -38,8 +34,12 @@ export default class LatinViewSet extends ViewSet {
       LatinVerbParticipleIrregularView,
       LatinVerbSupineIrregularView,
       //      LatinVerbGerundiveIrregularView, // Gerundive table is eliminated for now as per discussion in https://github.com/alpheios-project/inflection-tables/issues/76
-      LatinSupineView,
-      LatinVerbParticipleView
+      LatinVoiceConjugationMoodView,
+      LatinVoiceMoodConjugationView,
+      LatinConjugationVoiceMoodView,
+      LatinConjugationMoodVoiceView,
+      LatinMoodVoiceConjugationView,
+      LatinMoodConjugationVoiceView
     ]
   }
 }
