@@ -52,7 +52,7 @@
         resourceOptions: {},
 
         overrideLanguage: false,
-        overrideLanguageLabel: 'Override language'
+        overrideLanguageLabel: 'Change language'
       }
     },
     props: {
@@ -138,7 +138,7 @@
 
         this.uiController.updateLanguage(this.options.items.lookupLanguage.currentValue)
         this.resourceOptions.items.lexicons = this.uiController.resourceOptions.items.lexicons
-        
+
         LexicalQueryLookup
           .create(textSelector, this.uiController, this.resourceOptions)
           .getData()
@@ -198,7 +198,7 @@
       margin: 15px 10px 5px;
 
       text-align: left;
-      
+
     }
 
     .uk-input.alpheios-lookup__input {

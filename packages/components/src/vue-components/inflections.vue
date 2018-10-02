@@ -33,8 +33,6 @@
                 </div>
             </div>
 
-            <h4 class="alpheios-inflections__additional_title" v-if="selectedView.additionalTitle">{{selectedView.additionalTitle}}</h4>
-
             <div v-if="data.inflectionData"
                  v-show="showExplanatoryHint"
                  class="alpheios-inflections__paradigms-expl"
