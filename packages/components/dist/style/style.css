@@ -322,6 +322,7 @@
  */
   /*
  * Bullet
+ * 1. Reset display table which causes issues in combination with multi column layouts
  */
   /* Size modifier
  ========================================================================== */
@@ -2839,10 +2840,6 @@
     background: #fff; }
   .auk pre code {
     font-family: Consolas, monaco, monospace; }
-  .auk ::-moz-selection {
-    background: #39f;
-    color: #fff;
-    text-shadow: none; }
   .auk ::selection {
     background: #39f;
     color: #fff;
@@ -2855,14 +2852,19 @@
     display: list-item; }
   .auk template {
     display: none; }
-  .auk .var-media-s::before {
+  .auk .uk-breakpoint-s::before {
     content: "640px"; }
-  .auk .var-media-m::before {
+  .auk .uk-breakpoint-m::before {
     content: "960px"; }
-  .auk .var-media-l::before {
+  .auk .uk-breakpoint-l::before {
     content: "1200px"; }
-  .auk .var-media-xl::before {
+  .auk .uk-breakpoint-xl::before {
     content: "1600px"; }
+  .auk :root {
+    --uk-breakpoint-s: $breakpoint-small;
+    --uk-breakpoint-m: $breakpoint-medium;
+    --uk-breakpoint-l: $breakpoint-large;
+    --uk-breakpoint-xl: $breakpoint-xlarge; }
   .auk a.uk-link-muted,
   .auk .uk-link-muted a {
     color: #999; }
@@ -3025,7 +3027,9 @@
     height: 1.5em;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%226%22%20height%3D%226%22%20viewBox%3D%220%200%206%206%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22%23666666%22%20cx%3D%223%22%20cy%3D%223%22%20r%3D%223%22%3E%3C%2Fcircle%3E%0A%3C%2Fsvg%3E");
     background-repeat: no-repeat;
-    background-position: 50% 50%; }
+    background-position: 50% 50%;
+    /* 1 */
+    display: block; }
   .auk .uk-list-large > li:nth-child(n+2),
   .auk .uk-list-large > li > ul {
     margin-top: 20px; }
