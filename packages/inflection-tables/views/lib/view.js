@@ -218,9 +218,7 @@ export default class View {
     emptyColumnsHidden: true,
     noSuffixMatchesHidden: true
   }) {
-    console.log(`view render call`)
     if (!this.isRendered && this.isRenderable) {
-      console.log(`view render rendering`)
       this.footnotes = this.getFootnotes()
       this.table.messages = this.messages
       this.morphemes = this.getMorphemes()
