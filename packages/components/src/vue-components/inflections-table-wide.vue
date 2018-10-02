@@ -10,7 +10,7 @@
 
         <template v-if="!state.collapsed">
             <h4 class="alpheios-inflections__additional_title" v-if="view.additionalTitle">{{view.additionalTitle}}</h4>
-            <div v-if="!view.isImplemented" class="alpheios-inflections__not-impl-msg">
+            <div v-if="!view.isImplemented || (view.wideView && view.wideView.rows.length == 0)" class="alpheios-inflections__not-impl-msg">
                 {{messages.INFLECT_MSG_TABLE_NOT_IMPLEMENTED}}
             </div>
             <div v-else-if="view.wideView">

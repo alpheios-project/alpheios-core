@@ -14485,7 +14485,8 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            !_vm.view.isImplemented
+            !_vm.view.isImplemented ||
+            (_vm.view.wideView && _vm.view.wideView.rows.length == 0)
               ? _c(
                   "div",
                   { staticClass: "alpheios-inflections__not-impl-msg" },
