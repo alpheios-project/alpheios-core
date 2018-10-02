@@ -60,6 +60,7 @@
       $_alpheios_cleanup () {
         if (this.interactInstance) {
           this.interactInstance.unset()
+          this.interactInstance = null
         }
       },
 
