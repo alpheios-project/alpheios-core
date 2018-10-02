@@ -8557,7 +8557,6 @@ __webpack_require__.r(__webpack_exports__);
     // Named according to Vue style guide: https://vuejs.org/v2/style-guide/#Private-property-names-essential
     $_alpheios_init () {
       if (this.draggable && !this.interactInstance) {
-        console.log(`creating an interact instance`)
         this.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.target)
           .draggable(this.draggableSettings())
       }
@@ -8565,7 +8564,6 @@ __webpack_require__.r(__webpack_exports__);
 
     $_alpheios_cleanup () {
       if (this.interactInstance) {
-        console.log(`removing an interact instance`)
         this.interactInstance.unset()
         this.interactInstance = null
       }
@@ -8633,14 +8631,12 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     showPopup () {
-      console.log(`show popup`)
       this.$_alpheios_init()
       this.footnotesPopupVisible = true
       vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default.a.nextTick().then(() => this.checkBounds())
     },
 
     hidePopup () {
-      console.log(`hide popup`)
       this.footnotesPopupVisible = false
       this.$_alpheios_cleanup()
       this.popupAlignmentStyles.transform = undefined
