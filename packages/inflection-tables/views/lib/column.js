@@ -14,7 +14,8 @@ export default class Column {
     this._headerCell = undefined
     this.hidden = false
     this.empty = this.cells.every(cell => cell.empty)
-    this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches)
+    // TODO we should rename this to be cellMatches
+    this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches || cell.morphologyMatch)
 
     for (let cell of this.cells) {
       cell.column = this
