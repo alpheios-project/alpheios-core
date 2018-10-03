@@ -37,9 +37,7 @@ export default class LatinAdjectiveView extends LatinView {
   static getOrderedDeclensions () {
     return [
       this.featureMap.get(LatinView.datasetConsts.ORD_1ST_2ND),
-      this.featureMap.get(Constants.ORD_3RD),
-      this.featureMap.get(Constants.ORD_4TH),
-      this.featureMap.get(Constants.ORD_5TH)
+      this.featureMap.get(Constants.ORD_3RD)
     ]
   }
 
@@ -47,8 +45,6 @@ export default class LatinAdjectiveView extends LatinView {
     switch (featureValue) {
       case LatinView.datasetConsts.ORD_1ST_2ND: return `First/Second<br>ā and o`
       case Constants.ORD_3RD: return `Third<br>consonant and i`
-      case Constants.ORD_4TH: return `Fourth`
-      case Constants.ORD_5TH: return `Fifth`
       default: return featureValue
     }
   }

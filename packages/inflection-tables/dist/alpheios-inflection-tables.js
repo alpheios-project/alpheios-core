@@ -14817,9 +14817,7 @@ class LatinAdjectiveView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["de
   static getOrderedDeclensions () {
     return [
       this.featureMap.get(_latin_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].datasetConsts.ORD_1ST_2ND),
-      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD),
-      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_4TH),
-      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_5TH)
+      this.featureMap.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD)
     ]
   }
 
@@ -14827,8 +14825,6 @@ class LatinAdjectiveView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["de
     switch (featureValue) {
       case _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].datasetConsts.ORD_1ST_2ND: return `First/Second<br>ā and o`
       case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD: return `Third<br>consonant and i`
-      case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_4TH: return `Fourth`
-      case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_5TH: return `Fifth`
       default: return featureValue
     }
   }
@@ -15026,7 +15022,7 @@ class LatinView extends _views_lib_view_js__WEBPACK_IMPORTED_MODULE_1__["default
       case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_2ND: return `Second<br>o`
       case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_3RD: return `Third<br>(mutes, liquids, nasals, i)`
       case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_4TH: return `Fourth<br>u`
-      case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_5TH: return `5th<br>ē`
+      case alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].ORD_5TH: return `Fifth<br>ē`
       default: return featureValue
     }
   }
@@ -17767,15 +17763,19 @@ class Table {
    */
   _canCollapse () {
     let colsWithMatches = 0
+    let nonEmptyColQty = 0
     if (this.headers.length > 0) {
       for (let headerCell of this.headers[0].cells) {
         if (headerCell.columns.some(column => column.suffixMatches)) {
           colsWithMatches++
         }
+        if (!headerCell.columns.every(column => column.empty)) {
+          nonEmptyColQty++
+        }
       }
     }
     // A table can collapse if it has all columns with matches, but not every column has matches in it.
-    return colsWithMatches > 0 && colsWithMatches < this.headers[0].cells.length
+    return colsWithMatches > 0 && colsWithMatches < nonEmptyColQty
   }
 
   /**

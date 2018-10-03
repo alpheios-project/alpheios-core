@@ -346,15 +346,19 @@ export default class Table {
    */
   _canCollapse () {
     let colsWithMatches = 0
+    let nonEmptyColQty = 0
     if (this.headers.length > 0) {
       for (let headerCell of this.headers[0].cells) {
         if (headerCell.columns.some(column => column.suffixMatches)) {
           colsWithMatches++
         }
+        if (!headerCell.columns.every(column => column.empty)) {
+          nonEmptyColQty++
+        }
       }
     }
     // A table can collapse if it has all columns with matches, but not every column has matches in it.
-    return colsWithMatches > 0 && colsWithMatches < this.headers[0].cells.length
+    return colsWithMatches > 0 && colsWithMatches < nonEmptyColQty
   }
 
   /**

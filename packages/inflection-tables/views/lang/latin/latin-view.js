@@ -88,7 +88,7 @@ export default class LatinView extends View {
       case Constants.ORD_2ND: return `Second<br>o`
       case Constants.ORD_3RD: return `Third<br>(mutes, liquids, nasals, i)`
       case Constants.ORD_4TH: return `Fourth<br>u`
-      case Constants.ORD_5TH: return `5th<br>ē`
+      case Constants.ORD_5TH: return `Fifth<br>ē`
       default: return featureValue
     }
   }
