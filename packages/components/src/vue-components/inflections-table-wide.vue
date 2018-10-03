@@ -224,6 +224,7 @@
     watch: {
       view: function () {
         this.$emit('widthchange')
+        this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
       },
 
       collapsed: function (state) {
