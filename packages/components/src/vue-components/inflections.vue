@@ -285,6 +285,8 @@
         if (visibility && this.htmlElements.content) {
           // If container is become visible, update parent with its width
           this.updateWidth()
+          // Scroll to top if panel is reopened
+          this.navigate('top')
         }
       },
       locale: function () {
