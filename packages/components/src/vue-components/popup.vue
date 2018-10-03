@@ -700,6 +700,7 @@
         fill: $alpheios-link-color-dark-bg;
         stroke: $alpheios-link-color-dark-bg;
         background: inherit;
+        stroke-width: 2.5;
     }
 
     .alpheios-popup__close-btn:hover,

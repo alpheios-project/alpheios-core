@@ -8990,6 +8990,7 @@ a.alpheios-lookup__settings-link {
   fill: #D1D1D0;
   stroke: #D1D1D0;
   background: inherit;
+  stroke-width: 2.5;
 }
 .alpheios-popup__close-btn:hover,
 .alpheios-popup__close-btn:focus {
@@ -9871,6 +9872,9 @@ ul.alpheios-skin_properties {
     height: 20px;
     display: inline-block;
     vertical-align: top;
+}
+.alpheios-panel__header-action-btn.alpheios_close {
+  stroke-width: 2.5;
 }
 .alpheios-panel__header-action-btn:hover,
 .alpheios-panel__header-action-btn:focus,
