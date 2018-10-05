@@ -19,7 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/alpheios-project/inflection-tables.git"
   },
-  "author": "",
+  "author": "The Alpheios Project, Ltd.",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alpheios-project/inflection-tables/issues"
