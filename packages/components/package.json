@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/alpheios-project/components.git"
   },
-  "author": "",
+  "author": "The Alpheios Project, Ltd.",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alpheios-project/components/issues"
