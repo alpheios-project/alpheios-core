@@ -20,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/alpheios-project/data-models.git"
   },
-  "author": "",
+  "author": "The Alpheios Project, Ltd.",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alpheios-project/data-models/issues"
