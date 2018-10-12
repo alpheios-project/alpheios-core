@@ -108,7 +108,7 @@ export default class PointerEvt {
 
   static pointerUpListener (event, domEvt) {
     const valid = event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    if (valid) { event.evtHandler(event) }
+    if (valid) { event.evtHandler(event, domEvt) }
   }
 
   static touchStartListener (event, domEvt) {
@@ -117,14 +117,21 @@ export default class PointerEvt {
 
   static touchEndListener (event, domEvt) {
     const valid = event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)
-    if (valid) { event.evtHandler(event) }
+    if (valid) { event.evtHandler(event, domEvt) }
   }
 
   static dblClickListener (event, domEvt) {
     const valid = event
       .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
       .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    if (valid) { event.evtHandler(event) }
+    if (valid) { event.evtHandler(event, domEvt) }
+  }
+
+  static genericListener (event, domEvt) {
+    const valid = event
+      .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+      .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+    if (valid) { event.evtHandler(event, domEvt) }
   }
 
   static addUpDownListeners (element, event) {
@@ -140,5 +147,9 @@ export default class PointerEvt {
 
   static addDblClickListener (element, event) {
     element.addEventListener('dblclick', this.dblClickListener.bind(this, event), { passive: true })
+  }
+
+  static addGenericListener (element, event, eventName) {
+    element.addEventListener(eventName, this.genericListener.bind(this, event), { passive: true })
   }
 }

@@ -8667,6 +8667,8 @@ fieldset[disabled] .multiselect{pointer-events:none
 }
 .multiselect__input,.multiselect__single{position:relative;display:inline-block;min-height:20px;line-height:20px;border:none;border-radius:5px;background:#fff;padding:0 0 0 5px;width:100%;transition:border .1s ease;box-sizing:border-box;margin-bottom:8px;vertical-align:top
 }
+.multiselect__input::-webkit-input-placeholder{color:#35495e
+}
 .multiselect__input:-ms-input-placeholder{color:#35495e
 }
 .multiselect__input::placeholder{color:#35495e
@@ -8733,9 +8735,9 @@ fieldset[disabled] .multiselect{pointer-events:none
 }
 .multiselect--disabled{background:#ededed;pointer-events:none
 }
-.multiselect--disabled .multiselect__current,.multiselect--disabled .multiselect__select{background:#ededed;color:#a6a6a6
+.multiselect--disabled .multiselect__current,.multiselect--disabled .multiselect__select,.multiselect__option--disabled{background:#ededed;color:#a6a6a6
 }
-.multiselect__option--disabled{background:#ededed!important;color:#a6a6a6!important;cursor:text;pointer-events:none
+.multiselect__option--disabled{cursor:text;pointer-events:none
 }
 .multiselect__option--group{background:#ededed;color:#35495e
 }
