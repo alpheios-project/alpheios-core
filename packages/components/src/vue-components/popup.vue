@@ -433,8 +433,8 @@
             min: { width: this.minResizableWidth, height: this.minResizableHeight }
           },
           restrictEdges: {
-            outer: document.body,
-            endOnly: true,
+            restriction: document.body,
+            endOnly: true
           }
         }
       },
@@ -445,7 +445,6 @@
           inertia: true,
           autoScroll: false,
           restrict: {
-            restriction: document.body,
             elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
           },
           ignoreFrom: 'input, textarea, a[href], select, option',
