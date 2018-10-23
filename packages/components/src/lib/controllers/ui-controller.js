@@ -70,7 +70,29 @@ export default class UIController {
       resizable: true
     }
     this.template = Object.assign(templateDefaults, template)
+    this.isInitialized = false
+
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
+  }
+
+  static get defaults () {
+    return {
+      irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size'
+    }
+  }
+
+  static get settingValues () {
+    return {
+      uiTypePanel: 'panel',
+      uiTypePopup: 'popup',
+      verboseMode: 'verbose',
+      enableLemmaTranslations: false
+    }
+  }
+
+  async init () {
+    if (this.isInitialized) { return `Already initialized` }
+    console.log(`UI controller initialization started`)
 
     this.zIndex = this.getZIndexMax()
 
@@ -78,6 +100,11 @@ export default class UIController {
       .addMessages(enUS, Locales.en_US)
       .addMessages(enGB, Locales.en_GB)
       .setLocale(Locales.en_US)
+
+    // TODO: Do we need to load options consequently?
+    await this.options.load()
+    await this.resourceOptions.load()
+    await this.uiOptions.load()
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
@@ -375,23 +402,6 @@ export default class UIController {
       }
     })
 
-    this.options.load(() => {
-      this.resourceOptions.load(() => {
-        this.uiOptions.load(() => {
-          this.state.activateUI()
-          console.log('UI options are loaded')
-          document.body.dispatchEvent(new Event('Alpheios_Options_Loaded'))
-
-          const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.options.items.preferredLanguage.currentValue)
-          this.options.items.lookupLangOverride.setValue(false)
-          this.updateLanguage(currentLanguageID)
-          this.updateVerboseMode()
-          this.updateLemmaTranslations()
-          this.notifyInflectionBrowser()
-        })
-      })
-    })
-
     // Create a Vue instance for a popup
     this.popup = new Vue({
       el: `#${this.template.popupId}`,
@@ -651,21 +661,20 @@ export default class UIController {
 
     // Set initial values of components
     this.setRootComponentClasses()
-  }
 
-  static get defaults () {
-    return {
-      irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size'
-    }
-  }
+    this.state.activateUI()
+    console.log('UI options are loaded')
+    document.body.dispatchEvent(new Event('Alpheios_Options_Loaded'))
 
-  static get settingValues () {
-    return {
-      uiTypePanel: 'panel',
-      uiTypePopup: 'popup',
-      verboseMode: 'verbose',
-      enableLemmaTranslations: false
-    }
+    const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.options.items.preferredLanguage.currentValue)
+    this.options.items.lookupLangOverride.setValue(false)
+    this.updateLanguage(currentLanguageID)
+    this.updateVerboseMode()
+    this.updateLemmaTranslations()
+    this.notifyInflectionBrowser()
+
+    this.isInitialized = true
+    console.log(`UI controller initialization finished`)
   }
 
   /**
