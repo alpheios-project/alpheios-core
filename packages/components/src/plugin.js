@@ -30,7 +30,9 @@ import GenericEvt from './lib/custom-pointer-events/generic-evt.js'
 import LongTap from './lib/custom-pointer-events/long-tap.js'
 import Swipe from './lib/custom-pointer-events/swipe.js'
 import AlignmentSelector from './lib/selection/alignment/alignment-selector.js'
+import HTMLPage from './lib/utility/html-page.js'
 
 export { Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
-  DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector }
+  DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
+  HTMLPage }

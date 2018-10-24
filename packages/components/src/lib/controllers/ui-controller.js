@@ -1,5 +1,8 @@
 /* global Node, Event */
 import { Lexeme, Feature, Definition, LanguageModelFactory, Constants } from 'alpheios-data-models'
+import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+import { Lexicons } from 'alpheios-lexicon-client'
+import { LemmaTranslations } from 'alpheios-lemma-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
@@ -16,6 +19,17 @@ import enGB from '../../locales/en-gb/messages.json'
 import Template from '../../templates/template.htmlf'
 import { Grammars } from 'alpheios-res-client'
 import ResourceQuery from '../queries/resource-query'
+import {
+  AnnotationQuery,
+  ContentOptionDefaults,
+  HTMLSelector,
+  LanguageOptionDefaults,
+  LexicalQuery,
+  MouseDblClick,
+  Options, UIOptionDefaults
+} from '../../..'
+
+import SiteOptions from '../../settings/site-options.json'
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -30,9 +44,7 @@ export default class UIController {
   /**
    * @constructor
    * @param {UIStateAPI} state - State object for the parent application
-   * @param {Options} options - content options (see `src/setting/content-options-defaults.js`)
-   * @param {Options} resourceOptions - resource options (see `src/setting/language-options-defaults.js`)
-   * @param {Options} uiOptions - UI options (see `src/setting/ui-options-defaults.js`)
+   * @param {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    * @param {Object} manifest - parent application info details  (API definition pending)
    * In some environments manifest data may not be available. Then a `{}` default value
    * will be used.
@@ -45,11 +57,13 @@ export default class UIController {
    *                            popupComponent: Vue single file component of a panel element.
    *                              Allows to provide an alternative popup layout
    */
-  constructor (state, options, resourceOptions, uiOptions, manifest = {}, template = {}) {
+  constructor (state, storageAdapter, /* options, resourceOptions, uiOptions, */manifest = {}, template = {}) {
+    console.log(`UI controller constructor`)
     this.state = state
-    this.options = options
-    this.resourceOptions = resourceOptions
-    this.uiOptions = uiOptions
+    this.options = new Options(ContentOptionDefaults, storageAdapter)
+    this.resourceOptions = new Options(LanguageOptionDefaults, storageAdapter)
+    this.uiOptions = new Options(UIOptionDefaults, storageAdapter)
+    this.siteOptions = null // Will be set during `init` phase
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
@@ -71,6 +85,8 @@ export default class UIController {
     }
     this.template = Object.assign(templateDefaults, template)
     this.isInitialized = false
+    this.isActivated = false
+    this.isDeactivated = false
 
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
   }
@@ -93,6 +109,7 @@ export default class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     console.log(`UI controller initialization started`)
+    this.siteOptions = this.loadSiteOptions()
 
     this.zIndex = this.getZIndexMax()
 
@@ -105,6 +122,8 @@ export default class UIController {
     await this.options.load()
     await this.resourceOptions.load()
     await this.uiOptions.load()
+
+    this.maAdapter = new AlpheiosTuftsAdapter() // Morphological analyzer adapter, with default arguments
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
@@ -673,8 +692,66 @@ export default class UIController {
     this.updateLemmaTranslations()
     this.notifyInflectionBrowser()
 
+    this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
+
+    // Activate listeners
+    MouseDblClick.listen('body', evt => this.getSelectedText(evt))
+    document.addEventListener('keydown', this.handleEscapeKey.bind(this))
+    document.body.addEventListener('Alpheios_Reload', this.handleReload.bind(this))
+    document.body.addEventListener('Alpheios_Embedded_Response', this.disableContent.bind(this))
+    document.body.addEventListener('Alpheios_Page_Load', this.updateAnnotations.bind(this))
+    document.body.addEventListener('Alpheios_Options_Loaded', this.updatePanelOnActivation.bind(this))
+
     this.isInitialized = true
     console.log(`UI controller initialization finished`)
+  }
+
+  async activate () {
+    console.log('Activate call')
+    if (!this.isActivated) {
+      if (!this.isInitialized) { await this.init() }
+
+      // Update panel on activation
+      if (this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
+        this.panel.open()
+      }
+      this.isActivated = true
+      this.isDeactivated = false
+      this.state.activate()
+    }
+  }
+
+  async deactivate () {
+    console.log('Deactivate call')
+    this.popup.close()
+    this.panel.close()
+    this.isActivated = false
+    this.isDeactivated = true
+    this.state.deactivate()
+  }
+
+  // TODO: Do we need to keep it?
+  // reactivate () {
+  //   if (this.state.isDisabled()) {
+  //     console.log('Alpheios is disabled')
+  //   } else {
+  //     console.log('Content has been reactivated.')
+  //     this.state.activate()
+  //   }
+  // }
+
+  /**
+   * Load site-specific settings
+   */
+  loadSiteOptions () {
+    let allSiteOptions = []
+    for (let site of SiteOptions) {
+      for (let domain of site.options) {
+        let siteOpts = new Options(domain, this.storageAreaClass)
+        allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
+      }
+    }
+    return allSiteOptions
   }
 
   /**
@@ -1059,5 +1136,118 @@ export default class UIController {
   changeSkin () {
     // Update skin name in classes
     this.setRootComponentClasses()
+  }
+
+  getSelectedText (event) {
+    console.log(`Get selected text`)
+    if (this.state.isActive() && this.state.uiIsActive()) {
+      /*
+      TextSelector conveys text selection information. It is more generic of the two.
+      HTMLSelector conveys page-specific information, such as location of a selection on a page.
+      It's probably better to keep them separated in order to follow a more abstract model.
+       */
+      let htmlSelector = new HTMLSelector(event, this.options.items.preferredLanguage.currentValue)
+      let textSelector = htmlSelector.createTextSelector()
+
+      if (!textSelector.isEmpty()) {
+        // TODO: disable experience monitor as it might cause memory leaks
+        /* ExpObjMon.track(
+          LexicalQuery.create(textSelector, {
+            htmlSelector: htmlSelector,
+            uiController: this.ui,
+            maAdapter: this.maAdapter,
+            lexicons: Lexicons,
+            resourceOptions: this.resourceOptions,
+            siteOptions: [],
+            lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.options.items.locale.currentValue } : null,
+            langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
+          }),
+          {
+            experience: 'Get word data',
+            actions: [
+              { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
+              { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
+            ]
+          })
+          .getData() */
+
+        LexicalQuery.create(textSelector, {
+          htmlSelector: htmlSelector,
+          uiController: this,
+          maAdapter: this.maAdapter,
+          lexicons: Lexicons,
+          resourceOptions: this.resourceOptions,
+          siteOptions: [],
+          lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.options.items.locale.currentValue } : null,
+          langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
+        }).getData()
+      }
+    }
+  }
+
+  /**
+   * Check to see if Lemma Translations should be enabled for a query
+   *  NB this is Prototype functionality
+   */
+  enableLemmaTranslations (textSelector) {
+    return textSelector.languageID === Constants.LANG_LATIN &&
+      this.options.items.enableLemmaTranslations.currentValue &&
+      !this.options.items.locale.currentValue.match(/^en-/)
+  }
+
+  handleEscapeKey (event) {
+    // TODO: Move to keypress as keyCode is deprecated
+    // TODO: Why does it not work on initial panel opening?
+    if (event.keyCode === 27 && this.state.isActive()) {
+      if (this.state.isPanelOpen()) {
+        this.panel.close()
+      } else if (this.popup.visible) {
+        this.popup.close()
+      }
+    }
+    return true
+  }
+
+  handleReload () {
+    console.log('Alpheios reload event caught.')
+    if (this.state.isActive()) {
+      this.deactivate()
+    }
+    window.location.reload()
+  }
+
+  disableContent () {
+    console.log('Alpheios is embedded.')
+    // if we weren't already disabled, remember the current state
+    // and then deactivate before disabling
+    if (!this.state.isDisabled()) {
+      this.state.save()
+      if (this.state.isActive()) {
+        console.log('Deactivating Alpheios')
+        this.deactivate()
+      }
+    }
+    this.state.disable()
+    // TODO: Need to handle this in a content. Send state to BG on every state change?
+    // this.sendStateToBackground()
+  }
+
+  /**
+   * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
+   */
+  updateAnnotations () {
+    if (this.state.isActive() && this.state.uiIsActive()) {
+      AnnotationQuery.create({
+        uiController: this,
+        document: document,
+        siteOptions: this.siteOptions
+      }).getData()
+    }
+  }
+
+  updatePanelOnActivation () {
+    if (this.state.isActive() && this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
+      this.panel.open()
+    }
   }
 }

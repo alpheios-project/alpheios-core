@@ -1,0 +1,22 @@
+[
+  {
+    "uriMatch": "https?://thelatinlibrary.com/caesar/gall1.shtml",
+    "options": [
+      {
+        "domain": "alpheios-resource-options",
+        "items": {
+          "treebanks": {
+            "labelText": "Treebanks",
+            "defaultValue": "http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1",
+            "multiValue": false,
+            "values": [
+                { "value": "http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1",
+                  "test": "Example Site Treebank"
+                }
+              ]
+          }
+        }
+      }
+    ]
+  }
+]
