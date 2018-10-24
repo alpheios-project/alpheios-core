@@ -1,0 +1,87 @@
+{
+  "name": "alpheios-client-adapters",
+  "version": "0.0.1",
+  "description": "Alpheios Client Adapters Library",
+  "main": "dist/alpheios-client-adapters.min.js",
+  "scripts": {
+    "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "build": "npm run build-lib && npm run build-node",
+    "build-lib": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+    "build-node": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
+    "build-prod": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
+    "build-dev": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+    "lint": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/client-adapters.git"
+  },
+  "author": "The Alpheios Project, Ltd.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/client-adapters/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/client-adapters#readme",
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "alpheios-data-models": "github:alpheios-project/data-models",
+    "alpheios-node-build": "github:alpheios-project/node-build",
+    "axios": "*",
+    "coveralls": "^3.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.0.0-beta.3",
+    "jest": "^23.6.0",
+    "jest-fetch-mock": "1.6.5",
+    "jest-serializer-vue": "^2.0.2",
+    "jest-vue-preprocessor": "^1.4.0",
+    "source-map-loader": "^0.2.4",
+    "standard": "^12.0.0",
+    "whatwg-fetch": "*",
+    "xmltojson": "^1.3.5"
+  },
+  "dependencies": {},
+  "jest": {
+    "verbose": true,
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ],
+    "transformIgnorePatterns": [
+      "!node_modules/alpheios-data-models/"
+    ],
+    "moduleNameMapper": {
+      "^@[/](.+)": "<rootDir>/src/$1"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "plugin:vue/essential"
+    ],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module",
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "eslintIgnore": [
+    "**/dist",
+    "**/support"
+  ],
+  "standard": {
+    "ignore": [
+      "**/dist"
+    ]
+  }
+}
