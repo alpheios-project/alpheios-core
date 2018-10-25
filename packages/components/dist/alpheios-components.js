@@ -29882,7 +29882,7 @@ class UIController {
     this.options = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__, this.storageAdapter)
     this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_23__, this.storageAdapter)
     this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__, this.storageAdapter)
-    this.siteOptions = null // Will be set during `init` phase
+    this.siteOptions = null // Will be set during an `init` phase
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
@@ -29929,7 +29929,7 @@ class UIController {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
     let optionLoadPromises = [this.options.load(), this.resourceOptions.load(), this.uiOptions.load()]
-    this.siteOptions = this.loadSiteOptions() //
+    this.siteOptions = this.loadSiteOptions()
 
     this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_22__["default"].getZIndexMax()
 
@@ -30523,21 +30523,32 @@ class UIController {
     this.isInitialized = true
   }
 
+  /**
+   * Activates a UI controller. If `deactivate()` method unloads some resources, we should restore them here.
+   * @returns {Promise<void>}
+   */
   async activate () {
-    if (!this.isActivated) {
-      if (!this.isInitialized) { await this.init() }
+    if (this.isActivated) { return `Already activated` }
 
-      // Update panel on activation
-      if (this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
-        this.panel.open()
-      }
-      this.isActivated = true
-      this.isDeactivated = false
-      this.state.activate()
+    if (!this.isInitialized) { await this.init() }
+
+    // Update panel on activation
+    if (this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
+      this.panel.open()
     }
+    this.isActivated = true
+    this.isDeactivated = false
+    this.state.activate()
   }
 
+  /**
+   * Deactivates a UI controller. May unload some resources to preserve memory.
+   * In this case an `activate()` method will be responsible for restoring them.
+   * @returns {Promise<void>}
+   */
   async deactivate () {
+    if (this.isDeactivated) { return `Already deactivated` }
+
     this.popup.close()
     this.panel.close()
     this.isActivated = false

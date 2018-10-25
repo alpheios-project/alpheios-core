@@ -63,7 +63,7 @@ export default class UIController {
     this.options = new Options(ContentOptionDefaults, this.storageAdapter)
     this.resourceOptions = new Options(LanguageOptionDefaults, this.storageAdapter)
     this.uiOptions = new Options(UIOptionDefaults, this.storageAdapter)
-    this.siteOptions = null // Will be set during `init` phase
+    this.siteOptions = null // Will be set during an `init` phase
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
@@ -110,7 +110,7 @@ export default class UIController {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
     let optionLoadPromises = [this.options.load(), this.resourceOptions.load(), this.uiOptions.load()]
-    this.siteOptions = this.loadSiteOptions() //
+    this.siteOptions = this.loadSiteOptions()
 
     this.zIndex = HTMLPage.getZIndexMax()
 
@@ -704,21 +704,32 @@ export default class UIController {
     this.isInitialized = true
   }
 
+  /**
+   * Activates a UI controller. If `deactivate()` method unloads some resources, we should restore them here.
+   * @returns {Promise<void>}
+   */
   async activate () {
-    if (!this.isActivated) {
-      if (!this.isInitialized) { await this.init() }
+    if (this.isActivated) { return `Already activated` }
 
-      // Update panel on activation
-      if (this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
-        this.panel.open()
-      }
-      this.isActivated = true
-      this.isDeactivated = false
-      this.state.activate()
+    if (!this.isInitialized) { await this.init() }
+
+    // Update panel on activation
+    if (this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
+      this.panel.open()
     }
+    this.isActivated = true
+    this.isDeactivated = false
+    this.state.activate()
   }
 
+  /**
+   * Deactivates a UI controller. May unload some resources to preserve memory.
+   * In this case an `activate()` method will be responsible for restoring them.
+   * @returns {Promise<void>}
+   */
   async deactivate () {
+    if (this.isDeactivated) { return `Already deactivated` }
+
     this.popup.close()
     this.panel.close()
     this.isActivated = false
