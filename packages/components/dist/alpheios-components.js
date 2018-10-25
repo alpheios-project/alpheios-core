@@ -31997,7 +31997,6 @@ class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   get (keys = undefined) {
-    console.log(`ExtensionSyncStorage: get`, browser.storage.sync)
     return browser.storage.sync.get(keys)
   }
 }

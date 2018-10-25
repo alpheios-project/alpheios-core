@@ -713,6 +713,8 @@ export default class UIController {
 
     if (!this.isInitialized) { await this.init() }
 
+    // TODO: probably need to set event listeners here
+
     // Update panel on activation
     if (this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
       this.panel.open()
@@ -729,6 +731,8 @@ export default class UIController {
    */
   async deactivate () {
     if (this.isDeactivated) { return `Already deactivated` }
+
+    // TODO: probably need to remove event listeners here
 
     this.popup.close()
     this.panel.close()
