@@ -4,6 +4,8 @@ import Aramorph from '@/tufts/engine/aramorph'
 import Hazm from '@/tufts/engine/hazm'
 import Traces from '@/tufts/engine/traces'
 
+import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+
 class EnginesSet {
   constructor (adapterConfigEngines) {
     this.engine = adapterConfigEngines
@@ -15,6 +17,11 @@ class EnginesSet {
       let allEngines = new Map(([ Whitakers, Morpheusgrc, Aramorph, Hazm, Traces ]).map((e) => { return [ e.engine, e ] }))
       return allEngines.get(engineCode)
     }
+  }
+
+  getEngineByCodeFromLangCode (languageCode) {
+    let languageID = LMF.getLanguageIdFromCode(languageCode)
+    return this.getEngineByCode(languageID)
   }
 }
 
