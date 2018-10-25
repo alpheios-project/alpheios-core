@@ -35,7 +35,7 @@
     "alpheios-morph-client": "github:alpheios-project/morph-client",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
-    "autoprefixer": "^9.1.5",
+    "autoprefixer": "^9.3.1",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
     "coveralls": "^3.0.2",
@@ -54,16 +54,16 @@
     "jest-serializer-vue": "^2.0.2",
     "jest-vue-preprocessor": "^1.4.0",
     "jump.js": "^1.0.2",
-    "postcss-import": "^12.0.0",
+    "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.2",
-    "sinon": "^6.3.4",
+    "sinon": "^7.0.0",
     "source-map-loader": "^0.2.4",
     "standard": "^12.0.1",
-    "style-loader": "^0.23.0",
-    "uikit": "^3.0.0-rc.17",
+    "style-loader": "^0.23.1",
+    "uikit": "^3.0.0-rc.20",
     "vue": "^2.5.17",
     "whatwg-fetch": "^3.0.0",
     "wrap-range-text": "*"
@@ -126,6 +126,6 @@
     ]
   },
   "dependencies": {
-    "vue-multiselect": "^2.1.0"
+    "vue-multiselect": "^2.1.3"
   }
 }

@@ -1,35 +1,34 @@
-/* global Node, Event */
+/* global Event */
 import { Lexeme, Feature, Definition, LanguageModelFactory, Constants } from 'alpheios-data-models'
 import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
 import { Lexicons } from 'alpheios-lexicon-client'
+import { Grammars } from 'alpheios-res-client'
 import { LemmaTranslations } from 'alpheios-lemma-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 
 // A panel component
-import Panel from '../../vue-components/panel.vue'
+import Panel from '@/vue-components/panel.vue'
 // A popup component
-import Popup from '../../vue-components/popup.vue'
+import Popup from '@/vue-components/popup.vue'
 
-import L10n from '../l10n/l10n'
-import Locales from '../../locales/locales'
-import enUS from '../../locales/en-us/messages.json'
-import enGB from '../../locales/en-gb/messages.json'
-import Template from '../../templates/template.htmlf'
-import { Grammars } from 'alpheios-res-client'
-import ResourceQuery from '../queries/resource-query'
-import {
-  AnnotationQuery,
-  ContentOptionDefaults,
-  HTMLSelector,
-  LanguageOptionDefaults,
-  LexicalQuery,
-  MouseDblClick,
-  Options, UIOptionDefaults
-} from '../../..'
-
-import SiteOptions from '../../settings/site-options.json'
+import L10n from '@/lib/l10n/l10n.js'
+import Locales from '@/locales/locales.js'
+import enUS from '@/locales/en-us/messages.json'
+import enGB from '@/locales/en-gb/messages.json'
+import Template from '@/templates/template.htmlf'
+import LexicalQuery from '@/lib/queries/lexical-query.js'
+import ResourceQuery from '@/lib/queries/resource-query.js'
+import AnnotationQuery from '@/lib/queries/annotation-query.js'
+import SiteOptions from '@/settings/site-options.json'
+import ContentOptionDefaults from '@/settings/content-options-defaults.json'
+import UIOptionDefaults from '@/settings/ui-options-defaults.json'
+import HTMLSelector from '@/lib/selection/media/html-selector.js'
+import HTMLPage from '@/lib/utility/html-page.js'
+import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
+import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
+import Options from '@/lib/options/options.js'
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -37,7 +36,6 @@ const languageNames = new Map([
   [Constants.LANG_ARABIC, 'Arabic'],
   [Constants.LANG_PERSIAN, 'Persian'],
   [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
-
 ])
 
 export default class UIController {
@@ -58,11 +56,11 @@ export default class UIController {
    *                              Allows to provide an alternative popup layout
    */
   constructor (state, storageAdapter, /* options, resourceOptions, uiOptions, */manifest = {}, template = {}) {
-    console.log(`UI controller constructor`)
     this.state = state
-    this.options = new Options(ContentOptionDefaults, storageAdapter)
-    this.resourceOptions = new Options(LanguageOptionDefaults, storageAdapter)
-    this.uiOptions = new Options(UIOptionDefaults, storageAdapter)
+    this.storageAdapter = storageAdapter
+    this.options = new Options(ContentOptionDefaults, this.storageAdapter)
+    this.resourceOptions = new Options(LanguageOptionDefaults, this.storageAdapter)
+    this.uiOptions = new Options(UIOptionDefaults, this.storageAdapter)
     this.siteOptions = null // Will be set during `init` phase
     this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
@@ -108,20 +106,16 @@ export default class UIController {
 
   async init () {
     if (this.isInitialized) { return `Already initialized` }
-    console.log(`UI controller initialization started`)
-    this.siteOptions = this.loadSiteOptions()
+    // Start loading options as early as possible
+    let optionLoadPromises = [this.options.load(), this.resourceOptions.load(), this.uiOptions.load()]
+    this.siteOptions = this.loadSiteOptions() //
 
-    this.zIndex = this.getZIndexMax()
+    this.zIndex = HTMLPage.getZIndexMax()
 
     this.l10n = new L10n()
       .addMessages(enUS, Locales.en_US)
       .addMessages(enGB, Locales.en_GB)
       .setLocale(Locales.en_US)
-
-    // TODO: Do we need to load options consequently?
-    await this.options.load()
-    await this.resourceOptions.load()
-    await this.uiOptions.load()
 
     this.maAdapter = new AlpheiosTuftsAdapter() // Morphological analyzer adapter, with default arguments
 
@@ -130,6 +124,10 @@ export default class UIController {
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
     container.outerHTML = this.template.html
+
+    await Promise.all(optionLoadPromises)
+    // All options shall be loaded at this point. Can initialize Vue components that will use them
+
     // Initialize components
     this.panel = new Vue({
       el: `#${this.template.panelId}`,
@@ -682,7 +680,6 @@ export default class UIController {
     this.setRootComponentClasses()
 
     this.state.activateUI()
-    console.log('UI options are loaded')
     document.body.dispatchEvent(new Event('Alpheios_Options_Loaded'))
 
     const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.options.items.preferredLanguage.currentValue)
@@ -703,11 +700,9 @@ export default class UIController {
     document.body.addEventListener('Alpheios_Options_Loaded', this.updatePanelOnActivation.bind(this))
 
     this.isInitialized = true
-    console.log(`UI controller initialization finished`)
   }
 
   async activate () {
-    console.log('Activate call')
     if (!this.isActivated) {
       if (!this.isInitialized) { await this.init() }
 
@@ -722,7 +717,6 @@ export default class UIController {
   }
 
   async deactivate () {
-    console.log('Deactivate call')
     this.popup.close()
     this.panel.close()
     this.isActivated = false
@@ -745,60 +739,15 @@ export default class UIController {
    */
   loadSiteOptions () {
     let allSiteOptions = []
+    // TODO: need to fix this. It iterates over `site` but `site-options.json` does not have this filed
+    // TODO: also, is `site-options-treebanks.json` the thing similar? Why is it never loaded?
     for (let site of SiteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new Options(domain, this.storageAreaClass)
+        let siteOpts = new Options(domain, this.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
     return allSiteOptions
-  }
-
-  /**
-   * Finds a maximal z-index value of elements on a page.
-   * @return {Number}
-   */
-  getZIndexMax (zIndexDefualt = 2000) {
-    let startTime = new Date().getTime()
-    let zIndex = this.zIndexRecursion(document.querySelector('body'), Number.NEGATIVE_INFINITY)
-    let timeDiff = new Date().getTime() - startTime
-    console.log(`Z-index max value is ${zIndex}, calculation time is ${timeDiff} ms`)
-
-    if (zIndex >= zIndexDefualt) {
-      if (zIndex < Number.POSITIVE_INFINITY) { zIndex++ } // To be one level higher that the highest element on a page
-    } else {
-      zIndex = zIndexDefualt
-    }
-
-    return zIndex
-  }
-
-  /**
-   * A recursive function that iterates over all elements on a page searching for a highest z-index.
-   * @param {Node} element - A root page element to start scan with (usually `body`).
-   * @param {Number} zIndexMax - A current highest z-index value found.
-   * @return {Number} - A current highest z-index value.
-   */
-  zIndexRecursion (element, zIndexMax) {
-    if (element) {
-      let zIndexValues = [
-        window.getComputedStyle(element).getPropertyValue('z-index'), // If z-index defined in CSS rules
-        element.style.getPropertyValue('z-index') // If z-index is defined in an inline style
-      ]
-      for (const zIndex of zIndexValues) {
-        if (zIndex && zIndex !== 'auto') {
-          // Value has some numerical z-index value
-          zIndexMax = Math.max(zIndexMax, zIndex)
-        }
-      }
-      for (let node of element.childNodes) {
-        let nodeType = node.nodeType
-        if (nodeType === Node.ELEMENT_NODE || nodeType === Node.DOCUMENT_NODE || nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-          zIndexMax = this.zIndexRecursion(node, zIndexMax)
-        }
-      }
-    }
-    return zIndexMax
   }
 
   static hasRegularBaseFontSize () {

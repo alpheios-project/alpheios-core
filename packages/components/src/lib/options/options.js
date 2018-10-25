@@ -12,19 +12,21 @@ export default class Options {
    *    {Object} items - An object that represents options that are exposed to the user. Each property is an option name.
    * @param {Function<StorageAdapter>} StorageAdapter - A storage adapter implementation
    */
-  constructor (defaults = null, StorageAdapter = null) {
-    if (defaults !== null && (!defaults.domain || !defaults.items)) {
+  constructor (defaults, StorageAdapter) {
+    if (!defaults || !defaults.domain || !defaults.items) {
       throw new Error(`Defaults have no obligatory "domain" and "items" properties`)
     }
-    // if defaults aren't provided, properties need to be initialized separately
-    if (defaults !== null && StorageAdapter !== null) {
-      this.storageAdapter = new StorageAdapter(defaults.domain)
-      this.domain = defaults.domain
-      for (const key of Object.keys(defaults)) {
-        this[key] = defaults[key]
-      }
-      this.items = Options.initItems(this.items, this.storageAdapter)
+    if (!StorageAdapter) {
+      throw new Error(`No storage adapter implementation provided`)
     }
+
+    this.defaults = defaults
+    this.domain = defaults.domain
+    this.storageAdapter = new StorageAdapter(defaults.domain)
+    for (const key of Object.keys(defaults)) {
+      this[key] = defaults[key]
+    }
+    this.items = Options.initItems(this.items, this.storageAdapter)
   }
 
   static initItems (defaults, storageAdapter) {
@@ -48,7 +50,7 @@ export default class Options {
    * @return {Options} the cloned Options object
    */
   clone (StorageAdapter) {
-    let obj = new Options(null, null)
+    let obj = new Options(this.defaults, StorageAdapter)
     obj.storageAdapter = new StorageAdapter(this.domain)
     obj.domain = this.domain
     obj.items = {}
@@ -70,45 +72,46 @@ export default class Options {
   }
 
   /**
-   * Will always return a resolved promise.
+   * Loads options from the storage. Returns a promise that is resolved if options are loaded
+   * successfully and that is rejectd if there was an error retrieving them.
+   * @returns {Promise<string>}
    */
-  load (callbackFunc) {
-    this.storageAdapter.get().then(
-      values => {
-        for (let key in values) {
-          if (this.items.hasOwnProperty(key)) {
-            let value
-            try {
-              value = JSON.parse(values[key])
-            } catch (e) {
-              // backwards compatibility
-              value = values[key]
-            }
-            this.items[key].currentValue = value
-          } else {
-            let keyinfo = this.parseKey(key)
-            if (this.items.hasOwnProperty(keyinfo.setting)) {
-              this.items[keyinfo.setting].forEach((f) => {
-                if (f.name === key) {
-                  try {
-                    f.currentValue = JSON.parse(values[key])
-                  } catch (e) {
-                    // backwards compatibility
-                    f.currentValue = values[key]
-                  }
+  async load () {
+    try {
+      let values = await this.storageAdapter.get()
+      for (let key in values) {
+        if (this.items.hasOwnProperty(key)) {
+          let value
+          try {
+            value = JSON.parse(values[key])
+          } catch (e) {
+            // backwards compatibility
+            value = values[key]
+          }
+          this.items[key].currentValue = value
+        } else {
+          let keyinfo = this.parseKey(key)
+          if (this.items.hasOwnProperty(keyinfo.setting)) {
+            this.items[keyinfo.setting].forEach((f) => {
+              if (f.name === key) {
+                try {
+                  f.currentValue = JSON.parse(values[key])
+                } catch (e) {
+                  // backwards compatibility
+                  f.currentValue = values[key]
                 }
-              })
-            }
+              }
+            })
           }
         }
-        callbackFunc(this)
-      },
-      error => {
-        console.error(`Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values
-          will be used instead`, error)
-        callbackFunc(this)
       }
-    )
+      return `Options loaded successfully for ${this.domain}`
+    } catch (error) {
+      let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values
+      will be used instead`
+      console.error(message)
+      throw new Error(message)
+    }
   }
 
   /**
