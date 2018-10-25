@@ -17,6 +17,7 @@ import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
 import enGB from '@/locales/en-gb/messages.json'
+import TabScript from '@/lib/state/tab-script.js'
 import Template from '@/templates/template.htmlf'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import ResourceQuery from '@/lib/queries/resource-query.js'
@@ -41,7 +42,6 @@ const languageNames = new Map([
 export default class UIController {
   /**
    * @constructor
-   * @param {UIStateAPI} state - State object for the parent application
    * @param {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    * @param {Object} manifest - parent application info details  (API definition pending)
    * In some environments manifest data may not be available. Then a `{}` default value
@@ -55,8 +55,10 @@ export default class UIController {
    *                            popupComponent: Vue single file component of a panel element.
    *                              Allows to provide an alternative popup layout
    */
-  constructor (state, storageAdapter, /* options, resourceOptions, uiOptions, */manifest = {}, template = {}) {
-    this.state = state
+  constructor (storageAdapter, manifest = {}, template = {}) {
+    this.state = new TabScript()
+    this.state.status = TabScript.statuses.script.PENDING
+    this.state.panelStatus = TabScript.statuses.panel.CLOSED
     this.storageAdapter = storageAdapter
     this.options = new Options(ContentOptionDefaults, this.storageAdapter)
     this.resourceOptions = new Options(LanguageOptionDefaults, this.storageAdapter)
