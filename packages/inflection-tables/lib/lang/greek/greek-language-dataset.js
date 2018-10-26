@@ -47,6 +47,8 @@ import paradigm14 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-14.js
 import paradigm15 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-15.json'
 import paradigm16 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-16.json'
 import paradigm17 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-17.json'
+import paradigm17b from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-17b.json'
+import paradigm17c from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-17c.json'
 import paradigm18 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-18.json'
 import paradigm19 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-19.json'
 import paradigm20 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-20.json'
@@ -73,6 +75,7 @@ import paradigm40 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-40.js
 import paradigm41 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-41.json'
 import paradigm42 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-42.json'
 import paradigm43 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-43.json'
+import paradigm43b from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-43b.json'
 import paradigm44 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-44.json'
 import paradigm45 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-45.json'
 import paradigm46 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-46.json'
@@ -133,6 +136,8 @@ export default class GreekLanguageDataset extends LanguageDataset {
     this.typeFeatures.get(Feature.types.gender).getImporter()
       .map(this.constructor.constants.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
       .map(this.constructor.constants.GEND_MASCULINE_FEMININE_NEUTER, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE, Constants.GEND_NEUTER])
+    this.typeFeatures.get(Feature.types.tense).getImporter()
+      .map('future_perfect', [Constants.TENSE_FUTURE_PERFECT])
   }
 
   static get languageID () {
@@ -387,6 +392,8 @@ export default class GreekLanguageDataset extends LanguageDataset {
       ['verbpdgm15', new Paradigm(this.languageID, partOfSpeech, paradigm15)],
       ['verbpdgm16', new Paradigm(this.languageID, partOfSpeech, paradigm16)],
       ['verbpdgm17', new Paradigm(this.languageID, partOfSpeech, paradigm17)],
+      ['verbpdgm17b', new Paradigm(this.languageID, partOfSpeech, paradigm17b)],
+      ['verbpdgm17c', new Paradigm(this.languageID, partOfSpeech, paradigm17c)],
       ['verbpdgm18', new Paradigm(this.languageID, partOfSpeech, paradigm18)],
       ['verbpdgm19', new Paradigm(this.languageID, partOfSpeech, paradigm19)],
       ['verbpdgm20', new Paradigm(this.languageID, partOfSpeech, paradigm20)],
@@ -413,6 +420,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       ['verbpdgm41', new Paradigm(this.languageID, partOfSpeech, paradigm41)],
       ['verbpdgm42', new Paradigm(this.languageID, partOfSpeech, paradigm42)],
       ['verbpdgm43', new Paradigm(this.languageID, partOfSpeech, paradigm43)],
+      ['verbpdgm43b', new Paradigm(this.languageID, partOfSpeech, paradigm43b)],
       ['verbpdgm44', new Paradigm(this.languageID, partOfSpeech, paradigm44)],
       ['verbpdgm45', new Paradigm(this.languageID, partOfSpeech, paradigm45)],
       ['verbpdgm46', new Paradigm(this.languageID, partOfSpeech, paradigm46)],

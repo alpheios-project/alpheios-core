@@ -1,1 +1,559 @@
-{"ID":"verbpdgm16","partOfSpeech":"verb","title":"Future Perfect Indicative, Infinitive, Participle","credits":"Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.","table":{"rows":[{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","voice":"active","mood":"indicative","value":"periphrastic active"},{"role":"label","tense":"future_perfect","voice":"active","mood":"indicative","value":"simple active (rare)"},{"role":"label","tense":"future_perfect","voice":"mediopassive middle","mood":"indicative","value":"middle-passive"},{"role":"label","tense":"future_perfect","voice":"mediopassive middle","mood":"indicative","value":""}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":"singular"},{"role":"label","tense":"future_perfect","number":"singular","mood":"indicative","value":"1st"},{"role":"data","tense":"future_perfect","voice":"active","number":"singular","person":"1st","mood":"indicative","value":"λελυκὼς (-υῖα) ἔσομαι"},{"role":"data","tense":"future_perfect","voice":"active","number":"singular","person":"1st","mood":"indicative","value":"τεθνήξω"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"λελύσομαι"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"λελυμένος (-η) ἔσομαι"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","number":"singular","mood":"indicative","value":"2nd"},{"role":"data","tense":"future_perfect","voice":"active","number":"singular","person":"2nd","mood":"indicative","value":"λελυκὼς (-υῖα) ἔσῃ"},{"role":"data","tense":"future_perfect","voice":"active","number":"singular","person":"2nd","mood":"indicative","value":"τεθνήξεις"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"λελύσῃ"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"λελυμένος (-η) ἔσῃ"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","number":"singular","mood":"indicative","value":"3rd"},{"role":"data","tense":"future_perfect","voice":"active","number":"singular","person":"3rd","mood":"indicative","value":"λελυκὼς (-υῖα, -ὸς) ἔσται"},{"role":"data","tense":"future_perfect","voice":"active","number":"singular","person":"3rd","mood":"indicative","value":"τεθνήξει"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"λελύσεται"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"λελυμένος (-η, -ον) ἔσται"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":"dual"},{"role":"label","tense":"future_perfect","number":"dual","mood":"indicative","value":"2nd"},{"role":"data","tense":"future_perfect","voice":"active","number":"dual","person":"2nd","mood":"indicative","value":"λελυκότε (-υία) ἔσεσθον"},{"role":"data","tense":"future_perfect","voice":"active","number":"dual","person":"2nd","mood":"indicative","value":"τεθνήξετον"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"λελύσεσθον"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"λελυμένω (-ᾱ) ἔσεσθον"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","number":"dual","mood":"indicative","value":"3rd"},{"role":"data","tense":"future_perfect","voice":"active","number":"dual","person":"3rd","mood":"indicative","value":"λελυκότε (-υία) ἔσεσθον"},{"role":"data","tense":"future_perfect","voice":"active","number":"dual","person":"3rd","mood":"indicative","value":"τεθνήξετον"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"λελύσεσθον"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"λελυμένω (-ᾱ) ἔσεσθον"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":"plural"},{"role":"label","tense":"future_perfect","number":"plural","mood":"indicative","value":"1st"},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"1st","mood":"indicative","value":"λελυκότες (-υῖαι) ἐσόμεθα"},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"1st","mood":"indicative","value":"τεθνήξομεν"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"λελυσόμεθα"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"λελυμένοι (-αι) ἐσόμεθα"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","number":"plural","mood":"indicative","value":"2nd"},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"2nd","mood":"indicative","value":"λελυκότες (-υῖαι) ἔσεσθε"},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"2nd","mood":"indicative","value":"τεθνήξετε"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"λελύσεσθε"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"λελυμένοι (-αι) ἔσεσθε"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","number":"plural","mood":"indicative","value":"3rd"},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":"λελυκότες (-υῖαι) ἔσονται"},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":"τεθνήξουσῐ(ν)"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"λελύσονται"},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"λελυμένοι (-αι) ἔσονται"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":""},{"role":"label","tense":"future_perfect","number":"plural","mood":"indicative","value":""},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":"λελυκότα ἔσται"},{"role":"data","tense":"future_perfect","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":""},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":""},{"role":"data","tense":"future_perfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"λελυμένᾰ ἔσται"}]}]},"subTables":[{"rows":[{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":"active infinitive"},{"role":"label","tense":"future_perfect","voice":"active","mood":"infinitive","value":"periphrastic: λελυκὼς ἔσεσθαι; simple (rare): τεθνήξειν"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":"middle-passive infinitive"},{"role":"label","tense":"future_perfect","voice":"mediopassive middle","mood":"infinitive","value":"λελύσεσθαι"}]},{"cells":[{"role":"label","tense":"future_perfect","mood":"indicative","value":"middle-passive participle"},{"role":"label","tense":"future_perfect","voice":"mediopassive middle","value":"λελυσόμενος, -η, -ον"}]}]}]}
+{
+    "ID": "verbpdgm16",
+    "partOfSpeech": "verb",
+    "title": "Future Perfect Indicative, Infinitive, Participle",
+    "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "voice": "active",
+                "mood": "indicative",
+                "value": "periphrastic active"
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "voice": "active",
+                "mood": "indicative",
+                "value": "simple active (rare)"
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "middle-passive"
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "λελυκὼς (-υῖα) ἔσομαι"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "τεθνήξω"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "λελύσομαι"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "λελυμένος (-η) ἔσομαι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελυκὼς (-υῖα) ἔσῃ"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "τεθνήξεις"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελύσῃ"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελυμένος (-η) ἔσῃ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυκὼς (-υῖα, -ὸς) ἔσται"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "τεθνήξει"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελύσεται"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυμένος (-η, -ον) ἔσται"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "dual",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελυκότε (-υία) ἔσεσθον"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "τεθνήξετον"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελύσεσθον"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελυμένω (-ᾱ) ἔσεσθον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "dual",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυκότε (-υία) ἔσεσθον"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "τεθνήξετον"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελύσεσθον"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυμένω (-ᾱ) ἔσεσθον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "λελυκότες (-υῖαι) ἐσόμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "τεθνήξομεν"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "λελυσόμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "λελυμένοι (-αι) ἐσόμεθα"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελυκότες (-υῖαι) ἔσεσθε"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "τεθνήξετε"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελύσεσθε"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "λελυμένοι (-αι) ἔσεσθε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυκότες (-υῖαι) ἔσονται"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "τεθνήξουσῐ(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελύσονται"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυμένοι (-αι) ἔσονται"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "number": "plural",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυκότα ἔσται"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "λελυμένᾰ ἔσται"
+            }
+        ]}
+    ]},
+    "subTables": [{"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": "active infinitive"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "active",
+                "mood": "infinitive",
+                "value": "periphrastic: λελυκὼς ἔσεσθαι; simple (rare): τεθνήξειν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": "middle-passive infinitive"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "mood": "infinitive",
+                "value": "λελύσεσθαι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "future_perfect",
+                "mood": "indicative",
+                "value": "middle-passive participle"
+            },
+            {
+                "role": "data",
+                "tense": "future_perfect",
+                "voice": "mediopassive middle",
+                "value": "λελυσόμενος, -η, -ον",
+                "reflink": {
+                        "text": "(see declension)",
+                        "id": "verbpdgm65"
+                    }
+            }
+        ]}
+    ]}]
+}

@@ -1,103 +1,90 @@
 {
-    "ID": "verbpdgm48",
+    "ID": "verbpdgm17c",
     "partOfSpeech": "verb",
-    "title": "φημί: Present System",
+    "title": "Athematic Perfects - δέδια (in addition to forms from δέδοικα)",
     "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
     "table": {"rows": [
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": ""
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": ""
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "mood": "indicative",
                 "value": "indicative"
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "mood": "subjunctive",
-                "value": "subjunctive"
+                "value": "subjunctive (rare)"
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "mood": "optative",
                 "value": "optative"
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "mood": "imperative",
                 "value": "imperative"
             },
             {
                 "role": "label",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "mood": "indicative",
-                "value": "imperfect indicative"
+                "value": "pluperfect indicative"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": "singular"
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "value": "1st"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "φημί"
+                "value": "δέδια"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "1st",
                 "mood": "subjunctive",
-                "value": "φῶ"
+                "value": "δεδίω"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "1st",
                 "mood": "optative",
-                "value": "φαίην"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "1st",
                 "mood": "imperative",
@@ -105,299 +92,264 @@
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "ἔφην"
+                "value": "ἐδεδίειν"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": ""
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "value": "2nd"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "φῄς"
+                "value": "δέδιας"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "value": "φῇς"
+                "value": "δεδίῃς"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "optative",
-                "value": "φαίης"
+                "value": "not found"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "imperative",
-                "value": "φάθι / φαθί"
+                "value": "δέδιθι"
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "ἔφησθα or ἔφης"
+                "value": "ἐδεδίεις"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": ""
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "value": "3rd"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "φησί(ν)"
+                "value": "δέδιε(ν)"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "value": "φῇ"
+                "value": "δεδίῃ"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "optative",
-                "value": "φαίη"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "imperative",
-                "value": "φατω"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "ἔφη"
+                "value": "ἐδεδίει"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": "dual"
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "value": "2nd"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "φατόν"
+                "value": "δέδιτον"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "value": "φῆτον"
+                "value": "δεδίητον"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "optative",
-                "value": "φαῖτον"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "imperative",
-                "value": "φάτον"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "ἔφατον"
+                "value": ""
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": ""
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "value": "3rd"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "φατόν"
+                "value": "δέδιτον"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "value": "φῆτον"
+                "value": "δεδίητον"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "optative",
-                "value": "φαίτην"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "imperative",
-                "value": "φάτων"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "ἐφάτην"
+                "value": ""
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": "plural"
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "value": "1st"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "φαμέν"
+                "value": "δέδιμεν"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "1st",
                 "mood": "subjunctive",
-                "value": "φῶμεν"
+                "value": "δεδίωμεν"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "1st",
                 "mood": "optative",
-                "value": "φαῖμεν or φαίημεν"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "1st",
                 "mood": "imperative",
@@ -405,132 +357,117 @@
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "ἔφαμεν"
+                "value": "ἐδεδίειμεν"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": ""
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "value": "2nd"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "φατέ"
+                "value": "δέδιτε"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "value": "φῆτε"
+                "value": "δεδίητε"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "optative",
-                "value": "φαίητε or φαίητε"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "imperative",
-                "value": "φάτε"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "ἔφατε"
+                "value": "ἐδεδίειτε"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": ""
             },
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "value": "3rd"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "φᾱσί(ν)"
+                "value": "δέδιᾱσῐ(ν)"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "value": "φῶσῐ(ν)"
+                "value": "δεδίωσῐ(ν)"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "optative",
-                "value": "φαῖεν or φαίησαν"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "imperative",
-                "value": "φάντων"
+                "value": ""
             },
             {
                 "role": "data",
-                "tense": "imperfect",
-                "voice": "active",
+                "tense": "pluperfect",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "ἔφασαν"
+                "value": "ἐδεδίεσαν or ἐδέδισαν"
             }
         ]}
     ]},
@@ -538,33 +475,29 @@
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": "infinitive"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "mood": "infinitive",
-                "value": "φάναι"
+                "value": "δεδιέναι"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
-                "tense": "present",
-                "voice": "active",
+                "tense": "perfect",
                 "value": "participle"
             },
             {
                 "role": "data",
-                "tense": "present",
-                "voice": "active",
-                "value": "(poetic) φάς, φᾶσᾰ, φάν",
+                "tense": "perfect",
+                "value": "δεδιώς, δεδιυῖᾰ, δεδιός",
                 "reflink": {
                     "text": "(see declension)",
-                    "id": "verbpdgm59"
+                    "id": "verbpdgm64"
                 }
             }
         ]}

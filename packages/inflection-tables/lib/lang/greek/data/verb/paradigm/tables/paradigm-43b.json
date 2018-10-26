@@ -1,54 +1,54 @@
 {
-    "ID": "verbpdgm48",
+    "ID": "verbpdgm43b",
     "partOfSpeech": "verb",
-    "title": "φημί: Present System",
+    "title": "ἐπίσταμαι: Present System Middle-Passive",
     "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
     "table": {"rows": [
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "mood": "indicative",
                 "value": "indicative"
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "mood": "subjunctive",
                 "value": "subjunctive"
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "mood": "optative",
                 "value": "optative"
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "mood": "imperative",
                 "value": "imperative"
             },
             {
                 "role": "label",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "mood": "indicative",
                 "value": "imperfect indicative"
             }
@@ -57,47 +57,47 @@
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": "singular"
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "value": "1st"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "φημί"
+                "value": "ἐπίσταμαι"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "subjunctive",
-                "value": "φῶ"
+                "value": "ἐπίστωμαι"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "optative",
-                "value": "φαίην"
+                "value": "ἐπισταίμην"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "imperative",
@@ -106,298 +106,298 @@
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "ἔφην"
+                "value": "ἠπιστάμην"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "value": "2nd"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "φῄς"
+                "value": "ἐπίστασαι or ἐπίστᾳ"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "value": "φῇς"
+                "value": "ἐπίστῃ"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "optative",
-                "value": "φαίης"
+                "value": "ἐπίσταιο"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "imperative",
-                "value": "φάθι / φαθί"
+                "value": "ἐπίστασο or ἐπίστω"
             },
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "ἔφησθα or ἔφης"
+                "value": "ἠπίστω or ἠπίστασο"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "value": "3rd"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "φησί(ν)"
+                "value": "ἐπίσταται"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "value": "φῇ"
+                "value": "ἐπίστηται"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "optative",
-                "value": "φαίη"
+                "value": "ἐπίσταιτο"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "imperative",
-                "value": "φατω"
+                "value": "ἐπιστάσθω"
             },
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "ἔφη"
+                "value": "ἠπίστατο"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": "dual"
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "value": "2nd"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "φατόν"
+                "value": "ἐπίστασθον"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "value": "φῆτον"
+                "value": ""
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "optative",
-                "value": "φαῖτον"
+                "value": ""
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "imperative",
-                "value": "φάτον"
+                "value": ""
             },
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "ἔφατον"
+                "value": ""
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "value": "3rd"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "φατόν"
+                "value": ""
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "value": "φῆτον"
+                "value": ""
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "optative",
-                "value": "φαίτην"
+                "value": "ἐπίσταίσθην"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "imperative",
-                "value": "φάτων"
+                "value": ""
             },
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "ἐφάτην"
+                "value": "ἠπιστάσθην"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": "plural"
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "value": "1st"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "φαμέν"
+                "value": "ἐπιστάμεθα"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "subjunctive",
-                "value": "φῶμεν"
+                "value": "ἐπιστώμεθα"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "optative",
-                "value": "φαῖμεν or φαίημεν"
+                "value": "ἐπισταίμεθα"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "imperative",
@@ -406,131 +406,131 @@
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
-                "value": "ἔφαμεν"
+                "value": "ἠπιστάμεθα"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "value": "2nd"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "φατέ"
+                "value": "ἐπίστασθε"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "value": "φῆτε"
+                "value": "ἐπίστησθε"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "optative",
-                "value": "φαίητε or φαίητε"
+                "value": ""
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "imperative",
-                "value": "φάτε"
+                "value": "ἐπίστασθε"
             },
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
-                "value": "ἔφατε"
+                "value": "ἠπίστασθε"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "value": "3rd"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "φᾱσί(ν)"
+                "value": "ἐπίστανται"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "value": "φῶσῐ(ν)"
+                "value": "ἐπίστωνται"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "optative",
-                "value": "φαῖεν or φαίησαν"
+                "value": "ἐπίσταιντο"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "imperative",
-                "value": "φάντων"
+                "value": "ἐπιστάσθων"
             },
             {
                 "role": "data",
                 "tense": "imperfect",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
-                "value": "ἔφασαν"
+                "value": "ἠπίσταντο"
             }
         ]}
     ]},
@@ -539,32 +539,32 @@
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": "infinitive"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "mood": "infinitive",
-                "value": "φάναι"
+                "value": "ἐπίστασθαι"
             }
         ]},
         {"cells": [
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
+                "voice": "mediopassive middle",
                 "value": "participle"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
-                "value": "(poetic) φάς, φᾶσᾰ, φάν",
+                "voice": "mediopassive middle",
+                "value": "ἐπιστάμενος, -η, -ον",
                 "reflink": {
                     "text": "(see declension)",
-                    "id": "verbpdgm59"
+                    "id": "verbpdgm65"
                 }
             }
         ]}

@@ -169,7 +169,10 @@ export default class LanguageDataset {
       return acc
     }, [])
 
-    let result = (matches.length === fullMatchQty)
+    // we can't consider it a match if there were NO common features
+    // so we have to test to make sure there is at least one matching feature
+    // required and found
+    let result = (matches.length > 0 && matches.length === fullMatchQty)
     return { fullMatch: result, matchedItems: matches }
   }
 

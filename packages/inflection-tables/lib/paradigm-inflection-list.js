@@ -42,8 +42,9 @@ export default class ParadigmInflectionList extends InflectionList {
     inflections = inflections.filter(i => i.constraints && i.constraints.paradigmBased)
     let matchingParadigm = []
     // Get all matching paradigms for all inflections
-    let highestMatchOrder = Number.MIN_SAFE_INTEGER
     for (const inflection of inflections) {
+      let matchingParadigmInflection = []
+      let highestMatchOrder = Number.MIN_SAFE_INTEGER
       for (const paradigm of this.items) {
         const matchingRules = paradigm.matchingRules(inflection)
         if (matchingRules.length > 0) {
@@ -51,16 +52,22 @@ export default class ParadigmInflectionList extends InflectionList {
           const rulesMatchOrder = matchingRules.reduce((acc, rule) => rule.matchOrder > acc ? rule.matchOrder : acc, Number.MIN_SAFE_INTEGER)
           if (rulesMatchOrder > highestMatchOrder) {
             // This is the matching rule with the highers order. Scrap all previous matches and store this one
-            matchingParadigm = [paradigm]
+            matchingParadigmInflection = [paradigm]
             highestMatchOrder = rulesMatchOrder
           } else if (rulesMatchOrder === highestMatchOrder) {
             // Rule with the same matchOrder as we already have stored.
 
             // Check if there is the same paradigm in matches already
-            if (!matchingParadigm.find(p => p.id === paradigm.id)) {
-              matchingParadigm.push(paradigm)
+            if (!matchingParadigmInflection.find(p => p.id === paradigm.id)) {
+              matchingParadigmInflection.push(paradigm)
             }
           }
+        }
+      }
+      for (let pi of matchingParadigmInflection) {
+        // deduple paradigms across all inflections
+        if (!matchingParadigm.find(p => p.id === pi.id)) {
+          matchingParadigm.push(pi)
         }
       }
     }

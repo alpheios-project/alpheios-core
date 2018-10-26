@@ -37,6 +37,10 @@ export default class Paradigm {
           }
           for (const feature of cellFeatures) {
             const values = cell[feature].split(' ')
+            // TODO this should be done via an importer but changing this code
+            // would require retesting of all of the paradigm table matching
+            // so hacking a specific workaround for now
+            values.forEach((v, index, values) => { values[index] = v.replace(/future_perfect/, 'future perfect') })
             cell[feature] = new Feature(feature, values, this.languageID)
           }
           cell[Feature.types.part] = new Feature(Feature.types.part, this.partOfSpeech, this.languageID)
