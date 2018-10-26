@@ -1,12 +1,18 @@
+import path from 'path'
+const projectRoot = process.cwd()
+
+console.info('*************************projectRoot', path.join(projectRoot, 'src'))
+
 const webpack = {
   common: {
-    entry: './driver.js',
+    entry: './index.js',
     externals: {
       'alpheios-data-models': 'alpheios-data-models'
     },
     resolve: {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
+        'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
         '@': path.join(projectRoot, 'src')
       }
     }

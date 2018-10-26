@@ -9,7 +9,6 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
     this.config = new ConfigData(config, DefaultConfig)
-    console.info('*******************this.config', this.config)
     this.models = { 'lat': LatinLanguageModel, 'grc': GreekLanguageModel }
   }
 
