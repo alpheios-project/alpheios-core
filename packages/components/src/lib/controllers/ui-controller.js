@@ -1129,7 +1129,6 @@ export default class UIController {
   }
 
   getSelectedText (event) {
-    console.log(`Get selected text`)
     if (this.state.isActive() && this.state.uiIsActive()) {
       /*
       TextSelector conveys text selection information. It is more generic of the two.
