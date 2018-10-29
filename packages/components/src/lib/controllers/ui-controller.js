@@ -738,6 +738,11 @@ export default class UIController {
 
     // Update panel on activation
     if (this.options.openPanel && !this.panel.isOpen()) {
+      /**
+       * Without this, the panel will close immediately after opening.
+       * Probably this is a matter of timing between state updates.
+       * Shall be solved during state refactoring.
+       */
       setTimeout(() => this.panel.open(), 0)
     }
     this.isActivated = true
