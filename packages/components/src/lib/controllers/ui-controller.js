@@ -17,7 +17,6 @@ import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
 import enGB from '@/locales/en-gb/messages.json'
-import TabScript from '@/lib/state/tab-script.js'
 import Template from '@/templates/template.htmlf'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import ResourceQuery from '@/lib/queries/resource-query.js'
@@ -29,6 +28,8 @@ import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import HTMLPage from '@/lib/utility/html-page.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
+import LongTap from '@/lib/custom-pointer-events/long-tap.js'
+import GenericEvt from '@/lib/custom-pointer-events/generic-evt.js'
 import Options from '@/lib/options/options.js'
 
 const languageNames = new Map([
@@ -42,7 +43,23 @@ const languageNames = new Map([
 export default class UIController {
   /**
    * @constructor
+   * @param {UIStateAPI} state - An object to store a UI state.
    * @param {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
+   * @param {Object} options - UI controller options, an object with the following props
+   * (if not specified, will be set to default):
+   *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
+   *     {string} textQueryTrigger - what event will start a lexical query on a selected text. Possible values are
+   *     (see custom pointer events library for more details):
+   *         'dblClick' - MouseDblClick pointer event will be used;
+   *         'longTap' - LongTap pointer event will be used;
+   *         genericEvt - if trigger name other than above specified, it will be treated as a GenericEvt pointer event
+   *             with the name of the event being the value of this filed;
+   *             This name will be passed to the GenericEvt pointer event object;
+   *         'none' - do not register any trigger. This will allow a UIController owner to
+   *         register its own custom trigger and listener.
+   *         Default value: 'dblClick'.
+   *     {string} textQuerySelector - an area(s) on a page where a trigger event will start a lexical query. This is
+   *     a standard CSS selector. Default value: 'body'.
    * @param {Object} manifest - parent application info details  (API definition pending)
    * In some environments manifest data may not be available. Then a `{}` default value
    * will be used.
@@ -55,16 +72,27 @@ export default class UIController {
    *                            popupComponent: Vue single file component of a panel element.
    *                              Allows to provide an alternative popup layout
    */
-  constructor (storageAdapter, manifest = {}, template = {}) {
-    this.state = new TabScript()
-    this.state.status = TabScript.statuses.script.PENDING
-    this.state.panelStatus = TabScript.statuses.panel.CLOSED
+  constructor (state, storageAdapter, options = {}, manifest = {}, template = {}) {
+    this.state = state
     this.storageAdapter = storageAdapter
-    this.options = new Options(ContentOptionDefaults, this.storageAdapter)
+    this.contentOptions = new Options(ContentOptionDefaults, this.storageAdapter)
     this.resourceOptions = new Options(LanguageOptionDefaults, this.storageAdapter)
     this.uiOptions = new Options(UIOptionDefaults, this.storageAdapter)
     this.siteOptions = null // Will be set during an `init` phase
-    this.settings = UIController.settingValues
+
+    // Default values for options
+    const optionsDefaults = {
+      openPanel: this.uiOptions.items.panelOnActivate.currentValue,
+      textQueryTrigger: 'dblClick',
+      textQuerySelector: 'body',
+      uiTypePanel: 'panel',
+      uiTypePopup: 'popup',
+      verboseMode: 'verbose',
+      enableLemmaTranslations: false
+    }
+
+    this.options = Object.assign({}, optionsDefaults, options)
+
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.manifest = manifest
@@ -99,17 +127,14 @@ export default class UIController {
 
   static get settingValues () {
     return {
-      uiTypePanel: 'panel',
-      uiTypePopup: 'popup',
-      verboseMode: 'verbose',
-      enableLemmaTranslations: false
+
     }
   }
 
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
-    let optionLoadPromises = [this.options.load(), this.resourceOptions.load(), this.uiOptions.load()]
+    let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     this.siteOptions = this.loadSiteOptions()
 
     this.zIndex = HTMLPage.getZIndexMax()
@@ -119,6 +144,7 @@ export default class UIController {
       .addMessages(enGB, Locales.en_GB)
       .setLocale(Locales.en_US)
 
+    // Will add morph adapter options to the `options` object of UI controller constructor as needed.
     this.maAdapter = new AlpheiosTuftsAdapter() // Morphological analyzer adapter, with default arguments
 
     // Inject HTML code of a plugin. Should go in reverse order.
@@ -186,7 +212,7 @@ export default class UIController {
             selectedText: '',
             languageName: ''
           },
-          settings: this.options.items,
+          settings: this.contentOptions.items,
           treebankComponentData: {
             data: {
               word: {},
@@ -205,7 +231,7 @@ export default class UIController {
           l10n: this.l10n
         },
         state: this.state,
-        options: this.options,
+        options: this.contentOptions,
         resourceOptions: this.resourceOptions,
         currentPanelComponent: this.template.defaultPanelComponent,
         uiController: this,
@@ -466,7 +492,7 @@ export default class UIController {
           component to identify a new request coming in and to distinguish it from data updates of the current request.
            */
           requestStartTime: 0,
-          settings: this.options.items,
+          settings: this.contentOptions.items,
           verboseMode: this.state.verboseMode,
           defDataReady: false,
           hasTreebank: false,
@@ -497,7 +523,7 @@ export default class UIController {
           }
         },
         panel: this.panel,
-        options: this.options,
+        options: this.contentOptions,
         resourceOptions: this.resourceOptions,
         currentPopupComponent: this.template.defaultPopupComponent,
         uiController: this,
@@ -681,25 +707,14 @@ export default class UIController {
     // Set initial values of components
     this.setRootComponentClasses()
 
-    this.state.activateUI()
-    document.body.dispatchEvent(new Event('Alpheios_Options_Loaded'))
-
-    const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.options.items.preferredLanguage.currentValue)
-    this.options.items.lookupLangOverride.setValue(false)
+    const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
+    this.contentOptions.items.lookupLangOverride.setValue(false)
     this.updateLanguage(currentLanguageID)
     this.updateVerboseMode()
     this.updateLemmaTranslations()
     this.notifyInflectionBrowser()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
-
-    // Activate listeners
-    MouseDblClick.listen('body', evt => this.getSelectedText(evt))
-    document.addEventListener('keydown', this.handleEscapeKey.bind(this))
-    document.body.addEventListener('Alpheios_Reload', this.handleReload.bind(this))
-    document.body.addEventListener('Alpheios_Embedded_Response', this.disableContent.bind(this))
-    document.body.addEventListener('Alpheios_Page_Load', this.updateAnnotations.bind(this))
-    document.body.addEventListener('Alpheios_Options_Loaded', this.updatePanelOnActivation.bind(this))
 
     this.isInitialized = true
   }
@@ -710,18 +725,34 @@ export default class UIController {
    */
   async activate () {
     if (this.isActivated) { return `Already activated` }
+    if (this.state.isDisabled()) { return `UI controller is disabled` }
 
     if (!this.isInitialized) { await this.init() }
 
-    // TODO: probably need to set event listeners here
+    // Activate listeners
+    if (this.options.textQueryTrigger !== 'none') { this.addTextQueryListener(this.options.textQueryTrigger, this.options.textQuerySelector) }
+    document.addEventListener('keydown', this.handleEscapeKey.bind(this))
+    document.body.addEventListener('Alpheios_Page_Load', this.updateAnnotations.bind(this))
+
+    this.state.activateUI()
 
     // Update panel on activation
-    if (this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
-      this.panel.open()
+    if (this.options.openPanel && !this.panel.isOpen()) {
+      setTimeout(() => this.panel.open(), 0)
     }
     this.isActivated = true
     this.isDeactivated = false
     this.state.activate()
+  }
+
+  addTextQueryListener (trigger, selector = 'body') {
+    if (trigger === 'dblClick') {
+      MouseDblClick.listen(selector, evt => this.getSelectedText(evt))
+    } else if (trigger === 'longTap') {
+      LongTap.listen(selector, evt => this.getSelectedText(evt))
+    } else {
+      GenericEvt.listen(selector, (evt) => this.getSelectedText(evt), trigger)
+    }
   }
 
   /**
@@ -741,23 +772,11 @@ export default class UIController {
     this.state.deactivate()
   }
 
-  // TODO: Do we need to keep it?
-  // reactivate () {
-  //   if (this.state.isDisabled()) {
-  //     console.log('Alpheios is disabled')
-  //   } else {
-  //     console.log('Content has been reactivated.')
-  //     this.state.activate()
-  //   }
-  // }
-
   /**
    * Load site-specific settings
    */
   loadSiteOptions () {
     let allSiteOptions = []
-    // TODO: need to fix this. It iterates over `site` but `site-options.json` does not have this filed
-    // TODO: also, is `site-options-treebanks.json` the thing similar? Why is it never loaded?
     for (let site of SiteOptions) {
       for (let domain of site.options) {
         let siteOpts = new Options(domain, this.storageAdapter)
@@ -971,14 +990,14 @@ export default class UIController {
   }
 
   updateVerboseMode () {
-    this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
+    this.state.setItem('verboseMode', this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
     this.panel.panelData.verboseMode = this.state.verboseMode
     this.popup.popupData.verboseMode = this.state.verboseMode
   }
 
   updateLemmaTranslations () {
-    if (this.options.items.enableLemmaTranslations.currentValue && !this.options.items.locale.currentValue.match(/en-/)) {
-      this.state.setItem('lemmaTranslationLang', this.options.items.locale.currentValue)
+    if (this.contentOptions.items.enableLemmaTranslations.currentValue && !this.contentOptions.items.locale.currentValue.match(/en-/)) {
+      this.state.setItem('lemmaTranslationLang', this.contentOptions.items.locale.currentValue)
     } else {
       this.state.setItem('lemmaTranslationLang', null)
     }
@@ -989,7 +1008,7 @@ export default class UIController {
   }
 
   updateInflections (homonym) {
-    this.inflectionsViewSet = ViewSetFactory.create(homonym, this.options.items.locale.currentValue)
+    this.inflectionsViewSet = ViewSetFactory.create(homonym, this.contentOptions.items.locale.currentValue)
 
     this.panel.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet
     if (this.inflectionsViewSet.hasMatchingViews) {
@@ -1023,7 +1042,7 @@ export default class UIController {
   }
 
   open () {
-    if (this.options.items.uiType.currentValue === this.settings.uiTypePanel) {
+    if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
       this.panel.open()
     } else {
       if (this.panel.isOpen) { this.panel.close() }
@@ -1112,7 +1131,7 @@ export default class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new HTMLSelector(event, this.options.items.preferredLanguage.currentValue)
+      let htmlSelector = new HTMLSelector(event, this.contentOptions.items.preferredLanguage.currentValue)
       let textSelector = htmlSelector.createTextSelector()
 
       if (!textSelector.isEmpty()) {
@@ -1125,7 +1144,7 @@ export default class UIController {
             lexicons: Lexicons,
             resourceOptions: this.resourceOptions,
             siteOptions: [],
-            lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.options.items.locale.currentValue } : null,
+            lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.contentOptions.items.locale.currentValue } : null,
             langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
           }),
           {
@@ -1144,7 +1163,7 @@ export default class UIController {
           lexicons: Lexicons,
           resourceOptions: this.resourceOptions,
           siteOptions: [],
-          lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.options.items.locale.currentValue } : null,
+          lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.contentOptions.items.locale.currentValue } : null,
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         }).getData()
       }
@@ -1157,8 +1176,8 @@ export default class UIController {
    */
   enableLemmaTranslations (textSelector) {
     return textSelector.languageID === Constants.LANG_LATIN &&
-      this.options.items.enableLemmaTranslations.currentValue &&
-      !this.options.items.locale.currentValue.match(/^en-/)
+      this.contentOptions.items.enableLemmaTranslations.currentValue &&
+      !this.contentOptions.items.locale.currentValue.match(/^en-/)
   }
 
   handleEscapeKey (event) {
@@ -1173,31 +1192,6 @@ export default class UIController {
     }
     return true
   }
-
-  handleReload () {
-    console.log('Alpheios reload event caught.')
-    if (this.state.isActive()) {
-      this.deactivate()
-    }
-    window.location.reload()
-  }
-
-  disableContent () {
-    console.log('Alpheios is embedded.')
-    // if we weren't already disabled, remember the current state
-    // and then deactivate before disabling
-    if (!this.state.isDisabled()) {
-      this.state.save()
-      if (this.state.isActive()) {
-        console.log('Deactivating Alpheios')
-        this.deactivate()
-      }
-    }
-    this.state.disable()
-    // TODO: Need to handle this in a content. Send state to BG on every state change?
-    // this.sendStateToBackground()
-  }
-
   /**
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
@@ -1208,12 +1202,6 @@ export default class UIController {
         document: document,
         siteOptions: this.siteOptions
       }).getData()
-    }
-  }
-
-  updatePanelOnActivation () {
-    if (this.state.isActive() && this.uiOptions.items.panelOnActivate.currentValue && !this.panel.isOpen()) {
-      this.panel.open()
     }
   }
 }

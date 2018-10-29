@@ -72,7 +72,7 @@
     },
     created: function () {
       if (this.uiController) {
-        this.options = this.uiController.options.clone(TempStorageArea)
+        this.options = this.uiController.contentOptions.clone(TempStorageArea)
         this.resourceOptions = this.uiController.resourceOptions.clone(TempStorageArea)
 
         if (this.parentLanguage) {
@@ -119,7 +119,7 @@
           this.showLanguageSettings = this.overrideLanguage
         }
       },
-      'uiController.options.items.lookupLangOverride.currentValue': function(value) {
+      'uiController.contentOptions.items.lookupLangOverride.currentValue': function(value) {
         this.overrideLanguage = value
         this.updateUIbyOverrideLanguage()
       }
@@ -184,7 +184,7 @@
 
       checkboxClick: function () {
         this.overrideLanguage = !this.overrideLanguage
-        this.uiController.options.items.lookupLangOverride.setValue(this.overrideLanguage)
+        this.uiController.contentOptions.items.lookupLangOverride.setValue(this.overrideLanguage)
 
         this.updateUIbyOverrideLanguage()
       }

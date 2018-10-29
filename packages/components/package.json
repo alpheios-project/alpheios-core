@@ -4,15 +4,15 @@
   "description": "Alpheios UI Compononents",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
-    "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-lib": "standard --fix && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-components": "standard --fix && jest tests/vue-components --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-c": "standard --fix && jest tests/vue-components/lookup.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "test-a": "standard --fix && jest tests/lib/selection/alignment --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "build": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
-    "build-prod": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
-    "build-dev": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
-    "lint": "standard --fix"
+    "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-lib": "eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-components": "eslint --fix src/**/*.js && jest tests/vue-components --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-c": "eslint --fix src/**/*.js && jest tests/vue-components/lookup.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-a": "eslint --fix src/**/*.js && jest tests/lib/selection/alignment --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
+    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+    "lint": "eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue"
   },
   "repository": {
     "type": "git",
@@ -35,13 +35,19 @@
     "alpheios-morph-client": "github:alpheios-project/morph-client",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
-    "autoprefixer": "^9.3.1",
+    "autoprefixer": "^9.2.1",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
     "coveralls": "^3.0.2",
     "css-loader": "^1.0.0",
     "dom-anchor-text-quote": "*",
     "element-closest": "^2.0.2",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.0.0-beta.3",
     "espree": "^4.0.0",
     "file-loader": "^2.0.0",
     "flush-promises": "^1.0.0",
@@ -54,16 +60,15 @@
     "jest-serializer-vue": "^2.0.2",
     "jest-vue-preprocessor": "^1.4.0",
     "jump.js": "^1.0.2",
-    "postcss-import": "^12.0.1",
+    "postcss-import": "^12.0.0",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.2",
-    "sinon": "^7.0.0",
+    "sinon": "^6.3.5",
     "source-map-loader": "^0.2.4",
-    "standard": "^12.0.1",
-    "style-loader": "^0.23.1",
-    "uikit": "^3.0.0-rc.20",
+    "style-loader": "^0.23.0",
+    "uikit": "^3.0.0-rc.17",
     "vue": "^2.5.17",
     "whatwg-fetch": "^3.0.0",
     "wrap-range-text": "*"
@@ -109,6 +114,10 @@
     ]
   },
   "eslintConfig": {
+    "extends": [
+      "standard",
+      "plugin:vue/essential"
+    ],
     "env": {
       "browser": true,
       "node": true
@@ -119,12 +128,10 @@
       "experimentalObjectRestSpread": true
     }
   },
-  "standard": {
-    "ignore": [
-      "**/dist",
-      "**/support"
-    ]
-  },
+  "eslintIgnore": [
+    "**/dist",
+    "**/support"
+  ],
   "dependencies": {
     "vue-multiselect": "^2.1.3"
   }
