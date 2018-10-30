@@ -98,8 +98,13 @@
               for (const inflection of lexeme.inflections) {
                 let fullMatch = true
                 for (const feature of comparativeFeatures) {
-                  fullMatch = fullMatch && inflection.hasOwnProperty(feature) && cell[feature].hasValues(inflection[feature].values)
-                  if (!fullMatch) { break } // If at least one feature does not match, there is no reason to check others
+                  // if the inflection is missing a feature from the table it is assumed to match
+                  if (inflection.hasOwnProperty(feature)) {
+                    fullMatch = fullMatch && cell[feature].hasValues(inflection[feature].values)
+                    if (!fullMatch) {
+                      break
+                    } // If at least one feature does not match, there is no reason to check others
+                  }
                 }
                 if (fullMatch) {
                   // If full match is found, there is no need to check other inflections

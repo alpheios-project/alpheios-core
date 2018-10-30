@@ -71,6 +71,7 @@
                   <inflectionattribute :data="infl.groupingKey" :type="types.voice" :linkedfeatures="linkedfeatures" :grouplevel="4" @sendfeature="sendFeature"
                     v-if="! group.groupingKey.isCaseInflectionSet"/>
                   <span v-for="item in infl.inflections">
+                    <inflectionattribute :data="item" type="dialect" :linkedfeatures="linkedfeatures" @sendfeature="sendFeature" :decorators="['parenthesize']"/>
                     <inflectionattribute :data="item" type="example" :linkedfeatures="linkedfeatures" @sendfeature="sendFeature"/>
                   </span>
               </div><!-- end infl -->
@@ -79,7 +80,6 @@
         </div>
       </div>
     </div><!-- end alpheios-morph__inflections -->
-
 
   </div>
 </template>

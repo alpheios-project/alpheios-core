@@ -8810,6 +8810,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -9182,8 +9185,13 @@ __webpack_require__.r(__webpack_exports__);
             for (const inflection of lexeme.inflections) {
               let fullMatch = true
               for (const feature of comparativeFeatures) {
-                fullMatch = fullMatch && inflection.hasOwnProperty(feature) && cell[feature].hasValues(inflection[feature].values)
-                if (!fullMatch) { break } // If at least one feature does not match, there is no reason to check others
+                // if the inflection is missing a feature from the table it is assumed to match
+                if (inflection.hasOwnProperty(feature)) {
+                  fullMatch = fullMatch && cell[feature].hasValues(inflection[feature].values)
+                  if (!fullMatch) {
+                    break
+                  } // If at least one feature does not match, there is no reason to check others
+                }
               }
               if (fullMatch) {
                 // If full match is found, there is no need to check other inflections
@@ -9695,7 +9703,6 @@ __webpack_require__.r(__webpack_exports__);
         this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
         this.selectedView = this.views[0].render()
         this.mainTableCollapsed = false
-        this.prerenderedCollapsed = false
       }
     },
     viewSelector: {
@@ -9705,7 +9712,6 @@ __webpack_require__.r(__webpack_exports__);
       set: function (newValue) {
         this.selectedView = this.views.find(view => view.id === newValue).render()
         this.mainTableCollapsed = false
-        this.prerenderedCollapsed = false
       }
     },
     inflectionTable: function () {
@@ -10021,7 +10027,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function () {
     if (this.uiController) {
-      this.options = this.uiController.contentOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
+      this.options = this.uiController.options.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
       this.resourceOptions = this.uiController.resourceOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
 
       if (this.parentLanguage) {
@@ -10068,7 +10074,7 @@ __webpack_require__.r(__webpack_exports__);
         this.showLanguageSettings = this.overrideLanguage
       }
     },
-    'uiController.contentOptions.items.lookupLangOverride.currentValue': function(value) {
+    'uiController.options.items.lookupLangOverride.currentValue': function(value) {
       this.overrideLanguage = value
       this.updateUIbyOverrideLanguage()
     }
@@ -10133,7 +10139,7 @@ __webpack_require__.r(__webpack_exports__);
 
     checkboxClick: function () {
       this.overrideLanguage = !this.overrideLanguage
-      this.uiController.contentOptions.items.lookupLangOverride.setValue(this.overrideLanguage)
+      this.uiController.options.items.lookupLangOverride.setValue(this.overrideLanguage)
 
       this.updateUIbyOverrideLanguage()
     }
@@ -10157,6 +10163,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./shortdef.vue */ "./vue-components/shortdef.vue");
 /* harmony import */ var _infl_attribute_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./infl-attribute.vue */ "./vue-components/infl-attribute.vue");
 /* harmony import */ var _lemma_translation_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lemma-translation.vue */ "./vue-components/lemma-translation.vue");
+//
 //
 //
 //
@@ -10845,16 +10852,18 @@ __webpack_require__.r(__webpack_exports__);
       return this.data.tabs.inflections
     },
 
-    treebankTabPossible: function() {
+    treebankTabAvailable: function() {
       // treebank data is possible if we have it for the word or the page
-      return this.data && (this.data.treebankComponentData.data.page.src || this.data.treebankComponentData.data.word.src) ? true : false
+      return this.data && this.data.treebankComponentData && this.data.treebankComponentData.data && 
+            ((this.data.treebankComponentData.data.page && this.data.treebankComponentData.data.page.src) || 
+             (this.data.treebankComponentData.data.word && this.data.treebankComponentData.data.word.src)) ? true : false
     },
 
     treebankTabVisible: function() {
       // Inform treebank component about visibility state change
-      if (this.data && this.data.treebankComponentData) {
+      if (this.data && this.data.treebankComponentData && this.data.treebankComponentData.data) {
         this.data.treebankComponentData.visible = this.data.tabs.treebank
-      }
+      } 
       return this.data.tabs.treebank
     },
 
@@ -13421,7 +13430,7 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Present System of Contract Verbs (-εω, -αω, -οω)")
+          _vm._v("Athematic Perfects")
         ]),
         _vm._v(" "),
         _c("wide-table", {
@@ -13437,6 +13446,38 @@ var render = function() {
             interaction: _vm.inflTableInteraction
           }
         }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            view: _vm.greekParadigmView({ paradigmID: "verbpdgm17b" }),
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            collapsed: _vm.inflBrowserTablesCollapsed
+          },
+          on: {
+            widthchange: _vm.inflTableWidthUpd,
+            interaction: _vm.inflTableInteraction
+          }
+        }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            view: _vm.greekParadigmView({ paradigmID: "verbpdgm17c" }),
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            collapsed: _vm.inflBrowserTablesCollapsed
+          },
+          on: {
+            widthchange: _vm.inflTableWidthUpd,
+            interaction: _vm.inflTableInteraction
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+          _vm._v("Present System of Contract Verbs (-εω, -αω, -οω)")
+        ]),
         _vm._v(" "),
         _c("wide-table", {
           attrs: {
@@ -13563,10 +13604,6 @@ var render = function() {
             interaction: _vm.inflTableInteraction
           }
         }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Second Aorist of βαίνω, γιγνώσκω, ἁλίσκομαι, δύω")
-        ]),
         _vm._v(" "),
         _c("wide-table", {
           attrs: {
@@ -13819,6 +13856,20 @@ var render = function() {
         _c("wide-table", {
           attrs: {
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm43" }),
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            collapsed: _vm.inflBrowserTablesCollapsed
+          },
+          on: {
+            widthchange: _vm.inflTableWidthUpd,
+            interaction: _vm.inflTableInteraction
+          }
+        }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            view: _vm.greekParadigmView({ paradigmID: "verbpdgm43b" }),
             "infl-browser-table": true,
             messages: _vm.messages,
             "no-suffix-matches-hidden": false,
@@ -16037,6 +16088,19 @@ var render = function() {
                                               _c("inflectionattribute", {
                                                 attrs: {
                                                   data: item,
+                                                  type: "dialect",
+                                                  linkedfeatures:
+                                                    _vm.linkedfeatures,
+                                                  decorators: ["parenthesize"]
+                                                },
+                                                on: {
+                                                  sendfeature: _vm.sendFeature
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("inflectionattribute", {
+                                                attrs: {
+                                                  data: item,
                                                   type: "example",
                                                   linkedfeatures:
                                                     _vm.linkedfeatures
@@ -16307,8 +16371,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.treebankTabVisible,
-                        expression: "treebankTabVisible"
+                        value: _vm.treebankTabAvailable,
+                        expression: "treebankTabAvailable"
                       }
                     ],
                     attrs: {
@@ -19472,7 +19536,7 @@ function defineReactive (
         return
       }
       /* eslint-enable no-self-compare */
-      if ( true && customSetter) {
+      if (true && customSetter) {
         customSetter();
       }
       if (setter) {
@@ -19492,7 +19556,7 @@ function defineReactive (
  * already exist.
  */
 function set (target, key, val) {
-  if ( true &&
+  if (true &&
     (isUndef(target) || isPrimitive(target))
   ) {
     warn(("Cannot set reactive property on undefined, null, or primitive value: " + ((target))));
@@ -19508,7 +19572,7 @@ function set (target, key, val) {
   }
   var ob = (target).__ob__;
   if (target._isVue || (ob && ob.vmCount)) {
-     true && warn(
+    true && warn(
       'Avoid adding reactive properties to a Vue instance or its root $data ' +
       'at runtime - declare it upfront in the data option.'
     );
@@ -19527,7 +19591,7 @@ function set (target, key, val) {
  * Delete a property and trigger change if necessary.
  */
 function del (target, key) {
-  if ( true &&
+  if (true &&
     (isUndef(target) || isPrimitive(target))
   ) {
     warn(("Cannot delete reactive property on undefined, null, or primitive value: " + ((target))));
@@ -19538,7 +19602,7 @@ function del (target, key) {
   }
   var ob = (target).__ob__;
   if (target._isVue || (ob && ob.vmCount)) {
-     true && warn(
+    true && warn(
       'Avoid deleting properties on a Vue instance or its root $data ' +
       '- just set it to null.'
     );
@@ -19664,7 +19728,7 @@ strats.data = function (
 ) {
   if (!vm) {
     if (childVal && typeof childVal !== 'function') {
-       true && warn(
+      true && warn(
         'The "data" option should be a function ' +
         'that returns a per-instance value in component ' +
         'definitions.',
@@ -19714,7 +19778,7 @@ function mergeAssets (
 ) {
   var res = Object.create(parentVal || null);
   if (childVal) {
-     true && assertObjectType(key, childVal, vm);
+    true && assertObjectType(key, childVal, vm);
     return extend(res, childVal)
   } else {
     return res
@@ -19978,7 +20042,7 @@ function resolveAsset (
   if (hasOwn(assets, PascalCaseId)) { return assets[PascalCaseId] }
   // fallback to prototype chain
   var res = assets[id] || assets[camelizedId] || assets[PascalCaseId];
-  if ( true && warnMissing && !res) {
+  if (true && warnMissing && !res) {
     warn(
       'Failed to resolve ' + type.slice(0, -1) + ': ' + id,
       options
@@ -20038,7 +20102,7 @@ function getPropDefaultValue (vm, prop, key) {
   }
   var def = prop.default;
   // warn against non-factory defaults for Object & Array
-  if ( true && isObject(def)) {
+  if (true && isObject(def)) {
     warn(
       'Invalid default value for prop "' + key + '": ' +
       'Props with type Object/Array must use a factory function ' +
@@ -20511,7 +20575,7 @@ function updateListeners (
     event = normalizeEvent(name);
     /* istanbul ignore if */
     if (isUndef(cur)) {
-       true && warn(
+      true && warn(
         "Invalid handler for event \"" + (event.name) + "\": got " + String(cur),
         vm
       );
@@ -20791,7 +20855,7 @@ function resolveAsyncComponent (
     });
 
     var reject = once(function (reason) {
-       true && warn(
+      true && warn(
         "Failed to resolve async component: " + (String(factory)) +
         (reason ? ("\nReason: " + reason) : '')
       );
@@ -21230,7 +21294,7 @@ function mountComponent (
 
   var updateComponent;
   /* istanbul ignore if */
-  if ( true && config.performance && mark) {
+  if (true && config.performance && mark) {
     updateComponent = function () {
       var name = vm._name;
       var id = vm._uid;
@@ -21444,7 +21508,7 @@ function flushSchedulerQueue () {
     has[id] = null;
     watcher.run();
     // in dev build, check and stop circular updates.
-    if ( true && has[id] != null) {
+    if (true && has[id] != null) {
       circular[id] = (circular[id] || 0) + 1;
       if (circular[id] > MAX_UPDATE_COUNT) {
         warn(
@@ -21580,7 +21644,7 @@ var Watcher = function Watcher (
     this.getter = parsePath(expOrFn);
     if (!this.getter) {
       this.getter = function () {};
-       true && warn(
+      true && warn(
         "Failed watching path: \"" + expOrFn + "\" " +
         'Watcher only accepts simple dot-delimited paths. ' +
         'For full control, use a function instead.',
@@ -21835,7 +21899,7 @@ function initData (vm) {
     : data || {};
   if (!isPlainObject(data)) {
     data = {};
-     true && warn(
+    true && warn(
       'data functions should return an object:\n' +
       'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function',
       vm
@@ -21857,7 +21921,7 @@ function initData (vm) {
       }
     }
     if (props && hasOwn(props, key)) {
-       true && warn(
+      true && warn(
         "The data property \"" + key + "\" is already declared as a prop. " +
         "Use prop default value instead.",
         vm
@@ -21894,7 +21958,7 @@ function initComputed (vm, computed) {
   for (var key in computed) {
     var userDef = computed[key];
     var getter = typeof userDef === 'function' ? userDef : userDef.get;
-    if ( true && getter == null) {
+    if (true && getter == null) {
       warn(
         ("Getter is missing for computed property \"" + key + "\"."),
         vm
@@ -21947,7 +22011,7 @@ function defineComputed (
       ? userDef.set
       : noop;
   }
-  if ( true &&
+  if (true &&
       sharedPropertyDefinition.set === noop) {
     sharedPropertyDefinition.set = function () {
       warn(
@@ -22197,7 +22261,7 @@ function renderSlot (
   if (scopedSlotFn) { // scoped slot
     props = props || {};
     if (bindObject) {
-      if ( true && !isObject(bindObject)) {
+      if (true && !isObject(bindObject)) {
         warn(
           'slot v-bind without argument expects an Object',
           this
@@ -22210,7 +22274,7 @@ function renderSlot (
     var slotNodes = this.$slots[name];
     // warn duplicate slot usage
     if (slotNodes) {
-      if ( true && slotNodes._rendered) {
+      if (true && slotNodes._rendered) {
         warn(
           "Duplicate presence of slot \"" + name + "\" found in the same render tree " +
           "- this will likely cause render errors.",
@@ -22285,7 +22349,7 @@ function bindObjectProps (
 ) {
   if (value) {
     if (!isObject(value)) {
-       true && warn(
+      true && warn(
         'v-bind without argument expects an Object or Array value',
         this
       );
@@ -22391,7 +22455,7 @@ function markStaticNode (node, key, isOnce) {
 function bindObjectListeners (data, value) {
   if (value) {
     if (!isPlainObject(value)) {
-       true && warn(
+      true && warn(
         'v-on without argument expects an Object value',
         this
       );
@@ -22823,7 +22887,7 @@ function _createElement (
   normalizationType
 ) {
   if (isDef(data) && isDef((data).__ob__)) {
-     true && warn(
+    true && warn(
       "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
       'Always create fresh vnode data objects in each render!',
       context
@@ -22839,7 +22903,7 @@ function _createElement (
     return createEmptyVNode()
   }
   // warn against non-primitive key
-  if ( true &&
+  if (true &&
     isDef(data) && isDef(data.key) && !isPrimitive(data.key)
   ) {
     {
@@ -23017,7 +23081,7 @@ function renderMixin (Vue) {
     }
     // return empty vnode in case the render function errored out
     if (!(vnode instanceof VNode)) {
-      if ( true && Array.isArray(vnode)) {
+      if (true && Array.isArray(vnode)) {
         warn(
           'Multiple root nodes returned from render function. Render function ' +
           'should return a single root node.',
@@ -23044,7 +23108,7 @@ function initMixin (Vue) {
 
     var startTag, endTag;
     /* istanbul ignore if */
-    if ( true && config.performance && mark) {
+    if (true && config.performance && mark) {
       startTag = "vue-perf-start:" + (vm._uid);
       endTag = "vue-perf-end:" + (vm._uid);
       mark(startTag);
@@ -23081,7 +23145,7 @@ function initMixin (Vue) {
     callHook(vm, 'created');
 
     /* istanbul ignore if */
-    if ( true && config.performance && mark) {
+    if (true && config.performance && mark) {
       vm._name = formatComponentName(vm, false);
       mark(endTag);
       measure(("vue " + (vm._name) + " init"), startTag, endTag);
@@ -23172,7 +23236,7 @@ function dedupe (latest, extended, sealed) {
 }
 
 function Vue (options) {
-  if ( true &&
+  if (true &&
     !(this instanceof Vue)
   ) {
     warn('Vue is a constructor and should be called with the `new` keyword');
@@ -23241,7 +23305,7 @@ function initExtend (Vue) {
     }
 
     var name = extendOptions.name || Super.options.name;
-    if ( true && name) {
+    if (true && name) {
       validateComponentName(name);
     }
 
@@ -23324,7 +23388,7 @@ function initAssetRegisters (Vue) {
         return this.options[type + 's'][id]
       } else {
         /* istanbul ignore if */
-        if ( true && type === 'component') {
+        if (true && type === 'component') {
           validateComponentName(id);
         }
         if (type === 'component' && isPlainObject(definition)) {
@@ -23748,7 +23812,7 @@ function query (el) {
   if (typeof el === 'string') {
     var selected = document.querySelector(el);
     if (!selected) {
-       true && warn(
+      true && warn(
         'Cannot find element: ' + el
       );
       return document.createElement('div')
@@ -24039,7 +24103,7 @@ function createPatchFunction (backend) {
         insert(parentElm, vnode.elm, refElm);
       }
 
-      if ( true && data && data.pre) {
+      if (true && data && data.pre) {
         creatingElmInVPre--;
       }
     } else if (isTrue(vnode.isComment)) {
@@ -24457,7 +24521,7 @@ function createPatchFunction (backend) {
           if (isDef(i = data) && isDef(i = i.domProps) && isDef(i = i.innerHTML)) {
             if (i !== elm.innerHTML) {
               /* istanbul ignore if */
-              if ( true &&
+              if (true &&
                 typeof console !== 'undefined' &&
                 !hydrationBailed
               ) {
@@ -24483,7 +24547,7 @@ function createPatchFunction (backend) {
             // longer than the virtual children list.
             if (!childrenMatch || childNode) {
               /* istanbul ignore if */
-              if ( true &&
+              if (true &&
                 typeof console !== 'undefined' &&
                 !hydrationBailed
               ) {
@@ -25046,7 +25110,7 @@ function addHandler (
   // warn prevent and passive modifier
   /* istanbul ignore if */
   if (
-     true && warn &&
+    true && warn &&
     modifiers.prevent && modifiers.passive
   ) {
     warn(
@@ -26143,7 +26207,7 @@ function enter (vnode, toggleDisplay) {
       : duration
   );
 
-  if ( true && explicitEnterDuration != null) {
+  if (true && explicitEnterDuration != null) {
     checkDuration(explicitEnterDuration, 'enter', vnode);
   }
 
@@ -26251,7 +26315,7 @@ function leave (vnode, rm) {
       : duration
   );
 
-  if ( true && isDef(explicitLeaveDuration)) {
+  if (true && isDef(explicitLeaveDuration)) {
     checkDuration(explicitLeaveDuration, 'leave', vnode);
   }
 
@@ -26478,7 +26542,7 @@ function actuallySetSelected (el, binding, vm) {
   var value = binding.value;
   var isMultiple = el.multiple;
   if (isMultiple && !Array.isArray(value)) {
-     true && warn(
+    true && warn(
       "<select multiple v-model=\"" + (binding.expression) + "\"> " +
       "expects an Array value for its binding, but got " + (Object.prototype.toString.call(value).slice(8, -1)),
       vm
@@ -26694,7 +26758,7 @@ var Transition = {
     }
 
     // warn multiple elements
-    if ( true && children.length > 1) {
+    if (true && children.length > 1) {
       warn(
         '<transition> can only be used on a single element. Use ' +
         '<transition-group> for lists.',
@@ -26705,7 +26769,7 @@ var Transition = {
     var mode = this.mode;
 
     // warn invalid mode
-    if ( true &&
+    if (true &&
       mode && mode !== 'in-out' && mode !== 'out-in'
     ) {
       warn(
@@ -26999,7 +27063,7 @@ if (inBrowser) {
       if (devtools) {
         devtools.emit('init', Vue);
       } else if (
-         true &&
+        true &&
         isChrome
       ) {
         console[console.info ? 'info' : 'log'](
@@ -27008,7 +27072,7 @@ if (inBrowser) {
         );
       }
     }
-    if ( true &&
+    if (true &&
       config.productionTip !== false &&
       typeof console !== 'undefined'
     ) {
@@ -27074,7 +27138,7 @@ function parseText (
 function transformNode (el, options) {
   var warn = options.warn || baseWarn;
   var staticClass = getAndRemoveAttr(el, 'class');
-  if ( true && staticClass) {
+  if (true && staticClass) {
     var res = parseText(staticClass, options.delimiters);
     if (res) {
       warn(
@@ -27360,7 +27424,7 @@ function parseHTML (html, options) {
 
     if (html === last) {
       options.chars && options.chars(html);
-      if ( true && !stack.length && options.warn) {
+      if (true && !stack.length && options.warn) {
         options.warn(("Mal-formatted tag at end of template: \"" + html + "\""));
       }
       break
@@ -27467,7 +27531,7 @@ function parseHTML (html, options) {
     if (pos >= 0) {
       // Close all the open elements, up the stack
       for (var i = stack.length - 1; i >= pos; i--) {
-        if ( true &&
+        if (true &&
           (i > pos || !tagName) &&
           options.warn
         ) {
@@ -27613,7 +27677,7 @@ function parse (
 
       if (isForbiddenTag(element) && !isServerRendering()) {
         element.forbidden = true;
-         true && warn$2(
+        true && warn$2(
           'Templates should only be responsible for mapping the state to the ' +
           'UI. Avoid placing tags with side-effects in your templates, such as ' +
           "<" + tag + ">" + ', as they will not be parsed.'
@@ -27811,7 +27875,7 @@ function processElement (element, options) {
 function processKey (el) {
   var exp = getBindingAttr(el, 'key');
   if (exp) {
-    if ( true && el.tag === 'template') {
+    if (true && el.tag === 'template') {
       warn$2("<template> cannot be keyed. Place the key on real elements instead.");
     }
     el.key = exp;
@@ -27901,7 +27965,7 @@ function findPrevElement (children) {
     if (children[i].type === 1) {
       return children[i]
     } else {
-      if ( true && children[i].text !== ' ') {
+      if (true && children[i].text !== ' ') {
         warn$2(
           "text \"" + (children[i].text.trim()) + "\" between v-if and v-else(-if) " +
           "will be ignored."
@@ -27929,7 +27993,7 @@ function processOnce (el) {
 function processSlot (el) {
   if (el.tag === 'slot') {
     el.slotName = getBindingAttr(el, 'name');
-    if ( true && el.key) {
+    if (true && el.key) {
       warn$2(
         "`key` does not work on <slot> because slots are abstract outlets " +
         "and can possibly expand into multiple elements. " +
@@ -27941,7 +28005,7 @@ function processSlot (el) {
     if (el.tag === 'template') {
       slotScope = getAndRemoveAttr(el, 'scope');
       /* istanbul ignore if */
-      if ( true && slotScope) {
+      if (true && slotScope) {
         warn$2(
           "the \"scope\" attribute for scoped slots have been deprecated and " +
           "replaced by \"slot-scope\" since 2.5. The new \"slot-scope\" attribute " +
@@ -27953,7 +28017,7 @@ function processSlot (el) {
       el.slotScope = slotScope || getAndRemoveAttr(el, 'slot-scope');
     } else if ((slotScope = getAndRemoveAttr(el, 'slot-scope'))) {
       /* istanbul ignore if */
-      if ( true && el.attrsMap['v-for']) {
+      if (true && el.attrsMap['v-for']) {
         warn$2(
           "Ambiguous combined usage of slot-scope and v-for on <" + (el.tag) + "> " +
           "(v-for takes higher priority). Use a wrapper <template> for the " +
@@ -28039,7 +28103,7 @@ function processAttrs (el) {
           name = name.slice(0, -(arg.length + 1));
         }
         addDirective(el, name, rawName, value, arg, modifiers);
-        if ( true && name === 'model') {
+        if (true && name === 'model') {
           checkForAliasModel(el, value);
         }
       }
@@ -28092,7 +28156,7 @@ function makeAttrsMap (attrs) {
   var map = {};
   for (var i = 0, l = attrs.length; i < l; i++) {
     if (
-       true &&
+      true &&
       map[attrs[i].name] && !isIE && !isEdge
     ) {
       warn$2('duplicate attribute: ' + attrs[i].name);
@@ -28548,7 +28612,7 @@ function genFilterCode (key) {
 /*  */
 
 function on (el, dir) {
-  if ( true && dir.modifiers) {
+  if (true && dir.modifiers) {
     warn("v-on without argument does not support modifiers.");
   }
   el.wrapListeners = function (code) { return ("_g(" + code + "," + (dir.value) + ")"); };
@@ -28653,7 +28717,7 @@ function genOnce (el, state) {
       parent = parent.parent;
     }
     if (!key) {
-       true && state.warn(
+      true && state.warn(
         "v-once can only be used inside v-for that is keyed. "
       );
       return genElement(el, state)
@@ -28712,7 +28776,7 @@ function genFor (
   var iterator1 = el.iterator1 ? ("," + (el.iterator1)) : '';
   var iterator2 = el.iterator2 ? ("," + (el.iterator2)) : '';
 
-  if ( true &&
+  if (true &&
     state.maybeComponent(el) &&
     el.tag !== 'slot' &&
     el.tag !== 'template' &&
@@ -28838,7 +28902,7 @@ function genDirectives (el, state) {
 
 function genInlineTemplate (el, state) {
   var ast = el.children[0];
-  if ( true && (
+  if (true && (
     el.children.length !== 1 || ast.type !== 1
   )) {
     state.warn('Inline-template components must have exactly one child element.');
@@ -29328,7 +29392,7 @@ Vue.prototype.$mount = function (
 
   /* istanbul ignore if */
   if (el === document.body || el === document.documentElement) {
-     true && warn(
+    true && warn(
       "Do not mount Vue to <html> or <body> - mount to normal elements instead."
     );
     return this
@@ -29343,7 +29407,7 @@ Vue.prototype.$mount = function (
         if (template.charAt(0) === '#') {
           template = idToTemplate(template);
           /* istanbul ignore if */
-          if ( true && !template) {
+          if (true && !template) {
             warn(
               ("Template element not found or is empty: " + (options.template)),
               this
@@ -29363,7 +29427,7 @@ Vue.prototype.$mount = function (
     }
     if (template) {
       /* istanbul ignore if */
-      if ( true && config.performance && mark) {
+      if (true && config.performance && mark) {
         mark('compile');
       }
 
@@ -29379,7 +29443,7 @@ Vue.prototype.$mount = function (
       options.staticRenderFns = staticRenderFns;
 
       /* istanbul ignore if */
-      if ( true && config.performance && mark) {
+      if (true && config.performance && mark) {
         mark('compile end');
         measure(("vue " + (this._name) + " compile"), 'compile', 'compile end');
       }
@@ -29578,7 +29642,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAArCAYAAADL
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M13 16l-6-6 6-6"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\attach-left.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M13 16l-6-6 6-6"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/attach-left.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29589,7 +29653,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M5.5 1l9 9-9 9"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\attach-right.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M5.5 1l9 9-9 9"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/attach-right.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29600,7 +29664,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#fff","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#4e6476"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005z"}})]),_c('path',{attrs:{"d":"M45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\black-brush.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#fff","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#4e6476"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005z"}})]),_c('path',{attrs:{"d":"M45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/black-brush.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29611,7 +29675,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M16 16L4 4M16 4L4 16"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\close.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M16 16L4 4M16 4L4 16"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/close.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29622,7 +29686,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\definitions.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/definitions.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29633,7 +29697,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 25 21"}},[_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\inflections.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 25 21"}},[_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/inflections.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29644,7 +29708,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\info.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/info.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29655,7 +29719,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"9.997","cy":"10","r":"3.31"}}),_c('path',{attrs:{"fill":"none","d":"M18.488 12.285l-2.283 3.952c-.883-.741-2.02-.956-2.902-.446-.875.498-1.256 1.582-1.057 2.709H7.735c.203-1.126-.182-2.201-1.051-2.709-.883-.521-2.029-.299-2.911.446L1.5 12.285c1.073-.414 1.817-1.286 1.817-2.294-.012-1.011-.744-1.87-1.817-2.275l2.265-3.932c.88.732 2.029.954 2.922.448.868-.51 1.252-1.595 1.048-2.732h4.528c-.191 1.137.178 2.21 1.051 2.72.892.51 2.029.296 2.911-.426l2.262 3.92c-1.083.403-1.826 1.274-1.817 2.295.002 1.009.745 1.871 1.818 2.276z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\options.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"9.997","cy":"10","r":"3.31"}}),_c('path',{attrs:{"fill":"none","d":"M18.488 12.285l-2.283 3.952c-.883-.741-2.02-.956-2.902-.446-.875.498-1.256 1.582-1.057 2.709H7.735c.203-1.126-.182-2.201-1.051-2.709-.883-.521-2.029-.299-2.911.446L1.5 12.285c1.073-.414 1.817-1.286 1.817-2.294-.012-1.011-.744-1.87-1.817-2.275l2.265-3.932c.88.732 2.029.954 2.922.448.868-.51 1.252-1.595 1.048-2.732h4.528c-.191 1.137.178 2.21 1.051 2.72.892.51 2.029.296 2.911-.426l2.262 3.92c-1.083.403-1.826 1.274-1.817 2.295.002 1.009.745 1.871 1.818 2.276z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/options.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29666,7 +29730,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 24 24"}},[_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\resources.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 24 24"}},[_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/resources.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29677,7 +29741,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1792 1248v320q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H960v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H736q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H320v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H96q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960q0-52 38-90t90-38h512V640h-96q-40 0-68-28t-28-68V224q0-40 28-68t68-28h320q40 0 68 28t28 68v320q0 40-28 68t-68 28h-96v192h512q52 0 90 38t38 90v192h96q40 0 68 28t28 68z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\sitemap.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1792 1248v320q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H960v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H736q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H320v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H96q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960q0-52 38-90t90-38h512V640h-96q-40 0-68-28t-28-68V224q0-40 28-68t68-28h320q40 0 68 28t28 68v320q0 40-28 68t-68 28h-96v192h512q52 0 90 38t38 90v192h96q40 0 68 28t28 68z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/sitemap.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29688,7 +29752,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\status.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/status.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29699,7 +29763,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#4e6476","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#fff"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005zM45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('g',[_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\white-brush.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#4e6476","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#fff"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005zM45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('g',[_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])])])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/white-brush.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -29779,50 +29843,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UIController; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var alpheios_morph_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-morph-client */ "alpheios-morph-client");
-/* harmony import */ var alpheios_morph_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_morph_client__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var alpheios_lexicon_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-lexicon-client */ "alpheios-lexicon-client");
-/* harmony import */ var alpheios_lexicon_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_lexicon_client__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var alpheios_res_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-res-client */ "alpheios-res-client");
-/* harmony import */ var alpheios_res_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_res_client__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var alpheios_lemma_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alpheios-lemma-client */ "alpheios-lemma-client");
-/* harmony import */ var alpheios_lemma_client__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alpheios_lemma_client__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alpheios-inflection-tables */ "alpheios-inflection-tables");
-/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue-components/panel.vue */ "./vue-components/panel.vue");
-/* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue-components/popup.vue */ "./vue-components/popup.vue");
-/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_11___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_12___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
-var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* global Event */
-
-
-
-
+/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-inflection-tables */ "alpheios-inflection-tables");
+/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../vue-components/panel.vue */ "./vue-components/panel.vue");
+/* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../vue-components/popup.vue */ "./vue-components/popup.vue");
+/* harmony import */ var _l10n_l10n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../l10n/l10n */ "./lib/l10n/l10n.js");
+/* harmony import */ var _locales_locales__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../locales/locales */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../templates/template.htmlf */ "./templates/template.htmlf");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var alpheios_res_client__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! alpheios-res-client */ "alpheios-res-client");
+/* harmony import */ var alpheios_res_client__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(alpheios_res_client__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _queries_resource_query__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../queries/resource-query */ "./lib/queries/resource-query.js");
+/* global Node, Event */
 
 
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
@@ -29841,45 +29879,22 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 const languageNames = new Map([
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_ARABIC, 'Arabic'],
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN, 'Persian'],
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
+
 ])
 
 class UIController {
   /**
    * @constructor
-   * @param {UIStateAPI} state - An object to store a UI state.
-   * @param {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
-   * @param {Object} options - UI controller options, an object with the following props
-   * (if not specified, will be set to default):
-   *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
-   *     {string} textQueryTrigger - what event will start a lexical query on a selected text. Possible values are
-   *     (see custom pointer events library for more details):
-   *         'dblClick' - MouseDblClick pointer event will be used;
-   *         'longTap' - LongTap pointer event will be used;
-   *         genericEvt - if trigger name other than above specified, it will be treated as a GenericEvt pointer event
-   *             with the name of the event being the value of this filed;
-   *             This name will be passed to the GenericEvt pointer event object;
-   *         'none' - do not register any trigger. This will allow a UIController owner to
-   *         register its own custom trigger and listener.
-   *         Default value: 'dblClick'.
-   *     {string} textQuerySelector - an area(s) on a page where a trigger event will start a lexical query. This is
-   *     a standard CSS selector. Default value: 'body'.
+   * @param {UIStateAPI} state - State object for the parent application
+   * @param {Options} options - content options (see `src/setting/content-options-defaults.js`)
+   * @param {Options} resourceOptions - resource options (see `src/setting/language-options-defaults.js`)
+   * @param {Options} uiOptions - UI options (see `src/setting/ui-options-defaults.js`)
    * @param {Object} manifest - parent application info details  (API definition pending)
    * In some environments manifest data may not be available. Then a `{}` default value
    * will be used.
@@ -29892,86 +29907,47 @@ class UIController {
    *                            popupComponent: Vue single file component of a panel element.
    *                              Allows to provide an alternative popup layout
    */
-  constructor (state, storageAdapter, options = {}, manifest = {}, template = {}) {
+  constructor (state, options, resourceOptions, uiOptions, manifest = {}, template = {}) {
     this.state = state
-    this.storageAdapter = storageAdapter
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__, this.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__, this.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__, this.storageAdapter)
-    this.siteOptions = null // Will be set during an `init` phase
-
-    // Default values for options
-    const optionsDefaults = {
-      openPanel: this.uiOptions.items.panelOnActivate.currentValue,
-      textQueryTrigger: 'dblClick',
-      textQuerySelector: 'body',
-      uiTypePanel: 'panel',
-      uiTypePopup: 'popup',
-      verboseMode: 'verbose',
-      enableLemmaTranslations: false
-    }
-
-    this.options = Object.assign({}, optionsDefaults, options)
-
+    this.options = options
+    this.resourceOptions = resourceOptions
+    this.uiOptions = uiOptions
+    this.settings = UIController.settingValues
     this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.manifest = manifest
     const templateDefaults = {
-      html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_13___default.a,
+      html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default.a,
       panelId: 'alpheios-panel',
       panelComponents: {
-        panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+        panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
       },
       defaultPanelComponent: 'panel',
       popupId: 'alpheios-popup',
       popupComponents: {
-        popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+        popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
       },
       defaultPopupComponent: 'popup',
       draggable: true,
       resizable: true
     }
     this.template = Object.assign(templateDefaults, template)
-    this.isInitialized = false
-    this.isActivated = false
-    this.isDeactivated = false
-
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
-  }
 
-  static get defaults () {
-    return {
-      irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size'
-    }
-  }
+    this.zIndex = this.getZIndexMax()
 
-  async init () {
-    if (this.isInitialized) { return `Already initialized` }
-    // Start loading options as early as possible
-    let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
-    this.siteOptions = this.loadSiteOptions()
-
-    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_21__["default"].getZIndexMax()
-
-    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_9__["default"]()
-      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_11__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_US)
-      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_12__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_GB)
-      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_US)
-
-    // Will add morph adapter options to the `options` object of UI controller constructor as needed.
-    this.maAdapter = new alpheios_morph_client__WEBPACK_IMPORTED_MODULE_1__["AlpheiosTuftsAdapter"]() // Morphological analyzer adapter, with default arguments
+    this.l10n = new _l10n_l10n__WEBPACK_IMPORTED_MODULE_5__["default"]()
+      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__, _locales_locales__WEBPACK_IMPORTED_MODULE_6__["default"].en_US)
+      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__, _locales_locales__WEBPACK_IMPORTED_MODULE_6__["default"].en_GB)
+      .setLocale(_locales_locales__WEBPACK_IMPORTED_MODULE_6__["default"].en_US)
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
     container.outerHTML = this.template.html
-
-    await Promise.all(optionLoadPromises)
-    // All options shall be loaded at this point. Can initialize Vue components that will use them
-
     // Initialize components
-    this.panel = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_6___default.a({
+    this.panel = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_2___default.a({
       el: `#${this.template.panelId}`,
       components: this.template.panelComponents,
       data: {
@@ -29985,7 +29961,7 @@ class UIController {
             info: true,
             treebank: false
           },
-          verboseMode: this.options.verboseMode,
+          verboseMode: this.state.verboseMode,
           grammarAvailable: false,
           grammarRes: {},
           lexemes: [],
@@ -30026,7 +30002,7 @@ class UIController {
             selectedText: '',
             languageName: ''
           },
-          settings: this.contentOptions.items,
+          settings: this.options.items,
           treebankComponentData: {
             data: {
               word: {},
@@ -30045,7 +30021,7 @@ class UIController {
           l10n: this.l10n
         },
         state: this.state,
-        options: this.contentOptions,
+        options: this.options,
         resourceOptions: this.resourceOptions,
         currentPanelComponent: this.template.defaultPanelComponent,
         uiController: this,
@@ -30184,9 +30160,9 @@ class UIController {
 
         requestGrammar: function (feature) {
           // ExpObjMon.track(
-          _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].create(feature, {
+          _queries_resource_query__WEBPACK_IMPORTED_MODULE_11__["default"].create(feature, {
             uiController: this.uiController,
-            grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_3__["Grammars"]
+            grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_10__["Grammars"]
           }).getData()
           //, {
           // experience: 'Get resource',
@@ -30261,8 +30237,25 @@ class UIController {
       }
     })
 
+    this.options.load(() => {
+      this.resourceOptions.load(() => {
+        this.uiOptions.load(() => {
+          this.state.activateUI()
+          console.log('UI options are loaded')
+          document.body.dispatchEvent(new Event('Alpheios_Options_Loaded'))
+
+          const currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(this.options.items.preferredLanguage.currentValue)
+          this.options.items.lookupLangOverride.setValue(false)
+          this.updateLanguage(currentLanguageID)
+          this.updateVerboseMode()
+          this.updateLemmaTranslations()
+          this.notifyInflectionBrowser()
+        })
+      })
+    })
+
     // Create a Vue instance for a popup
-    this.popup = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_6___default.a({
+    this.popup = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_2___default.a({
       el: `#${this.template.popupId}`,
       components: this.template.popupComponents,
       data: {
@@ -30306,8 +30299,8 @@ class UIController {
           component to identify a new request coming in and to distinguish it from data updates of the current request.
            */
           requestStartTime: 0,
-          settings: this.contentOptions.items,
-          verboseMode: this.options.verboseMode,
+          settings: this.options.items,
+          verboseMode: this.state.verboseMode,
           defDataReady: false,
           hasTreebank: false,
           inflDataReady: this.inflDataReady,
@@ -30337,7 +30330,7 @@ class UIController {
           }
         },
         panel: this.panel,
-        options: this.contentOptions,
+        options: this.options,
         resourceOptions: this.resourceOptions,
         currentPopupComponent: this.template.defaultPopupComponent,
         uiController: this,
@@ -30520,95 +30513,68 @@ class UIController {
 
     // Set initial values of components
     this.setRootComponentClasses()
+  }
 
-    const currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
-    this.contentOptions.items.lookupLangOverride.setValue(false)
-    this.updateLanguage(currentLanguageID)
-    this.updateVerboseMode()
-    this.updateLemmaTranslations()
-    this.notifyInflectionBrowser()
+  static get defaults () {
+    return {
+      irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size'
+    }
+  }
 
-    this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
-
-    this.isInitialized = true
-
-    return this
+  static get settingValues () {
+    return {
+      uiTypePanel: 'panel',
+      uiTypePopup: 'popup',
+      verboseMode: 'verbose',
+      enableLemmaTranslations: false
+    }
   }
 
   /**
-   * Activates a UI controller. If `deactivate()` method unloads some resources, we should restore them here.
-   * @returns {Promise<UIController>}
+   * Finds a maximal z-index value of elements on a page.
+   * @return {Number}
    */
-  async activate () {
-    if (this.isActivated) { return `Already activated` }
-    if (this.state.isDisabled()) { return `UI controller is disabled` }
+  getZIndexMax (zIndexDefualt = 2000) {
+    let startTime = new Date().getTime()
+    let zIndex = this.zIndexRecursion(document.querySelector('body'), Number.NEGATIVE_INFINITY)
+    let timeDiff = new Date().getTime() - startTime
+    console.log(`Z-index max value is ${zIndex}, calculation time is ${timeDiff} ms`)
 
-    if (!this.isInitialized) { await this.init() }
-
-    // Activate listeners
-    if (this.options.textQueryTrigger !== 'none') { this.addTextQueryListener(this.options.textQueryTrigger, this.options.textQuerySelector) }
-    document.addEventListener('keydown', this.handleEscapeKey.bind(this))
-    document.body.addEventListener('Alpheios_Page_Load', this.updateAnnotations.bind(this))
-
-    this.state.activateUI()
-
-    // Update panel on activation
-    if (this.options.openPanel && !this.panel.isOpen()) {
-      /**
-       * Without this, the panel will close immediately after opening.
-       * Probably this is a matter of timing between state updates.
-       * Shall be solved during state refactoring.
-       */
-      setTimeout(() => this.panel.open(), 0)
-    }
-    this.isActivated = true
-    this.isDeactivated = false
-    this.state.activate()
-
-    return this
-  }
-
-  addTextQueryListener (trigger, selector = 'body') {
-    if (trigger === 'dblClick') {
-      _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"].listen(selector, evt => this.getSelectedText(evt))
-    } else if (trigger === 'longTap') {
-      _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"].listen(selector, evt => this.getSelectedText(evt))
+    if (zIndex >= zIndexDefualt) {
+      if (zIndex < Number.POSITIVE_INFINITY) { zIndex++ } // To be one level higher that the highest element on a page
     } else {
-      _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"].listen(selector, (evt) => this.getSelectedText(evt), trigger)
+      zIndex = zIndexDefualt
     }
+
+    return zIndex
   }
 
   /**
-   * Deactivates a UI controller. May unload some resources to preserve memory.
-   * In this case an `activate()` method will be responsible for restoring them.
-   * @returns {Promise<UIController>}
+   * A recursive function that iterates over all elements on a page searching for a highest z-index.
+   * @param {Node} element - A root page element to start scan with (usually `body`).
+   * @param {Number} zIndexMax - A current highest z-index value found.
+   * @return {Number} - A current highest z-index value.
    */
-  async deactivate () {
-    if (this.isDeactivated) { return `Already deactivated` }
-
-    // TODO: probably need to remove event listeners here
-
-    this.popup.close()
-    this.panel.close()
-    this.isActivated = false
-    this.isDeactivated = true
-    this.state.deactivate()
-
-    return this
-  }
-
-  /**
-   * Load site-specific settings
-   */
-  loadSiteOptions () {
-    let allSiteOptions = []
-    for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_17__) {
-      for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](domain, this.storageAdapter)
-        allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
+  zIndexRecursion (element, zIndexMax) {
+    if (element) {
+      let zIndexValues = [
+        window.getComputedStyle(element).getPropertyValue('z-index'), // If z-index defined in CSS rules
+        element.style.getPropertyValue('z-index') // If z-index is defined in an inline style
+      ]
+      for (const zIndex of zIndexValues) {
+        if (zIndex && zIndex !== 'auto') {
+          // Value has some numerical z-index value
+          zIndexMax = Math.max(zIndexMax, zIndex)
+        }
+      }
+      for (let node of element.childNodes) {
+        let nodeType = node.nodeType
+        if (nodeType === Node.ELEMENT_NODE || nodeType === Node.DOCUMENT_NODE || nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+          zIndexMax = this.zIndexRecursion(node, zIndexMax)
+        }
       }
     }
-    return allSiteOptions
+    return zIndexMax
   }
 
   static hasRegularBaseFontSize () {
@@ -30688,7 +30654,7 @@ class UIController {
 
   newLexicalRequest (languageID) {
     this.popup.newLexicalRequest()
-    this.panel.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_5__["ViewSetFactory"].hasInflectionsEnabled(languageID)
+    this.panel.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__["ViewSetFactory"].hasInflectionsEnabled(languageID)
     this.panel.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
     this.panel.panelData.grammarAvailable = false
     this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
@@ -30810,19 +30776,19 @@ class UIController {
 
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID)
 
-    vue_dist_vue__WEBPACK_IMPORTED_MODULE_6___default.a.set(this.popup.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID))
+    vue_dist_vue__WEBPACK_IMPORTED_MODULE_2___default.a.set(this.popup.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID))
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
   updateVerboseMode () {
-    this.state.setItem('verboseMode', this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
-    this.panel.panelData.verboseMode = this.options.verboseMode
-    this.popup.popupData.verboseMode = this.options.verboseMode
+    this.state.setItem('verboseMode', this.options.items.verboseMode.currentValue === this.settings.verboseMode)
+    this.panel.panelData.verboseMode = this.state.verboseMode
+    this.popup.popupData.verboseMode = this.state.verboseMode
   }
 
   updateLemmaTranslations () {
-    if (this.contentOptions.items.enableLemmaTranslations.currentValue && !this.contentOptions.items.locale.currentValue.match(/en-/)) {
-      this.state.setItem('lemmaTranslationLang', this.contentOptions.items.locale.currentValue)
+    if (this.options.items.enableLemmaTranslations.currentValue && !this.options.items.locale.currentValue.match(/en-/)) {
+      this.state.setItem('lemmaTranslationLang', this.options.items.locale.currentValue)
     } else {
       this.state.setItem('lemmaTranslationLang', null)
     }
@@ -30833,7 +30799,7 @@ class UIController {
   }
 
   updateInflections (homonym) {
-    this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_5__["ViewSetFactory"].create(homonym, this.contentOptions.items.locale.currentValue)
+    this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_1__["ViewSetFactory"].create(homonym, this.options.items.locale.currentValue)
 
     this.panel.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet
     if (this.inflectionsViewSet.hasMatchingViews) {
@@ -30867,7 +30833,7 @@ class UIController {
   }
 
   open () {
-    if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
+    if (this.options.items.uiType.currentValue === this.settings.uiTypePanel) {
       this.panel.open()
     } else {
       if (this.panel.isOpen) { this.panel.close() }
@@ -30947,86 +30913,137 @@ class UIController {
     // Update skin name in classes
     this.setRootComponentClasses()
   }
+}
 
-  getSelectedText (event) {
-    if (this.state.isActive() && this.state.uiIsActive()) {
-      /*
-      TextSelector conveys text selection information. It is more generic of the two.
-      HTMLSelector conveys page-specific information, such as location of a selection on a page.
-      It's probably better to keep them separated in order to follow a more abstract model.
-       */
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_20__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
-      let textSelector = htmlSelector.createTextSelector()
 
-      if (!textSelector.isEmpty()) {
-        // TODO: disable experience monitor as it might cause memory leaks
-        /* ExpObjMon.track(
-          LexicalQuery.create(textSelector, {
-            htmlSelector: htmlSelector,
-            uiController: this.ui,
-            maAdapter: this.maAdapter,
-            lexicons: Lexicons,
-            resourceOptions: this.resourceOptions,
-            siteOptions: [],
-            lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.contentOptions.items.locale.currentValue } : null,
-            langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-          }),
-          {
-            experience: 'Get word data',
-            actions: [
-              { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
-              { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
-            ]
-          })
-          .getData() */
+/***/ }),
 
-        _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create(textSelector, {
-          htmlSelector: htmlSelector,
-          uiController: this,
-          maAdapter: this.maAdapter,
-          lexicons: alpheios_lexicon_client__WEBPACK_IMPORTED_MODULE_2__["Lexicons"],
-          resourceOptions: this.resourceOptions,
-          siteOptions: [],
-          lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: alpheios_lemma_client__WEBPACK_IMPORTED_MODULE_4__["LemmaTranslations"], locale: this.contentOptions.items.locale.currentValue } : null,
-          langOpts: { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-        }).getData()
+/***/ "./lib/controllers/ui-state.js":
+/*!*************************************!*\
+  !*** ./lib/controllers/ui-state.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UIStateAPI; });
+/**
+ * Interface for a State Object to manage Alpheios UI State
+ */
+class UIStateAPI {
+  constructor () {
+    /**
+     * A language of a latest lexical query
+     * @type {Language}
+     */
+    this.selectionLang = undefined
+
+    this.watchers = new Map()
+  }
+
+  static get statuses () {
+    return {
+      script: {
+        PENDING: Symbol.for('Alpheios_Status_Pending'), // Script has not been fully initialized yet
+        ACTIVE: Symbol.for('Alpheios_Status_Active'), // Script is loaded and active
+        DEACTIVATED: Symbol.for('Alpheios_Status_Deactivated'), // Script has been loaded, but is deactivated
+        DISABLED: Symbol.for('Alpheios_Status_Disabled') // Script has been loaded, but it is disabled
+      },
+      panel: {
+        OPEN: Symbol.for('Alpheios_Status_PanelOpen'), // Panel is open
+        CLOSED: Symbol.for('Alpheios_Status_PanelClosed') // Panel is closed
       }
     }
   }
 
   /**
-   * Check to see if Lemma Translations should be enabled for a query
-   *  NB this is Prototype functionality
+   * SetItem provides a monitored way to change a TabScript state. If value is assigned to a data property directly
+   * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
+   * and if there is a watcher function registered for a changed property name,
+   * this function will be called on every property change, passing a changed property name as an argument.
+   * @param key
+   * @param value
+   * @return {UIStateAPI}
    */
-  enableLemmaTranslations (textSelector) {
-    return textSelector.languageID === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN &&
-      this.contentOptions.items.enableLemmaTranslations.currentValue &&
-      !this.contentOptions.items.locale.currentValue.match(/^en-/)
+  setItem (key, value) {
+    this[key] = value
+    if (this.watchers && this.watchers.has(key)) {
+      this.watchers.get(key)(key, this)
+    }
+    return this
   }
 
-  handleEscapeKey (event) {
-    // TODO: Move to keypress as keyCode is deprecated
-    // TODO: Why does it not work on initial panel opening?
-    if (event.keyCode === 27 && this.state.isActive()) {
-      if (this.state.isPanelOpen()) {
-        this.panel.close()
-      } else if (this.popup.visible) {
-        this.popup.close()
-      }
-    }
-    return true
-  }
   /**
-   * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
+   * Sets a watcher function that is called every time a property is changed using a setItem() method.
+   * @param {String} property - A name of a property that should be monitored
+   * @param {Function} watchFunc - A function that will be called every time a property changes
+   * @return {UIStateAPI} Reference to self for chaining
    */
-  updateAnnotations () {
-    if (this.state.isActive() && this.state.uiIsActive()) {
-      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].create({
-        uiController: this,
-        document: document,
-        siteOptions: this.siteOptions
-      }).getData()
-    }
+  setWatcher (property, watchFunc) {
+    this.watchers.set(property, watchFunc)
+    return this
+  }
+
+  /**
+   * Check if the state of the panel is open
+   * @return {boolean} true if open false if closed
+   */
+  isPanelOpen () {
+    return false
+  }
+
+  /**
+   * Check if the state of the panel is closed
+   * @return {boolean} true if closed false if open
+   */
+  isPanelClosed () {
+    return false
+  }
+
+  /**
+   * Set the state of the panel to open
+   * @return {UIStateAPI} the updated state object
+   */
+  setPanelOpen () {
+    console.log('setPanelOpen is not implemented')
+    return this
+  }
+
+  /**
+   * Set the state of the panel to closed
+   * @return {UIStateAPI} the updated state object
+   */
+  setPanelClosed () {
+    console.log('setPanelClosed is not implemented')
+    return this
+  }
+
+  /**
+   * Check if the state of the UI is active (i.e. fully loaded and ready to use)
+   * @return {boolean} true if active false if not
+   */
+  uiIsActive () {
+    return false
+  }
+
+  /**
+   * Set the state of the UI to active (i.e. fully loaded and ready to use)
+   * @return {IState} the updated state object
+   */
+  activateUI () {
+    console.log('activateUI is not implemented')
+    return this
+  }
+
+  /**
+   * Set the currently active panel tab
+   * @param {String} tabName name of the tab
+   * @return {UIStateAPI} the updated state object
+   */
+  changeTab (tabName) {
+    console.log('changeTab is not implemented')
+    return this
   }
 }
 
@@ -32276,21 +32293,19 @@ class Options {
    *    {Object} items - An object that represents options that are exposed to the user. Each property is an option name.
    * @param {Function<StorageAdapter>} StorageAdapter - A storage adapter implementation
    */
-  constructor (defaults, StorageAdapter) {
-    if (!defaults || !defaults.domain || !defaults.items) {
+  constructor (defaults = null, StorageAdapter = null) {
+    if (defaults !== null && (!defaults.domain || !defaults.items)) {
       throw new Error(`Defaults have no obligatory "domain" and "items" properties`)
     }
-    if (!StorageAdapter) {
-      throw new Error(`No storage adapter implementation provided`)
+    // if defaults aren't provided, properties need to be initialized separately
+    if (defaults !== null && StorageAdapter !== null) {
+      this.storageAdapter = new StorageAdapter(defaults.domain)
+      this.domain = defaults.domain
+      for (const key of Object.keys(defaults)) {
+        this[key] = defaults[key]
+      }
+      this.items = Options.initItems(this.items, this.storageAdapter)
     }
-
-    this.defaults = defaults
-    this.domain = defaults.domain
-    this.storageAdapter = new StorageAdapter(defaults.domain)
-    for (const key of Object.keys(defaults)) {
-      this[key] = defaults[key]
-    }
-    this.items = Options.initItems(this.items, this.storageAdapter)
   }
 
   static initItems (defaults, storageAdapter) {
@@ -32314,7 +32329,7 @@ class Options {
    * @return {Options} the cloned Options object
    */
   clone (StorageAdapter) {
-    let obj = new Options(this.defaults, StorageAdapter)
+    let obj = new Options(null, null)
     obj.storageAdapter = new StorageAdapter(this.domain)
     obj.domain = this.domain
     obj.items = {}
@@ -32336,46 +32351,45 @@ class Options {
   }
 
   /**
-   * Loads options from the storage. Returns a promise that is resolved if options are loaded
-   * successfully and that is rejectd if there was an error retrieving them.
-   * @returns {Promise<Options>}
+   * Will always return a resolved promise.
    */
-  async load () {
-    try {
-      let values = await this.storageAdapter.get()
-      for (let key in values) {
-        if (this.items.hasOwnProperty(key)) {
-          let value
-          try {
-            value = JSON.parse(values[key])
-          } catch (e) {
-            // backwards compatibility
-            value = values[key]
-          }
-          this.items[key].currentValue = value
-        } else {
-          let keyinfo = this.parseKey(key)
-          if (this.items.hasOwnProperty(keyinfo.setting)) {
-            this.items[keyinfo.setting].forEach((f) => {
-              if (f.name === key) {
-                try {
-                  f.currentValue = JSON.parse(values[key])
-                } catch (e) {
-                  // backwards compatibility
-                  f.currentValue = values[key]
+  load (callbackFunc) {
+    this.storageAdapter.get().then(
+      values => {
+        for (let key in values) {
+          if (this.items.hasOwnProperty(key)) {
+            let value
+            try {
+              value = JSON.parse(values[key])
+            } catch (e) {
+              // backwards compatibility
+              value = values[key]
+            }
+            this.items[key].currentValue = value
+          } else {
+            let keyinfo = this.parseKey(key)
+            if (this.items.hasOwnProperty(keyinfo.setting)) {
+              this.items[keyinfo.setting].forEach((f) => {
+                if (f.name === key) {
+                  try {
+                    f.currentValue = JSON.parse(values[key])
+                  } catch (e) {
+                    // backwards compatibility
+                    f.currentValue = values[key]
+                  }
                 }
-              }
-            })
+              })
+            }
           }
         }
+        callbackFunc(this)
+      },
+      error => {
+        console.error(`Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values
+          will be used instead`, error)
+        callbackFunc(this)
       }
-      return this
-    } catch (error) {
-      let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values ` +
-      `will be used instead`
-      console.error(message)
-      throw new Error(message)
-    }
+    )
   }
 
   /**
@@ -32488,7 +32502,7 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["
    * successfully. If at least on save operation fails, returns a rejected promise with an error information.
    */
   set (keysObject) {
-    return new Promise((resolve) => { resolve(`TempStorageArea does not store any values permanently`) })
+    return new Promise((resolve, reject) => {})
   }
 
   /**
@@ -32502,7 +32516,7 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   get (keys = undefined) {
-    return new Promise((resolve) => { resolve(`TempStorageArea does not have any stored values`) })
+    return new Promise((resolve, reject) => {})
   }
 }
 
@@ -33847,558 +33861,6 @@ class TextQuoteSelector {
 
 /***/ }),
 
-/***/ "./lib/state/tab-script.js":
-/*!*********************************!*\
-  !*** ./lib/state/tab-script.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TabScript; });
-/* harmony import */ var _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/state/ui-state-api.js */ "./lib/state/ui-state-api.js");
-/* harmony import */ var _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/state/tab.js */ "./lib/state/tab.js");
-
-
-/**
- * Contains a state of a tab (page) content script.
- * @property {Number} tabID - An ID of a tab where the content script is loaded
- * @property {Symbol} status - A status of a current script (Active, Deactivated, Pending)
- * @property {panelStatus} panelStatus
- */
-class TabScript extends _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor (tabObj) {
-    super()
-    this.tabID = tabObj ? tabObj.uniqueId : undefined
-    this.tabObj = tabObj
-    this.status = undefined
-    this.panelStatus = undefined
-    this.tab = undefined
-    this.savedStatus = undefined
-    this.uiActive = false
-
-    this.watchers = new Map()
-  }
-
-  updateTabObject (tabId, windowId) {
-    this.tabObj = new _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_1__["default"](tabId, windowId)
-    this.tabID = this.tabObj.uniqueId
-    return this
-  }
-
-  deattach () {
-    this.tabObj.deattach()
-  }
-
-  attach (newWinId) {
-    this.tabObj.attach(newWinId)
-  }
-
-  get isDeattached () {
-    return this.tabObj.isDeattached
-  }
-
-  static get propTypes () {
-    return {
-      NUMERIC: Symbol('Numeric'),
-      STRING: Symbol('String'),
-      SYMBOL: Symbol('Symbol')
-    }
-  }
-
-  static get props () {
-    return {
-      status: {
-        name: 'status',
-        valueType: TabScript.propTypes.SYMBOL,
-        values: {
-          PENDING: Symbol.for('Alpheios_Status_Pending'), // Content script has not been fully initialized yet
-          ACTIVE: Symbol.for('Alpheios_Status_Active'), // Content script is loaded and active
-          DEACTIVATED: Symbol.for('Alpheios_Status_Deactivated'), // Content script has been loaded, but is deactivated
-          DISABLED: Symbol.for('Alpheios_Status_Disabled') // Content script has been loaded, but it is disabled
-        },
-        defaultValueIndex: 0
-      },
-      savedStatus: {
-        name: 'savedStatus',
-        valueType: Boolean
-      },
-      panelStatus: {
-        name: 'panelStatus',
-        valueType: TabScript.propTypes.SYMBOL,
-        values: {
-          OPEN: Symbol.for('Alpheios_Status_PanelOpen'), // Panel is open
-          CLOSED: Symbol.for('Alpheios_Status_PanelClosed') // Panel is closed
-        },
-        defaultValueIndex: 1
-      },
-      tab: {
-        name: 'tab',
-        valueType: TabScript.propTypes.STRING,
-        values: {
-          INFO: 'info'
-        },
-        defaultValueIndex: 0
-      },
-      uiActive: {
-        name: 'uiActive',
-        valueType: Boolean
-      }
-    }
-  }
-
-  static get symbolProps () {
-    return [TabScript.props.status.name, TabScript.props.panelStatus.name]
-  }
-
-  static get stringProps () {
-    return [TabScript.props.tab.name]
-  }
-
-  static get booleanProps () {
-    return [TabScript.props.savedStatus.name]
-  }
-
-  /**
-   * Only certain features will be stored within a serialized version of a TabScript. This is done
-   * to prevent context-specific features (such as local event handlers) to be passed over the network
-   * to a different context where they would make no sense. This getter returns a list of such fields.
-   * @return {String[]}
-   */
-  static get dataProps () {
-    return TabScript.symbolProps.concat(TabScript.stringProps).concat(TabScript.booleanProps)
-  }
-
-  /**
-   * A copy constructor.
-   * @param {TabScript} source - An instance of TabScript object we need to copy.
-   * @return {TabScript} A copy of a source object.
-   */
-  static create (source) {
-    let copy = new TabScript()
-    for (let key of Object.keys(source)) {
-      copy[key] = source[key]
-    }
-    return copy
-  }
-
-  static get defaults () {
-    return {
-      status: TabScript.statuses.script.ACTIVE,
-      panelStatus: TabScript.statuses.panel.OPEN
-    }
-  }
-
-  static get statuses () {
-    return {
-      script: {
-        PENDING: Symbol.for('Alpheios_Status_Pending'), // Content script has not been fully initialized yet
-        ACTIVE: Symbol.for('Alpheios_Status_Active'), // Content script is loaded and active
-        DEACTIVATED: Symbol.for('Alpheios_Status_Deactivated'), // Content script has been loaded, but is deactivated
-        DISABLED: Symbol.for('Alpheios_Status_Disabled') // Content script has been loaded, but it is disabled
-      },
-      panel: {
-        OPEN: Symbol.for('Alpheios_Status_PanelOpen'), // Panel is open
-        CLOSED: Symbol.for('Alpheios_Status_PanelClosed') // Panel is closed
-      }
-    }
-  }
-
-  /**
-   * Sets a watcher function that is called every time a property is changed using a setItem() method.
-   * @param {String} property - A name of a property that should be monitored
-   * @param {Function} watchFunc - A function that will be called every time a property changes
-   * @return {TabScript} Reference to self for chaining
-   */
-  setWatcher (property, watchFunc) {
-    this.watchers.set(property, watchFunc)
-    return this
-  }
-
-  /**
-   * SetItem provides a monitored way to change a TabScript state. If value is assigned to a data property directly
-   * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
-   * and if there is a watcher function registered for a changed property name,
-   * this function will be called on every property change, passing a changed property name as an argument.
-   * @param key
-   * @param value
-   * @return {TabScript}
-   */
-  setItem (key, value) {
-    this[key] = value
-    if (this.watchers && this.watchers.has(key)) {
-      this.watchers.get(key)(key, this)
-    }
-    return this
-  }
-
-  isPanelOpen () {
-    return this.panelStatus === TabScript.statuses.panel.OPEN
-  }
-
-  isPanelClosed () {
-    return this.panelStatus === TabScript.statuses.panel.CLOSED
-  }
-
-  setPanelOpen () {
-    this.setItem('panelStatus', TabScript.statuses.panel.OPEN)
-    return this
-  }
-
-  setPanelClosed () {
-    this.setItem('panelStatus', TabScript.statuses.panel.CLOSED)
-    return this
-  }
-
-  hasSameID (tabID) {
-    return Symbol.keyFor(this.tabID) === Symbol.keyFor(tabID)
-  }
-
-  isActive () {
-    return this.status === TabScript.statuses.script.ACTIVE
-  }
-
-  isDeactivated () {
-    return this.status === TabScript.statuses.script.DEACTIVATED
-  }
-
-  isDisabled () {
-    return this.status === TabScript.statuses.script.DISABLED
-  }
-
-  uiIsActive () {
-    return this[TabScript.props.uiActive.name]
-  }
-
-  activate () {
-    this.status = TabScript.statuses.script.ACTIVE
-    return this
-  }
-
-  deactivate () {
-    this.status = TabScript.statuses.script.DEACTIVATED
-    return this
-  }
-
-  disable () {
-    this.status = TabScript.statuses.script.DISABLED
-    return this
-  }
-
-  save () {
-    this.savedStatus = this.status
-    return this
-  }
-
-  restore () {
-    if (this.savedStatus) {
-      this.status = this.savedStatus
-      this.savedStatus = undefined
-    }
-    return this
-  }
-
-  activateUI () {
-    this.setItem(TabScript.props.uiActive.name, true)
-    return this
-  }
-
-  changeTab (tabName) {
-    this.setItem(TabScript.props.tab.name, tabName)
-    return this
-  }
-
-  update (source) {
-    for (let key of Object.keys(source)) {
-      if (source[key]) {
-        this[key] = source[key]
-      }
-    }
-    return this
-  }
-
-  diff (state) {
-    let diff = {
-      _changedKeys: [],
-      _changedEntries: []
-    }
-
-    // Check if there are any differences in tab IDs
-
-    if (this.tabID !== state.tabID) {
-      diff.tabID = state.tabID
-      diff['_changedKeys'].push('tabID')
-      diff['_changedEntries'].push(['tabID', state.tabID])
-    }
-
-    for (let key of Object.keys(state)) {
-      // Build diffs only for data properties
-      if (TabScript.dataProps.includes(key)) {
-        if (this.hasOwnProperty(key)) {
-          if (this[key] !== state[key]) {
-            diff[key] = state[key]
-            diff['_changedKeys'].push(key)
-            diff['_changedEntries'].push([key, state[key]])
-          }
-        } else {
-          console.warn(`TabScript has no property named "${key}"`)
-        }
-      }
-    }
-
-    diff.keys = function () {
-      return diff['_changedKeys']
-    }
-
-    diff.entries = function () {
-      return diff['_changedEntries']
-    }
-
-    diff.has = function (prop) {
-      return diff._changedKeys.includes(prop)
-    }
-
-    diff.isEmpty = function () {
-      return !diff._changedKeys.length
-    }
-    return diff
-  }
-
-  /**
-   * Creates a serializable copy of a source object. Firefox uses the structured clone algorithm
-   * (https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) to serialize objects.
-   * Requirements of this algorithm are that a serializable object to have no Function or Error properties,
-   * neither any DOM Nodes. That's why an empty serializable object is created and only
-   * selected properties are copied into it.
-   * @param {TabScript} source - An object to be serialized.
-   * @return {Object} A serializable copy of a source.
-   */
-  static serializable (source) {
-    let serializable = {}
-    serializable.tabID = (typeof source.tabID === 'symbol') ? Symbol.keyFor(source.tabID) : source.tabID
-    serializable.tabObj = source.tabObj ? source.tabObj.clone() : undefined
-
-    for (let key of Object.keys(source)) {
-      if (TabScript.dataProps.includes(key)) {
-        /*
-        Only certain features will be stored within a serialized version of a TabScript. This is done
-        to prevent context-specific features (such as local event handlers) to be passed over the network
-        to a different context where they would make no sense.
-         */
-        let value = source[key]
-        serializable[key] = (typeof value === 'symbol') ? Symbol.keyFor(value) : value
-      }
-    }
-    return serializable
-  }
-
-  static readObject (jsonObject) {
-    let tabObj = (jsonObject.tabObj && jsonObject.tabObj.tabId && jsonObject.tabObj.windowId) ? new _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_1__["default"](jsonObject.tabObj.tabId, jsonObject.tabObj.windowId, jsonObject.tabObj.status) : undefined
-    let tabScript = new TabScript(tabObj)
-
-    for (let prop of TabScript.symbolProps) {
-      if (jsonObject.hasOwnProperty(prop)) {
-        tabScript[prop] = Symbol.for(jsonObject[prop])
-      }
-    }
-
-    for (let prop of TabScript.stringProps) {
-      if (jsonObject.hasOwnProperty(prop)) { tabScript[prop] = jsonObject[prop] }
-    }
-
-    for (let prop of TabScript.booleanProps) {
-      if (jsonObject.hasOwnProperty(prop)) { tabScript[prop] = jsonObject[prop] }
-    }
-    return tabScript
-  }
-}
-
-
-/***/ }),
-
-/***/ "./lib/state/tab.js":
-/*!**************************!*\
-  !*** ./lib/state/tab.js ***!
-  \**************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Tab; });
-class Tab {
-  constructor (tabId, windowId, status) {
-    this.tabId = tabId
-    this.windowId = windowId
-    this.status = 'attached'
-  }
-
-  get uniqueId () {
-    return this.constructor.createUniqueId(this.tabId, this.windowId)
-  }
-
-  get isDeattached () {
-    return this.status === 'deattached'
-  }
-
-  deattach () {
-    this.status = 'deattached'
-  }
-
-  attach (newWinId) {
-    this.windowId = newWinId
-    this.status = 'attached'
-  }
-
-  clone () {
-    return new Tab(this.tabId, this.windowId)
-  }
-
-  compareWithTab (tabObj) {
-    return this.tabId === tabObj.tabId && this.windowId === tabObj.windowId
-  }
-
-  static createUniqueId (tabId, windowId) {
-    return Symbol.for(`Alpheios_tabId:${tabId.toString()},windowId:${windowId.toString()}`)
-  }
-}
-
-
-/***/ }),
-
-/***/ "./lib/state/ui-state-api.js":
-/*!***********************************!*\
-  !*** ./lib/state/ui-state-api.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UIStateAPI; });
-/**
- * Interface for a State Object to manage Alpheios UI State
- */
-class UIStateAPI {
-  constructor () {
-    /**
-     * A language of a latest lexical query
-     * @type {Language}
-     */
-    this.selectionLang = undefined
-
-    this.watchers = new Map()
-  }
-
-  static get statuses () {
-    return {
-      script: {
-        PENDING: Symbol.for('Alpheios_Status_Pending'), // Script has not been fully initialized yet
-        ACTIVE: Symbol.for('Alpheios_Status_Active'), // Script is loaded and active
-        DEACTIVATED: Symbol.for('Alpheios_Status_Deactivated'), // Script has been loaded, but is deactivated
-        DISABLED: Symbol.for('Alpheios_Status_Disabled') // Script has been loaded, but it is disabled
-      },
-      panel: {
-        OPEN: Symbol.for('Alpheios_Status_PanelOpen'), // Panel is open
-        CLOSED: Symbol.for('Alpheios_Status_PanelClosed') // Panel is closed
-      }
-    }
-  }
-
-  /**
-   * SetItem provides a monitored way to change a TabScript state. If value is assigned to a data property directly
-   * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
-   * and if there is a watcher function registered for a changed property name,
-   * this function will be called on every property change, passing a changed property name as an argument.
-   * @param key
-   * @param value
-   * @return {UIStateAPI}
-   */
-  setItem (key, value) {
-    this[key] = value
-    if (this.watchers && this.watchers.has(key)) {
-      this.watchers.get(key)(key, this)
-    }
-    return this
-  }
-
-  /**
-   * Sets a watcher function that is called every time a property is changed using a setItem() method.
-   * @param {String} property - A name of a property that should be monitored
-   * @param {Function} watchFunc - A function that will be called every time a property changes
-   * @return {UIStateAPI} Reference to self for chaining
-   */
-  setWatcher (property, watchFunc) {
-    this.watchers.set(property, watchFunc)
-    return this
-  }
-
-  /**
-   * Check if the state of the panel is open
-   * @return {boolean} true if open false if closed
-   */
-  isPanelOpen () {
-    return false
-  }
-
-  /**
-   * Check if the state of the panel is closed
-   * @return {boolean} true if closed false if open
-   */
-  isPanelClosed () {
-    return false
-  }
-
-  /**
-   * Set the state of the panel to open
-   * @return {UIStateAPI} the updated state object
-   */
-  setPanelOpen () {
-    console.log('setPanelOpen is not implemented')
-    return this
-  }
-
-  /**
-   * Set the state of the panel to closed
-   * @return {UIStateAPI} the updated state object
-   */
-  setPanelClosed () {
-    console.log('setPanelClosed is not implemented')
-    return this
-  }
-
-  /**
-   * Check if the state of the UI is active (i.e. fully loaded and ready to use)
-   * @return {boolean} true if active false if not
-   */
-  uiIsActive () {
-    return false
-  }
-
-  /**
-   * Set the state of the UI to active (i.e. fully loaded and ready to use)
-   * @return {IState} the updated state object
-   */
-  activateUI () {
-    console.log('activateUI is not implemented')
-    return this
-  }
-
-  /**
-   * Set the currently active panel tab
-   * @param {String} tabName name of the tab
-   * @return {UIStateAPI} the updated state object
-   */
-  changeTab (tabName) {
-    console.log('changeTab is not implemented')
-    return this
-  }
-}
-
-
-/***/ }),
-
 /***/ "./lib/utility/comparable.js":
 /*!***********************************!*\
   !*** ./lib/utility/comparable.js ***!
@@ -34421,93 +33883,6 @@ class Comparable {
    */
   static key (object) {
     return `Key: ${Object.values(object).join(' ')}`
-  }
-}
-
-
-/***/ }),
-
-/***/ "./lib/utility/html-page.js":
-/*!**********************************!*\
-  !*** ./lib/utility/html-page.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HTMLPage; });
-/* global Node */
-/**
- * An auxiliary utility class to provide HTML page, window, and document related functionality.
- */
-class HTMLPage {
-  /**
-   * Checks whether the current window has an frames in it.
-   * @returns {boolean}
-   */
-  static get hasFrames () {
-    return (window.frames.length > 0)
-  }
-
-  /**
-   * Checks whether the current window is a frame itself.
-   * @returns {boolean}
-   */
-  static get isFrame () {
-    return (window.self !== window.top)
-  }
-
-  /**
-   * Checks whether the current window is at the top level of window hierarchy.
-   * @returns {boolean}
-   */
-  static get isAtTop () {
-    return (window.self === window.top)
-  }
-
-  /**
-   * Finds a maximal z-index value of elements on a page.
-   * @return {Number}
-   */
-  static getZIndexMax (zIndexDefualt = 2000) {
-    let zIndex = this.zIndexRecursion(document.querySelector('body'), Number.NEGATIVE_INFINITY)
-
-    if (zIndex >= zIndexDefualt) {
-      if (zIndex < Number.POSITIVE_INFINITY) { zIndex++ } // To be one level higher that the highest element on a page
-    } else {
-      zIndex = zIndexDefualt
-    }
-
-    return zIndex
-  }
-
-  /**
-   * A recursive function that iterates over all elements on a page searching for a highest z-index.
-   * @param {Node} element - A root page element to start scan with (usually `body`).
-   * @param {Number} zIndexMax - A current highest z-index value found.
-   * @return {Number} - A current highest z-index value.
-   */
-  static zIndexRecursion (element, zIndexMax) {
-    if (element) {
-      let zIndexValues = [
-        window.getComputedStyle(element).getPropertyValue('z-index'), // If z-index defined in CSS rules
-        element.style.getPropertyValue('z-index') // If z-index is defined in an inline style
-      ]
-      for (const zIndex of zIndexValues) {
-        if (zIndex && zIndex !== 'auto') {
-          // Value has some numerical z-index value
-          zIndexMax = Math.max(zIndexMax, zIndex)
-        }
-      }
-      for (let node of element.childNodes) {
-        let nodeType = node.nodeType
-        if (nodeType === Node.ELEMENT_NODE || nodeType === Node.DOCUMENT_NODE || nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-          zIndexMax = this.zIndexRecursion(node, zIndexMax)
-        }
-      }
-    }
-    return zIndexMax
   }
 }
 
@@ -34568,7 +33943,7 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 /*!*******************!*\
   !*** ./plugin.js ***!
   \*******************/
-/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript */
+/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34600,8 +33975,8 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__P
 /* harmony import */ var _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/controllers/ui-controller.js */ "./lib/controllers/ui-controller.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIController", function() { return _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
-/* harmony import */ var _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/state/ui-state-api.js */ "./lib/state/ui-state-api.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony import */ var _lib_controllers_ui_state_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/controllers/ui-state.js */ "./lib/controllers/ui-state.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return _lib_controllers_ui_state_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
 /* harmony import */ var _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/controllers/language.js */ "./lib/controllers/language.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Language", function() { return _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
@@ -34660,20 +34035,8 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace =
 /* harmony import */ var _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/selection/alignment/alignment-selector.js */ "./lib/selection/alignment/alignment-selector.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlignmentSelector", function() { return _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
 
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLPage", function() { return _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
-
-/* harmony import */ var _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/lib/state/tab.js */ "./lib/state/tab.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tab", function() { return _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
-
-/* harmony import */ var _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/lib/state/tab-script.js */ "./lib/state/tab-script.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TabScript", function() { return _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
-
 // The following import will not probably used by any client directly,
 // but is required to include Scss file specified in there to a MiniCssExtractPlugin bundle
-
-
-
 
 
 
@@ -34732,17 +34095,6 @@ module.exports = {"domain":"alpheios-resource-options","items":{"lexicons":{"lab
 
 /***/ }),
 
-/***/ "./settings/site-options.json":
-/*!************************************!*\
-  !*** ./settings/site-options.json ***!
-  \************************************/
-/*! exports provided: 0, default */
-/***/ (function(module) {
-
-module.exports = [{"uriMatch":"https?://thelatinlibrary.com/caesar/gall1.shtml","options":[{"domain":"alpheios-resource-options","items":{"treebanks":{"labelText":"Treebanks","defaultValue":"http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1","multiValue":false,"values":[{"value":"http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1","test":"Example Site Treebank"}]}}}]}];
-
-/***/ }),
-
 /***/ "./settings/ui-options-defaults.json":
 /*!*******************************************!*\
   !*** ./settings/ui-options-defaults.json ***!
@@ -34772,7 +34124,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @close=\"close\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\n    </component>\n</div>\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @close=\"close\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\n    </component>\n</div>\n";
 
 /***/ }),
 

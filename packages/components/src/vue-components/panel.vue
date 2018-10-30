@@ -37,7 +37,7 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_TREEBANK')" v-show="treebankTabVisible">
+              <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="ln10Messages('TOOLTIP_TREEBANK')" v-show="treebankTabAvailable">
                 <span v-bind:class="{ active: data.tabs.treebank }" @click="changeTab('treebank')"
                       class="alpheios-panel__header-nav-btn">
                   <treebank-icon class="alpheios-icon"></treebank-icon>
@@ -337,16 +337,18 @@
         return this.data.tabs.inflections
       },
 
-      treebankTabPossible: function() {
+      treebankTabAvailable: function() {
         // treebank data is possible if we have it for the word or the page
-        return this.data && (this.data.treebankComponentData.data.page.src || this.data.treebankComponentData.data.word.src) ? true : false
+        return this.data && this.data.treebankComponentData && this.data.treebankComponentData.data && 
+              ((this.data.treebankComponentData.data.page && this.data.treebankComponentData.data.page.src) || 
+               (this.data.treebankComponentData.data.word && this.data.treebankComponentData.data.word.src)) ? true : false
       },
 
       treebankTabVisible: function() {
         // Inform treebank component about visibility state change
-        if (this.data && this.data.treebankComponentData) {
+        if (this.data && this.data.treebankComponentData && this.data.treebankComponentData.data) {
           this.data.treebankComponentData.visible = this.data.tabs.treebank
-        }
+        } 
         return this.data.tabs.treebank
       },
 

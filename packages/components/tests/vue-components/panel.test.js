@@ -665,7 +665,7 @@ describe('panel.test.js', () => {
           grammarRes: {},
           inflectionComponentData: {},
           infoComponentData: {},
-          treebankComponentData: {},
+          treebankComponentData: { data: {} },
           classes: [],
 
           settings: options.items,

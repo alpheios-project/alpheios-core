@@ -7483,38 +7483,38 @@
   border-radius: 17.6px; }
 
 /* panel contents */
-.lex_sense1 {
+.alpheios-lex-lex_sense1, .lex_sense1 {
   margin-left: .5em; }
 
-.lex_sense2 {
+.alpheios-lex-lex_sense2, .lex_sense2 {
   margin-left: 1em; }
 
-.lex_sense3 {
+.alpheios-lex-lex_sense3, .lex_sense3 {
   margin-left: 1.5em; }
 
-.lex_sense4 {
+.alpheios-lex-lex_sense4, .lex_sense4 {
   margin-left: 2em; }
 
-.lex_sense5 {
+.alpheios-lex-lex_sense5, .lex_sense5 {
   margin-left: 2.5em; }
 
-.lex_sense6 {
+.alpheios-lex-lex_sense6, .lex_sense6 {
   margin-left: 3em; }
 
 .alpheios-meaning .alpheios-provider {
   font-style: italic;
   font-size: smaller; }
 
-.sense-separator {
+.alpheios-lex-sense-separator, .sense-separator {
   line-height: 1em; }
 
-.sense-spacer1 {
+.alpheios-lex-sense-spacer1, .sense-spacer1 {
   padding-left: 1em; }
 
-.sense-spacer2 {
+.alpheios-lex-sense-spacer2, .sense-spacer2 {
   padding-left: 3em; }
 
-.alph-source {
+.alpheios-lex-alph-source, .alph-source {
   margin-top: 1em; }
 
 .alph_tooltip {
