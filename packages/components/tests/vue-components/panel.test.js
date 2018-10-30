@@ -306,7 +306,7 @@ describe('panel.test.js', () => {
   })
 
   it('5 Panel - active info tab', () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -334,14 +334,14 @@ describe('panel.test.js', () => {
           treebankComponentData: {},
           classes: [],
 
-          settings: options.items,
+          settings: contentOptions.items,
           resourceSettings: resourceOptions.items
         }
       },
       computed: {
         'uiController': function () {
           return {
-            options: options,
+            contentOptions: contentOptions,
             resourceOptions: resourceOptions
           }
         }
@@ -370,7 +370,7 @@ describe('panel.test.js', () => {
   })
 
   it('6 Panel - active definitions tab', () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -396,14 +396,14 @@ describe('panel.test.js', () => {
           treebankComponentData: {},
           classes: [],
 
-          settings: options.items,
+          settings: contentOptions.items,
           resourceSettings: resourceOptions.items
         }
       },
       computed: {
         'uiController': function () {
           return {
-            options: options,
+            contentOptions: contentOptions,
             resourceOptions: resourceOptions
           }
         }

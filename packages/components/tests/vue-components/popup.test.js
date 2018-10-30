@@ -67,7 +67,7 @@ describe('popup.test.js', () => {
   })
 
   it('2 Popup - render with children components (min requirements)', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Popup, {
@@ -83,7 +83,7 @@ describe('popup.test.js', () => {
       computed: {
         'uiController': function () {
           return {
-            options: options,
+            contentOptions: contentOptions,
             resourceOptions: resourceOptions,
             l10n: l10n
           }
@@ -453,12 +453,12 @@ describe('popup.test.js', () => {
     curProps.data.left = '10vw'
     curProps.data.top = '10vh'
 
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
 
     curProps.data.settings = {}
-    curProps.data.settings.popupPosition = options.items.popupPosition
+    curProps.data.settings.popupPosition = contentOptions.items.popupPosition
     curProps.data.settings.popupPosition.currentValue = 'fixed'
-    curProps.data.settings.preferredLanguage = options.items.preferredLanguage
+    curProps.data.settings.preferredLanguage = contentOptions.items.preferredLanguage
 
     let cmp = mount(Popup, {
       propsData: curProps
@@ -489,12 +489,12 @@ describe('popup.test.js', () => {
     curProps.data.left = '10vw'
     curProps.data.top = '10vh'
 
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
 
     curProps.data.settings = {}
-    curProps.data.settings.popupPosition = options.items.popupPosition
+    curProps.data.settings.popupPosition = contentOptions.items.popupPosition
     curProps.data.settings.popupPosition.currentValue = 'fixed'
-    curProps.data.settings.preferredLanguage = options.items.preferredLanguage
+    curProps.data.settings.preferredLanguage = contentOptions.items.preferredLanguage
 
     let cmp = mount(Popup, {
       propsData: curProps

@@ -45,7 +45,7 @@ describe('options.test.js', () => {
     expect(function () {
       let l = new Options()
       console.log(l)
-    }).not.toThrow(new Error(`Defaults have no obligatory "domain" and "items" properties`))
+    }).toThrow(new Error(`Defaults have no obligatory "domain" and "items" properties`))
   })
 
   it('2 Options - constructor defaults should contain property domain and will throw an error if undefined', () => {
@@ -90,7 +90,7 @@ describe('options.test.js', () => {
     expect(opt.names).toEqual(['locale'])
   })
 
-  it('6 Options - load reload options from storageAdapter and executes callBackFn ', async () => {
+  it('6 Options - load reload options from storageAdapter and returns an instance of Options object', async () => {
     let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-test-options',
@@ -102,10 +102,10 @@ describe('options.test.js', () => {
     let opt = new Options(testDefaults, LocalStorageArea)
 
     let callBackFn = jest.fn(() => { console.log('I am callBackFn') })
-    await opt.load(callBackFn)
+    let returnedOptions = await opt.load(callBackFn)
 
     expect(opt.items.locale6.currentValue).toEqual('Foo')
-    expect(callBackFn).toHaveBeenCalled()
+    expect(returnedOptions).toBeInstanceOf(Options)
   })
 
   it('7 Options - if there is a grouped property in storageAdapter it will be parsed and saved ', async () => {
@@ -143,7 +143,7 @@ describe('options.test.js', () => {
     expect(opt.items.localeN).toBeUndefined()
   })
 
-  it('9 Options - if in load method storageAdapter.get throw a error then console.error will be executed and callBackFn will be executed', async () => {
+  it('9 Options - if in load method storageAdapter.get throw a error', async () => {
     let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
     let testDefaults = {
       domain: 'alpheios-test-options',
@@ -154,18 +154,13 @@ describe('options.test.js', () => {
     window.localStorage.values['alpheios-test-options-keys'] = '["locale6"]'
     window.localStorage.values.locale6 = 'Foo'
     let opt = new Options(testDefaults, LocalStorageArea)
-
-    let callBackFn = jest.fn(() => { console.log('I am callBackFn') })
-
     let testError = new Error('storageAdapter reject error')
 
     opt.storageAdapter.get = function () { return new Promise((resolve, reject) => { reject(testError) }) }
 
-    await opt.load(callBackFn)
-
-    expect(console.error).toHaveBeenCalledWith(`Cannot retrieve options for Alpheios extension from a local storage: ${testError}. Default values
-          will be used instead`, testError)
-    expect(callBackFn).toHaveBeenCalled()
+    await expect(opt.load())
+      .rejects
+      .toThrow(`Cannot retrieve options for Alpheios extension from a local storage: ${testError}. Default values will be used instead`)
   })
 
   it('10 Options - parseKey parses a string to object', () => {

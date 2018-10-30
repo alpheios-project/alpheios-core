@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import UIController from '@/lib/controllers/ui-controller'
-import State from '@/lib/controllers/ui-state'
+import State from '@/lib/state/tab-script.js'
 
 import OptionItem from '@/lib/options/options-item'
 import ResourceQuery from '@/lib/queries/resource-query'
@@ -11,6 +11,7 @@ import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import ContentOptionDefaults from '@/settings/content-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import LocalStorageArea from '@/lib/options/local-storage-area.js'
+import HTMLPage from '@/lib/utility/html-page.js'
 
 import L10n from '@/lib/l10n/l10n'
 import Locales from '@/locales/locales'
@@ -27,20 +28,28 @@ describe('ui-controller.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
-  let uiC, options, resourceOptions, state
+  let uiC, contentOptions, resourceOptions, state
 
-  beforeEach(() => {
+  beforeEach(async (done) => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
     jest.spyOn(Options, 'initItems')
 
     state = new State()
-    options = new Options(ContentOptionDefaults, LocalStorageArea)
+    contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let uiOptions = new Options(UIOptionDefaults, LocalStorageArea)
 
-    uiC = new UIController(state, options, resourceOptions, uiOptions)
+    uiC = new UIController(state, LocalStorageArea, {})
+    uiC.contentOptions = contentOptions
+    uiC.resourceOptions = resourceOptions
+    uiC.uiOptions = uiOptions
+
+    await uiC.init()
+    await uiC.activate()
+
+    done()
   })
   afterEach(() => {
     jest.resetModules()
@@ -58,10 +67,10 @@ describe('ui-controller.test.js', () => {
   let latID = Constants.LANG_LATIN
   let araID = Constants.LANG_ARABIC
 
-  it('1 UIController - create object with min arguments', () => {
-    expect(uiC.settings).toHaveProperty('uiTypePanel')
-    expect(uiC.settings).toHaveProperty('uiTypePopup')
-    expect(uiC.settings).toHaveProperty('verboseMode')
+  it('1 UIController - create object with min arguments', async () => {
+    expect(uiC.options).toHaveProperty('uiTypePanel')
+    expect(uiC.options).toHaveProperty('uiTypePopup')
+    expect(uiC.options).toHaveProperty('verboseMode')
 
     expect(uiC.irregularBaseFontSizeClassName.length).toBeGreaterThan(0)
     expect(uiC.irregularBaseFontSize).toBeDefined()
@@ -97,10 +106,6 @@ describe('ui-controller.test.js', () => {
   it('2 UIController - static methods', () => {
     expect(UIController.defaults).toHaveProperty('irregularBaseFontSizeClassName')
 
-    expect(UIController.settingValues).toHaveProperty('uiTypePanel')
-    expect(UIController.settingValues).toHaveProperty('uiTypePopup')
-    expect(UIController.settingValues).toHaveProperty('verboseMode')
-
     document.querySelector('html').style['font-size'] = '16px'
     expect(UIController.hasRegularBaseFontSize()).toBeTruthy()
 
@@ -113,12 +118,15 @@ describe('ui-controller.test.js', () => {
   })
 
   it('3 UIController - getZIndexMax method', () => {
-    // defaultZIndex = 2000
 
-    expect(uiC.getZIndexMax()).toEqual(2001)
-    expect(uiC.getZIndexMax(2010)).toEqual(2010)
+    uiC.zIndex = HTMLPage.getZIndexMax(2000)
+    expect(uiC.zIndex).toEqual(2001)
 
-    expect(uiC.zIndexRecursion(document.querySelector('body'), Number.NEGATIVE_INFINITY)).toEqual(2000)
+    uiC.zIndex = HTMLPage.getZIndexMax(2010)
+    expect(uiC.zIndex).toEqual(2010)
+
+    uiC.zIndex = HTMLPage.zIndexRecursion(document.querySelector('body'), Number.NEGATIVE_INFINITY)
+    expect(uiC.zIndex).toEqual(2000)
   })
 
   it('4 UIController - formatFullDefinitions method', () => {
@@ -488,14 +496,14 @@ describe('ui-controller.test.js', () => {
   })
 
   it('18 UIController - updateVerboseMode', () => {
-    uiC.options.items.verboseMode.setValue(true)
-    uiC.settings.verboseMode = true
+    uiC.contentOptions.items.verboseMode.setValue(true)
+    uiC.options.verboseMode = true
     uiC.updateVerboseMode()
-    expect(uiC.state.verboseMode).toBeTruthy()
+    expect(uiC.options.verboseMode).toBeTruthy()
     expect(uiC.panel.panelData.verboseMode).toBeTruthy()
     expect(uiC.popup.popupData.verboseMode).toBeTruthy()
 
-    uiC.settings.verboseMode = false
+    uiC.options.verboseMode = false
     uiC.updateVerboseMode()
     expect(uiC.state.verboseMode).toBeFalsy()
     expect(uiC.panel.panelData.verboseMode).toBeFalsy()
@@ -542,8 +550,8 @@ describe('ui-controller.test.js', () => {
     uiC.panel.visible = false
     uiC.popup.visible = false
 
-    uiC.options.items.uiType.setValue('popup')
-    uiC.settings.uiTypePanel = 'panel'
+    uiC.contentOptions.items.uiType.setValue('popup')
+    uiC.contentOptions.uiTypePanel = 'panel'
 
     uiC.open()
     expect(uiC.panel.panelData.isOpen).toBeFalsy()
@@ -557,7 +565,7 @@ describe('ui-controller.test.js', () => {
     expect(uiC.popup.visible).toBeTruthy()
 
     //* **********************************************
-    uiC.options.items.uiType.setValue('panel')
+    uiC.contentOptions.items.uiType.setValue('panel')
 
     uiC.open()
     expect(uiC.panel.panelData.isOpen).toBeTruthy()
@@ -575,7 +583,7 @@ describe('ui-controller.test.js', () => {
     uiOptions1.items.fontSize = undefined
     uiOptions1.items.colorSchema = undefined
 
-    let uiC1 = new UIController(state, options, resourceOptions, uiOptions1)
+    let uiC1 = new UIController(state, contentOptions, resourceOptions, uiOptions1)
     uiC1.setRootComponentClasses()
     let resClasses = ['alpheios-irregular-base-font-size', 'auk--default']
     expect(uiC1.popup.popupData.classes).toEqual(resClasses)
@@ -584,7 +592,7 @@ describe('ui-controller.test.js', () => {
     //* ****************************************************************
     uiOptions1.items.skin = new OptionItem({ defaultValue: 'fooskin' }, 'skin', stAdapter)
 
-    let uiC2 = new UIController(state, options, resourceOptions, uiOptions1)
+    let uiC2 = new UIController(state, contentOptions, resourceOptions, uiOptions1)
     uiC2.setRootComponentClasses()
     resClasses.push('auk--fooskin')
 

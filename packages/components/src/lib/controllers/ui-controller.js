@@ -125,12 +125,6 @@ export default class UIController {
     }
   }
 
-  static get settingValues () {
-    return {
-
-    }
-  }
-
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
@@ -171,7 +165,7 @@ export default class UIController {
             info: true,
             treebank: false
           },
-          verboseMode: this.state.verboseMode,
+          verboseMode: this.options.verboseMode,
           grammarAvailable: false,
           grammarRes: {},
           lexemes: [],
@@ -493,7 +487,7 @@ export default class UIController {
            */
           requestStartTime: 0,
           settings: this.contentOptions.items,
-          verboseMode: this.state.verboseMode,
+          verboseMode: this.options.verboseMode,
           defDataReady: false,
           hasTreebank: false,
           inflDataReady: this.inflDataReady,
@@ -717,11 +711,13 @@ export default class UIController {
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
 
     this.isInitialized = true
+
+    return this
   }
 
   /**
    * Activates a UI controller. If `deactivate()` method unloads some resources, we should restore them here.
-   * @returns {Promise<void>}
+   * @returns {Promise<UIController>}
    */
   async activate () {
     if (this.isActivated) { return `Already activated` }
@@ -748,6 +744,8 @@ export default class UIController {
     this.isActivated = true
     this.isDeactivated = false
     this.state.activate()
+
+    return this
   }
 
   addTextQueryListener (trigger, selector = 'body') {
@@ -763,7 +761,7 @@ export default class UIController {
   /**
    * Deactivates a UI controller. May unload some resources to preserve memory.
    * In this case an `activate()` method will be responsible for restoring them.
-   * @returns {Promise<void>}
+   * @returns {Promise<UIController>}
    */
   async deactivate () {
     if (this.isDeactivated) { return `Already deactivated` }
@@ -775,6 +773,8 @@ export default class UIController {
     this.isActivated = false
     this.isDeactivated = true
     this.state.deactivate()
+
+    return this
   }
 
   /**
@@ -996,8 +996,8 @@ export default class UIController {
 
   updateVerboseMode () {
     this.state.setItem('verboseMode', this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
-    this.panel.panelData.verboseMode = this.state.verboseMode
-    this.popup.popupData.verboseMode = this.state.verboseMode
+    this.panel.panelData.verboseMode = this.options.verboseMode
+    this.popup.popupData.verboseMode = this.options.verboseMode
   }
 
   updateLemmaTranslations () {

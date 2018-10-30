@@ -29945,12 +29945,6 @@ class UIController {
     }
   }
 
-  static get settingValues () {
-    return {
-
-    }
-  }
-
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
@@ -29991,7 +29985,7 @@ class UIController {
             info: true,
             treebank: false
           },
-          verboseMode: this.state.verboseMode,
+          verboseMode: this.options.verboseMode,
           grammarAvailable: false,
           grammarRes: {},
           lexemes: [],
@@ -30313,7 +30307,7 @@ class UIController {
            */
           requestStartTime: 0,
           settings: this.contentOptions.items,
-          verboseMode: this.state.verboseMode,
+          verboseMode: this.options.verboseMode,
           defDataReady: false,
           hasTreebank: false,
           inflDataReady: this.inflDataReady,
@@ -30537,11 +30531,13 @@ class UIController {
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
 
     this.isInitialized = true
+
+    return this
   }
 
   /**
    * Activates a UI controller. If `deactivate()` method unloads some resources, we should restore them here.
-   * @returns {Promise<void>}
+   * @returns {Promise<UIController>}
    */
   async activate () {
     if (this.isActivated) { return `Already activated` }
@@ -30558,11 +30554,18 @@ class UIController {
 
     // Update panel on activation
     if (this.options.openPanel && !this.panel.isOpen()) {
+      /**
+       * Without this, the panel will close immediately after opening.
+       * Probably this is a matter of timing between state updates.
+       * Shall be solved during state refactoring.
+       */
       setTimeout(() => this.panel.open(), 0)
     }
     this.isActivated = true
     this.isDeactivated = false
     this.state.activate()
+
+    return this
   }
 
   addTextQueryListener (trigger, selector = 'body') {
@@ -30578,7 +30581,7 @@ class UIController {
   /**
    * Deactivates a UI controller. May unload some resources to preserve memory.
    * In this case an `activate()` method will be responsible for restoring them.
-   * @returns {Promise<void>}
+   * @returns {Promise<UIController>}
    */
   async deactivate () {
     if (this.isDeactivated) { return `Already deactivated` }
@@ -30590,6 +30593,8 @@ class UIController {
     this.isActivated = false
     this.isDeactivated = true
     this.state.deactivate()
+
+    return this
   }
 
   /**
@@ -30811,8 +30816,8 @@ class UIController {
 
   updateVerboseMode () {
     this.state.setItem('verboseMode', this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
-    this.panel.panelData.verboseMode = this.state.verboseMode
-    this.popup.popupData.verboseMode = this.state.verboseMode
+    this.panel.panelData.verboseMode = this.options.verboseMode
+    this.popup.popupData.verboseMode = this.options.verboseMode
   }
 
   updateLemmaTranslations () {
@@ -30944,7 +30949,6 @@ class UIController {
   }
 
   getSelectedText (event) {
-    console.log(`Get selected text`)
     if (this.state.isActive() && this.state.uiIsActive()) {
       /*
       TextSelector conveys text selection information. It is more generic of the two.
@@ -32334,7 +32338,7 @@ class Options {
   /**
    * Loads options from the storage. Returns a promise that is resolved if options are loaded
    * successfully and that is rejectd if there was an error retrieving them.
-   * @returns {Promise<string>}
+   * @returns {Promise<Options>}
    */
   async load () {
     try {
@@ -32365,10 +32369,10 @@ class Options {
           }
         }
       }
-      return `Options loaded successfully for ${this.domain}`
+      return this
     } catch (error) {
-      let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values
-      will be used instead`
+      let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values ` +
+      `will be used instead`
       console.error(message)
       throw new Error(message)
     }

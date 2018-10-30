@@ -74,7 +74,7 @@ export default class Options {
   /**
    * Loads options from the storage. Returns a promise that is resolved if options are loaded
    * successfully and that is rejectd if there was an error retrieving them.
-   * @returns {Promise<string>}
+   * @returns {Promise<Options>}
    */
   async load () {
     try {
@@ -105,10 +105,10 @@ export default class Options {
           }
         }
       }
-      return `Options loaded successfully for ${this.domain}`
+      return this
     } catch (error) {
-      let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values
-      will be used instead`
+      let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values ` +
+      `will be used instead`
       console.error(message)
       throw new Error(message)
     }
