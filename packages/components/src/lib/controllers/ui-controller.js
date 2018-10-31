@@ -47,6 +47,9 @@ export default class UIController {
    * @param {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    * @param {Object} options - UI controller options, an object with the following props
    * (if not specified, will be set to default):
+   *     {Object} app - A set of app related options with the following properties:
+   *          {string} name - An application name;
+   *          {string} version - A version of an application.
    *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
    *     {string} textQueryTrigger - what event will start a lexical query on a selected text. Possible values are
    *     (see custom pointer events library for more details):
@@ -60,19 +63,12 @@ export default class UIController {
    *         Default value: 'dblClick'.
    *     {string} textQuerySelector - an area(s) on a page where a trigger event will start a lexical query. This is
    *     a standard CSS selector. Default value: 'body'.
-   * @param {Object} manifest - parent application info details  (API definition pending)
-   * In some environments manifest data may not be available. Then a `{}` default value
-   * will be used.
-   * @param {Object} template - object with the following properties:
-   *                            html: HTML string for the container of the Alpheios components
-   *                            panelId: the id of the wrapper for the panel component,
-   *                            panelComponent: Vue single file component of a panel element.
-   *                              Allows to provide an alternative panel layout
-   *                            popupId: the id of the wrapper for the popup component
-   *                            popupComponent: Vue single file component of a panel element.
-   *                              Allows to provide an alternative popup layout
+   *     {Object} template - object w ith the following properties:
+   *         html: HTML string for the container of the Alpheios components
+   *         panelId: the id of the wrapper for the panel component,
+   *         popupId: the id of the wrapper for the popup component
    */
-  constructor (state, storageAdapter, options = {}, manifest = {}, template = {}) {
+  constructor (state, storageAdapter, options = {}) {
     this.state = state
     this.storageAdapter = storageAdapter
     this.contentOptions = new Options(ContentOptionDefaults, this.storageAdapter)
@@ -82,36 +78,32 @@ export default class UIController {
 
     // Default values for options
     const optionsDefaults = {
+      app: {
+        name: 'name',
+        version: 'version'
+      },
       openPanel: this.uiOptions.items.panelOnActivate.currentValue,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
       uiTypePanel: 'panel',
       uiTypePopup: 'popup',
       verboseMode: 'verbose',
-      enableLemmaTranslations: false
+      enableLemmaTranslations: false,
+      irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
+      template: {
+        html: Template,
+        panelId: 'alpheios-panel',
+        defaultPanelComponent: 'panel',
+        popupId: 'alpheios-popup',
+        defaultPopupComponent: 'popup',
+        draggable: true,
+        resizable: true
+      }
     }
 
-    this.options = Object.assign({}, optionsDefaults, options)
+    this.options = UIController.setOptions(options, optionsDefaults)
 
-    this.irregularBaseFontSizeClassName = 'alpheios-irregular-base-font-size'
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
-    this.manifest = manifest
-    const templateDefaults = {
-      html: Template,
-      panelId: 'alpheios-panel',
-      panelComponents: {
-        panel: Panel
-      },
-      defaultPanelComponent: 'panel',
-      popupId: 'alpheios-popup',
-      popupComponents: {
-        popup: Popup
-      },
-      defaultPopupComponent: 'popup',
-      draggable: true,
-      resizable: true
-    }
-    this.template = Object.assign(templateDefaults, template)
     this.isInitialized = false
     this.isActivated = false
     this.isDeactivated = false
@@ -119,10 +111,26 @@ export default class UIController {
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
   }
 
-  static get defaults () {
-    return {
-      irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size'
+  /**
+   * Constructs a new options object that contains properties from either an `options` argument,
+   * or, if not provided, from a `defaultOptions` object.
+   * @param options
+   * @param defaultOptions
+   */
+  static setOptions (options, defaultOptions) {
+    let result = {}
+    for (const [key, defaultValue] of Object.entries(defaultOptions)) {
+      // TODO: Add support for objects that are not options object but something else
+      if (typeof defaultValue === 'object') {
+        // This is an options group
+        const optionsValue = options.hasOwnProperty(key) ? options[key] : {}
+        result[key] = this.setOptions(optionsValue, defaultValue)
+      } else {
+        // This is a primitive type
+        result[key] = options.hasOwnProperty(key) ? options[key] : defaultOptions[key]
+      }
     }
+    return result
   }
 
   async init () {
@@ -145,15 +153,17 @@ export default class UIController {
     document.body.classList.add('alpheios')
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
-    container.outerHTML = this.template.html
+    container.outerHTML = this.options.template.html
 
     await Promise.all(optionLoadPromises)
     // All options shall be loaded at this point. Can initialize Vue components that will use them
 
     // Initialize components
     this.panel = new Vue({
-      el: `#${this.template.panelId}`,
-      components: this.template.panelComponents,
+      el: `#${this.options.template.panelId}`,
+      components: {
+        panel: Panel
+      },
       data: {
         panelData: {
           isOpen: false,
@@ -192,7 +202,7 @@ export default class UIController {
             tableBody: 'alpheios-panel-content-infl-table-body'
           },
           infoComponentData: {
-            manifest: this.manifest,
+            appInfo: this.options.app,
             languageName: UIController.getLanguageName(this.state.currentLanguage)
           },
           messages: [],
@@ -227,7 +237,7 @@ export default class UIController {
         state: this.state,
         options: this.contentOptions,
         resourceOptions: this.resourceOptions,
-        currentPanelComponent: this.template.defaultPanelComponent,
+        currentPanelComponent: this.options.template.defaultPanelComponent,
         uiController: this,
         classesChanged: 0
       },
@@ -443,8 +453,10 @@ export default class UIController {
 
     // Create a Vue instance for a popup
     this.popup = new Vue({
-      el: `#${this.template.popupId}`,
-      components: this.template.popupComponents,
+      el: `#${this.options.template.popupId}`,
+      components: {
+        popup: Popup
+      },
       data: {
         messages: [],
         lexemes: [],
@@ -460,8 +472,8 @@ export default class UIController {
           top: '10vh',
           left: '10vw',
 
-          draggable: this.template.draggable,
-          resizable: this.template.resizable,
+          draggable: this.options.template.draggable,
+          resizable: this.options.template.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -519,7 +531,7 @@ export default class UIController {
         panel: this.panel,
         options: this.contentOptions,
         resourceOptions: this.resourceOptions,
-        currentPopupComponent: this.template.defaultPopupComponent,
+        currentPopupComponent: this.options.template.defaultPopupComponent,
         uiController: this,
         classesChanged: 0
       },
@@ -1060,7 +1072,7 @@ export default class UIController {
     let classes = []
 
     if (!UIController.hasRegularBaseFontSize()) {
-      classes.push(this.constructor.defaults.irregularBaseFontSizeClassName)
+      classes.push(this.options.irregularBaseFontSizeClassName)
     }
     if (this.uiOptions.items.skin !== undefined) {
       classes.push(`auk--${this.uiOptions.items.skin.currentValue}`)
