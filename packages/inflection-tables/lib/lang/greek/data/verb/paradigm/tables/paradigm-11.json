@@ -900,6 +900,7 @@
                     "role": "data",
                     "tense": "perfect",
                     "voice": "active",
+                    "part of speech": "verb_participle",
                     "value": "λελυκώς, λελυκυῖᾰ, λελυκός",
                     "reflink": {
                         "text": "(see declension)",
@@ -918,6 +919,7 @@
                     "role": "data",
                     "tense": "perfect",
                     "voice": "active",
+                    "part of speech": "verb_participle",
                     "value": "λελοιπώς, λελοιπυῖᾰ, λελοιπός",
                     "reflink": {
                         "text": "(see declension)",

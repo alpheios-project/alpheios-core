@@ -1,1 +1,573 @@
-{"ID":"verbpdgm10","partOfSpeech":"verb","title":"Aorist Passive System","credits":"Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.","table":{"rows":[{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":""},{"role":"label","tense":"aorist","voice":"passive","value":""},{"role":"label","tense":"aorist","voice":"passive","mood":"indicative","value":"indicative"},{"role":"label","tense":"aorist","voice":"passive","mood":"subjunctive","value":"subjunctive"},{"role":"label","tense":"aorist","voice":"passive","mood":"optative","value":"optative"},{"role":"label","tense":"aorist","voice":"passive","mood":"imperative","value":"imperative"},{"role":"label","tense":"aorist","voice":"passive","mood":"indicative","value":"2nd aorist indicative"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":"singular"},{"role":"label","tense":"aorist","voice":"passive","number":"singular","value":"1st"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"1st","mood":"indicative","value":"ἐβουλεύθην"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"1st","mood":"subjunctive","value":"βουλευθῶ"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"1st","mood":"optative","value":"βουλευθείην"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"1st","mood":"indicative","value":"ἐγράφην"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":""},{"role":"label","tense":"aorist","voice":"passive","number":"singular","value":"2nd"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"2nd","mood":"indicative","value":"ἐβουλεύθης"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"2nd","mood":"subjunctive","value":"βουλευθῇς"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"2nd","mood":"optative","value":"βουλευθείης"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"2nd","mood":"imperative","value":"βουλεύθητι"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"2nd","mood":"indicative","value":"ἐγράφης"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":""},{"role":"label","tense":"aorist","voice":"passive","number":"singular","value":"3rd"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"3rd","mood":"indicative","value":"ἐβουλεύθη"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"3rd","mood":"subjunctive","value":"βουλευθῇ"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"3rd","mood":"optative","value":"βουλευθείη"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"3rd","mood":"imperative","value":"βουλευθήτω"},{"role":"data","tense":"aorist","voice":"passive","number":"singular","person":"3rd","mood":"indicative","value":"ἐγράφη"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":"dual"},{"role":"label","tense":"aorist","voice":"passive","number":"dual","value":"2nd"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"2nd","mood":"indicative","value":"ἐβουλεύθητον"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"2nd","mood":"subjunctive","value":"βουλευθῆτον"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"2nd","mood":"optative","value":"βουλευθείητον (-θεῖτον)"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"2nd","mood":"imperative","value":"βουλεύθητον"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"2nd","mood":"indicative","value":"ἐγράφητον"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":""},{"role":"label","tense":"aorist","voice":"passive","number":"dual","value":"3rd"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"3rd","mood":"indicative","value":"ἐβουλευθήτην"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"3rd","mood":"subjunctive","value":"βουλευθῆτον"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"3rd","mood":"optative","value":"βουλευθειήτην (-θείτην)"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"3rd","mood":"imperative","value":"βουλευθήτων"},{"role":"data","tense":"aorist","voice":"passive","number":"dual","person":"3rd","mood":"indicative","value":"ἐγραφήτην"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":"plural"},{"role":"label","tense":"aorist","voice":"passive","number":"plural","value":"1st"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"1st","mood":"indicative","value":"ἐβουλεύθημεν"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"1st","mood":"subjunctive","value":"βουλευθῶμεν"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"1st","mood":"optative","value":"βουλευθείημεν (-θεῖμεν)"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"1st","mood":"indicative","value":"ἐγράφημεν"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":""},{"role":"label","tense":"aorist","voice":"passive","number":"plural","value":"2nd"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"2nd","mood":"indicative","value":"ἐβουλεύθητε"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"2nd","mood":"subjunctive","value":"βουλευθῆτε"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"2nd","mood":"optative","value":"βουλευθείητε (-θεῖτε)"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"2nd","mood":"imperative","value":"βουλεύθητε"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"2nd","mood":"indicative","value":"ἐγράφητε"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":""},{"role":"label","tense":"aorist","voice":"passive","number":"plural","value":"3rd"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"3rd","mood":"indicative","value":"ἐβουλεύθησαν"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"3rd","mood":"subjunctive","value":"βουλευθῶσῐ(ν)"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"3rd","mood":"optative","value":"βουλευθείησαν (-θεῖεν)"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"3rd","mood":"imperative","value":"βουλευθέντων"},{"role":"data","tense":"aorist","voice":"passive","number":"plural","person":"3rd","mood":"indicative","value":"ἐγράφησαν"}]}]},"subTables":[{"rows":[{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":"infinitive"},{"role":"data","tense":"aorist","voice":"passive","mood":"infinitive","value":"βουλευθῆναι"}]},{"cells":[{"role":"label","tense":"aorist","voice":"passive","value":"participle"},{"role":"data","tense":"aorist","voice":"passive","value":"βουλευθείς, βουλευθεῖσᾰ, βουλευθέν","reflink":{"text":"(see declension)","id":"verbpdgm60"}}]}]}]}
+{
+    "ID": "verbpdgm10",
+    "partOfSpeech": "verb",
+    "title": "Aorist Passive System",
+    "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "mood": "indicative",
+                "value": "indicative"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "mood": "subjunctive",
+                "value": "subjunctive"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "mood": "optative",
+                "value": "optative"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "mood": "imperative",
+                "value": "imperative"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "mood": "indicative",
+                "value": "2nd aorist indicative"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐβουλεύθην"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "βουλευθῶ"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "1st",
+                "mood": "optative",
+                "value": "βουλευθείην"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐγράφην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐβουλεύθης"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "βουλευθῇς"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "βουλευθείης"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "βουλεύθητι"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐγράφης"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐβουλεύθη"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "βουλευθῇ"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "βουλευθείη"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "βουλευθήτω"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐγράφη"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐβουλεύθητον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "βουλευθῆτον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "βουλευθείητον (-θεῖτον)"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "βουλεύθητον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐγράφητον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐβουλευθήτην"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "βουλευθῆτον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "βουλευθειήτην (-θείτην)"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "βουλευθήτων"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐγραφήτην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐβουλεύθημεν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "βουλευθῶμεν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "1st",
+                "mood": "optative",
+                "value": "βουλευθείημεν (-θεῖμεν)"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐγράφημεν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐβουλεύθητε"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "βουλευθῆτε"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "βουλευθείητε (-θεῖτε)"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "βουλεύθητε"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐγράφητε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐβουλεύθησαν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "βουλευθῶσῐ(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "βουλευθείησαν (-θεῖεν)"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "βουλευθέντων"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐγράφησαν"
+            }
+        ]}
+    ]},
+    "subTables": [{"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": "infinitive"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "mood": "infinitive",
+                "value": "βουλευθῆναι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "passive",
+                "value": "participle"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "passive",
+                "part of speech": "verb_participle",
+                "value": "βουλευθείς, βουλευθεῖσᾰ, βουλευθέν",
+                "reflink": {
+                    "text": "(see declension)",
+                    "id": "verbpdgm60"
+                }
+            }
+        ]}
+    ]}]
+}

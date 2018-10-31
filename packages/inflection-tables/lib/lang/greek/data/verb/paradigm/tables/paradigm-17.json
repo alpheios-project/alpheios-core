@@ -1,1 +1,506 @@
-{"ID":"verbpdgm17","partOfSpeech":"verb","title":"Athematic Perfects - ἵστημι (in addition to forms from ἕστηκα)","credits":"Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.","table":{"rows":[{"cells":[{"role":"label","tense":"perfect","value":""},{"role":"label","tense":"perfect","value":""},{"role":"label","tense":"perfect","mood":"indicative","value":"indicative"},{"role":"label","tense":"perfect","mood":"subjunctive","value":"subjunctive"},{"role":"label","tense":"perfect","mood":"optative","value":"optative (poetic)"},{"role":"label","tense":"perfect","mood":"imperative","value":"imperative (poetic)"},{"role":"label","tense":"pluperfect","mood":"indicative","value":"pluperfect indicative"}]},{"cells":[{"role":"label","tense":"perfect","value":"singular"},{"role":"label","tense":"perfect","number":"singular","value":"1st"},{"role":"data","tense":"perfect","number":"singular","person":"1st","mood":"indicative","value":""},{"role":"data","tense":"perfect","number":"singular","person":"1st","mood":"subjunctive","value":"ἑστῶ"},{"role":"data","tense":"perfect","number":"singular","person":"1st","mood":"optative","value":"ἕσταίην"},{"role":"data","tense":"perfect","number":"singular","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"pluperfect","number":"singular","person":"1st","mood":"indicative","value":""}]},{"cells":[{"role":"label","tense":"perfect","value":""},{"role":"label","tense":"perfect","number":"singular","value":"2nd"},{"role":"data","tense":"perfect","number":"singular","person":"2nd","mood":"indicative","value":""},{"role":"data","tense":"perfect","number":"singular","person":"2nd","mood":"subjunctive","value":"ἑστῇς"},{"role":"data","tense":"perfect","number":"singular","person":"2nd","mood":"optative","value":"ἕσταίης"},{"role":"data","tense":"perfect","number":"singular","person":"2nd","mood":"imperative","value":"ἕσταθι"},{"role":"data","tense":"pluperfect","number":"singular","person":"2nd","mood":"indicative","value":""}]},{"cells":[{"role":"label","tense":"perfect","value":""},{"role":"label","tense":"perfect","number":"singular","value":"3rd"},{"role":"data","tense":"perfect","number":"singular","person":"3rd","mood":"indicative","value":""},{"role":"data","tense":"perfect","number":"singular","person":"3rd","mood":"subjunctive","value":"ἑστῇ"},{"role":"data","tense":"perfect","number":"singular","person":"3rd","mood":"optative","value":"ἕσταίη"},{"role":"data","tense":"perfect","number":"singular","person":"3rd","mood":"imperative","value":"ἑστάτω"},{"role":"data","tense":"pluperfect","number":"singular","person":"3rd","mood":"indicative","value":""}]},{"cells":[{"role":"label","tense":"perfect","value":"dual"},{"role":"label","tense":"perfect","number":"dual","value":"2nd"},{"role":"data","tense":"perfect","number":"dual","person":"2nd","mood":"indicative","value":"ἕστατον"},{"role":"data","tense":"perfect","number":"dual","person":"2nd","mood":"subjunctive","value":"ἑστῆτον"},{"role":"data","tense":"perfect","number":"dual","person":"2nd","mood":"optative","value":"ἑσταῖτον"},{"role":"data","tense":"perfect","number":"dual","person":"2nd","mood":"imperative","value":"ἕστατον"},{"role":"data","tense":"pluperfect","number":"dual","person":"2nd","mood":"indicative","value":"ἕστατον"}]},{"cells":[{"role":"label","tense":"perfect","value":""},{"role":"label","tense":"perfect","number":"dual","value":"3rd"},{"role":"data","tense":"perfect","number":"dual","person":"3rd","mood":"indicative","value":"ἕστατον"},{"role":"data","tense":"perfect","number":"dual","person":"3rd","mood":"subjunctive","value":"ἑστῆτον"},{"role":"data","tense":"perfect","number":"dual","person":"3rd","mood":"optative","value":"ἑσταίτην"},{"role":"data","tense":"perfect","number":"dual","person":"3rd","mood":"imperative","value":"ἑστάτων"},{"role":"data","tense":"pluperfect","number":"dual","person":"3rd","mood":"indicative","value":"ἑστάτην"}]},{"cells":[{"role":"label","tense":"perfect","value":"plural"},{"role":"label","tense":"perfect","number":"plural","value":"1st"},{"role":"data","tense":"perfect","number":"plural","person":"1st","mood":"indicative","value":"ἕσταμεν"},{"role":"data","tense":"perfect","number":"plural","person":"1st","mood":"subjunctive","value":"ἑστῶμεν"},{"role":"data","tense":"perfect","number":"plural","person":"1st","mood":"optative","value":"ἑσταῖμεν"},{"role":"data","tense":"perfect","number":"plural","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"pluperfect","number":"plural","person":"1st","mood":"indicative","value":"ἕσταμεν"}]},{"cells":[{"role":"label","tense":"perfect","value":""},{"role":"label","tense":"perfect","number":"plural","value":"2nd"},{"role":"data","tense":"perfect","number":"plural","person":"2nd","mood":"indicative","value":"ἕστατε"},{"role":"data","tense":"perfect","number":"plural","person":"2nd","mood":"subjunctive","value":"ἑστῆτε"},{"role":"data","tense":"perfect","number":"plural","person":"2nd","mood":"optative","value":"ἑσταῖτε"},{"role":"data","tense":"perfect","number":"plural","person":"2nd","mood":"imperative","value":"ἕστατε"},{"role":"data","tense":"pluperfect","number":"plural","person":"2nd","mood":"indicative","value":"ἕστατε"}]},{"cells":[{"role":"label","tense":"perfect","value":""},{"role":"label","tense":"perfect","number":"plural","value":"3rd"},{"role":"data","tense":"perfect","number":"plural","person":"3rd","mood":"indicative","value":"ἑστᾶσῐ(ν)"},{"role":"data","tense":"perfect","number":"plural","person":"3rd","mood":"subjunctive","value":"ἑστῶσῐ(ν)"},{"role":"data","tense":"perfect","number":"plural","person":"3rd","mood":"optative","value":"ἑσταῖεν"},{"role":"data","tense":"perfect","number":"plural","person":"3rd","mood":"imperative","value":"ἑστάντων"},{"role":"data","tense":"pluperfect","number":"plural","person":"3rd","mood":"indicative","value":"ἕστασαν"}]}]},"subTables":[{"rows":[{"cells":[{"role":"label","tense":"perfect","value":"infinitive"},{"role":"data","tense":"perfect","mood":"infinitive","value":"ἑστάναι"}]},{"cells":[{"role":"label","tense":"perfect","value":"participle"},{"role":"data","tense":"perfect","value":"ἑστώς, ἑστῶσᾰ, ἑστός (m./n. stem ἑστώτ- )","reflink":{"text":"(see declension)","id":"verbpdgm64"}}]}]}]}
+{
+    "ID": "verbpdgm17",
+    "partOfSpeech": "verb",
+    "title": "Athematic Perfects - ἵστημι (in addition to forms from ἕστηκα)",
+    "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "mood": "indicative",
+                "value": "indicative"
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "mood": "subjunctive",
+                "value": "subjunctive"
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "mood": "optative",
+                "value": "optative (poetic)"
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "mood": "imperative",
+                "value": "imperative (poetic)"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "mood": "indicative",
+                "value": "pluperfect indicative"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "singular",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "ἑστῶ"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "1st",
+                "mood": "optative",
+                "value": "ἕσταίην"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "singular",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "ἑστῇς"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "ἕσταίης"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "ἕσταθι"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "singular",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "ἑστῇ"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "ἕσταίη"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "ἑστάτω"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "dual",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἕστατον"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "ἑστῆτον"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "ἑσταῖτον"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "ἕστατον"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἕστατον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "dual",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἕστατον"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "ἑστῆτον"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "ἑσταίτην"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "ἑστάτων"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἑστάτην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "plural",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἕσταμεν"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "ἑστῶμεν"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "1st",
+                "mood": "optative",
+                "value": "ἑσταῖμεν"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἕσταμεν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "plural",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἕστατε"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "ἑστῆτε"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "ἑσταῖτε"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "ἕστατε"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἕστατε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "perfect",
+                "number": "plural",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἑστᾶσῐ(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "ἑστῶσῐ(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "ἑσταῖεν"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "ἑστάντων"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἕστασαν"
+            }
+        ]}
+    ]},
+    "subTables": [{"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": "infinitive"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "mood": "infinitive",
+                "value": "ἑστάναι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "perfect",
+                "value": "participle"
+            },
+            {
+                "role": "data",
+                "tense": "perfect",
+                "part of speech": "verb_participle",
+                "value": "ἑστώς, ἑστῶσᾰ, ἑστός (m./n. stem ἑστώτ- )",
+                "reflink": {
+                    "text": "(see declension)",
+                    "id": "verbpdgm64"
+                }
+            }
+        ]}
+    ]}]
+}

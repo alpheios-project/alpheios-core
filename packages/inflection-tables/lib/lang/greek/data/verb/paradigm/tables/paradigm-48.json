@@ -561,6 +561,7 @@
                 "role": "data",
                 "tense": "present",
                 "voice": "active",
+                "part of speech": "verb_participle",
                 "value": "(poetic) φάς, φᾶσᾰ, φάν",
                 "reflink": {
                     "text": "(see declension)",

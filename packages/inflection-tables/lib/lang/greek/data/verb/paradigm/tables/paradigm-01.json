@@ -1,1 +1,573 @@
-{"ID":"verbpdgm1","partOfSpeech":"verb","title":"ω-Verbs: Present System Active","credits":"Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.","table":{"rows":[{"cells":[{"role":"label","tense":"present","voice":"active","value":""},{"role":"label","tense":"present","voice":"active","value":""},{"role":"label","tense":"present","voice":"active","mood":"indicative","value":"indicative"},{"role":"label","tense":"present","voice":"active","mood":"subjunctive","value":"subjunctive"},{"role":"label","tense":"present","voice":"active","mood":"optative","value":"optative"},{"role":"label","tense":"present","voice":"active","mood":"imperative","value":"imperative"},{"role":"label","tense":"imperfect","voice":"active","mood":"indicative","value":"imperfect indicative"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":"singular"},{"role":"label","tense":"present","voice":"active","number":"singular","value":"1st"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"1st","mood":"indicative","value":"βουλεύω"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"1st","mood":"subjunctive","value":"βουλεύω"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"1st","mood":"optative","value":"βουλεύοιμι"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"imperfect","voice":"active","number":"singular","person":"1st","mood":"indicative","value":"ἐβούλευον"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":""},{"role":"label","tense":"present","voice":"active","number":"singular","value":"2nd"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"2nd","mood":"indicative","value":"βουλεύεις"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"2nd","mood":"subjunctive","value":"βουλεύῃς"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"2nd","mood":"optative","value":"βουλεύοις"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"2nd","mood":"imperative","value":"βούλευε"},{"role":"data","tense":"imperfect","voice":"active","number":"singular","person":"2nd","mood":"indicative","value":"ἐβούλευες"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":""},{"role":"label","tense":"present","voice":"active","number":"singular","value":"3rd"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"3rd","mood":"indicative","value":"βουλεύει"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"3rd","mood":"subjunctive","value":"βουλεύῃ"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"3rd","mood":"optative","value":"βουλεύοι"},{"role":"data","tense":"present","voice":"active","number":"singular","person":"3rd","mood":"imperative","value":"βουλευέτω"},{"role":"data","tense":"imperfect","voice":"active","number":"singular","person":"3rd","mood":"indicative","value":"ἐβούλευε(ν)"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":"dual"},{"role":"label","tense":"present","voice":"active","number":"dual","value":"2nd"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"2nd","mood":"indicative","value":"βουλεύετον"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"2nd","mood":"subjunctive","value":"βουλεύητον"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"2nd","mood":"optative","value":"βουλεύοιτον"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"2nd","mood":"imperative","value":"βουλεύετον"},{"role":"data","tense":"imperfect","voice":"active","number":"dual","person":"2nd","mood":"indicative","value":"ἐβουλεύετον"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":""},{"role":"label","tense":"present","voice":"active","number":"dual","value":"3rd"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"3rd","mood":"indicative","value":"βουλεύετον"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"3rd","mood":"subjunctive","value":"βουλεύητον"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"3rd","mood":"optative","value":"βουλευοίτην"},{"role":"data","tense":"present","voice":"active","number":"dual","person":"3rd","mood":"imperative","value":"βουλευέτων"},{"role":"data","tense":"imperfect","voice":"active","number":"dual","person":"3rd","mood":"indicative","value":"ἐβουλευέτην"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":"plural"},{"role":"label","tense":"present","voice":"active","number":"plural","value":"1st"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"1st","mood":"indicative","value":"βουλεύομεν"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"1st","mood":"subjunctive","value":"βουλεύωμεν"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"1st","mood":"optative","value":"βουλεύοιμεν"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"imperfect","voice":"active","number":"plural","person":"1st","mood":"indicative","value":"ἐβουλεύομεν"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":""},{"role":"label","tense":"present","voice":"active","number":"plural","value":"2nd"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"2nd","mood":"indicative","value":"βουλεύετε"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"2nd","mood":"subjunctive","value":"βουλεύητε"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"2nd","mood":"optative","value":"βουλεύοιτε"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"2nd","mood":"imperative","value":"βουλεύετε"},{"role":"data","tense":"imperfect","voice":"active","number":"plural","person":"2nd","mood":"indicative","value":"ἐβουλεύετε"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":""},{"role":"label","tense":"present","voice":"active","number":"plural","value":"3rd"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":"βουλεύουσῐ(ν)"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"3rd","mood":"subjunctive","value":"βουλεύωσῐ(ν)"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"3rd","mood":"optative","value":"βουλεύοιεν"},{"role":"data","tense":"present","voice":"active","number":"plural","person":"3rd","mood":"imperative","value":"βουλευόντων"},{"role":"data","tense":"imperfect","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":"ἐβούλευον"}]}]},"subTables":[{"rows":[{"cells":[{"role":"label","tense":"present","voice":"active","value":"infinitive"},{"role":"data","tense":"present","voice":"active","mood":"infinitive","value":"βουλεύειν"}]},{"cells":[{"role":"label","tense":"present","voice":"active","value":"participle"},{"role":"data","tense":"present","voice":"active","value":"βουλεύων, βουλεύουσᾰ, βουλεῦον","reflink":{"text":"(see declension)","id":"verbpdgm54"}}]}]}]}
+{
+    "ID": "verbpdgm1",
+    "partOfSpeech": "verb",
+    "title": "ω-Verbs: Present System Active",
+    "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "mood": "indicative",
+                "value": "indicative"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "mood": "subjunctive",
+                "value": "subjunctive"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "mood": "optative",
+                "value": "optative"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "mood": "imperative",
+                "value": "imperative"
+            },
+            {
+                "role": "label",
+                "tense": "imperfect",
+                "voice": "active",
+                "mood": "indicative",
+                "value": "imperfect indicative"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "βουλεύω"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "βουλεύω"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "optative",
+                "value": "βουλεύοιμι"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐβούλευον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "βουλεύεις"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "βουλεύῃς"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "βουλεύοις"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "βούλευε"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐβούλευες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "βουλεύει"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "βουλεύῃ"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "βουλεύοι"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "βουλευέτω"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐβούλευε(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "βουλεύετον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "βουλεύητον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "βουλεύοιτον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "βουλεύετον"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐβουλεύετον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "βουλεύετον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "βουλεύητον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "βουλευοίτην"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "βουλευέτων"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐβουλευέτην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "βουλεύομεν"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "βουλεύωμεν"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "optative",
+                "value": "βουλεύοιμεν"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐβουλεύομεν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "βουλεύετε"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "βουλεύητε"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "βουλεύοιτε"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "βουλεύετε"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐβουλεύετε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "βουλεύουσῐ(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "βουλεύωσῐ(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "βουλεύοιεν"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "βουλευόντων"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐβούλευον"
+            }
+        ]}
+    ]},
+    "subTables": [{"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": "infinitive"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "mood": "infinitive",
+                "value": "βουλεύειν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "active",
+                "value": "participle"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "active",
+                "part of speech": "verb_participle",
+                "value": "βουλεύων, βουλεύουσᾰ, βουλεῦον",
+                "reflink": {
+                    "text": "(see declension)",
+                    "id": "verbpdgm54"
+                }
+            }
+        ]}
+    ]}]
+}

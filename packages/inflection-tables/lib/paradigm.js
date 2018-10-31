@@ -25,26 +25,10 @@ export default class Paradigm {
     this.rules = []
 
     // Convert string feature values to Feature objects for later comparison
-    for (let row of this.table.rows) {
-      for (let cell of row.cells) {
-        if (cell.role === 'data') {
-          let cellFeatures = []
-          for (const prop of Object.keys(cell)) {
-            // Eliminate "non-feature" keys
-            if (prop !== 'role' && prop !== 'value') {
-              cellFeatures.push(prop)
-            }
-          }
-          for (const feature of cellFeatures) {
-            const values = cell[feature].split(' ')
-            // TODO this should be done via an importer but changing this code
-            // would require retesting of all of the paradigm table matching
-            // so hacking a specific workaround for now
-            values.forEach((v, index, values) => { values[index] = v.replace(/future_perfect/, 'future perfect') })
-            cell[feature] = new Feature(feature, values, this.languageID)
-          }
-          cell[Feature.types.part] = new Feature(Feature.types.part, this.partOfSpeech, this.languageID)
-        }
+    this.tableCellValuesToFeatures(this.table)
+    if (this.subTables) {
+      for (let table of this.subTables) {
+        this.tableCellValuesToFeatures(table)
       }
     }
 
@@ -55,6 +39,38 @@ export default class Paradigm {
      * @private
      */
     this._suppParadigms = new Map()
+  }
+
+  // Convert string feature values of a table to Feature objects for later comparison
+  tableCellValuesToFeatures (table) {
+    for (let row of table.rows) {
+      for (let cell of row.cells) {
+        if (cell.role === 'data') {
+          let cellFeatures = []
+          for (const prop of Object.keys(cell)) {
+            // Eliminate "non-feature" keys
+            if (prop !== 'role' && prop !== 'value') {
+              cellFeatures.push(prop)
+            }
+          }
+          for (const feature of cellFeatures) {
+            if (typeof cell[feature] === 'string') {
+              const values = cell[feature].split(' ')
+              // TODO this should be done via an importer but changing this code
+              // would require retesting of all of the paradigm table matching
+              // so hacking a specific workaround for now
+              values.forEach((v, index, values) => { values[index] = v.replace(/future_perfect/, 'future perfect') })
+              values.forEach((v, index, values) => { values[index] = v.replace(/verb_participle/, 'verb participle') })
+              cell[feature] = new Feature(feature, values, this.languageID)
+            }
+          }
+          // if the paradigm data doesn't explicitly define a part of speech, then set it from the paradigm
+          if (!cell[Feature.types.part]) {
+            cell[Feature.types.part] = new Feature(Feature.types.part, this.partOfSpeech, this.languageID)
+          }
+        }
+      }
+    }
   }
 
   /**

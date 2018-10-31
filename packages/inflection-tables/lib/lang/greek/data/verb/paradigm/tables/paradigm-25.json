@@ -1,1 +1,573 @@
-{"ID":"verbpdgm25","partOfSpeech":"verb","title":"Present System Middle-Passive of Contract Verbs in -άω  (with η contraction)","credits":"Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.","table":{"rows":[{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":""},{"role":"label","tense":"present","voice":"mediopassive middle","value":""},{"role":"label","tense":"present","voice":"mediopassive middle","mood":"indicative","value":"indicative"},{"role":"label","tense":"present","voice":"mediopassive middle","mood":"subjunctive","value":"subjunctive"},{"role":"label","tense":"present","voice":"mediopassive middle","mood":"optative","value":"optative"},{"role":"label","tense":"present","voice":"mediopassive middle","mood":"imperative","value":"imperative"},{"role":"label","tense":"imperfect","voice":"mediopassive middle","mood":"indicative","value":"imperfect indicative"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":"singular"},{"role":"label","tense":"present","voice":"mediopassive middle","number":"singular","value":"1st"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"χρῶμαι"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"1st","mood":"subjunctive","value":"χρῶμαι"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"1st","mood":"optative","value":"χρῴμην"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"ἐχρώμην"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":""},{"role":"label","tense":"present","voice":"mediopassive middle","number":"singular","value":"2nd"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"χρῇ"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"subjunctive","value":"χρῇ"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"optative","value":"χρῷο"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"imperative","value":"χρῶ"},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"ἐχρῶ"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":""},{"role":"label","tense":"present","voice":"mediopassive middle","number":"singular","value":"3rd"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"χρῆται"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"subjunctive","value":"χρῆται"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"optative","value":"χρῷτο"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"imperative","value":"χρήσθω"},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"ἐχρῆτο"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":"dual"},{"role":"label","tense":"present","voice":"mediopassive middle","number":"dual","value":"2nd"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"χρῆσθον"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"subjunctive","value":"χρῆσθον"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"optative","value":"χρῷσθον"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"imperative","value":"χρῆσθον"},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"ἐχρῆσθον"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":""},{"role":"label","tense":"present","voice":"mediopassive middle","number":"dual","value":"3rd"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"χρῆσθον"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"subjunctive","value":"χρῆσθον"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"optative","value":"χρῴσθην"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"imperative","value":"χρήσθων"},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"ἐχρήσθην"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":"plural"},{"role":"label","tense":"present","voice":"mediopassive middle","number":"plural","value":"1st"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"χρώμεθα"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"1st","mood":"subjunctive","value":"χρώμεθα"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"1st","mood":"optative","value":"χρῴμεθα"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"1st","mood":"imperative","value":""},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"ἐχρώμεθα"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":""},{"role":"label","tense":"present","voice":"mediopassive middle","number":"plural","value":"2nd"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"χρῆσθε"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"subjunctive","value":"χρῆσθε"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"optative","value":"χρῷσθε"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"imperative","value":"χρῆσθε"},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"ἐχρῆσθε"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":""},{"role":"label","tense":"present","voice":"mediopassive middle","number":"plural","value":"3rd"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"χρῶνται"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"subjunctive","value":"χρῶνται"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"optative","value":"χρῷντο"},{"role":"data","tense":"present","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"imperative","value":"χρήσθων"},{"role":"data","tense":"imperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"ἐχρῶντο"}]}]},"subTables":[{"rows":[{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":"infinitive"},{"role":"data","tense":"present","voice":"mediopassive middle","mood":"infinitive","value":"χρῆσθαι"}]},{"cells":[{"role":"label","tense":"present","voice":"mediopassive middle","value":"participle"},{"role":"data","tense":"present","voice":"mediopassive middle","value":"χρώμενος, -η, -ον","reflink":{"text":"(see declension)","id":"verbpdgm65"}}]}]}]}
+{
+    "ID": "verbpdgm25",
+    "partOfSpeech": "verb",
+    "title": "Present System Middle-Passive of Contract Verbs in -άω  (with η contraction)",
+    "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "indicative"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "mood": "subjunctive",
+                "value": "subjunctive"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "mood": "optative",
+                "value": "optative"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "mood": "imperative",
+                "value": "imperative"
+            },
+            {
+                "role": "label",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "imperfect indicative"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "χρῶμαι"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "χρῶμαι"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "optative",
+                "value": "χρῴμην"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐχρώμην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "χρῇ"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "χρῇ"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "χρῷο"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "χρῶ"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐχρῶ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "χρῆται"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "χρῆται"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "χρῷτο"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "χρήσθω"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐχρῆτο"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "χρῆσθον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "χρῆσθον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "χρῷσθον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "χρῆσθον"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐχρῆσθον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "χρῆσθον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "χρῆσθον"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "χρῴσθην"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "χρήσθων"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐχρήσθην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "χρώμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "χρώμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "optative",
+                "value": "χρῴμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐχρώμεθα"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "χρῆσθε"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "χρῆσθε"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "χρῷσθε"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "χρῆσθε"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐχρῆσθε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "χρῶνται"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "χρῶνται"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "χρῷντο"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "χρήσθων"
+            },
+            {
+                "role": "data",
+                "tense": "imperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐχρῶντο"
+            }
+        ]}
+    ]},
+    "subTables": [{"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": "infinitive"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "mood": "infinitive",
+                "value": "χρῆσθαι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "value": "participle"
+            },
+            {
+                "role": "data",
+                "tense": "present",
+                "voice": "mediopassive middle",
+                "part of speech": "verb_participle",
+                "value": "χρώμενος, -η, -ον",
+                "reflink": {
+                    "text": "(see declension)",
+                    "id": "verbpdgm65"
+                }
+            }
+        ]}
+    ]}]
+}

@@ -1,1 +1,892 @@
-{"ID":"verbpdgm15","partOfSpeech":"verb","title":"Pluperfect Middle-Passive Indicative","credits":"Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.","table":{"rows":[{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"active","mood":"indicative","value":"active"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"m.-p.: vowel stem"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"m.-p.: dental plosive stem"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"m.-p.: labial plosive stem"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"singular"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"singular","mood":"indicative","value":"1st"},{"role":"data","tense":"pluperfect","voice":"active","number":"singular","person":"1st","mood":"indicative","value":"ἐλελύκη"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"ἐλελύμην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"ἐπεπείσμην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"ἐγεγράμμην"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"singular","mood":"indicative","value":"2nd"},{"role":"data","tense":"pluperfect","voice":"active","number":"singular","person":"2nd","mood":"indicative","value":"ἐλελύκης"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"ἐλέλυσο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"ἐπέπεισο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"ἐγέγραψο"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"singular","mood":"indicative","value":"3rd"},{"role":"data","tense":"pluperfect","voice":"active","number":"singular","person":"3rd","mood":"indicative","value":"ἐλελύκει(ν)"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"ἐλέλυτο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"ἐπέπειστο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"ἐγέγραπτο"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"dual"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"dual","mood":"indicative","value":"2nd"},{"role":"data","tense":"pluperfect","voice":"active","number":"dual","person":"2nd","mood":"indicative","value":"ἐλελύκετον"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"ἐλέλυσθον"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"ἐπέπεισθον"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"ἐγέγραφθον"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"dual","mood":"indicative","value":"3rd"},{"role":"data","tense":"pluperfect","voice":"active","number":"dual","person":"3rd","mood":"indicative","value":"ἐλελυκέτην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"ἐλελύσθην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"ἐπεπείσθην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"ἐγεγράφθην"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"plural"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":"1st"},{"role":"data","tense":"pluperfect","voice":"active","number":"plural","person":"1st","mood":"indicative","value":"ἐλελύκεμεν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"ἐλελύμεθα"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"ἐπεπείσμεθα"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"ἐγεγράμμεθα"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":"2nd"},{"role":"data","tense":"pluperfect","voice":"active","number":"plural","person":"2nd","mood":"indicative","value":"ἐλελύκετε"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"ἐλέλυσθε"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"ἐπέπεισθε"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"ἐγέγραφθε"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":"3rd"},{"role":"data","tense":"pluperfect","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":"ἐλελύκεσαν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"ἐλέλυντο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"πεπεισμένοι (-αι) ἦσαν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"γεγραμμένοι (-αι) ἦσαν"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":""},{"role":"data","tense":"pluperfect","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":[null]},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":""},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"πεπεισμένα ἦν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"γεγραμμένα ἦν"}]}]},"subTables":[{"rows":[{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"m.-p.: velar plosive stem"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"m.-p.: stem in λ"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"m.-p.: stem in ν"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"singular"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"singular","mood":"indicative","value":"1st"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"ἐπεπράγμην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"ἠγγέλμην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"1st","mood":"indicative","value":"ἐπεφάσμην"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"singular","mood":"indicative","value":"2nd"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"ἐπέπραξο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"ἤγγελσο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"2nd","mood":"indicative","value":"———"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"singular","mood":"indicative","value":"3rd"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"ἐπέπρακτο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"ἤγγελτο"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"singular","person":"3rd","mood":"indicative","value":"ἐπέφαντο"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"dual"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"dual","mood":"indicative","value":"2nd"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"ἐπέπραχθον"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"ἤγγελθον"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"2nd","mood":"indicative","value":"ἐπέφανθον"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"dual","mood":"indicative","value":"3rd"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"ἐπεπράχθην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"ἠγγέλθην"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"dual","person":"3rd","mood":"indicative","value":"ἐπεφάνθην"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":"plural"},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":"1st"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"ἐπεπράγμεθα"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"ἠγγέλμεθα"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"1st","mood":"indicative","value":"ἐπεφάσμεθα"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":"2nd"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"ἐπέπραχθε"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"ἤγγελθε"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"2nd","mood":"indicative","value":"ἐπέφανθε"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":"3rd"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"πεπραγμένοι (-αι) ἦσαν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"ἠγγελμένοι (-αι) ἦσαν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"πεφασμένοι (-αι) ἦσαν"}]},{"cells":[{"role":"label","tense":"pluperfect","voice":"mediopassive middle","mood":"indicative","value":""},{"role":"label","tense":"pluperfect","voice":"mediopassive middle","number":"plural","mood":"indicative","value":""},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"πεπραγμένα ἦν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"ἠγγελμένα ἦν"},{"role":"data","tense":"pluperfect","voice":"mediopassive middle","number":"plural","person":"3rd","mood":"indicative","value":"πεφασμένα ἦν"}]}]}]}
+{
+    "ID": "verbpdgm15",
+    "partOfSpeech": "verb",
+    "title": "Pluperfect Middle-Passive Indicative",
+    "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "active",
+                "mood": "indicative",
+                "value": "active"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "m.-p.: vowel stem"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "m.-p.: dental plosive stem"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "m.-p.: labial plosive stem"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐλελύκη"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐλελύμην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐπεπείσμην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐγεγράμμην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐλελύκης"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐλέλυσο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέπεισο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐγέγραψο"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐλελύκει(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐλέλυτο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐπέπειστο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐγέγραπτο"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐλελύκετον"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐλέλυσθον"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέπεισθον"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐγέγραφθον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐλελυκέτην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐλελύσθην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐπεπείσθην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐγεγράφθην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐλελύκεμεν"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐλελύμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐπεπείσμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐγεγράμμεθα"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐλελύκετε"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐλέλυσθε"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέπεισθε"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐγέγραφθε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐλελύκεσαν"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐλέλυντο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "πεπεισμένοι (-αι) ἦσαν or πεπεισμένα ἦν"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "γεγραμμένοι (-αι) ἦσαν or γεγραμμένα ἦν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "m.-p.: velar plosive stem"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "m.-p.: stem in λ"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "m.-p.: stem in ν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐπεπράγμην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἠγγέλμην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐπεφάσμην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέπραξο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἤγγελσο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "\u2014\u2014\u2014"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐπέπρακτο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἤγγελτο"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐπέφαντο"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέπραχθον"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἤγγελθον"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέφανθον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐπεπράχθην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἠγγέλθην"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐπεφάνθην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐπεπράγμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἠγγέλμεθα"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἐπεφάσμεθα"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέπραχθε"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἤγγελθε"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἐπέφανθε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "mood": "indicative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "mood": "indicative",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "πεπραγμένοι (-αι) ἦσαν or πεπραγμένα ἦν"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἠγγελμένοι (-αι) ἦσαν or ἠγγελμένα ἦν"
+            },
+            {
+                "role": "data",
+                "tense": "pluperfect",
+                "voice": "mediopassive middle",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "πεφασμένοι (-αι) ἦσαν or πεφασμένα ἦν"
+            }
+        ]}
+    ]},
+    "subTables": []
+}

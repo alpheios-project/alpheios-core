@@ -1,1 +1,573 @@
-{"ID":"verbpdgm50","partOfSpeech":"verb","title":"γιγνώσκω: Aorist System Active","credits":"Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.","table":{"rows":[{"cells":[{"role":"label","tense":"aorist","voice":"active","value":""},{"role":"label","tense":"aorist","voice":"active","value":""},{"role":"label","tense":"aorist","voice":"active","mood":"indicative","value":"indicative"},{"role":"label","tense":"aorist","voice":"active","mood":"subjunctive","value":"subjunctive"},{"role":"label","tense":"aorist","voice":"active","mood":"optative","value":"optative"},{"role":"label","tense":"aorist","voice":"active","mood":"optative","value":""},{"role":"label","tense":"aorist","voice":"active","mood":"imperative","value":"imperative"}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":"singular"},{"role":"label","tense":"aorist","voice":"active","number":"singular","value":"1st"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"1st","mood":"indicative","value":"ἔγνων"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"1st","mood":"subjunctive","value":"γνῶ"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"1st","mood":"optative","value":"γνοίην"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"1st","mood":"optative","value":""},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"1st","mood":"imperative","value":""}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":""},{"role":"label","tense":"aorist","voice":"active","number":"singular","value":"2nd"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"2nd","mood":"indicative","value":"ἔγνως"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"2nd","mood":"subjunctive","value":"γνῷς"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"2nd","mood":"optative","value":"γνοίης"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"2nd","mood":"optative","value":""},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"2nd","mood":"imperative","value":"γνῶθι"}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":""},{"role":"label","tense":"aorist","voice":"active","number":"singular","value":"3rd"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"3rd","mood":"indicative","value":"ἔγνω"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"3rd","mood":"subjunctive","value":"γνῷ"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"3rd","mood":"optative","value":"γνοίη"},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"3rd","mood":"optative","value":""},{"role":"data","tense":"aorist","voice":"active","number":"singular","person":"3rd","mood":"imperative","value":"γνώτω"}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":"dual"},{"role":"label","tense":"aorist","voice":"active","number":"dual","value":"2nd"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"2nd","mood":"indicative","value":"ἔγνωτον"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"2nd","mood":"subjunctive","value":"γνῶτον"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"2nd","mood":"optative","value":"γνοίητον"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"2nd","mood":"optative","value":"γνοῖτον"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"2nd","mood":"imperative","value":"γνῶτον"}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":""},{"role":"label","tense":"aorist","voice":"active","number":"dual","value":"3rd"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"3rd","mood":"indicative","value":"ἐγνώτην"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"3rd","mood":"subjunctive","value":"γνῶτον"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"3rd","mood":"optative","value":"γνοιήτην"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"3rd","mood":"optative","value":"γνοίτην"},{"role":"data","tense":"aorist","voice":"active","number":"dual","person":"3rd","mood":"imperative","value":"γνώτων"}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":"plural"},{"role":"label","tense":"aorist","voice":"active","number":"plural","value":"1st"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"1st","mood":"indicative","value":"ἔγνωμεν"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"1st","mood":"subjunctive","value":"γνῶμεν"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"1st","mood":"optative","value":"γνοίημεν"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"1st","mood":"optative","value":"γνοῖμεν"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"1st","mood":"imperative","value":""}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":""},{"role":"label","tense":"aorist","voice":"active","number":"plural","value":"2nd"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"2nd","mood":"indicative","value":"ἔγνωτε"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"2nd","mood":"subjunctive","value":"γνῶτε"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"2nd","mood":"optative","value":"γνοίητε"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"2nd","mood":"optative","value":""},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"2nd","mood":"imperative","value":"γνῶτε"}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":""},{"role":"label","tense":"aorist","voice":"active","number":"plural","value":"3rd"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"3rd","mood":"indicative","value":"ἔγνωσαν"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"3rd","mood":"subjunctive","value":"γνῶσῐ(ν)"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"3rd","mood":"optative","value":"γνοῖεν"},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"3rd","mood":"optative","value":""},{"role":"data","tense":"aorist","voice":"active","number":"plural","person":"3rd","mood":"imperative","value":"γνόντων"}]}]},"subTables":[{"rows":[{"cells":[{"role":"label","tense":"aorist","voice":"active","value":"infinitive"},{"role":"data","tense":"aorist","voice":"active","mood":"infinitive","value":"γνῶναι"}]},{"cells":[{"role":"label","tense":"aorist","voice":"active","value":"participle"},{"role":"data","tense":"aorist","voice":"active","value":"γνούς, γνοῦσᾰ, γνόν","reflink":{"text":"(see declension)","id":"verbpdgm61"}}]}]}]}
+{
+    "ID": "verbpdgm50",
+    "partOfSpeech": "verb",
+    "title": "γιγνώσκω: Aorist System Active",
+    "credits": "Verb paradigm tables derived from <a href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "mood": "indicative",
+                "value": "indicative"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "mood": "subjunctive",
+                "value": "subjunctive"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "mood": "optative",
+                "value": "optative"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "mood": "optative",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "mood": "imperative",
+                "value": "imperative"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἔγνων"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "γνῶ"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "optative",
+                "value": "γνοίην"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "optative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἔγνως"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "γνῷς"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "γνοίης"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "optative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "γνῶθι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἔγνω"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "γνῷ"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "γνοίη"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "optative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "singular",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "γνώτω"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἔγνωτον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "γνῶτον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "γνοίητον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "γνοῖτον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "γνῶτον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἐγνώτην"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "γνῶτον"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "γνοιήτην"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "γνοίτην"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "dual",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "γνώτων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "value": "1st"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "indicative",
+                "value": "ἔγνωμεν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "subjunctive",
+                "value": "γνῶμεν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "optative",
+                "value": "γνοίημεν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "optative",
+                "value": "γνοῖμεν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "1st",
+                "mood": "imperative",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "value": "2nd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "indicative",
+                "value": "ἔγνωτε"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "subjunctive",
+                "value": "γνῶτε"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "optative",
+                "value": "γνοίητε"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "optative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "2nd",
+                "mood": "imperative",
+                "value": "γνῶτε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "value": "3rd"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "indicative",
+                "value": "ἔγνωσαν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "subjunctive",
+                "value": "γνῶσῐ(ν)"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "optative",
+                "value": "γνοῖεν"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "optative",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "number": "plural",
+                "person": "3rd",
+                "mood": "imperative",
+                "value": "γνόντων"
+            }
+        ]}
+    ]},
+    "subTables": [{"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": "infinitive"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "mood": "infinitive",
+                "value": "γνῶναι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "tense": "aorist",
+                "voice": "active",
+                "value": "participle"
+            },
+            {
+                "role": "data",
+                "tense": "aorist",
+                "voice": "active",
+                "part of speech": "verb_participle",
+                "value": "γνούς, γνοῦσᾰ, γνόν",
+                "reflink": {
+                    "text": "(see declension)",
+                    "id": "verbpdgm61"
+                }
+            }
+        ]}
+    ]}]
+}
