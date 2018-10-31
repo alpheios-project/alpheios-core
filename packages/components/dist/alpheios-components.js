@@ -29882,6 +29882,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 /* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
 /* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
 /* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
 /* global Event */
 
 
@@ -29916,6 +29917,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 
 
 
+
 const languageNames = new Map([
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
@@ -29928,12 +29930,12 @@ class UIController {
   /**
    * @constructor
    * @param {UIStateAPI} state - An object to store a UI state.
-   * @param {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    * @param {Object} options - UI controller options, an object with the following props
    * (if not specified, will be set to default):
    *     {Object} app - A set of app related options with the following properties:
    *          {string} name - An application name;
    *          {string} version - A version of an application.
+   *     {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
    *     {string} textQueryTrigger - what event will start a lexical query on a selected text. Possible values are
    *     (see custom pointer events library for more details):
@@ -29952,21 +29954,37 @@ class UIController {
    *         panelId: the id of the wrapper for the panel component,
    *         popupId: the id of the wrapper for the popup component
    */
-  constructor (state, storageAdapter, options = {}) {
+  constructor (state, options = {}) {
     this.state = state
-    this.storageAdapter = storageAdapter
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__, this.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__, this.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__, this.storageAdapter)
+    this.options = UIController.setOptions(options, UIController.optionsDefaults)
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__, this.options.storageAdapter)
     this.siteOptions = null // Will be set during an `init` phase
 
-    // Default values for options
-    const optionsDefaults = {
+    this.options.openPanel = this.uiOptions.items.panelOnActivate.currentValue
+
+    this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
+    this.isInitialized = false
+    this.isActivated = false
+    this.isDeactivated = false
+
+    this.inflectionsViewSet = null // Holds inflection tables ViewSet
+  }
+
+  /**
+   * Returns an object with default options of a UIController.
+   * Can be redefined to provide other default values.
+   * @return {object} An object that contains default options.
+   */
+  static get optionsDefaults () {
+    return {
       app: {
         name: 'name',
         version: 'version'
       },
-      openPanel: this.uiOptions.items.panelOnActivate.currentValue,
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__["default"],
+      openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
       uiTypePanel: 'panel',
@@ -29984,33 +30002,29 @@ class UIController {
         resizable: true
       }
     }
-
-    this.options = UIController.setOptions(options, optionsDefaults)
-
-    this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
-    this.isInitialized = false
-    this.isActivated = false
-    this.isDeactivated = false
-
-    this.inflectionsViewSet = null // Holds inflection tables ViewSet
   }
 
   /**
    * Constructs a new options object that contains properties from either an `options` argument,
    * or, if not provided, from a `defaultOptions` object.
-   * @param options
-   * @param defaultOptions
+   * `defaultOptions` object serves as a template. It is a list of valid options known to the UI controller.
+   * All properties from `options` must be presented in `defaultOptions` or
+   * they will not be copied into a resulting options object.
+   * If an option property is itself an object (i.e. is considered as a group of options),
+   * it will be copied recursively.
+   * @param {object} options - A user specified options object.
+   * @param {object} defaultOptions - A set of default options specified by a UI controller.
+   * @return {object} A resulting options object
    */
   static setOptions (options, defaultOptions) {
     let result = {}
     for (const [key, defaultValue] of Object.entries(defaultOptions)) {
-      // TODO: Add support for objects that are not options object but something else
-      if (typeof defaultValue === 'object') {
+      if (typeof defaultValue === 'object' && defaultValue.constructor.name === 'Object') {
         // This is an options group
         const optionsValue = options.hasOwnProperty(key) ? options[key] : {}
         result[key] = this.setOptions(optionsValue, defaultValue)
       } else {
-        // This is a primitive type
+        // This is a primitive type, an array, or other object that is not an options group
         result[key] = options.hasOwnProperty(key) ? options[key] : defaultOptions[key]
       }
     }
@@ -30680,7 +30694,7 @@ class UIController {
     let allSiteOptions = []
     for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_17__) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](domain, this.storageAdapter)
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
