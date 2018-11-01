@@ -2496,11 +2496,37 @@ class BaseAdapter {
 
 /***/ }),
 
+/***/ "./client-adapters.js":
+/*!****************************!*\
+  !*** ./client-adapters.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tufts/adapter */ "./tufts/adapter.js");
+
+
+class ClientAdapters {
+  static maAdapter (options) {
+    let localMaAdapter = new _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]()
+    if (options.type === 'getHomonym') {
+      return localMaAdapter.getHomonym(options.languageID, options.word)
+    }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ClientAdapters);
+
+
+/***/ }),
+
 /***/ "./index.js":
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: BaseAdapter, AlpheiosTuftsAdapter, AlpheiosTreebankAdapter */
+/*! exports provided: AlpheiosTuftsAdapter, AlpheiosTreebankAdapter, ClientAdapters */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2508,11 +2534,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tufts/adapter */ "./tufts/adapter.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlpheiosTuftsAdapter", function() { return _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/base-adapter */ "./base-adapter.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "BaseAdapter", function() { return _base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/alpheiostb/adapter */ "./alpheiostb/adapter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlpheiosTreebankAdapter", function() { return _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/alpheiostb/adapter */ "./alpheiostb/adapter.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlpheiosTreebankAdapter", function() { return _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _client_adapters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/client-adapters */ "./client-adapters.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _client_adapters__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+
 
 
 
