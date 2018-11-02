@@ -1,11 +1,15 @@
 import AlpheiosTuftsAdapter from '@/tufts/adapter'
 
 class ClientAdapters {
-  static maAdapter (options) {
+  static async maAdapter (options) {
     let localMaAdapter = new AlpheiosTuftsAdapter()
+    console.info('********************options', options)
     if (options.type === 'getHomonym') {
-      return localMaAdapter.getHomonym(options.languageID, options.word)
+      let homonym = await localMaAdapter.getHomonym(options.languageID, options.word)
+      console.info('*******************maAdapter homonym', homonym)
+      return homonym
     }
+    return null
   }
 }
 

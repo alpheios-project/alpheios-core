@@ -16,15 +16,20 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
 
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(languageID, word)
+    console.info('***************async getHomonym1', languageID, word, url)
     let jsonObj = await this.fetch(url)
+    console.info('***************async getHomonym2', jsonObj)
 
     if (jsonObj) {
       let transformAdapter = new TransformAdapter(this.engineSet, this.config)
 
-      let homonym = transformAdapter.transformData(jsonObj.RDF.Annotation, word)
+      console.info('***************async getHomonym3', jsonObj.RDF.Annotation, word)
+
+      let homonym = transformAdapter.transformData(jsonObj, word)
       if (homonym && homonym.lexemes) {
         homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
       }
+      console.info('***************async getHomonym4', homonym)
       return homonym
     } else {
       // No data found for this word

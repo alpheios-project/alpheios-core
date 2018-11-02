@@ -1,35 +1,23 @@
 import axios from 'axios'
 
 class BaseAdapter {
-  fetchWindow (url, type = 'json') {
-    return new Promise((resolve, reject) => {
-      if (url) {
-        window.fetch(url).then(
-          function (response) {
-            try {
-              if (response.ok) {
-                if (type === 'xml') {
-                  let xmlString = response.text()
-                  resolve(xmlString)
-                } else {
-                  let json = response.json()
-                  resolve(json)
-                }
-              } else {
-                reject(response.statusText)
-              }
-            } catch (error) {
-              reject(error)
-            }
-          }
-        ).catch((error) => {
-          reject(error)
+  async fetchWindow (url, type = 'json') {
+    if (url) {
+      try {
+        console.info('****************inside fetchWindow 1', url)
+        let response = await window.fetch(url)
+        console.info('****************inside fetchWindow 2', response)
+        if (type === 'xml') {
+          return response.text()
+        } else {
+          return response.json()
         }
-        )
-      } else {
-        reject(new Error(`Unable to prepare parser request url ${url}`))
+      } catch (error) {
+        console.error(`Unable to get data from url ${url}`)
       }
-    })
+    } else {
+      console.error(`Unable to prepare parser request url`)
+    }
   }
 
   async fetchAxios (url) {
@@ -41,12 +29,16 @@ class BaseAdapter {
     }
   }
 
-  fetch (url, type) {
+  async fetch (url, type) {
+    let res
+
     if (typeof window !== 'undefined') {
-      return this.fetchWindow(url, type)
+      res = await this.fetchWindow(url, type)
     } else {
-      return this.fetchAxios(url)
+      res = await this.fetchAxios(url)
     }
+
+    return res
   }
 }
 
