@@ -29930,29 +29930,11 @@ class UIController {
   /**
    * @constructor
    * @param {UIStateAPI} state - An object to store a UI state.
-   * @param {Object} options - UI controller options, an object with the following props
-   * (if not specified, will be set to default):
-   *     {Object} app - A set of app related options with the following properties:
-   *          {string} name - An application name;
-   *          {string} version - A version of an application.
-   *     {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
-   *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
-   *     {string} textQueryTrigger - what event will start a lexical query on a selected text. Possible values are
-   *     (see custom pointer events library for more details):
-   *         'dblClick' - MouseDblClick pointer event will be used;
-   *         'longTap' - LongTap pointer event will be used;
-   *         genericEvt - if trigger name other than above specified, it will be treated as a GenericEvt pointer event
-   *             with the name of the event being the value of this filed;
-   *             This name will be passed to the GenericEvt pointer event object;
-   *         'none' - do not register any trigger. This will allow a UIController owner to
-   *         register its own custom trigger and listener.
-   *         Default value: 'dblClick'.
-   *     {string} textQuerySelector - an area(s) on a page where a trigger event will start a lexical query. This is
-   *     a standard CSS selector. Default value: 'body'.
-   *     {Object} template - object w ith the following properties:
-   *         html: HTML string for the container of the Alpheios components
-   *         panelId: the id of the wrapper for the panel component,
-   *         popupId: the id of the wrapper for the popup component
+   * @param {Object} options - UI controller options object.
+   * See `optionsDefaults` getter for detailed parameter description: @see {@link optionsDefaults}
+   * If any options is not specified, it will be set to a default value.
+   * If an options is not present in an `optionsDefaults` object, it will be ignored as an unknown option.
+   * Default values: See `optionsDefaults` getter @see {@link optionsDefaults}
    */
   constructor (state, options = {}) {
     this.state = state
@@ -29976,6 +29958,27 @@ class UIController {
    * Returns an object with default options of a UIController.
    * Can be redefined to provide other default values.
    * @return {object} An object that contains default options.
+   *     {Object} app - A set of app related options with the following properties:
+   *          {string} name - An application name;
+   *          {string} version - A version of an application.
+   *     {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
+   *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
+   *     {string} textQueryTrigger - what event will start a lexical query on a selected text. Possible values are
+   *     (see custom pointer events library for more details):
+   *         'dblClick' - MouseDblClick pointer event will be used;
+   *         'longTap' - LongTap pointer event will be used;
+   *         genericEvt - if trigger name other than above specified, it will be treated as a GenericEvt pointer event
+   *             with the name of the event being the value of this filed;
+   *             This name will be passed to the GenericEvt pointer event object;
+   *         'none' - do not register any trigger. This will allow a UIController owner to
+   *         register its own custom trigger and listener.
+   *         Default value: 'dblClick'.
+   *     {string} textQuerySelector - an area(s) on a page where a trigger event will start a lexical query. This is
+   *     a standard CSS selector. Default value: 'body'.
+   *     {Object} template - object w ith the following properties:
+   *         html: HTML string for the container of the Alpheios components
+   *         panelId: the id of the wrapper for the panel component,
+   *         popupId: the id of the wrapper for the popup component
    */
   static get optionsDefaults () {
     return {
