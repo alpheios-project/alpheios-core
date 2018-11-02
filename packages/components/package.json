@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Alpheios UI Compononents",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
@@ -50,7 +50,7 @@
     "eslint-plugin-vue": "^5.0.0-beta.3",
     "espree": "^4.1.0",
     "file-loader": "^2.0.0",
-    "flush-promises": "^1.0.1",
+    "flush-promises": "^1.0.2",
     "font-awesome-svg-png": "^1.2.2",
     "html-loader": "^0.5.5",
     "html-loader-jest": "^0.2.1",
@@ -65,7 +65,7 @@
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.2",
-    "sinon": "^7.1.0",
+    "sinon": "^7.1.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.0",
     "uikit": "^3.0.0-rc.20",
