@@ -325,7 +325,7 @@ describe('panel.test.js', () => {
           grammarRes: {},
           infoComponentData: {
             languageName: 'Latin',
-            manifest: {
+            appInfo: {
               name: 'Foo name',
               version: 'Foo version'
             }

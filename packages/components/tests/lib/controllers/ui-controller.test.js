@@ -72,27 +72,19 @@ describe('ui-controller.test.js', () => {
     expect(uiC.options).toHaveProperty('uiTypePopup')
     expect(uiC.options).toHaveProperty('verboseMode')
 
-    expect(uiC.irregularBaseFontSizeClassName.length).toBeGreaterThan(0)
+    expect(uiC.options.irregularBaseFontSizeClassName.length).toBeGreaterThan(0)
     expect(uiC.irregularBaseFontSize).toBeDefined()
-    expect(uiC.manifest).toBeDefined()
+    expect(uiC.options.app).toBeDefined()
 
-    expect(uiC.template).toHaveProperty('html')
-    expect(uiC.template).toHaveProperty('panelId')
+    expect(uiC.options.template).toHaveProperty('html')
+    expect(uiC.options.template).toHaveProperty('panelId')
 
-    expect(uiC.template).toHaveProperty('panelComponents')
-    expect(uiC.template.panelComponents).toHaveProperty('panel')
-    expect(uiC.template.panelComponents.panel).toBeInstanceOf(Panel.constructor)
+    expect(uiC.options.template).toHaveProperty('defaultPanelComponent')
+    expect(uiC.options.template).toHaveProperty('popupId')
 
-    expect(uiC.template).toHaveProperty('defaultPanelComponent')
-    expect(uiC.template).toHaveProperty('popupId')
-
-    expect(uiC.template).toHaveProperty('popupComponents')
-    expect(uiC.template.popupComponents).toHaveProperty('popup')
-    expect(uiC.template.popupComponents.popup).toBeInstanceOf(Popup.constructor)
-
-    expect(uiC.template).toHaveProperty('defaultPopupComponent')
-    expect(uiC.template).toHaveProperty('draggable')
-    expect(uiC.template).toHaveProperty('resizable')
+    expect(uiC.options.template).toHaveProperty('defaultPopupComponent')
+    expect(uiC.options.template).toHaveProperty('draggable')
+    expect(uiC.options.template).toHaveProperty('resizable')
 
     expect(uiC.zIndex).toBeGreaterThan(0)
 
@@ -104,7 +96,7 @@ describe('ui-controller.test.js', () => {
   })
 
   it('2 UIController - static methods', () => {
-    expect(UIController.defaults).toHaveProperty('irregularBaseFontSizeClassName')
+    expect(UIController.optionsDefaults).toHaveProperty('irregularBaseFontSizeClassName')
 
     document.querySelector('html').style['font-size'] = '16px'
     expect(UIController.hasRegularBaseFontSize()).toBeTruthy()
