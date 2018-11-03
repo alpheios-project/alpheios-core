@@ -2470,7 +2470,9 @@ class BaseAdapter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tufts/adapter */ "./tufts/adapter.js");
-/* harmony import */ var _translations_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/translations/adapter */ "./translations/adapter.js");
+/* harmony import */ var _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/alpheiostb/adapter */ "./alpheiostb/adapter.js");
+/* harmony import */ var _translations_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/translations/adapter */ "./translations/adapter.js");
+
 
 
 
@@ -2495,6 +2497,25 @@ class ClientAdapters {
   }
 
   /*
+   * it is used for getting data from treebank adapter
+   * @param {options} Object - object contains parametes:
+   * options.type String - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   * options.languageID Symbol - languageID value for the word
+   * options.word String - target word for what we will receive morph data
+*/
+
+  static async tbAdapter (options) {
+    let localTbAdapter = new _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]()
+    console.info('********************options', options)
+    if (options.type === 'getHomonym') {
+      let homonym = await localTbAdapter.getHomonym(options.languageID, options.wordref)
+      console.info('*******************tbAdapter homonym', homonym)
+      return homonym
+    }
+    return null
+  }
+
+  /*
    * it is used for getting data from translations adapter
    * @param {options} Object - object contains parametes:
    * options.type String - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
@@ -2503,7 +2524,7 @@ class ClientAdapters {
    * options.browserLang - language for translations
 */
   static async lemmaTranslations (options) {
-    let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]()
+    let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
 
     if (options.type === 'fetchTranslations') {
       await localLemmasAdapter.getTranslationsList(options.lemmaList, options.inLang, options.browserLang)
@@ -2638,8 +2659,6 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
       let urlAvaLangsRes = this.config.url + '/' + inLang + '/'
       let unparsed = await this.fetch(urlAvaLangsRes)
 
-      console.info('******************getAvailableResLang unparsed', unparsed)
-
       let mapLangUri = {}
       unparsed.forEach(function (langItem) {
         mapLangUri[langItem.lang] = langItem.uri
@@ -2650,8 +2669,6 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
       }
     }
 
-    console.info('******************getAvailableResLang 1', inLang, outLang)
-    console.info('******************getAvailableResLang 2', inLang, this.mapLangUri[inLang])
     return this.mapLangUri[inLang] ? this.mapLangUri[inLang][outLang] : undefined
   }
 }
@@ -3127,7 +3144,6 @@ class EnginesSet {
   }
 
   getEngineByCode (languageID) {
-    console.info('*************************this.engine[languageID]', this.engine[languageID])
     if (this.engine[languageID]) {
       let engineCode = this.engine[languageID][0]
       let allEngines = new Map(([ _tufts_engine_whitakers__WEBPACK_IMPORTED_MODULE_0__["default"], _tufts_engine_morpheusgrc__WEBPACK_IMPORTED_MODULE_1__["default"], _tufts_engine_aramorph__WEBPACK_IMPORTED_MODULE_2__["default"], _tufts_engine_hazm__WEBPACK_IMPORTED_MODULE_3__["default"], _tufts_engine_traces__WEBPACK_IMPORTED_MODULE_4__["default"] ]).map((e) => { return [ e.engine, e ] }))

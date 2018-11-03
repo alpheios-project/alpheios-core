@@ -1,4 +1,5 @@
 import AlpheiosTuftsAdapter from '@/tufts/adapter'
+import AlpheiosTreebankAdapter from '@/alpheiostb/adapter'
 import AlpheiosLemmaTranslationsAdapter from '@/translations/adapter'
 
 class ClientAdapters {
@@ -16,6 +17,25 @@ class ClientAdapters {
     if (options.type === 'getHomonym') {
       let homonym = await localMaAdapter.getHomonym(options.languageID, options.word)
       console.info('*******************maAdapter homonym', homonym)
+      return homonym
+    }
+    return null
+  }
+
+  /*
+   * it is used for getting data from treebank adapter
+   * @param {options} Object - object contains parametes:
+   * options.type String - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   * options.languageID Symbol - languageID value for the word
+   * options.word String - target word for what we will receive morph data
+*/
+
+  static async tbAdapter (options) {
+    let localTbAdapter = new AlpheiosTreebankAdapter()
+    console.info('********************options', options)
+    if (options.type === 'getHomonym') {
+      let homonym = await localTbAdapter.getHomonym(options.languageID, options.wordref)
+      console.info('*******************tbAdapter homonym', homonym)
       return homonym
     }
     return null
