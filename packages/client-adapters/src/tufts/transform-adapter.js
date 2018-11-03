@@ -72,7 +72,7 @@ class TransformAdapter {
       // exist - always use the lemma and language from the first
       let language = lemmaElements[0].hdwd ? lemmaElements[0].hdwd.lang : lemmaElements[0].lang
       // Get importer based on the language
-      let mappingData = this.getEngineLanguageMap(language)
+      let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
         console.log(`No mapping data found for ${language}`)
         continue

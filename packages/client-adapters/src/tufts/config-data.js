@@ -1,22 +1,7 @@
 import { LanguageModelFactory as LMF, Constants } from 'alpheios-data-models'
+import ConfigData from '@/config-data'
 
-class ConfigData {
-  constructor (config, defaultConfig) {
-    Object.keys(config).forEach(configKey => {
-      this[configKey] = config[configKey]
-    })
-
-    Object.keys(defaultConfig).forEach(configKey => {
-      if (configKey === 'engine') {
-        this.uploadEngines(defaultConfig[configKey])
-      } else {
-        if (this[configKey] === undefined) {
-          this[configKey] = defaultConfig[configKey]
-        }
-      }
-    })
-  }
-
+class TuftsConfigData extends ConfigData {
   uploadEngines (enginesConfig) {
     if (this.engine === undefined) {
       this.engine = {}
@@ -69,4 +54,4 @@ class ConfigData {
   }
 }
 
-export default ConfigData
+export default TuftsConfigData

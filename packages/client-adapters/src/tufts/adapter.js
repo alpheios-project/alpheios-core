@@ -5,12 +5,12 @@ import TransformAdapter from '@/tufts/transform-adapter'
 
 import DefaultConfig from '@/tufts/config.json'
 import EnginesSet from '@/tufts/engines-set'
-import ConfigData from '@/tufts/config-data'
+import TuftsConfigData from '@/tufts/config-data'
 
 class AlpheiosTuftsAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
-    this.config = new ConfigData(config, DefaultConfig)
+    this.config = new TuftsConfigData(config, DefaultConfig)
     this.engineSet = new EnginesSet(this.config.engine)
   }
 
