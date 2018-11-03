@@ -2607,7 +2607,7 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
     let outLang = this.config.defineOutLang(browserLang)
 
     let input = this.prepareInput(lemmaList)
-    let urlLang = this.getAvailableResLang(inLang, outLang)
+    let urlLang = await this.getAvailableResLang(inLang, outLang)
 
     if (input && urlLang) {
       try {
@@ -2638,6 +2638,8 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
       let urlAvaLangsRes = this.config.url + '/' + inLang + '/'
       let unparsed = await this.fetch(urlAvaLangsRes)
 
+      console.info('******************getAvailableResLang unparsed', unparsed)
+
       let mapLangUri = {}
       unparsed.forEach(function (langItem) {
         mapLangUri[langItem.lang] = langItem.uri
@@ -2648,6 +2650,8 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
       }
     }
 
+    console.info('******************getAvailableResLang 1', inLang, outLang)
+    console.info('******************getAvailableResLang 2', inLang, this.mapLangUri[inLang])
     return this.mapLangUri[inLang] ? this.mapLangUri[inLang][outLang] : undefined
   }
 }
@@ -2734,6 +2738,8 @@ class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["d
   constructor (config = {}) {
     super()
     this.config = new _tufts_config_data__WEBPACK_IMPORTED_MODULE_5__["default"](config, _tufts_config_json__WEBPACK_IMPORTED_MODULE_3__)
+    console.info('******************AlpheiosTuftsAdapter this.config.engine', this.config, this.config.engine)
+    this.config.uploadEngines(this.config.engine)
     this.engineSet = new _tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__["default"](this.config.engine)
   }
 
@@ -2761,8 +2767,9 @@ class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["d
   }
 
   prepareRequestUrl (languageID, word) {
-    let engine = this.engineSet.getEngineByCode(languageID)
     let langCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
+    let engine = this.engineSet.getEngineByCode(languageID)
+    console.info('*****************prepareRequestUrl this.engineSet', this.engineSet)
     if (engine) {
       let code = engine.engine
       return this.config.url.replace('r_WORD', word).replace('r_ENGINE', code).replace('r_LANG', langCode).replace('r_CLIENT', this.config.clientId)
@@ -3120,6 +3127,7 @@ class EnginesSet {
   }
 
   getEngineByCode (languageID) {
+    console.info('*************************this.engine[languageID]', this.engine[languageID])
     if (this.engine[languageID]) {
       let engineCode = this.engine[languageID][0]
       let allEngines = new Map(([ _tufts_engine_whitakers__WEBPACK_IMPORTED_MODULE_0__["default"], _tufts_engine_morpheusgrc__WEBPACK_IMPORTED_MODULE_1__["default"], _tufts_engine_aramorph__WEBPACK_IMPORTED_MODULE_2__["default"], _tufts_engine_hazm__WEBPACK_IMPORTED_MODULE_3__["default"], _tufts_engine_traces__WEBPACK_IMPORTED_MODULE_4__["default"] ]).map((e) => { return [ e.engine, e ] }))

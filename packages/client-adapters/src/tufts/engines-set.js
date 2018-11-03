@@ -12,6 +12,7 @@ class EnginesSet {
   }
 
   getEngineByCode (languageID) {
+    console.info('*************************this.engine[languageID]', this.engine[languageID])
     if (this.engine[languageID]) {
       let engineCode = this.engine[languageID][0]
       let allEngines = new Map(([ Whitakers, Morpheusgrc, Aramorph, Hazm, Traces ]).map((e) => { return [ e.engine, e ] }))

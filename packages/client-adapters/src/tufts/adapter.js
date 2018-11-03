@@ -11,6 +11,8 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
     this.config = new TuftsConfigData(config, DefaultConfig)
+    console.info('******************AlpheiosTuftsAdapter this.config.engine', this.config, this.config.engine)
+    this.config.uploadEngines(this.config.engine)
     this.engineSet = new EnginesSet(this.config.engine)
   }
 
@@ -38,8 +40,9 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
   }
 
   prepareRequestUrl (languageID, word) {
-    let engine = this.engineSet.getEngineByCode(languageID)
     let langCode = LMF.getLanguageCodeFromId(languageID)
+    let engine = this.engineSet.getEngineByCode(languageID)
+    console.info('*****************prepareRequestUrl this.engineSet', this.engineSet)
     if (engine) {
       let code = engine.engine
       return this.config.url.replace('r_WORD', word).replace('r_ENGINE', code).replace('r_LANG', langCode).replace('r_CLIENT', this.config.clientId)

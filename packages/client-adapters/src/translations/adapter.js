@@ -16,7 +16,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
     let outLang = this.config.defineOutLang(browserLang)
 
     let input = this.prepareInput(lemmaList)
-    let urlLang = this.getAvailableResLang(inLang, outLang)
+    let urlLang = await this.getAvailableResLang(inLang, outLang)
 
     if (input && urlLang) {
       try {
