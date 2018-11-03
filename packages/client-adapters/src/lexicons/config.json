@@ -1,0 +1,119 @@
+{
+  "https://github.com/alpheios-project/lsj": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html"
+    },
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    },
+    "description": "\"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott)",
+    "rights": "\"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University."
+  },
+  "https://github.com/alpheios-project/aut": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html"
+    },
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    },
+    "description": "\"Autenrieth Homeric Dictionary\" (Geoerge Autenrieth)",
+    "rights": "\"Autenrieth Homeric Dictionary\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University"
+  },
+  "https://github.com/alpheios-project/ml": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html"
+    },
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    },
+    "description": "\"Middle Liddell\"",
+    "rights": "\"An Intermediate Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University"
+  },
+  "https://github.com/alpheios-project/as": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html"
+    },
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    },
+    "description": "\"A Manual Greek Lexicon of the New Testament\"",
+    "rights": "\"A Manual Greek Lexicon of the New Testament\" (G. Abbott-Smith). Provided by biblicalhumanities.org."
+  },
+  "https://github.com/alpheios-project/dod": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat",
+      "full": null
+    },
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    },
+    "description": "\"Dodson\"",
+    "rights": "\"A Public Domain lexicon by John Jeffrey Dodson (2010)\". Provided by biblicalhumanities.org."
+  },
+  "https://github.com/alpheios-project/ls": {
+    "urls": {
+      "short": null,
+      "index": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html"
+    },
+    "langs": {
+      "source": "lat",
+      "target": "en"
+    },
+    "description": "\"A Latin Dictionary\" (Charlton T. Lewis, Charles Short)",
+    "rights": "\"A Latin Dictionary\" (Charlton T. Lewis, Charles Short). Provided by the Perseus Digital Library at Tufts University."
+  },
+  "https://github.com/alpheios-project/lan": {
+    "urls": {
+      "short": null,
+      "index": "https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html"
+    },
+    "langs": {
+      "source": "ara",
+      "target": "en"
+    },
+    "description": "\"The Arabic-English Lexicon\" (Edward Lane)",
+    "rights": "\"The Arabic-English Lexicon\" (Edward Lane). Provided by the Perseus Digital Library at Tufts University."
+  },
+  "https://github.com/alpheios-project/sal": {
+    "urls": {
+      "short": null,
+      "index": "https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html"
+    },
+    "langs": {
+      "source": "ara",
+      "target": "en"
+    },
+    "description": "\"An Advanced Learner's Arabic Dictionary\" (H. Anthony Salmone)",
+    "rights": "\"An Advanced Learner's Arabic Dictionary\" (H. Anthony Salmone). Provided by the Perseus Digital Library at Tufts University."
+  },
+  "https://github.com/alpheios-project/stg": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat",
+      "full": null
+    },
+    "langs": {
+      "source": "per",
+      "target": "en"
+    },
+    "description": "\"A Comprehensive Persian-English Dictionary\" (Francis Joseph Steingass)",
+    "rights": "\"A Comprehensive Persian-English Dictionary\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park."
+  }
+}
