@@ -20,7 +20,8 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
 
     if (input && urlLang) {
       try {
-        let translationsList = await this.fetch(urlLang + '?input=' + input)
+        let url = urlLang + '?input=' + input
+        let translationsList = await this.fetch(url)
         for (let lemma of lemmaList) {
           Translation.loadTranslations(lemma, outLang, translationsList, this.provider)
         }

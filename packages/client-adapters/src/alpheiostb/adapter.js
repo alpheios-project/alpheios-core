@@ -16,10 +16,10 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
     let url = this.prepareRequestUrl(word)
 
     if (url) {
-      let xmlString = await this.fetch(url, 'xml')
+      let xmlString = await this.fetch(url, { type: 'xml' })
       if (xmlString) {
         let langCode = LMF.getLanguageCodeFromId(languageID)
-        console.log(`LangCode ${langCode}`)
+        // console.log(`LangCode ${langCode}`)
         let jsonObj = xmlToJSON.parseString(xmlString)
         jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
 

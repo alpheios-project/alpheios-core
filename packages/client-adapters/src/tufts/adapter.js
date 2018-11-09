@@ -11,27 +11,22 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
     this.config = new TuftsConfigData(config, DefaultConfig)
-    console.info('******************AlpheiosTuftsAdapter this.config.engine', this.config, this.config.engine)
     this.config.uploadEngines(this.config.engine)
     this.engineSet = new EnginesSet(this.config.engine)
   }
 
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(languageID, word)
-    console.info('***************async getHomonym1', languageID, word, url)
     let jsonObj = await this.fetch(url)
-    console.info('***************async getHomonym2', jsonObj)
 
     if (jsonObj) {
       let transformAdapter = new TransformAdapter(this.engineSet, this.config)
-
-      console.info('***************async getHomonym3', jsonObj.RDF.Annotation, word)
 
       let homonym = transformAdapter.transformData(jsonObj, word)
       if (homonym && homonym.lexemes) {
         homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
       }
-      console.info('***************async getHomonym4', homonym)
+
       return homonym
     } else {
       // No data found for this word
@@ -42,7 +37,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
   prepareRequestUrl (languageID, word) {
     let langCode = LMF.getLanguageCodeFromId(languageID)
     let engine = this.engineSet.getEngineByCode(languageID)
-    console.info('*****************prepareRequestUrl this.engineSet', this.engineSet)
+
     if (engine) {
       let code = engine.engine
       return this.config.url.replace('r_WORD', word).replace('r_ENGINE', code).replace('r_LANG', langCode).replace('r_CLIENT', this.config.clientId)
