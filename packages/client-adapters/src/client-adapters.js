@@ -54,7 +54,8 @@ class ClientAdapters {
     let localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter()
 
     if (options.type === 'fetchTranslations') {
-      await localLemmasAdapter.getTranslationsList(options.lemmaList, options.inLang, options.browserLang)
+      console.info('*********************fetchTranslations', options.homonym)
+      await localLemmasAdapter.getTranslationsList(options.homonym, options.browserLang)
       return true
     }
     return null
@@ -73,7 +74,11 @@ class ClientAdapters {
     let localLexiconsAdapter = new AlpheiosLexiconsAdapter()
 
     if (options.type === 'fetchShortDefs') {
-      await localLexiconsAdapter.fetchShortDefs(options.lemma, options.opts)
+      await localLexiconsAdapter.fetchShortDefs(options.homonym, options.opts)
+      return true
+    }
+    if (options.type === 'fetchFullDefs') {
+      await localLexiconsAdapter.fetchFullDefs(options.homonym, options.opts)
       return true
     }
     return null

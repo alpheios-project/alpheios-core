@@ -5652,7 +5652,8 @@ class ClientAdapters {
     let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
 
     if (options.type === 'fetchTranslations') {
-      await localLemmasAdapter.getTranslationsList(options.lemmaList, options.inLang, options.browserLang)
+      console.info('*********************fetchTranslations', options.homonym)
+      await localLemmasAdapter.getTranslationsList(options.homonym, options.browserLang)
       return true
     }
     return null
@@ -5671,7 +5672,11 @@ class ClientAdapters {
     let localLexiconsAdapter = new _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]()
 
     if (options.type === 'fetchShortDefs') {
-      await localLexiconsAdapter.fetchShortDefs(options.lemma, options.opts)
+      await localLexiconsAdapter.fetchShortDefs(options.homonym, options.opts)
+      return true
+    }
+    if (options.type === 'fetchFullDefs') {
+      await localLexiconsAdapter.fetchFullDefs(options.homonym, options.opts)
       return true
     }
     return null
@@ -5763,6 +5768,8 @@ var _lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/
 
 
 
+let cachedDefinitions = new Map()
+
 class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor (config = {}) {
     super()
@@ -5771,51 +5778,107 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
     this.data = null
   }
 
-  async fetchShortDefs (lemma, options = {}) {
-    let res = await this.fetchDefinitions(lemma, options, 'short')
+  async fetchShortDefs (homonym, options = {}) {
+    let res = await this.fetchDefinitions(homonym, options, 'short')
     return res
   }
 
-  async fetchFullDefs (lemma, options = {}) {
-    let res = await this.fetchDefinitions(lemma, options, 'full')
+  async fetchFullDefs (homonym, options = {}) {
+    let res = await this.fetchDefinitions(homonym, options, 'full')
     return res
   }
 
-  async fetchDefinitions (lemma, options, lookupFunction) {
+  async fetchDefinitions (homonym, options, lookupFunction) {
     console.info('************* fetchDefinitions')
+
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
       console.error('There are no allowed urls in the options')
       return
     }
-
-    let urlKeys = this.getRequests(lemma.languageID).filter(url => this.options.allow.includes(url))
+    let languageID = homonym.lexemes[0].lemma.languageID
+    let urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
     for (let urlKey of urlKeys) {
-      let url = this.config[urlKey].urls[lookupFunction]
-      let unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
       if (lookupFunction === 'short') {
-        await this.updateShortDefs(unparsed, lemma, this.config[urlKey])
+        console.info('**************lookupFunction short start')
+        let url = this.config[urlKey].urls.short
+        await this.checkCachedData(url)
+        await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
+        console.info('**************lookupFunction short finish')
+      }
+      if (lookupFunction === 'full') {
+        console.info('**************lookupFunction full start')
+        let url = this.config[urlKey].urls.index
+        await this.checkCachedData(url)
+        console.info('**************lookupFunction full checkCachedData finish')
+        let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
+        console.info('**************lookupFunction full collectFullDefURLs finish')
+        await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+        console.info('**************lookupFunction full finish')
       }
     }
   }
 
-  async updateShortDefs (unparsed, lemma, config) {
-    console.info('************************updateShortDefs')
-    let parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-    this.data = this.fillMap(parsed.data)
-    // console.info('************************this.data', this.data)
-    let model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(lemma.languageID)
-    let deftexts = this.lookupInDataIndex(this.data, lemma, model)
-    console.info('***************************deftexts', deftexts)
+  async checkCachedData (url) {
+    if (!cachedDefinitions.has(url)) {
+      let unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+      let parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+      let data = this.fillMap(parsed.data)
+      cachedDefinitions.set(url, data)
+    }
+  }
 
-    if (deftexts) {
-      for (let d of deftexts) {
-        let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](d, config.langs.target, 'text/plain', lemma.word)
-        await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
+  async updateShortDefs (languageID, data, homonym, config) {
+    console.info('************************updateShortDefs')
+    let model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID)
+
+    for (let lexeme of homonym.lexemes) {
+      let deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
+      console.info('***************************deftexts', deftexts)
+
+      if (deftexts) {
+        for (let d of deftexts) {
+          let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](d, config.langs.target, 'text/plain', lexeme.lemma.word)
+          let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
+          lexeme.meaning['appendShortDefs'](definition)
+        }
       }
     }
-    console.info('**************lemma', lemma)
+    // console.info('**************lemma', lemma, def)
+  }
+
+  collectFullDefURLs (languageID, data, homonym, config) {
+    let model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID)
+    let urlFull = config.urls.full
+
+    if (!urlFull) {
+      console.error(`URL data is not available`)
+      return
+    }
+
+    let requests = []
+    for (let lexeme of homonym.lexemes) {
+      let ids = this.lookupInDataIndex(data, lexeme.lemma, model)
+      if (urlFull && ids) {
+        for (let id of ids) {
+          requests.push({ url: `${urlFull}&n=${id}`, lexeme: lexeme })
+        }
+      } else if (urlFull) {
+        requests.push({ url: `${urlFull}&l=${lexeme.lemma.word}`, lexeme: lexeme })
+      }
+    }
+    return requests
+  }
+
+  async updateFullDefs (fullDefsRequests, config) {
+    console.info('********************updateFullDefs', fullDefsRequests)
+    for (let request of fullDefsRequests) {
+      let fullDefData = await this.fetch(request.url, { type: 'xml' })
+      let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+      let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
+      request.lexeme.meaning['appendFullDefs'](definition)
+    }
   }
 
   getRequests (languageID) {
@@ -5951,8 +6014,19 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
     this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["ResourceProvider"](this.config.url, this.config.rights)
   }
 
-  async getTranslationsList (lemmaList, inLang, browserLang) {
+  async getTranslationsList (homonym, browserLang) {
+    let lemmaList = []
+    console.info('*****************getTranslationsList homonym', homonym)
+    for (let lexeme of homonym.lexemes) {
+      lemmaList.push(lexeme.lemma)
+    }
+    console.info('*****************translations lemmaList', lemmaList)
+
+    const inLang = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID)
+    console.info('*****************translations inLang', inLang)
+
     let outLang = this.config.defineOutLang(browserLang)
+    console.info('*****************translations outLang', outLang)
 
     let input = this.prepareInput(lemmaList)
     let urlLang = await this.getAvailableResLang(inLang, outLang)
