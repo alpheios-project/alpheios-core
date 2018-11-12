@@ -33,7 +33,7 @@ describe('LexiconsAdapter', () => {
     console.info('*******************homonym', homonym)
 
     let adapterLex = new AlpheiosLexiconsAdapter()
-    await adapterLex.fetchDefinitions(homonym.lexemes[0].lemma, { allow: ['https://github.com/alpheios-project/lsj'] }, 'short')
+    await adapterLex.fetchDefinitions(homonym, { allow: ['https://github.com/alpheios-project/lsj'] }, 'short')
     // await adapterLex.fetchDefinitions(homonym, {}, 'short')
     console.info('final of the test')
   })
