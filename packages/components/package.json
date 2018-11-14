@@ -133,6 +133,6 @@
     "**/support"
   ],
   "dependencies": {
-    "vue-multiselect": "^2.1.3"
+    "vue-multiselect": "2.1.0"
   }
 }
