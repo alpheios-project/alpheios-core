@@ -1,4 +1,5 @@
-div.alpheios-color_schema_dark_class {
+#{$alpheios-ID-namespace} {
+.alpheios-color_schema_dark_class {
 	background: $alpheios-color_schema_dark_background;
 	color: $alpheios-color_schema_dark_text_color;
 
@@ -81,4 +82,5 @@ div.alpheios-color_schema_dark_class {
 		color: $alpheios-toolbar-color;
 		background: $alpheios-toolbar-text-color;
 	}
+}
 }

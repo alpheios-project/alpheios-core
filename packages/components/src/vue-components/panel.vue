@@ -684,19 +684,6 @@
         stroke: $alpheios-link-hover-color;
     }
 
-    .alpheios-panel__body {
-        display: flex;
-        height: calc(100vh - #{$alpheios-panel-header-height});
-    }
-
-    .alpheios-panel-left .alpheios-panel__body {
-        flex-direction: row;
-    }
-
-    .alpheios-panel-right .alpheios-panel__body {
-        flex-direction: row-reverse;
-    }
-
     .alpheios-panel__content {
         overflow: visible;
         grid-area: content;

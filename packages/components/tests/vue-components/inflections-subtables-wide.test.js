@@ -45,7 +45,7 @@ describe('inflections-subtables-wide.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('2 WideInflectionsSubTables - cellClasses method  returns classes depending on cell features', () => {
+  it.skip('2 WideInflectionsSubTables - cellClasses method  returns classes depending on cell features', () => {
     let cmp = mount(WideInflectionsSubTables, {
       propsData: {
         view: testView

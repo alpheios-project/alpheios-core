@@ -288,6 +288,7 @@
         margin: 1rem 0 0.6rem;
         text-transform: uppercase;
         font-size: 1rem;
+        font-style: normal;
     }
 
     .alpheios-ib__pofs-title {

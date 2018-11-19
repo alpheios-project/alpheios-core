@@ -20,14 +20,16 @@
     .uk-button-small {
         font-size: $baseFontSize * 0.7;
         line-height: $baseFontSize * 1.75;
+        padding: 0 $baseFontSize * 0.90 !important;
+        height: auto !important;
     }
 
     .uk-input {
-        height: $baseFontSize * 1.75;
+        height: $baseFontSize * 1.75 !important;
     }
 
     .uk-select:not([multiple]):not([size]) {
-        height: $baseFontSize * 2.5;
+        height: $baseFontSize * 2.5 !important;
     }
 
     .alpheios-text__smallest {
@@ -80,6 +82,10 @@
         font-size: $baseFontSize * 1.25;
     }
 
+    .alpheios-ib .alpheios-inflections__title {
+        font-size: $baseFontSize;
+    }
+
     .alpheios-inflections__additional_title {
         font-size: $baseFontSize * 0.875;
         font-weight: 700;
@@ -112,7 +118,7 @@
 
         label {
             padding-left: $baseFontSize * 1.325;
-            min-height: $baseFontSize;
+            min-height: $baseFontSize * 1.25;
 
             &::before{
               height: $baseFontSize;
@@ -182,22 +188,24 @@
 
 }
 
-.#{$alpheios-uikit-namespace}.alpheios-font_medium_class {
-    @include font-class($alpheios-base-font-size);
-}
+#{$alpheios-ID-namespace} {
+    .alpheios-font_medium_class {
+        @include font-class($alpheios-base-font-size);
+    }
 
-.#{$alpheios-uikit-namespace}.alpheios-font_small_class {
-    @include font-class($alpheios-small-font-size);
-}
+    .alpheios-font_small_class {
+        @include font-class($alpheios-small-font-size);
+    }
 
-.#{$alpheios-uikit-namespace}.alpheios-font_large_class {
-    @include font-class($alpheios-large-font-size);
+    .alpheios-font_large_class {
+        @include font-class($alpheios-large-font-size);
 
-    .alpheios-panel__header-action-btn,
-    .alpheios-panel__header-action-btn.active:hover,
-    .alpheios-panel__header-action-btn.active:focus,
-    .alpheios-panel__header-nav-btn {
-        margin-right: 10px;
-        margin-left: 10px;
+        .alpheios-panel__header-action-btn,
+        .alpheios-panel__header-action-btn.active:hover,
+        .alpheios-panel__header-action-btn.active:focus,
+        .alpheios-panel__header-nav-btn {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
     }
 }

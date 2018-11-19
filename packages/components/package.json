@@ -9,7 +9,8 @@
     "test-components": "eslint --fix src/**/*.js && jest tests/vue-components --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-c": "eslint --fix src/**/*.js && jest tests/vue-components/lookup.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "eslint --fix src/**/*.js && jest tests/lib/selection/alignment --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+    "build": "npm run build-safari && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+    "build-safari": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue-postcss config-safari.mjs",
     "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
     "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
     "lint": "eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue"
@@ -62,6 +63,8 @@
     "jump.js": "^1.0.2",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
+    "postcss-safe-important": "^1.1.0",
+    "postcss-scss": "^2.0.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.2",
