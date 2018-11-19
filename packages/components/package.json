@@ -64,7 +64,6 @@
     "jump.js": "^1.0.2",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
-    "postcss-safe-important": "^1.1.0",
     "postcss-scss": "^2.0.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.1.0",
@@ -86,7 +85,8 @@
     "intl-messageformat": "2.x.x",
     "uuid": "3.x.x",
     "wrap-range-text": "",
-    "eslint": "^1.6.0"
+    "eslint": "^1.6.0",
+    "postcss-safe-important": "^1.1.0"
   },
   "engines": {
     "node": ">= 10.5.0",
