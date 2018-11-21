@@ -79,8 +79,12 @@ describe('panel.test.js', () => {
           lexemes: [],
           inflectionComponentData: {
             visible: false,
-            enabled: false,
-            inflectionData: false // If no inflection data present, it is set to false
+            inflectionViewSet: null,
+            inflDataReady: false
+          },
+          inflectionBrowserEnabled: true,
+          inflectionBrowserData: {
+            visible: false
           },
           shortDefinitions: [],
           fullDefinitions: '',
@@ -441,11 +445,13 @@ describe('panel.test.js', () => {
           grammarRes: {},
           inflectionComponentData: {
             languageName: 'Latin',
-            enabled: true,
+            visible: true,
             inflectionViewSet: {
               enabled: true,
               hasMatchingData: true
-            }
+            },
+            inflDataReady: true
+
           },
           infoComponentData: {},
           treebankComponentData: {},

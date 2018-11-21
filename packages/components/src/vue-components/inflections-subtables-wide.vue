@@ -32,7 +32,7 @@
     methods: {
       cellClasses: function (cell) {
         if (cell.role === 'label') {
-          return 'infl-prdgm-tbl-cell--label'
+          return 'infl-prdgm-tbl__cell--label'
         }
 
         /*
@@ -44,7 +44,7 @@
          */
         if (cell.role === 'data') {
 
-          let cellClassName = 'infl-prdgm-tbl-cell--data'
+          let cellClassName = 'infl-prdgm-tbl__cell--data'
           const fullMatchClassnName = 'infl-prdgm-tbl-cell--full-match'
           // Get a list of cell feature properties
           let comparativeFeatures = []

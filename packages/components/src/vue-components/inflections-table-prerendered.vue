@@ -52,7 +52,6 @@
       collapsed: function (state) {
         if (this.collapsed !== null) {
           this.state.collapsed = state
-          this.$emit('prerenderedinteraction')
         }
       }
     },
@@ -65,7 +64,6 @@
     methods: {
       collapse: function () {
         this.state.collapsed = !this.state.collapsed
-        this.$emit('prerenderedinteraction')
         this.$emit('widthchange') // When view is open, we might need to adjust a panel width
       },
 

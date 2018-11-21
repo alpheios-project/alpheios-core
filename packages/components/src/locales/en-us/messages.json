@@ -31,8 +31,13 @@
     "component": "Panel"
   },
   "TOOLTIP_INFLECT": {
-    "message": "Inflection Tables",
+    "message": "Inflections",
     "description": "tooltip for inflections tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT_BROWSER": {
+    "message": "Browse Inflection Tables",
+    "description": "tooltip for inflections browser tab",
     "component": "Panel"
   },
   "TOOLTIP_DEFINITIONS": {

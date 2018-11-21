@@ -40,11 +40,11 @@
             </div>
 
             <div v-if="!selectedView.hasPrerenderedTables">
-                <main-table-wide-vue :view="selectedView" :messages="messages" :collapsed="mainTableCollapsed" @widthchange="updateWidth">
+                <main-table-wide-vue :view="selectedView" :messages="messages" @widthchange="updateWidth" :collapsed="false">
                 </main-table-wide-vue>
 
                 <template v-if="selectedView.linkedViews" v-for="linkedView in selectedView.linkedViews">
-                    <main-table-wide-vue :view="linkedView" :messages="messages" @widthchange="updateWidth">
+                    <main-table-wide-vue :view="linkedView" :messages="messages" @widthchange="updateWidth" :collapsed="false">
                     </main-table-wide-vue>
                 </template>
 
@@ -56,10 +56,10 @@
                 </div>
             </div>
             <template v-else>
-                <prerendered-table-wide :view="selectedView" :collapsed="mainTableCollapsed" @prerenderedinteraction="prerenderedInteraction"></prerendered-table-wide>
-                <sub-tables-wide v-show="!prerenderedCollapsed" :view="selectedView" @navigate="navigate"></sub-tables-wide>
+                <prerendered-table-wide :view="selectedView" :collapsed="false"></prerendered-table-wide>
+                <sub-tables-wide :view="selectedView" @navigate="navigate" :collapsed="false"></sub-tables-wide>
 
-                <div v-show="selectedView.hasSuppParadigms && !prerenderedCollapsed" class="alpheios-inflections__supp-tables">
+                <div v-show="selectedView.hasSuppParadigms" class="alpheios-inflections__supp-tables">
                     <h3 class="alpheios-inflections__title">{{messages.INFLECTIONS_SUPPLEMENTAL_SECTION_HEADER}}</h3>
                     <template v-for="paradigm of selectedView.suppParadigms">
                         <supp-tables-wide :data="paradigm"
@@ -69,19 +69,14 @@
                 </div>
             </template>
 
-            <div v-show="selectedView.hasCredits && !prerenderedCollapsed" class="alpheios-inflections__credits-cont">
+            <div v-show="selectedView.hasCredits" class="alpheios-inflections__credits-cont">
                 <h3 class="alpheios-inflections__credits-title">{{messages.INFLECTIONS_CREDITS_TITLE}}</h3>
                 <div v-html="selectedView.creditsText" class="alpheios-inflections__credits-text"></div>
             </div>
         </div>
-        <div v-else-if="!inflectionBrowserEnabled" class="alpheios-inflections__placeholder">
+        <div v-else class="alpheios-inflections__placeholder">
             {{messages.PLACEHOLDER_INFLECT_UNAVAILABLE}}
         </div>
-
-        <inflection-browser v-if="inflectionBrowserEnabled" :language-id="languageID" :messages="messages"
-                            :infl-browser-tables-collapsed="inflBrowserTablesCollapsed"
-                            @widthchange="updateWidth" @interaction="inflTableInteraction">
-        </inflection-browser>
     </div>
 </template>
 <script>
@@ -90,7 +85,6 @@
   import WideTableVue from './inflections-table-wide.vue'
   import WideSubTables from './inflections-subtables-wide.vue'
   import WideSuppTable from './inflections-supp-table-wide.vue'
-  import InflectionBrowser from './inflections-browser.vue'
   import WordForms from './wordforms.vue'
 
   import Tooltip from './tooltip.vue'
@@ -108,7 +102,6 @@
       mainTableWideVue: WideTableVue,
       subTablesWide: WideSubTables,
       suppTablesWide: WideSuppTable,
-      inflectionBrowser: InflectionBrowser,
       alphTooltip: Tooltip,
       wordForms: WordForms
     },
@@ -118,19 +111,6 @@
       inflectionsEnabled: {
         type: Boolean,
         default: false,
-        required: false
-      },
-
-      // Whether a inflection browser component is enabled or not (depends on the language)
-      inflectionBrowserEnabled: {
-        type: Boolean,
-        default: true,
-        required: false
-      },
-
-      inflBrowserTablesCollapsed: {
-        type: Boolean,
-        default: true,
         required: false
       },
 
@@ -171,8 +151,6 @@
         selectedViewName: '',
         selectedView: {},
         renderedView: {},
-        mainTableCollapsed: false,
-        prerenderedCollapsed: false,
         elementIDs: {
           panelInner: 'alpheios-panel-inner',
           footnotes: 'alph-inflection-footnotes'
@@ -206,7 +184,6 @@
           this.selectedPartOfSpeech = newValue
           this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
           this.selectedView = this.views[0].render()
-          this.mainTableCollapsed = false
         }
       },
       viewSelector: {
@@ -215,7 +192,6 @@
         },
         set: function (newValue) {
           this.selectedView = this.views.find(view => view.id === newValue).render()
-          this.mainTableCollapsed = false
         }
       },
       inflectionTable: function () {
@@ -242,31 +218,7 @@
 
     watch: {
       inflectionViewSet: function () {
-        this.hasInflectionData = false
-        if (this.data.inflectionViewSet) {
-          this.languageID = this.data.inflectionViewSet.languageID
-        }
-        if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
-
-          this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
-          if (this.partsOfSpeech.length > 0) {
-            this.selectedPartOfSpeech = this.partsOfSpeech[0]
-            this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
-          } else {
-            this.selectedPartOfSpeech = []
-            this.views = []
-          }
-
-          if (this.views.length > 0) {
-            this.hasInflectionData = true
-            this.selectedView = this.views[0].render()
-            this.mainTableCollapsed = false
-            this.prerenderedCollapsed = false
-          } else {
-            this.selectedView = ''
-          }
-        }
-        // Notify parent of inflection data change
+        this.initViewSet()
         this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.data.inflectionViewSet)
       },
 
@@ -299,34 +251,35 @@
     },
 
     methods: {
+      initViewSet() {
+        this.hasInflectionData = false
+        if (this.data.inflectionViewSet) {
+          this.languageID = this.data.inflectionViewSet.languageID
+        }
+        if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
+
+          this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
+          if (this.partsOfSpeech.length > 0) {
+            this.selectedPartOfSpeech = this.partsOfSpeech[0]
+            this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
+          } else {
+            this.selectedPartOfSpeech = []
+            this.views = []
+          }
+
+          if (this.views.length > 0) {
+            this.hasInflectionData = true
+            this.selectedView = this.views[0].render()
+          } else {
+            this.selectedView = ''
+          }
+        }
+      },
+
       updateWidth: function () {
         Vue.nextTick(() => {
-          this.$emit('contentwidth', this.htmlElements.content.offsetWidth + 1)
+          this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections' } )
         })
-      },
-
-      inflTableInteraction: function () {
-        this.mainTableCollapsed = true
-        Vue.nextTick()
-          .then(() => {
-            this.mainTableCollapsed = null
-          })
-
-      },
-      prerenderedInteraction: function() {
-        // this is a bit of  hack -- prerendered tables collapsed state
-        // should follow the main table collapsed state but
-        // the prerendered tables are a group of sibling tables and we
-        // are only tracking state in a property on the main one we have
-        // to keep a separate property for the sub and supplementary and credits
-        // pieces to follow. So we use a simple toggle for that state
-        // but it should always be overridden by the main table state which is
-        // more fully captured
-        if (this.mainTableCollapsed) {
-          this.prerenderedCollapsed = true
-        } else {
-          this.prerenderedCollapsed = ! this.prerenderedCollapsed
-        }
       },
 
       navigate (reflink) {
@@ -355,6 +308,7 @@
       if (typeof this.$el.querySelector === 'function') {
         this.htmlElements.content = this.$el
       }
+      this.initViewSet()
     }
   }
 </script>

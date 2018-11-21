@@ -186,6 +186,7 @@ export default class UIController {
           tabs: {
             definitions: false,
             inflections: false,
+            inflectionsbrowser: false,
             status: false,
             options: false,
             info: true,
@@ -197,14 +198,16 @@ export default class UIController {
           lexemes: [],
           inflectionComponentData: {
             visible: false,
-            inflectionViewSet: null
+            inflectionViewSet: null,
+            inflDataReady: false
+          },
+          inflectionBrowserData: {
+            visible: false
           },
           inflectionsWaitState: false,
           inflectionsEnabled: false,
           // Whether inflection browser is enabled for a language. We always show an inflection browser for now.
           inflectionBrowserEnabled: false,
-          // Whether all table in an inflection browser should be collapsed
-          inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
           inflections: {
@@ -899,7 +902,6 @@ export default class UIController {
     this.panel.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
     this.panel.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
     this.panel.panelData.grammarAvailable = false
-    this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
     this.clear().open().changeTab('definitions')
     return this
   }
@@ -1049,11 +1051,11 @@ export default class UIController {
       this.addMessage(this.l10n.messages.TEXT_NOTICE_INFLDATA_READY)
     }
     this.panel.panelData.inflectionsWaitState = false
+    this.panel.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
     this.popup.popupData.inflDataReady = this.inflDataReady
   }
 
   lexicalRequestComplete () {
-    this.panel.panelData.inflBrowserTablesCollapsed = null // Reset inflection browser tables state
     this.popup.popupData.morphDataReady = true
   }
 
