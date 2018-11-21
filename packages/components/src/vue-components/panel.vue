@@ -273,7 +273,9 @@
         return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
       },
       mainstyles: function () {
-        return (this.data) ? this.data.styles : ''
+        let mainstyles = (this.data) ? this.data.styles : {}
+        
+        return Object.assign({ width: '400px' }, mainstyles)
       },
       resourceSettingsLexicons: function () {
         return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
@@ -552,13 +554,14 @@
     $alpheios-panel-title-height: 20px;
 
     .alpheios-panel {
-        width: 400px; // Initial width
+        // width: 400px; /* no !important */
+        overflow: auto;
         height: 100vh;
         top: 0;
         z-index: 2000;
         position: fixed;
         background: #FFF;
-        resize: both;
+        resize: both; /* no !important */
         opacity: 0.95;
         direction: ltr;
         display: grid;
@@ -569,6 +572,7 @@
             "title"
             "content"
             "content"
+        
     }
 
     .alpheios-panel[data-notification-visible="true"] {

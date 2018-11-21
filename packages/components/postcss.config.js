@@ -3,7 +3,7 @@ module.exports = {
   parser: 'postcss-scss',
   plugins: {
     'postcss-safe-important': {
-      decls: ['display']
+      decls: ['display', 'grid-template-columns']
     }
   }
 }

@@ -115,13 +115,11 @@
   }
 }
 
-#{$alpheios-ID-namespace} {
-  .alpheios-font_large_class,
-  .alpheios-font_medium_class, 
-  .alpheios-font_small_class,
-  .alpheios-color_schema_light_class,
-  .alpheios-color_schema_dark_class,
-  .alpheios-panel {
-   @include multiselect-class();
- }
+.#{$alpheios-uikit-namespace}.alpheios-font_large_class,
+.#{$alpheios-uikit-namespace}.alpheios-font_medium_class, 
+.#{$alpheios-uikit-namespace}.alpheios-font_small_class,
+.#{$alpheios-uikit-namespace}.alpheios-color_schema_light_class,
+.#{$alpheios-uikit-namespace}.alpheios-color_schema_dark_class,
+.#{$alpheios-uikit-namespace}.alpheios-panel {
+  @include multiselect-class();
 }
