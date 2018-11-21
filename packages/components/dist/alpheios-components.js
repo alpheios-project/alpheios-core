@@ -10798,7 +10798,9 @@ __webpack_require__.r(__webpack_exports__);
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
-      defaultScrollPadding: 20
+      defaultScrollPadding: 20,
+      defaultPanelWidth: 400,
+      panelWidth: null
     }
   },
   props: {
@@ -10833,8 +10835,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     mainstyles: function () {
       let mainstyles = (this.data) ? this.data.styles : {}
-      
-      return Object.assign({ width: '400px' }, mainstyles)
+      this.panelWidth = this.panelWidth ? this.panelWidth : this.defaultPanelWidth
+
+      return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
     },
     resourceSettingsLexicons: function () {
       return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
@@ -11001,7 +11004,7 @@ __webpack_require__.r(__webpack_exports__);
         return
       }
       if (dataObj.width === 'auto') {
-        this.$el.style.removeProperty('width')
+        this.panelWidth = null
         return
       }
 
@@ -11019,13 +11022,13 @@ __webpack_require__.r(__webpack_exports__);
         let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
 
         if (adjustedWidth > maxWidth) { adjustedWidth = maxWidth }
-        this.$el.style.width = `${adjustedWidth}px`
+        this.panelWidth = adjustedWidth
       }
     },
 
     setTreebankContentWidth: function(width) {
         console.log(`Set width to ${width}`)
-        this.$el.style.width = width
+        this.panelWidth = width
     },
 
     ln10Messages: function (value, defaultValue = 'unknown') {
