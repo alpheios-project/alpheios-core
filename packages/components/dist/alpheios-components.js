@@ -29667,6 +29667,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 /* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
 /* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
 /* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
 /* global Event */
 
 
@@ -29680,6 +29681,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 // A panel component
 
 // A popup component
+
 
 
 
@@ -29735,7 +29737,44 @@ class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
+    /**
+     * If an event controller be used with an instance of a UI Controller,
+     * this prop will hold an event controller instance. It is usually initialized within a `build` method.
+     * @type {UIEventController}
+     */
+    this.evc = null
+
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
+  }
+
+  /**
+   * Creates an instance of a UI controller with default options. Provide your own implementation of this method
+   * if you want to initialize a UI controller differently.
+   */
+  static build (state, options) {
+    let uiController = new UIController(state, options)
+
+    // Creates on configures an event listener
+    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_28__["default"]()
+    switch (uiController.options.textQueryTrigger) {
+      case 'dblClick':
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"])
+        break
+      case 'longTap':
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"])
+        break
+      default:
+        eventController.registerListener(
+          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], uiController.options.textQueryTrigger
+        )
+    }
+
+    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'keydown')
+    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'Alpheios_Page_Load')
+
+    // Attaches an event controller to a UIController instance
+    uiController.evc = eventController
+    return uiController
   }
 
   /**
@@ -30426,9 +30465,7 @@ class UIController {
     if (!this.isInitialized) { await this.init() }
 
     // Activate listeners
-    if (this.options.textQueryTrigger !== 'none') { this.addTextQueryListener(this.options.textQueryTrigger, this.options.textQuerySelector) }
-    document.addEventListener('keydown', this.handleEscapeKey.bind(this))
-    document.body.addEventListener('Alpheios_Page_Load', this.updateAnnotations.bind(this))
+    if (this.evc) { this.evc.activateListeners() }
 
     this.state.activateUI()
 
@@ -30448,16 +30485,6 @@ class UIController {
     return this
   }
 
-  addTextQueryListener (trigger, selector = 'body') {
-    if (trigger === 'dblClick') {
-      _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"].listen(selector, evt => this.getSelectedText(evt))
-    } else if (trigger === 'longTap') {
-      _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"].listen(selector, evt => this.getSelectedText(evt))
-    } else {
-      _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"].listen(selector, (evt) => this.getSelectedText(evt), trigger)
-    }
-  }
-
   /**
    * Deactivates a UI controller. May unload some resources to preserve memory.
    * In this case an `activate()` method will be responsible for restoring them.
@@ -30466,7 +30493,8 @@ class UIController {
   async deactivate () {
     if (this.isDeactivated) { return `Already deactivated` }
 
-    // TODO: probably need to remove event listeners here
+    // Deactivate event listeners
+    if (this.evc) { this.evc.deactivateListeners() }
 
     this.popup.close()
     this.panel.close()
@@ -30884,10 +30912,10 @@ class UIController {
       !this.contentOptions.items.locale.currentValue.match(/^en-/)
   }
 
-  handleEscapeKey (event) {
+  handleEscapeKey (event, nativeEvent) {
     // TODO: Move to keypress as keyCode is deprecated
     // TODO: Why does it not work on initial panel opening?
-    if (event.keyCode === 27 && this.state.isActive()) {
+    if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
         this.panel.close()
       } else if (this.popup.visible) {
@@ -30899,7 +30927,7 @@ class UIController {
   /**
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
-  updateAnnotations () {
+  updateAnnotations (event, nativeEvent) {
     if (this.state.isActive() && this.state.uiIsActive()) {
       _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].create({
         uiController: this,
@@ -30907,6 +30935,112 @@ class UIController {
         siteOptions: this.siteOptions
       }).getData()
     }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/controllers/ui-event-controller.js":
+/*!************************************************!*\
+  !*** ./lib/controllers/ui-event-controller.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UIEventController; });
+/**
+ * This is an event controller that is used currently for user interaction event, but can be adapted
+ * to handle events of any type.
+ */
+class UIEventController {
+  constructor () {
+    this.listeners = new Map()
+  }
+
+  /**
+   * Registers a single event listener or a group of event listeners.
+   * @param {string} name - A name of the listener or a group of listeners
+   *        that can be used to operate it (register, unregister, set, or remove).
+   * @param {string} nodeOrSelector - A CSS selector to define HTML elements that will listen to an events
+   *        or an HTML Node element.
+   * @param {Function} eventHandler - An event listener function to register.
+   * @param {PointerEvt} EventType - A constructor function of on of a custom pointer events that will do an event handling.
+   * @param {...*} eventExtraParams - Extra arguments that will be passed to the
+   *        PointerEvt constructor function after two obligatory parameters of HTML element and handler function.
+   * @return {UIEventController} An event controller instance for chaining.
+   */
+  registerListener (name, nodeOrSelector, eventHandler, EventType, ...eventExtraParams) {
+    let events
+    if (!nodeOrSelector || nodeOrSelector instanceof Node) {
+      events = [new EventType(nodeOrSelector, eventHandler, ...eventExtraParams)]
+    } else {
+      events = Array.from(document.querySelectorAll(nodeOrSelector)).map((el) => new EventType(el, eventHandler, ...eventExtraParams))
+    }
+
+    if (this.listeners.has(name)) {
+      // Unregister a previously registered event listener
+      this.unregisterListener(name)
+    }
+    this.listeners.set(name, events)
+    return this
+  }
+
+  /**
+   * Unregisters a single listener or a group of listeners registered under a specific name.
+   * @param {string} name - A name of the event listener or group of event listeners.
+   * @return {UIEventController} An event controller instance for chaining.
+   */
+  unregisterListener (name) {
+    if (this.listeners.has(name)) {
+      this.deactivateListener(name)
+      this.listeners.delete(name)
+    }
+    return this
+  }
+
+  /**
+   * Activates a listener by name.
+   * @param {string} name - A name of a listener to activate.
+   * @return {UIEventController} An event controller instance for chaining.
+   */
+  activateListener (name) {
+    if (this.listeners.has(name)) {
+      this.listeners.get(name).forEach((l) => l.set())
+    }
+    return this
+  }
+
+  /**
+   * Activates all event listeners that were registered previously.
+   * @return {UIEventController} An event controller instance for chaining.
+   */
+  activateListeners () {
+    Array.from(this.listeners.keys()).forEach((name) => this.activateListener(name))
+    return this
+  }
+
+  /**
+   * Deactivates a listener by name.
+   * @param {string} name - A name of a listener to deactivate.
+   * @return {UIEventController} An event controller instance for chaining.
+   */
+  deactivateListener (name) {
+    if (this.listeners.has(name)) {
+      this.listeners.get(name).forEach((l) => l.remove())
+    }
+    return this
+  }
+
+  /**
+   * Deactivates all event listeners that were registered previously.
+   * @return {UIEventController} An event controller instance for chaining.
+   */
+  deactivateListeners () {
+    Array.from(this.listeners.keys()).forEach((name) => this.deactivateListener(name))
+    return this
   }
 }
 
@@ -30987,33 +31121,71 @@ __webpack_require__.r(__webpack_exports__);
 
 /**
  * This is a Generic Event Class that can be used to
- * to wrap events for which we haven't explicitly defined wrappers
+ * to wrap events for which we haven't explicitly defined wrappers.
+ * @param {Node} element - An HTML Node element
+ * @param {Function} evtHandler - A client's event handler
+ * @param {string} evtType - A type of an event, such as 'click', 'dblclick', etc.
  */
 class GenericEvt extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor (element, evtHandler, evtName) {
+  constructor (element, evtHandler, evtType) {
     super()
     this.element = element
+    this.evtType = evtType
     this.evtHandler = evtHandler
-    this.evtName = evtName
+    this.boundListener = this.eventListener.bind(this) // A bound event listener of GenericEvt
   }
 
   static excludeCpeTest (dataset) {
-    return dataset.hasOwnProperty('alphExcludeDblClickCpe')
+    return dataset.hasOwnProperty('alphExcludeGenericEvtCpe')
   }
 
   setEndPoint (clientX, clientY, target, path) {
     super.setEndPoint(clientX, clientY, target, path)
     if (!(this.start.excluded || this.end.excluded)) {
-      _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__["default"].instance.log(`${this.evtName} (completed), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
+      _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__["default"].instance.log(`${this.evtType} (completed), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
         `duration: ${this.duration}`)
     }
     return !(this.start.excluded || this.end.excluded)
   }
 
-  static listen (selector, evtHandler, evtName) {
+  /**
+   * A callback that is attached to a native HTML event listener.
+   * It calls a client's event handler if an event is valid.
+   * @param domEvt
+   */
+  eventListener (domEvt) {
+    const valid = this
+      .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+      .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+    if (valid) { this.evtHandler(this, domEvt) }
+  }
+
+  /**
+   * Activates a listener
+   */
+  set () {
+    this.element.addEventListener(this.evtType, this.boundListener, { passive: true })
+  }
+
+  /**
+   * Deactivates a listener
+   */
+  remove () {
+    this.element.removeEventListener(this.evtType, this.boundListener, { passive: true })
+  }
+
+  /**
+   * This static method that allows to set a listener in one function call
+   * TODO: It is here for compatibility with older code. Remove if not used anywhere anymore.
+   * @param {string} selector
+   * @param {Function} evtHandler
+   * @param {string} evtType - A type of an event, such as 'click', 'dblclick', etc.
+   */
+  static listen (selector, evtHandler, evtType) {
     let elements = document.querySelectorAll(selector)
     for (const element of elements) {
-      this.addGenericListener(element, new this(element, evtHandler, evtName), evtName)
+      let listener = new this(element, evtHandler, evtType)
+      listener.set()
     }
   }
 }
@@ -31040,7 +31212,15 @@ class LongTap extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor (element, evtHandler, mvmntThreshold = 5, durationThreshold = 125) {
     super()
     this.element = element
+    this.evtStartType = this.constructor.pointerEventSupported ? 'pointerdown' : 'touchstart'
+    this.evtEndType = this.constructor.pointerEventSupported ? 'pointerup' : 'touchend'
     this.evtHandler = evtHandler
+    this.boundStartListener = this.constructor.pointerEventSupported
+      ? this.constructor.pointerDownListener.bind(this, this)
+      : this.constructor.touchStartListener.bind(this, this)
+    this.boundEndListener = this.constructor.pointerEventSupported
+      ? this.constructor.pointerUpListener.bind(this, this)
+      : this.constructor.touchEndListener.bind(this, this)
 
     this.mvmntThreshold = mvmntThreshold
     this.durationThreshold = durationThreshold
@@ -31061,10 +31241,31 @@ class LongTap extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
     return completed && !this.start.excluded && !this.end.excluded
   }
 
+  /**
+   * Activates a listener
+   */
+  set () {
+    this.element.addEventListener(this.evtStartType, this.boundStartListener, { passive: true })
+    this.element.addEventListener(this.evtEndType, this.boundEndListener, { passive: true })
+  }
+
+  /**
+   * Deactivates a listener
+   */
+  remove () {
+    this.element.removeEventListener(this.evtStartType, this.boundStartListener, { passive: true })
+    this.element.removeEventListener(this.evtEndType, this.boundEndListener, { passive: true })
+  }
+
+  /**
+   * This static method that allows to set a listener in one function call
+   * TODO: It is here for compatibility with older code. Remove if not used anywhere anymore.
+   */
   static listen (selector, evtHandler, mvmntThreshold, durationThreshold) {
     let elements = document.querySelectorAll(selector)
     for (const element of elements) {
-      this.addUpDownListeners(element, new this(element, evtHandler, mvmntThreshold, durationThreshold))
+      let listener = new this(element, mvmntThreshold, durationThreshold)
+      listener.set()
     }
   }
 }
@@ -31088,10 +31289,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class MouseDblClick extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Creates an instance of a class.
+   * @param {Node} element - An HTML Node element
+   * @param {Function} evtHandler - A client's event handler
+   */
   constructor (element, evtHandler) {
     super()
+    this.evtType = 'dblclick'
     this.element = element
-    this.evtHandler = evtHandler
+    this.evtHandler = evtHandler // A client's event handler
+    this.boundListener = this.eventListener.bind(this) // A bound event listener of MouseDblClick
   }
 
   static excludeCpeTest (dataset) {
@@ -31107,10 +31315,43 @@ class MouseDblClick extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["defaul
     return !(this.start.excluded || this.end.excluded)
   }
 
+  /**
+   * A callback that is attached to a native HTML event listener.
+   * It calls a client's event handler if an event is valid.
+   * @param domEvt
+   */
+  eventListener (domEvt) {
+    const valid = this
+      .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+      .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+    if (valid) { this.evtHandler(this, domEvt) } // Call a client's event handler
+  }
+
+  /**
+   * Activates a listener
+   */
+  set () {
+    this.element.addEventListener(this.evtType, this.boundListener, { passive: true })
+  }
+
+  /**
+   * Deactivates a listener
+   */
+  remove () {
+    this.element.removeEventListener(this.evtType, this.boundListener, { passive: true })
+  }
+
+  /**
+   * This static method that allows to set a listener in one function call
+   * TODO: It is here for compatibility with older code. Remove if not used anywhere anymore.
+   * @param {string} selector
+   * @param {Function} evtHandler
+   */
   static listen (selector, evtHandler) {
     let elements = document.querySelectorAll(selector)
     for (const element of elements) {
-      this.addDblClickListener(element, new this(element, evtHandler))
+      let listener = new this(element, evtHandler)
+      listener.set()
     }
   }
 }
@@ -31251,20 +31492,6 @@ class PointerEvt {
     if (valid) { event.evtHandler(event, domEvt) }
   }
 
-  static dblClickListener (event, domEvt) {
-    const valid = event
-      .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-      .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    if (valid) { event.evtHandler(event, domEvt) }
-  }
-
-  static genericListener (event, domEvt) {
-    const valid = event
-      .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-      .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-    if (valid) { event.evtHandler(event, domEvt) }
-  }
-
   static addUpDownListeners (element, event) {
     if (this.pointerEventSupported) {
       // Will use pointer events
@@ -31274,14 +31501,6 @@ class PointerEvt {
       element.addEventListener('touchstart', this.touchStartListener.bind(this, event), { passive: true })
       element.addEventListener('touchend', this.touchEndListener.bind(this, event), { passive: true })
     }
-  }
-
-  static addDblClickListener (element, event) {
-    element.addEventListener('dblclick', this.dblClickListener.bind(this, event), { passive: true })
-  }
-
-  static addGenericListener (element, event, eventName) {
-    element.addEventListener(eventName, this.genericListener.bind(this, event), { passive: true })
   }
 }
 
@@ -31691,7 +31910,6 @@ class HTMLConsole {
 
     this.node = document.querySelector(this.selector)
     if (!this.node) {
-      console.warn(`Cannot find HTML console node "${this.selector}". Console will be disabled`)
       this.enabled = false
     }
   }
@@ -34448,7 +34666,7 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 /*!*******************!*\
   !*** ./plugin.js ***!
   \*******************/
-/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript */
+/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34480,77 +34698,81 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__P
 /* harmony import */ var _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/controllers/ui-controller.js */ "./lib/controllers/ui-controller.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIController", function() { return _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
-/* harmony import */ var _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/state/ui-state-api.js */ "./lib/state/ui-state-api.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIEventController", function() { return _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/controllers/language.js */ "./lib/controllers/language.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Language", function() { return _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony import */ var _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/lib/state/ui-state-api.js */ "./lib/state/ui-state-api.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+/* harmony import */ var _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/controllers/language.js */ "./lib/controllers/language.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Language", function() { return _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnnotationQuery", function() { return _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnnotationQuery", function() { return _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LocalStorageArea", function() { return _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
-/* harmony import */ var _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./lib/options/extension-sync-storage.js */ "./lib/options/extension-sync-storage.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ExtensionSyncStorage", function() { return _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LocalStorageArea", function() { return _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "ContentOptionDefaults", function() { return _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__; });
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "LanguageOptionDefaults", function() { return _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__; });
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "UIOptionDefaults", function() { return _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__; });
-/* harmony import */ var _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./lib/options/defaults-loader.js */ "./lib/options/defaults-loader.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DefaultsLoader", function() { return _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
+/* harmony import */ var _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./lib/options/extension-sync-storage.js */ "./lib/options/extension-sync-storage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ExtensionSyncStorage", function() { return _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
 
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./lib/options/options.js */ "./lib/options/options.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Options", function() { return _lib_options_options_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "ContentOptionDefaults", function() { return _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__; });
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "LanguageOptionDefaults", function() { return _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__; });
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "UIOptionDefaults", function() { return _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__; });
+/* harmony import */ var _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./lib/options/defaults-loader.js */ "./lib/options/defaults-loader.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DefaultsLoader", function() { return _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
 
-/* harmony import */ var _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./lib/log/logger.js */ "./lib/log/logger.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./lib/options/options.js */ "./lib/options/options.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Options", function() { return _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
 
-/* harmony import */ var _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./lib/log/html-console.js */ "./lib/log/html-console.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLConsole", function() { return _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
+/* harmony import */ var _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./lib/log/logger.js */ "./lib/log/logger.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MouseDblClick", function() { return _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
+/* harmony import */ var _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./lib/log/html-console.js */ "./lib/log/html-console.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLConsole", function() { return _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GenericEvt", function() { return _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MouseDblClick", function() { return _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LongTap", function() { return _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GenericEvt", function() { return _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./lib/custom-pointer-events/swipe.js */ "./lib/custom-pointer-events/swipe.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Swipe", function() { return _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_27__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LongTap", function() { return _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_27__["default"]; });
 
-/* harmony import */ var _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/selection/alignment/alignment-selector.js */ "./lib/selection/alignment/alignment-selector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlignmentSelector", function() { return _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/custom-pointer-events/swipe.js */ "./lib/custom-pointer-events/swipe.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Swipe", function() { return _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
 
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLPage", function() { return _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
+/* harmony import */ var _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/selection/alignment/alignment-selector.js */ "./lib/selection/alignment/alignment-selector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlignmentSelector", function() { return _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
 
-/* harmony import */ var _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/lib/state/tab.js */ "./lib/state/tab.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tab", function() { return _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLPage", function() { return _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
 
-/* harmony import */ var _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/lib/state/tab-script.js */ "./lib/state/tab-script.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TabScript", function() { return _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
+/* harmony import */ var _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/lib/state/tab.js */ "./lib/state/tab.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tab", function() { return _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
+
+/* harmony import */ var _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @/lib/state/tab-script.js */ "./lib/state/tab-script.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TabScript", function() { return _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_32__["default"]; });
 
 // The following import will not probably used by any client directly,
 // but is required to include Scss file specified in there to a MiniCssExtractPlugin bundle
+
 
 
 

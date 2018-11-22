@@ -10,6 +10,7 @@ import Locales from './locales/locales'
 import enUS from './locales/en-us/messages.json'
 import enGB from './locales/en-gb/messages.json'
 import UIController from './lib/controllers/ui-controller.js'
+import UIEventController from '@/lib/controllers/ui-event-controller.js'
 import UIStateAPI from '@/lib/state/ui-state-api.js'
 import Language from './lib/controllers/language.js'
 import HTMLSelector from './lib/selection/media/html-selector.js'
@@ -34,7 +35,8 @@ import HTMLPage from './lib/utility/html-page.js'
 import Tab from '@/lib/state/tab.js'
 import TabScript from '@/lib/state/tab-script.js'
 
-export { Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
+export { Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
+  Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
   HTMLPage, Tab, TabScript }

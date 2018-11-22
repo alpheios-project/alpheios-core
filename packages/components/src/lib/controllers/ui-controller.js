@@ -32,6 +32,7 @@ import LongTap from '@/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@/lib/custom-pointer-events/generic-evt.js'
 import Options from '@/lib/options/options.js'
 import LocalStorage from '@/lib/options/local-storage-area.js'
+import UIEventController from '@/lib/controllers/ui-event-controller.js'
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -66,7 +67,44 @@ export default class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
+    /**
+     * If an event controller be used with an instance of a UI Controller,
+     * this prop will hold an event controller instance. It is usually initialized within a `build` method.
+     * @type {UIEventController}
+     */
+    this.evc = null
+
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
+  }
+
+  /**
+   * Creates an instance of a UI controller with default options. Provide your own implementation of this method
+   * if you want to initialize a UI controller differently.
+   */
+  static build (state, options) {
+    let uiController = new UIController(state, options)
+
+    // Creates on configures an event listener
+    let eventController = new UIEventController()
+    switch (uiController.options.textQueryTrigger) {
+      case 'dblClick':
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), MouseDblClick)
+        break
+      case 'longTap':
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), LongTap)
+        break
+      default:
+        eventController.registerListener(
+          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), GenericEvt, uiController.options.textQueryTrigger
+        )
+    }
+
+    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), GenericEvt, 'keydown')
+    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), GenericEvt, 'Alpheios_Page_Load')
+
+    // Attaches an event controller to a UIController instance
+    uiController.evc = eventController
+    return uiController
   }
 
   /**
@@ -757,9 +795,7 @@ export default class UIController {
     if (!this.isInitialized) { await this.init() }
 
     // Activate listeners
-    if (this.options.textQueryTrigger !== 'none') { this.addTextQueryListener(this.options.textQueryTrigger, this.options.textQuerySelector) }
-    document.addEventListener('keydown', this.handleEscapeKey.bind(this))
-    document.body.addEventListener('Alpheios_Page_Load', this.updateAnnotations.bind(this))
+    if (this.evc) { this.evc.activateListeners() }
 
     this.state.activateUI()
 
@@ -779,16 +815,6 @@ export default class UIController {
     return this
   }
 
-  addTextQueryListener (trigger, selector = 'body') {
-    if (trigger === 'dblClick') {
-      MouseDblClick.listen(selector, evt => this.getSelectedText(evt))
-    } else if (trigger === 'longTap') {
-      LongTap.listen(selector, evt => this.getSelectedText(evt))
-    } else {
-      GenericEvt.listen(selector, (evt) => this.getSelectedText(evt), trigger)
-    }
-  }
-
   /**
    * Deactivates a UI controller. May unload some resources to preserve memory.
    * In this case an `activate()` method will be responsible for restoring them.
@@ -797,7 +823,8 @@ export default class UIController {
   async deactivate () {
     if (this.isDeactivated) { return `Already deactivated` }
 
-    // TODO: probably need to remove event listeners here
+    // Deactivate event listeners
+    if (this.evc) { this.evc.deactivateListeners() }
 
     this.popup.close()
     this.panel.close()
@@ -1215,10 +1242,10 @@ export default class UIController {
       !this.contentOptions.items.locale.currentValue.match(/^en-/)
   }
 
-  handleEscapeKey (event) {
+  handleEscapeKey (event, nativeEvent) {
     // TODO: Move to keypress as keyCode is deprecated
     // TODO: Why does it not work on initial panel opening?
-    if (event.keyCode === 27 && this.state.isActive()) {
+    if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
         this.panel.close()
       } else if (this.popup.visible) {
@@ -1230,7 +1257,7 @@ export default class UIController {
   /**
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
-  updateAnnotations () {
+  updateAnnotations (event, nativeEvent) {
     if (this.state.isActive() && this.state.uiIsActive()) {
       AnnotationQuery.create({
         uiController: this,

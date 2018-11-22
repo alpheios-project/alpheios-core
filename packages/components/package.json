@@ -123,9 +123,8 @@
       "node": true
     },
     "parserOptions": {
-      "ecmaVersion": 2017,
-      "sourceType": "module",
-      "experimentalObjectRestSpread": true
+      "ecmaVersion": 2018,
+      "sourceType": "module"
     }
   },
   "eslintIgnore": [

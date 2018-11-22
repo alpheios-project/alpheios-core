@@ -7,7 +7,6 @@ export default class HTMLConsole {
 
     this.node = document.querySelector(this.selector)
     if (!this.node) {
-      console.warn(`Cannot find HTML console node "${this.selector}". Console will be disabled`)
       this.enabled = false
     }
   }
