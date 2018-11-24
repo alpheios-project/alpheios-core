@@ -4,20 +4,40 @@ import AlpheiosLemmaTranslationsAdapter from '@/translations/adapter'
 import AlpheiosLexiconsAdapter from '@/lexicons/adapter'
 
 class ClientAdapters {
-/*
+  /*
+  *  Additional abstraction layer for structuring adapters
+  */
+  static get morphology () {
+    return {
+      alpheiosTreebank: ClientAdapters.tbAdapter,
+      tufts: ClientAdapters.maAdapter
+    }
+  }
+
+  static get lexicon () {
+    return {
+      alpheios: ClientAdapters.lexicons
+    }
+  }
+
+  static get lemmatranslation () {
+    return {
+      alpheios: ClientAdapters.lemmaTranslations
+    }
+  }
+
+  /*
    * it is used for getting data from morph adapter
    * @param {options} Object - object contains parametes:
-   * options.type String - for now one value - "getHomonym" - action that should be done wth the help of adapter
-   * options.languageID Symbol - languageID value for the word
-   * options.word String - target word for what we will receive morph data
+   * options.method String - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   * options.params.languageID Symbol - languageID value for the word
+   * options.params.word String - target word for what we will receive morph data
 */
 
   static async maAdapter (options) {
     let localMaAdapter = new AlpheiosTuftsAdapter()
-    console.info('********************options', options)
-    if (options.type === 'getHomonym') {
-      let homonym = await localMaAdapter.getHomonym(options.languageID, options.word)
-      console.info('*******************maAdapter homonym', homonym)
+    if (options.method === 'getHomonym') {
+      let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return homonym
     }
     return null
@@ -26,17 +46,15 @@ class ClientAdapters {
   /*
    * it is used for getting data from treebank adapter
    * @param {options} Object - object contains parametes:
-   * options.type String - for now one value - "getHomonym" - action that should be done wth the help of adapter
-   * options.languageID Symbol - languageID value for the word
-   * options.word String - target word for what we will receive morph data
+   * options.method String - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   * options.params.languageID Symbol - languageID value for the word
+   * options.params.word String - target word for what we will receive morph data
 */
 
   static async tbAdapter (options) {
     let localTbAdapter = new AlpheiosTreebankAdapter()
-    console.info('********************options', options)
-    if (options.type === 'getHomonym') {
-      let homonym = await localTbAdapter.getHomonym(options.languageID, options.wordref)
-      console.info('*******************tbAdapter homonym', homonym)
+    if (options.method === 'getHomonym') {
+      let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
       return homonym
     }
     return null
@@ -45,17 +63,16 @@ class ClientAdapters {
   /*
    * it is used for getting data from translations adapter
    * @param {options} Object - object contains parametes:
-   * options.type String - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
-   * options.lemmaList [Lemma] - languageID value for the word
-   * options.inLang String - language code of the target word
-   * options.browserLang - language for translations
+   * options.method String - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
+   * options.params.lemmaList [Lemma] - languageID value for the word
+   * options.params.inLang String - language code of the target word
+   * options.params.browserLang - language for translations
 */
   static async lemmaTranslations (options) {
     let localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter()
 
-    if (options.type === 'fetchTranslations') {
-      console.info('*********************fetchTranslations', options.homonym)
-      await localLemmasAdapter.getTranslationsList(options.homonym, options.browserLang)
+    if (options.method === 'fetchTranslations') {
+      await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
       return true
     }
     return null
@@ -64,21 +81,21 @@ class ClientAdapters {
   /*
    * it is used for getting data from lexicons adapter
    * @param {options} Object - object contains parametes:
-   * options.type String - action that should be done wth the help of adapter
+   * options.method String - action that should be done wth the help of adapter
    *      variants: fetchShortDefs
-   * options.lemmaList [Lemma] - languageID value for the word
-   * options.inLang String - language code of the target word
-   * options.browserLang - language for translations
+   * options.params.lemmaList [Lemma] - languageID value for the word
+   * options.params.inLang String - language code of the target word
+   * options.params.browserLang - language for translations
 */
   static async lexicons (options) {
     let localLexiconsAdapter = new AlpheiosLexiconsAdapter()
 
-    if (options.type === 'fetchShortDefs') {
-      await localLexiconsAdapter.fetchShortDefs(options.homonym, options.opts)
+    if (options.method === 'fetchShortDefs') {
+      await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
       return true
     }
-    if (options.type === 'fetchFullDefs') {
-      await localLexiconsAdapter.fetchFullDefs(options.homonym, options.opts)
+    if (options.method === 'fetchFullDefs') {
+      await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return true
     }
     return null
