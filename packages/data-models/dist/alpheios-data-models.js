@@ -917,7 +917,7 @@ class Definition {
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
-/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ResourceProvider, Translation */
+/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -978,8 +978,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceProvider", function() { return _resource_provider_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
 
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Translation", function() { return _translation_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
+/* harmony import */ var _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./ps-events/ps-event.js */ "./ps-events/ps-event.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PsEvent", function() { return _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
+
+/* harmony import */ var _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PsEventData", function() { return _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
+
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Translation", function() { return _translation_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+
+
 
 
 
@@ -4694,6 +4702,123 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
    */
   static getPunctuation () {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r"
+  }
+}
+
+
+/***/ }),
+
+/***/ "./ps-events/ps-event-data.js":
+/*!************************************!*\
+  !*** ./ps-events/ps-event-data.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PsEventData; });
+/**
+ * A public information about published event that is returned to subscriber.
+ * It can be used by subscribers that are listening for more than one event
+ * to distinguish between different event types.
+ * We could pass an PsEvent object to subscribers instead of PsEventData
+ * but it's better not to expose some details of PsEvent implementation to the outside.
+ * This will help to avoid creating dependencies on PsEvent internals within subscribers functions.
+ * Thus an PsEventData object can be considered as a publicly exposed part of PsEvent data.
+ * If needed, PsEventData can present PsEvent data to subscriber differently,
+ * not in the way PsEvent stores it. This makes sense as subscriber might be interested in
+ * a different angle of PsEvent information. PsEventData may add properties or methods
+ * that do not needed within an PsEvent, but might be useful to subscribers.
+ */
+class PsEventData {
+  /**
+   * @param {PsEvent} event - An event that is being published.
+   */
+  constructor (event) {
+    this.name = event.name
+    this.publisher = event.publisher
+  }
+}
+
+
+/***/ }),
+
+/***/ "./ps-events/ps-event.js":
+/*!*******************************!*\
+  !*** ./ps-events/ps-event.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PsEvent; });
+/* harmony import */ var _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../src/ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
+
+
+/**
+ * An event in pub/sub (publish–subscribe) design pattern
+ */
+class PsEvent {
+  /**
+   * @param {string} name - A name of the event.
+   * @param {Function} publisher - A constructor function of a publisher.
+   *        PsEvent uses its `name` property to set its publisher name field.
+   */
+  constructor (name, publisher) {
+    /**
+     * A name of the event.
+     * @type {string}
+     */
+    this.name = name
+
+    /**
+     * A name of the publisher.
+     * @type {string}
+     */
+    this.publisher = publisher.name
+
+    /**
+     * A subscribers that listens to the published event.
+     * @type {Function[]} - A subscriber function
+     */
+    this._subscribers = []
+  }
+
+  /**
+   * This function is called when an event is published.
+   * @callback EventSubscriber
+   * @param {Object} data - An event-specific data associated with the event.
+   * @param {PsEventData} eventData - A data about the event being published.
+   *        PsEvent data allows generic subscribers (i.e. functions that are subscribed to
+   *        more than one event) to distinguish between an event being published.
+   */
+
+  /**
+   * Return a list of subscribers for the current event.
+   * @return {EventSubscriber[]} An array of event subscriber functions.
+   */
+  get subscribers () {
+    return this._subscribers
+  }
+
+  /**
+   * Subscribes a function to the published event.
+   * When event is published, a @type {Event~subscriber} function is called.
+   * @param {EventSubscriber} subscriber - A subscriber function.
+   */
+  sub (subscriber) {
+    this._subscribers.push(subscriber)
+  }
+
+  /**
+   * Publishes an event with data related to it. All subscribers will receive an
+   * event notification along with event data.
+   * @param {Object} [data={}] - An event-specific data associated with the event.
+   */
+  pub (data = {}) {
+    this._subscribers.forEach(l => l(data, new _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](this)))
   }
 }
 

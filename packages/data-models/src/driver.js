@@ -18,6 +18,8 @@ import ArabicLanguageModel from './arabic_language_model.js'
 import PersianLanguageModel from './persian_language_model.js'
 import GeezLanguageModel from './geez_language_model.js'
 import ResourceProvider from './resource_provider.js'
+import PsEvent from './ps-events/ps-event.js'
+import PsEventData from './ps-events/ps-event-data.js'
 
 import Translation from './translation.js'
 
@@ -41,5 +43,6 @@ export {
   PersianLanguageModel,
   GeezLanguageModel,
   ResourceProvider,
-
-  Translation }
+  Translation,
+  PsEvent,
+  PsEventData }
