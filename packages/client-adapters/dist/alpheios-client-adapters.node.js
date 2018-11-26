@@ -5615,31 +5615,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/alpheiostb/adapter */ "./alpheiostb/adapter.js");
 /* harmony import */ var _translations_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/translations/adapter */ "./translations/adapter.js");
 /* harmony import */ var _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lexicons/adapter */ "./lexicons/adapter.js");
+/* harmony import */ var _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/errors/wrong-method-error */ "./errors/wrong-method-error.js");
 
 
 
 
+
+
+let cachedConfig = new Map()
+let cachedAdaptersList = new Map()
 
 class ClientAdapters {
+  static init () {
+    if (cachedConfig.size === 0) {
+      cachedConfig.set('morphology', {
+        alpheiosTreebank: {
+          adapter: ClientAdapters.tbAdapter,
+          methods: [ 'getHomonym' ]
+        },
+        tufts: {
+          adapter: ClientAdapters.maAdapter,
+          methods: [ 'getHomonym' ]
+        }
+      })
+
+      cachedConfig.set('lexicon', {
+        alpheios: {
+          adapter: ClientAdapters.lexicons,
+          methods: ['fetchShortDefs', 'fetchFullDefs']
+        }
+      })
+
+      cachedConfig.set('lemmatranslation', {
+        alpheios: {
+          adapter: ClientAdapters.lemmaTranslations,
+          methods: ['fetchTranslations']
+        }
+      })
+
+      for (let key of cachedConfig.keys()) {
+        let res = {}
+        Object.keys(cachedConfig.get(key)).forEach(typeAdapter => {
+          res[typeAdapter] = cachedConfig.get(key)[typeAdapter].adapter
+        })
+
+        cachedAdaptersList.set(key, res)
+      }
+    }
+  }
   /*
   *  Additional abstraction layer for structuring adapters
   */
   static get morphology () {
-    return {
-      alpheiosTreebank: ClientAdapters.tbAdapter,
-      tufts: ClientAdapters.maAdapter
-    }
+    ClientAdapters.init()
+    return cachedAdaptersList.get('morphology')
   }
 
   static get lexicon () {
-    return {
-      alpheios: ClientAdapters.lexicons
-    }
+    ClientAdapters.init()
+    return cachedAdaptersList.get('lexicon')
   }
 
   static get lemmatranslation () {
-    return {
-      alpheios: ClientAdapters.lemmaTranslations
+    ClientAdapters.init()
+    return cachedAdaptersList.get('lemmatranslation')
+  }
+
+  static checkMethod (category, adapterName, method) {
+    if (!cachedConfig.get(category)[adapterName].methods.includes(method)) {
+      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](`wrong method for ${category}.${adapterName} - ${method}`, `${category}.${adapterName}`)
     }
   }
 
@@ -5652,6 +5696,8 @@ class ClientAdapters {
 */
 
   static async maAdapter (options) {
+    ClientAdapters.checkMethod('morphology', 'tufts', options.method)
+
     let localMaAdapter = new _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]()
     if (options.method === 'getHomonym') {
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
@@ -5669,6 +5715,8 @@ class ClientAdapters {
 */
 
   static async tbAdapter (options) {
+    ClientAdapters.checkMethod('morphology', 'alpheiosTreebank', options.method)
+
     let localTbAdapter = new _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]()
     if (options.method === 'getHomonym') {
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
@@ -5686,6 +5734,8 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lemmaTranslations (options) {
+    ClientAdapters.checkMethod('lemmatranslation', 'alpheios', options.method)
+
     let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
 
     if (options.method === 'fetchTranslations') {
@@ -5705,6 +5755,8 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lexicons (options) {
+    ClientAdapters.checkMethod('lexicon', 'alpheios', options.method)
+
     let localLexiconsAdapter = new _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]()
 
     if (options.method === 'fetchShortDefs') {
@@ -5748,6 +5800,28 @@ class ConfigData {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (ConfigData);
+
+
+/***/ }),
+
+/***/ "./errors/wrong-method-error.js":
+/*!**************************************!*\
+  !*** ./errors/wrong-method-error.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class WrongMethodError extends Error {
+  constructor (message, adapter) {
+    super(message)
+    this.adapter = adapter
+    Error.captureStackTrace(this, WrongMethodError)
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (WrongMethodError);
 
 
 /***/ }),

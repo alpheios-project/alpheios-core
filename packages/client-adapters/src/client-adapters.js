@@ -2,27 +2,70 @@ import AlpheiosTuftsAdapter from '@/tufts/adapter'
 import AlpheiosTreebankAdapter from '@/alpheiostb/adapter'
 import AlpheiosLemmaTranslationsAdapter from '@/translations/adapter'
 import AlpheiosLexiconsAdapter from '@/lexicons/adapter'
+import WrongMethodError from '@/errors/wrong-method-error'
+
+let cachedConfig = new Map()
+let cachedAdaptersList = new Map()
 
 class ClientAdapters {
+  static init () {
+    if (cachedConfig.size === 0) {
+      cachedConfig.set('morphology', {
+        alpheiosTreebank: {
+          adapter: ClientAdapters.tbAdapter,
+          methods: [ 'getHomonym' ]
+        },
+        tufts: {
+          adapter: ClientAdapters.maAdapter,
+          methods: [ 'getHomonym' ]
+        }
+      })
+
+      cachedConfig.set('lexicon', {
+        alpheios: {
+          adapter: ClientAdapters.lexicons,
+          methods: ['fetchShortDefs', 'fetchFullDefs']
+        }
+      })
+
+      cachedConfig.set('lemmatranslation', {
+        alpheios: {
+          adapter: ClientAdapters.lemmaTranslations,
+          methods: ['fetchTranslations']
+        }
+      })
+
+      for (let key of cachedConfig.keys()) {
+        let res = {}
+        Object.keys(cachedConfig.get(key)).forEach(typeAdapter => {
+          res[typeAdapter] = cachedConfig.get(key)[typeAdapter].adapter
+        })
+
+        cachedAdaptersList.set(key, res)
+      }
+    }
+  }
   /*
   *  Additional abstraction layer for structuring adapters
   */
   static get morphology () {
-    return {
-      alpheiosTreebank: ClientAdapters.tbAdapter,
-      tufts: ClientAdapters.maAdapter
-    }
+    ClientAdapters.init()
+    return cachedAdaptersList.get('morphology')
   }
 
   static get lexicon () {
-    return {
-      alpheios: ClientAdapters.lexicons
-    }
+    ClientAdapters.init()
+    return cachedAdaptersList.get('lexicon')
   }
 
   static get lemmatranslation () {
-    return {
-      alpheios: ClientAdapters.lemmaTranslations
+    ClientAdapters.init()
+    return cachedAdaptersList.get('lemmatranslation')
+  }
+
+  static checkMethod (category, adapterName, method) {
+    if (!cachedConfig.get(category)[adapterName].methods.includes(method)) {
+      throw new WrongMethodError(`wrong method for ${category}.${adapterName} - ${method}`, `${category}.${adapterName}`)
     }
   }
 
@@ -35,6 +78,8 @@ class ClientAdapters {
 */
 
   static async maAdapter (options) {
+    ClientAdapters.checkMethod('morphology', 'tufts', options.method)
+
     let localMaAdapter = new AlpheiosTuftsAdapter()
     if (options.method === 'getHomonym') {
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
@@ -52,6 +97,8 @@ class ClientAdapters {
 */
 
   static async tbAdapter (options) {
+    ClientAdapters.checkMethod('morphology', 'alpheiosTreebank', options.method)
+
     let localTbAdapter = new AlpheiosTreebankAdapter()
     if (options.method === 'getHomonym') {
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
@@ -69,6 +116,8 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lemmaTranslations (options) {
+    ClientAdapters.checkMethod('lemmatranslation', 'alpheios', options.method)
+
     let localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter()
 
     if (options.method === 'fetchTranslations') {
@@ -88,6 +137,8 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lexicons (options) {
+    ClientAdapters.checkMethod('lexicon', 'alpheios', options.method)
+
     let localLexiconsAdapter = new AlpheiosLexiconsAdapter()
 
     if (options.method === 'fetchShortDefs') {
