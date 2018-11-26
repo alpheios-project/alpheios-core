@@ -1,5 +1,5 @@
 import Query from './query.js'
-import Event from '@/lib/events/event.js'
+import { PsEvent } from 'alpheios-data-models'
 
 export default class ResourceQuery extends Query {
   constructor (name, feature, options) {
@@ -94,17 +94,17 @@ ResourceQuery.evt = {
    *  {symbol} resultStatus - A lexical query result status
    * }
    */
-  RESOURCE_QUERY_COMPLETE: new Event('Resource Query Complete', ResourceQuery),
+  RESOURCE_QUERY_COMPLETE: new PsEvent('Resource Query Complete', ResourceQuery),
 
   /**
    * Published when some new piece of grammar data becomes available.
    * Data: {Array} url - A grammar data URLs.
    */
-  GRAMMAR_AVAILABLE: new Event('Grammar Data is Available', ResourceQuery),
+  GRAMMAR_AVAILABLE: new PsEvent('Grammar Data is Available', ResourceQuery),
 
   /**
    * Published when a no grammar information is found.
    * Data: {symbol} languageID - a language ID of a selected text.
    */
-  GRAMMAR_NOT_FOUND: new Event('Grammar Not Found', ResourceQuery)
+  GRAMMAR_NOT_FOUND: new PsEvent('Grammar Not Found', ResourceQuery)
 }

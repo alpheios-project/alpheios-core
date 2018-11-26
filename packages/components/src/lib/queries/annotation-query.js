@@ -1,5 +1,5 @@
 import Query from './query.js'
-import Event from '@/lib/events/event.js'
+import { PsEvent } from 'alpheios-data-models'
 
 /**
  * This is a Query class to encapsulate queries for document specific Annotations
@@ -51,5 +51,5 @@ AnnotationQuery.evt = {
    * Published when annotations become available.
    * Data: annotations - An annotations data.
    */
-  ANNOTATIONS_AVAILABLE: new Event('Annotations Become Available', AnnotationQuery)
+  ANNOTATIONS_AVAILABLE: new PsEvent('Annotations Become Available', AnnotationQuery)
 }

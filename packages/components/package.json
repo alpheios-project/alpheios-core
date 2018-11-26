@@ -1,7 +1,7 @@
 {
   "name": "alpheios-components",
-  "version": "0.6.0",
-  "description": "Alpheios UI Compononents",
+  "version": "0.7.0",
+  "description": "Alpheios UI Components",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",

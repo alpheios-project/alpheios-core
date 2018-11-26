@@ -1,5 +1,4 @@
-import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym } from 'alpheios-data-models'
-import Event from '@/lib/events/event.js'
+import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent } from 'alpheios-data-models'
 import Query from './query.js'
 
 export default class LexicalQuery extends Query {
@@ -231,31 +230,31 @@ LexicalQuery.evt = {
       {Homonym} homonym - A homonym data
    * }
    */
-  LEXICAL_QUERY_COMPLETE: new Event('Lexical Query Complete', LexicalQuery),
+  LEXICAL_QUERY_COMPLETE: new PsEvent('Lexical Query Complete', LexicalQuery),
 
   /**
    * Published when morphological data becomes available.
    * Data: an empty object.
    */
-  MORPH_DATA_READY: new Event(`Morph Data Ready`, LexicalQuery),
+  MORPH_DATA_READY: new PsEvent(`Morph Data Ready`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: an empty object.
    */
-  MORPH_DATA_NOT_FOUND: new Event(`Morph Data Not Found`, LexicalQuery),
+  MORPH_DATA_NOT_FOUND: new PsEvent(`Morph Data Not Found`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: {Homonym} homonym - A homonym object.
    */
-  HOMONYM_READY: new Event(`Homonym Ready`, LexicalQuery),
+  HOMONYM_READY: new PsEvent(`Homonym Ready`, LexicalQuery),
 
   /**
    * Published when lemma translations becomes available.
    * Data: {Homonym} homonym - A homonym object.
    */
-  LEMMA_TRANSL_READY: new Event(`Lemma Translations Ready`, LexicalQuery),
+  LEMMA_TRANSL_READY: new PsEvent(`Lemma Translations Ready`, LexicalQuery),
 
   /**
    * Published when definitions data becomes available.
@@ -265,7 +264,7 @@ LexicalQuery.evt = {
    *   homonym: this.homonym
    * }
    */
-  DEFS_READY: new Event(`Definitions Data Ready`, LexicalQuery),
+  DEFS_READY: new PsEvent(`Definitions Data Ready`, LexicalQuery),
 
   /**
    * Published when definitions data has been not found.
@@ -274,5 +273,5 @@ LexicalQuery.evt = {
    *   word: definitionRequest.lexeme.lemma.word
    * }
    */
-  DEFS_NOT_FOUND: new Event(`Definitions Data Not Found`, LexicalQuery)
+  DEFS_NOT_FOUND: new PsEvent(`Definitions Data Not Found`, LexicalQuery)
 }

@@ -45,6 +45,10 @@ const languageNames = new Map([
 export default class UIController {
   /**
    * @constructor
+   * The best way to create a configured instance of a UIController is to use its `create` method.
+   * It configures and attaches all UIController's modules.
+   * If you need a custom configuration of a UIController, replace its `create` method with your own.
+   *
    * @param {UIStateAPI} state - An object to store a UI state.
    * @param {Object} options - UI controller options object.
    * See `optionsDefaults` getter for detailed parameter description: @see {@link optionsDefaults}
@@ -79,7 +83,7 @@ export default class UIController {
 
   /**
    * Creates an instance of a UI controller with default options. Provide your own implementation of this method
-   * if you want to initialize a UI controller differently.
+   * if you want to create a different configuration of a UI controller.
    */
   static create (state, options) {
     let uiController = new UIController(state, options)

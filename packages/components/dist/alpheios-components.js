@@ -29715,6 +29715,10 @@ const languageNames = new Map([
 class UIController {
   /**
    * @constructor
+   * The best way to create a configured instance of a UIController is to use its `create` method.
+   * It configures and attaches all UIController's modules.
+   * If you need a custom configuration of a UIController, replace its `create` method with your own.
+   *
    * @param {UIStateAPI} state - An object to store a UI state.
    * @param {Object} options - UI controller options object.
    * See `optionsDefaults` getter for detailed parameter description: @see {@link optionsDefaults}
@@ -29749,7 +29753,7 @@ class UIController {
 
   /**
    * Creates an instance of a UI controller with default options. Provide your own implementation of this method
-   * if you want to initialize a UI controller differently.
+   * if you want to create a different configuration of a UI controller.
    */
   static create (state, options) {
     let uiController = new UIController(state, options)
@@ -29783,6 +29787,14 @@ class UIController {
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+
+    // Subscribe to ResourceQuery events
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+
+    // Subscribe to AnnotationQuery events
+    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
     return uiController
   }
@@ -30948,7 +30960,7 @@ class UIController {
   /**
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
-  updateAnnotations (event, nativeEvent) {
+  updateAnnotations () {
     if (this.state.isActive() && this.state.uiIsActive()) {
       _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].create({
         document: document,
@@ -31683,123 +31695,6 @@ class Swipe extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
     for (const element of elements) {
       this.addUpDownListeners(element, new this(element, evtHandler, mvmntThreshold, durationThreshold))
     }
-  }
-}
-
-
-/***/ }),
-
-/***/ "./lib/events/event-data.js":
-/*!**********************************!*\
-  !*** ./lib/events/event-data.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EventData; });
-/**
- * A public information about published event that is returned to subscriber.
- * It can be used by subscribers that are listening for more than one event
- * to distinguish between different event types.
- * We could pass an Event object to subscribers instead of EventData
- * but it's better not to expose some details of Event implementation to the outside.
- * This will help to avoid creating dependencies on Event internals within subscribers functions.
- * Thus an EventData object can be considered as a publicly exposed part of Event data.
- * If needed, EventData can present Event data to subscriber differently,
- * not in the way Event stores it. This makes sense as subscriber might be interested in
- * a different angle of Event information. EventData may add properties or methods
- * that do not needed within an Event, but might be useful to subscribers.
- */
-class EventData {
-  /**
-   * @param {Event} event - An event that is being published.
-   */
-  constructor (event) {
-    this.name = event.name
-    this.publisher = event.publisher
-  }
-}
-
-
-/***/ }),
-
-/***/ "./lib/events/event.js":
-/*!*****************************!*\
-  !*** ./lib/events/event.js ***!
-  \*****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Event; });
-/* harmony import */ var _lib_events_event_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/events/event-data.js */ "./lib/events/event-data.js");
-
-
-/**
- * An event in pub/sub (publish–subscribe) design pattern
- */
-class Event {
-  /**
-   * @param {string} name - A name of the event.
-   * @param {Function} publisher - A constructor function of a publisher.
-   *        Event uses its `name` property to set its publisher name field.
-   */
-  constructor (name, publisher) {
-    /**
-     * A name of the event.
-     * @type {string}
-     */
-    this.name = name
-
-    /**
-     * A name of the publisher.
-     * @type {string}
-     */
-    this.publisher = publisher.name
-
-    /**
-     * A subscribers that listens to the published event.
-     * @type {Function[]} - A subscriber function
-     */
-    this._subscribers = []
-  }
-
-  /**
-   * This function is called when an event is published.
-   * @callback EventSubscriber
-   * @param {Object} data - An event-specific data associated with the event.
-   * @param {EventData} eventData - A data about the event being published.
-   *        Event data allows generic subscribers (i.e. functions that are subscribed to
-   *        more than one event) to distinguish between an event being published.
-   */
-
-  /**
-   * Return a list of subscribers for the current event.
-   * @return {EventSubscriber[]} An array of event subscriber functions.
-   */
-  get subscribers () {
-    return this._subscribers
-  }
-
-  /**
-   * Subscribes a function to the published event.
-   * When event is published, a @type {Event~subscriber} function is called.
-   * @param {EventSubscriber} subscriber - A subscriber function.
-   */
-  sub (subscriber) {
-    this._subscribers.push(subscriber)
-  }
-
-  /**
-   * Publishes an event with data related to it. All subscribers will receive an
-   * event notification along with event data.
-   * @param {Object} [data={}] - An event-specific data associated with the event.
-   */
-  pub (data = {}) {
-    this._subscribers.forEach(l => l(data, new _lib_events_event_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](this)))
   }
 }
 
@@ -32826,7 +32721,8 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AnnotationQuery; });
 /* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./query.js */ "./lib/queries/query.js");
-/* harmony import */ var _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/events/event.js */ "./lib/events/event.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -32880,7 +32776,7 @@ AnnotationQuery.evt = {
    * Published when annotations become available.
    * Data: annotations - An annotations data.
    */
-  ANNOTATIONS_AVAILABLE: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"]('Annotations Become Available', AnnotationQuery)
+  ANNOTATIONS_AVAILABLE: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PsEvent"]('Annotations Become Available', AnnotationQuery)
 }
 
 
@@ -32965,13 +32861,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LexicalQuery; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/events/event.js */ "./lib/events/event.js");
-/* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./query.js */ "./lib/queries/query.js");
+/* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./query.js */ "./lib/queries/query.js");
 
 
 
-
-class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
+class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
   constructor (name, selector, options) {
     super(name)
     this.selector = selector
@@ -32989,7 +32883,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
   }
 
   static create (selector, options) {
-    return _query_js__WEBPACK_IMPORTED_MODULE_2__["default"].create(LexicalQuery, selector, options)
+    return _query_js__WEBPACK_IMPORTED_MODULE_1__["default"].create(LexicalQuery, selector, options)
   }
 
   async getData () {
@@ -32999,7 +32893,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
     let result = iterator.next()
     while (true) {
       if (!this.active) { this.finalize() }
-      if (_query_js__WEBPACK_IMPORTED_MODULE_2__["default"].isPromise(result.value)) {
+      if (_query_js__WEBPACK_IMPORTED_MODULE_1__["default"].isPromise(result.value)) {
         try {
           let resolvedValue = await result.value
           result = iterator.next(resolvedValue)
@@ -33164,7 +33058,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
       resultStatus: resultStatus,
       homonym: this.homonym
     })
-    _query_js__WEBPACK_IMPORTED_MODULE_2__["default"].destroy(this)
+    _query_js__WEBPACK_IMPORTED_MODULE_1__["default"].destroy(this)
     return result
   }
 
@@ -33200,31 +33094,31 @@ LexicalQuery.evt = {
       {Homonym} homonym - A homonym data
    * }
    */
-  LEXICAL_QUERY_COMPLETE: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"]('Lexical Query Complete', LexicalQuery),
+  LEXICAL_QUERY_COMPLETE: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Lexical Query Complete', LexicalQuery),
 
   /**
    * Published when morphological data becomes available.
    * Data: an empty object.
    */
-  MORPH_DATA_READY: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"](`Morph Data Ready`, LexicalQuery),
+  MORPH_DATA_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Morph Data Ready`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: an empty object.
    */
-  MORPH_DATA_NOT_FOUND: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"](`Morph Data Not Found`, LexicalQuery),
+  MORPH_DATA_NOT_FOUND: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Morph Data Not Found`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: {Homonym} homonym - A homonym object.
    */
-  HOMONYM_READY: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"](`Homonym Ready`, LexicalQuery),
+  HOMONYM_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Homonym Ready`, LexicalQuery),
 
   /**
    * Published when lemma translations becomes available.
    * Data: {Homonym} homonym - A homonym object.
    */
-  LEMMA_TRANSL_READY: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"](`Lemma Translations Ready`, LexicalQuery),
+  LEMMA_TRANSL_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Lemma Translations Ready`, LexicalQuery),
 
   /**
    * Published when definitions data becomes available.
@@ -33234,7 +33128,7 @@ LexicalQuery.evt = {
    *   homonym: this.homonym
    * }
    */
-  DEFS_READY: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"](`Definitions Data Ready`, LexicalQuery),
+  DEFS_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Definitions Data Ready`, LexicalQuery),
 
   /**
    * Published when definitions data has been not found.
@@ -33243,7 +33137,7 @@ LexicalQuery.evt = {
    *   word: definitionRequest.lexeme.lemma.word
    * }
    */
-  DEFS_NOT_FOUND: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"](`Definitions Data Not Found`, LexicalQuery)
+  DEFS_NOT_FOUND: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Definitions Data Not Found`, LexicalQuery)
 }
 
 
@@ -33371,7 +33265,8 @@ Query.resultStatus = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResourceQuery; });
 /* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./query.js */ "./lib/queries/query.js");
-/* harmony import */ var _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/events/event.js */ "./lib/events/event.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -33468,19 +33363,19 @@ ResourceQuery.evt = {
    *  {symbol} resultStatus - A lexical query result status
    * }
    */
-  RESOURCE_QUERY_COMPLETE: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"]('Resource Query Complete', ResourceQuery),
+  RESOURCE_QUERY_COMPLETE: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PsEvent"]('Resource Query Complete', ResourceQuery),
 
   /**
    * Published when some new piece of grammar data becomes available.
    * Data: {Array} url - A grammar data URLs.
    */
-  GRAMMAR_AVAILABLE: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"]('Grammar Data is Available', ResourceQuery),
+  GRAMMAR_AVAILABLE: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PsEvent"]('Grammar Data is Available', ResourceQuery),
 
   /**
    * Published when a no grammar information is found.
    * Data: {symbol} languageID - a language ID of a selected text.
    */
-  GRAMMAR_NOT_FOUND: new _lib_events_event_js__WEBPACK_IMPORTED_MODULE_1__["default"]('Grammar Not Found', ResourceQuery)
+  GRAMMAR_NOT_FOUND: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PsEvent"]('Grammar Not Found', ResourceQuery)
 }
 
 
