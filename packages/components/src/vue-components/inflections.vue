@@ -386,52 +386,6 @@
         vertical-align: super;
     }
 
-    .alpheios-inflections__footnote-popup {
-        display: grid;
-        grid-template-columns: 20px 1fr;
-        grid-row-gap: 2px;
-        background: #FFF;
-        color: $alpheios-headers-color;
-        position: absolute;
-        padding: 30px 15px 15px;
-        left: 0;
-        bottom: 20px;
-        transform: translateX(-50%);
-        z-index: 10;
-        min-width: 200px;
-        border: 1px solid $alpheios-toolbar-color;
-    }
-
-    .alpheios-inflections__footnote-popup.hidden {
-        display: none;
-    }
-
-    .alpheios-inflections__footnote-popup-title {
-        font-weight: 700;
-        position: absolute;
-        text-transform: uppercase;
-        left: 15px;
-        top: 7px;
-    }
-
-    .alpheios-inflections__footnote-popup-close-btn {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        display: block;
-        width: 20px;
-        height: 20px;
-        margin: 0;
-        cursor: pointer;
-        fill: $alpheios-toolbar-color;
-        stroke: $alpheios-toolbar-color;
-    }
-
-    .alpheios-inflections__footnote-popup-close-btn:hover,
-    .alpheios-inflections__footnote-popup-close-btn:active {
-        fill: $alpheios-link-hover-color;
-        stroke: $alpheios-link-hover-color;
-    }
 
     .alpheios-inflections__credits-cont {
         margin-bottom: 10px;

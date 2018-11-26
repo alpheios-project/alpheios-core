@@ -114,7 +114,8 @@
                 </inflections>
             </div>
             <div v-show="inflectionsBrowserTabVisible" :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser" v-if="data.inflectionBrowserEnabled && data.settings && data.l10n">
-                <inflection-browser :messages="data.l10n.messages" @contentwidth="setContentWidth" :data=data.inflectionBrowserData>
+                <inflection-browser :messages="data.l10n.messages" @contentwidth="setContentWidth" :data="data.inflectionBrowserData"
+                :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed">
                 </inflection-browser>
             </div>
             <div v-show="data.tabs.grammar" class="alpheios-panel__tab-panel alpheios-panel__tab__grammar

@@ -9172,12 +9172,61 @@ img.alpheios-popup__logo {
   font-weight: 700;
 }
 
-
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
 .infl-suff-footnote-link {
   position: relative;
 }
 .alpheios-inflections__footnote-popup {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-row-gap: 2px;
+  background: #FFF;
+  color: #333333;
+  position: absolute;
+  padding: 30px 15px 15px;
+  left: 0;
+  bottom: 20px;
+  z-index: 10;
+  min-width: 200px;
+  border: 1px solid #4E6476;
   cursor: move;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.alpheios-inflections__footnote-popup.hidden {
+  display: none;
+}
+.alpheios-inflections__footnote-popup-title {
+  font-weight: 700;
+  position: absolute;
+  text-transform: uppercase;
+  left: 15px;
+  top: 7px;
+}
+.alpheios-inflections__footnote-popup-close-btn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+  fill: #4E6476;
+  stroke: #4E6476;
+}
+.alpheios-inflections__footnote-popup-close-btn:hover,
+.alpheios-inflections__footnote-popup-close-btn:active {
+  fill: #5BC8DC;
+  stroke: #5BC8DC;
 }
 
 /************ UIKit vars ************************/
@@ -9505,48 +9554,6 @@ h4.alpheios-inflections__additional_title {
   position: relative;
   padding-left: 2px;
   vertical-align: super;
-}
-.alpheios-inflections__footnote-popup {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  grid-row-gap: 2px;
-  background: #FFF;
-  color: #333333;
-  position: absolute;
-  padding: 30px 15px 15px;
-  left: 0;
-  bottom: 20px;
-  transform: translateX(-50%);
-  z-index: 10;
-  min-width: 200px;
-  border: 1px solid #4E6476;
-}
-.alpheios-inflections__footnote-popup.hidden {
-  display: none;
-}
-.alpheios-inflections__footnote-popup-title {
-  font-weight: 700;
-  position: absolute;
-  text-transform: uppercase;
-  left: 15px;
-  top: 7px;
-}
-.alpheios-inflections__footnote-popup-close-btn {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  cursor: pointer;
-  fill: #4E6476;
-  stroke: #4E6476;
-}
-.alpheios-inflections__footnote-popup-close-btn:hover,
-.alpheios-inflections__footnote-popup-close-btn:active {
-  fill: #5BC8DC;
-  stroke: #5BC8DC;
 }
 .alpheios-inflections__credits-cont {
   margin-bottom: 10px;

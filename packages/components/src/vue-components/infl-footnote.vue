@@ -43,7 +43,8 @@
       }
     },
     mounted () {
-      this.target = this.$el.querySelector('.alpheios-inflections__footnote-popup')
+      this.inflpopup = this.$el.querySelector('.alpheios-inflections__footnote-popup')
+      this.inflpanel = this.$el.closest('#alpheios-panel__inflections-panel')
     },
     beforeDestroy () {
       this.$_alpheios_cleanup()
@@ -52,8 +53,10 @@
       // Named according to Vue style guide: https://vuejs.org/v2/style-guide/#Private-property-names-essential
       $_alpheios_init () {
         if (this.draggable && !this.interactInstance) {
-          this.interactInstance = interact(this.target)
+          this.interactInstance = interact(this.inflpopup)
             .draggable(this.draggableSettings())
+
+          this.setTransformPopup('translate(-50%)')
         }
       },
 
@@ -62,6 +65,11 @@
           this.interactInstance.unset()
           this.interactInstance = null
         }
+      },
+
+      setTransformPopup(transformValue) {
+        this.popupAlignmentStyles.webkitTransform = transformValue
+        this.popupAlignmentStyles.transform = transformValue
       },
 
       draggableSettings: function () {
@@ -82,8 +90,7 @@
         const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
         const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
-        target.style.webkitTransform = `translate(${x}px, ${y}px)`
-        target.style.transform = `translate(${x}px, ${y}px)`
+        this.setTransformPopup(`translate(${x}px, ${y}px)`)
 
         target.setAttribute('data-x', x)
         target.setAttribute('data-y', y)
@@ -108,20 +115,13 @@
       },
 
       checkBounds () {
-        if (!this.inflpopup) {
-          this.inflpopup = this.$el.querySelector('.alpheios-inflections__footnote-popup')
-        }
-        if (!this.inflpanel) {
-          this.inflpanel = this.$el.closest('#alpheios-panel__inflections-panel')
-        }
-
         let popupBR = this.inflpopup.getBoundingClientRect()
         let panelBR = this.inflpanel.getBoundingClientRect()
 
         if (this.isOutOfRightXBound(popupBR, panelBR)) {
-          this.popupAlignmentStyles.transform = 'translateX(calc(-50% - ' + this.deltaRightXBound(popupBR, panelBR) + 'px))'
+          this.setTransformPopup(`translateX(calc(-50% - ${this.deltaRightXBound(popupBR, panelBR)}px))`)
         } else if (this.isOutOfLeftXBound(popupBR, panelBR)) {
-          this.popupAlignmentStyles.transform = 'translateX(-' + this.deltaLeftXBound(popupBR, panelBR) + 'px)'
+          this.setTransformPopup(`translateX(-${this.deltaLeftXBound(popupBR, panelBR)}px)`)
         }
       },
 
@@ -142,10 +142,63 @@
 </script>
 
 <style lang="scss">
+    @import "../styles/alpheios";
     .infl-suff-footnote-link {
         position: relative;
     }
+
     .alpheios-inflections__footnote-popup {
-    	cursor: move;
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        grid-row-gap: 2px;
+        background: #FFF;
+        color: $alpheios-headers-color;
+        position: absolute;
+        padding: 30px 15px 15px;
+        left: 0;
+        bottom: 20px;
+        z-index: 10;
+        min-width: 200px;
+        border: 1px solid $alpheios-toolbar-color;
+        cursor: move;
+
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+    }
+
+    .alpheios-inflections__footnote-popup.hidden {
+        display: none;
+    }
+
+    .alpheios-inflections__footnote-popup-title {
+        font-weight: 700;
+        position: absolute;
+        text-transform: uppercase;
+        left: 15px;
+        top: 7px;
+    }
+
+    .alpheios-inflections__footnote-popup-close-btn {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        cursor: pointer;
+        fill: $alpheios-toolbar-color;
+        stroke: $alpheios-toolbar-color;
+    }
+
+    .alpheios-inflections__footnote-popup-close-btn:hover,
+    .alpheios-inflections__footnote-popup-close-btn:active {
+        fill: $alpheios-link-hover-color;
+        stroke: $alpheios-link-hover-color;
     }
 </style>
