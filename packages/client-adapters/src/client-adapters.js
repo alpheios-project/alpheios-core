@@ -4,36 +4,26 @@ import AlpheiosLemmaTranslationsAdapter from '@/translations/adapter'
 import AlpheiosLexiconsAdapter from '@/lexicons/adapter'
 import WrongMethodError from '@/errors/wrong-method-error'
 
+import AdaptersConfig from '@/adapters-config.json'
+
 let cachedConfig = new Map()
 let cachedAdaptersList = new Map()
 
 class ClientAdapters {
   static init () {
     if (cachedConfig.size === 0) {
-      cachedConfig.set('morphology', {
-        alpheiosTreebank: {
-          adapter: ClientAdapters.tbAdapter,
-          methods: [ 'getHomonym' ]
-        },
-        tufts: {
-          adapter: ClientAdapters.maAdapter,
-          methods: [ 'getHomonym' ]
-        }
-      })
+      for (let category in AdaptersConfig) {
+        let adapters = {}
+        for (let adapterKey in AdaptersConfig[category]) {
+          let adapterData = AdaptersConfig[category][adapterKey]
 
-      cachedConfig.set('lexicon', {
-        alpheios: {
-          adapter: ClientAdapters.lexicons,
-          methods: ['fetchShortDefs', 'fetchFullDefs']
+          adapters[adapterKey] = {
+            adapter: ClientAdapters[adapterData.adapter],
+            methods: adapterData.methods
+          }
         }
-      })
-
-      cachedConfig.set('lemmatranslation', {
-        alpheios: {
-          adapter: ClientAdapters.lemmaTranslations,
-          methods: ['fetchTranslations']
-        }
-      })
+        cachedConfig.set(category, adapters)
+      }
 
       for (let key of cachedConfig.keys()) {
         let res = {}
@@ -65,7 +55,7 @@ class ClientAdapters {
 
   static checkMethod (category, adapterName, method) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(method)) {
-      throw new WrongMethodError(`wrong method for ${category}.${adapterName} - ${method}`, `${category}.${adapterName}`)
+      throw new WrongMethodError(`Wrong method for ${category}.${adapterName} - ${method}`, `${category}.${adapterName}`)
     }
   }
 

@@ -5379,6 +5379,17 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 
 /***/ }),
 
+/***/ "./adapters-config.json":
+/*!******************************!*\
+  !*** ./adapters-config.json ***!
+  \******************************/
+/*! exports provided: morphology, lexicon, lemmatranslation, default */
+/***/ (function(module) {
+
+module.exports = {"morphology":{"alpheiosTreebank":{"adapter":"tbAdapter","methods":["getHomonym"]},"tufts":{"adapter":"maAdapter","methods":["getHomonym"]}},"lexicon":{"alpheios":{"adapter":"lexicons","methods":["fetchShortDefs","fetchFullDefs"]}},"lemmatranslation":{"alpheios":{"adapter":"lemmaTranslations","methods":"fetchTranslations"}}};
+
+/***/ }),
+
 /***/ "./alpheiostb/adapter.js":
 /*!*******************************!*\
   !*** ./alpheiostb/adapter.js ***!
@@ -5616,6 +5627,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _translations_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/translations/adapter */ "./translations/adapter.js");
 /* harmony import */ var _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lexicons/adapter */ "./lexicons/adapter.js");
 /* harmony import */ var _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/errors/wrong-method-error */ "./errors/wrong-method-error.js");
+/* harmony import */ var _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/adapters-config.json */ "./adapters-config.json");
+var _adapters_config_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters-config.json */ "./adapters-config.json", 1);
+
+
 
 
 
@@ -5628,6 +5643,24 @@ let cachedAdaptersList = new Map()
 class ClientAdapters {
   static init () {
     if (cachedConfig.size === 0) {
+      console.info('****************AdaptersConfig', _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__)
+      for (let category in _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__) {
+        console.info('****************category', category)
+        let adapters = {}
+        for (let adapterKey in _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__[category]) {
+          let adapterData = _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__[category][adapterKey]
+          console.info('****************adapterKey', adapterKey)
+          console.info('****************adapterData', adapterData)
+
+          adapters[adapterKey] = {
+            adapter: ClientAdapters[adapterData.adapter],
+            methods: adapterData.methods
+          }
+        }
+        console.info('***************category, adapters', category, adapters)
+        cachedConfig.set(category, adapters)
+      }
+      /*
       cachedConfig.set('morphology', {
         alpheiosTreebank: {
           adapter: ClientAdapters.tbAdapter,
@@ -5652,7 +5685,7 @@ class ClientAdapters {
           methods: ['fetchTranslations']
         }
       })
-
+      */
       for (let key of cachedConfig.keys()) {
         let res = {}
         Object.keys(cachedConfig.get(key)).forEach(typeAdapter => {

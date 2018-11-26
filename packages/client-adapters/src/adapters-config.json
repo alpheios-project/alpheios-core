@@ -1,0 +1,25 @@
+{ "morphology": {
+    "alpheiosTreebank": {
+      "adapter": "tbAdapter",
+      "methods": [ "getHomonym" ]
+    },
+    "tufts": {
+      "adapter": "maAdapter",
+      "methods": [ "getHomonym" ]
+    }
+  },
+
+  "lexicon": {
+    "alpheios": {
+      "adapter": "lexicons",
+      "methods": [ "fetchShortDefs", "fetchFullDefs" ]
+    }
+  },
+
+  "lemmatranslation": {
+    "alpheios": {
+      "adapter": "lemmaTranslations",
+      "methods": "fetchTranslations"
+    }
+  }
+}
