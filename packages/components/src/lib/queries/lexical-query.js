@@ -1,4 +1,5 @@
 import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym } from 'alpheios-data-models'
+import Event from '@/lib/events/event.js'
 import Query from './query.js'
 
 export default class LexicalQuery extends Query {
@@ -6,7 +7,6 @@ export default class LexicalQuery extends Query {
     super(name)
     this.selector = selector
     this.htmlSelector = options.htmlSelector
-    this.ui = options.uiController
     this.maAdapter = options.maAdapter
     this.tbAdapter = options.tbAdapter
     this.langData = options.langData
@@ -15,7 +15,6 @@ export default class LexicalQuery extends Query {
     this.resourceOptions = options.resourceOptions || []
     this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
-    this.l10n = options.l10n
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
   }
@@ -26,9 +25,6 @@ export default class LexicalQuery extends Query {
 
   async getData () {
     this.languageID = this.selector.languageID
-    this.ui.setTargetRect(this.htmlSelector.targetRect).newLexicalRequest(this.languageID).message(`Please wait while data is retrieved ...`)
-    this.ui.showStatusInfo(this.selector.normalizedText, this.languageID)
-    this.ui.updateWordAnnotationData(this.selector.data)
     let iterator = this.iterations()
 
     let result = iterator.next()
@@ -52,7 +48,6 @@ export default class LexicalQuery extends Query {
 
   * iterations () {
     let formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
-    this.ui.updateLanguage(this.selector.languageID)
     if (this.tbAdapter && this.selector.data.treebank && this.selector.data.treebank.word) {
       this.annotatedHomonym = yield this.tbAdapter.getHomonym(this.selector.languageID, this.selector.data.treebank.word.ref)
     }
@@ -63,15 +58,12 @@ export default class LexicalQuery extends Query {
         if (this.annotatedHomonym) {
           this.homonym = Homonym.disambiguate(this.homonym, [this.annotatedHomonym])
         }
-        this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_READY)
+        LexicalQuery.evt.MORPH_DATA_READY.pub()
       } else {
         if (this.annotatedHomonym) {
           this.homonym = this.annotatedHomonym
         } else {
-          this.ui.addImportantMessage(this.ui.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND)
-          // Need to notify a UI controller that there is no morph data on this word in an analyzer
-          // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
-          if (this.ui.morphologyDataNotFound) { this.ui.morphologyDataNotFound(true) }
+          LexicalQuery.evt.MORPH_DATA_NOT_FOUND.pub()
           this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
         }
       }
@@ -93,11 +85,7 @@ export default class LexicalQuery extends Query {
       this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
     }
 
-    this.ui.updateMorphology(this.homonym)
-    this.ui.updateDefinitions(this.homonym)
-    // Update status info with data from a morphological analyzer
-    this.ui.showStatusInfo(this.homonym.targetWord, this.homonym.languageID)
-    this.ui.updateInflections(this.homonym)
+    LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
 
     let definitionRequests = []
 
@@ -133,7 +121,7 @@ export default class LexicalQuery extends Query {
     if (this.lemmaTranslations) {
       const languageCode = LMF.getLanguageCodeFromId(this.selector.languageID)
       yield this.lemmaTranslations.adapter.fetchTranslations(lemmaList, languageCode, this.lemmaTranslations.locale)
-      this.ui.updateTranslations(this.homonym)
+      LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
     }
 
     yield 'Retrieval of lemma translations completed'
@@ -147,8 +135,11 @@ export default class LexicalQuery extends Query {
             definitionRequest.lexeme.meaning[definitionRequest.appendFunction](definition)
             definitionRequest.complete = true
             if (this.active) {
-              this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_DEFSDATA_READY.get(definitionRequest.type, definitionRequest.lexeme.lemma.word))
-              this.ui.updateDefinitions(this.homonym)
+              LexicalQuery.evt.DEFS_READY.pub({
+                requestType: definitionRequest.type,
+                word: definitionRequest.lexeme.lemma.word,
+                homonym: this.homonym
+              })
             }
             if (definitionRequests.every(request => request.complete)) {
               this.finalize('Success')
@@ -158,7 +149,10 @@ export default class LexicalQuery extends Query {
             console.error(`${definitionRequest.type}(s) request failed: ${error}`)
             definitionRequest.complete = true
             if (this.active) {
-              this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_DEFSDATA_NOTFOUND.get(definitionRequest.type, definitionRequest.lexeme.lemma.word))
+              LexicalQuery.evt.DEFS_NOT_FOUND.pub({
+                requestType: definitionRequest.type,
+                word: definitionRequest.lexeme.lemma.word
+              })
             }
             if (definitionRequests.every(request => request.complete)) {
               this.finalize(error)
@@ -175,6 +169,7 @@ export default class LexicalQuery extends Query {
   }
 
   finalize (result) {
+    let resultStatus
     if (this.active) {
       // if we can reset the query and we don't have ahy valid results yet
       // then reset and try again
@@ -187,18 +182,19 @@ export default class LexicalQuery extends Query {
         this.getData()
         return
       }
-      this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE)
       if (typeof result === 'object' && result instanceof Error) {
-        this.ui.lexicalRequestFailed(this.languageID)
+        resultStatus = LexicalQuery.resultStatus.FAILED
         console.error(`LexicalQuery failed: ${result.message}`)
       } else {
-        this.ui.lexicalRequestSucceeded()
+        resultStatus = LexicalQuery.resultStatus.SUCCEEDED
       }
-      // we might have previous requests which succeeded so go ahead and try
-      // to show language info. It will catch empty data.
-      this.ui.showLanguageInfo(this.homonym)
+    } else {
+      resultStatus = LexicalQuery.resultStatus.CANCELED
     }
-    this.ui.lexicalRequestComplete()
+    LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
+      resultStatus: resultStatus,
+      homonym: this.homonym
+    })
     Query.destroy(this)
     return result
   }
@@ -222,4 +218,61 @@ export default class LexicalQuery extends Query {
     }
     return lexiconOpts
   }
+}
+
+/**
+ * This is a description of a LexicalQuery event interface.
+ */
+LexicalQuery.evt = {
+  /**
+   * Published when a new LexicalQuery data processing is complete.
+   * Data: {
+   *  {symbol} resultStatus - A lexical query result status,
+      {Homonym} homonym - A homonym data
+   * }
+   */
+  LEXICAL_QUERY_COMPLETE: new Event('Lexical Query Complete', LexicalQuery),
+
+  /**
+   * Published when morphological data becomes available.
+   * Data: an empty object.
+   */
+  MORPH_DATA_READY: new Event(`Morph Data Ready`, LexicalQuery),
+
+  /**
+   * Published when no morphological data has been found.
+   * Data: an empty object.
+   */
+  MORPH_DATA_NOT_FOUND: new Event(`Morph Data Not Found`, LexicalQuery),
+
+  /**
+   * Published when no morphological data has been found.
+   * Data: {Homonym} homonym - A homonym object.
+   */
+  HOMONYM_READY: new Event(`Homonym Ready`, LexicalQuery),
+
+  /**
+   * Published when lemma translations becomes available.
+   * Data: {Homonym} homonym - A homonym object.
+   */
+  LEMMA_TRANSL_READY: new Event(`Lemma Translations Ready`, LexicalQuery),
+
+  /**
+   * Published when definitions data becomes available.
+   * Data: {
+   *   requestType: definitionRequest.type,
+   *   word: definitionRequest.lexeme.lemma.word,
+   *   homonym: this.homonym
+   * }
+   */
+  DEFS_READY: new Event(`Definitions Data Ready`, LexicalQuery),
+
+  /**
+   * Published when definitions data has been not found.
+   * Data: {
+   *   requestType: definitionRequest.type,
+   *   word: definitionRequest.lexeme.lemma.word
+   * }
+   */
+  DEFS_NOT_FOUND: new Event(`Definitions Data Not Found`, LexicalQuery)
 }

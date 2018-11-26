@@ -1,4 +1,5 @@
 import Query from './query.js'
+import Event from '@/lib/events/event.js'
 
 /**
  * This is a Query class to encapsulate queries for document specific Annotations
@@ -8,7 +9,6 @@ import Query from './query.js'
 export default class AnnotationQuery extends Query {
   constructor (name, options) {
     super(name)
-    this.ui = options.uiController
     this.l10n = options.l10n
     this.siteOptions = options.siteOptions
     this.document = options.document
@@ -20,7 +20,7 @@ export default class AnnotationQuery extends Query {
 
   async getData () {
     this.getTreebankOptions().then((data) => {
-      this.ui.updatePageAnnotationData(data)
+      AnnotationQuery.evt.ANNOTATIONS_AVAILABLE.pub({ annotations: data })
     })
     this.finalize('complete')
   }
@@ -40,4 +40,16 @@ export default class AnnotationQuery extends Query {
       return { treebank: { page: {} } }
     }
   }
+}
+
+/**
+ * This is a description of a ResourceQuery event interface.
+ * Data: empty.
+ */
+AnnotationQuery.evt = {
+  /**
+   * Published when annotations become available.
+   * Data: annotations - An annotations data.
+   */
+  ANNOTATIONS_AVAILABLE: new Event('Annotations Become Available', AnnotationQuery)
 }

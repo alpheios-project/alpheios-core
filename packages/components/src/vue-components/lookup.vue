@@ -139,11 +139,11 @@
         this.uiController.updateLanguage(this.options.items.lookupLanguage.currentValue)
         this.resourceOptions.items.lexicons = this.uiController.resourceOptions.items.lexicons
 
+        const resourceOptions = this.resourceOptions || this.uiController.resourceOptions
+        const lemmaTranslationLang = this.uiController.state.lemmaTranslationLang
         LexicalQueryLookup
-          .create(textSelector, this.uiController, this.resourceOptions)
+          .create(textSelector, resourceOptions, lemmaTranslationLang)
           .getData()
-
-        // this.lookuptext = ''
       },
 
       'switchLookupSettings': function () {

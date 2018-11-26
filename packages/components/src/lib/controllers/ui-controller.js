@@ -81,7 +81,7 @@ export default class UIController {
    * Creates an instance of a UI controller with default options. Provide your own implementation of this method
    * if you want to initialize a UI controller differently.
    */
-  static build (state, options) {
+  static create (state, options) {
     let uiController = new UIController(state, options)
 
     // Creates on configures an event listener
@@ -104,6 +104,24 @@ export default class UIController {
 
     // Attaches an event controller to a UIController instance
     uiController.evc = eventController
+
+    // Subscribe to LexicalQuery events
+    LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
+    LexicalQuery.evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    LexicalQuery.evt.MORPH_DATA_NOT_FOUND.sub(uiController.onMorphDataNotFound.bind(uiController))
+    LexicalQuery.evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
+    LexicalQuery.evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
+    LexicalQuery.evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
+    LexicalQuery.evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+
+    // Subscribe to ResourceQuery events
+    ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    ResourceQuery.evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    ResourceQuery.evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+
+    // Subscribe to AnnotationQuery events
+    AnnotationQuery.evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
+
     return uiController
   }
 
@@ -432,7 +450,6 @@ export default class UIController {
         requestGrammar: function (feature) {
           // ExpObjMon.track(
           ResourceQuery.create(feature, {
-            uiController: this.uiController,
             grammars: Grammars
           }).getData()
           //, {
@@ -442,6 +459,7 @@ export default class UIController {
           //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
           // ]
           // }).getData()
+          this.uiController.message(this.panelData.l10n.messages.TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS)
         },
 
         settingChange: function (name, value) {
@@ -966,7 +984,12 @@ export default class UIController {
     this.popup.popupData.providers = Array.from(providers.keys())
   }
 
-  updateGrammar (urls) {
+  /**
+   * Updates grammar data with URLs supplied.
+   * If no URLS are provided, will reset grammar data.
+   * @param {Array} urls
+   */
+  updateGrammar (urls = []) {
     if (urls.length > 0) {
       this.panel.panelData.grammarRes = urls[0]
       this.panel.panelData.grammarAvailable = true
@@ -1220,7 +1243,6 @@ export default class UIController {
 
         LexicalQuery.create(textSelector, {
           htmlSelector: htmlSelector,
-          uiController: this,
           maAdapter: this.maAdapter,
           lexicons: Lexicons,
           resourceOptions: this.resourceOptions,
@@ -1228,6 +1250,13 @@ export default class UIController {
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.contentOptions.items.locale.currentValue } : null,
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         }).getData()
+
+        this.setTargetRect(htmlSelector.targetRect)
+        this.newLexicalRequest(textSelector.languageID)
+        this.message(this.l10n.messages.TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS)
+        this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
+        this.updateLanguage(textSelector.languageID)
+        this.updateWordAnnotationData(textSelector.data)
       }
     }
   }
@@ -1257,13 +1286,83 @@ export default class UIController {
   /**
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
-  updateAnnotations (event, nativeEvent) {
+  updateAnnotations () {
     if (this.state.isActive() && this.state.uiIsActive()) {
       AnnotationQuery.create({
-        uiController: this,
         document: document,
         siteOptions: this.siteOptions
       }).getData()
     }
+  }
+
+  onLexicalQueryComplete (data) {
+    switch (data.resultStatus) {
+      case LexicalQuery.resultStatus.SUCCEEDED:
+        this.lexicalRequestSucceeded()
+        this.showLanguageInfo(data.homonym)
+        this.addMessage(this.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE)
+        this.lexicalRequestComplete()
+        break
+      case LexicalQuery.resultStatus.FAILED:
+        this.lexicalRequestFailed()
+        this.showLanguageInfo(data.homonym)
+        this.addMessage(this.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE)
+        this.lexicalRequestComplete()
+        break
+      default:
+        // Request was probably cancelled
+        this.lexicalRequestComplete()
+    }
+  }
+
+  onMorphDataReady () {
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_MORPHDATA_READY)
+  }
+
+  onMorphDataNotFound () {
+    this.addImportantMessage(this.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND)
+    // Need to notify a UI controller that there is no morph data on this word in an analyzer
+    // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
+    if (this.morphologyDataNotFound) { this.morphologyDataNotFound(true) }
+  }
+
+  onHomonymReady (homonym) {
+    this.updateMorphology(homonym)
+    this.updateDefinitions(homonym)
+    // Update status info with data from a morphological analyzer
+    this.showStatusInfo(homonym.targetWord, homonym.languageID)
+    this.updateInflections(homonym)
+  }
+
+  onLemmaTranslationsReady (homonym) {
+    this.updateTranslations(homonym)
+  }
+
+  onDefinitionsReady (data) {
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_DEFSDATA_READY.get(data.requestType, data.word))
+    this.updateDefinitions(data.homonym)
+  }
+
+  onDefinitionsNotFound (data) {
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_DEFSDATA_NOTFOUND.get(data.requestType, data.word))
+  }
+
+  onResourceQueryComplete () {
+    // We don't check result status for now. We always output the same message.
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_COMPLETE)
+  }
+
+  onGrammarAvailable (data) {
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_READY)
+    this.updateGrammar(data.url)
+  }
+
+  onGrammarNotFound () {
+    this.updateGrammar()
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND)
+  }
+
+  onAnnotationsAvailable (data) {
+    this.updatePageAnnotationData(data.annotations)
   }
 }

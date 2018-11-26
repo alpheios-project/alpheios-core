@@ -314,6 +314,16 @@
     "description": "resource query complete notice",
     "component": "UI"
   },
+  "TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS": {
+    "message": "Please wait while data is retrieved ...",
+    "description": "Data retrieval is in progress",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS": {
+    "message": "Please wait while data is retrieved ...",
+    "description": "Resource retrieval is in progress",
+    "component": "UI"
+  },
   "LABEL_BROWSERACTION_DEACTIVATE": {
     "message": "Deactivate Alpheios",
     "description": "Deactivate browser action title",

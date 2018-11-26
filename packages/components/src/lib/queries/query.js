@@ -87,3 +87,9 @@ export default class Query {
     throw new Error(`finalize() method should be implemented in a subclass of a Query`)
   }
 }
+
+Query.resultStatus = {
+  SUCCEEDED: Symbol('Query finished successfully'),
+  FAILED: Symbol('Query failed'),
+  CANCELED: Symbol('Query has been canceled')
+}

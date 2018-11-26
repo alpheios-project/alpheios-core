@@ -1,10 +1,10 @@
 import Query from './query.js'
+import Event from '@/lib/events/event.js'
 
 export default class ResourceQuery extends Query {
   constructor (name, feature, options) {
     super(name)
     this.feature = feature
-    this.ui = options.uiController
     this.grammars = options.grammars
   }
 
@@ -13,7 +13,6 @@ export default class ResourceQuery extends Query {
   }
 
   async getData () {
-    this.ui.message(`Retrieving requested resource ...`)
     let iterator = this.iterations()
 
     let result = iterator.next()
@@ -47,8 +46,7 @@ export default class ResourceQuery extends Query {
     }
     ))
     if (grammarRequests.length === 0) {
-      this.ui.updateGrammar([])
-      this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND)
+      ResourceQuery.evt.GRAMMAR_NOT_FOUND.pub()
       this.finalize()
     }
     for (let q of grammarRequests) {
@@ -56,18 +54,21 @@ export default class ResourceQuery extends Query {
         url => {
           q.complete = true
           if (this.active) {
-            this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_GRAMMAR_READY)
-            this.ui.updateGrammar(url)
+            ResourceQuery.evt.GRAMMAR_AVAILABLE.pub({ url: url })
           }
           if (grammarRequests.every(request => request.complete)) {
-            if (this.active) { this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_GRAMMAR_COMPLETE) }
+            if (this.active) {
+              ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.pub({ resultStatus: ResourceQuery.resultStatus.SUCCEEDED })
+            }
             this.finalize()
           }
         },
         error => {
           console.log('Error retrieving Grammar resource', error)
           if (grammarRequests.every(request => request.complete)) {
-            if (this.active) { this.ui.addMessage(this.ui.l10n.messages.TEXT_NOTICE_RESQUERY_COMPLETE) }
+            if (this.active) {
+              ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.pub({ resultStatus: ResourceQuery.resultStatus.SUCCEEDED })
+            }
             this.finalize()
           }
         }
@@ -80,4 +81,30 @@ export default class ResourceQuery extends Query {
     Query.destroy(this)
     return result
   }
+}
+
+/**
+ * This is a description of a ResourceQuery event interface.
+ * Data: empty.
+ */
+ResourceQuery.evt = {
+  /**
+   * Published when a new LexicalQuery data processing is complete.
+   * Data: {
+   *  {symbol} resultStatus - A lexical query result status
+   * }
+   */
+  RESOURCE_QUERY_COMPLETE: new Event('Resource Query Complete', ResourceQuery),
+
+  /**
+   * Published when some new piece of grammar data becomes available.
+   * Data: {Array} url - A grammar data URLs.
+   */
+  GRAMMAR_AVAILABLE: new Event('Grammar Data is Available', ResourceQuery),
+
+  /**
+   * Published when a no grammar information is found.
+   * Data: {symbol} languageID - a language ID of a selected text.
+   */
+  GRAMMAR_NOT_FOUND: new Event('Grammar Not Found', ResourceQuery)
 }
