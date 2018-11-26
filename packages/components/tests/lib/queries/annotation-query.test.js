@@ -75,7 +75,7 @@ describe('annotation-query.test.js', () => {
     }
     let query = AnnotationQuery.create(options)
 
-    let spy1 = jest.spyOn(options.uiController, 'updatePageAnnotationData')
+    let spy1 = jest.spyOn(AnnotationQuery.evt.ANNOTATIONS_AVAILABLE, 'pub')
     let spy2 = jest.spyOn(query, 'getTreebankOptions')
     let spy3 = jest.spyOn(query, 'finalize')
     await query.getData()

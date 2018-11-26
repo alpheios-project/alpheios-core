@@ -161,28 +161,6 @@ describe('lexical-query.test.js', () => {
     expect(query.canReset).toBeFalsy()
   })
 
-  it('2 LexicalQuery - getData executes before iterations init languageId, ui.setTargetRect, ui.showStatusInfo, ui.updateWordAnnotationData', async () => {
-    let curUI = Object.assign({}, testUI)
-    let query = LexicalQuery.create(testTextSelector, {
-      uiController: curUI,
-      htmlSelector: testHtmlSelector,
-      maAdapter: testMaAdapter
-    })
-    let languageID = testTextSelector.languageID
-    query.active = false
-
-    jest.spyOn(curUI, 'setTargetRect')
-    jest.spyOn(curUI, 'showStatusInfo')
-    jest.spyOn(curUI, 'updateWordAnnotationData')
-
-    await query.getData()
-
-    expect(curUI.setTargetRect).toHaveBeenCalledWith(testHtmlSelector.targetRect)
-    expect(curUI.showStatusInfo).toHaveBeenCalledWith(testTextSelector.normalizedText, languageID)
-    expect(curUI.updateWordAnnotationData).toHaveBeenCalledWith(testTextSelector.data)
-    expect(query.languageID).toEqual(languageID)
-  })
-
   // TODO: Probably removal of iteration of `getInflectionData()` broke it. Need to fix
   it.skip('3 LexicalQuery - getData could make another iterations circle if canReset = true', async () => {
     let curUI = Object.assign({}, testUI)
@@ -218,42 +196,12 @@ describe('lexical-query.test.js', () => {
 
     query.LDFAdapter = testLDFAdapterFailed
     jest.spyOn(query.maAdapter, 'getHomonym')
-    jest.spyOn(curUI, 'addMessage')
-    jest.spyOn(curUI, 'updateMorphology')
-    jest.spyOn(curUI, 'updateDefinitions')
-    jest.spyOn(curUI, 'showStatusInfo')
+    jest.spyOn(LexicalQuery.evt.HOMONYM_READY, 'pub')
 
     await query.getData()
 
     expect(query.maAdapter.getHomonym).toHaveBeenCalledWith(testTextSelector.languageID, testTextSelector.normalizedText)
-    expect(curUI.addMessage).toHaveBeenCalledWith(l10n.messages.TEXT_NOTICE_MORPHDATA_READY)
-    expect(curUI.updateMorphology).toHaveBeenCalledWith(testHomonym)
-    expect(curUI.updateDefinitions).toHaveBeenCalledWith(testHomonym)
-    expect(curUI.showStatusInfo).toHaveBeenCalledWith(testHomonym.targetWord, testHomonym.languageID)
-  })
-
-  it('5 LexicalQuery - getData executes iterations: LDFAdapter.getInflectionData and after it getInflectionData, addMessage, updateInflections', async () => {
-    let curUI = Object.assign({}, testUI)
-    let query = LexicalQuery.create(testTextSelector, {
-      uiController: curUI,
-      htmlSelector: testHtmlSelector,
-      maAdapter: Object.assign({}, testMaAdapter),
-      lexicons: Object.assign({}, testLexiconAdapterFailed)
-    })
-    query.canReset = false
-    query.getLexiconOptions = function () { return { allow: false } }
-
-    query.LDFAdapter = Object.assign({}, testLDFAdapter)
-
-    jest.spyOn(query.LDFAdapter, 'getInflectionData')
-    jest.spyOn(curUI, 'addMessage')
-    jest.spyOn(curUI, 'updateInflections')
-
-    await query.getData()
-
-    // expect(query.LDFAdapter.getInflectionData).toHaveBeenCalledWith(testHomonym)
-    expect(curUI.addMessage).toHaveBeenCalledWith(l10n.messages.TEXT_NOTICE_MORPHDATA_READY)
-    expect(curUI.updateInflections).toHaveBeenCalledWith(testHomonym)
+    expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
   it('6 LexicalQuery - If GetData couldn\'t finalize the full Lexical Request it throws error to console with LexicalQuery failed:', async () => {
@@ -289,12 +237,12 @@ describe('lexical-query.test.js', () => {
     query.LDFAdapter = Object.assign({}, testLDFAdapter)
 
     jest.spyOn(console, 'error')
-    jest.spyOn(curUI, 'addMessage')
+    jest.spyOn(LexicalQuery.evt.DEFS_NOT_FOUND, 'pub')
 
     await query.getData()
 
     expect(console.error).toHaveBeenCalled()
-    expect(curUI.addMessage).toHaveBeenCalledWith(l10n.messages.TEXT_NOTICE_DEFSDATA_NOTFOUND.get('Full definition', testHomonym.lexemes[0].lemma.word))
+    expect(LexicalQuery.evt.DEFS_NOT_FOUND.pub).toHaveBeenCalled()
   })
 
   it('8 LexicalQuery - getData executes fetchShortDefs and fetchFullDefs and if request is rejected than ', async () => {
@@ -313,13 +261,13 @@ describe('lexical-query.test.js', () => {
 
     jest.spyOn(query.lexicons, 'fetchShortDefs')
     jest.spyOn(query.lexicons, 'fetchFullDefs')
-    jest.spyOn(curUI, 'updateDefinitions')
+    jest.spyOn(LexicalQuery.evt.HOMONYM_READY, 'pub')
 
     await query.getData()
 
     expect(query.lexicons.fetchShortDefs).toHaveBeenCalledWith({ word: 'foo lemma' }, { allow: false })
     expect(query.lexicons.fetchFullDefs).toHaveBeenCalledWith({ word: 'foo lemma' }, { allow: false })
-    expect(curUI.updateDefinitions).toHaveBeenCalledWith(testHomonym)
+    expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
   it('9 LexicalQuery - getData executes fetchTranslations and it executes updateTranslations', async () => {
@@ -340,13 +288,13 @@ describe('lexical-query.test.js', () => {
     query.LDFAdapter = Object.assign({}, testLDFAdapter)
 
     jest.spyOn(query.lemmaTranslations.adapter, 'fetchTranslations')
-    jest.spyOn(curUI, 'updateTranslations')
+    jest.spyOn(LexicalQuery.evt.LEMMA_TRANSL_READY, 'pub')
 
     await query.getData()
 
     const langCode = LMF.getLanguageCodeFromId(testTextSelector.languageID)
     expect(query.lemmaTranslations.adapter.fetchTranslations).toHaveBeenCalledWith([{ word: 'foo lemma' }], langCode, userLang)
-    expect(curUI.updateTranslations).toHaveBeenCalledWith(testHomonym)
+    expect(LexicalQuery.evt.LEMMA_TRANSL_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
   it('10 LexicalQuery - getLexiconOptions parses lexicons', () => {
@@ -476,10 +424,10 @@ describe('lexical-query.test.js', () => {
     query.LDFAdapter = Object.assign({}, testLDFAdapter)
 
     jest.spyOn(query, 'finalize')
-    jest.spyOn(curUI, 'updateDefinitions')
+    jest.spyOn(LexicalQuery.evt.DEFS_READY, 'pub')
 
     await query.getData()
-    expect(curUI.updateDefinitions).toHaveBeenCalled()
+    expect(LexicalQuery.evt.DEFS_READY.pub).toHaveBeenCalled()
     expect(query.finalize).toHaveBeenCalledWith('Success')
   })
 })

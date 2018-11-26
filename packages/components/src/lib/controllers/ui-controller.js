@@ -111,8 +111,8 @@ export default class UIController {
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    LexicalQuery.evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    LexicalQuery.evt.MORPH_DATA_NOT_FOUND.sub(uiController.onMorphDataNotFound.bind(uiController))
+    LexicalQuery.evt.TREEBANK_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    LexicalQuery.evt.TREEBANK_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
     LexicalQuery.evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
     LexicalQuery.evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
     LexicalQuery.evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
@@ -1245,7 +1245,7 @@ export default class UIController {
           })
           .getData() */
 
-        LexicalQuery.create(textSelector, {
+        let lexQuery = LexicalQuery.create(textSelector, {
           htmlSelector: htmlSelector,
           maAdapter: this.maAdapter,
           lexicons: Lexicons,
@@ -1253,7 +1253,7 @@ export default class UIController {
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.contentOptions.items.locale.currentValue } : null,
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-        }).getData()
+        })
 
         this.setTargetRect(htmlSelector.targetRect)
         this.newLexicalRequest(textSelector.languageID)
@@ -1261,6 +1261,8 @@ export default class UIController {
         this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
         this.updateLanguage(textSelector.languageID)
         this.updateWordAnnotationData(textSelector.data)
+
+        lexQuery.getData()
       }
     }
   }

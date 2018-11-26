@@ -29781,8 +29781,8 @@ class UIController {
 
     // Subscribe to LexicalQuery events
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.MORPH_DATA_NOT_FOUND.sub(uiController.onMorphDataNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.TREEBANK_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.TREEBANK_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
@@ -30915,7 +30915,7 @@ class UIController {
           })
           .getData() */
 
-        _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create(textSelector, {
+        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
           maAdapter: this.maAdapter,
           lexicons: alpheios_lexicon_client__WEBPACK_IMPORTED_MODULE_2__["Lexicons"],
@@ -30923,7 +30923,7 @@ class UIController {
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: alpheios_lemma_client__WEBPACK_IMPORTED_MODULE_4__["LemmaTranslations"], locale: this.contentOptions.items.locale.currentValue } : null,
           langOpts: { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-        }).getData()
+        })
 
         this.setTargetRect(htmlSelector.targetRect)
         this.newLexicalRequest(textSelector.languageID)
@@ -30931,6 +30931,8 @@ class UIController {
         this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
         this.updateLanguage(textSelector.languageID)
         this.updateWordAnnotationData(textSelector.data)
+
+        lexQuery.getData()
       }
     }
   }
@@ -32921,12 +32923,12 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
         if (this.annotatedHomonym) {
           this.homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].disambiguate(this.homonym, [this.annotatedHomonym])
         }
-        LexicalQuery.evt.MORPH_DATA_READY.pub()
+        LexicalQuery.evt.TREEBANK_DATA_READY.pub()
       } else {
         if (this.annotatedHomonym) {
           this.homonym = this.annotatedHomonym
         } else {
-          LexicalQuery.evt.MORPH_DATA_NOT_FOUND.pub()
+          LexicalQuery.evt.TREEBANK_DATA_NOTAVAILABLE.pub()
           this.homonym = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]([formLexeme], this.selector.normalizedText)
         }
       }
@@ -33100,13 +33102,13 @@ LexicalQuery.evt = {
    * Published when morphological data becomes available.
    * Data: an empty object.
    */
-  MORPH_DATA_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Morph Data Ready`, LexicalQuery),
+  TREEBANK_DATA_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Morph Data Ready`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: an empty object.
    */
-  MORPH_DATA_NOT_FOUND: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Morph Data Not Found`, LexicalQuery),
+  TREEBANK_DATA_NOTAVAILABLE: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Morph Data Not Found`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.

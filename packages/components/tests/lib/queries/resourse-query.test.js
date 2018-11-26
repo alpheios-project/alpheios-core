@@ -37,41 +37,35 @@ describe('resource-query.test.js', () => {
   })
 
   it('1 ResourceQuery - create method returns a new ResourceQuery with params', () => {
-    let query = ResourceQuery.create('foo feature', { uiController: 'foo uiController', grammars: 'foo grammars' })
+    let query = ResourceQuery.create('foo feature', { grammars: 'foo grammars' })
 
     expect(typeof query).toEqual('object')
     expect(query.constructor.name).toEqual('ResourceQuery')
     expect(typeof query.ID).toEqual('string')
 
     expect(query.feature).toEqual('foo feature')
-    expect(query.ui).toEqual('foo uiController')
     expect(query.grammars).toEqual('foo grammars')
   })
 
-  it('2 ResourceQuery - getData method executes steps: message, updateGrammar, addMessage, finalize (when fetchResources returns [])', async () => {
+  it('2 ResourceQuery - getData method executes steps: ResourceQuery.evt.GRAMMAR_NOT_FOUND.pub, finalize (when fetchResources returns [])', async () => {
     let testGrammars = {
       fetchResources: function () {
         return []
       }
     }
 
-    jest.spyOn(testUi, 'message')
-    jest.spyOn(testUi, 'updateGrammar')
-    jest.spyOn(testUi, 'addMessage')
+    jest.spyOn(ResourceQuery.evt.GRAMMAR_NOT_FOUND, 'pub')
 
-    let query = ResourceQuery.create('foo feature', { uiController: testUi, grammars: testGrammars })
+    let query = ResourceQuery.create('foo feature', { grammars: testGrammars })
     jest.spyOn(query, 'finalize')
 
     await query.getData()
 
-    expect(testUi.message).toHaveBeenCalledWith(`Retrieving requested resource ...`)
-    expect(testUi.updateGrammar).toHaveBeenCalledWith([])
-
-    expect(testUi.addMessage).toHaveBeenCalledWith(l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND)
+    expect(ResourceQuery.evt.GRAMMAR_NOT_FOUND.pub).toHaveBeenCalled()
     expect(query.finalize).toHaveBeenCalled()
   })
 
-  it('3 ResourceQuery - getData method executes updateGrammar with url as an argument (when fetchResources returns request url)', async () => {
+  it('3 ResourceQuery - getData method publishes GRAMMAR_AVAILABLE event with a url as an argument (when fetchResources returns a request url)', async () => {
     let testGrammars = {
       fetchResources: function () {
         return [
@@ -80,14 +74,13 @@ describe('resource-query.test.js', () => {
       }
     }
 
-    let query = ResourceQuery.create('foo feature', { uiController: testUi, grammars: testGrammars })
-    jest.spyOn(testUi, 'updateGrammar')
-    jest.spyOn(testUi, 'addMessage')
+    let query = ResourceQuery.create('foo feature', { grammars: testGrammars })
+    jest.spyOn(ResourceQuery.evt.GRAMMAR_AVAILABLE, 'pub')
+    jest.spyOn(ResourceQuery.evt.RESOURCE_QUERY_COMPLETE, 'pub')
 
     await query.getData()
-    expect(testUi.updateGrammar).toHaveBeenCalledWith('http:/testurl.com')
-    expect(testUi.addMessage).toHaveBeenCalledWith(l10n.messages.TEXT_NOTICE_GRAMMAR_READY)
-    expect(testUi.addMessage).toHaveBeenCalledWith(l10n.messages.TEXT_NOTICE_GRAMMAR_COMPLETE)
+    expect(ResourceQuery.evt.GRAMMAR_AVAILABLE.pub).toHaveBeenCalledWith({ url: 'http:/testurl.com' })
+    expect(ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.pub).toHaveBeenCalled()
   })
 
   it('4 ResourceQuery - getData method throws error to console when fetchResources returns error', async () => {

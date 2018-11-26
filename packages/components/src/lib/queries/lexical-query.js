@@ -57,12 +57,12 @@ export default class LexicalQuery extends Query {
         if (this.annotatedHomonym) {
           this.homonym = Homonym.disambiguate(this.homonym, [this.annotatedHomonym])
         }
-        LexicalQuery.evt.MORPH_DATA_READY.pub()
+        LexicalQuery.evt.TREEBANK_DATA_READY.pub()
       } else {
         if (this.annotatedHomonym) {
           this.homonym = this.annotatedHomonym
         } else {
-          LexicalQuery.evt.MORPH_DATA_NOT_FOUND.pub()
+          LexicalQuery.evt.TREEBANK_DATA_NOTAVAILABLE.pub()
           this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
         }
       }
@@ -236,13 +236,13 @@ LexicalQuery.evt = {
    * Published when morphological data becomes available.
    * Data: an empty object.
    */
-  MORPH_DATA_READY: new PsEvent(`Morph Data Ready`, LexicalQuery),
+  TREEBANK_DATA_READY: new PsEvent(`Morph Data Ready`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: an empty object.
    */
-  MORPH_DATA_NOT_FOUND: new PsEvent(`Morph Data Not Found`, LexicalQuery),
+  TREEBANK_DATA_NOTAVAILABLE: new PsEvent(`Morph Data Not Found`, LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
