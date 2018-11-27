@@ -253,6 +253,7 @@ export default class UIController {
             treebank: false
           },
           verboseMode: this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode,
+          currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
           lexemes: [],
@@ -1069,11 +1070,17 @@ export default class UIController {
   }
 
   updateLanguage (currentLanguageID) {
+    // the code which follows assumes we have been passed a languageID symbol
+    // we can try to recover gracefully if we accidentally get passed a string value
+    if (typeof currentLanguageID !== "symbol") {
+      console.warn("updateLanguage was called with a string value")
+      currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
+    }
     this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
 
     this.panel.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
     this.popup.popupData.inflDataReady = this.inflDataReady
-
+    this.panel.panelData.currentLanguageID = currentLanguageID
     this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID)
 
     Vue.set(this.popup.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID))

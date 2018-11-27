@@ -114,7 +114,7 @@
                 </inflections>
             </div>
             <div v-show="inflectionsBrowserTabVisible" :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser" v-if="data.inflectionBrowserEnabled && data.settings && data.l10n">
-                <inflection-browser :messages="data.l10n.messages" @contentwidth="setContentWidth" :data="data.inflectionBrowserData"
+                <inflection-browser :messages="data.l10n.messages" @contentwidth="setContentWidth" :data="data.inflectionBrowserData" :language-id="inflectionBrowserLanguageID"
                 :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed">
                 </inflection-browser>
             </div>
@@ -286,6 +286,9 @@
         } else {
           return this.options.items.preferredLanguage.currentTextValue()
         }
+      },
+      inflectionBrowserLanguageID: function() {
+        return this.data.currentLanguageID
       },
       uiController: function () {
         return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
