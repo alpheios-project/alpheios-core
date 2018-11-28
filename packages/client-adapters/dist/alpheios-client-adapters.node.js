@@ -5643,49 +5643,19 @@ let cachedAdaptersList = new Map()
 class ClientAdapters {
   static init () {
     if (cachedConfig.size === 0) {
-      console.info('****************AdaptersConfig', _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__)
       for (let category in _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__) {
-        console.info('****************category', category)
         let adapters = {}
         for (let adapterKey in _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__[category]) {
           let adapterData = _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__[category][adapterKey]
-          console.info('****************adapterKey', adapterKey)
-          console.info('****************adapterData', adapterData)
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
             methods: adapterData.methods
           }
         }
-        console.info('***************category, adapters', category, adapters)
         cachedConfig.set(category, adapters)
       }
-      /*
-      cachedConfig.set('morphology', {
-        alpheiosTreebank: {
-          adapter: ClientAdapters.tbAdapter,
-          methods: [ 'getHomonym' ]
-        },
-        tufts: {
-          adapter: ClientAdapters.maAdapter,
-          methods: [ 'getHomonym' ]
-        }
-      })
 
-      cachedConfig.set('lexicon', {
-        alpheios: {
-          adapter: ClientAdapters.lexicons,
-          methods: ['fetchShortDefs', 'fetchFullDefs']
-        }
-      })
-
-      cachedConfig.set('lemmatranslation', {
-        alpheios: {
-          adapter: ClientAdapters.lemmaTranslations,
-          methods: ['fetchTranslations']
-        }
-      })
-      */
       for (let key of cachedConfig.keys()) {
         let res = {}
         Object.keys(cachedConfig.get(key)).forEach(typeAdapter => {
@@ -5716,7 +5686,7 @@ class ClientAdapters {
 
   static checkMethod (category, adapterName, method) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(method)) {
-      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](`wrong method for ${category}.${adapterName} - ${method}`, `${category}.${adapterName}`)
+      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](`Wrong method for ${category}.${adapterName} - ${method}`, `${category}.${adapterName}`)
     }
   }
 
