@@ -10834,8 +10834,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _translations_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/translations/adapter */ "./translations/adapter.js");
 /* harmony import */ var _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lexicons/adapter */ "./lexicons/adapter.js");
 /* harmony import */ var _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/errors/wrong-method-error */ "./errors/wrong-method-error.js");
-/* harmony import */ var _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/adapters-config.json */ "./adapters-config.json");
-var _adapters_config_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters-config.json */ "./adapters-config.json", 1);
+/* harmony import */ var _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/errors/no-required-param-error */ "./errors/no-required-param-error.js");
+/* harmony import */ var _adapters_config_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/adapters-config.json */ "./adapters-config.json");
+var _adapters_config_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters-config.json */ "./adapters-config.json", 1);
+
+
 
 
 
@@ -10850,10 +10853,10 @@ let cachedAdaptersList = new Map()
 class ClientAdapters {
   static init () {
     if (cachedConfig.size === 0) {
-      for (let category in _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__) {
+      for (let category in _adapters_config_json__WEBPACK_IMPORTED_MODULE_6__) {
         let adapters = {}
-        for (let adapterKey in _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__[category]) {
-          let adapterData = _adapters_config_json__WEBPACK_IMPORTED_MODULE_5__[category][adapterKey]
+        for (let adapterKey in _adapters_config_json__WEBPACK_IMPORTED_MODULE_6__[category]) {
+          let adapterData = _adapters_config_json__WEBPACK_IMPORTED_MODULE_6__[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -10891,9 +10894,15 @@ class ClientAdapters {
     return cachedAdaptersList.get('lemmatranslation')
   }
 
-  static checkMethod (category, adapterName, method) {
-    if (!cachedConfig.get(category)[adapterName].methods.includes(method)) {
-      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](`Wrong method for ${category}.${adapterName} - ${method}`, `${category}.${adapterName}`)
+  static checkMethod (category, adapterName, methodName) {
+    if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
+      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](category, adapterName, methodName)
+    }
+  }
+
+  static checkParam (params, category, adapterName, methodName, paramName) {
+    if (!params[paramName]) {
+      throw new _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_5__["default"](category, adapterName, methodName, paramName)
     }
   }
 
@@ -10910,6 +10919,9 @@ class ClientAdapters {
 
     let localMaAdapter = new _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]()
     if (options.method === 'getHomonym') {
+      ClientAdapters.checkParam(options.params, 'morphology', 'tufts', options.method, 'languageID')
+      ClientAdapters.checkParam(options.params, 'morphology', 'tufts', options.method, 'word')
+
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return homonym
     }
@@ -10929,6 +10941,9 @@ class ClientAdapters {
 
     let localTbAdapter = new _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]()
     if (options.method === 'getHomonym') {
+      ClientAdapters.checkParam(options.params, 'morphology', 'alpheiosTreebank', options.method, 'languageID')
+      ClientAdapters.checkParam(options.params, 'morphology', 'alpheiosTreebank', options.method, 'wordref')
+
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
       return homonym
     }
@@ -10949,6 +10964,9 @@ class ClientAdapters {
     let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
 
     if (options.method === 'fetchTranslations') {
+      ClientAdapters.checkParam(options.params, 'lemmatranslation', 'alpheios', options.method, 'homonym')
+      ClientAdapters.checkParam(options.params, 'lemmatranslation', 'alpheios', options.method, 'browserLang')
+
       await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
       return true
     }
@@ -10970,10 +10988,18 @@ class ClientAdapters {
     let localLexiconsAdapter = new _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]()
 
     if (options.method === 'fetchShortDefs') {
+      console.info('*****************fetchShortDefs', options.params)
+
+      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'homonym')
+      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'opts')
+
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
       return true
     }
     if (options.method === 'fetchFullDefs') {
+      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'homonym')
+      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'opts')
+
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return true
     }
@@ -11014,6 +11040,31 @@ class ConfigData {
 
 /***/ }),
 
+/***/ "./errors/no-required-param-error.js":
+/*!*******************************************!*\
+  !*** ./errors/no-required-param-error.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class NoRequiredParamError extends Error {
+  constructor (category, adapterName, methodName, paramName) {
+    let message = `There is no required parameter - ${paramName} for ${category}.${adapterName} - ${methodName}`
+    super(message)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.paramName = paramName
+    Error.captureStackTrace(this, NoRequiredParamError)
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (NoRequiredParamError);
+
+
+/***/ }),
+
 /***/ "./errors/wrong-method-error.js":
 /*!**************************************!*\
   !*** ./errors/wrong-method-error.js ***!
@@ -11024,9 +11075,11 @@ class ConfigData {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class WrongMethodError extends Error {
-  constructor (message, adapter) {
+  constructor (category, adapterName, methodName) {
+    let message = `Wrong method for ${category}.${adapterName} - ${methodName}`
     super(message)
-    this.adapter = adapter
+    this.adapter = `${category}.${adapterName}`
+    this.method = methodName
     Error.captureStackTrace(this, WrongMethodError)
   }
 }

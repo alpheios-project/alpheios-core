@@ -1,7 +1,9 @@
 class WrongMethodError extends Error {
-  constructor (message, adapter) {
+  constructor (category, adapterName, methodName) {
+    let message = `Wrong method for ${category}.${adapterName} - ${methodName}`
     super(message)
-    this.adapter = adapter
+    this.adapter = `${category}.${adapterName}`
+    this.method = methodName
     Error.captureStackTrace(this, WrongMethodError)
   }
 }
