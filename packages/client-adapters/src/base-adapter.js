@@ -82,17 +82,21 @@ class BaseAdapter {
   async fetch (url, options) {
     let res
 
-    if (typeof window !== 'undefined') {
-      if (options && options.timeout > 0) {
-        res = await this.fetchWindowTimeout(url, options)
+    try {
+      if (typeof window !== 'undefined') {
+        if (options && options.timeout > 0) {
+          res = await this.fetchWindowTimeout(url, options)
+        } else {
+          res = await this.fetchWindow(url, options)
+        }
       } else {
-        res = await this.fetchWindow(url, options)
+        res = await this.fetchAxios(url, options)
       }
-    } else {
-      res = await this.fetchAxios(url, options)
-    }
 
-    return res
+      return res
+    } catch (error) {
+      console.error('*************** adapter fetch', error)
+    }
   }
 }
 

@@ -3,14 +3,13 @@ import papaparse from 'papaparse'
 
 import BaseAdapter from '@/base-adapter'
 import DefaultConfig from '@/lexicons/config.json'
-import LexiconsConfigData from '@/lexicons/config-data'
 
 let cachedDefinitions = new Map()
 
 class AlpheiosLexiconsAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
-    this.config = new LexiconsConfigData(config, DefaultConfig)
+    this.config = this.uploadConfig(config, DefaultConfig)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
     this.data = null
   }
@@ -26,8 +25,6 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   }
 
   async fetchDefinitions (homonym, options, lookupFunction) {
-    console.info('************* fetchDefinitions')
-
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
       console.error('There are no allowed urls in the options')
@@ -38,23 +35,17 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
     for (let urlKey of urlKeys) {
       if (lookupFunction === 'short') {
-        console.info('**************lookupFunction short start')
         let url = this.config[urlKey].urls.short
         await this.checkCachedData(url)
         await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
-        console.info('**************lookupFunction short finish')
       }
       if (lookupFunction === 'full') {
-        console.info('**************lookupFunction full start')
         let url = this.config[urlKey].urls.index
         await this.checkCachedData(url)
-        console.info('**************lookupFunction full checkCachedData finish')
         let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
-        console.info('**************lookupFunction full collectFullDefURLs finish')
         if (fullDefsRequests) {
           await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
         }
-        console.info('**************lookupFunction full finish')
       }
     }
   }
@@ -69,12 +60,10 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   }
 
   async updateShortDefs (languageID, data, homonym, config) {
-    console.info('************************updateShortDefs')
     let model = LMF.getLanguageModel(languageID)
 
     for (let lexeme of homonym.lexemes) {
       let deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
-      console.info('***************************deftexts', deftexts)
 
       if (deftexts) {
         for (let d of deftexts) {
@@ -84,7 +73,6 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         }
       }
     }
-    // console.info('**************lemma', lemma, def)
   }
 
   collectFullDefURLs (languageID, data, homonym, config) {

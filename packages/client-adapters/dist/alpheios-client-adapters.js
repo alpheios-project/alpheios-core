@@ -10611,10 +10611,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/base-adapter */ "./base-adapter.js");
 /* harmony import */ var _alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/alpheiostb/config.json */ "./alpheiostb/config.json");
 var _alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/alpheiostb/config.json */ "./alpheiostb/config.json", 1);
-/* harmony import */ var _config_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/config-data */ "./config-data.js");
-/* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! xmltojson */ "../node_modules/xmltojson/lib/xmlToJSON.js");
-/* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(xmltojson__WEBPACK_IMPORTED_MODULE_4__);
-
+/* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! xmltojson */ "../node_modules/xmltojson/lib/xmlToJSON.js");
+/* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(xmltojson__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -10624,7 +10622,7 @@ var _alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__
 class AlpheiosTreebankAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
   constructor (config = {}) {
     super()
-    this.config = new _config_data__WEBPACK_IMPORTED_MODULE_3__["default"](config, _alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__)
+    this.config = this.uploadConfig(config, _alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__)
     this.models = { 'lat': alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LatinLanguageModel"], 'grc': alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["GreekLanguageModel"] }
   }
 
@@ -10635,8 +10633,8 @@ class AlpheiosTreebankAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__
       let xmlString = await this.fetch(url, { type: 'xml' })
       if (xmlString) {
         let langCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-        // console.log(`LangCode ${langCode}`)
-        let jsonObj = xmltojson__WEBPACK_IMPORTED_MODULE_4___default.a.parseString(xmlString)
+
+        let jsonObj = xmltojson__WEBPACK_IMPORTED_MODULE_3___default.a.parseString(xmlString)
         jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
 
         let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
@@ -10664,27 +10662,21 @@ class AlpheiosTreebankAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__
     let providerUri = this.config.providerUri
     let providerRights = this.config.providerRights
     let provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, providerRights)
+
     let hdwd = jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]
     let lemmaText = hdwd._text
     // the Alpheios v1 treebank data kept trailing digits on the lemmas
     // these won't match morphology service lemmas which have them stripped
     lemmaText = lemmaText.replace(/\d+$/, '')
+
     let model = this.models[hdwd._attr.lang._value]
     let lemma = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemmaText, model.languageCode)
     let lexmodel = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](lemma, [])
     let inflection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"](lemmaText, model.languageID, null, null, null)
     let infl = jsonObj.words[0].word[0].entry[0].infl[0]
     inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm, targetWord, model.languageID))
-    let features = [
-      ['pofs', 'part', true],
-      ['case', 'grmCase', false],
-      ['num', 'number', false],
-      ['gend', 'gender', false],
-      ['voice', 'voice', false],
-      ['mood', 'mood', false],
-      ['pers', 'person', false],
-      ['comp', 'comparison', false]
-    ]
+
+    let features = this.config.featuresArray
     for (let feature of features) {
       let localName = feature[0]
       let featureType = feature[1]
@@ -10711,10 +10703,10 @@ class AlpheiosTreebankAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__
 /*!********************************!*\
   !*** ./alpheiostb/config.json ***!
   \********************************/
-/*! exports provided: texts, url, providerUri, providerRights, allowUnknownValues, default */
+/*! exports provided: texts, url, providerUri, providerRights, allowUnknownValues, featuresArray, default */
 /***/ (function(module) {
 
-module.exports = {"texts":["1999.01.0021","1999.01.0135","1999.02.0066","phi0959.phi006.alpheios-text-lat1","tlg0011.tlg003.alpheios-text-grc1","tlg0012.tlg001.alpheios-text-grc1","tlg0012.tlg002.alpheios-text-grc1","tlg0020.tlg001.alpheios-text-grc1","tlg0020.tlg002.alpheios-text-grc1","tlg0020.tlg003.alpheios-text-grc1","tlg0085.tlg001.alpheios-text-grc1","tlg0085.tlg002.alpheios-text-grc1","tlg0085.tlg003.alpheios-text-grc1","tlg0085.tlg004.alpheios-text-grc1","tlg0085.tlg005.alpheios-text-grc1","tlg0085.tlg006.alpheios-text-grc1","tlg0085.tlg007.alpheios-text-grc1","tlg0086.tlg034.alpheios-text-ara2"],"url":"http://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=r_TEXT&w=r_WORD&clientId=r_CLIENT","providerUri":"https://alpheios.net","providerRights":"The Alpheios Treebank data is licenced under the Creative Commons 3.0 Share-Alike license.","allowUnknownValues":true};
+module.exports = {"texts":["1999.01.0021","1999.01.0135","1999.02.0066","phi0959.phi006.alpheios-text-lat1","tlg0011.tlg003.alpheios-text-grc1","tlg0012.tlg001.alpheios-text-grc1","tlg0012.tlg002.alpheios-text-grc1","tlg0020.tlg001.alpheios-text-grc1","tlg0020.tlg002.alpheios-text-grc1","tlg0020.tlg003.alpheios-text-grc1","tlg0085.tlg001.alpheios-text-grc1","tlg0085.tlg002.alpheios-text-grc1","tlg0085.tlg003.alpheios-text-grc1","tlg0085.tlg004.alpheios-text-grc1","tlg0085.tlg005.alpheios-text-grc1","tlg0085.tlg006.alpheios-text-grc1","tlg0085.tlg007.alpheios-text-grc1","tlg0086.tlg034.alpheios-text-ara2"],"url":"http://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=r_TEXT&w=r_WORD&clientId=r_CLIENT","providerUri":"https://alpheios.net","providerRights":"The Alpheios Treebank data is licenced under the Creative Commons 3.0 Share-Alike license.","allowUnknownValues":true,"featuresArray":[["pofs","part",true],["case","grmCase",false],["num","number",false],["gend","gender",false],["voice","voice",false],["mood","mood",false],["pers","person",false],["comp","comparison",false]]};
 
 /***/ }),
 
@@ -10813,17 +10805,21 @@ class BaseAdapter {
   async fetch (url, options) {
     let res
 
-    if (typeof window !== 'undefined') {
-      if (options && options.timeout > 0) {
-        res = await this.fetchWindowTimeout(url, options)
+    try {
+      if (typeof window !== 'undefined') {
+        if (options && options.timeout > 0) {
+          res = await this.fetchWindowTimeout(url, options)
+        } else {
+          res = await this.fetchWindow(url, options)
+        }
       } else {
-        res = await this.fetchWindow(url, options)
+        res = await this.fetchAxios(url, options)
       }
-    } else {
-      res = await this.fetchAxios(url, options)
-    }
 
-    return res
+      return res
+    } catch (error) {
+      console.error('*************** adapter fetch', error)
+    }
   }
 }
 
@@ -10938,7 +10934,12 @@ class ClientAdapters {
   static async maAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'tufts', options)
 
-    let localMaAdapter = new _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]()
+    let localMaAdapter = new _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: options.method
+    })
+
     if (options.method === 'getHomonym') {
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return homonym
@@ -11016,30 +11017,26 @@ class ClientAdapters {
 
 /***/ }),
 
-/***/ "./config-data.js":
-/*!************************!*\
-  !*** ./config-data.js ***!
-  \************************/
+/***/ "./errors/adapter-error.js":
+/*!*********************************!*\
+  !*** ./errors/adapter-error.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-class ConfigData {
-  constructor (config, defaultConfig) {
-    Object.keys(config).forEach(configKey => {
-      this[configKey] = config[configKey]
-    })
-
-    Object.keys(defaultConfig).forEach(configKey => {
-      if (this[configKey] === undefined) {
-        this[configKey] = defaultConfig[configKey]
-      }
-    })
+class AdapterError extends Error {
+  constructor (category, adapterName, methodName, messageError) {
+    let message = `${messageError} for ${category}.${adapterName} - ${methodName}`
+    super(message)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    Error.captureStackTrace(this, AdapterError)
   }
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (ConfigData);
+/* harmony default export */ __webpack_exports__["default"] = (AdapterError);
 
 
 /***/ }),
@@ -11097,22 +11094,13 @@ class WrongMethodError extends Error {
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: AlpheiosTuftsAdapter, AlpheiosTreebankAdapter, ClientAdapters */
+/*! exports provided: ClientAdapters */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/tufts/adapter */ "./tufts/adapter.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlpheiosTuftsAdapter", function() { return _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]; });
-
-/* harmony import */ var _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/alpheiostb/adapter */ "./alpheiostb/adapter.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlpheiosTreebankAdapter", function() { return _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]; });
-
-/* harmony import */ var _client_adapters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/client-adapters */ "./client-adapters.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _client_adapters__WEBPACK_IMPORTED_MODULE_2__["default"]; });
-
-
-
+/* harmony import */ var _client_adapters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/client-adapters */ "./client-adapters.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _client_adapters__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 
 
@@ -11137,8 +11125,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/base-adapter */ "./base-adapter.js");
 /* harmony import */ var _lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lexicons/config.json */ "./lexicons/config.json");
 var _lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/lexicons/config.json */ "./lexicons/config.json", 1);
-/* harmony import */ var _lexicons_config_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/lexicons/config-data */ "./lexicons/config-data.js");
-
 
 
 
@@ -11150,7 +11136,7 @@ let cachedDefinitions = new Map()
 class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor (config = {}) {
     super()
-    this.config = new _lexicons_config_data__WEBPACK_IMPORTED_MODULE_4__["default"](config, _lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
+    this.config = this.uploadConfig(config, _lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
     this.data = null
   }
@@ -11166,8 +11152,6 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
   }
 
   async fetchDefinitions (homonym, options, lookupFunction) {
-    console.info('************* fetchDefinitions')
-
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
       console.error('There are no allowed urls in the options')
@@ -11178,23 +11162,17 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
 
     for (let urlKey of urlKeys) {
       if (lookupFunction === 'short') {
-        console.info('**************lookupFunction short start')
         let url = this.config[urlKey].urls.short
         await this.checkCachedData(url)
         await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
-        console.info('**************lookupFunction short finish')
       }
       if (lookupFunction === 'full') {
-        console.info('**************lookupFunction full start')
         let url = this.config[urlKey].urls.index
         await this.checkCachedData(url)
-        console.info('**************lookupFunction full checkCachedData finish')
         let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
-        console.info('**************lookupFunction full collectFullDefURLs finish')
         if (fullDefsRequests) {
           await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
         }
-        console.info('**************lookupFunction full finish')
       }
     }
   }
@@ -11209,12 +11187,10 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
   }
 
   async updateShortDefs (languageID, data, homonym, config) {
-    console.info('************************updateShortDefs')
     let model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID)
 
     for (let lexeme of homonym.lexemes) {
       let deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
-      console.info('***************************deftexts', deftexts)
 
       if (deftexts) {
         for (let d of deftexts) {
@@ -11224,7 +11200,6 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
         }
       }
     }
-    // console.info('**************lemma', lemma, def)
   }
 
   collectFullDefURLs (languageID, data, homonym, config) {
@@ -11331,27 +11306,6 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
 
 /***/ }),
 
-/***/ "./lexicons/config-data.js":
-/*!*********************************!*\
-  !*** ./lexicons/config-data.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _config_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/config-data */ "./config-data.js");
-
-
-class LexiconsConfigData extends _config_data__WEBPACK_IMPORTED_MODULE_0__["default"] {
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (LexiconsConfigData);
-
-
-/***/ }),
-
 /***/ "./lexicons/config.json":
 /*!******************************!*\
   !*** ./lexicons/config.json ***!
@@ -11374,37 +11328,30 @@ module.exports = {"https://github.com/alpheios-project/lsj":{"urls":{"short":"ht
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _translations_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/translations/config.json */ "./translations/config.json");
 var _translations_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/translations/config.json */ "./translations/config.json", 1);
-/* harmony import */ var _translations_config_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/translations/config-data */ "./translations/config-data.js");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _base_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/base-adapter */ "./base-adapter.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/base-adapter */ "./base-adapter.js");
 
 
 
 
 
-
-class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_3__["default"] {
+class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor (config = {}) {
     super()
-    this.config = new _translations_config_data__WEBPACK_IMPORTED_MODULE_1__["default"](config, _translations_config_json__WEBPACK_IMPORTED_MODULE_0__)
+    this.config = this.uploadConfig(config, _translations_config_json__WEBPACK_IMPORTED_MODULE_0__)
     this.mapLangUri = {}
-    this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["ResourceProvider"](this.config.url, this.config.rights)
+    this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ResourceProvider"](this.config.url, this.config.rights)
   }
 
   async getTranslationsList (homonym, browserLang) {
     let lemmaList = []
-    console.info('*****************getTranslationsList homonym', homonym)
     for (let lexeme of homonym.lexemes) {
       lemmaList.push(lexeme.lemma)
     }
-    console.info('*****************translations lemmaList', lemmaList)
 
-    const inLang = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID)
-    console.info('*****************translations inLang', inLang)
-
-    let outLang = this.config.defineOutLang(browserLang)
-    console.info('*****************translations outLang', outLang)
+    const inLang = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID)
+    let outLang = this.config.langMap[browserLang] || this.config.defaultLang
 
     let input = this.prepareInput(lemmaList)
     let urlLang = await this.getAvailableResLang(inLang, outLang)
@@ -11414,7 +11361,7 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
         let url = urlLang + '?input=' + input
         let translationsList = await this.fetch(url)
         for (let lemma of lemmaList) {
-          alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Translation"].loadTranslations(lemma, outLang, translationsList, this.provider)
+          alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Translation"].loadTranslations(lemma, outLang, translationsList, this.provider)
         }
       } catch (error) {
         console.error(`Some problems with translations from ${inLang} to ${outLang}`, error)
@@ -11458,50 +11405,14 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
 
 /***/ }),
 
-/***/ "./translations/config-data.js":
-/*!*************************************!*\
-  !*** ./translations/config-data.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _config_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/config-data */ "./config-data.js");
-
-
-class TranslationsConfigData extends _config_data__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  get defaultLang () {
-    return 'eng'
-  }
-
-  defineOutLang (browserLang) {
-    let langMap = {
-      'en-US': 'eng',
-      'it': 'ita',
-      'pt': 'por',
-      'ca': 'cat',
-      'fr': 'fre',
-      'de': 'ger',
-      'es': 'spa'
-    }
-    return langMap[browserLang] || this.defaultLang
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (TranslationsConfigData);
-
-
-/***/ }),
-
 /***/ "./translations/config.json":
 /*!**********************************!*\
   !*** ./translations/config.json ***!
   \**********************************/
-/*! exports provided: url, availableLangSource, rights, default */
+/*! exports provided: url, availableLangSource, rights, deafultLang, langMap, default */
 /***/ (function(module) {
 
-module.exports = {"url":"https://ats.alpheios.net","availableLangSource":["lat"],"rights":"Lemma translations are extracted from data provided under the GNU GPL v3 license by the Collatinus Project (https://github.com/biblissima/collatinus), which is developed and maintained by Yves Ouvrard and Philippe Verkerk."};
+module.exports = {"url":"https://ats.alpheios.net","availableLangSource":["lat"],"rights":"Lemma translatins are extracted from data provided under the GNU GPL v3 license by the Collatinus Project (https://github.com/biblissima/collatinus), which is developed and maintained by Yves Ouvrard and Philippe Verkerk.","deafultLang":"eng","langMap":{"en-US":"eng","it":"ita","pt":"por","ca":"cat","fr":"fre","de":"ger","es":"spa"}};
 
 /***/ }),
 
@@ -11521,6 +11432,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/tufts/config.json */ "./tufts/config.json");
 var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/tufts/config.json */ "./tufts/config.json", 1);
 /* harmony import */ var _tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/tufts/engines-set */ "./tufts/engines-set.js");
+/* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../errors/adapter-error */ "./errors/adapter-error.js");
 
 
 
@@ -11528,6 +11440,9 @@ var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__w
 
 
 
+
+
+// import AdapterError from '@/errors/adapter-error'
 
 class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
   constructor (config = {}) {
@@ -11552,20 +11467,31 @@ class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["d
 
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(languageID, word)
-    let jsonObj = await this.fetch(url)
+    if (!url) {
+      return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, `There is no engine for languageID - ${languageID.toString()}`)
+    }
+    try {
+      let jsonObj = await this.fetch(url)
+      if (jsonObj) {
+        let transformAdapter = new _tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this.engineSet, this.config)
 
-    if (jsonObj) {
-      let transformAdapter = new _tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this.engineSet, this.config)
+        let homonym = transformAdapter.transformData(jsonObj, word)
 
-      let homonym = transformAdapter.transformData(jsonObj, word)
-      if (homonym && homonym.lexemes) {
-        homonym.lexemes.sort(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"].getSortByTwoLemmaFeatures(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part))
+        if (!homonym) {
+          return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, `No homonym was get for word - ${word}, for languageID - ${languageID.toString()}`)
+        }
+
+        if (homonym && homonym.lexemes) {
+          homonym.lexemes.sort(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"].getSortByTwoLemmaFeatures(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part))
+        }
+
+        return homonym
+      } else {
+        // No data found for this word
+        return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, `Empty jsobObj for word - ${word}, for languageID - ${languageID.toString()}`)
       }
-
-      return homonym
-    } else {
-      // No data found for this word
-      return undefined
+    } catch (error) {
+      return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, error.mesage)
     }
   }
 
@@ -12205,14 +12131,14 @@ class TransformAdapter {
       let lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [ inflectionsJSONTerm ] : [])
       let language = this.defineLanguage(dictData, inflectionsJSONTerm)
       if (!language) {
-        console.log(`No language found`)
+        console.log(`************************No language found`)
         continue
       }
 
       // Get importer based on the language
       let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
-        console.log(`No mapping data found for ${language}`)
+        console.log(`************************No mapping data found for ${language}`)
         continue
       }
 
@@ -12230,7 +12156,7 @@ class TransformAdapter {
 
         let lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
         if (!lemmaText) {
-          console.log('No lemma or language found')
+          console.log('************************No lemma or language found')
           continue
         }
         let lemma = mappingData.parseLemma(lemmaText, language)

@@ -1,5 +1,15 @@
 {
 	"url": "https://ats.alpheios.net",
 	"availableLangSource": ["lat"],
-  "rights": "Lemma translations are extracted from data provided under the GNU GPL v3 license by the Collatinus Project (https://github.com/biblissima/collatinus), which is developed and maintained by Yves Ouvrard and Philippe Verkerk."
+	"rights": "Lemma translatins are extracted from data provided under the GNU GPL v3 license by the Collatinus Project (https://github.com/biblissima/collatinus), which is developed and maintained by Yves Ouvrard and Philippe Verkerk.",
+	"deafultLang": "eng",
+	"langMap": {
+	  "en-US": "eng",
+	  "it": "ita",
+	  "pt": "por",
+	  "ca": "cat",
+	  "fr": "fre",
+	  "de": "ger",
+	  "es": "spa"
+	}
 }

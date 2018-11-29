@@ -87,7 +87,12 @@ class ClientAdapters {
   static async maAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'tufts', options)
 
-    let localMaAdapter = new AlpheiosTuftsAdapter()
+    let localMaAdapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: options.method
+    })
+
     if (options.method === 'getHomonym') {
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return homonym

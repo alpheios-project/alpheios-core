@@ -5,6 +5,9 @@ import TransformAdapter from '@/tufts/transform-adapter'
 
 import DefaultConfig from '@/tufts/config.json'
 import EnginesSet from '@/tufts/engines-set'
+import AdapterError from '../errors/adapter-error'
+
+// import AdapterError from '@/errors/adapter-error'
 
 class AlpheiosTuftsAdapter extends BaseAdapter {
   constructor (config = {}) {
@@ -29,20 +32,31 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
 
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(languageID, word)
-    let jsonObj = await this.fetch(url)
+    if (!url) {
+      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `There is no engine for languageID - ${languageID.toString()}`)
+    }
+    try {
+      let jsonObj = await this.fetch(url)
+      if (jsonObj) {
+        let transformAdapter = new TransformAdapter(this.engineSet, this.config)
 
-    if (jsonObj) {
-      let transformAdapter = new TransformAdapter(this.engineSet, this.config)
+        let homonym = transformAdapter.transformData(jsonObj, word)
 
-      let homonym = transformAdapter.transformData(jsonObj, word)
-      if (homonym && homonym.lexemes) {
-        homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
+        if (!homonym) {
+          return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `No homonym was get for word - ${word}, for languageID - ${languageID.toString()}`)
+        }
+
+        if (homonym && homonym.lexemes) {
+          homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
+        }
+
+        return homonym
+      } else {
+        // No data found for this word
+        return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `Empty jsobObj for word - ${word}, for languageID - ${languageID.toString()}`)
       }
-
-      return homonym
-    } else {
-      // No data found for this word
-      return undefined
+    } catch (error) {
+      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, error.mesage)
     }
   }
 

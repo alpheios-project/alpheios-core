@@ -84,14 +84,14 @@ class TransformAdapter {
       let lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [ inflectionsJSONTerm ] : [])
       let language = this.defineLanguage(dictData, inflectionsJSONTerm)
       if (!language) {
-        console.log(`No language found`)
+        console.log(`************************No language found`)
         continue
       }
 
       // Get importer based on the language
       let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
-        console.log(`No mapping data found for ${language}`)
+        console.log(`************************No mapping data found for ${language}`)
         continue
       }
 
@@ -109,7 +109,7 @@ class TransformAdapter {
 
         let lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
         if (!lemmaText) {
-          console.log('No lemma or language found')
+          console.log('************************No lemma or language found')
           continue
         }
         let lemma = mappingData.parseLemma(lemmaText, language)

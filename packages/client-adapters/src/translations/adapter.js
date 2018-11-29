@@ -1,5 +1,4 @@
 import DefaultConfig from '@/translations/config.json'
-import TranslationsConfigData from '@/translations/config-data'
 
 import { ResourceProvider, Translation, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import BaseAdapter from '@/base-adapter'
@@ -7,24 +6,19 @@ import BaseAdapter from '@/base-adapter'
 class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
-    this.config = new TranslationsConfigData(config, DefaultConfig)
+    this.config = this.uploadConfig(config, DefaultConfig)
     this.mapLangUri = {}
     this.provider = new ResourceProvider(this.config.url, this.config.rights)
   }
 
   async getTranslationsList (homonym, browserLang) {
     let lemmaList = []
-    console.info('*****************getTranslationsList homonym', homonym)
     for (let lexeme of homonym.lexemes) {
       lemmaList.push(lexeme.lemma)
     }
-    console.info('*****************translations lemmaList', lemmaList)
 
     const inLang = LMF.getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID)
-    console.info('*****************translations inLang', inLang)
-
-    let outLang = this.config.defineOutLang(browserLang)
-    console.info('*****************translations outLang', outLang)
+    let outLang = this.config.langMap[browserLang] || this.config.defaultLang
 
     let input = this.prepareInput(lemmaList)
     let urlLang = await this.getAvailableResLang(inLang, outLang)
