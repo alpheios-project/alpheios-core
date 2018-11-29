@@ -1,25 +1,38 @@
 { "morphology": {
     "alpheiosTreebank": {
       "adapter": "tbAdapter",
-      "methods": [ "getHomonym" ]
+      "methods": [ "getHomonym" ],
+      "params": {
+        "getHomonym" : [ "languageID", "wordref" ]
+      }
     },
     "tufts": {
       "adapter": "maAdapter",
-      "methods": [ "getHomonym" ]
+      "methods": [ "getHomonym" ],
+      "params": {
+        "getHomonym" : [ "languageID", "word" ]
+      }
     }
   },
 
   "lexicon": {
     "alpheios": {
       "adapter": "lexicons",
-      "methods": [ "fetchShortDefs", "fetchFullDefs" ]
+      "methods": [ "fetchShortDefs", "fetchFullDefs" ],
+      "params": {
+        "fetchShortDefs" : [ "homonym", "opts" ],
+        "fetchFullDefs" : [ "homonym", "opts" ]
+      }
     }
   },
 
   "lemmatranslation": {
     "alpheios": {
       "adapter": "lemmaTranslations",
-      "methods": "fetchTranslations"
+      "methods": "fetchTranslations",
+      "params": {
+        "fetchTranslations" : [ "homonym", "browserLang" ]
+      }
     }
   }
 }

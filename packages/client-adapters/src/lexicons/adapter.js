@@ -51,7 +51,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         console.info('**************lookupFunction full checkCachedData finish')
         let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
         console.info('**************lookupFunction full collectFullDefURLs finish')
-        await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+        if (fullDefsRequests) {
+          await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+        }
         console.info('**************lookupFunction full finish')
       }
     }
@@ -109,7 +111,6 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   }
 
   async updateFullDefs (fullDefsRequests, config) {
-    console.info('********************updateFullDefs', fullDefsRequests)
     for (let request of fullDefsRequests) {
       let fullDefData = await this.fetch(request.url, { type: 'xml' })
       let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)

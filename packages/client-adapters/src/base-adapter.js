@@ -1,6 +1,21 @@
 import axios from 'axios'
 
 class BaseAdapter {
+  uploadConfig (config, defaultConfig) {
+    let configRes = {}
+    Object.keys(config).forEach(configKey => {
+      configRes[configKey] = config[configKey]
+    })
+
+    Object.keys(defaultConfig).forEach(configKey => {
+      if (configRes[configKey] === undefined) {
+        configRes[configKey] = defaultConfig[configKey]
+      }
+    })
+
+    return configRes
+  }
+
   timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
@@ -8,9 +23,7 @@ class BaseAdapter {
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
-        console.info('****************inside fetchWindow 1', url)
         let response = await window.fetch(url)
-        console.info('****************inside fetchWindow 2', response)
         if (options.type === 'xml') {
           return response.text()
         } else {
@@ -27,7 +40,6 @@ class BaseAdapter {
   fetchWindowTimeout (url, options) {
     if (url) {
       let didTimeOut = false
-      console.info('***************fetchWindowTimeout options.timeout', options.timeout)
       return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => {
           didTimeOut = true

@@ -6,107 +6,127 @@ class TransformAdapter {
     this.config = config
   }
 
+  extractData (source, nameParam) {
+    let schema = {
+      'providerUri': [ 'RDF', 'Annotation', 'creator', 'Agent', 'about' ],
+      'providerRights': [ 'RDF', 'Annotation', 'rights', '$' ],
+      'inflections': [ 'rest', 'entry', 'infl' ],
+      'dictData': [ 'rest', 'entry', 'dict' ]
+    }
+    let res
+
+    if (schema[nameParam]) {
+      res = source
+      for (let pathPart of schema[nameParam]) {
+        if (res[pathPart]) {
+          res = res[pathPart]
+        } else {
+          res = undefined
+          break
+        }
+      }
+    }
+    return res
+  }
+
+  checkToBeArray (data, defaultData = []) {
+    let resData = data
+    if (!Array.isArray(data)) {
+      if (data) {
+        resData = [data]
+      } else {
+        resData = defaultData
+      }
+    }
+    return resData
+  }
+
+  collectHdwdArray (data, term, direction) {
+    let hdwd = []
+
+    if (data && !Array.isArray(data) && !data.hdwd && term) {
+      hdwd.push(term.prefix ? term.prefix.$ : '')
+      hdwd.push(term.stem ? term.stem.$ : '')
+      hdwd.push(term.suff ? term.suff.$ : '')
+
+      if (direction === Constants.LANG_DIR_RTL) {
+        hdwd.reverse()
+      }
+    }
+
+    return hdwd
+  }
+
+  defineLanguage (data, term) {
+    let lemmaData = Array.isArray(data) ? data[0] : data
+    if (!lemmaData.hdwd && term) {
+      lemmaData.hdwd = {}
+      lemmaData.hdwd.lang = term.lang
+    }
+    return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
+  }
+
   transformData (jsonObj, targetWord) {
     let lexemes = []
-    let annotationBody = jsonObj.RDF.Annotation.Body
-    if (!Array.isArray(annotationBody)) {
-      /*
-      If only one lexeme is returned, Annotation Body will not be an array but rather a single object.
-      Let's convert it to an array so we can work with it in the same way no matter what format it is.
-      */
-      if (annotationBody) {
-        annotationBody = [annotationBody]
-      } else {
-        annotationBody = []
-      }
-    }
-    let providerUri = jsonObj.RDF.Annotation.creator.Agent.about
-    let providerRights = ''
-    if (jsonObj.RDF.Annotation.rights) {
-      providerRights = jsonObj.RDF.Annotation.rights.$
-    }
+    let annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
+
+    let providerUri = this.extractData(jsonObj, 'providerUri')
+    let providerRights = this.extractData(jsonObj, 'providerRights')
+
     let provider = new ResourceProvider(providerUri, providerRights)
+
     for (let lexeme of annotationBody) {
-      let inflectionsJSON = lexeme.rest.entry.infl
-      if (!inflectionsJSON) {
-        inflectionsJSON = []
-      } else if (!Array.isArray(inflectionsJSON)) {
-        // If only one inflection returned, it is a single object, not an array of objects.
-        // Convert it to an array for uniformity.
-        inflectionsJSON = [inflectionsJSON]
+      let inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
+      let inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
+
+      let dictData = this.extractData(lexeme, 'dictData')
+
+      let lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [ inflectionsJSONTerm ] : [])
+      let language = this.defineLanguage(dictData, inflectionsJSONTerm)
+      if (!language) {
+        console.log(`No language found`)
+        continue
       }
-      let lemmaElements
-      let features = [
-        ['pofs', 'part'],
-        ['case', 'grmCase'],
-        ['gend', 'gender'],
-        ['decl', 'declension'],
-        ['conj', 'conjugation'],
-        ['area', 'area'],
-        ['age', 'age'],
-        ['geo', 'geo'],
-        ['freq', 'frequency'],
-        ['note', 'note'],
-        ['pron', 'pronunciation'],
-        ['kind', 'kind'],
-        ['src', 'source']
-      ]
-      let reconstructHdwd = []
-      if (lexeme.rest.entry.dict) {
-        if (Array.isArray(lexeme.rest.entry.dict)) {
-          lemmaElements = lexeme.rest.entry.dict
-        } else {
-          if (!lexeme.rest.entry.dict.hdwd && inflectionsJSON[0].term) {
-            lexeme.rest.entry.dict.hdwd = {}
-            lexeme.rest.entry.dict.hdwd.lang = inflectionsJSON[0].term.lang
-            reconstructHdwd.push(inflectionsJSON[0].term.prefix ? inflectionsJSON[0].term.prefix.$ : '')
-            reconstructHdwd.push(inflectionsJSON[0].term.stem ? inflectionsJSON[0].term.stem.$ : '')
-            reconstructHdwd.push(inflectionsJSON[0].term.suff ? inflectionsJSON[0].term.suff.$ : '')
-          }
-          lemmaElements = [lexeme.rest.entry.dict]
-        }
-      } else if (inflectionsJSON.length > 0 && inflectionsJSON[0].term) {
-        lemmaElements = [ inflectionsJSON[0].term ]
-      }
-      // in rare cases (e.g. conditum in Whitakers) multiple dict entries
-      // exist - always use the lemma and language from the first
-      let language = lemmaElements[0].hdwd ? lemmaElements[0].hdwd.lang : lemmaElements[0].lang
+
       // Get importer based on the language
       let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
         console.log(`No mapping data found for ${language}`)
         continue
       }
+
+      let reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
       if (reconstructHdwd.length > 0) {
-        if (mappingData.model.direction === Constants.LANG_DIR_RTL) {
-          reconstructHdwd.reverse()
-        }
-        lexeme.rest.entry.dict.hdwd.$ = reconstructHdwd.join('')
+        lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
       }
+
       let lemmas = []
       let lexemeSet = []
+
       for (let entry of lemmaElements.entries()) {
-        let shortdefs = []
         let index = entry[0]
         let elem = entry[1]
-        let lemmaText
-        if (elem.hdwd) {
-          lemmaText = elem.hdwd.$
-        }
-        if (!lemmaText || !language) {
+
+        let lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
+        if (!lemmaText) {
           console.log('No lemma or language found')
           continue
         }
         let lemma = mappingData.parseLemma(lemmaText, language)
         lemmas.push(lemma)
+
+        let features = this.config.featuresArray
         for (let feature of features) {
           mappingData.mapFeature(lemma, elem, ...feature, this.config.allowUnknownValues)
         }
+
+        let shortdefs = []
         let meanings = lexeme.rest.entry.mean
         if (!Array.isArray(meanings)) {
           meanings = [meanings]
         }
         meanings = meanings.filter((m) => m)
+
         // if we have multiple dictionary elements, take the meaning with the matching index
         if (lemmaElements.length > 1) {
           if (meanings && meanings[index]) {
@@ -130,9 +150,11 @@ class TransformAdapter {
         lexmodel.meaning.appendShortDefs(shortdefs)
         lexemeSet.push(ResourceProvider.getProxy(provider, lexmodel))
       }
+
       if (lemmas.length === 0) {
         continue
       }
+
       let inflections = []
       for (let inflectionJSON of inflectionsJSON) {
         let stem = inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
@@ -144,23 +166,7 @@ class TransformAdapter {
           inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, mappingData.model.languageID))
         }
         // Parse whatever grammatical features we're interested in and are provided
-        for (let f of [
-          ['pofs', 'part'],
-          ['case', 'grmCase'],
-          ['decl', 'declension'],
-          ['num', 'number'],
-          ['gend', 'gender'],
-          ['conj', 'conjugation'],
-          ['tense', 'tense'],
-          ['voice', 'voice'],
-          ['mood', 'mood'],
-          ['pers', 'person'],
-          ['comp', 'comparison'],
-          ['stemtype', 'stemtype'],
-          ['derivtype', 'derivtype'],
-          ['dial', 'dialect'],
-          ['morph', 'morph']
-        ]) {
+        for (let f of this.config.featuresArrayAll) {
           try {
             mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
             mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)

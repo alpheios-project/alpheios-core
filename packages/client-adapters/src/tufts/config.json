@@ -7,5 +7,39 @@
     "gez": ["traces"]
   },
   "url": "https://morph.alpheios.net/api/v1/analysis/word?word=r_WORD&engine=r_ENGINE&lang=r_LANG&clientId=r_CLIENT",
-  "allowUnknownValues": true
+  "allowUnknownValues": true,
+  "featuresArray" : 
+    [
+      ["pofs", "part"],
+      ["case", "grmCase"],
+      ["gend", "gender"],
+      ["decl", "declension"],
+      ["conj", "conjugation"],
+      ["area", "area"],
+      ["age", "age"],
+      ["geo", "geo"],
+      ["freq", "frequency"],
+      ["note", "note"],
+      ["pron", "pronunciation"],
+      ["kind", "kind"],
+      ["src", "source"]
+    ],
+  "featuresArrayAll" : 
+    [
+      ["pofs", "part"],
+      ["case", "grmCase"],
+      ["gend", "gender"],
+      ["decl", "declension"],
+      ["conj", "conjugation"],
+      ["num", "number"],
+      ["tense", "tense"],
+      ["voice", "voice"],
+      ["mood", "mood"],
+      ["pers", "person"],
+      ["comp", "comparison"],
+      ["stemtype", "stemtype"],
+      ["derivtype", "derivtype"],
+      ["dial", "dialect"],
+      ["morph", "morph"]
+    ]
 }

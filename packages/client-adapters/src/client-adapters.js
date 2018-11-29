@@ -61,10 +61,19 @@ class ClientAdapters {
     }
   }
 
-  static checkParam (params, category, adapterName, methodName, paramName) {
-    if (!params[paramName]) {
-      throw new NoRequiredParamError(category, adapterName, methodName, paramName)
+  static checkParam (params, category, adapterName, methodName) {
+    if (cachedConfig.get(category)[adapterName].params) {
+      cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
+        if (!params[paramName]) {
+          throw new NoRequiredParamError(category, adapterName, methodName, paramName)
+        }
+      })
     }
+  }
+
+  static checkMethodParam (category, adapterName, options) {
+    ClientAdapters.checkMethod(category, adapterName, options.method)
+    ClientAdapters.checkParam(options.params, category, adapterName, options.method)
   }
 
   /*
@@ -76,13 +85,10 @@ class ClientAdapters {
 */
 
   static async maAdapter (options) {
-    ClientAdapters.checkMethod('morphology', 'tufts', options.method)
+    ClientAdapters.checkMethodParam('morphology', 'tufts', options)
 
     let localMaAdapter = new AlpheiosTuftsAdapter()
     if (options.method === 'getHomonym') {
-      ClientAdapters.checkParam(options.params, 'morphology', 'tufts', options.method, 'languageID')
-      ClientAdapters.checkParam(options.params, 'morphology', 'tufts', options.method, 'word')
-
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return homonym
     }
@@ -98,13 +104,10 @@ class ClientAdapters {
 */
 
   static async tbAdapter (options) {
-    ClientAdapters.checkMethod('morphology', 'alpheiosTreebank', options.method)
+    ClientAdapters.checkMethodParam('morphology', 'alpheiosTreebank', options)
 
     let localTbAdapter = new AlpheiosTreebankAdapter()
     if (options.method === 'getHomonym') {
-      ClientAdapters.checkParam(options.params, 'morphology', 'alpheiosTreebank', options.method, 'languageID')
-      ClientAdapters.checkParam(options.params, 'morphology', 'alpheiosTreebank', options.method, 'wordref')
-
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
       return homonym
     }
@@ -120,14 +123,11 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lemmaTranslations (options) {
-    ClientAdapters.checkMethod('lemmatranslation', 'alpheios', options.method)
+    ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
 
     let localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter()
 
     if (options.method === 'fetchTranslations') {
-      ClientAdapters.checkParam(options.params, 'lemmatranslation', 'alpheios', options.method, 'homonym')
-      ClientAdapters.checkParam(options.params, 'lemmatranslation', 'alpheios', options.method, 'browserLang')
-
       await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
       return true
     }
@@ -144,23 +144,15 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lexicons (options) {
-    ClientAdapters.checkMethod('lexicon', 'alpheios', options.method)
+    ClientAdapters.checkMethodParam('lexicon', 'alpheios', options)
 
     let localLexiconsAdapter = new AlpheiosLexiconsAdapter()
 
     if (options.method === 'fetchShortDefs') {
-      console.info('*****************fetchShortDefs', options.params)
-
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'homonym')
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'opts')
-
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
       return true
     }
     if (options.method === 'fetchFullDefs') {
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'homonym')
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'opts')
-
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return true
     }

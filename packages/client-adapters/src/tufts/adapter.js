@@ -1,18 +1,30 @@
-import { LanguageModelFactory as LMF, Lexeme, Feature } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Lexeme, Feature, Constants } from 'alpheios-data-models'
 
 import BaseAdapter from '@/base-adapter'
 import TransformAdapter from '@/tufts/transform-adapter'
 
 import DefaultConfig from '@/tufts/config.json'
 import EnginesSet from '@/tufts/engines-set'
-import TuftsConfigData from '@/tufts/config-data'
 
 class AlpheiosTuftsAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
-    this.config = new TuftsConfigData(config, DefaultConfig)
-    this.config.uploadEngines(this.config.engine)
-    this.engineSet = new EnginesSet(this.config.engine)
+    this.config = this.uploadConfig(config, DefaultConfig)
+    this.uploadEngines(this.config.engine)
+    this.engineSet = new EnginesSet(this.engines)
+  }
+
+  uploadEngines (engineConfig) {
+    if (this.engine === undefined) {
+      this.engines = {}
+    }
+    Object.keys(engineConfig).forEach(langCode => {
+      let langID = LMF.getLanguageIdFromCode(langCode)
+
+      if (langID !== Constants.LANG_UNDEFINED && this.engines[langID] === undefined) {
+        this.engines[langID] = engineConfig[langCode]
+      }
+    })
   }
 
   async getHomonym (languageID, word) {

@@ -10593,7 +10593,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*! exports provided: morphology, lexicon, lemmatranslation, default */
 /***/ (function(module) {
 
-module.exports = {"morphology":{"alpheiosTreebank":{"adapter":"tbAdapter","methods":["getHomonym"]},"tufts":{"adapter":"maAdapter","methods":["getHomonym"]}},"lexicon":{"alpheios":{"adapter":"lexicons","methods":["fetchShortDefs","fetchFullDefs"]}},"lemmatranslation":{"alpheios":{"adapter":"lemmaTranslations","methods":"fetchTranslations"}}};
+module.exports = {"morphology":{"alpheiosTreebank":{"adapter":"tbAdapter","methods":["getHomonym"],"params":{"getHomonym":["languageID","wordref"]}},"tufts":{"adapter":"maAdapter","methods":["getHomonym"],"params":{"getHomonym":["languageID","word"]}}},"lexicon":{"alpheios":{"adapter":"lexicons","methods":["fetchShortDefs","fetchFullDefs"],"params":{"fetchShortDefs":["homonym","opts"],"fetchFullDefs":["homonym","opts"]}}},"lemmatranslation":{"alpheios":{"adapter":"lemmaTranslations","methods":"fetchTranslations","params":{"fetchTranslations":["homonym","browserLang"]}}}};
 
 /***/ }),
 
@@ -10732,6 +10732,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class BaseAdapter {
+  uploadConfig (config, defaultConfig) {
+    let configRes = {}
+    Object.keys(config).forEach(configKey => {
+      configRes[configKey] = config[configKey]
+    })
+
+    Object.keys(defaultConfig).forEach(configKey => {
+      if (configRes[configKey] === undefined) {
+        configRes[configKey] = defaultConfig[configKey]
+      }
+    })
+
+    return configRes
+  }
+
   timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
@@ -10739,9 +10754,7 @@ class BaseAdapter {
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
-        console.info('****************inside fetchWindow 1', url)
         let response = await window.fetch(url)
-        console.info('****************inside fetchWindow 2', response)
         if (options.type === 'xml') {
           return response.text()
         } else {
@@ -10758,7 +10771,6 @@ class BaseAdapter {
   fetchWindowTimeout (url, options) {
     if (url) {
       let didTimeOut = false
-      console.info('***************fetchWindowTimeout options.timeout', options.timeout)
       return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => {
           didTimeOut = true
@@ -10900,10 +10912,19 @@ class ClientAdapters {
     }
   }
 
-  static checkParam (params, category, adapterName, methodName, paramName) {
-    if (!params[paramName]) {
-      throw new _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_5__["default"](category, adapterName, methodName, paramName)
+  static checkParam (params, category, adapterName, methodName) {
+    if (cachedConfig.get(category)[adapterName].params) {
+      cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
+        if (!params[paramName]) {
+          throw new _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_5__["default"](category, adapterName, methodName, paramName)
+        }
+      })
     }
+  }
+
+  static checkMethodParam (category, adapterName, options) {
+    ClientAdapters.checkMethod(category, adapterName, options.method)
+    ClientAdapters.checkParam(options.params, category, adapterName, options.method)
   }
 
   /*
@@ -10915,13 +10936,10 @@ class ClientAdapters {
 */
 
   static async maAdapter (options) {
-    ClientAdapters.checkMethod('morphology', 'tufts', options.method)
+    ClientAdapters.checkMethodParam('morphology', 'tufts', options)
 
     let localMaAdapter = new _tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]()
     if (options.method === 'getHomonym') {
-      ClientAdapters.checkParam(options.params, 'morphology', 'tufts', options.method, 'languageID')
-      ClientAdapters.checkParam(options.params, 'morphology', 'tufts', options.method, 'word')
-
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return homonym
     }
@@ -10937,13 +10955,10 @@ class ClientAdapters {
 */
 
   static async tbAdapter (options) {
-    ClientAdapters.checkMethod('morphology', 'alpheiosTreebank', options.method)
+    ClientAdapters.checkMethodParam('morphology', 'alpheiosTreebank', options)
 
     let localTbAdapter = new _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]()
     if (options.method === 'getHomonym') {
-      ClientAdapters.checkParam(options.params, 'morphology', 'alpheiosTreebank', options.method, 'languageID')
-      ClientAdapters.checkParam(options.params, 'morphology', 'alpheiosTreebank', options.method, 'wordref')
-
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
       return homonym
     }
@@ -10959,14 +10974,11 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lemmaTranslations (options) {
-    ClientAdapters.checkMethod('lemmatranslation', 'alpheios', options.method)
+    ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
 
     let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
 
     if (options.method === 'fetchTranslations') {
-      ClientAdapters.checkParam(options.params, 'lemmatranslation', 'alpheios', options.method, 'homonym')
-      ClientAdapters.checkParam(options.params, 'lemmatranslation', 'alpheios', options.method, 'browserLang')
-
       await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
       return true
     }
@@ -10983,23 +10995,15 @@ class ClientAdapters {
    * options.params.browserLang - language for translations
 */
   static async lexicons (options) {
-    ClientAdapters.checkMethod('lexicon', 'alpheios', options.method)
+    ClientAdapters.checkMethodParam('lexicon', 'alpheios', options)
 
     let localLexiconsAdapter = new _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]()
 
     if (options.method === 'fetchShortDefs') {
-      console.info('*****************fetchShortDefs', options.params)
-
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'homonym')
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'opts')
-
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
       return true
     }
     if (options.method === 'fetchFullDefs') {
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'homonym')
-      ClientAdapters.checkParam(options.params, 'lexicon', 'alpheios', options.method, 'opts')
-
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return true
     }
@@ -11187,7 +11191,9 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
         console.info('**************lookupFunction full checkCachedData finish')
         let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
         console.info('**************lookupFunction full collectFullDefURLs finish')
-        await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+        if (fullDefsRequests) {
+          await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+        }
         console.info('**************lookupFunction full finish')
       }
     }
@@ -11245,7 +11251,6 @@ class AlpheiosLexiconsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_2__
   }
 
   async updateFullDefs (fullDefsRequests, config) {
-    console.info('********************updateFullDefs', fullDefsRequests)
     for (let request of fullDefsRequests) {
       let fullDefData = await this.fetch(request.url, { type: 'xml' })
       let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
@@ -11516,8 +11521,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/tufts/config.json */ "./tufts/config.json");
 var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/tufts/config.json */ "./tufts/config.json", 1);
 /* harmony import */ var _tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/tufts/engines-set */ "./tufts/engines-set.js");
-/* harmony import */ var _tufts_config_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/tufts/config-data */ "./tufts/config-data.js");
-
 
 
 
@@ -11529,9 +11532,22 @@ var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__w
 class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
   constructor (config = {}) {
     super()
-    this.config = new _tufts_config_data__WEBPACK_IMPORTED_MODULE_5__["default"](config, _tufts_config_json__WEBPACK_IMPORTED_MODULE_3__)
-    this.config.uploadEngines(this.config.engine)
-    this.engineSet = new _tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__["default"](this.config.engine)
+    this.config = this.uploadConfig(config, _tufts_config_json__WEBPACK_IMPORTED_MODULE_3__)
+    this.uploadEngines(this.config.engine)
+    this.engineSet = new _tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__["default"](this.engines)
+  }
+
+  uploadEngines (engineConfig) {
+    if (this.engine === undefined) {
+      this.engines = {}
+    }
+    Object.keys(engineConfig).forEach(langCode => {
+      let langID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(langCode)
+
+      if (langID !== alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_UNDEFINED && this.engines[langID] === undefined) {
+        this.engines[langID] = engineConfig[langCode]
+      }
+    })
   }
 
   async getHomonym (languageID, word) {
@@ -11571,87 +11587,14 @@ class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["d
 
 /***/ }),
 
-/***/ "./tufts/config-data.js":
-/*!******************************!*\
-  !*** ./tufts/config-data.js ***!
-  \******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _config_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/config-data */ "./config-data.js");
-
-
-
-class TuftsConfigData extends _config_data__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  uploadEngines (enginesConfig) {
-    if (this.engine === undefined) {
-      this.engine = {}
-    }
-    Object.keys(enginesConfig).forEach(langCode => {
-      let langID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(langCode)
-
-      if (langID !== alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_UNDEFINED && this.engine[langID] === undefined) {
-        this.engine[langID] = enginesConfig[langCode]
-      }
-    })
-  }
-
-  get featuresArray () {
-    return [
-      ['pofs', 'part'],
-      ['case', 'grmCase'],
-      ['gend', 'gender'],
-      ['decl', 'declension'],
-      ['conj', 'conjugation'],
-      ['area', 'area'],
-      ['age', 'age'],
-      ['geo', 'geo'],
-      ['freq', 'frequency'],
-      ['note', 'note'],
-      ['pron', 'pronunciation'],
-      ['kind', 'kind'],
-      ['src', 'source']
-    ]
-  }
-
-  get featuresArrayAll () {
-    return [
-      ['pofs', 'part'],
-      ['case', 'grmCase'],
-      ['decl', 'declension'],
-      ['num', 'number'],
-      ['gend', 'gender'],
-      ['conj', 'conjugation'],
-      ['tense', 'tense'],
-      ['voice', 'voice'],
-      ['mood', 'mood'],
-      ['pers', 'person'],
-      ['comp', 'comparison'],
-      ['stemtype', 'stemtype'],
-      ['derivtype', 'derivtype'],
-      ['dial', 'dialect'],
-      ['morph', 'morph']
-    ]
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (TuftsConfigData);
-
-
-/***/ }),
-
 /***/ "./tufts/config.json":
 /*!***************************!*\
   !*** ./tufts/config.json ***!
   \***************************/
-/*! exports provided: engine, url, allowUnknownValues, default */
+/*! exports provided: engine, url, allowUnknownValues, featuresArray, featuresArrayAll, default */
 /***/ (function(module) {
 
-module.exports = {"engine":{"lat":["whitakerLat"],"grc":["morpheusgrc"],"ara":["aramorph"],"per":["hazm"],"gez":["traces"]},"url":"https://morph.alpheios.net/api/v1/analysis/word?word=r_WORD&engine=r_ENGINE&lang=r_LANG&clientId=r_CLIENT","allowUnknownValues":true};
+module.exports = {"engine":{"lat":["whitakerLat"],"grc":["morpheusgrc"],"ara":["aramorph"],"per":["hazm"],"gez":["traces"]},"url":"https://morph.alpheios.net/api/v1/analysis/word?word=r_WORD&engine=r_ENGINE&lang=r_LANG&clientId=r_CLIENT","allowUnknownValues":true,"featuresArray":[["pofs","part"],["case","grmCase"],["gend","gender"],["decl","declension"],["conj","conjugation"],["area","area"],["age","age"],["geo","geo"],["freq","frequency"],["note","note"],["pron","pronunciation"],["kind","kind"],["src","source"]],"featuresArrayAll":[["pofs","part"],["case","grmCase"],["gend","gender"],["decl","declension"],["conj","conjugation"],["num","number"],["tense","tense"],["voice","voice"],["mood","mood"],["pers","person"],["comp","comparison"],["stemtype","stemtype"],["derivtype","derivtype"],["dial","dialect"],["morph","morph"]]};
 
 /***/ }),
 
@@ -12184,107 +12127,127 @@ class TransformAdapter {
     this.config = config
   }
 
+  extractData (source, nameParam) {
+    let schema = {
+      'providerUri': [ 'RDF', 'Annotation', 'creator', 'Agent', 'about' ],
+      'providerRights': [ 'RDF', 'Annotation', 'rights', '$' ],
+      'inflections': [ 'rest', 'entry', 'infl' ],
+      'dictData': [ 'rest', 'entry', 'dict' ]
+    }
+    let res
+
+    if (schema[nameParam]) {
+      res = source
+      for (let pathPart of schema[nameParam]) {
+        if (res[pathPart]) {
+          res = res[pathPart]
+        } else {
+          res = undefined
+          break
+        }
+      }
+    }
+    return res
+  }
+
+  checkToBeArray (data, defaultData = []) {
+    let resData = data
+    if (!Array.isArray(data)) {
+      if (data) {
+        resData = [data]
+      } else {
+        resData = defaultData
+      }
+    }
+    return resData
+  }
+
+  collectHdwdArray (data, term, direction) {
+    let hdwd = []
+
+    if (data && !Array.isArray(data) && !data.hdwd && term) {
+      hdwd.push(term.prefix ? term.prefix.$ : '')
+      hdwd.push(term.stem ? term.stem.$ : '')
+      hdwd.push(term.suff ? term.suff.$ : '')
+
+      if (direction === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_DIR_RTL) {
+        hdwd.reverse()
+      }
+    }
+
+    return hdwd
+  }
+
+  defineLanguage (data, term) {
+    let lemmaData = Array.isArray(data) ? data[0] : data
+    if (!lemmaData.hdwd && term) {
+      lemmaData.hdwd = {}
+      lemmaData.hdwd.lang = term.lang
+    }
+    return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
+  }
+
   transformData (jsonObj, targetWord) {
     let lexemes = []
-    let annotationBody = jsonObj.RDF.Annotation.Body
-    if (!Array.isArray(annotationBody)) {
-      /*
-      If only one lexeme is returned, Annotation Body will not be an array but rather a single object.
-      Let's convert it to an array so we can work with it in the same way no matter what format it is.
-      */
-      if (annotationBody) {
-        annotationBody = [annotationBody]
-      } else {
-        annotationBody = []
-      }
-    }
-    let providerUri = jsonObj.RDF.Annotation.creator.Agent.about
-    let providerRights = ''
-    if (jsonObj.RDF.Annotation.rights) {
-      providerRights = jsonObj.RDF.Annotation.rights.$
-    }
+    let annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
+
+    let providerUri = this.extractData(jsonObj, 'providerUri')
+    let providerRights = this.extractData(jsonObj, 'providerRights')
+
     let provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, providerRights)
+
     for (let lexeme of annotationBody) {
-      let inflectionsJSON = lexeme.rest.entry.infl
-      if (!inflectionsJSON) {
-        inflectionsJSON = []
-      } else if (!Array.isArray(inflectionsJSON)) {
-        // If only one inflection returned, it is a single object, not an array of objects.
-        // Convert it to an array for uniformity.
-        inflectionsJSON = [inflectionsJSON]
+      let inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
+      let inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
+
+      let dictData = this.extractData(lexeme, 'dictData')
+
+      let lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [ inflectionsJSONTerm ] : [])
+      let language = this.defineLanguage(dictData, inflectionsJSONTerm)
+      if (!language) {
+        console.log(`No language found`)
+        continue
       }
-      let lemmaElements
-      let features = [
-        ['pofs', 'part'],
-        ['case', 'grmCase'],
-        ['gend', 'gender'],
-        ['decl', 'declension'],
-        ['conj', 'conjugation'],
-        ['area', 'area'],
-        ['age', 'age'],
-        ['geo', 'geo'],
-        ['freq', 'frequency'],
-        ['note', 'note'],
-        ['pron', 'pronunciation'],
-        ['kind', 'kind'],
-        ['src', 'source']
-      ]
-      let reconstructHdwd = []
-      if (lexeme.rest.entry.dict) {
-        if (Array.isArray(lexeme.rest.entry.dict)) {
-          lemmaElements = lexeme.rest.entry.dict
-        } else {
-          if (!lexeme.rest.entry.dict.hdwd && inflectionsJSON[0].term) {
-            lexeme.rest.entry.dict.hdwd = {}
-            lexeme.rest.entry.dict.hdwd.lang = inflectionsJSON[0].term.lang
-            reconstructHdwd.push(inflectionsJSON[0].term.prefix ? inflectionsJSON[0].term.prefix.$ : '')
-            reconstructHdwd.push(inflectionsJSON[0].term.stem ? inflectionsJSON[0].term.stem.$ : '')
-            reconstructHdwd.push(inflectionsJSON[0].term.suff ? inflectionsJSON[0].term.suff.$ : '')
-          }
-          lemmaElements = [lexeme.rest.entry.dict]
-        }
-      } else if (inflectionsJSON.length > 0 && inflectionsJSON[0].term) {
-        lemmaElements = [ inflectionsJSON[0].term ]
-      }
-      // in rare cases (e.g. conditum in Whitakers) multiple dict entries
-      // exist - always use the lemma and language from the first
-      let language = lemmaElements[0].hdwd ? lemmaElements[0].hdwd.lang : lemmaElements[0].lang
+
       // Get importer based on the language
       let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
         console.log(`No mapping data found for ${language}`)
         continue
       }
+
+      let reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
       if (reconstructHdwd.length > 0) {
-        if (mappingData.model.direction === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_DIR_RTL) {
-          reconstructHdwd.reverse()
-        }
-        lexeme.rest.entry.dict.hdwd.$ = reconstructHdwd.join('')
+        lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
       }
+
       let lemmas = []
       let lexemeSet = []
+
       for (let entry of lemmaElements.entries()) {
-        let shortdefs = []
         let index = entry[0]
         let elem = entry[1]
-        let lemmaText
-        if (elem.hdwd) {
-          lemmaText = elem.hdwd.$
-        }
-        if (!lemmaText || !language) {
+
+        let lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
+        if (!lemmaText) {
           console.log('No lemma or language found')
           continue
         }
         let lemma = mappingData.parseLemma(lemmaText, language)
         lemmas.push(lemma)
+
+        let features = this.config.featuresArray
         for (let feature of features) {
           mappingData.mapFeature(lemma, elem, ...feature, this.config.allowUnknownValues)
         }
+
+        let shortdefs = []
         let meanings = lexeme.rest.entry.mean
         if (!Array.isArray(meanings)) {
           meanings = [meanings]
         }
         meanings = meanings.filter((m) => m)
+
         // if we have multiple dictionary elements, take the meaning with the matching index
         if (lemmaElements.length > 1) {
           if (meanings && meanings[index]) {
@@ -12308,9 +12271,11 @@ class TransformAdapter {
         lexmodel.meaning.appendShortDefs(shortdefs)
         lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, lexmodel))
       }
+
       if (lemmas.length === 0) {
         continue
       }
+
       let inflections = []
       for (let inflectionJSON of inflectionsJSON) {
         let stem = inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
@@ -12322,23 +12287,7 @@ class TransformAdapter {
           inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm, targetWord, mappingData.model.languageID))
         }
         // Parse whatever grammatical features we're interested in and are provided
-        for (let f of [
-          ['pofs', 'part'],
-          ['case', 'grmCase'],
-          ['decl', 'declension'],
-          ['num', 'number'],
-          ['gend', 'gender'],
-          ['conj', 'conjugation'],
-          ['tense', 'tense'],
-          ['voice', 'voice'],
-          ['mood', 'mood'],
-          ['pers', 'person'],
-          ['comp', 'comparison'],
-          ['stemtype', 'stemtype'],
-          ['derivtype', 'derivtype'],
-          ['dial', 'dialect'],
-          ['morph', 'morph']
-        ]) {
+        for (let f of this.config.featuresArrayAll) {
           try {
             mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
             mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
