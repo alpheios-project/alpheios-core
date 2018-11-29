@@ -248,6 +248,7 @@ export default class UIController {
             inflections: false,
             inflectionsbrowser: false,
             status: false,
+            user: false,
             options: false,
             info: true,
             treebank: false
@@ -1072,8 +1073,8 @@ export default class UIController {
   updateLanguage (currentLanguageID) {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
-    if (typeof currentLanguageID !== "symbol") {
-      console.warn("updateLanguage was called with a string value")
+    if (typeof currentLanguageID !== 'symbol') {
+      console.warn('updateLanguage was called with a string value')
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
     this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
