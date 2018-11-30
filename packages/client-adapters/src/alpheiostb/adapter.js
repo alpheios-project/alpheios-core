@@ -3,6 +3,7 @@ import BaseAdapter from '@/base-adapter'
 
 import DefaultConfig from '@/alpheiostb/config.json'
 import xmlToJSON from 'xmltojson'
+import AdapterError from '@/errors/adapter-error'
 
 class AlpheiosTreebankAdapter extends BaseAdapter {
   constructor (config = {}) {
@@ -13,21 +14,31 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
 
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(word)
+    if (!url) {
+      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `Url was not created for the word - ${word}`)
+    }
+    try {
+      if (url) {
+        let res = await this.fetch(url, { type: 'xml' })
 
-    if (url) {
-      let xmlString = await this.fetch(url, { type: 'xml' })
-      if (xmlString) {
-        let langCode = LMF.getLanguageCodeFromId(languageID)
+        if (res.constructor.name === 'AdapterError') {
+          return res.update(this.config)
+        }
 
-        let jsonObj = xmlToJSON.parseString(xmlString)
-        jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
+        if (res) {
+          let langCode = LMF.getLanguageCodeFromId(languageID)
 
-        let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
-        return homonym
-      } else {
-      // No data found for this word
-        return undefined
+          let jsonObj = xmlToJSON.parseString(res)
+          jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
+
+          let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
+          return homonym
+        } else {
+          return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `Empty result for word - ${word}`)
+        }
       }
+    } catch (error) {
+      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, error.mesage)
     }
   }
 

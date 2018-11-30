@@ -111,7 +111,11 @@ class ClientAdapters {
   static async tbAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'alpheiosTreebank', options)
 
-    let localTbAdapter = new AlpheiosTreebankAdapter()
+    let localTbAdapter = new AlpheiosTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'alpheiosTreebank',
+      method: options.method
+    })
     if (options.method === 'getHomonym') {
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
       return homonym
@@ -130,11 +134,15 @@ class ClientAdapters {
   static async lemmaTranslations (options) {
     ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
 
-    let localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter()
+    let localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter({
+      category: 'lemmatranslation',
+      adapterName: 'alpheios',
+      method: options.method
+    })
 
     if (options.method === 'fetchTranslations') {
-      await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
-      return true
+      let res = await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
+      return res
     }
     return null
   }
@@ -151,7 +159,11 @@ class ClientAdapters {
   static async lexicons (options) {
     ClientAdapters.checkMethodParam('lexicon', 'alpheios', options)
 
-    let localLexiconsAdapter = new AlpheiosLexiconsAdapter()
+    let localLexiconsAdapter = new AlpheiosLexiconsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: options.method
+    })
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)

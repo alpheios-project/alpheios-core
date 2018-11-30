@@ -1,4 +1,5 @@
 import axios from 'axios'
+import AdapterError from '@/errors/adapter-error'
 
 class BaseAdapter {
   uploadConfig (config, defaultConfig) {
@@ -30,10 +31,11 @@ class BaseAdapter {
           return response.json()
         }
       } catch (error) {
-        console.error(`Unable to get data from url ${url}`)
+        return new AdapterError(null, null, null, `Unable to get data from url ${url}`)
       }
     } else {
       console.error(`Unable to prepare parser request url`)
+      return new AdapterError(null, null, null, `Unable to get data from empty url`)
     }
   }
 

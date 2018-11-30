@@ -5406,6 +5406,8 @@ __webpack_require__.r(__webpack_exports__);
 var _alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/alpheiostb/config.json */ "./alpheiostb/config.json", 1);
 /* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! xmltojson */ "../node_modules/xmltojson/lib/xmlToJSON.js");
 /* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(xmltojson__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/errors/adapter-error */ "./errors/adapter-error.js");
+
 
 
 
@@ -5421,21 +5423,31 @@ class AlpheiosTreebankAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__
 
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(word)
+    if (!url) {
+      return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_4__["default"](this.config.category, this.config.adapterName, this.config.method, `Url was not created for the word - ${word}`)
+    }
+    try {
+      if (url) {
+        let res = await this.fetch(url, { type: 'xml' })
 
-    if (url) {
-      let xmlString = await this.fetch(url, { type: 'xml' })
-      if (xmlString) {
-        let langCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
+        if (res.constructor.name === 'AdapterError') {
+          return res.update(this.config)
+        }
 
-        let jsonObj = xmltojson__WEBPACK_IMPORTED_MODULE_3___default.a.parseString(xmlString)
-        jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
+        if (res) {
+          let langCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
 
-        let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
-        return homonym
-      } else {
-      // No data found for this word
-        return undefined
+          let jsonObj = xmltojson__WEBPACK_IMPORTED_MODULE_3___default.a.parseString(res)
+          jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
+
+          let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
+          return homonym
+        } else {
+          return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_4__["default"](this.config.category, this.config.adapterName, this.config.method, `Empty result for word - ${word}`)
+        }
       }
+    } catch (error) {
+      return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_4__["default"](this.config.category, this.config.adapterName, this.config.method, error.mesage)
     }
   }
 
@@ -5514,6 +5526,8 @@ module.exports = {"texts":["1999.01.0021","1999.01.0135","1999.02.0066","phi0959
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/errors/adapter-error */ "./errors/adapter-error.js");
+
 
 
 class BaseAdapter {
@@ -5546,10 +5560,11 @@ class BaseAdapter {
           return response.json()
         }
       } catch (error) {
-        console.error(`Unable to get data from url ${url}`)
+        return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](null, null, null, `Unable to get data from url ${url}`)
       }
     } else {
       console.error(`Unable to prepare parser request url`)
+      return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](null, null, null, `Unable to get data from empty url`)
     }
   }
 
@@ -5751,7 +5766,11 @@ class ClientAdapters {
   static async tbAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'alpheiosTreebank', options)
 
-    let localTbAdapter = new _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]()
+    let localTbAdapter = new _alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      category: 'morphology',
+      adapterName: 'alpheiosTreebank',
+      method: options.method
+    })
     if (options.method === 'getHomonym') {
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
       return homonym
@@ -5770,11 +5789,15 @@ class ClientAdapters {
   static async lemmaTranslations (options) {
     ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
 
-    let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
+    let localLemmasAdapter = new _translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      category: 'lemmatranslation',
+      adapterName: 'alpheios',
+      method: options.method
+    })
 
     if (options.method === 'fetchTranslations') {
-      await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
-      return true
+      let res = await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
+      return res
     }
     return null
   }
@@ -5791,7 +5814,11 @@ class ClientAdapters {
   static async lexicons (options) {
     ClientAdapters.checkMethodParam('lexicon', 'alpheios', options)
 
-    let localLexiconsAdapter = new _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]()
+    let localLexiconsAdapter = new _lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: options.method
+    })
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
@@ -5821,11 +5848,23 @@ class ClientAdapters {
 __webpack_require__.r(__webpack_exports__);
 class AdapterError extends Error {
   constructor (category, adapterName, methodName, messageError) {
-    let message = `${messageError} for ${category}.${adapterName} - ${methodName}`
+    let message = messageError
     super(message)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
+
+    if (this.adapter && this.methodName) {
+      this.message = `${this.message} for ${this.adapter} - ${this.methodName}`
+    }
     Error.captureStackTrace(this, AdapterError)
+  }
+
+  update (config) {
+    this.adapter = `${config.category}.${config.adapterName}`
+    this.methodName = config.method
+
+    this.message = `${this.message} for ${this.adapter} - ${this.methodName}`
+    return this
   }
 }
 
@@ -6124,6 +6163,8 @@ var _translations_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/base-adapter */ "./base-adapter.js");
+/* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/errors/adapter-error */ "./errors/adapter-error.js");
+
 
 
 
@@ -6147,18 +6188,35 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
     let outLang = this.config.langMap[browserLang] || this.config.defaultLang
 
     let input = this.prepareInput(lemmaList)
-    let urlLang = await this.getAvailableResLang(inLang, outLang)
+    if (!input) {
+      return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__["default"](this.config.category, this.config.adapterName, this.config.method, `There were problems with preparing input - ${input}`)
+    }
 
-    if (input && urlLang) {
-      try {
-        let url = urlLang + '?input=' + input
-        let translationsList = await this.fetch(url)
-        for (let lemma of lemmaList) {
-          alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Translation"].loadTranslations(lemma, outLang, translationsList, this.provider)
-        }
-      } catch (error) {
-        console.error(`Some problems with translations from ${inLang} to ${outLang}`, error)
+    try {
+      let urlLang = await this.getAvailableResLang(inLang, outLang)
+
+      if (urlLang && urlLang.constructor.name === 'AdapterError') {
+        return urlLang
       }
+
+      if (input && urlLang) {
+        try {
+          let url = urlLang + '?input=' + input
+          let translationsList = await this.fetch(url)
+
+          if (translationsList && translationsList.constructor.name === 'AdapterError') {
+            return translationsList.update(this.config)
+          }
+
+          for (let lemma of lemmaList) {
+            alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Translation"].loadTranslations(lemma, outLang, translationsList, this.provider)
+          }
+        } catch (error) {
+          return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__["default"](this.config.category, this.config.adapterName, this.config.method, error.message)
+        }
+      }
+    } catch (error) {
+      return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__["default"](this.config.category, this.config.adapterName, this.config.method, error.message)
     }
   }
 
@@ -6178,6 +6236,10 @@ class AlpheiosLemmaTranslationsAdapter extends _base_adapter__WEBPACK_IMPORTED_M
     if (this.mapLangUri[inLang] === undefined) {
       let urlAvaLangsRes = this.config.url + '/' + inLang + '/'
       let unparsed = await this.fetch(urlAvaLangsRes)
+
+      if (unparsed && unparsed.constructor.name === 'AdapterError') {
+        return unparsed.update(this.config)
+      }
 
       let mapLangUri = {}
       unparsed.forEach(function (langItem) {
@@ -6225,7 +6287,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/tufts/config.json */ "./tufts/config.json");
 var _tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/tufts/config.json */ "./tufts/config.json", 1);
 /* harmony import */ var _tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/tufts/engines-set */ "./tufts/engines-set.js");
-/* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../errors/adapter-error */ "./errors/adapter-error.js");
+/* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/errors/adapter-error */ "./errors/adapter-error.js");
 
 
 
@@ -6264,11 +6326,14 @@ class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["d
       return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, `There is no engine for languageID - ${languageID.toString()}`)
     }
     try {
-      let jsonObj = await this.fetch(url)
-      if (jsonObj) {
+      let res = await this.fetch(url)
+      if (res.constructor.name === 'AdapterError') {
+        return res.update(this.config)
+      }
+      if (res) {
         let transformAdapter = new _tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this.engineSet, this.config)
 
-        let homonym = transformAdapter.transformData(jsonObj, word)
+        let homonym = transformAdapter.transformData(res, word)
 
         if (!homonym) {
           return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, `No homonym was get for word - ${word}, for languageID - ${languageID.toString()}`)
@@ -6281,7 +6346,7 @@ class AlpheiosTuftsAdapter extends _base_adapter__WEBPACK_IMPORTED_MODULE_1__["d
         return homonym
       } else {
         // No data found for this word
-        return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, `Empty jsobObj for word - ${word}, for languageID - ${languageID.toString()}`)
+        return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, `Empty result for word - ${word}, for languageID - ${languageID.toString()}`)
       }
     } catch (error) {
       return new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_5__["default"](this.config.category, this.config.adapterName, this.config.method, error.mesage)
