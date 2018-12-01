@@ -4,9 +4,11 @@ Alpheios Client Adapters Library
 
 **adapters-config.json**
 
-category --> adapterName --> adapterFunc
-                     --> methods
-                     --> params
+* category 
+    * adapterName 
+        * adapterFunc
+        * methods
+        * params
            
 | Name | Type | Description |
 |------|------|-------------|
