@@ -8427,6 +8427,7 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
 
   async updateShortDefs (languageID, data, homonym, config) {
     let model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID)
+    let finalRes = false
 
     for (let lexeme of homonym.lexemes) {
       let deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
@@ -8437,6 +8438,7 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
             let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](d, config.langs.target, 'text/plain', lexeme.lemma.word)
             let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
             lexeme.meaning['appendShortDefs'](definition)
+            finalRes = true
           } catch (error) {
             this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
             continue
@@ -8444,6 +8446,8 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
         }
       }
     }
+
+    return finalRes
   }
 
   collectFullDefURLs (languageID, data, homonym, config) {
@@ -8470,6 +8474,8 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
   }
 
   async updateFullDefs (fullDefsRequests, config) {
+    let finalRes = false
+
     for (let request of fullDefsRequests) {
       let fullDefData = await this.fetch(request.url, { type: 'xml' })
       if (!fullDefData) {
@@ -8480,11 +8486,14 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
         let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
         let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
         request.lexeme.meaning['appendFullDefs'](definition)
+        finalRes = true
       } catch (error) {
         this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
         continue
       }
     }
+
+    return finalRes
   }
 
   getRequests (languageID) {

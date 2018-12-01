@@ -75,6 +75,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
   async updateShortDefs (languageID, data, homonym, config) {
     let model = LMF.getLanguageModel(languageID)
+    let finalRes = false
 
     for (let lexeme of homonym.lexemes) {
       let deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
@@ -85,6 +86,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
             let def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
             let definition = await ResourceProvider.getProxy(this.provider, def)
             lexeme.meaning['appendShortDefs'](definition)
+            finalRes = true
           } catch (error) {
             this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
             continue
@@ -92,6 +94,8 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         }
       }
     }
+
+    return finalRes
   }
 
   collectFullDefURLs (languageID, data, homonym, config) {
@@ -118,6 +122,8 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   }
 
   async updateFullDefs (fullDefsRequests, config) {
+    let finalRes = false
+
     for (let request of fullDefsRequests) {
       let fullDefData = await this.fetch(request.url, { type: 'xml' })
       if (!fullDefData) {
@@ -128,11 +134,14 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
         let definition = await ResourceProvider.getProxy(this.provider, def)
         request.lexeme.meaning['appendFullDefs'](definition)
+        finalRes = true
       } catch (error) {
         this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
         continue
       }
     }
+
+    return finalRes
   }
 
   getRequests (languageID) {
