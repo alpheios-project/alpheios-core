@@ -1,7 +1,25 @@
 import axios from 'axios'
 import AdapterError from '@/errors/adapter-error'
 
+import L10n from '@/l10n/l10n'
+import Locales from '@/locales/locales.js'
+import enUS from '@/locales/en-us/messages.json'
+import enGB from '@/locales/en-gb/messages.json'
+
 class BaseAdapter {
+  constructor () {
+    this.errors = []
+    this.l10n = new L10n()
+      .addMessages(enUS, Locales.en_US)
+      .addMessages(enGB, Locales.en_GB)
+      .setLocale(Locales.en_US)
+  }
+
+  addError (message) {
+    let error = new AdapterError(this.config.category, this.config.adapterName, this.config.method, message)
+    this.errors.push(error)
+  }
+
   uploadConfig (config, defaultConfig) {
     let configRes = {}
     Object.keys(config).forEach(configKey => {
@@ -25,17 +43,20 @@ class BaseAdapter {
     if (url) {
       try {
         let response = await window.fetch(url)
+        if (!response.ok) {
+          this.addError(this.l10n.messages['BASIC_ADAPTER_URL_RESPONSE_FAILED'].get(response.status, response.statusText))
+          return
+        }
         if (options.type === 'xml') {
           return response.text()
         } else {
           return response.json()
         }
       } catch (error) {
-        return new AdapterError(null, null, null, `Unable to get data from url ${url}`)
+        this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
       }
     } else {
-      console.error(`Unable to prepare parser request url`)
-      return new AdapterError(null, null, null, `Unable to get data from empty url`)
+      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
     }
   }
 
@@ -77,7 +98,7 @@ class BaseAdapter {
       }
       return res.data
     } catch (error) {
-      console.error(`Unable to prepare parser request url`, url, error.message)
+      this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
     }
   }
 
@@ -97,7 +118,7 @@ class BaseAdapter {
 
       return res
     } catch (error) {
-      console.error('*************** adapter fetch', error)
+      this.addError(this.l10n.messages['BASIC_ADAPTER_UNKNOWN_ERROR'].get(error.message))
     }
   }
 }

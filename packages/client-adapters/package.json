@@ -34,6 +34,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.0.0-beta.5",
+    "intl-messageformat": "^2.2.0",
     "jest": "^23.6.0",
     "jest-fetch-mock": "1.6.5",
     "jest-serializer-vue": "^2.0.2",

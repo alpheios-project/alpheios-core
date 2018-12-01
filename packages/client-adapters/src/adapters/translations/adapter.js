@@ -1,8 +1,7 @@
-import DefaultConfig from '@/translations/config.json'
+import DefaultConfig from '@/adapters/translations/config.json'
 
 import { ResourceProvider, Translation, LanguageModelFactory as LMF } from 'alpheios-data-models'
-import BaseAdapter from '@/base-adapter'
-import AdapterError from '@/errors/adapter-error'
+import BaseAdapter from '@/adapters/base-adapter'
 
 class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
   constructor (config = {}) {
@@ -23,14 +22,15 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
 
     let input = this.prepareInput(lemmaList)
     if (!input) {
-      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `There were problems with preparing input - ${input}`)
+      this.addError(this.l10n.messages['TRANSLATION_INPUT_PREPARE_ERROR'].get(input.toString()))
+      return
     }
 
     try {
       let urlLang = await this.getAvailableResLang(inLang, outLang)
 
       if (urlLang && urlLang.constructor.name === 'AdapterError') {
-        return urlLang
+        return
       }
 
       if (input && urlLang) {
@@ -39,18 +39,18 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
           let translationsList = await this.fetch(url)
 
           if (translationsList && translationsList.constructor.name === 'AdapterError') {
-            return translationsList.update(this.config)
+            return
           }
 
           for (let lemma of lemmaList) {
             Translation.loadTranslations(lemma, outLang, translationsList, this.provider)
           }
         } catch (error) {
-          return new AdapterError(this.config.category, this.config.adapterName, this.config.method, error.message)
+          this.addError(this.l10n.messages['TRANSLATION_UNKNOWN_ERROR'].get(error.message))
         }
       }
     } catch (error) {
-      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, error.message)
+      this.addError(this.l10n.messages['TRANSLATION_UNKNOWN_ERROR'].get(error.message))
     }
   }
 
@@ -72,7 +72,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
       let unparsed = await this.fetch(urlAvaLangsRes)
 
       if (unparsed && unparsed.constructor.name === 'AdapterError') {
-        return unparsed.update(this.config)
+        return unparsed
       }
 
       let mapLangUri = {}

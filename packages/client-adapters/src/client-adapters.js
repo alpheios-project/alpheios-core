@@ -1,12 +1,12 @@
-import AlpheiosTuftsAdapter from '@/tufts/adapter'
-import AlpheiosTreebankAdapter from '@/alpheiostb/adapter'
-import AlpheiosLemmaTranslationsAdapter from '@/translations/adapter'
-import AlpheiosLexiconsAdapter from '@/lexicons/adapter'
+import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
+import AlpheiosTreebankAdapter from '@/adapters/alpheiostb/adapter'
+import AlpheiosLemmaTranslationsAdapter from '@/adapters/translations/adapter'
+import AlpheiosLexiconsAdapter from '@/adapters/lexicons/adapter'
 
 import WrongMethodError from '@/errors/wrong-method-error'
 import NoRequiredParamError from '@/errors/no-required-param-error'
 
-import AdaptersConfig from '@/adapters-config.json'
+import AdaptersConfig from '@/adapters/adapters-config.json'
 
 let cachedConfig = new Map()
 let cachedAdaptersList = new Map()
@@ -95,7 +95,7 @@ class ClientAdapters {
 
     if (options.method === 'getHomonym') {
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
-      return homonym
+      return { result: homonym, errors: localMaAdapter.errors }
     }
     return null
   }
@@ -118,7 +118,7 @@ class ClientAdapters {
     })
     if (options.method === 'getHomonym') {
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
-      return homonym
+      return { result: homonym, errors: localTbAdapter.errors }
     }
     return null
   }
@@ -141,8 +141,8 @@ class ClientAdapters {
     })
 
     if (options.method === 'fetchTranslations') {
-      let res = await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
-      return res
+      await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
+      return { errors: localLemmasAdapter.errors }
     }
     return null
   }
@@ -167,11 +167,11 @@ class ClientAdapters {
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
-      return true
+      return { errors: localLexiconsAdapter.errors }
     }
     if (options.method === 'fetchFullDefs') {
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
-      return true
+      return { errors: localLexiconsAdapter.errors }
     }
     return null
   }

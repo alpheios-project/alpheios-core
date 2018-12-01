@@ -1,8 +1,8 @@
 import { LanguageModelFactory as LMF, Definition, ResourceProvider } from 'alpheios-data-models'
 import papaparse from 'papaparse'
 
-import BaseAdapter from '@/base-adapter'
-import DefaultConfig from '@/lexicons/config.json'
+import BaseAdapter from '@/adapters/base-adapter'
+import DefaultConfig from '@/adapters/lexicons/config.json'
 
 let cachedDefinitions = new Map()
 
@@ -15,19 +15,17 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   }
 
   async fetchShortDefs (homonym, options = {}) {
-    let res = await this.fetchDefinitions(homonym, options, 'short')
-    return res
+    await this.fetchDefinitions(homonym, options, 'short')
   }
 
   async fetchFullDefs (homonym, options = {}) {
-    let res = await this.fetchDefinitions(homonym, options, 'full')
-    return res
+    await this.fetchDefinitions(homonym, options, 'full')
   }
 
   async fetchDefinitions (homonym, options, lookupFunction) {
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
-      console.error('There are no allowed urls in the options')
+      this.addError(this.l10n.messages['LEXICONS_NO_ALLOWED_URL'])
       return
     }
     let languageID = homonym.lexemes[0].lemma.languageID
@@ -36,7 +34,10 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     for (let urlKey of urlKeys) {
       if (lookupFunction === 'short') {
         let url = this.config[urlKey].urls.short
-        await this.checkCachedData(url)
+        let res = await this.checkCachedData(url)
+        if (!res) {
+          continue
+        }
         await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
       }
       if (lookupFunction === 'full') {
@@ -52,11 +53,17 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
   async checkCachedData (url) {
     if (!cachedDefinitions.has(url)) {
-      let unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
-      let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-      let data = this.fillMap(parsed.data)
-      cachedDefinitions.set(url, data)
+      try {
+        let unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+        let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+        let data = this.fillMap(parsed.data)
+        cachedDefinitions.set(url, data)
+      } catch (error) {
+        this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+        return false
+      }
     }
+    return true
   }
 
   async updateShortDefs (languageID, data, homonym, config) {
@@ -67,9 +74,14 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
       if (deftexts) {
         for (let d of deftexts) {
-          let def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
-          let definition = await ResourceProvider.getProxy(this.provider, def)
-          lexeme.meaning['appendShortDefs'](definition)
+          try {
+            let def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
+            let definition = await ResourceProvider.getProxy(this.provider, def)
+            lexeme.meaning['appendShortDefs'](definition)
+          } catch (error) {
+            this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
+            continue
+          }
         }
       }
     }
@@ -80,7 +92,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     let urlFull = config.urls.full
 
     if (!urlFull) {
-      console.error(`URL data is not available`)
+      this.addError(this.l10n.messages['LEXICONS_NO_FULL_URL'])
       return
     }
 
@@ -101,9 +113,18 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   async updateFullDefs (fullDefsRequests, config) {
     for (let request of fullDefsRequests) {
       let fullDefData = await this.fetch(request.url, { type: 'xml' })
-      let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-      let definition = await ResourceProvider.getProxy(this.provider, def)
-      request.lexeme.meaning['appendFullDefs'](definition)
+      if (!fullDefData) {
+        this.addError(this.l10n.messages['LEXICONS_NO_DATA_FROM_URL'].get(request.url))
+        continue
+      }
+      try {
+        let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+        let definition = await ResourceProvider.getProxy(this.provider, def)
+        request.lexeme.meaning['appendFullDefs'](definition)
+      } catch (error) {
+        this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
+        continue
+      }
     }
   }
 

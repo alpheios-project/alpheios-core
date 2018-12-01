@@ -6,7 +6,7 @@ class AdapterError extends Error {
     this.methodName = methodName
 
     if (this.adapter && this.methodName) {
-      this.message = `${this.message} for ${this.adapter} - ${this.methodName}`
+      this.message = `${this.message} (${this.adapter}.${this.methodName})`
     }
     Error.captureStackTrace(this, AdapterError)
   }
@@ -15,7 +15,7 @@ class AdapterError extends Error {
     this.adapter = `${config.category}.${config.adapterName}`
     this.methodName = config.method
 
-    this.message = `${this.message} for ${this.adapter} - ${this.methodName}`
+    this.message = `${this.message} (${this.adapter}.${this.methodName})`
     return this
   }
 }

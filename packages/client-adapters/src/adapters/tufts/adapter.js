@@ -1,13 +1,10 @@
 import { LanguageModelFactory as LMF, Lexeme, Feature, Constants } from 'alpheios-data-models'
 
-import BaseAdapter from '@/base-adapter'
-import TransformAdapter from '@/tufts/transform-adapter'
+import BaseAdapter from '@/adapters/base-adapter'
+import TransformAdapter from '@/adapters/tufts/transform-adapter'
 
-import DefaultConfig from '@/tufts/config.json'
-import EnginesSet from '@/tufts/engines-set'
-import AdapterError from '@/errors/adapter-error'
-
-// import AdapterError from '@/errors/adapter-error'
+import DefaultConfig from '@/adapters/tufts/config.json'
+import EnginesSet from '@/adapters/tufts/engines-set'
 
 class AlpheiosTuftsAdapter extends BaseAdapter {
   constructor (config = {}) {
@@ -33,12 +30,13 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(languageID, word)
     if (!url) {
-      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `There is no engine for languageID - ${languageID.toString()}`)
+      this.addError(this.l10n.messages['MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE'].get(languageID.toString()))
+      return
     }
     try {
       let res = await this.fetch(url)
       if (res.constructor.name === 'AdapterError') {
-        return res.update(this.config)
+        return
       }
       if (res) {
         let transformAdapter = new TransformAdapter(this.engineSet, this.config)
@@ -46,7 +44,8 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         let homonym = transformAdapter.transformData(res, word)
 
         if (!homonym) {
-          return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `No homonym was get for word - ${word}, for languageID - ${languageID.toString()}`)
+          this.addError(this.l10n.messages['MORPH_TUFTS_NO_HOMONYM'].get(word, languageID.toString()))
+          return
         }
 
         if (homonym && homonym.lexemes) {
@@ -55,11 +54,10 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
 
         return homonym
       } else {
-        // No data found for this word
-        return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `Empty result for word - ${word}, for languageID - ${languageID.toString()}`)
+        return
       }
     } catch (error) {
-      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, error.mesage)
+      this.addError(this.l10n.messages['MORPH_TUFTS_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
 

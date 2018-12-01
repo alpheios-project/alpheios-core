@@ -1,8 +1,8 @@
-import Whitakers from '@/tufts/engine/whitakers'
-import Morpheusgrc from '@/tufts/engine/morpheusgrc'
-import Aramorph from '@/tufts/engine/aramorph'
-import Hazm from '@/tufts/engine/hazm'
-import Traces from '@/tufts/engine/traces'
+import Whitakers from '@/adapters/tufts/engine/whitakers'
+import Morpheusgrc from '@/adapters/tufts/engine/morpheusgrc'
+import Aramorph from '@/adapters/tufts/engine/aramorph'
+import Hazm from '@/adapters/tufts/engine/hazm'
+import Traces from '@/adapters/tufts/engine/traces'
 
 import { LanguageModelFactory as LMF } from 'alpheios-data-models'
 

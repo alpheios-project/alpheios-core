@@ -1,9 +1,8 @@
 import { LanguageModelFactory as LMF, LatinLanguageModel, GreekLanguageModel, ResourceProvider, Lexeme, Lemma, Feature, Inflection, Homonym } from 'alpheios-data-models'
-import BaseAdapter from '@/base-adapter'
+import BaseAdapter from '@/adapters/base-adapter'
 
-import DefaultConfig from '@/alpheiostb/config.json'
+import DefaultConfig from '@/adapters/alpheiostb/config.json'
 import xmlToJSON from 'xmltojson'
-import AdapterError from '@/errors/adapter-error'
 
 class AlpheiosTreebankAdapter extends BaseAdapter {
   constructor (config = {}) {
@@ -15,14 +14,15 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(word)
     if (!url) {
-      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `Url was not created for the word - ${word}`)
+      this.addError(this.l10n.messages['MORPH_TREEBANK_NO_URL'].get(word))
+      return
     }
     try {
       if (url) {
         let res = await this.fetch(url, { type: 'xml' })
 
         if (res.constructor.name === 'AdapterError') {
-          return res.update(this.config)
+          return
         }
 
         if (res) {
@@ -34,11 +34,11 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
           let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
           return homonym
         } else {
-          return new AdapterError(this.config.category, this.config.adapterName, this.config.method, `Empty result for word - ${word}`)
+          this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(word))
         }
       }
     } catch (error) {
-      return new AdapterError(this.config.category, this.config.adapterName, this.config.method, error.mesage)
+      this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
 
