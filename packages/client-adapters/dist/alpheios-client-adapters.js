@@ -13007,11 +13007,13 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
   }
 
   async fetchShortDefs (homonym, options = {}) {
-    await this.fetchDefinitions(homonym, options, 'short')
+    let res = await this.fetchDefinitions(homonym, options, 'short')
+    return res
   }
 
   async fetchFullDefs (homonym, options = {}) {
-    await this.fetchDefinitions(homonym, options, 'full')
+    let res = await this.fetchDefinitions(homonym, options, 'full')
+    return res
   }
 
   async fetchDefinitions (homonym, options, lookupFunction) {
@@ -13023,6 +13025,7 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
     let languageID = homonym.lexemes[0].lemma.languageID
     let urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
+    let defRes = false
     for (let urlKey of urlKeys) {
       if (lookupFunction === 'short') {
         let url = this.config[urlKey].urls.short
@@ -13030,17 +13033,21 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
         if (!res) {
           continue
         }
-        await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
+        res = await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
+
+        defRes = defRes || res
       }
       if (lookupFunction === 'full') {
         let url = this.config[urlKey].urls.index
         await this.checkCachedData(url)
         let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
         if (fullDefsRequests) {
-          await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+          let res = await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+          defRes = defRes || res
         }
       }
     }
+    return defRes
   }
 
   async checkCachedData (url) {
@@ -13396,7 +13403,6 @@ class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODU
 
         return homonym
       } else {
-        // No data found for this word
         return
       }
     } catch (error) {
@@ -14362,12 +14368,12 @@ class ClientAdapters {
     })
 
     if (options.method === 'fetchShortDefs') {
-      await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
-      return { errors: localLexiconsAdapter.errors }
+      let res = await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
+      return { result: res, errors: localLexiconsAdapter.errors }
     }
     if (options.method === 'fetchFullDefs') {
-      await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
-      return { errors: localLexiconsAdapter.errors }
+      let res = await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
+      return { result: res, errors: localLexiconsAdapter.errors }
     }
     return null
   }

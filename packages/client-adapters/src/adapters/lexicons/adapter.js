@@ -15,11 +15,13 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   }
 
   async fetchShortDefs (homonym, options = {}) {
-    await this.fetchDefinitions(homonym, options, 'short')
+    let res = await this.fetchDefinitions(homonym, options, 'short')
+    return res
   }
 
   async fetchFullDefs (homonym, options = {}) {
-    await this.fetchDefinitions(homonym, options, 'full')
+    let res = await this.fetchDefinitions(homonym, options, 'full')
+    return res
   }
 
   async fetchDefinitions (homonym, options, lookupFunction) {
@@ -31,6 +33,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     let languageID = homonym.lexemes[0].lemma.languageID
     let urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
+    let defRes = false
     for (let urlKey of urlKeys) {
       if (lookupFunction === 'short') {
         let url = this.config[urlKey].urls.short
@@ -38,17 +41,21 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         if (!res) {
           continue
         }
-        await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
+        res = await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
+
+        defRes = defRes || res
       }
       if (lookupFunction === 'full') {
         let url = this.config[urlKey].urls.index
         await this.checkCachedData(url)
         let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
         if (fullDefsRequests) {
-          await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+          let res = await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
+          defRes = defRes || res
         }
       }
     }
+    return defRes
   }
 
   async checkCachedData (url) {
