@@ -14232,7 +14232,8 @@ class ClientAdapters {
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
-            methods: adapterData.methods
+            methods: adapterData.methods,
+            params: adapterData.params
           }
         }
         cachedConfig.set(category, adapters)
