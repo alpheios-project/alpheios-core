@@ -14228,8 +14228,6 @@ let cachedConfig = new Map()
 let cachedAdaptersList = new Map()
 
 class ClientAdapters {
-  static get defaultSync () { return true }
-
   static init () {
     if (cachedConfig.size === 0) {
       for (let category in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6__) {
@@ -14309,8 +14307,7 @@ class ClientAdapters {
     let localMaAdapter = new _adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]({
       category: 'morphology',
       adapterName: 'tufts',
-      method: options.method,
-      sync: options.sync || ClientAdapters.defaultSync
+      method: options.method
     })
 
     if (options.method === 'getHomonym') {
