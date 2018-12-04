@@ -13,6 +13,11 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
 
   async getTranslationsList (homonym, browserLang) {
     let lemmaList = []
+    if (!homonym || !homonym.lexemes) {
+      this.addError(this.l10n.messages['TRANSLATION_INCORRECT_LEXEMES'])
+      return
+    }
+
     for (let lexeme of homonym.lexemes) {
       lemmaList.push(lexeme.lemma)
     }

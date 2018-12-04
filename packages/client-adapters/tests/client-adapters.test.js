@@ -157,4 +157,94 @@ describe('client-adapters.test.js', () => {
     expect(res.errors.length).toBeGreaterThan(0)
     expect(res.result).toBeUndefined()
   })
+
+  it('12 ClientAdapters - lemmaTranslations returns empty errors if adapter returns correct data', async () => {
+    ClientAdapters.init()
+
+    let reHomonym = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        word: 'cepit'
+      }
+    })
+
+    let res = await ClientAdapters.lemmaTranslations({
+      method: 'fetchTranslations',
+      params: {
+        homonym: reHomonym.result,
+        browserLang: 'spa'
+      }
+    })
+
+    expect(res.errors).toEqual([])
+  })
+
+  it('13 ClientAdapters - lemmaTranslations returns errors if adapter doesn\'t return correct data', async () => {
+    ClientAdapters.init()
+
+    let reHomonym = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        word: 'foo'
+      }
+    })
+
+    let res = await ClientAdapters.lemmaTranslations({
+      method: 'fetchTranslations',
+      params: {
+        homonym: reHomonym.result,
+        browserLang: 'spa'
+      }
+    })
+
+    expect(res.errors.length).toBeGreaterThan(0)
+  })
+
+  it('14 ClientAdapters - lexicons returns empty errors if adapter returns correct data', async () => {
+    ClientAdapters.init()
+
+    let reHomonym = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        word: 'cepit'
+      }
+    })
+
+    let res = await ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: reHomonym.result,
+        opts: {
+          allow: ['"https://github.com/alpheios-project/ls"']
+        }
+      }
+    })
+
+    expect(res.errors).toEqual([])
+  })
+
+  it('15 ClientAdapters - lexicons returns errors if adapter doesn\'t return correct data', async () => {
+    ClientAdapters.init()
+
+    let reHomonym = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        word: 'cepit'
+      }
+    })
+
+    let res = await ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: reHomonym.result,
+        opts: {}
+      }
+    })
+
+    expect(res.errors.length).toBeGreaterThan(0)
+  })
 })

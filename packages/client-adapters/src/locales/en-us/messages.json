@@ -87,6 +87,11 @@
     "component": "lemmatranslation.alpheios",
     "params": ["message"]
   },
+  "TRANSLATION_INCORRECT_LEXEMES": {
+    "message": "There is no correct homonym in input",
+    "description": "Error message for lemmatranslation.alpheios adapter - no lexemes",
+    "component": "lemmatranslation.alpheios"
+  },
   "LEXICONS_NO_ALLOWED_URL": {
     "message": "There are no allowed urls in the options",
     "description": "Error message for lexicon.alpheios adapter - no urls were found in options",
