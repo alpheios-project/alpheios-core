@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import ClientAdapters from '@/client-adapters.js'
-import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
 
 import { Constants, Homonym } from 'alpheios-data-models'
 
