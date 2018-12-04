@@ -1,2 +1,2 @@
-dist/*    -diff -merge
-dist/*    linguist-generated=true
+dist/*.js    -diff -merge
+dist/*.js    linguist-generated=true
