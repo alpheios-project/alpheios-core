@@ -14223,6 +14223,8 @@ let cachedConfig = new Map()
 let cachedAdaptersList = new Map()
 
 class ClientAdapters {
+  static get defaultSync () { return true }
+
   static init () {
     if (cachedConfig.size === 0) {
       for (let category in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6__) {
@@ -14268,7 +14270,11 @@ class ClientAdapters {
   }
 
   static checkMethod (category, adapterName, methodName) {
+    console.info('*************************maAdapter checkMethod1', category, adapterName, methodName)
+    console.info('*************************maAdapter checkMethod2', cachedConfig.get(category)[adapterName].methods, cachedConfig.get(category)[adapterName])
+    console.info('*************************maAdapter checkMethod3', !cachedConfig.get(category)[adapterName].methods.includes(methodName))
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
+      console.info('*************************maAdapter inside')
       throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](category, adapterName, methodName)
     }
   }
@@ -14302,7 +14308,8 @@ class ClientAdapters {
     let localMaAdapter = new _adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]({
       category: 'morphology',
       adapterName: 'tufts',
-      method: options.method
+      method: options.method,
+      sync: options.sync || ClientAdapters.defaultSync
     })
 
     if (options.method === 'getHomonym') {

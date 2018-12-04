@@ -12,6 +12,8 @@ let cachedConfig = new Map()
 let cachedAdaptersList = new Map()
 
 class ClientAdapters {
+  static get defaultSync () { return true }
+
   static init () {
     if (cachedConfig.size === 0) {
       for (let category in AdaptersConfig) {
@@ -91,7 +93,8 @@ class ClientAdapters {
     let localMaAdapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: options.method
+      method: options.method,
+      sync: options.sync || ClientAdapters.defaultSync
     })
 
     if (options.method === 'getHomonym') {

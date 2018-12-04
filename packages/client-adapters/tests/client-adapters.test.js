@@ -1,10 +1,10 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-
+import 'whatwg-fetch'
 import ClientAdapters from '@/client-adapters.js'
 import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants, Homonym } from 'alpheios-data-models'
 
 describe('client-adapters.test.js', () => {
   console.error = function () {}
@@ -87,14 +87,74 @@ describe('client-adapters.test.js', () => {
     expect(ClientAdapters.checkMethod).toHaveBeenCalledWith('morphology', 'tufts', 'getHomonym')
     expect(ClientAdapters.checkParam).toHaveBeenCalledWith({ word: 'cepit', languageID: Constants.LANG_LATIN }, 'morphology', 'tufts', 'getHomonym')
   })
-/*
-  it('7 ClientAdapters - maAdapter executes checkMethodParam and doen\'t create AlpheiosTuftsAdapter', () => {
-    const spy = jest.fn()
-    function Mock (...args) {
-      spy(...args)
-      Constructor.apply(this, args)
-    }
-    Mock.prototype = Constructor.prototype
+
+  it('7 ClientAdapters - maAdapter executes checkMethodParam and returns null if some problems', async () => {
+    ClientAdapters.init()
+    ClientAdapters.checkMethodParam = jest.fn()
+    let res = await ClientAdapters.maAdapter({
+      method: 'getHomonymTest'
+    })
+    expect(ClientAdapters.checkMethodParam).toHaveBeenCalled()
+    expect(res).toBeNull()
   })
-*/
+
+  it('8 ClientAdapters - maAdapter returns homonym and empty errors if adapter returns correct data', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        word: 'cepit'
+      }
+    })
+
+    expect(res.errors).toEqual([])
+    expect(res.result).toBeInstanceOf(Homonym)
+  })
+
+  it('9 ClientAdapters - maAdapter returns empty homonym and errors if adapter doesn\'t return correct data', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        word: 'foo'
+      }
+    })
+
+    expect(res.errors.length).toBeGreaterThan(0)
+    expect(res.result).toBeUndefined()
+  })
+
+  it('10 ClientAdapters - tbAdapter returns homonym and empty errors if adapter returns correct data', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tbAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        wordref: 'phi0959.phi006.alpheios-text-lat1#1-2'
+      }
+    })
+
+    expect(res.errors).toEqual([])
+    expect(res.result).toBeInstanceOf(Homonym)
+  })
+
+  it('11 ClientAdapters - tbAdapter returns empty homonym and errors if adapter doesn\'t return correct data', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tbAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        wordref: 'foo'
+      }
+    })
+
+    expect(res.errors.length).toBeGreaterThan(0)
+    expect(res.result).toBeUndefined()
+  })
 })
