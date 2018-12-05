@@ -8621,6 +8621,7 @@ class AlpheiosLemmaTranslationsAdapter extends _adapters_base_adapter__WEBPACK_I
     let outLang = this.config.langMap[browserLang] || this.config.defaultLang
 
     let input = this.prepareInput(lemmaList)
+
     if (!input) {
       this.addError(this.l10n.messages['TRANSLATION_INPUT_PREPARE_ERROR'].get(input.toString()))
       return
