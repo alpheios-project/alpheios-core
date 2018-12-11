@@ -413,7 +413,7 @@ describe('sync-async.test.js', () => {
       }
     })
 
-    resT3.then((value) => {
+    resT4.then((value) => {
       let newDate1 = new Date()
       console.info('**************************value4', timeNow.bind(newDate1)(), res4.result.targetWord, res4.result.lexemes[0].lemma.translation)
     })
@@ -421,4 +421,392 @@ describe('sync-async.test.js', () => {
     let res = await timeout(3000)
     return res
   }, 50000)
+
+  it.skip('6 ClientAdapters - lexicons sync getting data fetchShortDefs', async () => {
+    ClientAdapters.init()
+    let res1 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ἐμαυτοῦ'
+      }
+    })
+
+    let res2 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ταύταις'
+      }
+    })
+
+    let res3 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'πλατύς'
+      }
+    })
+
+    let res4 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'μύες'
+      }
+    })
+
+    let newDate = new Date()
+    console.info('*******************************SYNC fetchShortDefs*******************', timeNow.bind(newDate)())
+
+    await ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res1.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate1 = new Date()
+    console.info('**************************resT1 result', timeNow.bind(newDate1)(), res1.result.targetWord, res1.result.lexemes[0].meaning.shortDefs)
+
+    await ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res2.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate2 = new Date()
+    console.info('**************************resT2 result', timeNow.bind(newDate2)(), res2.result.targetWord, res2.result.lexemes[0].meaning.shortDefs)
+
+    await ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res3.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate3 = new Date()
+    console.info('**************************resT3 result', timeNow.bind(newDate3)(), res3.result.targetWord, res3.result.lexemes[0].meaning.shortDefs)
+
+    await ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res4.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate4 = new Date()
+    console.info('**************************resT4 result', timeNow.bind(newDate4)(), res4.result.targetWord, res4.result.lexemes[0].meaning.shortDefs)
+
+    let res = await timeout(3000)
+    return res
+  }, 50000)
+
+  it.skip('7 ClientAdapters - lexicons async getting data fetchShortDefs', async () => {
+    ClientAdapters.init()
+    let res1 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ἐμαυτοῦ'
+      }
+    })
+
+    let res2 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ταύταις'
+      }
+    })
+
+    let res3 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'πλατύς'
+      }
+    })
+
+    let res4 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'μύες'
+      }
+    })
+
+    let newDate = new Date()
+    console.info('*******************************ASYNC fetchShortDefs*******************', timeNow.bind(newDate)())
+
+    let resT1 = ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res1.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj', 'https://github.com/alpheios-project/aut']
+        }
+      }
+    })
+
+    resT1.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value1', timeNow.bind(newDate1)(), res1.result.targetWord, res1.result.lexemes[0].meaning.shortDefs)
+    })
+
+    let resT2 = ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res2.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj', 'https://github.com/alpheios-project/aut']
+        }
+      }
+    })
+
+    resT2.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value2', timeNow.bind(newDate1)(), res2.result.targetWord, res2.result.lexemes[0].meaning.shortDefs)
+    })
+
+    let resT3 = ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res3.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj', 'https://github.com/alpheios-project/aut']
+        }
+      }
+    })
+
+    resT3.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value3', timeNow.bind(newDate1)(), res3.result.targetWord, res3.result.lexemes[0].meaning.shortDefs)
+    })
+
+    let resT4 = ClientAdapters.lexicons({
+      method: 'fetchShortDefs',
+      params: {
+        homonym: res4.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj', 'https://github.com/alpheios-project/aut']
+        }
+      }
+    })
+
+    resT4.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value4', timeNow.bind(newDate1)(), res4.result.targetWord, res4.result.lexemes[0].meaning.shortDefs)
+    })
+
+    let res = await timeout(50000)
+    return res
+  }, 60000)
+
+  it.skip('8 ClientAdapters - lexicons sync getting data - fetchFullDefs', async () => {
+    ClientAdapters.init()
+    let res1 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ἐμαυτοῦ'
+      }
+    })
+
+    let res2 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ταύταις'
+      }
+    })
+
+    let res3 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'πλατύς'
+      }
+    })
+
+    let res4 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'μύες'
+      }
+    })
+
+    let newDate = new Date()
+    console.info('*******************************SYNC fetchFullDefs*******************', timeNow.bind(newDate)())
+
+    await ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res1.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate1 = new Date()
+    console.info('**************************resT1 result', timeNow.bind(newDate1)(), res1.result.targetWord, res1.result.lexemes[0].meaning.fullDefs[0].text.length)
+
+    await ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res2.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate2 = new Date()
+    console.info('**************************resT2 result', timeNow.bind(newDate2)(), res2.result.targetWord, res2.result.lexemes[0].meaning.fullDefs[0].text.length)
+
+    await ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res3.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate3 = new Date()
+    console.info('**************************resT3 result', timeNow.bind(newDate3)(), res3.result.targetWord, res3.result.lexemes[0].meaning.fullDefs[0].text.length)
+
+    await ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res4.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    let newDate4 = new Date()
+    console.info('**************************resT4 result', timeNow.bind(newDate4)(), res4.result.targetWord, res4.result.lexemes[0].meaning.fullDefs[0].text.length)
+
+    let res = await timeout(3000)
+    return res
+  }, 50000)
+
+  it.skip('9 ClientAdapters - lexicons sync getting data - fetchFullDefs', async () => {
+    ClientAdapters.init()
+    let res1 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ἐμαυτοῦ'
+      }
+    })
+
+    let res2 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'ταύταις'
+      }
+    })
+
+    let res3 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'πλατύς'
+      }
+    })
+
+    let res4 = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'μύες'
+      }
+    })
+
+    let newDate = new Date()
+    console.info('*******************************ASYNC fetchFullDefs*******************', timeNow.bind(newDate)())
+
+    let resT1 = ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res1.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    resT1.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value1', timeNow.bind(newDate1)(), res1.result.targetWord, res1.result.lexemes[0].meaning.fullDefs[0].text.length)
+    })
+
+    let resT2 = ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res2.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    resT2.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value2', timeNow.bind(newDate1)(), res2.result.targetWord, res2.result.lexemes[0].meaning.fullDefs[0].text.length)
+    })
+
+    let resT3 = ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res3.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    resT3.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value3', timeNow.bind(newDate1)(), res3.result.targetWord, res3.result.lexemes[0].meaning.fullDefs[0].text.length)
+    })
+
+    let resT4 = ClientAdapters.lexicons({
+      method: 'fetchFullDefs',
+      params: {
+        homonym: res4.result,
+        opts: {
+          allow: ['https://github.com/alpheios-project/lsj']
+        }
+      }
+    })
+
+    resT4.then((value) => {
+      let newDate1 = new Date()
+      console.info('**************************value4', timeNow.bind(newDate1)(), res4.result.targetWord, res4.result.lexemes[0].meaning.fullDefs[0].text.length)
+    })
+
+    let res = await timeout(50000)
+    return res
+  }, 60000)
 })

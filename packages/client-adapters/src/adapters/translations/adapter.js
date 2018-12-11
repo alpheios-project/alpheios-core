@@ -4,13 +4,21 @@ import { ResourceProvider, Translation, LanguageModelFactory as LMF } from 'alph
 import BaseAdapter from '@/adapters/base-adapter'
 
 class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
+  /**
+   * Adapter uploads config data, creates provider and inits mapLangUri (Object for storing data for available languages)
+   * @param {Object} config - properties with higher priority
+  */
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, DefaultConfig)
     this.mapLangUri = {}
     this.provider = new ResourceProvider(this.config.url, this.config.rights)
   }
-
+  /**
+   * This method updates homonym with retrieved translations, if an error occurs it will be added to errors property of an adapter
+   * @param {Homonym} homonym
+   * @param {String} browserLang - language of the translation (for example its, spa)
+  */
   async getTranslationsList (homonym, browserLang) {
     let lemmaList = []
     if (!homonym || !homonym.lexemes) {
@@ -34,7 +42,6 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
 
     try {
       let urlLang = await this.getAvailableResLang(inLang, outLang)
-
       if (urlLang && urlLang.constructor.name === 'AdapterError') {
         return
       }
@@ -43,7 +50,6 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
         try {
           let url = urlLang + '?input=' + input
           let translationsList = await this.fetch(url)
-
           if (translationsList && translationsList.constructor.name === 'AdapterError') {
             return
           }
@@ -59,19 +65,19 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
       this.addError(this.l10n.messages['TRANSLATION_UNKNOWN_ERROR'].get(error.message))
     }
   }
-
+  /**
+   * This method creates a string with unique lemma's words form lemmas list
+   * @param {[Lemma]} lemmaList
+  */
   prepareInput (lemmaList) {
-    let input = ''
-
-    for (let lemma of lemmaList) {
-      input += lemma.word + ','
-    }
-    if (input.length > 0) {
-      input = input.substr(0, input.length - 1)
-    }
-    return input.length > 0 ? input : undefined
+    let inputList = lemmaList.map(lemma => lemma.word).filter((item, index, self) => self.indexOf(item) === index)
+    return inputList.length > 0 ? inputList.join(',') : undefined
   }
-
+  /**
+   * This method fetches an url for translation
+   * @param {String} inLang  - translate from language  (for example, lat)
+   * @param {String} outLang  - translate to language  (for example, es, it)
+  */
   async getAvailableResLang (inLang, outLang) {
     if (this.mapLangUri[inLang] === undefined) {
       let urlAvaLangsRes = this.config.url + '/' + inLang + '/'

@@ -34,6 +34,22 @@
     "component": "morphology.tufts",
     "params": ["message"]
   },
+  "MORPH_TRANSFORM_NO_LANGUAGE": {
+    "message": "No Language was defined from json object",
+    "description": "Error message for morph.tufts adapter - transform problem",
+    "component": "morphology.tufts"
+  },
+  "MORPH_TRANSFORM_NO_LEMMA": {
+    "message": "No Lemma was defined from json object",
+    "description": "Error message for morph.tufts adapter - transform problem",
+    "component": "morphology.tufts"
+  },
+  "MORPH_TRANSFORM_NO_MAPPING_DATA": {
+    "message": "No mapping data found for {language}",
+    "description": "Error message for morph.tufts adapter - transform problem",
+    "component": "morphology.tufts",
+    "params": ["language"]
+  },
   "BASIC_ADAPTER_NO_DATA_FROM_URL": {
     "message": "Unable to get data from url - {url}",
     "description": "Error message for basic adapter - when no data was returned from the url",

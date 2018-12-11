@@ -8085,16 +8085,28 @@ var _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*
 
 
 class AlpheiosTreebankAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
+  /**
+   * Treebank adapter uploads config data and fills model property
+   * @param {Object} config - properties with higher priority
+  */
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__)
     this.models = { 'lat': alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LatinLanguageModel"], 'grc': alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["GreekLanguageModel"] }
   }
 
-  async getHomonym (languageID, word) {
-    let url = this.prepareRequestUrl(word)
+  /**
+   * This method gets data from adapter's engine. All errors are added to adapter.errors
+   * @param {Symbol} languageID - languageID for getting homonym
+   * @param {String} wordref - a word reference for getting homonym from Treebank
+   * Returned values:
+   *      - {Homonym} - if successed
+   *      - {undefined} - if failed
+  */
+  async getHomonym (languageID, wordref) {
+    let url = this.prepareRequestUrl(wordref)
     if (!url) {
-      this.addError(this.l10n.messages['MORPH_TREEBANK_NO_URL'].get(word))
+      this.addError(this.l10n.messages['MORPH_TREEBANK_NO_URL'].get(wordref))
       return
     }
     try {
@@ -8114,7 +8126,7 @@ class AlpheiosTreebankAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
           let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
           return homonym
         } else {
-          this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(word))
+          this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(wordref))
         }
       }
     } catch (error) {
@@ -8122,8 +8134,13 @@ class AlpheiosTreebankAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
     }
   }
 
-  prepareRequestUrl (word) {
-    let [text, fragment] = word.split(/#/)
+  /**
+   * This method creates url with url from config and chosen engine
+   * @param {String} wordref - a word reference for getting homonym
+   * @return {String} - constructed url for getting data from Treebank
+  */
+  prepareRequestUrl (wordref) {
+    let [text, fragment] = wordref.split(/#/)
     let url
 
     if (this.config.texts.includes(text)) {
@@ -8133,6 +8150,12 @@ class AlpheiosTreebankAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
     return url
   }
 
+  /**
+   * This method transform data from adapter to Homonym
+   * @param {Object} jsonObj - data from adapter
+   * @param {String} targetWord - word
+   * @return {Homonym}
+  */
   transform (jsonObj, targetWord) {
     'use strict'
     let providerUri = this.config.providerUri
@@ -8213,6 +8236,9 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__P
 
 
 class BaseAdapter {
+  /**
+   * Every adapter has errors array and L10n property for localizing messages
+  */
   constructor () {
     this.errors = []
     this.l10n = new _l10n_l10n__WEBPACK_IMPORTED_MODULE_2__["default"]()
@@ -8221,11 +8247,21 @@ class BaseAdapter {
       .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
   }
 
+  /**
+   * This method is used for adding error meassage with additional data
+   * @param {String} message  - message text for the error
+  */
   addError (message) {
     let error = new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](this.config.category, this.config.adapterName, this.config.method, message)
     this.errors.push(error)
   }
 
+  /**
+   * This method is used for uploding config property from current properties and default properties
+   * @param {Object} config - properties with higher priority
+   * @param {Object} defaultConfig - default properties
+   * @return {Object} - configuration data
+  */
   uploadConfig (config, defaultConfig) {
     let configRes = {}
     Object.keys(config).forEach(configKey => {
@@ -8241,10 +8277,23 @@ class BaseAdapter {
     return configRes
   }
 
+  /**
+   * This method is used for creating timeout Promise
+   * @param {Number} ms - amount of ms for creation timeout
+   * @return {Promise}
+  */
   timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
+  /**
+   * This method is used for fetching data using window.fetch
+   * @param {String} url - url for fetching data
+   * @param {Object} options
+   *     @param {String} options.type - json is default, also it could be xml. This property defines output format.
+   *                                    xml - response.text(), otherwise - response.json()
+   * @return {Object|String}
+  */
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
@@ -8266,6 +8315,15 @@ class BaseAdapter {
     }
   }
 
+  /**
+   * This method is used for fetching data using window.fetch with timeout reject
+   * @param {String} url - url for fetching data
+   * @param {Object} options
+   *     @param {String} options.type - json is default, also it could be xml. This property defines output format.
+   *                                    xml - response.text(), otherwise - response.json()
+   *     @param {Number} options.timeout - timeout ms amount
+   * @return {Promise}
+  */
   fetchWindowTimeout (url, options) {
     if (url) {
       let didTimeOut = false
@@ -8279,52 +8337,79 @@ class BaseAdapter {
           .then((response) => {
             clearTimeout(timeout)
             if (!didTimeOut) {
-              console.log('fetch good! ', response)
-              resolve(response)
+              if (options.type === 'xml') {
+                resolve(response.text())
+              } else {
+                resolve(response.json())
+              }
             }
           })
           .catch((err) => {
-            console.log('fetch failed! ', err)
-            // Rejection already happened with setTimeout
+            this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
             if (didTimeOut) return
-            // Reject with error
             reject(err)
           })
       })
+    } else {
+      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
     }
   }
 
+  /**
+   * This method is used for fetching data using axios
+   * @param {String} url - url for fetching data
+   * @param {Object} options
+   *     @param {Number} options.timeout - timeout ms amount
+   * @return {Object|String}
+  */
   async fetchAxios (url, options) {
-    try {
-      let res
-      if (options && options.timeout > 0) {
-        res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(url), { timeout: options.timeout })
-      } else {
-        res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(url))
+    if (url) {
+      try {
+        let res
+        if (options && options.timeout > 0) {
+          res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(url), { timeout: options.timeout })
+        } else {
+          res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(url))
+        }
+        return res.data
+      } catch (error) {
+        this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
       }
-      return res.data
-    } catch (error) {
-      this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
+    } else {
+      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
     }
   }
 
+  /**
+   * This method is used for fetching data using different methods. If window is defined - than it would be used window.fetch.
+   * Otherwise axios would be used.
+   * @param {String} url - url for fetching data
+   * @param {Object} options
+   *     @param {String} options.type - json is default, also it could be xml. This property defines output format.
+   *                                    xml - response.text(), otherwise - response.json()
+   *     @param {Number} options.timeout - timeout ms amount
+   * @return {Object|String}
+  */
   async fetch (url, options) {
     let res
-
-    try {
-      if (typeof window !== 'undefined') {
-        if (options && options.timeout > 0) {
-          res = await this.fetchWindowTimeout(url, options)
+    if (url) {
+      try {
+        if (typeof window !== 'undefined') {
+          if (options && options.timeout > 0) {
+            res = await this.fetchWindowTimeout(url, options)
+          } else {
+            res = await this.fetchWindow(url, options)
+          }
         } else {
-          res = await this.fetchWindow(url, options)
+          res = await this.fetchAxios(url, options)
         }
-      } else {
-        res = await this.fetchAxios(url, options)
-      }
 
-      return res
-    } catch (error) {
-      this.addError(this.l10n.messages['BASIC_ADAPTER_UNKNOWN_ERROR'].get(error.message))
+        return res
+      } catch (error) {
+        this.addError(this.l10n.messages['BASIC_ADAPTER_UNKNOWN_ERROR'].get(error.message))
+      }
+    } else {
+      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
     }
   }
 }
@@ -8359,23 +8444,121 @@ var _adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#_
 let cachedDefinitions = new Map()
 
 class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
+  /**
+  * Lexicons adapter uploads config data, defines default options and inits data
+  * @param {Object} config - properties with higher priority
+  */
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, _adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
-    this.data = null
   }
 
+  /**
+  * This method retrieves short definitions for given homonym
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  * @param {Object} options - options
+  */
   async fetchShortDefs (homonym, options = {}) {
-    let res = await this.fetchDefinitions(homonym, options, 'short')
-    return res
+    await this.fetchDefinitions(homonym, options, 'short')
   }
 
+  /**
+  * This method retrieves full definitions for given homonym
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  * @param {Object} options - options
+  */
   async fetchFullDefs (homonym, options = {}) {
-    let res = await this.fetchDefinitions(homonym, options, 'full')
-    return res
+    await this.fetchDefinitions(homonym, options, 'full')
   }
 
+  /**
+  * This method creates Promise for getting short definitions, for being able to parallel requests
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  * @param {String} urlKey - urlIndex for geting data from config
+  */
+  prepareShortDefPromise (homonym, urlKey) {
+    let url = this.config[urlKey].urls.short
+    let requestType = 'shortDefs'
+
+    let resCheckCached = this.checkCachedData(url)
+    return resCheckCached.then(
+      async (result) => {
+        if (result) {
+          await this.updateShortDefs(cachedDefinitions.get(url), homonym, this.config[urlKey])
+          this.prepareSuccessCallback(requestType, homonym)
+        }
+      },
+      error => {
+        this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+        this.prepareFailedCallback(requestType, homonym)
+      }
+    )
+  }
+
+  /**
+  * This method creates Promise for getting full definitions, for being able to parallel requests
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  * @param {String} urlKey - urlIndex for geting data from config
+  */
+  prepareFullDefPromise (homonym, urlKey) {
+    let url = this.config[urlKey].urls.full
+    let requestType = 'fullDefs'
+
+    let resCheckCached = this.checkCachedData(url)
+    return resCheckCached.then(
+      async (result) => {
+        if (result) {
+          let fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
+          let resFullDefs = this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+          resFullDefs.catch(error => {
+            this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+            this.prepareFailedCallback(requestType, homonym)
+          })
+        }
+      },
+      error => {
+        this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+        this.prepareFailedCallback(requestType, homonym)
+      }
+    )
+  }
+
+  /**
+  * This method checks if there is a callBackEvtSuccess defined and publish it if exists
+  * @param {String} requestType - name of the request - shortDef and fullDef
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  */
+  prepareSuccessCallback (requestType, homonym) {
+    if (this.config.callBackEvtSuccess) {
+      this.config.callBackEvtSuccess.pub({
+        requestType: requestType,
+        homonym: homonym
+      })
+    }
+  }
+
+  /**
+  * This method checks if there is a callBackEvtFailed defined and publish it if exists
+  * @param {String} requestType - name of the request - shortDef and fullDef
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  */
+  prepareFailedCallback (requestType, homonym) {
+    if (this.config.callBackEvtFailed) {
+      this.config.callBackEvtFailed.pub({
+        requestType: requestType,
+        homonym: homonym
+      })
+    }
+  }
+
+  /**
+  * This is a generic method that retrieves definitions for homonym
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  * @param {Object} options - options
+  * @param {Object} lookupFunction - type of definitions - short, full
+  * @return {Boolean} - result of fetching
+  */
   async fetchDefinitions (homonym, options, lookupFunction) {
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
@@ -8385,31 +8568,21 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
     let languageID = homonym.lexemes[0].lemma.languageID
     let urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
-    let defRes = false
     for (let urlKey of urlKeys) {
       if (lookupFunction === 'short') {
-        let url = this.config[urlKey].urls.short
-        let res = await this.checkCachedData(url)
-        if (!res) {
-          continue
-        }
-        res = await this.updateShortDefs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
-
-        defRes = defRes || res
+        this.prepareShortDefPromise(homonym, urlKey, lookupFunction)
       }
       if (lookupFunction === 'full') {
-        let url = this.config[urlKey].urls.index
-        await this.checkCachedData(url)
-        let fullDefsRequests = this.collectFullDefURLs(languageID, cachedDefinitions.get(url), homonym, this.config[urlKey])
-        if (fullDefsRequests) {
-          let res = await this.updateFullDefs(fullDefsRequests, this.config[urlKey])
-          defRes = defRes || res
-        }
+        this.prepareFullDefPromise(homonym, urlKey, lookupFunction)
       }
     }
-    return defRes
   }
 
+  /**
+  * This method checks if data from url is already cached and if not - it uploads data from url to cache
+  * @param {String} url - url from what we need to cache data
+  * @return {Boolean} - true - if cached is successed
+  */
   async checkCachedData (url) {
     if (!cachedDefinitions.has(url)) {
       try {
@@ -8425,9 +8598,15 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
     return true
   }
 
-  async updateShortDefs (languageID, data, homonym, config) {
+  /**
+  * This method searches for definitions in cached text, creates definitions and updates lexemes
+  * @param {Map} data - cached data from definition's url
+  * @param {Homonym} homonym - homonym we search definitions for
+  * @param {Object} config - config data for url
+  */
+  async updateShortDefs (data, homonym, config) {
+    let languageID = homonym.lexemes[0].lemma.languageID
     let model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID)
-    let finalRes = false
 
     for (let lexeme of homonym.lexemes) {
       let deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
@@ -8438,19 +8617,28 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
             let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](d, config.langs.target, 'text/plain', lexeme.lemma.word)
             let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
             lexeme.meaning['appendShortDefs'](definition)
-            finalRes = true
           } catch (error) {
             this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
             continue
           }
         }
+      } else {
+        let url = config.urls.short
+        this.addError(this.l10n.messages['LEXICONS_NO_DATA_FROM_URL'].get(url))
+        this.prepareFailedCallback('shortDefs', homonym)
       }
     }
-
-    return finalRes
   }
 
-  collectFullDefURLs (languageID, data, homonym, config) {
+  /**
+  * This method creates requests to full definitions url for each lexeme and given config
+  * @param {Map} data - cached data from definition's index url
+  * @param {Homonym} homonym - homonym we search definitions for
+  * @param {Object} config - config data for url
+  * @return {[String]} - array of urls for retrieving data
+  */
+  collectFullDefURLs (data, homonym, config) {
+    let languageID = homonym.lexemes[0].lemma.languageID
     let model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(languageID)
     let urlFull = config.urls.full
 
@@ -8473,32 +8661,37 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
     return requests
   }
 
-  async updateFullDefs (fullDefsRequests, config) {
-    let finalRes = false
-
+  /**
+  * This method fetches data from request and update homonym with full definition - it is made as Promises with calback to make it parallel
+  * @param {[String]} fullDefsRequests - array of full definitions url
+  * @param {Object} config - config data for url
+  * @param {Homonym} homonym - homonym we search definitions for
+  */
+  async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) {
-      let fullDefData = await this.fetch(request.url, { type: 'xml' })
-      if (!fullDefData) {
-        this.addError(this.l10n.messages['LEXICONS_NO_DATA_FROM_URL'].get(request.url))
-        continue
-      }
-      try {
-        let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-        let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
-        request.lexeme.meaning['appendFullDefs'](definition)
-        finalRes = true
-      } catch (error) {
-        this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
-        continue
-      }
-    }
+      let fullDefDataRes = this.fetch(request.url, { type: 'xml' })
 
-    return finalRes
+      fullDefDataRes.then(
+        async (fullDefData) => {
+          let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+          let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
+          request.lexeme.meaning['appendFullDefs'](definition)
+          this.prepareSuccessCallback('fullDefs', homonym)
+        },
+        error => {
+          this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
+        }
+      )
+    }
   }
 
+  /*
+  * This method retrieves urls from config for given languageCode
+  * @param {Symbol} languageID
+  */
   getRequests (languageID) {
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-    return Object.keys(this.config).filter(url => this.config[url].langs && this.config[url].langs.source === languageCode)
+    return Object.keys(this.config).filter(url => this.config[url] && this.config[url].langs && this.config[url].langs.source === languageCode)
   }
 
   /**
@@ -8599,13 +8792,21 @@ var _adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = 
 
 
 class AlpheiosLemmaTranslationsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
+  /**
+   * Adapter uploads config data, creates provider and inits mapLangUri (Object for storing data for available languages)
+   * @param {Object} config - properties with higher priority
+  */
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, _adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0__)
     this.mapLangUri = {}
     this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ResourceProvider"](this.config.url, this.config.rights)
   }
-
+  /**
+   * This method updates homonym with retrieved translations, if an error occurs it will be added to errors property of an adapter
+   * @param {Homonym} homonym
+   * @param {String} browserLang - language of the translation (for example its, spa)
+  */
   async getTranslationsList (homonym, browserLang) {
     let lemmaList = []
     if (!homonym || !homonym.lexemes) {
@@ -8629,7 +8830,6 @@ class AlpheiosLemmaTranslationsAdapter extends _adapters_base_adapter__WEBPACK_I
 
     try {
       let urlLang = await this.getAvailableResLang(inLang, outLang)
-
       if (urlLang && urlLang.constructor.name === 'AdapterError') {
         return
       }
@@ -8638,7 +8838,6 @@ class AlpheiosLemmaTranslationsAdapter extends _adapters_base_adapter__WEBPACK_I
         try {
           let url = urlLang + '?input=' + input
           let translationsList = await this.fetch(url)
-
           if (translationsList && translationsList.constructor.name === 'AdapterError') {
             return
           }
@@ -8654,19 +8853,19 @@ class AlpheiosLemmaTranslationsAdapter extends _adapters_base_adapter__WEBPACK_I
       this.addError(this.l10n.messages['TRANSLATION_UNKNOWN_ERROR'].get(error.message))
     }
   }
-
+  /**
+   * This method creates a string with unique lemma's words form lemmas list
+   * @param {[Lemma]} lemmaList
+  */
   prepareInput (lemmaList) {
-    let input = ''
-
-    for (let lemma of lemmaList) {
-      input += lemma.word + ','
-    }
-    if (input.length > 0) {
-      input = input.substr(0, input.length - 1)
-    }
-    return input.length > 0 ? input : undefined
+    let inputList = lemmaList.map(lemma => lemma.word).filter((item, index, self) => self.indexOf(item) === index)
+    return inputList.length > 0 ? inputList.join(',') : undefined
   }
-
+  /**
+   * This method fetches an url for translation
+   * @param {String} inLang  - translate from language  (for example, lat)
+   * @param {String} outLang  - translate to language  (for example, es, it)
+  */
   async getAvailableResLang (inLang, outLang) {
     if (this.mapLangUri[inLang] === undefined) {
       let urlAvaLangsRes = this.config.url + '/' + inLang + '/'
@@ -8731,6 +8930,10 @@ var _adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PU
 
 
 class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
+  /**
+   * Tufts adapter uploads config data, uploads available engines and creates EnginesSet from them
+   * @param {Object} config - properties with higher priority
+  */
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, _adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__)
@@ -8738,6 +8941,11 @@ class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODU
     this.engineSet = new _adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__["default"](this.engines)
   }
 
+  /**
+   * This method creates engines object with the following format:
+   * LanguageID: array of available engines from config files, for example Symbol(Latin): ["whitakerLat"]
+   * @param {Object} engineConfig - engines config data
+  */
   uploadEngines (engineConfig) {
     if (this.engine === undefined) {
       this.engines = {}
@@ -8751,6 +8959,14 @@ class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODU
     })
   }
 
+  /**
+   * This method gets data from adapter's engine. All errors are added to adapter.errors
+   * @param {Symbol} languageID - languageID for getting homonym
+   * @param {String} word - a word for getting homonym
+   * Returned values:
+   *      - {Homonym} - if successed
+   *      - {undefined} - if failed
+  */
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(languageID, word)
     if (!url) {
@@ -8763,7 +8979,7 @@ class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODU
         return
       }
       if (res) {
-        let transformAdapter = new _adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this.engineSet, this.config)
+        let transformAdapter = new _adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this)
 
         let homonym = transformAdapter.transformData(res, word)
 
@@ -8777,14 +8993,20 @@ class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODU
         }
 
         return homonym
-      } else {
-        return
       }
     } catch (error) {
       this.addError(this.l10n.messages['MORPH_TUFTS_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
 
+  /**
+   * This method creates url with url from config and chosen engine
+   * @param {Symbol} languageID - languageID for getting homonym
+   * @param {String} word - a word for getting homonym
+   * Returned url:
+   *     - {String} - constructed url for getting data from Tufts if engine is correct
+   *     - {null} - if engine is not correct
+  */
   prepareRequestUrl (languageID, word) {
     let langCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
     let engine = this.engineSet.getEngineByCode(languageID)
@@ -9068,10 +9290,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class EnginesSet {
+  /**
+   * @param {Object} adapterConfigEngines - it is the following format - Symbol(Latin): ["whitakerLat"]
+  */
   constructor (adapterConfigEngines) {
     this.engine = adapterConfigEngines
   }
 
+  /**
+   * This method returns engine class by languageID
+   * @param {Symbol} languageID
+   * @return {Engine Class}
+  */
   getEngineByCode (languageID) {
     if (this.engine[languageID]) {
       let engineCode = this.engine[languageID][0]
@@ -9080,6 +9310,11 @@ class EnginesSet {
     }
   }
 
+  /**
+   * This method returns engine class by languageCode
+   * @param {String} languageCode
+   * @return {Engine Class}
+  */
   getEngineByCodeFromLangCode (languageCode) {
     let languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_5__["LanguageModelFactory"].getLanguageIdFromCode(languageCode)
     return this.getEngineByCode(languageID)
@@ -9338,11 +9573,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class TransformAdapter {
-  constructor (engineSet, config) {
-    this.engineSet = engineSet
-    this.config = config
+  constructor (adapter) {
+    this.engineSet = adapter.engineSet
+    this.config = adapter.config
+    this.adapter = adapter
   }
 
+  /**
+   * This method extract parameter by defined path
+   * @param {Object} source - json object to retrieve data from
+   * @param {String} nameParam - parameter name that should be retrieved
+   * @return {String|Object} - extracted data
+  */
   extractData (source, nameParam) {
     let schema = {
       'providerUri': [ 'RDF', 'Annotation', 'creator', 'Agent', 'about' ],
@@ -9366,6 +9608,12 @@ class TransformAdapter {
     return res
   }
 
+  /**
+   * This method checks if data is array, if not - converts to array
+   * @param {?} data - value that should be checked
+   * @param {?} defaultData - default value, if data is null
+   * @return {Array}
+  */
   checkToBeArray (data, defaultData = []) {
     let resData = data
     if (!Array.isArray(data)) {
@@ -9378,10 +9626,17 @@ class TransformAdapter {
     return resData
   }
 
+  /**
+   * This method creates hdwd from source json object
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @param {Symbol} direction - define the word direction
+   * @return {Array} - array with parts for hdwr
+  */
   collectHdwdArray (data, term, direction) {
     let hdwd = []
 
-    if (data && !Array.isArray(data) && !data.hdwd && term) {
+    if (data && !Array.isArray(data) && (!data.hdwd || !data.hdwd.$) && term) {
       hdwd.push(term.prefix ? term.prefix.$ : '')
       hdwd.push(term.stem ? term.stem.$ : '')
       hdwd.push(term.suff ? term.suff.$ : '')
@@ -9394,6 +9649,12 @@ class TransformAdapter {
     return hdwd
   }
 
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @return {String}  - language code
+  */
   defineLanguage (data, term) {
     let lemmaData = Array.isArray(data) ? data[0] : data
     if (!lemmaData.hdwd && term) {
@@ -9403,6 +9664,14 @@ class TransformAdapter {
     return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
   }
 
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * Returned values:
+   *     - {Homonym}
+   *     - {undefined}
+  */
   transformData (jsonObj, targetWord) {
     let lexemes = []
     let annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
@@ -9419,16 +9688,16 @@ class TransformAdapter {
       let dictData = this.extractData(lexeme, 'dictData')
 
       let lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [ inflectionsJSONTerm ] : [])
-      let language = this.defineLanguage(dictData, inflectionsJSONTerm)
+      let language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
       if (!language) {
-        console.log(`************************No language found`)
+        this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_LANGUAGE'])
         continue
       }
 
       // Get importer based on the language
       let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
-        console.log(`************************No mapping data found for ${language}`)
+        this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_MAPPING_DATA'].get(language))
         continue
       }
 
@@ -9446,7 +9715,7 @@ class TransformAdapter {
 
         let lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
         if (!lemmaText) {
-          console.log('************************No lemma or language found')
+          this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_LEMMA'])
           continue
         }
         let lemma = mappingData.parseLemma(lemmaText, language)
@@ -9589,6 +9858,9 @@ let cachedConfig = new Map()
 let cachedAdaptersList = new Map()
 
 class ClientAdapters {
+  /**
+   * it is used for uploading data from AdaptersConfig to cachedConfig and CachedAdaptersList
+  */
   static init () {
     if (cachedConfig.size === 0) {
       for (let category in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6__) {
@@ -9615,30 +9887,47 @@ class ClientAdapters {
       }
     }
   }
-  /*
+  /**
   *  Additional abstraction layer for structuring adapters
+  *  it is used for retrieving data from morphology category
   */
   static get morphology () {
     ClientAdapters.init()
     return cachedAdaptersList.get('morphology')
   }
-
+  /**
+  * it is used for retrieving data from lexicon category
+  */
   static get lexicon () {
     ClientAdapters.init()
     return cachedAdaptersList.get('lexicon')
   }
-
+  /**
+  * it is used for retrieving data from lemmatranslation category
+  */
   static get lemmatranslation () {
     ClientAdapters.init()
     return cachedAdaptersList.get('lemmatranslation')
   }
-
+  /**
+  * This method checks if given method is registered in config for category.adapterName
+  * @param {String} category - category name - morphology, lemmatranslation, lexicon
+  * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
+  * @param {String} methodName - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
+  */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
       throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](category, adapterName, methodName)
     }
   }
 
+  /**
+  * This method checks if given array with parameteres doesn\'t have required parameters, registered in config file
+  * @param {[String]} params - array of parameter\' names for being checked
+  * @param {String} category - category name - morphology, lemmatranslation, lexicon
+  * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
+  * @param {String} methodName - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
+  */
   static checkParam (params, category, adapterName, methodName) {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
@@ -9649,17 +9938,27 @@ class ClientAdapters {
     }
   }
 
+  /*
+  * This method executes both checks for given options - checks method and given parameters from options
+  * @param {String} category - category name - morphology, lemmatranslation, lexicon
+  * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
+  * @param {Object} options - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
+  */
   static checkMethodParam (category, adapterName, options) {
     ClientAdapters.checkMethod(category, adapterName, options.method)
     ClientAdapters.checkParam(options.params, category, adapterName, options.method)
   }
 
-  /*
+  /**
    * it is used for getting data from morph adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - for now one value - "getHomonym" - action that should be done wth the help of adapter
-   * options.params.languageID Symbol - languageID value for the word
-   * options.params.word String - target word for what we will receive morph data
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   *    @param {Symbol} options.params.languageID - languageID value for the word
+   *    @param {String} options.params.word - target word for what we will receive morph data
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Homonym, errors: [AdapterError] }
 */
 
   static async maAdapter (options) {
@@ -9678,12 +9977,16 @@ class ClientAdapters {
     return null
   }
 
-  /*
+  /**
    * it is used for getting data from treebank adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - for now one value - "getHomonym" - action that should be done wth the help of adapter
-   * options.params.languageID Symbol - languageID value for the word
-   * options.params.word String - target word for what we will receive morph data
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   *    @param {Symbol} options.params.languageID - languageID value for the word
+   *    @param {String} options.params.wordref - target wordref for getting data from treebank adapter
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Homonym, errors: [AdapterError] }
 */
 
   static async tbAdapter (options) {
@@ -9701,13 +10004,16 @@ class ClientAdapters {
     return null
   }
 
-  /*
+  /**
    * it is used for getting data from translations adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
-   * options.params.lemmaList [Lemma] - languageID value for the word
-   * options.params.inLang String - language code of the target word
-   * options.params.browserLang - language for translations
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
+   *    @param {Homonym} options.params.homonym - homonym for retrieving translations
+   *    @param {String} options.params.browserLang - language for translations
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Boolean, errors: [AdapterError] }
 */
   static async lemmaTranslations (options) {
     ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
@@ -9725,31 +10031,40 @@ class ClientAdapters {
     return null
   }
 
-  /*
+  /**
    * it is used for getting data from lexicons adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - action that should be done wth the help of adapter
-   *      variants: fetchShortDefs
-   * options.params.lemmaList [Lemma] - languageID value for the word
-   * options.params.inLang String - language code of the target word
-   * options.params.browserLang - language for translations
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - action that should be done wth the help of adapter - fetchShortDefs and fetchFullDefs
+   *    @param {Homonym} options.params.homonym - homonym for retrieving translations
+   *    @param {Object(allow: [String])} options.params.opts - an object with array of urls for dictionaries
+   *    @param {PSEvent} options.params.callBackEvtSuccess - an event that should be published on success result
+   *    @param {PSEvent} options.params.callBackEvtFailed - an event that should be published on failed result
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Boolean, errors: [AdapterError] }
 */
   static async lexicons (options) {
     ClientAdapters.checkMethodParam('lexicon', 'alpheios', options)
 
-    let localLexiconsAdapter = new _adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    let adapterParams = {
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: options.method
-    })
+      method: options.method,
+      timeout: options.params.timeout ? options.params.timeout : 3000,
+      callBackEvtSuccess: options.params.callBackEvtSuccess,
+      callBackEvtFailed: options.params.callBackEvtFailed
+    }
+
+    let localLexiconsAdapter = new _adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__["default"](adapterParams)
 
     if (options.method === 'fetchShortDefs') {
-      let res = await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
-      return { result: res, errors: localLexiconsAdapter.errors }
+      await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
+      return { errors: localLexiconsAdapter.errors }
     }
     if (options.method === 'fetchFullDefs') {
-      let res = await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
-      return { result: res, errors: localLexiconsAdapter.errors }
+      await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
+      return { errors: localLexiconsAdapter.errors }
     }
     return null
   }
@@ -10172,10 +10487,10 @@ module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_TUFTS_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_TUFTS_UNKNOWN_ERROR, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_TUFTS_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_TUFTS_UNKNOWN_ERROR, MORPH_TRANSFORM_NO_LANGUAGE, MORPH_TRANSFORM_NO_LEMMA, MORPH_TRANSFORM_NO_MAPPING_DATA, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE":{"message":"There is no engine for the given languageID {languageID}","description":"Error message for morphology.tufts adapter - when no engine is found for given languageID","component":"morphology.tufts","params":["languageID"]},"MORPH_TUFTS_NO_HOMONYM":{"message":"There is no homonym for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no homonym was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no data was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.tufts adapter - unknown","component":"morphology.tufts","params":["message"]},"BASIC_ADAPTER_NO_DATA_FROM_URL":{"message":"Unable to get data from url - {url}","description":"Error message for basic adapter - when no data was returned from the url","component":"basic_adapter","params":["url"]},"BASIC_ADAPTER_EMPTY_URL":{"message":"Unable to get data from empty url","description":"Error message for basic adapter - when empty url was given","component":"basic_adapter"},"BASIC_ADAPTER_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["message"]},"BASIC_ADAPTER_URL_RESPONSE_FAILED":{"message":"Request doesn't return data - {statusCode}: {statusText}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["statusCode","statusText"]},"MORPH_TREEBANK_NO_URL":{"message":"There is a problem with creating url for the given word - {word}","description":"Error message for morph.treebank - no url for fetching data from treebank","component":"morph.treebank","params":["word"]},"MORPH_TREEBANK_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word}","description":"Error message for morphology.treebank adapter - when no data was returned from the source","component":"morphology.treebank","params":["word"]},"MORPH_TREEBANK_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.treebank adapter - unknown","component":"morphology.treebank","params":["message"]},"TRANSLATION_INPUT_PREPARE_ERROR":{"message":"Some problems with preparing input for geting translations - {input}","description":"Error message for lemmatranslation.alpheios adapter - problems with input","component":"lemmatranslation.alpheios","params":["input"]},"TRANSLATION_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for lemmatranslation.alpheios adapter - unknown","component":"lemmatranslation.alpheios","params":["message"]},"TRANSLATION_INCORRECT_LEXEMES":{"message":"There is no correct homonym in input","description":"Error message for lemmatranslation.alpheios adapter - no lexemes","component":"lemmatranslation.alpheios"},"LEXICONS_NO_ALLOWED_URL":{"message":"There are no allowed urls in the options","description":"Error message for lexicon.alpheios adapter - no urls were found in options","component":"lexicon.alpheios"},"LEXICONS_FAILED_CACHED_DATA":{"message":"There is a problem with catching data from lexicon source - {message}","description":"Error message for lexicon.alpheios adapter - some problems with getting cached data","component":"lexicon.alpheios","params":["message"]},"LEXICONS_FAILED_APPEND_DEFS":{"message":"There is a problem with updating definitions - {message}","description":"Error message for lexicon.alpheios adapter - some problems with updating definitions","component":"lexicon.alpheios","params":["message"]},"LEXICONS_NO_FULL_URL":{"message":"No full url is defined for definitions","description":"Error message for lexicon.alpheios adapter - no full url is defined","component":"lexicon.alpheios"},"LEXICONS_NO_DATA_FROM_URL":{"message":"No data recieved from url - {url}","description":"Error message for lexicon.alpheios adapter - no data from url","component":"lexicon.alpheios","params":["url"]}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE":{"message":"There is no engine for the given languageID {languageID}","description":"Error message for morphology.tufts adapter - when no engine is found for given languageID","component":"morphology.tufts","params":["languageID"]},"MORPH_TUFTS_NO_HOMONYM":{"message":"There is no homonym for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no homonym was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no data was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.tufts adapter - unknown","component":"morphology.tufts","params":["message"]},"MORPH_TRANSFORM_NO_LANGUAGE":{"message":"No Language was defined from json object","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts"},"MORPH_TRANSFORM_NO_LEMMA":{"message":"No Lemma was defined from json object","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts"},"MORPH_TRANSFORM_NO_MAPPING_DATA":{"message":"No mapping data found for {language}","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts","params":["language"]},"BASIC_ADAPTER_NO_DATA_FROM_URL":{"message":"Unable to get data from url - {url}","description":"Error message for basic adapter - when no data was returned from the url","component":"basic_adapter","params":["url"]},"BASIC_ADAPTER_EMPTY_URL":{"message":"Unable to get data from empty url","description":"Error message for basic adapter - when empty url was given","component":"basic_adapter"},"BASIC_ADAPTER_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["message"]},"BASIC_ADAPTER_URL_RESPONSE_FAILED":{"message":"Request doesn't return data - {statusCode}: {statusText}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["statusCode","statusText"]},"MORPH_TREEBANK_NO_URL":{"message":"There is a problem with creating url for the given word - {word}","description":"Error message for morph.treebank - no url for fetching data from treebank","component":"morph.treebank","params":["word"]},"MORPH_TREEBANK_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word}","description":"Error message for morphology.treebank adapter - when no data was returned from the source","component":"morphology.treebank","params":["word"]},"MORPH_TREEBANK_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.treebank adapter - unknown","component":"morphology.treebank","params":["message"]},"TRANSLATION_INPUT_PREPARE_ERROR":{"message":"Some problems with preparing input for geting translations - {input}","description":"Error message for lemmatranslation.alpheios adapter - problems with input","component":"lemmatranslation.alpheios","params":["input"]},"TRANSLATION_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for lemmatranslation.alpheios adapter - unknown","component":"lemmatranslation.alpheios","params":["message"]},"TRANSLATION_INCORRECT_LEXEMES":{"message":"There is no correct homonym in input","description":"Error message for lemmatranslation.alpheios adapter - no lexemes","component":"lemmatranslation.alpheios"},"LEXICONS_NO_ALLOWED_URL":{"message":"There are no allowed urls in the options","description":"Error message for lexicon.alpheios adapter - no urls were found in options","component":"lexicon.alpheios"},"LEXICONS_FAILED_CACHED_DATA":{"message":"There is a problem with catching data from lexicon source - {message}","description":"Error message for lexicon.alpheios adapter - some problems with getting cached data","component":"lexicon.alpheios","params":["message"]},"LEXICONS_FAILED_APPEND_DEFS":{"message":"There is a problem with updating definitions - {message}","description":"Error message for lexicon.alpheios adapter - some problems with updating definitions","component":"lexicon.alpheios","params":["message"]},"LEXICONS_NO_FULL_URL":{"message":"No full url is defined for definitions","description":"Error message for lexicon.alpheios adapter - no full url is defined","component":"lexicon.alpheios"},"LEXICONS_NO_DATA_FROM_URL":{"message":"No data recieved from url - {url}","description":"Error message for lexicon.alpheios adapter - no data from url","component":"lexicon.alpheios","params":["url"]}};
 
 /***/ }),
 

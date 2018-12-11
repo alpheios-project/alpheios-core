@@ -1,11 +1,18 @@
 import { ResourceProvider, Definition, Lexeme, Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
 
 class TransformAdapter {
-  constructor (engineSet, config) {
-    this.engineSet = engineSet
-    this.config = config
+  constructor (adapter) {
+    this.engineSet = adapter.engineSet
+    this.config = adapter.config
+    this.adapter = adapter
   }
 
+  /**
+   * This method extract parameter by defined path
+   * @param {Object} source - json object to retrieve data from
+   * @param {String} nameParam - parameter name that should be retrieved
+   * @return {String|Object} - extracted data
+  */
   extractData (source, nameParam) {
     let schema = {
       'providerUri': [ 'RDF', 'Annotation', 'creator', 'Agent', 'about' ],
@@ -29,6 +36,12 @@ class TransformAdapter {
     return res
   }
 
+  /**
+   * This method checks if data is array, if not - converts to array
+   * @param {?} data - value that should be checked
+   * @param {?} defaultData - default value, if data is null
+   * @return {Array}
+  */
   checkToBeArray (data, defaultData = []) {
     let resData = data
     if (!Array.isArray(data)) {
@@ -41,10 +54,17 @@ class TransformAdapter {
     return resData
   }
 
+  /**
+   * This method creates hdwd from source json object
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @param {Symbol} direction - define the word direction
+   * @return {Array} - array with parts for hdwr
+  */
   collectHdwdArray (data, term, direction) {
     let hdwd = []
 
-    if (data && !Array.isArray(data) && !data.hdwd && term) {
+    if (data && !Array.isArray(data) && (!data.hdwd || !data.hdwd.$) && term) {
       hdwd.push(term.prefix ? term.prefix.$ : '')
       hdwd.push(term.stem ? term.stem.$ : '')
       hdwd.push(term.suff ? term.suff.$ : '')
@@ -57,6 +77,12 @@ class TransformAdapter {
     return hdwd
   }
 
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @return {String}  - language code
+  */
   defineLanguage (data, term) {
     let lemmaData = Array.isArray(data) ? data[0] : data
     if (!lemmaData.hdwd && term) {
@@ -66,6 +92,14 @@ class TransformAdapter {
     return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
   }
 
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * Returned values:
+   *     - {Homonym}
+   *     - {undefined}
+  */
   transformData (jsonObj, targetWord) {
     let lexemes = []
     let annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
@@ -82,16 +116,16 @@ class TransformAdapter {
       let dictData = this.extractData(lexeme, 'dictData')
 
       let lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [ inflectionsJSONTerm ] : [])
-      let language = this.defineLanguage(dictData, inflectionsJSONTerm)
+      let language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
       if (!language) {
-        console.log(`************************No language found`)
+        this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_LANGUAGE'])
         continue
       }
 
       // Get importer based on the language
       let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
-        console.log(`************************No mapping data found for ${language}`)
+        this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_MAPPING_DATA'].get(language))
         continue
       }
 
@@ -109,7 +143,7 @@ class TransformAdapter {
 
         let lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
         if (!lemmaText) {
-          console.log('************************No lemma or language found')
+          this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_LEMMA'])
           continue
         }
         let lemma = mappingData.parseLemma(lemmaText, language)

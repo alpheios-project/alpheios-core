@@ -12,6 +12,9 @@ let cachedConfig = new Map()
 let cachedAdaptersList = new Map()
 
 class ClientAdapters {
+  /**
+   * it is used for uploading data from AdaptersConfig to cachedConfig and CachedAdaptersList
+  */
   static init () {
     if (cachedConfig.size === 0) {
       for (let category in AdaptersConfig) {
@@ -38,30 +41,47 @@ class ClientAdapters {
       }
     }
   }
-  /*
+  /**
   *  Additional abstraction layer for structuring adapters
+  *  it is used for retrieving data from morphology category
   */
   static get morphology () {
     ClientAdapters.init()
     return cachedAdaptersList.get('morphology')
   }
-
+  /**
+  * it is used for retrieving data from lexicon category
+  */
   static get lexicon () {
     ClientAdapters.init()
     return cachedAdaptersList.get('lexicon')
   }
-
+  /**
+  * it is used for retrieving data from lemmatranslation category
+  */
   static get lemmatranslation () {
     ClientAdapters.init()
     return cachedAdaptersList.get('lemmatranslation')
   }
-
+  /**
+  * This method checks if given method is registered in config for category.adapterName
+  * @param {String} category - category name - morphology, lemmatranslation, lexicon
+  * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
+  * @param {String} methodName - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
+  */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
       throw new WrongMethodError(category, adapterName, methodName)
     }
   }
 
+  /**
+  * This method checks if given array with parameteres doesn\'t have required parameters, registered in config file
+  * @param {[String]} params - array of parameter\' names for being checked
+  * @param {String} category - category name - morphology, lemmatranslation, lexicon
+  * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
+  * @param {String} methodName - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
+  */
   static checkParam (params, category, adapterName, methodName) {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
@@ -72,17 +92,27 @@ class ClientAdapters {
     }
   }
 
+  /*
+  * This method executes both checks for given options - checks method and given parameters from options
+  * @param {String} category - category name - morphology, lemmatranslation, lexicon
+  * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
+  * @param {Object} options - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
+  */
   static checkMethodParam (category, adapterName, options) {
     ClientAdapters.checkMethod(category, adapterName, options.method)
     ClientAdapters.checkParam(options.params, category, adapterName, options.method)
   }
 
-  /*
+  /**
    * it is used for getting data from morph adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - for now one value - "getHomonym" - action that should be done wth the help of adapter
-   * options.params.languageID Symbol - languageID value for the word
-   * options.params.word String - target word for what we will receive morph data
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   *    @param {Symbol} options.params.languageID - languageID value for the word
+   *    @param {String} options.params.word - target word for what we will receive morph data
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Homonym, errors: [AdapterError] }
 */
 
   static async maAdapter (options) {
@@ -101,12 +131,16 @@ class ClientAdapters {
     return null
   }
 
-  /*
+  /**
    * it is used for getting data from treebank adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - for now one value - "getHomonym" - action that should be done wth the help of adapter
-   * options.params.languageID Symbol - languageID value for the word
-   * options.params.word String - target word for what we will receive morph data
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   *    @param {Symbol} options.params.languageID - languageID value for the word
+   *    @param {String} options.params.wordref - target wordref for getting data from treebank adapter
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Homonym, errors: [AdapterError] }
 */
 
   static async tbAdapter (options) {
@@ -124,13 +158,16 @@ class ClientAdapters {
     return null
   }
 
-  /*
+  /**
    * it is used for getting data from translations adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
-   * options.params.lemmaList [Lemma] - languageID value for the word
-   * options.params.inLang String - language code of the target word
-   * options.params.browserLang - language for translations
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
+   *    @param {Homonym} options.params.homonym - homonym for retrieving translations
+   *    @param {String} options.params.browserLang - language for translations
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Boolean, errors: [AdapterError] }
 */
   static async lemmaTranslations (options) {
     ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
@@ -148,31 +185,40 @@ class ClientAdapters {
     return null
   }
 
-  /*
+  /**
    * it is used for getting data from lexicons adapter
-   * @param {options} Object - object contains parametes:
-   * options.method String - action that should be done wth the help of adapter
-   *      variants: fetchShortDefs
-   * options.params.lemmaList [Lemma] - languageID value for the word
-   * options.params.inLang String - language code of the target word
-   * options.params.browserLang - language for translations
+   * @param {Object} options - object contains parametes:
+   *    @param {String} options.method - action that should be done wth the help of adapter - fetchShortDefs and fetchFullDefs
+   *    @param {Homonym} options.params.homonym - homonym for retrieving translations
+   *    @param {Object(allow: [String])} options.params.opts - an object with array of urls for dictionaries
+   *    @param {PSEvent} options.params.callBackEvtSuccess - an event that should be published on success result
+   *    @param {PSEvent} options.params.callBackEvtFailed - an event that should be published on failed result
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Boolean, errors: [AdapterError] }
 */
   static async lexicons (options) {
     ClientAdapters.checkMethodParam('lexicon', 'alpheios', options)
 
-    let localLexiconsAdapter = new AlpheiosLexiconsAdapter({
+    let adapterParams = {
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: options.method
-    })
+      method: options.method,
+      timeout: options.params.timeout ? options.params.timeout : 3000,
+      callBackEvtSuccess: options.params.callBackEvtSuccess,
+      callBackEvtFailed: options.params.callBackEvtFailed
+    }
+
+    let localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams)
 
     if (options.method === 'fetchShortDefs') {
-      let res = await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
-      return { result: res, errors: localLexiconsAdapter.errors }
+      await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
+      return { errors: localLexiconsAdapter.errors }
     }
     if (options.method === 'fetchFullDefs') {
-      let res = await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
-      return { result: res, errors: localLexiconsAdapter.errors }
+      await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
+      return { errors: localLexiconsAdapter.errors }
     }
     return null
   }

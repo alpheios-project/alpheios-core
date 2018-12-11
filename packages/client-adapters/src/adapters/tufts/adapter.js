@@ -7,6 +7,10 @@ import DefaultConfig from '@/adapters/tufts/config.json'
 import EnginesSet from '@/adapters/tufts/engines-set'
 
 class AlpheiosTuftsAdapter extends BaseAdapter {
+  /**
+   * Tufts adapter uploads config data, uploads available engines and creates EnginesSet from them
+   * @param {Object} config - properties with higher priority
+  */
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, DefaultConfig)
@@ -14,6 +18,11 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
     this.engineSet = new EnginesSet(this.engines)
   }
 
+  /**
+   * This method creates engines object with the following format:
+   * LanguageID: array of available engines from config files, for example Symbol(Latin): ["whitakerLat"]
+   * @param {Object} engineConfig - engines config data
+  */
   uploadEngines (engineConfig) {
     if (this.engine === undefined) {
       this.engines = {}
@@ -27,6 +36,14 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
     })
   }
 
+  /**
+   * This method gets data from adapter's engine. All errors are added to adapter.errors
+   * @param {Symbol} languageID - languageID for getting homonym
+   * @param {String} word - a word for getting homonym
+   * Returned values:
+   *      - {Homonym} - if successed
+   *      - {undefined} - if failed
+  */
   async getHomonym (languageID, word) {
     let url = this.prepareRequestUrl(languageID, word)
     if (!url) {
@@ -39,7 +56,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         return
       }
       if (res) {
-        let transformAdapter = new TransformAdapter(this.engineSet, this.config)
+        let transformAdapter = new TransformAdapter(this)
 
         let homonym = transformAdapter.transformData(res, word)
 
@@ -53,14 +70,20 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         }
 
         return homonym
-      } else {
-        return
       }
     } catch (error) {
       this.addError(this.l10n.messages['MORPH_TUFTS_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
 
+  /**
+   * This method creates url with url from config and chosen engine
+   * @param {Symbol} languageID - languageID for getting homonym
+   * @param {String} word - a word for getting homonym
+   * Returned url:
+   *     - {String} - constructed url for getting data from Tufts if engine is correct
+   *     - {null} - if engine is not correct
+  */
   prepareRequestUrl (languageID, word) {
     let langCode = LMF.getLanguageCodeFromId(languageID)
     let engine = this.engineSet.getEngineByCode(languageID)
