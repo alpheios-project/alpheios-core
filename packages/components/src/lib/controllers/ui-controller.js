@@ -79,6 +79,8 @@ export default class UIController {
     this.evc = null
 
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
+
+    this.auth = null // An object used for user's authorization
   }
 
   /**
@@ -314,7 +316,8 @@ export default class UIController {
             zIndex: this.zIndex
           },
           minWidth: 400,
-          l10n: this.l10n
+          l10n: this.l10n,
+          auth: this.auth
         },
         state: this.state,
         options: this.contentOptions,

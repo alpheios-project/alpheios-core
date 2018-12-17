@@ -9745,6 +9745,54 @@ h3.alpheios-inflections__credits-title {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios-ib {
+  padding: 0.2rem 20px 0.2rem;
+}
+.alpheios-ib__title,
+div.alpheios-ib div.alpheios-ib__title {
+  color: #4E6476;
+  font-weight: 700;
+  margin: 1rem 0 0.6rem;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-style: normal;
+}
+.alpheios-ib__pofs-title {
+  font-weight: 700;
+}
+.alpheios-ib__pofs-title-l2 {
+  font-weight: 700;
+  margin-top: 0.2rem;
+  margin-left: 1rem;
+}
+.alpheios-ib__pofs-title-l3 {
+  font-weight: 700;
+  margin-top: 0.2rem;
+  margin-left: 2rem;
+}
+div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
+  font-weight: 400;
+  font-size: 0.875rem;
+  position: relative;
+  top: -0.1rem;
+  left: 0.2rem;
+  color: #4E6476;
+}
+.alpheios-clickable {
+  cursor: pointer;
+}
+.alpheios-ib .alpheios-inflections__title.alpheios-table-sf__title {
+  text-align: left;
+  font-weight: normal;
+  font-size: 1rem;
+  margin: 0 0 0.2rem 3rem;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
 #alpheios-reskin-panel.alpheios-skin_panel {
   display: inline-block;
 }
@@ -9792,47 +9840,8 @@ ul.alpheios-skin_properties {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
-.alpheios-ib {
-  padding: 0.2rem 20px 0.2rem;
-}
-.alpheios-ib__title,
-div.alpheios-ib div.alpheios-ib__title {
-  color: #4E6476;
-  font-weight: 700;
-  margin: 1rem 0 0.6rem;
-  text-transform: uppercase;
-  font-size: 1rem;
-  font-style: normal;
-}
-.alpheios-ib__pofs-title {
-  font-weight: 700;
-}
-.alpheios-ib__pofs-title-l2 {
-  font-weight: 700;
-  margin-top: 0.2rem;
-  margin-left: 1rem;
-}
-.alpheios-ib__pofs-title-l3 {
-  font-weight: 700;
-  margin-top: 0.2rem;
-  margin-left: 2rem;
-}
-div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
-  font-weight: 400;
-  font-size: 0.875rem;
-  position: relative;
-  top: -0.1rem;
-  left: 0.2rem;
-  color: #4E6476;
-}
-.alpheios-clickable {
-  cursor: pointer;
-}
-.alpheios-ib .alpheios-inflections__title.alpheios-table-sf__title {
-  text-align: left;
-  font-weight: normal;
-  font-size: 1rem;
-  margin: 0 0 0.2rem 3rem;
+.alpheios-user-auth__message-box {
+  margin-top: 20px;
 }
 
 /************ UIKit vars ************************/

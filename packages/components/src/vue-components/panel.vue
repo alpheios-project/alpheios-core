@@ -159,7 +159,7 @@
                 </div>
             </div>
             <div v-show="data.tabs.user" class="alpheios-panel__tab-panel alpheios-panel__tab__status">
-                Some user information
+                <user-auth :auth="data.auth"></user-auth>
             </div>
             <div v-show="data.tabs.options" class="alpheios-panel__tab-panel alpheios-panel__tab__options">
                 <reskin-font-color :messages="data.l10n.messages" v-if="data.l10n"></reskin-font-color>
@@ -219,406 +219,411 @@
     </div>
 </template>
 <script>
-  import Inflections from './inflections.vue'
-  import Setting from './setting.vue'
-  import ShortDef from './shortdef.vue'
-  import Grammar from './grammar.vue'
-  import Treebank from './treebank.vue'
-  import Info from './info.vue'
-  import interact from 'interactjs'
+// Vue components
+import Inflections from './inflections.vue'
+import Setting from './setting.vue'
+import ShortDef from './shortdef.vue'
+import Grammar from './grammar.vue'
+import Treebank from './treebank.vue'
+import Info from './info.vue'
+import InflectionBrowser from './inflections-browser.vue'
+import Tooltip from './tooltip.vue'
+import Lookup from './lookup.vue'
+import ReskinFontColor from './reskin-font-color.vue'
+import UserAuth from './user-auth.vue'
 
-  import Tooltip from './tooltip.vue'
-  import Lookup from './lookup.vue'
-  import ReskinFontColor from './reskin-font-color.vue'
+// Embeddable SVG icons
+import AttachLeftIcon from '../images/inline-icons/attach-left.svg'
+import AttachRightIcon from '../images/inline-icons/attach-right.svg'
+import CloseIcon from '../images/inline-icons/close.svg'
+import DefinitionsIcon from '../images/inline-icons/definitions.svg'
+import InflectionsIcon from '../images/inline-icons/inflections.svg'
+import InflectionsBrowserIcon from '../images/inline-icons/inflections-browser.svg'
+import StatusIcon from '../images/inline-icons/status.svg'
+import UserIcon from '../images/inline-icons/user.svg'
+import OptionsIcon from '../images/inline-icons/options.svg'
+import GrammarIcon from '../images/inline-icons/resources.svg'
+import TreebankIcon from '../images/inline-icons/sitemap.svg'
+import InfoIcon from '../images/inline-icons/info.svg'
 
-  // Embeddable SVG icons
-  import AttachLeftIcon from '../images/inline-icons/attach-left.svg'
-  import AttachRightIcon from '../images/inline-icons/attach-right.svg'
-  import CloseIcon from '../images/inline-icons/close.svg'
-  import DefinitionsIcon from '../images/inline-icons/definitions.svg'
-  import InflectionsIcon from '../images/inline-icons/inflections.svg'
-  import InflectionsBrowserIcon from '../images/inline-icons/inflections-browser.svg'
-  import StatusIcon from '../images/inline-icons/status.svg'
-  import UserIcon from '../images/inline-icons/user.svg'
-  import OptionsIcon from '../images/inline-icons/options.svg'
-  import GrammarIcon from '../images/inline-icons/resources.svg'
-  import TreebankIcon from '../images/inline-icons/sitemap.svg'
-  import InfoIcon from '../images/inline-icons/info.svg'
-  import InflectionBrowser from './inflections-browser.vue'
+// Vue directives
+import { directive as onClickaway } from '../directives/clickaway.js'
 
-  import { directive as onClickaway } from '../directives/clickaway.js'
+// JS imports
+import interact from 'interactjs'
 
-  export default {
-    name: 'Panel',
-    components: {
-      inflections: Inflections,
-      inflectionBrowser: InflectionBrowser,
-      setting: Setting,
-      shortdef: ShortDef,
-      info: Info,
-      grammar: Grammar,
-      treebank: Treebank,
-      attachLeftIcon: AttachLeftIcon,
-      attachRightIcon: AttachRightIcon,
-      closeIcon: CloseIcon,
-      definitionsIcon: DefinitionsIcon,
-      inflectionsIcon: InflectionsIcon,
-      inflectionsBrowserIcon: InflectionsBrowserIcon,
-      statusIcon: StatusIcon,
-      userIcon: UserIcon,
-      optionsIcon: OptionsIcon,
-      infoIcon: InfoIcon,
-      grammarIcon: GrammarIcon,
-      treebankIcon: TreebankIcon,
-      alphTooltip: Tooltip,
-      lookup: Lookup,
-      reskinFontColor: ReskinFontColor
+export default {
+  name: 'Panel',
+  components: {
+    inflections: Inflections,
+    inflectionBrowser: InflectionBrowser,
+    setting: Setting,
+    shortdef: ShortDef,
+    info: Info,
+    grammar: Grammar,
+    treebank: Treebank,
+    userAuth: UserAuth,
+    attachLeftIcon: AttachLeftIcon,
+    attachRightIcon: AttachRightIcon,
+    closeIcon: CloseIcon,
+    definitionsIcon: DefinitionsIcon,
+    inflectionsIcon: InflectionsIcon,
+    inflectionsBrowserIcon: InflectionsBrowserIcon,
+    statusIcon: StatusIcon,
+    userIcon: UserIcon,
+    optionsIcon: OptionsIcon,
+    infoIcon: InfoIcon,
+    grammarIcon: GrammarIcon,
+    treebankIcon: TreebankIcon,
+    alphTooltip: Tooltip,
+    lookup: Lookup,
+    reskinFontColor: ReskinFontColor
+  },
+  directives: {
+    onClickaway: onClickaway
+  },
+  data: function () {
+    return {
+      inflectionsPanelID: 'alpheios-panel__inflections-panel',
+      inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
+
+      positionClassVariants: {
+        left: 'alpheios-panel-left',
+        right: 'alpheios-panel-right'
+      },
+
+      panelLeftPadding: 0,
+      panelRightPadding: 0,
+      scrollPadding: 0,
+      defaultScrollPadding: 20,
+      defaultPanelWidth: 400,
+      panelWidth: null
+    }
+  },
+  props: {
+    data: {
+      type: Object,
+      required: true
     },
-    directives: {
-      onClickaway: onClickaway
+    classesChanged: {
+      type: Number,
+      required: false,
+      default: 0
+    }
+  },
+
+  computed: {
+    divClasses () {
+      return (this.data && this.data.classes ? this.data.classes.join(' ') : '') + ' ' + this.positionClasses
     },
-    data: function () {
-      return {
-        inflectionsPanelID: 'alpheios-panel__inflections-panel',
-        inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
-
-        positionClassVariants: {
-          left: 'alpheios-panel-left',
-          right: 'alpheios-panel-right'
-        },
-
-        panelLeftPadding: 0,
-        panelRightPadding: 0,
-        scrollPadding: 0,
-        defaultScrollPadding: 20,
-        defaultPanelWidth: 400,
-        panelWidth: null
+    clearLookupText: function () {
+      // always true to clear panels lookup
+      return true
+    },
+    lookupParentLanguage: function () {
+      if (this.data.infoComponentData) {
+        return this.data.infoComponentData.languageName
+      } else {
+        return this.options.items.preferredLanguage.currentTextValue()
       }
     },
-    props: {
-      data: {
-        type: Object,
-        required: true
-      },
-      classesChanged: {
-        type: Number,
-        required: false,
-        default: 0
-      }
+    inflectionBrowserLanguageID: function () {
+      return this.data.currentLanguageID
+    },
+    uiController: function () {
+      return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
+    },
+    mainstyles: function () {
+      let mainstyles = (this.data) ? this.data.styles : {}
+      this.panelWidth = this.panelWidth ? this.panelWidth : this.defaultPanelWidth
+
+      return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
+    },
+    resourceSettingsLexicons: function () {
+      return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
+    },
+    resourceSettingsLexiconsShort: function () {
+      return this.data.resourceSettings && this.data.resourceSettings.lexiconsShort ? this.data.resourceSettings.lexiconsShort.filter(item => item.values.length > 0) : []
     },
 
-    computed: {
-      divClasses () {
-        return (this.data && this.data.classes ? this.data.classes.join(' ') : '') + ' ' + this.positionClasses
-      },
-      clearLookupText: function () {
-        // always true to clear panels lookup
-        return true
-      },
-      lookupParentLanguage: function () {
-        if (this.data.infoComponentData) {
-          return this.data.infoComponentData.languageName
-        } else {
-          return this.options.items.preferredLanguage.currentTextValue()
-        }
-      },
-      inflectionBrowserLanguageID: function () {
-        return this.data.currentLanguageID
-      },
-      uiController: function () {
-        return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
-      },
-      mainstyles: function () {
-        let mainstyles = (this.data) ? this.data.styles : {}
-        this.panelWidth = this.panelWidth ? this.panelWidth : this.defaultPanelWidth
+    showDefinitionsPlaceholder: function () {
+      return (!this.data.shortDefinitions || this.data.shortDefinitions.length === 0) && (!this.data.fullDefinitions || this.data.fullDefinitions.length === 0)
+    },
+    classes: function () {
+      // Find index of an existing position class and replace it with an updated value
+      if (this.data) {
+        const positionLeftIndex = this.data.classes.findIndex(v => v === this.positionLeftClassName)
+        const positionRightIndex = this.data.classes.findIndex(v => v === this.positionRightClassName)
 
-        return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
-      },
-      resourceSettingsLexicons: function () {
-        return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
-      },
-      resourceSettingsLexiconsShort: function () {
-        return this.data.resourceSettings && this.data.resourceSettings.lexiconsShort ? this.data.resourceSettings.lexiconsShort.filter(item => item.values.length > 0) : []
-      },
-
-      showDefinitionsPlaceholder: function () {
-        return (!this.data.shortDefinitions || this.data.shortDefinitions.length === 0) && (!this.data.fullDefinitions || this.data.fullDefinitions.length === 0)
-      },
-      classes: function () {
-        // Find index of an existing position class and replace it with an updated value
-        if (this.data) {
-          const positionLeftIndex = this.data.classes.findIndex(v => v === this.positionLeftClassName)
-          const positionRightIndex = this.data.classes.findIndex(v => v === this.positionRightClassName)
-
-          if (this.data.settings.panelPosition.currentValue === 'left') {
-            if (positionRightIndex >= 0) {
-              // Replace an existing value
-              this.data.classes[positionRightIndex] = this.positionLeftClassName
-            } else {
-              // Add an initial value
-              this.data.classes.push(this.positionLeftClassName)
-            }
-          } else if (this.data.settings.panelPosition.currentValue === 'right') {
-            if (positionLeftIndex >= 0) {
-              // Replace an existing value
-              this.data.classes[positionLeftIndex] = this.positionRightClassName
-            } else {
-              // Add an initial value
-              this.data.classes.push(this.positionRightClassName)
-            }
+        if (this.data.settings.panelPosition.currentValue === 'left') {
+          if (positionRightIndex >= 0) {
+            // Replace an existing value
+            this.data.classes[positionRightIndex] = this.positionLeftClassName
+          } else {
+            // Add an initial value
+            this.data.classes.push(this.positionLeftClassName)
           }
-          return this.data.classes
+        } else if (this.data.settings.panelPosition.currentValue === 'right') {
+          if (positionLeftIndex >= 0) {
+            // Replace an existing value
+            this.data.classes[positionLeftIndex] = this.positionRightClassName
+          } else {
+            // Add an initial value
+            this.data.classes.push(this.positionRightClassName)
+          }
         }
-        return null
-      },
+        return this.data.classes
+      }
+      return null
+    },
 
-      notificationClasses: function () {
-        return {
-          'alpheios-panel__notifications--important': this.data.notification.important
-        }
-      },
+    notificationClasses: function () {
+      return {
+        'alpheios-panel__notifications--important': this.data.notification.important
+      }
+    },
 
-      attachToLeftVisible: function () {
-        return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'right' : false
-      },
+    attachToLeftVisible: function () {
+      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'right' : false
+    },
 
-      attachToRightVisible: function () {
-        return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'left' : true
-      },
+    attachToRightVisible: function () {
+      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'left' : true
+    },
 
-      // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
-      inflectionsTabVisible: function () {
-        // Inform an inflection component about its visibility state change
-        if (this.data && this.data.inflectionComponentData.inflectionViewSet) {
-          this.data.inflectionComponentData.visible = this.data.tabs.inflections
-        }
-        return this.data.tabs.inflections
-      },
+    // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
+    inflectionsTabVisible: function () {
+      // Inform an inflection component about its visibility state change
+      if (this.data && this.data.inflectionComponentData.inflectionViewSet) {
+        this.data.inflectionComponentData.visible = this.data.tabs.inflections
+      }
+      return this.data.tabs.inflections
+    },
 
-      // Need this to watch when inflections browser tab becomes active and adjust panel width to fully fit an inflection table in
-      inflectionsBrowserTabVisible: function () {
-        // Inform an inflection browser component about its visibility state change
-        if (this.data && this.data.inflectionBrowserData) {
-          this.data.inflectionBrowserData.visible = this.data.tabs.inflectionsbrowser
-        }
-        return this.data.tabs.inflectionsbrowser
-      },
+    // Need this to watch when inflections browser tab becomes active and adjust panel width to fully fit an inflection table in
+    inflectionsBrowserTabVisible: function () {
+      // Inform an inflection browser component about its visibility state change
+      if (this.data && this.data.inflectionBrowserData) {
+        this.data.inflectionBrowserData.visible = this.data.tabs.inflectionsbrowser
+      }
+      return this.data.tabs.inflectionsbrowser
+    },
 
-      treebankTabAvailable: function () {
-        // treebank data is possible if we have it for the word or the page
-        return !!(this.data && this.data.treebankComponentData && this.data.treebankComponentData.data &&
+    treebankTabAvailable: function () {
+      // treebank data is possible if we have it for the word or the page
+      return !!(this.data && this.data.treebankComponentData && this.data.treebankComponentData.data &&
           ((this.data.treebankComponentData.data.page && this.data.treebankComponentData.data.page.src) ||
             (this.data.treebankComponentData.data.word && this.data.treebankComponentData.data.word.src)))
-      },
+    },
 
-      treebankTabVisible: function () {
-        // Inform treebank component about visibility state change
-        if (this.data && this.data.treebankComponentData && this.data.treebankComponentData.data) {
-          this.data.treebankComponentData.visible = this.data.tabs.treebank
-        }
-        return this.data.tabs.treebank
-      },
+    treebankTabVisible: function () {
+      // Inform treebank component about visibility state change
+      if (this.data && this.data.treebankComponentData && this.data.treebankComponentData.data) {
+        this.data.treebankComponentData.visible = this.data.tabs.treebank
+      }
+      return this.data.tabs.treebank
+    },
 
-      additionalStylesTootipCloseIcon: function () {
-        return {
-          top: '2px',
-          right: '50px'
-        }
-      },
-
-      positionClasses: function () {
-        if (this.data) {
-          return this.positionClassVariants[this.data.settings.panelPosition.currentValue]
-        }
-        return null
+    additionalStylesTootipCloseIcon: function () {
+      return {
+        top: '2px',
+        right: '50px'
       }
     },
-    methods: {
-      updateZIndex: function (zIndexMax) {
-        if (zIndexMax >= this.zIndex) {
-          this.zIndex = zIndexMax
-          if (this.zIndex < Number.POSITIVE_INFINITY) { this.zIndex++ } // To be one level higher that the highest element on a page
-          this.self.element.style.zIndex = this.zIndex
+
+    positionClasses: function () {
+      if (this.data) {
+        return this.positionClassVariants[this.data.settings.panelPosition.currentValue]
+      }
+      return null
+    }
+  },
+  methods: {
+    updateZIndex: function (zIndexMax) {
+      if (zIndexMax >= this.zIndex) {
+        this.zIndex = zIndexMax
+        if (this.zIndex < Number.POSITIVE_INFINITY) { this.zIndex++ } // To be one level higher that the highest element on a page
+        this.self.element.style.zIndex = this.zIndex
+      }
+    },
+
+    close () {
+      this.$emit('close')
+    },
+
+    closeNotifications () {
+      this.$emit('closenotifications')
+    },
+
+    setPosition (position) {
+      this.$emit('setposition', position)
+    },
+
+    changeTab (name) {
+      this.setContentWidth({ width: 'auto', component: null })
+      this.$emit('changetab', name)
+    },
+
+    clearContent: function () {
+      for (let contentArea in this.contentAreas) {
+        if (this.contentAreas.hasOwnProperty(contentArea)) {
+          this.contentAreas[contentArea].clearContent()
         }
-      },
+      }
+      return this
+    },
 
-      close () {
-        this.$emit('close')
-      },
+    showMessage: function (messageHTML) {
+      this.contentAreas.messages.setContent(messageHTML)
+      this.tabGroups.contentTabs.activate('statusTab')
+    },
 
-      closeNotifications () {
-        this.$emit('closenotifications')
-      },
+    appendMessage: function (messageHTML) {
+      this.contentAreas.messages.appendContent(messageHTML)
+    },
 
-      setPosition (position) {
-        this.$emit('setposition', position)
-      },
+    clearMessages: function () {
+      this.contentAreas.messages.setContent('')
+    },
 
-      changeTab (name) {
-        this.setContentWidth({ width: 'auto', component: null })
-        this.$emit('changetab', name)
-      },
+    settingChanged: function (name, value) {
+      this.$emit('settingchange', name, value) // Re-emit for a Vue instance to catch
+    },
 
-      clearContent: function () {
-        for (let contentArea in this.contentAreas) {
-          if (this.contentAreas.hasOwnProperty(contentArea)) {
-            this.contentAreas[contentArea].clearContent()
-          }
-        }
-        return this
-      },
+    resourceSettingChanged: function (name, value) {
+      this.$emit('resourcesettingchange', name, value) // Re-emit for a Vue instance to catch
+    },
 
-      showMessage: function (messageHTML) {
-        this.contentAreas.messages.setContent(messageHTML)
-        this.tabGroups.contentTabs.activate('statusTab')
-      },
+    uiOptionChanged: function (name, value) {
+      this.$emit('ui-option-change', name, value) // Re-emit for a Vue instance to catch
+    },
 
-      appendMessage: function (messageHTML) {
-        this.contentAreas.messages.appendContent(messageHTML)
-      },
+    setContentWidth: function (dataObj) {
+      if (this.data === undefined) {
+        return
+      }
+      if (dataObj.width === 'auto') {
+        this.panelWidth = null
+        return
+      }
 
-      clearMessages: function () {
-        this.contentAreas.messages.setContent('')
-      },
+      this.calcWidthPaddings(dataObj.component)
+      this.calcScrollPadding()
 
-      settingChanged: function (name, value) {
-        this.$emit('settingchange', name, value) // Re-emit for a Vue instance to catch
-      },
-
-      resourceSettingChanged: function (name, value) {
-        this.$emit('resourcesettingchange', name, value) // Re-emit for a Vue instance to catch
-      },
-
-      uiOptionChanged: function (name, value) {
-        this.$emit('ui-option-change', name, value) // Re-emit for a Vue instance to catch
-      },
-
-      setContentWidth: function (dataObj) {
-        if (this.data === undefined) {
-          return
-        }
-        if (dataObj.width === 'auto') {
-          this.panelWidth = null
-          return
-        }
-
-        this.calcWidthPaddings(dataObj.component)
-        this.calcScrollPadding()
-
-        let widthDelta = this.navbarWidth +
+      let widthDelta = this.navbarWidth +
           this.panelLeftPadding +
           this.panelRightPadding +
           this.scrollPadding
 
-        if (dataObj.width > this.data.minWidth - widthDelta) {
-          let adjustedWidth = dataObj.width + widthDelta
-          // Max viewport width less some space to display page content
-          let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
+      if (dataObj.width > this.data.minWidth - widthDelta) {
+        let adjustedWidth = dataObj.width + widthDelta
+        // Max viewport width less some space to display page content
+        let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
 
-          if (adjustedWidth > maxWidth) { adjustedWidth = maxWidth }
-          this.panelWidth = adjustedWidth
-        }
-      },
-
-      setTreebankContentWidth: function (width) {
-        console.log(`Set width to ${width}`)
-        this.panelWidth = width
-      },
-
-      ln10Messages: function (value, defaultValue = 'unknown') {
-        if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
-          return this.data.l10n.messages[value]
-        }
-        return defaultValue
-      },
-
-      attachTrackingClick: function () {
-        this.close()
-      },
-
-      calcScrollPadding: function () {
-        if (typeof this.$el.querySelector === 'function') {
-          this.scrollPadding = this.$el.scrollHeight > this.$el.offsetHeight
-            ? this.defaultScrollPadding : 0
-        }
-      },
-
-      calcWidthPaddings: function (component) {
-        let panelTabId
-        if (component === 'inflections') {
-          panelTabId = this.inflectionsPanelID
-        } else if (component === 'inflections=browser') {
-          panelTabId = this.inflectionsBrowserPanelID
-        }
-
-        if (typeof this.$el.querySelector === 'function' && panelTabId && (this.panelLeftPadding === 0 || this.panelRightPadding === 0)) {
-          let navbar = this.$el.querySelector(`#${this.navbarID}`)
-          let panel = this.$el.querySelector(`#${panelTabId}`)
-          this.navbarWidth = 0
-          if (navbar) {
-            let width = window.getComputedStyle(navbar).getPropertyValue('width').match(/\d+/)
-            if (width && Array.isArray(width) && width.length > 0) { this.navbarWidth = width[0] }
-          }
-
-          if (panel) {
-            let resPl1 = window.getComputedStyle(panel).getPropertyValue('padding-left').match(/\d+/)
-            if (Array.isArray(resPl1)) {
-              this.panelLeftPadding = parseInt(resPl1[0])
-            } else {
-              this.panelLeftPadding = 0
-            }
-
-            let resPl2 = window.getComputedStyle(panel).getPropertyValue('padding-right').match(/\d+/)
-            if (Array.isArray(resPl2)) {
-              this.panelRightPadding = parseInt(resPl2[0])
-            } else {
-              this.panelRightPadding = 0
-            }
-          }
-        }
+        if (adjustedWidth > maxWidth) { adjustedWidth = maxWidth }
+        this.panelWidth = adjustedWidth
       }
     },
-    created: function () {
-      let vm = this
-      vm.$on('changeStyleClass', (name, type) => {
-        vm.uiOptionChanged(name, type)
-      })
+
+    setTreebankContentWidth: function (width) {
+      console.log(`Set width to ${width}`)
+      this.panelWidth = width
     },
-    mounted: function () {
-      // Determine paddings and sidebar width for calculation of a panel width to fit content
-      if (this.data === undefined) {
-        return
+
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
+        return this.data.l10n.messages[value]
       }
+      return defaultValue
+    },
+
+    attachTrackingClick: function () {
+      this.close()
+    },
+
+    calcScrollPadding: function () {
       if (typeof this.$el.querySelector === 'function') {
-        this.calcWidthPaddings()
+        this.scrollPadding = this.$el.scrollHeight > this.$el.offsetHeight
+          ? this.defaultScrollPadding : 0
+      }
+    },
 
-        // Initialize Interact.js: make panel resizable
-        interact(this.$el)
-          .resizable({
-            // resize from all edges and corners
-            edges: { left: true, right: true, bottom: false, top: false },
+    calcWidthPaddings: function (component) {
+      let panelTabId
+      if (component === 'inflections') {
+        panelTabId = this.inflectionsPanelID
+      } else if (component === 'inflections=browser') {
+        panelTabId = this.inflectionsBrowserPanelID
+      }
 
-            // keep the edges inside the parent
-            restrictEdges: {
-              outer: document.body,
-              endOnly: true
-            },
+      if (typeof this.$el.querySelector === 'function' && panelTabId && (this.panelLeftPadding === 0 || this.panelRightPadding === 0)) {
+        let navbar = this.$el.querySelector(`#${this.navbarID}`)
+        let panel = this.$el.querySelector(`#${panelTabId}`)
+        this.navbarWidth = 0
+        if (navbar) {
+          let width = window.getComputedStyle(navbar).getPropertyValue('width').match(/\d+/)
+          if (width && Array.isArray(width) && width.length > 0) { this.navbarWidth = width[0] }
+        }
 
-            // minimum size
-            restrictSize: {
-              min: { width: this.data.minWidth }
-            },
+        if (panel) {
+          let resPl1 = window.getComputedStyle(panel).getPropertyValue('padding-left').match(/\d+/)
+          if (Array.isArray(resPl1)) {
+            this.panelLeftPadding = parseInt(resPl1[0])
+          } else {
+            this.panelLeftPadding = 0
+          }
 
-            inertia: true
-          })
-          .on('resizemove', event => {
-            let target = event.target
-            // update the element's style
-            target.style.width = `${event.rect.width}px`
-          })
+          let resPl2 = window.getComputedStyle(panel).getPropertyValue('padding-right').match(/\d+/)
+          if (Array.isArray(resPl2)) {
+            this.panelRightPadding = parseInt(resPl2[0])
+          } else {
+            this.panelRightPadding = 0
+          }
+        }
       }
     }
+  },
+  created: function () {
+    let vm = this
+    vm.$on('changeStyleClass', (name, type) => {
+      vm.uiOptionChanged(name, type)
+    })
+  },
+  mounted: function () {
+    // Determine paddings and sidebar width for calculation of a panel width to fit content
+    if (this.data === undefined) {
+      return
+    }
+    if (typeof this.$el.querySelector === 'function') {
+      this.calcWidthPaddings()
+
+      // Initialize Interact.js: make panel resizable
+      interact(this.$el)
+        .resizable({
+          // resize from all edges and corners
+          edges: { left: true, right: true, bottom: false, top: false },
+
+          // keep the edges inside the parent
+          restrictEdges: {
+            outer: document.body,
+            endOnly: true
+          },
+
+          // minimum size
+          restrictSize: {
+            min: { width: this.data.minWidth }
+          },
+
+          inertia: true
+        })
+        .on('resizemove', event => {
+          let target = event.target
+          // update the element's style
+          target.style.width = `${event.rect.width}px`
+        })
+    }
   }
+}
 </script>
 <style lang="scss">
     @import "../styles/alpheios";
