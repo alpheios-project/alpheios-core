@@ -1,0 +1,14 @@
+// Custom variables and UKKIt variable overwrites.
+@import "alpheios-theme/import.variables";
+// Import default variables and available mixins.
+@import "../../../node_modules/uikit/src/scss/variables.scss";
+@import "../../../node_modules/uikit/src/scss/mixins.scss";
+// Custom mixin overwrites.
+@import "alpheios-theme/import.mixins";
+
+// Isolate UIKit classes into a namespace to avoid any potential conflicts with page body
+.#{$alpheios-uikit-namespace} {
+    // UIkit
+    @import "components/import.components";
+}
+@import "compatibility";

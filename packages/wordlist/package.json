@@ -1,0 +1,105 @@
+{
+  "name": "alpheios-wordlist",
+  "version": "0.1.0",
+  "description": "Word-In-Context List library for an Alpheios project",
+  "main": "dist/alpheios-wordlist.min.js",
+  "scripts": {
+    "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
+    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+    "lint": "eslint --fix src/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/wordlist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/wordlist/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/wordlist#readme",
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.27",
+    "alpheios-client-adapters": "github:alpheios-project/client-adapters",
+    "alpheios-data-models": "github:alpheios-project/data-models",
+    "alpheios-node-build": "github:alpheios-project/node-build",
+    "autoprefixer": "^8.6.5",
+    "bytes": "^3.0.0",
+    "chalk": "^2.4.1",
+    "copy-webpack-plugin": "^4.6.0",
+    "coveralls": "^3.0.2",
+    "css-loader": "^0.28.11",
+    "dom-anchor-text-quote": "*",
+    "element-closest": "^2.0.2",
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "file-loader": "^1.1.11",
+    "flush-promises": "^1.0.2",
+    "font-awesome-svg-png": "^1.2.2",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "fs": "0.0.1-security",
+    "html-loader": "^0.5.5",
+    "html-loader-jest": "^0.2.1",
+    "interactjs": "^1.3.3",
+    "intl-messageformat": "^2.2.0",
+    "jest": "^23.6.0",
+    "jest-serializer-vue": "^2.0.2",
+    "jest-vue-preprocessor": "^1.4.0",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.1.6",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^7.1.0",
+    "semver": "^5.6.0",
+    "shelljs": "^0.8.3",
+    "sinon": "^6.3.5",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.21.0",
+    "uikit": "^3.0.0-rc.25",
+    "vue": "^2.5.21",
+    "whatwg-fetch": "^2.0.4",
+    "wrap-range-text": "*"
+  },
+  "peerDependencies": {
+    "alpheios-data-models": "github:alpheios-project/data-models",
+    "dom-anchor-text-quote": "4.0.2",
+    "intl-messageformat": "2.x.x",
+    "uuid": "3.x.x",
+    "wrap-range-text": ""
+  },
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "^@[/](.+)": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.htmlf$": "html-loader-jest",
+      "^.+\\.jsx?$": "babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
+      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransform.js"
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    }
+  },
+  "standard": {
+    "ignore": [
+      "**/dist",
+      "**/tests/test-bundle.js"
+    ]
+  }
+}
