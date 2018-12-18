@@ -3,13 +3,23 @@ import WordList from '@/lib/word-list';
 import WordItem from '@/lib/word-item';
 
 export default class WordlistController {
-  constructor () {
-    this.wordList = new WordList()
+  constructor (userID) {
+    this.userID = userID
+    this.wordLists = new Map()
+  }
+
+  createWordList (languageID) {
+    this.wordLists.set(languageID, new WordList(this.userID, languageID))
   }
 
   updateWordList(homonym) {
-    this.wordList.push(new WordItem(homonym))
+    let languageID = homonym.languageID
+    if (!this.wordLists.has(languageID)) {
+      this.createWordList(languageID)
+    }
     
-    console.info('******************this.wordList', this.wordList)
+    this.wordLists.get(languageID).push(new WordItem(homonym))
+    
+    console.info('******************this.wordLists', this.wordLists)
   }
 }

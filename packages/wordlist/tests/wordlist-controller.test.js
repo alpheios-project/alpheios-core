@@ -10,17 +10,27 @@ describe('wordlist-controller.test.js', () => {
   console.log = function () {}
   console.warn = function () {}  
 
-  let testHomonym
+  let testHomonymLatin, testHomonymGreek
+  let testUserID = 'userIDTest'
 
   beforeAll(async () => {
-    let resTestHomonym = await ClientAdapters.morphology.tufts({
+    let resTestHomonymLatin = await ClientAdapters.morphology.tufts({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'caeli'
       }
     })
-    testHomonym = resTestHomonym.result
+    testHomonymLatin = resTestHomonymLatin.result
+
+    let resTestHomonymGreek = await ClientAdapters.morphology.tufts({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'μύες'
+      }
+    })
+    testHomonymGreek = resTestHomonymGreek.result
   })
   
   beforeEach(() => {
@@ -38,8 +48,8 @@ describe('wordlist-controller.test.js', () => {
   })
   
   it('1 WordlistController - new constructor', () => {
-    let wC = new WordlistController()
-    wC.updateWordList(testHomonym)
-    wC.updateWordList(testHomonym)
+    let wC = new WordlistController(testUserID)
+    wC.updateWordList(testHomonymLatin)
+    wC.updateWordList(testHomonymGreek)
   })
 })
