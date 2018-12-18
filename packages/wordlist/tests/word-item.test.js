@@ -54,6 +54,8 @@ describe('word-item.test.js', () => {
     expect(wI.targetWord).toEqual(testHomonymLatin.targetWord)
     expect(wI.languageID).toEqual(testHomonymLatin.languageID)
     expect(wI.homonym).toEqual(testHomonymLatin)
+    expect(wI.important).toBeFalsy()
+    expect(wI.ID).toBeDefined()
   })
 
   it('2 WordItem - makeImportant method marks item as important', () => {
