@@ -60,14 +60,14 @@ describe('wordlist-controller.test.js', () => {
 
     expect(wC.wordLists.size).toEqual(1)
     expect(wC.wordLists.has(Constants.LANG_LATIN)).toBeTruthy()
-    expect(wC.wordLists.get(Constants.LANG_LATIN).items.length).toEqual(1)
+    expect(wC.wordLists.get(Constants.LANG_LATIN).values.length).toEqual(1)
 
     wC.updateWordList(testHomonymLatin)
-    expect(wC.wordLists.get(Constants.LANG_LATIN).items.length).toEqual(1) // check for duplicates
+    expect(wC.wordLists.get(Constants.LANG_LATIN).values.length).toEqual(1) // check for duplicates
 
     wC.updateWordList(testHomonymGreek)
     expect(wC.wordLists.size).toEqual(2)
     expect(wC.wordLists.has(Constants.LANG_GREEK)).toBeTruthy()
-    expect(wC.wordLists.get(Constants.LANG_GREEK).items.length).toEqual(1)
+    expect(wC.wordLists.get(Constants.LANG_GREEK).values.length).toEqual(1)
   })
 })
