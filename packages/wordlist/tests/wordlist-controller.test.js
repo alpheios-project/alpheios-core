@@ -1,12 +1,26 @@
+/* eslint-env jest */
+/* eslint-disable no-unused-vars */
+import 'whatwg-fetch'
 import WordlistController from '@/controllers/wordlist-controller.js'
+import { ClientAdapters } from 'alpheios-client-adapters'
+import { Constants } from 'alpheios-data-models'
 
 describe('wordlist-controller.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}  
 
-  beforeAll(async () => {
+  let testHomonym
 
+  beforeAll(async () => {
+    let resTestHomonym = await ClientAdapters.morphology.tufts({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_LATIN,
+        word: 'caeli'
+      }
+    })
+    testHomonym = resTestHomonym.result
   })
   
   beforeEach(() => {
@@ -25,6 +39,7 @@ describe('wordlist-controller.test.js', () => {
   
   it('1 WordlistController - new constructor', () => {
     let wC = new WordlistController()
-    console.info('************wc', wC)
+    wC.updateWordList(testHomonym)
+    wC.updateWordList(testHomonym)
   })
 })
