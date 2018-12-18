@@ -47,9 +47,27 @@ describe('wordlist-controller.test.js', () => {
     jest.clearAllMocks()
   })
   
-  it('1 WordlistController - new constructor', () => {
+  it('1 WordlistController - constructor saves userID from properties and inits wordLists', () => {
+    let wC = new WordlistController(testUserID)
+    expect(wC.userID).toEqual(testUserID)
+    expect(wC.wordLists).toBeInstanceOf(Map)
+    expect(wC.wordLists.size).toEqual(0)
+  })
+
+  it('2 WordlistController - updateWordList checks wordLists map, doesn\'t add duplicate and create a separate WordList for each languageID', () => {
     let wC = new WordlistController(testUserID)
     wC.updateWordList(testHomonymLatin)
+
+    expect(wC.wordLists.size).toEqual(1)
+    expect(wC.wordLists.has(Constants.LANG_LATIN)).toBeTruthy()
+    expect(wC.wordLists.get(Constants.LANG_LATIN).items.length).toEqual(1)
+
+    wC.updateWordList(testHomonymLatin)
+    expect(wC.wordLists.get(Constants.LANG_LATIN).items.length).toEqual(1) // check for duplicates
+
     wC.updateWordList(testHomonymGreek)
+    expect(wC.wordLists.size).toEqual(2)
+    expect(wC.wordLists.has(Constants.LANG_GREEK)).toBeTruthy()
+    expect(wC.wordLists.get(Constants.LANG_GREEK).items.length).toEqual(1)
   })
 })

@@ -19,7 +19,5 @@ export default class WordlistController {
     }
     
     this.wordLists.get(languageID).push(new WordItem(homonym))
-    
-    console.info('******************this.wordLists', this.wordLists)
   }
 }

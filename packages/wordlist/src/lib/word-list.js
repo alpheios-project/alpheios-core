@@ -14,4 +14,16 @@ export default class WordList {
   contains (wordItem) {
     return this.items.map(item => item.targetWord).includes(wordItem.targetWord)
   }
+
+  makeAllImportant () {
+    this.items.forEach(wordItem => {
+      wordItem.makeImportant()
+    })
+  }
+
+  removeAllImportant () {
+    this.items.forEach(wordItem => {
+      wordItem.removeImportant()
+    })
+  }
 }
