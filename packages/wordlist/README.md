@@ -1,1 +1,1 @@
-# wordlist
+# wordlist [![Coverage Status](https://coveralls.io/repos/github/alpheios-project/wordlist/badge.svg?branch=master)](https://coveralls.io/github/alpheios-project/wordlist?branch=master)
