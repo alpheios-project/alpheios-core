@@ -6,4 +6,4 @@ notifications:
   slack: alpheiosproject:9WEA6UNyLr3U0bWIJctp1rqS
 before_install:
 - export COVERALLS_SERVICE_NAME=travis-pro
-- export COVERALLS_REPO_TOKEN=owAfWo66FUVHI0Gw4oiaLc72YPJAvl7lw
+- export COVERALLS_REPO_TOKEN=jfAzjkVkTQmBT279oSBs2SH7Ag2QKIfV4
