@@ -704,6 +704,8 @@ module.exports = v4;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -711,6 +713,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WordListPanel',
@@ -726,10 +734,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     languagesList () {
-      // console.info('*********************languagesList 1', this.updated, this.wordLists)
-      // console.info('*********************languagesList 2', this.wordLists.keys())
-      // console.info('*********************languagesList 3', Array.from(this.wordLists.keys()))
       return this.updated && this.wordLists.size > 0 ? Array.from(this.wordLists.keys()) : []
+    }
+  },
+  methods: {
+    getLanguageName(languageID) {
+      let languageNames = new Map([
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_ARABIC, 'Arabic'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN, 'Persian'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
+      ])
+
+      return languageNames.has(languageID) ? languageNames.get(languageID) : ''
+    },
+
+    getWordItemsByLanguage(languageID) {
+      console.info('***************getWordItemsByLanguage1', languageID)
+      console.info('***************getWordItemsByLanguage2', this.wordLists.get(languageID).items)
+      console.info('***************getWordItemsByLanguage3', Object.values(this.wordLists.get(languageID).items))
+      return Object.values(this.wordLists.get(languageID).items)
     }
   }
 });
@@ -755,10 +780,46 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "alpheios-wordlist" },
-    _vm._l(_vm.languagesList, function(language) {
-      return _c("div", { staticClass: "alpheios-wordlist-language" }, [
-        _vm._v("\n        " + _vm._s(language) + "\n    ")
-      ])
+    _vm._l(_vm.languagesList, function(languageID, langIndex) {
+      return _c(
+        "div",
+        { key: langIndex, staticClass: "alpheios-wordlist-language" },
+        [
+          _c("div", { staticClass: "alpheios-wordlist-language__title" }, [
+            _vm._v(_vm._s(_vm.getLanguageName(languageID)))
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.getWordItemsByLanguage(languageID), function(wordItem) {
+            return _c(
+              "div",
+              {
+                key: wordItem.ID,
+                staticClass: "alpheios-wordlist-language__worditem"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "alpheios-wordlist-language__worditem__data alpheios-wordlist-language__worditem__targetWord"
+                  },
+                  [_vm._v(_vm._s(wordItem.targetWord))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "alpheios-wordlist-language__worditem__data alpheios-wordlist-language__worditem__lemmasList"
+                  },
+                  [_vm._v(_vm._s(wordItem.lemmasList))]
+                )
+              ]
+            )
+          })
+        ],
+        2
+      )
     }),
     0
   )
@@ -12098,6 +12159,10 @@ class WordItem {
 
   removeImportant () {
     this.important = false
+  }
+
+  get lemmasList () {
+    return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).join(', ')
   }
 }
 

@@ -16,4 +16,8 @@ export default class WordItem {
   removeImportant () {
     this.important = false
   }
+
+  get lemmasList () {
+    return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).join(', ')
+  }
 }

@@ -1,6 +1,30 @@
 /***************** panel settings **********************/
 
 /***************** panel settings **********************/
+.alpheios-wordlist-language {
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.alpheios-wordlist-language__title {
+  font-weight: bold;
+  font-size: 110%;
+  border-bottom: 1px solid #4E6476;
+}
+.alpheios-wordlist-language__worditem {
+  border-bottom: 1px solid #ddd;
+  padding: 2px 0;
+}
+.alpheios-wordlist-language__worditem__data {
+  display: inline-block;
+  vertical-align: middle;
+}
+.alpheios-wordlist-language__worditem__targetWord {
+  font-weight: bold;
+  width: 30%;
+}
+.alpheios-wordlist-language__worditem__lemmasList {
+  width: 68%;
+}
 
 
 /*# sourceMappingURL=style.css.map*/
