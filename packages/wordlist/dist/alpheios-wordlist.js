@@ -11823,8 +11823,15 @@ class WordlistController {
     }
     
     this.wordLists.get(languageID).push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_2__["default"](homonym))
+
+    console.info('*******************this.wordLists', this.wordLists)
+  }
+
+  onHomonymReady (homonym) {
+    this.updateWordList(homonym)
   }
 }
+
 
 /***/ }),
 
