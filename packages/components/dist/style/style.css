@@ -9842,6 +9842,29 @@ ul.alpheios-skin_properties {
 /********** Dark Schema ***********************/
 .alpheios-user-auth__message-box {
   margin-top: 20px;
+  padding: 10px;
+  background: #BCE5F0;
+}
+.alpheios-user-auth__user-info-box {
+  margin-top: 20px;
+  display: flex;
+  border-top: 1px solid #D1D1D0;
+  flex-direction: column;
+}
+.alpheios-user-auth__user-info-item-box {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+  border-bottom: 1px solid #D1D1D0;
+}
+.alpheios-user-auth__user-info-item-name {
+  flex: 1 1;
+}
+.alpheios-user-auth__user-info-item-value {
+  font-weight: 700;
+  flex: 1 1;
+  color: #3E8D9C !important;
+  text-align: right;
 }
 
 /************ UIKit vars ************************/
