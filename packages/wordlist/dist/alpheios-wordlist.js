@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("alpheios-data-models"));
+		module.exports = factory(require("alpheios-data-models"), require("intl-messageformat"));
 	else if(typeof define === 'function' && define.amd)
-		define(["alpheios-data-models"], factory);
+		define(["alpheios-data-models", "intl-messageformat"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
+		var a = typeof exports === 'object' ? factory(require("alpheios-data-models"), require("intl-messageformat")) : factory(root["alpheios-data-models"], root["intl-messageformat"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_intl_messageformat__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -95,6 +95,28 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
 
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
@@ -695,18 +717,82 @@ module.exports = v4;
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-list-panel.vue?vue&type=script&lang=js&":
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'TooltipWrap',
+  data () {
+    return {
+      allowedTooltipClasses: [
+        'alpheios-tooltip__top', 'alpheios-tooltip__top-right', 'alpheios-tooltip__top-left', 
+        'alpheios-tooltip__bottom', 'alpheios-tooltip__bottom-right', 'alpheios-tooltip__bottom-wide', 
+        'alpheios-tooltip__bottom-narrow', 'alpheios-tooltip__bottom-narrow2',
+        'alpheios-tooltip__left', 'alpheios-tooltip__right'
+      ],
+      defaultTooltipClass: 'alpheios-tooltip__bottom'
+    }
+  },
+  props: {
+    tooltipText: {
+      type: String,
+      required: true
+    },
+    tooltipDirection: {
+      type: String,
+      required: false
+    },
+    additionalStyles: {
+      type: Object,
+      required: false
+    }
+  },
+  computed: {
+    tooltipDirectionLC: function () {
+      return this.tooltipDirection ? this.tooltipDirection.toLowerCase() : ''
+    },
+    tooltipDirectionClass: function () {
+      return 'alpheios-tooltip__' + this.tooltipDirectionLC
+    },
+    finalTooltipDirection: function() {
+      return (this.allowedTooltipClasses.indexOf(this.tooltipDirectionClass) > -1) ? this.tooltipDirectionClass : this.defaultTooltipClass
+    }
+  }
+});
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-item-panel.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-list-panel.vue?vue&type=script&lang=js& ***!
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-item-panel.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-//
+/* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/icons/check.svg */ "./icons/check.svg");
+/* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_icons_check_svg__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -721,10 +807,182 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'WordListPanel',
+  name: 'WordItemPanel',
+  components: {
+    checkIcon: _icons_check_svg__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   props: {
-    wordLists: {
-      type: Map,
+    worditem: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
+    return {
+      important: false
+    }
+  },
+  mounted () {
+    this.important = this.worditem.important
+    this.$parent.$on('eventChangeImportant', this.eventChangeImportant);
+  },
+  computed: {
+    itemClasses () {
+      return { active: this.important }
+    }
+  },
+  methods: {
+    changeImportant () {
+      this.worditem.important = !this.worditem.important
+      this.important = this.worditem.important
+    },
+    eventChangeImportant () {
+      this.important = this.worditem.important
+    } 
+  }
+});
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-language-panel.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-language-panel.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue-components/common-components/tooltip-wrap.vue */ "./vue-components/common-components/tooltip-wrap.vue");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/icons/check.svg */ "./icons/check.svg");
+/* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_icons_check_svg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue-components/word-item-panel.vue */ "./vue-components/word-item-panel.vue");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+ // Vue in a runtime + compiler configuration
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'WordListPanel',
+  components: {
+    checkIcon: _icons_check_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
+    wordItemPanel: _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    alphTooltip: _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    wordlist: {
+      type: Object,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: true
+    },
+    updated: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    wordItems () {
+      return this.updated ? this.wordlist.values : []
+    },
+    languageName () {
+      let languageNames = new Map([
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_LATIN, 'Latin'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_GREEK, 'Greek'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_ARABIC, 'Arabic'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_PERSIAN, 'Persian'],
+        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
+      ])
+      
+      let languageID = this.wordlist.languageID
+      return languageNames.has(languageID) ? languageNames.get(languageID) : ''
+    }
+  },
+  methods: {
+    makeAllImportant () {
+      this.wordlist.makeAllImportant()
+      this.$emit('eventChangeImportant')
+    },
+    removeAllImportant () {
+      this.wordlist.removeAllImportant()
+      this.$emit('eventChangeImportant')
+    }
+  }
+});
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-list-panel.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-list-panel.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _vue_components_word_language_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-language-panel.vue */ "./vue-components/word-language-panel.vue");
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'WordListPanel',
+  components: {
+    wordLanguagePanel: _vue_components_word_language_panel_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  props: {
+    wordlistC: {
+      type: Object,
       required: true
     },
     updated: {
@@ -734,30 +992,216 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     languagesList () {
-      return this.updated && this.wordLists.size > 0 ? Array.from(this.wordLists.keys()) : []
+      return this.updated && Object.keys(this.wordLists).length > 0 ? Object.keys(this.wordLists) : []
+    },
+    l10n () {
+      return new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__["default"]()
+        .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_1__["default"].en_US)
+        .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_1__["default"].en_GB)
+        .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_1__["default"].en_US)
+    },
+    wordLists () {
+      return this.wordlistC.wordLists
     }
   },
   methods: {
-    getLanguageName(languageID) {
-      let languageNames = new Map([
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_ARABIC, 'Arabic'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN, 'Persian'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
-      ])
-
-      return languageNames.has(languageID) ? languageNames.get(languageID) : ''
-    },
-
-    getWordItemsByLanguage(languageID) {
-      console.info('***************getWordItemsByLanguage1', languageID)
-      console.info('***************getWordItemsByLanguage2', this.wordLists.get(languageID).items)
-      console.info('***************getWordItemsByLanguage3', Object.values(this.wordLists.get(languageID).items))
-      return Object.values(this.wordLists.get(languageID).items)
-    }
   }
 });
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/common-components/tooltip-wrap.vue?vue&type=template&id=08f22dbf&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/common-components/tooltip-wrap.vue?vue&type=template&id=08f22dbf& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "alpheios-tooltip", style: _vm.additionalStyles },
+    [
+      _vm._t("default"),
+      _vm._v(" "),
+      _vm.tooltipText
+        ? _c(
+            "span",
+            {
+              staticClass: "alpheios-tooltip__text",
+              class: _vm.finalTooltipDirection
+            },
+            [_vm._v("\n    " + _vm._s(_vm.tooltipText) + "\n  ")]
+          )
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { class: _vm.itemClasses }, [
+    _c(
+      "div",
+      {
+        staticClass: "alpheios-worditem__data alpheios-worditem__important",
+        on: {
+          click: function($event) {
+            _vm.changeImportant()
+          }
+        }
+      },
+      [_c("check-icon")],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "alpheios-worditem__data alpheios-worditem__targetWord" },
+      [_vm._v(_vm._s(_vm.worditem.targetWord))]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "alpheios-worditem__data alpheios-worditem__lemmasList" },
+      [_vm._v(_vm._s(_vm.worditem.lemmasList))]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        { staticClass: "alpheios-wordlist-commands" },
+        [
+          _c("div", { staticClass: "alpheios-wordlist-language__title" }, [
+            _vm._v(_vm._s(_vm.languageName))
+          ]),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipDirection: "top-left",
+                tooltipText: _vm.messages.TOOLTIP_ALL_IMPORTANT
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "alpheios-wordlist-commands__item alpheios-wordlist-commands__item-all-important",
+                  on: {
+                    click: function($event) {
+                      _vm.makeAllImportant()
+                    }
+                  }
+                },
+                [_c("check-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipDirection: "top-left",
+                tooltipText: _vm.messages.TOOLTIP_NO_IMPORTANT
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "alpheios-wordlist-commands__item alpheios-wordlist-commands__item-no-important",
+                  on: {
+                    click: function($event) {
+                      _vm.removeAllImportant()
+                    }
+                  }
+                },
+                [_c("check-icon")],
+                1
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.wordItems, function(wordItem) {
+        return _c(
+          "div",
+          {
+            key: wordItem.ID,
+            staticClass: "alpheios-wordlist-language__worditem"
+          },
+          [_c("word-item-panel", { attrs: { worditem: wordItem } })],
+          1
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
 
 
 /***/ }),
@@ -780,45 +1224,20 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "alpheios-wordlist" },
-    _vm._l(_vm.languagesList, function(languageID, langIndex) {
+    _vm._l(_vm.languagesList, function(languageCode, langIndex) {
       return _c(
         "div",
         { key: langIndex, staticClass: "alpheios-wordlist-language" },
         [
-          _c("div", { staticClass: "alpheios-wordlist-language__title" }, [
-            _vm._v(_vm._s(_vm.getLanguageName(languageID)))
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.getWordItemsByLanguage(languageID), function(wordItem) {
-            return _c(
-              "div",
-              {
-                key: wordItem.ID,
-                staticClass: "alpheios-wordlist-language__worditem"
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "alpheios-wordlist-language__worditem__data alpheios-wordlist-language__worditem__targetWord"
-                  },
-                  [_vm._v(_vm._s(wordItem.targetWord))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "alpheios-wordlist-language__worditem__data alpheios-wordlist-language__worditem__lemmasList"
-                  },
-                  [_vm._v(_vm._s(wordItem.lemmasList))]
-                )
-              ]
-            )
+          _c("word-language-panel", {
+            attrs: {
+              wordlist: _vm.wordLists[languageCode],
+              messages: _vm.l10n.messages,
+              updated: _vm.updated
+            }
           })
         ],
-        2
+        1
       )
     }),
     0
@@ -12066,20 +12485,24 @@ __webpack_require__.r(__webpack_exports__);
 class WordlistController {
   constructor (userID) {
     this.userID = userID
-    this.wordLists = new Map()
+    this.wordLists = {}
   }
 
   createWordList (languageID) {
-    this.wordLists.set(languageID, new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID))
+    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
+    this.wordLists[languageCode] = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID)
+    console.info('****************createWordList this.wordLists', this.wordLists)
   }
 
   updateWordList(homonym) {
     let languageID = homonym.languageID
-    if (!this.wordLists.has(languageID)) {
+    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
+    if (!Object.keys(this.wordLists).includes(languageCode)) {
       this.createWordList(languageID)
     }
     
-    this.wordLists.get(languageID).push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym))
+    this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym))
+    console.info('****************updateWordList this.wordLists', this.wordLists)
   }
 
   onHomonymReady (homonym) {
@@ -12099,6 +12522,17 @@ WordlistController.evt = {
   WORDLIST_UPDATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist updated', WordlistController)
 }
 
+
+/***/ }),
+
+/***/ "./icons/check.svg":
+/*!*************************!*\
+  !*** ./icons/check.svg ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "C:\\_Irina\\_clients\\_Alpheios Project\\git\\wordlist\\src\\icons\\check.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -12126,6 +12560,299 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+/***/ }),
+
+/***/ "./lib/l10n/l10n.js":
+/*!**************************!*\
+  !*** ./lib/l10n/l10n.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return L10n; });
+/* harmony import */ var _message_bundle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message-bundle */ "./lib/l10n/message-bundle.js");
+
+
+/**
+ * Combines several message bundles of different locales.
+ */
+class L10n {
+  constructor () {
+    this.selectedLocale = undefined // A locale that currently selected
+    this.bundles = new Map() // Maps message bundles to their locales
+    return this
+  }
+
+  /**
+   * Adds, or appends, one or several messages for a locale specified.
+   * This method is chainable.
+   * @param {string} messageJSON - Messages in a JSON string
+   * @param {string} locale - A locale of the messages
+   * @return {L10n} - Self reference (for chaining)
+   */
+  addMessages (messageJSON, locale) {
+    let messageBundle
+    if (this.bundles.has(locale)) {
+      messageBundle = this.bundles.get(locale)
+      messageBundle.appendFromJSON(messageJSON)
+    } else {
+      messageBundle = new _message_bundle__WEBPACK_IMPORTED_MODULE_0__["default"](messageJSON, locale)
+      this.addMessageBundle(messageBundle)
+    }
+    return this
+  }
+
+  /**
+   * Adds a message bundle to a L10n object. If selected locale is not set, sets it to the locale of the message bundle.
+   * This function is chainable.
+   * @param {MessageBundle} messageBundle - A message bundle that will be stored within an L10n object.
+   * @return {L10n} - Returns self for chaining.
+   */
+  addMessageBundle (messageBundle) {
+    this.bundles.set(messageBundle.locale, messageBundle)
+    if (!this.selectedLocale) {
+      this.setLocale(messageBundle.locale)
+    }
+    return this
+  }
+
+  /**
+   * Returns an array of locales supported by the L10n object.
+   * @return {string[]}
+   */
+  get locales () {
+    return Array.from(this.bundles.keys())
+  }
+
+  /**
+   * Returns a message bundle for a currently selected locale
+   * @return {MessageBundle | undefined} A message bundle object or undefined if selectedLocale is not set
+   */
+  get bundle () {
+    return this.bundles.get(this.selectedLocale)
+  }
+
+  /**
+   *
+   * @return {Object} - An object containing message objects as property values.
+   * The name of the property is a message key.
+   */
+  get messages () {
+    return this.bundles.has(this.selectedLocale) ? this.bundles.get(this.selectedLocale).messages : {}
+  }
+
+  /**
+   * Sets, or switches a locale that is currently selected. If message bundle for such locale
+   * does not exist, does nothing.
+   * This method is chainable.
+   * @param {string} locale - A locale to be set as currently selected.
+   * @return {L10n} Reference to self for chaining
+   */
+  setLocale (locale) {
+    if (this.bundles.has(locale)) {
+      this.selectedLocale = locale
+    } else {
+      console.error(`Cannot set locale to "${locale}" because there is no message bundle for it`)
+    }
+    return this
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/l10n/message-bundle.js":
+/*!************************************!*\
+  !*** ./lib/l10n/message-bundle.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessageBundle; });
+/* harmony import */ var _message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message.js */ "./lib/l10n/message.js");
+
+// TODO: Deal with situations when message is not available, but is requested
+
+/**
+ * Combines messages with the same locale code into a single message bundle.
+ */
+class MessageBundle {
+  /**
+   * Creates a message bundle (a list of messages) for a locale.
+   * @param {String} messagesJSON - Messages for a locale as a JSON string or as an object.
+   * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
+   */
+  constructor (messagesJSON, locale) {
+    if (!locale) {
+      throw new Error('Locale data is missing')
+    }
+    if (!messagesJSON) {
+      throw new Error('Message data is missing')
+    }
+
+    this._locale = locale
+    /**
+     * An object whose properties are messages. Each message has a get() method and,
+     * if a message has any parameters, a format() method.
+     * @type {{get: Function, [format]: Function}}
+     */
+    this.messages = {}
+
+    let messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
+    this.append(messages)
+  }
+
+  /**
+   * Appends a series of messages from a JSON string
+   * @param {string} messagesJSON - A JSON string
+   */
+  appendFromJSON (messagesJSON) {
+    let messages = JSON.parse(messagesJSON)
+    this.append(messages)
+  }
+
+  /**
+   * Appends a series of messages from an object. Object properties are message names, and
+   * values are message objects.
+   * @param {object} messages - An object containing messages.
+   */
+  append (messages) {
+    for (const [key, messageObj] of Object.entries(messages)) {
+      if (!this.hasOwnProperty(key)) {
+        let message = new _message_js__WEBPACK_IMPORTED_MODULE_0__["default"](messageObj, this._locale)
+        this[key] = message
+        message.defineProperties(this.messages, key)
+      } else {
+        console.warn(`A key name "${key}" is reserved or already used. A message will be ignored"`)
+      }
+    }
+  }
+
+  /**
+   * Returns a (formatted) message for a message ID provided.
+   * @param messageID - An ID of a message.
+   * @param options - Options that can be used for message formatting in the following format:
+   * {
+   *     paramOneName: paramOneValue,
+   *     paramTwoName: paramTwoValue
+   * }.
+   * @returns {string} A formatted message. If message not found, returns a message that contains an error text.
+   */
+  get (messageID, options = undefined) {
+    if (this[messageID]) {
+      if (typeof this[messageID].format === 'function') {
+        return this[messageID].format(options)
+      } else {
+        return this[messageID]
+      }
+    } else {
+      // If message with the ID provided is not in translation data, generate a warning.
+      return `Not in translation data: "${messageID}"`
+    }
+  }
+
+  /**
+   * Returns a locale of a current message bundle.
+   * @return {string} A locale of this message bundle.
+   */
+  get locale () {
+    return this._locale
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/l10n/message.js":
+/*!*****************************!*\
+  !*** ./lib/l10n/message.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
+/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "intl-messageformat");
+/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_messageformat__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ * Represents a single message object
+ */
+class Message {
+  /**
+   * Creates a new Message object.
+   * @param {object} message - A message object as read from JSON file.
+   * @param {string} locale - A message's locale.
+   */
+  constructor (message, locale) {
+    if (!locale) {
+      throw new Error('Locale data is missing')
+    }
+    if (!message) {
+      throw new Error('Message data is missing')
+    }
+
+    this.locale = locale
+    for (const key of Object.keys(message)) {
+      this[key] = message[key]
+    }
+
+    this.formatFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(message.message, this.locale)
+  }
+
+  /**
+   * Whether this message has any parameters or not.
+   * @return {boolean} True if message has any parameters, false otherwise.
+   */
+  get hasParameters () {
+    return !!(this.params && Array.isArray(this.params) && this.params.length > 0)
+  }
+
+  /**
+   * Defines getter methods on an object of messages.
+   * @param {object} messages - On object where messages will be stored. Each property corresponds to a message key.
+   *        Each property will have a getter function defined (will return a formatted message), and,
+   *        for messages with parameters, a format(function).
+   *        `messages` object usually comes from a MessageBundle object.
+   * @param {string} key - A message key, a name of a message.
+   * @return {undefined} Has no return value.
+   */
+  defineProperties (messages, key) {
+    let self = this
+
+    if (this.hasParameters) {
+      messages[key] = {
+        format (options) {
+          return self.formatFunc.format(options)
+        },
+        get (...options) {
+          let params = {}
+          // TODO: Add checks
+          for (let [index, param] of self.params.entries()) {
+            params[param] = options[index]
+          }
+          return self.formatFunc.format(params)
+        }
+      }
+    } else {
+      Object.defineProperty(messages, key, {
+        get () {
+          return self.formatFunc.format()
+        },
+        enumerable: true,
+        configurable: true // So it can be deleted
+      })
+    }
+  }
+}
 
 
 /***/ }),
@@ -12190,9 +12917,14 @@ class WordList {
   }
 
   push (wordItem) {
+    console.info('************this.items1', this.items)
+    console.info('************this.items2', this.languageID, wordItem.languageID)
+    console.info('************this.items3', this.contains(wordItem), this.contains(wordItem))
     if (this.languageID === wordItem.languageID && !this.contains(wordItem)) {
+      console.info('************this.items4 inside')
       this.items[wordItem.ID] = wordItem
     }
+    console.info('************this.items5', this.items[wordItem.ID])
   }
 
   contains (wordItem) {
@@ -12210,7 +12942,61 @@ class WordList {
       wordItem.removeImportant()
     })
   }
+
+  getWordItemByID (languageID, ID) {
+    return this.items[ID]
+  }
 }
+
+/***/ }),
+
+/***/ "./locales/en-gb/messages.json":
+/*!*************************************!*\
+  !*** ./locales/en-gb/messages.json ***!
+  \*************************************/
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, default */
+/***/ (function(module) {
+
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a biscuit.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no queues} =1 {is one queue} other {are # queues}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]}};
+
+/***/ }),
+
+/***/ "./locales/en-us/messages.json":
+/*!*************************************!*\
+  !*** ./locales/en-us/messages.json ***!
+  \*************************************/
+/*! exports provided: TOOLTIP_ALL_IMPORTANT, TOOLTIP_NO_IMPORTANT, default */
+/***/ (function(module) {
+
+module.exports = {"TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordListPanel"},"TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove all words inside language block important","component":"WordListPanel"}};
+
+/***/ }),
+
+/***/ "./locales/locales.js":
+/*!****************************!*\
+  !*** ./locales/locales.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./en-us/messages.json */ "./locales/en-us/messages.json");
+var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  en_US: 'en-US',
+  en_GB: 'en-GB',
+  messages: {
+    en_US: _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__,
+    en_GB: _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__
+  }
+});
+
 
 /***/ }),
 
@@ -12222,6 +13008,249 @@ class WordList {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./vue-components/common-components/tooltip-wrap.vue":
+/*!***********************************************************!*\
+  !*** ./vue-components/common-components/tooltip-wrap.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltip-wrap.vue?vue&type=template&id=08f22dbf& */ "./vue-components/common-components/tooltip-wrap.vue?vue&type=template&id=08f22dbf&");
+/* harmony import */ var _tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip-wrap.vue?vue&type=script&lang=js& */ "./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tooltip-wrap.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue-components/common-components/tooltip-wrap.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./tooltip-wrap.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&":
+/*!*********************************************************************************************!*\
+  !*** ./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss& ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./tooltip-wrap.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue-components/common-components/tooltip-wrap.vue?vue&type=template&id=08f22dbf&":
+/*!******************************************************************************************!*\
+  !*** ./vue-components/common-components/tooltip-wrap.vue?vue&type=template&id=08f22dbf& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./tooltip-wrap.vue?vue&type=template&id=08f22dbf& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/common-components/tooltip-wrap.vue?vue&type=template&id=08f22dbf&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue-components/word-item-panel.vue":
+/*!********************************************!*\
+  !*** ./vue-components/word-item-panel.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item-panel.vue?vue&type=template&id=2b7beca9& */ "./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&");
+/* harmony import */ var _word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-item-panel.vue?vue&type=script&lang=js& */ "./vue-components/word-item-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-item-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue-components/word-item-panel.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue-components/word-item-panel.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./vue-components/word-item-panel.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-item-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-item-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!******************************************************************************!*\
+  !*** ./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-item-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&":
+/*!***************************************************************************!*\
+  !*** ./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9& ***!
+  \***************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-item-panel.vue?vue&type=template&id=2b7beca9& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue-components/word-language-panel.vue":
+/*!************************************************!*\
+  !*** ./vue-components/word-language-panel.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=template&id=70b3b72e& */ "./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&");
+/* harmony import */ var _word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=script&lang=js& */ "./vue-components/word-language-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue-components/word-language-panel.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue-components/word-language-panel.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./vue-components/word-language-panel.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-language-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-language-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&":
+/*!*******************************************************************************!*\
+  !*** ./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-language-panel.vue?vue&type=template&id=70b3b72e& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -12320,6 +13349,17 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
+
+/***/ }),
+
+/***/ "intl-messageformat":
+/*!*************************************!*\
+  !*** external "intl-messageformat" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_intl_messageformat__;
 
 /***/ })
 

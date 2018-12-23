@@ -1,4 +1,4 @@
-import { PsEvent } from 'alpheios-data-models'
+import { PsEvent, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import WordList from '@/lib/word-list';
 import WordItem from '@/lib/word-item';
@@ -6,20 +6,24 @@ import WordItem from '@/lib/word-item';
 export default class WordlistController {
   constructor (userID) {
     this.userID = userID
-    this.wordLists = new Map()
+    this.wordLists = {}
   }
 
   createWordList (languageID) {
-    this.wordLists.set(languageID, new WordList(this.userID, languageID))
+    let languageCode = LMF.getLanguageCodeFromId(languageID)
+    this.wordLists[languageCode] = new WordList(this.userID, languageID)
+    console.info('****************createWordList this.wordLists', this.wordLists)
   }
 
   updateWordList(homonym) {
     let languageID = homonym.languageID
-    if (!this.wordLists.has(languageID)) {
+    let languageCode = LMF.getLanguageCodeFromId(languageID)
+    if (!Object.keys(this.wordLists).includes(languageCode)) {
       this.createWordList(languageID)
     }
     
-    this.wordLists.get(languageID).push(new WordItem(homonym))
+    this.wordLists[languageCode].push(new WordItem(homonym))
+    console.info('****************updateWordList this.wordLists', this.wordLists)
   }
 
   onHomonymReady (homonym) {
