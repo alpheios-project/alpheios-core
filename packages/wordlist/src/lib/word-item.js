@@ -1,4 +1,5 @@
 import uuidv4 from 'uuid/v4'
+import { Homonym } from 'alpheios-data-models'
 
 export default class WordItem {
   constructor (homonym) {
@@ -19,5 +20,10 @@ export default class WordItem {
 
   get lemmasList () {
     return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).join(', ')
+  }
+
+  static uploadFromJSON (jsonObj) {
+    let homonym = Homonym.readObject(jsonObj.homonym)
+    return new WordItem(homonym)
   }
 }

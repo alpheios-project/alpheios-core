@@ -1,8 +1,36 @@
+import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import WordItem from '@/lib/word-item'
+
 export default class WordList {
-  constructor (userID, languageID) {
+  constructor (userID, languageID, storageAdapter) {
     this.userID = userID
     this.languageID = languageID
+    this.storageAdapter = storageAdapter
     this.items = {}
+    this.createStorageID()
+  }
+
+  createStorageID () {
+    let languageCode = LMF.getLanguageCodeFromId(this.languageID)
+    this.storageID =  this.userID + '-' + languageCode
+  }
+
+  async uploadFromStorage () {
+    let result = await this.storageAdapter.get(this.storageID)
+    console.info('***************result', result)
+    let resultObj = JSON.parse(result[this.storageID])
+    if (!resultObj) {
+      return false
+    }
+    console.info('**********************resultObj', resultObj)
+    Object.values(resultObj.items).forEach(resItem => {
+      let wordItem = WordItem.uploadFromJSON(resItem)
+      this.push(wordItem)
+    })
+    
+    console.info('********************uploadFromStorage1', result)
+    console.info('********************uploadFromStorage2', this.items)
+    return true
   }
 
   get values () {
@@ -10,14 +38,32 @@ export default class WordList {
   }
 
   push (wordItem) {
-    console.info('************this.items1', this.items)
-    console.info('************this.items2', this.languageID, wordItem.languageID)
-    console.info('************this.items3', this.contains(wordItem), this.contains(wordItem))
     if (this.languageID === wordItem.languageID && !this.contains(wordItem)) {
-      console.info('************this.items4 inside')
       this.items[wordItem.ID] = wordItem
+      return true
     }
-    console.info('************this.items5', this.items[wordItem.ID])
+    return false
+  }
+  
+  pushToStorage (wordItem) {
+    if (this.push(wordItem)) {
+      this.saveToStorage()
+    }
+  }
+
+  saveToStorage () {
+    let values = {}
+    values[this.storageID] = this.convertToStorage()
+    this.storageAdapter.set(values)
+  }
+
+  convertToStorage () {
+    let result = {}
+    Object.values(this.items).forEach(item => {
+      result[item.ID] = JSON.stringify(Object.assign( {}, item ))
+    })
+    console.info('*******************convertToStorage', result)
+    return JSON.stringify(result)
   }
 
   contains (wordItem) {

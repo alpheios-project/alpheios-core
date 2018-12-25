@@ -12477,8 +12477,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _lib_word_list__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/word-list */ "./lib/word-list.js");
 /* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
+/* harmony import */ var _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/storage/indexed-db-adapter */ "./storage/indexed-db-adapter.js");
 
  // Vue in a runtime + compiler configuration
+
 
 
 
@@ -12486,27 +12488,103 @@ class WordlistController {
   constructor (userID) {
     this.userID = userID
     this.wordLists = {}
+
+    this.storageAdapter = new _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_4__["default"]()
   }
 
-  createWordList (languageID) {
+  static get langAliases () {
+    return new Map([
+      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
+      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
+      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_ARABIC, 'Arabic'],
+      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN, 'Persian'],
+      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
+    ])
+  }
+
+  get availableLists () {
+    const languages = Array.from(WordlistController.langAliases.keys())
+    let lists = []
+    languages.forEach(languageID => {
+      let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
+      lists.push(this.userID + '-' + languageCode)
+    })
+    return lists
+  }
+
+  initLists () {
+    if (this.storageAdapter.available) {
+      this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.uploadListsFromDB.bind(this))
+    }
+  }
+
+  initDBStructure (event) {
+    const db = event.target.result;
+    const objectStore = db.createObjectStore('UserLists', { keyPath: 'ID' })
+    objectStore.createIndex('ID', 'ID', { unique: true })
+    objectStore.createIndex('userID', 'userID', { unique: false })
+    objectStore.createIndex('languageCode', 'languageCode', { unique: false })
+
+    console.info('*******************UserLists Object store created')
+  }
+
+  uploadListsFromDB (event) {
+    const db = event.target.result
+    console.info('**************DB opened', db.name, db.version, db.objectStoreNames)
+    /*
+    const testItems = [
+      {ID: this.userID+'-lat', userID: this.userID, languageCode: 'lat', wordList: { items: [{text: 'testItems1'}, {text: 'testItems2'}] }}
+    ]
+    this.storageAdapter.set(db, 'UserLists', testItems)
+    */
+    const lists = this.availableLists
+    lists.forEach(listID => {
+      console.info('**********************getting for', listID)
+      this.storageAdapter.get(db, 'UserLists', {indexName: 'ID', value: listID, type: 'only' })
+    })
+    
+  }
+
+  async initLists_backup () {
+    let langs = WordlistController.availableLists
+    console.info('****************************langs', langs)
+    await langs.forEach(async (languageID) => {
+      await this.createWordList(languageID, true)
+      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    })
+    
+    console.info('********************initLists', this.wordLists)
+    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    /*
+    let langs = WordlistController.availableLists
+    console.info('****************************langs', langs)
+
+    await this.createWordList(Constants.LANG_LATIN)
+    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    */
+  }
+
+  async createWordList (languageID, init = false) {
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-    this.wordLists[languageCode] = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID)
-    console.info('****************createWordList this.wordLists', this.wordLists)
+    let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID, this.storageAdapter)
+    let resUpload = await wordList.uploadFromStorage()
+    if (wordList.items.length > 0 || init === false) {
+      this.wordLists[languageCode] = wordList 
+    }
   }
 
-  updateWordList(homonym) {
+  async updateWordList(homonym) {
     let languageID = homonym.languageID
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
     if (!Object.keys(this.wordLists).includes(languageCode)) {
-      this.createWordList(languageID)
+      await this.createWordList(languageID)
     }
     
-    this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym))
-    console.info('****************updateWordList this.wordLists', this.wordLists)
+    this.wordLists[languageCode].pushToStorage(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym))
   }
 
-  onHomonymReady (homonym) {
-    this.updateWordList(homonym)
+  async onHomonymReady (homonym) {
+    await this.updateWordList(homonym)
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
   }
 }
@@ -12869,6 +12947,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItem; });
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 class WordItem {
@@ -12891,6 +12972,11 @@ class WordItem {
   get lemmasList () {
     return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).join(', ')
   }
+
+  static uploadFromJSON (jsonObj) {
+    let homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Homonym"].readObject(jsonObj.homonym)
+    return new WordItem(homonym)
+  }
 }
 
 /***/ }),
@@ -12905,11 +12991,42 @@ class WordItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordList; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
+
+
+
 class WordList {
-  constructor (userID, languageID) {
+  constructor (userID, languageID, storageAdapter) {
     this.userID = userID
     this.languageID = languageID
+    this.storageAdapter = storageAdapter
     this.items = {}
+    this.createStorageID()
+  }
+
+  createStorageID () {
+    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID)
+    this.storageID =  this.userID + '-' + languageCode
+  }
+
+  async uploadFromStorage () {
+    let result = await this.storageAdapter.get(this.storageID)
+    console.info('***************result', result)
+    let resultObj = JSON.parse(result[this.storageID])
+    if (!resultObj) {
+      return false
+    }
+    console.info('**********************resultObj', resultObj)
+    Object.values(resultObj.items).forEach(resItem => {
+      let wordItem = _lib_word_item__WEBPACK_IMPORTED_MODULE_1__["default"].uploadFromJSON(resItem)
+      this.push(wordItem)
+    })
+    
+    console.info('********************uploadFromStorage1', result)
+    console.info('********************uploadFromStorage2', this.items)
+    return true
   }
 
   get values () {
@@ -12917,14 +13034,32 @@ class WordList {
   }
 
   push (wordItem) {
-    console.info('************this.items1', this.items)
-    console.info('************this.items2', this.languageID, wordItem.languageID)
-    console.info('************this.items3', this.contains(wordItem), this.contains(wordItem))
     if (this.languageID === wordItem.languageID && !this.contains(wordItem)) {
-      console.info('************this.items4 inside')
       this.items[wordItem.ID] = wordItem
+      return true
     }
-    console.info('************this.items5', this.items[wordItem.ID])
+    return false
+  }
+  
+  pushToStorage (wordItem) {
+    if (this.push(wordItem)) {
+      this.saveToStorage()
+    }
+  }
+
+  saveToStorage () {
+    let values = {}
+    values[this.storageID] = this.convertToStorage()
+    this.storageAdapter.set(values)
+  }
+
+  convertToStorage () {
+    let result = {}
+    Object.values(this.items).forEach(item => {
+      result[item.ID] = JSON.stringify(Object.assign( {}, item ))
+    })
+    console.info('*******************convertToStorage', result)
+    return JSON.stringify(result)
   }
 
   contains (wordItem) {
@@ -12996,6 +13131,194 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
     en_GB: _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__
   }
 });
+
+
+/***/ }),
+
+/***/ "./storage/indexed-db-adapter.js":
+/*!***************************************!*\
+  !*** ./storage/indexed-db-adapter.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBAdapter; });
+/* harmony import */ var _storage_storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/storage/storage-adapter.js */ "./storage/storage-adapter.js");
+
+
+/**
+ * An implementation of a StorageAdapter interface for a local storage.
+ */
+class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  
+  constructor (domain = 'alpheios-storage-domain') {
+    super(domain)
+
+    this.available = this.initIndexedDBNamespaces()
+    this.currentVersion = 1
+    this.dbName = 'AlpheiosUserWordLists'
+  }
+
+  initIndexedDBNamespaces () {
+    this.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    this.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // This line should only be needed if it is needed to support the object's constants for older browsers
+    this.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+    if (!this.indexedDB) {
+      console.info("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+      return false
+    }
+    return true
+  }
+
+  openDatabase (upgradeCallback, successCallback) {
+    let request = this.indexedDB.open(this.dbName, this.currentVersion)
+    request.onerror = (event) => {
+      console.info('*************Some problems with opening LabirintOrders', event.target)
+    }
+    request.onsuccess = successCallback
+    request.onupgradeneeded = upgradeCallback
+    return request
+  }
+
+  set (db, objectStoreName, data) {
+    const transaction = db.transaction([objectStoreName], 'readwrite')
+    transaction.oncomplete = (event) => {
+        console.info('**************testData added')
+    }
+    transaction.onerror = (event) => {
+        console.info('**************testData onerror')
+    }
+    const objectStore = transaction.objectStore(objectStoreName);
+    data.forEach(dataItem => {
+      const requestPut = objectStore.put(dataItem)
+      requestPut.onsuccess = (event) => {
+        console.info('****************wordlist added successful', event.target.result)
+      }
+      requestPut.onerror = (event) => {
+        console.info('****************wordlist error with adding data', event.target)
+      }
+    })
+  }
+
+  get (db, objectStoreName, condition) {
+    const transaction = db.transaction([objectStoreName])
+    const objectStore = transaction.objectStore(objectStoreName)
+
+    if (this.hasProperCondition(condition)) {
+      this.getWithCondition(objectStore, condition)
+    } else {
+      console.info('There is not enough information for creating index condition')
+      this.getWithoutConditions(objectStore)
+    }
+  }
+
+  hasProperCondition (condition) {
+    const allowedTypes = [ 'only' ]
+    return condition.indexName && condition.value && condition.type && allowedTypes.includes(condition.type)
+  }
+
+  getWithoutConditions (objectStore) {
+    const requestOpenCursor = objectStore.openCursor(null)
+    requestOpenCursor.onsuccess = (event) => {
+      const cursor = event.target.result
+      if (cursor) {
+        console.info('***************cursor no condition', cursor.key, cursor.value)
+        cursor.continue()
+      }
+    }
+    requestOpenCursor.onerror = (event) => {
+      console.info('****************cursor without condition - some error', event.target)
+    }
+  }
+
+  getWithCondition (objectStore, condition) {
+    const index = objectStore.index(condition.indexName)
+    const keyRange = this.IDBKeyRange[condition.type](condition.value)
+
+    const requestOpenCursor = index.openCursor(keyRange)
+    requestOpenCursor.onsuccess = (event) => {
+      const cursor = event.target.result
+      if (cursor) {
+        console.info('***************cursor with condition', cursor.key, cursor.value)
+        cursor.continue()
+      }
+    }
+
+    requestOpenCursor.onerror = (event) => {
+      console.info('****************cursor with condition - some error', event.target)
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "./storage/storage-adapter.js":
+/*!************************************!*\
+  !*** ./storage/storage-adapter.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StorageAdapter; });
+/**
+ * An abstract storage adapter class for an Options object. Implements two methods: set() and get().
+ * A `domain` argument of a constructor designates a storage area where options key-value pairs
+ * are stored. This allows to avoid possible collisions with other options objects.
+ *
+ * Local storage can contain multiple key-value pairs. get() with an empty parameter
+ * should return all keys related to the particular object (e.g. set of options). A set of those keys
+ * is defined by the `domain` concept. A key named `domain-name-key` is saved to the
+ * local storage along with its key-value pairs. This special key
+ * will contain an array of keys that belong to the storage domain. If no key values are provided,
+ * get() function will use a list of those stored keys to retrieve all values that belong to a domain.
+ */
+class StorageAdapter {
+  constructor (domain = 'alpheios-storage-domain') {
+    this.domain = domain
+  }
+
+  /**
+   * Stores one or several key-value pairs to local storage.
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @return {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set (keysObject) {
+    console.info('*****************set value to storage')
+    // return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
+  }
+
+  /**
+   * Retrieves one or several values from local storage.
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @return {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get (keys) {
+    console.info('*****************get value from storage')
+    // return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
+  }
+
+  /**
+   * A wrapper around a local storage `removeItem()` function.
+   * It allows to remove one key-value pair from local storage.
+   * @param {String} key - key of the item to be removed.
+   * If a particular item exists, it will be removed.
+   * @return {Promise} - A promise that is resolved with with true if a key was removed
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  remove (key) {
+    return new Promise((resolve, reject) => reject(new Error(`Remove method should be implemented in a subclass`)))
+  }
+}
 
 
 /***/ }),
