@@ -66,7 +66,7 @@ export default {
             this.getUserInfo()
           })
           .catch(error => {
-            console.log(`Authenticated failed`, error)
+            console.error(`Authenticated failed:`, error)
             this.logInProgress = false
             this.isLoggedIn = false
             this.authenticationFailed = true
@@ -82,14 +82,24 @@ export default {
 
     getUserInfo: function () {
       if (this.auth) {
-        this.auth.getUserInfo()
-          .then(userInfo => {
-            console.log(`User info retrieved:`, userInfo)
+        // Retrieve user profile data
+        this.auth.getProfileData()
+          .then(profileData => {
+            console.log(`User info retrieved:`, profileData)
             this.hasUserInfo = true
-            this.userInfo = userInfo
+            this.userInfo = profileData
           })
           .catch(error => {
-            console.log(`Unable to retrieve user information from Auth0: ${error.message}`)
+            console.error(`Unable to retrieve user information from Auth0: ${error.message}`)
+          })
+
+        // Retrieve user data from Alpheios servers
+        this.auth.getUserData()
+          .then(userData => {
+            console.log(`User data retrieved:`, userData)
+          })
+          .catch(error => {
+            console.error(`Unable to retrieve user information from Auth0: ${error.message}`)
           })
       }
     }

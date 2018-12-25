@@ -84,7 +84,7 @@ describe('setting.test.js', () => {
     })
 
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "data"'))
-    expect(console.error).toBeCalledWith(expect.stringContaining('Invalid prop: type check failed for prop "classes". Expected Array, got String.'))
+    expect(console.error).toBeCalledWith(expect.stringContaining('Invalid prop: type check failed for prop "classes". Expected Array, got String with value "foovalue".'))
   })
 
   it('7 Setting - checkbox', () => {
