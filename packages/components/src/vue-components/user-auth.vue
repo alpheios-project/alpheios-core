@@ -1,24 +1,24 @@
 <template>
     <div>
         <button v-show="!isLoggedIn" class="uk-button uk-button-primary" @click="logIn">
-            Log in
+            {{ messages.AUTH_LOG_IN_BTN_LABEL }}
         </button>
         <button v-show="isLoggedIn" class="uk-button uk-button-primary" @click="logOut">
-            Log out
+            {{ messages.AUTH_LOG_OUT_BTN_LABEL }}
         </button>
         <div v-show="logInProgress" class="alpheios-user-auth__message-box">
-            Please be patient while we are logging you in ...
+            {{ messages.AUTH_LOG_IN_PROGRESS_MSG }}
         </div>
         <div v-show="isLoggedIn" class="alpheios-user-auth__message-box">
-            Congratulations! Your logged in successfully
+            {{ messages.AUTH_LOG_IN_SUCCESS_MSG }}
         </div>
         <div v-show="authenticationFailed" class="alpheios-user-auth__message-box">
-            Authentication failed
+            {{ messages.AUTH_LOG_IN_AUTH_FAILURE_MSG }}
         </div>
         <div v-if="isLoggedIn && hasUserInfo" class="alpheios-user-auth__user-info-box">
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    Nickname:
+                    {{ messages.AUTH_PROFILE_NICKNAME_LABEL }}
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.nickname ? userInfo.nickname: `&mdash;` }}
@@ -26,7 +26,7 @@
             </div>
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    Name:
+                    {{ messages.AUTH_PROFILE_NAME_LABEL }}
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.name ? userInfo.name: `&mdash;` }}
@@ -40,7 +40,8 @@
 export default {
   name: 'UserAuth',
   props: {
-    auth: [Object, Function]
+    auth: [Object, Function],
+    messages: [Object]
   },
   data: function () {
     return {

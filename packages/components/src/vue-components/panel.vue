@@ -159,7 +159,7 @@
                 </div>
             </div>
             <div v-show="data.tabs.user" class="alpheios-panel__tab-panel alpheios-panel__tab__status">
-                <user-auth :auth="data.auth"></user-auth>
+                <user-auth :auth="data.auth" :messages="data.l10n.messages"></user-auth>
             </div>
             <div v-show="data.tabs.options" class="alpheios-panel__tab-panel alpheios-panel__tab__options">
                 <reskin-font-color :messages="data.l10n.messages" v-if="data.l10n"></reskin-font-color>

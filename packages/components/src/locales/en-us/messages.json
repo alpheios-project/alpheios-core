@@ -439,5 +439,41 @@
     "message": "Source",
     "description": "A link pointing to the source of a lemma or inflection",
     "component": "InflAttribute"
+  },
+
+  "AUTH_LOG_IN_BTN_LABEL": {
+    "message": "Log In",
+    "description": "A message shown on a log in button",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOG_OUT_BTN_LABEL": {
+    "message": "Log Out",
+    "description": "A message shown on a log out button",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOG_IN_PROGRESS_MSG": {
+    "message": "Please be patient while we are logging you in ...",
+    "description": "A message shown to the user while he or she is waiting for an authentication to complete",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOG_IN_SUCCESS_MSG": {
+    "message": "Congratulations! Your logged in successfully",
+    "description": "A message shown to the user if he or she logged in successfully",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOG_IN_AUTH_FAILURE_MSG": {
+    "message": "Authentication failed",
+    "description": "A message shown to the user if his or her authentication failed",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_PROFILE_NICKNAME_LABEL": {
+    "message": "Nickname:",
+    "description": "A user's profile nickname filed label",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_PROFILE_NAME_LABEL": {
+    "message": "Name:",
+    "description": "A user's profile name filed label",
+    "component": "UserAuth Vue Component"
   }
 }
