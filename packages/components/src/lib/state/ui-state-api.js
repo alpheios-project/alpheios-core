@@ -18,7 +18,7 @@ export default class UIStateAPI {
         PENDING: Symbol.for('Alpheios_Status_Pending'), // Script has not been fully initialized yet
         ACTIVE: Symbol.for('Alpheios_Status_Active'), // Script is loaded and active
         DEACTIVATED: Symbol.for('Alpheios_Status_Deactivated'), // Script has been loaded, but is deactivated
-        DISABLED: Symbol.for('Alpheios_Status_Disabled') // Script has been loaded, but it is disabled
+        DISABLED: Symbol.for('Alpheios_Status_Disabled') // Content script has been disabled on a page and cannot be activated (due to incompatibility with a page content)
       },
       panel: {
         OPEN: Symbol.for('Alpheios_Status_PanelOpen'), // Panel is open

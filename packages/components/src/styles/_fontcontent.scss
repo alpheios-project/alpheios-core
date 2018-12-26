@@ -73,7 +73,7 @@
     .alpheios-panel__header-nav-btn {
         width: $baseFontSize * 1.25;
         height: $baseFontSize * 1.25;
-        margin: 25px - $baseFontSize 15px;
+        margin: 25px - $baseFontSize 14px;
 
         svg {
           width: $baseFontSize * 1.25;
@@ -92,7 +92,8 @@
     .alpheios-inflections__title {
         font-size: $baseFontSize * 1.25;
     }
-
+    .alpheios-ib__title,
+    div.alpheios-ib div.alpheios-ib__title,
     .alpheios-ib .alpheios-inflections__title {
         font-size: $baseFontSize;
     }
@@ -148,7 +149,7 @@
    .alpheios-popup-lexdataloading__progress-text {
         font-size: $baseFontSize * 0.8;
    }
-   
+
    .alpheios-checkbox-block.alpheios-checkbox-small {
         line-height: $baseFontSize * 1.3;
 
@@ -218,5 +219,17 @@
         margin-right: 10px;
         margin-left: 10px;
     }
+}
+
+.#{$alpheios-uikit-namespace}.alpheios-font_medium_class *[lang='ara']{
+  font-family: $alpheios-font-family-arabic;
+}
+
+.#{$alpheios-uikit-namespace}.alpheios-font_small_class *[lang='ara']{
+  font-family: $alpheios-font-family-arabic;
+}
+
+.#{$alpheios-uikit-namespace}.alpheios-font_large_class *[lang='ara']{
+  font-family: $alpheios-font-family-arabic;
 }
 

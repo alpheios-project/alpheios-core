@@ -425,8 +425,10 @@ describe('morph-inner-v1.test.js', () => {
     let morphForms = cmp.find('.alpheios-morph__inflections .alpheios-morph__forms')
 
     expect(morphForms.find('[data-feature="stem"]').text()).toEqual('foostem')
+    expect(morphForms.find('[data-feature="stem"]').attributes()['lang']).toEqual('lat')
     expect(morphForms.find('[data-feature="stem"]').element.getAttribute('data-grouplevel')).toEqual('1')
     expect(morphForms.find('[data-feature="suffix"]').text()).toEqual('-foosuffix')
+    expect(morphForms.find('[data-feature="suffix"]').attributes()['lang']).toEqual('lat')
     expect(morphForms.find('[data-feature="suffix"]').element.getAttribute('data-grouplevel')).toEqual('1')
 
     expect(morphForms.findAll(InflectionAttribute).length).not.toBeLessThan(5)

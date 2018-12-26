@@ -8,7 +8,7 @@
     "test-lib": "eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-components": "eslint --fix src/**/*.js && jest tests/vue-components --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-c": "eslint --fix src/**/*.js && jest tests/vue-components/lookup.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "test-a": "eslint --fix src/**/*.js && jest tests/lib/selection/alignment --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-a": "eslint --fix src/**/*.js && jest tests/lib/queries/lexical-query.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "npm run build-regular && npm run build-safari",
     "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
     "build-safari": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue-postcss config-safari.mjs",
@@ -29,15 +29,13 @@
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",
     "acorn": "^6.0.4",
+    "alpheios-client-adapters": "github:alpheios-project/client-adapters",
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
-    "alpheios-lemma-client": "github:alpheios-project/lemma-client",
-    "alpheios-lexicon-client": "github:alpheios-project/lexicon-client",
-    "alpheios-morph-client": "github:alpheios-project/morph-client",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
-    "autoprefixer": "^9.4.3",
+    "autoprefixer": "^9.3.1",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
     "coveralls": "^3.0.2",
@@ -132,6 +130,6 @@
     "**/support"
   ],
   "dependencies": {
-    "vue-multiselect": "2.1.3"
+    "vue-multiselect": "2.1.0"
   }
 }

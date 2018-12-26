@@ -104,9 +104,9 @@ describe('ui-controller.test.js', () => {
     document.querySelector('html').style['font-size'] = '14px'
     expect(UIController.hasRegularBaseFontSize()).toBeFalsy()
 
-    expect(UIController.getLanguageName()).toEqual('')
-    expect(UIController.getLanguageName(latID)).toEqual('Latin')
-    expect(UIController.getLanguageName('pppp')).toEqual('')
+    expect(UIController.getLanguageName()).toEqual({name: '', code: undefined})
+    expect(UIController.getLanguageName(latID)).toEqual({name: 'Latin', code: 'lat'})
+    expect(UIController.getLanguageName('pppp')).toEqual({name: '', code: 'pppp'})
   })
 
   it('3 UIController - getZIndexMax method', () => {
@@ -164,7 +164,7 @@ describe('ui-controller.test.js', () => {
 
   it('6 UIController - showLanguageInfo methods', () => {
     uiC.showLanguageInfo()
-    let languageName = UIController.getLanguageName(LMF.getLanguageIdFromCode(uiC.panel.options.items.preferredLanguage.currentValue))
+    let languageName = UIController.getLanguageName(LMF.getLanguageIdFromCode(uiC.panel.options.items.preferredLanguage.currentValue)).name
 
     expect(uiC.panel.panelData.notification.visible).toBeTruthy()
     expect(uiC.panel.panelData.notification.important).toBeTruthy()
@@ -202,7 +202,7 @@ describe('ui-controller.test.js', () => {
     expect(uiC.panel.panelData.notification.visible).toBeTruthy()
     expect(uiC.panel.panelData.notification.important).toBeTruthy()
     expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeTruthy()
-    expect(uiC.popup.popupData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(UIController.getLanguageName(testHomonymNoLexemes.languageID)))
+    expect(uiC.popup.popupData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(UIController.getLanguageName(testHomonymNoLexemes.languageID).name))
   })
 
   it('7 UIController - showStatusInfo methods', () => {

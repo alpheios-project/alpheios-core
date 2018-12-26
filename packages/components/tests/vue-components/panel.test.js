@@ -111,7 +111,8 @@ describe('panel.test.js', () => {
           },
           status: {
             selectedText: '',
-            languageName: ''
+            languageName: '',
+            languageCode: ''
           },
           settings: options.items,
           treebankComponentData: {
@@ -166,6 +167,11 @@ describe('panel.test.js', () => {
           inflectionComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: undefined
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items
@@ -247,7 +253,11 @@ describe('panel.test.js', () => {
       inflectionComponentData: {},
       treebankComponentData: {},
       classes: [],
-
+      status: {
+        selectedText: '',
+        languageName: '',
+        languageCode: undefined
+      },
       settings: options.items,
       resourceSettings: resourceOptions.items
     }
@@ -336,6 +346,11 @@ describe('panel.test.js', () => {
           inflectionComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: 'Latin',
+            languageCode: 'lat'
+          },
 
           settings: contentOptions.items,
           resourceSettings: resourceOptions.items
@@ -398,6 +413,11 @@ describe('panel.test.js', () => {
           inflectionComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: 'Latin',
+            languageCode: 'lat'
+          },
 
           settings: contentOptions.items,
           resourceSettings: resourceOptions.items
@@ -456,6 +476,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: 'Latin',
+            languageCode: 'lat'
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items
@@ -513,6 +538,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: 'Latin',
+            languageCode: 'lat'
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items
@@ -558,6 +588,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: 'Latin',
+            languageCode: 'lat'
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items,
@@ -637,6 +672,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: 'Latin',
+            languageCode: 'lat'
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items
@@ -672,7 +712,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: { data: {} },
           classes: [],
-
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: undefined
+          },
           settings: options.items,
           resourceSettings: resourceOptions.items
         }
@@ -715,7 +759,11 @@ describe('panel.test.js', () => {
           inflectionComponentData: {},
           infoComponentData: {},
           classes: [],
-
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: undefined
+          },
           settings: options.items,
           resourceSettings: resourceOptions.items
         }
@@ -774,7 +822,11 @@ describe('panel.test.js', () => {
       infoComponentData: {},
       treebankComponentData: {},
       classes: [],
-
+      status: {
+        selectedText: '',
+        languageName: '',
+        languageCode: undefined
+      },
       settings: options.items,
       resourceSettings: resourceOptions.items
     }
@@ -818,6 +870,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: undefined
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items
@@ -855,6 +912,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: undefined
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items
@@ -895,6 +957,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: undefined
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items
@@ -949,6 +1016,11 @@ describe('panel.test.js', () => {
           infoComponentData: {},
           treebankComponentData: {},
           classes: [],
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: undefined
+          },
 
           settings: options.items,
           resourceSettings: resourceOptions.items

@@ -1,11 +1,6 @@
 import LexicalQuery from './lexical-query.js'
 import { Constants } from 'alpheios-data-models'
 
-// import {LemmaTranslations} from 'alpheios-lemma-client'
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
-import { Lexicons } from 'alpheios-lexicon-client'
-import { LemmaTranslations } from 'alpheios-lemma-client'
-
 import HTMLSelector from '../selection/media/html-selector'
 
 /**
@@ -26,12 +21,10 @@ export default class LexicalQueryLookup extends LexicalQuery {
     // Experimental
     let lemmaTranslations
     if (textSelector.languageID === Constants.LANG_LATIN && lemmaTranslationLang) {
-      lemmaTranslations = { adapter: LemmaTranslations, locale: lemmaTranslationLang }
+      lemmaTranslations = { locale: lemmaTranslationLang }
     }
     let options = {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
-      maAdapter: new AlpheiosTuftsAdapter(),
-      lexicons: Lexicons,
 
       lemmaTranslations: lemmaTranslations,
 

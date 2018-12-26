@@ -5,6 +5,20 @@ Alpheios Common Components Library
 [![Build Status](https://travis-ci.org/alpheios-project/components.svg?branch=master)](https://travis-ci.org/alpheios-project/components)
 [![Coverage Status](https://coveralls.io/repos/github/alpheios-project/components/badge.svg?branch=master)](https://coveralls.io/github/alpheios-project/components?branch=master)
 
+## UIController configuration
+
+A UI controller should usually be created using its `create()` static method. This method takes `state` object
+(an instance of `UIStateAPI`) as an argument. This `state` object provides configuration options that
+a UI controller uses during it's activation. This includes a panel status (open or closed) and what
+tab be shown when a panel be opened for the first time.
+
+To set those options to default, use a `DEFAULT` constants that existis for both of those values. 
+With this option applied their values will be set according to internal UI controller settings and user 
+preferences that a UI controller will obtain during initialization.
+
+To use values other then default, specify a panel state (open or closed) and/or a name of a tab that will
+be opened by default explicitly.
+
 ## CSS Styles
 Components use a Sass version of [UIKit 3](https://getuikit.com/) framework for visual styling. The UIKit build
 has been customized with custom variables and mixins to make it match default Alpheios styles.

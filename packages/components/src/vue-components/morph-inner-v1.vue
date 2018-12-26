@@ -57,9 +57,9 @@
       <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflections">
         <span class="inflset_index" v-if="inflections.length > 1">{{ ifindex + 1 }}.</span>
         <div class="alpheios-morph__forms">
-          <span class="alpheios-morph__formtext" data-grouplevel="1" data-feature="prefix" v-if="inflset.groupingKey.prefix">{{inflset.groupingKey.prefix}} </span>
-          <span class="alpheios-morph__formtext" data-grouplevel="1" data-feature="stem">{{inflset.groupingKey.stem}}</span>
-          <span class="alpheios-morph__formtext" data-grouplevel="1" data-feature="suffix" v-if="inflset.groupingKey.suffix"> -{{inflset.groupingKey.suffix}}</span>
+          <span :lang="languageCode(lex.lemma.languageID)" class="alpheios-morph__formtext" data-grouplevel="1" data-feature="prefix" v-if="inflset.groupingKey.prefix">{{inflset.groupingKey.prefix}} </span>
+          <span :lang="languageCode(lex.lemma.languageID)" class="alpheios-morph__formtext" data-grouplevel="1" data-feature="stem">{{inflset.groupingKey.stem}}</span>
+          <span :lang="languageCode(lex.lemma.languageID)" class="alpheios-morph__formtext" data-grouplevel="1" data-feature="suffix" v-if="inflset.groupingKey.suffix"> -{{inflset.groupingKey.suffix}}</span>
           <span class="alpheios-morph__inflfeatures">
             <inflectionattribute :data="inflset.groupingKey" :type="types.part" :linkedfeatures="linkedfeatures" :grouplevel="1" @sendfeature="sendFeature"
               v-if="! featureMatch(lex.lemma.features[types.part],inflset.groupingKey[types.part])"/>

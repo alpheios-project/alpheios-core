@@ -1,9 +1,6 @@
 /* global Event */
 import { Lexeme, Feature, Definition, LanguageModelFactory, Constants } from 'alpheios-data-models'
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
-import { Lexicons } from 'alpheios-lexicon-client'
 import { Grammars } from 'alpheios-res-client'
-import { LemmaTranslations } from 'alpheios-lemma-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
@@ -12,6 +9,8 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Panel from '@/vue-components/panel.vue'
 // A popup component
 import Popup from '@/vue-components/popup.vue'
+
+import EmbedLibWarning from '@/vue-components/embed-lib-warning.vue'
 
 import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
@@ -63,8 +62,16 @@ export default class UIController {
     this.resourceOptions = new Options(LanguageOptionDefaults, this.options.storageAdapter)
     this.uiOptions = new Options(UIOptionDefaults, this.options.storageAdapter)
     this.siteOptions = null // Will be set during an `init` phase
-
-    this.options.openPanel = this.uiOptions.items.panelOnActivate.currentValue
+    this.tabState = {
+      definitions: false,
+      inflections: false,
+      inflectionsbrowser: false,
+      status: false,
+      options: false,
+      info: false,
+      treebank: false
+    }
+    this.tabStateDefault = 'info'
 
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.isInitialized = false
@@ -113,8 +120,8 @@ export default class UIController {
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    LexicalQuery.evt.TREEBANK_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    LexicalQuery.evt.TREEBANK_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
+    LexicalQuery.evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
     LexicalQuery.evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
     LexicalQuery.evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
     LexicalQuery.evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
@@ -211,6 +218,17 @@ export default class UIController {
     return result
   }
 
+  setDefaultPanelState () {
+    if (!this.panel) { return this }
+    if (this.uiOptions.items.panelOnActivate.currentValue) {
+      // If option value of panelOnActivate is true
+      this.state.setPanelOpen()
+    } else {
+      this.state.setPanelClosed()
+    }
+    return this
+  }
+
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
@@ -225,7 +243,6 @@ export default class UIController {
       .setLocale(Locales.en_US)
 
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
-    this.maAdapter = new AlpheiosTuftsAdapter() // Morphological analyzer adapter, with default arguments
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
@@ -235,7 +252,6 @@ export default class UIController {
 
     await Promise.all(optionLoadPromises)
     // All options shall be loaded at this point. Can initialize Vue components that will use them
-
     // Initialize components
     this.panel = new Vue({
       el: `#${this.options.template.panelId}`,
@@ -245,16 +261,7 @@ export default class UIController {
       data: {
         panelData: {
           isOpen: false,
-          tabs: {
-            definitions: false,
-            inflections: false,
-            inflectionsbrowser: false,
-            status: false,
-            user: false,
-            options: false,
-            info: true,
-            treebank: false
-          },
+          tabs: this.tabState,
           verboseMode: this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode,
           currentLanguageID: null,
           grammarAvailable: false,
@@ -287,7 +294,7 @@ export default class UIController {
           },
           infoComponentData: {
             appInfo: this.options.app,
-            languageName: UIController.getLanguageName(this.state.currentLanguage)
+            languageName: UIController.getLanguageName(this.state.currentLanguage).name
           },
           messages: [],
           notification: {
@@ -298,7 +305,8 @@ export default class UIController {
           },
           status: {
             selectedText: '',
-            languageName: ''
+            languageName: '',
+            languageCode: ''
           },
           settings: this.contentOptions.items,
           treebankComponentData: {
@@ -331,19 +339,18 @@ export default class UIController {
           return this.state.isPanelOpen()
         },
 
-        open: function () {
-          if (!this.state.isPanelOpen()) {
+        open: function (forceOpen) {
+          if (forceOpen || !this.state.isPanelOpen()) {
             this.panelData.isOpen = true
             this.state.setPanelOpen()
           }
           return this
         },
 
-        close: function () {
-          if (!this.state.isPanelClosed()) {
-            this.panelData.isOpen = false
-            this.state.setPanelClosed()
-          }
+        // `updateState == false` is used to close a panel without updating state
+        close: function (updateState = true) {
+          this.panelData.isOpen = false
+          if (updateState) { this.state.setPanelClosed() }
           return this
         },
 
@@ -363,6 +370,24 @@ export default class UIController {
         changeTab (name) {
           for (let key of Object.keys(this.panelData.tabs)) {
             if (this.panelData.tabs[key]) { this.panelData.tabs[key] = false }
+          }
+
+          const inflectionsAvailable = Boolean(this.panelData && this.panelData.inflectionComponentData && this.panelData.inflectionComponentData.inflDataReady)
+          const grammarAvailable = Boolean(this.panelData && this.panelData.grammarAvailable)
+          const statusAvailable = Boolean(this.panelData && this.panelData.verboseMode)
+
+          // TODO: With state refactoring, eliminate similar code in `panel.vue`
+          const treebankTabAvaliable = Boolean(this.panelData && this.panelData.treebankComponentData && this.panelData.treebankComponentData.data &&
+          ((this.panelData.treebankComponentData.data.page && this.panelData.treebankComponentData.data.page.src) ||
+            (this.panelData.treebankComponentData.data.word && this.panelData.treebankComponentData.data.word.src)))
+          // If tab is disabled, switch to a default one
+          if (
+            (!inflectionsAvailable && name === 'inflections') ||
+            (!grammarAvailable && name === 'grammar') ||
+            (!treebankTabAvaliable && name === 'treebank') ||
+            (!statusAvailable && name === 'status')
+          ) {
+            name = this.uiController.tabStateDefault
           }
           this.panelData.tabs[name] = true
           this.state.changeTab(name) // Reflect a tab change in a state
@@ -407,7 +432,7 @@ export default class UIController {
           this.panelData.notification.visible = true
           let languageName
           if (homonym) {
-            languageName = UIController.getLanguageName(homonym.languageID)
+            languageName = UIController.getLanguageName(homonym.languageID).name
           } else if (this.panelData.infoComponentData.languageName) {
             languageName = this.panelData.infoComponentData.languageName
           } else {
@@ -425,7 +450,9 @@ export default class UIController {
         },
 
         showStatusInfo: function (selectionText, languageID) {
-          this.panelData.status.languageName = UIController.getLanguageName(languageID)
+          let langDetails = UIController.getLanguageName(languageID)
+          this.panelData.status.languageName = langDetails.name
+          this.panelData.status.languageCode = langDetails.code
           this.panelData.status.selectedText = selectionText
         },
 
@@ -445,6 +472,7 @@ export default class UIController {
 
         clearStatus: function () {
           this.panelData.status.languageName = ''
+          this.panelData.status.languageCode = ''
           this.panelData.status.selectedText = ''
         },
 
@@ -605,7 +633,8 @@ export default class UIController {
           providers: [],
           status: {
             selectedText: '',
-            languageName: ''
+            languageName: '',
+            languageCode: ''
           },
           currentLanguage: null,
           resourceSettings: this.resourceOptions.items,
@@ -657,7 +686,7 @@ export default class UIController {
           this.popupData.notification.visible = true
           let languageName
           if (homonym) {
-            languageName = UIController.getLanguageName(homonym.languageID)
+            languageName = UIController.getLanguageName(homonym.languageID).name
           } else if (this.popupData.currentLanguageName) {
             languageName = this.popupData.currentLanguageName
           } else {
@@ -674,7 +703,9 @@ export default class UIController {
         },
 
         showStatusInfo: function (selectionText, languageID) {
-          this.popupData.status.languageName = UIController.getLanguageName(languageID)
+          let langDetails = UIController.getLanguageName(languageID)
+          this.popupData.status.languageName = langDetails.name
+          this.popupData.status.languageCode = langDetails.code
           this.popupData.status.selectedText = selectionText
         },
 
@@ -718,6 +749,7 @@ export default class UIController {
 
         clearStatus: function () {
           this.popupData.status.languageName = ''
+          this.popupData.status.languageCode = ''
           this.popupData.status.selectedText = ''
         },
 
@@ -828,15 +860,18 @@ export default class UIController {
 
     this.state.activateUI()
 
-    // Update panel on activation
-    if (this.options.openPanel && !this.panel.isOpen()) {
-      /**
-       * Without this, the panel will close immediately after opening.
-       * Probably this is a matter of timing between state updates.
-       * Shall be solved during state refactoring.
-       */
-      setTimeout(() => this.panel.open(), 0)
+    if (this.state.isPanelStateDefault() || !this.state.isPanelStateValid()) {
+      this.setDefaultPanelState()
     }
+    // If panel should be opened according to the state, open it
+    if (this.state.isPanelOpen()) {
+      this.panel.open(true)
+    }
+
+    if (this.state.tab) {
+      this.changeTab(this.state.tab)
+    }
+
     this.isActivated = true
     this.isDeactivated = false
     this.state.activate()
@@ -856,12 +891,29 @@ export default class UIController {
     if (this.evc) { this.evc.deactivateListeners() }
 
     this.popup.close()
-    this.panel.close()
+    this.panel.close(false) // Close panel without updating it's state so the state can be saved for later reactivation
     this.isActivated = false
     this.isDeactivated = true
     this.state.deactivate()
 
     return this
+  }
+
+  /**
+   * Returns an unmounted Vue instance of a warning panel.
+   * This panel is displayed when UI controller is disabled
+   * due to embedded lib presence.
+   * @param {string} message - A message to display within a panel
+   */
+  static getEmbedLibWarning (message) {
+    if (!UIController.embedLibWarningInstance) {
+      let EmbedLibWarningClass = Vue.extend(EmbedLibWarning)
+        UIController.embedLibWarningInstance = new EmbedLibWarningClass({
+        propsData: {text: message}
+      })
+      UIController.embedLibWarningInstance.$mount() // Render off-document to append afterwards
+    }
+    return UIController.embedLibWarningInstance
   }
 
   /**
@@ -908,7 +960,7 @@ export default class UIController {
   }
 
   /**
-   * Gets language name by either language ID (a symbol) or language code (string)
+   * Gets language name details by either language ID (a symbol) or language code (string)
    * @param {symbol|string} language - Either language ID or language code (see constants in `data-models` for definitions)
    * @return {string} A language name
    */
@@ -917,7 +969,7 @@ export default class UIController {
     let langCode // eslint-disable-line
     // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
     ;({ languageID: langID, languageCode: langCode } = LanguageModelFactory.getLanguageAttrs(language))
-    return languageNames.has(langID) ? languageNames.get(langID) : ''
+    return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode }
   }
 
   showLanguageInfo (homonym) {
@@ -944,7 +996,15 @@ export default class UIController {
   }
 
   changeTab (tabName) {
-    this.panel.changeTab(tabName)
+    if (this.panel) {
+      if (!this.tabState.hasOwnProperty(tabName)) {
+        // Set tab to a default one if it is an unknown tab name
+        tabName = this.tabStateDefault
+      }
+      this.panel.changeTab(tabName)
+    } else {
+      console.warn(`Cannot switch tab because panel does not exist`)
+    }
     return this
   }
 
@@ -1085,9 +1145,9 @@ export default class UIController {
     this.panel.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
     this.popup.popupData.inflDataReady = this.inflDataReady
     this.panel.panelData.currentLanguageID = currentLanguageID
-    this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID)
+    this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID).name
 
-    Vue.set(this.popup.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID))
+    Vue.set(this.popup.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
@@ -1261,11 +1321,9 @@ export default class UIController {
 
         let lexQuery = LexicalQuery.create(textSelector, {
           htmlSelector: htmlSelector,
-          maAdapter: this.maAdapter,
-          lexicons: Lexicons,
           resourceOptions: this.resourceOptions,
           siteOptions: [],
-          lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.contentOptions.items.locale.currentValue } : null,
+          lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.contentOptions.items.locale.currentValue } : null,
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
@@ -1386,3 +1444,10 @@ export default class UIController {
     this.updatePageAnnotationData(data.annotations)
   }
 }
+
+/**
+ * An instance of a warning panel that is shown when UI controller is disabled
+ * because an Alpheios embedded lib is active on a page
+ * @type {Vue | null}
+ */
+UIController.embedLibWarningInstance = null

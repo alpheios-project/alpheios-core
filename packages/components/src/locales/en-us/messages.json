@@ -440,6 +440,11 @@
     "description": "A link pointing to the source of a lemma or inflection",
     "component": "InflAttribute"
   },
+  "EMBED_LIB_WARNING_TEXT": {
+    "message": "This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.",
+    "description": "A message that is shown when an Alpheios extension is disabled due to embedded library presence",
+    "component": "EmbedLibWarning"
+  },
 
   "AUTH_LOG_IN_BTN_LABEL": {
     "message": "Log In",

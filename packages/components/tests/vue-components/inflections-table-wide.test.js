@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 import { shallowMount, mount } from '@vue/test-utils'
 import WideInflectionsTable from '@/vue-components/inflections-table-prerendered.vue'
 import { ViewSetFactory, LanguageDatasetFactory } from 'alpheios-inflection-tables'
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+import { ClientAdapters } from 'alpheios-client-adapters'
 import { Constants, Feature } from 'alpheios-data-models'
 
 import VerbTestInflectionTable from './inflectionsTables/verbTestInflectionTable.js'
@@ -18,8 +18,15 @@ describe('inflections-table-wide.test.js', () => {
   let testView
 
   beforeAll(async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'συνδέει')
+    let adapterTuftsRes = await ClientAdapters.morphology.tufts({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'συνδέει'
+      }
+    })
+
+    let testHomonym = adapterTuftsRes.result
     let testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
 
     let inflectionViewSet = ViewSetFactory.create(testHomonym, 'en-US')

@@ -18,6 +18,14 @@
 
 @import "alignment";
 
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Amiri Regular'), local('Amiri-Regular'), url(https://fonts.gstatic.com/s/amiri/v11/J7aRnpd8CGxBHpUrtLMA7w.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
+}
+
 body {
     -webkit-touch-callout: auto;
     -webkit-user-select: auto;

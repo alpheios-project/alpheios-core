@@ -16,6 +16,7 @@ export default class HTMLPage {
    * @returns {boolean}
    */
   static get isFrame () {
+    console.log(`isFrame = ${window.self !== window.top}`, window.self, window.top)
     return (window.self !== window.top)
   }
 
@@ -25,6 +26,50 @@ export default class HTMLPage {
    */
   static get isAtTop () {
     return (window.self === window.top)
+  }
+
+  /**
+   * Checks wither the current browsing content (represented by window object)
+   * is a valid target for a UI controller activation.
+   * The browsing context could be either the topmost window within a browser tab
+   * or a window within a frame that is part of the topmost or any other window.
+   * @returns {boolean} - True if the browsing content is valid, false otherwise.
+   */
+  static get isValidTarget () {
+    // Check if page URL is not excluded
+    for (const url of HTMLPage.targetRequirements.excludedURLs) {
+      if (window.document.URL.search(url) !== -1) {
+        console.warn(`Not valid, URL is in the excluded list (${window.document.URL})`)
+        return false
+      }
+    }
+
+    if (!window.document.body) {
+      console.warn(`Not valid, has no body (${window.document.URL})`)
+      return false
+    }
+
+    // TODO: This will need to be changed when a mobile support be added
+    if (window.document.body.clientWidth < HTMLPage.targetRequirements.minWidth) {
+      console.warn(`Not valid, min width is too small (${window.document.URL})`)
+      return false
+    }
+
+    if (window.document.body.clientHeight < HTMLPage.targetRequirements.minHeight) {
+      if (this.isAtTop && !this.hasFrames) {
+        // We could still allow no height for top level documents that have no frames
+        return true
+      }
+      console.warn(`Not valid, min height is too small (${window.document.URL})`)
+      return false
+    }
+
+    if (window.document.body.innerText.length < HTMLPage.targetRequirements.minCharCount) {
+      console.warn(`Not valid, has too little characters (${window.document.URL})`)
+      return false
+    }
+
+    return true
   }
 
   /**
@@ -70,4 +115,24 @@ export default class HTMLPage {
     }
     return zIndexMax
   }
+
+  /**
+   * Detects an Alpheios embedded library by the presence of its tag.
+   * @returns {boolean} True if the library is present, false otherwise.
+   */
+  static get isEmbedLibActive () {
+    const attrValue = window.document.body.getAttribute('alpheios-embed-lib-status')
+    return attrValue === 'active'
+  }
+}
+
+HTMLPage.targetRequirements = {
+  minWidth: 500, // A minimal width for a browsing context to qualify for showing a desktop UI
+  minHeight: 400, // A minimal height for a browsing context to qualify for showing a desktop UI
+  minCharCount: 1, // A minimal number of characters in a browsing context
+  excludedURLs: [
+    'about:blank',
+    'grammars.alpheios.net',
+    'alpheios.net/alpheios-treebanks'
+  ]
 }

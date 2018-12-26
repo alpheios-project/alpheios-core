@@ -118,7 +118,7 @@
                     {{ ln10Messages('PLACEHOLDER_DEFINITIONS') }}
                 </div>
                 <div class="alpheios-panel__contentitem" v-for="definition in data.shortDefinitions">
-                    <shortdef :definition="definition"></shortdef>
+                    <shortdef :definition="definition" :languageCode="data.status.languageCode"></shortdef>
                 </div>
                 <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
                      v-html="data.fullDefinitions"></div>
