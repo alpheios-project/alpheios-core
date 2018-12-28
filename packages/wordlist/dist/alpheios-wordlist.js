@@ -12490,6 +12490,7 @@ class WordlistController {
     this.wordLists = {}
 
     this.storageAdapter = new _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_4__["default"]()
+    this.createAvailableListsID()
   }
 
   static get langAliases () {
@@ -12502,14 +12503,14 @@ class WordlistController {
     ])
   }
 
-  get availableLists () {
+  createAvailableListsID () {
     const languages = Array.from(WordlistController.langAliases.keys())
     let lists = []
     languages.forEach(languageID => {
       let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
       lists.push(this.userID + '-' + languageCode)
     })
-    return lists
+    this.availableLists = lists
   }
 
   initLists () {
@@ -12537,40 +12538,28 @@ class WordlistController {
     ]
     this.storageAdapter.set(db, 'UserLists', testItems)
     */
+    
     const lists = this.availableLists
     lists.forEach(listID => {
-      console.info('**********************getting for', listID)
-      this.storageAdapter.get(db, 'UserLists', {indexName: 'ID', value: listID, type: 'only' })
+      this.storageAdapter.get(db, 'UserLists', {indexName: 'ID', value: listID, type: 'only' }, this.uploadResultToList.bind(this))
     })
-    
   }
 
-  async initLists_backup () {
-    let langs = WordlistController.availableLists
-    console.info('****************************langs', langs)
-    await langs.forEach(async (languageID) => {
-      await this.createWordList(languageID, true)
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    })
-    
-    console.info('********************initLists', this.wordLists)
-    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    /*
-    let langs = WordlistController.availableLists
-    console.info('****************************langs', langs)
-
-    await this.createWordList(Constants.LANG_LATIN)
-    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    */
+  uploadResultToList (result) {
+    if (result && result.length > 0) {
+      console.info('*****************uploadResultToList', result)
+      result[0].wordItems.forEach(wordItemResult => {
+        let lemmaSource = wordItemResult.lexemes[0].lemma
+        let lemmaTest = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"].readObject(lemmaSource)
+        console.info('******************lemmaTest', lemmaTest)
+      })
+    }
   }
-
+  
   async createWordList (languageID, init = false) {
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
     let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID, this.storageAdapter)
-    let resUpload = await wordList.uploadFromStorage()
-    if (wordList.items.length > 0 || init === false) {
-      this.wordLists[languageCode] = wordList 
-    }
+    this.wordLists[languageCode] = wordList
   }
 
   async updateWordList(homonym) {
@@ -12580,7 +12569,7 @@ class WordlistController {
       await this.createWordList(languageID)
     }
     
-    this.wordLists[languageCode].pushToStorage(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym))
+    this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym), true)
   }
 
   async onHomonymReady (homonym) {
@@ -12591,10 +12580,9 @@ class WordlistController {
 
 WordlistController.evt = {
   /**
-   * Published when a new LexicalQuery data processing is complete.
+   * Published when a WordList was updated.
    * Data: {
-   *  {symbol} resultStatus - A lexical query result status,
-      {Homonym} homonym - A homonym data
+   *  {wordLists} an Array with WordLists object
    * }
    */
   WORDLIST_UPDATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist updated', WordlistController)
@@ -13010,7 +12998,7 @@ class WordList {
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID)
     this.storageID =  this.userID + '-' + languageCode
   }
-
+/*
   async uploadFromStorage () {
     let result = await this.storageAdapter.get(this.storageID)
     console.info('***************result', result)
@@ -13020,7 +13008,7 @@ class WordList {
     }
     console.info('**********************resultObj', resultObj)
     Object.values(resultObj.items).forEach(resItem => {
-      let wordItem = _lib_word_item__WEBPACK_IMPORTED_MODULE_1__["default"].uploadFromJSON(resItem)
+      let wordItem = WordItem.uploadFromJSON(resItem)
       this.push(wordItem)
     })
     
@@ -13028,40 +13016,68 @@ class WordList {
     console.info('********************uploadFromStorage2', this.items)
     return true
   }
-
+*/
   get values () {
     return Object.values(this.items)
   }
 
-  push (wordItem) {
+  push (wordItem, saveToStorage = false) {
     if (this.languageID === wordItem.languageID && !this.contains(wordItem)) {
       this.items[wordItem.ID] = wordItem
+      if (saveToStorage) {
+        this.saveToStorage()
+      }
       return true
     }
     return false
   }
   
-  pushToStorage (wordItem) {
-    if (this.push(wordItem)) {
-      this.saveToStorage()
+  saveToStorage () {
+    if (this.storageAdapter.available) {
+      this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
   }
 
-  saveToStorage () {
-    let values = {}
-    values[this.storageID] = this.convertToStorage()
-    this.storageAdapter.set(values)
+  putToStorageTransaction (event) {
+    const db = event.target.result
+    console.info('**************DB opened', db.name, db.version, db.objectStoreNames)
+    this.storageAdapter.set(db, 'UserLists', this.convertToStorage())
   }
 
   convertToStorage () {
-    let result = {}
-    Object.values(this.items).forEach(item => {
-      result[item.ID] = JSON.stringify(Object.assign( {}, item ))
-    })
-    console.info('*******************convertToStorage', result)
-    return JSON.stringify(result)
-  }
+    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID)
+    let result = { ID: this.storageID, userID: this.userID, languageCode: languageCode }
+    console.info('**********************convert to Storage', this)
+    result.wordItems = []
 
+    for (let item of Object.values(this.items)) {
+      let resultItem = { lexemes: [] }
+      for (let lexeme of item.homonym.lexemes) {
+        let resInflections = []
+        lexeme.inflections.forEach(inflection => {
+          let resInflection = {
+            stem: inflection.stem,
+            languageCode: languageCode,
+            suffix: inflection.suffix,
+            prefix: inflection.prefix,
+            example: inflection.example
+          }
+          resInflections.push(resInflection)
+        })
+        
+        let resultLexeme = { 
+          lemma: lexeme.lemma.convertToJSON(), 
+          inflections: resInflections
+        }
+
+        resultItem.lexemes.push(resultLexeme)
+      }
+      result.wordItems.push(resultItem)
+    }
+    console.info('******************result', result)
+    return [ result ]
+  }
+  
   contains (wordItem) {
     return this.values.map(item => item.targetWord).includes(wordItem.targetWord)
   }
@@ -13202,15 +13218,15 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     })
   }
 
-  get (db, objectStoreName, condition) {
+  get (db, objectStoreName, condition, callbackF) {
     const transaction = db.transaction([objectStoreName])
     const objectStore = transaction.objectStore(objectStoreName)
 
     if (this.hasProperCondition(condition)) {
-      this.getWithCondition(objectStore, condition)
+      this.getWithCondition(objectStore, condition, callbackF)
     } else {
       console.info('There is not enough information for creating index condition')
-      this.getWithoutConditions(objectStore)
+      this.getWithoutConditions(objectStore, callbackF)
     }
   }
 
@@ -13219,7 +13235,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return condition.indexName && condition.value && condition.type && allowedTypes.includes(condition.type)
   }
 
-  getWithoutConditions (objectStore) {
+  getWithoutConditions (objectStore, callbackF) {
     const requestOpenCursor = objectStore.openCursor(null)
     requestOpenCursor.onsuccess = (event) => {
       const cursor = event.target.result
@@ -13233,17 +13249,13 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     }
   }
 
-  getWithCondition (objectStore, condition) {
+  getWithCondition (objectStore, condition, callbackF) {
     const index = objectStore.index(condition.indexName)
     const keyRange = this.IDBKeyRange[condition.type](condition.value)
 
-    const requestOpenCursor = index.openCursor(keyRange)
+    const requestOpenCursor = index.getAll(keyRange, 0)
     requestOpenCursor.onsuccess = (event) => {
-      const cursor = event.target.result
-      if (cursor) {
-        console.info('***************cursor with condition', cursor.key, cursor.value)
-        cursor.continue()
-      }
+      callbackF(event.target.result)
     }
 
     requestOpenCursor.onerror = (event) => {

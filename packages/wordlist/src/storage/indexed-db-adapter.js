@@ -54,15 +54,15 @@ export default class IndexedDBAdapter extends StorageAdapter {
     })
   }
 
-  get (db, objectStoreName, condition) {
+  get (db, objectStoreName, condition, callbackF) {
     const transaction = db.transaction([objectStoreName])
     const objectStore = transaction.objectStore(objectStoreName)
 
     if (this.hasProperCondition(condition)) {
-      this.getWithCondition(objectStore, condition)
+      this.getWithCondition(objectStore, condition, callbackF)
     } else {
       console.info('There is not enough information for creating index condition')
-      this.getWithoutConditions(objectStore)
+      this.getWithoutConditions(objectStore, callbackF)
     }
   }
 
@@ -71,7 +71,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
     return condition.indexName && condition.value && condition.type && allowedTypes.includes(condition.type)
   }
 
-  getWithoutConditions (objectStore) {
+  getWithoutConditions (objectStore, callbackF) {
     const requestOpenCursor = objectStore.openCursor(null)
     requestOpenCursor.onsuccess = (event) => {
       const cursor = event.target.result
@@ -85,17 +85,13 @@ export default class IndexedDBAdapter extends StorageAdapter {
     }
   }
 
-  getWithCondition (objectStore, condition) {
+  getWithCondition (objectStore, condition, callbackF) {
     const index = objectStore.index(condition.indexName)
     const keyRange = this.IDBKeyRange[condition.type](condition.value)
 
-    const requestOpenCursor = index.openCursor(keyRange)
+    const requestOpenCursor = index.getAll(keyRange, 0)
     requestOpenCursor.onsuccess = (event) => {
-      const cursor = event.target.result
-      if (cursor) {
-        console.info('***************cursor with condition', cursor.key, cursor.value)
-        cursor.continue()
-      }
+      callbackF(event.target.result)
     }
 
     requestOpenCursor.onerror = (event) => {

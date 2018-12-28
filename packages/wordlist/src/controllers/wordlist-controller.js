@@ -1,4 +1,4 @@
-import { PsEvent, LanguageModelFactory as LMF, Constants } from 'alpheios-data-models'
+import { PsEvent, LanguageModelFactory as LMF, Constants, Lemma, Feature } from 'alpheios-data-models'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import WordList from '@/lib/word-list';
 import WordItem from '@/lib/word-item';
@@ -10,6 +10,7 @@ export default class WordlistController {
     this.wordLists = {}
 
     this.storageAdapter = new IndexedDBAdapter()
+    this.createAvailableListsID()
   }
 
   static get langAliases () {
@@ -22,14 +23,14 @@ export default class WordlistController {
     ])
   }
 
-  get availableLists () {
+  createAvailableListsID () {
     const languages = Array.from(WordlistController.langAliases.keys())
     let lists = []
     languages.forEach(languageID => {
       let languageCode = LMF.getLanguageCodeFromId(languageID)
       lists.push(this.userID + '-' + languageCode)
     })
-    return lists
+    this.availableLists = lists
   }
 
   initLists () {
@@ -57,40 +58,28 @@ export default class WordlistController {
     ]
     this.storageAdapter.set(db, 'UserLists', testItems)
     */
+    
     const lists = this.availableLists
     lists.forEach(listID => {
-      console.info('**********************getting for', listID)
-      this.storageAdapter.get(db, 'UserLists', {indexName: 'ID', value: listID, type: 'only' })
+      this.storageAdapter.get(db, 'UserLists', {indexName: 'ID', value: listID, type: 'only' }, this.uploadResultToList.bind(this))
     })
-    
   }
 
-  async initLists_backup () {
-    let langs = WordlistController.availableLists
-    console.info('****************************langs', langs)
-    await langs.forEach(async (languageID) => {
-      await this.createWordList(languageID, true)
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    })
-    
-    console.info('********************initLists', this.wordLists)
-    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    /*
-    let langs = WordlistController.availableLists
-    console.info('****************************langs', langs)
-
-    await this.createWordList(Constants.LANG_LATIN)
-    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    */
+  uploadResultToList (result) {
+    if (result && result.length > 0) {
+      console.info('*****************uploadResultToList', result)
+      result[0].wordItems.forEach(wordItemResult => {
+        let lemmaSource = wordItemResult.lexemes[0].lemma
+        let lemmaTest = Lemma.readObject(lemmaSource)
+        console.info('******************lemmaTest', lemmaTest)
+      })
+    }
   }
-
+  
   async createWordList (languageID, init = false) {
     let languageCode = LMF.getLanguageCodeFromId(languageID)
     let wordList = new WordList(this.userID, languageID, this.storageAdapter)
-    let resUpload = await wordList.uploadFromStorage()
-    if (wordList.items.length > 0 || init === false) {
-      this.wordLists[languageCode] = wordList 
-    }
+    this.wordLists[languageCode] = wordList
   }
 
   async updateWordList(homonym) {
@@ -100,7 +89,7 @@ export default class WordlistController {
       await this.createWordList(languageID)
     }
     
-    this.wordLists[languageCode].pushToStorage(new WordItem(homonym))
+    this.wordLists[languageCode].push(new WordItem(homonym), true)
   }
 
   async onHomonymReady (homonym) {
@@ -111,10 +100,9 @@ export default class WordlistController {
 
 WordlistController.evt = {
   /**
-   * Published when a new LexicalQuery data processing is complete.
+   * Published when a WordList was updated.
    * Data: {
-   *  {symbol} resultStatus - A lexical query result status,
-      {Homonym} homonym - A homonym data
+   *  {wordLists} an Array with WordLists object
    * }
    */
   WORDLIST_UPDATED: new PsEvent('Wordlist updated', WordlistController)

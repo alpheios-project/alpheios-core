@@ -14,7 +14,7 @@ export default class WordList {
     let languageCode = LMF.getLanguageCodeFromId(this.languageID)
     this.storageID =  this.userID + '-' + languageCode
   }
-
+/*
   async uploadFromStorage () {
     let result = await this.storageAdapter.get(this.storageID)
     console.info('***************result', result)
@@ -32,40 +32,68 @@ export default class WordList {
     console.info('********************uploadFromStorage2', this.items)
     return true
   }
-
+*/
   get values () {
     return Object.values(this.items)
   }
 
-  push (wordItem) {
+  push (wordItem, saveToStorage = false) {
     if (this.languageID === wordItem.languageID && !this.contains(wordItem)) {
       this.items[wordItem.ID] = wordItem
+      if (saveToStorage) {
+        this.saveToStorage()
+      }
       return true
     }
     return false
   }
   
-  pushToStorage (wordItem) {
-    if (this.push(wordItem)) {
-      this.saveToStorage()
+  saveToStorage () {
+    if (this.storageAdapter.available) {
+      this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
   }
 
-  saveToStorage () {
-    let values = {}
-    values[this.storageID] = this.convertToStorage()
-    this.storageAdapter.set(values)
+  putToStorageTransaction (event) {
+    const db = event.target.result
+    console.info('**************DB opened', db.name, db.version, db.objectStoreNames)
+    this.storageAdapter.set(db, 'UserLists', this.convertToStorage())
   }
 
   convertToStorage () {
-    let result = {}
-    Object.values(this.items).forEach(item => {
-      result[item.ID] = JSON.stringify(Object.assign( {}, item ))
-    })
-    console.info('*******************convertToStorage', result)
-    return JSON.stringify(result)
-  }
+    let languageCode = LMF.getLanguageCodeFromId(this.languageID)
+    let result = { ID: this.storageID, userID: this.userID, languageCode: languageCode }
+    console.info('**********************convert to Storage', this)
+    result.wordItems = []
 
+    for (let item of Object.values(this.items)) {
+      let resultItem = { lexemes: [] }
+      for (let lexeme of item.homonym.lexemes) {
+        let resInflections = []
+        lexeme.inflections.forEach(inflection => {
+          let resInflection = {
+            stem: inflection.stem,
+            languageCode: languageCode,
+            suffix: inflection.suffix,
+            prefix: inflection.prefix,
+            example: inflection.example
+          }
+          resInflections.push(resInflection)
+        })
+        
+        let resultLexeme = { 
+          lemma: lexeme.lemma.convertToJSON(), 
+          inflections: resInflections
+        }
+
+        resultItem.lexemes.push(resultLexeme)
+      }
+      result.wordItems.push(resultItem)
+    }
+    console.info('******************result', result)
+    return [ result ]
+  }
+  
   contains (wordItem) {
     return this.values.map(item => item.targetWord).includes(wordItem.targetWord)
   }
