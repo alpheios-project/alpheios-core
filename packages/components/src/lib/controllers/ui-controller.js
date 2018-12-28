@@ -908,8 +908,8 @@ export default class UIController {
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
       let EmbedLibWarningClass = Vue.extend(EmbedLibWarning)
-        UIController.embedLibWarningInstance = new EmbedLibWarningClass({
-        propsData: {text: message}
+      UIController.embedLibWarningInstance = new EmbedLibWarningClass({
+        propsData: { text: message }
       })
       UIController.embedLibWarningInstance.$mount() // Render off-document to append afterwards
     }
