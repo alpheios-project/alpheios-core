@@ -12584,13 +12584,12 @@ class WordlistController {
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
     console.info('******************onHomonymReady finish')
   }
-/*
+
   async onDefinitionsReady (data) {
-    console.info('******************onDefinitionsReady start', data)
-    await this.updateWordList(data)
+    console.info('******************onDefinitionsReady start', data.homonym.lexemes[0].meaning.fullDefs[0].text)
+    await this.updateWordList(data.homonym)
     console.info('******************onDefinitionsReady finish')
   }
-  */
 }
 
 WordlistController.evt = {
@@ -13072,8 +13071,8 @@ class WordList {
         lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
         
         let resMeaning = lexeme.meaning.convertToJSONObject()
-        console.info('********************resMeaning 1', resMeaning)
-        console.info('********************resMeaning 1', lexeme.meaning.fullDefs)
+        console.info('********************resMeaning 1 new', resMeaning.fullDefs[0].text)
+        console.info('********************resMeaning 2 new', lexeme.meaning.fullDefs[0].text)
         let resultLexeme = { 
           lemma: lexeme.lemma.convertToJSONObject(), 
           inflections: resInflections,

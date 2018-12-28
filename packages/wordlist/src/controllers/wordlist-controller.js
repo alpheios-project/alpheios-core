@@ -104,13 +104,12 @@ export default class WordlistController {
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
     console.info('******************onHomonymReady finish')
   }
-/*
+
   async onDefinitionsReady (data) {
-    console.info('******************onDefinitionsReady start', data)
-    await this.updateWordList(data)
+    console.info('******************onDefinitionsReady start', data.homonym.lexemes[0].meaning.fullDefs[0].text)
+    await this.updateWordList(data.homonym)
     console.info('******************onDefinitionsReady finish')
   }
-  */
 }
 
 WordlistController.evt = {
