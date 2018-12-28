@@ -1,4 +1,4 @@
-import { PsEvent, LanguageModelFactory as LMF, Constants, Lemma, Feature } from 'alpheios-data-models'
+import { PsEvent, LanguageModelFactory as LMF, Constants, Lemma, Inflection } from 'alpheios-data-models'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import WordList from '@/lib/word-list';
 import WordItem from '@/lib/word-item';
@@ -71,7 +71,12 @@ export default class WordlistController {
       result[0].wordItems.forEach(wordItemResult => {
         let lemmaSource = wordItemResult.lexemes[0].lemma
         let lemmaTest = Lemma.readObject(lemmaSource)
+        let inflectionsTest = []
+        wordItemResult.lexemes[0].inflections.forEach(inflSource => {
+          inflectionsTest.push(Inflection.readObject(inflSource, lemmaTest))
+        })
         console.info('******************lemmaTest', lemmaTest)
+        console.info('******************inflectionsTest', inflectionsTest)
       })
     }
   }
@@ -89,13 +94,23 @@ export default class WordlistController {
       await this.createWordList(languageID)
     }
     
+    console.info('*****************updateWordList', homonym)
     this.wordLists[languageCode].push(new WordItem(homonym), true)
   }
 
-  async onHomonymReady (homonym) {
-    await this.updateWordList(homonym)
+  async onHomonymReady (data) {
+    console.info('******************onHomonymReady start')
+    await this.updateWordList(data.homonym)
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    console.info('******************onHomonymReady finish')
   }
+/*
+  async onDefinitionsReady (data) {
+    console.info('******************onDefinitionsReady start', data)
+    await this.updateWordList(data)
+    console.info('******************onDefinitionsReady finish')
+  }
+  */
 }
 
 WordlistController.evt = {

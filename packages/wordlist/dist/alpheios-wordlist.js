@@ -12551,7 +12551,12 @@ class WordlistController {
       result[0].wordItems.forEach(wordItemResult => {
         let lemmaSource = wordItemResult.lexemes[0].lemma
         let lemmaTest = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"].readObject(lemmaSource)
+        let inflectionsTest = []
+        wordItemResult.lexemes[0].inflections.forEach(inflSource => {
+          inflectionsTest.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"].readObject(inflSource, lemmaTest))
+        })
         console.info('******************lemmaTest', lemmaTest)
+        console.info('******************inflectionsTest', inflectionsTest)
       })
     }
   }
@@ -12569,13 +12574,23 @@ class WordlistController {
       await this.createWordList(languageID)
     }
     
+    console.info('*****************updateWordList', homonym)
     this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym), true)
   }
 
-  async onHomonymReady (homonym) {
-    await this.updateWordList(homonym)
+  async onHomonymReady (data) {
+    console.info('******************onHomonymReady start')
+    await this.updateWordList(data.homonym)
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    console.info('******************onHomonymReady finish')
   }
+/*
+  async onDefinitionsReady (data) {
+    console.info('******************onDefinitionsReady start', data)
+    await this.updateWordList(data)
+    console.info('******************onDefinitionsReady finish')
+  }
+  */
 }
 
 WordlistController.evt = {
@@ -13054,20 +13069,15 @@ class WordList {
       let resultItem = { lexemes: [] }
       for (let lexeme of item.homonym.lexemes) {
         let resInflections = []
-        lexeme.inflections.forEach(inflection => {
-          let resInflection = {
-            stem: inflection.stem,
-            languageCode: languageCode,
-            suffix: inflection.suffix,
-            prefix: inflection.prefix,
-            example: inflection.example
-          }
-          resInflections.push(resInflection)
-        })
+        lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
         
+        let resMeaning = lexeme.meaning.convertToJSONObject()
+        console.info('********************resMeaning 1', resMeaning)
+        console.info('********************resMeaning 1', lexeme.meaning.fullDefs)
         let resultLexeme = { 
-          lemma: lexeme.lemma.convertToJSON(), 
-          inflections: resInflections
+          lemma: lexeme.lemma.convertToJSONObject(), 
+          inflections: resInflections,
+          meaning: resMeaning
         }
 
         resultItem.lexemes.push(resultLexeme)

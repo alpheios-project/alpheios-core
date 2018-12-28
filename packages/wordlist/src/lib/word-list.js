@@ -70,20 +70,15 @@ export default class WordList {
       let resultItem = { lexemes: [] }
       for (let lexeme of item.homonym.lexemes) {
         let resInflections = []
-        lexeme.inflections.forEach(inflection => {
-          let resInflection = {
-            stem: inflection.stem,
-            languageCode: languageCode,
-            suffix: inflection.suffix,
-            prefix: inflection.prefix,
-            example: inflection.example
-          }
-          resInflections.push(resInflection)
-        })
+        lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
         
+        let resMeaning = lexeme.meaning.convertToJSONObject()
+        console.info('********************resMeaning 1', resMeaning)
+        console.info('********************resMeaning 1', lexeme.meaning.fullDefs)
         let resultLexeme = { 
-          lemma: lexeme.lemma.convertToJSON(), 
-          inflections: resInflections
+          lemma: lexeme.lemma.convertToJSONObject(), 
+          inflections: resInflections,
+          meaning: resMeaning
         }
 
         resultItem.lexemes.push(resultLexeme)
