@@ -50,24 +50,24 @@ describe('wordlist-controller.test.js', () => {
   it('1 WordlistController - constructor saves userID from properties and inits wordLists', () => {
     let wC = new WordlistController(testUserID)
     expect(wC.userID).toEqual(testUserID)
-    expect(wC.wordLists).toBeInstanceOf(Map)
-    expect(wC.wordLists.size).toEqual(0)
+    expect(wC.wordLists).toBeInstanceOf(Object)
+    expect(Object.values(wC.wordLists).length).toEqual(0)
   })
 
   it('2 WordlistController - updateWordList checks wordLists map, doesn\'t add duplicate and create a separate WordList for each languageID', () => {
     let wC = new WordlistController(testUserID)
     wC.updateWordList(testHomonymLatin)
 
-    expect(wC.wordLists.size).toEqual(1)
-    expect(wC.wordLists.has(Constants.LANG_LATIN)).toBeTruthy()
-    expect(wC.wordLists.get(Constants.LANG_LATIN).values.length).toEqual(1)
+    expect(Object.values(wC.wordLists).length).toEqual(1)
+    expect(Object.keys(wC.wordLists).includes('lat')).toBeTruthy()
+    expect(wC.wordLists.lat).toBeDefined()
 
     wC.updateWordList(testHomonymLatin)
-    expect(wC.wordLists.get(Constants.LANG_LATIN).values.length).toEqual(1) // check for duplicates
+    expect(wC.wordLists.lat).toBeDefined() // check for duplicates
 
     wC.updateWordList(testHomonymGreek)
-    expect(wC.wordLists.size).toEqual(2)
-    expect(wC.wordLists.has(Constants.LANG_GREEK)).toBeTruthy()
-    expect(wC.wordLists.get(Constants.LANG_GREEK).values.length).toEqual(1)
+    expect(Object.values(wC.wordLists).length).toEqual(2)
+    expect(Object.keys(wC.wordLists).includes('grc')).toBeTruthy()
+    expect(wC.wordLists.grc).toBeDefined()
   })
 })
