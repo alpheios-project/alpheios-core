@@ -7,5 +7,7 @@
 It is useful to test with the following repo:
 
 https://github.com/alpheios-project/components/tree/feat-304-word-list
+
 https://github.com/alpheios-project/data-models/tree/feat-304-word-list
+
 https://github.com/alpheios-project/embed-lib/tree/feat-304-word-list
