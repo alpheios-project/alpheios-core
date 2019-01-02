@@ -1,5 +1,4 @@
 import { LanguageModelFactory as LMF } from 'alpheios-data-models'
-import WordItem from '@/lib/word-item'
 
 export default class WordList {
   constructor (userID, languageID, storageAdapter) {
@@ -7,6 +6,7 @@ export default class WordList {
     this.languageID = languageID
     this.storageAdapter = storageAdapter
     this.items = {}
+    this.wordItemsToSave = []
     this.createStorageID()
   }
 
@@ -14,33 +14,21 @@ export default class WordList {
     let languageCode = LMF.getLanguageCodeFromId(this.languageID)
     this.storageID =  this.userID + '-' + languageCode
   }
-/*
-  async uploadFromStorage () {
-    let result = await this.storageAdapter.get(this.storageID)
-    console.info('***************result', result)
-    let resultObj = JSON.parse(result[this.storageID])
-    if (!resultObj) {
-      return false
-    }
-    console.info('**********************resultObj', resultObj)
-    Object.values(resultObj.items).forEach(resItem => {
-      let wordItem = WordItem.uploadFromJSON(resItem)
-      this.push(wordItem)
-    })
-    
-    console.info('********************uploadFromStorage1', result)
-    console.info('********************uploadFromStorage2', this.items)
-    return true
-  }
-*/
+
   get values () {
     return Object.values(this.items)
   }
 
-  push (wordItem, saveToStorage = false) {
-    if (this.languageID === wordItem.languageID && !this.contains(wordItem)) {
+  push (wordItem, saveToStorage = false, upgradeQueue = {}) {
+    this.removeWordItemByWord(wordItem)
+
+    if (this.languageID === wordItem.languageID) {
       this.items[wordItem.ID] = wordItem
       if (saveToStorage) {
+        this.upgradeQueue = upgradeQueue
+        this.upgradeQueue.setCurrentWord(wordItem)
+
+        this.wordItemsToSave = [ wordItem ]
         this.saveToStorage()
       }
       return true
@@ -48,8 +36,14 @@ export default class WordList {
     return false
   }
   
+  removeWordItemByWord (wordItem) {
+    if (this.contains(wordItem)) { 
+      let deleteID = this.getIDByTargetWord(wordItem)
+      delete this.items[deleteID]
+    }
+  }
+
   saveToStorage () {
-    console.info('***********************saveToStorage', this.storageAdapter.available)
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
@@ -57,56 +51,62 @@ export default class WordList {
 
   putToStorageTransaction (event) {
     const db = event.target.result
-    console.info('**************DB opened', db.name, db.version, db.objectStoreNames)
-    this.storageAdapter.set(db, 'UserLists', this.convertToStorage())
+    let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
+    this.storageAdapter.set(db, 'UserLists', this.convertToStorageList(), successCallBackF)
   }
 
-  convertToStorage () {
-    let languageCode = LMF.getLanguageCodeFromId(this.languageID)
-    let result = { ID: this.storageID, userID: this.userID, languageCode: languageCode }
-    console.info('**********************convert to Storage', this)
-    result.wordItems = []
-
-    for (let item of Object.values(this.items)) {
-      let resultItem = { lexemes: [] }
-      for (let lexeme of item.homonym.lexemes) {
-        let resInflections = []
-        lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
-        
-        let resMeaning = lexeme.meaning.convertToJSONObject()
-        console.info('********************resMeaning 1 new', resMeaning.fullDefs[0] ? resMeaning.fullDefs[0].text : '')
-        console.info('********************resMeaning 2 new', lexeme.meaning.fullDefs[0] ? lexeme.meaning.fullDefs[0].text : '')
-        let resultLexeme = { 
-          lemma: lexeme.lemma.convertToJSONObject(), 
-          inflections: resInflections,
-          meaning: resMeaning
-        }
-
-        resultItem.lexemes.push(resultLexeme)
-      }
-      result.wordItems.push(resultItem)
+  convertToStorageList () {
+    let result = []
+    for (let item of this.wordItemsToSave) {
+      result.push(this.convertToStorageItem(item))
     }
-    console.info('******************result', result)
-    return [ result ]
+    this.wordItemsToSave = []
+    return result
+  }
+
+  convertToStorageItem (wordItem) {
+    return Object.assign({ 
+      ID: this.storageID + '-' + wordItem.targetWord, 
+      userID: this.userID, 
+      userIDLangCode: this.storageID 
+    }, wordItem.convertToStorage())
   }
   
   contains (wordItem) {
     return this.values.map(item => item.targetWord).includes(wordItem.targetWord)
   }
 
+  getIDByTargetWord (wordItem) {
+    let checkRes = this.values.filter(item => item.targetWord === wordItem.targetWord)
+    return checkRes ? checkRes[0].ID : null
+  }
+
+  makeImportantByID (wordItemID) {
+    this.items[wordItemID].makeImportant()
+    this.wordItemsToSave = [ this.items[wordItemID] ]
+    this.saveToStorage()
+  }
+
+  removeImportantByID (wordItemID) {
+    this.items[wordItemID].removeImportant()
+    this.wordItemsToSave = [ this.items[wordItemID] ]
+    this.saveToStorage()
+  }
+
   makeAllImportant () {
     this.values.forEach(wordItem => {
       wordItem.makeImportant()
     })
+    this.wordItemsToSave = this.values
+    this.saveToStorage()
   }
 
   removeAllImportant () {
     this.values.forEach(wordItem => {
       wordItem.removeImportant()
     })
+    this.wordItemsToSave = this.values
+    this.saveToStorage()
   }
 
-  getWordItemByID (languageID, ID) {
-    return this.items[ID]
-  }
 }

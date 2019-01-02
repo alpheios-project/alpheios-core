@@ -803,6 +803,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -833,12 +836,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changeImportant () {
-      this.worditem.important = !this.worditem.important
+      // this.worditem.important = !this.worditem.important
+      this.$emit('changeImportant', this.worditem.ID, this.worditem.important)
       this.important = this.worditem.important
     },
     eventChangeImportant () {
       this.important = this.worditem.important
-    } 
+    },
+    selectWordItem () {
+      this.worditem.selectWordItem()
+    }
   }
 });
 
@@ -862,6 +869,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue-components/word-item-panel.vue */ "./vue-components/word-item-panel.vue");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
 //
 //
 //
@@ -938,6 +948,13 @@ __webpack_require__.r(__webpack_exports__);
     removeAllImportant () {
       this.wordlist.removeAllImportant()
       this.$emit('eventChangeImportant')
+    },
+    changeImportant (ID, important) {
+      if (important) {
+        this.wordlist.removeImportantByID(ID)
+      } else {
+        this.wordlist.makeImportantByID(ID)
+      }
     }
   }
 });
@@ -1085,7 +1102,14 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "alpheios-worditem__data alpheios-worditem__targetWord" },
+      {
+        staticClass: "alpheios-worditem__data alpheios-worditem__targetWord",
+        on: {
+          click: function($event) {
+            _vm.selectWordItem()
+          }
+        }
+      },
       [_vm._v(_vm._s(_vm.worditem.targetWord))]
     ),
     _vm._v(" "),
@@ -1191,7 +1215,12 @@ var render = function() {
             key: wordItem.ID,
             staticClass: "alpheios-wordlist-language__worditem"
           },
-          [_c("word-item-panel", { attrs: { worditem: wordItem } })],
+          [
+            _c("word-item-panel", {
+              attrs: { worditem: wordItem },
+              on: { changeImportant: _vm.changeImportant }
+            })
+          ],
           1
         )
       })
@@ -12461,6 +12490,60 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./controllers/upgrade-queue.js":
+/*!**************************************!*\
+  !*** ./controllers/upgrade-queue.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UpgradeQueue; });
+class UpgradeQueue {
+  constructor () {
+    this.count = 0
+    this.targetWords = []
+
+    this.currentWord = null
+    this.methods = []
+  }
+
+  includeHomonym (homonym) {
+    return this.targetWords.includes(homonym.targetWord)
+  }
+
+  addToQueue (homonym) {
+    this.count = this.count + 1
+    this.targetWords.push(homonym.targetWord)
+  }
+
+  addToMetods (method, args) {
+    this.methods.push({ 
+      method: method,
+      args: args 
+    })
+  }
+
+  setCurrentWord (wordItem) {
+    this.currentWord = wordItem.targetWord
+  }
+
+  clearCurrentItem () {
+    this.count = this.count - 1
+    this.targetWords = this.targetWords.filter(item => item != this.currentWord)
+    this.currentWord = null
+
+    if (this.methods.length > 0) {
+      this.methods[0].method(...this.methods[0].args)
+      this.methods.splice(0, 1)
+    }
+    // console.info('**********************changeUpdateQueue', this.upgradeQueue)
+  }
+}
+
+/***/ }),
+
 /***/ "./controllers/wordlist-controller.js":
 /*!********************************************!*\
   !*** ./controllers/wordlist-controller.js ***!
@@ -12478,8 +12561,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_word_list__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/word-list */ "./lib/word-list.js");
 /* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
 /* harmony import */ var _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/storage/indexed-db-adapter */ "./storage/indexed-db-adapter.js");
+/* harmony import */ var _controllers_upgrade_queue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/controllers/upgrade-queue */ "./controllers/upgrade-queue.js");
 
  // Vue in a runtime + compiler configuration
+
 
 
 
@@ -12491,6 +12576,7 @@ class WordlistController {
 
     this.storageAdapter = new _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_4__["default"]()
     this.createAvailableListsID()
+    this.upgradeQueue = new _controllers_upgrade_queue__WEBPACK_IMPORTED_MODULE_5__["default"]()
   }
 
   static get langAliases () {
@@ -12525,71 +12611,62 @@ class WordlistController {
     objectStore.createIndex('ID', 'ID', { unique: true })
     objectStore.createIndex('userID', 'userID', { unique: false })
     objectStore.createIndex('languageCode', 'languageCode', { unique: false })
-
-    console.info('*******************UserLists Object store created')
+    objectStore.createIndex('userIDLangCode', 'userIDLangCode', { unique: false })
+    objectStore.createIndex('targetWord', 'targetWord', { unique: true })
   }
 
   uploadListsFromDB (event) {
     const db = event.target.result
-    console.info('**************DB opened', db.name, db.version, db.objectStoreNames)
-    /*
-    const testItems = [
-      {ID: this.userID+'-lat', userID: this.userID, languageCode: 'lat', wordList: { items: [{text: 'testItems1'}, {text: 'testItems2'}] }}
-    ]
-    this.storageAdapter.set(db, 'UserLists', testItems)
-    */
-    
     const lists = this.availableLists
     lists.forEach(listID => {
-      this.storageAdapter.get(db, 'UserLists', {indexName: 'ID', value: listID, type: 'only' }, this.uploadResultToList.bind(this))
+      this.storageAdapter.get(db, 'UserLists', {indexName: 'userIDLangCode', value: listID, type: 'only' }, this.parseResultToWordList.bind(this))
     })
   }
 
-  uploadResultToList (result) {
+  parseResultToWordList (result) {
     if (result && result.length > 0) {
-      console.info('*****************uploadResultToList', result)
-      result[0].wordItems.forEach(wordItemResult => {
-        let lemmaSource = wordItemResult.lexemes[0].lemma
-        let lemmaTest = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"].readObject(lemmaSource)
-        let inflectionsTest = []
-        wordItemResult.lexemes[0].inflections.forEach(inflSource => {
-          inflectionsTest.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"].readObject(inflSource, lemmaTest))
-        })
-        console.info('******************lemmaTest', lemmaTest)
-        console.info('******************inflectionsTest', inflectionsTest)
+      console.info('*******************parseResultToWordList result', result)
+      result.forEach(wordItemResult => {
+        let homonymRes = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(wordItemResult.homonym)
+        this.updateWordList({ homonym: homonymRes, important: wordItemResult.important }, false)
       })
     }
   }
   
-  createWordList (languageID, init = false) {
+  createWordList (languageID) {
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
     let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID, this.storageAdapter)
     this.wordLists[languageCode] = wordList
   }
 
-  updateWordList(homonym) {
-    let languageID = homonym.languageID
+  updateWordList(wordItemData, saveToStorage = true) {
+    let languageID = wordItemData.homonym.languageID
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
     if (!Object.keys(this.wordLists).includes(languageCode)) {
       this.createWordList(languageID)
     }
     
-    console.info('*****************updateWordList', homonym)
-    this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym), true)
+    if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
+      this.upgradeQueue.addToQueue(wordItemData.homonym)
+      this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](wordItemData.homonym, wordItemData.important), saveToStorage, this.upgradeQueue)
+      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    } else {
+      this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
+    }
   }
 
   onHomonymReady (data) {
-    console.info('******************onHomonymReady start')
-    this.updateWordList(data.homonym)
-    console.info('******************onHomonymReady finish')
+    // console.info('******************onHomonymReady start')
+    this.updateWordList({ homonym: data.homonym })
+    // console.info('******************onHomonymReady finish')
   }
 
   onDefinitionsReady (data) {
-    let testData = data.homonym.lexemes[0].meaning.fullDefs
-    let testText = testData && testData.length > 0 ? testData[0].text.substr(0, 10) + '...' : '<no text>'
-    console.info('******************onDefinitionsReady start', testText)
-    this.updateWordList(data.homonym)
-    console.info('******************onDefinitionsReady finish')
+    // let testData = data.homonym.lexemes[0].meaning.fullDefs
+    // let testText = testData && testData.length > 0 ? testData[0].text.substr(0, 10) + '...' : '<no text>'
+    // console.info('******************onDefinitionsReady start', testText)
+    this.updateWordList({ homonym: data.homonym })
+    // console.info('******************onDefinitionsReady finish')
   }
 }
 
@@ -12600,7 +12677,8 @@ WordlistController.evt = {
    *  {wordLists} an Array with WordLists object
    * }
    */
-  WORDLIST_UPDATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist updated', WordlistController)
+  WORDLIST_UPDATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist updated', WordlistController),
+  WORDITEM_SELECTED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem selected', WordlistController),
 }
 
 
@@ -12952,15 +13030,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controllers/wordlist-controller */ "./controllers/wordlist-controller.js");
+
 
 
 
 class WordItem {
-  constructor (homonym) {
+  constructor (homonym, important = false) {
     this.targetWord = homonym.targetWord
     this.languageID = homonym.languageID
+    this.languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(homonym.languageID)
     this.homonym = homonym
-    this.important = false
+    this.important = important
     this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
   }
 
@@ -12980,6 +13061,34 @@ class WordItem {
     let homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Homonym"].readObject(jsonObj.homonym)
     return new WordItem(homonym)
   }
+
+  convertToStorage () {
+    let resultItem = { lexemes: [] }
+    for (let lexeme of this.homonym.lexemes) {
+      let resInflections = []
+      lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
+      
+      let resMeaning = lexeme.meaning.convertToJSONObject()
+      let resultLexeme = { 
+        lemma: lexeme.lemma.convertToJSONObject(), 
+        inflections: resInflections,
+        meaning: resMeaning
+      }
+
+      resultItem.lexemes.push(resultLexeme)
+    }
+    resultItem.targetWord = this.targetWord
+    return {
+      homonym: resultItem,
+      important: this.important,
+      languageCode: this.languageCode,
+      targetWord: this.targetWord
+    }
+  }
+
+  selectWordItem () {
+    _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__["default"].evt.WORDITEM_SELECTED.pub(this.homonym)
+  }
 }
 
 /***/ }),
@@ -12996,8 +13105,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordList; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
-
 
 
 class WordList {
@@ -13006,6 +13113,7 @@ class WordList {
     this.languageID = languageID
     this.storageAdapter = storageAdapter
     this.items = {}
+    this.wordItemsToSave = []
     this.createStorageID()
   }
 
@@ -13013,33 +13121,21 @@ class WordList {
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID)
     this.storageID =  this.userID + '-' + languageCode
   }
-/*
-  async uploadFromStorage () {
-    let result = await this.storageAdapter.get(this.storageID)
-    console.info('***************result', result)
-    let resultObj = JSON.parse(result[this.storageID])
-    if (!resultObj) {
-      return false
-    }
-    console.info('**********************resultObj', resultObj)
-    Object.values(resultObj.items).forEach(resItem => {
-      let wordItem = WordItem.uploadFromJSON(resItem)
-      this.push(wordItem)
-    })
-    
-    console.info('********************uploadFromStorage1', result)
-    console.info('********************uploadFromStorage2', this.items)
-    return true
-  }
-*/
+
   get values () {
     return Object.values(this.items)
   }
 
-  push (wordItem, saveToStorage = false) {
-    if (this.languageID === wordItem.languageID && !this.contains(wordItem)) {
+  push (wordItem, saveToStorage = false, upgradeQueue = {}) {
+    this.removeWordItemByWord(wordItem)
+
+    if (this.languageID === wordItem.languageID) {
       this.items[wordItem.ID] = wordItem
       if (saveToStorage) {
+        this.upgradeQueue = upgradeQueue
+        this.upgradeQueue.setCurrentWord(wordItem)
+
+        this.wordItemsToSave = [ wordItem ]
         this.saveToStorage()
       }
       return true
@@ -13047,8 +13143,14 @@ class WordList {
     return false
   }
   
+  removeWordItemByWord (wordItem) {
+    if (this.contains(wordItem)) { 
+      let deleteID = this.getIDByTargetWord(wordItem)
+      delete this.items[deleteID]
+    }
+  }
+
   saveToStorage () {
-    console.info('***********************saveToStorage', this.storageAdapter.available)
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
@@ -13056,58 +13158,64 @@ class WordList {
 
   putToStorageTransaction (event) {
     const db = event.target.result
-    console.info('**************DB opened', db.name, db.version, db.objectStoreNames)
-    this.storageAdapter.set(db, 'UserLists', this.convertToStorage())
+    let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
+    this.storageAdapter.set(db, 'UserLists', this.convertToStorageList(), successCallBackF)
   }
 
-  convertToStorage () {
-    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID)
-    let result = { ID: this.storageID, userID: this.userID, languageCode: languageCode }
-    console.info('**********************convert to Storage', this)
-    result.wordItems = []
-
-    for (let item of Object.values(this.items)) {
-      let resultItem = { lexemes: [] }
-      for (let lexeme of item.homonym.lexemes) {
-        let resInflections = []
-        lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
-        
-        let resMeaning = lexeme.meaning.convertToJSONObject()
-        console.info('********************resMeaning 1 new', resMeaning.fullDefs[0] ? resMeaning.fullDefs[0].text : '')
-        console.info('********************resMeaning 2 new', lexeme.meaning.fullDefs[0] ? lexeme.meaning.fullDefs[0].text : '')
-        let resultLexeme = { 
-          lemma: lexeme.lemma.convertToJSONObject(), 
-          inflections: resInflections,
-          meaning: resMeaning
-        }
-
-        resultItem.lexemes.push(resultLexeme)
-      }
-      result.wordItems.push(resultItem)
+  convertToStorageList () {
+    let result = []
+    for (let item of this.wordItemsToSave) {
+      result.push(this.convertToStorageItem(item))
     }
-    console.info('******************result', result)
-    return [ result ]
+    this.wordItemsToSave = []
+    return result
+  }
+
+  convertToStorageItem (wordItem) {
+    return Object.assign({ 
+      ID: this.storageID + '-' + wordItem.targetWord, 
+      userID: this.userID, 
+      userIDLangCode: this.storageID 
+    }, wordItem.convertToStorage())
   }
   
   contains (wordItem) {
     return this.values.map(item => item.targetWord).includes(wordItem.targetWord)
   }
 
+  getIDByTargetWord (wordItem) {
+    let checkRes = this.values.filter(item => item.targetWord === wordItem.targetWord)
+    return checkRes ? checkRes[0].ID : null
+  }
+
+  makeImportantByID (wordItemID) {
+    this.items[wordItemID].makeImportant()
+    this.wordItemsToSave = [ this.items[wordItemID] ]
+    this.saveToStorage()
+  }
+
+  removeImportantByID (wordItemID) {
+    this.items[wordItemID].removeImportant()
+    this.wordItemsToSave = [ this.items[wordItemID] ]
+    this.saveToStorage()
+  }
+
   makeAllImportant () {
     this.values.forEach(wordItem => {
       wordItem.makeImportant()
     })
+    this.wordItemsToSave = this.values
+    this.saveToStorage()
   }
 
   removeAllImportant () {
     this.values.forEach(wordItem => {
       wordItem.removeImportant()
     })
+    this.wordItemsToSave = this.values
+    this.saveToStorage()
   }
 
-  getWordItemByID (languageID, ID) {
-    return this.items[ID]
-  }
 }
 
 /***/ }),
@@ -13210,16 +13318,20 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return request
   }
 
-  set (db, objectStoreName, data) {
+  set (db, objectStoreName, data, onCompleteF) {
     const transaction = db.transaction([objectStoreName], 'readwrite')
     transaction.oncomplete = (event) => {
-        console.info('**************testData added')
+      console.info('**************set data successfull')
+      if (onCompleteF) {
+        onCompleteF()
+      }
     }
     transaction.onerror = (event) => {
         console.info('**************testData onerror')
     }
     const objectStore = transaction.objectStore(objectStoreName);
     data.forEach(dataItem => {
+      console.info('********************put dataItem', dataItem)
       const requestPut = objectStore.put(dataItem)
       requestPut.onsuccess = (event) => {
         console.info('****************wordlist added successful', event.target.result)
@@ -13250,11 +13362,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
   getWithoutConditions (objectStore, callbackF) {
     const requestOpenCursor = objectStore.openCursor(null)
     requestOpenCursor.onsuccess = (event) => {
-      const cursor = event.target.result
-      if (cursor) {
-        console.info('***************cursor no condition', cursor.key, cursor.value)
-        cursor.continue()
-      }
+      callbackF(event.target.result)
     }
     requestOpenCursor.onerror = (event) => {
       console.info('****************cursor without condition - some error', event.target)

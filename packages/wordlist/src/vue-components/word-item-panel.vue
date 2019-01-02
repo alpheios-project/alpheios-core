@@ -4,7 +4,10 @@
                 @click="changeImportant()">
                 <check-icon></check-icon>
         </div>
-        <div class="alpheios-worditem__data alpheios-worditem__targetWord">{{ worditem.targetWord }}</div>
+        <div 
+          class="alpheios-worditem__data alpheios-worditem__targetWord"
+          @click="selectWordItem()"
+        >{{ worditem.targetWord }}</div>
         <div class="alpheios-worditem__data alpheios-worditem__lemmasList">{{ worditem.lemmasList }}</div>
     </div>
 </template>
@@ -38,12 +41,16 @@
     },
     methods: {
       changeImportant () {
-        this.worditem.important = !this.worditem.important
+        // this.worditem.important = !this.worditem.important
+        this.$emit('changeImportant', this.worditem.ID, this.worditem.important)
         this.important = this.worditem.important
       },
       eventChangeImportant () {
         this.important = this.worditem.important
-      } 
+      },
+      selectWordItem () {
+        this.worditem.selectWordItem()
+      }
     }
   }
 </script>
@@ -87,6 +94,7 @@
   .alpheios-worditem__targetWord {
       font-weight: bold;
       width: 30%;
+      cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
       width: 58%;

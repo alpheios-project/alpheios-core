@@ -1,8 +1,9 @@
-import { PsEvent, LanguageModelFactory as LMF, Constants, Lemma, Inflection } from 'alpheios-data-models'
+import { PsEvent, LanguageModelFactory as LMF, Constants, Lemma, Inflection, DefinitionSet, Lexeme, Homonym } from 'alpheios-data-models'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import WordList from '@/lib/word-list';
 import WordItem from '@/lib/word-item';
 import IndexedDBAdapter from '@/storage/indexed-db-adapter'
+import UpgradeQueue from '@/controllers/upgrade-queue';
 
 export default class WordlistController {
   constructor (userID) {
@@ -11,6 +12,7 @@ export default class WordlistController {
 
     this.storageAdapter = new IndexedDBAdapter()
     this.createAvailableListsID()
+    this.upgradeQueue = new UpgradeQueue()
   }
 
   static get langAliases () {
@@ -45,71 +47,62 @@ export default class WordlistController {
     objectStore.createIndex('ID', 'ID', { unique: true })
     objectStore.createIndex('userID', 'userID', { unique: false })
     objectStore.createIndex('languageCode', 'languageCode', { unique: false })
-
-    console.info('*******************UserLists Object store created')
+    objectStore.createIndex('userIDLangCode', 'userIDLangCode', { unique: false })
+    objectStore.createIndex('targetWord', 'targetWord', { unique: true })
   }
 
   uploadListsFromDB (event) {
     const db = event.target.result
-    console.info('**************DB opened', db.name, db.version, db.objectStoreNames)
-    /*
-    const testItems = [
-      {ID: this.userID+'-lat', userID: this.userID, languageCode: 'lat', wordList: { items: [{text: 'testItems1'}, {text: 'testItems2'}] }}
-    ]
-    this.storageAdapter.set(db, 'UserLists', testItems)
-    */
-    
     const lists = this.availableLists
     lists.forEach(listID => {
-      this.storageAdapter.get(db, 'UserLists', {indexName: 'ID', value: listID, type: 'only' }, this.uploadResultToList.bind(this))
+      this.storageAdapter.get(db, 'UserLists', {indexName: 'userIDLangCode', value: listID, type: 'only' }, this.parseResultToWordList.bind(this))
     })
   }
 
-  uploadResultToList (result) {
+  parseResultToWordList (result) {
     if (result && result.length > 0) {
-      console.info('*****************uploadResultToList', result)
-      result[0].wordItems.forEach(wordItemResult => {
-        let lemmaSource = wordItemResult.lexemes[0].lemma
-        let lemmaTest = Lemma.readObject(lemmaSource)
-        let inflectionsTest = []
-        wordItemResult.lexemes[0].inflections.forEach(inflSource => {
-          inflectionsTest.push(Inflection.readObject(inflSource, lemmaTest))
-        })
-        console.info('******************lemmaTest', lemmaTest)
-        console.info('******************inflectionsTest', inflectionsTest)
+      console.info('*******************parseResultToWordList result', result)
+      result.forEach(wordItemResult => {
+        let homonymRes = Homonym.readObject(wordItemResult.homonym)
+        this.updateWordList({ homonym: homonymRes, important: wordItemResult.important }, false)
       })
     }
   }
   
-  createWordList (languageID, init = false) {
+  createWordList (languageID) {
     let languageCode = LMF.getLanguageCodeFromId(languageID)
     let wordList = new WordList(this.userID, languageID, this.storageAdapter)
     this.wordLists[languageCode] = wordList
   }
 
-  updateWordList(homonym) {
-    let languageID = homonym.languageID
+  updateWordList(wordItemData, saveToStorage = true) {
+    let languageID = wordItemData.homonym.languageID
     let languageCode = LMF.getLanguageCodeFromId(languageID)
     if (!Object.keys(this.wordLists).includes(languageCode)) {
       this.createWordList(languageID)
     }
     
-    console.info('*****************updateWordList', homonym)
-    this.wordLists[languageCode].push(new WordItem(homonym), true)
+    if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
+      this.upgradeQueue.addToQueue(wordItemData.homonym)
+      this.wordLists[languageCode].push(new WordItem(wordItemData.homonym, wordItemData.important), saveToStorage, this.upgradeQueue)
+      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    } else {
+      this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
+    }
   }
 
   onHomonymReady (data) {
-    console.info('******************onHomonymReady start')
-    this.updateWordList(data.homonym)
-    console.info('******************onHomonymReady finish')
+    // console.info('******************onHomonymReady start')
+    this.updateWordList({ homonym: data.homonym })
+    // console.info('******************onHomonymReady finish')
   }
 
   onDefinitionsReady (data) {
-    let testData = data.homonym.lexemes[0].meaning.fullDefs
-    let testText = testData && testData.length > 0 ? testData[0].text.substr(0, 10) + '...' : '<no text>'
-    console.info('******************onDefinitionsReady start', testText)
-    this.updateWordList(data.homonym)
-    console.info('******************onDefinitionsReady finish')
+    // let testData = data.homonym.lexemes[0].meaning.fullDefs
+    // let testText = testData && testData.length > 0 ? testData[0].text.substr(0, 10) + '...' : '<no text>'
+    // console.info('******************onDefinitionsReady start', testText)
+    this.updateWordList({ homonym: data.homonym })
+    // console.info('******************onDefinitionsReady finish')
   }
 }
 
@@ -120,5 +113,6 @@ WordlistController.evt = {
    *  {wordLists} an Array with WordLists object
    * }
    */
-  WORDLIST_UPDATED: new PsEvent('Wordlist updated', WordlistController)
+  WORDLIST_UPDATED: new PsEvent('Wordlist updated', WordlistController),
+  WORDITEM_SELECTED: new PsEvent('WordItem selected', WordlistController),
 }

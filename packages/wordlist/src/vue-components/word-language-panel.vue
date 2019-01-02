@@ -17,7 +17,10 @@
         <div class="alpheios-wordlist-language__worditem"
                 v-for="wordItem in wordItems" 
                 v-bind:key="wordItem.ID">
-            <word-item-panel :worditem="wordItem"></word-item-panel>
+            <word-item-panel 
+              :worditem="wordItem" 
+              @changeImportant = "changeImportant"
+            ></word-item-panel>
         </div>
     </div>
 </template>
@@ -74,6 +77,13 @@ export default {
     removeAllImportant () {
       this.wordlist.removeAllImportant()
       this.$emit('eventChangeImportant')
+    },
+    changeImportant (ID, important) {
+      if (important) {
+        this.wordlist.removeImportantByID(ID)
+      } else {
+        this.wordlist.makeImportantByID(ID)
+      }
     }
   }
 }

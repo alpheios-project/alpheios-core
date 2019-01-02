@@ -35,16 +35,20 @@ export default class IndexedDBAdapter extends StorageAdapter {
     return request
   }
 
-  set (db, objectStoreName, data) {
+  set (db, objectStoreName, data, onCompleteF) {
     const transaction = db.transaction([objectStoreName], 'readwrite')
     transaction.oncomplete = (event) => {
-        console.info('**************testData added')
+      console.info('**************set data successfull')
+      if (onCompleteF) {
+        onCompleteF()
+      }
     }
     transaction.onerror = (event) => {
         console.info('**************testData onerror')
     }
     const objectStore = transaction.objectStore(objectStoreName);
     data.forEach(dataItem => {
+      console.info('********************put dataItem', dataItem)
       const requestPut = objectStore.put(dataItem)
       requestPut.onsuccess = (event) => {
         console.info('****************wordlist added successful', event.target.result)
@@ -75,11 +79,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
   getWithoutConditions (objectStore, callbackF) {
     const requestOpenCursor = objectStore.openCursor(null)
     requestOpenCursor.onsuccess = (event) => {
-      const cursor = event.target.result
-      if (cursor) {
-        console.info('***************cursor no condition', cursor.key, cursor.value)
-        cursor.continue()
-      }
+      callbackF(event.target.result)
     }
     requestOpenCursor.onerror = (event) => {
       console.info('****************cursor without condition - some error', event.target)
