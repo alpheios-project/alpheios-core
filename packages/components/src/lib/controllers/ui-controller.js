@@ -4,11 +4,15 @@ import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
+import Vuex from 'vuex'
 
 // A panel component
 import Panel from '@/vue-components/panel.vue'
 // A popup component
 import Popup from '@/vue-components/popup.vue'
+
+// Modules
+import L10nModule from '@/modules/data/l10n/l10n.js'
 
 import EmbedLibWarning from '@/vue-components/embed-lib-warning.vue'
 
@@ -40,6 +44,9 @@ const languageNames = new Map([
   [Constants.LANG_PERSIAN, 'Persian'],
   [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
 ])
+
+// Enable Vuex
+Vue.use(Vuex)
 
 export default class UIController {
   /**
@@ -78,6 +85,9 @@ export default class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
+    this.store = null // Vuex store. A public API for data and UI module interactions.
+    this.registeredDataModules = [] // Data modules that are registered to be included into the store.
+
     /**
      * If an event controller be used with an instance of a UI Controller,
      * this prop will hold an event controller instance. It is usually initialized within a `build` method.
@@ -96,6 +106,9 @@ export default class UIController {
    */
   static create (state, options) {
     let uiController = new UIController(state, options)
+
+    // Register modules
+    uiController.registerDataModule(L10nModule)
 
     // Creates on configures an event listener
     let eventController = new UIEventController()
@@ -229,6 +242,17 @@ export default class UIController {
     return this
   }
 
+  /**
+   * Registers a data module for use by UI controller.
+   * @param {DataModule} Module - A data module class (i.e. the constructor function).
+   * @param options - Arbitrary number of values that will be passed to the module constructor.
+   * @return {UIController} - A self reference for chaining.
+   */
+  registerDataModule (Module, ...options) {
+    this.registeredDataModules.push(new Module(...options))
+    return this
+  }
+
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
@@ -252,9 +276,15 @@ export default class UIController {
 
     await Promise.all(optionLoadPromises)
     // All options shall be loaded at this point. Can initialize Vue components that will use them
+    // Initialize the store
+    this.store = new Vuex.Store({
+      modules: Object.assign({}, ...this.registeredDataModules.map(module => ({ [module.storeName]: module.store })))
+    })
+
     // Initialize components
     this.panel = new Vue({
       el: `#${this.options.template.panelId}`,
+      store: this.store,
       components: {
         panel: Panel
       },
@@ -563,6 +593,7 @@ export default class UIController {
         this.panelData.inflections.tableBody = document.querySelector(`#${this.panelData.inflectionIDs.tableBody}`)
       }
     })
+    console.log(`Panel's store is`, this.panel.$store)
 
     // Create a Vue instance for a popup
     this.popup = new Vue({

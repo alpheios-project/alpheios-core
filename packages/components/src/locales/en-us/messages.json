@@ -472,12 +472,12 @@
     "component": "UserAuth Vue Component"
   },
   "AUTH_PROFILE_NICKNAME_LABEL": {
-    "message": "Nickname:",
+    "message": "Nickname",
     "description": "A user's profile nickname filed label",
     "component": "UserAuth Vue Component"
   },
   "AUTH_PROFILE_NAME_LABEL": {
-    "message": "Name:",
+    "message": "Name",
     "description": "A user's profile name filed label",
     "component": "UserAuth Vue Component"
   }

@@ -15,15 +15,16 @@ export default class L10n {
    * This method is chainable.
    * @param {string} messageJSON - Messages in a JSON string
    * @param {string} locale - A locale of the messages
+   * @param {Function} missingTranslationMsgFn - A placeholder message that will be shown if translation is not found.
    * @return {L10n} - Self reference (for chaining)
    */
-  addMessages (messageJSON, locale) {
+  addMessages (messageJSON, locale, missingTranslationMsgFn) {
     let messageBundle
     if (this.bundles.has(locale)) {
       messageBundle = this.bundles.get(locale)
       messageBundle.appendFromJSON(messageJSON)
     } else {
-      messageBundle = new MessageBundle(messageJSON, locale)
+      messageBundle = new MessageBundle(messageJSON, locale, missingTranslationMsgFn)
       this.addMessageBundle(messageBundle)
     }
     return this

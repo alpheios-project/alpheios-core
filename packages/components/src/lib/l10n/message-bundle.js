@@ -7,10 +7,11 @@ import Message from './message.js'
 export default class MessageBundle {
   /**
    * Creates a message bundle (a list of messages) for a locale.
-   * @param {String} messagesJSON - Messages for a locale as a JSON string or as an object.
+   * @param {string} messagesJSON - Messages for a locale as a JSON string or as an object.
    * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
+   * @param {Function} missingTranslationMsgFn - A placeholder message that will be shown if translation is not found.
    */
-  constructor (messagesJSON, locale) {
+  constructor (messagesJSON, locale, missingTranslationMsgFn = (msgID, locale) => `Missing translation: ${msgID} [${locale}]`) {
     if (!locale) {
       throw new Error('Locale data is missing')
     }
@@ -25,6 +26,8 @@ export default class MessageBundle {
      * @type {{get: Function, [format]: Function}}
      */
     this.messages = {}
+
+    this._missingTranslationMsgFn = missingTranslationMsgFn
 
     let messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
     this.append(messages)
@@ -71,11 +74,11 @@ export default class MessageBundle {
       if (typeof this[messageID].format === 'function') {
         return this[messageID].format(options)
       } else {
-        return this[messageID]
+        return this[messageID].message
       }
     } else {
       // If message with the ID provided is not in translation data, generate a warning.
-      return `Not in translation data: "${messageID}"`
+      return this._missingTranslationMsgFn(messageID, this._locale)
     }
   }
 

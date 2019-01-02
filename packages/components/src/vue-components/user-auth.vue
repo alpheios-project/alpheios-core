@@ -1,24 +1,27 @@
 <template>
     <div>
+        <button class="uk-button uk-button-primary" style="text-align: right;" @click="localeToggle">
+            Toggle Locale
+        </button>
         <button v-show="!isLoggedIn" class="uk-button uk-button-primary" @click="logIn">
-            {{ messages.AUTH_LOG_IN_BTN_LABEL }}
+            {{ msg(`AUTH_LOG_IN_BTN_LABEL`) }}
         </button>
         <button v-show="isLoggedIn" class="uk-button uk-button-primary" @click="logOut">
-            {{ messages.AUTH_LOG_OUT_BTN_LABEL }}
+            {{ msg(`AUTH_LOG_OUT_BTN_LABEL`) }}
         </button>
         <div v-show="logInProgress" class="alpheios-user-auth__message-box">
-            {{ messages.AUTH_LOG_IN_PROGRESS_MSG }}
+            {{ msg(`AUTH_LOG_IN_PROGRESS_MSG`) }}
         </div>
         <div v-show="isLoggedIn" class="alpheios-user-auth__message-box">
-            {{ messages.AUTH_LOG_IN_SUCCESS_MSG }}
+            {{ msg(`AUTH_LOG_IN_SUCCESS_MSG`) }}
         </div>
         <div v-show="authenticationFailed" class="alpheios-user-auth__message-box">
-            {{ messages.AUTH_LOG_IN_AUTH_FAILURE_MSG }}
+            {{ msg(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
         </div>
         <div v-if="isLoggedIn && hasUserInfo" class="alpheios-user-auth__user-info-box">
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    {{ messages.AUTH_PROFILE_NICKNAME_LABEL }}
+                    {{ msg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.nickname ? userInfo.nickname: `&mdash;` }}
@@ -26,7 +29,7 @@
             </div>
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    {{ messages.AUTH_PROFILE_NAME_LABEL }}
+                    {{ msg(`AUTH_PROFILE_NAME_LABEL`) }}:
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.name ? userInfo.name: `&mdash;` }}
@@ -40,8 +43,7 @@
 export default {
   name: 'UserAuth',
   props: {
-    auth: [Object, Function],
-    messages: [Object]
+    auth: [Object, Function]
   },
   data: function () {
     return {
@@ -52,9 +54,9 @@ export default {
       userInfo: null // Will hold a user info object when user data is retrieved
     }
   },
+
   methods: {
     logIn: function () {
-      console.log('Login started')
       this.logInProgress = true
       if (this.auth) {
         this.auth.authenticate()
@@ -103,6 +105,19 @@ export default {
             console.error(`Unable to retrieve user information from Auth0: ${error.message}`)
           })
       }
+    },
+
+    localeToggle: function () {
+      console.log(`Locale toggle`)
+      if (this.$store.state.l10n.selectedLocale === 'en-GB') {
+        this.$store.commit('setLocale', 'en-US')
+      } else {
+        this.$store.commit('setLocale', 'en-GB')
+      }
+    },
+
+    msg (messageID) {
+      return this.$store.getters.getMessage(messageID)
     }
   }
 }
