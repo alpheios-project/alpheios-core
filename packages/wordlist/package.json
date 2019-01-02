@@ -23,7 +23,7 @@
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",
     "alpheios-client-adapters": "github:alpheios-project/client-adapters",
-    "alpheios-data-models": "github:alpheios-project/data-models",
+    "alpheios-data-models": "github:alpheios-project/data-models#feat-304-word-list",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "autoprefixer": "^8.6.5",
     "bytes": "^3.0.0",

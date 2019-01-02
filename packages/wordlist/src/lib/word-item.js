@@ -29,6 +29,10 @@ export default class WordItem {
     return new WordItem(homonym)
   }
 
+  /**
+   * This method converts wordItem to be as jsonObject
+   * it uses convertToJSON methods for each piece of the data - I will refractor all of them into Homonym methods later
+   */
   convertToStorage () {
     let resultItem = { lexemes: [] }
     for (let lexeme of this.homonym.lexemes) {

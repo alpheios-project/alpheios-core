@@ -36,6 +36,5 @@ export default class UpgradeQueue {
       this.methods[0].method(...this.methods[0].args)
       this.methods.splice(0, 1)
     }
-    // console.info('**********************changeUpdateQueue', this.upgradeQueue)
   }
 }

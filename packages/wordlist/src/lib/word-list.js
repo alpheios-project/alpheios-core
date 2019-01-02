@@ -19,6 +19,14 @@ export default class WordList {
     return Object.values(this.items)
   }
 
+  /**
+   * This method removes wordItem with the same targetWord if it exists
+   * checks for the languageId to be the same as defines in the current wordList
+   * adds wordItem to the current wordList
+   * and saves to storage (if saveToStorage flag = true)
+   * before saving - it duplicates upgradeQueue from wordlist 
+   * to pass it later to IndexedDB put callback and move queue further after success saving
+   */
   push (wordItem, saveToStorage = false, upgradeQueue = {}) {
     this.removeWordItemByWord(wordItem)
 
@@ -43,18 +51,36 @@ export default class WordList {
     }
   }
 
+  /**
+   * This method is the same as in WordList and it passes putToStorageTransaction as a callback for successful opening database
+   */
   saveToStorage () {
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
   }
 
+  /**
+   * This method executes in successfull callback from saveToStorage method
+   * it gets db from event data
+   * and passes the foolowing arguments to set method of the storageAdapter
+   *        db - opened database from the event
+   *        UserLists - table name
+   *        jsonObject data - selected amount of wordItems (it could be one wordItem, it could be the whole list) converted to be as jsonObject
+   *        successCallBackF - it is used to move queue further, if there is a queue (it is not defined everytime)
+   */
   putToStorageTransaction (event) {
     const db = event.target.result
     let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
     this.storageAdapter.set(db, 'UserLists', this.convertToStorageList(), successCallBackF)
   }
 
+  /**
+   * This method converts some amount of wordItems to be as jsonObject
+   * as we couldn't pass some arguments to the IndexedDB callbacks (as they are events)
+   * I have created a variable in wordList that stores currently defined amount of wordItem - it is this.wordItemsToSave
+   * this.wordItemsToSave is defined now in push, and changing important flags methods
+   */
   convertToStorageList () {
     let result = []
     for (let item of this.wordItemsToSave) {
