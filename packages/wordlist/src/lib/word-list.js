@@ -49,6 +49,7 @@ export default class WordList {
   }
   
   saveToStorage () {
+    console.info('***********************saveToStorage', this.storageAdapter.available)
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
@@ -73,8 +74,8 @@ export default class WordList {
         lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
         
         let resMeaning = lexeme.meaning.convertToJSONObject()
-        console.info('********************resMeaning 1 new', resMeaning.fullDefs[0].text)
-        console.info('********************resMeaning 2 new', lexeme.meaning.fullDefs[0].text)
+        console.info('********************resMeaning 1 new', resMeaning.fullDefs[0] ? resMeaning.fullDefs[0].text : '')
+        console.info('********************resMeaning 2 new', lexeme.meaning.fullDefs[0] ? lexeme.meaning.fullDefs[0].text : '')
         let resultLexeme = { 
           lemma: lexeme.lemma.convertToJSONObject(), 
           inflections: resInflections,

@@ -25,6 +25,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
   }
 
   openDatabase (upgradeCallback, successCallback) {
+    console.info('***********************openDatabase')
     let request = this.indexedDB.open(this.dbName, this.currentVersion)
     request.onerror = (event) => {
       console.info('*************Some problems with opening LabirintOrders', event.target)

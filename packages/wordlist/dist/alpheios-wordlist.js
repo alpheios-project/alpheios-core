@@ -12561,33 +12561,34 @@ class WordlistController {
     }
   }
   
-  async createWordList (languageID, init = false) {
+  createWordList (languageID, init = false) {
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
     let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID, this.storageAdapter)
     this.wordLists[languageCode] = wordList
   }
 
-  async updateWordList(homonym) {
+  updateWordList(homonym) {
     let languageID = homonym.languageID
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
     if (!Object.keys(this.wordLists).includes(languageCode)) {
-      await this.createWordList(languageID)
+      this.createWordList(languageID)
     }
     
     console.info('*****************updateWordList', homonym)
     this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](homonym), true)
   }
 
-  async onHomonymReady (data) {
+  onHomonymReady (data) {
     console.info('******************onHomonymReady start')
-    await this.updateWordList(data.homonym)
-    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    this.updateWordList(data.homonym)
     console.info('******************onHomonymReady finish')
   }
 
-  async onDefinitionsReady (data) {
-    console.info('******************onDefinitionsReady start', data.homonym.lexemes[0].meaning.fullDefs[0].text)
-    await this.updateWordList(data.homonym)
+  onDefinitionsReady (data) {
+    let testData = data.homonym.lexemes[0].meaning.fullDefs
+    let testText = testData && testData.length > 0 ? testData[0].text.substr(0, 10) + '...' : '<no text>'
+    console.info('******************onDefinitionsReady start', testText)
+    this.updateWordList(data.homonym)
     console.info('******************onDefinitionsReady finish')
   }
 }
@@ -13047,6 +13048,7 @@ class WordList {
   }
   
   saveToStorage () {
+    console.info('***********************saveToStorage', this.storageAdapter.available)
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
@@ -13071,8 +13073,8 @@ class WordList {
         lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
         
         let resMeaning = lexeme.meaning.convertToJSONObject()
-        console.info('********************resMeaning 1 new', resMeaning.fullDefs[0].text)
-        console.info('********************resMeaning 2 new', lexeme.meaning.fullDefs[0].text)
+        console.info('********************resMeaning 1 new', resMeaning.fullDefs[0] ? resMeaning.fullDefs[0].text : '')
+        console.info('********************resMeaning 2 new', lexeme.meaning.fullDefs[0] ? lexeme.meaning.fullDefs[0].text : '')
         let resultLexeme = { 
           lemma: lexeme.lemma.convertToJSONObject(), 
           inflections: resInflections,
@@ -13198,6 +13200,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
   }
 
   openDatabase (upgradeCallback, successCallback) {
+    console.info('***********************openDatabase')
     let request = this.indexedDB.open(this.dbName, this.currentVersion)
     request.onerror = (event) => {
       console.info('*************Some problems with opening LabirintOrders', event.target)

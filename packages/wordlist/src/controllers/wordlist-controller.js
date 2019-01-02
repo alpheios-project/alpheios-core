@@ -81,33 +81,34 @@ export default class WordlistController {
     }
   }
   
-  async createWordList (languageID, init = false) {
+  createWordList (languageID, init = false) {
     let languageCode = LMF.getLanguageCodeFromId(languageID)
     let wordList = new WordList(this.userID, languageID, this.storageAdapter)
     this.wordLists[languageCode] = wordList
   }
 
-  async updateWordList(homonym) {
+  updateWordList(homonym) {
     let languageID = homonym.languageID
     let languageCode = LMF.getLanguageCodeFromId(languageID)
     if (!Object.keys(this.wordLists).includes(languageCode)) {
-      await this.createWordList(languageID)
+      this.createWordList(languageID)
     }
     
     console.info('*****************updateWordList', homonym)
     this.wordLists[languageCode].push(new WordItem(homonym), true)
   }
 
-  async onHomonymReady (data) {
+  onHomonymReady (data) {
     console.info('******************onHomonymReady start')
-    await this.updateWordList(data.homonym)
-    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    this.updateWordList(data.homonym)
     console.info('******************onHomonymReady finish')
   }
 
-  async onDefinitionsReady (data) {
-    console.info('******************onDefinitionsReady start', data.homonym.lexemes[0].meaning.fullDefs[0].text)
-    await this.updateWordList(data.homonym)
+  onDefinitionsReady (data) {
+    let testData = data.homonym.lexemes[0].meaning.fullDefs
+    let testText = testData && testData.length > 0 ? testData[0].text.substr(0, 10) + '...' : '<no text>'
+    console.info('******************onDefinitionsReady start', testText)
+    this.updateWordList(data.homonym)
     console.info('******************onDefinitionsReady finish')
   }
 }
