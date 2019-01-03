@@ -4,8 +4,8 @@ import Suffix from '@lib/suffix.js'
 import GreekView from '@views/lang/greek/greek-view.js'
 
 export default class GreekNounView extends GreekView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'nounDeclension'
     this.name = 'noun declension'
     this.title = 'Noun declension'

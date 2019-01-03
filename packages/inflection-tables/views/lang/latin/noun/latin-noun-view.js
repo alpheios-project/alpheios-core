@@ -4,8 +4,8 @@ import Suffix from '@lib/suffix.js'
 import LatinView from '@views/lang/latin/latin-view.js'
 
 export default class LatinNounView extends LatinView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'noun_declension'
     this.name = 'noun declension'
     this.title = 'Noun declension'

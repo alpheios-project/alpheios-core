@@ -8,11 +8,9 @@ import LanguageDatasetFactory from '../../lib/language-dataset-factory.js'
 export default class ViewSet {
   /**
    * @param {Homonym} homonym - Data about inflections we need to build views for
-   * @param {string} locale - A locale's IETF language tag (ex. `en-US`)
    */
-  constructor (homonym = undefined, locale = 'en-US') {
+  constructor (homonym = undefined) {
     this.homonym = homonym
-    this.locale = locale
     this.matchingViews = []
     this.matchingViewsMap = new Map()
     this.inflectionData = null
@@ -36,7 +34,7 @@ export default class ViewSet {
         }
 
         this.matchingViews.push(...this.constructor.views.reduce(
-          (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.locale)), []))
+          (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym)), []))
         this.updateMatchingViewsMap(this.matchingViews)
       }
     }
@@ -90,28 +88,15 @@ export default class ViewSet {
     }
   }
 
-  updateMessages (messages) {
-    this.messages = messages
-    for (let view of this.matchingViews) {
-      view.updateMessages(messages)
-    }
-  }
-
-  setLocale (locale) {
-    for (let view of this.matchingViews) {
-      view.setLocale(locale)
-    }
-  }
-
   static getViewByID (viewID) {
     return this.views.find(v => v.viewID === viewID)
   }
 
-  static getStandardForm (options, locale) {
+  static getStandardForm (options) {
     if (!options || !options.viewID) {
       throw new Error(`Obligatory options property, "viewID", is missing`)
     }
     let view = this.getViewByID(options.viewID)
-    return view ? view.getStandardFormInstance(options, locale) : null
+    return view ? view.getStandardFormInstance(options) : null
   }
 }

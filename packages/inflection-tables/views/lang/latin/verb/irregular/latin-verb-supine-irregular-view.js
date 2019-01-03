@@ -6,8 +6,8 @@ import LatinVerbParticipleIrregularView from '@views/lang/latin/verb/irregular/l
 import Table from '@views/lib/table'
 
 export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBaseView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbSupineConjugationIrregular'
     this.name = 'verb-supine-irregular'

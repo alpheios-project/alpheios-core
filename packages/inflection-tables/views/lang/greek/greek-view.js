@@ -5,8 +5,8 @@ import View from '../../lib/view.js'
 import GroupFeatureType from '../../lib/group-feature-type.js'
 
 export default class GreekView extends View {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     /*
     Default grammatical features of a View. It child views need to have different feature values, redefine

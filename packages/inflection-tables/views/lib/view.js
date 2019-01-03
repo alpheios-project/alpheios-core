@@ -1,6 +1,5 @@
 import { Feature, Inflection, Homonym, LanguageModelFactory } from 'alpheios-data-models'
 import LDF from '../../lib/language-dataset-factory.js'
-import L10n from '../../l10n/l10n.js'
 import WideView from './wide-view'
 import Form from '@lib/form.js'
 
@@ -13,12 +12,10 @@ export default class View {
    * but there could be several views for the same part of speech that show different table representation of a view.
    * @param {Homonym} homonym - A homonym
    * @param {InflectionSet} inflectionSet - An inflection data object.
-   * @param {string} locale - A locale for serving localized messages. If none provided, a default language will be used.
    */
-  constructor (homonym, inflectionSet, locale = L10n.defaultLocale) {
+  constructor (homonym, inflectionSet) {
     this.homonym = homonym
     this.inflectionData = inflectionSet
-    this.messages = L10n.getMessages(locale)
     this.pageHeader = {}
     // A view can be rendered for different parts of speech. This is a part of speech this view currently uses
     this.partOfSpeech = this.constructor.mainPartOfSpeech
@@ -179,17 +176,6 @@ export default class View {
     return true
   }
 
-  get locale () {
-    return this.messages.locale
-  }
-
-  setLocale (locale) {
-    if (this.locale !== locale) {
-      this.messages = L10n.getMessages(locale)
-    }
-    return this
-  }
-
   /**
    * Checks whether this view can be and needs to be rendered (i.e. construct inflection table structures).
    * Views that don't need to be rendered are the ones that are not implemented and the ones tha have
@@ -348,16 +334,15 @@ export default class View {
    * to return multiple views if necessary (e.g. paradigm view can return multiple instances of the view
    * with different data).
    * @param {Inflection} homonym - An inflection for which matching instances to be found.
-   * @param {string} locale
    * @return {View[] | []} Array of view instances or an empty array if view instance does not match inflection data.
    */
-  static getMatchingInstances (homonym, locale) {
+  static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       let inflectionData = this.getInflectionsData(homonym)
 
       if (inflectionData.types.has(this.inflectionType)) {
         // There is some inflection data found for the view's morpheme type
-        let view = new this(homonym, inflectionData, locale)
+        let view = new this(homonym, inflectionData)
         return [view]
       }
     }
@@ -377,11 +362,11 @@ export default class View {
     return homonym
   }
 
-  static getStandardFormInstance (options, locale = 'en-US') {
+  static getStandardFormInstance (options) {
     let homonym = this.createStandardFormHomonym(options)
     let inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
-    let view = new this(homonym, inflectionData, locale)
+    let view = new this(homonym, inflectionData)
     if (options.title) {
       view.setTitle(options.title)
     }

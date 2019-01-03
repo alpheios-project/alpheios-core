@@ -260,7 +260,7 @@ export default class Table {
           headers[currentLevel] = new Row()
         }
         headers[currentLevel].titleCell = currentFeature.createRowTitleCell(
-          this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size)
+          currentFeature.groupTitle, this.features.firstColumnFeature.size)
 
         headers[currentLevel].add(headerCell)
         cells.push(headerCell)
@@ -274,7 +274,7 @@ export default class Table {
 
         headers[currentLevel].add(headerCell)
         headers[currentLevel].titleCell = currentFeature.createRowTitleCell(
-          this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size)
+          currentFeature.groupTitle, this.features.firstColumnFeature.size)
         cells.push(headerCell)
       }
     }

@@ -5,8 +5,8 @@ import GreekView from '@views/lang/greek/greek-view.js'
 import GreekNounView from './greek-noun-view'
 
 export default class GreekNounSimplifiedView extends GreekNounView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'nounDeclensionSimplified'
     this.name = 'noun declension simplified'
     this.title = 'Noun declension (simplified)'

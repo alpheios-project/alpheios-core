@@ -10,10 +10,6 @@ import { Constants } from 'alpheios-data-models'
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'
 
-import L10nJSON from '@tests/l10n/l10n-json.js'
-import L10n from '@l10n/l10n.js'
-import MessageBundle from '@l10n/message-bundle.js'
-
 import Form from '@lib/form.js'
 
 jest.setTimeout(30000)
@@ -36,8 +32,6 @@ describe('view.test.js', () => {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
     set: jest.fn()
   }) */
-
-  L10n.getMessages = jest.fn((locale) => L10nJSON.getMessages(locale))
 
   Object.defineProperty(View, 'partOfSpeech', {
     get: jest.fn(() => 'numeral'),
@@ -71,7 +65,6 @@ describe('view.test.js', () => {
     let view = new View(testInflectionData, testLocale)
 
     expect(view.homonym.targetWord).toEqual(testHomonym.targetWord)
-    expect(view.messages).toBeInstanceOf(MessageBundle)
     expect(Object.keys(view.pageHeader).length).toEqual(0)
     expect(view.id).toBeDefined()
     expect(view.name).toBeDefined()
@@ -81,20 +74,6 @@ describe('view.test.js', () => {
     expect(Object.keys(view.table).length).toEqual(1) // This is `options`
     expect(view.hasCredits).toBeFalsy()
     expect(view.creditsText).toEqual('')
-  })
-
-  it('2 View - locale return locale from messages', () => {
-    let view = new View(testInflectionData, testLocale)
-    expect(view.locale).toEqual(testLocale)
-  })
-
-  it('3 View - setLocale updates messages if argument\'s locale differs', () => {
-    let view = new View(testInflectionData, testLocale)
-    expect(view.locale).toEqual(testLocale)
-
-    view.setLocale('en-GB')
-    expect(view.locale).toEqual('en-GB')
-    expect(L10n.getMessages).toHaveBeenCalledWith('en-GB')
   })
 
   // TODO: update to reflect an updated call procedure

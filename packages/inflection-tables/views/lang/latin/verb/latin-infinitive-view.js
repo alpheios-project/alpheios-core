@@ -4,8 +4,8 @@ import LatinVerbMoodView from './latin-verb-mood-view.js'
 import Table from '../../../lib/table'
 
 export default class LatinInfinitiveView extends LatinVerbMoodView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbInfinitive'
     this.name = 'infinitive'
     this.title = 'Infinitive'

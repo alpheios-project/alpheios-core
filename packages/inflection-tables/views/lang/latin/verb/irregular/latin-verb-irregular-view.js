@@ -11,8 +11,8 @@ import Table from '@views/lib/table'
  * which is stored in a `word` feature of an inflection.
  */
 export default class LatinVerbIrregularView extends LatinVerbIrregularBaseView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbConjugationIrregular'
     this.name = 'verb-irregular'

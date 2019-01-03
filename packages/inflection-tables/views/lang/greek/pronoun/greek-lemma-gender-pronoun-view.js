@@ -7,8 +7,8 @@ import Table from '../../../lib/table'
  * Used for demonstrative pronouns. Produces a table grouped into columns by lemma and gender
  */
 export default class GreekLemmaGenderPronounView extends GreekPronounView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale, GreekLemmaGenderPronounView.classes[0])
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData, GreekLemmaGenderPronounView.classes[0])
 
     // Add lemmas
     /* this.lemmaTypeFeature = new Feature(

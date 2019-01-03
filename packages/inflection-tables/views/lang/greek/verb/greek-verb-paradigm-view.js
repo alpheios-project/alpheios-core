@@ -12,10 +12,9 @@ export default class GreekVerbParadigmView extends GreekView {
    * @param {Paradigm} paradigm
    * @param {Homonym} homonym
    * @param {InflectionData} inflectionData
-   * @param {string} locale
    */
-  constructor (paradigm, homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (paradigm, homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = paradigm.id
     this.name = paradigm.title.toLowerCase()
     this.title = paradigm.title
@@ -108,11 +107,11 @@ export default class GreekVerbParadigmView extends GreekView {
     return false */
   }
 
-  static getMatchingInstances (homonym, messages) {
+  static getMatchingInstances (homonym) {
     let inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
       let paradigms = inflectionData.types.get(this.inflectionType).items
-      return paradigms.map(paradigm => new this(paradigm, homonym, inflectionData, messages))
+      return paradigms.map(paradigm => new this(paradigm, homonym, inflectionData))
     }
     return []
   }
@@ -142,13 +141,13 @@ export default class GreekVerbParadigmView extends GreekView {
     return this
   }
 
-  static getStandardFormInstance (options, locale = 'en-US') {
+  static getStandardFormInstance (options) {
     if (!options || !options.paradigmID) {
       throw new Error(`Obligatory options property, "paradigmID", is missing`)
     }
     let paradigm = this.dataset.pos.get(this.mainPartOfSpeech).types.get(Paradigm).getByID(options.paradigmID)
     if (paradigm) {
-      return new this(paradigm, null, null, locale).render().noSuffixMatchesGroupsHidden(false)
+      return new this(paradigm, null, null).render().noSuffixMatchesGroupsHidden(false)
     }
   }
 }

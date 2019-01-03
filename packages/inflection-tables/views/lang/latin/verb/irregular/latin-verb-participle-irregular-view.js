@@ -7,8 +7,8 @@ import GroupFeatureType from '@views/lib/group-feature-type'
 import Table from '@views/lib/table'
 
 export default class LatinVerbParticipleIrregularView extends LatinVerbIrregularBaseView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbParticipleConjugationIrregular'
     this.name = 'verb-participle-irregular'

@@ -7,8 +7,8 @@ import GreekView from '../greek-view.js'
 import GroupFeatureType from '../../../lib/group-feature-type.js'
 
 export default class GreekNumeralView extends GreekView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'numeralDeclension'
     this.name = 'numeral declension'
     this.title = 'Numeral declension'

@@ -6,8 +6,8 @@ import Table from '../../../lib/table'
  * Used for personal pronouns. Produces a table grouped into columns by person
  */
 export default class GreekPersonPronounView extends GreekPronounView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale, GreekPersonPronounView.classes[0])
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData, GreekPersonPronounView.classes[0])
 
     if (this.isImplemented) {
       this.createTable()

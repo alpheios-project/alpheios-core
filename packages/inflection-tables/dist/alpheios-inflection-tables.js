@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("alpheios-data-models"), require("intl-messageformat"));
+		module.exports = factory(require("alpheios-data-models"));
 	else if(typeof define === 'function' && define.amd)
-		define(["alpheios-data-models", "intl-messageformat"], factory);
+		define(["alpheios-data-models"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("alpheios-data-models"), require("intl-messageformat")) : factory(root["alpheios-data-models"], root["intl-messageformat"]);
+		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_intl_messageformat__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -100,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: InflectionData, LanguageDatasetFactory, LatinDataSet, GreekDataSet, L10n, ViewSetFactory */
+/*! exports provided: InflectionData, LanguageDatasetFactory, LatinDataSet, GreekDataSet, ViewSetFactory */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -117,11 +117,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lang_greek_greek_language_dataset_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/lang/greek/greek-language-dataset.js */ "./lib/lang/greek/greek-language-dataset.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GreekDataSet", function() { return _lib_lang_greek_greek_language_dataset_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./l10n/l10n.js */ "./l10n/l10n.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "L10n", function() { return _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
-
-/* harmony import */ var _views_lib_view_set_factory_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/lib/view-set-factory.js */ "./views/lib/view-set-factory.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ViewSetFactory", function() { return _views_lib_view_set_factory_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _views_lib_view_set_factory_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/lib/view-set-factory.js */ "./views/lib/view-set-factory.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ViewSetFactory", function() { return _views_lib_view_set_factory_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
 
 
@@ -130,201 +127,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-/***/ }),
-
-/***/ "./l10n/l10n.js":
-/*!**********************!*\
-  !*** ./l10n/l10n.js ***!
-  \**********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return L10n; });
-/* harmony import */ var _message_bundle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message-bundle.js */ "./l10n/message-bundle.js");
-/* harmony import */ var _locale_en_us_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./locale/en-us.json */ "./l10n/locale/en-us.json");
-var _locale_en_us_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./locale/en-us.json */ "./l10n/locale/en-us.json", 1);
-/* harmony import */ var _locale_en_gb_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./locale/en-gb.json */ "./l10n/locale/en-gb.json");
-var _locale_en_gb_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./locale/en-gb.json */ "./l10n/locale/en-gb.json", 1);
-
-
-
-
-const messages = new Map([
-  ['en-US', _locale_en_us_json__WEBPACK_IMPORTED_MODULE_1__],
-  ['en-GB', _locale_en_gb_json__WEBPACK_IMPORTED_MODULE_2__]
-])
-
-let messageBundles = new Map()
-
-/**
- * Combines several message bundle for different locales.
- */
-class L10n {
-  /**
-   * Creates an object. If an array of message bundle data is provided, initializes an object with this data.
-   * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
-   * @returns {L10n} Returns a reference to self for chaining.
-   */
-  constructor (messageData) {
-    this._locales = {}
-    this._localeList = []
-
-    if (messageData) {
-      this.addLocaleData(messageData)
-    }
-    return this
-  }
-
-  static get defaultLocale () {
-    return 'en-US'
-  }
-
-  static get locales () {
-    return Array.from(messages.keys())
-  }
-
-  static getMessages (locale = this.defaultLocale) {
-    if (messageBundles.has(locale)) {
-      return messageBundles.get(locale)
-    }
-    if (!messages.has(locale)) {
-      console.warn(`Messages for "{locale}" are not found, returning a default "${this.defaultLocale}" instead`)
-      locale = this.defaultLocale
-    }
-    let messageBundle = new _message_bundle_js__WEBPACK_IMPORTED_MODULE_0__["default"](locale, messages.get(locale))
-    messageBundles.set(locale, messageBundle)
-    return messageBundle
-  }
-
-  /**
-   * Adds one or several message bundles.
-   * This function is chainable.
-   * @param {MessageBundle[]} messageData - An array of message bundles to be stored within.
-   * @return {L10n} - Returns self for chaining.
-   */
-  addLocaleData (messageData) {
-    for (let messageBundle of messageData) {
-      this._localeList.push(messageBundle.locale)
-      this._locales[messageBundle.locale] = messageBundle
-    }
-    return this
-  }
-
-  /**
-   * Returns a message bundle for a locale.
-   * @param {string} locale - A locale code for a message bundle. IETF language tag format is recommended.
-   * @returns {MessageBundle} A message bundle for a locale.
-   */
-  messages (locale) {
-    if (!this._locales[locale]) {
-      throw new Error('Locale "' + locale + '" is not found.')
-    }
-    return this._locales[locale]
-  }
-
-  /**
-   * Returns a list of available locale codes.
-   * @returns {string[]} Array of local codes.
-   */
-  get locales () {
-    return this._localeList
-  }
-}
-
-
-/***/ }),
-
-/***/ "./l10n/locale/en-gb.json":
-/*!********************************!*\
-  !*** ./l10n/locale/en-gb.json ***!
-  \********************************/
-/*! exports provided: Number, Case, Declension, Declension Stem, Gender, Type, Voice, Conjugation Stem, Mood, Person, Lemma, GreekParadigmTablesCreditsText, default */
-/***/ (function(module) {
-
-module.exports = {"Number":"Number (GB)","Case":"Case (GB)","Declension":"Declension (GB)","Declension Stem":"Declension Stem","Gender":"Gender (GB)","Type":"Type (GB)","Voice":"Voice (GB)","Conjugation Stem":"Conjugation Stem (GB)","Mood":"Mood (GB)","Person":"Person (GB)","Lemma":"Lemma (GB)","GreekParadigmTablesCreditsText":"Verb paradigm tables derived from Ancient Greek Tutorials, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley. ©1999-2005 The Regents of the University of California."};
-
-/***/ }),
-
-/***/ "./l10n/locale/en-us.json":
-/*!********************************!*\
-  !*** ./l10n/locale/en-us.json ***!
-  \********************************/
-/*! exports provided: Number, Case, Declension, Declension Stem, Gender, Type, Voice, Conjugation Stem, Mood, Person, Lemma, GreekParadigmTablesCreditsText, default */
-/***/ (function(module) {
-
-module.exports = {"Number":"Number","Case":"Case","Declension":"Declension","Declension Stem":"Declension Stem","Gender":"Gender","Type":"Type","Voice":"Voice","Conjugation Stem":"Conjugation Stem","Mood":"Mood","Person":"Person","Lemma":"Lemma","GreekParadigmTablesCreditsText":"Verb paradigm tables derived from Ancient Greek Tutorials, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley. ©1999-2005 The Regents of the University of California."};
-
-/***/ }),
-
-/***/ "./l10n/message-bundle.js":
-/*!********************************!*\
-  !*** ./l10n/message-bundle.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessageBundle; });
-/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "intl-messageformat");
-/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_messageformat__WEBPACK_IMPORTED_MODULE_0__);
-
-
-/**
- * Combines messages with the same locale code.
- */
-class MessageBundle {
-  /**
-   * Creates a message bundle (a list of messages) for a locale.
-   * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
-   * @param {Object} messages - Messages for a locale in an object. Object keys are message IDss, strings that
-   * are used to reference a message, and key values are message texts in a string format.
-   */
-  constructor (locale, messages) {
-    if (!locale) {
-      throw new Error('Locale data is missing')
-    }
-    if (!messages) {
-      throw new Error('Messages data is missing')
-    }
-
-    this._locale = locale
-
-    for (let messageID in messages) {
-      if (messages.hasOwnProperty(messageID)) {
-        this[messageID] = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(messages[messageID], this._locale)
-      }
-    }
-  }
-
-  /**
-   * Returns a (formatted) message for a message ID provided.
-   * @param messageID - An ID of a message.
-   * @param options - Options that can be used for message formatting.
-   * @returns {string} A formatted message. If message not found, returns a message that contains an error text.
-   */
-  get (messageID, options = undefined) {
-    if (this[messageID]) {
-      return this[messageID].format(options)
-    } else {
-      // If message with the ID provided is not in translation data, generate a warning.
-      return `Not in translation data: "${messageID}"`
-    }
-  }
-
-  /**
-   * Returns a locale of a current message bundle.
-   * @return {string} A locale of this message bundle.
-   */
-  get locale () {
-    return this._locale
-  }
-}
 
 
 /***/ }),
@@ -13549,8 +13351,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class GreekAdjectiveSimplifiedView extends _views_lang_greek_adjective_greek_adjective_view__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'adjectiveDeclensionSimplified'
     this.name = 'adjective declension simplified'
     this.title = 'Adjective declension (simplified)'
@@ -13605,8 +13407,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'adjectiveDeclension'
     this.name = 'adjective declension'
     this.title = 'Adjective declension'
@@ -13675,8 +13477,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class GreekArticleView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'articleDeclension'
     this.name = 'article declension'
@@ -13803,8 +13605,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class GreekView extends _lib_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     /*
     Default grammatical features of a View. It child views need to have different feature values, redefine
@@ -13950,8 +13752,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class GreekNounSimplifiedView extends _greek_noun_view__WEBPACK_IMPORTED_MODULE_4__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'nounDeclensionSimplified'
     this.name = 'noun declension simplified'
     this.title = 'Noun declension (simplified)'
@@ -14013,8 +13815,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class GreekNounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_3__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'nounDeclension'
     this.name = 'noun declension'
     this.title = 'Noun declension'
@@ -14086,8 +13888,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class GreekNumeralView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'numeralDeclension'
     this.name = 'numeral declension'
     this.title = 'Numeral declension'
@@ -14210,13 +14012,13 @@ __webpack_require__.r(__webpack_exports__);
  * Produces a table grouped into columns by gender.
  */
 class GreekGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
+  constructor (homonym, inflectionData) {
     let grammarClass = _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
     // we should only get 1 class here -- if we get more the view is likely to be wrong
     if (grammarClass.length > 0) {
       console.warn('more than one grammarClass found for homonym')
     }
-    super(homonym, inflectionData, locale, grammarClass[0])
+    super(homonym, inflectionData, grammarClass[0])
 
     if (this.isImplemented) {
       this.createTable()
@@ -14294,8 +14096,8 @@ __webpack_require__.r(__webpack_exports__);
  * Used for demonstrative pronouns. Produces a table grouped into columns by lemma and gender
  */
 class GreekLemmaGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale, GreekLemmaGenderPronounView.classes[0])
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData, GreekLemmaGenderPronounView.classes[0])
 
     // Add lemmas
     /* this.lemmaTypeFeature = new Feature(
@@ -14372,8 +14174,8 @@ __webpack_require__.r(__webpack_exports__);
  * Used for reflexive pronouns. Produces a table grouped into columns by person and gender
  */
 class GreekPersonGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale, GreekPersonGenderPronounView.classes[0])
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData, GreekPersonGenderPronounView.classes[0])
 
     if (this.isImplemented) {
       this.createTable()
@@ -14440,8 +14242,8 @@ __webpack_require__.r(__webpack_exports__);
  * Used for personal pronouns. Produces a table grouped into columns by person
  */
 class GreekPersonPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale, GreekPersonPronounView.classes[0])
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData, GreekPersonPronounView.classes[0])
 
     if (this.isImplemented) {
       this.createTable()
@@ -14508,11 +14310,10 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
   /**
    * @param {Homonym} homonym
    * @param {InflectionData} inflectionData
-   * @param {string} locale
    * @param {string} grammarClass - For what pronoun class a view will be created
    */
-  constructor (homonym, inflectionData, locale, grammarClass = 'Greek') {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData, grammarClass = 'Greek') {
+    super(homonym, inflectionData)
     this.id = GreekPronounView.getID(grammarClass)
     this.name = GreekPronounView.getName(grammarClass)
     this.title = GreekPronounView.getTitle(grammarClass)
@@ -14609,10 +14410,10 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
     return false
   }
 
-  static getMatchingInstances (homonym, messages) {
+  static getMatchingInstances (homonym) {
     let inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
-      return [new this(homonym, inflectionData, messages).render()]
+      return [new this(homonym, inflectionData).render()]
     }
     return []
   }
@@ -14697,10 +14498,9 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
    * @param {Paradigm} paradigm
    * @param {Homonym} homonym
    * @param {InflectionData} inflectionData
-   * @param {string} locale
    */
-  constructor (paradigm, homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (paradigm, homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = paradigm.id
     this.name = paradigm.title.toLowerCase()
     this.title = paradigm.title
@@ -14793,11 +14593,11 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
     return false */
   }
 
-  static getMatchingInstances (homonym, messages) {
+  static getMatchingInstances (homonym) {
     let inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
       let paradigms = inflectionData.types.get(this.inflectionType).items
-      return paradigms.map(paradigm => new this(paradigm, homonym, inflectionData, messages))
+      return paradigms.map(paradigm => new this(paradigm, homonym, inflectionData))
     }
     return []
   }
@@ -14827,13 +14627,13 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
     return this
   }
 
-  static getStandardFormInstance (options, locale = 'en-US') {
+  static getStandardFormInstance (options) {
     if (!options || !options.paradigmID) {
       throw new Error(`Obligatory options property, "paradigmID", is missing`)
     }
     let paradigm = this.dataset.pos.get(this.mainPartOfSpeech).types.get(_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"]).getByID(options.paradigmID)
     if (paradigm) {
-      return new this(paradigm, null, null, locale).render().noSuffixMatchesGroupsHidden(false)
+      return new this(paradigm, null, null).render().noSuffixMatchesGroupsHidden(false)
     }
   }
 }
@@ -14860,8 +14660,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinAdjectiveView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'adjectiveDeclension'
     this.name = 'adjective declension'
     this.title = 'Adjective declension'
@@ -15015,8 +14815,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinView extends _views_lib_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.features = {
       numbers: _views_lib_group_feature_type_js__WEBPACK_IMPORTED_MODULE_2__["default"].createFromType(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number, this.constructor.languageID, 'Number'),
@@ -15167,8 +14967,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinNounView extends _views_lang_latin_latin_view_js__WEBPACK_IMPORTED_MODULE_3__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'noun_declension'
     this.name = 'noun declension'
     this.title = 'Noun declension'
@@ -15236,8 +15036,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinSupineView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.partOfSpeech = this.constructor.mainPartOfSpeech
     this.id = 'verbSupine'
     this.name = 'supine'
@@ -15303,8 +15103,8 @@ __webpack_require__.r(__webpack_exports__);
  * That's why its match filter will always return false.
  */
 class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbConjugationIrregularBase'
     this.name = 'verb-irregular-base'
@@ -15387,7 +15187,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
       }
       let inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
       if (Constructor.matchFilter(this.homonym.languageID, linkedViewInflections)) {
-        let view = new Constructor(this.homonym, inflectionData, this.locale)
+        let view = new Constructor(this.homonym, inflectionData)
         for (let infl of inflections) {
           infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] = infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].createFeature(this.constructor.mainPartOfSpeech)
         }
@@ -15399,10 +15199,10 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
   }
 
   // See base view for description
-  static getMatchingInstances (homonym, locale) {
+  static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       let inflectionData = this.getInflectionsData(homonym)
-      let view = new this(homonym, inflectionData, locale)
+      let view = new this(homonym, inflectionData)
       view.createLinkedViews()
       return [view.render()]
     }
@@ -15442,8 +15242,8 @@ __webpack_require__.r(__webpack_exports__);
  * which is stored in a `word` feature of an inflection.
  */
 class LatinVerbIrregularView extends _views_lang_latin_verb_irregular_latin_verb_irregular_base_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbConjugationIrregular'
     this.name = 'verb-irregular'
@@ -15535,8 +15335,8 @@ __webpack_require__.r(__webpack_exports__);
  * which is stored in a `word` feature of an inflection.
  */
 class LatinVerbIrregularVoiceView extends _views_lang_latin_verb_irregular_latin_verb_irregular_base_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbConjugationIrregularVoice'
     this.name = 'verb-irregular-voice'
@@ -15625,8 +15425,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinVerbParticipleIrregularView extends _views_lang_latin_verb_irregular_latin_verb_irregular_base_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbParticipleConjugationIrregular'
     this.name = 'verb-participle-irregular'
@@ -15702,8 +15502,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinVerbSupineIrregularView extends _views_lang_latin_verb_irregular_latin_verb_irregular_base_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbSupineConjugationIrregular'
     this.name = 'verb-supine-irregular'
@@ -15785,8 +15585,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinConjugationMoodVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbConjugationMoodVoice'
     this.name = 'conjugation-mood-voice'
     this.title = 'Verb Conjugation'
@@ -15850,8 +15650,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinConjugationVoiceMoodView extends _latin_verb_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbConjugationVoiceMood'
     this.name = 'conjugation-voice-mood'
     this.title = 'Verb Conjugation'
@@ -15914,8 +15714,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinImperativeView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbImperative'
     this.name = 'imperative'
     this.title = 'Imperative'
@@ -15999,8 +15799,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinInfinitiveView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbInfinitive'
     this.name = 'infinitive'
     this.title = 'Infinitive'
@@ -16078,8 +15878,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinMoodConjugationVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbMoodConjugationVoice'
     this.name = 'mood-conjugation-voice'
     this.title = 'Verb Conjugation'
@@ -16143,8 +15943,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinMoodVoiceConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbMoodVoiceConjugation'
     this.name = 'mood-voice-conjugation'
     this.title = 'Verb Conjugation'
@@ -16234,8 +16034,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinVerbParticipleView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.partOfSpeech = this.constructor.mainPartOfSpeech
     this.id = 'verbParticiple'
     this.name = 'participle'
@@ -16326,8 +16126,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinVoiceConjugationMoodView extends _latin_verb_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbVoiceConjugationMood'
     this.name = 'voice-conjugation-mood'
     this.title = 'Verb Conjugation'
@@ -16391,8 +16191,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class LatinVoiceMoodConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'verbVoiceMoodConjugation'
     this.name = 'voice-mood-conjugation'
     this.title = 'Verb Conjugation'
@@ -17754,7 +17554,7 @@ class Table {
           headers[currentLevel] = new _row_js__WEBPACK_IMPORTED_MODULE_3__["default"]()
         }
         headers[currentLevel].titleCell = currentFeature.createRowTitleCell(
-          this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size)
+          currentFeature.groupTitle, this.features.firstColumnFeature.size)
 
         headers[currentLevel].add(headerCell)
         cells.push(headerCell)
@@ -17768,7 +17568,7 @@ class Table {
 
         headers[currentLevel].add(headerCell)
         headers[currentLevel].titleCell = currentFeature.createRowTitleCell(
-          this.messages.get(currentFeature.groupTitle), this.features.firstColumnFeature.size)
+          currentFeature.groupTitle, this.features.firstColumnFeature.size)
         cells.push(headerCell)
       }
     }
@@ -17908,11 +17708,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class ViewSetFactory {
-  static create (homonym, locale) {
+  static create (homonym) {
     let viewSet
     try {
       let Constructor = this.getConstructor(homonym.languageID)
-      viewSet = new Constructor(homonym, locale)
+      viewSet = new Constructor(homonym)
     } catch (e) {
       console.error(`Cannot build inflection tables: ${e}`)
       // Create an empty ViewSet with no inflection data
@@ -17936,8 +17736,8 @@ class ViewSetFactory {
     }
   }
 
-  static getStandardForm (languageID, options, locale) {
-    return this.getConstructor(languageID).getStandardForm(options, locale)
+  static getStandardForm (languageID, options) {
+    return this.getConstructor(languageID).getStandardForm(options)
   }
 }
 
@@ -17967,11 +17767,9 @@ __webpack_require__.r(__webpack_exports__);
 class ViewSet {
   /**
    * @param {Homonym} homonym - Data about inflections we need to build views for
-   * @param {string} locale - A locale's IETF language tag (ex. `en-US`)
    */
-  constructor (homonym = undefined, locale = 'en-US') {
+  constructor (homonym = undefined) {
     this.homonym = homonym
-    this.locale = locale
     this.matchingViews = []
     this.matchingViewsMap = new Map()
     this.inflectionData = null
@@ -17995,7 +17793,7 @@ class ViewSet {
         }
 
         this.matchingViews.push(...this.constructor.views.reduce(
-          (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym, this.locale)), []))
+          (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym)), []))
         this.updateMatchingViewsMap(this.matchingViews)
       }
     }
@@ -18049,29 +17847,16 @@ class ViewSet {
     }
   }
 
-  updateMessages (messages) {
-    this.messages = messages
-    for (let view of this.matchingViews) {
-      view.updateMessages(messages)
-    }
-  }
-
-  setLocale (locale) {
-    for (let view of this.matchingViews) {
-      view.setLocale(locale)
-    }
-  }
-
   static getViewByID (viewID) {
     return this.views.find(v => v.viewID === viewID)
   }
 
-  static getStandardForm (options, locale) {
+  static getStandardForm (options) {
     if (!options || !options.viewID) {
       throw new Error(`Obligatory options property, "viewID", is missing`)
     }
     let view = this.getViewByID(options.viewID)
-    return view ? view.getStandardFormInstance(options, locale) : null
+    return view ? view.getStandardFormInstance(options) : null
   }
 }
 
@@ -18091,10 +17876,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _lib_language_dataset_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/language-dataset-factory.js */ "./lib/language-dataset-factory.js");
-/* harmony import */ var _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../l10n/l10n.js */ "./l10n/l10n.js");
-/* harmony import */ var _wide_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./wide-view */ "./views/lib/wide-view.js");
-/* harmony import */ var _lib_form_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lib/form.js */ "./lib/form.js");
-
+/* harmony import */ var _wide_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./wide-view */ "./views/lib/wide-view.js");
+/* harmony import */ var _lib_form_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lib/form.js */ "./lib/form.js");
 
 
 
@@ -18109,12 +17892,10 @@ class View {
    * but there could be several views for the same part of speech that show different table representation of a view.
    * @param {Homonym} homonym - A homonym
    * @param {InflectionSet} inflectionSet - An inflection data object.
-   * @param {string} locale - A locale for serving localized messages. If none provided, a default language will be used.
    */
-  constructor (homonym, inflectionSet, locale = _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__["default"].defaultLocale) {
+  constructor (homonym, inflectionSet) {
     this.homonym = homonym
     this.inflectionData = inflectionSet
-    this.messages = _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__["default"].getMessages(locale)
     this.pageHeader = {}
     // A view can be rendered for different parts of speech. This is a part of speech this view currently uses
     this.partOfSpeech = this.constructor.mainPartOfSpeech
@@ -18143,7 +17924,7 @@ class View {
     this.table = {
       options: {}
     }
-    this.wideView = new _wide_view__WEBPACK_IMPORTED_MODULE_3__["default"]()
+    this.wideView = new _wide_view__WEBPACK_IMPORTED_MODULE_2__["default"]()
 
     /**
      * Whether this view has any credits
@@ -18273,17 +18054,6 @@ class View {
   static enabledForInflection (inflection) {
     // default returns true
     return true
-  }
-
-  get locale () {
-    return this.messages.locale
-  }
-
-  setLocale (locale) {
-    if (this.locale !== locale) {
-      this.messages = _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__["default"].getMessages(locale)
-    }
-    return this
   }
 
   /**
@@ -18444,16 +18214,15 @@ class View {
    * to return multiple views if necessary (e.g. paradigm view can return multiple instances of the view
    * with different data).
    * @param {Inflection} homonym - An inflection for which matching instances to be found.
-   * @param {string} locale
    * @return {View[] | []} Array of view instances or an empty array if view instance does not match inflection data.
    */
-  static getMatchingInstances (homonym, locale) {
+  static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       let inflectionData = this.getInflectionsData(homonym)
 
       if (inflectionData.types.has(this.inflectionType)) {
         // There is some inflection data found for the view's morpheme type
-        let view = new this(homonym, inflectionData, locale)
+        let view = new this(homonym, inflectionData)
         return [view]
       }
     }
@@ -18461,7 +18230,7 @@ class View {
   }
 
   static createStandardFormHomonym (options) {
-    if (this.inflectionType === _lib_form_js__WEBPACK_IMPORTED_MODULE_4__["default"] && !options.form) {
+    if (this.inflectionType === _lib_form_js__WEBPACK_IMPORTED_MODULE_3__["default"] && !options.form) {
       throw new Error(`Obligatory options property, "form", is missing`)
     }
     const stem = options.form ? options.form : 'stem'
@@ -18473,11 +18242,11 @@ class View {
     return homonym
   }
 
-  static getStandardFormInstance (options, locale = 'en-US') {
+  static getStandardFormInstance (options) {
     let homonym = this.createStandardFormHomonym(options)
     let inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
-    let view = new this(homonym, inflectionData, locale)
+    let view = new this(homonym, inflectionData)
     if (options.title) {
       view.setTitle(options.title)
     }
@@ -18601,17 +18370,6 @@ class WideView {
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
-
-/***/ }),
-
-/***/ "intl-messageformat":
-/*!*************************************!*\
-  !*** external "intl-messageformat" ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_intl_messageformat__;
 
 /***/ })
 

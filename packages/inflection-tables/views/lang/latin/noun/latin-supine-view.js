@@ -4,8 +4,8 @@ import LatinView from '../latin-view.js'
 import Table from '../../../lib/table'
 
 export default class LatinSupineView extends LatinView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.partOfSpeech = this.constructor.mainPartOfSpeech
     this.id = 'verbSupine'
     this.name = 'supine'

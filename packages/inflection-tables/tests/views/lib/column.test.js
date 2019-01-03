@@ -14,10 +14,6 @@ import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 
 import GroupFeatureType from '@views/lib/group-feature-type.js'
 
-import L10nJSON from '@tests/l10n/l10n-json.js'
-import L10n from '@l10n/l10n.js'
-import MessageBundle from '@l10n/message-bundle.js'
-
 import Form from '@lib/form.js'
 import * as Styles from '@views/styles/styles'
 
@@ -39,8 +35,6 @@ describe('column.test.js', () => {
     get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
     set: jest.fn()
   }) */
-
-  L10n.getMessages = jest.fn((locale) => L10nJSON.getMessages(locale))
 
   beforeAll(async () => {
     maAdapter = new AlpheiosTuftsAdapter()

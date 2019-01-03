@@ -12,11 +12,10 @@ export default class GreekPronounView extends GreekView {
   /**
    * @param {Homonym} homonym
    * @param {InflectionData} inflectionData
-   * @param {string} locale
    * @param {string} grammarClass - For what pronoun class a view will be created
    */
-  constructor (homonym, inflectionData, locale, grammarClass = 'Greek') {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData, grammarClass = 'Greek') {
+    super(homonym, inflectionData)
     this.id = GreekPronounView.getID(grammarClass)
     this.name = GreekPronounView.getName(grammarClass)
     this.title = GreekPronounView.getTitle(grammarClass)
@@ -113,10 +112,10 @@ export default class GreekPronounView extends GreekView {
     return false
   }
 
-  static getMatchingInstances (homonym, messages) {
+  static getMatchingInstances (homonym) {
     let inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
-      return [new this(homonym, inflectionData, messages).render()]
+      return [new this(homonym, inflectionData).render()]
     }
     return []
   }

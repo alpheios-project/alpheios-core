@@ -3,8 +3,8 @@ import Suffix from '@lib/suffix.js'
 import GreekAdjectiveView from '@views/lang/greek/adjective/greek-adjective-view'
 
 export default class GreekAdjectiveSimplifiedView extends GreekAdjectiveView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
     this.id = 'adjectiveDeclensionSimplified'
     this.name = 'adjective declension simplified'
     this.title = 'Adjective declension (simplified)'

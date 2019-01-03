@@ -4,8 +4,8 @@ import GroupFeatureType from '@views/lib/group-feature-type.js'
 import Table from '@views/lib/table.js'
 
 export default class LatinView extends View {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.features = {
       numbers: GroupFeatureType.createFromType(Feature.types.number, this.constructor.languageID, 'Number'),

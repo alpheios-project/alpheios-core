@@ -3,8 +3,8 @@ import LatinVerbIrregularBaseView from '@views/lang/latin/verb/irregular/latin-v
 import Table from '@views/lib/table'
 
 export default class LatinVerbGerundiveIrregularView extends LatinVerbIrregularBaseView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbGerundiveConjugationIrregular'
     this.name = 'verb-gerundive-irregular'

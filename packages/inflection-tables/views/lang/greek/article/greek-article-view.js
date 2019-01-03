@@ -4,8 +4,8 @@ import GreekView from '../greek-view.js'
 import Table from '../../../lib/table'
 
 export default class GreekArticleView extends GreekView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'articleDeclension'
     this.name = 'article declension'

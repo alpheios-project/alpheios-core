@@ -9,8 +9,8 @@ import Table from '@views/lib/table'
  * That's why its match filter will always return false.
  */
 export default class LatinVerbIrregularVoiceView extends LatinView {
-  constructor (homonym, inflectionData, locale) {
-    super(homonym, inflectionData, locale)
+  constructor (homonym, inflectionData) {
+    super(homonym, inflectionData)
 
     this.id = 'verbConjugationIrregularBase'
     this.name = 'verb-irregular-base'
@@ -93,7 +93,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
       }
       let inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
       if (Constructor.matchFilter(this.homonym.languageID, linkedViewInflections)) {
-        let view = new Constructor(this.homonym, inflectionData, this.locale)
+        let view = new Constructor(this.homonym, inflectionData)
         for (let infl of inflections) {
           infl[Feature.types.part] = infl[Feature.types.part].createFeature(this.constructor.mainPartOfSpeech)
         }
@@ -105,10 +105,10 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   }
 
   // See base view for description
-  static getMatchingInstances (homonym, locale) {
+  static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       let inflectionData = this.getInflectionsData(homonym)
-      let view = new this(homonym, inflectionData, locale)
+      let view = new this(homonym, inflectionData)
       view.createLinkedViews()
       return [view.render()]
     }

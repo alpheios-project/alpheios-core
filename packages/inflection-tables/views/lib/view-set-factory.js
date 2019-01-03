@@ -4,11 +4,11 @@ import LatinViewSet from '../lang/latin/latin-view-set.js'
 import GreekViewSet from '../lang/greek/greek-view-set.js'
 
 export default class ViewSetFactory {
-  static create (homonym, locale) {
+  static create (homonym) {
     let viewSet
     try {
       let Constructor = this.getConstructor(homonym.languageID)
-      viewSet = new Constructor(homonym, locale)
+      viewSet = new Constructor(homonym)
     } catch (e) {
       console.error(`Cannot build inflection tables: ${e}`)
       // Create an empty ViewSet with no inflection data
@@ -32,7 +32,7 @@ export default class ViewSetFactory {
     }
   }
 
-  static getStandardForm (languageID, options, locale) {
-    return this.getConstructor(languageID).getStandardForm(options, locale)
+  static getStandardForm (languageID, options) {
+    return this.getConstructor(languageID).getStandardForm(options)
   }
 }

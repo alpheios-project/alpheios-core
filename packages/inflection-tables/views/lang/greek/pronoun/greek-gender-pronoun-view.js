@@ -8,13 +8,13 @@ import Table from '../../../lib/table'
  * Produces a table grouped into columns by gender.
  */
 export default class GreekGenderPronounView extends GreekPronounView {
-  constructor (homonym, inflectionData, locale) {
+  constructor (homonym, inflectionData) {
     let grammarClass = GreekPronounView.getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
     // we should only get 1 class here -- if we get more the view is likely to be wrong
     if (grammarClass.length > 0) {
       console.warn('more than one grammarClass found for homonym')
     }
-    super(homonym, inflectionData, locale, grammarClass[0])
+    super(homonym, inflectionData, grammarClass[0])
 
     if (this.isImplemented) {
       this.createTable()
