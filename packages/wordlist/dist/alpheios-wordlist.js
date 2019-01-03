@@ -12538,7 +12538,6 @@ class UpgradeQueue {
       this.methods[0].method(...this.methods[0].args)
       this.methods.splice(0, 1)
     }
-    // console.info('**********************changeUpdateQueue', this.upgradeQueue)
   }
 }
 
@@ -12599,12 +12598,28 @@ class WordlistController {
     this.availableLists = lists
   }
 
+  /**
+   * This method executes in UIControler init method (at the end)
+   * It checks if storageAdapter is avalable (in our case it checks if IndexededDB works in the current browser)
+   * And if it is available, it executes openDatabase and 
+   * passes initDBStructure method for the case, when database doesn't exist (onupgradeneeded event)
+   * and uploadListsFromDB for the case when database already exists
+   */
   initLists () {
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.uploadListsFromDB.bind(this))
     }
   }
 
+  /**
+   * This method creats structure for the UserList Table in onupgradeneeded event
+   * Later we could use defined indexes as a range key for searching/filterng data
+   * Besides defined indexes Table could have any other fields,
+   * in our case it will have also - homonym and important
+   * So each item in the table defines one worditem in the wordlist
+   * userID, languageCode, userIDLangCode defines wordList in the table's item
+   * ID has a structure - userID-languageCode-targetWord, for example userIDTest-lat-cepit
+   */
   initDBStructure (event) {
     const db = event.target.result;
     const objectStore = db.createObjectStore('UserLists', { keyPath: 'ID' })
@@ -12615,6 +12630,13 @@ class WordlistController {
     objectStore.createIndex('targetWord', 'targetWord', { unique: true })
   }
 
+   /**
+   * This method loads data from the table in onsuccess event
+   * event is an argument, and event.target.result - is a database varaiable
+   * We are checking all available lists name (using userIDLangCode property, that defines wordlist)
+   * with the help of keyRange property condition - {indexName: 'userIDLangCode', value: listID, type: 'only' }
+   * and if it retrieves data successfully, it executes parseResultToWordList
+   */
   uploadListsFromDB (event) {
     const db = event.target.result
     const lists = this.availableLists
@@ -12623,22 +12645,32 @@ class WordlistController {
     })
   }
 
+  /**
+   * This method parses data from the database table (filtered by wordList)
+   * and creates Homonym from saved object (it is looks like jsonObject)
+   * After that it executes updateWordList method with saveToStorage parameter = false,
+   * to prevent form re-saving action
+   */
   parseResultToWordList (result) {
     if (result && result.length > 0) {
-      console.info('*******************parseResultToWordList result', result)
       result.forEach(wordItemResult => {
         let homonymRes = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(wordItemResult.homonym)
         this.updateWordList({ homonym: homonymRes, important: wordItemResult.important }, false)
       })
     }
   }
-  
-  createWordList (languageID) {
-    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-    let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID, this.storageAdapter)
-    this.wordLists[languageCode] = wordList
-  }
 
+  /**
+   * This method checks if there already exists wordList in controller's wordLists property
+   * If it doesn't exists, it executes createWordList method
+   * then it checks upgradeQueue object, if it has the similiar homonym (it checks by the target word)
+   * if not, then
+   *         it creates a new WordItem with arguments, passes a saveToStorage flag (if it cames from LexicalQuery event, than we need to save to storage)
+   *         pushes it to the wordlist and publishes event for UIController to update WordList tab in the panel
+   * if it has, then
+   *         it saves this method and data to the queue
+   *         when current saveToStorage method from this wordlist would be finished it will execute next method from this queue
+   */
   updateWordList(wordItemData, saveToStorage = true) {
     let languageID = wordItemData.homonym.languageID
     let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
@@ -12655,18 +12687,29 @@ class WordlistController {
     }
   }
 
-  onHomonymReady (data) {
-    // console.info('******************onHomonymReady start')
-    this.updateWordList({ homonym: data.homonym })
-    // console.info('******************onHomonymReady finish')
+  /**
+   * This method creates an empty wordlist and attaches to controller
+   */
+  createWordList (languageID) {
+    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
+    let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID, this.storageAdapter)
+    this.wordLists[languageCode] = wordList
   }
 
-  onDefinitionsReady (data) {
-    // let testData = data.homonym.lexemes[0].meaning.fullDefs
-    // let testText = testData && testData.length > 0 ? testData[0].text.substr(0, 10) + '...' : '<no text>'
-    // console.info('******************onDefinitionsReady start', testText)
+  /**
+   * This method executes updateWordList with default saveToStorage flag = true
+   */
+  onHomonymReady (data) {
     this.updateWordList({ homonym: data.homonym })
-    // console.info('******************onDefinitionsReady finish')
+  }
+
+  /**
+   * This method executes updateWordList with default saveToStorage flag = true 
+   * (because definitions could come much later we need to resave homonym with definitions data to database)
+   * The same I will do later with lemma translations data
+  */
+  onDefinitionsReady (data) {
+    this.updateWordList({ homonym: data.homonym })
   }
 }
 
@@ -12678,7 +12721,13 @@ WordlistController.evt = {
    * }
    */
   WORDLIST_UPDATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist updated', WordlistController),
-  WORDITEM_SELECTED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem selected', WordlistController),
+  /**
+   * Published when a WordItem was selected.
+   * Data: {
+   *  {Homonym} a Homonym that should be uploaded to popup/panel
+   * }
+   */
+  WORDITEM_SELECTED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem selected', WordlistController)
 }
 
 
@@ -13062,6 +13111,10 @@ class WordItem {
     return new WordItem(homonym)
   }
 
+  /**
+   * This method converts wordItem to be as jsonObject
+   * it uses convertToJSON methods for each piece of the data - I will refractor all of them into Homonym methods later
+   */
   convertToStorage () {
     let resultItem = { lexemes: [] }
     for (let lexeme of this.homonym.lexemes) {
@@ -13126,6 +13179,14 @@ class WordList {
     return Object.values(this.items)
   }
 
+  /**
+   * This method removes wordItem with the same targetWord if it exists
+   * checks for the languageId to be the same as defines in the current wordList
+   * adds wordItem to the current wordList
+   * and saves to storage (if saveToStorage flag = true)
+   * before saving - it duplicates upgradeQueue from wordlist 
+   * to pass it later to IndexedDB put callback and move queue further after success saving
+   */
   push (wordItem, saveToStorage = false, upgradeQueue = {}) {
     this.removeWordItemByWord(wordItem)
 
@@ -13150,18 +13211,36 @@ class WordList {
     }
   }
 
+  /**
+   * This method is the same as in WordList and it passes putToStorageTransaction as a callback for successful opening database
+   */
   saveToStorage () {
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
     }
   }
 
+  /**
+   * This method executes in successfull callback from saveToStorage method
+   * it gets db from event data
+   * and passes the foolowing arguments to set method of the storageAdapter
+   *        db - opened database from the event
+   *        UserLists - table name
+   *        jsonObject data - selected amount of wordItems (it could be one wordItem, it could be the whole list) converted to be as jsonObject
+   *        successCallBackF - it is used to move queue further, if there is a queue (it is not defined everytime)
+   */
   putToStorageTransaction (event) {
     const db = event.target.result
     let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
     this.storageAdapter.set(db, 'UserLists', this.convertToStorageList(), successCallBackF)
   }
 
+  /**
+   * This method converts some amount of wordItems to be as jsonObject
+   * as we couldn't pass some arguments to the IndexedDB callbacks (as they are events)
+   * I have created a variable in wordList that stores currently defined amount of wordItem - it is this.wordItemsToSave
+   * this.wordItemsToSave is defined now in push, and changing important flags methods
+   */
   convertToStorageList () {
     let result = []
     for (let item of this.wordItemsToSave) {
@@ -13296,6 +13375,9 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     this.dbName = 'AlpheiosUserWordLists'
   }
 
+  /**
+   * This method checks if IndexedDB is used in the current browser
+   */
   initIndexedDBNamespaces () {
     this.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
     this.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // This line should only be needed if it is needed to support the object's constants for older browsers
@@ -13307,8 +13389,10 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return true
   }
 
+  /**
+   * This method create a request for opening database and passes callbacks for two events
+   */
   openDatabase (upgradeCallback, successCallback) {
-    console.info('***********************openDatabase')
     let request = this.indexedDB.open(this.dbName, this.currentVersion)
     request.onerror = (event) => {
       console.info('*************Some problems with opening LabirintOrders', event.target)
@@ -13318,6 +13402,12 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return request
   }
 
+  /**
+   * This method create a request for put data to the selected ObjectStore
+   * and executes onComplete callback on success
+   * It creates transaction with readwrire access (onComplete callback would be executes on transaction finalize)
+   * And then it goes through data Array and executes put request (put allows adding data and rewriting existing data by keyValue)
+   */
   set (db, objectStoreName, data, onCompleteF) {
     const transaction = db.transaction([objectStoreName], 'readwrite')
     transaction.oncomplete = (event) => {
@@ -13331,7 +13421,6 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     }
     const objectStore = transaction.objectStore(objectStoreName);
     data.forEach(dataItem => {
-      console.info('********************put dataItem', dataItem)
       const requestPut = objectStore.put(dataItem)
       requestPut.onsuccess = (event) => {
         console.info('****************wordlist added successful', event.target.result)
@@ -13342,6 +13431,12 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     })
   }
 
+  /**
+   * This method creates a request for getting data from table
+   * it creates transaction and executes one of the methods - getWithCondition or getWithoutConditions
+   * (depending on passed condition argument)
+   * callback function is passed to final get request
+   */
   get (db, objectStoreName, condition, callbackF) {
     const transaction = db.transaction([objectStoreName])
     const objectStore = transaction.objectStore(objectStoreName)
@@ -13354,11 +13449,19 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     }
   }
 
+    /**
+   * This method checks if condition is correct
+   * I have limited here for 'only' compare method because I am using only it, but it could be upgraded later
+   */
   hasProperCondition (condition) {
     const allowedTypes = [ 'only' ]
     return condition.indexName && condition.value && condition.type && allowedTypes.includes(condition.type)
   }
 
+  /**
+   * This method gets all data from the table without any filtering
+   * I don't use this method in the code, but it could be useful later
+   */
   getWithoutConditions (objectStore, callbackF) {
     const requestOpenCursor = objectStore.openCursor(null)
     requestOpenCursor.onsuccess = (event) => {
@@ -13369,6 +13472,14 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     }
   }
 
+  /**
+   * This method gets data with filtering condition
+   * I use IDBKeyRange for filtering, so it looks like this for example
+   *     this.IDBKeyRange.only('userIDTest-lat')
+   * where IDBKeyRange is defined with userIDLangCode index
+   * so it gets all wordItems for latin wordList for the current user
+   * and success callback it passes retrieved data using callback function, for example WordlistController.parseResultToWordList
+   */
   getWithCondition (objectStore, condition, callbackF) {
     const index = objectStore.index(condition.indexName)
     const keyRange = this.IDBKeyRange[condition.type](condition.value)
