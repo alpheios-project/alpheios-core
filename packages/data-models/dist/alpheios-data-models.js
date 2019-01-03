@@ -1029,8 +1029,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Feature; });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
-/* harmony import */ var _i18n_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./i18n.js */ "./i18n.js");
-
 
 
 
@@ -1408,14 +1406,6 @@ class Feature {
   getCopy () {
     let values = this._data.map(item => [item.value, item.sortOrder])
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice())
-  }
-
-  /**
-   * A locale-specific abbreviation for a feature's values.
-   * @return {string[]}
-   */
-  toLocaleStringAbbr (lang = 'en') {
-    return this.values.map(v => _i18n_js__WEBPACK_IMPORTED_MODULE_2__["i18n"][lang][v] ? _i18n_js__WEBPACK_IMPORTED_MODULE_2__["i18n"][lang][v].abbr : v).join(this.constructor.joinSeparator)
   }
 
   /**
@@ -2330,8 +2320,6 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _i18n_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./i18n.js */ "./i18n.js");
-
 
 
 
@@ -2436,18 +2424,6 @@ class GrmFeature {
       return this.value.join(',')
     } else {
       return this.value
-    }
-  }
-
-  /**
-   * a locale-specific abbreviation for a feature's values
-   * @return {string}
-   */
-  toLocaleStringAbbr (lang = 'en') {
-    if (Array.isArray(this.value)) {
-      return this.value.map((v) => this.toLocaleStringAbbr(v, lang))
-    } else {
-      return _i18n_js__WEBPACK_IMPORTED_MODULE_2__["i18n"][lang][this.value].abbr
     }
   }
 
@@ -2660,171 +2636,6 @@ class Homonym {
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Homonym);
-
-
-/***/ }),
-
-/***/ "./i18n.js":
-/*!*****************!*\
-  !*** ./i18n.js ***!
-  \*****************/
-/*! exports provided: i18n */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i18n", function() { return i18n; });
-/**
- * This is a temporary placeholder for an i18n library
- */
-const i18n = {
-  en: {
-    feminine: {
-      full: 'feminine',
-      abbr: 'f.'
-    },
-    masculine: {
-      full: 'masculine',
-      abbr: 'm.'
-    },
-    neuter: {
-      full: 'neuter',
-      abbr: 'n.'
-    },
-    nominative: {
-      full: 'nominative',
-      abbr: 'nom.'
-    },
-    accusative: {
-      full: 'accusative',
-      abbr: 'acc.'
-    },
-    genitive: {
-      full: 'genitive',
-      abbr: 'gen.'
-    },
-    vocative: {
-      full: 'vocative',
-      abbr: 'voc.'
-    },
-    ablative: {
-      full: 'ablative',
-      abbr: 'abl.'
-    },
-    locative: {
-      full: 'locative',
-      abbr: 'loc.'
-    },
-    dative: {
-      full: 'dative',
-      abbr: 'dat.'
-    },
-    positive: {
-      full: 'positive',
-      abbr: 'pos.'
-    },
-    comparative: {
-      full: 'comparative',
-      abbr: 'comp.'
-    },
-    superlative: {
-      full: 'superlative',
-      abbr: 'super.'
-    },
-    singular: {
-      full: 'singular',
-      abbr: 'sing.'
-    },
-    plural: {
-      full: 'plural',
-      abbr: 'plur.'
-    },
-    dual: {
-      full: 'dual',
-      abbr: 'dl.'
-    },
-    present: {
-      full: 'present',
-      abbr: 'pres.'
-    },
-    imperfect: {
-      full: 'imperfect',
-      abbr: 'impf.'
-    },
-    perfect: {
-      full: 'perfect',
-      abbr: 'perf.'
-    },
-    pluperfect: {
-      full: 'pluperfect',
-      abbr: 'plup.'
-    },
-    plusquamperfect: {
-      full: 'plusquamperfect',
-      abbr: 'pqpf.'
-    },
-    'future perfect': {
-      full: 'future perfect',
-      abbr: 'fut. perf.'
-    },
-    future: {
-      full: 'future',
-      abbr: 'fut.'
-    },
-    aorist: {
-      full: 'aorist',
-      abbr: 'aor.'
-    },
-    indicative: {
-      full: 'indicative',
-      abbr: 'ind.'
-    },
-    subjunctive: {
-      full: 'subjunctive',
-      abbr: 'sub.'
-    },
-    infinitive: {
-      full: 'infinitive',
-      abbr: 'infin.'
-    },
-    imperative: {
-      full: 'imperative',
-      abbr: 'imp.'
-    },
-    supine: {
-      full: 'supine',
-      abbr: 'sup.'
-    },
-    participle: {
-      full: 'participle',
-      abbr: 'part.'
-    },
-    optative: {
-      full: 'optative',
-      abbr: 'opt.'
-    },
-    active: {
-      full: 'active',
-      abbr: 'act.'
-    },
-    passive: {
-      full: 'passive',
-      abbr: 'pass.'
-    },
-    middle: {
-      full: 'middle',
-      abbr: 'mid.'
-    },
-    mediopassive: {
-      full: 'mediopassive',
-      abbr: 'mp.'
-    },
-    deponens: {
-      full: 'deponens',
-      abbr: 'dep.'
-    }
-  }
-}
 
 
 /***/ }),

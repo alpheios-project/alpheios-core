@@ -1,6 +1,5 @@
 import LMF from './language_model_factory.js'
 import Feature from './feature.js'
-import * as i18n from './i18n.js'
 
 /**
  * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
@@ -103,18 +102,6 @@ class GrmFeature {
       return this.value.join(',')
     } else {
       return this.value
-    }
-  }
-
-  /**
-   * a locale-specific abbreviation for a feature's values
-   * @return {string}
-   */
-  toLocaleStringAbbr (lang = 'en') {
-    if (Array.isArray(this.value)) {
-      return this.value.map((v) => this.toLocaleStringAbbr(v, lang))
-    } else {
-      return i18n.i18n[lang][this.value].abbr
     }
   }
 

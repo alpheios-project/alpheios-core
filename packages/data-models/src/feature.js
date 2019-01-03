@@ -1,6 +1,5 @@
 import LanguageModelFactory from './language_model_factory.js'
 import FeatureImporter from './feature_importer.js'
-import * as i18n from './i18n.js'
 
 /**
  * A grammatical feature object, that can replace both Feature and FeatureType objects.
@@ -376,14 +375,6 @@ export default class Feature {
   getCopy () {
     let values = this._data.map(item => [item.value, item.sortOrder])
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice())
-  }
-
-  /**
-   * A locale-specific abbreviation for a feature's values.
-   * @return {string[]}
-   */
-  toLocaleStringAbbr (lang = 'en') {
-    return this.values.map(v => i18n.i18n[lang][v] ? i18n.i18n[lang][v].abbr : v).join(this.constructor.joinSeparator)
   }
 
   /**
