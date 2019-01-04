@@ -24,7 +24,6 @@ export default class Message {
 
     this.formatFunc = new IntlMessageFormat(message.message, this.locale)
     this.abbrFunc = new IntlMessageFormat(message.abbr || message.message, this.locale)
-
   }
 
   /**
