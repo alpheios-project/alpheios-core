@@ -11,26 +11,26 @@
         <template v-if="!state.collapsed">
             <h4 class="alpheios-inflections__additional_title" v-if="view.additionalTitle">{{view.additionalTitle}}</h4>
             <div v-if="!view.isImplemented || (view.wideView && view.wideView.rows.length == 0)" class="alpheios-inflections__not-impl-msg">
-                {{messages.INFLECT_MSG_TABLE_NOT_IMPLEMENTED}}
+                {{ln10Messages('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
             </div>
             <div v-else-if="view.wideView">
                 <div v-if="!view.hasPrerenderedTables && !inflBrowserTable" class="alpheios-inflections__table-ctrl-cont">
                     <div v-show="view.canCollapse && state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
                         <alph-tooltip tooltipDirection="bottom-right"
-                                      :tooltipText="messages.TOOLTIP_INFLECT_SHOWFULL">
+                                      :tooltipText="ln10Messages('TOOLTIP_INFLECT_SHOWFULL')">
                             <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right"
                                     @click="showNoSuffixGroups">
-                                {{messages.LABEL_INFLECT_SHOWFULL}}
+                                {{ln10Messages('LABEL_INFLECT_SHOWFULL')}}
                             </button>
                         </alph-tooltip>
                     </div>
 
                     <div v-show="view.canCollapse && !state.noSuffixGroupsHidden" class="alpheios-inflections__table-ctrl-cell--btn">
                         <alph-tooltip tooltipDirection="bottom-right"
-                                      :tooltipText="messages.TOOLTIP_INFLECT_COLLAPSE">
+                                      :tooltipText="ln10Messages('TOOLTIP_INFLECT_COLLAPSE')">
                             <button class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right"
                                     @click="hideNoSuffixGroups">
-                                {{messages.LABEL_INFLECT_COLLAPSE}}
+                                {{ln10Messages('LABEL_INFLECT_COLLAPSE')}}
                             </button>
                         </alph-tooltip>
                     </div>
@@ -51,7 +51,7 @@
                                         <template v-if="index < cell.morphemes.length-1">, </template>
                                     </template>
                                 </template>
-                                <span v-else v-html="cell.value"></span>
+                                <span v-else v-html="ln10Messages(cell.value,cell.value)"></span>
                             </div>
                         </template>
                     </div>
@@ -217,6 +217,13 @@
         if (cell.isDataCell) {
           cell.clearRowAndColumnHighlighting()
         }
+      },
+
+      ln10Messages: function (value, defaultValue = 'unknown') {
+        if (this.messages && this.messages[value]) {
+          return this.messages[value].get()
+        }
+        return defaultValue
       }
     },
 

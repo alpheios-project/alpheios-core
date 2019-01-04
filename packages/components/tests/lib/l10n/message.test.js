@@ -52,12 +52,35 @@ describe('message.test.js', () => {
     let mb = new MessageBundle(enUS, Locales.en_US)
 
     m1.defineProperties(mb.messages, 'TOOLTIP_MOVE_PANEL_RIGHT')
-    expect(typeof mb.messages['TOOLTIP_MOVE_PANEL_RIGHT']).toEqual('string')
+    expect(typeof mb.messages['TOOLTIP_MOVE_PANEL_RIGHT'].get()).toEqual('string')
 
     let m2 = new Message(enUS['TEXT_NOTICE_DEFSDATA_READY'], Locales.en_US)
     m2.defineProperties(mb.messages, 'TEXT_NOTICE_DEFSDATA_READY')
 
     expect(typeof mb.messages['TEXT_NOTICE_DEFSDATA_READY'].format).toEqual('function')
     expect(mb.messages['TEXT_NOTICE_DEFSDATA_READY'].format({ requestType: 'foo type', lemma: 'foo lemma' })).toEqual(m2.formatFunc.format({ requestType: 'foo type', lemma: 'foo lemma' }))
+  })
+
+  it('4 Message - returns abbreviation if present',() => {
+    let mockMessage = { MOCK_MESSAGE : { message:"testfull",abbr:"tf."} }
+    let m = new Message(mockMessage.MOCK_MESSAGE, Locales.en_US)
+    let mockMessageBundle = { messages: {'MOCK_MESSAGE':m } }
+    m.defineProperties(mockMessageBundle.messages,'MOCK_MESSAGE')
+    expect(mockMessageBundle.messages['MOCK_MESSAGE'].abbr()).toEqual('tf.')
+  })
+
+  it('5 Message - returns full message for abbreviation if no abbreviation present',() => {
+    let mockMessage = { MOCK_MESSAGE : { message:"testfull" }}
+    let m = new Message(mockMessage.MOCK_MESSAGE, Locales.en_US)
+    let mockMessageBundle = { messages: {'MOCK_MESSAGE':m } }
+    m.defineProperties(mockMessageBundle.messages,'MOCK_MESSAGE')
+    expect(mockMessageBundle.messages['MOCK_MESSAGE'].abbr()).toEqual('testfull')
+  })
+  it('6 Message - returns parameterized abbreviation',() => {
+    let mockMessage = { MOCK_MESSAGE : { message:"testfull {p1}", abbr:"tf. {p1}", params: ["p1"] }}
+    let m = new Message(mockMessage.MOCK_MESSAGE, Locales.en_US)
+    let mockMessageBundle = { messages: {'MOCK_MESSAGE':m } }
+    m.defineProperties(mockMessageBundle.messages,'MOCK_MESSAGE')
+    expect(mockMessageBundle.messages['MOCK_MESSAGE'].abbr("1")).toEqual('tf. 1')
   })
 })

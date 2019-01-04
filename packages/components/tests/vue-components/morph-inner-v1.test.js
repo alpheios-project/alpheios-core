@@ -10,10 +10,34 @@ import { LanguageModelFactory as LMF } from 'alpheios-data-models'
 const mockFeature = function (value, type, languageCode) {
   return {
     value: value,
+    values: [value],
     type: type,
     languageID: LMF.getLanguageIdFromCode(languageCode),
     toLocaleStringAbbr: () => { return `${value}-mockabbrev` },
     toString: () => { return value }
+  }
+}
+
+const mockMessages = {
+  '3rd': {
+    get: () => {return '3rd'},
+    abbr: () => {return '3rd-mockabbrev'}
+  },
+  'singular': {
+    get: () => {return 'singular'},
+    abbr: () => {return 'singular-mockabbrev'}
+  },
+  'perfect': {
+    get: () => {return 'perfect'},
+    abbr: () => {return 'perfect-mockabbrev'}
+  },
+  'indicative': {
+    get: () => {return 'indicative'},
+    abbr: () => {return 'indicative-mockabbrev'}
+  },
+  'active': {
+    get: () => {return 'active'},
+    abbr: () => {return 'active-mockabbrev'}
   }
 }
 
@@ -343,6 +367,7 @@ describe('morph-inner-v1.test.js', () => {
     let word = mockFeature('capio', 'word', 'lat')
     let cmp = mount(MorphInner, {
       propsData: {
+        messages: mockMessages,
         morphDataReady: true,
         lex:
           {

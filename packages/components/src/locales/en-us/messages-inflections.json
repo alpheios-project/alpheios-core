@@ -1,0 +1,35 @@
+{
+  "Number": {
+    "message": "Number"
+  },
+  "Case": {
+    "message": "Case"
+  },
+  "Declension": {
+    "message": "Declension"
+  },
+  "Declension Stem": {
+    "message": "Declension Stem"
+  },
+  "Gender": {
+     "message" : "Gender"
+  },
+  "Type": {
+    "message": "Type"
+  },
+  "Voice": {
+    "message": "Voice"
+  },
+  "Conjugation Stem": {
+    "message": "Conjugation Stem"
+  },
+  "Mood": {
+    "message": "Mood"
+  },
+  "Person": {
+    "message": "Person"
+  },
+  "Lemma": {
+    "message": "Lemma"
+  }
+}

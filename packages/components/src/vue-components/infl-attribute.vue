@@ -45,14 +45,25 @@
         return classList.join(' ')
       },
       decorate(data,type) {
-        let decorated = typeof(data[type]) === 'string' ? data[type] : data[type].value
-        if (this.decorators.includes('abbreviate') && data[type].value) {
-          decorated = data[type].toLocaleStringAbbr()
+        let baseValues = []
+        let decoratedValues = []
+        if (typeof(data[type]) === 'string') {
+          baseValues = [data[type]]
+        } else {
+          baseValues = data[type].values
         }
-        if (this.decorators.includes('link') && data[type].value && data[type].value.match(/^http/)) {
-          let linkText = this.messages ? this.messages[`INFL_ATTRIBUTE_LINK_TEXT_TYPE`] : type
-          decorated = `<a class="alpheios-morph__linkedattr" target="_blank" href="${data[type].value}">${linkText}</a>`
+        for (let v of baseValues) {
+          let decorated = v
+          if (this.decorators.includes('abbreviate') && this.messages && this.messages[v]) {
+            decorated = this.messages[v].abbr()
+          }
+          if (this.decorators.includes('link') && decorated.match(/^http/)) {
+            let linkText = this.messages ? this.messages[`INFL_ATTRIBUTE_LINK_TEXT_TYPE`].get() : type
+            decorated = `<a class="alpheios-morph__linkedattr" target="_blank" href="${decorated}">${linkText}</a>`
+          }
+          decoratedValues.push(decorated)
         }
+        let decorated = decoratedValues.join(' ')
         if (this.decorators.includes('appendtype')) {
           decorated = `${decorated} ${type}`
         }

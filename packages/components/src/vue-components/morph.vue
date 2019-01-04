@@ -12,6 +12,7 @@
         :definitions = "definitions[lex.lemma.ID] ? definitions[lex.lemma.ID] : []"
         :linkedfeatures = "linkedfeatures"
         :translations = "translations"
+        :messages = "messages"
         @sendfeature = "sendFeature"
         ></morph-inner>
     </div><!--alpheios-morph__lexemes-->
@@ -46,6 +47,10 @@
         morphDataReady: {
           type: Boolean,
           required: true
+        },
+        messages: {
+          type: Object,
+          required: false
         }
     },
     methods: {

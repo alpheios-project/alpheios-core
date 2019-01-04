@@ -23,6 +23,8 @@ export default class Message {
     }
 
     this.formatFunc = new IntlMessageFormat(message.message, this.locale)
+    this.abbrFunc = new IntlMessageFormat(message.abbr || message.message, this.locale)
+
   }
 
   /**
@@ -57,16 +59,25 @@ export default class Message {
             params[param] = options[index]
           }
           return self.formatFunc.format(params)
+        },
+        abbr (...options) {
+          let params = {}
+          // TODO: Add checks
+          for (let [index, param] of self.params.entries()) {
+            params[param] = options[index]
+          }
+          return self.abbrFunc.format(params)
         }
       }
     } else {
-      Object.defineProperty(messages, key, {
+      messages[key] = {
         get () {
           return self.formatFunc.format()
         },
-        enumerable: true,
-        configurable: true // So it can be deleted
-      })
+        abbr () {
+          return self.abbrFunc.format()
+        }
+      }
     }
   }
 }

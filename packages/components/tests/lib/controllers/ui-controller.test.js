@@ -236,10 +236,10 @@ describe('ui-controller.test.js', () => {
   })
 
   it('10 UIController - changeTab methods', () => {
-    uiC.changeTab('inflection')
+    uiC.changeTab('options')
 
     for (let tab in uiC.panel.panelData.tabs) {
-      if (tab === 'inflection') {
+      if (tab === 'options') {
         expect(uiC.panel.panelData.tabs[tab]).toBeTruthy()
       } else {
         expect(uiC.panel.panelData.tabs[tab]).toBeFalsy()
@@ -349,7 +349,7 @@ describe('ui-controller.test.js', () => {
   it('14 UIController - updateGrammar methods', () => {
     uiC.updateGrammar([])
 
-    let message = l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND
+    let message = l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND.get()
 
     expect(uiC.panel.panelData.grammarRes).toEqual({ provider: message })
 

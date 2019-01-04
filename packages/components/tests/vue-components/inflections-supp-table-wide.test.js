@@ -49,7 +49,7 @@ describe('inflections-supp-table-wide.test.js', () => {
       propsData: {
         data: testParadigm,
         bgColor: 'transparent',
-        messages: []
+        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
@@ -60,7 +60,7 @@ describe('inflections-supp-table-wide.test.js', () => {
       propsData: {
         data: testParadigm,
         bgColor: 'transparent',
-        messages: []
+        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
       }
     })
 
@@ -76,7 +76,7 @@ describe('inflections-supp-table-wide.test.js', () => {
       propsData: {
         data: testParadigm,
         bgColor: 'transparent',
-        messages: []
+        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
       }
     })
 
@@ -90,7 +90,7 @@ describe('inflections-supp-table-wide.test.js', () => {
       propsData: {
         data: testParadigm,
         bgColor: 'transparent',
-        messages: []
+        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
       }
     })
 

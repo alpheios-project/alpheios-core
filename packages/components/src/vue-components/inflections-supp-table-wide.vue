@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </div>
-            <a class="infl-supp-tbl__reflink" @click="navigate">{{messages.INFLECTIONS_MAIN_TABLE_LINK_TEXT}}</a>
+            <a class="infl-supp-tbl__reflink" @click="navigate">{{messages.INFLECTIONS_MAIN_TABLE_LINK_TEXT.get()}}</a>
         </div>
     </div>
 </template>

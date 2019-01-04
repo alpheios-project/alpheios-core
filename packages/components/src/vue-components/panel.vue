@@ -532,7 +532,7 @@ export default {
 
     ln10Messages: function (value, defaultValue = 'unknown') {
       if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
-        return this.data.l10n.messages[value]
+        return this.data.l10n.messages[value].get()
       }
       return defaultValue
     },

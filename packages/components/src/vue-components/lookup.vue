@@ -166,7 +166,7 @@
 
       ln10Messages: function (value, defaultValue = 'uknown') {
         if (this.uiController && this.uiController.l10n && this.uiController.l10n.messages && this.uiController.l10n.messages[value]) {
-          return this.uiController.l10n.messages[value]
+          return this.uiController.l10n.messages[value].get()
         }
         return defaultValue
       },

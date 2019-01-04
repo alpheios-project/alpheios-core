@@ -10,6 +10,25 @@ describe('infl-attribute.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
+  const mockMessages = {
+    'foovalue': {
+      get: () => { return 'foovalue'},
+      abbr: () => {return 'fv'}
+    },
+    'INFL_ATTRIBUTE_LINK_TEXT_TYPE': {
+      get: () => { return 'source' },
+      abbr: () => {return 'src'}
+    },
+    'masculine': {
+      get: () => { return 'masculine'},
+      abbr: () => { return 'm.'}
+    },
+    'feminine': {
+      get: () => { return 'feminine'},
+      abbr: () => { return 'f.'}
+    }
+  }
+
   beforeEach(() => {
     jest.spyOn(console, 'error')
   })
@@ -51,6 +70,7 @@ describe('infl-attribute.test.js', () => {
         data: {
           fooType: {
             value: 'fooValue',
+            values: ['fooValue'],
             type: 'fooType2'
           },
           features: {
@@ -70,7 +90,7 @@ describe('infl-attribute.test.js', () => {
     await Vue.nextTick()
 
     expect(cmp.emitted()['sendfeature']).toBeTruthy()
-    expect(cmp.emitted()['sendfeature'][0]).toEqual([{ value: 'fooValue', type: 'fooType2' }])
+    expect(cmp.emitted()['sendfeature'][0]).toEqual([{ value: 'fooValue', values: ['fooValue'], type: 'fooType2' }])
   })
 
   it('3 InflectionAttribute - attributeClass method creates class list from featureType and extra classes', () => {
@@ -101,7 +121,8 @@ describe('infl-attribute.test.js', () => {
           'source': new Feature(Feature.types.source, 'http://example.org', Constants.LANG_GREEK)
         },
         type: 'part of speech',
-        decorators: ['brackets']
+        decorators: ['brackets'],
+        messages: mockMessages
       }
     })
 
@@ -117,7 +138,7 @@ describe('infl-attribute.test.js', () => {
 
     cmp.vm.decorators = ['abbreviate']
 
-    expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('foovalue')
+    expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('fv')
 
     expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('verb')
 
@@ -153,5 +174,20 @@ describe('infl-attribute.test.js', () => {
 
     cmp.vm.sendFeature([testFeature])
     expect(cmp.emitted()['sendfeature']).toBeFalsy()
+  })
+
+  it('7 InflectionAttribute - decorate method handles multivalued features properly', () => {
+    let cmp = mount(InflectionAttribute, {
+      propsData: {
+        data: {
+          'gender': new Feature(Feature.types.gender, ['feminine', 'masculine'], Constants.LANG_GREEK),
+        },
+        type: 'gender',
+        decorators: ['abbreviate'],
+        messages: mockMessages
+      }
+    })
+
+    expect(cmp.vm.decorate(cmp.vm.data, 'gender')).toEqual('f. m.')
   })
 })

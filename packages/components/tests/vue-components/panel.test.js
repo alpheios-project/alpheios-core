@@ -183,7 +183,7 @@ describe('panel.test.js', () => {
 
     for (let i = 0; i < tabsButtonsTooltips.length; i++) {
       switch (tabsButtonsTooltips.at(i).vm.tooltipText) {
-        case l10n.messages.TOOLTIP_HELP:
+        case l10n.messages.TOOLTIP_HELP.get():
           expect(tabsButtonsTooltips.at(i).find('.alpheios-panel__header-nav-btn').hasClass('active')).toBeTruthy()
           break
         default:
@@ -1037,6 +1037,6 @@ describe('panel.test.js', () => {
     expect(res).toEqual('foounknown')
 
     res = cmp.vm.ln10Messages('TOOLTIP_POPUP_CLOSE')
-    expect(res).toEqual(l10n.messages.TOOLTIP_POPUP_CLOSE)
+    expect(res).toEqual(l10n.messages.TOOLTIP_POPUP_CLOSE.get())
   })
 })

@@ -57,7 +57,7 @@
             {{ ln10Messages('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
         </div>
         <div v-show="morphDataReady && hasMorphData" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready">
-            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions" :translations="translations"
+            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions" :translations="translations" :messages="data.l10n.messages"
                    :linkedfeatures="linkedfeatures" @sendfeature="sendFeature" :morphDataReady="morphDataReady && hasMorphData">
             </morph>
 
@@ -575,7 +575,7 @@
 
       ln10Messages: function (value, defaultValue = 'unknown') {
         if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
-          return this.data.l10n.messages[value]
+          return this.data.l10n.messages[value].get()
         }
         return defaultValue
       },

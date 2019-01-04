@@ -1,7 +1,7 @@
 <template>
     <div ref="popup" class="auk alpheios-popup alpheios-popup--mobile" v-bind:class="data.classes" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}"
          v-show="visible" :data-notification-visible="data.notification.visible">
-        <span class="alpheios-popup__close-btn" @click="closePopup" :title="data.l10n.messages.TOOLTIP_POPUP_CLOSE">
+        <span class="alpheios-popup__close-btn" @click="closePopup" :title="data.l10n.messages.TOOLTIP_POPUP_CLOSE.get()">
             <close-icon></close-icon>
         </span>
         <div class="alpheios-popup__header">
@@ -12,19 +12,19 @@
             </div>
             <div class="uk-button-group alpheios-popup__button-area">
                 <button @click="showPanelTab('inflections')" v-show="data.inflDataReady"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_INFLECT}}
+                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_INFLECT.get()}}
                 </button>
                 <button @click="showPanelTab('definitions')" v-show="data.defDataReady"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_DEFINE}}
+                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_DEFINE.get()}}
                 </button>
                 <button @click="showPanelTab('options')"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_OPTIONS}}
+                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_OPTIONS.get()}}
                 </button>
             </div>
         </div>
         <div v-show="!morphDataReady"
              class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios--text-small">
-            {{data.l10n.messages.PLACEHOLDER_POPUP_DATA}}
+            {{data.l10n.messages.PLACEHOLDER_POPUP_DATA.get()}}
         </div>
         <div v-show="morphDataReady" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-text-small">
             <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions"
@@ -32,7 +32,7 @@
             </morph>
 
             <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
-                <div class="alpheios-popup__morph-cont-providers-header">{{data.l10n.messages.LABEL_POPUP_CREDITS}}</div>
+                <div class="alpheios-popup__morph-cont-providers-header">{{data.l10n.messages.LABEL_POPUP_CREDITS.get()}}</div>
                 <div class="alpheios-popup__morph-cont-providers-source" v-for="p in data.providers">
                     {{ p.toString() }}
                 </div>

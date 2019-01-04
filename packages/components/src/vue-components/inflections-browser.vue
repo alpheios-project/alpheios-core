@@ -259,14 +259,13 @@
        * @return {View}
        */
       inflView: function (languageID, options) {
-        const locale = 'en-US'
         /*
         Vue rendering algorithm may call this method more then once. To avoid unnecessary re-rendering,
         which might sometimes trigger an infinite loop, rendered views are cached with `options` as a key.
          */
         const key = Comparable.key(options)
         if (!this.views.has(key)) {
-          let view = ViewSetFactory.getStandardForm(languageID, options, locale)
+          let view = ViewSetFactory.getStandardForm(languageID, options)
           this.views.set(key, view)
         }
         return this.views.get(key)
