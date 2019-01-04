@@ -4,24 +4,24 @@
             Toggle Locale
         </button>
         <button v-show="!isLoggedIn" class="uk-button uk-button-primary" @click="logIn">
-            {{ msg(`AUTH_LOG_IN_BTN_LABEL`) }}
+            {{ $l10nMsg(`AUTH_LOG_IN_BTN_LABEL`) }}
         </button>
         <button v-show="isLoggedIn" class="uk-button uk-button-primary" @click="logOut">
-            {{ msg(`AUTH_LOG_OUT_BTN_LABEL`) }}
+            {{ $l10nMsg(`AUTH_LOG_OUT_BTN_LABEL`) }}
         </button>
         <div v-show="logInProgress" class="alpheios-user-auth__message-box">
-            {{ msg(`AUTH_LOG_IN_PROGRESS_MSG`) }}
+            {{ $l10nMsg(`AUTH_LOG_IN_PROGRESS_MSG`) }}
         </div>
         <div v-show="isLoggedIn" class="alpheios-user-auth__message-box">
-            {{ msg(`AUTH_LOG_IN_SUCCESS_MSG`) }}
+            {{ $l10nMsg(`AUTH_LOG_IN_SUCCESS_MSG`) }}
         </div>
         <div v-show="authenticationFailed" class="alpheios-user-auth__message-box">
-            {{ msg(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
+            {{ $l10nMsg(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
         </div>
         <div v-if="isLoggedIn && hasUserInfo" class="alpheios-user-auth__user-info-box">
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    {{ msg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
+                    {{ $l10nMsg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.nickname ? userInfo.nickname: `&mdash;` }}
@@ -29,7 +29,7 @@
             </div>
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    {{ msg(`AUTH_PROFILE_NAME_LABEL`) }}:
+                    {{ $l10nMsg(`AUTH_PROFILE_NAME_LABEL`) }}:
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.name ? userInfo.name: `&mdash;` }}
@@ -107,17 +107,23 @@ export default {
       }
     },
 
+    /**
+     * A method for demonstration of language switching.
+     * TODO: Remove in production builds.
+     */
     localeToggle: function () {
-      console.log(`Locale toggle`)
-      if (this.$store.state.l10n.selectedLocale === 'en-GB') {
-        this.$store.commit('setLocale', 'en-US')
-      } else {
-        this.$store.commit('setLocale', 'en-GB')
-      }
-    },
+      const newLocale = (this.$l10nGetLocale() === 'en-GB') ? 'en-US' : 'en-GB'
+      this.$l10nSetLocale(newLocale)
+    }
+  },
 
-    msg (messageID) {
-      return this.$store.getters.getMessage(messageID)
+  created: function () {
+    // Check for dependencies
+    // TODO: Provide a unified way to do such checks
+    const dependencies = ['l10n']
+    const missingDependencies = dependencies.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   }
 }

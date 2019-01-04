@@ -12491,17 +12491,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
+    /**
+     * A method for demonstration of language switching.
+     * TODO: Remove in production builds.
+     */
     localeToggle: function () {
       console.log(`Locale toggle`)
-      if (this.$store.state.l10n.selectedLocale === 'en-GB') {
-        this.$store.commit('setLocale', 'en-US')
-      } else {
-        this.$store.commit('setLocale', 'en-GB')
-      }
-    },
+      const newLocale = (this.$l10nGetLocale() === 'en-GB') ? 'en-US' : 'en-GB'
+      this.$l10nSetLocale(newLocale)
+    }
+  },
 
-    msg (messageID) {
-      return this.$store.getters.getMessage(messageID)
+  created: function () {
+    // Check for dependencies
+    // TODO: Provide a unified way to check for dependencies
+    let dependencies = ['l10n']
+    let missingDependencies = dependencies.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   }
 });
@@ -18707,7 +18714,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_BTN_LABEL")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_BTN_LABEL")) +
+            "\n    "
         )
       ]
     ),
@@ -18728,7 +18737,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_OUT_BTN_LABEL")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.$l10nMsg("AUTH_LOG_OUT_BTN_LABEL")) +
+            "\n    "
         )
       ]
     ),
@@ -18748,7 +18759,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_PROGRESS_MSG")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_PROGRESS_MSG")) +
+            "\n    "
         )
       ]
     ),
@@ -18768,7 +18781,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_SUCCESS_MSG")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_SUCCESS_MSG")) +
+            "\n    "
         )
       ]
     ),
@@ -18789,7 +18804,7 @@ var render = function() {
       [
         _vm._v(
           "\n        " +
-            _vm._s(_vm.msg("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
+            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
             "\n    "
         )
       ]
@@ -18804,7 +18819,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.msg("AUTH_PROFILE_NICKNAME_LABEL")) +
+                    _vm._s(_vm.$l10nMsg("AUTH_PROFILE_NICKNAME_LABEL")) +
                     ":\n            "
                 )
               ]
@@ -18832,7 +18847,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.msg("AUTH_PROFILE_NAME_LABEL")) +
+                    _vm._s(_vm.$l10nMsg("AUTH_PROFILE_NAME_LABEL")) +
                     ":\n            "
                 )
               ]
@@ -31471,7 +31486,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue-components/panel.vue */ "./vue-components/panel.vue");
 /* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue-components/popup.vue */ "./vue-components/popup.vue");
-/* harmony import */ var _modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/modules/data/l10n/module.js */ "./modules/data/l10n/module.js");
+/* harmony import */ var _modules_data_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/modules/data/l10n/l10n.js */ "./modules/data/l10n/l10n.js");
 /* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue-components/embed-lib-warning.vue */ "./vue-components/embed-lib-warning.vue");
 /* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
 /* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
@@ -31610,7 +31625,7 @@ class UIController {
     let uiController = new UIController(state, options)
 
     // Register modules
-    uiController.registerDataModule(_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_7__["default"])
+    uiController.registerDataModule(_modules_data_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_7__["default"])
 
     // Creates on configures an event listener
     let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_28__["default"]()
@@ -31744,8 +31759,13 @@ class UIController {
     return this
   }
 
+  /**
+   * Registers a data module for use by UI controller.
+   * @param {DataModule} Module - A data module class (i.e. the constructor function).
+   * @param options - Arbitrary number of values that will be passed to the module constructor.
+   * @return {UIController} - A self reference for chaining.
+   */
   registerDataModule (Module, ...options) {
-    // let newModule = new Module(...options)
     this.registeredDataModules.push(new Module(...options))
     return this
   }
@@ -31775,7 +31795,7 @@ class UIController {
     // All options shall be loaded at this point. Can initialize Vue components that will use them
     // Initialize the store
     this.store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
-      modules: Object.assign({}, ...this.registeredDataModules.map(module => ({ [module.storeName]: module.store })))
+      modules: Object.assign({}, ...this.registeredDataModules.map(module => ({ [module.name]: module.store })))
     })
 
     // Initialize components
@@ -36869,10 +36889,10 @@ HTMLPage.targetRequirements = {
 /*!*************************************!*\
   !*** ./locales/en-gb/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, AUTH_PROFILE_NICKNAME_LABEL, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a biscuit.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no queues} =1 {is one queue} other {are # queues}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname: (GB)","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a biscuit.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no queues} =1 {is one queue} other {are # queues}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]}};
 
 /***/ }),
 
@@ -36915,60 +36935,158 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 
 /***/ }),
 
-/***/ "./modules/data/l10n/module.js":
-/*!*************************************!*\
-  !*** ./modules/data/l10n/module.js ***!
-  \*************************************/
+/***/ "./modules/data/l10n/l10n.js":
+/*!***********************************!*\
+  !*** ./modules/data/l10n/l10n.js ***!
+  \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return L10nModule; });
-/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _modules_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/modules/module.js */ "./modules/module.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
+
+ // Vue in a runtime + compiler configuration
 
 
 
 
 
-class L10nModule {
+class L10nModule extends _modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor () {
-    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__["default"]()
-      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_1__["default"].en_US)
-      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_1__["default"].en_GB)
-      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_1__["default"].en_US)
+    super('l10n')
+    console.log(`L10nModule created`)
+    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
+      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_GB)
+      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
 
-    this.storeName = 'l10n' // With this name `this.store` will be visible inside a UI controller's Vuex store
+    this.name = 'l10n'
 
     this.store = {
+      // All stores of modules are namespaced
+      namespaced: true,
+
       state: {
         selectedLocale: this.l10n.selectedLocale
       },
       getters: {
-        getMessage: (state) => (messageID) => {
-          console.log(`getMessage`, this)
+        // For arrow functions `this` will point to the class instance, not to the store
+        getLocale: (state) => () => {
+          return state.selectedLocale
+        },
+
+        getMessage: () => (messageID) => {
           return this.l10n.bundle.get(messageID)
         }
       },
       mutations: {
+        // For arrow functions `this` will point to the class instance, not to the store
         setLocale: (state, newLocale) => {
-          // Because this is an arrow function, this points to the class instance, not to the store
           this.l10n.setLocale(newLocale)
           state.selectedLocale = this.l10n.selectedLocale
           state.messages = this.l10n.messages
         }
-      },
-      actions: {
-        increment (context) {
-          context.commit('increment')
-        }
       }
     }
+
+    /**
+     * This is required to install methods listed in the `install()` globally.
+     * If module registers no global methods, this step is not required.
+     */
+    vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(L10nModule)
+  }
+}
+
+/**
+ * Because all modules are namespaced, their getters are accessed as:
+ *    this.$store.getters[moduleName/getterName]()
+ * This can be tedious.
+ * To avoid this, we can either wrap them by computed props or methods
+ * of a component that uses them (if those getters will not be used by every component)
+ * or they can be installed globally via a Vue plugin (if those getters are expected to be used
+ * in every component, such as getters for string translation)
+ *
+ * `install()` function contains a list of functions that will be installed globally.
+ * By Vue.js convention, their names start with a dollar sign.
+ * We also prepend their names with a module name to avoid name collisions.
+ * Globally installed functions can be called from any Vue component as:
+ *     this.$moduleMethodName(params) (e.g. this.$l10nMsg(messageID))
+ *
+ * A set of functions within `install()` defines a public API of a module.
+ * @param Vue
+ * @param options
+ */
+L10nModule.install = function (Vue, options) {
+  /**
+   * Returns a translated string for its message ID given.
+   * @param {string} messageID - A message ID of a string to retrieve.
+   * @return {string} - A formatted translated text of a string.
+   */
+  Vue.prototype.$l10nMsg = function (messageID) {
+    return this.$store.getters['l10n/getMessage'](messageID)
+  }
+
+  /**
+   * Returns a current locale of L10n.
+   * @return {string} - A current locale
+   */
+  Vue.prototype.$l10nGetLocale = function () {
+    return this.$store.getters['l10n/getLocale']()
+  }
+
+  /**
+   * Sets locale of L10n to a new value.
+   * @param newLocale
+   */
+  Vue.prototype.$l10nSetLocale = function (newLocale) {
+    if (this.$store.state.selectedLocale !== newLocale) {
+      return this.$store.commit('l10n/setLocale', newLocale)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./modules/module.js":
+/*!***************************!*\
+  !*** ./modules/module.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Module; });
+/**
+ * A base class for all data and UI modules. Its role is to define common features that are shared
+ * across instances of al module types.
+ */
+class Module {
+  constructor (name) {
+    /**
+     * A name with which a store of the module will be visible inside a UI controller's Vuex store,
+     * It is also used as a prefix for any global function a module may install on Vue instances.
+     * @type {string}
+     */
+    this.name = name
+
+    /**
+     * A module's Vuex store object that will be integrated into global Vuex store of a UI controller.
+     * @type {Object}
+     */
+    this.store = {}
   }
 }
 

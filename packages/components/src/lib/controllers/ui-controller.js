@@ -243,7 +243,8 @@ export default class UIController {
   }
 
   /**
-   * Registers a data module for use by UI controller.
+   * Registers a data module for use by UI controller and other modules.
+   * It instantiates each module and adds them to the registered modules store.
    * @param {DataModule} Module - A data module class (i.e. the constructor function).
    * @param options - Arbitrary number of values that will be passed to the module constructor.
    * @return {UIController} - A self reference for chaining.
@@ -275,16 +276,17 @@ export default class UIController {
     container.outerHTML = this.options.template.html
 
     await Promise.all(optionLoadPromises)
+
     // All options shall be loaded at this point. Can initialize Vue components that will use them
-    // Initialize the store
+    // Initialize the Vuex store, mount all registered modules into the store.
     this.store = new Vuex.Store({
-      modules: Object.assign({}, ...this.registeredDataModules.map(module => ({ [module.storeName]: module.store })))
+      modules: Object.assign({}, ...this.registeredDataModules.map(module => ({ [module.name]: module.store })))
     })
 
     // Initialize components
     this.panel = new Vue({
       el: `#${this.options.template.panelId}`,
-      store: this.store,
+      store: this.store, // Install store into the panel
       components: {
         panel: Panel
       },
