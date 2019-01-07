@@ -14734,7 +14734,11 @@ class AdapterError extends Error {
     if (this.adapter && this.methodName) {
       this.message = `${this.message} (${this.adapter}.${this.methodName})`
     }
-    Error.captureStackTrace(this, AdapterError)
+    try {
+      Error.captureStackTrace(this, AdapterError)
+    } catch (e) {
+      console.log('Error.captureStackTrace is not supported here')
+    }
   }
 
   update (config) {
