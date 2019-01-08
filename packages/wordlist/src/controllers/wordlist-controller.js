@@ -97,7 +97,7 @@ export default class WordlistController {
   parseResultToWordList (result) {
     if (result && result.length > 0) {
       result.forEach(wordItemResult => {
-        let homonymRes = Homonym.readObject(wordItemResult.homonym)
+        let homonymRes = Homonym.readObject(wordItemResult.body.homonym)
         // console.info('*******************parseResultToWordList', homonymRes)
         this.updateWordList({ homonym: homonymRes, important: wordItemResult.body.important }, false)
         if (this.upgradeQueue) {

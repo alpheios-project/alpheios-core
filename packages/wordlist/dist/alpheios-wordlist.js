@@ -12762,7 +12762,7 @@ class WordlistController {
   parseResultToWordList (result) {
     if (result && result.length > 0) {
       result.forEach(wordItemResult => {
-        let homonymRes = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(wordItemResult.homonym)
+        let homonymRes = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(wordItemResult.body.homonym)
         // console.info('*******************parseResultToWordList', homonymRes)
         this.updateWordList({ homonym: homonymRes, important: wordItemResult.body.important }, false)
         if (this.upgradeQueue) {
