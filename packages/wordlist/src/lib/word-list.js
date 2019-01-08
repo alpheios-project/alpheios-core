@@ -127,7 +127,7 @@ export default class WordList {
     return Object.assign({ 
       ID: this.storageID + '-' + wordItem.targetWord, 
       userID: this.userID, 
-      userIDLangCode: this.storageID 
+      userIDLangCode: this.storageID      
     }, wordItem.convertToStorage())
   }
   

@@ -99,7 +99,7 @@ export default class WordlistController {
       result.forEach(wordItemResult => {
         let homonymRes = Homonym.readObject(wordItemResult.homonym)
         // console.info('*******************parseResultToWordList', homonymRes)
-        this.updateWordList({ homonym: homonymRes, important: wordItemResult.important }, false)
+        this.updateWordList({ homonym: homonymRes, important: wordItemResult.body.important }, false)
         if (this.upgradeQueue) {
           this.upgradeQueue.clearCurrentItem()
         }

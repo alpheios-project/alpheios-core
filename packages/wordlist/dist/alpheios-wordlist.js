@@ -12764,7 +12764,7 @@ class WordlistController {
       result.forEach(wordItemResult => {
         let homonymRes = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(wordItemResult.homonym)
         // console.info('*******************parseResultToWordList', homonymRes)
-        this.updateWordList({ homonym: homonymRes, important: wordItemResult.important }, false)
+        this.updateWordList({ homonym: homonymRes, important: wordItemResult.body.important }, false)
         if (this.upgradeQueue) {
           this.upgradeQueue.clearCurrentItem()
         }
@@ -13268,15 +13268,39 @@ class WordItem {
     }
     resultItem.targetWord = this.targetWord
     return {
-      homonym: resultItem,
-      important: this.important,
+      targetWord: this.targetWord,
       languageCode: this.languageCode,
-      targetWord: this.targetWord
+      target: {
+        targetWord: this.targetWord,
+        source: window.location.href,
+        selector: {
+          type: 'TextQuoteSelector',
+          exact: this.targetWord,
+          prefix: '',
+          suffix: ''
+        }
+      },
+      body: {
+        dt: WordItem.currentDate,
+        homonym: resultItem,
+        important: this.important
+      }
     }
   }
 
   selectWordItem () {
     _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__["default"].evt.WORDITEM_SELECTED.pub(this.homonym)
+  }
+
+  static get currentDate () {
+    let dt = new Date()
+    return dt.getFullYear() + '/'
+        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
+        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
+                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"  
+                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":" 
+                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
+
   }
 }
 
@@ -13423,7 +13447,7 @@ class WordList {
     return Object.assign({ 
       ID: this.storageID + '-' + wordItem.targetWord, 
       userID: this.userID, 
-      userIDLangCode: this.storageID 
+      userIDLangCode: this.storageID      
     }, wordItem.convertToStorage())
   }
   
@@ -13580,7 +13604,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
   set (db, objectStoreName, data, onCompleteF) {
     const transaction = db.transaction([objectStoreName], 'readwrite')
     transaction.oncomplete = (event) => {
-      console.info('**************set data successfull')
+      // console.info('**************set data successfull')
       if (onCompleteF) {
         onCompleteF()
       }
@@ -13592,7 +13616,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     data.forEach(dataItem => {
       const requestPut = objectStore.put(dataItem)
       requestPut.onsuccess = (event) => {
-        console.info('****************wordlist added successful', event.target.result)
+        // console.info('****************wordlist added successful', event.target.result)
       }
       requestPut.onerror = (event) => {
         console.info('****************wordlist error with adding data', event.target)

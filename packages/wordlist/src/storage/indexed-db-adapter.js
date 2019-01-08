@@ -49,7 +49,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
   set (db, objectStoreName, data, onCompleteF) {
     const transaction = db.transaction([objectStoreName], 'readwrite')
     transaction.oncomplete = (event) => {
-      console.info('**************set data successfull')
+      // console.info('**************set data successfull')
       if (onCompleteF) {
         onCompleteF()
       }
@@ -61,7 +61,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
     data.forEach(dataItem => {
       const requestPut = objectStore.put(dataItem)
       requestPut.onsuccess = (event) => {
-        console.info('****************wordlist added successful', event.target.result)
+        // console.info('****************wordlist added successful', event.target.result)
       }
       requestPut.onerror = (event) => {
         console.info('****************wordlist error with adding data', event.target)
