@@ -12864,7 +12864,7 @@ WordlistController.evt = {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "C:\\_Irina\\_clients\\_Alpheios Project\\git\\wordlist\\src\\icons\\check.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\check.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -12875,7 +12875,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "C:\\_Irina\\_clients\\_Alpheios Project\\git\\wordlist\\src\\icons\\delete.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\delete.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
