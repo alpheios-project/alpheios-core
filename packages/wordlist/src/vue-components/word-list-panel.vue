@@ -1,7 +1,9 @@
 <template>
   <div class="alpheios-wordlist">
       <div class="alpheios-wordlist-language" v-for="(languageCode, langIndex) in languagesList" v-bind:key="langIndex">
-        <word-language-panel :wordlist = "wordLists[languageCode]" :messages="l10n.messages" :updated="updated"></word-language-panel>
+        <word-language-panel 
+          :wordlist = "wordLists[languageCode]" :messages="l10n.messages" 
+          :updated="updated"></word-language-panel>
       </div>
   </div>
 </template>
@@ -38,7 +40,7 @@
           .setLocale(Locales.en_US)
       },
       wordLists () {
-        return this.wordlistC.wordLists
+        return this.updated ? this.wordlistC.wordLists : []
       }
     },
     methods: {
@@ -59,37 +61,7 @@
         display: inline-block;
     }
 
-    .alpheios-wordlist-commands {
-      border-bottom: 1px solid $alpheios-toolbar-color;
-    }
-
     .alpheios-wordlist-language__worditem.active {
       color: $alpheios-link-hover-color;
     }
-
-    .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
-      width: 15px;
-      height: 15px;
-      display: inline-block;
-      text-align: center;
-      cursor: pointer;
-      margin: 0 5px 10px;
-      svg {
-        width: 15px;
-        height: 15px;
-        display: inline-block;
-        vertical-align: top;
-      } 
-    }
-
-    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-no-important {
-      fill: $alpheios-link-color-dark-bg;
-      stroke: $alpheios-link-color-dark-bg;
-    }
-
-    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-all-important {
-      fill: $alpheios-link-hover-color;
-      stroke: $alpheios-link-hover-color;
-    }
-
 </style>

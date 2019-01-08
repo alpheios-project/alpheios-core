@@ -151,11 +151,14 @@
   border-bottom: 1px solid #ddd;
   padding: 2px 0;
 }
+.alpheios-wordlist-language__worditem__current_session {
+  background: #fdf7d0;
+}
 .alpheios-worditem__data {
   display: inline-block;
   vertical-align: middle;
 }
-.alpheios-wordlist-language__worditem .alpheios-worditem__important {
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon {
   width: 15px;
   height: 15px;
   text-align: center;
@@ -164,16 +167,24 @@
   stroke: #D1D1D0;
   margin: 5px;
 }
-.alpheios-wordlist-language__worditem .alpheios-worditem__important svg {
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon svg {
     width: 15px;
     height: 15px;
     display: inline-block;
     vertical-align: top;
 }
-.active .alpheios-worditem__data {
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon.alpheios-worditem__delete_icon {
+    fill: #333333;
+    stroke: #333333;
+}
+.alpheios-wordlist-language__worditem__active .alpheios-worditem__data {
   fill: #5BC8DC;
   stroke: #5BC8DC;
   color: #5BC8DC;
+}
+.alpheios-wordlist-language__worditem__active .alpheios-worditem__data.alpheios-worditem__delete_icon {
+    fill: #333333;
+    stroke: #333333;
 }
 .alpheios-worditem__targetWord {
   font-weight: bold;
@@ -181,24 +192,12 @@
   cursor: pointer;
 }
 .alpheios-worditem__lemmasList {
-  width: 58%;
+  width: 48%;
 }
 
 /***************** panel settings **********************/
-.alpheios-wordlist-language {
-  padding-bottom: 5px;
-  margin-bottom: 10px;
-}
-.alpheios-wordlist-language__title {
-  font-weight: bold;
-  font-size: 110%;
-  display: inline-block;
-}
 .alpheios-wordlist-commands {
   border-bottom: 1px solid #4E6476;
-}
-.alpheios-wordlist-language__worditem.active {
-  color: #5BC8DC;
 }
 .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
   width: 15px;
@@ -221,6 +220,24 @@
 .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-all-important {
   fill: #5BC8DC;
   stroke: #5BC8DC;
+}
+.alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all {
+  fill: #333333;
+  stroke: #333333;
+}
+
+/***************** panel settings **********************/
+.alpheios-wordlist-language {
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.alpheios-wordlist-language__title {
+  font-weight: bold;
+  font-size: 110%;
+  display: inline-block;
+}
+.alpheios-wordlist-language__worditem.active {
+  color: #5BC8DC;
 }
 
 

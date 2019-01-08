@@ -12,14 +12,20 @@
                 <check-icon></check-icon>
             </div>
             </alph-tooltip>
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_REMOVE_ALL">
+            <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-remove-all" @click="deleteAll()">
+                <delete-icon></delete-icon>
+            </div>
+            </alph-tooltip>
         </div>
 
-        <div class="alpheios-wordlist-language__worditem"
+        <div 
                 v-for="wordItem in wordItems" 
                 v-bind:key="wordItem.ID">
             <word-item-panel 
               :worditem="wordItem" 
               @changeImportant = "changeImportant"
+              @deleteItem = "deleteItem"
             ></word-item-panel>
         </div>
     </div>
@@ -27,7 +33,8 @@
 <script>
 import TooltipWrap from '@/vue-components/common-components/tooltip-wrap.vue'
 import { Constants } from 'alpheios-data-models'
-import CheckIcon from '@/icons/check.svg';
+import CheckIcon from '@/icons/check.svg'
+import DeleteIcon from '@/icons/delete.svg'
 import WordItemPanel from '@/vue-components/word-item-panel.vue'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 
@@ -35,6 +42,7 @@ export default {
   name: 'WordListPanel',
   components: {
     checkIcon: CheckIcon,
+    deleteIcon: DeleteIcon,
     wordItemPanel: WordItemPanel,
     alphTooltip: TooltipWrap
   },
@@ -52,9 +60,14 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      reloadList: 1
+    }
+  },
   computed: {
     wordItems () {
-      return this.updated ? this.wordlist.values : []
+      return this.updated && this.reloadList ? this.wordlist.values : []
     },
     languageName () {
       let languageNames = new Map([
@@ -84,7 +97,52 @@ export default {
       } else {
         this.wordlist.makeImportantByID(ID)
       }
+    },
+    deleteItem (ID) {
+      this.wordlist.removeWordItemByID(ID)
+      this.reloadList = this.reloadList + 1
+    },
+    deleteAll () {
+      this.wordlist.removeAllWordItems()
+      this.reloadList = this.reloadList + 1
     }
   }
 }
 </script>
+<style lang="scss">
+    @import "../styles/alpheios";
+
+    .alpheios-wordlist-commands {
+      border-bottom: 1px solid $alpheios-toolbar-color;
+    }
+    .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+      margin: 0 5px 10px;
+      svg {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        vertical-align: top;
+      } 
+    }
+
+    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-no-important {
+      fill: $alpheios-link-color-dark-bg;
+      stroke: $alpheios-link-color-dark-bg;
+    }
+
+    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-all-important {
+      fill: $alpheios-link-hover-color;
+      stroke: $alpheios-link-hover-color;
+    }
+
+    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all {
+      fill: $alpheios-headers-color;
+      stroke: $alpheios-headers-color;
+    }
+
+</style>

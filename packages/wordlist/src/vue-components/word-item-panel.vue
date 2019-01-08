@@ -1,8 +1,12 @@
 <template>
-    <div v-bind:class="itemClasses" >
-        <div class="alpheios-worditem__data alpheios-worditem__important" 
+    <div v-bind:class="itemClasses" class="alpheios-wordlist-language__worditem">
+        <div class="alpheios-worditem__data alpheios-worditem__icon" 
                 @click="changeImportant()">
                 <check-icon></check-icon>
+        </div>
+        <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon" 
+                @click="deleteItem()">
+                <delete-icon></delete-icon>
         </div>
         <div 
           class="alpheios-worditem__data alpheios-worditem__targetWord"
@@ -13,11 +17,13 @@
 </template>
 <script>
   import CheckIcon from '@/icons/check.svg';
+  import DeleteIcon from '@/icons/delete.svg';
 
   export default {
     name: 'WordItemPanel',
     components: {
-      checkIcon: CheckIcon
+      checkIcon: CheckIcon,
+      deleteIcon: DeleteIcon
     },
     props: {
       worditem: {
@@ -36,12 +42,15 @@
     },
     computed: {
       itemClasses () {
-        return { active: this.important }
+        // console.info('********************itemClasses', this.worditem.currentSession, this.worditem)
+        return { 
+          'alpheios-wordlist-language__worditem__active': this.important,
+          'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
+        }
       }
     },
     methods: {
       changeImportant () {
-        // this.worditem.important = !this.worditem.important
         this.$emit('changeImportant', this.worditem.ID, this.worditem.important)
         this.important = this.worditem.important
       },
@@ -50,6 +59,9 @@
       },
       selectWordItem () {
         this.worditem.selectWordItem()
+      },
+      deleteItem () {
+        this.$emit('deleteItem', this.worditem.ID)
       }
     }
   }
@@ -62,13 +74,17 @@
       padding: 2px 0;
   }
 
+  .alpheios-wordlist-language__worditem__current_session {
+    background: $alpheios-highlight-light-color;
+  }
+
   .alpheios-worditem__data {
       display: inline-block;
       vertical-align: middle;
   }
 
   .alpheios-wordlist-language__worditem {
-    .alpheios-worditem__important {
+    .alpheios-worditem__icon {
         width: 15px;
         height: 15px;
         text-align: center;
@@ -82,13 +98,23 @@
           display: inline-block;
           vertical-align: top;
         }
+
+        &.alpheios-worditem__delete_icon {
+          fill: $alpheios-headers-color;
+          stroke: $alpheios-headers-color;
+        }
     }
   }
 
- .active .alpheios-worditem__data {
+ .alpheios-wordlist-language__worditem__active .alpheios-worditem__data {
     fill: $alpheios-link-hover-color;
     stroke: $alpheios-link-hover-color;
     color: $alpheios-link-hover-color;
+
+    &.alpheios-worditem__delete_icon {
+      fill: $alpheios-headers-color;
+      stroke: $alpheios-headers-color;
+    }
   }
 
   .alpheios-worditem__targetWord {
@@ -97,6 +123,6 @@
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: 58%;
+      width: 48%;
   }
 </style>

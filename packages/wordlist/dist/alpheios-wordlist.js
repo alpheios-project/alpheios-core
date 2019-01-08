@@ -118,6 +118,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss& ***!
@@ -793,6 +804,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/icons/check.svg */ "./icons/check.svg");
 /* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_icons_check_svg__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/icons/delete.svg */ "./icons/delete.svg");
+/* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_icons_delete_svg__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -806,13 +819,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WordItemPanel',
   components: {
-    checkIcon: _icons_check_svg__WEBPACK_IMPORTED_MODULE_0___default.a
+    checkIcon: _icons_check_svg__WEBPACK_IMPORTED_MODULE_0___default.a,
+    deleteIcon: _icons_delete_svg__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: {
     worditem: {
@@ -831,12 +850,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     itemClasses () {
-      return { active: this.important }
+      // console.info('********************itemClasses', this.worditem.currentSession, this.worditem)
+      return { 
+        'alpheios-wordlist-language__worditem__active': this.important,
+        'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
+      }
     }
   },
   methods: {
     changeImportant () {
-      // this.worditem.important = !this.worditem.important
       this.$emit('changeImportant', this.worditem.ID, this.worditem.important)
       this.important = this.worditem.important
     },
@@ -845,6 +867,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectWordItem () {
       this.worditem.selectWordItem()
+    },
+    deleteItem () {
+      this.$emit('deleteItem', this.worditem.ID)
     }
   }
 });
@@ -866,9 +891,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/icons/check.svg */ "./icons/check.svg");
 /* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_icons_check_svg__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue-components/word-item-panel.vue */ "./vue-components/word-item-panel.vue");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/icons/delete.svg */ "./icons/delete.svg");
+/* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_icons_delete_svg__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-item-panel.vue */ "./vue-components/word-item-panel.vue");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__);
 //
 //
 //
@@ -895,6 +922,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -906,7 +940,8 @@ __webpack_require__.r(__webpack_exports__);
   name: 'WordListPanel',
   components: {
     checkIcon: _icons_check_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
-    wordItemPanel: _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    deleteIcon: _icons_delete_svg__WEBPACK_IMPORTED_MODULE_3___default.a,
+    wordItemPanel: _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     alphTooltip: _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
@@ -923,9 +958,14 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  data () {
+    return {
+      reloadList: 1
+    }
+  },
   computed: {
     wordItems () {
-      return this.updated ? this.wordlist.values : []
+      return this.updated && this.reloadList ? this.wordlist.values : []
     },
     languageName () {
       let languageNames = new Map([
@@ -955,6 +995,14 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.wordlist.makeImportantByID(ID)
       }
+    },
+    deleteItem (ID) {
+      this.wordlist.removeWordItemByID(ID)
+      this.reloadList = this.reloadList + 1
+    },
+    deleteAll () {
+      this.wordlist.removeAllWordItems()
+      this.reloadList = this.reloadList + 1
     }
   }
 });
@@ -978,6 +1026,8 @@ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__P
 /* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
 var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
 /* harmony import */ var _vue_components_word_language_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-language-panel.vue */ "./vue-components/word-language-panel.vue");
+//
+//
 //
 //
 //
@@ -1018,7 +1068,7 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__P
         .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_1__["default"].en_US)
     },
     wordLists () {
-      return this.wordlistC.wordLists
+      return this.updated ? this.wordlistC.wordLists : []
     }
   },
   methods: {
@@ -1085,40 +1135,64 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { class: _vm.itemClasses }, [
-    _c(
-      "div",
-      {
-        staticClass: "alpheios-worditem__data alpheios-worditem__important",
-        on: {
-          click: function($event) {
-            _vm.changeImportant()
+  return _c(
+    "div",
+    {
+      staticClass: "alpheios-wordlist-language__worditem",
+      class: _vm.itemClasses
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "alpheios-worditem__data alpheios-worditem__icon",
+          on: {
+            click: function($event) {
+              _vm.changeImportant()
+            }
           }
-        }
-      },
-      [_c("check-icon")],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "alpheios-worditem__data alpheios-worditem__targetWord",
-        on: {
-          click: function($event) {
-            _vm.selectWordItem()
+        },
+        [_c("check-icon")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon",
+          on: {
+            click: function($event) {
+              _vm.deleteItem()
+            }
           }
-        }
-      },
-      [_vm._v(_vm._s(_vm.worditem.targetWord))]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "alpheios-worditem__data alpheios-worditem__lemmasList" },
-      [_vm._v(_vm._s(_vm.worditem.lemmasList))]
-    )
-  ])
+        },
+        [_c("delete-icon")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "alpheios-worditem__data alpheios-worditem__targetWord",
+          on: {
+            click: function($event) {
+              _vm.selectWordItem()
+            }
+          }
+        },
+        [_vm._v(_vm._s(_vm.worditem.targetWord))]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "alpheios-worditem__data alpheios-worditem__lemmasList"
+        },
+        [_vm._v(_vm._s(_vm.worditem.lemmasList))]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -1203,6 +1277,32 @@ var render = function() {
                 1
               )
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipDirection: "top-left",
+                tooltipText: _vm.messages.TOOLTIP_REMOVE_ALL
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "alpheios-wordlist-commands__item alpheios-wordlist-commands__item-remove-all",
+                  on: {
+                    click: function($event) {
+                      _vm.deleteAll()
+                    }
+                  }
+                },
+                [_c("delete-icon")],
+                1
+              )
+            ]
           )
         ],
         1
@@ -1211,14 +1311,14 @@ var render = function() {
       _vm._l(_vm.wordItems, function(wordItem) {
         return _c(
           "div",
-          {
-            key: wordItem.ID,
-            staticClass: "alpheios-wordlist-language__worditem"
-          },
+          { key: wordItem.ID },
           [
             _c("word-item-panel", {
               attrs: { worditem: wordItem },
-              on: { changeImportant: _vm.changeImportant }
+              on: {
+                changeImportant: _vm.changeImportant,
+                deleteItem: _vm.deleteItem
+              }
             })
           ],
           1
@@ -12531,8 +12631,10 @@ class UpgradeQueue {
 
   clearCurrentItem () {
     this.count = this.count - 1
+    console.info('*********************clearCurrentItem before', this.currentWord, this.targetWords)
     this.targetWords = this.targetWords.filter(item => item != this.currentWord)
     this.currentWord = null
+    console.info('*********************clearCurrentItem after', this.currentWord, this.targetWords)
 
     if (this.methods.length > 0) {
       this.methods[0].method(...this.methods[0].args)
@@ -12608,6 +12710,8 @@ class WordlistController {
   initLists () {
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.uploadListsFromDB.bind(this))
+      // this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.deleteWordItemFromDB.bind(this))
+      
     }
   }
 
@@ -12645,6 +12749,10 @@ class WordlistController {
     })
   }
 
+  deleteWordItemFromDB (event) {
+    const db = event.target.result
+    this.storageAdapter.delete(db, 'UserLists', ['userIDTest-lat-cepit'])
+  }
   /**
    * This method parses data from the database table (filtered by wordList)
    * and creates Homonym from saved object (it is looks like jsonObject)
@@ -12655,7 +12763,11 @@ class WordlistController {
     if (result && result.length > 0) {
       result.forEach(wordItemResult => {
         let homonymRes = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(wordItemResult.homonym)
+        // console.info('*******************parseResultToWordList', homonymRes)
         this.updateWordList({ homonym: homonymRes, important: wordItemResult.important }, false)
+        if (this.upgradeQueue) {
+          this.upgradeQueue.clearCurrentItem()
+        }
       })
     }
   }
@@ -12678,9 +12790,12 @@ class WordlistController {
       this.createWordList(languageID)
     }
     
+    console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
+
     if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
       this.upgradeQueue.addToQueue(wordItemData.homonym)
-      this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](wordItemData.homonym, wordItemData.important), saveToStorage, this.upgradeQueue)
+      console.info('*******************updateWordList 2', wordItemData.homonym)
+      this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](wordItemData.homonym, wordItemData.important, wordItemData.currentSession), saveToStorage, this.upgradeQueue)
       WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
     } else {
       this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
@@ -12700,16 +12815,25 @@ class WordlistController {
    * This method executes updateWordList with default saveToStorage flag = true
    */
   onHomonymReady (data) {
-    this.updateWordList({ homonym: data.homonym })
+    this.updateWordList({ homonym: data.homonym, currentSession: true })
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true 
    * (because definitions could come much later we need to resave homonym with definitions data to database)
-   * The same I will do later with lemma translations data
   */
   onDefinitionsReady (data) {
-    this.updateWordList({ homonym: data.homonym })
+    console.info('********************onDefinitionsReady', data)
+    this.updateWordList({ homonym: data.homonym, currentSession: true })
+  }
+
+  /**
+   * This method executes updateWordList with default saveToStorage flag = true 
+   * (because lemma translations could come much later we need to resave homonym with translations data to database)
+  */
+  onLemmaTranslationsReady (homonym) {
+    console.info('********************onLemmaTranslationsReady', homonym)
+    this.updateWordList({ homonym: homonym, currentSession: true })
   }
 }
 
@@ -12741,6 +12865,17 @@ WordlistController.evt = {
 /***/ (function(module, exports) {
 
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "C:\\_Irina\\_clients\\_Alpheios Project\\git\\wordlist\\src\\icons\\check.svg"};module.exports = { render: render, toString: toString };
+
+/***/ }),
+
+/***/ "./icons/delete.svg":
+/*!**************************!*\
+  !*** ./icons/delete.svg ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "C:\\_Irina\\_clients\\_Alpheios Project\\git\\wordlist\\src\\icons\\delete.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -13085,12 +13220,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class WordItem {
-  constructor (homonym, important = false) {
+  constructor (homonym, important = false, currentSession = false) {
     this.targetWord = homonym.targetWord
     this.languageID = homonym.languageID
     this.languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(homonym.languageID)
     this.homonym = homonym
     this.important = important
+    this.currentSession = currentSession
     this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
   }
 
@@ -13167,6 +13303,7 @@ class WordList {
     this.storageAdapter = storageAdapter
     this.items = {}
     this.wordItemsToSave = []
+    this.wordItemsToDelete = []
     this.createStorageID()
   }
 
@@ -13207,8 +13344,40 @@ class WordList {
   removeWordItemByWord (wordItem) {
     if (this.contains(wordItem)) { 
       let deleteID = this.getIDByTargetWord(wordItem)
+      this.wordItemsToDelete = [ this.storageID + '-' + this.items[deleteID].targetWord ]
       delete this.items[deleteID]
+      this.removeFromStorage()
     }
+  }
+
+  removeWordItemByID (ID) {
+    if (this.items[ID]) { 
+      this.wordItemsToDelete = [ this.storageID + '-' + this.items[ID].targetWord ]
+      delete this.items[ID]
+      this.removeFromStorage()
+    }
+  }
+
+  removeAllWordItems () {
+    this.wordItemsToDelete = this.values.map(item => this.storageID + '-' + item.targetWord)
+    let IDsforDelete = this.values.map(item => item.ID)
+    IDsforDelete.forEach(ID => {
+      delete this.items[ID]
+    })
+    this.removeFromStorage()
+  }
+
+  removeFromStorage () {
+    if (this.storageAdapter.available) {
+      this.storageAdapter.openDatabase(null, this.deleteStorageTransaction.bind(this))
+    }
+  }
+
+  deleteStorageTransaction (event) {
+    const db = event.target.result
+    let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
+    this.storageAdapter.delete(db, 'UserLists', this.wordItemsToDelete.slice(), successCallBackF)
+    this.wordItemsToDelete = []
   }
 
   /**
@@ -13314,10 +13483,10 @@ module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: TOOLTIP_ALL_IMPORTANT, TOOLTIP_NO_IMPORTANT, default */
+/*! exports provided: TOOLTIP_ALL_IMPORTANT, TOOLTIP_NO_IMPORTANT, TOOLTIP_REMOVE_ALL, default */
 /***/ (function(module) {
 
-module.exports = {"TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordListPanel"},"TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove all words inside language block important","component":"WordListPanel"}};
+module.exports = {"TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"}};
 
 /***/ }),
 
@@ -13405,7 +13574,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
   /**
    * This method create a request for put data to the selected ObjectStore
    * and executes onComplete callback on success
-   * It creates transaction with readwrire access (onComplete callback would be executes on transaction finalize)
+   * It creates transaction with readwrite access (onComplete callback would be executes on transaction finalize)
    * And then it goes through data Array and executes put request (put allows adding data and rewriting existing data by keyValue)
    */
   set (db, objectStoreName, data, onCompleteF) {
@@ -13492,6 +13661,36 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     requestOpenCursor.onerror = (event) => {
       console.info('****************cursor with condition - some error', event.target)
     }
+  }
+
+  /**
+   * This method create a request for delete data from the selected ObjectStore
+   * and executes onComplete callback on success
+   * It creates transaction with readwrire access (onComplete callback would be executes on transaction finalize)
+   * And then it goes through data Array and executes put request (put allows adding data and rewriting existing data by keyValue)
+   */
+  delete (db, objectStoreName, data, onCompleteF) {
+    console.info('*****************delete method', data)
+    const transaction = db.transaction([objectStoreName], 'readwrite')
+    transaction.oncomplete = (event) => {
+      console.info('**************delete data successfull')
+      if (onCompleteF) {
+        onCompleteF()
+      }
+    }
+    transaction.onerror = (event) => {
+        console.info('**************testData onerror')
+    }
+    const objectStore = transaction.objectStore(objectStoreName);
+    data.forEach(dataItem => {
+      const requestPut = objectStore.delete(dataItem)
+      requestPut.onsuccess = (event) => {
+        console.info('****************worditem was deleted', event.target.result)
+      }
+      requestPut.onerror = (event) => {
+        console.info('****************wordlist error with deleting data', event.target)
+      }
+    })
   }
 }
 
@@ -13762,7 +13961,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=template&id=70b3b72e& */ "./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&");
 /* harmony import */ var _word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=script&lang=js& */ "./vue-components/word-language-panel.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -13770,7 +13971,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["render"],
   _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -13799,6 +14000,22 @@ component.options.__file = "vue-components/word-language-panel.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-language-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-language-panel.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!**********************************************************************************!*\
+  !*** ./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-language-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

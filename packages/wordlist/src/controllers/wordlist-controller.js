@@ -45,6 +45,8 @@ export default class WordlistController {
   initLists () {
     if (this.storageAdapter.available) {
       this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.uploadListsFromDB.bind(this))
+      // this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.deleteWordItemFromDB.bind(this))
+      
     }
   }
 
@@ -82,6 +84,10 @@ export default class WordlistController {
     })
   }
 
+  deleteWordItemFromDB (event) {
+    const db = event.target.result
+    this.storageAdapter.delete(db, 'UserLists', ['userIDTest-lat-cepit'])
+  }
   /**
    * This method parses data from the database table (filtered by wordList)
    * and creates Homonym from saved object (it is looks like jsonObject)
@@ -92,7 +98,11 @@ export default class WordlistController {
     if (result && result.length > 0) {
       result.forEach(wordItemResult => {
         let homonymRes = Homonym.readObject(wordItemResult.homonym)
+        // console.info('*******************parseResultToWordList', homonymRes)
         this.updateWordList({ homonym: homonymRes, important: wordItemResult.important }, false)
+        if (this.upgradeQueue) {
+          this.upgradeQueue.clearCurrentItem()
+        }
       })
     }
   }
@@ -115,9 +125,12 @@ export default class WordlistController {
       this.createWordList(languageID)
     }
     
+    console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
+
     if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
       this.upgradeQueue.addToQueue(wordItemData.homonym)
-      this.wordLists[languageCode].push(new WordItem(wordItemData.homonym, wordItemData.important), saveToStorage, this.upgradeQueue)
+      console.info('*******************updateWordList 2', wordItemData.homonym)
+      this.wordLists[languageCode].push(new WordItem(wordItemData.homonym, wordItemData.important, wordItemData.currentSession), saveToStorage, this.upgradeQueue)
       WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
     } else {
       this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
@@ -137,16 +150,25 @@ export default class WordlistController {
    * This method executes updateWordList with default saveToStorage flag = true
    */
   onHomonymReady (data) {
-    this.updateWordList({ homonym: data.homonym })
+    this.updateWordList({ homonym: data.homonym, currentSession: true })
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true 
    * (because definitions could come much later we need to resave homonym with definitions data to database)
-   * The same I will do later with lemma translations data
   */
   onDefinitionsReady (data) {
-    this.updateWordList({ homonym: data.homonym })
+    console.info('********************onDefinitionsReady', data)
+    this.updateWordList({ homonym: data.homonym, currentSession: true })
+  }
+
+  /**
+   * This method executes updateWordList with default saveToStorage flag = true 
+   * (because lemma translations could come much later we need to resave homonym with translations data to database)
+  */
+  onLemmaTranslationsReady (homonym) {
+    console.info('********************onLemmaTranslationsReady', homonym)
+    this.updateWordList({ homonym: homonym, currentSession: true })
   }
 }
 

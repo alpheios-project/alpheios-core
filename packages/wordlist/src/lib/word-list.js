@@ -7,6 +7,7 @@ export default class WordList {
     this.storageAdapter = storageAdapter
     this.items = {}
     this.wordItemsToSave = []
+    this.wordItemsToDelete = []
     this.createStorageID()
   }
 
@@ -47,8 +48,40 @@ export default class WordList {
   removeWordItemByWord (wordItem) {
     if (this.contains(wordItem)) { 
       let deleteID = this.getIDByTargetWord(wordItem)
+      this.wordItemsToDelete = [ this.storageID + '-' + this.items[deleteID].targetWord ]
       delete this.items[deleteID]
+      this.removeFromStorage()
     }
+  }
+
+  removeWordItemByID (ID) {
+    if (this.items[ID]) { 
+      this.wordItemsToDelete = [ this.storageID + '-' + this.items[ID].targetWord ]
+      delete this.items[ID]
+      this.removeFromStorage()
+    }
+  }
+
+  removeAllWordItems () {
+    this.wordItemsToDelete = this.values.map(item => this.storageID + '-' + item.targetWord)
+    let IDsforDelete = this.values.map(item => item.ID)
+    IDsforDelete.forEach(ID => {
+      delete this.items[ID]
+    })
+    this.removeFromStorage()
+  }
+
+  removeFromStorage () {
+    if (this.storageAdapter.available) {
+      this.storageAdapter.openDatabase(null, this.deleteStorageTransaction.bind(this))
+    }
+  }
+
+  deleteStorageTransaction (event) {
+    const db = event.target.result
+    let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
+    this.storageAdapter.delete(db, 'UserLists', this.wordItemsToDelete.slice(), successCallBackF)
+    this.wordItemsToDelete = []
   }
 
   /**

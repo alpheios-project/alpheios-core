@@ -43,7 +43,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
   /**
    * This method create a request for put data to the selected ObjectStore
    * and executes onComplete callback on success
-   * It creates transaction with readwrire access (onComplete callback would be executes on transaction finalize)
+   * It creates transaction with readwrite access (onComplete callback would be executes on transaction finalize)
    * And then it goes through data Array and executes put request (put allows adding data and rewriting existing data by keyValue)
    */
   set (db, objectStoreName, data, onCompleteF) {
@@ -130,5 +130,35 @@ export default class IndexedDBAdapter extends StorageAdapter {
     requestOpenCursor.onerror = (event) => {
       console.info('****************cursor with condition - some error', event.target)
     }
+  }
+
+  /**
+   * This method create a request for delete data from the selected ObjectStore
+   * and executes onComplete callback on success
+   * It creates transaction with readwrire access (onComplete callback would be executes on transaction finalize)
+   * And then it goes through data Array and executes put request (put allows adding data and rewriting existing data by keyValue)
+   */
+  delete (db, objectStoreName, data, onCompleteF) {
+    console.info('*****************delete method', data)
+    const transaction = db.transaction([objectStoreName], 'readwrite')
+    transaction.oncomplete = (event) => {
+      console.info('**************delete data successfull')
+      if (onCompleteF) {
+        onCompleteF()
+      }
+    }
+    transaction.onerror = (event) => {
+        console.info('**************testData onerror')
+    }
+    const objectStore = transaction.objectStore(objectStoreName);
+    data.forEach(dataItem => {
+      const requestPut = objectStore.delete(dataItem)
+      requestPut.onsuccess = (event) => {
+        console.info('****************worditem was deleted', event.target.result)
+      }
+      requestPut.onerror = (event) => {
+        console.info('****************wordlist error with deleting data', event.target)
+      }
+    })
   }
 }

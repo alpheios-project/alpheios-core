@@ -3,12 +3,13 @@ import { Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import WordlistController from '../controllers/wordlist-controller';
 
 export default class WordItem {
-  constructor (homonym, important = false) {
+  constructor (homonym, important = false, currentSession = false) {
     this.targetWord = homonym.targetWord
     this.languageID = homonym.languageID
     this.languageCode = LMF.getLanguageCodeFromId(homonym.languageID)
     this.homonym = homonym
     this.important = important
+    this.currentSession = currentSession
     this.ID = uuidv4()
   }
 

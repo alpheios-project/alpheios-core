@@ -2,11 +2,17 @@
   "TOOLTIP_ALL_IMPORTANT": {
     "message": "Make all important ",
     "description": "Make all words inside language block important",
-    "component": "WordListPanel"
+    "component": "WordLanguagePanel"
   },
   "TOOLTIP_NO_IMPORTANT": {
     "message": "Remove all important ",
-    "description": "Remove all words inside language block important",
-    "component": "WordListPanel"
+    "description": "Remove important mark from all words inside language block",
+    "component": "WordLanguagePanel"
+  },
+  "TOOLTIP_REMOVE_ALL": {
+    "message": "Remove all word items",
+    "description": "Remove all words inside language block",
+    "component": "WordLanguagePanel"
   }
+  
 }
