@@ -22,7 +22,9 @@ export default class WordItem {
   }
 
   get lemmasList () {
-    return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).join(', ')
+    return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => { 
+      return self.indexOf(value) === index
+    }).join(', ')
   }
 
   static uploadFromJSON (jsonObj) {
