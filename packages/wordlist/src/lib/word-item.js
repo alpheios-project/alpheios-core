@@ -3,13 +3,14 @@ import { Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import WordlistController from '../controllers/wordlist-controller';
 
 export default class WordItem {
-  constructor (homonym, important = false, currentSession = false) {
-    this.targetWord = homonym.targetWord
-    this.languageID = homonym.languageID
-    this.languageCode = LMF.getLanguageCodeFromId(homonym.languageID)
-    this.homonym = homonym
-    this.important = important
-    this.currentSession = currentSession
+  constructor (data) {
+    this.targetWord = data.homonym.targetWord
+    this.languageID = data.homonym.languageID
+    this.languageCode = LMF.getLanguageCodeFromId(data.homonym.languageID)
+    this.homonym = data.homonym
+    this.important = data.important || false
+    this.currentSession = data.currentSession || false
+    this.textQuoteSelector = data.textSelector ? data.textSelector.textQuoteSelector : {}
     this.ID = uuidv4()
   }
 
@@ -37,6 +38,7 @@ export default class WordItem {
    * it uses convertToJSON methods for each piece of the data - I will refractor all of them into Homonym methods later
    */
   convertToStorage () {
+    // TODO Merging or create a separate structures
     let resultItem = { lexemes: [] }
     for (let lexeme of this.homonym.lexemes) {
       let resInflections = []
@@ -60,9 +62,10 @@ export default class WordItem {
         source: window.location.href,
         selector: {
           type: 'TextQuoteSelector',
-          exact: this.targetWord,
-          prefix: '',
-          suffix: ''
+          exact: this.textQuoteSelector.text,
+          prefix: this.textQuoteSelector.prefix,
+          suffix: this.textQuoteSelector.suffix,
+          contextHTML: this.textQuoteSelector.contextHTML
         }
       },
       body: {

@@ -125,12 +125,12 @@ export default class WordlistController {
       this.createWordList(languageID)
     }
     
-    console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
+    // console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
 
     if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
       this.upgradeQueue.addToQueue(wordItemData.homonym)
-      console.info('*******************updateWordList 2', wordItemData.homonym)
-      this.wordLists[languageCode].push(new WordItem(wordItemData.homonym, wordItemData.important, wordItemData.currentSession), saveToStorage, this.upgradeQueue)
+      // console.info('*******************updateWordList 2', wordItemData.homonym)
+      this.wordLists[languageCode].push(new WordItem(wordItemData), saveToStorage, this.upgradeQueue)
       WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
     } else {
       this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
@@ -150,7 +150,8 @@ export default class WordlistController {
    * This method executes updateWordList with default saveToStorage flag = true
    */
   onHomonymReady (data) {
-    this.updateWordList({ homonym: data.homonym, currentSession: true })
+    console.info('********************onHomonymReady', data.textSelector)
+    this.updateWordList({ homonym: data.homonym, currentSession: true, textSelector: data.textSelector })
   }
 
   /**
@@ -186,5 +187,6 @@ WordlistController.evt = {
    *  {Homonym} a Homonym that should be uploaded to popup/panel
    * }
    */
-  WORDITEM_SELECTED: new PsEvent('WordItem selected', WordlistController)
+  WORDITEM_SELECTED: new PsEvent('WordItem selected', WordlistController),
+  
 }

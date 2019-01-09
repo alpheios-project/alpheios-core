@@ -29,10 +29,10 @@ export default class UpgradeQueue {
 
   clearCurrentItem () {
     this.count = this.count - 1
-    console.info('*********************clearCurrentItem before', this.currentWord, this.targetWords)
+    // console.info('*********************clearCurrentItem before', this.currentWord, this.targetWords)
     this.targetWords = this.targetWords.filter(item => item != this.currentWord)
     this.currentWord = null
-    console.info('*********************clearCurrentItem after', this.currentWord, this.targetWords)
+    // console.info('*********************clearCurrentItem after', this.currentWord, this.targetWords)
 
     if (this.methods.length > 0) {
       this.methods[0].method(...this.methods[0].args)

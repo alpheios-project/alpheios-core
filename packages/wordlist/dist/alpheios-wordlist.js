@@ -12631,10 +12631,10 @@ class UpgradeQueue {
 
   clearCurrentItem () {
     this.count = this.count - 1
-    console.info('*********************clearCurrentItem before', this.currentWord, this.targetWords)
+    // console.info('*********************clearCurrentItem before', this.currentWord, this.targetWords)
     this.targetWords = this.targetWords.filter(item => item != this.currentWord)
     this.currentWord = null
-    console.info('*********************clearCurrentItem after', this.currentWord, this.targetWords)
+    // console.info('*********************clearCurrentItem after', this.currentWord, this.targetWords)
 
     if (this.methods.length > 0) {
       this.methods[0].method(...this.methods[0].args)
@@ -12790,12 +12790,12 @@ class WordlistController {
       this.createWordList(languageID)
     }
     
-    console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
+    // console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
 
     if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
       this.upgradeQueue.addToQueue(wordItemData.homonym)
-      console.info('*******************updateWordList 2', wordItemData.homonym)
-      this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](wordItemData.homonym, wordItemData.important, wordItemData.currentSession), saveToStorage, this.upgradeQueue)
+      // console.info('*******************updateWordList 2', wordItemData.homonym)
+      this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](wordItemData), saveToStorage, this.upgradeQueue)
       WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
     } else {
       this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
@@ -12815,7 +12815,8 @@ class WordlistController {
    * This method executes updateWordList with default saveToStorage flag = true
    */
   onHomonymReady (data) {
-    this.updateWordList({ homonym: data.homonym, currentSession: true })
+    console.info('********************onHomonymReady', data.textSelector)
+    this.updateWordList({ homonym: data.homonym, currentSession: true, textSelector: data.textSelector })
   }
 
   /**
@@ -12851,7 +12852,8 @@ WordlistController.evt = {
    *  {Homonym} a Homonym that should be uploaded to popup/panel
    * }
    */
-  WORDITEM_SELECTED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem selected', WordlistController)
+  WORDITEM_SELECTED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem selected', WordlistController),
+  
 }
 
 
@@ -13220,13 +13222,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class WordItem {
-  constructor (homonym, important = false, currentSession = false) {
-    this.targetWord = homonym.targetWord
-    this.languageID = homonym.languageID
-    this.languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(homonym.languageID)
-    this.homonym = homonym
-    this.important = important
-    this.currentSession = currentSession
+  constructor (data) {
+    this.targetWord = data.homonym.targetWord
+    this.languageID = data.homonym.languageID
+    this.languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(data.homonym.languageID)
+    this.homonym = data.homonym
+    this.important = data.important || false
+    this.currentSession = data.currentSession || false
+    this.textQuoteSelector = data.textSelector ? data.textSelector.textQuoteSelector : {}
     this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
   }
 
@@ -13254,6 +13257,7 @@ class WordItem {
    * it uses convertToJSON methods for each piece of the data - I will refractor all of them into Homonym methods later
    */
   convertToStorage () {
+    // TODO Merging or create a separate structures
     let resultItem = { lexemes: [] }
     for (let lexeme of this.homonym.lexemes) {
       let resInflections = []
@@ -13277,9 +13281,10 @@ class WordItem {
         source: window.location.href,
         selector: {
           type: 'TextQuoteSelector',
-          exact: this.targetWord,
-          prefix: '',
-          suffix: ''
+          exact: this.textQuoteSelector.text,
+          prefix: this.textQuoteSelector.prefix,
+          suffix: this.textQuoteSelector.suffix,
+          contextHTML: this.textQuoteSelector.contextHTML
         }
       },
       body: {
