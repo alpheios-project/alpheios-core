@@ -10144,7 +10144,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function () {
-    console.log(`Lookup created`)
     if (this.uiController) {
       this.options = this.uiController.contentOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
       this.resourceOptions = this.uiController.resourceOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
@@ -12402,6 +12401,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/modules/data/l10n/l10n-api.js */ "./modules/data/l10n/l10n-api.js");
 //
 //
 //
@@ -12442,6 +12442,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12457,6 +12459,10 @@ __webpack_require__.r(__webpack_exports__);
       hasUserInfo: false, // Whether user info data is available
       userInfo: null // Will hold a user info object when user data is retrieved
     }
+  },
+
+  computed: {
+    getLocale: _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__["default"].getters.getLocale
   },
 
   methods: {
@@ -12511,13 +12517,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
+    setLocale: _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__["default"].mutations.setLocale,
+    msg: _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__["default"].getterMethods.getMessage,
+
     /**
      * A method for demonstration of language switching.
      * TODO: Remove in production builds.
      */
     localeToggle: function () {
-      const newLocale = (this.$l10nGetLocale() === 'en-GB') ? 'en-US' : 'en-GB'
-      this.$l10nSetLocale(newLocale)
+      const newLocale = (this.getLocale === 'en-GB') ? 'en-US' : 'en-GB'
+      this.setLocale(newLocale)
     }
   },
 
@@ -18749,6 +18758,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("p", [_vm._v("Locale is: " + _vm._s(_vm.getLocale))]),
+    _vm._v(" "),
     _c(
       "button",
       {
@@ -18775,9 +18786,7 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " +
-            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_BTN_LABEL")) +
-            "\n    "
+          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_BTN_LABEL")) + "\n    "
         )
       ]
     ),
@@ -18798,9 +18807,7 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " +
-            _vm._s(_vm.$l10nMsg("AUTH_LOG_OUT_BTN_LABEL")) +
-            "\n    "
+          "\n        " + _vm._s(_vm.msg("AUTH_LOG_OUT_BTN_LABEL")) + "\n    "
         )
       ]
     ),
@@ -18820,9 +18827,7 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " +
-            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_PROGRESS_MSG")) +
-            "\n    "
+          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_PROGRESS_MSG")) + "\n    "
         )
       ]
     ),
@@ -18842,9 +18847,7 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " +
-            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_SUCCESS_MSG")) +
-            "\n    "
+          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_SUCCESS_MSG")) + "\n    "
         )
       ]
     ),
@@ -18865,7 +18868,7 @@ var render = function() {
       [
         _vm._v(
           "\n        " +
-            _vm._s(_vm.$l10nMsg("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
+            _vm._s(_vm.msg("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
             "\n    "
         )
       ]
@@ -18880,7 +18883,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.$l10nMsg("AUTH_PROFILE_NICKNAME_LABEL")) +
+                    _vm._s(_vm.msg("AUTH_PROFILE_NICKNAME_LABEL")) +
                     ":\n            "
                 )
               ]
@@ -18908,7 +18911,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.$l10nMsg("AUTH_PROFILE_NAME_LABEL")) +
+                    _vm._s(_vm.msg("AUTH_PROFILE_NAME_LABEL")) +
                     ":\n            "
                 )
               ]
@@ -31546,7 +31549,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue-components/panel.vue */ "./vue-components/panel.vue");
-/* harmony import */ var _modules_data_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/modules/data/l10n/l10n.js */ "./modules/data/l10n/l10n.js");
+/* harmony import */ var _modules_data_l10n_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/modules/data/l10n/l10n-module.js */ "./modules/data/l10n/l10n-module.js");
 /* harmony import */ var _modules_ui_popup_popup_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/modules/ui/popup/popup.js */ "./modules/ui/popup/popup.js");
 /* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue-components/embed-lib-warning.vue */ "./vue-components/embed-lib-warning.vue");
 /* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
@@ -31693,7 +31696,7 @@ class UIController {
     let uiController = new UIController(state, options)
 
     // Register modules
-    uiController.registerDataModule(_modules_data_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_6__["default"])
+    uiController.registerDataModule(_modules_data_l10n_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__["default"])
 
     // Creates on configures an event listener
     let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_30__["default"]()
@@ -32447,7 +32450,7 @@ class UIController {
         }
       }
     }) */
-    this.popup = new _modules_ui_popup_popup_js__WEBPACK_IMPORTED_MODULE_7__["default"](this)
+    this.popup = new _modules_ui_popup_popup_js__WEBPACK_IMPORTED_MODULE_7__["default"](this.store, this)
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -37094,10 +37097,145 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 
 /***/ }),
 
-/***/ "./modules/data/l10n/l10n.js":
-/*!***********************************!*\
-  !*** ./modules/data/l10n/l10n.js ***!
-  \***********************************/
+/***/ "./modules/data/l10n/l10n-api.js":
+/*!***************************************!*\
+  !*** ./modules/data/l10n/l10n-api.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * This is a public API of a L10n data module.
+ * It lists all public methods that can be used to access module's data
+ * or to perform any actions that are available on a module.
+ * A data consumer (usually a UI component) should import a modules API
+ * before using it and map it to its computed properties or methods objects.
+ *
+ * Example:
+ *    `import L10nAPI from 'l10n-api.js'`
+ *
+ * ```
+ * methods: {
+ *    ...
+ *    message: L10nAPI.getterMethods.getMessage
+ *    ...
+ * }
+ * ```
+ * This maps `getMessage` method from a `getterMethods` API group
+ * to a `message` method of a component.
+ *
+ * Gathering all public API of a module in one file provides a clear picture of what
+ * methods are exposed by a module.
+ * It also allows to analyze what data consumers are using this API by tracking
+ * API import statements within the code.
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /**
+   * Getters section groups methods for module data access.
+   * All these methods has no parameters.
+   * They should be mounted to the `computed` object of the UI component.
+   *
+   * Example:
+   * ```
+   * computed: {
+   *    ...
+   *    internalMethodName: L10nAPI.getters.apiMethod
+   *    ...
+   * }
+   * ```
+   *
+   * Getters with parameters can also be listed here. In that case they should be defined as:
+   * `getMessage: function () { return this.$store.getters['l10n/getMessage'] }`
+   * However, a requirement that hey need to have no parameters forces them to return a function that will
+   * take some parameters instead (@see {@link https://vuex.vuejs.org/guide/getters.html#method-style-access}).
+   * This prevents from describing their "real" parameters here as those are hidden.
+   * Functions with parameters are function-like, but, if defined like above,
+   * should be mounted as computed props. This is confusing.
+   * That's why getters with parameters are separated into a `GetterMethods` group,
+   * where they are defined as more "normal" functions.
+   */
+  getters: {
+    /**
+     * Returns a current locale of L10n.
+     * @return {string} - A current locale
+     */
+    getLocale: function () {
+      return this.$store.state.l10n.selectedLocale
+    }
+  },
+
+  /**
+   * Getters with parameters behave like methods.
+   * They should be mounted to the `mounted` object of the UI component.
+   * Example:
+   * ```
+   * methods: {
+   *    ...
+   *    internalMethodName: L10nAPI.getterMethods.apiMethod
+   *    ...
+   * }
+   * ```
+   */
+  getterMethods: {
+    /**
+     * Returns a translated string for its message ID given.
+     * @param {string} messageID - A message ID of a string to retrieve.
+     * @return {string} - A formatted translated text of a string.
+     */
+    getMessage: function (messageID) {
+      return this.$store.getters['l10n/getMessage'](messageID)
+    }
+  },
+
+  /**
+   * Mutations are synchronous methods that save data to the store.
+   * They should be mounted to the `mounted` object of the UI component.
+   * Example:
+   * ```
+   * methods: {
+   *    ...
+   *    internalMethodName: L10nAPI.mutations.apiMethod
+   *    ...
+   * }
+   * ```
+   */
+  mutations: {
+    /**
+     * Sets locale of L10n to a new value.
+     * @param newLocale
+     */
+    setLocale: function (newLocale) {
+      if (this.$store.state.selectedLocale !== newLocale) {
+        return this.$store.commit('l10n/setLocale', newLocale)
+      }
+    }
+  },
+
+  /**
+   * Actions are asynchronous methods that save data to the store.
+   * They should be mounted to the `mounted` object of the UI component.
+   * Example:
+   * ```
+   * methods: {
+   *    ...
+   *    internalMethodName: L10nAPI.actions.apiMethod
+   *    ...
+   * }
+   * ```
+   */
+  actions: {}
+});
+
+
+/***/ }),
+
+/***/ "./modules/data/l10n/l10n-module.js":
+/*!******************************************!*\
+  !*** ./modules/data/l10n/l10n-module.js ***!
+  \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37105,17 +37243,13 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return L10nModule; });
 /* harmony import */ var _modules_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/modules/module.js */ "./modules/module.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
 
-
- // Vue in a runtime + compiler configuration
 
 
 
@@ -37124,12 +37258,10 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__P
 class L10nModule extends _modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor () {
     super('l10n')
-    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_2__["default"]()
-      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
-      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_GB)
-      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
-
-    this.name = 'l10n'
+    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
+      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
+      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_GB)
+      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
 
     this.store = {
       // All stores of modules are namespaced
@@ -37140,10 +37272,6 @@ class L10nModule extends _modules_module_js__WEBPACK_IMPORTED_MODULE_0__["defaul
       },
       getters: {
         // For arrow functions `this` will point to the class instance, not to the store
-        getLocale: (state) => () => {
-          return state.selectedLocale
-        },
-
         getMessage: () => (messageID) => {
           return this.l10n.bundle.get(messageID)
         }
@@ -37153,63 +37281,8 @@ class L10nModule extends _modules_module_js__WEBPACK_IMPORTED_MODULE_0__["defaul
         setLocale: (state, newLocale) => {
           this.l10n.setLocale(newLocale)
           state.selectedLocale = this.l10n.selectedLocale
-          state.messages = this.l10n.messages
         }
       }
-    }
-
-    /**
-     * This is required to install methods listed in the `install()` globally.
-     * If module registers no global methods, this step is not required.
-     */
-    vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(L10nModule)
-  }
-}
-
-/**
- * Because all modules are namespaced, their getters are accessed as:
- *    this.$store.getters[moduleName/getterName]()
- * This can be tedious.
- * To avoid this, we can either wrap them by computed props or methods
- * of a component that uses them (if those getters will not be used by every component)
- * or they can be installed globally via a Vue plugin (if those getters are expected to be used
- * in every component, such as getters for string translation)
- *
- * `install()` function contains a list of functions that will be installed globally.
- * By Vue.js convention, their names start with a dollar sign.
- * We also prepend their names with a module name to avoid name collisions.
- * Globally installed functions can be called from any Vue component as:
- *     this.$moduleMethodName(params) (e.g. this.$l10nMsg(messageID))
- *
- * A set of functions within `install()` defines a public API of a module.
- * @param Vue
- * @param options
- */
-L10nModule.install = function (Vue, options) {
-  /**
-   * Returns a translated string for its message ID given.
-   * @param {string} messageID - A message ID of a string to retrieve.
-   * @return {string} - A formatted translated text of a string.
-   */
-  Vue.prototype.$l10nMsg = function (messageID) {
-    return this.$store.getters['l10n/getMessage'](messageID)
-  }
-
-  /**
-   * Returns a current locale of L10n.
-   * @return {string} - A current locale
-   */
-  Vue.prototype.$l10nGetLocale = function () {
-    return this.$store.getters['l10n/getLocale']()
-  }
-
-  /**
-   * Sets locale of L10n to a new value.
-   * @param newLocale
-   */
-  Vue.prototype.$l10nSetLocale = function (newLocale) {
-    if (this.$store.state.selectedLocale !== newLocale) {
-      return this.$store.commit('l10n/setLocale', newLocale)
     }
   }
 }
@@ -37270,11 +37343,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class PopupModule {
-  constructor (uiController) {
-    console.log(`Popup created`)
+  constructor (store, uiController) {
     this._uiController = uiController
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       el: `#${this._uiController.options.template.popupId}`,
+      store: store,
       components: {
         popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
       },

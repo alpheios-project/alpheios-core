@@ -3,10 +3,11 @@ import Popup from '@/vue-components/popup.vue'
 import { getLanguageName } from '@/lib/utility/language-names.js'
 
 export default class PopupModule {
-  constructor (uiController) {
+  constructor (store, uiController) {
     this._uiController = uiController
     this.vi = new Vue({
       el: `#${this._uiController.options.template.popupId}`,
+      store: store,
       components: {
         popup: Popup
       },

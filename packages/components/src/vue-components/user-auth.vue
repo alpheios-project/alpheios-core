@@ -1,27 +1,28 @@
 <template>
     <div>
+        <p>Locale is: {{ getLocale }}</p>
         <button class="uk-button uk-button-primary" style="text-align: right;" @click="localeToggle">
             Toggle Locale
         </button>
         <button v-show="!isLoggedIn" class="uk-button uk-button-primary" @click="logIn">
-            {{ $l10nMsg(`AUTH_LOG_IN_BTN_LABEL`) }}
+            {{ msg(`AUTH_LOG_IN_BTN_LABEL`) }}
         </button>
         <button v-show="isLoggedIn" class="uk-button uk-button-primary" @click="logOut">
-            {{ $l10nMsg(`AUTH_LOG_OUT_BTN_LABEL`) }}
+            {{ msg(`AUTH_LOG_OUT_BTN_LABEL`) }}
         </button>
         <div v-show="logInProgress" class="alpheios-user-auth__message-box">
-            {{ $l10nMsg(`AUTH_LOG_IN_PROGRESS_MSG`) }}
+            {{ msg(`AUTH_LOG_IN_PROGRESS_MSG`) }}
         </div>
         <div v-show="isLoggedIn" class="alpheios-user-auth__message-box">
-            {{ $l10nMsg(`AUTH_LOG_IN_SUCCESS_MSG`) }}
+            {{ msg(`AUTH_LOG_IN_SUCCESS_MSG`) }}
         </div>
         <div v-show="authenticationFailed" class="alpheios-user-auth__message-box">
-            {{ $l10nMsg(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
+            {{ msg(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
         </div>
         <div v-if="isLoggedIn && hasUserInfo" class="alpheios-user-auth__user-info-box">
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    {{ $l10nMsg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
+                    {{ msg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.nickname ? userInfo.nickname: `&mdash;` }}
@@ -29,7 +30,7 @@
             </div>
             <div class="alpheios-user-auth__user-info-item-box">
                 <div class="alpheios-user-auth__user-info-item-name">
-                    {{ $l10nMsg(`AUTH_PROFILE_NAME_LABEL`) }}:
+                    {{ msg(`AUTH_PROFILE_NAME_LABEL`) }}:
                 </div>
                 <div class="alpheios-user-auth__user-info-item-value">
                     {{ userInfo.name ? userInfo.name: `&mdash;` }}
@@ -39,6 +40,7 @@
     </div>
 </template>
 <script>
+import L10nAPI from '@/modules/data/l10n/l10n-api.js'
 
 export default {
   name: 'UserAuth',
@@ -53,6 +55,10 @@ export default {
       hasUserInfo: false, // Whether user info data is available
       userInfo: null // Will hold a user info object when user data is retrieved
     }
+  },
+
+  computed: {
+    getLocale: L10nAPI.getters.getLocale
   },
 
   methods: {
@@ -107,13 +113,16 @@ export default {
       }
     },
 
+    setLocale: L10nAPI.mutations.setLocale,
+    msg: L10nAPI.getterMethods.getMessage,
+
     /**
      * A method for demonstration of language switching.
      * TODO: Remove in production builds.
      */
     localeToggle: function () {
-      const newLocale = (this.$l10nGetLocale() === 'en-GB') ? 'en-US' : 'en-GB'
-      this.$l10nSetLocale(newLocale)
+      const newLocale = (this.getLocale === 'en-GB') ? 'en-US' : 'en-GB'
+      this.setLocale(newLocale)
     }
   },
 

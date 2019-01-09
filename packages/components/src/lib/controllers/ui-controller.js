@@ -12,7 +12,7 @@ import Panel from '@/vue-components/panel.vue'
 // import Popup from '@/vue-components/popup.vue'
 
 // Modules
-import L10nModule from '@/modules/data/l10n/l10n.js'
+import L10nModule from '@/modules/data/l10n/l10n-module.js'
 import PopupModule from '@/modules/ui/popup/popup.js'
 
 import EmbedLibWarning from '@/vue-components/embed-lib-warning.vue'
@@ -865,7 +865,7 @@ export default class UIController {
         }
       }
     }) */
-    this.popup = new PopupModule(this)
+    this.popup = new PopupModule(this.store, this)
 
     // Set initial values of components
     this.setRootComponentClasses()
