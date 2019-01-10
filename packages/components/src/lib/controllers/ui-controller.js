@@ -88,8 +88,8 @@ export default class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
-    this.store = null // Vuex store. A public API for data and UI module interactions.
-    this.registeredDataModules = [] // Data modules that are registered to be included into the store.
+    this.store = new Vuex.Store() // Vuex store. A public API for data and UI module interactions.
+    this.registeredDataModules = new Map() // Data modules that are registered to be included into the store.
 
     /**
      * If an event controller be used with an instance of a UI Controller,
@@ -253,7 +253,8 @@ export default class UIController {
    * @return {UIController} - A self reference for chaining.
    */
   registerDataModule (Module, ...options) {
-    this.registeredDataModules.push(new Module(...options))
+    const module = new Module(...options)
+    this.registeredDataModules.set(module.name, module)
     return this
   }
 
@@ -283,15 +284,16 @@ export default class UIController {
     await Promise.all(optionLoadPromises)
 
     // All options shall be loaded at this point. Can initialize Vue components that will use them
-    // Initialize the Vuex store, mount all registered modules into the store.
-    this.store = new Vuex.Store({
-      modules: Object.assign({}, ...this.registeredDataModules.map(module => ({ [module.name]: module.store })))
-    })
+    // Mount all registered modules into the store
+    this.registeredDataModules.forEach((module) => this.store.registerModule(module.name, module.store))
+    // Expose public API of all modules with `provide`
+    this.api = Object.assign({}, ...Array.from(this.registeredDataModules.values()).map(module => ({ [module.name]: module.api(this.store) })))
 
     // Initialize components
     this.panel = new Vue({
       el: `#${this.options.template.panelId}`,
       store: this.store, // Install store into the panel
+      provide: this.api, // Public API of the modules
       components: {
         panel: Panel
       },
@@ -1159,6 +1161,7 @@ export default class UIController {
   }
 
   updatePageAnnotationData (data) {
+    console.log(`Update page annotations`)
     this.panel.panelData.treebankComponentData.data.page = data.treebank.page || {}
   }
 
@@ -1404,6 +1407,7 @@ export default class UIController {
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
   updateAnnotations () {
+    console.log(`Update annotations called`)
     if (this.state.isActive() && this.state.uiIsActive()) {
       AnnotationQuery.create({
         document: document,
@@ -1480,6 +1484,7 @@ export default class UIController {
   }
 
   onAnnotationsAvailable (data) {
+    console.log(`Annotations becomes available`)
     this.updatePageAnnotationData(data.annotations)
   }
 }

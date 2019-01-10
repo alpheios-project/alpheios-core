@@ -12401,7 +12401,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/modules/data/l10n/l10n-api.js */ "./modules/data/l10n/l10n-api.js");
 //
 //
 //
@@ -12443,11 +12442,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UserAuth',
+  inject: ['l10n'], // Specify what modules are we going to use
   props: {
     auth: [Object, Function]
   },
@@ -12459,10 +12458,6 @@ __webpack_require__.r(__webpack_exports__);
       hasUserInfo: false, // Whether user info data is available
       userInfo: null // Will hold a user info object when user data is retrieved
     }
-  },
-
-  computed: {
-    getLocale: _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__["default"].getters.getLocale
   },
 
   methods: {
@@ -12517,16 +12512,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
-    setLocale: _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__["default"].mutations.setLocale,
-    msg: _modules_data_l10n_l10n_api_js__WEBPACK_IMPORTED_MODULE_0__["default"].getterMethods.getMessage,
-
     /**
      * A method for demonstration of language switching.
      * TODO: Remove in production builds.
      */
     localeToggle: function () {
-      const newLocale = (this.getLocale === 'en-GB') ? 'en-US' : 'en-GB'
-      this.setLocale(newLocale)
+      const newLocale = (this.l10n.getLocale() === 'en-GB') ? 'en-US' : 'en-GB'
+      this.l10n.setLocale(newLocale)
     }
   },
 
@@ -18758,7 +18750,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", [_vm._v("Locale is: " + _vm._s(_vm.getLocale))]),
+    _c("p", [_vm._v("Locale is: " + _vm._s(_vm.l10n.getLocale()))]),
     _vm._v(" "),
     _c(
       "button",
@@ -18786,7 +18778,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_BTN_LABEL")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_BTN_LABEL")) +
+            "\n    "
         )
       ]
     ),
@@ -18807,7 +18801,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_OUT_BTN_LABEL")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_OUT_BTN_LABEL")) +
+            "\n    "
         )
       ]
     ),
@@ -18827,7 +18823,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_PROGRESS_MSG")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_PROGRESS_MSG")) +
+            "\n    "
         )
       ]
     ),
@@ -18847,7 +18845,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n        " + _vm._s(_vm.msg("AUTH_LOG_IN_SUCCESS_MSG")) + "\n    "
+          "\n        " +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_SUCCESS_MSG")) +
+            "\n    "
         )
       ]
     ),
@@ -18868,7 +18868,7 @@ var render = function() {
       [
         _vm._v(
           "\n        " +
-            _vm._s(_vm.msg("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
             "\n    "
         )
       ]
@@ -18883,7 +18883,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.msg("AUTH_PROFILE_NICKNAME_LABEL")) +
+                    _vm._s(_vm.l10n.getMessage("AUTH_PROFILE_NICKNAME_LABEL")) +
                     ":\n            "
                 )
               ]
@@ -18911,7 +18911,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.msg("AUTH_PROFILE_NAME_LABEL")) +
+                    _vm._s(_vm.l10n.getMessage("AUTH_PROFILE_NAME_LABEL")) +
                     ":\n            "
                 )
               ]
@@ -31673,8 +31673,8 @@ class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
-    this.store = null // Vuex store. A public API for data and UI module interactions.
-    this.registeredDataModules = [] // Data modules that are registered to be included into the store.
+    this.store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store() // Vuex store. A public API for data and UI module interactions.
+    this.registeredDataModules = new Map() // Data modules that are registered to be included into the store.
 
     /**
      * If an event controller be used with an instance of a UI Controller,
@@ -31838,7 +31838,8 @@ class UIController {
    * @return {UIController} - A self reference for chaining.
    */
   registerDataModule (Module, ...options) {
-    this.registeredDataModules.push(new Module(...options))
+    const module = new Module(...options)
+    this.registeredDataModules.set(module.name, module)
     return this
   }
 
@@ -31868,15 +31869,16 @@ class UIController {
     await Promise.all(optionLoadPromises)
 
     // All options shall be loaded at this point. Can initialize Vue components that will use them
-    // Initialize the Vuex store, mount all registered modules into the store.
-    this.store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
-      modules: Object.assign({}, ...this.registeredDataModules.map(module => ({ [module.name]: module.store })))
-    })
+    // Mount all registered modules into the store
+    this.registeredDataModules.forEach((module) => this.store.registerModule(module.name, module.store))
+    // Expose public API of all modules with `provide`
+    this.api = Object.assign({}, ...Array.from(this.registeredDataModules.values()).map(module => ({ [module.name]: module.api(this.store) })))
 
     // Initialize components
     this.panel = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a({
       el: `#${this.options.template.panelId}`,
       store: this.store, // Install store into the panel
+      provide: this.api, // Public API of the modules
       components: {
         panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
       },
@@ -32744,6 +32746,7 @@ class UIController {
   }
 
   updatePageAnnotationData (data) {
+    console.log(`Update page annotations`)
     this.panel.panelData.treebankComponentData.data.page = data.treebank.page || {}
   }
 
@@ -32989,6 +32992,7 @@ class UIController {
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
   updateAnnotations () {
+    console.log(`Update annotations called`)
     if (this.state.isActive() && this.state.uiIsActive()) {
       _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_18__["default"].create({
         document: document,
@@ -33065,6 +33069,7 @@ class UIController {
   }
 
   onAnnotationsAvailable (data) {
+    console.log(`Annotations becomes available`)
     this.updatePageAnnotationData(data.annotations)
   }
 }
@@ -37097,141 +37102,6 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 
 /***/ }),
 
-/***/ "./modules/data/l10n/l10n-api.js":
-/*!***************************************!*\
-  !*** ./modules/data/l10n/l10n-api.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/**
- * This is a public API of a L10n data module.
- * It lists all public methods that can be used to access module's data
- * or to perform any actions that are available on a module.
- * A data consumer (usually a UI component) should import a modules API
- * before using it and map it to its computed properties or methods objects.
- *
- * Example:
- *    `import L10nAPI from 'l10n-api.js'`
- *
- * ```
- * methods: {
- *    ...
- *    message: L10nAPI.getterMethods.getMessage
- *    ...
- * }
- * ```
- * This maps `getMessage` method from a `getterMethods` API group
- * to a `message` method of a component.
- *
- * Gathering all public API of a module in one file provides a clear picture of what
- * methods are exposed by a module.
- * It also allows to analyze what data consumers are using this API by tracking
- * API import statements within the code.
- */
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  /**
-   * Getters section groups methods for module data access.
-   * All these methods has no parameters.
-   * They should be mounted to the `computed` object of the UI component.
-   *
-   * Example:
-   * ```
-   * computed: {
-   *    ...
-   *    internalMethodName: L10nAPI.getters.apiMethod
-   *    ...
-   * }
-   * ```
-   *
-   * Getters with parameters can also be listed here. In that case they should be defined as:
-   * `getMessage: function () { return this.$store.getters['l10n/getMessage'] }`
-   * However, a requirement that hey need to have no parameters forces them to return a function that will
-   * take some parameters instead (@see {@link https://vuex.vuejs.org/guide/getters.html#method-style-access}).
-   * This prevents from describing their "real" parameters here as those are hidden.
-   * Functions with parameters are function-like, but, if defined like above,
-   * should be mounted as computed props. This is confusing.
-   * That's why getters with parameters are separated into a `GetterMethods` group,
-   * where they are defined as more "normal" functions.
-   */
-  getters: {
-    /**
-     * Returns a current locale of L10n.
-     * @return {string} - A current locale
-     */
-    getLocale: function () {
-      return this.$store.state.l10n.selectedLocale
-    }
-  },
-
-  /**
-   * Getters with parameters behave like methods.
-   * They should be mounted to the `mounted` object of the UI component.
-   * Example:
-   * ```
-   * methods: {
-   *    ...
-   *    internalMethodName: L10nAPI.getterMethods.apiMethod
-   *    ...
-   * }
-   * ```
-   */
-  getterMethods: {
-    /**
-     * Returns a translated string for its message ID given.
-     * @param {string} messageID - A message ID of a string to retrieve.
-     * @return {string} - A formatted translated text of a string.
-     */
-    getMessage: function (messageID) {
-      return this.$store.getters['l10n/getMessage'](messageID)
-    }
-  },
-
-  /**
-   * Mutations are synchronous methods that save data to the store.
-   * They should be mounted to the `mounted` object of the UI component.
-   * Example:
-   * ```
-   * methods: {
-   *    ...
-   *    internalMethodName: L10nAPI.mutations.apiMethod
-   *    ...
-   * }
-   * ```
-   */
-  mutations: {
-    /**
-     * Sets locale of L10n to a new value.
-     * @param newLocale
-     */
-    setLocale: function (newLocale) {
-      if (this.$store.state.selectedLocale !== newLocale) {
-        return this.$store.commit('l10n/setLocale', newLocale)
-      }
-    }
-  },
-
-  /**
-   * Actions are asynchronous methods that save data to the store.
-   * They should be mounted to the `mounted` object of the UI component.
-   * Example:
-   * ```
-   * methods: {
-   *    ...
-   *    internalMethodName: L10nAPI.actions.apiMethod
-   *    ...
-   * }
-   * ```
-   */
-  actions: {}
-});
-
-
-/***/ }),
-
 /***/ "./modules/data/l10n/l10n-module.js":
 /*!******************************************!*\
   !*** ./modules/data/l10n/l10n-module.js ***!
@@ -37281,6 +37151,51 @@ class L10nModule extends _modules_module_js__WEBPACK_IMPORTED_MODULE_0__["defaul
         setLocale: (state, newLocale) => {
           this.l10n.setLocale(newLocale)
           state.selectedLocale = this.l10n.selectedLocale
+        }
+      }
+    }
+
+    /**
+     * An API object groups all publicly available methods of a module.
+     * They will be exposed to UI components by the UI controller.
+     * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
+     * Methods of a module will be available within a UI component after injection as
+     * `this.moduleName.methodName`
+     *
+     * Because some methods may need access to the Vuex store instance, `api` is a function
+     * that takes `store` as an argument and returns an object that contains API methods.
+     * For arrow functions `this` will be bound to the module's instance,
+     * for regular functions - to the object that is returned by the `api` function.
+     * @param {Vuex} store - an instance of a Vuex store that API methods may need to operate upon.
+     * @return {Object} An object containing public methods of a module.
+     */
+    this.api = (store) => {
+      return {
+        /**
+         * Returns a current locale of L10n.
+         * @return {string} - A current locale
+         */
+        getLocale: () => {
+          return this.store.state.selectedLocale
+        },
+
+        /**
+         * Sets locale of L10n to a new value.
+         * @param newLocale
+         */
+        setLocale: function (newLocale) {
+          if (store.state.l10n.selectedLocale !== newLocale) {
+            return store.commit('l10n/setLocale', newLocale)
+          }
+        },
+
+        /**
+         * Returns a translated string for its message ID given.
+         * @param {string} messageID - A message ID of a string to retrieve.
+         * @return {string} - A formatted translated text of a string.
+         */
+        getMessage: (messageID) => {
+          return this.l10n.bundle.get(messageID)
         }
       }
     }
