@@ -1,91 +1,104 @@
 <template>
-    <div ref="popup" id="alpheios-popup-inner" class="alpheios-popup auk" v-bind:class="divClasses" :style="mainstyles"
-         v-show="visible" :data-notification-visible="data && data.notification && data.notification.visible" v-on-clickaway="attachTrackingClick">
-         <alph-tooltip
-          tooltipDirection = "left"
-          :additionalStyles = "additionalStylesTootipCloseIcon"
-          :tooltipText = "ln10Messages('TOOLTIP_POPUP_CLOSE')">
-          <span class="alpheios-popup__close-btn" @click="closePopup">
+  <div :data-notification-visible="data && data.notification && data.notification.visible" :style="mainstyles" class="alpheios-popup auk" id="alpheios-popup-inner" ref="popup"
+       v-bind:class="divClasses" v-on-clickaway="attachTrackingClick"
+       v-show="visible">
+    <alph-tooltip
+        :additionalStyles="additionalStylesTootipCloseIcon"
+        :tooltipText="ln10Messages('TOOLTIP_POPUP_CLOSE')"
+        tooltipDirection="left">
+          <span @click="closePopup" class="alpheios-popup__close-btn">
               <close-icon></close-icon>
           </span>
-         </alph-tooltip>
-        <div class="alpheios-popup__header">
-            <div class="alpheios-popup__header-text" v-if="data && data.status" :lang="data.status.languageCode">
-                <span v-show="data.status.selectedText" :lang="data.status.languageCode" class="alpheios-popup__header-selection">{{data.status.selectedText}}</span>
-                <span v-show="data.status.languageName && data.verboseMode" class="alpheios-popup__header-word" lang="en">({{data.status.languageName}})</span>
-            </div>
+    </alph-tooltip>
+    <div class="alpheios-popup__header">
+      <div :lang="data.status.languageCode" class="alpheios-popup__header-text" v-if="data && data.status">
+        <span :lang="data.status.languageCode" class="alpheios-popup__header-selection"
+              v-show="data.status.selectedText">{{data.status.selectedText}}</span>
+        <span class="alpheios-popup__header-word" lang="en" v-show="data.status.languageName && data.verboseMode">({{data.status.languageName}})</span>
+      </div>
 
-            <div class="alpheios-popup__button-area" v-if="data">
-                <alph-tooltip v-show="data.defDataReady" tooltipDirection="bottom-wide" :tooltipText="ln10Messages('TOOLTIP_SHOW_DEFINITIONS')">
-                  <button @click="showPanelTab('definitions')" v-show="data.defDataReady"
-                          class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions">{{ ln10Messages('LABEL_POPUP_DEFINE') }}
-                  </button>
-                </alph-tooltip>
+      <div class="alpheios-popup__button-area" v-if="data">
+        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
+                      v-show="data.defDataReady">
+          <button @click="showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions"
+                  v-show="data.defDataReady">
+            {{ ln10Messages('LABEL_POPUP_DEFINE') }}
+          </button>
+        </alph-tooltip>
 
-                <alph-tooltip v-show="data.inflDataReady" tooltipDirection="bottom-wide" :tooltipText="ln10Messages('TOOLTIP_SHOW_INFLECTIONS')">
-                  <button @click="showPanelTab('inflections')" v-show="data.inflDataReady"
-                          class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections">{{ ln10Messages('LABEL_POPUP_INFLECT') }}
-                  </button>
-                </alph-tooltip>
+        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
+                      v-show="data.inflDataReady">
+          <button @click="showPanelTab('inflections')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
+                  v-show="data.inflDataReady">
+            {{ ln10Messages('LABEL_POPUP_INFLECT') }}
+          </button>
+        </alph-tooltip>
 
-                <alph-tooltip v-show="data.hasTreebank" tooltipDirection="bottom-wide" :tooltipText="ln10Messages('TOOLTIP_TREEBANK')">
-                    <button @click="showPanelTab('treebank')" v-show="data.hasTreebank"
-                            class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank">{{ ln10Messages('LABEL_POPUP_TREEBANK') }}
-                    </button>
+        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
+                      v-show="data.hasTreebank">
+          <button @click="showPanelTab('treebank')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank"
+                  v-show="data.hasTreebank">
+            {{ ln10Messages('LABEL_POPUP_TREEBANK') }}
+          </button>
 
-                </alph-tooltip>
+        </alph-tooltip>
 
-                <alph-tooltip tooltipDirection="bottom-right" :tooltipText="ln10Messages('TOOLTIP_SHOW_OPTIONS')">
-                  <button @click="showPanelTab('options')"
-                          class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options">{{ ln10Messages('LABEL_POPUP_OPTIONS') }}
-                  </button>
-                </alph-tooltip>
-            </div>
+        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
+          <button @click="showPanelTab('options')"
+                  class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options">
+            {{ ln10Messages('LABEL_POPUP_OPTIONS') }}
+          </button>
+        </alph-tooltip>
+      </div>
+    </div>
+
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+         v-show="!morphDataReady && !noLanguage">
+      <progress-bar :text="ln10Messages('PLACEHOLDER_POPUP_DATA')"></progress-bar>
+    </div>
+
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+         v-show="noLanguage && !morphDataReady">
+      {{ ln10Messages('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
+    </div>
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+         v-show="!hasMorphData && morphDataReady && !noLanguage">
+      {{ ln10Messages('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
+    </div>
+    <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
+         v-show="morphDataReady && hasMorphData">
+      <morph :definitions="definitions" :id="morphComponentID" :lexemes="lexemes" :linkedfeatures="linkedfeatures"
+             :messages="data.l10n.messages"
+             :morphDataReady="morphDataReady && hasMorphData" :translations="translations"
+             @sendfeature="sendFeature">
+      </morph>
+
+      <div class="alpheios-popup__morph-cont-providers" v-if="data && showProviders">
+        <div class="alpheios-popup__morph-cont-providers-header">{{ ln10Messages('LABEL_POPUP_CREDITS') }}</div>
+        <div class="alpheios-popup__morph-cont-providers-source" v-for="p in data.providers">
+          {{ p.toString() }}
         </div>
-
-        <div v-show="!morphDataReady && !noLanguage"
-             class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small">
-            <progress-bar :text="ln10Messages('PLACEHOLDER_POPUP_DATA')"></progress-bar>
-        </div>
-
-        <div v-show="noLanguage && !morphDataReady"
-             class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small">
-            {{ ln10Messages('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
-        </div>
-        <div v-show="!hasMorphData && morphDataReady && !noLanguage"
-             class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small">
-            {{ ln10Messages('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
-        </div>
-        <div v-show="morphDataReady && hasMorphData" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready">
-            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions" :translations="translations" :messages="data.l10n.messages"
-                   :linkedfeatures="linkedfeatures" @sendfeature="sendFeature" :morphDataReady="morphDataReady && hasMorphData">
-            </morph>
-
-            <div class="alpheios-popup__morph-cont-providers" v-if="data && showProviders">
-                <div class="alpheios-popup__morph-cont-providers-header">{{ ln10Messages('LABEL_POPUP_CREDITS') }}</div>
-                <div class="alpheios-popup__morph-cont-providers-source" v-for="p in data.providers">
-                    {{ p.toString() }}
-                </div>
-            </div>
-        </div>
-        <div class="alpheios-popup__providers">
-          <img class="alpheios-popup__logo" src="../../images/icon.png">
-          <a class="alpheios-popup__providers-link uk-link" v-on:click="switchProviders">{{providersLinkText}}</a>
-        </div>
-        <div class="alpheios-popup__notifications uk-text-small" :class="notificationClasses"
-             v-show="data.notification.important" v-if="data && data.notification">
+      </div>
+    </div>
+    <div class="alpheios-popup__providers">
+      <img class="alpheios-popup__logo" src="../../images/icon.png">
+      <a class="alpheios-popup__providers-link uk-link" v-on:click="switchProviders">{{providersLinkText}}</a>
+    </div>
+    <div :class="notificationClasses" class="alpheios-popup__notifications uk-text-small"
+         v-if="data && data.notification" v-show="data.notification.important">
 
               <span @click="closeNotifications" class="alpheios-popup__notifications-close-btn">
                   <close-icon></close-icon>
               </span>
 
-            <span v-html="data.notification.text"></span>
-            <setting :data="data.settings.preferredLanguage" :show-title="false"
-                     :classes="['alpheios-popup__notifications--lang-switcher']" @change="settingChanged"
-                     v-show="data.notification.showLanguageSwitcher"></setting>
-        </div>
-        <lookup :uiController="uiController" :parentLanguage="currentLanguageName" :clearLookupText="hasMorphData && morphDataReady"></lookup>
+      <span v-html="data.notification.text"></span>
+      <setting :classes="['alpheios-popup__notifications--lang-switcher']" :data="data.settings.preferredLanguage"
+               :show-title="false" @change="settingChanged"
+               v-show="data.notification.showLanguageSwitcher"></setting>
     </div>
+    <lookup :clearLookupText="hasMorphData && morphDataReady" :parentLanguage="currentLanguageName"
+            :uiController="uiController"></lookup>
+  </div>
 </template>
 <script>
 import Morph from './morph.vue'
@@ -96,7 +109,6 @@ import Logger from '@/lib/log/logger'
 import Tooltip from './tooltip.vue'
 import Lookup from './lookup.vue'
 import ProgressBar from './progress-bar.vue'
-
 // Embeddable SVG icons
 import CloseIcon from '../../images/inline-icons/close.svg'
 
@@ -194,7 +206,12 @@ export default {
       return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
     },
     mainstyles: function () {
-      return Object.assign({ left: this.positionLeftDm, top: this.positionTopDm, width: this.widthDm, height: this.heightDm }, this.data ? this.data.styles : {})
+      return Object.assign({
+        left: this.positionLeftDm,
+        top: this.positionTopDm,
+        width: this.widthDm,
+        height: this.heightDm
+      }, this.data ? this.data.styles : {})
     },
     logger: function () {
       let verbMode = false
@@ -219,8 +236,8 @@ export default {
     },
     hasMorphData: function () {
       if (Array.isArray(this.lexemes) && this.lexemes.length > 0 &&
-             (this.lexemes[0].lemma.principalParts.length > 0 || this.lexemes[0].inflections.length > 0 || this.lexemes[0].inflections.length > 0 ||
-              this.lexemes[0].meaning.fullDefs.length > 0 || this.lexemes[0].meaning.shortDefs.length > 0)
+          (this.lexemes[0].lemma.principalParts.length > 0 || this.lexemes[0].inflections.length > 0 || this.lexemes[0].inflections.length > 0 ||
+            this.lexemes[0].meaning.fullDefs.length > 0 || this.lexemes[0].meaning.shortDefs.length > 0)
       ) {
         return true
       }
@@ -353,10 +370,10 @@ export default {
         let time = Date.now()
         this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
         /*
-          let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-          let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-          let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
-          */
+            let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+            let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
+            let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
+            */
         if (newHeight >= this.maxHeight) {
           this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
           this.heightValue = this.maxHeight
@@ -478,12 +495,12 @@ export default {
         let dy = event.dy
 
         /*
-          On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
-          This will result in a popup moving abruptly beyond screen limits.
-          To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
-          direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
-          in (usually) one direction. This is probably the best we can do with all the information we have.
-           */
+            On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
+            This will result in a popup moving abruptly beyond screen limits.
+            To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
+            direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
+            in (usually) one direction. This is probably the best we can do with all the information we have.
+             */
         const dragTreshold = 100 // Drag distance values above this will be considered abnormal
         if (Math.abs(dx) > dragTreshold) {
           if (!this.dragErrorX) {
@@ -637,181 +654,183 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../styles/alpheios";
+  @import "../../styles/alpheios";
 
-    .alpheios-popup {
-        display: flex;
-        flex-direction: column;
-        background: #FFF;
-        border: 1px solid lightgray;
-        min-width: 210px;
-        min-height: 150px;
-        z-index: 1000;
-        position: fixed;
-        left: 200px;
-        top: 100px;
-        box-sizing: border-box;  /* Required for Interact.js to take element size with paddings and work correctly */
-        overflow: auto;
-        font-family: $alpheios-font-family;
-        font-size: $alpheios-base-font-size;
-        color: $alpheios-copy-color;
-    }
+  .alpheios-popup {
+    display: flex;
+    flex-direction: column;
+    background: #FFF;
+    border: 1px solid lightgray;
+    min-width: 210px;
+    min-height: 150px;
+    z-index: 1000;
+    position: fixed;
+    left: 200px;
+    top: 100px;
+    box-sizing: border-box; /* Required for Interact.js to take element size with paddings and work correctly */
+    overflow: auto;
+    font-family: $alpheios-font-family;
+    font-size: $alpheios-base-font-size;
+    color: $alpheios-copy-color;
+  }
 
-    .alpheios-popup__header {
-        position: relative;
-        box-sizing: border-box;
-        width: 100%;
-        flex: 0 0 45px;
-        padding: 10px 10px 0;
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
+  .alpheios-popup__header {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    flex: 0 0 45px;
+    padding: 10px 10px 0;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 
-    .alpheios-popup__header-text {
-        line-height: 1;
-        align-items: flex-start;
-        padding: 7px 20px 0 0;
-    }
+  .alpheios-popup__header-text {
+    line-height: 1;
+    align-items: flex-start;
+    padding: 7px 20px 0 0;
+  }
 
-    .alpheios-popup__header-text[lang='ara']  {
-        padding: 0px 20px 0px 20px; /* the arabic amiri font does not like the top padding */
-    }
+  .alpheios-popup__header-text[lang='ara'] {
+    padding: 0px 20px 0px 20px; /* the arabic amiri font does not like the top padding */
+  }
 
-    .alpheios-popup__header-selection {
-        font-size: $alpheios-base-font-size;
-        font-weight: 700;
-        color: $alpheios-toolbar-color;
-    }
+  .alpheios-popup__header-selection {
+    font-size: $alpheios-base-font-size;
+    font-weight: 700;
+    color: $alpheios-toolbar-color;
+  }
 
-    .alpheios-popup__header-word {
-        font-size: 0.75*$alpheios-base-font-size;
-        position: relative;
-        top: -1px;
-    }
+  .alpheios-popup__header-word {
+    font-size: 0.75*$alpheios-base-font-size;
+    position: relative;
+    top: -1px;
+  }
 
-    .alpheios-popup__close-btn {
-        display: block;
-        position: absolute;
-        width: 20px;
-        right: 5px;
-        top: 2px;
-        cursor: pointer;
-        fill: $alpheios-link-color-dark-bg;
-        stroke: $alpheios-link-color-dark-bg;
-        background: inherit;
-        stroke-width: 2.5;
-    }
+  .alpheios-popup__close-btn {
+    display: block;
+    position: absolute;
+    width: 20px;
+    right: 5px;
+    top: 2px;
+    cursor: pointer;
+    fill: $alpheios-link-color-dark-bg;
+    stroke: $alpheios-link-color-dark-bg;
+    background: inherit;
+    stroke-width: 2.5;
+  }
 
-    .alpheios-popup__close-btn:hover,
-    .alpheios-popup__close-btn:focus {
-        fill: $alpheios-link-hover-color;
-        stroke: $alpheios-link-hover-color;
-    }
+  .alpheios-popup__close-btn:hover,
+  .alpheios-popup__close-btn:focus {
+    fill: $alpheios-link-hover-color;
+    stroke: $alpheios-link-hover-color;
+  }
 
-    .alpheios-popup__notifications {
-        display: none;
-        position: relative;
-        padding: 10px 20px;
-        background: $alpheios-logo-color;
-        flex: 0 0 60px;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
+  .alpheios-popup__notifications {
+    display: none;
+    position: relative;
+    padding: 10px 20px;
+    background: $alpheios-logo-color;
+    flex: 0 0 60px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
 
-    .alpheios-popup__notifications-close-btn {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        display: block;
-        width: 20px;
-        height: 20px;
-        margin: 0;
-        cursor: pointer;
-        fill: $alpheios-link-color-dark-bg;
-        stroke: $alpheios-link-color-dark-bg;
-    }
+  .alpheios-popup__notifications-close-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    cursor: pointer;
+    fill: $alpheios-link-color-dark-bg;
+    stroke: $alpheios-link-color-dark-bg;
+  }
 
-    .alpheios-popup__notifications-close-btn:hover,
-    .alpheios-popup__notifications-close-btn:focus {
-        fill: $alpheios-link-hover-color;
-        stroke: $alpheios-link-hover-color;
-    }
+  .alpheios-popup__notifications-close-btn:hover,
+  .alpheios-popup__notifications-close-btn:focus {
+    fill: $alpheios-link-hover-color;
+    stroke: $alpheios-link-hover-color;
+  }
 
-    [data-notification-visible="true"] .alpheios-popup__notifications {
-        display: block;
-    }
+  [data-notification-visible="true"] .alpheios-popup__notifications {
+    display: block;
+  }
 
-    .alpheios-popup__notifications--lang-switcher {
-        font-size: 0.75*$alpheios-base-font-size;
-        float: right;
-        margin: -20px 10px 0 0;
-        display: inline-block;
-    }
+  .alpheios-popup__notifications--lang-switcher {
+    font-size: 0.75*$alpheios-base-font-size;
+    float: right;
+    margin: -20px 10px 0 0;
+    display: inline-block;
+  }
 
-    .alpheios-popup__notifications--lang-switcher .uk-select {
-        width: 120px;
-        height: 25px;
-    }
+  .alpheios-popup__notifications--lang-switcher .uk-select {
+    width: 120px;
+    height: 25px;
+  }
 
-    .alpheios-popup__notifications--important {
-        background: $alpheios-icon-color;
-    }
+  .alpheios-popup__notifications--important {
+    background: $alpheios-icon-color;
+  }
 
-    .alpheios-popup__morph-cont {
-        flex: 1 1;
-        box-sizing: border-box;
-        margin: 5px 10px 0;
-        overflow: auto;
-        padding: 10px;
-        border: 1px solid $alpheios-sidebar-header-border-color;
-    }
+  .alpheios-popup__morph-cont {
+    flex: 1 1;
+    box-sizing: border-box;
+    margin: 5px 10px 0;
+    overflow: auto;
+    padding: 10px;
+    border: 1px solid $alpheios-sidebar-header-border-color;
+  }
 
-    .alpheios-popup__morph-cont-providers-header {
-        display: inline-block;
-        /* color: $alpheios-link-color;
-        font-size: 0.75*$alpheios-base-font-size; */
-        font-weight: 700;
-        margin-top: 2px;
-    }
+  .alpheios-popup__morph-cont-providers-header {
+    display: inline-block;
+    /* color: $alpheios-link-color;
+    font-size: 0.75*$alpheios-base-font-size; */
+    font-weight: 700;
+    margin-top: 2px;
+  }
 
-    .alpheios-popup__definitions--placeholder {
-        border: 0 none;
-        padding: 10px 0;
-    }
+  .alpheios-popup__definitions--placeholder {
+    border: 0 none;
+    padding: 10px 0;
+  }
 
-    img.alpheios-popup__logo {
-        height: 16px;
-        width: auto;
-        vertical-align: middle;
-    }
+  img.alpheios-popup__logo {
+    height: 16px;
+    width: auto;
+    vertical-align: middle;
+  }
 
-    .alpheios-popup__more-btn {
-        float: right;
-        margin-bottom: 10px;
-        /* font-size: 0.675 * $alpheios-base-font-size; */
-    }
-    .alpheios-popup__morph-cont-providers-source {
-      font-size: smaller;
-      font-weight: normal;
-      /* color: $alpheios-toolbar-color; */
-      font-style: italic;
-      margin-left: .5em;
-      margin-top: .5em;
-      max-width: 700px;
-    }
+  .alpheios-popup__more-btn {
+    float: right;
+    margin-bottom: 10px;
+    /* font-size: 0.675 * $alpheios-base-font-size; */
+  }
 
-    .alpheios-popup__providers {
-      margin: 0 0 5px 10px;
-    }
-    /*
-    .alpheios-popup__providers-link {
-      font-size: 0.675*$alpheios-base-font-size;
-    }*/
-    .alpheios-popup__providers-link {
-      display: inline-block;
-      vertical-align: middle;
-      padding: 5px 0 0;
-    }
+  .alpheios-popup__morph-cont-providers-source {
+    font-size: smaller;
+    font-weight: normal;
+    /* color: $alpheios-toolbar-color; */
+    font-style: italic;
+    margin-left: .5em;
+    margin-top: .5em;
+    max-width: 700px;
+  }
+
+  .alpheios-popup__providers {
+    margin: 0 0 5px 10px;
+  }
+
+  /*
+  .alpheios-popup__providers-link {
+    font-size: 0.675*$alpheios-base-font-size;
+  }*/
+  .alpheios-popup__providers-link {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px 0 0;
+  }
 </style>

@@ -1,14 +1,14 @@
 <template>
-    <div class="alpheios-inflections__forms-cont">
-        <span class="alpheios-inflections__forms-targetword">"{{ targetWord }}"</span>
-        <span v-if="forms && forms.length >0" class="alpheios-inflections__form-parts">
+  <div class="alpheios-inflections__forms-cont">
+    <span class="alpheios-inflections__forms-targetword">"{{ targetWord }}"</span>
+    <span class="alpheios-inflections__form-parts" v-if="forms && forms.length >0">
           <span>(</span>
           <span class="alpheios-inflections__form-part" v-for="(form, index) in forms">
             {{ form }}<span v-if="index < forms.length-1">, </span>
           </span>
           <span>)</span>
         </span>
-    </div>
+  </div>
 </template>
 <script>
 import { Constants, Feature } from 'alpheios-data-models'
@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     forms: function () {
-      	if (this.lexemes) {
+      if (this.lexemes) {
         return this.defineFormsBySelectedView()
       }
     }
@@ -43,8 +43,8 @@ export default {
       let forms = new Set()
       for (let lexeme of this.lexemes) {
         for (let inflection of lexeme.inflections) {
-          	if (inflection[Feature.types.part].values.includes(this.partOfSpeech)) {
-          	  forms.add(inflection.form)
+          if (inflection[Feature.types.part].values.includes(this.partOfSpeech)) {
+            forms.add(inflection.form)
           }
         }
       }
@@ -55,13 +55,15 @@ export default {
 }
 </script>
 <style>
-	.alpheios-inflections__form-parts {
-	  display: inline-block;
-	}
-    .alpheios-inflections__forms-targetword {
-      font-weight: bold;
-    }
-    .alpheios-inflections__forms-cont {
-      padding-right: 30px;
-    }
+  .alpheios-inflections__form-parts {
+    display: inline-block;
+  }
+
+  .alpheios-inflections__forms-targetword {
+    font-weight: bold;
+  }
+
+  .alpheios-inflections__forms-cont {
+    padding-right: 30px;
+  }
 </style>

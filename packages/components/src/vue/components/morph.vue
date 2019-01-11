@@ -2,19 +2,19 @@
   <div>
     <div class="alpheios-morph__lexemes morph-inner-v1">
       <morph-inner
-        v-for = "(lex,index) in lexemes"
-        v-show = "showLexeme(lex)"
-        :key = "lex.lemma.ID"
-        :lex = "lex"
-        :index = "index"
-        :count = "lexemes.length"
-        :morphDataReady = "morphDataReady"
-        :definitions = "definitions[lex.lemma.ID] ? definitions[lex.lemma.ID] : []"
-        :linkedfeatures = "linkedfeatures"
-        :translations = "translations"
-        :messages = "messages"
-        @sendfeature = "sendFeature"
-        ></morph-inner>
+          :count="lexemes.length"
+          :definitions="definitions[lex.lemma.ID] ? definitions[lex.lemma.ID] : []"
+          :index="index"
+          :key="lex.lemma.ID"
+          :lex="lex"
+          :linkedfeatures="linkedfeatures"
+          :messages="messages"
+          :morphDataReady="morphDataReady"
+          :translations="translations"
+          @sendfeature="sendFeature"
+          v-for="(lex,index) in lexemes"
+          v-show="showLexeme(lex)"
+      ></morph-inner>
     </div><!--alpheios-morph__lexemes-->
   </div>
 </template>

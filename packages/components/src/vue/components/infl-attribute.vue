@@ -1,5 +1,6 @@
 <template>
-  <span @click="sendFeature(data[type],['alpheios-text__medium'])" :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel" v-if="data[type]" v-html="decorate(data,type)"></span>
+  <span :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel"
+        @click="sendFeature(data[type],['alpheios-text__medium'])" v-html="decorate(data,type)" v-if="data[type]"></span>
 </template>
 <script>
 export default {

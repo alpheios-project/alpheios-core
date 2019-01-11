@@ -1,12 +1,13 @@
 <template>
   <div class="alpheios-lookup__form" v-if="uiController">
-    <input class="uk-input alpheios-lookup__input" type="text" :placeholder="ln10Messages('LABEL_LOOKUP_BUTTON')" v-model="lookuptext"
-      @keyup.enter="lookup"
+    <input :placeholder="ln10Messages('LABEL_LOOKUP_BUTTON')" @keyup.enter="lookup" class="uk-input alpheios-lookup__input"
+           type="text"
+           v-model="lookuptext"
     >
-    <alph-tooltip tooltipDirection="top-right" :tooltipText="ln10Messages('LABEL_LOOKUP_BUTTON')">
+    <alph-tooltip :tooltipText="ln10Messages('LABEL_LOOKUP_BUTTON')" tooltipDirection="top-right">
       <span class="alpheios-lookup__button_with_link">
-      <button class="uk-button uk-button-primary uk-button-small alpheios-lookup__button" type="button" tabindex="-1"
-        @click="lookup"
+      <button @click="lookup" class="uk-button uk-button-primary uk-button-small alpheios-lookup__button" tabindex="-1"
+              type="button"
       >
         {{ ln10Messages('LABEL_LOOKUP_BUTTON') }}
       </button>
@@ -14,15 +15,17 @@
     </alph-tooltip>
 
     <div class="alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small">
-      <input type="checkbox" v-model="overrideLanguage" id="alpheios-checkbox-input">
-      <label class="alpheios-override-lang__label" for="checkbox" @click="checkboxClick">{{ overrideLanguageLabel }}</label>
+      <input id="alpheios-checkbox-input" type="checkbox" v-model="overrideLanguage">
+      <label @click="checkboxClick" class="alpheios-override-lang__label" for="checkbox">{{ overrideLanguageLabel
+        }}</label>
     </div>
 
     <div class="alpheios-lookup__settings" v-if="uiController">
       <div class="alpheios-lookup__settings-items" v-show="showLanguageSettings">
-        <alph-setting :data="lookupLanguage" @change="settingChange" :classes="['alpheios-panel__options-item']"></alph-setting>
-        <alph-setting :data="lexicon" @change="resourceSettingChange" :classes="['alpheios-panel__options-item']"
-         v-for="lexicon in lexiconsFiltered" :key="lexicon.name"></alph-setting>
+        <alph-setting :classes="['alpheios-panel__options-item']" :data="lookupLanguage"
+                      @change="settingChange"></alph-setting>
+        <alph-setting :classes="['alpheios-panel__options-item']" :data="lexicon" :key="lexicon.name"
+                      @change="resourceSettingChange" v-for="lexicon in lexiconsFiltered"></alph-setting>
       </div>
     </div>
   </div>
@@ -192,69 +195,69 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../styles/alpheios";
+  @import "../../styles/alpheios";
 
+  .alpheios-lookup__form {
+    margin: 15px 10px 5px;
+
+    text-align: left;
+
+  }
+
+  .uk-input.alpheios-lookup__input {
+    width: 70%;
+    margin-bottom: 10px;
+    vertical-align: top;
+
+    &:focus {
+      border-color: $alpheios-link-hover-color;
+    }
+  }
+
+  .uk-button.alpheios-lookup__button {
+    vertical-align: top;
+    display: block;
+  }
+
+  .alpheios-lookup__settings {
+    text-align: left;
+  }
+
+  a.alpheios-lookup__settings-link {
+    display: block;
+    padding-top: 5px;
+  }
+
+  .alpheios-lookup__button_with_link {
+    width: 29%;
+  }
+
+  .alpheios-panel {
     .alpheios-lookup__form {
-      margin: 15px 10px 5px;
-
-      text-align: left;
-
+      width: 100%;
+      margin: 5px 0;
     }
+  }
 
-    .uk-input.alpheios-lookup__input {
-      width: 70%;
-      margin-bottom: 10px;
-      vertical-align: top;
+  .alpheios-panel__options-item {
+    max-width: none;
+  }
 
-      &:focus {
-        border-color: $alpheios-link-hover-color;
-      }
+  .alpheios-panel__options-item {
+    .uk-select:not([multiple]):not([size]),
+    .uk-select[multiple],
+    .uk-select[size],
+    .uk-textarea {
+      max-width: 250px;
     }
+  }
 
-    .uk-button.alpheios-lookup__button {
-      vertical-align: top;
-      display: block;
-    }
+  .alpheios-override-lang {
+    margin-bottom: 10px;
+  }
 
-    .alpheios-lookup__settings {
-      text-align: left;
-    }
-
-    a.alpheios-lookup__settings-link {
-      display: block;
-      padding-top: 5px;
-    }
-
-    .alpheios-lookup__button_with_link {
-      width: 29%;
-    }
-
-    .alpheios-panel {
-      .alpheios-lookup__form {
-        width: 100%;
-        margin: 5px 0;
-      }
-    }
-
-    .alpheios-panel__options-item {
-      max-width: none;
-    }
-
-    .alpheios-panel__options-item {
-        .uk-select:not([multiple]):not([size]),
-        .uk-select[multiple],
-        .uk-select[size],
-        .uk-textarea {
-          max-width: 250px;
-        }
-    }
-
-    .alpheios-override-lang {
-      margin-bottom: 10px;
-    }
-
-    .alpheios-override-lang__label {
-      padding-bottom: 10px;
-    }
+  .alpheios-override-lang__label {
+    padding-bottom: 10px;
+  }
 
 </style>

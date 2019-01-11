@@ -1,21 +1,24 @@
 <template>
-    <a class="infl-suff-footnote-link"
-       @click.stop.prevent="showPopup">
-        <sup v-for="(footnote, index) in footnotes">
-            {{footnote.index}}<template v-if="index < footnotes.length-1">, </template>
-        </sup>
-        <div v-show="footnotesPopupVisible" class="alpheios-inflections__footnote-popup" :style="[popupAlignmentStyles]">
-            <div class="alpheios-inflections__footnote-popup-title">Footnotes:</div>
-            <template v-for="footnote in footnotes">
-                <dt>{{footnote.index}}</dt>
-                <dd>{{footnote.text}}</dd>
-            </template>
-            <div class="alpheios-inflections__footnote-popup-close-btn"
-                 @click.stop.prevent="hidePopup">
-                <svg viewBox="0 0 20 20"><path d="M16 16L4 4M16 4L4 16"></path></svg>
-            </div>
-        </div>
-    </a>
+  <a @click.stop.prevent="showPopup"
+     class="infl-suff-footnote-link">
+    <sup v-for="(footnote, index) in footnotes">
+      {{footnote.index}}
+      <template v-if="index < footnotes.length-1">,</template>
+    </sup>
+    <div :style="[popupAlignmentStyles]" class="alpheios-inflections__footnote-popup" v-show="footnotesPopupVisible">
+      <div class="alpheios-inflections__footnote-popup-title">Footnotes:</div>
+      <template v-for="footnote in footnotes">
+        <dt>{{footnote.index}}</dt>
+        <dd>{{footnote.text}}</dd>
+      </template>
+      <div @click.stop.prevent="hidePopup"
+           class="alpheios-inflections__footnote-popup-close-btn">
+        <svg viewBox="0 0 20 20">
+          <path d="M16 16L4 4M16 4L4 16"></path>
+        </svg>
+      </div>
+    </div>
+  </a>
 </template>
 <script>
 import interact from 'interactjs'
@@ -142,63 +145,64 @@ export default {
 </script>
 
 <style lang="scss">
-    @import "../../styles/alpheios";
-    .infl-suff-footnote-link {
-        position: relative;
-    }
+  @import "../../styles/alpheios";
 
-    .alpheios-inflections__footnote-popup {
-        display: grid;
-        grid-template-columns: 20px 1fr;
-        grid-row-gap: 2px;
-        background: #FFF;
-        color: $alpheios-headers-color;
-        position: absolute;
-        padding: 30px 15px 15px;
-        left: 0;
-        bottom: 20px;
-        z-index: 10;
-        min-width: 200px;
-        border: 1px solid $alpheios-toolbar-color;
-        cursor: move;
+  .infl-suff-footnote-link {
+    position: relative;
+  }
 
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+  .alpheios-inflections__footnote-popup {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    grid-row-gap: 2px;
+    background: #FFF;
+    color: $alpheios-headers-color;
+    position: absolute;
+    padding: 30px 15px 15px;
+    left: 0;
+    bottom: 20px;
+    z-index: 10;
+    min-width: 200px;
+    border: 1px solid $alpheios-toolbar-color;
+    cursor: move;
 
-    }
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
-    .alpheios-inflections__footnote-popup.hidden {
-        display: none;
-    }
+  }
 
-    .alpheios-inflections__footnote-popup-title {
-        font-weight: 700;
-        position: absolute;
-        text-transform: uppercase;
-        left: 15px;
-        top: 7px;
-    }
+  .alpheios-inflections__footnote-popup.hidden {
+    display: none;
+  }
 
-    .alpheios-inflections__footnote-popup-close-btn {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        display: block;
-        width: 20px;
-        height: 20px;
-        margin: 0;
-        cursor: pointer;
-        fill: $alpheios-toolbar-color;
-        stroke: $alpheios-toolbar-color;
-    }
+  .alpheios-inflections__footnote-popup-title {
+    font-weight: 700;
+    position: absolute;
+    text-transform: uppercase;
+    left: 15px;
+    top: 7px;
+  }
 
-    .alpheios-inflections__footnote-popup-close-btn:hover,
-    .alpheios-inflections__footnote-popup-close-btn:active {
-        fill: $alpheios-link-hover-color;
-        stroke: $alpheios-link-hover-color;
-    }
+  .alpheios-inflections__footnote-popup-close-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    cursor: pointer;
+    fill: $alpheios-toolbar-color;
+    stroke: $alpheios-toolbar-color;
+  }
+
+  .alpheios-inflections__footnote-popup-close-btn:hover,
+  .alpheios-inflections__footnote-popup-close-btn:active {
+    fill: $alpheios-link-hover-color;
+    stroke: $alpheios-link-hover-color;
+  }
 </style>

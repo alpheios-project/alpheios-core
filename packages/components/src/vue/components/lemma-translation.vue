@@ -1,8 +1,10 @@
 <template>
   <div class="alpheios-lemma__translations">
-    <div v-if="translations && translations[lemmakey] && translations[lemmakey].glosses && translations[lemmakey].glosses.length > 0" :data-lemmakey="lemmakey" class="hasValue">
-      <p v-for="(gloss, gindex) in translations[lemmakey].glosses" class="alpheios-lemma__translations-value">
-        <span v-if="translations[lemmakey].glosses.length > 1" class="translation_index">-</span>
+    <div
+        :data-lemmakey="lemmakey"
+        class="hasValue" v-if="translations && translations[lemmakey] && translations[lemmakey].glosses && translations[lemmakey].glosses.length > 0">
+      <p class="alpheios-lemma__translations-value" v-for="(gloss, gindex) in translations[lemmakey].glosses">
+        <span class="translation_index" v-if="translations[lemmakey].glosses.length > 1">-</span>
         <span class="alpheios-lemma__translations-gloss">{{ gloss }}</span>
       </p>
     </div>
@@ -24,7 +26,8 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../styles/alpheios";
+  @import "../../styles/alpheios";
+
   .alpheios-lemma__translations {
     padding: 5px 0 0 22px;
     font-style: italic;

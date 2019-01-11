@@ -1,64 +1,71 @@
 <template>
-    <div ref="popup" class="auk alpheios-popup alpheios-popup--mobile" v-bind:class="data.classes" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}"
-         v-show="visible" :data-notification-visible="data.notification.visible">
-        <span class="alpheios-popup__close-btn" @click="closePopup" :title="data.l10n.messages.TOOLTIP_POPUP_CLOSE.get()">
+  <div :data-notification-visible="data.notification.visible" :style="{left: positionLeftDm, top: positionTopDm, width: widthDm, height: heightDm}" class="auk alpheios-popup alpheios-popup--mobile"
+       ref="popup"
+       v-bind:class="data.classes" v-show="visible">
+        <span :title="data.l10n.messages.TOOLTIP_POPUP_CLOSE.get()" @click="closePopup"
+              class="alpheios-popup__close-btn">
             <close-icon></close-icon>
         </span>
-        <div class="alpheios-popup__header">
-            <div class="alpheios-popup__header-text">
-                Mobile
-                <span v-show="data.status.selectedText" class="alpheios-popup__header-selection">{{data.status.selectedText}}</span>
-                <span v-show="data.status.languageName && data.verboseMode" class="alpheios-popup__header-word">({{data.status.languageName}})</span>
-            </div>
-            <div class="uk-button-group alpheios-popup__button-area">
-                <button @click="showPanelTab('inflections')" v-show="data.inflDataReady"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_INFLECT.get()}}
-                </button>
-                <button @click="showPanelTab('definitions')" v-show="data.defDataReady"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_DEFINE.get()}}
-                </button>
-                <button @click="showPanelTab('options')"
-                        class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">{{data.l10n.messages.LABEL_POPUP_OPTIONS.get()}}
-                </button>
-            </div>
-        </div>
-        <div v-show="!morphDataReady"
-             class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios--text-small">
-            {{data.l10n.messages.PLACEHOLDER_POPUP_DATA.get()}}
-        </div>
-        <div v-show="morphDataReady" :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-text-small">
-            <morph :id="morphComponentID" :lexemes="lexemes" :definitions="definitions"
-                   :linkedfeatures="linkedfeatures" @sendfeature="sendFeature">
-            </morph>
+    <div class="alpheios-popup__header">
+      <div class="alpheios-popup__header-text">
+        Mobile
+        <span class="alpheios-popup__header-selection"
+              v-show="data.status.selectedText">{{data.status.selectedText}}</span>
+        <span class="alpheios-popup__header-word" v-show="data.status.languageName && data.verboseMode">({{data.status.languageName}})</span>
+      </div>
+      <div class="uk-button-group alpheios-popup__button-area">
+        <button @click="showPanelTab('inflections')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn"
+                v-show="data.inflDataReady">
+          {{data.l10n.messages.LABEL_POPUP_INFLECT.get()}}
+        </button>
+        <button @click="showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn"
+                v-show="data.defDataReady">
+          {{data.l10n.messages.LABEL_POPUP_DEFINE.get()}}
+        </button>
+        <button @click="showPanelTab('options')"
+                class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">
+          {{data.l10n.messages.LABEL_POPUP_OPTIONS.get()}}
+        </button>
+      </div>
+    </div>
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios--text-small"
+         v-show="!morphDataReady">
+      {{data.l10n.messages.PLACEHOLDER_POPUP_DATA.get()}}
+    </div>
+    <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-text-small" v-show="morphDataReady">
+      <morph :definitions="definitions" :id="morphComponentID" :lexemes="lexemes"
+             :linkedfeatures="linkedfeatures" @sendfeature="sendFeature">
+      </morph>
 
-            <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
-                <div class="alpheios-popup__morph-cont-providers-header">{{data.l10n.messages.LABEL_POPUP_CREDITS.get()}}</div>
-                <div class="alpheios-popup__morph-cont-providers-source" v-for="p in data.providers">
-                    {{ p.toString() }}
-                </div>
-            </div>
+      <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
+        <div class="alpheios-popup__morph-cont-providers-header">{{data.l10n.messages.LABEL_POPUP_CREDITS.get()}}</div>
+        <div class="alpheios-popup__morph-cont-providers-source" v-for="p in data.providers">
+          {{ p.toString() }}
         </div>
-        <div class="alpheios-popup__providers">
-            <img class="alpheios-popup__logo" src="../../images/icon.png">
-            <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
-        </div>
-        <div class="alpheios-popup__notifications alpheios-text-small" :class="notificationClasses"
-             v-show="data.notification.important">
+      </div>
+    </div>
+    <div class="alpheios-popup__providers">
+      <img class="alpheios-popup__logo" src="../../images/icon.png">
+      <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
+    </div>
+    <div :class="notificationClasses" class="alpheios-popup__notifications alpheios-text-small"
+         v-show="data.notification.important">
             <span @click="closeNotifications" class="alpheios-popup__notifications-close-btn">
                 <close-icon></close-icon>
             </span>
-            <span v-html="data.notification.text"></span>
-            <setting :data="data.settings.preferredLanguage" :show-title="false"
-                     :classes="['alpheios-popup__notifications--lang-switcher']" @change="settingChanged"
-                     v-show="data.notification.showLanguageSwitcher"></setting>
-        </div>
+      <span v-html="data.notification.text"></span>
+      <setting :classes="['alpheios-popup__notifications--lang-switcher']" :data="data.settings.preferredLanguage"
+               :show-title="false" @change="settingChanged"
+               v-show="data.notification.showLanguageSwitcher"></setting>
     </div>
+  </div>
 </template>
 <script>
 /*
   This is an example of a modified popup component that changes a popup template
   */
 import PopupBase from './popup.vue'
+
 export default {
   extends: PopupBase,
   mounted () {
@@ -67,7 +74,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    .alpheios-popup.alpheios-popup--mobile {
-        padding-top: 25px;
-    }
+  .alpheios-popup.alpheios-popup--mobile {
+    padding-top: 25px;
+  }
 </style>

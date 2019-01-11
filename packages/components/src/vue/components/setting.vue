@@ -1,16 +1,18 @@
 <template>
-      <div :class="classes" v-if="data && Object.keys(data).length > 0">
-        <label class="uk-form-label alpheios-setting__label" v-show="showTitle">{{data.labelText}}</label>
-        <multiselect v-model="selected" :options="values" :multiple="true" :searchable ="false" :close-on-select="true" :clear-on-select="false" :hide-selected="true" :preserve-search="true" placeholder="Pick some" v-if="data.multiValue">
-        </multiselect>
-        <div class="alpheios-checkbox-block" v-if="data.boolean">
-            <input type="checkbox" v-model="selected" id="alpheios-checkbox-input">
-            <label for="checkbox" @click="checkboxClick">{{ checkboxLabel }}</label>
-        </div>
-        <select v-model="selected" class="uk-select" v-if="!data.multiValue && !data.boolean">
-            <option v-for="item in values">{{item}}</option>
-        </select>
+  <div :class="classes" v-if="data && Object.keys(data).length > 0">
+    <label class="uk-form-label alpheios-setting__label" v-show="showTitle">{{data.labelText}}</label>
+    <multiselect :clear-on-select="false" :close-on-select="true" :hide-selected="true" :multiple="true" :options="values"
+                 :preserve-search="true" :searchable="false" placeholder="Pick some" v-if="data.multiValue"
+                 v-model="selected">
+    </multiselect>
+    <div class="alpheios-checkbox-block" v-if="data.boolean">
+      <input id="alpheios-checkbox-input" type="checkbox" v-model="selected">
+      <label @click="checkboxClick" for="checkbox">{{ checkboxLabel }}</label>
     </div>
+    <select class="uk-select" v-if="!data.multiValue && !data.boolean" v-model="selected">
+      <option v-for="item in values">{{item}}</option>
+    </select>
+  </div>
 </template>
 <script>
 import Multiselect from 'vue-multiselect'
@@ -78,6 +80,7 @@ export default {
   .alpheios-setting__label {
     display: block;
   }
+
   .alpheios-setting__label {
     vertical-align: middle;
   }

@@ -1,82 +1,83 @@
 <template>
-    <div :id="elementIDs.content">
-        <div v-if="waitState" class="alpheios-inflections__placeholder">
-            <div class="alpheios-inflections__progress-wrapper">
-                <div class="alpheios-inflections__progress-border">
-                    <div class="alpheios-inflections__progress-whitespace">
-                        <div class="alpheios-inflections__progress-line"></div>
-                        <div class="alpheios-inflections__progress-text">
-                            {{ln10Messages('PLACEHOLDER_INFLECT_IN_PROGRESS')}}
-                        </div>
-                    </div>
-                </div>
+  <div :id="elementIDs.content">
+    <div class="alpheios-inflections__placeholder" v-if="waitState">
+      <div class="alpheios-inflections__progress-wrapper">
+        <div class="alpheios-inflections__progress-border">
+          <div class="alpheios-inflections__progress-whitespace">
+            <div class="alpheios-inflections__progress-line"></div>
+            <div class="alpheios-inflections__progress-text">
+              {{ln10Messages('PLACEHOLDER_INFLECT_IN_PROGRESS')}}
             </div>
+          </div>
         </div>
-        <div v-else-if="inflectionsEnabled && hasMatchingViews" class="alpheios-inflections__content">
-            <div v-show="partsOfSpeech.length > 1">
-                <label class="uk-form-label">{{ln10Messages('LABEL_INFLECT_SELECT_POFS')}}</label>
-                <select v-model="partOfSpeechSelector" class="uk-select alpheios-inflections__view-selector alpheios-text__smallest">
-                    <option v-for="partOfSpeech in partsOfSpeech">{{partOfSpeech}}</option>
-                </select>
-            </div>
-            <div class="alpheios-inflections__actions">
-                <word-forms
-                        :partOfSpeech = "selectedView.constructor.mainPartOfSpeech"
-                        :targetWord = "selectedView.homonym.targetWord"
-                        :lexemes = "selectedView.homonym.lexemes"
-                        v-if="selectedView && selectedView.homonym">
-                </word-forms>
-                <div v-show="views.length > 1">
-                    <select v-model="viewSelector" class="uk-select alpheios-inflections__view-selector alpheios-text__smallest">
-                        <option v-for="view in views" :value="view.id">{{view.name}}</option>
-                    </select>
-                </div>
-            </div>
-
-            <div v-if="data.inflectionData"
-                 v-show="showExplanatoryHint"
-                 class="alpheios-inflections__paradigms-expl"
-                 v-html="messages.INFLECTIONS_PARADIGMS_EXPLANATORY_HINT.get(data.inflectionData.targetWord)">
-            </div>
-
-            <div v-if="!selectedView.hasPrerenderedTables">
-                <main-table-wide-vue :view="selectedView" :messages="messages" @widthchange="updateWidth" :collapsed="false">
-                </main-table-wide-vue>
-
-                <template v-if="selectedView.linkedViews" v-for="linkedView in selectedView.linkedViews">
-                    <main-table-wide-vue :view="linkedView" :messages="messages" @widthchange="updateWidth" :collapsed="false">
-                    </main-table-wide-vue>
-                </template>
-
-                <div :id="elementIDs.footnotes" class="alpheios-inflections__footnotes">
-                    <template v-for="footnote in footnotes">
-                        <dt>{{footnote.index}}</dt>
-                        <dd>{{footnote.text}}</dd>
-                    </template>
-                </div>
-            </div>
-            <template v-else>
-                <prerendered-table-wide :view="selectedView" :collapsed="false"></prerendered-table-wide>
-                <sub-tables-wide :view="selectedView" @navigate="navigate" :collapsed="false"></sub-tables-wide>
-
-                <div v-show="selectedView.hasSuppParadigms" class="alpheios-inflections__supp-tables">
-                    <template v-for="paradigm of selectedView.suppParadigms">
-                        <supp-tables-wide :data="paradigm"
-                                          :bg-color="selectedView.hlSuppParadigms ? selectedView.suppHlColors.get(paradigm.paradigmID) : 'transparent'"
-                                          :messages="messages" @navigate="navigate"></supp-tables-wide>
-                    </template>
-                </div>
-            </template>
-
-            <div v-show="selectedView.hasCredits" class="alpheios-inflections__credits-cont">
-                <h3 class="alpheios-inflections__credits-title">{{ln10Messages('INFLECTIONS_CREDITS_TITLE')}}</h3>
-                <div v-html="selectedView.creditsText" class="alpheios-inflections__credits-text"></div>
-            </div>
-        </div>
-        <div v-else class="alpheios-inflections__placeholder">
-            {{ln10Messages('PLACEHOLDER_INFLECT_UNAVAILABLE')}}
-        </div>
+      </div>
     </div>
+    <div class="alpheios-inflections__content" v-else-if="inflectionsEnabled && hasMatchingViews">
+      <div v-show="partsOfSpeech.length > 1">
+        <label class="uk-form-label">{{ln10Messages('LABEL_INFLECT_SELECT_POFS')}}</label>
+        <select class="uk-select alpheios-inflections__view-selector alpheios-text__smallest"
+                v-model="partOfSpeechSelector">
+          <option v-for="partOfSpeech in partsOfSpeech">{{partOfSpeech}}</option>
+        </select>
+      </div>
+      <div class="alpheios-inflections__actions">
+        <word-forms
+            :lexemes="selectedView.homonym.lexemes"
+            :partOfSpeech="selectedView.constructor.mainPartOfSpeech"
+            :targetWord="selectedView.homonym.targetWord"
+            v-if="selectedView && selectedView.homonym">
+        </word-forms>
+        <div v-show="views.length > 1">
+          <select class="uk-select alpheios-inflections__view-selector alpheios-text__smallest" v-model="viewSelector">
+            <option :value="view.id" v-for="view in views">{{view.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="alpheios-inflections__paradigms-expl"
+           v-html="messages.INFLECTIONS_PARADIGMS_EXPLANATORY_HINT.get(data.inflectionData.targetWord)"
+           v-if="data.inflectionData"
+           v-show="showExplanatoryHint">
+      </div>
+
+      <div v-if="!selectedView.hasPrerenderedTables">
+        <main-table-wide-vue :collapsed="false" :messages="messages" :view="selectedView" @widthchange="updateWidth">
+        </main-table-wide-vue>
+
+        <template v-for="linkedView in selectedView.linkedViews" v-if="selectedView.linkedViews">
+          <main-table-wide-vue :collapsed="false" :messages="messages" :view="linkedView" @widthchange="updateWidth">
+          </main-table-wide-vue>
+        </template>
+
+        <div :id="elementIDs.footnotes" class="alpheios-inflections__footnotes">
+          <template v-for="footnote in footnotes">
+            <dt>{{footnote.index}}</dt>
+            <dd>{{footnote.text}}</dd>
+          </template>
+        </div>
+      </div>
+      <template v-else>
+        <prerendered-table-wide :collapsed="false" :view="selectedView"></prerendered-table-wide>
+        <sub-tables-wide :collapsed="false" :view="selectedView" @navigate="navigate"></sub-tables-wide>
+
+        <div class="alpheios-inflections__supp-tables" v-show="selectedView.hasSuppParadigms">
+          <template v-for="paradigm of selectedView.suppParadigms">
+            <supp-tables-wide :bg-color="selectedView.hlSuppParadigms ? selectedView.suppHlColors.get(paradigm.paradigmID) : 'transparent'"
+                              :data="paradigm"
+                              :messages="messages" @navigate="navigate"></supp-tables-wide>
+          </template>
+        </div>
+      </template>
+
+      <div class="alpheios-inflections__credits-cont" v-show="selectedView.hasCredits">
+        <h3 class="alpheios-inflections__credits-title">{{ln10Messages('INFLECTIONS_CREDITS_TITLE')}}</h3>
+        <div class="alpheios-inflections__credits-text" v-html="selectedView.creditsText"></div>
+      </div>
+    </div>
+    <div class="alpheios-inflections__placeholder" v-else>
+      {{ln10Messages('PLACEHOLDER_INFLECT_UNAVAILABLE')}}
+    </div>
+  </div>
 </template>
 <script>
 // Subcomponents
@@ -87,10 +88,9 @@ import WideSuppTable from './inflections-supp-table-wide.vue'
 import WordForms from './wordforms.vue'
 
 import Tooltip from './tooltip.vue'
-
 // Other dependencies
 import { Constants } from 'alpheios-data-models'
-import { ViewSetFactory, L10n } from 'alpheios-inflection-tables'
+import { L10n, ViewSetFactory } from 'alpheios-inflection-tables'
 
 import Vue from 'vue/dist/vue'
 
@@ -122,9 +122,9 @@ export default {
       required: true
     },
     /*
-      Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
-      inflections data is calculated
-      */
+        Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
+        inflections data is calculated
+        */
     waitState: {
       type: Boolean,
       default: false,
@@ -218,14 +218,14 @@ export default {
     },
 
     /*
-      An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-      use this information to adjust a width of a container that displays an inflection component. However, a width
-      of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
-      an inflection table width and notify a parent component only when a parent container is visible.
-      A parent component will notify us of that by setting a `visible` property. A change of that property state
-      will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
-      as it won't be used by anything and thus will not be calculated by Vue.
-       */
+        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
+        use this information to adjust a width of a container that displays an inflection component. However, a width
+        of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
+        an inflection table width and notify a parent component only when a parent container is visible.
+        A parent component will notify us of that by setting a `visible` property. A change of that property state
+        will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
+        as it won't be used by anything and thus will not be calculated by Vue.
+         */
     isVisible: function (visibility) {
       if (visibility && this.htmlElements.content) {
         // If container is become visible, update parent with its width
@@ -305,204 +305,207 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../styles/alpheios";
+  @import "../../styles/alpheios";
 
-    .alpheios-panel__tab-panel.alpheios-panel__tab__inflections {
-        padding: 0 0 20px;
-    }
+  .alpheios-panel__tab-panel.alpheios-panel__tab__inflections {
+    padding: 0 0 20px;
+  }
 
-    .alpheios-inflections__placeholder {
-        padding: 0 20px;
-        margin-bottom: 1rem;
-    }
+  .alpheios-inflections__placeholder {
+    padding: 0 20px;
+    margin-bottom: 1rem;
+  }
 
-    .alpheios-inflections__content {
-        padding: 0 20px;
-        border-bottom: 1px solid $alpheios-base-border-color;
-    }
+  .alpheios-inflections__content {
+    padding: 0 20px;
+    border-bottom: 1px solid $alpheios-base-border-color;
+  }
 
-    h3.alpheios-inflections__title {
-        line-height: 1;
-        margin: 0 0 0.6rem 0;
-        font-weight: 700;
-        text-align: center;
-    }
+  h3.alpheios-inflections__title {
+    line-height: 1;
+    margin: 0 0 0.6rem 0;
+    font-weight: 700;
+    text-align: center;
+  }
 
-    h4.alpheios-inflections__additional_title {
-      line-height: 1.6;
-      font-weight: bold;
-      text-align: left;
-      margin: 0 0 0.6rem 0;
-    }
-    .#{$alpheios-uikit-namespace} .uk-select.alpheios-inflections__view-selector {
-        height: auto !important;
-        max-width: 220px;
-        line-height: 1.6;
-    }
+  h4.alpheios-inflections__additional_title {
+    line-height: 1.6;
+    font-weight: bold;
+    text-align: left;
+    margin: 0 0 0.6rem 0;
+  }
 
-    .alpheios-inflections__actions {
-        display:flex;
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: space-between;
-        margin-bottom: 0.6rem;
-        margin-top: 10px;
-    }
+  .#{$alpheios-uikit-namespace} .uk-select.alpheios-inflections__view-selector {
+    height: auto !important;
+    max-width: 220px;
+    line-height: 1.6;
+  }
 
-    .alpheios-inflections__form {
-        font-weight: bold;
-        line-height: 1.2;
-        justify-content: flex-start;
-    }
+  .alpheios-inflections__actions {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    margin-top: 10px;
+  }
 
-    .alpheios-inflections__placeholder {
-        text-align: center;
-    }
+  .alpheios-inflections__form {
+    font-weight: bold;
+    line-height: 1.2;
+    justify-content: flex-start;
+  }
 
-    // region Footnotes
-    .alpheios-inflections__footnotes {
-        display: none;
-        grid-template-columns: 1.6rem 1fr;
-        font-size: 0.875rem;
-        line-height: 1.2;
-        margin-bottom: 2rem;
+  .alpheios-inflections__placeholder {
+    text-align: center;
+  }
 
-        dt {
-            font-weight: 700;
-        }
-    }
+  // region Footnotes
+  .alpheios-inflections__footnotes {
+    display: none;
+    grid-template-columns: 1.6rem 1fr;
+    font-size: 0.875rem;
+    line-height: 1.2;
+    margin-bottom: 2rem;
 
-    [data-footnote] {
-        position: relative;
-        padding-left: 2px;
-        vertical-align: super;
+    dt {
+      font-weight: 700;
     }
+  }
 
-    .alpheios-inflections__credits-cont {
-        margin-bottom: 10px;
-    }
+  [data-footnote] {
+    position: relative;
+    padding-left: 2px;
+    vertical-align: super;
+  }
 
-    h3.alpheios-inflections__credits-title {
-        font-size: $alpheios-base-font-size;
-        font-weight: 700;
-        color: $alpheios-toolbar-color;
-        margin-bottom: 0;
-    }
+  .alpheios-inflections__credits-cont {
+    margin-bottom: 10px;
+  }
 
-    .alpheios-inflections__credits-text {
-        font-size: 0.75*$alpheios-base-font-size;
-        font-weight: normal;
-        color: $alpheios-toolbar-active-color;
-        font-style: italic;
-        padding: 5px;
-    }
+  h3.alpheios-inflections__credits-title {
+    font-size: $alpheios-base-font-size;
+    font-weight: 700;
+    color: $alpheios-toolbar-color;
+    margin-bottom: 0;
+  }
 
-    .alpheios-inflections__paradigms-expl {
-        font-size: 0.75*$alpheios-base-font-size;
-        font-weight: normal;
-        color: $alpheios-toolbar-active-color;
-        font-style: italic;
-        margin: 20px 0 10px;
-    }
+  .alpheios-inflections__credits-text {
+    font-size: 0.75*$alpheios-base-font-size;
+    font-weight: normal;
+    color: $alpheios-toolbar-active-color;
+    font-style: italic;
+    padding: 5px;
+  }
 
-    .alpheios-inflections__paradigms-expl span {
-        color: $alpheios-toolbar-color;
-        font-weight: 700;
-    }
+  .alpheios-inflections__paradigms-expl {
+    font-size: 0.75*$alpheios-base-font-size;
+    font-weight: normal;
+    color: $alpheios-toolbar-active-color;
+    font-style: italic;
+    margin: 20px 0 10px;
+  }
 
-    .alpheios-inflections__supp-tables {
-        margin-top: 4rem;
-    }
-    // endregion Footnotes
+  .alpheios-inflections__paradigms-expl span {
+    color: $alpheios-toolbar-color;
+    font-weight: 700;
+  }
 
-    // region Wait animation
-    $inflections-anim-min-width: 300px;
-    .alpheios-inflections__progress-wrapper {
-        height: 1.2rem;
-        margin: 0 1rem 2rem;
-        font-size: 0.875rem;
-    }
+  .alpheios-inflections__supp-tables {
+    margin-top: 4rem;
+  }
 
-    .alpheios-inflections__progress-border {
-        border: 2px solid $alpheios-icon-color;
-        min-width: $inflections-anim-min-width;
-        height: 100%;
-        padding: 2px;
-    }
+  // endregion Footnotes
 
-    .alpheios-inflections__progress-whitespace {
-        overflow: hidden;
-        height: 100%;
-        margin: 0 auto;
-        position: relative;
-    }
+  // region Wait animation
+  $inflections-anim-min-width: 300px;
+  .alpheios-inflections__progress-wrapper {
+    height: 1.2rem;
+    margin: 0 1rem 2rem;
+    font-size: 0.875rem;
+  }
 
-    .alpheios-inflections__progress-line {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        background-color: $alpheios-icon-color;
-        animation: cssload-slide 5.75s steps(40) infinite;
-    }
+  .alpheios-inflections__progress-border {
+    border: 2px solid $alpheios-icon-color;
+    min-width: $inflections-anim-min-width;
+    height: 100%;
+    padding: 2px;
+  }
 
-    .alpheios-inflections__progress-whitespace div.alpheios-inflections__progress-text,
-    .alpheios-inflections__progress-text {
-        text-transform: uppercase;
-        color: $alpheios-copy-color;
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: $inflections-anim-min-width;
-        font-size: 13px;
-        top: 3px;
-    }
+  .alpheios-inflections__progress-whitespace {
+    overflow: hidden;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
 
-    @keyframes cssload-slide {
-        0% {
-            left: -100%;
-        }
-        100% {
-            left: 100%;
-        }
-    }
+  .alpheios-inflections__progress-line {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: $alpheios-icon-color;
+    animation: cssload-slide 5.75s steps(40) infinite;
+  }
 
-    @-o-keyframes cssload-slide {
-        0% {
-            left: -100%;
-        }
-        100% {
-            left: 100%;
-        }
-    }
+  .alpheios-inflections__progress-whitespace div.alpheios-inflections__progress-text,
+  .alpheios-inflections__progress-text {
+    text-transform: uppercase;
+    color: $alpheios-copy-color;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: $inflections-anim-min-width;
+    font-size: 13px;
+    top: 3px;
+  }
 
-    @-ms-keyframes cssload-slide {
-        0% {
-            left: -100%;
-        }
-        100% {
-            left: 100%;
-        }
+  @keyframes cssload-slide {
+    0% {
+      left: -100%;
     }
+    100% {
+      left: 100%;
+    }
+  }
 
-    @-webkit-keyframes cssload-slide {
-        0% {
-            left: -100%;
-        }
-        100% {
-            left: 100%;
-        }
+  @-o-keyframes cssload-slide {
+    0% {
+      left: -100%;
     }
+    100% {
+      left: 100%;
+    }
+  }
 
-    @-moz-keyframes cssload-slide {
-        0% {
-            left: -100%;
-        }
-        100% {
-            left: 100%;
-        }
+  @-ms-keyframes cssload-slide {
+    0% {
+      left: -100%;
     }
-    // endregion Wait animation
+    100% {
+      left: 100%;
+    }
+  }
+
+  @-webkit-keyframes cssload-slide {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  @-moz-keyframes cssload-slide {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  // endregion Wait animation
 </style>

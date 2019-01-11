@@ -1,7 +1,7 @@
 <template>
-    <div class="alpheios-treebank">
-        <iframe class="alpheios-treebank__frame" :src="srcUrl"></iframe>
-    </div>
+  <div class="alpheios-treebank">
+    <iframe :src="srcUrl" class="alpheios-treebank__frame"></iframe>
+  </div>
 </template>
 <script>
 export default {
@@ -63,14 +63,14 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../styles/alpheios";
+  @import "../../styles/alpheios";
 
-    .alpheios-treebank {
-        display: flex;
-        flex-direction: column;
-    }
+  .alpheios-treebank {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .alpheios-treebank__frame {
-        flex: 1 1 100vh;
-    }
+  .alpheios-treebank__frame {
+    flex: 1 1 100vh;
+  }
 </style>
