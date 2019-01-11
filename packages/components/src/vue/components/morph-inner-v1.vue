@@ -106,132 +106,130 @@
   </div><!--alpheios-morph__dictentry-->
 </template>
 <script>
-  import { LanguageModelFactory, Feature, GrmFeature } from 'alpheios-data-models'
-  import ShortDef from './shortdef.vue'
-  import InflectionAttribute from './infl-attribute.vue'
+import { LanguageModelFactory, Feature, GrmFeature } from 'alpheios-data-models'
+import ShortDef from './shortdef.vue'
+import InflectionAttribute from './infl-attribute.vue'
 
-  import LemmaTranslation from './lemma-translation.vue'
+import LemmaTranslation from './lemma-translation.vue'
 
-  export default {
-    name: 'MorphInner',
-    components: {
-      shortdef: ShortDef,
-      inflectionattribute: InflectionAttribute,
-      lemmatranslation: LemmaTranslation
+export default {
+  name: 'MorphInner',
+  components: {
+    shortdef: ShortDef,
+    inflectionattribute: InflectionAttribute,
+    lemmatranslation: LemmaTranslation
+  },
+  props: {
+    lex: {
+      type: Object,
+      required: true
     },
-    props: {
-        lex: {
-          type: Object,
-          required: true
-        },
-        index: {
-          type: Number,
-          required: true
-        },
-        count: {
-          type: Number,
-          required: true
-        },
-        definitions: {
-          type: Array,
-          required: false,
-          default: () => []
-        },
-        linkedfeatures: {
-          type: Array,
-          required: false,
-          default: () => []
-        },
-        translations: {
-          type: Object,
-          required: false,
-          default: () => {}
-        },
-        morphDataReady: {
-          type: Boolean,
-          required: true
-        },
-        messages: {
-          type: Object,
-          required: false
-        }
+    index: {
+      type: Number,
+      required: true
     },
-    data: function () {
-      return {
-        showSource: false
+    count: {
+      type: Number,
+      required: true
+    },
+    definitions: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    linkedfeatures: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    translations: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    morphDataReady: {
+      type: Boolean,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: false
+    }
+  },
+  data: function () {
+    return {
+      showSource: false
+    }
+  },
+  created: function () {
+    this.types = Feature.types
+  },
+  computed: {
+    allLemmas () {
+      if (this.lex.altLemmas && this.lex.altLemmas.length > 0) {
+        return [this.lex.lemma, ...this.lex.altLemmas].sort((a, b) => {
+          if (a.features[Feature.types.frequency]) {
+            return a.features[Feature.types.frequency].compareTo(b.features[Feature.types.frequency])
+          } else if (b.features[Feature.types.frequency]) {
+            // frequency of a isn't defined so sort b first
+            return 1
+          } else {
+            // equal
+            return 0
+          }
+        })
+      } else {
+        return [this.lex.lemma]
       }
     },
-    created: function () {
-      this.types = Feature.types
-    },
-    computed: {
-      allLemmas () {
-        if (this.lex.altLemmas && this.lex.altLemmas.length > 0) {
-          return [this.lex.lemma, ...this.lex.altLemmas].sort((a,b) => {
-            if (a.features[Feature.types.frequency]) {
-              return a.features[Feature.types.frequency].compareTo(b.features[Feature.types.frequency])
-            } else if (b.features[Feature.types.frequency]) {
-              // frequency of a isn't defined so sort b first
-              return 1
-            } else {
-              // equal
-              return 0
-            }
-          })
-        } else {
-          return [this.lex.lemma]
-        }
-      },
-      morphClass () {
-        let c = "alpheios-morph__dictentry"
-        if (this.lex.disambiguated) {
-          c = `${c} alpheios-morph__dictentry-disambiguated`
-        }
-        return c
-
-      },
-      inflections: {
-        get: function() {
-          return (this.morphDataReady && this.lex.getGroupedInflections) ? this.lex.getGroupedInflections() : []
-        }
+    morphClass () {
+      let c = 'alpheios-morph__dictentry'
+      if (this.lex.disambiguated) {
+        c = `${c} alpheios-morph__dictentry-disambiguated`
       }
+      return c
     },
-    methods: {
-      groupClass(group) {
-        return group.groupingKey.isCaseInflectionSet ? 'alpheios-morph__inline' : 'alpheios-morph__block'
-      },
-      featureMatch (a, b) {
-        if (a && b) {
-          return a.isEqual(b)
-        }
-        return false
-
-      },
-      sendFeature (data) {
-        this.$emit('sendfeature',data)
-      },
-      getFeature (lemma, type) {
-        if (lemma.features[type] !== undefined) {
-          return lemma.features[type].value
-        }
-        return undefined
-      },
-      definitionIndex (index) {
-        let letters = "abcdefghijklmnopqrstuvwxyz"
-        return letters.substr(index, 1) + '.'
-      },
-      featureList(lemma,features,name) {
-        let list = features.map(i => lemma.features[i] ? lemma.features[i]: null).filter(i => i)
-        list = list.length > 0 ? `(${list.map((f)=>f).join(', ')})` : ''
-        let returnObj = {}
-        returnObj[name] = { value: list, values: [list] }
-        return returnObj
-      },
-      languageCode (languageID) {
-        return LanguageModelFactory.getLanguageCodeFromId(languageID)
+    inflections: {
+      get: function () {
+        return (this.morphDataReady && this.lex.getGroupedInflections) ? this.lex.getGroupedInflections() : []
       }
     }
+  },
+  methods: {
+    groupClass (group) {
+      return group.groupingKey.isCaseInflectionSet ? 'alpheios-morph__inline' : 'alpheios-morph__block'
+    },
+    featureMatch (a, b) {
+      if (a && b) {
+        return a.isEqual(b)
+      }
+      return false
+    },
+    sendFeature (data) {
+      this.$emit('sendfeature', data)
+    },
+    getFeature (lemma, type) {
+      if (lemma.features[type] !== undefined) {
+        return lemma.features[type].value
+      }
+      return undefined
+    },
+    definitionIndex (index) {
+      let letters = 'abcdefghijklmnopqrstuvwxyz'
+      return letters.substr(index, 1) + '.'
+    },
+    featureList (lemma, features, name) {
+      let list = features.map(i => lemma.features[i] ? lemma.features[i] : null).filter(i => i)
+      list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
+      let returnObj = {}
+      returnObj[name] = { value: list, values: [list] }
+      return returnObj
+    },
+    languageCode (languageID) {
+      return LanguageModelFactory.getLanguageCodeFromId(languageID)
+    }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";

@@ -84,89 +84,88 @@
   </div>
 </template>
 <script>
-  import { LanguageModelFactory, GrmFeature } from 'alpheios-data-models'
-  import ShortDef from './shortdef.vue'
-  import InflectionAttribute from './infl-attribute.vue'
+import { LanguageModelFactory, GrmFeature } from 'alpheios-data-models'
+import ShortDef from './shortdef.vue'
+import InflectionAttribute from './infl-attribute.vue'
 
-  import LemmaTranslation from './lemma-translation.vue'
+import LemmaTranslation from './lemma-translation.vue'
 
-  export default {
-    name: 'MorphInner',
-    components: { shortdef: ShortDef, inflectionattribute: InflectionAttribute, lemmatranslation: LemmaTranslation },
-    props: {
-        lex: {
-          type: Object,
-          required: true
-        },
-        index: {
-          type: Number,
-          required: true
-        },
-        count: {
-          type: Number,
-          required: true
-        },
-        definitions: {
-          type: Array,
-          required: false,
-          default: () => {[]}
-        },
-        linkedfeatures: {
-          type: Array,
-          required: false,
-          default: () => []
-        },
-        translations: {
-          type: Object,
-          required: false,
-          default: () => {}
-        },
-        morphDataReady: {
-          type: Boolean,
-          required: true
-        }
+export default {
+  name: 'MorphInner',
+  components: { shortdef: ShortDef, inflectionattribute: InflectionAttribute, lemmatranslation: LemmaTranslation },
+  props: {
+    lex: {
+      type: Object,
+      required: true
     },
-    data: function () {
-      return {
-        showSource: false
-      }
+    index: {
+      type: Number,
+      required: true
     },
-    created: function () {
-      this.types = GrmFeature.types
+    count: {
+      type: Number,
+      required: true
     },
-    computed: {
-      inflections: {
-        get: function() {
-          return this.morphDataReady ? this.lex.getGroupedInflections() : []
-        }
-      }
+    definitions: {
+      type: Array,
+      required: false,
+      default: () => { [] }
     },
-    methods: {
-      groupClass(group) {
-        return group.groupingKey.isCaseInflectionSet ? 'alpheios-morph__inline' : 'alpheios-morph__block'
-      },
-      featureMatch (a, b) {
-        if (a && b) {
-          return a.isEqual(b)
-        }
-        return false
-
-      },
-      sendFeature (data) {
-        this.$emit('sendfeature',data)
-      },
-      featureList(lemma,features,name) {
-        let list = features.map(i => lemma.features[i] ? GrmFeature.toFeature(lemma.features[i]): null).filter(i => i)
-        list = list.length > 0 ? `(${list.map((f)=>f).join(', ')})` : ''
-        let returnObj = {}
-        returnObj[name] = { value: list }
-        return returnObj
-      },
-      languageCode (languageID) {
-        return LanguageModelFactory.getLanguageCodeFromId(languageID)
+    linkedfeatures: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    translations: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    morphDataReady: {
+      type: Boolean,
+      required: true
+    }
+  },
+  data: function () {
+    return {
+      showSource: false
+    }
+  },
+  created: function () {
+    this.types = GrmFeature.types
+  },
+  computed: {
+    inflections: {
+      get: function () {
+        return this.morphDataReady ? this.lex.getGroupedInflections() : []
       }
     }
+  },
+  methods: {
+    groupClass (group) {
+      return group.groupingKey.isCaseInflectionSet ? 'alpheios-morph__inline' : 'alpheios-morph__block'
+    },
+    featureMatch (a, b) {
+      if (a && b) {
+        return a.isEqual(b)
+      }
+      return false
+    },
+    sendFeature (data) {
+      this.$emit('sendfeature', data)
+    },
+    featureList (lemma, features, name) {
+      let list = features.map(i => lemma.features[i] ? GrmFeature.toFeature(lemma.features[i]) : null).filter(i => i)
+      list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
+      let returnObj = {}
+      returnObj[name] = { value: list }
+      return returnObj
+    },
+    languageCode (languageID) {
+      return LanguageModelFactory.getLanguageCodeFromId(languageID)
+    }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";

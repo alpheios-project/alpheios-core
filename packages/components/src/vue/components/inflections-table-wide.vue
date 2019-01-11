@@ -70,187 +70,187 @@
     </div>
 </template>
 <script>
-  import InflFootnote from './infl-footnote.vue'
-  import Tooltip from './tooltip.vue'
+import InflFootnote from './infl-footnote.vue'
+import Tooltip from './tooltip.vue'
 
-  export default {
-    name: 'WideInflectionsTableStandardForm',
-    components: {
-      inflFootnote: InflFootnote,
-      alphTooltip: Tooltip,
+export default {
+  name: 'WideInflectionsTableStandardForm',
+  components: {
+    inflFootnote: InflFootnote,
+    alphTooltip: Tooltip
+  },
+  props: {
+    // An inflection table view
+    view: {
+      type: [Object, Boolean],
+      required: true
     },
-    props: {
-      // An inflection table view
-      view: {
-        type: [Object, Boolean],
-        required: true
-      },
-      messages: {
-        type: Object,
-        required: true
-      },
-      collapsed: {
-        type: [Boolean],
-        default: true,
-        required: false
-      },
-      // Indicate if this is a table for the inflection browser
-      inflBrowserTable: {
-        type: [Boolean],
-        default: false,
-        required: false
-      }
+    messages: {
+      type: Object,
+      required: true
     },
-
-    data: function () {
-      return {
-        state: {
-          collapsed: true,
-          noSuffixGroupsHidden: true
-        },
-        classes: {
-          fullMorphologyMatch: 'infl-cell--morph-match'
-        },
-        options: {
-          emptyColumnsHidden: true,
-          noSuffixMatchesHidden: true
-        }
-      }
+    collapsed: {
+      type: [Boolean],
+      default: true,
+      required: false
     },
+    // Indicate if this is a table for the inflection browser
+    inflBrowserTable: {
+      type: [Boolean],
+      default: false,
+      required: false
+    }
+  },
 
-    computed: {
-      tableStyles: function ()  {
-        return {
-          gridTemplateColumns: `repeat(${this.view.wideView.visibleColumnQty + this.view.wideView.titleColumnQty}, 1fr)`
-        }
-      }
-    },
-
-    methods: {
-      collapse: function () {
-        if (!this.view.isRendered) {
-          this.view.render(this.options)
-        }
-        this.state.collapsed = !this.state.collapsed
-        if (this.view.isImplemented) {
-          this.view.wideView.collapsed = this.state.collapsed
-        }
-        this.$emit('widthchange') // When view is open, we might need to adjust a panel width
+  data: function () {
+    return {
+      state: {
+        collapsed: true,
+        noSuffixGroupsHidden: true
       },
-
-      hideNoSuffixGroups: function () {
-        this.view.noSuffixMatchesGroupsHidden(true)
-        this.state.noSuffixGroupsHidden = true
-        this.$emit('widthchange')
+      classes: {
+        fullMorphologyMatch: 'infl-cell--morph-match'
       },
-
-      showNoSuffixGroups: function () {
-        this.view.noSuffixMatchesGroupsHidden(false)
-        this.state.noSuffixGroupsHidden = false
-        this.$emit('widthchange')
-      },
-
-      // Cell classes for regular tables
-      cellClasses: function (cell) {
-        let classes = {
-          ['infl-cell']: true,
-          ['infl-cell--morph-match']: cell.morphologyMatch,
-          ['infl-cell--hl']: cell.highlighted,
-          ['hidden']: cell.hidden
-        }
-
-        if (cell.constructor.name === 'HeaderCell') {
-          classes['infl-cell--hdr'] = true
-          classes[`infl-cell--sp${cell.span}`] = true
-        }
-
-        if (cell.constructor.name === 'RowTitleCell') {
-          classes['row-title-cell'] = true
-          classes['infl-cell--hdr'] = cell.formsColumn
-          if (cell.fullWidth) {
-            classes['infl-cell--fw'] = true
-          } else {
-            classes[`infl-cell--sp${cell.span}`] = true
-          }
-        }
-
-        if (this.inflBrowserTable) {
-          // Do not show full morphology matches in an inflection browser
-          classes['infl-cell--morph-match'] = false
-        }
-
-        return classes
-      },
-
-      // Cell classes for pre-rendered tables
-      // TODO: merge with `cellClasses()`
-      prerenderedCellClasses: function (cell) {
-        switch (cell.role) {
-          case 'label':
-            return 'infl-prdgm-tbl-cell--label'
-          case 'data':
-            return 'infl-prdgm-tbl-cell--data'
-        }
-      },
-
-      morphemeClasses: function (morpheme) {
-        if (this.inflBrowserTable) {
-          return {
-            ['infl-suff']: true
-          }
-        } else {
-          return {
-            ['infl-suff']: true,
-            ['infl-suff--suffix-match']: morpheme.match.suffixMatch,
-            ['infl-suff--full-match']: morpheme.match.fullMatch
-          }
-        }
-      },
-
-      cellMouseOver: function (cell) {
-        if (cell.isDataCell) {
-          cell.highlightRowAndColumn()
-        }
-      },
-
-      cellMouseLeave: function (cell) {
-        if (cell.isDataCell) {
-          cell.clearRowAndColumnHighlighting()
-        }
-      },
-
-      ln10Messages: function (value, defaultValue = 'unknown') {
-        if (this.messages && this.messages[value]) {
-          return this.messages[value].get()
-        }
-        return defaultValue
-      }
-    },
-
-    watch: {
-      view: function () {
-        this.$emit('widthchange')
-        this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
-      },
-
-      collapsed: function (state) {
-        if (this.collapsed !== null) {
-          this.state.collapsed = state
-        }
-      }
-    },
-
-    mounted: function () {
-      if (this.inflBrowserTable) {
-        this.options.noSuffixMatchesHidden = false
-      }
-
-      // Set a default value by the parent component
-      if (this.collapsed !== null) {
-        this.state.collapsed = this.collapsed
+      options: {
+        emptyColumnsHidden: true,
+        noSuffixMatchesHidden: true
       }
     }
+  },
+
+  computed: {
+    tableStyles: function () {
+      return {
+        gridTemplateColumns: `repeat(${this.view.wideView.visibleColumnQty + this.view.wideView.titleColumnQty}, 1fr)`
+      }
+    }
+  },
+
+  methods: {
+    collapse: function () {
+      if (!this.view.isRendered) {
+        this.view.render(this.options)
+      }
+      this.state.collapsed = !this.state.collapsed
+      if (this.view.isImplemented) {
+        this.view.wideView.collapsed = this.state.collapsed
+      }
+      this.$emit('widthchange') // When view is open, we might need to adjust a panel width
+    },
+
+    hideNoSuffixGroups: function () {
+      this.view.noSuffixMatchesGroupsHidden(true)
+      this.state.noSuffixGroupsHidden = true
+      this.$emit('widthchange')
+    },
+
+    showNoSuffixGroups: function () {
+      this.view.noSuffixMatchesGroupsHidden(false)
+      this.state.noSuffixGroupsHidden = false
+      this.$emit('widthchange')
+    },
+
+    // Cell classes for regular tables
+    cellClasses: function (cell) {
+      let classes = {
+        'infl-cell': true,
+        'infl-cell--morph-match': cell.morphologyMatch,
+        'infl-cell--hl': cell.highlighted,
+        'hidden': cell.hidden
+      }
+
+      if (cell.constructor.name === 'HeaderCell') {
+        classes['infl-cell--hdr'] = true
+        classes[`infl-cell--sp${cell.span}`] = true
+      }
+
+      if (cell.constructor.name === 'RowTitleCell') {
+        classes['row-title-cell'] = true
+        classes['infl-cell--hdr'] = cell.formsColumn
+        if (cell.fullWidth) {
+          classes['infl-cell--fw'] = true
+        } else {
+          classes[`infl-cell--sp${cell.span}`] = true
+        }
+      }
+
+      if (this.inflBrowserTable) {
+        // Do not show full morphology matches in an inflection browser
+        classes['infl-cell--morph-match'] = false
+      }
+
+      return classes
+    },
+
+    // Cell classes for pre-rendered tables
+    // TODO: merge with `cellClasses()`
+    prerenderedCellClasses: function (cell) {
+      switch (cell.role) {
+        case 'label':
+          return 'infl-prdgm-tbl-cell--label'
+        case 'data':
+          return 'infl-prdgm-tbl-cell--data'
+      }
+    },
+
+    morphemeClasses: function (morpheme) {
+      if (this.inflBrowserTable) {
+        return {
+          'infl-suff': true
+        }
+      } else {
+        return {
+          'infl-suff': true,
+          'infl-suff--suffix-match': morpheme.match.suffixMatch,
+          'infl-suff--full-match': morpheme.match.fullMatch
+        }
+      }
+    },
+
+    cellMouseOver: function (cell) {
+      if (cell.isDataCell) {
+        cell.highlightRowAndColumn()
+      }
+    },
+
+    cellMouseLeave: function (cell) {
+      if (cell.isDataCell) {
+        cell.clearRowAndColumnHighlighting()
+      }
+    },
+
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.messages && this.messages[value]) {
+        return this.messages[value].get()
+      }
+      return defaultValue
+    }
+  },
+
+  watch: {
+    view: function () {
+      this.$emit('widthchange')
+      this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
+    },
+
+    collapsed: function (state) {
+      if (this.collapsed !== null) {
+        this.state.collapsed = state
+      }
+    }
+  },
+
+  mounted: function () {
+    if (this.inflBrowserTable) {
+      this.options.noSuffixMatchesHidden = false
+    }
+
+    // Set a default value by the parent component
+    if (this.collapsed !== null) {
+      this.state.collapsed = this.collapsed
+    }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";

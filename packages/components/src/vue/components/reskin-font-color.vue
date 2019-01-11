@@ -21,39 +21,39 @@
   </div>
 </template>
 <script>
-  import WhiteBrush from '../../images/inline-icons/white-brush.svg';
-  import BlackBrush from '../../images/inline-icons/black-brush.svg';
+import WhiteBrush from '../../images/inline-icons/white-brush.svg'
+import BlackBrush from '../../images/inline-icons/black-brush.svg'
 
-  import Tooltip from './tooltip.vue'
+import Tooltip from './tooltip.vue'
 
-  export default {
-    name: 'ReskinFontColor',
-    components: {
-      whiteBrush: WhiteBrush,
-      blackBrush: BlackBrush,
-      alphTooltip: Tooltip
+export default {
+  name: 'ReskinFontColor',
+  components: {
+    whiteBrush: WhiteBrush,
+    blackBrush: BlackBrush,
+    alphTooltip: Tooltip
+  },
+  props: {
+    showTitle: {
+      type: Boolean,
+      required: false,
+      default: true
     },
-    props: {
-      showTitle: {
-        type: Boolean,
-        required: false,
-        default: true
-      },
-      messages: {
-        type: Object,
-        required: true
-      }
-    },
-    data () {
-      return {
-      }
-    },
-    methods: {
-      changeStyleClass (name, type) {
-        this.$parent.$emit('changeStyleClass', name, type)
-      }
+    messages: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    changeStyleClass (name, type) {
+      this.$parent.$emit('changeStyleClass', name, type)
     }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";
@@ -91,7 +91,6 @@
             height: 90%;
         }
     }
-
 
     .alpheios-font_small_class #alpheios-reskin-panel  .alpheios-skin_properties_item__small_font {
         background: $alpheios-toolbar-active-color;

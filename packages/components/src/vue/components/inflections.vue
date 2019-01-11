@@ -79,145 +79,145 @@
     </div>
 </template>
 <script>
-  // Subcomponents
-  import WidePrerenderedTable from './inflections-table-prerendered.vue'
-  import WideTableVue from './inflections-table-wide.vue'
-  import WideSubTables from './inflections-subtables-wide.vue'
-  import WideSuppTable from './inflections-supp-table-wide.vue'
-  import WordForms from './wordforms.vue'
+// Subcomponents
+import WidePrerenderedTable from './inflections-table-prerendered.vue'
+import WideTableVue from './inflections-table-wide.vue'
+import WideSubTables from './inflections-subtables-wide.vue'
+import WideSuppTable from './inflections-supp-table-wide.vue'
+import WordForms from './wordforms.vue'
 
-  import Tooltip from './tooltip.vue'
+import Tooltip from './tooltip.vue'
 
-  // Other dependencies
-  import { Constants } from 'alpheios-data-models'
-  import { ViewSetFactory, L10n} from 'alpheios-inflection-tables'
+// Other dependencies
+import { Constants } from 'alpheios-data-models'
+import { ViewSetFactory, L10n } from 'alpheios-inflection-tables'
 
-  import Vue from 'vue/dist/vue'
+import Vue from 'vue/dist/vue'
 
-  export default {
-    name: 'Inflections',
-    components: {
-      prerenderedTableWide: WidePrerenderedTable,
-      mainTableWideVue: WideTableVue,
-      subTablesWide: WideSubTables,
-      suppTablesWide: WideSuppTable,
-      alphTooltip: Tooltip,
-      wordForms: WordForms
+export default {
+  name: 'Inflections',
+  components: {
+    prerenderedTableWide: WidePrerenderedTable,
+    mainTableWideVue: WideTableVue,
+    subTablesWide: WideSubTables,
+    suppTablesWide: WideSuppTable,
+    alphTooltip: Tooltip,
+    wordForms: WordForms
+  },
+
+  props: {
+    // Whether inflections component is enabled or not
+    inflectionsEnabled: {
+      type: Boolean,
+      default: false,
+      required: false
     },
 
-    props: {
-      // Whether inflections component is enabled or not
-      inflectionsEnabled: {
-        type: Boolean,
-        default: false,
-        required: false
-      },
-
-      data: {
-        type: Object,
-        required: true
-      },
-      messages: {
-        type: Object,
-        required: true
-      },
-      /*
+    data: {
+      type: Object,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: true
+    },
+    /*
       Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
       inflections data is calculated
       */
-      waitState: {
-        type: Boolean,
-        default: false,
-        required: false
+    waitState: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
+  },
+
+  data: function () {
+    return {
+      languageID: undefined,
+      events: {
+        EVENT: 'event',
+        DATA_UPDATE: 'dataUpdate'
+      },
+      hasInflectionData: false,
+      partsOfSpeech: [],
+      selectedPartOfSpeech: [],
+      views: [],
+      selectedViewName: '',
+      selectedView: {},
+      renderedView: {},
+      elementIDs: {
+        panelInner: 'alpheios-panel-inner',
+        footnotes: 'alph-inflection-footnotes'
+      },
+      htmlElements: {
+        content: undefined
+      },
+      canCollapse: false // Whether a selected view can be expanded or collapsed (it can't if has no suffix matches)
+    }
+  },
+
+  computed: {
+    isEnabled: function () {
+      return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled
+    },
+    hasMatchingViews: function () {
+      return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled && this.data.inflectionViewSet.hasMatchingViews
+    },
+    inflectionViewSet: function () {
+      return this.data.inflectionViewSet
+    },
+    // Need this for a watcher that will monitor a parent container visibility state
+    isVisible: function () {
+      return this.data.visible
+    },
+    partOfSpeechSelector: {
+      get: function () {
+        return this.selectedPartOfSpeech
+      },
+      set: function (newValue) {
+        this.selectedPartOfSpeech = newValue
+        this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
+        this.selectedView = this.views[0].render()
       }
     },
-
-    data: function () {
-      return {
-        languageID: undefined,
-        events: {
-          EVENT: 'event',
-          DATA_UPDATE: 'dataUpdate'
-        },
-        hasInflectionData: false,
-        partsOfSpeech: [],
-        selectedPartOfSpeech: [],
-        views: [],
-        selectedViewName: '',
-        selectedView: {},
-        renderedView: {},
-        elementIDs: {
-          panelInner: 'alpheios-panel-inner',
-          footnotes: 'alph-inflection-footnotes'
-        },
-        htmlElements: {
-          content: undefined,
-        },
-        canCollapse: false // Whether a selected view can be expanded or collapsed (it can't if has no suffix matches)
+    viewSelector: {
+      get: function () {
+        return this.selectedView ? this.selectedView.id : ''
+      },
+      set: function (newValue) {
+        this.selectedView = this.views.find(view => view.id === newValue).render()
       }
     },
-
-    computed: {
-      isEnabled: function () {
-        return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled
-      },
-      hasMatchingViews: function () {
-        return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled && this.data.inflectionViewSet.hasMatchingViews
-      },
-      inflectionViewSet: function () {
-        return this.data.inflectionViewSet
-      },
-      // Need this for a watcher that will monitor a parent container visibility state
-      isVisible: function () {
-        return this.data.visible
-      },
-      partOfSpeechSelector: {
-        get: function () {
-          return this.selectedPartOfSpeech
-        },
-        set: function (newValue) {
-          this.selectedPartOfSpeech = newValue
-          this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
-          this.selectedView = this.views[0].render()
-        }
-      },
-      viewSelector: {
-        get: function () {
-          return this.selectedView ? this.selectedView.id : ''
-        },
-        set: function (newValue) {
-          this.selectedView = this.views.find(view => view.id === newValue).render()
-        }
-      },
-      inflectionTable: function () {
-        return this.selectedView.id
-      },
-      footnotes: function () {
-        let footnotes = []
-        if (this.selectedView && this.selectedView.footnotes) {
-          footnotes = Array.from(this.selectedView.footnotes.values())
-        }
-        return footnotes
-      },
-      forms: function () {
-        let forms = []
-        if (this.selectedView && this.selectedView.forms) {
-          forms = Array.from(this.selectedView.forms.values())
-        }
-        return forms
-      },
-      showExplanatoryHint: function () {
-        return this.selectedView && this.selectedView.constructor && this.selectedView.constructor.name === 'GreekParadigmView'
+    inflectionTable: function () {
+      return this.selectedView.id
+    },
+    footnotes: function () {
+      let footnotes = []
+      if (this.selectedView && this.selectedView.footnotes) {
+        footnotes = Array.from(this.selectedView.footnotes.values())
       }
+      return footnotes
+    },
+    forms: function () {
+      let forms = []
+      if (this.selectedView && this.selectedView.forms) {
+        forms = Array.from(this.selectedView.forms.values())
+      }
+      return forms
+    },
+    showExplanatoryHint: function () {
+      return this.selectedView && this.selectedView.constructor && this.selectedView.constructor.name === 'GreekParadigmView'
+    }
+  },
+
+  watch: {
+    inflectionViewSet: function () {
+      this.initViewSet()
+      this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.data.inflectionViewSet)
     },
 
-    watch: {
-      inflectionViewSet: function () {
-        this.initViewSet()
-        this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.data.inflectionViewSet)
-      },
-
-      /*
+    /*
       An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
       use this information to adjust a width of a container that displays an inflection component. However, a width
       of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
@@ -226,84 +226,83 @@
       will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
       as it won't be used by anything and thus will not be calculated by Vue.
        */
-      isVisible: function (visibility) {
-        if (visibility && this.htmlElements.content) {
-          // If container is become visible, update parent with its width
-          this.updateWidth()
-          // Scroll to top if panel is reopened
-          this.navigate('top')
-        }
+    isVisible: function (visibility) {
+      if (visibility && this.htmlElements.content) {
+        // If container is become visible, update parent with its width
+        this.updateWidth()
+        // Scroll to top if panel is reopened
+        this.navigate('top')
       }
-    },
-
-    methods: {
-      initViewSet() {
-        this.hasInflectionData = false
-        if (this.data.inflectionViewSet) {
-          this.languageID = this.data.inflectionViewSet.languageID
-        }
-        if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
-
-          this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
-          if (this.partsOfSpeech.length > 0) {
-            this.selectedPartOfSpeech = this.partsOfSpeech[0]
-            this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
-          } else {
-            this.selectedPartOfSpeech = []
-            this.views = []
-          }
-
-          if (this.views.length > 0) {
-            this.hasInflectionData = true
-            this.selectedView = this.views[0].render()
-          } else {
-            this.selectedView = ''
-          }
-        }
-      },
-
-      updateWidth: function () {
-        Vue.nextTick(() => {
-          this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections' } )
-        })
-      },
-
-      navigate (reflink) {
-        let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
-        if (!panel) {
-          console.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll cancelled`)
-        }
-        if (reflink === 'top') {
-          // Navigate to the top of the page
-          panel.scrollTop = 0
-        } else {
-          // Navigate to one of the supplemental tables
-          const paddingTop = 20 // A margin between an element and a top of a visible area, in pixels
-          let el = document.querySelector(`#${reflink}`)
-          if (el) {
-            const offset = Math.round(el.offsetTop)
-            panel.scrollTop = offset - paddingTop
-          } else {
-            console.warn(`Cannot find #${reflink} element. Navigation cancelled`)
-          }
-        }
-      },
-
-      ln10Messages: function (value, defaultValue = 'unknown') {
-        if (this.messages && this.messages[value]) {
-          return this.messages[value].get()
-        }
-        return defaultValue
-      }
-    },
-
-    mounted: function () {
-      if (typeof this.$el.querySelector === 'function') {
-        this.htmlElements.content = this.$el
-      }
-      this.initViewSet()
     }
+  },
+
+  methods: {
+    initViewSet () {
+      this.hasInflectionData = false
+      if (this.data.inflectionViewSet) {
+        this.languageID = this.data.inflectionViewSet.languageID
+      }
+      if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
+        this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
+        if (this.partsOfSpeech.length > 0) {
+          this.selectedPartOfSpeech = this.partsOfSpeech[0]
+          this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
+        } else {
+          this.selectedPartOfSpeech = []
+          this.views = []
+        }
+
+        if (this.views.length > 0) {
+          this.hasInflectionData = true
+          this.selectedView = this.views[0].render()
+        } else {
+          this.selectedView = ''
+        }
+      }
+    },
+
+    updateWidth: function () {
+      Vue.nextTick(() => {
+        this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections' })
+      })
+    },
+
+    navigate (reflink) {
+      let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
+      if (!panel) {
+        console.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll cancelled`)
+      }
+      if (reflink === 'top') {
+        // Navigate to the top of the page
+        panel.scrollTop = 0
+      } else {
+        // Navigate to one of the supplemental tables
+        const paddingTop = 20 // A margin between an element and a top of a visible area, in pixels
+        let el = document.querySelector(`#${reflink}`)
+        if (el) {
+          const offset = Math.round(el.offsetTop)
+          panel.scrollTop = offset - paddingTop
+        } else {
+          console.warn(`Cannot find #${reflink} element. Navigation cancelled`)
+        }
+      }
+    },
+
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.messages && this.messages[value]) {
+        return this.messages[value].get()
+      }
+      return defaultValue
+    }
+  },
+
+  mounted: function () {
+    if (typeof this.$el.querySelector === 'function') {
+      this.htmlElements.content = this.$el
+    }
+    this.initViewSet()
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";
@@ -378,7 +377,6 @@
         padding-left: 2px;
         vertical-align: super;
     }
-
 
     .alpheios-inflections__credits-cont {
         margin-bottom: 10px;

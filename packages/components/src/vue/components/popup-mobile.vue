@@ -55,16 +55,16 @@
     </div>
 </template>
 <script>
-  /*
+/*
   This is an example of a modified popup component that changes a popup template
   */
-  import PopupBase from './popup.vue';
-  export default {
-    extends: PopupBase,
-    mounted () {
-      console.log('Mounted in a Popup Mobile')
-    }
+import PopupBase from './popup.vue'
+export default {
+  extends: PopupBase,
+  mounted () {
+    console.log('Mounted in a Popup Mobile')
   }
+}
 </script>
 <style lang="scss">
     .alpheios-popup.alpheios-popup--mobile {

@@ -19,49 +19,49 @@
   </div>
 </template>
 <script>
-  import MorphInner from './morph-inner-v1.vue'
+import MorphInner from './morph-inner-v1.vue'
 
-  export default {
-    name: 'Morph',
-    components: { morphInner: MorphInner },
-    props: {
-        lexemes: {
-          type: Array,
-          required: true
-        },
-        definitions: {
-          type: Object,
-          required: false,
-          default: () => {}
-        },
-        linkedfeatures: {
-          type: Array,
-          required: false,
-          default: () => []
-        },
-        translations: {
-          type: Object,
-          required: false,
-          default: () => {}
-        },
-        morphDataReady: {
-          type: Boolean,
-          required: true
-        },
-        messages: {
-          type: Object,
-          required: false
-        }
+export default {
+  name: 'Morph',
+  components: { morphInner: MorphInner },
+  props: {
+    lexemes: {
+      type: Array,
+      required: true
     },
-    methods: {
-      showLexeme(lex) {
-        return (lex.isPopulated) ? lex.isPopulated() : false
-      },
-      sendFeature (data) {
-        this.$emit('sendfeature',data)
-      },
+    definitions: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    linkedfeatures: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    translations: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    morphDataReady: {
+      type: Boolean,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: false
+    }
+  },
+  methods: {
+    showLexeme (lex) {
+      return (lex.isPopulated) ? lex.isPopulated() : false
+    },
+    sendFeature (data) {
+      this.$emit('sendfeature', data)
     }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";

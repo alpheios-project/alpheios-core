@@ -7,15 +7,15 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'Grammar',
-    props: {
-      res: {
-        type: Object,
-        required: true
-      }
+export default {
+  name: 'Grammar',
+  props: {
+    res: {
+      type: Object,
+      required: true
     }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";
@@ -29,7 +29,7 @@
     .alpheios-grammar__provider {
         flex: none;
         font-weight: normal;
-        
+
         padding: 20px 25px 20px;
         font-size: 80%;
     }

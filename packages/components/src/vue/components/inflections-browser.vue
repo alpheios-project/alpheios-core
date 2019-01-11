@@ -45,7 +45,6 @@
             <wide-table :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'supersum', title: 'Supersum (superesse, superfui, superfuturus)' })" :infl-browser-table="true" :messages="messages" :no-suffix-matches-hidden="false" :collapsed="inflBrowserTablesCollapsed" @widthchange="inflTableWidthUpd" ></wide-table>
         </div>
 
-
         <div class="alpheios-ib__title alpheios-clickable" @click="collapseLanguage(constants.LANG_GREEK)">
             Greek Inflection Browser
             <span class='alpheios-ib__title-collapse' v-show="collapsed[constants.LANG_GREEK.toString()]">[+]</span>
@@ -159,81 +158,81 @@
 
 </template>
 <script>
-  import { Constants } from 'alpheios-data-models'
-  import { ViewSetFactory } from 'alpheios-inflection-tables'
-  import Comparable from '@/lib/utility/comparable.js'
+import { Constants } from 'alpheios-data-models'
+import { ViewSetFactory } from 'alpheios-inflection-tables'
+import Comparable from '@/lib/utility/comparable.js'
 
-  import WideTable from './inflections-table-wide.vue'
-  import Vue from 'vue/dist/vue'
+import WideTable from './inflections-table-wide.vue'
+import Vue from 'vue/dist/vue'
 
-  export default {
-    name: 'InflectionStandardForms',
-    components: {
-      wideTable: WideTable,
+export default {
+  name: 'InflectionStandardForms',
+  components: {
+    wideTable: WideTable
+  },
+
+  props: {
+    languageId: {
+      type: Symbol,
+      required: false
     },
 
-    props: {
-      languageId: {
-        type: Symbol,
-        required: false
-      },
+    // A passtrough to inflection-tables-wide
+    messages: {
+      type: Object,
+      required: true
+    },
 
-      // A passtrough to inflection-tables-wide
-      messages: {
-        type: Object,
-        required: true
-      },
+    inflBrowserTablesCollapsed: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
 
-      inflBrowserTablesCollapsed: {
-        type: Boolean,
-        required: false,
-        default: true
-      },
+    data: {
+      type: Object,
+      required: true
+    }
+  },
 
-      data: {
-        type: Object,
-        required: true
+  data: function () {
+    return {
+      // As we cannot reference `Constants` in template during rendering we have to reassign them this way
+      constants: {
+        LANG_LATIN: Constants.LANG_LATIN,
+        LANG_GREEK: Constants.LANG_GREEK
+      },
+      views: new Map(),
+      collapsed: {
+        // Vue.js currently cannot track Maps or Symbol props so we have to do it this way:
+        [Constants.LANG_LATIN.toString()]: true,
+        [Constants.LANG_GREEK.toString()]: true
+      },
+      htmlElements: {
+        content: undefined
+      }
+    }
+  },
+
+  computed: {
+    // Need this for a watcher that will monitor a parent container visibility state
+    isVisible: function () {
+      return this.data.visible
+    }
+
+  },
+
+  watch: {
+    languageId: function (newValue, oldValue) {
+      if (oldValue) {
+        this.collapsed[oldValue.toString()] = true
+      }
+      if (newValue) {
+        this.languageId = newValue
+        this.collapsed[newValue.toString()] = false
       }
     },
-
-    data: function () {
-      return {
-        // As we cannot reference `Constants` in template during rendering we have to reassign them this way
-        constants: {
-          LANG_LATIN: Constants.LANG_LATIN,
-          LANG_GREEK: Constants.LANG_GREEK
-        },
-        views: new Map(),
-        collapsed: {
-          // Vue.js currently cannot track Maps or Symbol props so we have to do it this way:
-          [Constants.LANG_LATIN.toString()]: true,
-          [Constants.LANG_GREEK.toString()]: true
-        },
-        htmlElements: {
-          content: undefined,
-        }
-      }
-    },
-
-    computed: {
-      // Need this for a watcher that will monitor a parent container visibility state
-      isVisible: function () {
-        return this.data.visible
-      }
-
-    },
-
-    watch: {
-      languageId: function (newValue, oldValue) {
-        if (oldValue) {
-          this.collapsed[oldValue.toString()] = true
-        }
-        if (newValue) {
-          this.languageId = newValue
-          this.collapsed[newValue.toString()] = false
-        }
-      },
-      /*
+    /*
       An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
       use this information to adjust a width of a container that displays an inflection component. However, a width
       of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
@@ -242,77 +241,77 @@
       will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
       as it won't be used by anything and thus will not be calculated by Vue.
        */
-      isVisible: function (visibility) {
-        if (visibility && this.htmlElements.content) {
-          // If container is become visible, update parent with its width
-          this.inflTableWidthUpd()
-        }
+    isVisible: function (visibility) {
+      if (visibility && this.htmlElements.content) {
+        // If container is become visible, update parent with its width
+        this.inflTableWidthUpd()
       }
-    },
+    }
+  },
 
-    methods: {
-      /**
+  methods: {
+    /**
        * Returns a version of a view according to options
        * @param {symbol} languageID - A language ID of a view.
        * @param {Object} options - An options object. Obligatory prop is `viewID`.
        * May also include `form` (for form based views) and `paradigmID` (for paradigm views).
        * @return {View}
        */
-      inflView: function (languageID, options) {
-        /*
+    inflView: function (languageID, options) {
+      /*
         Vue rendering algorithm may call this method more then once. To avoid unnecessary re-rendering,
         which might sometimes trigger an infinite loop, rendered views are cached with `options` as a key.
          */
-        const key = Comparable.key(options)
-        if (!this.views.has(key)) {
-          let view = ViewSetFactory.getStandardForm(languageID, options)
-          this.views.set(key, view)
-        }
-        return this.views.get(key)
-      },
+      const key = Comparable.key(options)
+      if (!this.views.has(key)) {
+        let view = ViewSetFactory.getStandardForm(languageID, options)
+        this.views.set(key, view)
+      }
+      return this.views.get(key)
+    },
 
-      latinInflView: function (options) {
-        return this.inflView(this.constants.LANG_LATIN, options)
-      },
+    latinInflView: function (options) {
+      return this.inflView(this.constants.LANG_LATIN, options)
+    },
 
-      greekInflView: function (options) {
-        return this.inflView(this.constants.LANG_GREEK, options)
-      },
+    greekInflView: function (options) {
+      return this.inflView(this.constants.LANG_GREEK, options)
+    },
 
-      greekParadigmView: function (paradigmOptions) {
-        paradigmOptions.viewID = 'greek_verb_paradigm_view'
-        return this.greekInflView(paradigmOptions)
-      },
+    greekParadigmView: function (paradigmOptions) {
+      paradigmOptions.viewID = 'greek_verb_paradigm_view'
+      return this.greekInflView(paradigmOptions)
+    },
 
-      greekParticipleParadigmView: function (paradigmOptions) {
-        paradigmOptions.viewID = 'greek_verb_participle_paradigm_view'
-        return this.greekInflView(paradigmOptions)
-      },
+    greekParticipleParadigmView: function (paradigmOptions) {
+      paradigmOptions.viewID = 'greek_verb_participle_paradigm_view'
+      return this.greekInflView(paradigmOptions)
+    },
 
-      collapseLanguage: function (languageID) {
-        const language = languageID.toString()
-        if (this.collapsed.hasOwnProperty(language)) {
-          this.collapsed[language] = !this.collapsed[language]
-        }
-      },
-
-      inflTableWidthUpd: function () {
-        Vue.nextTick(() => {
-          this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: "inflections-browser" })
-        })
+    collapseLanguage: function (languageID) {
+      const language = languageID.toString()
+      if (this.collapsed.hasOwnProperty(language)) {
+        this.collapsed[language] = !this.collapsed[language]
       }
     },
 
-    mounted: function () {
-      if (this.languageId) {
-        // Set a group that will be opened initially
-        this.collapsed[this.languageId.toString()] = false
-      }
-      if (typeof this.$el.querySelector === 'function') {
-        this.htmlElements.content = this.$el
-      }
+    inflTableWidthUpd: function () {
+      Vue.nextTick(() => {
+        this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections-browser' })
+      })
+    }
+  },
+
+  mounted: function () {
+    if (this.languageId) {
+      // Set a group that will be opened initially
+      this.collapsed[this.languageId.toString()] = false
+    }
+    if (typeof this.$el.querySelector === 'function') {
+      this.htmlElements.content = this.$el
     }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";

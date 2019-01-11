@@ -5,14 +5,14 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'ShortDef',
-    props: ['definition','languageCode'],
-    methods: {},
-    mounted () {
-      //console.log('ShortDef is mounted')
-    }
+export default {
+  name: 'ShortDef',
+  props: ['definition', 'languageCode'],
+  methods: {},
+  mounted () {
+    // console.log('ShortDef is mounted')
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";

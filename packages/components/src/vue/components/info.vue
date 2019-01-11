@@ -15,19 +15,19 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'Info',
-    props: {
-      data: {
-        type: Object,
-        required: true
-      },
-      messages: {
-        type: Object,
-        required: true
-      }
+export default {
+  name: 'Info',
+  props: {
+    data: {
+      type: Object,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: true
     }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";

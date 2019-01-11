@@ -1,31 +1,31 @@
 <template>
     <div v-show="visible" class="alpheios-embed-lib-warning">
         {{text}}
-        <span @click="close" class="alpheios-embed-lib-warning__close" >
+        <span @click="close" class="alpheios-embed-lib-warning__close">
             <close-icon></close-icon>
         </span>
     </div>
 </template>
 <script>
-  import CloseIcon from '../../images/inline-icons/close.svg';
+import CloseIcon from '../../images/inline-icons/close.svg'
 
-  export default {
-    name: 'EmbedLibWarning',
-    components: {
-      closeIcon: CloseIcon,
-    },
-    props: [ 'text' ],
-    data: function () {
-      return {
-        visible: true
-      }
-    },
-    methods: {
-      close: function () {
-        this.visible = false
-      }
+export default {
+  name: 'EmbedLibWarning',
+  components: {
+    closeIcon: CloseIcon
+  },
+  props: ['text'],
+  data: function () {
+    return {
+      visible: true
+    }
+  },
+  methods: {
+    close: function () {
+      this.visible = false
     }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";

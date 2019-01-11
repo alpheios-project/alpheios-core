@@ -11,48 +11,48 @@
     </div>
 </template>
 <script>
-  import {Constants, Feature} from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 
-  export default {
-    name: 'WordForms',
+export default {
+  name: 'WordForms',
 
-    props: {
-      // This will be an InflectionData object
-      partOfSpeech: {
-        type: String,
-        required: true
-      },
-      targetWord: {
-        type: String,
-        required: true
-      },
-      lexemes: {
-        type: Array,
-        required: true
-      }
+  props: {
+    // This will be an InflectionData object
+    partOfSpeech: {
+      type: String,
+      required: true
     },
-    computed: {
-      forms: function () {
+    targetWord: {
+      type: String,
+      required: true
+    },
+    lexemes: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    forms: function () {
       	if (this.lexemes) {
-          return this.defineFormsBySelectedView()
-        }
-      }
-    },
-    methods: {
-      defineFormsBySelectedView: function () {
-        let forms = new Set()
-        for (let lexeme of this.lexemes) {
-          for (let inflection of lexeme.inflections) {
-          	if (inflection[Feature.types.part].values.includes(this.partOfSpeech)) {
-          	  forms.add(inflection.form)
-            }
-          }
-        }
-        return Array.from(forms.values())
+        return this.defineFormsBySelectedView()
       }
     }
-
+  },
+  methods: {
+    defineFormsBySelectedView: function () {
+      let forms = new Set()
+      for (let lexeme of this.lexemes) {
+        for (let inflection of lexeme.inflections) {
+          	if (inflection[Feature.types.part].values.includes(this.partOfSpeech)) {
+          	  forms.add(inflection.form)
+          }
+        }
+      }
+      return Array.from(forms.values())
+    }
   }
+
+}
 </script>
 <style>
 	.alpheios-inflections__form-parts {

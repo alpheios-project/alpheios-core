@@ -88,555 +88,553 @@
     </div>
 </template>
 <script>
-  import Morph from './morph.vue'
-  import Setting from './setting.vue'
-  import interact from 'interactjs'
-  import Logger from '@/lib/log/logger'
+import Morph from './morph.vue'
+import Setting from './setting.vue'
+import interact from 'interactjs'
+import Logger from '@/lib/log/logger'
 
-  import Tooltip from './tooltip.vue'
-  import Lookup from './lookup.vue'
-  import ProgressBar from './progress-bar.vue'
+import Tooltip from './tooltip.vue'
+import Lookup from './lookup.vue'
+import ProgressBar from './progress-bar.vue'
 
-  // Embeddable SVG icons
-  import CloseIcon from '../../images/inline-icons/close.svg'
+// Embeddable SVG icons
+import CloseIcon from '../../images/inline-icons/close.svg'
 
-  import { directive as onClickaway } from '../directives/clickaway.js';
+import { directive as onClickaway } from '../directives/clickaway.js'
 
-  export default {
-    name: 'Popup',
-    components: {
-      morph: Morph,
-      setting: Setting,
-      closeIcon: CloseIcon,
-      alphTooltip: Tooltip,
-      lookup: Lookup,
-      progressBar: ProgressBar
+export default {
+  name: 'Popup',
+  components: {
+    morph: Morph,
+    setting: Setting,
+    closeIcon: CloseIcon,
+    alphTooltip: Tooltip,
+    lookup: Lookup,
+    progressBar: ProgressBar
+  },
+  directives: {
+    onClickaway: onClickaway
+  },
+  data: function () {
+    return {
+      resizable: true,
+      draggable: true,
+      // Whether there is an error with Interact.js drag coordinates in the corresponding direction
+      dragErrorX: false,
+      dragErrorY: false,
+      // contentHeight: 0, // Morphological content height (updated with `heightchange` event emitted by a morph component)
+      minResizableWidth: 0, // Resizable's min width (for Interact.js)
+      minResizableHeight: 0, // Resizable's min height (for Interact.js)
+      interactInstance: undefined,
+      lexicalDataContainerID: 'alpheios-lexical-data-container',
+      morphComponentID: 'alpheios-morph-component',
+
+      // Current positions and sizes of a popup
+      positionTopValue: 0,
+      positionLeftValue: 0,
+      widthValue: 0,
+      heightValue: 0,
+      exactWidth: 0,
+      exactHeight: 0,
+      resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
+      resizeCount: 0, // Should not exceed `resizeCountMax`
+      resizeCountMax: 100, // Max number of resize iteration
+      updateDimensionsTimeout: null
+    }
+  },
+  props: {
+    data: {
+      type: Object,
+      required: true
     },
-    directives: {
-      onClickaway: onClickaway,
+    messages: {
+      type: Array,
+      required: true
     },
-    data: function () {
+    lexemes: {
+      type: Array,
+      required: true
+    },
+    definitions: {
+      type: Object,
+      required: true
+    },
+    linkedfeatures: {
+      type: Array,
+      required: true
+    },
+    visible: {
+      type: Boolean,
+      required: true
+    },
+    translations: {
+      type: Object,
+      required: true
+    },
+    classesChanged: {
+      type: Number,
+      required: false,
+      default: 0
+    }
+  },
+  created () {
+    let vm = this
+    this.$on('updatePopupDimensions', function () {
+      vm.updatePopupDimensions()
+    })
+    this.$on('changeStyleClass', function (name, type) {
+      vm.uiOptionChanged(name, type)
+    })
+  },
+  computed: {
+    divClasses () {
+      return this.data && this.data.classes ? this.data.classes.join(' ') : ''
+    },
+    uiController: function () {
+      return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
+    },
+    mainstyles: function () {
+      return Object.assign({ left: this.positionLeftDm, top: this.positionTopDm, width: this.widthDm, height: this.heightDm }, this.data ? this.data.styles : {})
+    },
+    logger: function () {
+      let verbMode = false
+      if (this.data) {
+        console.log(`Verbose = ${this.data.verboseMode}`)
+        verbMode = this.data.verboseMode
+      }
+      return Logger.getLogger(verbMode)
+    },
+    requestStartTime: function () {
+      return (this.data) ? this.data.requestStartTime : null
+    },
+
+    inflDataReady: function () {
+      return (this.data && this.data.inflDataReady) ? this.data.inflDataReady : false
+    },
+    defDataReady: function () {
+      return (this.data && this.data.defDataReady) ? this.data.defDataReady : false
+    },
+    translationsDataReady: function () {
+      return (this.data && this.data.translationsDataReady) ? this.data.translationsDataReady : false
+    },
+    hasMorphData: function () {
+      if (Array.isArray(this.lexemes) && this.lexemes.length > 0 &&
+             (this.lexemes[0].lemma.principalParts.length > 0 || this.lexemes[0].inflections.length > 0 || this.lexemes[0].inflections.length > 0 ||
+              this.lexemes[0].meaning.fullDefs.length > 0 || this.lexemes[0].meaning.shortDefs.length > 0)
+      ) {
+        return true
+      }
+      return false
+    },
+    morphDataReady: function () {
+      return (this.data && this.data.morphDataReady) ? this.data.morphDataReady : false
+    },
+    noLanguage: function () {
+      return (this.data) ? this.data.currentLanguageName === undefined : false
+    },
+    currentLanguageName: function () {
+      return (this.data) ? this.data.currentLanguageName : null
+    },
+    notificationClasses: function () {
       return {
-        resizable: true,
-        draggable: true,
-        // Whether there is an error with Interact.js drag coordinates in the corresponding direction
-        dragErrorX: false,
-        dragErrorY: false,
-        // contentHeight: 0, // Morphological content height (updated with `heightchange` event emitted by a morph component)
-        minResizableWidth: 0, // Resizable's min width (for Interact.js)
-        minResizableHeight: 0, // Resizable's min height (for Interact.js)
-        interactInstance: undefined,
-        lexicalDataContainerID: 'alpheios-lexical-data-container',
-        morphComponentID: 'alpheios-morph-component',
-
-        // Current positions and sizes of a popup
-        positionTopValue: 0,
-        positionLeftValue: 0,
-        widthValue: 0,
-        heightValue: 0,
-        exactWidth: 0,
-        exactHeight: 0,
-        resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
-        resizeCount: 0, // Should not exceed `resizeCountMax`
-        resizeCountMax: 100, // Max number of resize iteration
-        updateDimensionsTimeout: null
+        'alpheios-popup__notifications--important': this.data.notification.important
       }
     },
-    props: {
-      data: {
-        type: Object,
-        required: true
-      },
-      messages: {
-        type: Array,
-        required: true
-      },
-      lexemes: {
-        type: Array,
-        required: true
-      },
-      definitions: {
-        type: Object,
-        required: true
-      },
-      linkedfeatures: {
-        type: Array,
-        required: true
-      },
-      visible: {
-        type: Boolean,
-        required: true
-      },
-      translations: {
-        type: Object,
-        required: true
-      },
-      classesChanged: {
-        type: Number,
-        required: false,
-        default: 0
+    providersLinkText: function () {
+      return (this.data) ? this.data.showProviders ? this.ln10Messages('LABEL_POPUP_HIDECREDITS') : this.ln10Messages('LABEL_POPUP_SHOWCREDITS') : ''
+    },
+    showProviders: function () {
+      return (this.data) ? this.data.showProviders : null
+    },
+    updates: function () {
+      return (this.data) ? this.data.updates : null
+    },
+
+    positionLeftDm: function () {
+      if (!this.visible) {
+        // Reset if popup is invisible
+        return '0px'
       }
+
+      if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
+        return this.data.left
+      }
+
+      let left = this.positionLeftValue
+      let placementTargetX = this.data.targetRect.left
+      let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+      let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+      let leftSide = placementTargetX - this.exactWidth / 2
+      let rightSide = placementTargetX + this.exactWidth / 2
+      if (this.widthDm !== 'auto') {
+        // Popup is too wide and was restricted in height
+        this.logger.log(`Setting position left for a set width`)
+        left = this.data.viewportMargin
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin &&
+          leftSide > this.data.viewportMargin) {
+        // We can center it with the target
+        left = placementTargetX - Math.floor(this.exactWidth / 2)
+      } else if (leftSide > this.data.viewportMargin) {
+        // There is space at the left, move it there
+        left = viewportWidth - verticalScrollbarWidth - this.data.viewportMargin - this.exactWidth
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin) {
+        // There is space at the right, move it there
+        left = this.data.viewportMargin
+      }
+      return `${left}px`
     },
-    created () {
-      let vm = this
-      this.$on('updatePopupDimensions', function() {
-        vm.updatePopupDimensions()
-      })
-      this.$on('changeStyleClass', function(name, type) {
-        vm.uiOptionChanged(name, type)
-      })
+
+    positionTopDm: function () {
+      if (!this.visible) {
+        // Reset if popup is invisible
+        return '0px'
+      }
+
+      if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
+        return this.data.top
+      }
+
+      let time = Date.now()
+      this.logger.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
+      let top = this.positionTopValue
+      let placementTargetY = this.data.targetRect.top
+      let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+      let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
+      if (this.heightDm !== 'auto') {
+        // Popup is too wide and was restricted in height
+        this.logger.log(`Setting position top for a set height`)
+        top = this.data.viewportMargin
+      } else if (placementTargetY + this.data.placementMargin + this.exactHeight < viewportHeight - this.data.viewportMargin - horizontalScrollbarWidth) {
+        // Place it below a selection
+        top = placementTargetY + this.data.placementMargin
+      } else if (placementTargetY - this.data.placementMargin - this.exactHeight > this.data.viewportMargin) {
+        // Place it above a selection
+        top = placementTargetY - this.data.placementMargin - this.exactHeight
+      } else if (placementTargetY < viewportHeight - horizontalScrollbarWidth - placementTargetY) {
+        // There is no space neither above nor below. Word is shifted to the top. Place a popup at the bottom.
+        top = viewportHeight - horizontalScrollbarWidth - this.data.viewportMargin - this.exactHeight
+      } else if (placementTargetY > viewportHeight - horizontalScrollbarWidth - placementTargetY) {
+        // There is no space neither above nor below. Word is shifted to the bottom. Place a popup at the top.
+        top = this.data.viewportMargin
+      } else {
+        // There is no space neither above nor below. Center it vertically.
+        top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
+      }
+      time = Date.now()
+      this.logger.log(`${time}: position top getter, return value is ${top}, offsetHeight is ${this.exactHeight}`)
+      return `${top}px`
     },
-    computed: {
-      divClasses () {
-        return this.data && this.data.classes ? this.data.classes.join(' ') : ''
-      },
-      uiController: function () {
-        return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
-      },
-      mainstyles: function () {
-        return Object.assign({left: this.positionLeftDm, top: this.positionTopDm, width: this.widthDm, height: this.heightDm}, this.data ? this.data.styles : {})
-      },
-      logger: function() {
-        let verbMode = false
-        if (this.data) {
-          console.log(`Verbose = ${this.data.verboseMode}`)
-          verbMode = this.data.verboseMode
-        }
-        return Logger.getLogger(verbMode)
-      },
-      requestStartTime: function () {
-        return (this.data) ? this.data.requestStartTime : null
-      },
 
-      inflDataReady: function () {
-        return (this.data && this.data.inflDataReady) ? this.data.inflDataReady : false
+    widthDm: {
+      get: function () {
+        return this.widthValue === 'auto' ? 'auto' : `${this.widthValue}px`
       },
-      defDataReady: function () {
-        return (this.data && this.data.defDataReady) ? this.data.defDataReady : false
-      },
-      translationsDataReady: function () {
-        return (this.data && this.data.translationsDataReady) ? this.data.translationsDataReady : false
-      },
-      hasMorphData: function () {
-        if (Array.isArray(this.lexemes) && this.lexemes.length > 0 &&
-             (this.lexemes[0].lemma.principalParts.length > 0 || this.lexemes[0].inflections.length > 0 || this.lexemes[0].inflections.length > 0
-              || this.lexemes[0].meaning.fullDefs.length > 0 || this.lexemes[0].meaning.shortDefs.length > 0)
-           )
-        {
-          return true
-        }
-        return false
-      },
-      morphDataReady: function () {
-        return (this.data && this.data.morphDataReady) ? this.data.morphDataReady : false
-      },
-      noLanguage: function () {
-        return (this.data) ? this.data.currentLanguageName === undefined : false
-      },
-      currentLanguageName: function() {
-        return (this.data) ? this.data.currentLanguageName : null
-      },
-      notificationClasses: function () {
-        return {
-          'alpheios-popup__notifications--important': this.data.notification.important
-        }
-      },
-      providersLinkText: function() {
-
-        return (this.data) ? this.data.showProviders ? this.ln10Messages('LABEL_POPUP_HIDECREDITS') : this.ln10Messages('LABEL_POPUP_SHOWCREDITS') : ''
-      },
-      showProviders: function() {
-        return (this.data) ? this.data.showProviders : null
-      },
-      updates: function() {
-        return (this.data) ? this.data.updates : null
-      },
-
-      positionLeftDm: function () {
-        if (!this.visible) {
-          // Reset if popup is invisible
-          return '0px'
-        }
-
-        if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
-          return this.data.left
-        }
-
-        let left = this.positionLeftValue
-        let placementTargetX = this.data.targetRect.left
+      set: function (newWidth) {
         let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
         let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-        let leftSide = placementTargetX - this.exactWidth / 2
-        let rightSide = placementTargetX + this.exactWidth / 2
-        if (this.widthDm !== 'auto') {
-          // Popup is too wide and was restricted in height
-          this.logger.log(`Setting position left for a set width`)
-          left = this.data.viewportMargin
-        } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin
-          && leftSide > this.data.viewportMargin) {
-          // We can center it with the target
-          left = placementTargetX - Math.floor(this.exactWidth / 2)
-        } else if (leftSide > this.data.viewportMargin) {
-          // There is space at the left, move it there
-          left = viewportWidth - verticalScrollbarWidth - this.data.viewportMargin - this.exactWidth
-        } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin) {
-          // There is space at the right, move it there
-          left = this.data.viewportMargin
-        }
-        return `${left}px`
-      },
-
-      positionTopDm: function () {
-        if (!this.visible) {
-          // Reset if popup is invisible
-          return '0px'
-        }
-
-        if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
-          return this.data.top
-        }
-
-        let time = Date.now()
-        this.logger.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
-        let top = this.positionTopValue
-        let placementTargetY = this.data.targetRect.top
-        let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-        let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-        if (this.heightDm !== 'auto') {
-          // Popup is too wide and was restricted in height
-          this.logger.log(`Setting position top for a set height`)
-          top = this.data.viewportMargin
-        } else if (placementTargetY + this.data.placementMargin + this.exactHeight < viewportHeight - this.data.viewportMargin - horizontalScrollbarWidth) {
-          // Place it below a selection
-          top = placementTargetY + this.data.placementMargin
-        } else if (placementTargetY - this.data.placementMargin - this.exactHeight > this.data.viewportMargin) {
-          // Place it above a selection
-          top = placementTargetY - this.data.placementMargin - this.exactHeight
-        } else if (placementTargetY < viewportHeight - horizontalScrollbarWidth - placementTargetY) {
-          // There is no space neither above nor below. Word is shifted to the top. Place a popup at the bottom.
-          top = viewportHeight - horizontalScrollbarWidth - this.data.viewportMargin - this.exactHeight
-        } else if (placementTargetY > viewportHeight - horizontalScrollbarWidth - placementTargetY) {
-          // There is no space neither above nor below. Word is shifted to the bottom. Place a popup at the top.
-          top = this.data.viewportMargin
+        let maxWidth = viewportWidth - 2 * this.data.viewportMargin - verticalScrollbarWidth
+        if (newWidth >= maxWidth) {
+          this.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
+          this.widthValue = maxWidth
+          this.exactWidth = this.widthValue
         } else {
-          // There is no space neither above nor below. Center it vertically.
-          top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
+          this.widthValue = 'auto'
         }
-        time = Date.now()
-        this.logger.log(`${time}: position top getter, return value is ${top}, offsetHeight is ${this.exactHeight}`)
-        return `${top}px`
-      },
+      }
+    },
 
-      widthDm: {
-        get: function () {
-          return this.widthValue === 'auto' ? 'auto' : `${this.widthValue}px`
-        },
-        set: function (newWidth) {
-          let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-          let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-          let maxWidth = viewportWidth - 2*this.data.viewportMargin - verticalScrollbarWidth
-          if (newWidth >= maxWidth) {
-            this.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
-            this.widthValue = maxWidth
-            this.exactWidth = this.widthValue
-          } else {
-            this.widthValue = 'auto'
-          }
-        }
+    heightDm: {
+      get: function () {
+        let time = Date.now()
+        this.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
+        return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
       },
-
-      heightDm: {
-        get: function () {
-          let time = Date.now()
-          this.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
-          return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
-        },
-        set: function (newHeight) {
-          let time = Date.now()
-          this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
-          /*
+      set: function (newHeight) {
+        let time = Date.now()
+        this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
+        /*
           let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
           let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
           let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
           */
-          if (newHeight >= this.maxHeight) {
-            this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
-            this.heightValue = this.maxHeight
-            this.exactHeight = this.heightValue
-          } else {
-            this.heightValue = 'auto'
-          }
-        }
-      },
-
-      maxHeight () {
-        let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-        let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-        return viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
-      },
-
-      additionalStylesTootipCloseIcon: function () {
-        return {
-          top: '2px',
-          right: '50px'
+        if (newHeight >= this.maxHeight) {
+          this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
+          this.heightValue = this.maxHeight
+          this.exactHeight = this.heightValue
+        } else {
+          this.heightValue = 'auto'
         }
       }
     },
 
-    methods: {
-      uiOptionChanged: function (name, value) {
-        this.$emit('ui-option-change', name, value)
-      },
+    maxHeight () {
+      let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+      let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
+      return viewportHeight - 2 * this.data.viewportMargin - horizontalScrollbarWidth
+    },
 
-      clearMessages() {
-        while (this.messages.length >0) {
-          this.messages.pop()
-        }
-      },
+    additionalStylesTootipCloseIcon: function () {
+      return {
+        top: '2px',
+        right: '50px'
+      }
+    }
+  },
 
-      closePopup () {
-        this.logger.log(`Closing a popup and resetting its dimensions`)
-        this.$emit('close')
-      },
+  methods: {
+    uiOptionChanged: function (name, value) {
+      this.$emit('ui-option-change', name, value)
+    },
 
-      closeNotifications () {
-        this.$emit('closepopupnotifications')
-      },
+    clearMessages () {
+      while (this.messages.length > 0) {
+        this.messages.pop()
+      }
+    },
 
-      showPanelTab (tabName) {
-        this.$emit('showpaneltab', tabName)
-      },
+    closePopup () {
+      this.logger.log(`Closing a popup and resetting its dimensions`)
+      this.$emit('close')
+    },
 
-      settingChanged: function (name, value) {
-        this.$emit('settingchange', name, value) // Re-emit for a Vue instance
-      },
+    closeNotifications () {
+      this.$emit('closepopupnotifications')
+    },
 
-      switchProviders: function () {
-        this.data.showProviders = ! this.data.showProviders
-        if (this.data.showProviders) {
-          // Show credits info
-          this.$nextTick(() => {
-            let container = this.$el.querySelector(`#${this.lexicalDataContainerID}`)
-            if (container) {
-              container.scrollTop = container.scrollHeight // Will make it scroll all the way to the bottom
-            }
-          })
-        }
-      },
+    showPanelTab (tabName) {
+      this.$emit('showpaneltab', tabName)
+    },
 
-      // Interact.js resizable settings
-      resizableSettings: function () {
-        return {
-          preserveAspectRatio: false,
-          edges: { left: true, right: true, bottom: true, top: true },
-          restrictSize: {
-            min: { width: this.minResizableWidth, height: this.minResizableHeight }
-          },
-          restrictEdges: {
-            restriction: document.body,
-            endOnly: true
+    settingChanged: function (name, value) {
+      this.$emit('settingchange', name, value) // Re-emit for a Vue instance
+    },
+
+    switchProviders: function () {
+      this.data.showProviders = !this.data.showProviders
+      if (this.data.showProviders) {
+        // Show credits info
+        this.$nextTick(() => {
+          let container = this.$el.querySelector(`#${this.lexicalDataContainerID}`)
+          if (container) {
+            container.scrollTop = container.scrollHeight // Will make it scroll all the way to the bottom
           }
+        })
+      }
+    },
+
+    // Interact.js resizable settings
+    resizableSettings: function () {
+      return {
+        preserveAspectRatio: false,
+        edges: { left: true, right: true, bottom: true, top: true },
+        restrictSize: {
+          min: { width: this.minResizableWidth, height: this.minResizableHeight }
+        },
+        restrictEdges: {
+          restriction: document.body,
+          endOnly: true
         }
-      },
+      }
+    },
 
-      // Interact.js draggable settings
-      draggableSettings: function () {
-        return {
-          inertia: true,
-          autoScroll: false,
-          restrict: {
-            elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
-          },
-          ignoreFrom: 'input, textarea, a[href], select, option',
-          onmove: this.dragMoveListener
-        }
-      },
+    // Interact.js draggable settings
+    draggableSettings: function () {
+      return {
+        inertia: true,
+        autoScroll: false,
+        restrict: {
+          elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
+        },
+        ignoreFrom: 'input, textarea, a[href], select, option',
+        onmove: this.dragMoveListener
+      }
+    },
 
-      resizeListener (event) {
-        if (this.resizable) {
-          const target = event.target
-          let x = (parseFloat(target.getAttribute('data-x')) || 0)
-          let y = (parseFloat(target.getAttribute('data-y')) || 0)
+    resizeListener (event) {
+      if (this.resizable) {
+        const target = event.target
+        let x = (parseFloat(target.getAttribute('data-x')) || 0)
+        let y = (parseFloat(target.getAttribute('data-y')) || 0)
 
-          // update the element's style
-          target.style.width  = event.rect.width + 'px'
-          target.style.height = event.rect.height + 'px'
+        // update the element's style
+        target.style.width = event.rect.width + 'px'
+        target.style.height = event.rect.height + 'px'
 
-          // translate when resizing from top or left edges
-          x += event.deltaRect.left
-          y += event.deltaRect.top
+        // translate when resizing from top or left edges
+        x += event.deltaRect.left
+        y += event.deltaRect.top
 
-          target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
 
-          target.setAttribute('data-x', x)
-          target.setAttribute('data-y', y)
-        }
-      },
+        target.setAttribute('data-x', x)
+        target.setAttribute('data-y', y)
+      }
+    },
 
-      dragMoveListener (event) {
-        if (this.draggable) {
-          const target = event.target;
-          let dx = event.dx
-          let dy = event.dy
+    dragMoveListener (event) {
+      if (this.draggable) {
+        const target = event.target
+        let dx = event.dx
+        let dy = event.dy
 
-          /*
+        /*
           On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
           This will result in a popup moving abruptly beyond screen limits.
           To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
           direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
           in (usually) one direction. This is probably the best we can do with all the information we have.
            */
-          const dragTreshold = 100 // Drag distance values above this will be considered abnormal
-          if (Math.abs(dx) > dragTreshold) {
-            if (!this.dragErrorX) {
-              console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
-              this.dragErrorX = true
-            }
-            dx = 0
+        const dragTreshold = 100 // Drag distance values above this will be considered abnormal
+        if (Math.abs(dx) > dragTreshold) {
+          if (!this.dragErrorX) {
+            console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
+            this.dragErrorX = true
           }
-          if (Math.abs(dy) > dragTreshold) {
-            if (!this.dragErrorY) {
-              console.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
-              this.dragErrorY = true
-            }
-            dy = 0
-          }
-          const x = (parseFloat(target.getAttribute('data-x')) || 0) + dx;
-          const y = (parseFloat(target.getAttribute('data-y')) || 0) + dy;
-
-          target.style.webkitTransform = `translate(${x}px, ${y}px)`;
-          target.style.transform = `translate(${x}px, ${y}px)`;
-
-          target.setAttribute('data-x', x);
-          target.setAttribute('data-y', y);
+          dx = 0
         }
-      },
+        if (Math.abs(dy) > dragTreshold) {
+          if (!this.dragErrorY) {
+            console.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
+            this.dragErrorY = true
+          }
+          dy = 0
+        }
+        const x = (parseFloat(target.getAttribute('data-x')) || 0) + dx
+        const y = (parseFloat(target.getAttribute('data-y')) || 0) + dy
 
-      /**
+        target.style.webkitTransform = `translate(${x}px, ${y}px)`
+        target.style.transform = `translate(${x}px, ${y}px)`
+
+        target.setAttribute('data-x', x)
+        target.setAttribute('data-y', y)
+      }
+    },
+
+    /**
        * This function is called from an `updated()` callback. Because of this, it should never use a `nextTick()`
        * as it might result in an infinite loop of updates: nextTick() causes a popup to be updated, updated()
        * callback is called, that, in turn, calls nextTick() and so on.
        * It seems that calling it even without `nextTick()` is enough for updating a popup dimensions.
        */
-      updatePopupDimensions () {
-        let time = Date.now()
+    updatePopupDimensions () {
+      let time = Date.now()
 
-        if (this.resizeCount >= this.resizeCountMax) {
-          // Skip resizing if maximum number reached to avoid infinite loops
-          return
-        }
-
-        let innerDif = this.$el.querySelector("#alpheios-lexical-data-container").clientHeight - this.$el.querySelector("#alpheios-morph-component").clientHeight
-
-        if (this.heightDm !== 'auto' && innerDif > this.resizeDelta && this.heightValue !== this.maxHeight) {
-          this.heightDm ='auto'
-          return
-        }
-
-        // Update dimensions only if there was any significant change in a popup size
-        if (this.$el.offsetWidth >= this.exactWidth + this.resizeDelta
-          || this.$el.offsetWidth <= this.exactWidth - this.resizeDelta) {
-          this.logger.log(`${time}: dimensions update, offsetWidth is ${this.$el.offsetWidth}, previous exactWidth is ${this.exactWidth}`)
-          this.exactWidth = this.$el.offsetWidth
-          this.widthDm = this.$el.offsetWidth
-          this.resizeCount++
-          this.logger.log(`Resize counter value is ${this.resizeCount}`)
-        }
-
-        if (this.$el.offsetHeight >= this.exactHeight + this.resizeDelta
-          || this.$el.offsetHeight <= this.exactHeight - this.resizeDelta) {
-          this.logger.log(`${time}: dimensions update, offsetHeight is ${this.$el.offsetHeight}, previous exactHeight is ${this.exactHeight}`)
-          this.exactHeight = this.$el.offsetHeight
-          this.heightDm = this.$el.offsetHeight
-          this.resizeCount++
-          this.logger.log(`Resize counter value is ${this.resizeCount}`)
-        }
-      },
-
-      resetPopupDimensions () {
-        this.logger.log('Resetting popup dimensions')
-        // this.contentHeight = 0
-        this.resizeCount = 0
-        this.widthValue = 0
-        this.heightValue = 0
-        this.exactWidth = 0
-        this.exactHeight = 0
-        if (this.$el) {
-          this.$el.style.webkitTransform = `translate(0px, $0px)`
-          this.$el.style.transform = `translate(0px, 0px)`
-          this.$el.setAttribute('data-x', '0')
-          this.$el.setAttribute('data-y', '0')
-        }
-      },
-
-      sendFeature (data) {
-        this.$emit('sendfeature',data)
-      },
-
-      ln10Messages: function (value, defaultValue = 'unknown') {
-        if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
-          return this.data.l10n.messages[value].get()
-        }
-        return defaultValue
-      },
-
-      attachTrackingClick: function () {
-        this.closePopup()
+      if (this.resizeCount >= this.resizeCountMax) {
+        // Skip resizing if maximum number reached to avoid infinite loops
+        return
       }
 
-    },
+      let innerDif = this.$el.querySelector('#alpheios-lexical-data-container').clientHeight - this.$el.querySelector('#alpheios-morph-component').clientHeight
 
-    mounted () {
-      if (this.data && this.data.draggable && this.data.resizable) {
-        this.interactInstance = interact(this.$el)
-          .resizable(this.resizableSettings())
-          .draggable(this.draggableSettings())
-          .on('resizemove', this.resizeListener)
+      if (this.heightDm !== 'auto' && innerDif > this.resizeDelta && this.heightValue !== this.maxHeight) {
+        this.heightDm = 'auto'
+        return
+      }
+
+      // Update dimensions only if there was any significant change in a popup size
+      if (this.$el.offsetWidth >= this.exactWidth + this.resizeDelta ||
+          this.$el.offsetWidth <= this.exactWidth - this.resizeDelta) {
+        this.logger.log(`${time}: dimensions update, offsetWidth is ${this.$el.offsetWidth}, previous exactWidth is ${this.exactWidth}`)
+        this.exactWidth = this.$el.offsetWidth
+        this.widthDm = this.$el.offsetWidth
+        this.resizeCount++
+        this.logger.log(`Resize counter value is ${this.resizeCount}`)
+      }
+
+      if (this.$el.offsetHeight >= this.exactHeight + this.resizeDelta ||
+          this.$el.offsetHeight <= this.exactHeight - this.resizeDelta) {
+        this.logger.log(`${time}: dimensions update, offsetHeight is ${this.$el.offsetHeight}, previous exactHeight is ${this.exactHeight}`)
+        this.exactHeight = this.$el.offsetHeight
+        this.heightDm = this.$el.offsetHeight
+        this.resizeCount++
+        this.logger.log(`Resize counter value is ${this.resizeCount}`)
       }
     },
 
-    updated () {
-      if (this.visible) {
-        let time = Date.now()
-        this.logger.log(`${time}: component is updated`)
-
-        let vm = this
-        clearTimeout(this.updateDimensionsTimeout)
-        let timeoutDuration = 0
-        if (this.resizeCount > 1) {
-          timeoutDuration = 1000
-        }
-        this.updateDimensionsTimeout = setTimeout(function () {
-          vm.updatePopupDimensions()
-        }, timeoutDuration)
+    resetPopupDimensions () {
+      this.logger.log('Resetting popup dimensions')
+      // this.contentHeight = 0
+      this.resizeCount = 0
+      this.widthValue = 0
+      this.heightValue = 0
+      this.exactWidth = 0
+      this.exactHeight = 0
+      if (this.$el) {
+        this.$el.style.webkitTransform = `translate(0px, $0px)`
+        this.$el.style.transform = `translate(0px, 0px)`
+        this.$el.setAttribute('data-x', '0')
+        this.$el.setAttribute('data-y', '0')
       }
     },
 
-    watch: {
-      visible: function(value) {
-        if (value) {
-          // A popup became visible
-          this.updatePopupDimensions()
-        } else {
-          // A popup became invisible
-          this.resetPopupDimensions()
-        }
-      },
+    sendFeature (data) {
+      this.$emit('sendfeature', data)
+    },
 
-      requestStartTime () {
-        this.logger.log(`Request start time has been updated`)
-        this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
-        // There is a new request coming in, reset popup dimensions
-        this.resetPopupDimensions()
-      },
-
-      translationsDataReady: function(value) {
-        let time = Date.now()
-        this.logger.log(`${time}: translation data became available`, this.translations)
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
+        return this.data.l10n.messages[value].get()
       }
+      return defaultValue
+    },
 
+    attachTrackingClick: function () {
+      this.closePopup()
     }
+
+  },
+
+  mounted () {
+    if (this.data && this.data.draggable && this.data.resizable) {
+      this.interactInstance = interact(this.$el)
+        .resizable(this.resizableSettings())
+        .draggable(this.draggableSettings())
+        .on('resizemove', this.resizeListener)
+    }
+  },
+
+  updated () {
+    if (this.visible) {
+      let time = Date.now()
+      this.logger.log(`${time}: component is updated`)
+
+      let vm = this
+      clearTimeout(this.updateDimensionsTimeout)
+      let timeoutDuration = 0
+      if (this.resizeCount > 1) {
+        timeoutDuration = 1000
+      }
+      this.updateDimensionsTimeout = setTimeout(function () {
+        vm.updatePopupDimensions()
+      }, timeoutDuration)
+    }
+  },
+
+  watch: {
+    visible: function (value) {
+      if (value) {
+        // A popup became visible
+        this.updatePopupDimensions()
+      } else {
+        // A popup became invisible
+        this.resetPopupDimensions()
+      }
+    },
+
+    requestStartTime () {
+      this.logger.log(`Request start time has been updated`)
+      this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
+      // There is a new request coming in, reset popup dimensions
+      this.resetPopupDimensions()
+    },
+
+    translationsDataReady: function (value) {
+      let time = Date.now()
+      this.logger.log(`${time}: translation data became available`, this.translations)
+    }
+
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";

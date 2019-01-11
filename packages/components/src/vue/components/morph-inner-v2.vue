@@ -4,7 +4,6 @@
        >
     <span class="lemma_index" v-if="count > 1">{{ index + 1 }}</span>
 
-
     <div class="alpheios-morph__inflections" v-if="inflections.length >0">
       <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflection">
         <div class="alpheios-morph__forms">
@@ -98,103 +97,102 @@
   </div><!--alpheios-morph__dictentry-->
 </template>
 <script>
-  import { LanguageModelFactory, GrmFeature } from 'alpheios-data-models'
-  import ShortDef from './shortdef.vue'
-  import InflectionAttribute from './infl-attribute.vue'
+import { LanguageModelFactory, GrmFeature } from 'alpheios-data-models'
+import ShortDef from './shortdef.vue'
+import InflectionAttribute from './infl-attribute.vue'
 
-  import LemmaTranslation from './lemma-translation.vue'
+import LemmaTranslation from './lemma-translation.vue'
 
-  export default {
-    name: 'MorphInner',
-    components: {
-      shortdef: ShortDef,
-      inflectionattribute: InflectionAttribute,
-      lemmatranslation: LemmaTranslation
+export default {
+  name: 'MorphInner',
+  components: {
+    shortdef: ShortDef,
+    inflectionattribute: InflectionAttribute,
+    lemmatranslation: LemmaTranslation
+  },
+  props: {
+    lex: {
+      type: Object,
+      required: true
     },
-    props: {
-        lex: {
-          type: Object,
-          required: true
-        },
-        index: {
-          type: Number,
-          required: true
-        },
-        count: {
-          type: Number,
-          required: true
-        },
-        definitions: {
-          type: Array,
-          required: false,
-          default: () => {}
-        },
-        linkedfeatures: {
-          type: Array,
-          required: false,
-          default: () => []
-        },
-        translations: {
-          type: Object,
-          required: false,
-          default: () => {}
-        },
-        morphDataReady: {
-          type: Boolean,
-          required: true
-        }
+    index: {
+      type: Number,
+      required: true
     },
-    data: function () {
-      return {
-        showSource: false
-      }
+    count: {
+      type: Number,
+      required: true
     },
-    created: function () {
-      this.types = GrmFeature.types
+    definitions: {
+      type: Array,
+      required: false,
+      default: () => {}
     },
-    computed: {
-      inflections: {
-        get: function() {
-          return this.morphDataReady ? this.lex.getGroupedInflections() : []
-        }
-      }
+    linkedfeatures: {
+      type: Array,
+      required: false,
+      default: () => []
     },
-    methods: {
-      groupClass(group) {
-        return group.groupingKey.isCaseInflectionSet ? 'alpheios-morph__inline' : 'alpheios-morph__block'
-      },
-      featureMatch (a, b) {
-        if (a && b) {
-          return a.isEqual(b)
-        }
-        return false
-
-      },
-      sendFeature (data) {
-        this.$emit('sendfeature',data)
-      },
-      getFeature (lemma, type) {
-        if (lemma.features[type] !== undefined) {
-          return lemma.features[type].value
-        }
-        return undefined
-      },
-      definitionIndex (index) {
-        let letters = "abcdefghijklmnopqrstuvwxyz"
-        return letters.substr(index, 1) + '.'
-      },
-      featureList(lemma,features,name) {
-        let list = features.map(i => lemma.features[i] ? GrmFeature.toFeature(lemma.features[i]): null).filter(i => i)
-        list = list.length > 0 ? `(${list.map((f)=>f).join(', ')})` : ''
-        let returnObj = {}
-        returnObj[name] = { value: list }
-        return returnObj
-      },
-      languageCode (languageID) {
-        return LanguageModelFactory.getLanguageCodeFromId(languageID)
+    translations: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    morphDataReady: {
+      type: Boolean,
+      required: true
+    }
+  },
+  data: function () {
+    return {
+      showSource: false
+    }
+  },
+  created: function () {
+    this.types = GrmFeature.types
+  },
+  computed: {
+    inflections: {
+      get: function () {
+        return this.morphDataReady ? this.lex.getGroupedInflections() : []
       }
     }
+  },
+  methods: {
+    groupClass (group) {
+      return group.groupingKey.isCaseInflectionSet ? 'alpheios-morph__inline' : 'alpheios-morph__block'
+    },
+    featureMatch (a, b) {
+      if (a && b) {
+        return a.isEqual(b)
+      }
+      return false
+    },
+    sendFeature (data) {
+      this.$emit('sendfeature', data)
+    },
+    getFeature (lemma, type) {
+      if (lemma.features[type] !== undefined) {
+        return lemma.features[type].value
+      }
+      return undefined
+    },
+    definitionIndex (index) {
+      let letters = 'abcdefghijklmnopqrstuvwxyz'
+      return letters.substr(index, 1) + '.'
+    },
+    featureList (lemma, features, name) {
+      let list = features.map(i => lemma.features[i] ? GrmFeature.toFeature(lemma.features[i]) : null).filter(i => i)
+      list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
+      let returnObj = {}
+      returnObj[name] = { value: list }
+      return returnObj
+    },
+    languageCode (languageID) {
+      return LanguageModelFactory.getLanguageCodeFromId(languageID)
+    }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";
@@ -394,7 +392,6 @@
       }
     }
   }
-
 
   .alpheios-morph__inflections, .alpheios-morph__definition, .alpheios-morph__forms {
     margin: 0;

@@ -9,19 +9,19 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'LemmaTranslation',
-    props: {
-      translations: {
-        type: Object,
-        required: false
-      },
-      lemmakey: {
-        type: String,
-        required: false
-      }
+export default {
+  name: 'LemmaTranslation',
+  props: {
+    translations: {
+      type: Object,
+      required: false
+    },
+    lemmakey: {
+      type: String,
+      required: false
     }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/alpheios";
