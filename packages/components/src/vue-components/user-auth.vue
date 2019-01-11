@@ -83,6 +83,7 @@ export default {
       console.log('Logging out')
       this.isLoggedIn = false
       this.authenticationFailed = false
+      this.auth.logout()
     },
 
     getUserInfo: function () {
