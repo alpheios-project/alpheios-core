@@ -21,7 +21,7 @@
 
         <div 
                 v-for="wordItem in wordItems" 
-                v-bind:key="wordItem.ID">
+                v-bind:key="wordItem.storageID">
             <word-item-panel 
               :worditem="wordItem" 
               @changeImportant = "changeImportant"
@@ -70,40 +70,31 @@ export default {
       return this.updated && this.reloadList ? this.wordlist.values : []
     },
     languageName () {
-      let languageNames = new Map([
-        [Constants.LANG_LATIN, 'Latin'],
-        [Constants.LANG_GREEK, 'Greek'],
-        [Constants.LANG_ARABIC, 'Arabic'],
-        [Constants.LANG_PERSIAN, 'Persian'],
-        [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
-      ])
-      
-      let languageID = this.wordlist.languageID
-      return languageNames.has(languageID) ? languageNames.get(languageID) : ''
+      return this.wordlist.languageName
     }
   },
   methods: {
-    makeAllImportant () {
-      this.wordlist.makeAllImportant()
+    async makeAllImportant () {
+      await this.wordlist.makeAllImportant()
       this.$emit('eventChangeImportant')
     },
-    removeAllImportant () {
-      this.wordlist.removeAllImportant()
+    async removeAllImportant () {
+      await this.wordlist.removeAllImportant()
       this.$emit('eventChangeImportant')
     },
-    changeImportant (ID, important) {
+    async changeImportant (storageID, important) {
       if (important) {
-        this.wordlist.removeImportantByID(ID)
+        await this.wordlist.removeImportantByID(storageID)
       } else {
-        this.wordlist.makeImportantByID(ID)
+        await this.wordlist.makeImportantByID(storageID)
       }
     },
-    deleteItem (ID) {
-      this.wordlist.removeWordItemByID(ID)
+    async deleteItem (storageID) {
+      await this.wordlist.removeWordItemByID(storageID)
       this.reloadList = this.reloadList + 1
     },
-    deleteAll () {
-      this.wordlist.removeAllWordItems()
+    async deleteAll () {
+      await this.wordlist.removeAllWordItems()
       this.reloadList = this.reloadList + 1
     }
   }

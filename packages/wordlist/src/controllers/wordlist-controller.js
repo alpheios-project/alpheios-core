@@ -1,9 +1,6 @@
 import { PsEvent, LanguageModelFactory as LMF, Constants, Lemma, Inflection, DefinitionSet, Lexeme, Homonym } from 'alpheios-data-models'
-import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
-import WordList from '@/lib/word-list';
-import WordItem from '@/lib/word-item';
+import WordList from '@/lib/word-list'
 import IndexedDBAdapter from '@/storage/indexed-db-adapter'
-import UpgradeQueue from '@/controllers/upgrade-queue';
 
 export default class WordlistController {
   constructor (userID) {
@@ -11,28 +8,10 @@ export default class WordlistController {
     this.wordLists = {}
 
     this.storageAdapter = new IndexedDBAdapter()
-    this.createAvailableListsID()
-    this.upgradeQueue = new UpgradeQueue()
   }
 
-  static get langAliases () {
-    return new Map([
-      [Constants.LANG_LATIN, 'Latin'],
-      [Constants.LANG_GREEK, 'Greek'],
-      [Constants.LANG_ARABIC, 'Arabic'],
-      [Constants.LANG_PERSIAN, 'Persian'],
-      [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
-    ])
-  }
-
-  createAvailableListsID () {
-    const languages = Array.from(WordlistController.langAliases.keys())
-    let lists = []
-    languages.forEach(languageID => {
-      let languageCode = LMF.getLanguageCodeFromId(languageID)
-      lists.push(this.userID + '-' + languageCode)
-    })
-    this.availableLists = lists
+  get availableLangs () {
+    return ['lat', 'grc', 'ara', 'per', 'gez']
   }
 
   /**
@@ -42,32 +21,12 @@ export default class WordlistController {
    * passes initDBStructure method for the case, when database doesn't exist (onupgradeneeded event)
    * and uploadListsFromDB for the case when database already exists
    */
-  initLists () {
+  async initLists () {
     if (this.storageAdapter.available) {
-      this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.uploadListsFromDB.bind(this))
-      // this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.deleteWordItemFromDB.bind(this))
-      
+      await this.uploadListsFromDB()
     }
   }
 
-  /**
-   * This method creats structure for the UserList Table in onupgradeneeded event
-   * Later we could use defined indexes as a range key for searching/filterng data
-   * Besides defined indexes Table could have any other fields,
-   * in our case it will have also - homonym and important
-   * So each item in the table defines one worditem in the wordlist
-   * userID, languageCode, userIDLangCode defines wordList in the table's item
-   * ID has a structure - userID-languageCode-targetWord, for example userIDTest-lat-cepit
-   */
-  initDBStructure (event) {
-    const db = event.target.result;
-    const objectStore = db.createObjectStore('UserLists', { keyPath: 'ID' })
-    objectStore.createIndex('ID', 'ID', { unique: true })
-    objectStore.createIndex('userID', 'userID', { unique: false })
-    objectStore.createIndex('languageCode', 'languageCode', { unique: false })
-    objectStore.createIndex('userIDLangCode', 'userIDLangCode', { unique: false })
-    objectStore.createIndex('targetWord', 'targetWord', { unique: true })
-  }
 
    /**
    * This method loads data from the table in onsuccess event
@@ -76,100 +35,86 @@ export default class WordlistController {
    * with the help of keyRange property condition - {indexName: 'userIDLangCode', value: listID, type: 'only' }
    * and if it retrieves data successfully, it executes parseResultToWordList
    */
-  uploadListsFromDB (event) {
-    const db = event.target.result
-    const lists = this.availableLists
-    lists.forEach(listID => {
-      this.storageAdapter.get(db, 'UserLists', {indexName: 'userIDLangCode', value: listID, type: 'only' }, this.parseResultToWordList.bind(this))
+
+  async uploadListsFromDB () {
+    this.availableLangs.forEach(async (languageCode) => {
+      this.createWordList(languageCode)
+      let result = await this.wordLists[languageCode].uploadFromDB()
+      if (!result) {
+        this.removeWordList(languageCode)
+      }
+      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)     
     })
-  }
-
-  deleteWordItemFromDB (event) {
-    const db = event.target.result
-    this.storageAdapter.delete(db, 'UserLists', ['userIDTest-lat-cepit'])
-  }
-  /**
-   * This method parses data from the database table (filtered by wordList)
-   * and creates Homonym from saved object (it is looks like jsonObject)
-   * After that it executes updateWordList method with saveToStorage parameter = false,
-   * to prevent form re-saving action
-   */
-  parseResultToWordList (result) {
-    if (result && result.length > 0) {
-      result.forEach(wordItemResult => {
-        let homonymRes = Homonym.readObject(wordItemResult.body.homonym)
-        // console.info('*******************parseResultToWordList', homonymRes)
-        this.updateWordList({ homonym: homonymRes, important: wordItemResult.body.important }, false)
-        if (this.upgradeQueue) {
-          this.upgradeQueue.clearCurrentItem()
-        }
-      })
-    }
-  }
-
-  /**
-   * This method checks if there already exists wordList in controller's wordLists property
-   * If it doesn't exists, it executes createWordList method
-   * then it checks upgradeQueue object, if it has the similiar homonym (it checks by the target word)
-   * if not, then
-   *         it creates a new WordItem with arguments, passes a saveToStorage flag (if it cames from LexicalQuery event, than we need to save to storage)
-   *         pushes it to the wordlist and publishes event for UIController to update WordList tab in the panel
-   * if it has, then
-   *         it saves this method and data to the queue
-   *         when current saveToStorage method from this wordlist would be finished it will execute next method from this queue
-   */
-  updateWordList(wordItemData, saveToStorage = true) {
-    let languageID = wordItemData.homonym.languageID
-    let languageCode = LMF.getLanguageCodeFromId(languageID)
-    if (!Object.keys(this.wordLists).includes(languageCode)) {
-      this.createWordList(languageID)
-    }
-    
-    // console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
-
-    if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
-      this.upgradeQueue.addToQueue(wordItemData.homonym)
-      // console.info('*******************updateWordList 2', wordItemData.homonym)
-      this.wordLists[languageCode].push(new WordItem(wordItemData), saveToStorage, this.upgradeQueue)
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    } else {
-      this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
-    }
   }
 
   /**
    * This method creates an empty wordlist and attaches to controller
    */
-  createWordList (languageID) {
-    let languageCode = LMF.getLanguageCodeFromId(languageID)
-    let wordList = new WordList(this.userID, languageID, this.storageAdapter)
+  createWordList (languageCode) {
+    let wordList = new WordList(this.userID, languageCode, this.storageAdapter)
     this.wordLists[languageCode] = wordList
+  }
+
+  removeWordList (languageCode) {
+    delete this.wordLists[languageCode]
+  }
+
+  wordListExist (languageCode) {
+    return Object.keys(this.wordLists).includes(languageCode)
+  }
+
+  async addToWordList (data) {
+    // check if such wordItem exists in the WordList
+
+    let languageCode = data.textQuoteSelector ? data.textQuoteSelector.languageCode : data.homonym.language
+    let targetWord = data.textQuoteSelector ? data.textQuoteSelector.normalizedText : data.homonym.targetWord
+
+    if (!this.wordListExist(languageCode)) {
+      this.createWordList(languageCode)
+    }
+
+    let wordList = this.wordLists[languageCode]
+    await wordList.pushWordItem({
+      languageCode, targetWord,
+      homonym: data.homonym,
+      textQuoteSelector: data.textQuoteSelector,
+      userID: this.userID,
+      currentSession: true,
+      important: false
+    }, data.type)
+
+    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true
    */
-  onHomonymReady (data) {
-    console.info('********************onHomonymReady', data.textSelector)
-    this.updateWordList({ homonym: data.homonym, currentSession: true, textSelector: data.textSelector })
+  async onHomonymReady (data) {
+    console.info('********************onHomonymReady1', data)
+    await this.addToWordList({ homonym: data.homonym, type: 'shortHomonym' })
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true 
    * (because definitions could come much later we need to resave homonym with definitions data to database)
   */
-  onDefinitionsReady (data) {
+  async onDefinitionsReady (data) {
     console.info('********************onDefinitionsReady', data)
-    this.updateWordList({ homonym: data.homonym, currentSession: true })
+    await this.addToWordList({ homonym: data.homonym, type: 'fullHomonym' })
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true 
    * (because lemma translations could come much later we need to resave homonym with translations data to database)
   */
-  onLemmaTranslationsReady (homonym) {
+  async onLemmaTranslationsReady (homonym) {
     console.info('********************onLemmaTranslationsReady', homonym)
-    this.updateWordList({ homonym: homonym, currentSession: true })
+    await this.addToWordList({ homonym, type: 'fullHomonym' })
+  }
+
+  async onTextQuoteSelectorRecieved (textQuoteSelector) {
+    console.info('********************onTextQuoteSelectorRecieved', textQuoteSelector)
+    await this.addToWordList({ textQuoteSelector, type: 'textQuoteSelector' })
   }
 }
 

@@ -859,7 +859,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changeImportant () {
-      this.$emit('changeImportant', this.worditem.ID, this.worditem.important)
+      this.$emit('changeImportant', this.worditem.storageID, this.worditem.important)
       this.important = this.worditem.important
     },
     eventChangeImportant () {
@@ -869,7 +869,7 @@ __webpack_require__.r(__webpack_exports__);
       this.worditem.selectWordItem()
     },
     deleteItem () {
-      this.$emit('deleteItem', this.worditem.ID)
+      this.$emit('deleteItem', this.worditem.storageID)
     }
   }
 });
@@ -968,40 +968,31 @@ __webpack_require__.r(__webpack_exports__);
       return this.updated && this.reloadList ? this.wordlist.values : []
     },
     languageName () {
-      let languageNames = new Map([
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_LATIN, 'Latin'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_GREEK, 'Greek'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_ARABIC, 'Arabic'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_PERSIAN, 'Persian'],
-        [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
-      ])
-      
-      let languageID = this.wordlist.languageID
-      return languageNames.has(languageID) ? languageNames.get(languageID) : ''
+      return this.wordlist.languageName
     }
   },
   methods: {
-    makeAllImportant () {
-      this.wordlist.makeAllImportant()
+    async makeAllImportant () {
+      await this.wordlist.makeAllImportant()
       this.$emit('eventChangeImportant')
     },
-    removeAllImportant () {
-      this.wordlist.removeAllImportant()
+    async removeAllImportant () {
+      await this.wordlist.removeAllImportant()
       this.$emit('eventChangeImportant')
     },
-    changeImportant (ID, important) {
+    async changeImportant (storageID, important) {
       if (important) {
-        this.wordlist.removeImportantByID(ID)
+        await this.wordlist.removeImportantByID(storageID)
       } else {
-        this.wordlist.makeImportantByID(ID)
+        await this.wordlist.makeImportantByID(storageID)
       }
     },
-    deleteItem (ID) {
-      this.wordlist.removeWordItemByID(ID)
+    async deleteItem (storageID) {
+      await this.wordlist.removeWordItemByID(storageID)
       this.reloadList = this.reloadList + 1
     },
-    deleteAll () {
-      this.wordlist.removeAllWordItems()
+    async deleteAll () {
+      await this.wordlist.removeAllWordItems()
       this.reloadList = this.reloadList + 1
     }
   }
@@ -1311,7 +1302,7 @@ var render = function() {
       _vm._l(_vm.wordItems, function(wordItem) {
         return _c(
           "div",
-          { key: wordItem.ID },
+          { key: wordItem.storageID },
           [
             _c("word-item-panel", {
               attrs: { worditem: wordItem },
@@ -12590,61 +12581,6 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./controllers/upgrade-queue.js":
-/*!**************************************!*\
-  !*** ./controllers/upgrade-queue.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UpgradeQueue; });
-class UpgradeQueue {
-  constructor () {
-    this.count = 0
-    this.targetWords = []
-
-    this.currentWord = null
-    this.methods = []
-  }
-
-  includeHomonym (homonym) {
-    return this.targetWords.includes(homonym.targetWord)
-  }
-
-  addToQueue (homonym) {
-    this.count = this.count + 1
-    this.targetWords.push(homonym.targetWord)
-  }
-
-  addToMetods (method, args) {
-    this.methods.push({ 
-      method: method,
-      args: args 
-    })
-  }
-
-  setCurrentWord (wordItem) {
-    this.currentWord = wordItem.targetWord
-  }
-
-  clearCurrentItem () {
-    this.count = this.count - 1
-    // console.info('*********************clearCurrentItem before', this.currentWord, this.targetWords)
-    this.targetWords = this.targetWords.filter(item => item != this.currentWord)
-    this.currentWord = null
-    // console.info('*********************clearCurrentItem after', this.currentWord, this.targetWords)
-
-    if (this.methods.length > 0) {
-      this.methods[0].method(...this.methods[0].args)
-      this.methods.splice(0, 1)
-    }
-  }
-}
-
-/***/ }),
-
 /***/ "./controllers/wordlist-controller.js":
 /*!********************************************!*\
   !*** ./controllers/wordlist-controller.js ***!
@@ -12657,15 +12593,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordlistController; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _lib_word_list__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/word-list */ "./lib/word-list.js");
-/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
-/* harmony import */ var _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/storage/indexed-db-adapter */ "./storage/indexed-db-adapter.js");
-/* harmony import */ var _controllers_upgrade_queue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/controllers/upgrade-queue */ "./controllers/upgrade-queue.js");
-
- // Vue in a runtime + compiler configuration
-
+/* harmony import */ var _lib_word_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/word-list */ "./lib/word-list.js");
+/* harmony import */ var _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/storage/indexed-db-adapter */ "./storage/indexed-db-adapter.js");
 
 
 
@@ -12675,29 +12604,11 @@ class WordlistController {
     this.userID = userID
     this.wordLists = {}
 
-    this.storageAdapter = new _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_4__["default"]()
-    this.createAvailableListsID()
-    this.upgradeQueue = new _controllers_upgrade_queue__WEBPACK_IMPORTED_MODULE_5__["default"]()
+    this.storageAdapter = new _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
   }
 
-  static get langAliases () {
-    return new Map([
-      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
-      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
-      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_ARABIC, 'Arabic'],
-      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN, 'Persian'],
-      [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
-    ])
-  }
-
-  createAvailableListsID () {
-    const languages = Array.from(WordlistController.langAliases.keys())
-    let lists = []
-    languages.forEach(languageID => {
-      let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-      lists.push(this.userID + '-' + languageCode)
-    })
-    this.availableLists = lists
+  get availableLangs () {
+    return ['lat', 'grc', 'ara', 'per', 'gez']
   }
 
   /**
@@ -12707,32 +12618,12 @@ class WordlistController {
    * passes initDBStructure method for the case, when database doesn't exist (onupgradeneeded event)
    * and uploadListsFromDB for the case when database already exists
    */
-  initLists () {
+  async initLists () {
     if (this.storageAdapter.available) {
-      this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.uploadListsFromDB.bind(this))
-      // this.storageAdapter.openDatabase(this.initDBStructure.bind(this), this.deleteWordItemFromDB.bind(this))
-      
+      await this.uploadListsFromDB()
     }
   }
 
-  /**
-   * This method creats structure for the UserList Table in onupgradeneeded event
-   * Later we could use defined indexes as a range key for searching/filterng data
-   * Besides defined indexes Table could have any other fields,
-   * in our case it will have also - homonym and important
-   * So each item in the table defines one worditem in the wordlist
-   * userID, languageCode, userIDLangCode defines wordList in the table's item
-   * ID has a structure - userID-languageCode-targetWord, for example userIDTest-lat-cepit
-   */
-  initDBStructure (event) {
-    const db = event.target.result;
-    const objectStore = db.createObjectStore('UserLists', { keyPath: 'ID' })
-    objectStore.createIndex('ID', 'ID', { unique: true })
-    objectStore.createIndex('userID', 'userID', { unique: false })
-    objectStore.createIndex('languageCode', 'languageCode', { unique: false })
-    objectStore.createIndex('userIDLangCode', 'userIDLangCode', { unique: false })
-    objectStore.createIndex('targetWord', 'targetWord', { unique: true })
-  }
 
    /**
    * This method loads data from the table in onsuccess event
@@ -12741,100 +12632,86 @@ class WordlistController {
    * with the help of keyRange property condition - {indexName: 'userIDLangCode', value: listID, type: 'only' }
    * and if it retrieves data successfully, it executes parseResultToWordList
    */
-  uploadListsFromDB (event) {
-    const db = event.target.result
-    const lists = this.availableLists
-    lists.forEach(listID => {
-      this.storageAdapter.get(db, 'UserLists', {indexName: 'userIDLangCode', value: listID, type: 'only' }, this.parseResultToWordList.bind(this))
+
+  async uploadListsFromDB () {
+    this.availableLangs.forEach(async (languageCode) => {
+      this.createWordList(languageCode)
+      let result = await this.wordLists[languageCode].uploadFromDB()
+      if (!result) {
+        this.removeWordList(languageCode)
+      }
+      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)     
     })
-  }
-
-  deleteWordItemFromDB (event) {
-    const db = event.target.result
-    this.storageAdapter.delete(db, 'UserLists', ['userIDTest-lat-cepit'])
-  }
-  /**
-   * This method parses data from the database table (filtered by wordList)
-   * and creates Homonym from saved object (it is looks like jsonObject)
-   * After that it executes updateWordList method with saveToStorage parameter = false,
-   * to prevent form re-saving action
-   */
-  parseResultToWordList (result) {
-    if (result && result.length > 0) {
-      result.forEach(wordItemResult => {
-        let homonymRes = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(wordItemResult.body.homonym)
-        // console.info('*******************parseResultToWordList', homonymRes)
-        this.updateWordList({ homonym: homonymRes, important: wordItemResult.body.important }, false)
-        if (this.upgradeQueue) {
-          this.upgradeQueue.clearCurrentItem()
-        }
-      })
-    }
-  }
-
-  /**
-   * This method checks if there already exists wordList in controller's wordLists property
-   * If it doesn't exists, it executes createWordList method
-   * then it checks upgradeQueue object, if it has the similiar homonym (it checks by the target word)
-   * if not, then
-   *         it creates a new WordItem with arguments, passes a saveToStorage flag (if it cames from LexicalQuery event, than we need to save to storage)
-   *         pushes it to the wordlist and publishes event for UIController to update WordList tab in the panel
-   * if it has, then
-   *         it saves this method and data to the queue
-   *         when current saveToStorage method from this wordlist would be finished it will execute next method from this queue
-   */
-  updateWordList(wordItemData, saveToStorage = true) {
-    let languageID = wordItemData.homonym.languageID
-    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-    if (!Object.keys(this.wordLists).includes(languageCode)) {
-      this.createWordList(languageID)
-    }
-    
-    // console.info('*******************updateWordList 1', this.upgradeQueue, this.upgradeQueue.includeHomonym(wordItemData.homonym))
-
-    if (!this.upgradeQueue.includeHomonym(wordItemData.homonym)) {
-      this.upgradeQueue.addToQueue(wordItemData.homonym)
-      // console.info('*******************updateWordList 2', wordItemData.homonym)
-      this.wordLists[languageCode].push(new _lib_word_item__WEBPACK_IMPORTED_MODULE_3__["default"](wordItemData), saveToStorage, this.upgradeQueue)
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
-    } else {
-      this.upgradeQueue.addToMetods(this.updateWordList.bind(this), [ wordItemData, saveToStorage ])
-    }
   }
 
   /**
    * This method creates an empty wordlist and attaches to controller
    */
-  createWordList (languageID) {
-    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-    let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_2__["default"](this.userID, languageID, this.storageAdapter)
+  createWordList (languageCode) {
+    let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_1__["default"](this.userID, languageCode, this.storageAdapter)
     this.wordLists[languageCode] = wordList
+  }
+
+  removeWordList (languageCode) {
+    delete this.wordLists[languageCode]
+  }
+
+  wordListExist (languageCode) {
+    return Object.keys(this.wordLists).includes(languageCode)
+  }
+
+  async addToWordList (data) {
+    // check if such wordItem exists in the WordList
+
+    let languageCode = data.textQuoteSelector ? data.textQuoteSelector.languageCode : data.homonym.language
+    let targetWord = data.textQuoteSelector ? data.textQuoteSelector.normalizedText : data.homonym.targetWord
+
+    if (!this.wordListExist(languageCode)) {
+      this.createWordList(languageCode)
+    }
+
+    let wordList = this.wordLists[languageCode]
+    await wordList.pushWordItem({
+      languageCode, targetWord,
+      homonym: data.homonym,
+      textQuoteSelector: data.textQuoteSelector,
+      userID: this.userID,
+      currentSession: true,
+      important: false
+    }, data.type)
+
+    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true
    */
-  onHomonymReady (data) {
-    console.info('********************onHomonymReady', data.textSelector)
-    this.updateWordList({ homonym: data.homonym, currentSession: true, textSelector: data.textSelector })
+  async onHomonymReady (data) {
+    console.info('********************onHomonymReady1', data)
+    await this.addToWordList({ homonym: data.homonym, type: 'shortHomonym' })
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true 
    * (because definitions could come much later we need to resave homonym with definitions data to database)
   */
-  onDefinitionsReady (data) {
+  async onDefinitionsReady (data) {
     console.info('********************onDefinitionsReady', data)
-    this.updateWordList({ homonym: data.homonym, currentSession: true })
+    await this.addToWordList({ homonym: data.homonym, type: 'fullHomonym' })
   }
 
   /**
    * This method executes updateWordList with default saveToStorage flag = true 
    * (because lemma translations could come much later we need to resave homonym with translations data to database)
   */
-  onLemmaTranslationsReady (homonym) {
+  async onLemmaTranslationsReady (homonym) {
     console.info('********************onLemmaTranslationsReady', homonym)
-    this.updateWordList({ homonym: homonym, currentSession: true })
+    await this.addToWordList({ homonym, type: 'fullHomonym' })
+  }
+
+  async onTextQuoteSelectorRecieved (textQuoteSelector) {
+    console.info('********************onTextQuoteSelectorRecieved', textQuoteSelector)
+    await this.addToWordList({ textQuoteSelector, type: 'textQuoteSelector' })
   }
 }
 
@@ -13223,14 +13100,22 @@ __webpack_require__.r(__webpack_exports__);
 
 class WordItem {
   constructor (data) {
-    this.targetWord = data.homonym.targetWord
-    this.languageID = data.homonym.languageID
-    this.languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(data.homonym.languageID)
-    this.homonym = data.homonym
+    this.targetWord = data.targetWord
+    this.languageCode = data.languageCode
     this.important = data.important || false
     this.currentSession = data.currentSession || false
-    this.textQuoteSelector = data.textSelector ? data.textSelector.textQuoteSelector : {}
-    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
+    this.userID = data.userID
+
+    this.textQuoteSelector = data.textQuoteSelector ? data.textQuoteSelector : {}
+    this.homonym = data.homonym ? data.homonym : {}
+  }
+
+  get storageID () {
+    return this.userID + '-' + this.languageCode + '-' + this.targetWord
+  }
+
+  get listID () {
+    return this.userID + '-' + this.languageCode
   }
 
   makeImportant () {
@@ -13242,57 +13127,17 @@ class WordItem {
   }
 
   get lemmasList () {
-    return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => { 
-      return self.indexOf(value) === index
-    }).join(', ')
+    if (this.homonym && this.homonym.lexemes) {
+      return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => { 
+        return self.indexOf(value) === index
+      }).join(', ')
+    }
+    return ''
   }
-
-  static uploadFromJSON (jsonObj) {
+  
+  uploadHomonym (jsonObj) {
     let homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Homonym"].readObject(jsonObj.homonym)
-    return new WordItem(homonym)
-  }
-
-  /**
-   * This method converts wordItem to be as jsonObject
-   * it uses convertToJSON methods for each piece of the data - I will refractor all of them into Homonym methods later
-   */
-  convertToStorage () {
-    // TODO Merging or create a separate structures
-    let resultItem = { lexemes: [] }
-    for (let lexeme of this.homonym.lexemes) {
-      let resInflections = []
-      lexeme.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
-      
-      let resMeaning = lexeme.meaning.convertToJSONObject()
-      let resultLexeme = { 
-        lemma: lexeme.lemma.convertToJSONObject(), 
-        inflections: resInflections,
-        meaning: resMeaning
-      }
-
-      resultItem.lexemes.push(resultLexeme)
-    }
-    resultItem.targetWord = this.targetWord
-    return {
-      targetWord: this.targetWord,
-      languageCode: this.languageCode,
-      target: {
-        targetWord: this.targetWord,
-        source: window.location.href,
-        selector: {
-          type: 'TextQuoteSelector',
-          exact: this.textQuoteSelector.text,
-          prefix: this.textQuoteSelector.prefix,
-          suffix: this.textQuoteSelector.suffix,
-          contextHTML: this.textQuoteSelector.contextHTML
-        }
-      },
-      body: {
-        dt: WordItem.currentDate,
-        homonym: resultItem,
-        important: this.important
-      }
-    }
+    this.homonym = homonym
   }
 
   selectWordItem () {
@@ -13309,6 +13154,60 @@ class WordItem {
                 + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
 
   }
+
+  convertCommonToStorage () {
+    return {
+      ID: this.storageID,
+      listID: this.listID,
+      userID: this.userID,
+      languageCode: this.languageCode,
+      targetWord: this.targetWord,
+      important: this.important,
+      createdDT: WordItem.currentDate
+    }
+  }
+
+  convertTQSelectorToStorage () {
+    return {
+      ID: this.storageID,
+      listID: this.listID,
+      userID: this.userID,
+      languageCode: this.languageCode,
+      targetWord: this.targetWord,
+      
+      target: {
+        source: window.location.href,
+        selector: {
+          type: 'TextQuoteSelector',
+          exact: this.textQuoteSelector.text,
+          prefix: this.textQuoteSelector.prefix,
+          suffix: this.textQuoteSelector.suffix,
+          contextHTML: this.textQuoteSelector.contextHTML
+        }
+      },
+      createdDT: WordItem.currentDate
+    }
+  }
+
+  convertHomonymToStorage (addMeaning = false) {
+    let resultHomonym = this.homonym.convertToJSONObject(addMeaning)
+    return {
+      ID: this.storageID,
+      listID: this.listID,
+      userID: this.userID,
+      languageCode: this.languageCode,
+      targetWord: this.targetWord,
+
+      homonym: resultHomonym
+    }
+  }
+  convertShortHomonymToStorage () {
+    return this.convertHomonymToStorage(false)
+  }
+
+  convertFullHomonymToStorage () {
+    return this.convertHomonymToStorage(true)
+  }
 }
 
 /***/ }),
@@ -13323,178 +13222,181 @@ class WordItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordList; });
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
 
 
 class WordList {
-  constructor (userID, languageID, storageAdapter) {
+  constructor (userID, languageCode, storageAdapter) {
     this.userID = userID
-    this.languageID = languageID
+    this.languageCode = languageCode
     this.storageAdapter = storageAdapter
     this.items = {}
-    this.wordItemsToSave = []
-    this.wordItemsToDelete = []
-    this.createStorageID()
   }
 
-  createStorageID () {
-    let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID)
-    this.storageID =  this.userID + '-' + languageCode
+  get languageName () {
+    switch(this.languageCode) {
+      case 'lat':
+        return 'Latin'
+      case 'grc':
+        return 'Greek'
+      case 'ara':
+        return 'Arabic'
+      case 'per':
+        return 'Persian'
+      case 'gez':
+        return 'Ancient Ethiopic (Ge\'ez)'
+      default:
+        'Unknown'
+    }
+  }
+
+  get storageID () {
+    return this.userID + '-' + this.languageCode
   }
 
   get values () {
     return Object.values(this.items)
   }
 
-  /**
-   * This method removes wordItem with the same targetWord if it exists
-   * checks for the languageId to be the same as defines in the current wordList
-   * adds wordItem to the current wordList
-   * and saves to storage (if saveToStorage flag = true)
-   * before saving - it duplicates upgradeQueue from wordlist 
-   * to pass it later to IndexedDB put callback and move queue further after success saving
-   */
-  push (wordItem, saveToStorage = false, upgradeQueue = {}) {
-    this.removeWordItemByWord(wordItem)
-
-    if (this.languageID === wordItem.languageID) {
-      this.items[wordItem.ID] = wordItem
-      if (saveToStorage) {
-        this.upgradeQueue = upgradeQueue
-        this.upgradeQueue.setCurrentWord(wordItem)
-
-        this.wordItemsToSave = [ wordItem ]
-        this.saveToStorage()
-      }
-      return true
-    }
-    return false
-  }
-  
-  removeWordItemByWord (wordItem) {
-    if (this.contains(wordItem)) { 
-      let deleteID = this.getIDByTargetWord(wordItem)
-      this.wordItemsToDelete = [ this.storageID + '-' + this.items[deleteID].targetWord ]
-      delete this.items[deleteID]
-      this.removeFromStorage()
-    }
-  }
-
-  removeWordItemByID (ID) {
+  async removeWordItemByID (ID) {
     if (this.items[ID]) { 
-      this.wordItemsToDelete = [ this.storageID + '-' + this.items[ID].targetWord ]
+      await this.removeFromStorage({indexName: 'ID', value: this.items[ID].storageID, type: 'only' })
       delete this.items[ID]
-      this.removeFromStorage()
     }
   }
 
-  removeAllWordItems () {
-    this.wordItemsToDelete = this.values.map(item => this.storageID + '-' + item.targetWord)
-    let IDsforDelete = this.values.map(item => item.ID)
-    IDsforDelete.forEach(ID => {
-      delete this.items[ID]
-    })
-    this.removeFromStorage()
+  async removeAllWordItems () {
+    await this.removeFromStorage({indexName: 'listID', value: this.storageID, type: 'only' })
+    this.items = {}
   }
 
-  removeFromStorage () {
-    if (this.storageAdapter.available) {
-      this.storageAdapter.openDatabase(null, this.deleteStorageTransaction.bind(this))
+  async removeFromStorage (condition) {
+    for (let objectStoreData of Object.values(this.storageMap)) {
+      await this.storageAdapter.delete({
+        objectStoreName: objectStoreData.objectStoreName,
+        condition
+      })
     }
   }
 
-  deleteStorageTransaction (event) {
-    const db = event.target.result
-    let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
-    this.storageAdapter.delete(db, 'UserLists', this.wordItemsToDelete.slice(), successCallBackF)
-    this.wordItemsToDelete = []
-  }
-
-  /**
-   * This method is the same as in WordList and it passes putToStorageTransaction as a callback for successful opening database
-   */
-  saveToStorage () {
-    if (this.storageAdapter.available) {
-      this.storageAdapter.openDatabase(null, this.putToStorageTransaction.bind(this))
-    }
-  }
-
-  /**
-   * This method executes in successfull callback from saveToStorage method
-   * it gets db from event data
-   * and passes the foolowing arguments to set method of the storageAdapter
-   *        db - opened database from the event
-   *        UserLists - table name
-   *        jsonObject data - selected amount of wordItems (it could be one wordItem, it could be the whole list) converted to be as jsonObject
-   *        successCallBackF - it is used to move queue further, if there is a queue (it is not defined everytime)
-   */
-  putToStorageTransaction (event) {
-    const db = event.target.result
-    let successCallBackF = this.upgradeQueue ? this.upgradeQueue.clearCurrentItem.bind(this.upgradeQueue) : null
-    this.storageAdapter.set(db, 'UserLists', this.convertToStorageList(), successCallBackF)
-  }
-
-  /**
-   * This method converts some amount of wordItems to be as jsonObject
-   * as we couldn't pass some arguments to the IndexedDB callbacks (as they are events)
-   * I have created a variable in wordList that stores currently defined amount of wordItem - it is this.wordItemsToSave
-   * this.wordItemsToSave is defined now in push, and changing important flags methods
-   */
-  convertToStorageList () {
-    let result = []
-    for (let item of this.wordItemsToSave) {
-      result.push(this.convertToStorageItem(item))
-    }
-    this.wordItemsToSave = []
-    return result
-  }
-
-  convertToStorageItem (wordItem) {
-    return Object.assign({ 
-      ID: this.storageID + '-' + wordItem.targetWord, 
-      userID: this.userID, 
-      userIDLangCode: this.storageID      
-    }, wordItem.convertToStorage())
-  }
-  
   contains (wordItem) {
     return this.values.map(item => item.targetWord).includes(wordItem.targetWord)
   }
 
-  getIDByTargetWord (wordItem) {
-    let checkRes = this.values.filter(item => item.targetWord === wordItem.targetWord)
-    return checkRes ? checkRes[0].ID : null
-  }
-
-  makeImportantByID (wordItemID) {
+  async makeImportantByID (wordItemID) {
     this.items[wordItemID].makeImportant()
-    this.wordItemsToSave = [ this.items[wordItemID] ]
-    this.saveToStorage()
+    await this.pushWordItemPart([this.items[wordItemID]], 'common')
   }
 
-  removeImportantByID (wordItemID) {
+  async removeImportantByID (wordItemID) {
     this.items[wordItemID].removeImportant()
-    this.wordItemsToSave = [ this.items[wordItemID] ]
-    this.saveToStorage()
+    await this.pushWordItemPart([this.items[wordItemID]], 'common')
   }
 
-  makeAllImportant () {
+  async makeAllImportant () {
     this.values.forEach(wordItem => {
       wordItem.makeImportant()
     })
-    this.wordItemsToSave = this.values
-    this.saveToStorage()
+    await this.pushWordItemPart(this.values, 'common')
   }
 
-  removeAllImportant () {
+  async removeAllImportant () {
     this.values.forEach(wordItem => {
       wordItem.removeImportant()
     })
-    this.wordItemsToSave = this.values
-    this.saveToStorage()
+    await this.pushWordItemPart(this.values, 'common')
   }
 
+  get storageMap () {
+    return {
+      common: {
+        objectStoreName: 'WordListsCommon',
+        convertMethodName: 'convertCommonToStorage'
+      },
+      textQuoteSelector: {
+        objectStoreName: 'WordListsContext',
+        convertMethodName: 'convertTQSelectorToStorage'
+      },
+      shortHomonym: {
+        objectStoreName: 'WordListsHomonym',
+        convertMethodName: 'convertShortHomonymToStorage'
+      },
+      fullHomonym: {
+        objectStoreName: 'WordListsFullHomonym',
+        convertMethodName: 'convertFullHomonymToStorage'
+      }
+    }
+  }
+
+  async pushWordItem (data, type) {
+    let wordItem = new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"](data)
+    //check if worditem exists in the list
+    if (!this.contains(wordItem)) {
+      await this.pushWordItemPart([wordItem], 'common')
+    }
+
+    await this.pushWordItemPart([wordItem], type)
+  }
+
+  async pushWordItemPart (wordItems, type) {
+      if (this.storageMap[type]) {
+        let dataItems = []
+        for (let wordItem of wordItems) {
+          this.items[wordItem.storageID] = wordItem
+          let dataItem = wordItem[this.storageMap[type].convertMethodName]()
+          dataItems.push(dataItem)
+        }
+
+        await this.storageAdapter.set({
+          objectStoreName: this.storageMap[type].objectStoreName,
+          dataItems: dataItems
+        })
+        
+      }
+  }
+
+  async uploadFromDB () {
+    let res = await this.storageAdapter.get({
+      objectStoreName: this.storageMap.common.objectStoreName,
+      condition: {indexName: 'listID', value: this.storageID, type: 'only' }
+    })
+    if (res.length === 0) {
+      return false
+    } else {
+      for (let resWordItem of res) {
+        let resKey = resWordItem.ID
+        let wordItem = new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"](resWordItem)
+
+        let resFullHomonym = await this.storageAdapter.get({
+          objectStoreName: this.storageMap.fullHomonym.objectStoreName,
+          condition: {indexName: 'ID', value: resKey, type: 'only' }
+        })
+        
+        if (resFullHomonym.length > 0) {
+          wordItem.uploadHomonym(resFullHomonym[0])
+        } else {
+          let resShortHomonym = await this.storageAdapter.get({
+            objectStoreName: this.storageMap.shortHomonym.objectStoreName,
+            condition: {indexName: 'ID', value: resKey, type: 'only' }
+          })
+          if (resShortHomonym.length > 0)
+          wordItem.uploadHomonym(resShortHomonym[0])
+        }
+
+        let resTextQuoteSelector = await this.storageAdapter.get({
+          objectStoreName: this.storageMap.textQuoteSelector.objectStoreName,
+          condition: {indexName: 'ID', value: resKey, type: 'only' }
+        })
+
+        if (resTextQuoteSelector.length > 0) {
+          console.info('**********************resTextQuoteSelector', resTextQuoteSelector)
+        }
+
+        this.items[wordItem.storageID] = wordItem
+      }
+      return true
+    }
+  }
 }
 
 /***/ }),
@@ -13560,6 +13462,8 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBAdapter; });
 /* harmony import */ var _storage_storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/storage/storage-adapter.js */ "./storage/storage-adapter.js");
+/* harmony import */ var _storage_indexed_db_structure_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/storage/indexed-db-structure.js */ "./storage/indexed-db-structure.js");
+
 
 
 /**
@@ -13571,8 +13475,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     super(domain)
 
     this.available = this.initIndexedDBNamespaces()
-    this.currentVersion = 1
-    this.dbName = 'AlpheiosUserWordLists'
+    this.dbData = new _storage_indexed_db_structure_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
   }
 
   /**
@@ -13602,128 +13505,184 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return request
   }
 
-  /**
-   * This method create a request for put data to the selected ObjectStore
-   * and executes onComplete callback on success
-   * It creates transaction with readwrite access (onComplete callback would be executes on transaction finalize)
-   * And then it goes through data Array and executes put request (put allows adding data and rewriting existing data by keyValue)
-   */
-  set (db, objectStoreName, data, onCompleteF) {
-    const transaction = db.transaction([objectStoreName], 'readwrite')
-    transaction.oncomplete = (event) => {
-      // console.info('**************set data successfull')
-      if (onCompleteF) {
-        onCompleteF()
+  async set (data) {
+    let promiseOpenDB = await new Promise((resolve, reject) => {
+      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result
+        this.dbData.createObjectStores(db)
       }
-    }
-    transaction.onerror = (event) => {
-        console.info('**************testData onerror')
-    }
-    const objectStore = transaction.objectStore(objectStoreName);
-    data.forEach(dataItem => {
-      const requestPut = objectStore.put(dataItem)
-      requestPut.onsuccess = (event) => {
-        // console.info('****************wordlist added successful', event.target.result)
+      request.onsuccess = async (event) => {
+        const db = event.target.result
+        await this.putItem(db, data)
+        resolve()
       }
-      requestPut.onerror = (event) => {
-        console.info('****************wordlist error with adding data', event.target)
+      request.onerror = (event) => {
+        reject()
       }
     })
+    return promiseOpenDB
   }
 
-  /**
-   * This method creates a request for getting data from table
-   * it creates transaction and executes one of the methods - getWithCondition or getWithoutConditions
-   * (depending on passed condition argument)
-   * callback function is passed to final get request
-   */
-  get (db, objectStoreName, condition, callbackF) {
-    const transaction = db.transaction([objectStoreName])
-    const objectStore = transaction.objectStore(objectStoreName)
-
-    if (this.hasProperCondition(condition)) {
-      this.getWithCondition(objectStore, condition, callbackF)
-    } else {
-      console.info('There is not enough information for creating index condition')
-      this.getWithoutConditions(objectStore, callbackF)
-    }
-  }
-
-    /**
-   * This method checks if condition is correct
-   * I have limited here for 'only' compare method because I am using only it, but it could be upgraded later
-   */
-  hasProperCondition (condition) {
-    const allowedTypes = [ 'only' ]
-    return condition.indexName && condition.value && condition.type && allowedTypes.includes(condition.type)
-  }
-
-  /**
-   * This method gets all data from the table without any filtering
-   * I don't use this method in the code, but it could be useful later
-   */
-  getWithoutConditions (objectStore, callbackF) {
-    const requestOpenCursor = objectStore.openCursor(null)
-    requestOpenCursor.onsuccess = (event) => {
-      callbackF(event.target.result)
-    }
-    requestOpenCursor.onerror = (event) => {
-      console.info('****************cursor without condition - some error', event.target)
-    }
-  }
-
-  /**
-   * This method gets data with filtering condition
-   * I use IDBKeyRange for filtering, so it looks like this for example
-   *     this.IDBKeyRange.only('userIDTest-lat')
-   * where IDBKeyRange is defined with userIDLangCode index
-   * so it gets all wordItems for latin wordList for the current user
-   * and success callback it passes retrieved data using callback function, for example WordlistController.parseResultToWordList
-   */
-  getWithCondition (objectStore, condition, callbackF) {
-    const index = objectStore.index(condition.indexName)
-    const keyRange = this.IDBKeyRange[condition.type](condition.value)
-
-    const requestOpenCursor = index.getAll(keyRange, 0)
-    requestOpenCursor.onsuccess = (event) => {
-      callbackF(event.target.result)
-    }
-
-    requestOpenCursor.onerror = (event) => {
-      console.info('****************cursor with condition - some error', event.target)
-    }
-  }
-
-  /**
-   * This method create a request for delete data from the selected ObjectStore
-   * and executes onComplete callback on success
-   * It creates transaction with readwrire access (onComplete callback would be executes on transaction finalize)
-   * And then it goes through data Array and executes put request (put allows adding data and rewriting existing data by keyValue)
-   */
-  delete (db, objectStoreName, data, onCompleteF) {
-    console.info('*****************delete method', data)
-    const transaction = db.transaction([objectStoreName], 'readwrite')
-    transaction.oncomplete = (event) => {
-      console.info('**************delete data successfull')
-      if (onCompleteF) {
-        onCompleteF()
+  async putItem (db, data) {
+    let promisePut = await new Promise((resolve, reject) => {
+      const transaction = db.transaction([data.objectStoreName], 'readwrite')
+      transaction.onerror = (event) => {
+        reject()
       }
-    }
-    transaction.onerror = (event) => {
-        console.info('**************testData onerror')
-    }
-    const objectStore = transaction.objectStore(objectStoreName);
-    data.forEach(dataItem => {
-      const requestPut = objectStore.delete(dataItem)
-      requestPut.onsuccess = (event) => {
-        console.info('****************worditem was deleted', event.target.result)
+      const objectStore = transaction.objectStore(data.objectStoreName)
+      let objectsDone = data.dataItems.length
+      for (let dataItem of data.dataItems) {
+        const requestPut = objectStore.put(dataItem)
+        requestPut.onsuccess = () => {
+          objectsDone = objectsDone - 1
+          if (objectsDone === 0) {
+            resolve()
+          }
+        }
+        requestPut.onerror = () => {
+          reject()
+        }
       }
-      requestPut.onerror = (event) => {
-        console.info('****************wordlist error with deleting data', event.target)
+    })
+    return promisePut
+  }
+
+  async get (data) {
+    let promiseOpenDB = await new Promise((resolve, reject) => {
+      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+      request.onsuccess = (event) => {
+        const db = event.target.result
+        const transaction = db.transaction([data.objectStoreName])
+        const objectStore = transaction.objectStore(data.objectStoreName)
+
+        const index = objectStore.index(data.condition.indexName)
+        const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+
+        const requestOpenCursor = index.getAll(keyRange, 0)
+        requestOpenCursor.onsuccess = (event) => {
+          resolve(event.target.result)
+        }
+
+        requestOpenCursor.onerror = (event) => {
+          reject()
+        }        
       }
+      request.onerror = (event) => {
+        reject()
+      }
+    })
+    return promiseOpenDB
+  }
+
+  async delete (data) {
+    let promiseOpenDB = await new Promise((resolve, reject) => {
+      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+
+      request.onsuccess = (event) => {
+        const db = event.target.result
+        const transaction = db.transaction([data.objectStoreName], 'readwrite')
+        const objectStore = transaction.objectStore(data.objectStoreName)
+
+        const index = objectStore.index(data.condition.indexName)
+        const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+
+        let requestOpenCursor = index.openCursor(keyRange)
+        requestOpenCursor.onsuccess = (event) => {
+          const cursor = event.target.result
+          if (cursor) {
+            const requestDelete = cursor.delete()
+            requestDelete.onerror = (event) => {
+              reject()
+            }
+            cursor.continue()
+          } else {
+            resolve()
+          }
+        }
+      }
+
+      request.onerror = (event) => {
+        reject()
+      }
+    })
+
+    return promiseOpenDB
+  }
+}
+
+/***/ }),
+
+/***/ "./storage/indexed-db-structure.js":
+/*!*****************************************!*\
+  !*** ./storage/indexed-db-structure.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBStructure; });
+class IndexedDBStructure {
+  get dbName () {
+    return 'AlpheiosWordLists'
+  }
+
+  get dbVersion () {
+    return 1
+  }
+
+  get objectStores () {
+    return {
+      WordListsCommon: this.wordListsCommon,
+      WordListsContext: this.wordListsContext,
+      WordListsHomonym: this.wordListsHomonym,
+      WordListsFullHomonym: this.wordListsFullHomonym
+    }
+  }
+
+  get objectStoreTemplate () {
+    return {
+      keyPath: 'ID',
+      indexes: [
+        { indexName: 'ID', keyPath: 'ID', unique: true},
+        { indexName: 'listID', keyPath: 'listID', unique: false},
+        { indexName: 'userID', keyPath: 'userID', unique: false},
+        { indexName: 'languageCode', keyPath: 'languageCode', unique: false},
+        { indexName: 'targetWord', keyPath: 'targetWord', unique: false}
+      ]
+    }
+  }
+
+  get wordListsCommon () {
+    return this.objectStoreTemplate
+  }
+
+  get wordListsContext () {
+    return this.objectStoreTemplate
+  }
+
+  get wordListsHomonym () {
+    return this.objectStoreTemplate
+  }
+
+  get wordListsFullHomonym () {
+    return this.objectStoreTemplate
+  }
+
+  createObjectStores (db) {
+    Object.keys(this.objectStores).forEach(objectStoreName => {
+      const objectStoreStructure = this.objectStores[objectStoreName]
+
+      console.info('*************objectStoreStructure', objectStoreName, objectStoreStructure)
+      const objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+      objectStoreStructure.indexes.forEach(index => {
+        objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })    
+      })
     })
   }
 }
+
 
 /***/ }),
 

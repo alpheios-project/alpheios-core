@@ -51,7 +51,7 @@
     },
     methods: {
       changeImportant () {
-        this.$emit('changeImportant', this.worditem.ID, this.worditem.important)
+        this.$emit('changeImportant', this.worditem.storageID, this.worditem.important)
         this.important = this.worditem.important
       },
       eventChangeImportant () {
@@ -61,7 +61,7 @@
         this.worditem.selectWordItem()
       },
       deleteItem () {
-        this.$emit('deleteItem', this.worditem.ID)
+        this.$emit('deleteItem', this.worditem.storageID)
       }
     }
   }
