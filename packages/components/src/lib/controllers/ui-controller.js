@@ -12,8 +12,8 @@ import Panel from '@/vue-components/panel.vue'
 // import Popup from '@/vue-components/popup.vue'
 
 // Modules
-import L10nModule from '@/modules/data/l10n/l10n-module.js'
-import PopupModule from '@/modules/ui/popup/popup.js'
+import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
 
 import EmbedLibWarning from '@/vue-components/embed-lib-warning.vue'
 

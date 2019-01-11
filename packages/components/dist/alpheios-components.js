@@ -31549,8 +31549,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue-components/panel.vue */ "./vue-components/panel.vue");
-/* harmony import */ var _modules_data_l10n_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/modules/data/l10n/l10n-module.js */ "./modules/data/l10n/l10n-module.js");
-/* harmony import */ var _modules_ui_popup_popup_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/modules/ui/popup/popup.js */ "./modules/ui/popup/popup.js");
+/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
+/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
 /* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue-components/embed-lib-warning.vue */ "./vue-components/embed-lib-warning.vue");
 /* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
 /* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
@@ -31696,7 +31696,7 @@ class UIController {
     let uiController = new UIController(state, options)
 
     // Register modules
-    uiController.registerDataModule(_modules_data_l10n_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__["default"])
+    uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__["default"])
 
     // Creates on configures an event listener
     let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_30__["default"]()
@@ -32452,7 +32452,7 @@ class UIController {
         }
       }
     }) */
-    this.popup = new _modules_ui_popup_popup_js__WEBPACK_IMPORTED_MODULE_7__["default"](this.store, this)
+    this.popup = new _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__["default"](this.store, this)
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -37102,433 +37102,6 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 
 /***/ }),
 
-/***/ "./modules/data/l10n/l10n-module.js":
-/*!******************************************!*\
-  !*** ./modules/data/l10n/l10n-module.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return L10nModule; });
-/* harmony import */ var _modules_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/modules/module.js */ "./modules/module.js");
-/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
-
-
-
-
-
-
-class L10nModule extends _modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor () {
-    super('l10n')
-    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
-      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
-      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_GB)
-      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
-
-    this.store = {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-        selectedLocale: this.l10n.selectedLocale
-      },
-      getters: {
-        // For arrow functions `this` will point to the class instance, not to the store
-        getMessage: () => (messageID) => {
-          return this.l10n.bundle.get(messageID)
-        }
-      },
-      mutations: {
-        // For arrow functions `this` will point to the class instance, not to the store
-        setLocale: (state, newLocale) => {
-          this.l10n.setLocale(newLocale)
-          state.selectedLocale = this.l10n.selectedLocale
-        }
-      }
-    }
-
-    /**
-     * An API object groups all publicly available methods of a module.
-     * They will be exposed to UI components by the UI controller.
-     * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
-     * Methods of a module will be available within a UI component after injection as
-     * `this.moduleName.methodName`
-     *
-     * Because some methods may need access to the Vuex store instance, `api` is a function
-     * that takes `store` as an argument and returns an object that contains API methods.
-     * For arrow functions `this` will be bound to the module's instance,
-     * for regular functions - to the object that is returned by the `api` function.
-     * @param {Vuex} store - an instance of a Vuex store that API methods may need to operate upon.
-     * @return {Object} An object containing public methods of a module.
-     */
-    this.api = (store) => {
-      return {
-        /**
-         * Returns a current locale of L10n.
-         * @return {string} - A current locale
-         */
-        getLocale: () => {
-          return this.store.state.selectedLocale
-        },
-
-        /**
-         * Sets locale of L10n to a new value.
-         * @param newLocale
-         */
-        setLocale: function (newLocale) {
-          if (store.state.l10n.selectedLocale !== newLocale) {
-            return store.commit('l10n/setLocale', newLocale)
-          }
-        },
-
-        /**
-         * Returns a translated string for its message ID given.
-         * @param {string} messageID - A message ID of a string to retrieve.
-         * @return {string} - A formatted translated text of a string.
-         */
-        getMessage: (messageID) => {
-          return this.l10n.bundle.get(messageID)
-        }
-      }
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ "./modules/module.js":
-/*!***************************!*\
-  !*** ./modules/module.js ***!
-  \***************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Module; });
-/**
- * A base class for all data and UI modules. Its role is to define common features that are shared
- * across instances of al module types.
- */
-class Module {
-  constructor (name) {
-    /**
-     * A name with which a store of the module will be visible inside a UI controller's Vuex store,
-     * It is also used as a prefix for any global function a module may install on Vue instances.
-     * @type {string}
-     */
-    this.name = name
-
-    /**
-     * A module's Vuex store object that will be integrated into global Vuex store of a UI controller.
-     * @type {Object}
-     */
-    this.store = {}
-  }
-}
-
-
-/***/ }),
-
-/***/ "./modules/ui/popup/popup.js":
-/*!***********************************!*\
-  !*** ./modules/ui/popup/popup.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PopupModule; });
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue-components/popup.vue */ "./vue-components/popup.vue");
-/* harmony import */ var _lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/utility/language-names.js */ "./lib/utility/language-names.js");
- // Vue in a runtime + compiler configuration
-
-
-
-class PopupModule {
-  constructor (store, uiController) {
-    this._uiController = uiController
-    this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: `#${this._uiController.options.template.popupId}`,
-      store: store,
-      components: {
-        popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
-      },
-      data: {
-        messages: [],
-        lexemes: [],
-        definitions: {},
-
-        translations: {},
-
-        linkedFeatures: [],
-        visible: false,
-        popupData: {
-          fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
-          // Default popup position, with units
-          top: '10vh',
-          left: '10vw',
-
-          draggable: this._uiController.options.template.draggable,
-          resizable: this._uiController.options.template.resizable,
-          // Default popup dimensions, in pixels, without units. These values will override CSS rules.
-          // Can be scaled down on small screens automatically.
-          width: 210,
-          /*
-          `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
-          and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
-          a height of a popup less this value.
-           */
-          fixedElementsHeight: 120,
-          heightMin: 150, // Initially, popup height will be set to this value
-          heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
-          // A margin between a popup and a selection
-          placementMargin: 15,
-          // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
-          viewportMargin: 5,
-
-          // A position of a word selection
-          targetRect: {},
-
-          /*
-          A date and time when a new request was started, in milliseconds since 1970-01-01. It is used within a
-          component to identify a new request coming in and to distinguish it from data updates of the current request.
-           */
-          requestStartTime: 0,
-          settings: this._uiController.contentOptions.items,
-          verboseMode: this._uiController.contentOptions.items.verboseMode.currentValue === this._uiController.options.verboseMode,
-          defDataReady: false,
-          hasTreebank: false,
-          inflDataReady: this._uiController.inflDataReady,
-          morphDataReady: false,
-
-          translationsDataReady: false,
-
-          showProviders: false,
-          updates: 0,
-          classes: [], // Will be set later by `setRootComponentClasses()`
-          l10n: this._uiController.l10n,
-          notification: {
-            visible: false,
-            important: false,
-            showLanguageSwitcher: false,
-            text: ''
-          },
-          providers: [],
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          },
-          currentLanguage: null,
-          resourceSettings: this._uiController.resourceOptions.items,
-          styles: {
-            zIndex: this._uiController.zIndex
-          }
-        },
-        panel: this._uiController.panel,
-        options: this._uiController.contentOptions,
-        resourceOptions: this._uiController.resourceOptions,
-        currentPopupComponent: this._uiController.options.template.defaultPopupComponent,
-        uiController: this._uiController,
-        classesChanged: 0
-      },
-      methods: {
-        setTargetRect: function (targetRect) {
-          this.popupData.targetRect = targetRect
-        },
-
-        showMessage: function (message) {
-          this.messages = [message]
-          return this
-        },
-
-        appendMessage: function (message) {
-          this.messages.push(message)
-          return this
-        },
-
-        clearMessages: function () {
-          while (this.messages.length > 0) {
-            this.messages.pop()
-          }
-          return this
-        },
-
-        showNotification: function (text, important = false) {
-          this.popupData.notification.visible = true
-          this.popupData.notification.important = important
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = text
-        },
-
-        showImportantNotification: function (text) {
-          this.showNotification(text, true)
-        },
-
-        showLanguageNotification: function (homonym, notFound = false) {
-          this.popupData.notification.visible = true
-          let languageName
-          if (homonym) {
-            languageName = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(homonym.languageID).name
-          } else if (this.popupData.currentLanguageName) {
-            languageName = this.popupData.currentLanguageName
-          } else {
-            languageName = this.popupData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
-          }
-          if (notFound) {
-            this.popupData.notification.important = true
-            this.popupData.notification.showLanguageSwitcher = true
-            this.popupData.notification.text = this.popupData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
-          } else {
-            this.popupData.notification.important = false
-            this.popupData.notification.showLanguageSwitcher = false
-          }
-        },
-
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(languageID)
-          this.popupData.status.languageName = langDetails.name
-          this.popupData.status.languageCode = langDetails.code
-          this.popupData.status.selectedText = selectionText
-        },
-
-        showErrorInformation: function (errorText) {
-          this.popupData.notification.visible = true
-          this.popupData.notification.important = true
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = errorText
-        },
-
-        newLexicalRequest: function () {
-          this.popupData.requestStartTime = new Date().getTime()
-          this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
-        },
-
-        clearContent: function () {
-          this.definitions = {}
-          this.translations = {}
-
-          this.lexemes = []
-          this.popupData.providers = []
-          this.popupData.defDataReady = false
-          this.popupData.inflDataReady = false
-          this.popupData.morphDataReady = false
-
-          this.popupData.translationsDataReady = false
-
-          this.popupData.showProviders = false
-          this.popupData.hasTreebank = false
-          this.clearNotifications()
-          this.clearStatus()
-          return this
-        },
-
-        clearNotifications: function () {
-          this.popupData.notification.visible = false
-          this.popupData.notification.important = false
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = ''
-        },
-
-        clearStatus: function () {
-          this.popupData.status.languageName = ''
-          this.popupData.status.languageCode = ''
-          this.popupData.status.selectedText = ''
-        },
-
-        open: function () {
-          this.visible = true
-          return this
-        },
-
-        close: function () {
-          this.visible = false
-          return this
-        },
-
-        showPanelTab: function (tabName) {
-          this.panel.changeTab(tabName)
-          this.panel.open()
-          return this
-        },
-
-        sendFeature: function (feature) {
-          this.panel.requestGrammar(feature)
-          this.panel.changeTab('grammar')
-          this.panel.open()
-          return this
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          this.options.items[name].setTextValue(value)
-          switch (name) {
-            case 'locale':
-              if (this.uiController.presenter) {
-                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
-              }
-              this.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
-              break
-          }
-        },
-
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          // TODO this should really be handled within OptionsItem
-          // the difference between value and textValues is a little confusing
-          // see issue #73
-          if (name === 'fontSize' || name === 'colorSchema') {
-            this.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.uiController.popup.close() // Close an old popup
-              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
-              this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.uiController.updateColorSchemaClass(value)
-              break
-          }
-        }
-      }
-    })
-  }
-}
-
-
-/***/ }),
-
 /***/ "./plugin.js":
 /*!*******************!*\
   !*** ./plugin.js ***!
@@ -40005,6 +39578,433 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_template_id_7ab47da1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
+
+
+/***/ }),
+
+/***/ "./vue/vuex-modules/data/l10n-module.js":
+/*!**********************************************!*\
+  !*** ./vue/vuex-modules/data/l10n-module.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return L10nModule; });
+/* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
+/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
+
+
+
+
+
+class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor () {
+    super('l10n')
+    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
+      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
+      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_GB)
+      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
+
+    this.store = {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        selectedLocale: this.l10n.selectedLocale
+      },
+      getters: {
+        // For arrow functions `this` will point to the class instance, not to the store
+        getMessage: () => (messageID) => {
+          return this.l10n.bundle.get(messageID)
+        }
+      },
+      mutations: {
+        // For arrow functions `this` will point to the class instance, not to the store
+        setLocale: (state, newLocale) => {
+          this.l10n.setLocale(newLocale)
+          state.selectedLocale = this.l10n.selectedLocale
+        }
+      }
+    }
+
+    /**
+     * An API object groups all publicly available methods of a module.
+     * They will be exposed to UI components by the UI controller.
+     * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
+     * Methods of a module will be available within a UI component after injection as
+     * `this.moduleName.methodName`
+     *
+     * Because some methods may need access to the Vuex store instance, `api` is a function
+     * that takes `store` as an argument and returns an object that contains API methods.
+     * For arrow functions `this` will be bound to the module's instance,
+     * for regular functions - to the object that is returned by the `api` function.
+     * @param {Vuex} store - an instance of a Vuex store that API methods may need to operate upon.
+     * @return {Object} An object containing public methods of a module.
+     */
+    this.api = (store) => {
+      return {
+        /**
+         * Returns a current locale of L10n.
+         * @return {string} - A current locale
+         */
+        getLocale: () => {
+          return this.store.state.selectedLocale
+        },
+
+        /**
+         * Sets locale of L10n to a new value.
+         * @param newLocale
+         */
+        setLocale: function (newLocale) {
+          if (store.state.l10n.selectedLocale !== newLocale) {
+            return store.commit('l10n/setLocale', newLocale)
+          }
+        },
+
+        /**
+         * Returns a translated string for its message ID given.
+         * @param {string} messageID - A message ID of a string to retrieve.
+         * @return {string} - A formatted translated text of a string.
+         */
+        getMessage: (messageID) => {
+          return this.l10n.bundle.get(messageID)
+        }
+      }
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./vue/vuex-modules/module.js":
+/*!************************************!*\
+  !*** ./vue/vuex-modules/module.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Module; });
+/**
+ * A base class for all data and UI modules. Its role is to define common features that are shared
+ * across instances of al module types.
+ */
+class Module {
+  constructor (name) {
+    /**
+     * A name with which a store of the module will be visible inside a UI controller's Vuex store,
+     * It is also used as a prefix for any global function a module may install on Vue instances.
+     * @type {string}
+     */
+    this.name = name
+
+    /**
+     * A module's Vuex store object that will be integrated into global Vuex store of a UI controller.
+     * @type {Object}
+     */
+    this.store = {}
+  }
+}
+
+
+/***/ }),
+
+/***/ "./vue/vuex-modules/ui/popup-module.js":
+/*!*********************************************!*\
+  !*** ./vue/vuex-modules/ui/popup-module.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PopupModule; });
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue-components/popup.vue */ "./vue-components/popup.vue");
+/* harmony import */ var _lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/utility/language-names.js */ "./lib/utility/language-names.js");
+ // Vue in a runtime + compiler configuration
+
+
+
+class PopupModule {
+  constructor (store, uiController) {
+    this._uiController = uiController
+    this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+      el: `#${this._uiController.options.template.popupId}`,
+      store: store,
+      components: {
+        popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+      },
+      data: {
+        messages: [],
+        lexemes: [],
+        definitions: {},
+
+        translations: {},
+
+        linkedFeatures: [],
+        visible: false,
+        popupData: {
+          fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
+          // Default popup position, with units
+          top: '10vh',
+          left: '10vw',
+
+          draggable: this._uiController.options.template.draggable,
+          resizable: this._uiController.options.template.resizable,
+          // Default popup dimensions, in pixels, without units. These values will override CSS rules.
+          // Can be scaled down on small screens automatically.
+          width: 210,
+          /*
+          `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
+          and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
+          a height of a popup less this value.
+           */
+          fixedElementsHeight: 120,
+          heightMin: 150, // Initially, popup height will be set to this value
+          heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
+          // A margin between a popup and a selection
+          placementMargin: 15,
+          // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
+          viewportMargin: 5,
+
+          // A position of a word selection
+          targetRect: {},
+
+          /*
+          A date and time when a new request was started, in milliseconds since 1970-01-01. It is used within a
+          component to identify a new request coming in and to distinguish it from data updates of the current request.
+           */
+          requestStartTime: 0,
+          settings: this._uiController.contentOptions.items,
+          verboseMode: this._uiController.contentOptions.items.verboseMode.currentValue === this._uiController.options.verboseMode,
+          defDataReady: false,
+          hasTreebank: false,
+          inflDataReady: this._uiController.inflDataReady,
+          morphDataReady: false,
+
+          translationsDataReady: false,
+
+          showProviders: false,
+          updates: 0,
+          classes: [], // Will be set later by `setRootComponentClasses()`
+          l10n: this._uiController.l10n,
+          notification: {
+            visible: false,
+            important: false,
+            showLanguageSwitcher: false,
+            text: ''
+          },
+          providers: [],
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: ''
+          },
+          currentLanguage: null,
+          resourceSettings: this._uiController.resourceOptions.items,
+          styles: {
+            zIndex: this._uiController.zIndex
+          }
+        },
+        panel: this._uiController.panel,
+        options: this._uiController.contentOptions,
+        resourceOptions: this._uiController.resourceOptions,
+        currentPopupComponent: this._uiController.options.template.defaultPopupComponent,
+        uiController: this._uiController,
+        classesChanged: 0
+      },
+      methods: {
+        setTargetRect: function (targetRect) {
+          this.popupData.targetRect = targetRect
+        },
+
+        showMessage: function (message) {
+          this.messages = [message]
+          return this
+        },
+
+        appendMessage: function (message) {
+          this.messages.push(message)
+          return this
+        },
+
+        clearMessages: function () {
+          while (this.messages.length > 0) {
+            this.messages.pop()
+          }
+          return this
+        },
+
+        showNotification: function (text, important = false) {
+          this.popupData.notification.visible = true
+          this.popupData.notification.important = important
+          this.popupData.notification.showLanguageSwitcher = false
+          this.popupData.notification.text = text
+        },
+
+        showImportantNotification: function (text) {
+          this.showNotification(text, true)
+        },
+
+        showLanguageNotification: function (homonym, notFound = false) {
+          this.popupData.notification.visible = true
+          let languageName
+          if (homonym) {
+            languageName = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(homonym.languageID).name
+          } else if (this.popupData.currentLanguageName) {
+            languageName = this.popupData.currentLanguageName
+          } else {
+            languageName = this.popupData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
+          }
+          if (notFound) {
+            this.popupData.notification.important = true
+            this.popupData.notification.showLanguageSwitcher = true
+            this.popupData.notification.text = this.popupData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
+          } else {
+            this.popupData.notification.important = false
+            this.popupData.notification.showLanguageSwitcher = false
+          }
+        },
+
+        showStatusInfo: function (selectionText, languageID) {
+          let langDetails = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(languageID)
+          this.popupData.status.languageName = langDetails.name
+          this.popupData.status.languageCode = langDetails.code
+          this.popupData.status.selectedText = selectionText
+        },
+
+        showErrorInformation: function (errorText) {
+          this.popupData.notification.visible = true
+          this.popupData.notification.important = true
+          this.popupData.notification.showLanguageSwitcher = false
+          this.popupData.notification.text = errorText
+        },
+
+        newLexicalRequest: function () {
+          this.popupData.requestStartTime = new Date().getTime()
+          this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+        },
+
+        clearContent: function () {
+          this.definitions = {}
+          this.translations = {}
+
+          this.lexemes = []
+          this.popupData.providers = []
+          this.popupData.defDataReady = false
+          this.popupData.inflDataReady = false
+          this.popupData.morphDataReady = false
+
+          this.popupData.translationsDataReady = false
+
+          this.popupData.showProviders = false
+          this.popupData.hasTreebank = false
+          this.clearNotifications()
+          this.clearStatus()
+          return this
+        },
+
+        clearNotifications: function () {
+          this.popupData.notification.visible = false
+          this.popupData.notification.important = false
+          this.popupData.notification.showLanguageSwitcher = false
+          this.popupData.notification.text = ''
+        },
+
+        clearStatus: function () {
+          this.popupData.status.languageName = ''
+          this.popupData.status.languageCode = ''
+          this.popupData.status.selectedText = ''
+        },
+
+        open: function () {
+          this.visible = true
+          return this
+        },
+
+        close: function () {
+          this.visible = false
+          return this
+        },
+
+        showPanelTab: function (tabName) {
+          this.panel.changeTab(tabName)
+          this.panel.open()
+          return this
+        },
+
+        sendFeature: function (feature) {
+          this.panel.requestGrammar(feature)
+          this.panel.changeTab('grammar')
+          this.panel.open()
+          return this
+        },
+
+        settingChange: function (name, value) {
+          console.log('Change inside instance', name, value)
+          this.options.items[name].setTextValue(value)
+          switch (name) {
+            case 'locale':
+              if (this.uiController.presenter) {
+                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
+              }
+              this.uiController.updateLemmaTranslations()
+              break
+            case 'preferredLanguage':
+              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
+              break
+          }
+        },
+
+        resourceSettingChange: function (name, value) {
+          let keyinfo = this.resourceOptions.parseKey(name)
+          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
+          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+        },
+
+        uiOptionChange: function (name, value) {
+          // TODO this should really be handled within OptionsItem
+          // the difference between value and textValues is a little confusing
+          // see issue #73
+          if (name === 'fontSize' || name === 'colorSchema') {
+            this.uiController.uiOptions.items[name].setValue(value)
+          } else {
+            this.uiController.uiOptions.items[name].setTextValue(value)
+          }
+
+          switch (name) {
+            case 'skin':
+              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
+              break
+            case 'popup':
+              this.uiController.popup.close() // Close an old popup
+              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
+              this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
+              break
+            case 'fontSize':
+              this.uiController.updateFontSizeClass(value)
+              break
+            case 'colorSchema':
+              this.uiController.updateColorSchemaClass(value)
+              break
+          }
+        }
+      }
+    })
+  }
+}
 
 
 /***/ }),

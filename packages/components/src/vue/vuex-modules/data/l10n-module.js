@@ -1,4 +1,4 @@
-import Module from '@/modules/module.js'
+import Module from '@/vue/vuex-modules/module.js'
 import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
