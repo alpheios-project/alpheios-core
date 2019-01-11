@@ -92,6 +92,6 @@
   }
 </script>
 <style lang="scss">
-  @import "../styles/alpheios";
+  @import "../../styles/alpheios";
 
 </style>

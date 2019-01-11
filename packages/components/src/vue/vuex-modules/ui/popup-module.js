@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
-import Popup from '@/vue-components/popup.vue'
+import Popup from '@/vue/components/popup.vue'
 import { getLanguageName } from '@/lib/utility/language-names.js'
 
 export default class PopupModule {

@@ -142,7 +142,7 @@
 </script>
 
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
     .infl-suff-footnote-link {
         position: relative;
     }

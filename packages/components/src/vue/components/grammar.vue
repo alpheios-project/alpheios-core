@@ -18,7 +18,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-grammar {
         display: flex;

@@ -161,7 +161,7 @@
 <script>
   import { Constants } from 'alpheios-data-models'
   import { ViewSetFactory } from 'alpheios-inflection-tables'
-  import Comparable from '../lib/utility/comparable.js'
+  import Comparable from '@/lib/utility/comparable.js'
 
   import WideTable from './inflections-table-wide.vue'
   import Vue from 'vue/dist/vue'
@@ -315,7 +315,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-ib {
         padding: 0.2rem 20px 0.2rem;

@@ -7,7 +7,7 @@
     </div>
 </template>
 <script>
-  import CloseIcon from '../images/inline-icons/close.svg';
+  import CloseIcon from '../../images/inline-icons/close.svg';
 
   export default {
     name: 'EmbedLibWarning',
@@ -28,7 +28,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-embed-lib-warning {
         background: $alpheios-icon-color;

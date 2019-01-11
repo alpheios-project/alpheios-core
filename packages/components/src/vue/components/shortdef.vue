@@ -15,7 +15,7 @@
   }
 </script>
 <style lang="scss">
-  @import "../styles/alpheios";
+  @import "../../styles/alpheios";
 
   .alpheios-definition__text {
      color: $alpheios-tools-color;

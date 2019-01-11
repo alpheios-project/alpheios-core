@@ -73,7 +73,7 @@
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
-  @import "../styles/alpheios";
+  @import "../../styles/alpheios";
 
   .alpheios-setting__label {
     display: block;

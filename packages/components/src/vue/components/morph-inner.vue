@@ -169,7 +169,7 @@
   }
 </script>
 <style lang="scss">
-  @import "../styles/alpheios";
+  @import "../../styles/alpheios";
 
   .alpheios-morph__lexemes {
     color: $alpheios-tools-color;

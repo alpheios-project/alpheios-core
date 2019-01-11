@@ -306,7 +306,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-panel__tab-panel.alpheios-panel__tab__inflections {
         padding: 0 0 20px;

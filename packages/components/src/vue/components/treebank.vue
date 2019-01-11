@@ -63,7 +63,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-treebank {
         display: flex;

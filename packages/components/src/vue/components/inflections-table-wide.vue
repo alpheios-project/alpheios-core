@@ -253,7 +253,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-table-sf__title {
         margin-bottom: 5px;

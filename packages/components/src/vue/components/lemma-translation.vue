@@ -24,7 +24,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
   .alpheios-lemma__translations {
     padding: 5px 0 0 22px;
     font-style: italic;

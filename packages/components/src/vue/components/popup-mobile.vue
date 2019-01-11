@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="alpheios-popup__providers">
-            <img class="alpheios-popup__logo" src="../images/icon.png">
+            <img class="alpheios-popup__logo" src="../../images/icon.png">
             <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
         </div>
         <div class="alpheios-popup__notifications alpheios-text-small" :class="notificationClasses"

@@ -21,8 +21,8 @@
   </div>
 </template>
 <script>
-  import WhiteBrush from '../images/inline-icons/white-brush.svg';
-  import BlackBrush from '../images/inline-icons/black-brush.svg';
+  import WhiteBrush from '../../images/inline-icons/white-brush.svg';
+  import BlackBrush from '../../images/inline-icons/black-brush.svg';
 
   import Tooltip from './tooltip.vue'
 
@@ -56,7 +56,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     #alpheios-reskin-panel.alpheios-skin_panel {
       display: inline-block;

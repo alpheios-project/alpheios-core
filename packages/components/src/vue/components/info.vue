@@ -30,7 +30,7 @@
   }
 </script>
 <style lang="scss">
-  @import "../styles/alpheios";
+  @import "../../styles/alpheios";
 
   .alpheios-info {
     font-family: $alpheios-font-family;

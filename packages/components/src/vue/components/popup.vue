@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="alpheios-popup__providers">
-          <img class="alpheios-popup__logo" src="../images/icon.png">
+          <img class="alpheios-popup__logo" src="../../images/icon.png">
           <a class="alpheios-popup__providers-link uk-link" v-on:click="switchProviders">{{providersLinkText}}</a>
         </div>
         <div class="alpheios-popup__notifications uk-text-small" :class="notificationClasses"
@@ -91,14 +91,14 @@
   import Morph from './morph.vue'
   import Setting from './setting.vue'
   import interact from 'interactjs'
-  import Logger from '../lib/log/logger'
+  import Logger from '@/lib/log/logger'
 
   import Tooltip from './tooltip.vue'
   import Lookup from './lookup.vue'
   import ProgressBar from './progress-bar.vue'
 
   // Embeddable SVG icons
-  import CloseIcon from '../images/inline-icons/close.svg'
+  import CloseIcon from '../../images/inline-icons/close.svg'
 
   import { directive as onClickaway } from '../directives/clickaway.js';
 
@@ -639,7 +639,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-popup {
         display: flex;

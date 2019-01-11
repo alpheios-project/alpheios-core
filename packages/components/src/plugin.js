@@ -2,9 +2,9 @@
 // but is required to include Scss file specified in there to a MiniCssExtractPlugin bundle
 import Style from './styles/style.scss'
 
-import Popup from './vue-components/popup.vue'
-import PopupMobile from './vue-components/popup-mobile.vue'
-import Panel from './vue-components/panel.vue'
+import Popup from './vue/components/popup.vue'
+import PopupMobile from './vue/components/popup-mobile.vue'
+import Panel from './vue/components/panel.vue'
 import L10n from './lib/l10n/l10n'
 import Locales from './locales/locales'
 import enUS from './locales/en-us/messages.json'

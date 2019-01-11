@@ -7,15 +7,15 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Vuex from 'vuex'
 
 // A panel component
-import Panel from '@/vue-components/panel.vue'
+import Panel from '@/vue/components/panel.vue'
 // A popup component
-// import Popup from '@/vue-components/popup.vue'
+// import Popup from '@/vue/components/popup.vue'
 
 // Modules
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
 
-import EmbedLibWarning from '@/vue-components/embed-lib-warning.vue'
+import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
 
 import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'

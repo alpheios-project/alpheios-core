@@ -7,7 +7,7 @@
 
         <div class="alpheios-panel__header">
             <div class="alpheios-panel__header-logo">
-                <img class="alpheios-panel__header-logo-img" src="../images/icon.png">
+                <img class="alpheios-panel__header-logo-img" src="../../images/icon.png">
             </div>
             <span class="alpheios-panel__header-btn-group--center" v-if="data && data.tabs">
 
@@ -233,18 +233,18 @@ import ReskinFontColor from './reskin-font-color.vue'
 import UserAuth from './user-auth.vue'
 
 // Embeddable SVG icons
-import AttachLeftIcon from '../images/inline-icons/attach-left.svg'
-import AttachRightIcon from '../images/inline-icons/attach-right.svg'
-import CloseIcon from '../images/inline-icons/close.svg'
-import DefinitionsIcon from '../images/inline-icons/definitions.svg'
-import InflectionsIcon from '../images/inline-icons/inflections.svg'
-import InflectionsBrowserIcon from '../images/inline-icons/inflections-browser.svg'
-import StatusIcon from '../images/inline-icons/status.svg'
-import UserIcon from '../images/inline-icons/user.svg'
-import OptionsIcon from '../images/inline-icons/options.svg'
-import GrammarIcon from '../images/inline-icons/resources.svg'
-import TreebankIcon from '../images/inline-icons/sitemap.svg'
-import InfoIcon from '../images/inline-icons/info.svg'
+import AttachLeftIcon from '../../images/inline-icons/attach-left.svg'
+import AttachRightIcon from '../../images/inline-icons/attach-right.svg'
+import CloseIcon from '../../images/inline-icons/close.svg'
+import DefinitionsIcon from '../../images/inline-icons/definitions.svg'
+import InflectionsIcon from '../../images/inline-icons/inflections.svg'
+import InflectionsBrowserIcon from '../../images/inline-icons/inflections-browser.svg'
+import StatusIcon from '../../images/inline-icons/status.svg'
+import UserIcon from '../../images/inline-icons/user.svg'
+import OptionsIcon from '../../images/inline-icons/options.svg'
+import GrammarIcon from '../../images/inline-icons/resources.svg'
+import TreebankIcon from '../../images/inline-icons/sitemap.svg'
+import InfoIcon from '../../images/inline-icons/info.svg'
 
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
@@ -626,7 +626,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     $alpheios-panel-header-height: 40px;
     $alpheios-panel-title-height: 20px;

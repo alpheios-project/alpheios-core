@@ -28,10 +28,10 @@
   </div>
 </template>
 <script>
-  import TextSelector from '../lib/selection/text-selector'
-  import LexicalQueryLookup from '../lib/queries/lexical-query-lookup'
+  import TextSelector from '@/lib/selection/text-selector'
+  import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
   import { LanguageModelFactory } from 'alpheios-data-models'
-  import TempStorageArea from '../lib/options/temp-storage-area'
+  import TempStorageArea from '@/lib/options/temp-storage-area'
 
   import Tooltip from './tooltip.vue'
   import Setting from './setting.vue'
@@ -192,7 +192,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-lookup__form {
       margin: 15px 10px 5px;

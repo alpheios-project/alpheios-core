@@ -1,9 +1,5 @@
 <template>
     <div>
-        <p>Locale is: {{ l10n.getLocale() }}</p>
-        <button class="uk-button uk-button-primary" style="text-align: right;" @click="localeToggle">
-            Toggle Locale
-        </button>
         <button v-show="!isLoggedIn" class="uk-button uk-button-primary" @click="logIn">
             {{ l10n.getMessage(`AUTH_LOG_IN_BTN_LABEL`) }}
         </button>
@@ -108,15 +104,6 @@ export default {
             console.error(`Unable to retrieve user information from Auth0: ${error.message}`)
           })
       }
-    },
-
-    /**
-     * A method for demonstration of language switching.
-     * TODO: Remove in production builds.
-     */
-    localeToggle: function () {
-      const newLocale = (this.l10n.getLocale() === 'en-GB') ? 'en-US' : 'en-GB'
-      this.l10n.setLocale(newLocale)
     }
   },
 
@@ -132,7 +119,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../styles/alpheios";
+    @import "../../styles/alpheios";
 
     .alpheios-user-auth__message-box {
         margin-top: 20px;
