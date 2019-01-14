@@ -68,8 +68,6 @@
     },
     methods: {
       showContexts (wordItemStorageID, wordListLanguageCode) {
-        console.info('******************showContext word-list-panel1', wordItemStorageID, wordListLanguageCode)
-        console.info('******************showContext word-list-panel2', this.wordLists[wordListLanguageCode], this.wordLists[wordListLanguageCode][wordItemStorageID])
         this.showContextWordItem = this.wordLists[wordListLanguageCode].items[wordItemStorageID]
       }
     }
