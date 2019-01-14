@@ -140,14 +140,11 @@ export default class WordList {
   }
 
   async uploadFromDB () {
-    console.info('**********************uploadFromDB start')
-
     let res = await this.storageAdapter.get({
       objectStoreName: this.storageMap.common.objectStoreName,
       condition: {indexName: 'listID', value: this.storageID, type: 'only' }
     })
 
-    console.info('**********************uploadFromDB res1', res)
     if (res.length === 0) {
       return false
     } else {
@@ -177,7 +174,6 @@ export default class WordList {
         })
 
         if (resTextQuoteSelectors.length > 0) {
-          console.info('**********************resTextQuoteSelector', resTextQuoteSelectors)
           wordItem.uploadTextQuoteSelectors(resTextQuoteSelectors)
         }
 

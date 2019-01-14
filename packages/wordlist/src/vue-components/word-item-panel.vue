@@ -82,6 +82,9 @@
       },
       deleteItem () {
         this.$emit('deleteItem', this.worditem.storageID)
+      },
+      showContexts () {
+        this.$emit('showContexts', this.worditem.storageID)
       }
     }
   }

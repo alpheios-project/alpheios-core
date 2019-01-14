@@ -27,6 +27,7 @@
               :messages="messages"
               @changeImportant = "changeImportant"
               @deleteItem = "deleteItem"
+              @showContexts = "showContexts"
             ></word-item-panel>
         </div>
     </div>
@@ -97,6 +98,9 @@ export default {
     async deleteAll () {
       await this.wordlist.removeAllWordItems()
       this.reloadList = this.reloadList + 1
+    },
+    showContexts (wordItemStorageID) {
+      this.$emit('showContexts', wordItemStorageID, this.wordlist.languageCode)
     }
   }
 }
