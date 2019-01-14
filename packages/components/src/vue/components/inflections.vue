@@ -6,7 +6,7 @@
           <div class="alpheios-inflections__progress-whitespace">
             <div class="alpheios-inflections__progress-line"></div>
             <div class="alpheios-inflections__progress-text">
-              {{ln10Messages('PLACEHOLDER_INFLECT_IN_PROGRESS')}}
+              {{ l10n.getMsg('PLACEHOLDER_INFLECT_IN_PROGRESS') }}
             </div>
           </div>
         </div>
@@ -14,7 +14,7 @@
     </div>
     <div class="alpheios-inflections__content" v-else-if="inflectionsEnabled && hasMatchingViews">
       <div v-show="partsOfSpeech.length > 1">
-        <label class="uk-form-label">{{ln10Messages('LABEL_INFLECT_SELECT_POFS')}}</label>
+        <label class="uk-form-label">{{ l10n.getMsg('LABEL_INFLECT_SELECT_POFS') }}</label>
         <select class="uk-select alpheios-inflections__view-selector alpheios-text__smallest"
                 v-model="partOfSpeechSelector">
           <option v-for="partOfSpeech in partsOfSpeech">{{partOfSpeech}}</option>
@@ -35,17 +35,17 @@
       </div>
 
       <div class="alpheios-inflections__paradigms-expl"
-           v-html="messages.INFLECTIONS_PARADIGMS_EXPLANATORY_HINT.get(data.inflectionData.targetWord)"
+           v-html="l10n.getMsg('INFLECTIONS_PARADIGMS_EXPLANATORY_HINT', { word: data.inflectionData.targetWord })"
            v-if="data.inflectionData"
            v-show="showExplanatoryHint">
       </div>
 
       <div v-if="!selectedView.hasPrerenderedTables">
-        <main-table-wide-vue :collapsed="false" :messages="messages" :view="selectedView" @widthchange="updateWidth">
+        <main-table-wide-vue :collapsed="false" :view="selectedView" @widthchange="updateWidth">
         </main-table-wide-vue>
 
         <template v-for="linkedView in selectedView.linkedViews" v-if="selectedView.linkedViews">
-          <main-table-wide-vue :collapsed="false" :messages="messages" :view="linkedView" @widthchange="updateWidth">
+          <main-table-wide-vue :collapsed="false" :view="linkedView" @widthchange="updateWidth">
           </main-table-wide-vue>
         </template>
 
@@ -62,20 +62,20 @@
 
         <div class="alpheios-inflections__supp-tables" v-show="selectedView.hasSuppParadigms">
           <template v-for="paradigm of selectedView.suppParadigms">
-            <supp-tables-wide :bg-color="selectedView.hlSuppParadigms ? selectedView.suppHlColors.get(paradigm.paradigmID) : 'transparent'"
-                              :data="paradigm"
-                              :messages="messages" @navigate="navigate"></supp-tables-wide>
+            <supp-tables-wide
+                :bg-color="selectedView.hlSuppParadigms ? selectedView.suppHlColors.get(paradigm.paradigmID) : 'transparent'"
+                :data="paradigm" @navigate="navigate"></supp-tables-wide>
           </template>
         </div>
       </template>
 
       <div class="alpheios-inflections__credits-cont" v-show="selectedView.hasCredits">
-        <h3 class="alpheios-inflections__credits-title">{{ln10Messages('INFLECTIONS_CREDITS_TITLE')}}</h3>
+        <h3 class="alpheios-inflections__credits-title">{{ l10n.getMsg('INFLECTIONS_CREDITS_TITLE') }}</h3>
         <div class="alpheios-inflections__credits-text" v-html="selectedView.creditsText"></div>
       </div>
     </div>
     <div class="alpheios-inflections__placeholder" v-else>
-      {{ln10Messages('PLACEHOLDER_INFLECT_UNAVAILABLE')}}
+      {{ l10n.getMsg('PLACEHOLDER_INFLECT_UNAVAILABLE') }}
     </div>
   </div>
 </template>
@@ -87,21 +87,16 @@ import WideSubTables from './inflections-subtables-wide.vue'
 import WideSuppTable from './inflections-supp-table-wide.vue'
 import WordForms from './wordforms.vue'
 
-import Tooltip from './tooltip.vue'
-// Other dependencies
-import { Constants } from 'alpheios-data-models'
-import { L10n, ViewSetFactory } from 'alpheios-inflection-tables'
-
 import Vue from 'vue/dist/vue'
 
 export default {
   name: 'Inflections',
+  inject: ['l10n'],
   components: {
     prerenderedTableWide: WidePrerenderedTable,
     mainTableWideVue: WideTableVue,
     subTablesWide: WideSubTables,
     suppTablesWide: WideSuppTable,
-    alphTooltip: Tooltip,
     wordForms: WordForms
   },
 
@@ -117,14 +112,11 @@ export default {
       type: Object,
       required: true
     },
-    messages: {
-      type: Object,
-      required: true
-    },
+
     /*
-        Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
-        inflections data is calculated
-        */
+          Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
+          inflections data is calculated
+          */
     waitState: {
       type: Boolean,
       default: false,
@@ -218,14 +210,14 @@ export default {
     },
 
     /*
-        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-        use this information to adjust a width of a container that displays an inflection component. However, a width
-        of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
-        an inflection table width and notify a parent component only when a parent container is visible.
-        A parent component will notify us of that by setting a `visible` property. A change of that property state
-        will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
-        as it won't be used by anything and thus will not be calculated by Vue.
-         */
+          An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
+          use this information to adjust a width of a container that displays an inflection component. However, a width
+          of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
+          an inflection table width and notify a parent component only when a parent container is visible.
+          A parent component will notify us of that by setting a `visible` property. A change of that property state
+          will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
+          as it won't be used by anything and thus will not be calculated by Vue.
+           */
     isVisible: function (visibility) {
       if (visibility && this.htmlElements.content) {
         // If container is become visible, update parent with its width
@@ -286,13 +278,6 @@ export default {
           console.warn(`Cannot find #${reflink} element. Navigation cancelled`)
         }
       }
-    },
-
-    ln10Messages: function (value, defaultValue = 'unknown') {
-      if (this.messages && this.messages[value]) {
-        return this.messages[value].get()
-      }
-      return defaultValue
     }
   },
 

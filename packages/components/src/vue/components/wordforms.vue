@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { Constants, Feature } from 'alpheios-data-models'
+import { Feature } from 'alpheios-data-models'
 
 export default {
   name: 'WordForms',
@@ -33,9 +33,7 @@ export default {
   },
   computed: {
     forms: function () {
-      if (this.lexemes) {
-        return this.defineFormsBySelectedView()
-      }
+      return this.lexemes ? this.defineFormsBySelectedView() : ''
     }
   },
   methods: {

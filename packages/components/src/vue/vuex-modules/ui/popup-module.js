@@ -3,11 +3,17 @@ import Popup from '@/vue/components/popup.vue'
 import { getLanguageName } from '@/lib/utility/language-names.js'
 
 export default class PopupModule {
-  constructor (store, uiController) {
+  constructor (store, api, uiController) {
     this._uiController = uiController
     this.vi = new Vue({
       el: `#${this._uiController.options.template.popupId}`,
       store: store,
+      provide: api, // Expose APIs to child components
+      /*
+      Since this is a root component and we cannot claim APIs with `inject`
+      let's assign APIs to a custom prop to have access to it
+       */
+      api: api,
       components: {
         popup: Popup
       },
@@ -64,7 +70,6 @@ export default class PopupModule {
           showProviders: false,
           updates: 0,
           classes: [], // Will be set later by `setRootComponentClasses()`
-          l10n: this._uiController.l10n,
           notification: {
             visible: false,
             important: false,
@@ -131,12 +136,13 @@ export default class PopupModule {
           } else if (this.popupData.currentLanguageName) {
             languageName = this.popupData.currentLanguageName
           } else {
-            languageName = this.popupData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
+            // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
+            languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
           }
           if (notFound) {
             this.popupData.notification.important = true
             this.popupData.notification.showLanguageSwitcher = true
-            this.popupData.notification.text = this.popupData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
+            this.popupData.notification.text = this.$options.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
           } else {
             this.popupData.notification.important = false
             this.popupData.notification.showLanguageSwitcher = false

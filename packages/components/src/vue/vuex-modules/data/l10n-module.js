@@ -2,6 +2,8 @@ import Module from '@/vue/vuex-modules/module.js'
 import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
+import enUSData from '@/locales/en-us/messages-data.json'
+import enUSInfl from '@/locales/en-us/messages-inflections.json'
 import enGB from '@/locales/en-gb/messages.json'
 
 export default class L10nModule extends Module {
@@ -9,6 +11,8 @@ export default class L10nModule extends Module {
     super('l10n')
     this.l10n = new L10n()
       .addMessages(enUS, Locales.en_US)
+      .addMessages(enUSData, Locales.en_US)
+      .addMessages(enUSInfl, Locales.en_US)
       .addMessages(enGB, Locales.en_GB)
       .setLocale(Locales.en_US)
 
@@ -18,12 +22,6 @@ export default class L10nModule extends Module {
 
       state: {
         selectedLocale: this.l10n.selectedLocale
-      },
-      getters: {
-        // For arrow functions `this` will point to the class instance, not to the store
-        getMessage: () => (messageID) => {
-          return this.l10n.bundle.get(messageID)
-        }
       },
       mutations: {
         // For arrow functions `this` will point to the class instance, not to the store
@@ -69,12 +67,46 @@ export default class L10nModule extends Module {
         },
 
         /**
-         * Returns a translated string for its message ID given.
+         * Checks if message is in translated messages list.
+         * @param messageID
+         * @return {boolean}
+         */
+        hasMsg: (messageID) => {
+          return this.l10n.bundle.hasMsg(messageID)
+        },
+
+        /**
+         * Returns a translated message for a message ID given.
+         * If not translation found, returns an error message.
          * @param {string} messageID - A message ID of a string to retrieve.
+         * @param formatOptions
+         * @param options
          * @return {string} - A formatted translated text of a string.
          */
-        getMessage: (messageID) => {
-          return this.l10n.bundle.get(messageID)
+        getMsg: (messageID, formatOptions, options) => {
+          return this.l10n.bundle.getMsg(messageID, formatOptions, options)
+        },
+
+        /**
+         * Returns a translated message for a message ID given.
+         * If not translation found, returns a message ID string.
+         * @param {string} messageID - A message ID of a string to retrieve.
+         * @param formatOptions
+         * @param options
+         * @return {string} - A formatted translated text of a string.
+         */
+        getText: (messageID, formatOptions, options) => {
+          return this.l10n.bundle.getText(messageID, formatOptions, options)
+        },
+
+        /**
+         * Returns a translated version of an abbreviated message.
+         * @param messageID
+         * @param formatOptions
+         * @return {string}
+         */
+        getAbbr: (messageID, formatOptions) => {
+          return this.l10n.bundle.abbr(messageID, formatOptions)
         }
       }
     }

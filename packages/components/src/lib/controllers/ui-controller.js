@@ -14,15 +14,10 @@ import Panel from '@/vue/components/panel.vue'
 // Modules
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
+import SharedUIModule from '@/vue/vuex-modules/ui/shared-ui-module.js'
 
 import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
 
-import L10n from '@/lib/l10n/l10n.js'
-import Locales from '@/locales/locales.js'
-import enUS from '@/locales/en-us/messages.json'
-import enUSData from '@/locales/en-us/messages-data.json'
-import enUSInfl from '@/locales/en-us/messages-inflections.json'
-import enGB from '@/locales/en-gb/messages.json'
 import Template from '@/templates/template.htmlf'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import ResourceQuery from '@/lib/queries/resource-query.js'
@@ -112,6 +107,7 @@ export default class UIController {
 
     // Register modules
     uiController.registerDataModule(L10nModule)
+    uiController.registerDataModule(SharedUIModule)
 
     // Creates on configures an event listener
     let eventController = new UIEventController()
@@ -266,13 +262,6 @@ export default class UIController {
 
     this.zIndex = HTMLPage.getZIndexMax()
 
-    this.l10n = new L10n()
-      .addMessages(enUS, Locales.en_US)
-      .addMessages(enUSData, Locales.en_US)
-      .addMessages(enUSInfl, Locales.en_US)
-      .addMessages(enGB, Locales.en_GB)
-      .setLocale(Locales.en_US)
-
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
 
     // Inject HTML code of a plugin. Should go in reverse order.
@@ -293,7 +282,12 @@ export default class UIController {
     this.panel = new Vue({
       el: `#${this.options.template.panelId}`,
       store: this.store, // Install store into the panel
-      provide: this.api, // Public API of the modules
+      provide: this.api, // Public API of the modules for child components
+      /*
+      Since this is a root component and we cannot claim APIs with `inject`
+      let's assign APIs to a custom prop to have access to it
+       */
+      api: this.api,
       components: {
         panel: Panel
       },
@@ -363,7 +357,6 @@ export default class UIController {
             zIndex: this.zIndex
           },
           minWidth: 400,
-          l10n: this.l10n,
           auth: this.auth
         },
         state: this.state,
@@ -475,12 +468,12 @@ export default class UIController {
           } else if (this.panelData.infoComponentData.languageName) {
             languageName = this.panelData.infoComponentData.languageName
           } else {
-            languageName = this.panelData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
+            languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN') // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
           }
           if (notFound) {
             this.panelData.notification.important = true
             this.panelData.notification.showLanguageSwitcher = true
-            this.panelData.notification.text = this.panelData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
+            this.panelData.notification.text = this.$options.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
           } else {
             this.panelData.notification.visible = true
             this.panelData.notification.important = false
@@ -536,7 +529,7 @@ export default class UIController {
           //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
           // ]
           // }).getData()
-          this.uiController.message(this.panelData.l10n.messages.TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS.get())
+          this.uiController.message(this.$options.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
         },
 
         settingChange: function (name, value) {
@@ -602,272 +595,9 @@ export default class UIController {
         this.panelData.inflections.tableBody = document.querySelector(`#${this.panelData.inflectionIDs.tableBody}`)
       }
     })
-    console.log(`Panel's store is`, this.panel.$store)
 
     // Create a Vue instance for a popup
-    /* this.popup = new Vue({
-      el: `#${this.options.template.popupId}`,
-      components: {
-        popup: Popup
-      },
-      data: {
-        messages: [],
-        lexemes: [],
-        definitions: {},
-
-        translations: {},
-
-        linkedFeatures: [],
-        visible: false,
-        popupData: {
-          fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
-          // Default popup position, with units
-          top: '10vh',
-          left: '10vw',
-
-          draggable: this.options.template.draggable,
-          resizable: this.options.template.resizable,
-          // Default popup dimensions, in pixels, without units. These values will override CSS rules.
-          // Can be scaled down on small screens automatically.
-          width: 210,
-          /!*
-          `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
-          and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
-          a height of a popup less this value.
-           *!/
-          fixedElementsHeight: 120,
-          heightMin: 150, // Initially, popup height will be set to this value
-          heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
-          // A margin between a popup and a selection
-          placementMargin: 15,
-          // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
-          viewportMargin: 5,
-
-          // A position of a word selection
-          targetRect: {},
-
-          /!*
-          A date and time when a new request was started, in milliseconds since 1970-01-01. It is used within a
-          component to identify a new request coming in and to distinguish it from data updates of the current request.
-           *!/
-          requestStartTime: 0,
-          settings: this.contentOptions.items,
-          verboseMode: this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode,
-          defDataReady: false,
-          hasTreebank: false,
-          inflDataReady: this.inflDataReady,
-          morphDataReady: false,
-
-          translationsDataReady: false,
-
-          showProviders: false,
-          updates: 0,
-          classes: [], // Will be set later by `setRootComponentClasses()`
-          l10n: this.l10n,
-          notification: {
-            visible: false,
-            important: false,
-            showLanguageSwitcher: false,
-            text: ''
-          },
-          providers: [],
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          },
-          currentLanguage: null,
-          resourceSettings: this.resourceOptions.items,
-          styles: {
-            zIndex: this.zIndex
-          }
-        },
-        panel: this.panel,
-        options: this.contentOptions,
-        resourceOptions: this.resourceOptions,
-        currentPopupComponent: this.options.template.defaultPopupComponent,
-        uiController: this,
-        classesChanged: 0
-      },
-      methods: {
-        setTargetRect: function (targetRect) {
-          this.popupData.targetRect = targetRect
-        },
-
-        showMessage: function (message) {
-          this.messages = [message]
-          return this
-        },
-
-        appendMessage: function (message) {
-          this.messages.push(message)
-          return this
-        },
-
-        clearMessages: function () {
-          while (this.messages.length > 0) {
-            this.messages.pop()
-          }
-          return this
-        },
-
-        showNotification: function (text, important = false) {
-          this.popupData.notification.visible = true
-          this.popupData.notification.important = important
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = text
-        },
-
-        showImportantNotification: function (text) {
-          this.showNotification(text, true)
-        },
-
-        showLanguageNotification: function (homonym, notFound = false) {
-          this.popupData.notification.visible = true
-          let languageName
-          if (homonym) {
-            languageName = UIController.getLanguageName(homonym.languageID).name
-          } else if (this.popupData.currentLanguageName) {
-            languageName = this.popupData.currentLanguageName
-          } else {
-            languageName = this.popupData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
-          }
-          if (notFound) {
-            this.popupData.notification.important = true
-            this.popupData.notification.showLanguageSwitcher = true
-            this.popupData.notification.text = this.popupData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
-          } else {
-            this.popupData.notification.important = false
-            this.popupData.notification.showLanguageSwitcher = false
-          }
-        },
-
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = UIController.getLanguageName(languageID)
-          this.popupData.status.languageName = langDetails.name
-          this.popupData.status.languageCode = langDetails.code
-          this.popupData.status.selectedText = selectionText
-        },
-
-        showErrorInformation: function (errorText) {
-          this.popupData.notification.visible = true
-          this.popupData.notification.important = true
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = errorText
-        },
-
-        newLexicalRequest: function () {
-          this.popupData.requestStartTime = new Date().getTime()
-          this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
-        },
-
-        clearContent: function () {
-          this.definitions = {}
-          this.translations = {}
-
-          this.lexemes = []
-          this.popupData.providers = []
-          this.popupData.defDataReady = false
-          this.popupData.inflDataReady = false
-          this.popupData.morphDataReady = false
-
-          this.popupData.translationsDataReady = false
-
-          this.popupData.showProviders = false
-          this.popupData.hasTreebank = false
-          this.clearNotifications()
-          this.clearStatus()
-          return this
-        },
-
-        clearNotifications: function () {
-          this.popupData.notification.visible = false
-          this.popupData.notification.important = false
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = ''
-        },
-
-        clearStatus: function () {
-          this.popupData.status.languageName = ''
-          this.popupData.status.languageCode = ''
-          this.popupData.status.selectedText = ''
-        },
-
-        open: function () {
-          this.visible = true
-          return this
-        },
-
-        close: function () {
-          this.visible = false
-          return this
-        },
-
-        showPanelTab: function (tabName) {
-          this.panel.changeTab(tabName)
-          this.panel.open()
-          return this
-        },
-
-        sendFeature: function (feature) {
-          this.panel.requestGrammar(feature)
-          this.panel.changeTab('grammar')
-          this.panel.open()
-          return this
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          this.options.items[name].setTextValue(value)
-          switch (name) {
-            case 'locale':
-              if (this.uiController.presenter) {
-                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
-              }
-              this.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
-              break
-          }
-        },
-
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          // TODO this should really be handled within OptionsItem
-          // the difference between value and textValues is a little confusing
-          // see issue #73
-          if (name === 'fontSize' || name === 'colorSchema') {
-            this.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.uiController.popup.close() // Close an old popup
-              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
-              this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.uiController.updateColorSchemaClass(value)
-              break
-          }
-        }
-      }
-    }) */
-    this.popup = new PopupModule(this.store, this)
+    this.popup = new PopupModule(this.store, this.api, this)
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -1106,7 +836,7 @@ export default class UIController {
       this.panel.panelData.grammarRes = urls[0]
       this.panel.panelData.grammarAvailable = true
     } else {
-      this.panel.panelData.grammarRes = { provider: this.l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND.get() }
+      this.panel.panelData.grammarRes = { provider: this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND') }
     }
     // todo show TOC or not found
   }
@@ -1217,7 +947,7 @@ export default class UIController {
 
     this.panel.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet
     if (this.inflectionsViewSet.hasMatchingViews) {
-      this.addMessage(this.l10n.messages.TEXT_NOTICE_INFLDATA_READY.get())
+      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.panel.panelData.inflectionsWaitState = false
     this.panel.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
@@ -1371,7 +1101,7 @@ export default class UIController {
 
         this.setTargetRect(htmlSelector.targetRect)
         this.newLexicalRequest(textSelector.languageID)
-        this.message(this.l10n.messages.TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS.get())
+        this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
         this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
         this.updateLanguage(textSelector.languageID)
         this.updateWordAnnotationData(textSelector.data)
@@ -1407,7 +1137,6 @@ export default class UIController {
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
   updateAnnotations () {
-    console.log(`Update annotations called`)
     if (this.state.isActive() && this.state.uiIsActive()) {
       AnnotationQuery.create({
         document: document,
@@ -1421,13 +1150,13 @@ export default class UIController {
       case LexicalQuery.resultStatus.SUCCEEDED:
         this.lexicalRequestSucceeded()
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE.get())
+        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         this.lexicalRequestComplete()
         break
       case LexicalQuery.resultStatus.FAILED:
         this.lexicalRequestFailed()
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE.get())
+        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         this.lexicalRequestComplete()
         break
       default:
@@ -1437,11 +1166,11 @@ export default class UIController {
   }
 
   onMorphDataReady () {
-    this.addMessage(this.l10n.messages.TEXT_NOTICE_MORPHDATA_READY.get())
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
   }
 
   onMorphDataNotFound () {
-    this.addImportantMessage(this.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND.get())
+    this.addImportantMessage(this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'))
     // Need to notify a UI controller that there is no morph data on this word in an analyzer
     // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
     if (this.morphologyDataNotFound) { this.morphologyDataNotFound(true) }
@@ -1460,31 +1189,30 @@ export default class UIController {
   }
 
   onDefinitionsReady (data) {
-    this.addMessage(this.l10n.messages.TEXT_NOTICE_DEFSDATA_READY.get(data.requestType, data.word))
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateDefinitions(data.homonym)
   }
 
   onDefinitionsNotFound (data) {
-    this.addMessage(this.l10n.messages.TEXT_NOTICE_DEFSDATA_NOTFOUND.get(data.requestType, data.word))
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
   }
 
   onResourceQueryComplete () {
     // We don't check result status for now. We always output the same message.
-    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_COMPLETE.get())
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
   }
 
   onGrammarAvailable (data) {
-    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_READY.get())
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
     this.updateGrammar(data.url)
   }
 
   onGrammarNotFound () {
     this.updateGrammar()
-    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND.get())
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
   }
 
   onAnnotationsAvailable (data) {
-    console.log(`Annotations becomes available`)
     this.updatePageAnnotationData(data.annotations)
   }
 }

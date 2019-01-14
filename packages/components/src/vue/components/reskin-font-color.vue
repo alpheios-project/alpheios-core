@@ -1,30 +1,30 @@
 <template>
   <div class="alpheios-skin_panel alpheios-panel__options-item" id="alpheios-reskin-panel">
-    <label class="uk-form-label alpheios-setting__label" v-show="showTitle">{{ messages.LABEL_RESKIN_SETTINGS.get()
+    <label class="uk-form-label alpheios-setting__label" v-show="showTitle">{{ l10n.getMsg('LABEL_RESKIN_SETTINGS')
       }}:</label>
     <ul class="alpheios-skin_properties">
-      <alph-tooltip :tooltipText="messages.TOOLTIP_RESKIN_SMALLFONT.get()" tooltipDirection="top-left">
+      <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_RESKIN_SMALLFONT')" tooltipDirection="top-left">
         <li @click="changeStyleClass('fontSize', 'small')"
             class="alpheios-skin_properties_item alpheios-skin_properties_item__small_font">A
         </li>
       </alph-tooltip>
-      <alph-tooltip :tooltipText="messages.TOOLTIP_RESKIN_MEDIUMFONT.get()" tooltipDirection="top-left">
+      <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_RESKIN_MEDIUMFONT')" tooltipDirection="top-left">
         <li @click="changeStyleClass('fontSize', 'medium')"
             class="alpheios-skin_properties_item alpheios-skin_properties_item__medium_font">A
         </li>
       </alph-tooltip>
-      <alph-tooltip :tooltipText="messages.TOOLTIP_RESKIN_LARGEFONT.get()" tooltipDirection="top-left">
+      <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_RESKIN_LARGEFONT')" tooltipDirection="top-left">
         <li @click="changeStyleClass('fontSize', 'large')"
             class="alpheios-skin_properties_item alpheios-skin_properties_item__large_font">A
         </li>
       </alph-tooltip>
-      <alph-tooltip :tooltipText="messages.TOOLTIP_RESKIN_LIGHTBG.get()" tooltipDirection="top-left">
+      <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_RESKIN_LIGHTBG')" tooltipDirection="top-left">
         <li @click="changeStyleClass('colorSchema', 'light')"
             class="alpheios-skin_properties_item alpheios-skin_properties_item__light_bg">
           <black-brush></black-brush>
         </li>
       </alph-tooltip>
-      <alph-tooltip :tooltipText="messages.TOOLTIP_RESKIN_DARKBG.get()" tooltipDirection="top-left">
+      <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_RESKIN_DARKBG')" tooltipDirection="top-left">
         <li @click="changeStyleClass('colorSchema', 'dark')"
             class="alpheios-skin_properties_item alpheios-skin_properties_item__dark_bg">
           <white-brush></white-brush>
@@ -41,6 +41,7 @@ import Tooltip from './tooltip.vue'
 
 export default {
   name: 'ReskinFontColor',
+  inject: ['l10n'],
   components: {
     whiteBrush: WhiteBrush,
     blackBrush: BlackBrush,
@@ -51,10 +52,6 @@ export default {
       type: Boolean,
       required: false,
       default: true
-    },
-    messages: {
-      type: Object,
-      required: true
     }
   },
   data () {

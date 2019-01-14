@@ -11,21 +11,21 @@
       </div>
       <span class="alpheios-panel__header-btn-group--center" v-if="data && data.tabs">
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('info')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.info }">
                   <info-icon class="alpheios-icon"></info-icon>
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
                 <span :class="{ active: data.tabs.definitions }" @click="changeTab('definitions')"
                       class="alpheios-panel__header-nav-btn">
                   <definitions-icon class="alpheios-icon"></definitions-icon>
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
                             v-show="data.inflectionComponentData.inflDataReady">
                 <span @click="changeTab('inflections')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.inflections }">
@@ -33,14 +33,14 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('inflectionsbrowser')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.inflectionsbrowser }">
                   <inflections-browser-icon class="alpheios-icon"></inflections-browser-icon>
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
                             v-show="data.grammarAvailable">
                 <span @click="changeTab('grammar')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.grammar }">
@@ -48,7 +48,7 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
                             v-show="treebankTabAvailable">
                 <span @click="changeTab('treebank')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.treebank }">
@@ -56,21 +56,21 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('options')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.options }">
                   <options-icon class="alpheios-icon"></options-icon>
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_USER')" tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('user')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.user }">
                   <user-icon class="alpheios-icon"></user-icon>
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn" v-bind:class="{ active: data.tabs.status }"
                       v-show="data.verboseMode">
                   <status-icon class="alpheios-icon"></status-icon>
@@ -79,7 +79,7 @@
             </span>
       <span class="alpheios-panel__header-btn-group--end">
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
                             v-show="attachToLeftVisible">
                 <span @click="setPosition('left')" class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left"
                       v-show="attachToLeftVisible">
@@ -87,7 +87,7 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
                             v-show="attachToRightVisible">
                 <span @click="setPosition('right')" class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right"
                       v-show="attachToRightVisible">
@@ -96,7 +96,7 @@
               </alph-tooltip>
 
               <alph-tooltip
-                  :tooltipText="ln10Messages('TOOLTIP_CLOSE_PANEL')"
+                  :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
                   tooltipDirection="bottom-right">
                 <span @click="close" class="alpheios-panel__header-action-btn alpheios_close">
                     <close-icon></close-icon>
@@ -115,7 +115,7 @@
         </div>
         <div
             v-if="showDefinitionsPlaceholder">
-          {{ ln10Messages('PLACEHOLDER_DEFINITIONS') }}
+          {{ l10n.getText('PLACEHOLDER_DEFINITIONS') }}
         </div>
         <div class="alpheios-panel__contentitem" v-for="definition in data.shortDefinitions">
           <shortdef :definition="definition" :languageCode="data.status.languageCode"></shortdef>
@@ -124,21 +124,16 @@
              v-html="data.fullDefinitions"></div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="data.inflectionComponentData.inflDataReady && data.settings && data.l10n"
-           v-show="inflectionsTabVisible">
-        <inflections :data="data.inflectionComponentData"
-                     :inflections-enabled="data.inflectionsEnabled"
-                     :locale="data.settings.locale.currentValue" :messages="data.l10n.messages"
-                     :wait-state="data.inflectionsWaitState" @contentwidth="setContentWidth"
-                     class="alpheios-panel-inflections">
+           v-if="data.inflectionComponentData.inflDataReady && data.settings" v-show="inflectionsTabVisible">
+        <inflections :data="data.inflectionComponentData" :inflections-enabled="data.inflectionsEnabled"
+                     :locale="data.settings.locale.currentValue" :wait-state="data.inflectionsWaitState"
+                     @contentwidth="setContentWidth" class="alpheios-panel-inflections">
         </inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
-           v-if="data.inflectionBrowserEnabled && data.settings && data.l10n"
-           v-show="inflectionsBrowserTabVisible">
+           v-if="data.inflectionBrowserEnabled && data.settings" v-show="inflectionsBrowserTabVisible">
         <inflection-browser :data="data.inflectionBrowserData" :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
-                            :language-id="inflectionBrowserLanguageID" :messages="data.l10n.messages"
-                            @contentwidth="setContentWidth">
+                            :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
@@ -146,23 +141,23 @@
         <grammar :res="data.grammarRes"></grammar>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__treebank
-            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-if="data.treebankComponentData && data.settings && data.l10n"
+            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-if="data.treebankComponentData && data.settings"
            v-show="treebankTabVisible">
-        <treebank :locale="data.settings.locale.currentValue"
-                  :messages="data.l10n.messages" :res="data.treebankComponentData.data"
+        <treebank :locale="data.settings.locale.currentValue" :res="data.treebankComponentData.data"
                   :visible="data.treebankComponentData.visible" @treebankcontentwidth="setTreebankContentWidth">
         </treebank>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="data.tabs.status">
+        <!-- Messages to be displayed in a status panel -->
         <div v-for="message in data.messages">
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="data.tabs.user">
-        <user-auth :auth="data.auth" :messages="data.l10n.messages"></user-auth>
+        <user-auth :auth="data.auth"></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="data.tabs.options">
-        <reskin-font-color :messages="data.l10n.messages" v-if="data.l10n"></reskin-font-color>
+        <reskin-font-color></reskin-font-color>
         <setting :classes="['alpheios-panel__options-item']" :data="data.settings.preferredLanguage" @change="settingChanged"
                  v-if="data.settings"></setting>
         <setting :classes="['alpheios-panel__options-item']" :data="data.settings.panelPosition" @change="settingChanged"
@@ -201,8 +196,7 @@
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"
                   :uiController="uiController"></lookup>
         </div>
-        <info :data="data.infoComponentData" :messages="data.l10n.messages"
-              v-if="data.infoComponentData && data.l10n"></info>
+        <info :data="data.infoComponentData" v-if="data.infoComponentData"></info>
       </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"
@@ -251,6 +245,7 @@ import interact from 'interactjs'
 
 export default {
   name: 'Panel',
+  inject: ['l10n'],
   components: {
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
@@ -525,13 +520,6 @@ export default {
     setTreebankContentWidth: function (width) {
       console.log(`Set width to ${width}`)
       this.panelWidth = width
-    },
-
-    ln10Messages: function (value, defaultValue = 'unknown') {
-      if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
-        return this.data.l10n.messages[value].get()
-      }
-      return defaultValue
     },
 
     attachTrackingClick: function () {

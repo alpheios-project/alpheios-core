@@ -6,12 +6,9 @@
 <script>
 export default {
   name: 'Treebank',
+  inject: ['l10n'],
   props: {
     res: {
-      type: Object,
-      required: true
-    },
-    messages: {
       type: Object,
       required: true
     },

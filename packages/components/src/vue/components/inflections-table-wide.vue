@@ -12,30 +12,30 @@
       <h4 class="alpheios-inflections__additional_title" v-if="view.additionalTitle">{{view.additionalTitle}}</h4>
       <div class="alpheios-inflections__not-impl-msg"
            v-if="!view.isImplemented || (view.wideView && view.wideView.rows.length == 0)">
-        {{ln10Messages('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
+        {{l10n.getMsg('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
       </div>
       <div v-else-if="view.wideView">
         <div class="alpheios-inflections__table-ctrl-cont" v-if="!view.hasPrerenderedTables && !inflBrowserTable">
           <div class="alpheios-inflections__table-ctrl-cell--btn"
                v-show="view.canCollapse && state.noSuffixGroupsHidden">
-            <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_INFLECT_SHOWFULL')"
+            <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_INFLECT_SHOWFULL')"
                           tooltipDirection="bottom-right">
               <button
                   @click="showNoSuffixGroups"
                   class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
-                {{ln10Messages('LABEL_INFLECT_SHOWFULL')}}
+                {{l10n.getMsg('LABEL_INFLECT_SHOWFULL')}}
               </button>
             </alph-tooltip>
           </div>
 
           <div class="alpheios-inflections__table-ctrl-cell--btn"
                v-show="view.canCollapse && !state.noSuffixGroupsHidden">
-            <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_INFLECT_COLLAPSE')"
+            <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_INFLECT_COLLAPSE')"
                           tooltipDirection="bottom-right">
               <button
                   @click="hideNoSuffixGroups"
                   class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
-                {{ln10Messages('LABEL_INFLECT_COLLAPSE')}}
+                {{l10n.getMsg('LABEL_INFLECT_COLLAPSE')}}
               </button>
             </alph-tooltip>
           </div>
@@ -56,7 +56,7 @@
                     <template v-if="index < cell.morphemes.length-1">,</template>
                   </template>
                 </template>
-                <span v-else v-html="ln10Messages(cell.value,cell.value)"></span>
+                <span v-else v-html="l10n.getText(cell.value)"></span>
               </div>
             </template>
           </div>
@@ -80,6 +80,7 @@ import Tooltip from './tooltip.vue'
 
 export default {
   name: 'WideInflectionsTableStandardForm',
+  inject: ['l10n'],
   components: {
     inflFootnote: InflFootnote,
     alphTooltip: Tooltip
@@ -88,10 +89,6 @@ export default {
     // An inflection table view
     view: {
       type: [Object, Boolean],
-      required: true
-    },
-    messages: {
-      type: Object,
       required: true
     },
     collapsed: {
@@ -222,13 +219,6 @@ export default {
       if (cell.isDataCell) {
         cell.clearRowAndColumnHighlighting()
       }
-    },
-
-    ln10Messages: function (value, defaultValue = 'unknown') {
-      if (this.messages && this.messages[value]) {
-        return this.messages[value].get()
-      }
-      return defaultValue
     }
   },
 

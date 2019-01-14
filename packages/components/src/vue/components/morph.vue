@@ -8,7 +8,6 @@
           :key="lex.lemma.ID"
           :lex="lex"
           :linkedfeatures="linkedfeatures"
-          :messages="messages"
           :morphDataReady="morphDataReady"
           :translations="translations"
           @sendfeature="sendFeature"
@@ -47,10 +46,6 @@ export default {
     morphDataReady: {
       type: Boolean,
       required: true
-    },
-    messages: {
-      type: Object,
-      required: false
     }
   },
   methods: {

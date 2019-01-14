@@ -5,6 +5,7 @@
 <script>
 export default {
   name: 'InflectionAttribute',
+  inject: ['l10n'],
   props: {
     data: {
       type: Object,
@@ -28,10 +29,6 @@ export default {
       type: Array,
       required: false,
       default: () => ['']
-    },
-    messages: {
-      type: Object,
-      required: false
     }
   },
   methods: {
@@ -55,11 +52,11 @@ export default {
       }
       for (let v of baseValues) {
         let decorated = v
-        if (this.decorators.includes('abbreviate') && this.messages && this.messages[v]) {
-          decorated = this.messages[v].abbr()
+        if (this.decorators.includes('abbreviate') && this.l10n.hasMsg(v)) {
+          decorated = this.l10n.getAbbr(v)
         }
         if (this.decorators.includes('link') && decorated.match(/^http/)) {
-          let linkText = this.messages ? this.messages[`INFL_ATTRIBUTE_LINK_TEXT_TYPE`].get() : type
+          let linkText = this.l10n.hasMsg(`INFL_ATTRIBUTE_LINK_TEXT_TYPE`) ? this.l10n.getMsg(`INFL_ATTRIBUTE_LINK_TEXT_TYPE`) : type
           decorated = `<a class="alpheios-morph__linkedattr" target="_blank" href="${decorated}">${linkText}</a>`
         }
         decoratedValues.push(decorated)

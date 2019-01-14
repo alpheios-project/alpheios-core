@@ -1,15 +1,15 @@
 <template>
   <div class="alpheios-lookup__form" v-if="uiController">
-    <input :placeholder="ln10Messages('LABEL_LOOKUP_BUTTON')" @keyup.enter="lookup" class="uk-input alpheios-lookup__input"
+    <input :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')" @keyup.enter="lookup" class="uk-input alpheios-lookup__input"
            type="text"
            v-model="lookuptext"
     >
-    <alph-tooltip :tooltipText="ln10Messages('LABEL_LOOKUP_BUTTON')" tooltipDirection="top-right">
+    <alph-tooltip :tooltipText="l10n.getMsg('LABEL_LOOKUP_BUTTON')" tooltipDirection="top-right">
       <span class="alpheios-lookup__button_with_link">
       <button @click="lookup" class="uk-button uk-button-primary uk-button-small alpheios-lookup__button" tabindex="-1"
               type="button"
       >
-        {{ ln10Messages('LABEL_LOOKUP_BUTTON') }}
+        {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
       </button>
       </span>
     </alph-tooltip>
@@ -41,6 +41,7 @@ import Setting from './setting.vue'
 
 export default {
   name: 'Lookup',
+  inject: ['l10n'],
   components: {
     alphTooltip: Tooltip,
     alphSetting: Setting
@@ -165,13 +166,6 @@ export default {
       let keyinfo = this.resourceOptions.parseKey(name)
 
       this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-    },
-
-    ln10Messages: function (value, defaultValue = 'uknown') {
-      if (this.uiController && this.uiController.l10n && this.uiController.l10n.messages && this.uiController.l10n.messages[value]) {
-        return this.uiController.l10n.messages[value].get()
-      }
-      return defaultValue
     },
 
     updateUIbyOverrideLanguage: function () {

@@ -60,26 +60,53 @@ export default class MessageBundle {
   }
 
   /**
+   * Checks if message with a given message ID exists among the translated messages.
+   * @param {string} messageID - A message ID of a message to be checked
+   * @return {boolean} True if message is present, false otherwise
+   */
+  hasMsg (messageID) {
+    return Boolean(this.messages[messageID])
+  }
+
+  /**
    * Returns a (formatted) message for a message ID provided.
-   * @param messageID - An ID of a message.
-   * @param options - Options that can be used for message formatting in the following format:
+   * @param {string} messageID - An ID of a message.
+   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
    * {
    *     paramOneName: paramOneValue,
    *     paramTwoName: paramTwoValue
    * }.
+   * @param {object} options - An object with the following possible options:
+   *     {boolean} passthrough - If true and a translation for a given message ID is not found, will return
+   *                             an original `messageID` string. Otherwise will return an error message if
+   *                             a translation is missing.
    * @returns {string} A formatted message. If message not found, returns a message that contains an error text.
    */
-  get (messageID, options = undefined) {
-    if (this.messages[messageID]) {
-      if (typeof this.messages[messageID].format === 'function') {
-        return this.messages[messageID].format(options)
-      } else {
-        return this.messages[messageID].get()
-      }
+  getMsg (messageID, formatOptions = undefined, options = {}) {
+    const defaultOptions = {
+      passthrough: false
+    }
+    options = Object.assign(defaultOptions, options)
+    if (this.hasMsg(messageID)) {
+      const message = this.messages[messageID]
+      return message.hasParameters ? message.format(formatOptions) : message.get()
     } else {
       // If message with the ID provided is not in translation data, generate a warning.
-      return `Not in translation data: "${messageID}"`
+      return options.passthrough ? messageID : `"${messageID}" is not in translation data for ${this._locale}`
     }
+  }
+
+  /**
+   * A wrapper around `get()` with a `passthrough` parameter set to `true`.
+   * @see {@link MessageBundle#getMsg} for more information.
+   * @param messageID
+   * @param formatOptions
+   * @param options
+   * @return {string}
+   */
+  getText (messageID, formatOptions, options = {}) {
+    options.passthrough = true
+    return this.getMsg(messageID, formatOptions, options)
   }
 
   /**

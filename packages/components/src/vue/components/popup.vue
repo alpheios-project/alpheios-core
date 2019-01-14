@@ -4,7 +4,7 @@
        v-show="visible">
     <alph-tooltip
         :additionalStyles="additionalStylesTootipCloseIcon"
-        :tooltipText="ln10Messages('TOOLTIP_POPUP_CLOSE')"
+        :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"
         tooltipDirection="left">
           <span @click="closePopup" class="alpheios-popup__close-btn">
               <close-icon></close-icon>
@@ -18,35 +18,35 @@
       </div>
 
       <div class="alpheios-popup__button-area" v-if="data">
-        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
+        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                       v-show="data.defDataReady">
           <button @click="showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions"
                   v-show="data.defDataReady">
-            {{ ln10Messages('LABEL_POPUP_DEFINE') }}
+            {{ l10n.getText('LABEL_POPUP_DEFINE') }}
           </button>
         </alph-tooltip>
 
-        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
+        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
                       v-show="data.inflDataReady">
           <button @click="showPanelTab('inflections')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
                   v-show="data.inflDataReady">
-            {{ ln10Messages('LABEL_POPUP_INFLECT') }}
+            {{ l10n.getText('LABEL_POPUP_INFLECT') }}
           </button>
         </alph-tooltip>
 
-        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
+        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
                       v-show="data.hasTreebank">
           <button @click="showPanelTab('treebank')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank"
                   v-show="data.hasTreebank">
-            {{ ln10Messages('LABEL_POPUP_TREEBANK') }}
+            {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
           </button>
 
         </alph-tooltip>
 
-        <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
+        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
           <button @click="showPanelTab('options')"
                   class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options">
-            {{ ln10Messages('LABEL_POPUP_OPTIONS') }}
+            {{ l10n.getText('LABEL_POPUP_OPTIONS') }}
           </button>
         </alph-tooltip>
       </div>
@@ -54,27 +54,26 @@
 
     <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
          v-show="!morphDataReady && !noLanguage">
-      <progress-bar :text="ln10Messages('PLACEHOLDER_POPUP_DATA')"></progress-bar>
+      <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
     </div>
 
     <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
          v-show="noLanguage && !morphDataReady">
-      {{ ln10Messages('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
+      {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
     </div>
     <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
          v-show="!hasMorphData && morphDataReady && !noLanguage">
-      {{ ln10Messages('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
+      {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
     </div>
     <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
          v-show="morphDataReady && hasMorphData">
       <morph :definitions="definitions" :id="morphComponentID" :lexemes="lexemes" :linkedfeatures="linkedfeatures"
-             :messages="data.l10n.messages"
              :morphDataReady="morphDataReady && hasMorphData" :translations="translations"
              @sendfeature="sendFeature">
       </morph>
 
       <div class="alpheios-popup__morph-cont-providers" v-if="data && showProviders">
-        <div class="alpheios-popup__morph-cont-providers-header">{{ ln10Messages('LABEL_POPUP_CREDITS') }}</div>
+        <div class="alpheios-popup__morph-cont-providers-header">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
         <div class="alpheios-popup__morph-cont-providers-source" v-for="p in data.providers">
           {{ p.toString() }}
         </div>
@@ -116,6 +115,7 @@ import { directive as onClickaway } from '../directives/clickaway.js'
 
 export default {
   name: 'Popup',
+  inject: ['l10n'],
   components: {
     morph: Morph,
     setting: Setting,
@@ -258,7 +258,7 @@ export default {
       }
     },
     providersLinkText: function () {
-      return (this.data) ? this.data.showProviders ? this.ln10Messages('LABEL_POPUP_HIDECREDITS') : this.ln10Messages('LABEL_POPUP_SHOWCREDITS') : ''
+      return (this.data) ? (this.data.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')) : ''
     },
     showProviders: function () {
       return (this.data) ? this.data.showProviders : null
@@ -586,13 +586,6 @@ export default {
 
     sendFeature (data) {
       this.$emit('sendfeature', data)
-    },
-
-    ln10Messages: function (value, defaultValue = 'unknown') {
-      if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
-        return this.data.l10n.messages[value].get()
-      }
-      return defaultValue
     },
 
     attachTrackingClick: function () {

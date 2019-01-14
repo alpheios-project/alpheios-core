@@ -3,30 +3,27 @@
     <div class="alpheios-info__versiontext alpheios-text__smallest" v-if="data.appInfo">{{ data.appInfo.name }} {{
       data.appInfo.version }}
     </div>
-    <div class="alpheios-info__currentlanguage alpheios-text__smallest">{{ messages.LABEL_INFO_CURRENTLANGUAGE.get() }}
+    <div class="alpheios-info__currentlanguage alpheios-text__smallest">{{ l10n.getMsg('LABEL_INFO_CURRENTLANGUAGE') }}
       {{ data.languageName }}
     </div>
     <div class="alpheios-info__helptext">
-      <h3>{{ messages.TEXT_INFO_GETTINGSTARTED.get() }}</h3>
-      <p class="alpheios-text__small">{{ messages.TEXT_INFO_ACTIVATE.get() }}</p>
-      <p class="alpheios-text__small">{{ messages.TEXT_INFO_CLICK.get() }}</p>
-      <p class="alpheios-text__small">{{ messages.TEXT_INFO_LANGDETECT.get() }}</p>
-      <p class="alpheios-text__small">{{ messages.TEXT_INFO_SETTINGS.get() }}</p>
-      <p class="alpheios-text__small">{{ messages.TEXT_INFO_ARROW.get() }}</p>
-      <p class="alpheios-text__small">{{ messages.TEXT_INFO_REOPEN.get() }}</p>
-      <p class="alpheios-text__small">{{ messages.TEXT_INFO_DEACTIVATE.get() }}</p>
+      <h3>{{ l10n.getMsg('TEXT_INFO_GETTINGSTARTED') }}</h3>
+      <p class="alpheios-text__small">{{ l10n.getMsg('TEXT_INFO_ACTIVATE') }}</p>
+      <p class="alpheios-text__small">{{ l10n.getMsg('TEXT_INFO_CLICK') }}</p>
+      <p class="alpheios-text__small">{{ l10n.getMsg('TEXT_INFO_LANGDETECT') }}</p>
+      <p class="alpheios-text__small">{{ l10n.getMsg('TEXT_INFO_SETTINGS') }}</p>
+      <p class="alpheios-text__small">{{ l10n.getMsg('TEXT_INFO_ARROW') }}</p>
+      <p class="alpheios-text__small">{{ l10n.getMsg('TEXT_INFO_REOPEN') }}</p>
+      <p class="alpheios-text__small">{{ l10n.getMsg('TEXT_INFO_DEACTIVATE') }}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: 'Info',
+  inject: ['l10n'],
   props: {
     data: {
-      type: Object,
-      required: true
-    },
-    messages: {
       type: Object,
       required: true
     }

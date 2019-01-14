@@ -9,7 +9,7 @@
           </div>
         </div>
       </div>
-      <a @click="navigate" class="infl-supp-tbl__reflink">{{messages.INFLECTIONS_MAIN_TABLE_LINK_TEXT.get()}}</a>
+      <a @click="navigate" class="infl-supp-tbl__reflink">{{ l10n.getMsg('INFLECTIONS_MAIN_TABLE_LINK_TEXT') }}</a>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@
 
 export default {
   name: 'WideSupplementalInflectionsTable',
+  inject: ['l10n'],
   props: {
     /*
          An object that represents a wide version of a table, consists of array of rows.
@@ -29,11 +30,6 @@ export default {
 
     bgColor: {
       type: [String],
-      required: true
-    },
-
-    messages: {
-      type: [Object],
       required: true
     }
   },

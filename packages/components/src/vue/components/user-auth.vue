@@ -1,24 +1,24 @@
 <template>
   <div>
     <button @click="logIn" class="uk-button uk-button-primary" v-show="!isLoggedIn">
-      {{ l10n.getMessage(`AUTH_LOG_IN_BTN_LABEL`) }}
+      {{ l10n.getMsg(`AUTH_LOG_IN_BTN_LABEL`) }}
     </button>
     <button @click="logOut" class="uk-button uk-button-primary" v-show="isLoggedIn">
-      {{ l10n.getMessage(`AUTH_LOG_OUT_BTN_LABEL`) }}
+      {{ l10n.getMsg(`AUTH_LOG_OUT_BTN_LABEL`) }}
     </button>
     <div class="alpheios-user-auth__message-box" v-show="logInProgress">
-      {{ l10n.getMessage(`AUTH_LOG_IN_PROGRESS_MSG`) }}
+      {{ l10n.getMsg(`AUTH_LOG_IN_PROGRESS_MSG`) }}
     </div>
     <div class="alpheios-user-auth__message-box" v-show="isLoggedIn">
-      {{ l10n.getMessage(`AUTH_LOG_IN_SUCCESS_MSG`) }}
+      {{ l10n.getMsg(`AUTH_LOG_IN_SUCCESS_MSG`) }}
     </div>
     <div class="alpheios-user-auth__message-box" v-show="authenticationFailed">
-      {{ l10n.getMessage(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
+      {{ l10n.getMsg(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
     </div>
     <div class="alpheios-user-auth__user-info-box" v-if="isLoggedIn && hasUserInfo">
       <div class="alpheios-user-auth__user-info-item-box">
         <div class="alpheios-user-auth__user-info-item-name">
-          {{ l10n.getMessage(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
+          {{ l10n.getMsg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
         </div>
         <div class="alpheios-user-auth__user-info-item-value">
           {{ userInfo.nickname ? userInfo.nickname: `&mdash;` }}
@@ -26,7 +26,7 @@
       </div>
       <div class="alpheios-user-auth__user-info-item-box">
         <div class="alpheios-user-auth__user-info-item-name">
-          {{ l10n.getMessage(`AUTH_PROFILE_NAME_LABEL`) }}:
+          {{ l10n.getMsg(`AUTH_PROFILE_NAME_LABEL`) }}:
         </div>
         <div class="alpheios-user-auth__user-info-item-value">
           {{ userInfo.name ? userInfo.name: `&mdash;` }}
