@@ -138,15 +138,11 @@ export default class WordItem {
   }
 
   mergeTextQuoteSelectors (prevWordItem) {
-    console.info('*************mergeTextQuoteSelectors this', this.textQuoteSelectors)
-    console.info('*************mergeTextQuoteSelectors prevWordItem', prevWordItem.textQuoteSelectors)
     for (let tq of prevWordItem.textQuoteSelectors) {
-      console.info('**********************mergeTextQuoteSelectors inside', this.hasThisTextQuoteSelector(tq))
       if (!this.hasThisTextQuoteSelector(tq)) {
         this.textQuoteSelectors.push(tq)
       }
     }
-    console.info('*************mergeTextQuoteSelectors final this', this.textQuoteSelectors)
   }
 
   merge (prevWordItem) {

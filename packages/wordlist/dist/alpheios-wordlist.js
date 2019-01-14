@@ -1151,8 +1151,6 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__P
   },
   methods: {
     showContexts (wordItemStorageID, wordListLanguageCode) {
-      console.info('******************showContext word-list-panel1', wordItemStorageID, wordListLanguageCode)
-      console.info('******************showContext word-list-panel2', this.wordLists[wordListLanguageCode], this.wordLists[wordListLanguageCode][wordItemStorageID])
       this.showContextWordItem = this.wordLists[wordListLanguageCode].items[wordItemStorageID]
     }
   }
@@ -13426,15 +13424,11 @@ class WordItem {
   }
 
   mergeTextQuoteSelectors (prevWordItem) {
-    console.info('*************mergeTextQuoteSelectors this', this.textQuoteSelectors)
-    console.info('*************mergeTextQuoteSelectors prevWordItem', prevWordItem.textQuoteSelectors)
     for (let tq of prevWordItem.textQuoteSelectors) {
-      console.info('**********************mergeTextQuoteSelectors inside', this.hasThisTextQuoteSelector(tq))
       if (!this.hasThisTextQuoteSelector(tq)) {
         this.textQuoteSelectors.push(tq)
       }
     }
-    console.info('*************mergeTextQuoteSelectors final this', this.textQuoteSelectors)
   }
 
   merge (prevWordItem) {
