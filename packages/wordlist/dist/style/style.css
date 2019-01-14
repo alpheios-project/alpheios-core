@@ -1,10 +1,10 @@
 /***************** panel settings **********************/
-.alpheios-tooltip {
+.auk .alpheios-tooltip {
   position: relative;
   display: inline-block;
   user-select: none; }
 
-.alpheios-tooltip__text {
+.auk .alpheios-tooltip__text {
   visibility: hidden;
   position: absolute;
   width: 120px;
@@ -19,21 +19,21 @@
   font-size: 12px;
   border: 1px solid #4E6476; }
 
-.auk .alpheios-tooltip span.alpheios-tooltip__text,
-.alpheios-tooltip span.alpheios-tooltip__text {
+.auk .auk .alpheios-tooltip span.alpheios-tooltip__text,
+.auk .alpheios-tooltip span.alpheios-tooltip__text {
   font-size: 12px;
   padding: 5px 0; }
 
-.alpheios-tooltip:hover .alpheios-tooltip__text {
+.auk .alpheios-tooltip:hover .alpheios-tooltip__text {
   visibility: visible;
   opacity: 1; }
 
-.alpheios-tooltip__top {
+.auk .alpheios-tooltip__top {
   bottom: 125%;
   left: 50%;
   margin-left: -50%; }
 
-.alpheios-tooltip__top::after {
+.auk .alpheios-tooltip__top::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -43,12 +43,12 @@
   border-style: solid;
   border-color: #4E6476 transparent transparent transparent; }
 
-.alpheios-tooltip__top-right {
+.auk .alpheios-tooltip__top-right {
   bottom: 125%;
   right: 0;
   margin-left: -50%; }
 
-.alpheios-tooltip__top-right::after {
+.auk .alpheios-tooltip__top-right::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -58,11 +58,11 @@
   border-style: solid;
   border-color: #4E6476 transparent transparent transparent; }
 
-.alpheios-tooltip__top-left {
+.auk .alpheios-tooltip__top-left {
   bottom: 125%;
   left: 0; }
 
-.alpheios-tooltip__top-left::after {
+.auk .alpheios-tooltip__top-left::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -72,11 +72,11 @@
   border-style: solid;
   border-color: #4E6476 transparent transparent transparent; }
 
-.alpheios-tooltip__right {
+.auk .alpheios-tooltip__right {
   top: -5px;
   left: 125%; }
 
-.alpheios-tooltip__right::after {
+.auk .alpheios-tooltip__right::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -86,27 +86,27 @@
   border-style: solid;
   border-color: transparent #4E6476 transparent transparent; }
 
-.alpheios-tooltip__bottom {
+.auk .alpheios-tooltip__bottom {
   top: 135%;
   left: 50%;
   margin-left: -50%; }
 
-.alpheios-tooltip__bottom-wide {
+.auk .alpheios-tooltip__bottom-wide {
   top: 135%;
   left: -30%; }
 
-.alpheios-tooltip__bottom-narrow {
+.auk .alpheios-tooltip__bottom-narrow {
   top: 135%;
   left: -75%; }
 
-.alpheios-tooltip__bottom-narrow2 {
+.auk .alpheios-tooltip__bottom-narrow2 {
   top: 135%;
   left: -165%; }
 
-.alpheios-tooltip__bottom::after,
-.alpheios-tooltip__bottom-wide::after,
-.alpheios-tooltip__bottom-narrow::after,
-.alpheios-tooltip__bottom-narrow2::after {
+.auk .alpheios-tooltip__bottom::after,
+.auk .alpheios-tooltip__bottom-wide::after,
+.auk .alpheios-tooltip__bottom-narrow::after,
+.auk .alpheios-tooltip__bottom-narrow2::after {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -116,12 +116,12 @@
   border-style: solid;
   border-color: transparent transparent #4E6476 transparent; }
 
-.alpheios-tooltip__bottom-right {
+.auk .alpheios-tooltip__bottom-right {
   top: 135%;
   right: 0;
   margin-left: -50%; }
 
-.alpheios-tooltip__bottom-right::after {
+.auk .alpheios-tooltip__bottom-right::after {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -131,11 +131,11 @@
   border-style: solid;
   border-color: transparent transparent #4E6476 transparent; }
 
-.alpheios-tooltip__left {
+.auk .alpheios-tooltip__left {
   bottom: auto;
   right: 128%; }
 
-.alpheios-tooltip__left::after {
+.auk .alpheios-tooltip__left::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -144,7 +144,6 @@
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent transparent #4E6476; }
-
 
 /***************** panel settings **********************/
 .alpheios-wordlist-language__worditem {
@@ -192,7 +191,7 @@
   cursor: pointer;
 }
 .alpheios-worditem__lemmasList {
-  width: 48%;
+  width: 38%;
 }
 
 /***************** panel settings **********************/

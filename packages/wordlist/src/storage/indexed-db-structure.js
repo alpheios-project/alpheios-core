@@ -4,7 +4,7 @@ export default class IndexedDBStructure {
   }
 
   get dbVersion () {
-    return 1
+    return 2
   }
 
   get objectStores () {
@@ -34,7 +34,11 @@ export default class IndexedDBStructure {
   }
 
   get wordListsContext () {
-    return this.objectStoreTemplate
+    let structure = this.objectStoreTemplate
+    structure.indexes.push(
+      { indexName: 'wordItemID', keyPath: 'wordItemID', unique: false}
+    )
+    return structure
   }
 
   get wordListsHomonym () {
@@ -45,14 +49,20 @@ export default class IndexedDBStructure {
     return this.objectStoreTemplate
   }
 
-  createObjectStores (db) {
+  createObjectStores (db, upgradeTransaction) {
     Object.keys(this.objectStores).forEach(objectStoreName => {
       const objectStoreStructure = this.objectStores[objectStoreName]
 
-      console.info('*************objectStoreStructure', objectStoreName, objectStoreStructure)
-      const objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+      let objectStore
+      if (!db.objectStoreNames.contains(objectStoreName)) {
+        objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+      } else {
+        objectStore = upgradeTransaction.objectStore(objectStoreName)
+      }
       objectStoreStructure.indexes.forEach(index => {
-        objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })    
+        if (!objectStore.indexNames.contains(index.indexName)) {
+          objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })    
+        }
       })
     })
   }

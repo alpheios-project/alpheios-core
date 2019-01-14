@@ -13,6 +13,21 @@
     "message": "Remove all word items",
     "description": "Remove all words inside language block",
     "component": "WordLanguagePanel"
+  },
+  "TOOLTIP_CHANGE_IMPORTANT": {
+    "message": "Change important status",
+    "description": "Change important status for the WordItem",
+    "component": "WordItemPanel"
+  },
+  "TOOLTIP_REMOVE": {
+    "message": "Remove worditem",
+    "description": "Remove the WordItem form the list",
+    "component": "WordItemPanel"
+  },
+  "TOOLTIP_TEXT_CONTEXT": {
+    "message": "Show contexts",
+    "description": "Show panle with contexts for the wordItem",
+    "component": "WordItemPanel"
   }
   
 }

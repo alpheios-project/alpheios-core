@@ -37,9 +37,12 @@ export default class WordlistController {
    */
 
   async uploadListsFromDB () {
+    console.info('*********************uploadListsFromDB start')
     this.availableLangs.forEach(async (languageCode) => {
       this.createWordList(languageCode)
+      console.info('*********************uploadListsFromDB before')
       let result = await this.wordLists[languageCode].uploadFromDB()
+      console.info('*********************uploadListsFromDB result', result)
       if (!result) {
         this.removeWordList(languageCode)
       }

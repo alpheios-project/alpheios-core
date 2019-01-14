@@ -32,6 +32,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
    */
   openDatabase (upgradeCallback, successCallback) {
     let request = this.indexedDB.open(this.dbName, this.currentVersion)
+    console.info('***************inside openDatabase')
     request.onerror = (event) => {
       console.info('*************Some problems with opening LabirintOrders', event.target)
     }
@@ -40,13 +41,19 @@ export default class IndexedDBAdapter extends StorageAdapter {
     return request
   }
 
+  openDatabaseRequest () {
+    let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result
+      const upgradeTransaction = event.target.transaction
+      this.dbData.createObjectStores(db, upgradeTransaction)
+    }
+    return request
+  }
+
   async set (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result
-        this.dbData.createObjectStores(db)
-      }
+      let request = this.openDatabaseRequest()
       request.onsuccess = async (event) => {
         const db = event.target.result
         await this.putItem(db, data)
@@ -67,7 +74,9 @@ export default class IndexedDBAdapter extends StorageAdapter {
       }
       const objectStore = transaction.objectStore(data.objectStoreName)
       let objectsDone = data.dataItems.length
+      // console.info('************************data.dataItems', data.dataItems)
       for (let dataItem of data.dataItems) {
+        // console.info('************************dataItem', dataItem)
         const requestPut = objectStore.put(dataItem)
         requestPut.onsuccess = () => {
           objectsDone = objectsDone - 1
@@ -85,7 +94,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
 
   async get (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+      let request = this.openDatabaseRequest()
       request.onsuccess = (event) => {
         const db = event.target.result
         const transaction = db.transaction([data.objectStoreName])
@@ -112,8 +121,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
 
   async delete (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
-
+      let request = this.openDatabaseRequest()
       request.onsuccess = (event) => {
         const db = event.target.result
         const transaction = db.transaction([data.objectStoreName], 'readwrite')

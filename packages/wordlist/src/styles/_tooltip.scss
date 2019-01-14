@@ -1,168 +1,169 @@
+.#{$alpheios-uikit-namespace} {
+    .alpheios-tooltip {
+        position: relative;
+        display: inline-block;
+        user-select: none;
+    }
 
-.alpheios-tooltip {
-    position: relative;
-    display: inline-block;
-    user-select: none;
-}
+    .alpheios-tooltip__text {
+        visibility: hidden;
+        position: absolute;
+        width: 120px;
+        background-color: $alpheios-tooltip-bg;
+        color: $alpheios-tooltip-color;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity .6s;
 
-.alpheios-tooltip__text {
-    visibility: hidden;
-    position: absolute;
-    width: 120px;
-    background-color: $alpheios-tooltip-bg;
-    color: $alpheios-tooltip-color;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity .6s;
+        font-size: 12px;
+        border: 1px solid $alpheios-toolbar-color;
+    }
 
-    font-size: 12px;
-    border: 1px solid $alpheios-toolbar-color;
-}
+    .auk .alpheios-tooltip span.alpheios-tooltip__text,
+    .alpheios-tooltip span.alpheios-tooltip__text {
+        font-size: 12px;
+        padding: 5px 0;
+    }
 
-.auk .alpheios-tooltip span.alpheios-tooltip__text,
-.alpheios-tooltip span.alpheios-tooltip__text {
-    font-size: 12px;
-    padding: 5px 0;
-}
+    .alpheios-tooltip:hover .alpheios-tooltip__text {
+        visibility: visible;
+        opacity: 1;
+    }
 
-.alpheios-tooltip:hover .alpheios-tooltip__text {
-    visibility: visible;
-    opacity: 1;
-}
+    .alpheios-tooltip__top {
+        bottom: 125%;
+        left: 50%;
+        margin-left: -50%;
+    }
 
-.alpheios-tooltip__top {
-    bottom: 125%;
-    left: 50%;
-    margin-left: -50%;
-}
+    .alpheios-tooltip__top::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: $alpheios-toolbar-color transparent transparent transparent;
+    }
 
-.alpheios-tooltip__top::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: $alpheios-toolbar-color transparent transparent transparent;
-}
+    .alpheios-tooltip__top-right {
+        bottom: 125%;
+        right: 0;
+        margin-left: -50%;
+    }
 
-.alpheios-tooltip__top-right {
-    bottom: 125%;
-    right: 0;
-    margin-left: -50%;
-}
+    .alpheios-tooltip__top-right::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        right: 15%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: $alpheios-toolbar-color transparent transparent transparent;
+    }
 
-.alpheios-tooltip__top-right::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    right: 15%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: $alpheios-toolbar-color transparent transparent transparent;
-}
+    .alpheios-tooltip__top-left {
+        bottom: 125%;
+        left: 0;
+    }
 
-.alpheios-tooltip__top-left {
-    bottom: 125%;
-    left: 0;
-}
+    .alpheios-tooltip__top-left::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-left: 5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: $alpheios-toolbar-color transparent transparent transparent;
+    }
 
-.alpheios-tooltip__top-left::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-left: 5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: $alpheios-toolbar-color transparent transparent transparent;
-}
+    .alpheios-tooltip__right {
+        top: -5px;
+        left: 125%;
+    }
 
-.alpheios-tooltip__right {
-    top: -5px;
-    left: 125%;
-}
+    .alpheios-tooltip__right::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent $alpheios-toolbar-color transparent transparent;
+    }
 
-.alpheios-tooltip__right::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent $alpheios-toolbar-color transparent transparent;
-}
+    .alpheios-tooltip__bottom {
+        top: 135%;
+        left: 50%;
+        margin-left: -50%;
+    }
 
-.alpheios-tooltip__bottom {
-    top: 135%;
-    left: 50%;
-    margin-left: -50%;
-}
+    .alpheios-tooltip__bottom-wide {
+        top: 135%;
+        left: -30%;
+    }
 
-.alpheios-tooltip__bottom-wide {
-    top: 135%;
-    left: -30%;
-}
+    .alpheios-tooltip__bottom-narrow {
+        top: 135%;
+        left: -75%;
+    }
 
-.alpheios-tooltip__bottom-narrow {
-    top: 135%;
-    left: -75%;
-}
+    .alpheios-tooltip__bottom-narrow2 {
+        top: 135%;
+        left: -165%;
+    }
 
-.alpheios-tooltip__bottom-narrow2 {
-    top: 135%;
-    left: -165%;
-}
+    .alpheios-tooltip__bottom::after,
+    .alpheios-tooltip__bottom-wide::after,
+    .alpheios-tooltip__bottom-narrow::after,
+    .alpheios-tooltip__bottom-narrow2::after  {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent $alpheios-toolbar-color transparent;
+    }
 
-.alpheios-tooltip__bottom::after,
-.alpheios-tooltip__bottom-wide::after,
-.alpheios-tooltip__bottom-narrow::after,
-.alpheios-tooltip__bottom-narrow2::after  {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent $alpheios-toolbar-color transparent;
-}
+    .alpheios-tooltip__bottom-right {
+        top: 135%;
+        right: 0;
+        margin-left: -50%;
+    }
 
-.alpheios-tooltip__bottom-right {
-    top: 135%;
-    right: 0;
-    margin-left: -50%;
-}
+    .alpheios-tooltip__bottom-right::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        right: 15%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent $alpheios-toolbar-color transparent;
+    }
 
-.alpheios-tooltip__bottom-right::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    right: 15%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent $alpheios-toolbar-color transparent;
-}
+    .alpheios-tooltip__left {
+        bottom: auto;
+        right: 128%;
+    }
 
-.alpheios-tooltip__left {
-    bottom: auto;
-    right: 128%;
-}
-
-.alpheios-tooltip__left::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent $alpheios-toolbar-color;
+    .alpheios-tooltip__left::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent $alpheios-toolbar-color;
+    }
 }

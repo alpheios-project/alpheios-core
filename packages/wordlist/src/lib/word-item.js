@@ -1,17 +1,17 @@
 import uuidv4 from 'uuid/v4'
-import { Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
-import WordlistController from '../controllers/wordlist-controller';
+import { Homonym, TextQuoteSelector, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import WordlistController from '@/controllers/wordlist-controller';
 
 export default class WordItem {
   constructor (data) {
     this.targetWord = data.targetWord
     this.languageCode = data.languageCode
-    this.important = data.important || false
-    this.currentSession = data.currentSession || false
     this.userID = data.userID
 
-    this.textQuoteSelector = data.textQuoteSelector ? data.textQuoteSelector : {}
+    this.textQuoteSelectors = data.textQuoteSelector ? [ data.textQuoteSelector ] : []
     this.homonym = data.homonym ? data.homonym : {}
+    this.important = data.important || false
+    this.currentSession = data.currentSession || false
   }
 
   get storageID () {
@@ -44,6 +44,13 @@ export default class WordItem {
     this.homonym = homonym
   }
 
+  uploadTextQuoteSelectors (jsonObjs) {
+    for (let jsonObj of jsonObjs) {
+      let tq = TextQuoteSelector.readObject(jsonObj)
+      this.textQuoteSelectors.push(tq)
+    }
+  }
+
   selectWordItem () {
     WordlistController.evt.WORDITEM_SELECTED.pub(this.homonym)
   }
@@ -72,25 +79,34 @@ export default class WordItem {
   }
 
   convertTQSelectorToStorage () {
-    return {
-      ID: this.storageID,
-      listID: this.listID,
-      userID: this.userID,
-      languageCode: this.languageCode,
-      targetWord: this.targetWord,
-      
-      target: {
-        source: window.location.href,
-        selector: {
-          type: 'TextQuoteSelector',
-          exact: this.textQuoteSelector.text,
-          prefix: this.textQuoteSelector.prefix,
-          suffix: this.textQuoteSelector.suffix,
-          contextHTML: this.textQuoteSelector.contextHTML
-        }
-      },
-      createdDT: WordItem.currentDate
+    let result = []
+    let index = 0
+    for (let tq of this.textQuoteSelectors) {
+      index++
+      let resultItem = {
+        ID: this.storageID + '-' + index,
+        listID: this.listID,
+        userID: this.userID,
+        languageCode: this.languageCode,
+        targetWord: this.targetWord,
+        wordItemID: this.storageID,
+        
+        target: {
+          source: tq.source,
+          selector: {
+            type: 'TextQuoteSelector',
+            exact: tq.text,
+            prefix: tq.prefix,
+            suffix: tq.suffix,
+            contextHTML: tq.contextHTML,
+            languageCode: tq.languageCode
+          }
+        },
+        createdDT: WordItem.currentDate
+      }
+      result.push(resultItem)
     }
+    return result
   }
 
   convertHomonymToStorage (addMeaning = false) {
@@ -111,5 +127,36 @@ export default class WordItem {
 
   convertFullHomonymToStorage () {
     return this.convertHomonymToStorage(true)
+  }
+
+  emptyProp (propName) {
+    return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
+  }
+
+  hasThisTextQuoteSelector (tq) {
+    return this.textQuoteSelectors.filter(tqCurrent => tqCurrent.prefix === tq.prefix && tqCurrent.suffix === tq.suffix && tqCurrent.source === tq.source).length > 0
+  }
+
+  mergeTextQuoteSelectors (prevWordItem) {
+    console.info('*************mergeTextQuoteSelectors this', this.textQuoteSelectors)
+    console.info('*************mergeTextQuoteSelectors prevWordItem', prevWordItem.textQuoteSelectors)
+    for (let tq of prevWordItem.textQuoteSelectors) {
+      console.info('**********************mergeTextQuoteSelectors inside', this.hasThisTextQuoteSelector(tq))
+      if (!this.hasThisTextQuoteSelector(tq)) {
+        this.textQuoteSelectors.push(tq)
+      }
+    }
+    console.info('*************mergeTextQuoteSelectors final this', this.textQuoteSelectors)
+  }
+
+  merge (prevWordItem) {
+    let checkProps = ['homonym', 'important', 'currentSession']
+    for(let prop of checkProps) {
+      if (this.emptyProp(prop) && !prevWordItem.emptyProp(prop)) {
+        this[prop] = prevWordItem[prop]
+      }
+    }
+
+    this.mergeTextQuoteSelectors(prevWordItem)
   }
 }

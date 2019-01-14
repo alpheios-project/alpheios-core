@@ -108,33 +108,46 @@ export default class WordList {
     //check if worditem exists in the list
     if (!this.contains(wordItem)) {
       await this.pushWordItemPart([wordItem], 'common')
+    } else {
+      wordItem.merge(this.items[wordItem.storageID])
     }
-
+    
     await this.pushWordItemPart([wordItem], type)
+    // console.info('*******************pushWordItem', data, this)
   }
 
   async pushWordItemPart (wordItems, type) {
-      if (this.storageMap[type]) {
-        let dataItems = []
-        for (let wordItem of wordItems) {
-          this.items[wordItem.storageID] = wordItem
-          let dataItem = wordItem[this.storageMap[type].convertMethodName]()
-          dataItems.push(dataItem)
-        }
+    if (this.storageMap[type]) {
+      let dataItems = []
+      for (let wordItem of wordItems) {
+        this.items[wordItem.storageID] = wordItem
+        let resDataItem = wordItem[this.storageMap[type].convertMethodName]()
 
-        await this.storageAdapter.set({
-          objectStoreName: this.storageMap[type].objectStoreName,
-          dataItems: dataItems
-        })
-        
+        // console.info('**************pushWordItemPart resDataItem', resDataItem, Array.isArray(resDataItem))
+        if (!Array.isArray(resDataItem)) {
+          dataItems.push(resDataItem)
+        } else {
+          dataItems = dataItems.concat(resDataItem)
+        }
       }
+
+      await this.storageAdapter.set({
+        objectStoreName: this.storageMap[type].objectStoreName,
+        dataItems: dataItems
+      })
+      
+    }
   }
 
   async uploadFromDB () {
+    console.info('**********************uploadFromDB start')
+
     let res = await this.storageAdapter.get({
       objectStoreName: this.storageMap.common.objectStoreName,
       condition: {indexName: 'listID', value: this.storageID, type: 'only' }
     })
+
+    console.info('**********************uploadFromDB res1', res)
     if (res.length === 0) {
       return false
     } else {
@@ -158,15 +171,17 @@ export default class WordList {
           wordItem.uploadHomonym(resShortHomonym[0])
         }
 
-        let resTextQuoteSelector = await this.storageAdapter.get({
+        let resTextQuoteSelectors = await this.storageAdapter.get({
           objectStoreName: this.storageMap.textQuoteSelector.objectStoreName,
-          condition: {indexName: 'ID', value: resKey, type: 'only' }
+          condition: {indexName: 'wordItemID', value: resKey, type: 'only' }
         })
 
-        if (resTextQuoteSelector.length > 0) {
-          console.info('**********************resTextQuoteSelector', resTextQuoteSelector)
+        if (resTextQuoteSelectors.length > 0) {
+          console.info('**********************resTextQuoteSelector', resTextQuoteSelectors)
+          wordItem.uploadTextQuoteSelectors(resTextQuoteSelectors)
         }
 
+        console.info('**********************wordItem final', wordItem)
         this.items[wordItem.storageID] = wordItem
       }
       return true

@@ -24,6 +24,7 @@
                 v-bind:key="wordItem.storageID">
             <word-item-panel 
               :worditem="wordItem" 
+              :messages="messages"
               @changeImportant = "changeImportant"
               @deleteItem = "deleteItem"
             ></word-item-panel>

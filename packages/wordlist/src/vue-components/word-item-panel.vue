@@ -1,13 +1,25 @@
 <template>
     <div v-bind:class="itemClasses" class="alpheios-wordlist-language__worditem">
-        <div class="alpheios-worditem__data alpheios-worditem__icon" 
-                @click="changeImportant()">
-                <check-icon></check-icon>
-        </div>
-        <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon" 
-                @click="deleteItem()">
-                <delete-icon></delete-icon>
-        </div>
+        <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_CHANGE_IMPORTANT">
+          <div class="alpheios-worditem__data alpheios-worditem__icon" 
+                  @click="changeImportant()">
+                  <check-icon></check-icon>
+          </div>
+        </alph-tooltip>
+
+        <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_REMOVE">
+          <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon" 
+                  @click="deleteItem()">
+                  <delete-icon></delete-icon>
+          </div>
+        </alph-tooltip>
+
+        <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_TEXT_CONTEXT">
+          <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon" 
+                  @click="showContexts()">
+                  <text-quote-icon></text-quote-icon>
+          </div>
+        </alph-tooltip>
         <div 
           class="alpheios-worditem__data alpheios-worditem__targetWord"
           @click="selectWordItem()"
@@ -16,17 +28,25 @@
     </div>
 </template>
 <script>
-  import CheckIcon from '@/icons/check.svg';
-  import DeleteIcon from '@/icons/delete.svg';
+  import CheckIcon from '@/icons/check.svg'
+  import DeleteIcon from '@/icons/delete.svg'
+  import TextQuoteIcon from '@/icons/text-quote.svg'
+  import TooltipWrap from '@/vue-components/common-components/tooltip-wrap.vue'
 
   export default {
     name: 'WordItemPanel',
     components: {
       checkIcon: CheckIcon,
-      deleteIcon: DeleteIcon
+      deleteIcon: DeleteIcon,
+      textQuoteIcon: TextQuoteIcon,
+      alphTooltip: TooltipWrap
     },
     props: {
       worditem: {
+        type: Object,
+        required: true
+      },
+      messages: {
         type: Object,
         required: true
       }
@@ -123,6 +143,6 @@
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: 48%;
+      width: 38%;
   }
 </style>

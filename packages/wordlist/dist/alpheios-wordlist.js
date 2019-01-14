@@ -96,17 +96,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss& ***!
@@ -806,6 +795,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_icons_check_svg__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/icons/delete.svg */ "./icons/delete.svg");
 /* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_icons_delete_svg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _icons_text_quote_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/icons/text-quote.svg */ "./icons/text-quote.svg");
+/* harmony import */ var _icons_text_quote_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_icons_text_quote_svg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue-components/common-components/tooltip-wrap.vue */ "./vue-components/common-components/tooltip-wrap.vue");
 //
 //
 //
@@ -823,6 +815,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -831,10 +837,16 @@ __webpack_require__.r(__webpack_exports__);
   name: 'WordItemPanel',
   components: {
     checkIcon: _icons_check_svg__WEBPACK_IMPORTED_MODULE_0___default.a,
-    deleteIcon: _icons_delete_svg__WEBPACK_IMPORTED_MODULE_1___default.a
+    deleteIcon: _icons_delete_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
+    textQuoteIcon: _icons_text_quote_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
+    alphTooltip: _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
     worditem: {
+      type: Object,
+      required: true
+    },
+    messages: {
       type: Object,
       required: true
     }
@@ -896,6 +908,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-item-panel.vue */ "./vue-components/word-item-panel.vue");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__);
+//
 //
 //
 //
@@ -1134,32 +1147,80 @@ var render = function() {
     },
     [
       _c(
-        "div",
+        "alph-tooltip",
         {
-          staticClass: "alpheios-worditem__data alpheios-worditem__icon",
-          on: {
-            click: function($event) {
-              _vm.changeImportant()
-            }
+          attrs: {
+            tooltipDirection: "top-left",
+            tooltipText: _vm.messages.TOOLTIP_CHANGE_IMPORTANT
           }
         },
-        [_c("check-icon")],
-        1
+        [
+          _c(
+            "div",
+            {
+              staticClass: "alpheios-worditem__data alpheios-worditem__icon",
+              on: {
+                click: function($event) {
+                  _vm.changeImportant()
+                }
+              }
+            },
+            [_c("check-icon")],
+            1
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
-        "div",
+        "alph-tooltip",
         {
-          staticClass:
-            "alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon",
-          on: {
-            click: function($event) {
-              _vm.deleteItem()
-            }
+          attrs: {
+            tooltipDirection: "top-left",
+            tooltipText: _vm.messages.TOOLTIP_REMOVE
           }
         },
-        [_c("delete-icon")],
-        1
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon",
+              on: {
+                click: function($event) {
+                  _vm.deleteItem()
+                }
+              }
+            },
+            [_c("delete-icon")],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipDirection: "top-left",
+            tooltipText: _vm.messages.TOOLTIP_TEXT_CONTEXT
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon",
+              on: {
+                click: function($event) {
+                  _vm.showContexts()
+                }
+              }
+            },
+            [_c("text-quote-icon")],
+            1
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -1182,7 +1243,8 @@ var render = function() {
         },
         [_vm._v(_vm._s(_vm.worditem.lemmasList))]
       )
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -1305,7 +1367,7 @@ var render = function() {
           { key: wordItem.storageID },
           [
             _c("word-item-panel", {
-              attrs: { worditem: wordItem },
+              attrs: { worditem: wordItem, messages: _vm.messages },
               on: {
                 changeImportant: _vm.changeImportant,
                 deleteItem: _vm.deleteItem
@@ -1485,8 +1547,8 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.5.21
- * (c) 2014-2018 Evan You
+ * Vue.js v2.5.22
+ * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -2118,7 +2180,7 @@ function normalizeComponent (
         ? vm.options
         : vm._isVue
           ? vm.$options || vm.constructor.options
-          : vm || {};
+          : vm;
       var name = options.name || options._componentTag;
       var file = options.__file;
       if (!name && file) {
@@ -2213,9 +2275,9 @@ function normalizeComponent (
     }
   };
 
-  // the current target watcher being evaluated.
-  // this is globally unique because there could be only one
-  // watcher being evaluated at any time.
+  // The current target watcher being evaluated.
+  // This is globally unique because only one watcher
+  // can be evaluated at a time.
   Dep.target = null;
   var targetStack = [];
 
@@ -2741,13 +2803,26 @@ function normalizeComponent (
     parentVal,
     childVal
   ) {
-    return childVal
+    var res = childVal
       ? parentVal
         ? parentVal.concat(childVal)
         : Array.isArray(childVal)
           ? childVal
           : [childVal]
-      : parentVal
+      : parentVal;
+    return res
+      ? dedupeHooks(res)
+      : res
+  }
+
+  function dedupeHooks (hooks) {
+    var res = [];
+    for (var i = 0; i < hooks.length; i++) {
+      if (res.indexOf(hooks[i]) === -1) {
+        res.push(hooks[i]);
+      }
+    }
+    return res
   }
 
   LIFECYCLE_HOOKS.forEach(function (hook) {
@@ -2983,7 +3058,7 @@ function normalizeComponent (
     normalizeProps(child, vm);
     normalizeInject(child, vm);
     normalizeDirectives(child);
-    
+
     // Apply extends and mixins on the child options,
     // but only if it is a raw options object that isn't
     // the result of another mergeOptions call.
@@ -3914,6 +3989,8 @@ function normalizeComponent (
         // (async resolves are shimmed as synchronous during SSR)
         if (!sync) {
           forceRender(true);
+        } else {
+          contexts.length = 0;
         }
       });
 
@@ -4079,8 +4156,8 @@ function normalizeComponent (
       }
       // array of events
       if (Array.isArray(event)) {
-        for (var i = 0, l = event.length; i < l; i++) {
-          vm.$off(event[i], fn);
+        for (var i$1 = 0, l = event.length; i$1 < l; i$1++) {
+          vm.$off(event[i$1], fn);
         }
         return vm
       }
@@ -4093,16 +4170,14 @@ function normalizeComponent (
         vm._events[event] = null;
         return vm
       }
-      if (fn) {
-        // specific handler
-        var cb;
-        var i$1 = cbs.length;
-        while (i$1--) {
-          cb = cbs[i$1];
-          if (cb === fn || cb.fn === fn) {
-            cbs.splice(i$1, 1);
-            break
-          }
+      // specific handler
+      var cb;
+      var i = cbs.length;
+      while (i--) {
+        cb = cbs[i];
+        if (cb === fn || cb.fn === fn) {
+          cbs.splice(i, 1);
+          break
         }
       }
       return vm
@@ -6259,34 +6334,14 @@ function normalizeComponent (
   function resolveModifiedOptions (Ctor) {
     var modified;
     var latest = Ctor.options;
-    var extended = Ctor.extendOptions;
     var sealed = Ctor.sealedOptions;
     for (var key in latest) {
       if (latest[key] !== sealed[key]) {
         if (!modified) { modified = {}; }
-        modified[key] = dedupe(latest[key], extended[key], sealed[key]);
+        modified[key] = latest[key];
       }
     }
     return modified
-  }
-
-  function dedupe (latest, extended, sealed) {
-    // compare latest and sealed to ensure lifecycle hooks won't be duplicated
-    // between merges
-    if (Array.isArray(latest)) {
-      var res = [];
-      sealed = Array.isArray(sealed) ? sealed : [sealed];
-      extended = Array.isArray(extended) ? extended : [extended];
-      for (var i = 0; i < latest.length; i++) {
-        // push original options and not sealed options to exclude duplicated options
-        if (extended.indexOf(latest[i]) >= 0 || sealed.indexOf(latest[i]) < 0) {
-          res.push(latest[i]);
-        }
-      }
-      return res
-    } else {
-      return latest
-    }
   }
 
   function Vue (options) {
@@ -6656,7 +6711,7 @@ function normalizeComponent (
     value: FunctionalRenderContext
   });
 
-  Vue.version = '2.5.21';
+  Vue.version = '2.5.22';
 
   /*  */
 
@@ -12634,9 +12689,12 @@ class WordlistController {
    */
 
   async uploadListsFromDB () {
+    console.info('*********************uploadListsFromDB start')
     this.availableLangs.forEach(async (languageCode) => {
       this.createWordList(languageCode)
+      console.info('*********************uploadListsFromDB before')
       let result = await this.wordLists[languageCode].uploadFromDB()
+      console.info('*********************uploadListsFromDB result', result)
       if (!result) {
         this.removeWordList(languageCode)
       }
@@ -12755,6 +12813,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /***/ (function(module, exports) {
 
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\delete.svg"};module.exports = { render: render, toString: toString };
+
+/***/ }),
+
+/***/ "./icons/text-quote.svg":
+/*!******************************!*\
+  !*** ./icons/text-quote.svg ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 442 442"}},[_c('path',{attrs:{"d":"M171 336H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM322 336H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 86H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h252c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 136H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 186H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 236H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 286H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM171 286H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM171 136H70c-5.523 0-10 4.477-10 10v101c0 5.523 4.477 10 10 10h101c5.523 0 10-4.477 10-10V146c0-5.523-4.477-10-10-10zm-10 101H80v-81h81v81z"}}),_c('path',{attrs:{"d":"M422 76h-30V46c0-11.028-8.972-20-20-20H20C8.972 26 0 34.972 0 46v320c0 27.57 22.43 50 50 50h342c27.57 0 50-22.43 50-50V96c0-11.028-8.972-20-20-20zm0 290c0 16.542-13.458 30-30 30H50c-16.542 0-30-13.458-30-30V46h352v305c0 13.785 11.215 25 25 25 5.522 0 10-4.477 10-10s-4.478-10-10-10c-2.757 0-5-2.243-5-5V96h30v270z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\text-quote.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -13093,7 +13162,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controllers/wordlist-controller */ "./controllers/wordlist-controller.js");
+/* harmony import */ var _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/controllers/wordlist-controller */ "./controllers/wordlist-controller.js");
 
 
 
@@ -13102,12 +13171,12 @@ class WordItem {
   constructor (data) {
     this.targetWord = data.targetWord
     this.languageCode = data.languageCode
-    this.important = data.important || false
-    this.currentSession = data.currentSession || false
     this.userID = data.userID
 
-    this.textQuoteSelector = data.textQuoteSelector ? data.textQuoteSelector : {}
+    this.textQuoteSelectors = data.textQuoteSelector ? [ data.textQuoteSelector ] : []
     this.homonym = data.homonym ? data.homonym : {}
+    this.important = data.important || false
+    this.currentSession = data.currentSession || false
   }
 
   get storageID () {
@@ -13140,6 +13209,13 @@ class WordItem {
     this.homonym = homonym
   }
 
+  uploadTextQuoteSelectors (jsonObjs) {
+    for (let jsonObj of jsonObjs) {
+      let tq = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["TextQuoteSelector"].readObject(jsonObj)
+      this.textQuoteSelectors.push(tq)
+    }
+  }
+
   selectWordItem () {
     _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__["default"].evt.WORDITEM_SELECTED.pub(this.homonym)
   }
@@ -13168,25 +13244,34 @@ class WordItem {
   }
 
   convertTQSelectorToStorage () {
-    return {
-      ID: this.storageID,
-      listID: this.listID,
-      userID: this.userID,
-      languageCode: this.languageCode,
-      targetWord: this.targetWord,
-      
-      target: {
-        source: window.location.href,
-        selector: {
-          type: 'TextQuoteSelector',
-          exact: this.textQuoteSelector.text,
-          prefix: this.textQuoteSelector.prefix,
-          suffix: this.textQuoteSelector.suffix,
-          contextHTML: this.textQuoteSelector.contextHTML
-        }
-      },
-      createdDT: WordItem.currentDate
+    let result = []
+    let index = 0
+    for (let tq of this.textQuoteSelectors) {
+      index++
+      let resultItem = {
+        ID: this.storageID + '-' + index,
+        listID: this.listID,
+        userID: this.userID,
+        languageCode: this.languageCode,
+        targetWord: this.targetWord,
+        wordItemID: this.storageID,
+        
+        target: {
+          source: tq.source,
+          selector: {
+            type: 'TextQuoteSelector',
+            exact: tq.text,
+            prefix: tq.prefix,
+            suffix: tq.suffix,
+            contextHTML: tq.contextHTML,
+            languageCode: tq.languageCode
+          }
+        },
+        createdDT: WordItem.currentDate
+      }
+      result.push(resultItem)
     }
+    return result
   }
 
   convertHomonymToStorage (addMeaning = false) {
@@ -13207,6 +13292,37 @@ class WordItem {
 
   convertFullHomonymToStorage () {
     return this.convertHomonymToStorage(true)
+  }
+
+  emptyProp (propName) {
+    return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
+  }
+
+  hasThisTextQuoteSelector (tq) {
+    return this.textQuoteSelectors.filter(tqCurrent => tqCurrent.prefix === tq.prefix && tqCurrent.suffix === tq.suffix && tqCurrent.source === tq.source).length > 0
+  }
+
+  mergeTextQuoteSelectors (prevWordItem) {
+    console.info('*************mergeTextQuoteSelectors this', this.textQuoteSelectors)
+    console.info('*************mergeTextQuoteSelectors prevWordItem', prevWordItem.textQuoteSelectors)
+    for (let tq of prevWordItem.textQuoteSelectors) {
+      console.info('**********************mergeTextQuoteSelectors inside', this.hasThisTextQuoteSelector(tq))
+      if (!this.hasThisTextQuoteSelector(tq)) {
+        this.textQuoteSelectors.push(tq)
+      }
+    }
+    console.info('*************mergeTextQuoteSelectors final this', this.textQuoteSelectors)
+  }
+
+  merge (prevWordItem) {
+    let checkProps = ['homonym', 'important', 'currentSession']
+    for(let prop of checkProps) {
+      if (this.emptyProp(prop) && !prevWordItem.emptyProp(prop)) {
+        this[prop] = prevWordItem[prop]
+      }
+    }
+
+    this.mergeTextQuoteSelectors(prevWordItem)
   }
 }
 
@@ -13333,33 +13449,46 @@ class WordList {
     //check if worditem exists in the list
     if (!this.contains(wordItem)) {
       await this.pushWordItemPart([wordItem], 'common')
+    } else {
+      wordItem.merge(this.items[wordItem.storageID])
     }
-
+    
     await this.pushWordItemPart([wordItem], type)
+    // console.info('*******************pushWordItem', data, this)
   }
 
   async pushWordItemPart (wordItems, type) {
-      if (this.storageMap[type]) {
-        let dataItems = []
-        for (let wordItem of wordItems) {
-          this.items[wordItem.storageID] = wordItem
-          let dataItem = wordItem[this.storageMap[type].convertMethodName]()
-          dataItems.push(dataItem)
-        }
+    if (this.storageMap[type]) {
+      let dataItems = []
+      for (let wordItem of wordItems) {
+        this.items[wordItem.storageID] = wordItem
+        let resDataItem = wordItem[this.storageMap[type].convertMethodName]()
 
-        await this.storageAdapter.set({
-          objectStoreName: this.storageMap[type].objectStoreName,
-          dataItems: dataItems
-        })
-        
+        // console.info('**************pushWordItemPart resDataItem', resDataItem, Array.isArray(resDataItem))
+        if (!Array.isArray(resDataItem)) {
+          dataItems.push(resDataItem)
+        } else {
+          dataItems = dataItems.concat(resDataItem)
+        }
       }
+
+      await this.storageAdapter.set({
+        objectStoreName: this.storageMap[type].objectStoreName,
+        dataItems: dataItems
+      })
+      
+    }
   }
 
   async uploadFromDB () {
+    console.info('**********************uploadFromDB start')
+
     let res = await this.storageAdapter.get({
       objectStoreName: this.storageMap.common.objectStoreName,
       condition: {indexName: 'listID', value: this.storageID, type: 'only' }
     })
+
+    console.info('**********************uploadFromDB res1', res)
     if (res.length === 0) {
       return false
     } else {
@@ -13383,15 +13512,17 @@ class WordList {
           wordItem.uploadHomonym(resShortHomonym[0])
         }
 
-        let resTextQuoteSelector = await this.storageAdapter.get({
+        let resTextQuoteSelectors = await this.storageAdapter.get({
           objectStoreName: this.storageMap.textQuoteSelector.objectStoreName,
-          condition: {indexName: 'ID', value: resKey, type: 'only' }
+          condition: {indexName: 'wordItemID', value: resKey, type: 'only' }
         })
 
-        if (resTextQuoteSelector.length > 0) {
-          console.info('**********************resTextQuoteSelector', resTextQuoteSelector)
+        if (resTextQuoteSelectors.length > 0) {
+          console.info('**********************resTextQuoteSelector', resTextQuoteSelectors)
+          wordItem.uploadTextQuoteSelectors(resTextQuoteSelectors)
         }
 
+        console.info('**********************wordItem final', wordItem)
         this.items[wordItem.storageID] = wordItem
       }
       return true
@@ -13416,10 +13547,10 @@ module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: TOOLTIP_ALL_IMPORTANT, TOOLTIP_NO_IMPORTANT, TOOLTIP_REMOVE_ALL, default */
+/*! exports provided: TOOLTIP_ALL_IMPORTANT, TOOLTIP_NO_IMPORTANT, TOOLTIP_REMOVE_ALL, TOOLTIP_CHANGE_IMPORTANT, TOOLTIP_REMOVE, TOOLTIP_TEXT_CONTEXT, default */
 /***/ (function(module) {
 
-module.exports = {"TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"}};
+module.exports = {"TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"TOOLTIP_REMOVE":{"message":"Remove worditem","description":"Remove the WordItem form the list","component":"WordItemPanel"},"TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"}};
 
 /***/ }),
 
@@ -13497,6 +13628,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
    */
   openDatabase (upgradeCallback, successCallback) {
     let request = this.indexedDB.open(this.dbName, this.currentVersion)
+    console.info('***************inside openDatabase')
     request.onerror = (event) => {
       console.info('*************Some problems with opening LabirintOrders', event.target)
     }
@@ -13505,13 +13637,19 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return request
   }
 
+  openDatabaseRequest () {
+    let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result
+      const upgradeTransaction = event.target.transaction
+      this.dbData.createObjectStores(db, upgradeTransaction)
+    }
+    return request
+  }
+
   async set (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result
-        this.dbData.createObjectStores(db)
-      }
+      let request = this.openDatabaseRequest()
       request.onsuccess = async (event) => {
         const db = event.target.result
         await this.putItem(db, data)
@@ -13532,7 +13670,9 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
       }
       const objectStore = transaction.objectStore(data.objectStoreName)
       let objectsDone = data.dataItems.length
+      // console.info('************************data.dataItems', data.dataItems)
       for (let dataItem of data.dataItems) {
+        // console.info('************************dataItem', dataItem)
         const requestPut = objectStore.put(dataItem)
         requestPut.onsuccess = () => {
           objectsDone = objectsDone - 1
@@ -13550,7 +13690,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
 
   async get (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+      let request = this.openDatabaseRequest()
       request.onsuccess = (event) => {
         const db = event.target.result
         const transaction = db.transaction([data.objectStoreName])
@@ -13577,8 +13717,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
 
   async delete (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
-
+      let request = this.openDatabaseRequest()
       request.onsuccess = (event) => {
         const db = event.target.result
         const transaction = db.transaction([data.objectStoreName], 'readwrite')
@@ -13629,7 +13768,7 @@ class IndexedDBStructure {
   }
 
   get dbVersion () {
-    return 1
+    return 2
   }
 
   get objectStores () {
@@ -13659,7 +13798,11 @@ class IndexedDBStructure {
   }
 
   get wordListsContext () {
-    return this.objectStoreTemplate
+    let structure = this.objectStoreTemplate
+    structure.indexes.push(
+      { indexName: 'wordItemID', keyPath: 'wordItemID', unique: false}
+    )
+    return structure
   }
 
   get wordListsHomonym () {
@@ -13670,14 +13813,22 @@ class IndexedDBStructure {
     return this.objectStoreTemplate
   }
 
-  createObjectStores (db) {
+  createObjectStores (db, upgradeTransaction) {
     Object.keys(this.objectStores).forEach(objectStoreName => {
       const objectStoreStructure = this.objectStores[objectStoreName]
 
-      console.info('*************objectStoreStructure', objectStoreName, objectStoreStructure)
-      const objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+      console.info('*************objectStoreStructure 1', objectStoreName, objectStoreStructure)
+      console.info('*************objectStoreStructure 2', db.objectStoreNames)
+      let objectStore
+      if (!db.objectStoreNames.contains(objectStoreName)) {
+        objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+      } else {
+        objectStore = upgradeTransaction.objectStore(objectStoreName)
+      }
       objectStoreStructure.indexes.forEach(index => {
-        objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })    
+        if (!objectStore.indexNames.contains(index.indexName)) {
+          objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })    
+        }
       })
     })
   }
@@ -13777,9 +13928,7 @@ class StorageAdapter {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltip-wrap.vue?vue&type=template&id=08f22dbf& */ "./vue-components/common-components/tooltip-wrap.vue?vue&type=template&id=08f22dbf&");
 /* harmony import */ var _tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip-wrap.vue?vue&type=script&lang=js& */ "./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tooltip-wrap.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -13787,7 +13936,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__["render"],
   _tooltip_wrap_vue_vue_type_template_id_08f22dbf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -13816,22 +13965,6 @@ component.options.__file = "vue-components/common-components/tooltip-wrap.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./tooltip-wrap.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_tooltip_wrap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************!*\
-  !*** ./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./tooltip-wrap.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/common-components/tooltip-wrap.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_wrap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
