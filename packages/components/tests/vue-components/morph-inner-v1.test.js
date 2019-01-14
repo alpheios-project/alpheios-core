@@ -1,9 +1,9 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { shallowMount, mount } from '@vue/test-utils'
-import MorphInner from '@/vue-components/morph-inner-v1.vue'
-import InflectionAttribute from '@/vue-components/infl-attribute.vue'
-import ShortDef from '@/vue-components/shortdef.vue'
+import MorphInner from '@/vue/components/morph-inner-v1.vue'
+import InflectionAttribute from '@/vue/components/infl-attribute.vue'
+import ShortDef from '@/vue/components/shortdef.vue'
 
 import { LanguageModelFactory as LMF } from 'alpheios-data-models'
 

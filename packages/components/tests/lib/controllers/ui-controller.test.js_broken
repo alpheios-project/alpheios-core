@@ -19,8 +19,8 @@ import enGB from '@/locales/en-gb/messages.json'
 
 import { LanguageModelFactory as LMF, Definition, Constants } from 'alpheios-data-models'
 
-import Panel from '@/vue-components/panel.vue'
-import Popup from '@/vue-components/popup.vue'
+import Panel from '@/vue/components/panel.vue'
+import Popup from '@/vue/components/popup.vue'
 
 describe('options.test.js', () => {
   console.error = function () {}

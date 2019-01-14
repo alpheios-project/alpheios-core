@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import Grammar from '@/vue-components/grammar.vue'
+import Grammar from '@/vue/components/grammar.vue'
 
 describe('grammar.test.js', () => {
   console.error = function () {}

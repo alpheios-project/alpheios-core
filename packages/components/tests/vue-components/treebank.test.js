@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import Treebank from '@/vue-components/treebank.vue'
+import Treebank from '@/vue/components/treebank.vue'
 
 describe('treebank.test.js', () => {
   console.error = function () {}

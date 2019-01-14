@@ -260,9 +260,9 @@ export default class PopupModule {
               this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
               break
             case 'popup':
-              this.uiController.popup.close() // Close an old popup
-              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
-              this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
+              this.uiController.popup.vi.close() // Close an old popup
+              this.uiController.popup.vi.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
+              this.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
               break
             case 'fontSize':
               this.uiController.updateFontSizeClass(value)

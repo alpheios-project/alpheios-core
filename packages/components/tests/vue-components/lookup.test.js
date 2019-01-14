@@ -1,8 +1,8 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import Lookup from '@/vue-components/lookup.vue'
-import Setting from '@/vue-components/setting.vue'
+import Lookup from '@/vue/components/lookup.vue'
+import Setting from '@/vue/components/setting.vue'
 
 import Vue from 'vue/dist/vue'
 

@@ -1,8 +1,8 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { shallowMount, mount } from '@vue/test-utils'
-import Morph from '@/vue-components/morph.vue'
-import MorphInner from '@/vue-components/morph-inner-v1.vue'
+import Morph from '@/vue/components/morph.vue'
+import MorphInner from '@/vue/components/morph-inner-v1.vue'
 
 describe('morph.test.js', () => {
   console.error = function () {}

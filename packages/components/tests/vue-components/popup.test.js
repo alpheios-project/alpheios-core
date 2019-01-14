@@ -1,10 +1,10 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { shallowMount, mount } from '@vue/test-utils'
-import Popup from '@/vue-components/popup.vue'
-import Tooltip from '@/vue-components/tooltip.vue'
-import Lookup from '@/vue-components/lookup.vue'
-import Setting from '@/vue-components/setting.vue'
+import Popup from '@/vue/components/popup.vue'
+import Tooltip from '@/vue/components/tooltip.vue'
+import Lookup from '@/vue/components/lookup.vue'
+import Setting from '@/vue/components/setting.vue'
 
 import Vue from 'vue/dist/vue'
 

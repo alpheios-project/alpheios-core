@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import Tooltip from '@/vue-components/tooltip.vue'
+import Tooltip from '@/vue/components/tooltip.vue'
 
 describe('tooltip.test.js', () => {
   console.error = function () {}

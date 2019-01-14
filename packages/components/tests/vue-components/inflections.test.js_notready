@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { shallowMount, mount } from '@vue/test-utils'
-import Inflections from '@/vue-components/inflections.vue'
+import Inflections from '@/vue/components/inflections.vue'
 
 import L10n from '@/lib/l10n/l10n'
 import Locales from '@/locales/locales'

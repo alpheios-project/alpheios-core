@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import InflectionAttribute from '@/vue-components/infl-attribute.vue'
+import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 import Vue from 'vue/dist/vue'
 import { Feature, Constants } from 'alpheios-data-models'
 

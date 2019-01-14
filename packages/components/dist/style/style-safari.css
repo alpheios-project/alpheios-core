@@ -9046,7 +9046,7 @@ a.alpheios-lookup__settings-link {
 .alpheios-popup__morph-cont-providers-header {
   display: inline-block;
   /* color: $alpheios-link-color;
-    font-size: 0.75*$alpheios-base-font-size; */
+  font-size: 0.75*$alpheios-base-font-size; */
   font-weight: 700 !important;
   margin-top: 2px !important;
 }
@@ -9429,13 +9429,13 @@ a.infl-supp-tbl__reflink {
 
 
 .alpheios-inflections__form-parts {
-	  display: inline-block;
+  display: inline-block;
 }
 .alpheios-inflections__forms-targetword {
-      font-weight: bold !important;
+  font-weight: bold !important;
 }
 .alpheios-inflections__forms-cont {
-      padding-right: 30px !important;
+  padding-right: 30px !important;
 }
 
 /************ UIKit vars ************************/
