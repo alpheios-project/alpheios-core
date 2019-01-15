@@ -23,7 +23,7 @@ import { LanguageModelFactory as LMF, Definition, Constants } from 'alpheios-dat
 import Panel from '@/vue/components/panel.vue'
 import Popup from '@/vue/components/popup.vue'
 
-describe('ui-controller.test.js', () => {
+describe.skip('ui-controller.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}

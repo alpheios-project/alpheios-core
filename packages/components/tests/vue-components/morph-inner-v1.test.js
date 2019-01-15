@@ -20,24 +20,24 @@ const mockFeature = function (value, type, languageCode) {
 
 const mockMessages = {
   '3rd': {
-    get: () => {return '3rd'},
-    abbr: () => {return '3rd-mockabbrev'}
+    get: () => { return '3rd' },
+    abbr: () => { return '3rd-mockabbrev' }
   },
   'singular': {
-    get: () => {return 'singular'},
-    abbr: () => {return 'singular-mockabbrev'}
+    get: () => { return 'singular' },
+    abbr: () => { return 'singular-mockabbrev' }
   },
   'perfect': {
-    get: () => {return 'perfect'},
-    abbr: () => {return 'perfect-mockabbrev'}
+    get: () => { return 'perfect' },
+    abbr: () => { return 'perfect-mockabbrev' }
   },
   'indicative': {
-    get: () => {return 'indicative'},
-    abbr: () => {return 'indicative-mockabbrev'}
+    get: () => { return 'indicative' },
+    abbr: () => { return 'indicative-mockabbrev' }
   },
   'active': {
-    get: () => {return 'active'},
-    abbr: () => {return 'active-mockabbrev'}
+    get: () => { return 'active' },
+    abbr: () => { return 'active-mockabbrev' }
   }
 }
 
@@ -439,6 +439,13 @@ describe('morph-inner-v1.test.js', () => {
               ]
             }
           }
+      },
+      mocks: {
+        l10n: {
+          hasMsg: () => true,
+          getMsg: () => 'link text',
+          getAbbr: (value) => mockFeature(value).toLocaleStringAbbr()
+        }
       }
     })
 

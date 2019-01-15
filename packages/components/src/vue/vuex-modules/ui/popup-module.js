@@ -165,7 +165,7 @@ export default class PopupModule {
 
         newLexicalRequest: function () {
           this.popupData.requestStartTime = new Date().getTime()
-          this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          this.panel.vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
         },
 
         clearContent: function () {
@@ -211,15 +211,15 @@ export default class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          this.panel.changeTab(tabName)
-          this.panel.open()
+          this.panel.vi.changeTab(tabName)
+          this.panel.vi.open()
           return this
         },
 
         sendFeature: function (feature) {
-          this.panel.requestGrammar(feature)
-          this.panel.changeTab('grammar')
-          this.panel.open()
+          this.panel.vi.requestGrammar(feature)
+          this.panel.vi.changeTab('grammar')
+          this.panel.vi.open()
           return this
         },
 

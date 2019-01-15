@@ -2,26 +2,27 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Panel from '@/vue/components/panel.vue'
 import { getLanguageName } from '@/lib/utility/language-names.js'
 
-export default class PopupModule {
-  constructor (store, api, uiController) {
+export default class PanelModule {
+  constructor (store, api, tabState, uiController) {
     this._uiController = uiController
     this.vi = new Vue({
-      el: `#${this.options.template.panelId}`,
-      store: this.store, // Install store into the panel
-      provide: this.api, // Public API of the modules for child components
+      el: `#${this._uiController.options.template.panelId}`,
+      store: store, // Install store into the panel
+      provide: api, // Public API of the modules for child components
       /*
       Since this is a root component and we cannot claim APIs with `inject`
       let's assign APIs to a custom prop to have access to it
        */
-      api: this.api,
+      api: api,
+      uiController: uiController, // TODO: Remove during refactoring
       components: {
         panel: Panel
       },
       data: {
         panelData: {
           isOpen: false,
-          tabs: this.tabState,
-          verboseMode: this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode,
+          tabs: tabState,
+          verboseMode: this._uiController.contentOptions.items.verboseMode.currentValue === this._uiController.options.verboseMode,
           currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
@@ -52,8 +53,9 @@ export default class PopupModule {
             tableBody: 'alpheios-panel-content-infl-table-body'
           },
           infoComponentData: {
-            appInfo: this.options.app,
-            languageName: getLanguageName(this.state.currentLanguage)
+            appInfo: this._uiController.options.app,
+            // A string containing a language name
+            languageName: getLanguageName(this._uiController.state.currentLanguage).name
           },
           messages: [],
           notification: {
@@ -67,7 +69,7 @@ export default class PopupModule {
             languageName: '',
             languageCode: ''
           },
-          settings: this.contentOptions.items,
+          settings: this._uiController.contentOptions.items,
           treebankComponentData: {
             data: {
               word: {},
@@ -76,20 +78,20 @@ export default class PopupModule {
             },
             visible: false
           },
-          resourceSettings: this.resourceOptions.items,
-          uiOptions: this.uiOptions,
+          resourceSettings: this._uiController.resourceOptions.items,
+          uiOptions: this._uiController.uiOptions,
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
-            zIndex: this.zIndex
+            zIndex: this._uiController.zIndex
           },
           minWidth: 400,
-          auth: this.auth
+          auth: this._uiController.auth
         },
-        state: this.state,
-        options: this.contentOptions,
-        resourceOptions: this.resourceOptions,
-        currentPanelComponent: this.options.template.defaultPanelComponent,
-        uiController: this,
+        state: this._uiController.state,
+        options: this._uiController.contentOptions,
+        resourceOptions: this._uiController.resourceOptions,
+        currentPanelComponent: this._uiController.options.template.defaultPanelComponent,
+        uiController: this._uiController,
         classesChanged: 0
       },
       methods: {
@@ -190,9 +192,9 @@ export default class PopupModule {
           this.panelData.notification.visible = true
           let languageName
           if (homonym) {
-            languageName = UIController.getLanguageName(homonym.languageID).name
+            languageName = getLanguageName(homonym.languageID).name
           } else if (this.panelData.infoComponentData.languageName) {
-            languageName = this.panelData.infoComponentData.languageName
+            languageName = this.panelData.infoComponentData.languageName.name
           } else {
             languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN') // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
           }
@@ -208,7 +210,7 @@ export default class PopupModule {
         },
 
         showStatusInfo: function (selectionText, languageID) {
-          let langDetails = UIController.getLanguageName(languageID)
+          let langDetails = getLanguageName(languageID)
           this.panelData.status.languageName = langDetails.name
           this.panelData.status.languageCode = langDetails.code
           this.panelData.status.selectedText = selectionText
@@ -244,18 +246,7 @@ export default class PopupModule {
         },
 
         requestGrammar: function (feature) {
-          // ExpObjMon.track(
-          ResourceQuery.create(feature, {
-            grammars: Grammars
-          }).getData()
-          //, {
-          // experience: 'Get resource',
-          //  actions: [
-          //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
-          //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
-          // ]
-          // }).getData()
-          this.uiController.message(this.$options.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
+          this.$options.uiController.startResourceQuery(feature)
         },
 
         settingChange: function (name, value) {

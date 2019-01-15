@@ -6,10 +6,7 @@ import Setting from '@/vue/components/setting.vue'
 
 import Vue from 'vue/dist/vue'
 
-import L10n from '@/lib/l10n/l10n'
-import Locales from '@/locales/locales'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
+import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 
 import Options from '@/lib/options/options.js'
 import ContentOptionDefaults from '@/settings/content-options-defaults.json'
@@ -35,10 +32,7 @@ describe('lookup.test.js', () => {
     jest.clearAllMocks()
   })
 
-  let l10n = new L10n()
-    .addMessages(enUS, Locales.en_US)
-    .addMessages(enGB, Locales.en_GB)
-    .setLocale(Locales.en_US)
+  const l10nModule = new L10nModule()
 
   it('1 Lookup - renders a vue instance (min requirements)', () => {
     let cmp = mount(Lookup, {
@@ -62,11 +56,14 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n,
+        uiController: {
           contentOptions: contentOptions,
           resourceOptions: resourceOptions,
           updateLanguage: function () {}
         }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
 
@@ -103,8 +100,11 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions },
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions },
         parentLanguage: 'Latin'
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
 
@@ -123,7 +123,10 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions }
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
     expect(cmp.vm.showLanguageSettings).toBeFalsy()
@@ -150,7 +153,10 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions }
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
 
@@ -176,7 +182,10 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions }
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
 
@@ -191,7 +200,10 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions }
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
 
@@ -213,7 +225,10 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions }
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
 
@@ -232,7 +247,10 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions }
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
 
@@ -253,7 +271,10 @@ describe('lookup.test.js', () => {
 
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { l10n: l10n, contentOptions: contentOptions, resourceOptions: resourceOptions }
+        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
     jest.spyOn(cmp.vm, 'updateUIbyOverrideLanguage')

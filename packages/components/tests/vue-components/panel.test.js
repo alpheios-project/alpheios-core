@@ -15,11 +15,6 @@ import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 
 import Vue from 'vue/dist/vue'
 
-import L10n from '@/lib/l10n/l10n'
-import Locales from '@/locales/locales'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
-
 import Options from '@/lib/options/options.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import ContentOptionDefaults from '@/settings/content-options-defaults.json'
@@ -43,14 +38,14 @@ describe('panel.test.js', () => {
     jest.clearAllMocks()
   })
 
-  let l10n = new L10n()
-    .addMessages(enUS, Locales.en_US)
-    .addMessages(enGB, Locales.en_GB)
-    .setLocale(Locales.en_US)
+  const l10nModule = new L10nModule()
 
   it('1 Panel - renders a vue instance (min requirements)', () => {
     let cmp = shallowMount(Panel, {
-      propsData: {}
+      propsData: {},
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
+      }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.vm.uiController).toBeNull()

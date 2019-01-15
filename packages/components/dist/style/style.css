@@ -1860,10 +1860,10 @@
  * 1. Set position
  * 2. Size and style
  * 3. Allow scrolling
- * 4. Transform
  */
   /* Tablet landscape and bigger */
   /* Flip modifier */
+  /* Tablet landscape and bigger */
   /*
  * Open
  */
@@ -1875,7 +1875,7 @@
  * 1. Set position
  * 2. Clip the bar
  * 3. Animation
- * 4. Reset transform
+ * 4. Reset position
  */
   /* Tablet landscape and bigger */
   /*
@@ -2071,7 +2071,18 @@
  ========================================================================== */
   /* Direction modifier
  ========================================================================== */
-  /* Animations for scrollspy
+  /* Toggle (Hover + Focus)
+========================================================================== */
+  /*
+ * The toggle is triggered on touch devices using `:focus` and tabindex
+ */
+  /*
+ * 1. Prevent tab highlighting on iOS.
+ */
+  /*
+ * Remove outline for `tabindex`
+ */
+  /* Animations
  ========================================================================== */
   /*
  * Fade
@@ -2096,11 +2107,6 @@
  */
   /* Duration modifier
  ========================================================================== */
-  /* Enable animation only on hover
-========================================================================== */
-  /*
- * Note: Firefox and IE needs this because animations are not triggered when switching between display `none` and `block`
- */
   /* Keyframes used by animation classes
  ========================================================================== */
   /*
@@ -2562,15 +2568,28 @@
   /* ========================================================================
    Component: Transition
  ========================================================================== */
+  /* Toggle (Hover + Focus)
+ ========================================================================== */
   /*
- * Using multiple selectors to exclude `uk-transition-toggle`
- * Note: Transitions don't work with `uk-postion-center-*` classes because they also use `transform`
- *       Just put the transition in an extra `div`
+ * 1. Prevent tab highlighting on iOS.
+ */
+  /*
+ * Remove outline for `tabindex`
+ */
+  /* Transitions
+ ========================================================================== */
+  /*
+ * The toggle is triggered on touch devices by two methods:
+ * 1. Using `:focus` and tabindex
+ * 2. Using `:hover` and a `touchstart` event listener registered on the document
+ *    (Doesn't work on Surface touch devices)
+ *
+ * Note: Transitions don't work with `uk-postion-center-*` classes because they also use `transform`,
+ *       therefore it's recommended to use an extra `div` for the transition.
  */
   /*
  * Fade
  */
-  /* Show */
   /*
  * Scale
  * Note: Using `scale3d` for better image rendering
@@ -2581,9 +2600,9 @@
  */
   /* Show */
   /* Opacity modifier
-========================================================================== */
+ ========================================================================== */
   /* Duration modifiers
-========================================================================== */
+ ========================================================================== */
   /* ========================================================================
    Component: Visibility
  ========================================================================== */
@@ -2604,15 +2623,26 @@
   /* Desktop and smaller */
   /* Visibility
  ========================================================================== */
-  /* Hover
+  /* Toggle (Hover + Focus)
  ========================================================================== */
   /*
  * Hidden
- * Can't use `display: none` because it's not accessible through keyboard.
+ * 1. The toggle is triggered on touch devices using `:focus` and tabindex
+ * 2. The target stays visible if any element within receives focus through keyboard
+ *    Doesn't work in Edge, yet.
+ * 3. Can't use `display: none` nor `visibility: hidden` because both are not focusable.
+ *
  */
+  /* 1 + 2 */
   /*
  * Invisible
- * Can't use `visibility: hidden` because it's not accessible through keyboard.
+ */
+  /* 1 + 2 */
+  /*
+ * 1. Prevent tab highlighting on iOS.
+ */
+  /*
+ * Remove outline for `tabindex`
  */
   /* Touch
  ========================================================================== */
@@ -4654,6 +4684,8 @@
   .auk .uk-nav-default .uk-nav-sub a:hover,
   .auk .uk-nav-default .uk-nav-sub a:focus {
     color: #666666; }
+  .auk .uk-nav-default .uk-nav-sub li.uk-active > a {
+    color: #333; }
   .auk .uk-nav-primary > li > a {
     font-size: 1.5rem;
     line-height: 1.5;
@@ -4672,6 +4704,8 @@
   .auk .uk-nav-primary .uk-nav-sub a:hover,
   .auk .uk-nav-primary .uk-nav-sub a:focus {
     color: #666666; }
+  .auk .uk-nav-primary .uk-nav-sub li.uk-active > a {
+    color: #333; }
   .auk .uk-nav-center {
     text-align: center; }
   .auk .uk-nav-center .uk-nav-sub,
@@ -4842,6 +4876,8 @@
   .auk .uk-navbar-dropdown-nav .uk-nav-sub a:hover,
   .auk .uk-navbar-dropdown-nav .uk-nav-sub a:focus {
     color: #666666; }
+  .auk .uk-navbar-dropdown-nav .uk-nav-sub li.uk-active > a {
+    color: #333; }
   .auk .uk-navbar-dropbar {
     background: #fff; }
   .auk .uk-navbar-dropbar-slide {
@@ -5267,7 +5303,8 @@
   .auk .uk-dropdown-nav .uk-nav-sub a {
     color: #999; }
   .auk .uk-dropdown-nav .uk-nav-sub a:hover,
-  .auk .uk-dropdown-nav .uk-nav-sub a:focus {
+  .auk .uk-dropdown-nav .uk-nav-sub a:focus,
+  .auk .uk-dropdown-nav .uk-nav-sub li.uk-active > a {
     color: #666666; }
   .auk [class*='uk-dropdown-top'] {
     margin-top: -10px; }
@@ -5524,7 +5561,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
+    left: -270px;
     /* 2 */
     box-sizing: border-box;
     width: 270px;
@@ -5532,21 +5569,27 @@
     background: #222;
     /* 3 */
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    /* 4 */
-    transform: translateX(-100%); }
+    -webkit-overflow-scrolling: touch; }
   @media (min-width: 960px) {
     .auk .uk-offcanvas-bar {
+      left: -350px;
       width: 350px;
       padding: 40px 40px; } }
   .auk .uk-offcanvas-flip .uk-offcanvas-bar {
     left: auto;
-    right: 0;
-    transform: translateX(100%); }
+    right: -270px; }
+  @media (min-width: 960px) {
+    .auk .uk-offcanvas-flip .uk-offcanvas-bar {
+      right: -350px; } }
   .auk .uk-open > .uk-offcanvas-bar {
-    transform: translateX(0); }
+    left: 0; }
+  .auk .uk-offcanvas-flip .uk-open > .uk-offcanvas-bar {
+    left: auto;
+    right: 0; }
   .auk .uk-offcanvas-bar-animation {
-    transition: transform 0.3s ease-out; }
+    transition: left 0.3s ease-out; }
+  .auk .uk-offcanvas-flip .uk-offcanvas-bar-animation {
+    transition-property: right; }
   .auk .uk-offcanvas-reveal {
     /* 1 */
     position: absolute;
@@ -5560,7 +5603,11 @@
     transition: width 0.3s ease-out; }
   .auk .uk-offcanvas-reveal .uk-offcanvas-bar {
     /* 4 */
-    transform: translateX(0); }
+    left: 0; }
+  .auk .uk-offcanvas-flip .uk-offcanvas-reveal .uk-offcanvas-bar {
+    /* 4 */
+    left: auto;
+    right: 0; }
   .auk .uk-open > .uk-offcanvas-reveal {
     width: 270px; }
   @media (min-width: 960px) {
@@ -5822,6 +5869,13 @@
   .auk .uk-animation-reverse {
     animation-direction: reverse;
     animation-timing-function: ease-in; }
+  .auk .uk-animation-toggle:not(:hover):not(:focus) [class*='uk-animation-'] {
+    animation-name: none; }
+  .auk .uk-animation-toggle {
+    /* 1 */
+    -webkit-tap-highlight-color: transparent; }
+  .auk .uk-animation-toggle:focus {
+    outline: none; }
   .auk .uk-animation-fade {
     animation-name: uk-fade;
     animation-duration: 0.8s;
@@ -5861,8 +5915,6 @@
     animation-name: uk-shake; }
   .auk .uk-animation-fast {
     animation-duration: 0.1s; }
-  .auk .uk-animation-toggle:not(:hover):not(.uk-hover) [class*='uk-animation-'] {
-    animation-name: none; }
 
 @keyframes uk-fade {
   0% {
@@ -7305,40 +7357,35 @@
     .auk .uk-position-large.uk-position-top-center,
     .auk .uk-position-large.uk-position-bottom-center {
       transform: translateX(-50%) translateX(-50px); } }
+  .auk .uk-transition-toggle {
+    /* 1 */
+    -webkit-tap-highlight-color: transparent; }
+  .auk .uk-transition-toggle:focus {
+    outline: none; }
   .auk .uk-transition-fade,
   .auk [class*='uk-transition-scale'],
   .auk [class*='uk-transition-slide'] {
     transition: 0.3s ease-out;
-    transition-property: opacity, transform, filter; }
-  .auk .uk-transition-toggle:focus {
-    outline: none; }
-  .auk .uk-transition-fade {
+    transition-property: opacity, transform, filter;
     opacity: 0; }
-  .auk .uk-transition-toggle:hover [class*='uk-transition-fade'],
-  .auk .uk-transition-toggle.uk-hover [class*='uk-transition-fade'],
-  .auk .uk-transition-toggle:focus [class*='uk-transition-fade'],
-  .auk .uk-transition-active.uk-active [class*='uk-transition-fade'] {
+  .auk .uk-transition-toggle:hover .uk-transition-fade,
+  .auk .uk-transition-toggle:focus .uk-transition-fade,
+  .auk .uk-transition-active.uk-active .uk-transition-fade {
     opacity: 1; }
-  .auk [class*='uk-transition-scale'] {
-    opacity: 0; }
   .auk .uk-transition-scale-up {
     transform: scale3d(1, 1, 1); }
   .auk .uk-transition-scale-down {
     transform: scale3d(1.1, 1.1, 1); }
   .auk .uk-transition-toggle:hover .uk-transition-scale-up,
-  .auk .uk-transition-toggle.uk-hover .uk-transition-scale-up,
   .auk .uk-transition-toggle:focus .uk-transition-scale-up,
   .auk .uk-transition-active.uk-active .uk-transition-scale-up {
     opacity: 1;
     transform: scale3d(1.1, 1.1, 1); }
   .auk .uk-transition-toggle:hover .uk-transition-scale-down,
-  .auk .uk-transition-toggle.uk-hover .uk-transition-scale-down,
   .auk .uk-transition-toggle:focus .uk-transition-scale-down,
   .auk .uk-transition-active.uk-active .uk-transition-scale-down {
     opacity: 1;
     transform: scale3d(1, 1, 1); }
-  .auk [class*='uk-transition-slide'] {
-    opacity: 0; }
   .auk .uk-transition-slide-top {
     transform: translateY(-100%); }
   .auk .uk-transition-slide-bottom {
@@ -7364,11 +7411,10 @@
   .auk .uk-transition-slide-right-medium {
     transform: translateX(50px); }
   .auk .uk-transition-toggle:hover [class*='uk-transition-slide'],
-  .auk .uk-transition-toggle.uk-hover [class*='uk-transition-slide'],
   .auk .uk-transition-toggle:focus [class*='uk-transition-slide'],
   .auk .uk-transition-active.uk-active [class*='uk-transition-slide'] {
     opacity: 1;
-    transform: translateX(0) translateY(0); }
+    transform: translate(0, 0); }
   .auk .uk-transition-opaque {
     opacity: 1; }
   .auk .uk-transition-slow {
@@ -7402,15 +7448,22 @@
       display: none !important; } }
   .auk .uk-invisible {
     visibility: hidden !important; }
-  .auk .uk-visible-toggle:not(:hover):not(.uk-hover) .uk-hidden-hover:not(:focus) {
+  .auk .uk-visible-toggle:not(:hover):not(:focus) .uk-hidden-hover:not(:focus-within) {
+    /* 3 */
     position: absolute !important;
     width: 0 !important;
     height: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
     overflow: hidden !important; }
-  .auk .uk-visible-toggle:not(:hover):not(.uk-hover) .uk-invisible-hover:not(:focus) {
+  .auk .uk-visible-toggle:not(:hover):not(:focus) .uk-invisible-hover:not(:focus-within) {
+    /* 3 */
     opacity: 0 !important; }
+  .auk .uk-visible-toggle {
+    /* 1 */
+    -webkit-tap-highlight-color: transparent; }
+  .auk .uk-visible-toggle:focus {
+    outline: none; }
   @media (pointer: coarse) {
     .auk .uk-hidden-touch {
       display: none !important; } }

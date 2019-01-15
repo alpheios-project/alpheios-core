@@ -74,7 +74,6 @@ describe('treebank.test.js', () => {
     let cmp = mount(Treebank)
 
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "res"'))
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "messages"'))
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "locale"'))
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "visible"'))
   })

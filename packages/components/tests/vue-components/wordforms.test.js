@@ -26,7 +26,7 @@ describe('wordforms.test.js', () => {
       propsData: {}
     })
     expect(cmp.isVueInstance()).toBeTruthy()
-    expect(cmp.vm.forms).toBeUndefined()
+    expect(cmp.vm.forms).toBe('')
   })
 
   it('2 WordForms - check required props', () => {

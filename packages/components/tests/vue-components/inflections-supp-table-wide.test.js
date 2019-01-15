@@ -48,8 +48,12 @@ describe('inflections-supp-table-wide.test.js', () => {
     let cmp = mount(WideSupplementalInflectionsTable, {
       propsData: {
         data: testParadigm,
-        bgColor: 'transparent',
-        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
+        bgColor: 'transparent'
+      },
+      mocks: {
+        l10n: {
+          getMsg: () => { 'link text' }
+        }
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
@@ -59,8 +63,12 @@ describe('inflections-supp-table-wide.test.js', () => {
     let cmp = mount(WideSupplementalInflectionsTable, {
       propsData: {
         data: testParadigm,
-        bgColor: 'transparent',
-        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
+        bgColor: 'transparent'
+      },
+      mocks: {
+        l10n: {
+          getMsg: () => { 'link text' }
+        }
       }
     })
 
@@ -75,8 +83,12 @@ describe('inflections-supp-table-wide.test.js', () => {
     let cmp = mount(WideSupplementalInflectionsTable, {
       propsData: {
         data: testParadigm,
-        bgColor: 'transparent',
-        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
+        bgColor: 'transparent'
+      },
+      mocks: {
+        l10n: {
+          getMsg: () => { 'link text' }
+        }
       }
     })
 
@@ -89,8 +101,12 @@ describe('inflections-supp-table-wide.test.js', () => {
     let cmp = mount(WideSupplementalInflectionsTable, {
       propsData: {
         data: testParadigm,
-        bgColor: 'transparent',
-        messages: { INFLECTIONS_MAIN_TABLE_LINK_TEXT: { get: () => {"link text"} } }
+        bgColor: 'transparent'
+      },
+      mocks: {
+        l10n: {
+          getMsg: () => { 'link text' }
+        }
       }
     })
 
