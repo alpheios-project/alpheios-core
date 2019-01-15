@@ -2,7 +2,7 @@ import Module from '@/vue/vuex-modules/module.js'
 
 export default class SharedUIModule extends Module {
   constructor () {
-    super('sharedUI')
+    super()
 
     this.store = {
       // All stores of modules are namespaced
@@ -39,3 +39,5 @@ export default class SharedUIModule extends Module {
     }
   }
 }
+
+SharedUIModule.publicName = 'sharedUI'

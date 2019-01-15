@@ -31606,7 +31606,9 @@ class UIController {
     this.isDeactivated = false
 
     this.store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store() // Vuex store. A public API for data and UI module interactions.
-    this.registeredDataModules = new Map() // Data modules that are registered to be included into the store.
+    this.api = {} // An API object for functions of registered modules and UI controller.
+    this.dataModules = new Map() // Data modules that are registered to be included into the store.
+    this.uiModules = new Map()
 
     /**
      * If an event controller be used with an instance of a UI Controller,
@@ -31627,9 +31629,18 @@ class UIController {
   static create (state, options) {
     let uiController = new UIController(state, options)
 
-    // Register modules
+    // Register data modules
     uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__["default"])
     uiController.registerDataModule(_vue_vuex_modules_ui_shared_ui_module_js__WEBPACK_IMPORTED_MODULE_8__["default"])
+
+    // Register UI modules
+    uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      tabs: uiController.tabState,
+      uiController: uiController
+    })
+    uiController.registerUiModule(_vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      uiController: uiController
+    })
 
     // Creates on configures an event listener
     let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_25__["default"]()
@@ -31766,13 +31777,17 @@ class UIController {
   /**
    * Registers a data module for use by UI controller and other modules.
    * It instantiates each module and adds them to the registered modules store.
-   * @param {DataModule} Module - A data module class (i.e. the constructor function).
+   * @param {Module} moduleClass - A data module's class (i.e. the constructor function).
    * @param options - Arbitrary number of values that will be passed to the module constructor.
    * @return {UIController} - A self reference for chaining.
    */
-  registerDataModule (Module, ...options) {
-    const module = new Module(...options)
-    this.registeredDataModules.set(module.name, module)
+  registerDataModule (moduleClass, ...options) {
+    this.dataModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
+    return this
+  }
+
+  registerUiModule (moduleClass, ...options) {
+    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
     return this
   }
 
@@ -31795,330 +31810,19 @@ class UIController {
     await Promise.all(optionLoadPromises)
 
     // All options shall be loaded at this point. Can initialize Vue components that will use them
+    // Create all registered data modules
+    console.log(`Init`)
+    this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(...m.options) })
     // Mount all registered modules into the store
-    this.registeredDataModules.forEach((module) => this.store.registerModule(module.name, module.store))
+    this.dataModules.forEach((m) => this.store.registerModule(m.instance.publicName, m.instance.store))
     // Expose public API of all modules with `provide`
-    this.api = Object.assign({}, ...Array.from(this.registeredDataModules.values()).map(module => ({ [module.name]: module.api(this.store) })))
+    this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
+    // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
+    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
     // Initialize components
-    /* this.panel = new Vue({
-      el: `#${this.options.template.panelId}`,
-      store: this.store, // Install store into the panel
-      provide: this.api, // Public API of the modules for child components
-      /!*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       *!/
-      api: this.api,
-      components: {
-        panel: Panel
-      },
-      data: {
-        panelData: {
-          isOpen: false,
-          tabs: this.tabState,
-          verboseMode: this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode,
-          currentLanguageID: null,
-          grammarAvailable: false,
-          grammarRes: {},
-          lexemes: [],
-          inflectionComponentData: {
-            visible: false,
-            inflectionViewSet: null,
-            inflDataReady: false
-          },
-          inflectionBrowserData: {
-            visible: false
-          },
-          inflectionsWaitState: false,
-          inflectionsEnabled: false,
-          // Whether inflection browser is enabled for a language. We always show an inflection browser for now.
-          inflectionBrowserEnabled: false,
-          inflBrowserTablesCollapsed: null, // Null means that state is not set
-          shortDefinitions: [],
-          fullDefinitions: '',
-          inflections: {
-            localeSwitcher: undefined,
-            viewSelector: undefined,
-            tableBody: undefined
-          },
-          inflectionIDs: {
-            localeSwitcher: 'alpheios-panel-content-infl-table-locale-switcher',
-            viewSelector: 'alpheios-panel-content-infl-table-view-selector',
-            tableBody: 'alpheios-panel-content-infl-table-body'
-          },
-          infoComponentData: {
-            appInfo: this.options.app,
-            languageName: UIController.getLanguageName(this.state.currentLanguage).name
-          },
-          messages: [],
-          notification: {
-            visible: false,
-            important: false,
-            showLanguageSwitcher: false,
-            text: ''
-          },
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          },
-          settings: this.contentOptions.items,
-          treebankComponentData: {
-            data: {
-              word: {},
-              page: {}
-
-            },
-            visible: false
-          },
-          resourceSettings: this.resourceOptions.items,
-          uiOptions: this.uiOptions,
-          classes: [], // Will be set later by `setRootComponentClasses()`
-          styles: {
-            zIndex: this.zIndex
-          },
-          minWidth: 400,
-          auth: this.auth
-        },
-        state: this.state,
-        options: this.contentOptions,
-        resourceOptions: this.resourceOptions,
-        currentPanelComponent: this.options.template.defaultPanelComponent,
-        uiController: this,
-        classesChanged: 0
-      },
-      methods: {
-        isOpen: function () {
-          return this.state.isPanelOpen()
-        },
-
-        open: function (forceOpen) {
-          if (forceOpen || !this.state.isPanelOpen()) {
-            this.panelData.isOpen = true
-            this.state.setPanelOpen()
-          }
-          return this
-        },
-
-        // `updateState == false` is used to close a panel without updating state
-        close: function (updateState = true) {
-          this.panelData.isOpen = false
-          if (updateState) { this.state.setPanelClosed() }
-          return this
-        },
-
-        setPositionTo: function (position) {
-          this.options.items.panelPosition.setValue(position)
-          this.classesChanged += 1
-        },
-
-        attachToLeft: function () {
-          this.setPositionTo('left')
-        },
-
-        attachToRight: function () {
-          this.setPositionTo('right')
-        },
-
-        changeTab (name) {
-          for (let key of Object.keys(this.panelData.tabs)) {
-            if (this.panelData.tabs[key]) { this.panelData.tabs[key] = false }
-          }
-
-          const inflectionsAvailable = Boolean(this.panelData && this.panelData.inflectionComponentData && this.panelData.inflectionComponentData.inflDataReady)
-          const grammarAvailable = Boolean(this.panelData && this.panelData.grammarAvailable)
-          const statusAvailable = Boolean(this.panelData && this.panelData.verboseMode)
-
-          // TODO: With state refactoring, eliminate similar code in `panel.vue`
-          const treebankTabAvaliable = Boolean(this.panelData && this.panelData.treebankComponentData && this.panelData.treebankComponentData.data &&
-          ((this.panelData.treebankComponentData.data.page && this.panelData.treebankComponentData.data.page.src) ||
-            (this.panelData.treebankComponentData.data.word && this.panelData.treebankComponentData.data.word.src)))
-          // If tab is disabled, switch to a default one
-          if (
-            (!inflectionsAvailable && name === 'inflections') ||
-            (!grammarAvailable && name === 'grammar') ||
-            (!treebankTabAvaliable && name === 'treebank') ||
-            (!statusAvailable && name === 'status')
-          ) {
-            name = this.uiController.tabStateDefault
-          }
-          this.panelData.tabs[name] = true
-          this.state.changeTab(name) // Reflect a tab change in a state
-          return this
-        },
-
-        clearContent: function () {
-          this.panelData.shortDefinitions = []
-          this.panelData.fullDefinitions = ''
-          this.panelData.messages = ''
-          this.panelData.treebankComponentData.data.word = {}
-          this.panelData.treebankComponentData.visible = false
-          this.clearNotifications()
-          this.clearStatus()
-          return this
-        },
-
-        showMessage: function (message) {
-          this.panelData.messages = [message]
-        },
-
-        appendMessage: function (message) {
-          this.panelData.messages.push(message)
-        },
-
-        clearMessages: function () {
-          this.panelData.messages = []
-        },
-
-        showNotification: function (text, important = false) {
-          this.panelData.notification.visible = true
-          this.panelData.notification.important = important
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = text
-        },
-
-        showImportantNotification: function (text) {
-          this.showNotification(text, true)
-        },
-
-        showLanguageNotification: function (homonym, notFound = false) {
-          this.panelData.notification.visible = true
-          let languageName
-          if (homonym) {
-            languageName = UIController.getLanguageName(homonym.languageID).name
-          } else if (this.panelData.infoComponentData.languageName) {
-            languageName = this.panelData.infoComponentData.languageName
-          } else {
-            languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN') // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
-          }
-          if (notFound) {
-            this.panelData.notification.important = true
-            this.panelData.notification.showLanguageSwitcher = true
-            this.panelData.notification.text = this.$options.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
-          } else {
-            this.panelData.notification.visible = true
-            this.panelData.notification.important = false
-            this.panelData.notification.showLanguageSwitcher = false
-          }
-        },
-
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = UIController.getLanguageName(languageID)
-          this.panelData.status.languageName = langDetails.name
-          this.panelData.status.languageCode = langDetails.code
-          this.panelData.status.selectedText = selectionText
-        },
-
-        showErrorInformation: function (errorText) {
-          this.panelData.notification.visible = true
-          this.panelData.notification.important = true
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = errorText
-        },
-
-        clearNotifications: function () {
-          this.panelData.notification.visible = false
-          this.panelData.notification.important = false
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = ''
-        },
-
-        clearStatus: function () {
-          this.panelData.status.languageName = ''
-          this.panelData.status.languageCode = ''
-          this.panelData.status.selectedText = ''
-        },
-
-        toggle: function () {
-          if (this.state.isPanelOpen()) {
-            this.close()
-          } else {
-            this.open()
-          }
-          return this
-        },
-
-        requestGrammar: function (feature) {
-          // ExpObjMon.track(
-          ResourceQuery.create(feature, {
-            grammars: Grammars
-          }).getData()
-          //, {
-          // experience: 'Get resource',
-          //  actions: [
-          //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
-          //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
-          // ]
-          // }).getData()
-          this.uiController.message(this.$options.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          // TODO we need to refactor handling of boolean options
-          if (name === 'enableLemmaTranslations') {
-            this.options.items[name].setValue(value)
-          } else {
-            this.options.items[name].setTextValue(value)
-          }
-          switch (name) {
-            case 'locale':
-              if (this.uiController.presenter) {
-                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
-              }
-              this.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
-              break
-            case 'verboseMode':
-              this.uiController.updateVerboseMode()
-              break
-            case 'enableLemmaTranslations':
-              this.uiController.updateLemmaTranslations()
-              break
-          }
-        },
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
-            this.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.uiController.popup.vi.close() // Close an old popup
-              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
-              this.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.uiController.updateColorSchemaClass(value)
-              break
-          }
-        }
-      },
-      mounted: function () {
-        this.panelData.inflections.localeSwitcher = document.querySelector(`#${this.panelData.inflectionIDs.localeSwitcher}`)
-        this.panelData.inflections.viewSelector = document.querySelector(`#${this.panelData.inflectionIDs.viewSelector}`)
-        this.panelData.inflections.tableBody = document.querySelector(`#${this.panelData.inflectionIDs.tableBody}`)
-      }
-    }) */
-    this.panel = new _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_6__["default"](this.store, this.api, this.tabState, this)
-    this.popup = new _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__["default"](this.store, this.api, this)
+    this.panel = this.uiModules.get('panel').instance
+    this.popup = this.uiModules.get('popup').instance
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -39450,7 +39154,7 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__P
 
 class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor () {
-    super('l10n')
+    super()
     this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
       .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
       .addMessages(_locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
@@ -39555,6 +39259,8 @@ class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
   }
 }
 
+L10nModule.publicName = 'l10n'
+
 
 /***/ }),
 
@@ -39573,21 +39279,25 @@ __webpack_require__.r(__webpack_exports__);
  * across instances of al module types.
  */
 class Module {
-  constructor (name) {
-    /**
-     * A name with which a store of the module will be visible inside a UI controller's Vuex store,
-     * It is also used as a prefix for any global function a module may install on Vue instances.
-     * @type {string}
-     */
-    this.name = name
-
+  constructor () {
     /**
      * A module's Vuex store object that will be integrated into global Vuex store of a UI controller.
      * @type {Object}
      */
     this.store = {}
   }
+
+  get publicName () {
+    return this.constructor.publicName || `Module's name is not defined`
+  }
 }
+
+/**
+ * A name by which a store of the module will be visible inside a UI controller's Vuex store,
+ * It is also used as a prefix for any global function a module may install on Vue instances.
+ * @type {string}
+ */
+Module.publicName = `Module's name must be defined in a child`
 
 
 /***/ }),
@@ -39611,10 +39321,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class PanelModule {
-  constructor (store, api, tabState, uiController) {
-    this._uiController = uiController
+  constructor (store, api, options) {
+    const uiController = options.uiController
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: `#${this._uiController.options.template.panelId}`,
+      el: `#${uiController.options.template.panelId}`,
       store: store, // Install store into the panel
       provide: api, // Public API of the modules for child components
       /*
@@ -39629,8 +39339,8 @@ class PanelModule {
       data: {
         panelData: {
           isOpen: false,
-          tabs: tabState,
-          verboseMode: this._uiController.contentOptions.items.verboseMode.currentValue === this._uiController.options.verboseMode,
+          tabs: options.tabs,
+          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
@@ -39661,9 +39371,9 @@ class PanelModule {
             tableBody: 'alpheios-panel-content-infl-table-body'
           },
           infoComponentData: {
-            appInfo: this._uiController.options.app,
+            appInfo: uiController.options.app,
             // A string containing a language name
-            languageName: Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(this._uiController.state.currentLanguage).name
+            languageName: Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(uiController.state.currentLanguage).name
           },
           messages: [],
           notification: {
@@ -39677,7 +39387,7 @@ class PanelModule {
             languageName: '',
             languageCode: ''
           },
-          settings: this._uiController.contentOptions.items,
+          settings: uiController.contentOptions.items,
           treebankComponentData: {
             data: {
               word: {},
@@ -39686,20 +39396,20 @@ class PanelModule {
             },
             visible: false
           },
-          resourceSettings: this._uiController.resourceOptions.items,
-          uiOptions: this._uiController.uiOptions,
+          resourceSettings: uiController.resourceOptions.items,
+          uiOptions: uiController.uiOptions,
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
-            zIndex: this._uiController.zIndex
+            zIndex: uiController.zIndex
           },
           minWidth: 400,
-          auth: this._uiController.auth
+          auth: uiController.auth
         },
-        state: this._uiController.state,
-        options: this._uiController.contentOptions,
-        resourceOptions: this._uiController.resourceOptions,
-        currentPanelComponent: this._uiController.options.template.defaultPanelComponent,
-        uiController: this._uiController,
+        state: uiController.state,
+        options: uiController.contentOptions,
+        resourceOptions: uiController.resourceOptions,
+        currentPanelComponent: uiController.options.template.defaultPanelComponent,
+        uiController: uiController,
         classesChanged: 0
       },
       methods: {
@@ -39755,7 +39465,7 @@ class PanelModule {
             (!treebankTabAvaliable && name === 'treebank') ||
             (!statusAvailable && name === 'status')
           ) {
-            name = this.uiController.tabStateDefault
+            name = this.$options.uiController.tabStateDefault
           }
           this.panelData.tabs[name] = true
           this.state.changeTab(name) // Reflect a tab change in a state
@@ -39867,19 +39577,19 @@ class PanelModule {
           }
           switch (name) {
             case 'locale':
-              if (this.uiController.presenter) {
-                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
+              if (this.$options.uiController.presenter) {
+                this.$options.uiController.presenter.setLocale(this.options.items.locale.currentValue)
               }
-              this.uiController.updateLemmaTranslations()
+              this.$options.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
-              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
+              this.$options.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
               break
             case 'verboseMode':
-              this.uiController.updateVerboseMode()
+              this.$options.uiController.updateVerboseMode()
               break
             case 'enableLemmaTranslations':
-              this.uiController.updateLemmaTranslations()
+              this.$options.uiController.updateLemmaTranslations()
               break
           }
         },
@@ -39891,25 +39601,25 @@ class PanelModule {
 
         uiOptionChange: function (name, value) {
           if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
-            this.uiController.uiOptions.items[name].setValue(value)
+            this.$options.uiController.uiOptions.items[name].setValue(value)
           } else {
-            this.uiController.uiOptions.items[name].setTextValue(value)
+            this.$options.uiController.uiOptions.items[name].setTextValue(value)
           }
 
           switch (name) {
             case 'skin':
-              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
+              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
               break
             case 'popup':
-              this.uiController.popup.close() // Close an old popup
-              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
-              this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
+              this.$options.uiController.popup.close() // Close an old popup
+              this.$options.uiController.popup.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
+              this.$options.uiController.popup.open() // Will trigger an initialisation of popup dimensions
               break
             case 'fontSize':
-              this.uiController.updateFontSizeClass(value)
+              this.$options.uiController.updateFontSizeClass(value)
               break
             case 'colorSchema':
-              this.uiController.updateColorSchemaClass(value)
+              this.$options.uiController.updateColorSchemaClass(value)
               break
           }
         }
@@ -39921,7 +39631,13 @@ class PanelModule {
       }
     })
   }
+
+  get publicName () {
+    return this.constructor.publicName || `Module's name is not defined`
+  }
 }
+
+PanelModule.publicName = 'panel'
 
 
 /***/ }),
@@ -39945,10 +39661,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class PopupModule {
-  constructor (store, api, uiController) {
-    this._uiController = uiController
+  constructor (store, api, options) {
+    const uiController = options.uiController
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: `#${this._uiController.options.template.popupId}`,
+      el: `#${uiController.options.template.popupId}`,
       store: store,
       provide: api, // Expose APIs to child components
       /*
@@ -39956,6 +39672,7 @@ class PopupModule {
       let's assign APIs to a custom prop to have access to it
        */
       api: api,
+      uiController: uiController, // TODO: Remove during refactoring
       components: {
         popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
       },
@@ -39974,8 +39691,8 @@ class PopupModule {
           top: '10vh',
           left: '10vw',
 
-          draggable: this._uiController.options.template.draggable,
-          resizable: this._uiController.options.template.resizable,
+          draggable: uiController.options.template.draggable,
+          resizable: uiController.options.template.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -40000,11 +39717,11 @@ class PopupModule {
           component to identify a new request coming in and to distinguish it from data updates of the current request.
            */
           requestStartTime: 0,
-          settings: this._uiController.contentOptions.items,
-          verboseMode: this._uiController.contentOptions.items.verboseMode.currentValue === this._uiController.options.verboseMode,
+          settings: uiController.contentOptions.items,
+          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           defDataReady: false,
           hasTreebank: false,
-          inflDataReady: this._uiController.inflDataReady,
+          inflDataReady: uiController.inflDataReady,
           morphDataReady: false,
 
           translationsDataReady: false,
@@ -40025,16 +39742,15 @@ class PopupModule {
             languageCode: ''
           },
           currentLanguage: null,
-          resourceSettings: this._uiController.resourceOptions.items,
+          resourceSettings: uiController.resourceOptions.items,
           styles: {
-            zIndex: this._uiController.zIndex
+            zIndex: uiController.zIndex
           }
         },
-        panel: this._uiController.panel,
-        options: this._uiController.contentOptions,
-        resourceOptions: this._uiController.resourceOptions,
-        currentPopupComponent: this._uiController.options.template.defaultPopupComponent,
-        uiController: this._uiController,
+        options: uiController.contentOptions,
+        resourceOptions: uiController.resourceOptions,
+        currentPopupComponent: uiController.options.template.defaultPopupComponent,
+        uiController: uiController,
         classesChanged: 0
       },
       methods: {
@@ -40107,7 +39823,7 @@ class PopupModule {
 
         newLexicalRequest: function () {
           this.popupData.requestStartTime = new Date().getTime()
-          this.panel.vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          this.$options.uiController.panel.vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
         },
 
         clearContent: function () {
@@ -40153,15 +39869,15 @@ class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          this.panel.vi.changeTab(tabName)
-          this.panel.vi.open()
+          this.$options.uiController.panel.vi.changeTab(tabName)
+          this.$options.uiController.panel.vi.open()
           return this
         },
 
         sendFeature: function (feature) {
-          this.panel.vi.requestGrammar(feature)
-          this.panel.vi.changeTab('grammar')
-          this.panel.vi.open()
+          this.$options.uiController.panel.vi.requestGrammar(feature)
+          this.$options.uiController.panel.vi.changeTab('grammar')
+          this.$options.uiController.panel.vi.open()
           return this
         },
 
@@ -40170,13 +39886,13 @@ class PopupModule {
           this.options.items[name].setTextValue(value)
           switch (name) {
             case 'locale':
-              if (this.uiController.presenter) {
-                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
+              if (this.$options.uiController.presenter) {
+                this.$options.uiController.presenter.setLocale(this.$options.items.locale.currentValue)
               }
-              this.uiController.updateLemmaTranslations()
+              this.$options.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
-              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
+              this.$options.uiController.updateLanguage(this.$options.items.preferredLanguage.currentValue)
               break
           }
         },
@@ -40192,32 +39908,38 @@ class PopupModule {
           // the difference between value and textValues is a little confusing
           // see issue #73
           if (name === 'fontSize' || name === 'colorSchema') {
-            this.uiController.uiOptions.items[name].setValue(value)
+            this.$options.uiController.uiOptions.items[name].setValue(value)
           } else {
-            this.uiController.uiOptions.items[name].setTextValue(value)
+            this.$options.uiController.uiOptions.items[name].setTextValue(value)
           }
 
           switch (name) {
             case 'skin':
-              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
+              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
               break
             case 'popup':
-              this.uiController.popup.vi.close() // Close an old popup
-              this.uiController.popup.vi.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
-              this.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
+              this.$options.uiController.popup.vi.close() // Close an old popup
+              this.$options.uiController.popup.vi.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
+              this.$options.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
               break
             case 'fontSize':
-              this.uiController.updateFontSizeClass(value)
+              this.$options.uiController.updateFontSizeClass(value)
               break
             case 'colorSchema':
-              this.uiController.updateColorSchemaClass(value)
+              this.$options.uiController.updateColorSchemaClass(value)
               break
           }
         }
       }
     })
   }
+
+  get publicName () {
+    return this.constructor.publicName || `Module's name is not defined`
+  }
 }
+
+PopupModule.publicName = 'popup'
 
 
 /***/ }),
@@ -40237,7 +39959,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class SharedUIModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor () {
-    super('sharedUI')
+    super()
 
     this.store = {
       // All stores of modules are namespaced
@@ -40274,6 +39996,8 @@ class SharedUIModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODUL
     }
   }
 }
+
+SharedUIModule.publicName = 'sharedUI'
 
 
 /***/ }),

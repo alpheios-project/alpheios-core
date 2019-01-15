@@ -3,10 +3,10 @@ import Popup from '@/vue/components/popup.vue'
 import { getLanguageName } from '@/lib/utility/language-names.js'
 
 export default class PopupModule {
-  constructor (store, api, uiController) {
-    this._uiController = uiController
+  constructor (store, api, options) {
+    const uiController = options.uiController
     this.vi = new Vue({
-      el: `#${this._uiController.options.template.popupId}`,
+      el: `#${uiController.options.template.popupId}`,
       store: store,
       provide: api, // Expose APIs to child components
       /*
@@ -14,6 +14,7 @@ export default class PopupModule {
       let's assign APIs to a custom prop to have access to it
        */
       api: api,
+      uiController: uiController, // TODO: Remove during refactoring
       components: {
         popup: Popup
       },
@@ -32,8 +33,8 @@ export default class PopupModule {
           top: '10vh',
           left: '10vw',
 
-          draggable: this._uiController.options.template.draggable,
-          resizable: this._uiController.options.template.resizable,
+          draggable: uiController.options.template.draggable,
+          resizable: uiController.options.template.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -58,11 +59,11 @@ export default class PopupModule {
           component to identify a new request coming in and to distinguish it from data updates of the current request.
            */
           requestStartTime: 0,
-          settings: this._uiController.contentOptions.items,
-          verboseMode: this._uiController.contentOptions.items.verboseMode.currentValue === this._uiController.options.verboseMode,
+          settings: uiController.contentOptions.items,
+          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           defDataReady: false,
           hasTreebank: false,
-          inflDataReady: this._uiController.inflDataReady,
+          inflDataReady: uiController.inflDataReady,
           morphDataReady: false,
 
           translationsDataReady: false,
@@ -83,16 +84,15 @@ export default class PopupModule {
             languageCode: ''
           },
           currentLanguage: null,
-          resourceSettings: this._uiController.resourceOptions.items,
+          resourceSettings: uiController.resourceOptions.items,
           styles: {
-            zIndex: this._uiController.zIndex
+            zIndex: uiController.zIndex
           }
         },
-        panel: this._uiController.panel,
-        options: this._uiController.contentOptions,
-        resourceOptions: this._uiController.resourceOptions,
-        currentPopupComponent: this._uiController.options.template.defaultPopupComponent,
-        uiController: this._uiController,
+        options: uiController.contentOptions,
+        resourceOptions: uiController.resourceOptions,
+        currentPopupComponent: uiController.options.template.defaultPopupComponent,
+        uiController: uiController,
         classesChanged: 0
       },
       methods: {
@@ -165,7 +165,7 @@ export default class PopupModule {
 
         newLexicalRequest: function () {
           this.popupData.requestStartTime = new Date().getTime()
-          this.panel.vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          this.$options.uiController.panel.vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
         },
 
         clearContent: function () {
@@ -211,15 +211,15 @@ export default class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          this.panel.vi.changeTab(tabName)
-          this.panel.vi.open()
+          this.$options.uiController.panel.vi.changeTab(tabName)
+          this.$options.uiController.panel.vi.open()
           return this
         },
 
         sendFeature: function (feature) {
-          this.panel.vi.requestGrammar(feature)
-          this.panel.vi.changeTab('grammar')
-          this.panel.vi.open()
+          this.$options.uiController.panel.vi.requestGrammar(feature)
+          this.$options.uiController.panel.vi.changeTab('grammar')
+          this.$options.uiController.panel.vi.open()
           return this
         },
 
@@ -228,13 +228,13 @@ export default class PopupModule {
           this.options.items[name].setTextValue(value)
           switch (name) {
             case 'locale':
-              if (this.uiController.presenter) {
-                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
+              if (this.$options.uiController.presenter) {
+                this.$options.uiController.presenter.setLocale(this.$options.items.locale.currentValue)
               }
-              this.uiController.updateLemmaTranslations()
+              this.$options.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
-              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
+              this.$options.uiController.updateLanguage(this.$options.items.preferredLanguage.currentValue)
               break
           }
         },
@@ -250,29 +250,35 @@ export default class PopupModule {
           // the difference between value and textValues is a little confusing
           // see issue #73
           if (name === 'fontSize' || name === 'colorSchema') {
-            this.uiController.uiOptions.items[name].setValue(value)
+            this.$options.uiController.uiOptions.items[name].setValue(value)
           } else {
-            this.uiController.uiOptions.items[name].setTextValue(value)
+            this.$options.uiController.uiOptions.items[name].setTextValue(value)
           }
 
           switch (name) {
             case 'skin':
-              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
+              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
               break
             case 'popup':
-              this.uiController.popup.vi.close() // Close an old popup
-              this.uiController.popup.vi.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
-              this.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
+              this.$options.uiController.popup.vi.close() // Close an old popup
+              this.$options.uiController.popup.vi.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
+              this.$options.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
               break
             case 'fontSize':
-              this.uiController.updateFontSizeClass(value)
+              this.$options.uiController.updateFontSizeClass(value)
               break
             case 'colorSchema':
-              this.uiController.updateColorSchemaClass(value)
+              this.$options.uiController.updateColorSchemaClass(value)
               break
           }
         }
       }
     })
   }
+
+  get publicName () {
+    return this.constructor.publicName || `Module's name is not defined`
+  }
 }
+
+PopupModule.publicName = 'popup'

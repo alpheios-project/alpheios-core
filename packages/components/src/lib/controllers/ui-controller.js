@@ -85,7 +85,9 @@ export default class UIController {
     this.isDeactivated = false
 
     this.store = new Vuex.Store() // Vuex store. A public API for data and UI module interactions.
-    this.registeredDataModules = new Map() // Data modules that are registered to be included into the store.
+    this.api = {} // An API object for functions of registered modules and UI controller.
+    this.dataModules = new Map() // Data modules that are registered to be included into the store.
+    this.uiModules = new Map()
 
     /**
      * If an event controller be used with an instance of a UI Controller,
@@ -106,9 +108,18 @@ export default class UIController {
   static create (state, options) {
     let uiController = new UIController(state, options)
 
-    // Register modules
+    // Register data modules
     uiController.registerDataModule(L10nModule)
     uiController.registerDataModule(SharedUIModule)
+
+    // Register UI modules
+    uiController.registerUiModule(PanelModule, {
+      tabs: uiController.tabState,
+      uiController: uiController
+    })
+    uiController.registerUiModule(PopupModule, {
+      uiController: uiController
+    })
 
     // Creates on configures an event listener
     let eventController = new UIEventController()
@@ -245,13 +256,17 @@ export default class UIController {
   /**
    * Registers a data module for use by UI controller and other modules.
    * It instantiates each module and adds them to the registered modules store.
-   * @param {DataModule} Module - A data module class (i.e. the constructor function).
+   * @param {Module} moduleClass - A data module's class (i.e. the constructor function).
    * @param options - Arbitrary number of values that will be passed to the module constructor.
    * @return {UIController} - A self reference for chaining.
    */
-  registerDataModule (Module, ...options) {
-    const module = new Module(...options)
-    this.registeredDataModules.set(module.name, module)
+  registerDataModule (moduleClass, ...options) {
+    this.dataModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
+    return this
+  }
+
+  registerUiModule (moduleClass, ...options) {
+    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
     return this
   }
 
@@ -274,14 +289,19 @@ export default class UIController {
     await Promise.all(optionLoadPromises)
 
     // All options shall be loaded at this point. Can initialize Vue components that will use them
+    // Create all registered data modules
+    console.log(`Init`)
+    this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(...m.options) })
     // Mount all registered modules into the store
-    this.registeredDataModules.forEach((module) => this.store.registerModule(module.name, module.store))
+    this.dataModules.forEach((m) => this.store.registerModule(m.instance.publicName, m.instance.store))
     // Expose public API of all modules with `provide`
-    this.api = Object.assign({}, ...Array.from(this.registeredDataModules.values()).map(module => ({ [module.name]: module.api(this.store) })))
+    this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
+    // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
+    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
     // Initialize components
-    this.panel = new PanelModule(this.store, this.api, this.tabState, this)
-    this.popup = new PopupModule(this.store, this.api, this)
+    this.panel = this.uiModules.get('panel').instance
+    this.popup = this.uiModules.get('popup').instance
 
     // Set initial values of components
     this.setRootComponentClasses()

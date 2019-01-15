@@ -8,7 +8,7 @@ import enGB from '@/locales/en-gb/messages.json'
 
 export default class L10nModule extends Module {
   constructor () {
-    super('l10n')
+    super()
     this.l10n = new L10n()
       .addMessages(enUS, Locales.en_US)
       .addMessages(enUSData, Locales.en_US)
@@ -112,3 +112,5 @@ export default class L10nModule extends Module {
     }
   }
 }
+
+L10nModule.publicName = 'l10n'
