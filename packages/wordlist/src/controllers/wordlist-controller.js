@@ -37,10 +37,11 @@ export default class WordlistController {
    */
 
   async uploadListsFromDB () {
-    console.info('*********************uploadListsFromDB start')
+    
     this.availableLangs.forEach(async (languageCode) => {
       this.createWordList(languageCode)
       let result = await this.wordLists[languageCode].uploadFromDB()
+
       if (!result) {
         this.removeWordList(languageCode)
       }
@@ -91,7 +92,7 @@ export default class WordlistController {
    * This method executes updateWordList with default saveToStorage flag = true
    */
   async onHomonymReady (data) {
-    console.info('********************onHomonymReady1', data)
+    console.log('********************onHomonymReady1', data)
     await this.addToWordList({ homonym: data.homonym, type: 'shortHomonym' })
   }
 
@@ -100,7 +101,7 @@ export default class WordlistController {
    * (because definitions could come much later we need to resave homonym with definitions data to database)
   */
   async onDefinitionsReady (data) {
-    console.info('********************onDefinitionsReady', data)
+    console.log('********************onDefinitionsReady', data)
     await this.addToWordList({ homonym: data.homonym, type: 'fullHomonym' })
   }
 
@@ -109,12 +110,12 @@ export default class WordlistController {
    * (because lemma translations could come much later we need to resave homonym with translations data to database)
   */
   async onLemmaTranslationsReady (homonym) {
-    console.info('********************onLemmaTranslationsReady', homonym)
+    console.log('********************onLemmaTranslationsReady', homonym)
     await this.addToWordList({ homonym, type: 'fullHomonym' })
   }
 
   async onTextQuoteSelectorRecieved (textQuoteSelector) {
-    console.info('********************onTextQuoteSelectorRecieved', textQuoteSelector)
+    console.log('********************onTextQuoteSelectorRecieved', textQuoteSelector)
     await this.addToWordList({ textQuoteSelector, type: 'textQuoteSelector' })
   }
 }

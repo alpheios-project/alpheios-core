@@ -22,6 +22,38 @@ export default class WordItem {
     return this.userID + '-' + this.languageCode
   }
 
+  get hasTextQuoteSelectors () {
+    return this.textQuoteSelectors.length > 0
+  }
+
+  get formattedTextQuoteSelectors () {
+    let res = {}
+    for (let tq of this.textQuoteSelectors) {
+      if (!res[tq.source]) {
+        res[tq.source] = []
+      }
+      res[tq.source].push(tq)
+    }
+    return res
+  }
+
+  get languageName () {
+    switch(this.languageCode) {
+      case 'lat':
+        return 'Latin'
+      case 'grc':
+        return 'Greek'
+      case 'ara':
+        return 'Arabic'
+      case 'per':
+        return 'Persian'
+      case 'gez':
+        return 'Ancient Ethiopic (Ge\'ez)'
+      default:
+        'Unknown'
+    }
+  }
+  
   makeImportant () {
     this.important = true
   }

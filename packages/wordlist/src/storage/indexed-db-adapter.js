@@ -21,7 +21,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
     this.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // This line should only be needed if it is needed to support the object's constants for older browsers
     this.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
     if (!this.indexedDB) {
-      console.info("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+      console.warn("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
       return false
     }
     return true
@@ -32,9 +32,8 @@ export default class IndexedDBAdapter extends StorageAdapter {
    */
   openDatabase (upgradeCallback, successCallback) {
     let request = this.indexedDB.open(this.dbName, this.currentVersion)
-    console.info('***************inside openDatabase')
     request.onerror = (event) => {
-      console.info('*************Some problems with opening LabirintOrders', event.target)
+      console.info('*************Some problems with opening', event.target)
     }
     request.onsuccess = successCallback
     request.onupgradeneeded = upgradeCallback
@@ -74,9 +73,7 @@ export default class IndexedDBAdapter extends StorageAdapter {
       }
       const objectStore = transaction.objectStore(data.objectStoreName)
       let objectsDone = data.dataItems.length
-      // console.info('************************data.dataItems', data.dataItems)
       for (let dataItem of data.dataItems) {
-        // console.info('************************dataItem', dataItem)
         const requestPut = objectStore.put(dataItem)
         requestPut.onsuccess = () => {
           objectsDone = objectsDone - 1

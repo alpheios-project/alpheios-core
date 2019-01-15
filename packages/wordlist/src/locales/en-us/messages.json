@@ -28,6 +28,10 @@
     "message": "Show contexts",
     "description": "Show panle with contexts for the wordItem",
     "component": "WordItemPanel"
+  },
+  "TOOLTIP_BACK": {
+    "message": "Back to WordList",
+    "description": "Back to the WordList Tab",
+    "component": "WordContextPanel"
   }
-  
 }

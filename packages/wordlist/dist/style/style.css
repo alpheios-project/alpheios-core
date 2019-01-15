@@ -193,6 +193,9 @@
 .alpheios-worditem__lemmasList {
   width: 38%;
 }
+.alpheios_no_tq {
+  visibility: hidden;
+}
 
 /***************** panel settings **********************/
 .alpheios-wordlist-commands {
@@ -226,6 +229,43 @@
 }
 
 /***************** panel settings **********************/
+.alpheios-wordlists-tq a.alpheios-wordlists-tq-title {
+  font-weight: bold;
+  padding: 5px 0;
+  color: #3E8D9C;
+}
+.alpheios-wordlists-tq .alpheios-wordlists-tq-contextHTML-block {
+  padding: 5px 0 5px 10px;
+}
+.alpheios-wordlists-tq .alpheios-wordlists-tq-contextHTML {
+  font-style: italic;
+}
+.alpheios-wordlists-tq .alpheios_worditem_incontext,
+.alpheios-wordlists-tq .alpheios_worditem_incontext_add {
+  font-weight: bold;
+  background: #F6D918;
+  display: inline-block;
+  padding: 0 5px;
+}
+
+/***************** panel settings **********************/
+.alpheios-wordlist-commands {
+  border-bottom: 1px solid #4E6476;
+}
+.alpheios-wordlist-commands .alpheios-wordlist-commands__item {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 5px 10px;
+}
+.alpheios-wordlist-commands .alpheios-wordlist-commands__item svg {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    vertical-align: top;
+}
 
 /***************** panel settings **********************/
 .alpheios-wordlist-language {

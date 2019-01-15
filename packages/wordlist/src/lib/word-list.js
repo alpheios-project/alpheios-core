@@ -33,6 +33,62 @@ export default class WordList {
     return Object.values(this.items)
   }
 
+  get storageMap () {
+    return {
+      common: {
+        objectStoreName: 'WordListsCommon',
+        convertMethodName: 'convertCommonToStorage'
+      },
+      textQuoteSelector: {
+        objectStoreName: 'WordListsContext',
+        convertMethodName: 'convertTQSelectorToStorage'
+      },
+      shortHomonym: {
+        objectStoreName: 'WordListsHomonym',
+        convertMethodName: 'convertShortHomonymToStorage'
+      },
+      fullHomonym: {
+        objectStoreName: 'WordListsFullHomonym',
+        convertMethodName: 'convertFullHomonymToStorage'
+      }
+    }
+  }
+
+  async pushWordItem (data, type) {
+    let wordItem = new WordItem(data)
+    //check if worditem exists in the list
+    if (!this.contains(wordItem)) {
+      await this.pushWordItemPart([wordItem], 'common')
+    } else {
+      wordItem.merge(this.items[wordItem.storageID])
+    }
+    
+    await this.pushWordItemPart([wordItem], type)
+    // console.info('*******************pushWordItem', data, this)
+  }
+
+  async pushWordItemPart (wordItems, type) {
+    if (this.storageMap[type]) {
+      let dataItems = []
+      for (let wordItem of wordItems) {
+        this.items[wordItem.storageID] = wordItem
+        let resDataItem = wordItem[this.storageMap[type].convertMethodName]()
+
+        if (!Array.isArray(resDataItem)) {
+          dataItems.push(resDataItem)
+        } else {
+          dataItems = dataItems.concat(resDataItem)
+        }
+      }
+
+      await this.storageAdapter.set({
+        objectStoreName: this.storageMap[type].objectStoreName,
+        dataItems: dataItems
+      })
+      
+    }
+  }
+  
   async removeWordItemByID (ID) {
     if (this.items[ID]) { 
       await this.removeFromStorage({indexName: 'ID', value: this.items[ID].storageID, type: 'only' })
@@ -82,40 +138,6 @@ export default class WordList {
     await this.pushWordItemPart(this.values, 'common')
   }
 
-  get storageMap () {
-    return {
-      common: {
-        objectStoreName: 'WordListsCommon',
-        convertMethodName: 'convertCommonToStorage'
-      },
-      textQuoteSelector: {
-        objectStoreName: 'WordListsContext',
-        convertMethodName: 'convertTQSelectorToStorage'
-      },
-      shortHomonym: {
-        objectStoreName: 'WordListsHomonym',
-        convertMethodName: 'convertShortHomonymToStorage'
-      },
-      fullHomonym: {
-        objectStoreName: 'WordListsFullHomonym',
-        convertMethodName: 'convertFullHomonymToStorage'
-      }
-    }
-  }
-
-  async pushWordItem (data, type) {
-    let wordItem = new WordItem(data)
-    //check if worditem exists in the list
-    if (!this.contains(wordItem)) {
-      await this.pushWordItemPart([wordItem], 'common')
-    } else {
-      wordItem.merge(this.items[wordItem.storageID])
-    }
-    
-    await this.pushWordItemPart([wordItem], type)
-    // console.info('*******************pushWordItem', data, this)
-  }
-
   async pushWordItemPart (wordItems, type) {
     if (this.storageMap[type]) {
       let dataItems = []
@@ -123,7 +145,6 @@ export default class WordList {
         this.items[wordItem.storageID] = wordItem
         let resDataItem = wordItem[this.storageMap[type].convertMethodName]()
 
-        // console.info('**************pushWordItemPart resDataItem', resDataItem, Array.isArray(resDataItem))
         if (!Array.isArray(resDataItem)) {
           dataItems.push(resDataItem)
         } else {
@@ -177,7 +198,7 @@ export default class WordList {
           wordItem.uploadTextQuoteSelectors(resTextQuoteSelectors)
         }
 
-        console.info('**********************wordItem final', wordItem)
+        // console.info('**********************wordItem final', wordItem)
         this.items[wordItem.storageID] = wordItem
       }
       return true

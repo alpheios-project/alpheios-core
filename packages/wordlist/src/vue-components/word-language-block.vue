@@ -22,13 +22,13 @@
         <div 
                 v-for="wordItem in wordItems" 
                 v-bind:key="wordItem.storageID">
-            <word-item-panel 
+            <word-item 
               :worditem="wordItem" 
               :messages="messages"
               @changeImportant = "changeImportant"
               @deleteItem = "deleteItem"
               @showContexts = "showContexts"
-            ></word-item-panel>
+            ></word-item>
         </div>
     </div>
 </template>
@@ -37,15 +37,15 @@ import TooltipWrap from '@/vue-components/common-components/tooltip-wrap.vue'
 import { Constants } from 'alpheios-data-models'
 import CheckIcon from '@/icons/check.svg'
 import DeleteIcon from '@/icons/delete.svg'
-import WordItemPanel from '@/vue-components/word-item-panel.vue'
+import WordItem from '@/vue-components/word-item-block.vue'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 
 export default {
-  name: 'WordListPanel',
+  name: 'WordLanguageBlock',
   components: {
     checkIcon: CheckIcon,
     deleteIcon: DeleteIcon,
-    wordItemPanel: WordItemPanel,
+    wordItem: WordItem,
     alphTooltip: TooltipWrap
   },
   props: {

@@ -2,19 +2,20 @@
   <div>
     <div class="alpheios-wordlist" v-if="!showContext">
         <div class="alpheios-wordlist-language" v-for="(languageCode, langIndex) in languagesList" v-bind:key="langIndex">
-          <word-language-panel 
+          <word-language 
             :wordlist = "wordLists[languageCode]" 
             :messages = "l10n.messages" 
             :updated = "updated"
             @showContexts = "showContexts"
-            ></word-language-panel>
+            ></word-language>
         </div>
     </div>
     <div class="alpheios-wordlist-contexts" v-if="showContext">
-      <word-context-panel 
+      <word-context 
         :worditem = "showContextWordItem"
         :messages = "l10n.messages"
-      ></word-context-panel>       
+        @backToWordList = "backToWordList"
+      ></word-context>       
     </div>
   </div>
 </template>
@@ -24,14 +25,14 @@
   import enUS from '@/locales/en-us/messages.json'
   import enGB from '@/locales/en-gb/messages.json'
 
-  import WordLanguagePanel from '@/vue-components/word-language-panel.vue'
-  import WordContextPanel from '@/vue-components/word-context-panel.vue'
+  import WordLanguageBlock from '@/vue-components/word-language-block.vue'
+  import WordContextBlock from '@/vue-components/word-context-block.vue'
 
   export default {
-    name: 'WordListPanel',
+    name: 'WordListBlock',
     components: {
-      wordLanguagePanel: WordLanguagePanel,
-      wordContextPanel: WordContextPanel
+      wordLanguage: WordLanguageBlock,
+      wordContext: WordContextBlock
     },
     props: {
       wordlistC: {
@@ -69,6 +70,11 @@
     methods: {
       showContexts (wordItemStorageID, wordListLanguageCode) {
         this.showContextWordItem = this.wordLists[wordListLanguageCode].items[wordItemStorageID]
+      },
+      backToWordList () {
+        // console.info('***************backToWordList list before', this.showContext)
+        this.showContextWordItem = null
+        // console.info('***************backToWordList list after', this.showContext)
       }
     }
   }
