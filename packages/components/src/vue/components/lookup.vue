@@ -41,7 +41,7 @@ import Setting from './setting.vue'
 
 export default {
   name: 'Lookup',
-  inject: ['l10n'],
+  inject: ['ui', 'l10n'],
   components: {
     alphTooltip: Tooltip,
     alphSetting: Setting
@@ -150,7 +150,7 @@ export default {
         .getData()
       // A lookup, when started from a panel, should open a popup with lookup results
       this.uiController.popup.vi.open()
-      this.uiController.panel.close()
+      this.ui.closePanel()
     },
 
     'switchLookupSettings': function () {

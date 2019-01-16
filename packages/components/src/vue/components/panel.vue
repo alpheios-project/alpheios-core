@@ -2,7 +2,7 @@
   <div :class="divClasses" :data-notification-visible="data && data.notification && data.notification.important" :style="mainstyles" class="alpheios-panel auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
-       v-show="data && data.isOpen">
+       v-show="this.$store.state.panel.visible">
     <!-- Show only important notifications for now -->
 
     <div class="alpheios-panel__header">
@@ -98,7 +98,7 @@
               <alph-tooltip
                   :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
                   tooltipDirection="bottom-right">
-                <span @click="close" class="alpheios-panel__header-action-btn alpheios_close">
+                <span @click="ui.closePanel" class="alpheios-panel__header-action-btn alpheios_close">
                     <close-icon></close-icon>
                 </span>
               </alph-tooltip>
@@ -245,7 +245,8 @@ import interact from 'interactjs'
 
 export default {
   name: 'Panel',
-  inject: ['l10n'],
+  inject: ['l10n', 'ui'], // API modules that are required for this component
+  storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
@@ -439,10 +440,6 @@ export default {
       }
     },
 
-    close () {
-      this.$emit('close')
-    },
-
     closeNotifications () {
       this.$emit('closenotifications')
     },
@@ -568,6 +565,15 @@ export default {
       }
     }
   },
+
+  beforeCreate: function () {
+    // Check store dependencies. API dependencies will be verified by the `inject`
+    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
+    }
+  },
+
   created: function () {
     let vm = this
     vm.$on('changeStyleClass', (name, type) => {

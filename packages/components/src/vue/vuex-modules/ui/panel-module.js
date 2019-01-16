@@ -5,7 +5,21 @@ import { getLanguageName } from '@/lib/utility/language-names.js'
 // TODO: Add a check for required modules
 export default class PanelModule {
   constructor (store, api, options) {
+    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
     const uiController = options.uiController
+
+    this.store = {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        visible: true
+      },
+      mutations: {
+
+      }
+    }
+
     this.vi = new Vue({
       el: `#${uiController.options.template.panelId}`,
       store: store, // Install store into the panel
@@ -21,7 +35,7 @@ export default class PanelModule {
       },
       data: {
         panelData: {
-          isOpen: false,
+          // isOpen: false,
           tabs: options.tabs,
           verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           currentLanguageID: null,
@@ -96,25 +110,6 @@ export default class PanelModule {
         classesChanged: 0
       },
       methods: {
-        isOpen: function () {
-          return this.state.isPanelOpen()
-        },
-
-        open: function (forceOpen) {
-          if (forceOpen || !this.state.isPanelOpen()) {
-            this.panelData.isOpen = true
-            this.state.setPanelOpen()
-          }
-          return this
-        },
-
-        // `updateState == false` is used to close a panel without updating state
-        close: function (updateState = true) {
-          this.panelData.isOpen = false
-          if (updateState) { this.state.setPanelClosed() }
-          return this
-        },
-
         setPositionTo: function (position) {
           this.options.items.panelPosition.setValue(position)
           this.classesChanged += 1
@@ -321,3 +316,33 @@ export default class PanelModule {
 }
 
 PanelModule.publicName = 'panel'
+
+PanelModule.store = () => {
+  return {
+    // All stores of modules are namespaced
+    namespaced: true,
+
+    state: {
+      visible: false // A visibility of a panel
+    },
+    mutations: {
+      /**
+       * Opens a panel
+       * @param state
+       */
+      open (state) {
+        console.log(`Open panel mutation`)
+        state.visible = true
+      },
+
+      /**
+       * Closes a panel
+       * @param state
+       */
+      close (state) {
+        console.log(`Close panel mutation`)
+        state.visible = false
+      }
+    }
+  }
+}

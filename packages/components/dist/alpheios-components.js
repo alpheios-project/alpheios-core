@@ -10339,7 +10339,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Lookup',
-  inject: ['l10n'],
+  inject: ['ui', 'l10n'],
   components: {
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -10448,7 +10448,7 @@ __webpack_require__.r(__webpack_exports__);
         .getData()
       // A lookup, when started from a panel, should open a popup with lookup results
       this.uiController.popup.vi.open()
-      this.uiController.panel.close()
+      this.ui.closePanel()
     },
 
     'switchLookupSettings': function () {
@@ -11155,7 +11155,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  inject: ['l10n'],
+  inject: ['l10n', 'ui'], // API modules that are required for this component
+  storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -11349,10 +11350,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
-    close () {
-      this.$emit('close')
-    },
-
     closeNotifications () {
       this.$emit('closenotifications')
     },
@@ -11478,6 +11475,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+
+  beforeCreate: function () {
+    // Check store dependencies. API dependencies will be verified by the `inject`
+    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
+    }
+  },
+
   created: function () {
     let vm = this
     vm.$on('changeStyleClass', (name, type) => {
@@ -12780,16 +12786,6 @@ __webpack_require__.r(__webpack_exports__);
             console.error(`Unable to retrieve user information from Auth0: ${error.message}`)
           })
       }
-    }
-  },
-
-  created: function () {
-    // Check for dependencies
-    // TODO: Provide a unified way to do such checks
-    const dependencies = ['l10n']
-    const missingDependencies = dependencies.filter(d => !this.$store.state.hasOwnProperty(d))
-    if (missingDependencies.length > 0) {
-      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   }
 });
@@ -16600,8 +16596,8 @@ var render = function() {
         {
           name: "show",
           rawName: "v-show",
-          value: _vm.data && _vm.data.isOpen,
-          expression: "data && data.isOpen"
+          value: this.$store.state.panel.visible,
+          expression: "this.$store.state.panel.visible"
         }
       ],
       staticClass: "alpheios-panel auk",
@@ -17004,7 +17000,7 @@ var render = function() {
                   {
                     staticClass:
                       "alpheios-panel__header-action-btn alpheios_close",
-                    on: { click: _vm.close }
+                    on: { click: _vm.ui.closePanel }
                   },
                   [_c("close-icon")],
                   1
@@ -31496,29 +31492,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
 /* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
 /* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
-/* harmony import */ var _vue_vuex_modules_ui_shared_ui_module_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/vuex-modules/ui/shared-ui-module.js */ "./vue/vuex-modules/ui/shared-ui-module.js");
-/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
-var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
+var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_13___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
 /* global Event */
 
 
@@ -31533,7 +31528,6 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___names
 // import Popup from '@/vue/components/popup.vue'
 
 // Modules
-
 
 
 
@@ -31585,9 +31579,9 @@ class UIController {
   constructor (state, options = {}) {
     this.state = state
     this.options = UIController.setOptions(options, UIController.optionsDefaults)
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__, this.options.storageAdapter)
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14__, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__, this.options.storageAdapter)
     this.siteOptions = null // Will be set during an `init` phase
     this.tabState = {
       definitions: false,
@@ -31631,7 +31625,6 @@ class UIController {
 
     // Register data modules
     uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__["default"])
-    uiController.registerDataModule(_vue_vuex_modules_ui_shared_ui_module_js__WEBPACK_IMPORTED_MODULE_8__["default"])
 
     // Register UI modules
     uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -31643,42 +31636,42 @@ class UIController {
     })
 
     // Creates on configures an event listener
-    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_25__["default"]()
+    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_24__["default"]()
     switch (uiController.options.textQueryTrigger) {
       case 'dblClick':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_20__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_19__["default"])
         break
       case 'longTap':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_21__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__["default"])
         break
       default:
         eventController.registerListener(
-          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], uiController.options.textQueryTrigger
+          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], uiController.options.textQueryTrigger
         )
     }
 
-    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], 'keydown')
-    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], 'Alpheios_Page_Load')
+    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'keydown')
+    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'Alpheios_Page_Load')
 
     // Attaches an event controller to a UIController instance
     uiController.evc = eventController
 
     // Subscribe to LexicalQuery events
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
     // Subscribe to ResourceQuery events
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
 
     // Subscribe to AnnotationQuery events
-    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
+    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
     return uiController
   }
@@ -31715,7 +31708,7 @@ class UIController {
         name: 'name',
         version: 'version'
       },
-      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_24__["default"],
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_23__["default"],
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
@@ -31725,7 +31718,7 @@ class UIController {
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
-        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10___default.a,
+        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default.a,
         panelId: 'alpheios-panel',
         defaultPanelComponent: 'panel',
         popupId: 'alpheios-popup',
@@ -31805,7 +31798,7 @@ class UIController {
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     this.siteOptions = this.loadSiteOptions()
 
-    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_18__["default"].getZIndexMax()
+    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].getZIndexMax()
 
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
 
@@ -31819,20 +31812,30 @@ class UIController {
 
     // All options shall be loaded at this point. Can initialize Vue components that will use them
     // Create all registered data modules
-    console.log(`Init`)
     this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(...m.options) })
-    // Mount all registered modules into the store
+    // Mount all registered data modules into the store
     this.dataModules.forEach((m) => this.store.registerModule(m.instance.publicName, m.instance.store))
+    // Mount all registered UI modules into the store
+    this.uiModules.forEach((m) => this.store.registerModule(m.ModuleClass.publicName, m.ModuleClass.store()))
 
-    // Construct a public API of all modules that will be shared using `provide`
+    // Construct a public API of all data modules that will be shared using `provide`
     this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
-    // Add UI controller specific API groups
-    this.api.uiModules = {
-      hasModule: this.hasUiModule.bind(this),
-      getModule: this.getUiModule.bind(this)
+
+    /**
+     * This is a public API of a UI controller. All objects should use this public API only.
+     */
+    this.api.ui = {
+      // Modules
+      hasModule: this.hasUiModule.bind(this), // Checks if a UI module is available
+      getModule: this.getUiModule.bind(this), // Gets direct access to module. TODO: Shall be avoided.
+
+      // Actions
+      openPanel: this.openPanel.bind(this),
+      closePanel: this.closePanel.bind(this)
     }
 
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
+    // This must be done after creation of data modules.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
     // Initialize components
@@ -31876,7 +31879,7 @@ class UIController {
     }
     // If panel should be opened according to the state, open it
     if (this.state.isPanelOpen()) {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open(true) }
+      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel(true) } // Force close the panel
     }
 
     if (this.state.tab) {
@@ -31901,8 +31904,8 @@ class UIController {
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
 
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.close() }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+    if (this.api.ui.hasModule('popup')) { this.getUiModule('popup').vi.close() }
+    if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
     this.isActivated = false
     this.isDeactivated = true
     this.state.deactivate()
@@ -31918,7 +31921,7 @@ class UIController {
    */
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
-      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_9__["default"])
+      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__["default"])
       UIController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
@@ -31932,9 +31935,9 @@ class UIController {
    */
   loadSiteOptions () {
     let allSiteOptions = []
-    for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__) {
+    for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_13__) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](domain, this.options.storageAdapter)
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -32033,7 +32036,8 @@ class UIController {
   newLexicalRequest (languageID) {
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
     if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
+      console.log(`newLexicalRequest`)
+      const panel = this.api.ui.getModule('panel')
       panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
       panel.vi.panelData.grammarAvailable = false
@@ -32249,12 +32253,14 @@ class UIController {
     return this
   }
 
+  // TODO: Is this ever called?
   open () {
+    console.log(`UI controller: open()`)
     if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open() }
+      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
     } else {
-      if (this.hasUiModule('panel') && this.getUiModule('panel').vi.isOpen) { this.getUiModule('panel').vi.close() }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.open() }
+      if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
+      if (this.api.ui.hasModule('popup')) { this.api.ui.getModule('popup').vi.open() }
     }
     return this
   }
@@ -32262,15 +32268,25 @@ class UIController {
   /**
    * Opens a panel. Used from a content script upon a panel status change request.
    */
-  openPanel () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open() }
+  openPanel (forceOpen = false) {
+    console.log(`UI Controller's Open Panel`)
+    if (this.api.ui.hasModule('panel')) {
+      if (forceOpen || !this.state.isPanelOpen()) {
+        this.store.commit('panel/open')
+        this.state.setPanelOpen()
+      }
+    }
   }
 
   /**
    * Closes a panel. Used from a content script upon a panel status change request.
    */
-  closePanel () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close() }
+  closePanel (syncState = true) {
+    console.log(`UI Controller's Panel Close`)
+    if (this.api.ui.hasModule('panel')) {
+      this.store.commit('panel/close')
+      if (syncState) { this.state.setPanelClosed() }
+    }
   }
 
   setRootComponentClasses () {
@@ -32369,7 +32385,7 @@ class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_17__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
+      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_16__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
       let textSelector = htmlSelector.createTextSelector()
 
       if (!textSelector.isEmpty()) {
@@ -32394,7 +32410,7 @@ class UIController {
           })
           .getData() */
 
-        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(textSelector, {
+        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
           resourceOptions: this.resourceOptions,
           siteOptions: [],
@@ -32429,8 +32445,8 @@ class UIController {
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
-        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close() }
-      } else if (this.hasUiModule('popup') && this.getUiModule('popup').vi.visible) {
+        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
+      } else if (this.api.ui.hasModule('popup') && this.getUiModule('popup').vi.visible) {
         this.getUiModule('popup').vi.close()
       }
     }
@@ -32441,7 +32457,7 @@ class UIController {
    */
   updateAnnotations () {
     if (this.state.isActive() && this.state.uiIsActive()) {
-      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].create({
+      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].create({
         document: document,
         siteOptions: this.siteOptions
       }).getData()
@@ -32450,7 +32466,7 @@ class UIController {
 
   startResourceQuery (feature) {
     // ExpObjMon.track(
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].create(feature, {
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(feature, {
       grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_1__["Grammars"]
     }).getData()
     //, {
@@ -32465,13 +32481,13 @@ class UIController {
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.SUCCEEDED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.SUCCEEDED:
         this.lexicalRequestSucceeded()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         this.lexicalRequestComplete()
         break
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.FAILED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.FAILED:
         this.lexicalRequestFailed()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
@@ -36802,7 +36818,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @close=\"close\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -39387,7 +39403,21 @@ __webpack_require__.r(__webpack_exports__);
 // TODO: Add a check for required modules
 class PanelModule {
   constructor (store, api, options) {
+    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
     const uiController = options.uiController
+
+    this.store = {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        visible: true
+      },
+      mutations: {
+
+      }
+    }
+
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       el: `#${uiController.options.template.panelId}`,
       store: store, // Install store into the panel
@@ -39403,7 +39433,7 @@ class PanelModule {
       },
       data: {
         panelData: {
-          isOpen: false,
+          // isOpen: false,
           tabs: options.tabs,
           verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           currentLanguageID: null,
@@ -39478,25 +39508,6 @@ class PanelModule {
         classesChanged: 0
       },
       methods: {
-        isOpen: function () {
-          return this.state.isPanelOpen()
-        },
-
-        open: function (forceOpen) {
-          if (forceOpen || !this.state.isPanelOpen()) {
-            this.panelData.isOpen = true
-            this.state.setPanelOpen()
-          }
-          return this
-        },
-
-        // `updateState == false` is used to close a panel without updating state
-        close: function (updateState = true) {
-          this.panelData.isOpen = false
-          if (updateState) { this.state.setPanelClosed() }
-          return this
-        },
-
         setPositionTo: function (position) {
           this.options.items.panelPosition.setValue(position)
           this.classesChanged += 1
@@ -39704,6 +39715,36 @@ class PanelModule {
 
 PanelModule.publicName = 'panel'
 
+PanelModule.store = () => {
+  return {
+    // All stores of modules are namespaced
+    namespaced: true,
+
+    state: {
+      visible: false // A visibility of a panel
+    },
+    mutations: {
+      /**
+       * Opens a panel
+       * @param state
+       */
+      open (state) {
+        console.log(`Open panel mutation`)
+        state.visible = true
+      },
+
+      /**
+       * Closes a panel
+       * @param state
+       */
+      close (state) {
+        console.log(`Close panel mutation`)
+        state.visible = false
+      }
+    }
+  }
+}
+
 
 /***/ }),
 
@@ -39728,7 +39769,9 @@ __webpack_require__.r(__webpack_exports__);
 // TODO: Add a check for required modules
 class PopupModule {
   constructor (store, api, options) {
+    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
     const uiController = options.uiController
+
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       el: `#${uiController.options.template.popupId}`,
       store: store,
@@ -39889,7 +39932,9 @@ class PopupModule {
 
         newLexicalRequest: function () {
           this.popupData.requestStartTime = new Date().getTime()
-          this.$options.uiController.panel.vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          if (this.$options.api.ui.hasModule('panel')) {
+            this.$options.api.ui.getModule('panel').vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          }
         },
 
         clearContent: function () {
@@ -39935,20 +39980,20 @@ class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          if (this.$options.api.uiModules.hasModule('panel')) {
-            const panel = this.$options.api.uiModules.getModule('panel')
+          if (this.$options.api.ui.hasModule('panel')) {
+            const panel = this.$options.api.ui.getModule('panel')
             panel.vi.changeTab(tabName)
-            panel.vi.open()
+            this.$options.api.ui.openPanel()
           }
           return this
         },
 
         sendFeature: function (feature) {
-          if (this.$options.api.uiModules.hasModule('panel')) {
-            const panel = this.$options.api.uiModules.getModule('panel')
+          if (this.$options.api.ui.hasModule('panel')) {
+            const panel = this.$options.api.ui.getModule('panel')
             panel.vi.requestGrammar(feature)
             panel.vi.changeTab('grammar')
-            panel.vi.open()
+            this.$options.api.ui.openPanel()
           }
           return this
         },
@@ -40013,63 +40058,19 @@ class PopupModule {
 
 PopupModule.publicName = 'popup'
 
+PopupModule.store = () => {
+  return {
+    // All stores of modules are namespaced
+    namespaced: true,
 
-/***/ }),
+    state: {
+      visible: true
+    },
+    mutations: {
 
-/***/ "./vue/vuex-modules/ui/shared-ui-module.js":
-/*!*************************************************!*\
-  !*** ./vue/vuex-modules/ui/shared-ui-module.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SharedUIModule; });
-/* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
-
-
-class SharedUIModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor () {
-    super()
-
-    this.store = {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-      },
-      getters: {
-        // For arrow functions `this` will point to the class instance, not to the store
-      },
-      mutations: {
-        // For arrow functions `this` will point to the class instance, not to the store
-      }
-    }
-
-    /**
-     * An API object groups all publicly available methods of a module.
-     * They will be exposed to UI components by the UI controller.
-     * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
-     * Methods of a module will be available within a UI component after injection as
-     * `this.moduleName.methodName`
-     *
-     * Because some methods may need access to the Vuex store instance, `api` is a function
-     * that takes `store` as an argument and returns an object that contains API methods.
-     * For arrow functions `this` will be bound to the module's instance,
-     * for regular functions - to the object that is returned by the `api` function.
-     * @param {Vuex} store - an instance of a Vuex store that API methods may need to operate upon.
-     * @return {Object} An object containing public methods of a module.
-     */
-    this.api = (store) => {
-      return {
-
-      }
     }
   }
 }
-
-SharedUIModule.publicName = 'sharedUI'
 
 
 /***/ }),

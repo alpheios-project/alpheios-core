@@ -15,7 +15,6 @@ import Vuex from 'vuex'
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
 import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
-import SharedUIModule from '@/vue/vuex-modules/ui/shared-ui-module.js'
 
 import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
 
@@ -110,7 +109,6 @@ export default class UIController {
 
     // Register data modules
     uiController.registerDataModule(L10nModule)
-    uiController.registerDataModule(SharedUIModule)
 
     // Register UI modules
     uiController.registerUiModule(PanelModule, {
@@ -298,20 +296,30 @@ export default class UIController {
 
     // All options shall be loaded at this point. Can initialize Vue components that will use them
     // Create all registered data modules
-    console.log(`Init`)
     this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(...m.options) })
-    // Mount all registered modules into the store
+    // Mount all registered data modules into the store
     this.dataModules.forEach((m) => this.store.registerModule(m.instance.publicName, m.instance.store))
+    // Mount all registered UI modules into the store
+    this.uiModules.forEach((m) => this.store.registerModule(m.ModuleClass.publicName, m.ModuleClass.store()))
 
-    // Construct a public API of all modules that will be shared using `provide`
+    // Construct a public API of all data modules that will be shared using `provide`
     this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
-    // Add UI controller specific API groups
-    this.api.uiModules = {
-      hasModule: this.hasUiModule.bind(this),
-      getModule: this.getUiModule.bind(this)
+
+    /**
+     * This is a public API of a UI controller. All objects should use this public API only.
+     */
+    this.api.ui = {
+      // Modules
+      hasModule: this.hasUiModule.bind(this), // Checks if a UI module is available
+      getModule: this.getUiModule.bind(this), // Gets direct access to module. TODO: Shall be avoided.
+
+      // Actions
+      openPanel: this.openPanel.bind(this),
+      closePanel: this.closePanel.bind(this)
     }
 
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
+    // This must be done after creation of data modules.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
     // Initialize components
@@ -355,7 +363,7 @@ export default class UIController {
     }
     // If panel should be opened according to the state, open it
     if (this.state.isPanelOpen()) {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open(true) }
+      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel(true) } // Force close the panel
     }
 
     if (this.state.tab) {
@@ -380,8 +388,8 @@ export default class UIController {
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
 
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.close() }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+    if (this.api.ui.hasModule('popup')) { this.getUiModule('popup').vi.close() }
+    if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
     this.isActivated = false
     this.isDeactivated = true
     this.state.deactivate()
@@ -512,7 +520,8 @@ export default class UIController {
   newLexicalRequest (languageID) {
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
     if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
+      console.log(`newLexicalRequest`)
+      const panel = this.api.ui.getModule('panel')
       panel.vi.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
       panel.vi.panelData.grammarAvailable = false
@@ -728,12 +737,14 @@ export default class UIController {
     return this
   }
 
+  // TODO: Is this ever called?
   open () {
+    console.log(`UI controller: open()`)
     if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open() }
+      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
     } else {
-      if (this.hasUiModule('panel') && this.getUiModule('panel').vi.isOpen) { this.getUiModule('panel').vi.close() }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.open() }
+      if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
+      if (this.api.ui.hasModule('popup')) { this.api.ui.getModule('popup').vi.open() }
     }
     return this
   }
@@ -741,15 +752,25 @@ export default class UIController {
   /**
    * Opens a panel. Used from a content script upon a panel status change request.
    */
-  openPanel () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open() }
+  openPanel (forceOpen = false) {
+    console.log(`UI Controller's Open Panel`)
+    if (this.api.ui.hasModule('panel')) {
+      if (forceOpen || !this.state.isPanelOpen()) {
+        this.store.commit('panel/open')
+        this.state.setPanelOpen()
+      }
+    }
   }
 
   /**
    * Closes a panel. Used from a content script upon a panel status change request.
    */
-  closePanel () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close() }
+  closePanel (syncState = true) {
+    console.log(`UI Controller's Panel Close`)
+    if (this.api.ui.hasModule('panel')) {
+      this.store.commit('panel/close')
+      if (syncState) { this.state.setPanelClosed() }
+    }
   }
 
   setRootComponentClasses () {
@@ -908,8 +929,8 @@ export default class UIController {
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
-        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close() }
-      } else if (this.hasUiModule('popup') && this.getUiModule('popup').vi.visible) {
+        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
+      } else if (this.api.ui.hasModule('popup') && this.getUiModule('popup').vi.visible) {
         this.getUiModule('popup').vi.close()
       }
     }

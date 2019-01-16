@@ -5,7 +5,9 @@ import { getLanguageName } from '@/lib/utility/language-names.js'
 // TODO: Add a check for required modules
 export default class PopupModule {
   constructor (store, api, options) {
+    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
     const uiController = options.uiController
+
     this.vi = new Vue({
       el: `#${uiController.options.template.popupId}`,
       store: store,
@@ -166,8 +168,8 @@ export default class PopupModule {
 
         newLexicalRequest: function () {
           this.popupData.requestStartTime = new Date().getTime()
-          if (this.$options.api.uiModules.hasModule('panel')) {
-            this.$options.api.uiModules.getModule('panel').vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          if (this.$options.api.ui.hasModule('panel')) {
+            this.$options.api.ui.getModule('panel').vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
           }
         },
 
@@ -214,20 +216,20 @@ export default class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          if (this.$options.api.uiModules.hasModule('panel')) {
-            const panel = this.$options.api.uiModules.getModule('panel')
+          if (this.$options.api.ui.hasModule('panel')) {
+            const panel = this.$options.api.ui.getModule('panel')
             panel.vi.changeTab(tabName)
-            panel.vi.open()
+            this.$options.api.ui.openPanel()
           }
           return this
         },
 
         sendFeature: function (feature) {
-          if (this.$options.api.uiModules.hasModule('panel')) {
-            const panel = this.$options.api.uiModules.getModule('panel')
+          if (this.$options.api.ui.hasModule('panel')) {
+            const panel = this.$options.api.ui.getModule('panel')
             panel.vi.requestGrammar(feature)
             panel.vi.changeTab('grammar')
-            panel.vi.open()
+            this.$options.api.ui.openPanel()
           }
           return this
         },
@@ -291,3 +293,17 @@ export default class PopupModule {
 }
 
 PopupModule.publicName = 'popup'
+
+PopupModule.store = () => {
+  return {
+    // All stores of modules are namespaced
+    namespaced: true,
+
+    state: {
+      visible: true
+    },
+    mutations: {
+
+    }
+  }
+}

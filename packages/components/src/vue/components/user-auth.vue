@@ -105,16 +105,6 @@ export default {
           })
       }
     }
-  },
-
-  created: function () {
-    // Check for dependencies
-    // TODO: Provide a unified way to do such checks
-    const dependencies = ['l10n']
-    const missingDependencies = dependencies.filter(d => !this.$store.state.hasOwnProperty(d))
-    if (missingDependencies.length > 0) {
-      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
-    }
   }
 }
 </script>
