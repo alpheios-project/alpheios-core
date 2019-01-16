@@ -297,7 +297,6 @@ PopupModule.store = () => {
        * @param state
        */
       open (state) {
-        console.log(`Open popup mutation`)
         state.visible = true
       },
 
@@ -306,7 +305,6 @@ PopupModule.store = () => {
        * @param state
        */
       close (state) {
-        console.log(`Close popup mutation`)
         state.visible = false
       }
     }

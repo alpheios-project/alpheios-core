@@ -331,7 +331,6 @@ PanelModule.store = () => {
        * @param state
        */
       open (state) {
-        console.log(`Open panel mutation`)
         state.visible = true
       },
 
@@ -340,7 +339,6 @@ PanelModule.store = () => {
        * @param state
        */
       close (state) {
-        console.log(`Close panel mutation`)
         state.visible = false
       }
     }

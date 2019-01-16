@@ -523,7 +523,6 @@ export default class UIController {
   newLexicalRequest (languageID) {
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
     if (this.hasUiModule('panel')) {
-      console.log(`newLexicalRequest`)
       const panel = this.api.ui.getModule('panel')
       panel.vi.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
@@ -742,7 +741,6 @@ export default class UIController {
 
   // TODO: Is this ever called?
   open () {
-    console.log(`UI controller: open()`)
     if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
       if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
     } else {
@@ -756,7 +754,6 @@ export default class UIController {
    * Opens a panel. Used from a content script upon a panel status change request.
    */
   openPanel (forceOpen = false) {
-    console.log(`UI Controller's Open Panel`)
     if (this.api.ui.hasModule('panel')) {
       if (forceOpen || !this.state.isPanelOpen()) {
         this.store.commit('panel/open')
@@ -769,7 +766,6 @@ export default class UIController {
    * Closes a panel. Used from a content script upon a panel status change request.
    */
   closePanel (syncState = true) {
-    console.log(`UI Controller's Panel Close`)
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
       if (syncState) { this.state.setPanelClosed() }
@@ -777,13 +773,11 @@ export default class UIController {
   }
 
   openPopup () {
-    console.log(`UI Controller's Open Popup`)
     if (this.api.ui.hasModule('popup')) {
       this.store.commit('popup/open')
     }
   }
-  closePopup (syncState = true) {
-    console.log(`UI Controller's Close Popup`)
+  closePopup () {
     if (this.api.ui.hasModule('popup')) {
       this.store.commit('popup/close')
     }
