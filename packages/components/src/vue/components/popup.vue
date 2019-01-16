@@ -593,8 +593,8 @@ export default {
         .on('resizemove', this.resizeListener)
     }
 
-    // TODO: Is there a better way to handle a popup's content update?
-    this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
+    // Updated popup dimensions when its visibility is updated
+    this.$options.visibleUnwatch = this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
       if (newValue) {
         // A popup became visible
         this.updatePopupDimensions()
@@ -603,6 +603,11 @@ export default {
         this.resetPopupDimensions()
       }
     })
+  },
+
+  beforeDestroy () {
+    // Teardown the watch function
+    this.$options.visibleUnwatch()
   },
 
   updated () {

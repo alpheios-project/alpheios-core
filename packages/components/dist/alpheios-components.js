@@ -12232,8 +12232,7 @@ __webpack_require__.r(__webpack_exports__);
         .on('resizemove', this.resizeListener)
     }
 
-    // TODO: Is there a better way to handle a popup's content update?
-    this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
+    this.$options.visibleUnwatch = this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
       if (newValue) {
         // A popup became visible
         this.updatePopupDimensions()
@@ -12242,6 +12241,11 @@ __webpack_require__.r(__webpack_exports__);
         this.resetPopupDimensions()
       }
     })
+  },
+
+  beforeDestroy () {
+    // Teardown the watch function
+    this.$options.visibleUnwatch()
   },
 
   updated () {
@@ -31818,7 +31822,7 @@ class UIController {
     this.api.ui = {
       // Modules
       hasModule: this.hasUiModule.bind(this), // Checks if a UI module is available
-      getModule: this.getUiModule.bind(this), // Gets direct access to module. TODO: Shall be avoided.
+      getModule: this.getUiModule.bind(this), // Gets direct access to module.
 
       // Actions
       openPanel: this.openPanel.bind(this),
@@ -32030,7 +32034,6 @@ class UIController {
   newLexicalRequest (languageID) {
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
     if (this.hasUiModule('panel')) {
-      console.log(`newLexicalRequest`)
       const panel = this.api.ui.getModule('panel')
       panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
@@ -32249,7 +32252,6 @@ class UIController {
 
   // TODO: Is this ever called?
   open () {
-    console.log(`UI controller: open()`)
     if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
       if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
     } else {
@@ -32263,7 +32265,6 @@ class UIController {
    * Opens a panel. Used from a content script upon a panel status change request.
    */
   openPanel (forceOpen = false) {
-    console.log(`UI Controller's Open Panel`)
     if (this.api.ui.hasModule('panel')) {
       if (forceOpen || !this.state.isPanelOpen()) {
         this.store.commit('panel/open')
@@ -32276,7 +32277,6 @@ class UIController {
    * Closes a panel. Used from a content script upon a panel status change request.
    */
   closePanel (syncState = true) {
-    console.log(`UI Controller's Panel Close`)
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
       if (syncState) { this.state.setPanelClosed() }
@@ -32284,13 +32284,11 @@ class UIController {
   }
 
   openPopup () {
-    console.log(`UI Controller's Open Popup`)
     if (this.api.ui.hasModule('popup')) {
       this.store.commit('popup/open')
     }
   }
-  closePopup (syncState = true) {
-    console.log(`UI Controller's Close Popup`)
+  closePopup () {
     if (this.api.ui.hasModule('popup')) {
       this.store.commit('popup/close')
     }
@@ -39735,7 +39733,6 @@ PanelModule.store = () => {
        * @param state
        */
       open (state) {
-        console.log(`Open panel mutation`)
         state.visible = true
       },
 
@@ -39744,7 +39741,6 @@ PanelModule.store = () => {
        * @param state
        */
       close (state) {
-        console.log(`Close panel mutation`)
         state.visible = false
       }
     }
@@ -40067,7 +40063,6 @@ PopupModule.store = () => {
        * @param state
        */
       open (state) {
-        console.log(`Open popup mutation`)
         state.visible = true
       },
 
@@ -40076,7 +40071,6 @@ PopupModule.store = () => {
        * @param state
        */
       close (state) {
-        console.log(`Close popup mutation`)
         state.visible = false
       }
     }
