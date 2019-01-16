@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { shallowMount, mount } from '@vue/test-utils'
+import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Panel from '@/vue/components/panel.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
 import Lookup from '@/vue/components/lookup.vue'
@@ -14,6 +14,7 @@ import Grammar from '@/vue/components/grammar.vue'
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 
 import Vue from 'vue/dist/vue'
+import Vuex from 'vuex'
 
 import Options from '@/lib/options/options.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
@@ -22,6 +23,14 @@ import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import LocalStorageArea from '@/lib/options/local-storage-area.js'
 
 describe('panel.test.js', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
+  let store
+  const l10nModule = new L10nModule()
+  const uiAPI = {
+    closePanel: () => {}
+  }
+
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -30,6 +39,16 @@ describe('panel.test.js', () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+
+    store = new Vuex.Store({
+      modules: {
+        panel: {
+          state: {},
+          actions: {},
+          getters: {}
+        }
+      }
+    })
   })
   afterEach(() => {
     jest.resetModules()
@@ -38,13 +57,16 @@ describe('panel.test.js', () => {
     jest.clearAllMocks()
   })
 
-  const l10nModule = new L10nModule()
-
   it('1 Panel - renders a vue instance (min requirements)', () => {
+
+    localVue.use(Vuex)
     let cmp = shallowMount(Panel, {
       propsData: {},
+      store,
+      localVue,
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        ui: uiAPI
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
