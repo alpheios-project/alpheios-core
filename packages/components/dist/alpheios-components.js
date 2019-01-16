@@ -10447,7 +10447,7 @@ __webpack_require__.r(__webpack_exports__);
         .create(textSelector, resourceOptions, lemmaTranslationLang)
         .getData()
       // A lookup, when started from a panel, should open a popup with lookup results
-      this.uiController.popup.vi.open()
+      this.ui.openPopup()
       this.ui.closePanel()
     },
 
@@ -11430,7 +11430,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     attachTrackingClick: function () {
-      this.close()
+      this.ui.closePanel()
     },
 
     calcScrollPadding: function () {
@@ -11754,7 +11754,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Popup',
-  inject: ['l10n'],
+  inject: ['ui', 'l10n'],
   components: {
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -11812,10 +11812,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     linkedfeatures: {
       type: Array,
-      required: true
-    },
-    visible: {
-      type: Boolean,
       required: true
     },
     translations: {
@@ -11907,7 +11903,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     positionLeftDm: function () {
-      if (!this.visible) {
+      if (!this.$store.state.popup.visible) {
         // Reset if popup is invisible
         return '0px'
       }
@@ -11941,7 +11937,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     positionTopDm: function () {
-      if (!this.visible) {
+      if (!this.$store.state.popup.visible) {
         // Reset if popup is invisible
         return '0px'
       }
@@ -12046,11 +12042,6 @@ __webpack_require__.r(__webpack_exports__);
       while (this.messages.length > 0) {
         this.messages.pop()
       }
-    },
-
-    closePopup () {
-      this.logger.log(`Closing a popup and resetting its dimensions`)
-      this.$emit('close')
     },
 
     closeNotifications () {
@@ -12228,7 +12219,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     attachTrackingClick: function () {
-      this.closePopup()
+      this.ui.closePopup()
     }
 
   },
@@ -12240,10 +12231,21 @@ __webpack_require__.r(__webpack_exports__);
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
     }
+
+    // TODO: Is there a better way to handle a popup's content update?
+    this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
+      if (newValue) {
+        // A popup became visible
+        this.updatePopupDimensions()
+      } else {
+        // A popup became invisible
+        this.resetPopupDimensions()
+      }
+    })
   },
 
   updated () {
-    if (this.visible) {
+    if (this.$store.state.popup.visible) {
       let time = Date.now()
       this.logger.log(`${time}: component is updated`)
 
@@ -12260,16 +12262,6 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   watch: {
-    visible: function (value) {
-      if (value) {
-        // A popup became visible
-        this.updatePopupDimensions()
-      } else {
-        // A popup became invisible
-        this.resetPopupDimensions()
-      }
-    },
-
     requestStartTime () {
       this.logger.log(`Request start time has been updated`)
       this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
@@ -12281,7 +12273,6 @@ __webpack_require__.r(__webpack_exports__);
       let time = Date.now()
       this.logger.log(`${time}: translation data became available`, this.translations)
     }
-
   }
 });
 
@@ -17844,8 +17835,8 @@ var render = function() {
         {
           name: "show",
           rawName: "v-show",
-          value: _vm.visible,
-          expression: "visible"
+          value: this.$store.state.popup.visible,
+          expression: "this.$store.state.popup.visible"
         }
       ],
       ref: "popup",
@@ -17873,7 +17864,7 @@ var render = function() {
             "span",
             {
               staticClass: "alpheios-popup__close-btn",
-              on: { click: _vm.closePopup }
+              on: { click: _vm.ui.closePopup }
             },
             [_c("close-icon")],
             1
@@ -31831,7 +31822,9 @@ class UIController {
 
       // Actions
       openPanel: this.openPanel.bind(this),
-      closePanel: this.closePanel.bind(this)
+      closePanel: this.closePanel.bind(this),
+      openPopup: this.openPopup.bind(this),
+      closePopup: this.closePopup.bind(this)
     }
 
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
@@ -31839,8 +31832,9 @@ class UIController {
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
     // Initialize components
-    this.panel = this.uiModules.get('panel').instance
-    this.popup = this.uiModules.get('popup').instance
+    // TODO: this is for compatibility with legacy code only. All UI modules must by dynamic, not static
+    this.panel = this.api.ui.getModule('panel')
+    this.popup = this.api.ui.getModule('popup')
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -31904,7 +31898,7 @@ class UIController {
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
 
-    if (this.api.ui.hasModule('popup')) { this.getUiModule('popup').vi.close() }
+    if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
     if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
     this.isActivated = false
     this.isDeactivated = true
@@ -32260,7 +32254,7 @@ class UIController {
       if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
     } else {
       if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
-      if (this.api.ui.hasModule('popup')) { this.api.ui.getModule('popup').vi.open() }
+      if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
     }
     return this
   }
@@ -32289,6 +32283,18 @@ class UIController {
     }
   }
 
+  openPopup () {
+    console.log(`UI Controller's Open Popup`)
+    if (this.api.ui.hasModule('popup')) {
+      this.store.commit('popup/open')
+    }
+  }
+  closePopup (syncState = true) {
+    console.log(`UI Controller's Close Popup`)
+    if (this.api.ui.hasModule('popup')) {
+      this.store.commit('popup/close')
+    }
+  }
   setRootComponentClasses () {
     let classes = []
 
@@ -32446,8 +32452,8 @@ class UIController {
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
         if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.api.ui.hasModule('popup') && this.getUiModule('popup').vi.visible) {
-        this.getUiModule('popup').vi.close()
+      } else if (this.api.ui.hasModule('popup')) {
+        this.api.ui.closePopup()
       }
     }
     return true
@@ -36818,7 +36824,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -39793,7 +39799,6 @@ class PopupModule {
         translations: {},
 
         linkedFeatures: [],
-        visible: false,
         popupData: {
           fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
           // Default popup position, with units
@@ -39969,16 +39974,6 @@ class PopupModule {
           this.popupData.status.selectedText = ''
         },
 
-        open: function () {
-          this.visible = true
-          return this
-        },
-
-        close: function () {
-          this.visible = false
-          return this
-        },
-
         showPanelTab: function (tabName) {
           if (this.$options.api.ui.hasModule('panel')) {
             const panel = this.$options.api.ui.getModule('panel')
@@ -40035,9 +40030,9 @@ class PopupModule {
               this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
               break
             case 'popup':
-              this.$options.uiController.popup.vi.close() // Close an old popup
+              this.$options.api.ui.closePopup() // Close an old popup
               this.$options.uiController.popup.vi.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
+              this.$options.api.ui.openPopup() // Will trigger an initialisation of popup dimensions
               break
             case 'fontSize':
               this.$options.uiController.updateFontSizeClass(value)
@@ -40064,10 +40059,26 @@ PopupModule.store = () => {
     namespaced: true,
 
     state: {
-      visible: true
+      visible: false
     },
     mutations: {
+      /**
+       * Opens a panel
+       * @param state
+       */
+      open (state) {
+        console.log(`Open popup mutation`)
+        state.visible = true
+      },
 
+      /**
+       * Closes a panel
+       * @param state
+       */
+      close (state) {
+        console.log(`Close popup mutation`)
+        state.visible = false
+      }
     }
   }
 }

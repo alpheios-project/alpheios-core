@@ -520,7 +520,7 @@ export default {
     },
 
     attachTrackingClick: function () {
-      this.close()
+      this.ui.closePanel()
     },
 
     calcScrollPadding: function () {

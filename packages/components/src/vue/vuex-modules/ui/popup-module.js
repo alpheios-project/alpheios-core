@@ -29,7 +29,6 @@ export default class PopupModule {
         translations: {},
 
         linkedFeatures: [],
-        visible: false,
         popupData: {
           fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
           // Default popup position, with units
@@ -205,16 +204,6 @@ export default class PopupModule {
           this.popupData.status.selectedText = ''
         },
 
-        open: function () {
-          this.visible = true
-          return this
-        },
-
-        close: function () {
-          this.visible = false
-          return this
-        },
-
         showPanelTab: function (tabName) {
           if (this.$options.api.ui.hasModule('panel')) {
             const panel = this.$options.api.ui.getModule('panel')
@@ -271,9 +260,9 @@ export default class PopupModule {
               this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
               break
             case 'popup':
-              this.$options.uiController.popup.vi.close() // Close an old popup
+              this.$options.api.ui.closePopup() // Close an old popup
               this.$options.uiController.popup.vi.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
+              this.$options.api.ui.openPopup() // Will trigger an initialisation of popup dimensions
               break
             case 'fontSize':
               this.$options.uiController.updateFontSizeClass(value)
@@ -300,10 +289,26 @@ PopupModule.store = () => {
     namespaced: true,
 
     state: {
-      visible: true
+      visible: false
     },
     mutations: {
+      /**
+       * Opens a panel
+       * @param state
+       */
+      open (state) {
+        console.log(`Open popup mutation`)
+        state.visible = true
+      },
 
+      /**
+       * Closes a panel
+       * @param state
+       */
+      close (state) {
+        console.log(`Close popup mutation`)
+        state.visible = false
+      }
     }
   }
 }

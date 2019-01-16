@@ -311,11 +311,13 @@ export default class UIController {
     this.api.ui = {
       // Modules
       hasModule: this.hasUiModule.bind(this), // Checks if a UI module is available
-      getModule: this.getUiModule.bind(this), // Gets direct access to module. TODO: Shall be avoided.
+      getModule: this.getUiModule.bind(this), // Gets direct access to module.
 
       // Actions
       openPanel: this.openPanel.bind(this),
-      closePanel: this.closePanel.bind(this)
+      closePanel: this.closePanel.bind(this),
+      openPopup: this.openPopup.bind(this),
+      closePopup: this.closePopup.bind(this)
     }
 
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
@@ -323,8 +325,9 @@ export default class UIController {
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
     // Initialize components
-    this.panel = this.uiModules.get('panel').instance
-    this.popup = this.uiModules.get('popup').instance
+    // TODO: this is for compatibility with legacy code only. All UI modules must by dynamic, not static
+    this.panel = this.api.ui.getModule('panel')
+    this.popup = this.api.ui.getModule('popup')
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -388,7 +391,7 @@ export default class UIController {
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
 
-    if (this.api.ui.hasModule('popup')) { this.getUiModule('popup').vi.close() }
+    if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
     if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
     this.isActivated = false
     this.isDeactivated = true
@@ -744,7 +747,7 @@ export default class UIController {
       if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
     } else {
       if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
-      if (this.api.ui.hasModule('popup')) { this.api.ui.getModule('popup').vi.open() }
+      if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
     }
     return this
   }
@@ -773,6 +776,18 @@ export default class UIController {
     }
   }
 
+  openPopup () {
+    console.log(`UI Controller's Open Popup`)
+    if (this.api.ui.hasModule('popup')) {
+      this.store.commit('popup/open')
+    }
+  }
+  closePopup (syncState = true) {
+    console.log(`UI Controller's Close Popup`)
+    if (this.api.ui.hasModule('popup')) {
+      this.store.commit('popup/close')
+    }
+  }
   setRootComponentClasses () {
     let classes = []
 
@@ -930,8 +945,8 @@ export default class UIController {
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
         if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.api.ui.hasModule('popup') && this.getUiModule('popup').vi.visible) {
-        this.getUiModule('popup').vi.close()
+      } else if (this.api.ui.hasModule('popup')) {
+        this.api.ui.closePopup()
       }
     }
     return true

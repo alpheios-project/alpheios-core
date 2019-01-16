@@ -149,7 +149,7 @@ export default {
         .create(textSelector, resourceOptions, lemmaTranslationLang)
         .getData()
       // A lookup, when started from a panel, should open a popup with lookup results
-      this.uiController.popup.vi.open()
+      this.ui.openPopup()
       this.ui.closePanel()
     },
 

@@ -43,7 +43,9 @@ describe('panel.test.js', () => {
     store = new Vuex.Store({
       modules: {
         panel: {
-          state: {},
+          state: {
+            visible: false
+          },
           actions: {},
           getters: {}
         }

@@ -1,12 +1,12 @@
 <template>
   <div :data-notification-visible="data && data.notification && data.notification.visible" :style="mainstyles" class="alpheios-popup auk" id="alpheios-popup-inner" ref="popup"
        v-bind:class="divClasses" v-on-clickaway="attachTrackingClick"
-       v-show="visible">
+       v-show="this.$store.state.popup.visible">
     <alph-tooltip
         :additionalStyles="additionalStylesTootipCloseIcon"
         :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"
         tooltipDirection="left">
-          <span @click="closePopup" class="alpheios-popup__close-btn">
+          <span @click="ui.closePopup" class="alpheios-popup__close-btn">
               <close-icon></close-icon>
           </span>
     </alph-tooltip>
@@ -115,7 +115,7 @@ import { directive as onClickaway } from '../directives/clickaway.js'
 
 export default {
   name: 'Popup',
-  inject: ['l10n'],
+  inject: ['ui', 'l10n'],
   components: {
     morph: Morph,
     setting: Setting,
@@ -173,10 +173,6 @@ export default {
     },
     linkedfeatures: {
       type: Array,
-      required: true
-    },
-    visible: {
-      type: Boolean,
       required: true
     },
     translations: {
@@ -268,7 +264,7 @@ export default {
     },
 
     positionLeftDm: function () {
-      if (!this.visible) {
+      if (!this.$store.state.popup.visible) {
         // Reset if popup is invisible
         return '0px'
       }
@@ -302,7 +298,7 @@ export default {
     },
 
     positionTopDm: function () {
-      if (!this.visible) {
+      if (!this.$store.state.popup.visible) {
         // Reset if popup is invisible
         return '0px'
       }
@@ -407,11 +403,6 @@ export default {
       while (this.messages.length > 0) {
         this.messages.pop()
       }
-    },
-
-    closePopup () {
-      this.logger.log(`Closing a popup and resetting its dimensions`)
-      this.$emit('close')
     },
 
     closeNotifications () {
@@ -589,7 +580,7 @@ export default {
     },
 
     attachTrackingClick: function () {
-      this.closePopup()
+      this.ui.closePopup()
     }
 
   },
@@ -601,10 +592,21 @@ export default {
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
     }
+
+    // TODO: Is there a better way to handle a popup's content update?
+    this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
+      if (newValue) {
+        // A popup became visible
+        this.updatePopupDimensions()
+      } else {
+        // A popup became invisible
+        this.resetPopupDimensions()
+      }
+    })
   },
 
   updated () {
-    if (this.visible) {
+    if (this.$store.state.popup.visible) {
       let time = Date.now()
       this.logger.log(`${time}: component is updated`)
 
@@ -621,16 +623,6 @@ export default {
   },
 
   watch: {
-    visible: function (value) {
-      if (value) {
-        // A popup became visible
-        this.updatePopupDimensions()
-      } else {
-        // A popup became invisible
-        this.resetPopupDimensions()
-      }
-    },
-
     requestStartTime () {
       this.logger.log(`Request start time has been updated`)
       this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
@@ -642,7 +634,6 @@ export default {
       let time = Date.now()
       this.logger.log(`${time}: translation data became available`, this.translations)
     }
-
   }
 }
 </script>
