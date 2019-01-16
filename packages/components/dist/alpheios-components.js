@@ -31764,7 +31764,7 @@ class UIController {
   }
 
   setDefaultPanelState () {
-    if (!this.panel) { return this }
+    if (!this.hasUiModule('panel')) { return this }
     if (this.uiOptions.items.panelOnActivate.currentValue) {
       // If option value of panelOnActivate is true
       this.state.setPanelOpen()
@@ -31791,6 +31791,14 @@ class UIController {
     return this
   }
 
+  hasUiModule (moduleName) {
+    return this.uiModules.has(moduleName)
+  }
+
+  getUiModule (moduleName) {
+    return this.uiModules.get(moduleName).instance
+  }
+
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
@@ -31815,8 +31823,15 @@ class UIController {
     this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(...m.options) })
     // Mount all registered modules into the store
     this.dataModules.forEach((m) => this.store.registerModule(m.instance.publicName, m.instance.store))
-    // Expose public API of all modules with `provide`
+
+    // Construct a public API of all modules that will be shared using `provide`
     this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
+    // Add UI controller specific API groups
+    this.api.uiModules = {
+      hasModule: this.hasUiModule.bind(this),
+      getModule: this.getUiModule.bind(this)
+    }
+
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
@@ -31861,7 +31876,7 @@ class UIController {
     }
     // If panel should be opened according to the state, open it
     if (this.state.isPanelOpen()) {
-      this.panel.vi.open(true)
+      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open(true) }
     }
 
     if (this.state.tab) {
@@ -31886,8 +31901,8 @@ class UIController {
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
 
-    this.popup.vi.close()
-    this.panel.vi.close(false) // Close panel without updating it's state so the state can be saved for later reactivation
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.close() }
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close(false) } // Close panel without updating it's state so the state can be saved for later reactivation
     this.isActivated = false
     this.isDeactivated = true
     this.state.deactivate()
@@ -31940,19 +31955,25 @@ class UIController {
   }
 
   message (message) {
-    this.panel.vi.showMessage(message)
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showMessage(message) }
     return this
   }
 
   addMessage (message) {
-    this.panel.vi.appendMessage(message)
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.appendMessage(message) }
   }
 
   addImportantMessage (message) {
-    this.panel.vi.appendMessage(message)
-    this.popup.vi.appendMessage(message)
-    this.panel.vi.showImportantNotification(message)
-    this.popup.vi.showImportantNotification(message)
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      panel.vi.appendMessage(message)
+      panel.vi.showImportantNotification(message)
+    }
+    if (this.hasUiModule('popup')) {
+      const popup = this.getUiModule('popup')
+      popup.vi.appendMessage(message)
+      popup.vi.showImportantNotification(message)
+    }
   }
 
   /**
@@ -31973,31 +31994,31 @@ class UIController {
       !homonym.lexemes ||
       homonym.lexemes.length < 1 ||
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
-    this.panel.vi.showLanguageNotification(homonym, notFound)
-    this.popup.vi.showLanguageNotification(homonym, notFound)
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showLanguageNotification(homonym, notFound) }
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showLanguageNotification(homonym, notFound) }
   }
 
   showStatusInfo (selectionText, languageID) {
-    this.panel.vi.showStatusInfo(selectionText, languageID)
-    this.popup.vi.showStatusInfo(selectionText, languageID)
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showStatusInfo(selectionText, languageID) }
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showStatusInfo(selectionText, languageID) }
   }
 
   showErrorInfo (errorText) {
-    this.panel.vi.showErrorInformation(errorText)
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showErrorInformation(errorText) }
   }
 
   showImportantNotification (message) {
-    this.panel.vi.showImportantNotification(message)
-    this.popup.vi.showImportantNotification(message)
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showImportantNotification(message) }
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showImportantNotification(message) }
   }
 
   changeTab (tabName) {
-    if (this.panel) {
+    if (this.hasUiModule('panel')) {
       if (!this.tabState.hasOwnProperty(tabName)) {
         // Set tab to a default one if it is an unknown tab name
         tabName = this.tabStateDefault
       }
-      this.panel.vi.changeTab(tabName)
+      this.getUiModule('panel').vi.changeTab(tabName)
     } else {
       console.warn(`Cannot switch tab because panel does not exist`)
     }
@@ -32005,29 +32026,35 @@ class UIController {
   }
 
   setTargetRect (targetRect) {
-    this.popup.vi.setTargetRect(targetRect)
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.setTargetRect(targetRect) }
     return this
   }
 
   newLexicalRequest (languageID) {
-    this.popup.vi.newLexicalRequest()
-    this.panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
-    this.panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
-    this.panel.vi.panelData.grammarAvailable = false
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
+      panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
+      panel.vi.panelData.grammarAvailable = false
+    }
     this.clear().open().changeTab('definitions')
     return this
   }
 
   updateMorphology (homonym) {
     homonym.lexemes.sort(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"].getSortByTwoLemmaFeatures(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part))
-    this.popup.vi.lexemes = homonym.lexemes
-    if (homonym.lexemes.length > 0) {
-      // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple
-      this.popup.vi.linkedFeatures = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
+    if (this.hasUiModule('popup')) {
+      const popup = this.getUiModule('popup')
+      popup.vi.lexemes = homonym.lexemes
+      if (homonym.lexemes.length > 0) {
+        // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple
+        popup.vi.linkedFeatures = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
+      }
+      popup.vi.popupData.morphDataReady = true
+      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
     }
-    this.popup.vi.popupData.morphDataReady = true
-    this.panel.vi.panelData.lexemes = homonym.lexemes
-    this.popup.vi.popupData.updates = this.popup.vi.popupData.updates + 1
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.lexemes = homonym.lexemes }
     this.updateProviders(homonym)
   }
 
@@ -32048,7 +32075,7 @@ class UIController {
         providers.set(l.lemma.translation.provider, 1)
       }
     })
-    this.popup.vi.popupData.providers = Array.from(providers.keys())
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.providers = Array.from(providers.keys()) }
   }
 
   /**
@@ -32057,18 +32084,24 @@ class UIController {
    * @param {Array} urls
    */
   updateGrammar (urls = []) {
-    if (urls.length > 0) {
-      this.panel.vi.panelData.grammarRes = urls[0]
-      this.panel.vi.panelData.grammarAvailable = true
-    } else {
-      this.panel.vi.panelData.grammarRes = { provider: this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND') }
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      if (urls.length > 0) {
+        panel.vi.panelData.grammarRes = urls[0]
+        panel.vi.panelData.grammarAvailable = true
+      } else {
+        panel.vi.panelData.grammarRes = { provider: this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND') }
+      }
     }
     // todo show TOC or not found
   }
 
   updateDefinitions (homonym) {
-    this.panel.vi.panelData.fullDefinitions = ''
-    this.panel.vi.panelData.shortDefinitions = []
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      panel.vi.panelData.fullDefinitions = ''
+      panel.vi.panelData.shortDefinitions = []
+    }
     let definitions = {}
     // let defsList = []
     let hasFullDefs = false
@@ -32084,22 +32117,25 @@ class UIController {
             definitions[lexeme.lemma.ID].push(def)
           }
         }
-        this.panel.vi.panelData.shortDefinitions.push(...lexeme.meaning.shortDefs)
+        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.shortDefinitions.push(...lexeme.meaning.shortDefs) }
         this.updateProviders(homonym)
       } else if (Object.entries(lexeme.lemma.features).length > 0) {
         definitions[lexeme.lemma.ID] = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"]('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
       }
 
       if (lexeme.meaning.fullDefs.length > 0) {
-        this.panel.vi.panelData.fullDefinitions += this.formatFullDefinitions(lexeme)
+        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.fullDefinitions += this.formatFullDefinitions(lexeme) }
         hasFullDefs = true
       }
     }
 
     // Populate a popup
-    this.popup.vi.definitions = definitions
-    this.popup.vi.popupData.defDataReady = hasFullDefs
-    this.popup.vi.popupData.updates = this.popup.vi.popupData.updates + 1
+    if (this.hasUiModule('popup')) {
+      const popup = this.getUiModule('popup')
+      popup.vi.definitions = definitions
+      popup.vi.popupData.defDataReady = hasFullDefs
+      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
+    }
   }
 
   updateTranslations (homonym) {
@@ -32109,24 +32145,26 @@ class UIController {
         translations[lexeme.lemma.ID] = lexeme.lemma.translation
       }
     }
-    this.popup.vi.translations = translations
-    this.popup.vi.popupData.translationsDataReady = true
-    this.popup.vi.popupData.updates = this.popup.vi.popupData.updates + 1
+    if (this.hasUiModule('popup')) {
+      const popup = this.getUiModule('popup')
+      popup.vi.translations = translations
+      popup.vi.popupData.translationsDataReady = true
+      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
+    }
     this.updateProviders(homonym)
   }
 
   updatePageAnnotationData (data) {
-    console.log(`Update page annotations`)
-    this.panel.vi.panelData.treebankComponentData.data.page = data.treebank.page || {}
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.page = data.treebank.page || {} }
   }
 
   updateWordAnnotationData (data) {
     if (data && data.treebank) {
-      this.panel.vi.panelData.treebankComponentData.data.word = data.treebank.word || {}
-      this.popup.vi.popupData.hasTreebank = data.treebank.word
+      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = data.treebank.word || {} }
+      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = data.treebank.word }
     } else {
-      this.panel.vi.panelData.treebankComponentData.data.word = {}
-      this.popup.vi.popupData.hasTreebank = false
+      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = {} }
+      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = false }
     }
   }
 
@@ -32139,20 +32177,26 @@ class UIController {
     }
     this.state.setItem('currentLanguage', alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(currentLanguageID))
 
-    this.panel.vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
-    this.popup.vi.popupData.inflDataReady = this.inflDataReady
-    this.panel.vi.panelData.currentLanguageID = currentLanguageID
-    this.panel.vi.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID).name
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      panel.vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
+      panel.vi.panelData.currentLanguageID = currentLanguageID
+      panel.vi.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID).name
+    }
 
-    vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(this.popup.vi.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
+    if (this.hasUiModule('popup')) {
+      const popup = this.getUiModule('popup')
+      popup.vi.popupData.inflDataReady = this.inflDataReady
+      vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(popup.vi.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
+    }
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
   updateVerboseMode () {
     this.state.setItem('verboseMode', this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
 
-    this.panel.vi.panelData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
-    this.popup.vi.popupData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode) }
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode) }
   }
 
   updateLemmaTranslations () {
@@ -32164,32 +32208,35 @@ class UIController {
   }
 
   notifyInflectionBrowser () {
-    this.panel.vi.panelData.inflectionBrowserEnabled = true
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionBrowserEnabled = true }
   }
 
   updateInflections (homonym) {
     this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].create(homonym, this.contentOptions.items.locale.currentValue)
 
-    this.panel.vi.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet }
     if (this.inflectionsViewSet.hasMatchingViews) {
       this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
-    this.panel.vi.panelData.inflectionsWaitState = false
-    this.panel.vi.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
-    this.popup.vi.popupData.inflDataReady = this.inflDataReady
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      panel.vi.panelData.inflectionsWaitState = false
+      panel.vi.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
+    }
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady }
   }
 
   lexicalRequestComplete () {
-    this.popup.vi.popupData.morphDataReady = true
-    this.panel.vi.panelData.inflBrowserTablesCollapsed = null // Reset inflection browser tables state
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
   }
 
   lexicalRequestSucceeded () {
-    this.panel.vi.panelData.inflectionsWaitState = false
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
   }
 
   lexicalRequestFailed () {
-    this.panel.vi.panelData.inflectionsWaitState = false
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
   }
 
   get inflDataReady () {
@@ -32197,17 +32244,17 @@ class UIController {
   }
 
   clear () {
-    this.panel.vi.clearContent()
-    this.popup.vi.clearContent()
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
     return this
   }
 
   open () {
     if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
-      this.panel.vi.open()
+      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open() }
     } else {
-      if (this.panel.vi.isOpen) { this.panel.vi.close() }
-      this.popup.vi.open()
+      if (this.hasUiModule('panel') && this.getUiModule('panel').vi.isOpen) { this.getUiModule('panel').vi.close() }
+      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.open() }
     }
     return this
   }
@@ -32216,14 +32263,14 @@ class UIController {
    * Opens a panel. Used from a content script upon a panel status change request.
    */
   openPanel () {
-    this.panel.vi.open()
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.open() }
   }
 
   /**
    * Closes a panel. Used from a content script upon a panel status change request.
    */
   closePanel () {
-    this.panel.vi.close()
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close() }
   }
 
   setRootComponentClasses () {
@@ -32248,41 +32295,58 @@ class UIController {
       classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.defaultValue}_class`)
     }
 
-    this.popup.vi.popupData.classes.splice(0, this.popup.vi.popupData.classes.length)
-    this.panel.vi.panelData.classes.splice(0, this.popup.vi.popupData.classes.length)
+    let classesLength = 0
+    if (this.hasUiModule('popup')) {
+      const popup = this.getUiModule('popup')
+      const classesLength = popup.vi.popupData.classes.length
+      popup.vi.popupData.classes.splice(0, classesLength)
+      classes.forEach(classItem => {
+        popup.vi.popupData.classes.push(classItem)
+      })
+    }
 
-    classes.forEach(classItem => {
-      this.popup.vi.popupData.classes.push(classItem)
-      this.panel.vi.panelData.classes.push(classItem)
-    })
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      panel.vi.panelData.classes.splice(0, classesLength)
+
+      classes.forEach(classItem => {
+        panel.vi.panelData.classes.push(classItem)
+      })
+    }
   }
 
   updateStyleClass (prefix, type) {
-    let popupClasses = this.popup.vi.popupData.classes.slice(0)
+    if (this.hasUiModule('popup')) {
+      const popup = this.getUiModule('popup')
+      let popupClasses = popup.vi.popupData.classes.slice(0)
 
-    popupClasses.forEach(function (item, index) {
-      if (item.indexOf(prefix) === 0) {
-        popupClasses[index] = `${prefix}${type}_class`
-      }
-    })
+      popupClasses.forEach(function (item, index) {
+        if (item.indexOf(prefix) === 0) {
+          popupClasses[index] = `${prefix}${type}_class`
+        }
+      })
 
-    this.popup.vi.popupData.classes.splice(0, this.popup.vi.popupData.classes.length)
-    popupClasses.forEach(classItem => {
-      this.popup.vi.popupData.classes.push(classItem)
-    })
+      popup.vi.popupData.classes.splice(0, popup.vi.popupData.classes.length)
+      popupClasses.forEach(classItem => {
+        popup.vi.popupData.classes.push(classItem)
+      })
+    }
 
-    let panelClasses = this.panel.vi.panelData.classes.slice(0)
+    if (this.hasUiModule('panel')) {
+      const panel = this.getUiModule('panel')
+      let panelClasses = panel.vi.panelData.classes.slice(0)
 
-    panelClasses.forEach(function (item, index) {
-      if (item.indexOf(prefix) === 0) {
-        panelClasses[index] = `${prefix}${type}_class`
-      }
-    })
-    this.panel.vi.panelData.classes.splice(0, this.panel.vi.panelData.classes.length)
+      panelClasses.forEach(function (item, index) {
+        if (item.indexOf(prefix) === 0) {
+          panelClasses[index] = `${prefix}${type}_class`
+        }
+      })
+      panel.vi.panelData.classes.splice(0, panel.vi.panelData.classes.length)
 
-    panelClasses.forEach(classItem => {
-      this.panel.vi.panelData.classes.push(classItem)
-    })
+      panelClasses.forEach(classItem => {
+        panel.vi.panelData.classes.push(classItem)
+      })
+    }
   }
 
   updateFontSizeClass (type) {
@@ -32365,9 +32429,9 @@ class UIController {
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
-        this.panel.vi.close()
-      } else if (this.popup.vi.visible) {
-        this.popup.vi.close()
+        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.close() }
+      } else if (this.hasUiModule('popup') && this.getUiModule('popup').vi.visible) {
+        this.getUiModule('popup').vi.close()
       }
     }
     return true
@@ -39320,6 +39384,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// TODO: Add a check for required modules
 class PanelModule {
   constructor (store, api, options) {
     const uiController = options.uiController
@@ -39660,6 +39725,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// TODO: Add a check for required modules
 class PopupModule {
   constructor (store, api, options) {
     const uiController = options.uiController
@@ -39869,15 +39935,21 @@ class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          this.$options.uiController.panel.vi.changeTab(tabName)
-          this.$options.uiController.panel.vi.open()
+          if (this.$options.api.uiModules.hasModule('panel')) {
+            const panel = this.$options.api.uiModules.getModule('panel')
+            panel.vi.changeTab(tabName)
+            panel.vi.open()
+          }
           return this
         },
 
         sendFeature: function (feature) {
-          this.$options.uiController.panel.vi.requestGrammar(feature)
-          this.$options.uiController.panel.vi.changeTab('grammar')
-          this.$options.uiController.panel.vi.open()
+          if (this.$options.api.uiModules.hasModule('panel')) {
+            const panel = this.$options.api.uiModules.getModule('panel')
+            panel.vi.requestGrammar(feature)
+            panel.vi.changeTab('grammar')
+            panel.vi.open()
+          }
           return this
         },
 

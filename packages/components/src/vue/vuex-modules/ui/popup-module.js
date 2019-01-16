@@ -2,6 +2,7 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Popup from '@/vue/components/popup.vue'
 import { getLanguageName } from '@/lib/utility/language-names.js'
 
+// TODO: Add a check for required modules
 export default class PopupModule {
   constructor (store, api, options) {
     const uiController = options.uiController
@@ -165,7 +166,9 @@ export default class PopupModule {
 
         newLexicalRequest: function () {
           this.popupData.requestStartTime = new Date().getTime()
-          this.$options.uiController.panel.vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          if (this.$options.api.uiModules.hasModule('panel')) {
+            this.$options.api.uiModules.getModule('panel').vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+          }
         },
 
         clearContent: function () {
@@ -211,15 +214,21 @@ export default class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          this.$options.uiController.panel.vi.changeTab(tabName)
-          this.$options.uiController.panel.vi.open()
+          if (this.$options.api.uiModules.hasModule('panel')) {
+            const panel = this.$options.api.uiModules.getModule('panel')
+            panel.vi.changeTab(tabName)
+            panel.vi.open()
+          }
           return this
         },
 
         sendFeature: function (feature) {
-          this.$options.uiController.panel.vi.requestGrammar(feature)
-          this.$options.uiController.panel.vi.changeTab('grammar')
-          this.$options.uiController.panel.vi.open()
+          if (this.$options.api.uiModules.hasModule('panel')) {
+            const panel = this.$options.api.uiModules.getModule('panel')
+            panel.vi.requestGrammar(feature)
+            panel.vi.changeTab('grammar')
+            panel.vi.open()
+          }
           return this
         },
 

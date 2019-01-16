@@ -2,6 +2,7 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Panel from '@/vue/components/panel.vue'
 import { getLanguageName } from '@/lib/utility/language-names.js'
 
+// TODO: Add a check for required modules
 export default class PanelModule {
   constructor (store, api, options) {
     const uiController = options.uiController
