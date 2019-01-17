@@ -112,11 +112,11 @@ export default class UIController {
 
     // Register UI modules
     uiController.registerUiModule(PanelModule, {
-      tabs: uiController.tabState,
-      uiController: uiController
+      tabs: uiController.tabState, // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
+      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
     })
     uiController.registerUiModule(PopupModule, {
-      uiController: uiController
+      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
     })
 
     // Creates on configures an event listener
