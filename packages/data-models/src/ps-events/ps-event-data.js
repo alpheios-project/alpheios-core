@@ -14,9 +14,22 @@
 export default class PsEventData {
   /**
    * @param {PsEvent} event - An event that is being published.
+   * @param {string} [caller=''] - The name of the function from where an event was published.
    */
-  constructor (event) {
+  constructor (event, caller = '') {
     this.name = event.name
     this.publisher = event.publisher
+    this.caller = caller
+  }
+
+  /**
+   * Returns a description of an event data in a printable form. Example:
+   *     LexicalQuery.finalize -> [Lexical Query Complete]
+   * If caller function is not specified during a `pub()` call, description will be:
+   *     LexicalQuery -> [Lexical Query Complete]
+   * @return {string} - An event data description.
+   */
+  get description () {
+    return this.caller ? `${this.publisher}.${this.caller} -> [${this.name}]` : `${this.publisher} -> [${this.name}]`
   }
 }

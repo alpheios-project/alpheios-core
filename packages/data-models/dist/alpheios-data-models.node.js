@@ -4519,10 +4519,23 @@ __webpack_require__.r(__webpack_exports__);
 class PsEventData {
   /**
    * @param {PsEvent} event - An event that is being published.
+   * @param {string} [caller=''] - The name of the function from where an event was published.
    */
-  constructor (event) {
+  constructor (event, caller = '') {
     this.name = event.name
     this.publisher = event.publisher
+    this.caller = caller
+  }
+
+  /**
+   * Returns a description of an event data in a printable form. Example:
+   *     LexicalQuery.finalize -> [Lexical Query Complete]
+   * If caller function is not specified during a `pub()` call, description will be:
+   *     LexicalQuery -> [Lexical Query Complete]
+   * @return {string} - An event data description.
+   */
+  get description () {
+    return this.caller ? `${this.publisher}.${this.caller} -> [${this.name}]` : `${this.publisher} -> [${this.name}]`
   }
 }
 
@@ -4601,9 +4614,10 @@ class PsEvent {
    * Publishes an event with data related to it. All subscribers will receive an
    * event notification along with event data.
    * @param {Object} [data={}] - An event-specific data associated with the event.
+   * @param {string} [caller=''] - The name of the function that called `pub`.
    */
-  pub (data = {}) {
-    this._subscribers.forEach(l => l(data, new _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](this)))
+  pub (data = {}, caller = '') {
+    this._subscribers.forEach(l => l(data, new _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](this, caller)))
   }
 }
 

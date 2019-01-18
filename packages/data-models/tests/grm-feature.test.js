@@ -59,11 +59,6 @@ describe('Feature object', () => {
     expect(`${f}`).toEqual(featureValue1)
   })
 
-  test('toLocaleStringAbbr returns value', () => {
-    let f = new GrmFeature('feminine', Feature.types.gender, 'lat')
-    expect(f.toLocaleStringAbbr('en')).toEqual('f.')
-  })
-
   test('hasValue', () => {
     let f = new GrmFeature(['foo', 'bar'], Feature.types.gender, 'lat')
     expect(f.hasValue('foo')).toBeTruthy()

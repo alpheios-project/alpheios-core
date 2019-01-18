@@ -266,15 +266,7 @@ describe('feature.test.js', () => {
     expect(res3._data).toEqual([{ value: 'fooword', sortOrder: 1 }])
   })
 
-  it('11 Feature - check toLocaleStringAbbr', () => {
-    let f1 = new Feature(Feature.types.gender, 'feminine', latID)
-    expect(f1.toLocaleStringAbbr()).toEqual('f.')
-
-    let f2 = new Feature(Feature.types.gender, 'unknown', latID)
-    expect(f2.toLocaleStringAbbr()).toEqual('unknown')
-  })
-
-  it('12 Feature - check addImporter, getImporter', () => {
+  it('11 Feature - check addImporter, getImporter', () => {
     let feature = new Feature('word', 'fooword', latID)
     feature.addImporter()
 
@@ -295,7 +287,7 @@ describe('feature.test.js', () => {
     }).toThrow(new Error(`Importer "fooname1" does not exist`))
   })
 
-  it('13 Feature - check addFromImporter', () => {
+  it('12 Feature - check addFromImporter', () => {
     let feature = new Feature('word', 'fooword', latID)
 
     expect(function () {
@@ -320,7 +312,7 @@ describe('feature.test.js', () => {
     expect(feature._data).toEqual([{ value: 'foovalue1', sortOrder: 2 }, { value: 'fooword', sortOrder: 1 }])
   })
 
-  it('14 Feature - check createFromImporter', () => {
+  it('13 Feature - check createFromImporter', () => {
     let feature = new Feature('word', 'fooword', latID)
 
     expect(function () {

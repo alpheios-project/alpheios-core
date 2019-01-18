@@ -52,7 +52,20 @@ describe('event.test.js', () => {
     expect(anotherSubscriber).toBeCalledTimes(1)
   })
 
-  it('Event.pub: should pass data object and event data to all subscriber functions', () => {
+  it('Event.pub with a caller name: should pass data object and event data to all subscriber functions', () => {
+    const data = {
+      payload: 'Test data'
+    }
+    const callerName = 'Caller name'
+    const eventData = new EventData(event, callerName)
+    const anotherSubscriber = jest.fn()
+    event.sub(anotherSubscriber)
+    event.pub(data, callerName)
+    expect(subscriber).toBeCalledWith(data, eventData)
+    expect(anotherSubscriber).toBeCalledWith(data, eventData)
+  })
+
+  it('Event.pub without a caller name: should pass data object and event data to all subscriber functions', () => {
     const data = {
       payload: 'Test data'
     }

@@ -59,8 +59,9 @@ export default class PsEvent {
    * Publishes an event with data related to it. All subscribers will receive an
    * event notification along with event data.
    * @param {Object} [data={}] - An event-specific data associated with the event.
+   * @param {string} [caller=''] - The name of the function that called `pub`.
    */
-  pub (data = {}) {
-    this._subscribers.forEach(l => l(data, new PsEventData(this)))
+  pub (data = {}, caller = '') {
+    this._subscribers.forEach(l => l(data, new PsEventData(this, caller)))
   }
 }
