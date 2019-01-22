@@ -30,7 +30,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   }
 
   static get voiceEnabledHdwds () {
-    return ['fero']
+    return ['fero', 'queo', 'adeo', 'ineo']
   }
 
   createTable () {

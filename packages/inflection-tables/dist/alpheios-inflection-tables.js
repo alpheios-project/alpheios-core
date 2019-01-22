@@ -15124,7 +15124,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
   }
 
   static get voiceEnabledHdwds () {
-    return ['fero']
+    return ['fero', 'queo', 'adeo', 'ineo']
   }
 
   createTable () {
