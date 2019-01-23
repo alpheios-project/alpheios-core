@@ -1,14 +1,20 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { shallowMount, mount } from '@vue/test-utils'
+import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Popup from '@/vue/components/popup.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
 import Lookup from '@/vue/components/lookup.vue'
 import Setting from '@/vue/components/setting.vue'
 
 import Vue from 'vue/dist/vue'
+import Vuex from 'vuex'
 
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import Locales from '@/locales/locales.js'
+import enUS from '@/locales/en-us/messages.json'
+import enUSData from '@/locales/en-us/messages-data.json'
+import enUSInfl from '@/locales/en-us/messages-inflections.json'
+import enGB from '@/locales/en-gb/messages.json'
 
 import Options from '@/lib/options/options.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
@@ -16,7 +22,18 @@ import ContentOptionDefaults from '@/settings/content-options-defaults.json'
 import LocalStorageArea from '@/lib/options/local-storage-area.js'
 
 describe('popup.test.js', () => {
-  const l10nModule = new L10nModule()
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
+  let store
+  const l10nModule = new L10nModule(Locales.en_US, Locales.createBundleArr([
+    [enUS, Locales.en_US],
+    [enUSData, Locales.en_US],
+    [enUSInfl, Locales.en_US],
+    [enGB, Locales.en_GB]
+  ]))
+  const uiAPI = {
+    closePopup: () => {}
+  }
 
   console.error = function () {}
   console.log = function () {}
@@ -26,6 +43,18 @@ describe('popup.test.js', () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+
+    store = new Vuex.Store({
+      modules: {
+        popup: {
+          state: {
+            visible: false
+          },
+          actions: {},
+          getters: {}
+        }
+      }
+    })
   })
   afterEach(() => {
     jest.resetModules()
@@ -44,8 +73,11 @@ describe('popup.test.js', () => {
         visible: false,
         translations: {}
       },
+      store,
+      localVue,
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        ui: uiAPI
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()

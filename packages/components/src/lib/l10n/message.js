@@ -7,6 +7,9 @@ export default class Message {
   /**
    * Creates a new Message object.
    * @param {object} message - A message object as read from JSON file.
+   * @param {string} message.name - A message string.
+   * @param {string[]} [message.params] - A list of message parameters (optional).
+   * @param {string} [message.abbr] - Message abbreviation (optional).
    * @param {string} locale - A message's locale.
    */
   constructor (message, locale) {
@@ -17,13 +20,16 @@ export default class Message {
       throw new Error('Message data is missing')
     }
 
+    this.message = `Message text is not defined in translation data` // Message format string or text
+    this.params = [] // Message parameters
+
     this.locale = locale
     for (const key of Object.keys(message)) {
       this[key] = message[key]
     }
 
-    this.formatFunc = new IntlMessageFormat(message.message, this.locale)
-    this.abbrFunc = new IntlMessageFormat(message.abbr || message.message, this.locale)
+    this.formatFunc = new IntlMessageFormat(this.message, this.locale)
+    this.abbrFunc = new IntlMessageFormat(this.abbr || this.message, this.locale)
   }
 
   /**
@@ -31,52 +37,33 @@ export default class Message {
    * @return {boolean} True if message has any parameters, false otherwise.
    */
   get hasParameters () {
-    return !!(this.params && Array.isArray(this.params) && this.params.length > 0)
+    return Boolean(this.params.length > 0)
   }
 
   /**
-   * Defines getter methods on an object of messages.
-   * @param {object} messages - On object where messages will be stored. Each property corresponds to a message key.
-   *        Each property will have a getter function defined (will return a formatted message), and,
-   *        for messages with parameters, a format(function).
-   *        `messages` object usually comes from a MessageBundle object.
-   * @param {string} key - A message key, a name of a message.
-   * @return {undefined} Has no return value.
+   * Returns a formatted version of a message (if message has parameters) or
+   * a message text (if parameters do not exist for a message).
+   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
+   * {
+   *     paramOneName: paramOneValue,
+   *     paramTwoName: paramTwoValue
+   * }.
+   * @return {string} A formatted message text
    */
-  defineProperties (messages, key) {
-    let self = this
+  getMsg (formatOptions) {
+    return !this.hasParameters ? this.message : this.formatFunc.format(formatOptions)
+  }
 
-    if (this.hasParameters) {
-      messages[key] = {
-        format (options) {
-          return self.formatFunc.format(options)
-        },
-        get (...options) {
-          let params = {}
-          // TODO: Add checks
-          for (let [index, param] of self.params.entries()) {
-            params[param] = options[index]
-          }
-          return self.formatFunc.format(params)
-        },
-        abbr (...options) {
-          let params = {}
-          // TODO: Add checks
-          for (let [index, param] of self.params.entries()) {
-            params[param] = options[index]
-          }
-          return self.abbrFunc.format(params)
-        }
-      }
-    } else {
-      messages[key] = {
-        get () {
-          return self.formatFunc.format()
-        },
-        abbr () {
-          return self.abbrFunc.format()
-        }
-      }
-    }
+  /**
+   * Returns an abbreviated version of a message (if defined) or a message itself otherwise.
+   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
+   * {
+   *     paramOneName: paramOneValue,
+   *     paramTwoName: paramTwoValue
+   * }.
+   * @return {string} Abbreviated or full message text.
+   */
+  getAbbr (formatOptions) {
+    return !this.hasParameters ? this.abbrFunc.format() : this.abbrFunc.format(formatOptions)
   }
 }

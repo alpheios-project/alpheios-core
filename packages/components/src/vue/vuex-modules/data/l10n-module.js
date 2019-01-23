@@ -1,33 +1,26 @@
 import Module from '@/vue/vuex-modules/module.js'
 import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
-import enUS from '@/locales/en-us/messages.json'
-import enUSData from '@/locales/en-us/messages-data.json'
-import enUSInfl from '@/locales/en-us/messages-inflections.json'
-import enGB from '@/locales/en-gb/messages.json'
 
 export default class L10nModule extends Module {
-  constructor () {
+  constructor (defaultLocale = Locales.en_US, messageBundles = []) {
     super()
-    this.l10n = new L10n()
-      .addMessages(enUS, Locales.en_US)
-      .addMessages(enUSData, Locales.en_US)
-      .addMessages(enUSInfl, Locales.en_US)
-      .addMessages(enGB, Locales.en_GB)
-      .setLocale(Locales.en_US)
+    this._l10n = new L10n()
+    messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
+    this._l10n.setLocale(defaultLocale)
 
     this.store = {
       // All stores of modules are namespaced
       namespaced: true,
 
       state: {
-        selectedLocale: this.l10n.selectedLocale
+        selectedLocale: this._l10n.selectedLocale
       },
       mutations: {
         // For arrow functions `this` will point to the class instance, not to the store
         setLocale: (state, newLocale) => {
-          this.l10n.setLocale(newLocale)
-          state.selectedLocale = this.l10n.selectedLocale
+          this._l10n.setLocale(newLocale)
+          state.selectedLocale = this._l10n.selectedLocale
         }
       }
     }
@@ -72,7 +65,7 @@ export default class L10nModule extends Module {
          * @return {boolean}
          */
         hasMsg: (messageID) => {
-          return this.l10n.bundle.hasMsg(messageID)
+          return this._l10n.bundle.hasMsg(messageID)
         },
 
         /**
@@ -84,7 +77,7 @@ export default class L10nModule extends Module {
          * @return {string} - A formatted translated text of a string.
          */
         getMsg: (messageID, formatOptions, options) => {
-          return this.l10n.bundle.getMsg(messageID, formatOptions, options)
+          return this._l10n.bundle.getMsg(messageID, formatOptions, options)
         },
 
         /**
@@ -96,7 +89,7 @@ export default class L10nModule extends Module {
          * @return {string} - A formatted translated text of a string.
          */
         getText: (messageID, formatOptions, options) => {
-          return this.l10n.bundle.getText(messageID, formatOptions, options)
+          return this._l10n.bundle.getText(messageID, formatOptions, options)
         },
 
         /**
@@ -106,7 +99,7 @@ export default class L10nModule extends Module {
          * @return {string}
          */
         getAbbr: (messageID, formatOptions) => {
-          return this.l10n.bundle.abbr(messageID, formatOptions)
+          return this._l10n.bundle.getAbbr(messageID, formatOptions)
         }
       }
     }

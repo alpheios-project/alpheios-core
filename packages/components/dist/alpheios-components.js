@@ -12232,6 +12232,7 @@ __webpack_require__.r(__webpack_exports__);
         .on('resizemove', this.resizeListener)
     }
 
+    // Updated popup dimensions when its visibility is updated
     this.$options.visibleUnwatch = this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
       if (newValue) {
         // A popup became visible
@@ -30258,7 +30259,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************!*\
   !*** ../node_modules/vuex/dist/vuex.esm.js ***!
   \*********************************************/
-/*! exports provided: Store, install, mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers, default */
+/*! exports provided: default, Store, install, mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30271,11 +30272,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.0.1
- * (c) 2017 Evan You
+ * vuex v3.1.0
+ * (c) 2019 Evan You
  * @license MIT
  */
-var applyMixin = function (Vue) {
+function applyMixin (Vue) {
   var version = Number(Vue.version.split('.')[0]);
 
   if (version >= 2) {
@@ -30309,7 +30310,7 @@ var applyMixin = function (Vue) {
       this.$store = options.parent.$store;
     }
   }
-};
+}
 
 var devtoolHook =
   typeof window !== 'undefined' &&
@@ -30339,16 +30340,6 @@ function devtoolPlugin (store) {
  * @param {Function} f
  * @return {*}
  */
-/**
- * Deep copy the given object considering circular structure.
- * This function caches all nested objects and its copies.
- * If it detects circular structure, use cached copy to avoid infinite loop.
- *
- * @param {*} obj
- * @param {Array<Object>} cache
- * @return {*}
- */
-
 
 /**
  * forEach for object
@@ -30369,17 +30360,22 @@ function assert (condition, msg) {
   if (!condition) { throw new Error(("[vuex] " + msg)) }
 }
 
+// Base data struct for store's module, package with some attribute and method
 var Module = function Module (rawModule, runtime) {
   this.runtime = runtime;
+  // Store some children item
   this._children = Object.create(null);
+  // Store the origin module object which passed by programmer
   this._rawModule = rawModule;
   var rawState = rawModule.state;
+
+  // Store the origin module's state
   this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
 };
 
-var prototypeAccessors$1 = { namespaced: { configurable: true } };
+var prototypeAccessors = { namespaced: { configurable: true } };
 
-prototypeAccessors$1.namespaced.get = function () {
+prototypeAccessors.namespaced.get = function () {
   return !!this._rawModule.namespaced
 };
 
@@ -30430,7 +30426,7 @@ Module.prototype.forEachMutation = function forEachMutation (fn) {
   }
 };
 
-Object.defineProperties( Module.prototype, prototypeAccessors$1 );
+Object.defineProperties( Module.prototype, prototypeAccessors );
 
 var ModuleCollection = function ModuleCollection (rawRootModule) {
   // register root module (Vuex.Store options)
@@ -30573,16 +30569,11 @@ var Store = function Store (options) {
   if (true) {
     assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
     assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
-    assert(this instanceof Store, "Store must be called with the new operator.");
+    assert(this instanceof Store, "store must be called with the new operator.");
   }
 
   var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
   var strict = options.strict; if ( strict === void 0 ) strict = false;
-
-  var state = options.state; if ( state === void 0 ) state = {};
-  if (typeof state === 'function') {
-    state = state() || {};
-  }
 
   // store internal state
   this._committing = false;
@@ -30610,6 +30601,8 @@ var Store = function Store (options) {
   // strict mode
   this.strict = strict;
 
+  var state = this._modules.root.state;
+
   // init root module.
   // this also recursively registers all sub-modules
   // and collects all module getters inside this._wrappedGetters
@@ -30622,20 +30615,21 @@ var Store = function Store (options) {
   // apply plugins
   plugins.forEach(function (plugin) { return plugin(this$1); });
 
-  if (Vue.config.devtools) {
+  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
+  if (useDevtools) {
     devtoolPlugin(this);
   }
 };
 
-var prototypeAccessors = { state: { configurable: true } };
+var prototypeAccessors$1 = { state: { configurable: true } };
 
-prototypeAccessors.state.get = function () {
+prototypeAccessors$1.state.get = function () {
   return this._vm._data.$$state
 };
 
-prototypeAccessors.state.set = function (v) {
+prototypeAccessors$1.state.set = function (v) {
   if (true) {
-    assert(false, "Use store.replaceState() to explicit replace store state.");
+    assert(false, "use store.replaceState() to explicit replace store state.");
   }
 };
 
@@ -30691,11 +30685,34 @@ Store.prototype.dispatch = function dispatch (_type, _payload) {
     return
   }
 
-  this._actionSubscribers.forEach(function (sub) { return sub(action, this$1.state); });
+  try {
+    this._actionSubscribers
+      .filter(function (sub) { return sub.before; })
+      .forEach(function (sub) { return sub.before(action, this$1.state); });
+  } catch (e) {
+    if (true) {
+      console.warn("[vuex] error in before action subscribers: ");
+      console.error(e);
+    }
+  }
 
-  return entry.length > 1
+  var result = entry.length > 1
     ? Promise.all(entry.map(function (handler) { return handler(payload); }))
-    : entry[0](payload)
+    : entry[0](payload);
+
+  return result.then(function (res) {
+    try {
+      this$1._actionSubscribers
+        .filter(function (sub) { return sub.after; })
+        .forEach(function (sub) { return sub.after(action, this$1.state); });
+    } catch (e) {
+      if (true) {
+        console.warn("[vuex] error in after action subscribers: ");
+        console.error(e);
+      }
+    }
+    return res
+  })
 };
 
 Store.prototype.subscribe = function subscribe (fn) {
@@ -30703,7 +30720,8 @@ Store.prototype.subscribe = function subscribe (fn) {
 };
 
 Store.prototype.subscribeAction = function subscribeAction (fn) {
-  return genericSubscribe(fn, this._actionSubscribers)
+  var subs = typeof fn === 'function' ? { before: fn } : fn;
+  return genericSubscribe(subs, this._actionSubscribers)
 };
 
 Store.prototype.watch = function watch (getter, cb, options) {
@@ -30768,7 +30786,7 @@ Store.prototype._withCommit = function _withCommit (fn) {
   this._committing = committing;
 };
 
-Object.defineProperties( Store.prototype, prototypeAccessors );
+Object.defineProperties( Store.prototype, prototypeAccessors$1 );
 
 function genericSubscribe (fn, subs) {
   if (subs.indexOf(fn) < 0) {
@@ -31015,7 +31033,7 @@ function registerGetter (store, type, rawGetter, local) {
 function enableStrictMode (store) {
   store._vm.$watch(function () { return this._data.$$state }, function () {
     if (true) {
-      assert(store._committing, "Do not mutate vuex store state outside mutation handlers.");
+      assert(store._committing, "do not mutate vuex store state outside mutation handlers.");
     }
   }, { deep: true, sync: true });
 }
@@ -31034,7 +31052,7 @@ function unifyObjectStyle (type, payload, options) {
   }
 
   if (true) {
-    assert(typeof type === 'string', ("Expects string as the type, but found " + (typeof type) + "."));
+    assert(typeof type === 'string', ("expects string as the type, but found " + (typeof type) + "."));
   }
 
   return { type: type, payload: payload, options: options }
@@ -31053,6 +31071,12 @@ function install (_Vue) {
   applyMixin(Vue);
 }
 
+/**
+ * Reduce the code which written in Vue.js for getting the state.
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
+ * @param {Object}
+ */
 var mapState = normalizeNamespace(function (namespace, states) {
   var res = {};
   normalizeMap(states).forEach(function (ref) {
@@ -31080,6 +31104,12 @@ var mapState = normalizeNamespace(function (namespace, states) {
   return res
 });
 
+/**
+ * Reduce the code which written in Vue.js for committing the mutation
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept anthor params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
 var mapMutations = normalizeNamespace(function (namespace, mutations) {
   var res = {};
   normalizeMap(mutations).forEach(function (ref) {
@@ -31090,6 +31120,7 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
 
+      // Get the commit method from store
       var commit = this.$store.commit;
       if (namespace) {
         var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
@@ -31106,12 +31137,19 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
   return res
 });
 
+/**
+ * Reduce the code which written in Vue.js for getting the getters
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} getters
+ * @return {Object}
+ */
 var mapGetters = normalizeNamespace(function (namespace, getters) {
   var res = {};
   normalizeMap(getters).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
 
+    // The namespace has been mutated by normalizeNamespace
     val = namespace + val;
     res[key] = function mappedGetter () {
       if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
@@ -31129,6 +31167,12 @@ var mapGetters = normalizeNamespace(function (namespace, getters) {
   return res
 });
 
+/**
+ * Reduce the code which written in Vue.js for dispatch the action
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
 var mapActions = normalizeNamespace(function (namespace, actions) {
   var res = {};
   normalizeMap(actions).forEach(function (ref) {
@@ -31139,6 +31183,7 @@ var mapActions = normalizeNamespace(function (namespace, actions) {
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
 
+      // get dispatch function from store
       var dispatch = this.$store.dispatch;
       if (namespace) {
         var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
@@ -31155,6 +31200,11 @@ var mapActions = normalizeNamespace(function (namespace, actions) {
   return res
 });
 
+/**
+ * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
+ * @param {String} namespace
+ * @return {Object}
+ */
 var createNamespacedHelpers = function (namespace) { return ({
   mapState: mapState.bind(null, namespace),
   mapGetters: mapGetters.bind(null, namespace),
@@ -31162,12 +31212,24 @@ var createNamespacedHelpers = function (namespace) { return ({
   mapActions: mapActions.bind(null, namespace)
 }); };
 
+/**
+ * Normalize the map
+ * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
+ * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+ * @param {Array|Object} map
+ * @return {Object}
+ */
 function normalizeMap (map) {
   return Array.isArray(map)
     ? map.map(function (key) { return ({ key: key, val: key }); })
     : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
 }
 
+/**
+ * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
+ * @param {Function} fn
+ * @return {Function}
+ */
 function normalizeNamespace (fn) {
   return function (namespace, map) {
     if (typeof namespace !== 'string') {
@@ -31180,6 +31242,13 @@ function normalizeNamespace (fn) {
   }
 }
 
+/**
+ * Search a special module from store by namespace. if module not exist, print error message.
+ * @param {Object} store
+ * @param {String} helper
+ * @param {String} namespace
+ * @return {Object}
+ */
 function getModuleByNamespace (store, helper, namespace) {
   var module = store._modulesNamespaceMap[namespace];
   if ( true && !module) {
@@ -31191,7 +31260,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.0.1',
+  version: '3.1.0',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -31199,8 +31268,8 @@ var index_esm = {
   createNamespacedHelpers: createNamespacedHelpers
 };
 
-
 /* harmony default export */ __webpack_exports__["default"] = (index_esm);
+
 
 
 /***/ }),
@@ -31485,30 +31554,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
-/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
-/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
-/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
-var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_13___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/locales/en-us/messages-data.json */ "./locales/en-us/messages-data.json");
+var _locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_8___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages-data.json */ "./locales/en-us/messages-data.json", 1);
+/* harmony import */ var _locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/locales/en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json");
+var _locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_9___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_10___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
+/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
+/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
+var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_23___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
 /* global Event */
 
 
@@ -31522,7 +31600,12 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___names
 // A popup component
 // import Popup from '@/vue/components/popup.vue'
 
-// Modules
+// Modules and their support dependencies
+
+
+
+
+
 
 
 
@@ -31574,9 +31657,9 @@ class UIController {
   constructor (state, options = {}) {
     this.state = state
     this.options = UIController.setOptions(options, UIController.optionsDefaults)
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14__, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__, this.options.storageAdapter)
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_23__, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__, this.options.storageAdapter)
     this.siteOptions = null // Will be set during an `init` phase
     this.tabState = {
       definitions: false,
@@ -31619,54 +31702,60 @@ class UIController {
     let uiController = new UIController(state, options)
 
     // Register data modules
-    uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__["default"])
+    console.log(`L10n registration`)
+    uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__["default"], _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].en_US, _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].createBundleArr([
+      [_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].en_US],
+      [_locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_8__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].en_US],
+      [_locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_9__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].en_US],
+      [_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_10__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].en_GB]
+    ]))
 
     // Register UI modules
-    uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
-      tabs: uiController.tabState,
-      uiController: uiController
+    uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      tabs: uiController.tabState, // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
+      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
     })
-    uiController.registerUiModule(_vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__["default"], {
-      uiController: uiController
+    uiController.registerUiModule(_vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
     })
 
     // Creates on configures an event listener
-    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_24__["default"]()
+    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_29__["default"]()
     switch (uiController.options.textQueryTrigger) {
       case 'dblClick':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_19__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__["default"])
         break
       case 'longTap':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__["default"])
         break
       default:
         eventController.registerListener(
-          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], uiController.options.textQueryTrigger
+          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"], uiController.options.textQueryTrigger
         )
     }
 
-    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'keydown')
-    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'Alpheios_Page_Load')
+    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"], 'keydown')
+    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"], 'Alpheios_Page_Load')
 
     // Attaches an event controller to a UIController instance
     uiController.evc = eventController
 
     // Subscribe to LexicalQuery events
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
     // Subscribe to ResourceQuery events
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
 
     // Subscribe to AnnotationQuery events
-    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
+    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_17__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
     return uiController
   }
@@ -31703,7 +31792,7 @@ class UIController {
         name: 'name',
         version: 'version'
       },
-      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_23__["default"],
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_28__["default"],
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
@@ -31713,7 +31802,7 @@ class UIController {
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
-        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default.a,
+        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_14___default.a,
         panelId: 'alpheios-panel',
         defaultPanelComponent: 'panel',
         popupId: 'alpheios-popup',
@@ -31793,7 +31882,7 @@ class UIController {
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     this.siteOptions = this.loadSiteOptions()
 
-    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].getZIndexMax()
+    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_22__["default"].getZIndexMax()
 
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
 
@@ -31919,7 +32008,7 @@ class UIController {
    */
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
-      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__["default"])
+      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_13__["default"])
       UIController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
@@ -31933,9 +32022,9 @@ class UIController {
    */
   loadSiteOptions () {
     let allSiteOptions = []
-    for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_13__) {
+    for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_18__) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](domain, this.options.storageAdapter)
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -32389,7 +32478,7 @@ class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_16__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
+      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_21__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
       let textSelector = htmlSelector.createTextSelector()
 
       if (!textSelector.isEmpty()) {
@@ -32414,7 +32503,7 @@ class UIController {
           })
           .getData() */
 
-        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].create(textSelector, {
+        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
           resourceOptions: this.resourceOptions,
           siteOptions: [],
@@ -32461,7 +32550,7 @@ class UIController {
    */
   updateAnnotations () {
     if (this.state.isActive() && this.state.uiIsActive()) {
-      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].create({
+      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_17__["default"].create({
         document: document,
         siteOptions: this.siteOptions
       }).getData()
@@ -32470,7 +32559,7 @@ class UIController {
 
   startResourceQuery (feature) {
     // ExpObjMon.track(
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(feature, {
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].create(feature, {
       grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_1__["Grammars"]
     }).getData()
     //, {
@@ -32485,13 +32574,13 @@ class UIController {
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.SUCCEEDED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].resultStatus.SUCCEEDED:
         this.lexicalRequestSucceeded()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         this.lexicalRequestComplete()
         break
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.FAILED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].resultStatus.FAILED:
         this.lexicalRequestFailed()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
@@ -33261,6 +33350,10 @@ class L10n {
     } else {
       messageBundle = new _message_bundle__WEBPACK_IMPORTED_MODULE_0__["default"](messageJSON, locale, missingTranslationMsgFn)
       this.addMessageBundle(messageBundle)
+      if (!this.selectedLocale) {
+        // If locale is not defined, set it to the value of the current (and the only one) message bundle
+        this.setLocale(locale)
+      }
     }
     return this
   }
@@ -33272,9 +33365,15 @@ class L10n {
    * @return {L10n} - Returns self for chaining.
    */
   addMessageBundle (messageBundle) {
-    this.bundles.set(messageBundle.locale, messageBundle)
-    if (!this.selectedLocale) {
-      this.setLocale(messageBundle.locale)
+    const locale = messageBundle.locale
+    if (this.bundles.has(locale)) {
+      this.bundles.get(locale).appendFromBundle(messageBundle)
+    } else {
+      this.bundles.set(messageBundle.locale, messageBundle)
+      if (!this.selectedLocale) {
+        // If locale is not defined, set it to the value of the current (and the only one) message bundle
+        this.setLocale(messageBundle.locale)
+      }
     }
     return this
   }
@@ -33296,12 +33395,10 @@ class L10n {
   }
 
   /**
-   *
-   * @return {Object} - An object containing message objects as property values.
-   * The name of the property is a message key.
+   * A wrapper for {@link MessageBundle#getMsg}
    */
-  get messages () {
-    return this.bundles.has(this.selectedLocale) ? this.bundles.get(this.selectedLocale).messages : {}
+  getMsg (...params) {
+    return this.bundles.has(this.selectedLocale) ? this.bundles.get(this.selectedLocale).getMsg(...params) : {}
   }
 
   /**
@@ -33344,30 +33441,43 @@ __webpack_require__.r(__webpack_exports__);
 class MessageBundle {
   /**
    * Creates a message bundle (a list of messages) for a locale.
-   * @param {string} messagesJSON - Messages for a locale as a JSON string or as an object.
+   * @param {string | object} messagesJSONorObj - Messages for a locale as a JSON string or as an object.
    * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
    * @param {Function} missingTranslationMsgFn - A placeholder message that will be shown if translation is not found.
    */
-  constructor (messagesJSON, locale, missingTranslationMsgFn = (msgID, locale) => `Missing translation: ${msgID} [${locale}]`) {
+  constructor (messagesJSONorObj, locale, missingTranslationMsgFn = (msgID, locale) => `Missing translation: ${msgID} [${locale}]`) {
     if (!locale) {
       throw new Error('Locale data is missing')
     }
-    if (!messagesJSON) {
+    if (!messagesJSONorObj) {
       throw new Error('Message data is missing')
     }
 
     this._locale = locale
+
     /**
-     * An object whose properties are messages. Each message has a get() method and,
-     * if a message has any parameters, a format() method.
-     * @type {{get: Function, [format]: Function}}
+     * A map of message object. The key is a messageID
+     * @type {Map<string, Message>}
+     * @private
      */
-    this.messages = {}
+    this._messages = new Map()
 
     this._missingTranslationMsgFn = missingTranslationMsgFn
 
-    let messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
+    let messages = (typeof messagesJSONorObj === 'string') ? JSON.parse(messagesJSONorObj) : messagesJSONorObj
     this.append(messages)
+  }
+
+  /**
+   * Appends messages from another bundle to the current message bundle.
+   * If message has the same messageID that already exists in the
+   * current bundle, it will be overwritten.
+   * @param {MessageBundle} messageBundle - A bundle of messages.
+   */
+  appendFromBundle (messageBundle) {
+    for (const key of messageBundle.messageIds) {
+      this._messages.set(key, messageBundle.getMessageObject(key))
+    }
   }
 
   /**
@@ -33381,19 +33491,23 @@ class MessageBundle {
 
   /**
    * Appends a series of messages from an object. Object properties are message names, and
-   * values are message objects.
+   * values are message objects. If appended message has the same key as en existing one,
+   * an existing message will be overwritten.
    * @param {object} messages - An object containing messages.
    */
   append (messages) {
     for (const [key, messageObj] of Object.entries(messages)) {
-      if (!this.hasOwnProperty(key)) {
-        let message = new _message_js__WEBPACK_IMPORTED_MODULE_0__["default"](messageObj, this._locale)
-        this[key] = message
-        message.defineProperties(this.messages, key)
-      } else {
-        console.warn(`A key name "${key}" is reserved or already used. A message will be ignored"`)
-      }
+      const message = new _message_js__WEBPACK_IMPORTED_MODULE_0__["default"](messageObj, this._locale)
+      this._messages.set(key, message)
     }
+  }
+
+  /**
+   * Returns a list of message IDs that exist in a bundle.
+   * @return {string[]}
+   */
+  get messageIds () {
+    return Array.from(this._messages.keys())
   }
 
   /**
@@ -33402,11 +33516,12 @@ class MessageBundle {
    * @return {boolean} True if message is present, false otherwise
    */
   hasMsg (messageID) {
-    return Boolean(this.messages[messageID])
+    return this._messages.has(messageID)
   }
 
   /**
    * Returns a (formatted) message for a message ID provided.
+   * @see {@link Message#getMsg}
    * @param {string} messageID - An ID of a message.
    * @param {object} formatOptions - Options that can be used for message formatting in the following format:
    * {
@@ -33425,8 +33540,7 @@ class MessageBundle {
     }
     options = Object.assign(defaultOptions, options)
     if (this.hasMsg(messageID)) {
-      const message = this.messages[messageID]
-      return message.hasParameters ? message.format(formatOptions) : message.get()
+      return this._messages.get(messageID).getMsg(formatOptions)
     } else {
       // If message with the ID provided is not in translation data, generate a warning.
       return options.passthrough ? messageID : `"${messageID}" is not in translation data for ${this._locale}`
@@ -33448,21 +33562,29 @@ class MessageBundle {
 
   /**
    * Returns an abbreviated version of a message for a message ID provided.
+   * @see {@link Message#getAbbr}
    * @param messageID - An ID of a message.
-   * @param options - Options that can be used for message formatting in the following format:
-   * {
-   *     paramOneName: paramOneValue,
-   *     paramTwoName: paramTwoValue
-   * }.
-   * @returns {string} An abbreviated, and possibly formatted, message. If message not found, returns a message that contains an error text.
+   * @param formatOptions - Options that can be used for message formatting in the same order
+   * as they are defined in a translation source file.
+   * @returns {string} An abbreviated, and possibly formatted, message. If abbreviated message not found,
+   *          returns an original message text.
    */
-  abbr (messageID, options = undefined) {
-    if (this.messages[messageID]) {
-      return this.messages[messageID].abbr(options)
+  getAbbr (messageID, formatOptions = undefined) {
+    if (this.hasMsg(messageID)) {
+      return this._messages.get(messageID).getAbbr(formatOptions)
     } else {
       // If message with the ID provided is not in translation data, generate a warning.
       return this._missingTranslationMsgFn(messageID, this._locale)
     }
+  }
+
+  /**
+   * Returns a Message object for a given message ID.
+   * @param {string} messageID - A message ID of a message object to be retrieved..
+   * @return {Message} A message object.
+   */
+  getMessageObject (messageID) {
+    return this.hasMsg(messageID) ? this._messages.get(messageID) : null
   }
 
   /**
@@ -33498,6 +33620,9 @@ class Message {
   /**
    * Creates a new Message object.
    * @param {object} message - A message object as read from JSON file.
+   * @param {string} message.name - A message string.
+   * @param {string[]} [message.params] - A list of message parameters (optional).
+   * @param {string} [message.abbr] - Message abbreviation (optional).
    * @param {string} locale - A message's locale.
    */
   constructor (message, locale) {
@@ -33508,13 +33633,16 @@ class Message {
       throw new Error('Message data is missing')
     }
 
+    this.message = `Message text is not defined in translation data` // Message format string or text
+    this.params = [] // Message parameters
+
     this.locale = locale
     for (const key of Object.keys(message)) {
       this[key] = message[key]
     }
 
-    this.formatFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(message.message, this.locale)
-    this.abbrFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(message.abbr || message.message, this.locale)
+    this.formatFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(this.message, this.locale)
+    this.abbrFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(this.abbr || this.message, this.locale)
   }
 
   /**
@@ -33522,53 +33650,34 @@ class Message {
    * @return {boolean} True if message has any parameters, false otherwise.
    */
   get hasParameters () {
-    return !!(this.params && Array.isArray(this.params) && this.params.length > 0)
+    return Boolean(this.params.length > 0)
   }
 
   /**
-   * Defines getter methods on an object of messages.
-   * @param {object} messages - On object where messages will be stored. Each property corresponds to a message key.
-   *        Each property will have a getter function defined (will return a formatted message), and,
-   *        for messages with parameters, a format(function).
-   *        `messages` object usually comes from a MessageBundle object.
-   * @param {string} key - A message key, a name of a message.
-   * @return {undefined} Has no return value.
+   * Returns a formatted version of a message (if message has parameters) or
+   * a message text (if parameters do not exist for a message).
+   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
+   * {
+   *     paramOneName: paramOneValue,
+   *     paramTwoName: paramTwoValue
+   * }.
+   * @return {string} A formatted message text
    */
-  defineProperties (messages, key) {
-    let self = this
+  getMsg (formatOptions) {
+    return !this.hasParameters ? this.message : this.formatFunc.format(formatOptions)
+  }
 
-    if (this.hasParameters) {
-      messages[key] = {
-        format (options) {
-          return self.formatFunc.format(options)
-        },
-        get (...options) {
-          let params = {}
-          // TODO: Add checks
-          for (let [index, param] of self.params.entries()) {
-            params[param] = options[index]
-          }
-          return self.formatFunc.format(params)
-        },
-        abbr (...options) {
-          let params = {}
-          // TODO: Add checks
-          for (let [index, param] of self.params.entries()) {
-            params[param] = options[index]
-          }
-          return self.abbrFunc.format(params)
-        }
-      }
-    } else {
-      messages[key] = {
-        get () {
-          return self.formatFunc.format()
-        },
-        abbr () {
-          return self.abbrFunc.format()
-        }
-      }
-    }
+  /**
+   * Returns an abbreviated version of a message (if defined) or a message itself otherwise.
+   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
+   * {
+   *     paramOneName: paramOneValue,
+   *     paramTwoName: paramTwoValue
+   * }.
+   * @return {string} Abbreviated or full message text.
+   */
+  getAbbr (formatOptions) {
+    return !this.hasParameters ? this.abbrFunc.format() : this.abbrFunc.format(formatOptions)
   }
 }
 
@@ -36595,6 +36704,8 @@ __webpack_require__.r(__webpack_exports__);
 var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages.json */ "./locales/en-us/messages.json", 1);
 /* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
 var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/l10n/message-bundle.js */ "./lib/l10n/message-bundle.js");
+
 
 
 
@@ -36604,6 +36715,25 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
   messages: {
     en_US: _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__,
     en_GB: _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__
+  },
+  /**
+   * A helper function that creates a message bundle out of a messages JSON and a locale.
+   * @param {string | object} messagesJSONorObj - Messages for a locale as a JSON string or as an object.
+   * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
+   * @return {MessageBundle} A message bundle with messages from JSON.
+   */
+  createBundle: (messagesJSONorObj, locale) => {
+    return new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_2__["default"](messagesJSONorObj, locale)
+  },
+  /**
+   * Same as above, but creates an array of message bundles out of an array of messages JSONs and a locales.
+   * @param {Array.<string | object, number>[]} msgArr - An array of arrays with
+   * the first element being {string | object} messagesJSONorObj - messages for a locale as a JSON string or as an object,
+   * and the second element being {string} locale - a locale code for a message group. IETF language tag format is recommended.
+   * @return {MessageBundle[]} An array of message bundles.
+   */
+  createBundleArr: (msgArr) => {
+    return msgArr.map((m) => new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_2__["default"](...m))
   }
 });
 
@@ -39220,44 +39350,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
 /* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
 /* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-us/messages-data.json */ "./locales/en-us/messages-data.json");
-var _locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages-data.json */ "./locales/en-us/messages-data.json", 1);
-/* harmony import */ var _locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/locales/en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json");
-var _locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json", 1);
-/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
-
-
-
-
 
 
 
 
 class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor () {
+  constructor (defaultLocale = _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US, messageBundles = []) {
     super()
-    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
-      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
-      .addMessages(_locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
-      .addMessages(_locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_5__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
-      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_GB)
-      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
+    this._l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
+    messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
+    this._l10n.setLocale(defaultLocale)
 
     this.store = {
       // All stores of modules are namespaced
       namespaced: true,
 
       state: {
-        selectedLocale: this.l10n.selectedLocale
+        selectedLocale: this._l10n.selectedLocale
       },
       mutations: {
         // For arrow functions `this` will point to the class instance, not to the store
         setLocale: (state, newLocale) => {
-          this.l10n.setLocale(newLocale)
-          state.selectedLocale = this.l10n.selectedLocale
+          this._l10n.setLocale(newLocale)
+          state.selectedLocale = this._l10n.selectedLocale
         }
       }
     }
@@ -39302,7 +39417,7 @@ class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
          * @return {boolean}
          */
         hasMsg: (messageID) => {
-          return this.l10n.bundle.hasMsg(messageID)
+          return this._l10n.bundle.hasMsg(messageID)
         },
 
         /**
@@ -39314,7 +39429,7 @@ class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
          * @return {string} - A formatted translated text of a string.
          */
         getMsg: (messageID, formatOptions, options) => {
-          return this.l10n.bundle.getMsg(messageID, formatOptions, options)
+          return this._l10n.bundle.getMsg(messageID, formatOptions, options)
         },
 
         /**
@@ -39326,7 +39441,7 @@ class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
          * @return {string} - A formatted translated text of a string.
          */
         getText: (messageID, formatOptions, options) => {
-          return this.l10n.bundle.getText(messageID, formatOptions, options)
+          return this._l10n.bundle.getText(messageID, formatOptions, options)
         },
 
         /**
@@ -39336,7 +39451,7 @@ class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
          * @return {string}
          */
         getAbbr: (messageID, formatOptions) => {
-          return this.l10n.bundle.abbr(messageID, formatOptions)
+          return this._l10n.bundle.getAbbr(messageID, formatOptions)
         }
       }
     }

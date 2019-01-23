@@ -35,16 +35,16 @@
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
-    "autoprefixer": "^9.4.5",
-    "bytes": "^3.0.0",
+    "autoprefixer": "^9.4.6",
+    "bytes": "^3.1.0",
     "chalk": "^2.4.2",
     "coveralls": "^3.0.2",
     "css-loader": "^2.1.0",
     "dom-anchor-text-quote": "*",
     "element-closest": "^3.0.0",
-    "eslint": "^5.12.0",
+    "eslint": "^5.12.1",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-import": "^2.15.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
@@ -64,10 +64,10 @@
     "raw-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.3",
-    "sinon": "^7.2.2",
+    "sinon": "^7.2.3",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
-    "uikit": "^3.0.1",
+    "uikit": "^3.0.2",
     "vue": "^2.5.22",
     "whatwg-fetch": "^3.0.0",
     "wrap-range-text": "*"
@@ -131,6 +131,6 @@
   ],
   "dependencies": {
     "vue-multiselect": "2.1.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.1.0"
   }
 }

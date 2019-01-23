@@ -82,16 +82,7 @@ describe('l10n.test.js', () => {
     expect(testLn10.bundle).toEqual(testLn10.bundles.get(Locales.en_US))
   })
 
-  it('7 l10n - messages get method returns messages for selectedLocale from bundle  ', () => {
-    let testLn10 = new L10n()
-
-    expect(testLn10.messages).toEqual({})
-
-    testLn10.addMessages(enUS, Locales.en_US)
-    expect(testLn10.messages).toEqual(testLn10.bundles.get(Locales.en_US).messages)
-  })
-
-  it('8 l10n - setLocale method sets selectedLocale from argument if there is an object in bundle for locale from arguments', () => {
+  it('7 l10n - setLocale method sets selectedLocale from argument if there is an object in bundle for locale from arguments', () => {
     let testLn10 = new L10n().addMessages(enUS, Locales.en_US)
 
     testLn10.setLocale(Locales.en_US)

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import { mount } from '@vue/test-utils'
-import LemmaTranslation from '../../src/vue/components/lemma-translation.vue'
+import LemmaTranslation from '../../../src/vue/components/lemma-translation.vue'
 
 describe('lemma-translation.test.js', () => {
   let lemmaKey = 'capio-lat-verb-3rd-very frequent-Ox.Lat.Dict.-transitive'

@@ -12,6 +12,11 @@ import Setting from '@/vue/components/setting.vue'
 import Treebank from '@/vue/components/treebank.vue'
 import Grammar from '@/vue/components/grammar.vue'
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import Locales from '@/locales/locales.js'
+import enUS from '@/locales/en-us/messages.json'
+import enUSData from '@/locales/en-us/messages-data.json'
+import enUSInfl from '@/locales/en-us/messages-inflections.json'
+import enGB from '@/locales/en-gb/messages.json'
 
 import Vue from 'vue/dist/vue'
 import Vuex from 'vuex'
@@ -26,7 +31,12 @@ describe('panel.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store
-  const l10nModule = new L10nModule()
+  const l10nModule = new L10nModule(Locales.en_US, Locales.createBundleArr([
+    [enUS, Locales.en_US],
+    [enUSData, Locales.en_US],
+    [enUSInfl, Locales.en_US],
+    [enGB, Locales.en_GB]
+  ]))
   const uiAPI = {
     closePanel: () => {}
   }
@@ -60,7 +70,6 @@ describe('panel.test.js', () => {
   })
 
   it('1 Panel - renders a vue instance (min requirements)', () => {
-
     localVue.use(Vuex)
     let cmp = shallowMount(Panel, {
       propsData: {},

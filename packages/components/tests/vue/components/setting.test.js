@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import Setting from '../../src/vue/components/setting.vue'
+import Setting from '../../../src/vue/components/setting.vue'
 import Multiselect from 'vue-multiselect'
 
 describe('setting.test.js', () => {
