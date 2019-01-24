@@ -1,0 +1,76 @@
+{ "authors": [
+  { "urn": "urn:cts:latinLit:phi0959",
+    "title": [
+        { "@lang": "eng",
+          "@value": "Ovid"
+        }    
+    ],
+    "abbreviations": [
+       { "@lang": "eng",
+          "@value": "Ov."
+       }
+    ],
+    "works": [
+      { "urn": "urn:cts:latinLit:phi0959.phi001",
+        "title": [
+          { "@lang":"lat",
+            "@value": "Amores"
+          },
+          { "@lang":"eng",
+            "@value": "The Art of Love"
+          }
+        ],
+        "abbreviations": [
+          { "@lang": "eng",
+            "@value": "Am."
+          }
+       ]
+      },
+      { "urn": "urn:cts:latinLit:phi0959.phi006",
+        "title": [
+          { "@lang":"lat",
+            "@value": "Metamorphoses"
+          },
+          { "@lang":"eng",
+            "@value": "Metamorphoses"
+          }
+        ],
+        "abbreviations": [
+          { "@lang": "eng",
+            "@value": "Met."
+          }
+       ]
+      }
+    ]
+  },
+  { "urn": "urn:cts:latinLit:phi0690",
+    "title": [
+        { "@lang": "eng",
+          "@value": "Virgil"
+        }
+    ],
+    "abbreviations": [
+       { "@lang": "eng",
+          "@value": "Verg."
+       }
+     ],
+    "works": [
+      { "urn": "urn:cts:latinLit:phi0690.phi003",
+        "title": [
+          { "@lang":"lat",
+            "@value": "Aeneid"
+          },
+          { "@lang":"eng",
+            "@value": "Aeneid"
+          }
+        ],
+        "abbreviations": [
+         { "@lang": "eng",
+          "@value": "A."
+         }
+       ]
+      }
+    ]
+  }
+]
+}

@@ -151,6 +151,25 @@ class BaseAdapter {
     }
   }
 
+  printError (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.info(error.response.data)
+      console.info(error.response.status)
+      console.info(error.response.headers)
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.info(error.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.info('Error', error.message)
+    }
+    console.info(error.config)
+  }
+
   /**
    * This method is used for fetching data using different methods. If window is defined - than it would be used window.fetch.
    * Otherwise axios would be used.
@@ -163,6 +182,7 @@ class BaseAdapter {
   */
   async fetch (url, options) {
     let res
+
     if (url) {
       try {
         if (typeof window !== 'undefined') {

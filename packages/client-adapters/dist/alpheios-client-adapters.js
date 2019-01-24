@@ -3853,8 +3853,9 @@ function objectToString(o) {
   !*** ../node_modules/events/events.js ***!
   \****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3876,9 +3877,39 @@ function objectToString(o) {
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+
+var R = typeof Reflect === 'object' ? Reflect : null
+var ReflectApply = R && typeof R.apply === 'function'
+  ? R.apply
+  : function ReflectApply(target, receiver, args) {
+    return Function.prototype.apply.call(target, receiver, args);
+  }
+
+var ReflectOwnKeys
+if (R && typeof R.ownKeys === 'function') {
+  ReflectOwnKeys = R.ownKeys
+} else if (Object.getOwnPropertySymbols) {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target)
+      .concat(Object.getOwnPropertySymbols(target));
+  };
+} else {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target);
+  };
+}
+
+function ProcessEmitWarning(warning) {
+  if (console && console.warn) console.warn(warning);
+}
+
+var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
+  return value !== value;
+}
+
 function EventEmitter() {
-  this._events = this._events || {};
-  this._maxListeners = this._maxListeners || undefined;
+  EventEmitter.init.call(this);
 }
 module.exports = EventEmitter;
 
@@ -3886,276 +3917,392 @@ module.exports = EventEmitter;
 EventEmitter.EventEmitter = EventEmitter;
 
 EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._eventsCount = 0;
 EventEmitter.prototype._maxListeners = undefined;
 
 // By default EventEmitters will print a warning if more than 10 listeners are
 // added to it. This is a useful default which helps finding memory leaks.
-EventEmitter.defaultMaxListeners = 10;
+var defaultMaxListeners = 10;
+
+Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
+  enumerable: true,
+  get: function() {
+    return defaultMaxListeners;
+  },
+  set: function(arg) {
+    if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
+    }
+    defaultMaxListeners = arg;
+  }
+});
+
+EventEmitter.init = function() {
+
+  if (this._events === undefined ||
+      this._events === Object.getPrototypeOf(this)._events) {
+    this._events = Object.create(null);
+    this._eventsCount = 0;
+  }
+
+  this._maxListeners = this._maxListeners || undefined;
+};
 
 // Obviously not all Emitters should be limited to 10. This function allows
 // that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function(n) {
-  if (!isNumber(n) || n < 0 || isNaN(n))
-    throw TypeError('n must be a positive number');
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+  if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + '.');
+  }
   this._maxListeners = n;
   return this;
 };
 
-EventEmitter.prototype.emit = function(type) {
-  var er, handler, len, args, i, listeners;
+function $getMaxListeners(that) {
+  if (that._maxListeners === undefined)
+    return EventEmitter.defaultMaxListeners;
+  return that._maxListeners;
+}
 
-  if (!this._events)
-    this._events = {};
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+  return $getMaxListeners(this);
+};
 
-  // If there is no 'error' event listener then throw.
-  if (type === 'error') {
-    if (!this._events.error ||
-        (isObject(this._events.error) && !this._events.error.length)) {
-      er = arguments[1];
-      if (er instanceof Error) {
-        throw er; // Unhandled 'error' event
-      } else {
-        // At least give some kind of context to the user
-        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-        err.context = er;
-        throw err;
-      }
-    }
-  }
+EventEmitter.prototype.emit = function emit(type) {
+  var args = [];
+  for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);
+  var doError = (type === 'error');
 
-  handler = this._events[type];
-
-  if (isUndefined(handler))
+  var events = this._events;
+  if (events !== undefined)
+    doError = (doError && events.error === undefined);
+  else if (!doError)
     return false;
 
-  if (isFunction(handler)) {
-    switch (arguments.length) {
-      // fast cases
-      case 1:
-        handler.call(this);
-        break;
-      case 2:
-        handler.call(this, arguments[1]);
-        break;
-      case 3:
-        handler.call(this, arguments[1], arguments[2]);
-        break;
-      // slower
-      default:
-        args = Array.prototype.slice.call(arguments, 1);
-        handler.apply(this, args);
+  // If there is no 'error' event listener then throw.
+  if (doError) {
+    var er;
+    if (args.length > 0)
+      er = args[0];
+    if (er instanceof Error) {
+      // Note: The comments on the `throw` lines are intentional, they show
+      // up in Node's output if this results in an unhandled exception.
+      throw er; // Unhandled 'error' event
     }
-  } else if (isObject(handler)) {
-    args = Array.prototype.slice.call(arguments, 1);
-    listeners = handler.slice();
-    len = listeners.length;
-    for (i = 0; i < len; i++)
-      listeners[i].apply(this, args);
+    // At least give some kind of context to the user
+    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
+    err.context = er;
+    throw err; // Unhandled 'error' event
+  }
+
+  var handler = events[type];
+
+  if (handler === undefined)
+    return false;
+
+  if (typeof handler === 'function') {
+    ReflectApply(handler, this, args);
+  } else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      ReflectApply(listeners[i], this, args);
   }
 
   return true;
 };
 
-EventEmitter.prototype.addListener = function(type, listener) {
+function _addListener(target, type, listener, prepend) {
   var m;
+  var events;
+  var existing;
 
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
+  if (typeof listener !== 'function') {
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+  }
 
-  if (!this._events)
-    this._events = {};
+  events = target._events;
+  if (events === undefined) {
+    events = target._events = Object.create(null);
+    target._eventsCount = 0;
+  } else {
+    // To avoid recursion in the case that type === "newListener"! Before
+    // adding it to the listeners, first emit "newListener".
+    if (events.newListener !== undefined) {
+      target.emit('newListener', type,
+                  listener.listener ? listener.listener : listener);
 
-  // To avoid recursion in the case that type === "newListener"! Before
-  // adding it to the listeners, first emit "newListener".
-  if (this._events.newListener)
-    this.emit('newListener', type,
-              isFunction(listener.listener) ?
-              listener.listener : listener);
+      // Re-assign `events` because a newListener handler could have caused the
+      // this._events to be assigned to a new object
+      events = target._events;
+    }
+    existing = events[type];
+  }
 
-  if (!this._events[type])
+  if (existing === undefined) {
     // Optimize the case of one listener. Don't need the extra array object.
-    this._events[type] = listener;
-  else if (isObject(this._events[type]))
-    // If we've already got an array, just append.
-    this._events[type].push(listener);
-  else
-    // Adding the second element, need to change to array.
-    this._events[type] = [this._events[type], listener];
-
-  // Check for listener leak
-  if (isObject(this._events[type]) && !this._events[type].warned) {
-    if (!isUndefined(this._maxListeners)) {
-      m = this._maxListeners;
+    existing = events[type] = listener;
+    ++target._eventsCount;
+  } else {
+    if (typeof existing === 'function') {
+      // Adding the second element, need to change to array.
+      existing = events[type] =
+        prepend ? [listener, existing] : [existing, listener];
+      // If we've already got an array, just append.
+    } else if (prepend) {
+      existing.unshift(listener);
     } else {
-      m = EventEmitter.defaultMaxListeners;
+      existing.push(listener);
     }
 
-    if (m && m > 0 && this._events[type].length > m) {
-      this._events[type].warned = true;
-      console.error('(node) warning: possible EventEmitter memory ' +
-                    'leak detected. %d listeners added. ' +
-                    'Use emitter.setMaxListeners() to increase limit.',
-                    this._events[type].length);
-      if (typeof console.trace === 'function') {
-        // not supported in IE 10
-        console.trace();
-      }
+    // Check for listener leak
+    m = $getMaxListeners(target);
+    if (m > 0 && existing.length > m && !existing.warned) {
+      existing.warned = true;
+      // No error code for this since it is a Warning
+      // eslint-disable-next-line no-restricted-syntax
+      var w = new Error('Possible EventEmitter memory leak detected. ' +
+                          existing.length + ' ' + String(type) + ' listeners ' +
+                          'added. Use emitter.setMaxListeners() to ' +
+                          'increase limit');
+      w.name = 'MaxListenersExceededWarning';
+      w.emitter = target;
+      w.type = type;
+      w.count = existing.length;
+      ProcessEmitWarning(w);
     }
   }
 
-  return this;
+  return target;
+}
+
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+  return _addListener(this, type, listener, false);
 };
 
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
-EventEmitter.prototype.once = function(type, listener) {
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
+EventEmitter.prototype.prependListener =
+    function prependListener(type, listener) {
+      return _addListener(this, type, listener, true);
+    };
 
-  var fired = false;
-
-  function g() {
-    this.removeListener(type, g);
-
-    if (!fired) {
-      fired = true;
-      listener.apply(this, arguments);
-    }
+function onceWrapper() {
+  var args = [];
+  for (var i = 0; i < arguments.length; i++) args.push(arguments[i]);
+  if (!this.fired) {
+    this.target.removeListener(this.type, this.wrapFn);
+    this.fired = true;
+    ReflectApply(this.listener, this.target, args);
   }
+}
 
-  g.listener = listener;
-  this.on(type, g);
+function _onceWrap(target, type, listener) {
+  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
+  var wrapped = onceWrapper.bind(state);
+  wrapped.listener = listener;
+  state.wrapFn = wrapped;
+  return wrapped;
+}
 
+EventEmitter.prototype.once = function once(type, listener) {
+  if (typeof listener !== 'function') {
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+  }
+  this.on(type, _onceWrap(this, type, listener));
   return this;
 };
 
-// emits a 'removeListener' event iff the listener was removed
-EventEmitter.prototype.removeListener = function(type, listener) {
-  var list, position, length, i;
-
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  if (!this._events || !this._events[type])
-    return this;
-
-  list = this._events[type];
-  length = list.length;
-  position = -1;
-
-  if (list === listener ||
-      (isFunction(list.listener) && list.listener === listener)) {
-    delete this._events[type];
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-
-  } else if (isObject(list)) {
-    for (i = length; i-- > 0;) {
-      if (list[i] === listener ||
-          (list[i].listener && list[i].listener === listener)) {
-        position = i;
-        break;
+EventEmitter.prototype.prependOnceListener =
+    function prependOnceListener(type, listener) {
+      if (typeof listener !== 'function') {
+        throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
       }
-    }
-
-    if (position < 0)
+      this.prependListener(type, _onceWrap(this, type, listener));
       return this;
+    };
 
-    if (list.length === 1) {
-      list.length = 0;
-      delete this._events[type];
-    } else {
-      list.splice(position, 1);
-    }
+// Emits a 'removeListener' event if and only if the listener was removed.
+EventEmitter.prototype.removeListener =
+    function removeListener(type, listener) {
+      var list, events, position, i, originalListener;
 
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-  }
+      if (typeof listener !== 'function') {
+        throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+      }
 
-  return this;
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      list = events[type];
+      if (list === undefined)
+        return this;
+
+      if (list === listener || list.listener === listener) {
+        if (--this._eventsCount === 0)
+          this._events = Object.create(null);
+        else {
+          delete events[type];
+          if (events.removeListener)
+            this.emit('removeListener', type, list.listener || listener);
+        }
+      } else if (typeof list !== 'function') {
+        position = -1;
+
+        for (i = list.length - 1; i >= 0; i--) {
+          if (list[i] === listener || list[i].listener === listener) {
+            originalListener = list[i].listener;
+            position = i;
+            break;
+          }
+        }
+
+        if (position < 0)
+          return this;
+
+        if (position === 0)
+          list.shift();
+        else {
+          spliceOne(list, position);
+        }
+
+        if (list.length === 1)
+          events[type] = list[0];
+
+        if (events.removeListener !== undefined)
+          this.emit('removeListener', type, originalListener || listener);
+      }
+
+      return this;
+    };
+
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+
+EventEmitter.prototype.removeAllListeners =
+    function removeAllListeners(type) {
+      var listeners, events, i;
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      // not listening for removeListener, no need to emit
+      if (events.removeListener === undefined) {
+        if (arguments.length === 0) {
+          this._events = Object.create(null);
+          this._eventsCount = 0;
+        } else if (events[type] !== undefined) {
+          if (--this._eventsCount === 0)
+            this._events = Object.create(null);
+          else
+            delete events[type];
+        }
+        return this;
+      }
+
+      // emit removeListener for all listeners on all events
+      if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        var key;
+        for (i = 0; i < keys.length; ++i) {
+          key = keys[i];
+          if (key === 'removeListener') continue;
+          this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = Object.create(null);
+        this._eventsCount = 0;
+        return this;
+      }
+
+      listeners = events[type];
+
+      if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+      } else if (listeners !== undefined) {
+        // LIFO order
+        for (i = listeners.length - 1; i >= 0; i--) {
+          this.removeListener(type, listeners[i]);
+        }
+      }
+
+      return this;
+    };
+
+function _listeners(target, type, unwrap) {
+  var events = target._events;
+
+  if (events === undefined)
+    return [];
+
+  var evlistener = events[type];
+  if (evlistener === undefined)
+    return [];
+
+  if (typeof evlistener === 'function')
+    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+
+  return unwrap ?
+    unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+}
+
+EventEmitter.prototype.listeners = function listeners(type) {
+  return _listeners(this, type, true);
 };
 
-EventEmitter.prototype.removeAllListeners = function(type) {
-  var key, listeners;
-
-  if (!this._events)
-    return this;
-
-  // not listening for removeListener, no need to emit
-  if (!this._events.removeListener) {
-    if (arguments.length === 0)
-      this._events = {};
-    else if (this._events[type])
-      delete this._events[type];
-    return this;
-  }
-
-  // emit removeListener for all listeners on all events
-  if (arguments.length === 0) {
-    for (key in this._events) {
-      if (key === 'removeListener') continue;
-      this.removeAllListeners(key);
-    }
-    this.removeAllListeners('removeListener');
-    this._events = {};
-    return this;
-  }
-
-  listeners = this._events[type];
-
-  if (isFunction(listeners)) {
-    this.removeListener(type, listeners);
-  } else if (listeners) {
-    // LIFO order
-    while (listeners.length)
-      this.removeListener(type, listeners[listeners.length - 1]);
-  }
-  delete this._events[type];
-
-  return this;
-};
-
-EventEmitter.prototype.listeners = function(type) {
-  var ret;
-  if (!this._events || !this._events[type])
-    ret = [];
-  else if (isFunction(this._events[type]))
-    ret = [this._events[type]];
-  else
-    ret = this._events[type].slice();
-  return ret;
-};
-
-EventEmitter.prototype.listenerCount = function(type) {
-  if (this._events) {
-    var evlistener = this._events[type];
-
-    if (isFunction(evlistener))
-      return 1;
-    else if (evlistener)
-      return evlistener.length;
-  }
-  return 0;
+EventEmitter.prototype.rawListeners = function rawListeners(type) {
+  return _listeners(this, type, false);
 };
 
 EventEmitter.listenerCount = function(emitter, type) {
-  return emitter.listenerCount(type);
+  if (typeof emitter.listenerCount === 'function') {
+    return emitter.listenerCount(type);
+  } else {
+    return listenerCount.call(emitter, type);
+  }
 };
 
-function isFunction(arg) {
-  return typeof arg === 'function';
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+  var events = this._events;
+
+  if (events !== undefined) {
+    var evlistener = events[type];
+
+    if (typeof evlistener === 'function') {
+      return 1;
+    } else if (evlistener !== undefined) {
+      return evlistener.length;
+    }
+  }
+
+  return 0;
 }
 
-function isNumber(arg) {
-  return typeof arg === 'number';
+EventEmitter.prototype.eventNames = function eventNames() {
+  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+};
+
+function arrayClone(arr, n) {
+  var copy = new Array(n);
+  for (var i = 0; i < n; ++i)
+    copy[i] = arr[i];
+  return copy;
 }
 
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
+function spliceOne(list, index) {
+  for (; index + 1 < list.length; index++)
+    list[index] = list[index + 1];
+  list.pop();
 }
 
-function isUndefined(arg) {
-  return arg === void 0;
+function unwrapListeners(arr) {
+  var ret = new Array(arr.length);
+  for (var i = 0; i < ret.length; ++i) {
+    ret[i] = arr[i].listener || arr[i];
+  }
+  return ret;
 }
 
 
@@ -4264,7 +4411,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
-  var util = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+  var util = __webpack_require__(/*! util */ "../node_modules/node-libs-browser/node_modules/util/util.js");
   if (typeof util.inherits !== 'function') throw '';
   module.exports = util.inherits;
 } catch (e) {
@@ -6461,6 +6608,737 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
+/***/ "../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js":
+/*!**************************************************************************************!*\
+  !*** ../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+
+/***/ }),
+
+/***/ "../node_modules/node-libs-browser/node_modules/util/util.js":
+/*!*******************************************************************!*\
+  !*** ../node_modules/node-libs-browser/node_modules/util/util.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
+  function getOwnPropertyDescriptors(obj) {
+    var keys = Object.keys(obj);
+    var descriptors = {};
+    for (var i = 0; i < keys.length; i++) {
+      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
+    }
+    return descriptors;
+  };
+
+var formatRegExp = /%[sdj%]/g;
+exports.format = function(f) {
+  if (!isString(f)) {
+    var objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function(x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s': return String(args[i++]);
+      case '%d': return Number(args[i++]);
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
+        }
+      default:
+        return x;
+    }
+  });
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
+    }
+  }
+  return str;
+};
+
+
+// Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+exports.deprecate = function(fn, msg) {
+  if (typeof process !== 'undefined' && process.noDeprecation === true) {
+    return fn;
+  }
+
+  // Allow for deprecating things in the process of starting up.
+  if (typeof process === 'undefined') {
+    return function() {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
+
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+
+var debugs = {};
+var debugEnviron;
+exports.debuglog = function(set) {
+  if (isUndefined(debugEnviron))
+    debugEnviron = process.env.NODE_DEBUG || '';
+  set = set.toUpperCase();
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+      debugs[set] = function() {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function() {};
+    }
+  }
+  return debugs[set];
+};
+
+
+/**
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
+/* legacy: obj, showHidden, depth, colors*/
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  };
+  // legacy...
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  }
+  // set default options
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+exports.inspect = inspect;
+
+
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+inspect.colors = {
+  'bold' : [1, 22],
+  'italic' : [3, 23],
+  'underline' : [4, 24],
+  'inverse' : [7, 27],
+  'white' : [37, 39],
+  'grey' : [90, 39],
+  'black' : [30, 39],
+  'blue' : [34, 39],
+  'cyan' : [36, 39],
+  'green' : [32, 39],
+  'magenta' : [35, 39],
+  'red' : [31, 39],
+  'yellow' : [33, 39]
+};
+
+// Don't use 'blue' not visible on cmd.exe
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+           '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+
+function arrayToHash(array) {
+  var hash = {};
+
+  array.forEach(function(val, idx) {
+    hash[val] = true;
+  });
+
+  return hash;
+}
+
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect &&
+      value &&
+      isFunction(value.inspect) &&
+      // Filter out the util module, it's inspect function is special
+      value.inspect !== exports.inspect &&
+      // Also filter out any prototype objects using the circular check.
+      !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
+    }
+    return ret;
+  }
+
+  // Primitive types cannot have properties
+  var primitive = formatPrimitive(ctx, value);
+  if (primitive) {
+    return primitive;
+  }
+
+  // Look up the keys of the object.
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  }
+
+  // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  if (isError(value)
+      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  }
+
+  // Some type of object without properties can be shortcutted.
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
+    }
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    }
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+    }
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '', array = false, braces = ['{', '}'];
+
+  // Make Array say that they are Array
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  }
+
+  // Make functions say that they are functions
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  }
+
+  // Make RegExps say that they are RegExps
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  }
+
+  // Make dates with properties first say the date
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  }
+
+  // Make error with message first say the error
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+
+  var output;
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function(key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+
+  return reduceToSingleString(output, base, braces);
+}
+
+
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value))
+    return ctx.stylize('undefined', 'undefined');
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+                                             .replace(/'/g, "\\'")
+                                             .replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+  if (isNumber(value))
+    return ctx.stylize('' + value, 'number');
+  if (isBoolean(value))
+    return ctx.stylize('' + value, 'boolean');
+  // For some reason typeof null is "object", so special case here.
+  if (isNull(value))
+    return ctx.stylize('null', 'null');
+}
+
+
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
+
+
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+  keys.forEach(function(key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          key, true));
+    }
+  });
+  return output;
+}
+
+
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function(line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
+        } else {
+          str = '\n' + str.split('\n').map(function(line) {
+            return '   ' + line;
+          }).join('\n');
+        }
+      }
+    } else {
+      str = ctx.stylize('[Circular]', 'special');
+    }
+  }
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
+    }
+    name = JSON.stringify('' + key);
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
+    } else {
+      name = name.replace(/'/g, "\\'")
+                 .replace(/\\"/g, '"')
+                 .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
+    }
+  }
+
+  return name + ': ' + str;
+}
+
+
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function(prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] +
+           (base === '' ? '' : base + '\n ') +
+           ' ' +
+           output.join(',\n  ') +
+           ' ' +
+           braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+}
+
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js");
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+              'Oct', 'Nov', 'Dec'];
+
+// 26 Feb 16:19:34
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+}
+
+
+// log is just a thin wrapper to console.log that prepends a timestamp
+exports.log = function() {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
+
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
+exports.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+
+exports._extend = function(origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+
+  var keys = Object.keys(add);
+  var i = keys.length;
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
+
+exports.promisify = function promisify(original) {
+  if (typeof original !== 'function')
+    throw new TypeError('The "original" argument must be of type Function');
+
+  if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
+    var fn = original[kCustomPromisifiedSymbol];
+    if (typeof fn !== 'function') {
+      throw new TypeError('The "util.promisify.custom" argument must be of type Function');
+    }
+    Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+      value: fn, enumerable: false, writable: false, configurable: true
+    });
+    return fn;
+  }
+
+  function fn() {
+    var promiseResolve, promiseReject;
+    var promise = new Promise(function (resolve, reject) {
+      promiseResolve = resolve;
+      promiseReject = reject;
+    });
+
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+    args.push(function (err, value) {
+      if (err) {
+        promiseReject(err);
+      } else {
+        promiseResolve(value);
+      }
+    });
+
+    try {
+      original.apply(this, args);
+    } catch (err) {
+      promiseReject(err);
+    }
+
+    return promise;
+  }
+
+  Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
+
+  if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+    value: fn, enumerable: false, writable: false, configurable: true
+  });
+  return Object.defineProperties(
+    fn,
+    getOwnPropertyDescriptors(original)
+  );
+}
+
+exports.promisify.custom = kCustomPromisifiedSymbol
+
+function callbackifyOnRejected(reason, cb) {
+  // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
+  // Because `null` is a special error value in callbacks which means "no error
+  // occurred", we error-wrap so the callback consumer can distinguish between
+  // "the promise rejected with null" or "the promise fulfilled with undefined".
+  if (!reason) {
+    var newReason = new Error('Promise was rejected with a falsy value');
+    newReason.reason = reason;
+    reason = newReason;
+  }
+  return cb(reason);
+}
+
+function callbackify(original) {
+  if (typeof original !== 'function') {
+    throw new TypeError('The "original" argument must be of type Function');
+  }
+
+  // We DO NOT return the promise as it gives the user a false sense that
+  // the promise is actually somehow related to the callback's execution
+  // and that the callback throwing will reject the promise.
+  function callbackified() {
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+
+    var maybeCb = args.pop();
+    if (typeof maybeCb !== 'function') {
+      throw new TypeError('The last argument must be of type Function');
+    }
+    var self = this;
+    var cb = function() {
+      return maybeCb.apply(self, arguments);
+    };
+    // In true node style we process the callback on `nextTick` with all the
+    // implications (stack, `uncaughtException`, `async_hooks`)
+    original.apply(this, args)
+      .then(function(ret) { process.nextTick(cb, null, ret) },
+            function(rej) { process.nextTick(callbackifyOnRejected, rej, cb) });
+  }
+
+  Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
+  Object.defineProperties(callbackified,
+                          getOwnPropertyDescriptors(original));
+  return callbackified;
+}
+exports.callbackify = callbackify;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../process/browser.js */ "../node_modules/process/browser.js")))
+
+/***/ }),
+
 /***/ "../node_modules/papaparse/papaparse.js":
 /*!**********************************************!*\
   !*** ../node_modules/papaparse/papaparse.js ***!
@@ -6470,7 +7348,7 @@ module.exports = Array.isArray || function (arr) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* @license
 Papa Parse
-v4.6.2
+v4.6.3
 https://github.com/mholt/PapaParse
 License: MIT
 */
@@ -6758,7 +7636,7 @@ if (!Array.isArray)
 
 		unpackConfig();
 
-		var quoteCharRegex = new RegExp(_quoteChar, 'g');
+		var quoteCharRegex = new RegExp(escapeRegExp(_quoteChar), 'g');
 
 		if (typeof _input === 'string')
 			_input = JSON.parse(_input);
@@ -7728,7 +8606,7 @@ if (!Array.isArray)
 
 					if (typeof fieldCountPrevRow === 'undefined')
 					{
-						fieldCountPrevRow = fieldCount;
+						fieldCountPrevRow = 0;
 						continue;
 					}
 					else if (fieldCount > 1)
@@ -7741,7 +8619,7 @@ if (!Array.isArray)
 				if (preview.data.length > 0)
 					avgFieldCount /= (preview.data.length - emptyLinesCount);
 
-				if ((typeof bestDelta === 'undefined' || delta < bestDelta)
+				if ((typeof bestDelta === 'undefined' || delta > bestDelta)
 					&& avgFieldCount > 1.99)
 				{
 					bestDelta = delta;
@@ -7900,7 +8778,7 @@ if (!Array.isArray)
 
 			var nextDelim = input.indexOf(delim, cursor);
 			var nextNewline = input.indexOf(newline, cursor);
-			var quoteCharRegex = new RegExp(escapeChar.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&') + quoteChar, 'g');
+			var quoteCharRegex = new RegExp(escapeRegExp(escapeChar) + escapeRegExp(quoteChar), 'g');
 			var quoteSearch;
 
 			// Parser loop
@@ -11753,622 +12631,8 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
  * For Node.js, simply re-export the core `util.deprecate` function.
  */
 
-module.exports = __webpack_require__(/*! util */ "../node_modules/util/util.js").deprecate;
+module.exports = __webpack_require__(/*! util */ "../node_modules/node-libs-browser/node_modules/util/util.js").deprecate;
 
-
-/***/ }),
-
-/***/ "../node_modules/util/support/isBufferBrowser.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/util/support/isBufferBrowser.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function isBuffer(arg) {
-  return arg && typeof arg === 'object'
-    && typeof arg.copy === 'function'
-    && typeof arg.fill === 'function'
-    && typeof arg.readUInt8 === 'function';
-}
-
-/***/ }),
-
-/***/ "../node_modules/util/util.js":
-/*!************************************!*\
-  !*** ../node_modules/util/util.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var formatRegExp = /%[sdj%]/g;
-exports.format = function(f) {
-  if (!isString(f)) {
-    var objects = [];
-    for (var i = 0; i < arguments.length; i++) {
-      objects.push(inspect(arguments[i]));
-    }
-    return objects.join(' ');
-  }
-
-  var i = 1;
-  var args = arguments;
-  var len = args.length;
-  var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
-    if (i >= len) return x;
-    switch (x) {
-      case '%s': return String(args[i++]);
-      case '%d': return Number(args[i++]);
-      case '%j':
-        try {
-          return JSON.stringify(args[i++]);
-        } catch (_) {
-          return '[Circular]';
-        }
-      default:
-        return x;
-    }
-  });
-  for (var x = args[i]; i < len; x = args[++i]) {
-    if (isNull(x) || !isObject(x)) {
-      str += ' ' + x;
-    } else {
-      str += ' ' + inspect(x);
-    }
-  }
-  return str;
-};
-
-
-// Mark that a method should not be used.
-// Returns a modified function which warns once by default.
-// If --no-deprecation is set, then it is a no-op.
-exports.deprecate = function(fn, msg) {
-  // Allow for deprecating things in the process of starting up.
-  if (isUndefined(global.process)) {
-    return function() {
-      return exports.deprecate(fn, msg).apply(this, arguments);
-    };
-  }
-
-  if (process.noDeprecation === true) {
-    return fn;
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (process.throwDeprecation) {
-        throw new Error(msg);
-      } else if (process.traceDeprecation) {
-        console.trace(msg);
-      } else {
-        console.error(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-};
-
-
-var debugs = {};
-var debugEnviron;
-exports.debuglog = function(set) {
-  if (isUndefined(debugEnviron))
-    debugEnviron = process.env.NODE_DEBUG || '';
-  set = set.toUpperCase();
-  if (!debugs[set]) {
-    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
-      var pid = process.pid;
-      debugs[set] = function() {
-        var msg = exports.format.apply(exports, arguments);
-        console.error('%s %d: %s', set, pid, msg);
-      };
-    } else {
-      debugs[set] = function() {};
-    }
-  }
-  return debugs[set];
-};
-
-
-/**
- * Echos the value of a value. Trys to print the value out
- * in the best way possible given the different types.
- *
- * @param {Object} obj The object to print out.
- * @param {Object} opts Optional options object that alters the output.
- */
-/* legacy: obj, showHidden, depth, colors*/
-function inspect(obj, opts) {
-  // default options
-  var ctx = {
-    seen: [],
-    stylize: stylizeNoColor
-  };
-  // legacy...
-  if (arguments.length >= 3) ctx.depth = arguments[2];
-  if (arguments.length >= 4) ctx.colors = arguments[3];
-  if (isBoolean(opts)) {
-    // legacy...
-    ctx.showHidden = opts;
-  } else if (opts) {
-    // got an "options" object
-    exports._extend(ctx, opts);
-  }
-  // set default options
-  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-  if (isUndefined(ctx.depth)) ctx.depth = 2;
-  if (isUndefined(ctx.colors)) ctx.colors = false;
-  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-  if (ctx.colors) ctx.stylize = stylizeWithColor;
-  return formatValue(ctx, obj, ctx.depth);
-}
-exports.inspect = inspect;
-
-
-// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-inspect.colors = {
-  'bold' : [1, 22],
-  'italic' : [3, 23],
-  'underline' : [4, 24],
-  'inverse' : [7, 27],
-  'white' : [37, 39],
-  'grey' : [90, 39],
-  'black' : [30, 39],
-  'blue' : [34, 39],
-  'cyan' : [36, 39],
-  'green' : [32, 39],
-  'magenta' : [35, 39],
-  'red' : [31, 39],
-  'yellow' : [33, 39]
-};
-
-// Don't use 'blue' not visible on cmd.exe
-inspect.styles = {
-  'special': 'cyan',
-  'number': 'yellow',
-  'boolean': 'yellow',
-  'undefined': 'grey',
-  'null': 'bold',
-  'string': 'green',
-  'date': 'magenta',
-  // "name": intentionally not styling
-  'regexp': 'red'
-};
-
-
-function stylizeWithColor(str, styleType) {
-  var style = inspect.styles[styleType];
-
-  if (style) {
-    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
-           '\u001b[' + inspect.colors[style][1] + 'm';
-  } else {
-    return str;
-  }
-}
-
-
-function stylizeNoColor(str, styleType) {
-  return str;
-}
-
-
-function arrayToHash(array) {
-  var hash = {};
-
-  array.forEach(function(val, idx) {
-    hash[val] = true;
-  });
-
-  return hash;
-}
-
-
-function formatValue(ctx, value, recurseTimes) {
-  // Provide a hook for user-specified inspect functions.
-  // Check that value is an object with an inspect function on it
-  if (ctx.customInspect &&
-      value &&
-      isFunction(value.inspect) &&
-      // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)) {
-    var ret = value.inspect(recurseTimes, ctx);
-    if (!isString(ret)) {
-      ret = formatValue(ctx, ret, recurseTimes);
-    }
-    return ret;
-  }
-
-  // Primitive types cannot have properties
-  var primitive = formatPrimitive(ctx, value);
-  if (primitive) {
-    return primitive;
-  }
-
-  // Look up the keys of the object.
-  var keys = Object.keys(value);
-  var visibleKeys = arrayToHash(keys);
-
-  if (ctx.showHidden) {
-    keys = Object.getOwnPropertyNames(value);
-  }
-
-  // IE doesn't make error fields non-enumerable
-  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
-  if (isError(value)
-      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
-    return formatError(value);
-  }
-
-  // Some type of object without properties can be shortcutted.
-  if (keys.length === 0) {
-    if (isFunction(value)) {
-      var name = value.name ? ': ' + value.name : '';
-      return ctx.stylize('[Function' + name + ']', 'special');
-    }
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    }
-    if (isDate(value)) {
-      return ctx.stylize(Date.prototype.toString.call(value), 'date');
-    }
-    if (isError(value)) {
-      return formatError(value);
-    }
-  }
-
-  var base = '', array = false, braces = ['{', '}'];
-
-  // Make Array say that they are Array
-  if (isArray(value)) {
-    array = true;
-    braces = ['[', ']'];
-  }
-
-  // Make functions say that they are functions
-  if (isFunction(value)) {
-    var n = value.name ? ': ' + value.name : '';
-    base = ' [Function' + n + ']';
-  }
-
-  // Make RegExps say that they are RegExps
-  if (isRegExp(value)) {
-    base = ' ' + RegExp.prototype.toString.call(value);
-  }
-
-  // Make dates with properties first say the date
-  if (isDate(value)) {
-    base = ' ' + Date.prototype.toUTCString.call(value);
-  }
-
-  // Make error with message first say the error
-  if (isError(value)) {
-    base = ' ' + formatError(value);
-  }
-
-  if (keys.length === 0 && (!array || value.length == 0)) {
-    return braces[0] + base + braces[1];
-  }
-
-  if (recurseTimes < 0) {
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    } else {
-      return ctx.stylize('[Object]', 'special');
-    }
-  }
-
-  ctx.seen.push(value);
-
-  var output;
-  if (array) {
-    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
-  } else {
-    output = keys.map(function(key) {
-      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
-    });
-  }
-
-  ctx.seen.pop();
-
-  return reduceToSingleString(output, base, braces);
-}
-
-
-function formatPrimitive(ctx, value) {
-  if (isUndefined(value))
-    return ctx.stylize('undefined', 'undefined');
-  if (isString(value)) {
-    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-                                             .replace(/'/g, "\\'")
-                                             .replace(/\\"/g, '"') + '\'';
-    return ctx.stylize(simple, 'string');
-  }
-  if (isNumber(value))
-    return ctx.stylize('' + value, 'number');
-  if (isBoolean(value))
-    return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
-  if (isNull(value))
-    return ctx.stylize('null', 'null');
-}
-
-
-function formatError(value) {
-  return '[' + Error.prototype.toString.call(value) + ']';
-}
-
-
-function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
-  var output = [];
-  for (var i = 0, l = value.length; i < l; ++i) {
-    if (hasOwnProperty(value, String(i))) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          String(i), true));
-    } else {
-      output.push('');
-    }
-  }
-  keys.forEach(function(key) {
-    if (!key.match(/^\d+$/)) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          key, true));
-    }
-  });
-  return output;
-}
-
-
-function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-  var name, str, desc;
-  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
-  if (desc.get) {
-    if (desc.set) {
-      str = ctx.stylize('[Getter/Setter]', 'special');
-    } else {
-      str = ctx.stylize('[Getter]', 'special');
-    }
-  } else {
-    if (desc.set) {
-      str = ctx.stylize('[Setter]', 'special');
-    }
-  }
-  if (!hasOwnProperty(visibleKeys, key)) {
-    name = '[' + key + ']';
-  }
-  if (!str) {
-    if (ctx.seen.indexOf(desc.value) < 0) {
-      if (isNull(recurseTimes)) {
-        str = formatValue(ctx, desc.value, null);
-      } else {
-        str = formatValue(ctx, desc.value, recurseTimes - 1);
-      }
-      if (str.indexOf('\n') > -1) {
-        if (array) {
-          str = str.split('\n').map(function(line) {
-            return '  ' + line;
-          }).join('\n').substr(2);
-        } else {
-          str = '\n' + str.split('\n').map(function(line) {
-            return '   ' + line;
-          }).join('\n');
-        }
-      }
-    } else {
-      str = ctx.stylize('[Circular]', 'special');
-    }
-  }
-  if (isUndefined(name)) {
-    if (array && key.match(/^\d+$/)) {
-      return str;
-    }
-    name = JSON.stringify('' + key);
-    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-      name = name.substr(1, name.length - 2);
-      name = ctx.stylize(name, 'name');
-    } else {
-      name = name.replace(/'/g, "\\'")
-                 .replace(/\\"/g, '"')
-                 .replace(/(^"|"$)/g, "'");
-      name = ctx.stylize(name, 'string');
-    }
-  }
-
-  return name + ': ' + str;
-}
-
-
-function reduceToSingleString(output, base, braces) {
-  var numLinesEst = 0;
-  var length = output.reduce(function(prev, cur) {
-    numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
-    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
-  }, 0);
-
-  if (length > 60) {
-    return braces[0] +
-           (base === '' ? '' : base + '\n ') +
-           ' ' +
-           output.join(',\n  ') +
-           ' ' +
-           braces[1];
-  }
-
-  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
-}
-
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-function isArray(ar) {
-  return Array.isArray(ar);
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return isObject(re) && objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return isObject(d) && objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-
-function isError(e) {
-  return isObject(e) &&
-      (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../node_modules/util/support/isBufferBrowser.js");
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-
-function pad(n) {
-  return n < 10 ? '0' + n.toString(10) : n.toString(10);
-}
-
-
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-              'Oct', 'Nov', 'Dec'];
-
-// 26 Feb 16:19:34
-function timestamp() {
-  var d = new Date();
-  var time = [pad(d.getHours()),
-              pad(d.getMinutes()),
-              pad(d.getSeconds())].join(':');
-  return [d.getDate(), months[d.getMonth()], time].join(' ');
-}
-
-
-// log is just a thin wrapper to console.log that prepends a timestamp
-exports.log = function() {
-  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
-};
-
-
-/**
- * Inherit the prototype methods from one constructor into another.
- *
- * The Function.prototype.inherits from lang.js rewritten as a standalone
- * function (not on Function.prototype). NOTE: If this file is to be loaded
- * during bootstrapping this function needs to be rewritten using some native
- * functions as prototype setup using normal JavaScript does not work as
- * expected during bootstrapping (see mirror.js in r114903).
- *
- * @param {function} ctor Constructor function which needs to inherit the
- *     prototype.
- * @param {function} superCtor Constructor function to inherit prototype from.
- */
-exports.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
-
-exports._extend = function(origin, add) {
-  // Don't do anything if add isn't an object
-  if (!add || !isObject(add)) return origin;
-
-  var keys = Object.keys(add);
-  var i = keys.length;
-  while (i--) {
-    origin[keys[i]] = add[keys[i]];
-  }
-  return origin;
-};
-
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "../node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -12695,10 +12959,10 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*!***************************************!*\
   !*** ./adapters/adapters-config.json ***!
   \***************************************/
-/*! exports provided: morphology, lexicon, lemmatranslation, default */
+/*! exports provided: morphology, lexicon, lemmatranslation, wordusageExamples, default */
 /***/ (function(module) {
 
-module.exports = {"morphology":{"alpheiosTreebank":{"adapter":"tbAdapter","methods":["getHomonym"],"params":{"getHomonym":["languageID","wordref"]}},"tufts":{"adapter":"maAdapter","methods":["getHomonym"],"params":{"getHomonym":["languageID","word"]}}},"lexicon":{"alpheios":{"adapter":"lexicons","methods":["fetchShortDefs","fetchFullDefs"],"params":{"fetchShortDefs":["homonym","opts"],"fetchFullDefs":["homonym","opts"]}}},"lemmatranslation":{"alpheios":{"adapter":"lemmaTranslations","methods":"fetchTranslations","params":{"fetchTranslations":["homonym","browserLang"]}}}};
+module.exports = {"morphology":{"alpheiosTreebank":{"adapter":"tbAdapter","methods":["getHomonym"],"params":{"getHomonym":["languageID","wordref"]}},"tufts":{"adapter":"maAdapter","methods":["getHomonym"],"params":{"getHomonym":["languageID","word"]}}},"lexicon":{"alpheios":{"adapter":"lexicons","methods":["fetchShortDefs","fetchFullDefs"],"params":{"fetchShortDefs":["homonym","opts"],"fetchFullDefs":["homonym","opts"]}}},"lemmatranslation":{"alpheios":{"adapter":"lemmaTranslations","methods":"fetchTranslations","params":{"fetchTranslations":["homonym","browserLang"]}}},"wordusageExamples":{"concordance":{"adapter":"wordUsageExamples","methods":["getAuthorsWorks","getWordUsageExamples"],"params":{"getAuthorsWorks":[],"getWordUsageExamples":["homonym"]}}}};
 
 /***/ }),
 
@@ -13020,6 +13284,25 @@ class BaseAdapter {
     }
   }
 
+  printError (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.info(error.response.data)
+      console.info(error.response.status)
+      console.info(error.response.headers)
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.info(error.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.info('Error', error.message)
+    }
+    console.info(error.config)
+  }
+
   /**
    * This method is used for fetching data using different methods. If window is defined - than it would be used window.fetch.
    * Otherwise axios would be used.
@@ -13032,6 +13315,7 @@ class BaseAdapter {
   */
   async fetch (url, options) {
     let res
+
     if (url) {
       try {
         if (typeof window !== 'undefined') {
@@ -13056,6 +13340,311 @@ class BaseAdapter {
 
 /* harmony default export */ __webpack_exports__["default"] = (BaseAdapter);
 
+
+/***/ }),
+
+/***/ "./adapters/concordance/adapter.js":
+/*!*****************************************!*\
+  !*** ./adapters/concordance/adapter.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/concordance/config.json */ "./adapters/concordance/config.json");
+var _adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/concordance/config.json */ "./adapters/concordance/config.json", 1);
+/* harmony import */ var _adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/concordance/author-work.json */ "./adapters/concordance/author-work.json");
+var _adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/concordance/author-work.json */ "./adapters/concordance/author-work.json", 1);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
+
+
+
+
+
+
+class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_3__["default"] {
+  /**
+   * Adapter uploads config data and creates provider
+   * @param {Object} config - properties with higher priority
+  */
+  constructor (config = {}) {
+    super()
+    this.config = this.uploadConfig(config, _adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0__)
+    this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["ResourceProvider"](this.config.url, this.config.rights)
+    this.authors = []
+  }
+
+  /**
+  * This method retrieves a list of available authors and textWorks.
+  * For now it uploads data from json file, but later it will fetch data from cordance api
+  * @param {Boolean} reload - if true - data will be forced to reload from source
+  * @return {Author[]]}
+  */
+  async getAuthorsWorks (reload = false) {
+    try {
+      if (reload || this.authors.length === 0) {
+        this.authorWorkData = await this.uploadConfig({}, _adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1__)
+
+        this.authors = []
+        for (let authorWorkDataItem of Object.values(this.authorWorkData.authors)) {
+          let author = this.createAuthor(authorWorkDataItem)
+          this.authors.push(author)
+        }
+      }
+      return this.authors
+    } catch (error) {
+      this.addError(this.l10n.messages['CONCORDANCE_AUTHOR_UPLOAD_ERROR'].get(error.message))
+    }
+  }
+
+  /**
+  * This method retrieves a list of word usage examples from corcondance api and creates WordUsageExample-s.
+  * @param {Homonym} homonym - homonym for retrieving word usage examples
+  * @param {Object} filters - { author: {Author}, textWork: {TextWork} } - filter's property for getting data,
+  *                           it could be filtered: no filter, by author, by author and textWork
+  * @param {Object} pagination - { property: 'max', value: {Integer} } - property for setting max limit for the result
+  * @param {Object} sort - { } - it is an empty property for future sort feature
+  * @return {Object} - with the following format
+  *         {
+  *           {WordUsageExample[]} wordUsageExamples - result wordUsageExamples
+  *           {String} targetWord - source targetWord
+  *           {String} language - source languageCode
+  *           {ResourceProvider} provider - provider data
+  *         }
+  */
+  async getWordUsageExamples (homonym, filters = {}, pagination = {}, sort = {}) {
+    try {
+      let url = this.createFetchURL(homonym, filters, pagination, sort)
+      let wordUsageListRes = await this.fetch(url)
+      let parsedWordUsageList = await this.parseWordUsageResult(wordUsageListRes, homonym)
+      return {
+        wordUsageExamples: parsedWordUsageList,
+        targetWord: homonym.targetWord,
+        language: homonym.language,
+        provider: this.provider
+      }
+    } catch (error) {
+      this.addError(this.l10n.messages['CONCORDANCE_WORD_USAGE_FETCH_ERROR'].get(error.message))
+    }
+  }
+
+  /**
+  * This method constructs full url for getting data for getWordUsageExamples method using properties.
+  * @param {Homonym} homonym - homonym for retrieving word usage examples
+  * @param {Object} filters - { author: {Author}, textWork: {TextWork} } - filter's property for getting data,
+  *                           it could be filtered: no filter, by author, by author and textWork
+  * @param {Object} pagination - { property: 'max', value: {Integer} } - property for setting max limit for the result
+  * @param {Object} sort - { } - it is an empty property for future sort feature
+  * @return {String}
+  */
+  createFetchURL (homonym, filters, pagination, sort) {
+    let filterFormatted = this.formatFilter(filters)
+    let paginationFormatted = this.formatPagination(pagination)
+
+    return `${this.config.url}${homonym.targetWord}${filterFormatted}${paginationFormatted}`
+  }
+
+  /**
+  * This method formats filters property for fetch url.
+  * @param {Object} filters - { author: {Author}, textWork: {TextWork} } - filter's property for getting data,
+  *                           it could be filtered: no filter, by author, by author and textWork
+  * @return {String}
+  */
+  formatFilter (filters) {
+    if (filters && filters.author) {
+      if (filters.textWork) {
+        return `[${filters.author.ID}:${filters.textWork.ID}]`
+      }
+      return `[${filters.author.ID}]`
+    }
+    return ''
+  }
+
+  /**
+  * This method formats pagination property for fetch url.
+  * @param {Object} pagination - { property: 'max', value: {Integer} } - property for setting max limit for the result
+  * @return {String}
+  */
+  formatPagination (pagination) {
+    if (pagination && pagination.property && (pagination.property === 'max') && pagination.value) {
+      return `?${pagination.property}=${parseInt(pagination.value)}`
+    }
+    return ''
+  }
+
+  /**
+  * This method parses json result from concordance source for word usage examples.
+  * @param {Object} jsonObj - json response from url
+  * @param {Homonym} homonym - homonym for retrieving word usage examples
+  * @param {Author} author - author from filter
+  * @param {TextWork} textWork - textWork from filter
+  * @return {WordUsageExample[]}
+  */
+  async parseWordUsageResult (jsonObj, homonym) {
+    let wordUsageExamples = []
+    let author, textWork
+    for (let jsonObjItem of jsonObj) {
+      if (!author || !textWork) {
+        author = await this.getAuthorByAbbr(jsonObjItem)
+        textWork = this.getTextWorkByAbbr(author, jsonObjItem)
+      }
+
+      let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork)
+      wordUsageExamples.push(wordUsageExample)
+    }
+    return wordUsageExamples
+  }
+
+  async getAuthorByAbbr (jsonObj) {
+    if (jsonObj.cit && this.authors.length > 0) {
+      let authorAbbr = jsonObj.cit.split('.')[0]
+      return this.authors.find(author => author.abbreviation() === authorAbbr)
+    }
+    return null
+  }
+
+  getTextWorkByAbbr (author, jsonObj) {
+    if (jsonObj.cit && author && author.works.length > 0) {
+      let textWorkAbbr = jsonObj.cit.split('.')[1]
+      return author.works.find(textWork => textWork.abbreviation() === textWorkAbbr)
+    }
+    return null
+  }
+
+  /**
+  * This property is used to define prefix fr extract ID
+  * @returns {String}
+  */
+  get defaultIDPrefix () {
+    return 'phi'
+  }
+
+  /**
+  * Method returns Author for given jsonObj (from concordance API)
+  * @param {Object} jsonObj - json object with data of the Author
+  * @returns {Author}
+  */
+  createAuthor (jsonObj) {
+    let titles = {}
+    jsonObj.title.forEach(titleItem => {
+      titles[titleItem['@lang']] = titleItem['@value']
+    })
+
+    let abbreviations = {}
+    jsonObj.abbreviations.forEach(abbrItem => {
+      abbreviations[abbrItem['@lang']] = abbrItem['@value'].replace('.', '')
+    })
+
+    let author = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Author"](jsonObj.urn, titles, abbreviations)
+    author.ID = this.extractIDFromURNAuthor(author.urn)
+    let works = []
+
+    jsonObj.works.forEach(workItem => {
+      works.push(this.createTextWork(author, workItem))
+    })
+
+    author.works = works
+    return author
+  }
+
+  /**
+  * Method extracts ID from the urn, if it is correct. Otherwise it returns null.
+  * @returns {Number, null}
+  */
+  extractIDFromURNAuthor (urn) {
+    let partsUrn = urn.split(':')
+    if (Array.isArray(partsUrn) && partsUrn.length >= 4) {
+      let workIDPart = partsUrn[3].indexOf('.') === -1 ? partsUrn[3] : partsUrn[3].substr(0, partsUrn[3].indexOf('.'))
+      return parseInt(workIDPart.replace(this.defaultIDPrefix, ''))
+    }
+    return null
+  }
+
+  /**
+  * Method returns TextWork for given jsonObj (from concordance API)
+  * @param {Author} author - author of the textWork
+  * @param {Object} jsonObj - json object with data of the TextWork
+  * @returns {TextWork}
+  */
+  createTextWork (author, jsonObj) {
+    let titles = {}
+    jsonObj.title.forEach(titleItem => {
+      titles[titleItem['@lang']] = titleItem['@value']
+    })
+
+    let abbreviations = {}
+    jsonObj.abbreviations.forEach(abbrItem => {
+      abbreviations[abbrItem['@lang']] = abbrItem['@value'].replace('.', '')
+    })
+
+    let textWork = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["TextWork"](author, jsonObj.urn, titles, abbreviations)
+    textWork.ID = this.extractIDFromURNTextWork(textWork.urn)
+    return textWork
+  }
+
+  /**
+  * Method extracts ID from the urn, if it is correct. Otherwise it returns null.
+  * @returns {Number, null}
+  */
+  extractIDFromURNTextWork (urn) {
+    let partsUrn = urn.split(':')
+
+    if (Array.isArray(partsUrn) && partsUrn.length >= 4) {
+      let workIDPart = partsUrn[3].indexOf('.') === -1 ? null : partsUrn[3].substr(partsUrn[3].indexOf('.') + 1)
+
+      return parseInt(workIDPart.replace(this.defaultIDPrefix, ''))
+    }
+    return null
+  }
+
+  /**
+  * Creates WordUsageExample object from jsonObj, homonym, author, textWork and link from the adapter config
+  * @param {Object} jsonObj - json object from concordance api
+  * @param {Homonym} homonym - source homonym object
+  * @param {Author} author - source author object, could be undefined
+  * @param {TextWork} textWork - source textWork object, could be undefined
+  * @param {String} sourceLink - sourceTextUrl from the adapter config file
+  * @returns {WordUsageExample}
+  */
+  createWordUsageExample (jsonObj, homonym, author, textWork) {
+    let source = this.config.sourceTextUrl + jsonObj.link
+    let wordUsageExample = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["WordUsageExample"](homonym.language, jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit)
+    wordUsageExample.author = author
+    wordUsageExample.textWork = textWork
+    wordUsageExample.homonym = homonym
+    wordUsageExample.provider = this.provider
+
+    return wordUsageExample
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (AlpheiosConcordanceAdapter);
+
+
+/***/ }),
+
+/***/ "./adapters/concordance/author-work.json":
+/*!***********************************************!*\
+  !*** ./adapters/concordance/author-work.json ***!
+  \***********************************************/
+/*! exports provided: authors, default */
+/***/ (function(module) {
+
+module.exports = {"authors":[{"urn":"urn:cts:latinLit:phi0959","title":[{"@lang":"eng","@value":"Ovid"}],"abbreviations":[{"@lang":"eng","@value":"Ov."}],"works":[{"urn":"urn:cts:latinLit:phi0959.phi001","title":[{"@lang":"lat","@value":"Amores"},{"@lang":"eng","@value":"The Art of Love"}],"abbreviations":[{"@lang":"eng","@value":"Am."}]},{"urn":"urn:cts:latinLit:phi0959.phi006","title":[{"@lang":"lat","@value":"Metamorphoses"},{"@lang":"eng","@value":"Metamorphoses"}],"abbreviations":[{"@lang":"eng","@value":"Met."}]}]},{"urn":"urn:cts:latinLit:phi0690","title":[{"@lang":"eng","@value":"Virgil"}],"abbreviations":[{"@lang":"eng","@value":"Verg."}],"works":[{"urn":"urn:cts:latinLit:phi0690.phi003","title":[{"@lang":"lat","@value":"Aeneid"},{"@lang":"eng","@value":"Aeneid"}],"abbreviations":[{"@lang":"eng","@value":"A."}]}]}]};
+
+/***/ }),
+
+/***/ "./adapters/concordance/config.json":
+/*!******************************************!*\
+  !*** ./adapters/concordance/config.json ***!
+  \******************************************/
+/*! exports provided: url, sourceTextUrl, rights, default */
+/***/ (function(module) {
+
+module.exports = {"url":"https://latin.packhum.org/rst/concordance/","sourceTextUrl":"https://latin.packhum.org","rights":"Word usage examples are provided by The Packard Humanities Institute (https://packhum.org/). They are to be used only for personal study and are subject to the “Fair Use” principles of U.S. Copyright law."};
 
 /***/ }),
 
@@ -14480,10 +15069,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _adapters_alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/alpheiostb/adapter */ "./adapters/alpheiostb/adapter.js");
 /* harmony import */ var _adapters_translations_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/translations/adapter */ "./adapters/translations/adapter.js");
 /* harmony import */ var _adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/lexicons/adapter */ "./adapters/lexicons/adapter.js");
-/* harmony import */ var _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/errors/wrong-method-error */ "./errors/wrong-method-error.js");
-/* harmony import */ var _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/errors/no-required-param-error */ "./errors/no-required-param-error.js");
-/* harmony import */ var _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/adapters/adapters-config.json */ "./adapters/adapters-config.json");
-var _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/adapters-config.json */ "./adapters/adapters-config.json", 1);
+/* harmony import */ var _adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/adapters/concordance/adapter */ "./adapters/concordance/adapter.js");
+/* harmony import */ var _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/errors/wrong-method-error */ "./errors/wrong-method-error.js");
+/* harmony import */ var _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/errors/no-required-param-error */ "./errors/no-required-param-error.js");
+/* harmony import */ var _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+var _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/adapters-config.json */ "./adapters/adapters-config.json", 1);
+
 
 
 
@@ -14503,10 +15094,10 @@ class ClientAdapters {
   */
   static init () {
     if (cachedConfig.size === 0) {
-      for (let category in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6__) {
+      for (let category in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_7__) {
         let adapters = {}
-        for (let adapterKey in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6__[category]) {
-          let adapterData = _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_6__[category][adapterKey]
+        for (let adapterKey in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_7__[category]) {
+          let adapterData = _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_7__[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -14549,6 +15140,12 @@ class ClientAdapters {
     ClientAdapters.init()
     return cachedAdaptersList.get('lemmatranslation')
   }
+
+  static get wordusageExamples () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('wordusageExamples')
+  }
+
   /**
   * This method checks if given method is registered in config for category.adapterName
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
@@ -14557,7 +15154,7 @@ class ClientAdapters {
   */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
-      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_4__["default"](category, adapterName, methodName)
+      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_5__["default"](category, adapterName, methodName)
     }
   }
 
@@ -14572,7 +15169,7 @@ class ClientAdapters {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         if (!params[paramName]) {
-          throw new _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_5__["default"](category, adapterName, methodName, paramName)
+          throw new _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_6__["default"](category, adapterName, methodName, paramName)
         }
       })
     }
@@ -14668,6 +15265,28 @@ class ClientAdapters {
       await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
       return { errors: localLemmasAdapter.errors }
     }
+    return null
+  }
+
+  static async wordUsageExamples (options) {
+    ClientAdapters.checkMethodParam('wordusageExamples', 'concordance', options)
+
+    let localLemmasAdapter = new _adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      category: 'wordUsage',
+      adapterName: 'concordance',
+      method: options.method
+    })
+
+    if (options.method === 'getAuthorsWorks') {
+      let res = await localLemmasAdapter.getAuthorsWorks()
+      return { result: res, errors: localLemmasAdapter.errors }
+    }
+
+    if (options.method === 'getWordUsageExamples') {
+      let res = await localLemmasAdapter.getWordUsageExamples(options.params.homonym, options.params.filters, options.params.pagination, options.params.sort)
+      return { result: res, errors: localLemmasAdapter.errors }
+    }
+
     return null
   }
 
@@ -15131,10 +15750,10 @@ module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_TUFTS_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_TUFTS_UNKNOWN_ERROR, MORPH_TRANSFORM_NO_LANGUAGE, MORPH_TRANSFORM_NO_LEMMA, MORPH_TRANSFORM_NO_MAPPING_DATA, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_TUFTS_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_TUFTS_UNKNOWN_ERROR, MORPH_TRANSFORM_NO_LANGUAGE, MORPH_TRANSFORM_NO_LEMMA, MORPH_TRANSFORM_NO_MAPPING_DATA, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, CONCORDANCE_AUTHOR_UPLOAD_ERROR, CONCORDANCE_WORD_USAGE_FETCH_ERROR, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE":{"message":"There is no engine for the given languageID {languageID}","description":"Error message for morphology.tufts adapter - when no engine is found for given languageID","component":"morphology.tufts","params":["languageID"]},"MORPH_TUFTS_NO_HOMONYM":{"message":"There is no homonym for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no homonym was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no data was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.tufts adapter - unknown","component":"morphology.tufts","params":["message"]},"MORPH_TRANSFORM_NO_LANGUAGE":{"message":"No Language was defined from json object","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts"},"MORPH_TRANSFORM_NO_LEMMA":{"message":"No Lemma was defined from json object","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts"},"MORPH_TRANSFORM_NO_MAPPING_DATA":{"message":"No mapping data found for {language}","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts","params":["language"]},"BASIC_ADAPTER_NO_DATA_FROM_URL":{"message":"Unable to get data from url - {url}","description":"Error message for basic adapter - when no data was returned from the url","component":"basic_adapter","params":["url"]},"BASIC_ADAPTER_EMPTY_URL":{"message":"Unable to get data from empty url","description":"Error message for basic adapter - when empty url was given","component":"basic_adapter"},"BASIC_ADAPTER_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["message"]},"BASIC_ADAPTER_URL_RESPONSE_FAILED":{"message":"Request doesn't return data - {statusCode}: {statusText}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["statusCode","statusText"]},"MORPH_TREEBANK_NO_URL":{"message":"There is a problem with creating url for the given word - {word}","description":"Error message for morph.treebank - no url for fetching data from treebank","component":"morph.treebank","params":["word"]},"MORPH_TREEBANK_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word}","description":"Error message for morphology.treebank adapter - when no data was returned from the source","component":"morphology.treebank","params":["word"]},"MORPH_TREEBANK_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.treebank adapter - unknown","component":"morphology.treebank","params":["message"]},"TRANSLATION_INPUT_PREPARE_ERROR":{"message":"Some problems with preparing input for geting translations - {input}","description":"Error message for lemmatranslation.alpheios adapter - problems with input","component":"lemmatranslation.alpheios","params":["input"]},"TRANSLATION_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for lemmatranslation.alpheios adapter - unknown","component":"lemmatranslation.alpheios","params":["message"]},"TRANSLATION_INCORRECT_LEXEMES":{"message":"There is no correct homonym in input","description":"Error message for lemmatranslation.alpheios adapter - no lexemes","component":"lemmatranslation.alpheios"},"LEXICONS_NO_ALLOWED_URL":{"message":"There are no allowed urls in the options","description":"Error message for lexicon.alpheios adapter - no urls were found in options","component":"lexicon.alpheios"},"LEXICONS_FAILED_CACHED_DATA":{"message":"There is a problem with catching data from lexicon source - {message}","description":"Error message for lexicon.alpheios adapter - some problems with getting cached data","component":"lexicon.alpheios","params":["message"]},"LEXICONS_FAILED_APPEND_DEFS":{"message":"There is a problem with updating definitions - {message}","description":"Error message for lexicon.alpheios adapter - some problems with updating definitions","component":"lexicon.alpheios","params":["message"]},"LEXICONS_NO_FULL_URL":{"message":"No full url is defined for definitions","description":"Error message for lexicon.alpheios adapter - no full url is defined","component":"lexicon.alpheios"},"LEXICONS_NO_DATA_FROM_URL":{"message":"No data recieved from url - {url}","description":"Error message for lexicon.alpheios adapter - no data from url","component":"lexicon.alpheios","params":["url"]}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE":{"message":"There is no engine for the given languageID {languageID}","description":"Error message for morphology.tufts adapter - when no engine is found for given languageID","component":"morphology.tufts","params":["languageID"]},"MORPH_TUFTS_NO_HOMONYM":{"message":"There is no homonym for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no homonym was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word} and languageID {languageID}","description":"Error message for morphology.tufts adapter - when no data was returned from the source","component":"morphology.tufts","params":["word","languageID"]},"MORPH_TUFTS_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.tufts adapter - unknown","component":"morphology.tufts","params":["message"]},"MORPH_TRANSFORM_NO_LANGUAGE":{"message":"No Language was defined from json object","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts"},"MORPH_TRANSFORM_NO_LEMMA":{"message":"No Lemma was defined from json object","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts"},"MORPH_TRANSFORM_NO_MAPPING_DATA":{"message":"No mapping data found for {language}","description":"Error message for morph.tufts adapter - transform problem","component":"morphology.tufts","params":["language"]},"BASIC_ADAPTER_NO_DATA_FROM_URL":{"message":"Unable to get data from url - {url}","description":"Error message for basic adapter - when no data was returned from the url","component":"basic_adapter","params":["url"]},"BASIC_ADAPTER_EMPTY_URL":{"message":"Unable to get data from empty url","description":"Error message for basic adapter - when empty url was given","component":"basic_adapter"},"BASIC_ADAPTER_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["message"]},"BASIC_ADAPTER_URL_RESPONSE_FAILED":{"message":"Request doesn't return data - {statusCode}: {statusText}","description":"Error message for basic adapter - unknown","component":"basic_adapter","params":["statusCode","statusText"]},"MORPH_TREEBANK_NO_URL":{"message":"There is a problem with creating url for the given word - {word}","description":"Error message for morph.treebank - no url for fetching data from treebank","component":"morph.treebank","params":["word"]},"MORPH_TREEBANK_NO_ANSWER_FOR_WORD":{"message":"There is no data from the source for the given word - {word}","description":"Error message for morphology.treebank adapter - when no data was returned from the source","component":"morphology.treebank","params":["word"]},"MORPH_TREEBANK_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for morph.treebank adapter - unknown","component":"morphology.treebank","params":["message"]},"TRANSLATION_INPUT_PREPARE_ERROR":{"message":"Some problems with preparing input for geting translations - {input}","description":"Error message for lemmatranslation.alpheios adapter - problems with input","component":"lemmatranslation.alpheios","params":["input"]},"TRANSLATION_UNKNOWN_ERROR":{"message":"Unknown error - {message}","description":"Error message for lemmatranslation.alpheios adapter - unknown","component":"lemmatranslation.alpheios","params":["message"]},"TRANSLATION_INCORRECT_LEXEMES":{"message":"There is no correct homonym in input","description":"Error message for lemmatranslation.alpheios adapter - no lexemes","component":"lemmatranslation.alpheios"},"LEXICONS_NO_ALLOWED_URL":{"message":"There are no allowed urls in the options","description":"Error message for lexicon.alpheios adapter - no urls were found in options","component":"lexicon.alpheios"},"LEXICONS_FAILED_CACHED_DATA":{"message":"There is a problem with catching data from lexicon source - {message}","description":"Error message for lexicon.alpheios adapter - some problems with getting cached data","component":"lexicon.alpheios","params":["message"]},"LEXICONS_FAILED_APPEND_DEFS":{"message":"There is a problem with updating definitions - {message}","description":"Error message for lexicon.alpheios adapter - some problems with updating definitions","component":"lexicon.alpheios","params":["message"]},"LEXICONS_NO_FULL_URL":{"message":"No full url is defined for definitions","description":"Error message for lexicon.alpheios adapter - no full url is defined","component":"lexicon.alpheios"},"LEXICONS_NO_DATA_FROM_URL":{"message":"No data recieved from url - {url}","description":"Error message for lexicon.alpheios adapter - no data from url","component":"lexicon.alpheios","params":["url"]},"CONCORDANCE_AUTHOR_UPLOAD_ERROR":{"message":"Some problems with retrieving from author/textWork config file - {message}","description":"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file","component":"wordusageExamples.concordance","params":["message"]},"CONCORDANCE_WORD_USAGE_FETCH_ERROR":{"message":"Some problems with fetching word usage examples from concordance api - {message}","description":"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api","component":"wordusageExamples.concordance","params":["message"]}};
 
 /***/ }),
 

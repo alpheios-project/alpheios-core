@@ -34,5 +34,16 @@
         "fetchTranslations" : [ "homonym", "browserLang" ]
       }
     }
+  },
+
+  "wordusageExamples": {
+    "concordance": {
+      "adapter": "wordUsageExamples",
+      "methods": [ "getAuthorsWorks", "getWordUsageExamples"],
+      "params": {
+        "getAuthorsWorks": [],
+        "getWordUsageExamples" : [ "homonym"]
+      }
+    }
   }
 }

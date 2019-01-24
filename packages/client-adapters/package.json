@@ -5,7 +5,7 @@
   "main": "dist/alpheios-client-adapters.min.js",
   "scripts": {
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-a": "eslint --fix src/**/*.js && jest tests/adapters/lexicons/adapter.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-a": "eslint --fix src/**/*.js && jest tests/adapters/concordance/adapter.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "npm run build-lib && npm run build-node",
     "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
     "build-node": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
@@ -29,7 +29,7 @@
     "alpheios-node-build": "github:alpheios-project/node-build",
     "axios": "*",
     "coveralls": "^3.0.0",
-    "eslint": "^5.12.0",
+    "eslint": "^5.12.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
@@ -41,9 +41,8 @@
     "jest-fetch-mock": "1.6.5",
     "jest-serializer-vue": "^2.0.2",
     "jest-vue-preprocessor": "^1.4.0",
-    "papaparse": "^4.6.2",
+    "papaparse": "^4.6.3",
     "source-map-loader": "^0.2.4",
-    "standard": "^12.0.0",
     "whatwg-fetch": "*",
     "xmltojson": "^1.3.5"
   },
@@ -74,7 +73,7 @@
       "node": true
     },
     "parserOptions": {
-      "ecmaVersion": 2017,
+      "ecmaVersion": 2018,
       "sourceType": "module",
       "experimentalObjectRestSpread": true
     }
@@ -82,10 +81,5 @@
   "eslintIgnore": [
     "**/dist",
     "**/support"
-  ],
-  "standard": {
-    "ignore": [
-      "**/dist"
-    ]
-  }
+  ]
 }

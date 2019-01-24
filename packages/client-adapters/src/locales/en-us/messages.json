@@ -135,5 +135,17 @@
     "description": "Error message for lexicon.alpheios adapter - no data from url",
     "component": "lexicon.alpheios",
     "params": ["url"]
+  }, 
+  "CONCORDANCE_AUTHOR_UPLOAD_ERROR": {
+    "message": "Some problems with retrieving from author/textWork config file - {message}",
+    "description": "Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file",
+    "component": "wordusageExamples.concordance",
+    "params": ["message"]
+  },
+  "CONCORDANCE_WORD_USAGE_FETCH_ERROR": {
+    "message": "Some problems with fetching word usage examples from concordance api - {message}",
+    "description": "Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api",
+    "component": "wordusageExamples.concordance",
+    "params": ["message"]
   }
 }

@@ -1,7 +1,6 @@
 import path from 'path'
-const projectRoot = process.cwd()
 
-console.info('*************************projectRoot', path.join(projectRoot, 'src'))
+const projectRoot = process.cwd()
 
 const webpack = {
   common: {

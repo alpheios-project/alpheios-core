@@ -2,6 +2,7 @@ import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
 import AlpheiosTreebankAdapter from '@/adapters/alpheiostb/adapter'
 import AlpheiosLemmaTranslationsAdapter from '@/adapters/translations/adapter'
 import AlpheiosLexiconsAdapter from '@/adapters/lexicons/adapter'
+import AlpheiosConcordanceAdapter from '@/adapters/concordance/adapter'
 
 import WrongMethodError from '@/errors/wrong-method-error'
 import NoRequiredParamError from '@/errors/no-required-param-error'
@@ -63,6 +64,12 @@ class ClientAdapters {
     ClientAdapters.init()
     return cachedAdaptersList.get('lemmatranslation')
   }
+
+  static get wordusageExamples () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('wordusageExamples')
+  }
+
   /**
   * This method checks if given method is registered in config for category.adapterName
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
@@ -182,6 +189,28 @@ class ClientAdapters {
       await localLemmasAdapter.getTranslationsList(options.params.homonym, options.params.browserLang)
       return { errors: localLemmasAdapter.errors }
     }
+    return null
+  }
+
+  static async wordUsageExamples (options) {
+    ClientAdapters.checkMethodParam('wordusageExamples', 'concordance', options)
+
+    let localLemmasAdapter = new AlpheiosConcordanceAdapter({
+      category: 'wordUsage',
+      adapterName: 'concordance',
+      method: options.method
+    })
+
+    if (options.method === 'getAuthorsWorks') {
+      let res = await localLemmasAdapter.getAuthorsWorks()
+      return { result: res, errors: localLemmasAdapter.errors }
+    }
+
+    if (options.method === 'getWordUsageExamples') {
+      let res = await localLemmasAdapter.getWordUsageExamples(options.params.homonym, options.params.filters, options.params.pagination, options.params.sort)
+      return { result: res, errors: localLemmasAdapter.errors }
+    }
+
     return null
   }
 

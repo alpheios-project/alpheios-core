@@ -179,7 +179,7 @@ let result = ClientAdapters.lemmatranslation.alpheios({
 | Name | Type | Description |
 |------|------|-------------|
 | method | Symbol | There is one available methods - 'fetchTranslations' |
-| homonym | Homonym | Input Homonym for getting definitions |
+| homonym | Homonym | Input Homonym for getting translation |
 | browserLang | String | Available languages for translation |
 
 **Result: Promise**
@@ -199,3 +199,31 @@ let result = ClientAdapters.lemmatranslation.alpheios({
 | fr | French |
 | de | German |
 | es | Spain |
+
+## wordusageExamples.concordance Adapter
+
+This adapter retrieves word usage examples for latin from Concordance API - https://latin.packhum.org.
+
+```
+let result = ClientAdapters.wordusageExamples.concordance({
+  method: 
+  params: {
+    homonym: 
+  }
+})
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| method | Symbol | There is one available methods - 'getAuthorsWorks', 'getWordUsageExamples' |
+| homonym | Homonym | Input Homonym for getting word usage examples |
+
+**Result: Promise**
+
+| Name | Type | Description |
+|------|------|-------------|
+| result | Object | All results from concordance API: wordUsageExamples, targetWord, language, provider |
+| errors | Array | Array of AdapterError objects |
+
