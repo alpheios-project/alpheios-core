@@ -8408,6 +8408,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -12869,7 +12872,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "alpheios-embed-lib-warning" })
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.visible,
+          expression: "visible"
+        }
+      ],
+      staticClass: "alpheios-embed-lib-warning"
+    },
+    [
+      _vm._v("\n  " + _vm._s(_vm.text) + "\n  "),
+      _c(
+        "span",
+        {
+          staticClass: "alpheios-embed-lib-warning__close",
+          on: { click: _vm.close }
+        },
+        [_c("close-icon")],
+        1
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
