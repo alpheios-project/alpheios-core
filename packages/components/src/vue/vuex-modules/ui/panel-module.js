@@ -7,6 +7,7 @@ export default class PanelModule {
   constructor (store, api, options) {
     // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
     const uiController = options.uiController
+    this.options = Object.assign(PanelModule.optionsDefaults, options)
 
     this.store = {
       // All stores of modules are namespaced
@@ -21,7 +22,7 @@ export default class PanelModule {
     }
 
     this.vi = new Vue({
-      el: `#${uiController.options.template.panelId}`,
+      el: this.options.mountPoint,
       store: store, // Install store into the panel
       provide: api, // Public API of the modules for child components
       /*
@@ -343,4 +344,8 @@ PanelModule.store = () => {
       }
     }
   }
+}
+
+PanelModule.optionsDefaults = {
+  mountPoint: '#alpheios-panel'
 }

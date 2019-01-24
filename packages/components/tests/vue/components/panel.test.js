@@ -31,7 +31,7 @@ describe('panel.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store
-  const l10nModule = new L10nModule(Locales.en_US, Locales.createBundleArr([
+  const l10nModule = new L10nModule(Locales.en_US, Locales.bundleArr([
     [enUS, Locales.en_US],
     [enUSData, Locales.en_US],
     [enUSInfl, Locales.en_US],

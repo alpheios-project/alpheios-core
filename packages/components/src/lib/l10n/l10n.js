@@ -71,6 +71,7 @@ export default class L10n {
   }
 
   /**
+   * Returns a message from a bundle for a current locale.
    * A wrapper for {@link MessageBundle#getMsg}
    */
   getMsg (...params) {

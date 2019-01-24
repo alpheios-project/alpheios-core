@@ -34,9 +34,12 @@ import AlignmentSelector from './lib/selection/alignment/alignment-selector.js'
 import HTMLPage from './lib/utility/html-page.js'
 import Tab from '@/lib/state/tab.js'
 import TabScript from '@/lib/state/tab-script.js'
+import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
+import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
 
 export { Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
   Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
-  HTMLPage, Tab, TabScript }
+  HTMLPage, Tab, TabScript, L10nModule, PanelModule, PopupModule }

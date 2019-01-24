@@ -14,10 +14,6 @@ import Vuex from 'vuex'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import Locales from '@/locales/locales.js'
-import enUS from '@/locales/en-us/messages.json'
-import enUSData from '@/locales/en-us/messages-data.json'
-import enUSInfl from '@/locales/en-us/messages-inflections.json'
-import enGB from '@/locales/en-gb/messages.json'
 import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
 import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
 
@@ -113,20 +109,16 @@ export default class UIController {
     let uiController = new UIController(state, options)
 
     // Register data modules
-    console.log(`L10n registration`)
-    uiController.registerDataModule(L10nModule, Locales.en_US, Locales.createBundleArr([
-      [enUS, Locales.en_US],
-      [enUSData, Locales.en_US],
-      [enUSInfl, Locales.en_US],
-      [enGB, Locales.en_GB]
-    ]))
+    uiController.registerDataModule(L10nModule, Locales.en_US, Locales.bundleArr())
 
     // Register UI modules
     uiController.registerUiModule(PanelModule, {
+      mountPoint: '#alpheios-panel',
       tabs: uiController.tabState, // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
       uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
     })
     uiController.registerUiModule(PopupModule, {
+      mountPoint: '#alpheios-popup',
       uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
     })
 
@@ -214,9 +206,7 @@ export default class UIController {
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
         html: Template,
-        panelId: 'alpheios-panel',
         defaultPanelComponent: 'panel',
-        popupId: 'alpheios-popup',
         defaultPopupComponent: 'popup',
         draggable: true,
         resizable: true
