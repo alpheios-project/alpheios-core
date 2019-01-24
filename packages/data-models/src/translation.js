@@ -35,5 +35,16 @@ class Translation {
   static loadTranslations (lemma, languageCode, translationsList, provider) {
     lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList, provider))
   }
+
+  convertToJSONObject () {
+    return {
+      languageCode: this.languageCode,
+      translations: this.glosses
+    }
+  }
+
+  static readObject (jsonObject, lemma) {
+    return new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
+  }
 }
 export default Translation

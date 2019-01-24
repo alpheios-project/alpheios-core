@@ -436,4 +436,20 @@ export default class Feature {
     values = values.reduce((acc, cv) => acc.concat(cv), [])
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues)
   }
+
+  convertToJSONObject () {
+    let data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
+    return {
+      type: this.type,
+      languageCode: LanguageModelFactory.getLanguageCodeFromId(this.languageID),
+      sortOrder: this.sortOrder,
+      allowedValues: this.allowedValues,
+      data: data
+    }
+  }
+
+  static readObject (jsonObject) {
+    let languageID = LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode)
+    return new Feature(jsonObject.type, jsonObject.data, languageID, jsonObject.sortOrder, jsonObject.allowedValues)
+  }
 }

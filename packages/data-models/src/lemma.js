@@ -1,5 +1,6 @@
 import LMF from './language_model_factory.js'
 import Feature from './feature.js'
+import Translation from './translation.js'
 import uuidv4 from 'uuid/v4'
 
 /**
@@ -42,7 +43,37 @@ class Lemma {
   }
 
   static readObject (jsonObject) {
-    return new Lemma(jsonObject.word, jsonObject.language, jsonObject.principalParts, jsonObject.pronunciation)
+    let language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation)
+
+    if (jsonObject.features && jsonObject.features.length > 0) {
+      jsonObject.features.forEach(featureSource => {
+        resLemma.addFeature(Feature.readObject(featureSource))
+      })
+    }
+
+    if (jsonObject.translation) {
+      resLemma.translation = Translation.readObject(jsonObject.translation, resLemma)
+    }
+    return resLemma
+  }
+
+  convertToJSONObject () {
+    let resultFeatures = []
+    for (let feature of Object.values(this.features)) {
+      resultFeatures.push(feature.convertToJSONObject())
+    }
+    let resultLemma = {
+      word: this.word,
+      language: this.languageCode,
+      principalParts: this.principalParts,
+      features: resultFeatures
+    }
+
+    if (this.translation) {
+      resultLemma.translation = this.translation.convertToJSONObject()
+    }
+    return resultLemma
   }
 
   /**

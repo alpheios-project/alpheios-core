@@ -1,4 +1,5 @@
 import Definition from './definition'
+import LMF from './language_model_factory.js'
 
 export default class DefinitionSet {
   constructor (lemmaWord, languageID) {
@@ -15,6 +16,9 @@ export default class DefinitionSet {
    * @return {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
+    if (!jsonObject.languageID && jsonObject.languageCode) {
+      jsonObject.languageID = LMF.getLanguageIdFromCode(jsonObject.languageCode)
+    }
     let definitionSet = new DefinitionSet(jsonObject.lemmaWord, jsonObject.languageID)
 
     for (let shortDef of jsonObject.shortDefs) {
@@ -75,5 +79,15 @@ export default class DefinitionSet {
    */
   clearFullDefs () {
     this.fullDefs = []
+  }
+
+  convertToJSONObject () {
+    let languageCode = LMF.getLanguageCodeFromId(this.languageID)
+    return {
+      lemmaWord: this.lemmaWord,
+      languageCode: languageCode,
+      shortDefs: this.shortDefs.map(def => def.convertToJSONObject()),
+      fullDefs: this.fullDefs.map(def => def.convertToJSONObject())
+    }
   }
 }

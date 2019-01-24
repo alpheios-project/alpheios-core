@@ -326,5 +326,38 @@ class Inflection {
     string += `\n  example: ${this.example}`
     return string
   }
+
+  static readObject (jsonObject, lemma) {
+    let inflection =
+      new Inflection(
+        jsonObject.stem, jsonObject.languageCode, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
+    inflection.languageID = LMF.getLanguageIdFromCode(inflection.languageCode)
+
+    if (jsonObject.features && jsonObject.features.length > 0) {
+      jsonObject.features.forEach(featureSource => {
+        inflection.addFeature(Feature.readObject(featureSource))
+      })
+    }
+    if (lemma) {
+      inflection.lemma = lemma
+    }
+    return inflection
+  }
+
+  convertToJSONObject () {
+    let resultFeatures = []
+    for (let key of this.features.keys()) {
+      resultFeatures.push(this[key].convertToJSONObject())
+    }
+    let languageCode = LMF.getLanguageCodeFromId(this.languageID)
+    return {
+      stem: this.stem,
+      languageCode: languageCode,
+      suffix: this.suffix,
+      prefix: this.prefix,
+      example: this.example,
+      features: resultFeatures
+    }
+  }
 }
 export default Inflection

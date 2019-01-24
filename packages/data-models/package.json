@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-c1": "standard --fix && jest tests/greek_language_model.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-c": "standard --fix && jest tests/w3c/word-usage-example.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build-lib": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
     "build-node": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
     "build": "npm run build-lib && npm run build-node",

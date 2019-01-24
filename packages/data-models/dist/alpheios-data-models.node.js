@@ -778,6 +778,8 @@ const CLASS_RECIPROCAL = 'reciprocal'
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DefinitionSet; });
 /* harmony import */ var _definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition */ "./definition.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+
 
 
 class DefinitionSet {
@@ -795,6 +797,9 @@ class DefinitionSet {
    * @return {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
+    if (!jsonObject.languageID && jsonObject.languageCode) {
+      jsonObject.languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageIdFromCode(jsonObject.languageCode)
+    }
     let definitionSet = new DefinitionSet(jsonObject.lemmaWord, jsonObject.languageID)
 
     for (let shortDef of jsonObject.shortDefs) {
@@ -856,6 +861,16 @@ class DefinitionSet {
   clearFullDefs () {
     this.fullDefs = []
   }
+
+  convertToJSONObject () {
+    let languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
+    return {
+      lemmaWord: this.lemmaWord,
+      languageCode: languageCode,
+      shortDefs: this.shortDefs.map(def => def.convertToJSONObject()),
+      fullDefs: this.fullDefs.map(def => def.convertToJSONObject())
+    }
+  }
 }
 
 
@@ -881,6 +896,15 @@ class Definition {
   static readObject (jsonObject) {
     return new Definition(jsonObject.text, jsonObject.language, jsonObject.format, jsonObject.lemmaText)
   }
+
+  convertToJSONObject () {
+    return {
+      text: this.text,
+      language: this.language,
+      format: this.format,
+      lemmaText: this.lemmaText
+    }
+  }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Definition);
 
@@ -891,7 +915,7 @@ class Definition {
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
-/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData */
+/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData, TextQuoteSelector, WordUsageExample, Author, TextWork */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -960,6 +984,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Translation", function() { return _translation_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+
+/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TextQuoteSelector", function() { return _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
+
+/* harmony import */ var _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./texts/word-usage-example.js */ "./texts/word-usage-example.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordUsageExample", function() { return _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
+
+/* harmony import */ var _texts_author_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./texts/author.js */ "./texts/author.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Author", function() { return _texts_author_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
+
+/* harmony import */ var _texts_text_work_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./texts/text-work.js */ "./texts/text-work.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TextWork", function() { return _texts_text_work_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
+
+
+
+
 
 
 
@@ -1440,6 +1480,22 @@ class Feature {
      */
     values = values.reduce((acc, cv) => acc.concat(cv), [])
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues)
+  }
+
+  convertToJSONObject () {
+    let data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
+    return {
+      type: this.type,
+      languageCode: _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageCodeFromId(this.languageID),
+      sortOrder: this.sortOrder,
+      allowedValues: this.allowedValues,
+      data: data
+    }
+  }
+
+  static readObject (jsonObject) {
+    let languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageIdFromCode(jsonObject.languageCode)
+    return new Feature(jsonObject.type, jsonObject.data, languageID, jsonObject.sortOrder, jsonObject.allowedValues)
   }
 }
 
@@ -2523,11 +2579,16 @@ class Homonym {
         lexemes.push(_lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(lexeme))
       }
     }
-    let homonym = new Homonym(lexemes)
-    if (jsonObject.targetWord) {
-      homonym.targetWord = jsonObject.targetWord
-    }
+    let homonym = new Homonym(lexemes, jsonObject.form)
     return homonym
+  }
+
+  convertToJSONObject (addMeaning = false) {
+    let resultHomonym = { lexemes: [], form: this.targetWord }
+    for (let lexeme of this.lexemes) {
+      resultHomonym.lexemes.push(lexeme.convertToJSONObject(addMeaning))
+    }
+    return resultHomonym
   }
 
   /**
@@ -2953,6 +3014,39 @@ class Inflection {
     }
     string += `\n  example: ${this.example}`
     return string
+  }
+
+  static readObject (jsonObject, lemma) {
+    let inflection =
+      new Inflection(
+        jsonObject.stem, jsonObject.languageCode, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
+    inflection.languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageIdFromCode(inflection.languageCode)
+
+    if (jsonObject.features && jsonObject.features.length > 0) {
+      jsonObject.features.forEach(featureSource => {
+        inflection.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(featureSource))
+      })
+    }
+    if (lemma) {
+      inflection.lemma = lemma
+    }
+    return inflection
+  }
+
+  convertToJSONObject () {
+    let resultFeatures = []
+    for (let key of this.features.keys()) {
+      resultFeatures.push(this[key].convertToJSONObject())
+    }
+    let languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
+    return {
+      stem: this.stem,
+      languageCode: languageCode,
+      suffix: this.suffix,
+      prefix: this.prefix,
+      example: this.example,
+      features: resultFeatures
+    }
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Inflection);
@@ -3778,6 +3872,13 @@ class LanguageModelFactory {
    */
   static getLanguageCodeFromId (languageID) {
     for (const languageModel of MODELS.values()) {
+      /*
+      console.info('***************getLanguageCodeFromId step1-1', languageModel.languageID)
+      console.info('***************getLanguageCodeFromId step1-2', languageModel.languageID.toString())
+
+      console.info('***************getLanguageCodeFromId step2-1', languageID)
+      console.info('***************getLanguageCodeFromId step2-2', languageID.toString())
+    */
       if (languageModel.languageID.toString() === languageID.toString()) {
         return languageModel.languageCode
       }
@@ -4069,8 +4170,10 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -4106,7 +4209,7 @@ class Lemma {
     this.principalParts = principalParts
     this.features = {}
 
-    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_2___default()()
+    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_3___default()()
   }
 
   get language () {
@@ -4115,7 +4218,37 @@ class Lemma {
   }
 
   static readObject (jsonObject) {
-    return new Lemma(jsonObject.word, jsonObject.language, jsonObject.principalParts, jsonObject.pronunciation)
+    let language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation)
+
+    if (jsonObject.features && jsonObject.features.length > 0) {
+      jsonObject.features.forEach(featureSource => {
+        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(featureSource))
+      })
+    }
+
+    if (jsonObject.translation) {
+      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.translation, resLemma)
+    }
+    return resLemma
+  }
+
+  convertToJSONObject () {
+    let resultFeatures = []
+    for (let feature of Object.values(this.features)) {
+      resultFeatures.push(feature.convertToJSONObject())
+    }
+    let resultLemma = {
+      word: this.word,
+      language: this.languageCode,
+      principalParts: this.principalParts,
+      features: resultFeatures
+    }
+
+    if (this.translation) {
+      resultLemma.translation = this.translation.convertToJSONObject()
+    }
+    return resultLemma
   }
 
   /**
@@ -4361,8 +4494,27 @@ class Lexeme {
     }
 
     let lexeme = new Lexeme(lemma, inflections)
-    lexeme.meaning = _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.meaning)
+    if (jsonObject.meaning) {
+      lexeme.meaning = _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.meaning)
+    }
     return lexeme
+  }
+
+  convertToJSONObject (addMeaning = false) {
+    let resInflections = []
+    this.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
+
+    let resLexeme = {
+      lemma: this.lemma.convertToJSONObject(),
+      inflections: resInflections
+    }
+
+    if (addMeaning) {
+      let resMeaning = this.meaning.convertToJSONObject()
+      resLexeme.meaning = resMeaning
+    }
+
+    return resLexeme
   }
 
   /**
@@ -4681,6 +4833,217 @@ class ResourceProvider {
 
 /***/ }),
 
+/***/ "./texts/author.js":
+/*!*************************!*\
+  !*** ./texts/author.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Author {
+  /**
+  * Constructor, extracts ID from urn
+  * @param {String} urn - string identificator in special format, for example 'urn:cts:latinLit:phi0959'
+  * @param {Object} titles - has the following format { languageCode: title }
+  * @param {Object} abbreviations - has the following format { languageCode: abbreviation }
+  * @returns {Author}
+  */
+  constructor (urn, titles, abbreviations) {
+    this.urn = urn
+    this.titles = titles
+    this.abbreviations = abbreviations
+  }
+
+  /**
+  * This property is used to define title for panel
+  * @returns {String}
+  */
+  static get defaultLang () {
+    return 'eng'
+  }
+
+  /**
+  * Method returns title in the lang from arguments, otherwise in default language or (if not exists) it returns first available title
+  * @param {String} lang - language for getting title
+  * @returns {String}
+  */
+  title (lang) {
+    if (this.titles[lang]) {
+      return this.titles[lang]
+    } else if (this.titles[Author.defaultLang]) {
+      return this.titles[Author.defaultLang]
+    } else if (Object.values(this.titles).length > 0) {
+      return Object.values(this.titles)[0]
+    }
+    return null
+  }
+
+  /**
+  * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
+  * @param {String} lang - language for getting abbreviation
+  * @returns {String}
+  */
+  abbreviation (lang) {
+    if (this.abbreviations[lang]) {
+      return this.abbreviations[lang]
+    } else if (this.abbreviations[Author.defaultLang]) {
+      return this.abbreviations[Author.defaultLang]
+    } else if (Object.values(this.abbreviations).length > 0) {
+      return Object.values(this.abbreviations)[0]
+    }
+    return null
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Author);
+
+
+/***/ }),
+
+/***/ "./texts/text-work.js":
+/*!****************************!*\
+  !*** ./texts/text-work.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class TextWork {
+  /**
+  * Constructor, extracts ID from urn
+  * @param {Author} author - author of the textWork
+  * @param {String} urn - string identificator in special format, for example 'urn:cts:latinLit:phi0959'
+  * @param {Object} titles - has the following format { languageCode: title }
+  * @param {Object} abbreviations - has the following format { languageCode: abbreviation }
+  * @returns {TextWork}
+  */
+  constructor (author, urn, titles, abbreviations) {
+    this.urn = urn
+    this.titles = titles
+    this.author = author
+    this.abbreviations = abbreviations
+  }
+
+  /**
+  * This property is used to define title for panel
+  * @returns {String}
+  */
+  static get defaultLang () {
+    return 'eng'
+  }
+
+  /**
+  * This property is used to define prefix fr extract ID
+  * @returns {String}
+  */
+  static get defaultIDPrefix () {
+    return 'phi'
+  }
+
+  /**
+  * Method returns title in the lang from arguments, otherwise in default language or (if not exists) it returns first available title
+  * @param {String} lang - language for getting title
+  * @returns {String}
+  */
+  title (lang) {
+    if (this.titles[lang]) {
+      return this.titles[lang]
+    } else if (this.titles[TextWork.defaultLang]) {
+      return this.titles[TextWork.defaultLang]
+    } else if (Object.values(this.titles).length > 0) {
+      return Object.values(this.titles)[0]
+    }
+    return null
+  }
+
+  /**
+  * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
+  * @param {String} lang - language for getting abbreviation
+  * @returns {String}
+  */
+  abbreviation (lang) {
+    if (this.abbreviations[lang]) {
+      return this.abbreviations[lang]
+    } else if (this.abbreviations[TextWork.defaultLang]) {
+      return this.abbreviations[TextWork.defaultLang]
+    } else if (Object.values(this.abbreviations).length > 0) {
+      return Object.values(this.abbreviations)[0]
+    }
+    return null
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (TextWork);
+
+
+/***/ }),
+
+/***/ "./texts/word-usage-example.js":
+/*!*************************************!*\
+  !*** ./texts/word-usage-example.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordUsageExample; });
+/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
+
+
+class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor (language, targetWord, prefix, suffix, source, cit) {
+    super(language, targetWord)
+    this.prefix = prefix
+    this.suffix = suffix
+    this.source = source
+    this.cit = cit
+  }
+  createContext () {
+    return null // not implemented in the current child-class
+  }
+
+  /**
+  * Creates a full text of example prefix + word + suffix
+  * @returns {String}
+  */
+  get htmlExample () {
+    return `${this.prefix}<span class="alpheios_word_usage_list_item__text_targetword">${this.normalizedText}</span>${this.suffix}`
+  }
+
+  /**
+  * Creates a full description - author + textWork + cit number
+  * @param {String} lang - language for getting text
+  * @returns {String}
+  */
+  fullCit (lang) {
+    let res = ''
+    if (this.author) {
+      res = this.author.title(lang)
+      if (this.textWork) {
+        res = res + ' ' + this.textWork.title(lang)
+      } else {
+        if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
+          res = res + ' ' + this.cit.split('.')[1] + '.'
+        }
+      }
+
+      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 3) {
+        res = res + ' ' + this.cit.split('.')[2]
+      }
+    } else {
+      res = this.cit
+    }
+    return res
+  }
+}
+
+
+/***/ }),
+
 /***/ "./translation.js":
 /*!************************!*\
   !*** ./translation.js ***!
@@ -4728,8 +5091,75 @@ class Translation {
   static loadTranslations (lemma, languageCode, translationsList, provider) {
     lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList, provider))
   }
+
+  convertToJSONObject () {
+    return {
+      languageCode: this.languageCode,
+      translations: this.glosses
+    }
+  }
+
+  static readObject (jsonObject, lemma) {
+    return new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
+  }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Translation);
+
+
+/***/ }),
+
+/***/ "./w3c/text-quote-selector.js":
+/*!************************************!*\
+  !*** ./w3c/text-quote-selector.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TextQuoteSelector; });
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * Implements a W3C Text Quote Selector (https://www.w3.org/TR/annotation-model/#h-text-quote-selector)
+ */
+
+
+class TextQuoteSelector {
+  constructor (languageCode, normalizedText) {
+    this.languageCode = languageCode
+    this.normalizedText = normalizedText
+    this.contextForward = 6
+    this.contextBackward = 6
+    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
+  }
+
+  get contextHTML () {
+    let templateWord = `<span class="alpheios_worditem_incontext_add">${this.text}</span>`
+    let checkPrefix = this.prefix.replace(this.text, templateWord)
+    let checkSuffix = this.suffix.replace(this.text, templateWord)
+
+    let fullText = `${checkPrefix}<span class="alpheios_worditem_incontext">${this.text}</span>${checkSuffix}`
+    return fullText
+  }
+
+  createContext (selection, textSelector) {
+    this.prefix = selection.anchorNode.data.substr(0, textSelector.start)
+    this.suffix = selection.anchorNode.data.substr(textSelector.end)
+    this.text = textSelector.text
+    this.source = window.location.href
+    this.languageCode = textSelector.languageCode
+  }
+
+  static readObject (jsonObject) {
+    let tq = new TextQuoteSelector(jsonObject.languageCode, jsonObject.target.selector.exact)
+    tq.prefix = jsonObject.target.selector.prefix
+    tq.suffix = jsonObject.target.selector.suffix
+    tq.text = jsonObject.targetWord
+    tq.source = jsonObject.target.source
+    return tq
+  }
+}
 
 
 /***/ }),

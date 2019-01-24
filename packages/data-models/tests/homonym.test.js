@@ -68,7 +68,7 @@ describe('homonym.test.js', () => {
   it('3 Homonym - create homonym from json using readObject', () => {
     let testJson = {
       lexemes: [ lexeme1, lexeme2 ],
-      targetWord: 'fooTargetWord'
+      form: 'fooTargetWord'
     }
 
     Lexeme.readObject = jest.fn((l) => l)
@@ -81,7 +81,7 @@ describe('homonym.test.js', () => {
 
     delete testJson.targetWord
     let hRes2 = Homonym.readObject(testJson)
-    expect(hRes2.targetWord).toBeUndefined()
+    expect(hRes2.form).toBeUndefined()
 
     delete testJson.lexemes
 

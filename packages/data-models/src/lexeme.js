@@ -126,8 +126,27 @@ class Lexeme {
     }
 
     let lexeme = new Lexeme(lemma, inflections)
-    lexeme.meaning = DefinitionSet.readObject(jsonObject.meaning)
+    if (jsonObject.meaning) {
+      lexeme.meaning = DefinitionSet.readObject(jsonObject.meaning)
+    }
     return lexeme
+  }
+
+  convertToJSONObject (addMeaning = false) {
+    let resInflections = []
+    this.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
+
+    let resLexeme = {
+      lemma: this.lemma.convertToJSONObject(),
+      inflections: resInflections
+    }
+
+    if (addMeaning) {
+      let resMeaning = this.meaning.convertToJSONObject()
+      resLexeme.meaning = resMeaning
+    }
+
+    return resLexeme
   }
 
   /**

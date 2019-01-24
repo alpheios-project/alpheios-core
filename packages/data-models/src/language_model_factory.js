@@ -74,6 +74,13 @@ class LanguageModelFactory {
    */
   static getLanguageCodeFromId (languageID) {
     for (const languageModel of MODELS.values()) {
+      /*
+      console.info('***************getLanguageCodeFromId step1-1', languageModel.languageID)
+      console.info('***************getLanguageCodeFromId step1-2', languageModel.languageID.toString())
+
+      console.info('***************getLanguageCodeFromId step2-1', languageID)
+      console.info('***************getLanguageCodeFromId step2-2', languageID.toString())
+    */
       if (languageModel.languageID.toString() === languageID.toString()) {
         return languageModel.languageCode
       }
