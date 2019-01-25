@@ -1860,10 +1860,10 @@
  * 1. Set position
  * 2. Size and style
  * 3. Allow scrolling
- * 4. Transform
  */
   /* Tablet landscape and bigger */
   /* Flip modifier */
+  /* Tablet landscape and bigger */
   /*
  * Open
  */
@@ -1875,7 +1875,7 @@
  * 1. Set position
  * 2. Clip the bar
  * 3. Animation
- * 4. Reset transform
+ * 4. Reset position
  */
   /* Tablet landscape and bigger */
   /*
@@ -2071,7 +2071,18 @@
  ========================================================================== */
   /* Direction modifier
  ========================================================================== */
-  /* Animations for scrollspy
+  /* Toggle (Hover + Focus)
+========================================================================== */
+  /*
+ * The toggle is triggered on touch devices using `:focus` and tabindex
+ */
+  /*
+ * 1. Prevent tab highlighting on iOS.
+ */
+  /*
+ * Remove outline for `tabindex`
+ */
+  /* Animations
  ========================================================================== */
   /*
  * Fade
@@ -2096,11 +2107,6 @@
  */
   /* Duration modifier
  ========================================================================== */
-  /* Enable animation only on hover
-========================================================================== */
-  /*
- * Note: Firefox and IE needs this because animations are not triggered when switching between display `none` and `block`
- */
   /* Keyframes used by animation classes
  ========================================================================== */
   /*
@@ -2562,15 +2568,28 @@
   /* ========================================================================
    Component: Transition
  ========================================================================== */
+  /* Toggle (Hover + Focus)
+ ========================================================================== */
   /*
- * Using multiple selectors to exclude `uk-transition-toggle`
- * Note: Transitions don't work with `uk-postion-center-*` classes because they also use `transform`
- *       Just put the transition in an extra `div`
+ * 1. Prevent tab highlighting on iOS.
+ */
+  /*
+ * Remove outline for `tabindex`
+ */
+  /* Transitions
+ ========================================================================== */
+  /*
+ * The toggle is triggered on touch devices by two methods:
+ * 1. Using `:focus` and tabindex
+ * 2. Using `:hover` and a `touchstart` event listener registered on the document
+ *    (Doesn't work on Surface touch devices)
+ *
+ * Note: Transitions don't work with `uk-postion-center-*` classes because they also use `transform`,
+ *       therefore it's recommended to use an extra `div` for the transition.
  */
   /*
  * Fade
  */
-  /* Show */
   /*
  * Scale
  * Note: Using `scale3d` for better image rendering
@@ -2581,9 +2600,9 @@
  */
   /* Show */
   /* Opacity modifier
-========================================================================== */
+ ========================================================================== */
   /* Duration modifiers
-========================================================================== */
+ ========================================================================== */
   /* ========================================================================
    Component: Visibility
  ========================================================================== */
@@ -2604,15 +2623,26 @@
   /* Desktop and smaller */
   /* Visibility
  ========================================================================== */
-  /* Hover
+  /* Toggle (Hover + Focus)
  ========================================================================== */
   /*
  * Hidden
- * Can't use `display: none` because it's not accessible through keyboard.
+ * 1. The toggle is triggered on touch devices using `:focus` and tabindex
+ * 2. The target stays visible if any element within receives focus through keyboard
+ *    Doesn't work in Edge, yet.
+ * 3. Can't use `display: none` nor `visibility: hidden` because both are not focusable.
+ *
  */
+  /* 1 + 2 */
   /*
  * Invisible
- * Can't use `visibility: hidden` because it's not accessible through keyboard.
+ */
+  /* 1 + 2 */
+  /*
+ * 1. Prevent tab highlighting on iOS.
+ */
+  /*
+ * Remove outline for `tabindex`
  */
   /* Touch
  ========================================================================== */
@@ -4654,6 +4684,8 @@
   .auk .uk-nav-default .uk-nav-sub a:hover,
   .auk .uk-nav-default .uk-nav-sub a:focus {
     color: #666666 !important; }
+  .auk .uk-nav-default .uk-nav-sub li.uk-active > a {
+    color: #333 !important; }
   .auk .uk-nav-primary > li > a {
     font-size: 1.5rem !important;
     line-height: 1.5 !important;
@@ -4672,6 +4704,8 @@
   .auk .uk-nav-primary .uk-nav-sub a:hover,
   .auk .uk-nav-primary .uk-nav-sub a:focus {
     color: #666666 !important; }
+  .auk .uk-nav-primary .uk-nav-sub li.uk-active > a {
+    color: #333 !important; }
   .auk .uk-nav-center {
     text-align: center !important; }
   .auk .uk-nav-center .uk-nav-sub,
@@ -4842,6 +4876,8 @@
   .auk .uk-navbar-dropdown-nav .uk-nav-sub a:hover,
   .auk .uk-navbar-dropdown-nav .uk-nav-sub a:focus {
     color: #666666 !important; }
+  .auk .uk-navbar-dropdown-nav .uk-nav-sub li.uk-active > a {
+    color: #333 !important; }
   .auk .uk-navbar-dropbar {
     background: #fff !important; }
   .auk .uk-navbar-dropbar-slide {
@@ -5267,7 +5303,8 @@
   .auk .uk-dropdown-nav .uk-nav-sub a {
     color: #999 !important; }
   .auk .uk-dropdown-nav .uk-nav-sub a:hover,
-  .auk .uk-dropdown-nav .uk-nav-sub a:focus {
+  .auk .uk-dropdown-nav .uk-nav-sub a:focus,
+  .auk .uk-dropdown-nav .uk-nav-sub li.uk-active > a {
     color: #666666 !important; }
   .auk [class*='uk-dropdown-top'] {
     margin-top: -10px !important; }
@@ -5524,7 +5561,7 @@
     position: absolute !important;
     top: 0 !important;
     bottom: 0 !important;
-    left: 0 !important;
+    left: -270px !important;
     /* 2 */
     box-sizing: border-box !important;
     width: 270px !important;
@@ -5532,21 +5569,27 @@
     background: #222 !important;
     /* 3 */
     overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    /* 4 */
-    transform: translateX(-100%) !important; }
+    -webkit-overflow-scrolling: touch !important; }
   @media (min-width: 960px) {
     .auk .uk-offcanvas-bar {
+      left: -350px !important;
       width: 350px !important;
       padding: 40px 40px !important; } }
   .auk .uk-offcanvas-flip .uk-offcanvas-bar {
     left: auto !important;
-    right: 0 !important;
-    transform: translateX(100%) !important; }
+    right: -270px !important; }
+  @media (min-width: 960px) {
+    .auk .uk-offcanvas-flip .uk-offcanvas-bar {
+      right: -350px !important; } }
   .auk .uk-open > .uk-offcanvas-bar {
-    transform: translateX(0) !important; }
+    left: 0 !important; }
+  .auk .uk-offcanvas-flip .uk-open > .uk-offcanvas-bar {
+    left: auto !important;
+    right: 0 !important; }
   .auk .uk-offcanvas-bar-animation {
-    transition: transform 0.3s ease-out !important; }
+    transition: left 0.3s ease-out !important; }
+  .auk .uk-offcanvas-flip .uk-offcanvas-bar-animation {
+    transition-property: right !important; }
   .auk .uk-offcanvas-reveal {
     /* 1 */
     position: absolute !important;
@@ -5560,7 +5603,11 @@
     transition: width 0.3s ease-out !important; }
   .auk .uk-offcanvas-reveal .uk-offcanvas-bar {
     /* 4 */
-    transform: translateX(0) !important; }
+    left: 0 !important; }
+  .auk .uk-offcanvas-flip .uk-offcanvas-reveal .uk-offcanvas-bar {
+    /* 4 */
+    left: auto !important;
+    right: 0 !important; }
   .auk .uk-open > .uk-offcanvas-reveal {
     width: 270px !important; }
   @media (min-width: 960px) {
@@ -5822,6 +5869,13 @@
   .auk .uk-animation-reverse {
     animation-direction: reverse;
     animation-timing-function: ease-in; }
+  .auk .uk-animation-toggle:not(:hover):not(:focus) [class*='uk-animation-'] {
+    animation-name: none; }
+  .auk .uk-animation-toggle {
+    /* 1 */
+    -webkit-tap-highlight-color: transparent !important; }
+  .auk .uk-animation-toggle:focus {
+    outline: none !important; }
   .auk .uk-animation-fade {
     animation-name: uk-fade;
     animation-duration: 0.8s;
@@ -5861,8 +5915,6 @@
     animation-name: uk-shake; }
   .auk .uk-animation-fast {
     animation-duration: 0.1s; }
-  .auk .uk-animation-toggle:not(:hover):not(.uk-hover) [class*='uk-animation-'] {
-    animation-name: none; }
 
 @keyframes uk-fade {
   0% {
@@ -7305,40 +7357,35 @@
     .auk .uk-position-large.uk-position-top-center,
     .auk .uk-position-large.uk-position-bottom-center {
       transform: translateX(-50%) translateX(-50px) !important; } }
+  .auk .uk-transition-toggle {
+    /* 1 */
+    -webkit-tap-highlight-color: transparent !important; }
+  .auk .uk-transition-toggle:focus {
+    outline: none !important; }
   .auk .uk-transition-fade,
   .auk [class*='uk-transition-scale'],
   .auk [class*='uk-transition-slide'] {
     transition: 0.3s ease-out !important;
-    transition-property: opacity, transform, filter !important; }
-  .auk .uk-transition-toggle:focus {
-    outline: none !important; }
-  .auk .uk-transition-fade {
+    transition-property: opacity, transform, filter !important;
     opacity: 0 !important; }
-  .auk .uk-transition-toggle:hover [class*='uk-transition-fade'],
-  .auk .uk-transition-toggle.uk-hover [class*='uk-transition-fade'],
-  .auk .uk-transition-toggle:focus [class*='uk-transition-fade'],
-  .auk .uk-transition-active.uk-active [class*='uk-transition-fade'] {
+  .auk .uk-transition-toggle:hover .uk-transition-fade,
+  .auk .uk-transition-toggle:focus .uk-transition-fade,
+  .auk .uk-transition-active.uk-active .uk-transition-fade {
     opacity: 1 !important; }
-  .auk [class*='uk-transition-scale'] {
-    opacity: 0 !important; }
   .auk .uk-transition-scale-up {
     transform: scale3d(1, 1, 1) !important; }
   .auk .uk-transition-scale-down {
     transform: scale3d(1.1, 1.1, 1) !important; }
   .auk .uk-transition-toggle:hover .uk-transition-scale-up,
-  .auk .uk-transition-toggle.uk-hover .uk-transition-scale-up,
   .auk .uk-transition-toggle:focus .uk-transition-scale-up,
   .auk .uk-transition-active.uk-active .uk-transition-scale-up {
     opacity: 1 !important;
     transform: scale3d(1.1, 1.1, 1) !important; }
   .auk .uk-transition-toggle:hover .uk-transition-scale-down,
-  .auk .uk-transition-toggle.uk-hover .uk-transition-scale-down,
   .auk .uk-transition-toggle:focus .uk-transition-scale-down,
   .auk .uk-transition-active.uk-active .uk-transition-scale-down {
     opacity: 1 !important;
     transform: scale3d(1, 1, 1) !important; }
-  .auk [class*='uk-transition-slide'] {
-    opacity: 0 !important; }
   .auk .uk-transition-slide-top {
     transform: translateY(-100%) !important; }
   .auk .uk-transition-slide-bottom {
@@ -7364,11 +7411,10 @@
   .auk .uk-transition-slide-right-medium {
     transform: translateX(50px) !important; }
   .auk .uk-transition-toggle:hover [class*='uk-transition-slide'],
-  .auk .uk-transition-toggle.uk-hover [class*='uk-transition-slide'],
   .auk .uk-transition-toggle:focus [class*='uk-transition-slide'],
   .auk .uk-transition-active.uk-active [class*='uk-transition-slide'] {
     opacity: 1 !important;
-    transform: translateX(0) translateY(0) !important; }
+    transform: translate(0, 0) !important; }
   .auk .uk-transition-opaque {
     opacity: 1 !important; }
   .auk .uk-transition-slow {
@@ -7402,15 +7448,22 @@
       display: none !important; } }
   .auk .uk-invisible {
     visibility: hidden !important; }
-  .auk .uk-visible-toggle:not(:hover):not(.uk-hover) .uk-hidden-hover:not(:focus) {
+  .auk .uk-visible-toggle:not(:hover):not(:focus) .uk-hidden-hover:not(:focus-within) {
+    /* 3 */
     position: absolute !important;
     width: 0 !important;
     height: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
     overflow: hidden !important; }
-  .auk .uk-visible-toggle:not(:hover):not(.uk-hover) .uk-invisible-hover:not(:focus) {
+  .auk .uk-visible-toggle:not(:hover):not(:focus) .uk-invisible-hover:not(:focus-within) {
+    /* 3 */
     opacity: 0 !important; }
+  .auk .uk-visible-toggle {
+    /* 1 */
+    -webkit-tap-highlight-color: transparent !important; }
+  .auk .uk-visible-toggle:focus {
+    outline: none !important; }
   @media (pointer: coarse) {
     .auk .uk-hidden-touch {
       display: none !important; } }
@@ -8067,7 +8120,7 @@ div.alpheios-checkbox-block {
   .auk.alpheios-font_medium_class .alpheios-panel__header-nav-btn {
     width: 20px !important;
     height: 20px !important;
-    margin: 9px 14px !important; }
+    margin: 9px 9px !important; }
     .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn svg,
     .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:hover svg,
     .auk.alpheios-font_medium_class .alpheios-panel__header-action-btn.active:focus svg,
@@ -8194,7 +8247,7 @@ div.alpheios-checkbox-block {
   .auk.alpheios-font_small_class .alpheios-panel__header-nav-btn {
     width: 15px !important;
     height: 15px !important;
-    margin: 13px 14px !important; }
+    margin: 13px 9px !important; }
     .auk.alpheios-font_small_class .alpheios-panel__header-action-btn svg,
     .auk.alpheios-font_small_class .alpheios-panel__header-action-btn.active:hover svg,
     .auk.alpheios-font_small_class .alpheios-panel__header-action-btn.active:focus svg,
@@ -8321,7 +8374,7 @@ div.alpheios-checkbox-block {
   .auk.alpheios-font_large_class .alpheios-panel__header-nav-btn {
     width: 25px !important;
     height: 25px !important;
-    margin: 5px 14px !important; }
+    margin: 5px 9px !important; }
     .auk.alpheios-font_large_class .alpheios-panel__header-action-btn svg,
     .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:hover svg,
     .auk.alpheios-font_large_class .alpheios-panel__header-action-btn.active:focus svg,
@@ -9819,6 +9872,63 @@ ul.alpheios-skin_properties {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios_word_usage_list_item {
+  margin-bottom: 15px !important;
+}
+.alpheios_word_usage_list_item__source {
+  font-weight: bold !important;
+}
+.alpheios_word_usage_list_item__source a.alpheios_word_usage_list_item__source_link {
+  color: #3E8D9C !important;
+  font-size: 90% !important;
+  display: block;
+}
+.alpheios_word_usage_list_item__source p.alpheios_word_usage_list_item__source_cit {
+  margin: 0 !important;
+}
+.alpheios_word_usage_list_item__text {
+  margin-top: 3px !important;
+}
+.alpheios_word_usage_list_item__text span.alpheios_word_usage_list_item__text_targetword {
+    color: #E49A0D !important;
+    font-weight: bold !important;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
+.alpheios-word-usage {
+  display: flex;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+.alpheios-word-usage div.alpheios_word_usage_list_title {
+    flex: none !important;
+    font-weight: bold !important;
+    padding-bottom: 5px !important;
+    border-bottom: 1px solid #7E8897 !important;
+    margin-bottom: 10px !important;
+}
+.alpheios-word-usage div.alpheios_word_usage_list_mainblock {
+    flex: 1 1 auto !important;
+    position: relative !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+}
+.alpheios-word-usage div.alpheios-word_usage_list__provider {
+    flex: none !important;
+    font-weight: normal !important;
+    padding: 10px 0 !important;
+    font-size: 80% !important;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
 .alpheios-panel {
   overflow: auto !important;
   height: 100vh !important;
@@ -9897,7 +10007,7 @@ ul.alpheios-skin_properties {
   cursor: pointer !important;
   fill: #D1D1D0 !important;
   stroke: #D1D1D0 !important;
-  margin: 10px 15px !important;
+  margin: 10px 9px !important;
 }
 .alpheios-panel__header-action-btn svg,
   .alpheios-panel__header-action-btn.active:hover svg,

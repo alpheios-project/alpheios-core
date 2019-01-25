@@ -6,10 +6,6 @@ import { ViewSetFactory } from 'alpheios-inflection-tables'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Vuex from 'vuex'
 
-// A panel component
-// import Panel from '@/vue/components/panel.vue'
-// A popup component
-// import Popup from '@/vue/components/popup.vue'
 
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
@@ -89,7 +85,8 @@ export default class UIController {
       status: false,
       options: false,
       info: false,
-      treebank: false
+      treebank: false,
+      wordUsage: false
     }
     this.tabStateDefault = 'info'
 
@@ -168,6 +165,7 @@ export default class UIController {
     LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
     LexicalQuery.evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
     LexicalQuery.evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
+    LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.onWordUsageExamplesReady.bind(uiController))
     LexicalQuery.evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
     LexicalQuery.evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
@@ -552,6 +550,7 @@ export default class UIController {
       panel.vi.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
       panel.vi.panelData.grammarAvailable = false
+      panel.vi.panelData.wordUsageExamplesData = null
     }
     this.clear().open().changeTab('definitions')
     return this
@@ -739,6 +738,12 @@ export default class UIController {
       panel.vi.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
     }
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady }
+  }
+
+  updateWordUsageExamples (wordUsageExamplesData) {
+    if (this.hasUiModule('panel')) {
+      this.getUiModule('panel').vi.panelData.wordUsageExamplesData = wordUsageExamplesData
+    }
   }
 
   lexicalRequestComplete () {
@@ -933,6 +938,7 @@ export default class UIController {
           resourceOptions: this.resourceOptions,
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.contentOptions.items.locale.currentValue } : null,
+          wordUsageExamples: this.enableWordUsageExamples(textSelector) ? { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue } : null,
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
@@ -956,6 +962,11 @@ export default class UIController {
     return textSelector.languageID === Constants.LANG_LATIN &&
       this.contentOptions.items.enableLemmaTranslations.currentValue &&
       !this.contentOptions.items.locale.currentValue.match(/^en-/)
+  }
+
+  enableWordUsageExamples (textSelector) {
+    return textSelector.languageID === Constants.LANG_LATIN &&
+      this.contentOptions.items.enableWordUsageExamples.currentValue
   }
 
   handleEscapeKey (event, nativeEvent) {
@@ -1039,6 +1050,11 @@ export default class UIController {
   onDefinitionsReady (data) {
     this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateDefinitions(data.homonym)
+  }
+
+  onWordUsageExamplesReady (wordUsageExamplesData) {
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
+    this.updateWordUsageExamples(wordUsageExamplesData)
   }
 
   onDefinitionsNotFound (data) {

@@ -50,6 +50,28 @@
         }
       ]
     },
+    "enableWordUsageExamples": {
+      "defaultValue": false,
+      "labelText": "Experimental: Enable Latin Word Usage Examples (Concordance)",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
+    },
+    "wordUsageExamplesMax": {
+      "defaultValue": 5,
+      "labelText": "Word Usage Examples - max results",
+      "number": true,
+      "values": []
+    },
+    
     "panelPosition": {
       "defaultValue": "left",
       "labelText": "Panel position:",

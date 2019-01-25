@@ -7507,10 +7507,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js?!./vue/components/wordforms.vue?vue&type=style&index=0&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/wordforms.vue?vue&type=style&index=0&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/vue-loader/lib/index.js?!./vue/components/wordforms.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/wordforms.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7518,10 +7518,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&":
-/*!*************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7529,10 +7529,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/embed-lib-warning.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/embed-lib-warning.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/embed-lib-warning.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/embed-lib-warning.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7540,10 +7540,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/grammar.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/grammar.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/grammar.vue?vue&type=style&index=0&lang=scss&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/grammar.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7551,10 +7551,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-attribute.vue?vue&type=style&index=0&lang=scss&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/infl-attribute.vue?vue&type=style&index=0&lang=scss& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-attribute.vue?vue&type=style&index=0&lang=scss&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/infl-attribute.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7562,10 +7562,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-footnote.vue?vue&type=style&index=0&lang=scss&":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/infl-footnote.vue?vue&type=style&index=0&lang=scss& ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-footnote.vue?vue&type=style&index=0&lang=scss&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/infl-footnote.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7573,10 +7573,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-browser.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-browser.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-browser.vue?vue&type=style&index=0&lang=scss&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-browser.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7584,10 +7584,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7595,10 +7595,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7606,10 +7606,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7617,10 +7617,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-wide.vue?vue&type=style&index=0&lang=scss&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-table-wide.vue?vue&type=style&index=0&lang=scss& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-wide.vue?vue&type=style&index=0&lang=scss&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections-table-wide.vue?vue&type=style&index=0&lang=scss& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7628,10 +7628,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections.vue?vue&type=style&index=0&lang=scss&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections.vue?vue&type=style&index=0&lang=scss& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections.vue?vue&type=style&index=0&lang=scss&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/inflections.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7639,10 +7639,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/info.vue?vue&type=style&index=0&lang=scss&":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/info.vue?vue&type=style&index=0&lang=scss& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/info.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/info.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7650,10 +7650,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lemma-translation.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/lemma-translation.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lemma-translation.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/lemma-translation.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7661,10 +7661,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lookup.vue?vue&type=style&index=0&lang=scss&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/lookup.vue?vue&type=style&index=0&lang=scss& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lookup.vue?vue&type=style&index=0&lang=scss&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/lookup.vue?vue&type=style&index=0&lang=scss& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7672,10 +7672,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner-v1.vue?vue&type=style&index=0&lang=scss&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph-inner-v1.vue?vue&type=style&index=0&lang=scss& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner-v1.vue?vue&type=style&index=0&lang=scss&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph-inner-v1.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7683,10 +7683,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7694,10 +7694,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/panel.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7705,10 +7705,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss& ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7716,10 +7716,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/popup.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/popup.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7727,10 +7727,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/progress-bar.vue?vue&type=style&index=0&lang=scss&":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/progress-bar.vue?vue&type=style&index=0&lang=scss& ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/progress-bar.vue?vue&type=style&index=0&lang=scss&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/progress-bar.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7738,10 +7738,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/reskin-font-color.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/reskin-font-color.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/reskin-font-color.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/reskin-font-color.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7749,10 +7749,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/setting.vue?vue&type=style&index=1&lang=scss&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/setting.vue?vue&type=style&index=1&lang=scss& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/setting.vue?vue&type=style&index=1&lang=scss&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/setting.vue?vue&type=style&index=1&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7760,10 +7760,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss&":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss& ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7771,10 +7771,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7782,10 +7782,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/treebank.vue?vue&type=style&index=0&lang=scss&":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/treebank.vue?vue&type=style&index=0&lang=scss& ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/treebank.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/treebank.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7793,10 +7793,32 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/user-auth.vue?vue&type=style&index=0&lang=scss&":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/user-auth.vue?vue&type=style&index=0&lang=scss& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/user-auth.vue?vue&type=style&index=0&lang=scss&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/user-auth.vue?vue&type=style&index=0&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-example-item.vue?vue&type=style&index=0&lang=scss&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-usage-example-item.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-examples-block.vue?vue&type=style&index=0&lang=scss&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-usage-examples-block.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8482,7 +8504,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'InflectionAttribute',
-  inject: ['l10n'],
   props: {
     data: {
       type: Object,
@@ -8506,6 +8527,10 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: false,
       default: () => ['']
+    },
+    messages: {
+      type: Object,
+      required: false
     }
   },
   methods: {
@@ -8529,11 +8554,11 @@ __webpack_require__.r(__webpack_exports__);
       }
       for (let v of baseValues) {
         let decorated = v
-        if (this.decorators.includes('abbreviate') && this.l10n.hasMsg(v)) {
-          decorated = this.l10n.getAbbr(v)
+        if (this.decorators.includes('abbreviate') && this.messages && this.messages[v]) {
+          decorated = this.messages[v].abbr()
         }
         if (this.decorators.includes('link') && decorated.match(/^http/)) {
-          let linkText = this.l10n.hasMsg(`INFL_ATTRIBUTE_LINK_TEXT_TYPE`) ? this.l10n.getMsg(`INFL_ATTRIBUTE_LINK_TEXT_TYPE`) : type
+          let linkText = this.messages ? this.messages[`INFL_ATTRIBUTE_LINK_TEXT_TYPE`].get() : type
           decorated = `<a class="alpheios-morph__linkedattr" target="_blank" href="${decorated}">${linkText}</a>`
         }
         decoratedValues.push(decorated)
@@ -9163,6 +9188,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -9181,6 +9226,12 @@ __webpack_require__.r(__webpack_exports__);
     languageId: {
       type: Symbol,
       required: false
+    },
+
+    // A passtrough to inflection-tables-wide
+    messages: {
+      type: Object,
+      required: true
     },
 
     inflBrowserTablesCollapsed: {
@@ -9450,7 +9501,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WideSupplementalInflectionsTable',
-  inject: ['l10n'],
   props: {
     /*
          An object that represents a wide version of a table, consists of array of rows.
@@ -9463,6 +9513,11 @@ __webpack_require__.r(__webpack_exports__);
 
     bgColor: {
       type: [String],
+      required: true
+    },
+
+    messages: {
+      type: [Object],
       required: true
     }
   },
@@ -9717,7 +9772,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WideInflectionsTableStandardForm',
-  inject: ['l10n'],
   components: {
     inflFootnote: _infl_footnote_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -9726,6 +9780,10 @@ __webpack_require__.r(__webpack_exports__);
     // An inflection table view
     view: {
       type: [Object, Boolean],
+      required: true
+    },
+    messages: {
+      type: Object,
       required: true
     },
     collapsed: {
@@ -9856,6 +9914,13 @@ __webpack_require__.r(__webpack_exports__);
       if (cell.isDataCell) {
         cell.clearRowAndColumnHighlighting()
       }
+    },
+
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.messages && this.messages[value]) {
+        return this.messages[value].get()
+      }
+      return defaultValue
     }
   },
 
@@ -9901,8 +9966,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inflections-subtables-wide.vue */ "./vue/components/inflections-subtables-wide.vue");
 /* harmony import */ var _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections-supp-table-wide.vue */ "./vue/components/inflections-supp-table-wide.vue");
 /* harmony import */ var _wordforms_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./wordforms.vue */ "./vue/components/wordforms.vue");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alpheios-inflection-tables */ "alpheios-inflection-tables");
+/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_8__);
 //
 //
 //
@@ -9993,15 +10063,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// Other dependencies
+
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Inflections',
-  inject: ['l10n'],
   components: {
     prerenderedTableWide: _inflections_table_prerendered_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     mainTableWideVue: _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     subTablesWide: _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     suppTablesWide: _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     wordForms: _wordforms_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
 
@@ -10017,11 +10092,14 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
-
+    messages: {
+      type: Object,
+      required: true
+    },
     /*
-          Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
-          inflections data is calculated
-          */
+        Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
+        inflections data is calculated
+        */
     waitState: {
       type: Boolean,
       default: false,
@@ -10115,14 +10193,14 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     /*
-          An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-          use this information to adjust a width of a container that displays an inflection component. However, a width
-          of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
-          an inflection table width and notify a parent component only when a parent container is visible.
-          A parent component will notify us of that by setting a `visible` property. A change of that property state
-          will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
-          as it won't be used by anything and thus will not be calculated by Vue.
-           */
+        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
+        use this information to adjust a width of a container that displays an inflection component. However, a width
+        of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
+        an inflection table width and notify a parent component only when a parent container is visible.
+        A parent component will notify us of that by setting a `visible` property. A change of that property state
+        will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
+        as it won't be used by anything and thus will not be calculated by Vue.
+         */
     isVisible: function (visibility) {
       if (visibility && this.htmlElements.content) {
         // If container is become visible, update parent with its width
@@ -10159,7 +10237,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     updateWidth: function () {
-      vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default.a.nextTick(() => {
+      vue_dist_vue__WEBPACK_IMPORTED_MODULE_8___default.a.nextTick(() => {
         this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections' })
       })
     },
@@ -10183,6 +10261,13 @@ __webpack_require__.r(__webpack_exports__);
           console.warn(`Cannot find #${reflink} element. Navigation cancelled`)
         }
       }
+    },
+
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.messages && this.messages[value]) {
+        return this.messages[value].get()
+      }
+      return defaultValue
     }
   },
 
@@ -10229,9 +10314,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Info',
-  inject: ['l10n'],
   props: {
     data: {
+      type: Object,
+      required: true
+    },
+    messages: {
       type: Object,
       required: true
     }
@@ -10339,7 +10427,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Lookup',
-  inject: ['ui', 'l10n'],
   components: {
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -10447,8 +10534,8 @@ __webpack_require__.r(__webpack_exports__);
         .create(textSelector, resourceOptions, lemmaTranslationLang)
         .getData()
       // A lookup, when started from a panel, should open a popup with lookup results
-      this.ui.openPopup()
-      this.ui.closePanel()
+      this.uiController.popup.vi.open()
+      this.uiController.panel.close()
     },
 
     'switchLookupSettings': function () {
@@ -10467,6 +10554,13 @@ __webpack_require__.r(__webpack_exports__);
       let keyinfo = this.resourceOptions.parseKey(name)
 
       this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+    },
+
+    ln10Messages: function (value, defaultValue = 'uknown') {
+      if (this.uiController && this.uiController.l10n && this.uiController.l10n.messages && this.uiController.l10n.messages[value]) {
+        return this.uiController.l10n.messages[value].get()
+      }
+      return defaultValue
     },
 
     updateUIbyOverrideLanguage: function () {
@@ -10817,6 +10911,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -10846,6 +10941,10 @@ __webpack_require__.r(__webpack_exports__);
     morphDataReady: {
       type: Boolean,
       required: true
+    },
+    messages: {
+      type: Object,
+      required: false
     }
   },
   methods: {
@@ -10881,33 +10980,65 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
 /* harmony import */ var _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./reskin-font-color.vue */ "./vue/components/reskin-font-color.vue");
 /* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/components/word-usage-examples-block.vue */ "./vue/components/word-usage-examples-block.vue");
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_26__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11135,7 +11266,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 // Embeddable SVG icons
+
+
 
 
 
@@ -11155,8 +11290,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  inject: ['l10n', 'ui'], // API modules that are required for this component
-  storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -11166,24 +11299,26 @@ __webpack_require__.r(__webpack_exports__);
     grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_11___default.a,
-    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_12___default.a,
-    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13___default.a,
-    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
-    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
-    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17___default.a,
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18___default.a,
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
-    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22___default.a,
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
-    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21___default.a,
+    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12___default.a,
+    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13___default.a,
+    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17___default.a,
+    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18___default.a,
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
+    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23___default.a,
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21___default.a,
+    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22___default.a,
+    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24___default.a,
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    reskinFontColor: _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    reskinFontColor: _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    wordUsageExamplesBlock: _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_23__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__["directive"]
   },
   data: function () {
     return {
@@ -11339,6 +11474,10 @@ __webpack_require__.r(__webpack_exports__);
         return this.positionClassVariants[this.data.settings.panelPosition.currentValue]
       }
       return null
+    },
+
+    wordUsageExamplesData () {
+      return this.data.wordUsageExamplesData
     }
   },
   methods: {
@@ -11348,6 +11487,10 @@ __webpack_require__.r(__webpack_exports__);
         if (this.zIndex < Number.POSITIVE_INFINITY) { this.zIndex++ } // To be one level higher that the highest element on a page
         this.self.element.style.zIndex = this.zIndex
       }
+    },
+
+    close () {
+      this.$emit('close')
     },
 
     closeNotifications () {
@@ -11429,8 +11572,15 @@ __webpack_require__.r(__webpack_exports__);
       this.panelWidth = width
     },
 
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
+        return this.data.l10n.messages[value].get()
+      }
+      return defaultValue
+    },
+
     attachTrackingClick: function () {
-      this.ui.closePanel()
+      this.close()
     },
 
     calcScrollPadding: function () {
@@ -11475,15 +11625,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-
-  beforeCreate: function () {
-    // Check store dependencies. API dependencies will be verified by the `inject`
-    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
-    if (missingDependencies.length > 0) {
-      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
-    }
-  },
-
   created: function () {
     let vm = this
     vm.$on('changeStyleClass', (name, type) => {
@@ -11499,7 +11640,7 @@ __webpack_require__.r(__webpack_exports__);
       this.calcWidthPaddings()
 
       // Initialize Interact.js: make panel resizable
-      interactjs__WEBPACK_IMPORTED_MODULE_24___default()(this.$el)
+      interactjs__WEBPACK_IMPORTED_MODULE_26___default()(this.$el)
         .resizable({
           // resize from all edges and corners
           edges: { left: true, right: true, bottom: false, top: false },
@@ -11738,6 +11879,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -11754,7 +11896,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Popup',
-  inject: ['ui', 'l10n'],
   components: {
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -11812,6 +11953,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     linkedfeatures: {
       type: Array,
+      required: true
+    },
+    visible: {
+      type: Boolean,
       required: true
     },
     translations: {
@@ -11893,7 +12038,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     providersLinkText: function () {
-      return (this.data) ? (this.data.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')) : ''
+      return (this.data) ? this.data.showProviders ? this.ln10Messages('LABEL_POPUP_HIDECREDITS') : this.ln10Messages('LABEL_POPUP_SHOWCREDITS') : ''
     },
     showProviders: function () {
       return (this.data) ? this.data.showProviders : null
@@ -11903,7 +12048,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     positionLeftDm: function () {
-      if (!this.$store.state.popup.visible) {
+      if (!this.visible) {
         // Reset if popup is invisible
         return '0px'
       }
@@ -11937,7 +12082,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     positionTopDm: function () {
-      if (!this.$store.state.popup.visible) {
+      if (!this.visible) {
         // Reset if popup is invisible
         return '0px'
       }
@@ -12042,6 +12187,11 @@ __webpack_require__.r(__webpack_exports__);
       while (this.messages.length > 0) {
         this.messages.pop()
       }
+    },
+
+    closePopup () {
+      this.logger.log(`Closing a popup and resetting its dimensions`)
+      this.$emit('close')
     },
 
     closeNotifications () {
@@ -12218,8 +12368,15 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('sendfeature', data)
     },
 
+    ln10Messages: function (value, defaultValue = 'unknown') {
+      if (this.data && this.data.l10n && this.data.l10n.messages && this.data.l10n.messages[value]) {
+        return this.data.l10n.messages[value].get()
+      }
+      return defaultValue
+    },
+
     attachTrackingClick: function () {
-      this.ui.closePopup()
+      this.closePopup()
     }
 
   },
@@ -12231,26 +12388,10 @@ __webpack_require__.r(__webpack_exports__);
         .draggable(this.draggableSettings())
         .on('resizemove', this.resizeListener)
     }
-
-    // Updated popup dimensions when its visibility is updated
-    this.$options.visibleUnwatch = this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
-      if (newValue) {
-        // A popup became visible
-        this.updatePopupDimensions()
-      } else {
-        // A popup became invisible
-        this.resetPopupDimensions()
-      }
-    })
-  },
-
-  beforeDestroy () {
-    // Teardown the watch function
-    this.$options.visibleUnwatch()
   },
 
   updated () {
-    if (this.$store.state.popup.visible) {
+    if (this.visible) {
       let time = Date.now()
       this.logger.log(`${time}: component is updated`)
 
@@ -12267,6 +12408,16 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   watch: {
+    visible: function (value) {
+      if (value) {
+        // A popup became visible
+        this.updatePopupDimensions()
+      } else {
+        // A popup became invisible
+        this.resetPopupDimensions()
+      }
+    },
+
     requestStartTime () {
       this.logger.log(`Request start time has been updated`)
       this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
@@ -12278,6 +12429,7 @@ __webpack_require__.r(__webpack_exports__);
       let time = Date.now()
       this.logger.log(`${time}: translation data became available`, this.translations)
     }
+
   }
 });
 
@@ -12376,7 +12528,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ReskinFontColor',
-  inject: ['l10n'],
   components: {
     whiteBrush: _images_inline_icons_white_brush_svg__WEBPACK_IMPORTED_MODULE_0___default.a,
     blackBrush: _images_inline_icons_black_brush_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
@@ -12387,6 +12538,10 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       required: false,
       default: true
+    },
+    messages: {
+      type: Object,
+      required: true
     }
   },
   data () {
@@ -12413,6 +12568,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "../node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12459,10 +12621,12 @@ __webpack_require__.r(__webpack_exports__);
     selected: {
       get: function () {
         let rv
-        if (typeof this.data.currentTextValue === 'function' && this.data.boolean !== true) {
+        if (typeof this.data.currentTextValue === 'function' && this.data.boolean !== true  && this.data.number !== true) {
           rv = this.data.currentTextValue()
         } else if (this.data.boolean === true) {
           rv = this.data.currentValue
+        } else if (this.data.number === true) {
+          rv = parseInt(this.data.currentValue)
         }
         return rv
       },
@@ -12471,7 +12635,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     values: function () {
-      return this.data && this.data.textValues ? this.data.textValues() : []
+      return this.data && !this.data.number && this.data.textValues ? this.data.textValues() : []
     },
     checkboxLabel: function () {
       if (this.data && this.data.textValues) {
@@ -12611,9 +12775,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Treebank',
-  inject: ['l10n'],
   props: {
     res: {
+      type: Object,
+      required: true
+    },
+    messages: {
       type: Object,
       required: true
     },
@@ -12783,6 +12950,110 @@ __webpack_require__.r(__webpack_exports__);
           })
       }
     }
+  },
+
+  created: function () {
+    // Check for dependencies
+    // TODO: Provide a unified way to do such checks
+    const dependencies = ['l10n']
+    const missingDependencies = dependencies.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
+    }
+  }
+});
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-usage-example-item.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/word-usage-example-item.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'WordUsageExampleItem',
+  props: {
+    wordUsageItem: {
+      type: Object,
+      required: true
+    }
+  }
+});
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-usage-examples-block.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/word-usage-examples-block.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_components_word_usage_example_item_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/word-usage-example-item.vue */ "./vue/components/word-usage-example-item.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'WordUsageExamplesBlock',
+  components: {
+    wordUsageExampleItem: _vue_components_word_usage_example_item_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    wordUsageList: {
+      type: Array,
+      required: true
+    },
+    targetWord: {
+      type: String,
+      required: true
+    },
+    language: {
+      type: String,
+      required: true
+    },
+    provider: {
+      type: String,
+      required: false
+    }
+  },
+  computed: {
+    showWordUsageExampleItems () {
+      return this.wordUsageList && this.wordUsageList.length > 0
+    }
   }
 });
 
@@ -12835,7 +13106,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     forms: function () {
-      return this.lexemes ? this.defineFormsBySelectedView() : ''
+      if (this.lexemes) {
+        return this.defineFormsBySelectedView()
+      }
     }
   },
   methods: {
@@ -13179,6 +13452,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({ viewID: "latin_noun_view" })
           },
@@ -13193,6 +13467,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({ viewID: "latin_adjective_view" })
           },
@@ -13215,6 +13490,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_conjugation_mood_voice_view",
@@ -13228,6 +13504,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_conjugation_voice_mood_view",
@@ -13241,6 +13518,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_mood_conjugation_voice_view",
@@ -13254,6 +13532,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_mood_voice_conjugation_view",
@@ -13267,6 +13546,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_voice_conjugation_mood_view",
@@ -13280,6 +13560,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_voice_mood_conjugation_view",
@@ -13297,6 +13578,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({ viewID: "latin_verb_participle_view" })
           },
@@ -13307,6 +13589,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({ viewID: "latin_infinitive_view" })
           },
@@ -13317,6 +13600,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({ viewID: "latin_imperative_view" })
           },
@@ -13327,6 +13611,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({ viewID: "latin_supine_view" })
           },
@@ -13341,6 +13626,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13355,6 +13641,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_voice_view",
@@ -13369,6 +13656,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13383,6 +13671,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13397,6 +13686,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13411,6 +13701,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13425,6 +13716,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13439,6 +13731,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13453,6 +13746,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13467,6 +13761,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13481,6 +13776,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13495,6 +13791,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13509,6 +13806,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13523,6 +13821,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13537,6 +13836,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13551,6 +13851,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
@@ -13565,11 +13866,87 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.latinInflView({
               viewID: "latin_verb_irregular_view",
               form: "supersum",
               title: "Supersum (superesse, superfui, superfuturus)"
+            })
+          },
+          on: { widthchange: _vm.inflTableWidthUpd }
+        }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            collapsed: _vm.inflBrowserTablesCollapsed,
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            view: _vm.latinInflView({
+              viewID: "latin_verb_irregular_voice_view",
+              form: "queo",
+              title: "Queo (quire, quivi(ii), quitus)"
+            })
+          },
+          on: { widthchange: _vm.inflTableWidthUpd }
+        }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            collapsed: _vm.inflBrowserTablesCollapsed,
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            view: _vm.latinInflView({
+              viewID: "latin_verb_irregular_view",
+              form: "nequeo",
+              title: "Nequeo (nequire, nequivi(ii), nequitus)"
+            })
+          },
+          on: { widthchange: _vm.inflTableWidthUpd }
+        }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            collapsed: _vm.inflBrowserTablesCollapsed,
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            view: _vm.latinInflView({
+              viewID: "latin_verb_irregular_voice_view",
+              form: "adeo",
+              title: "Adeo (adire, adivi(ii), aditus)"
+            })
+          },
+          on: { widthchange: _vm.inflTableWidthUpd }
+        }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            collapsed: _vm.inflBrowserTablesCollapsed,
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            view: _vm.latinInflView({
+              viewID: "latin_verb_irregular_voice_view",
+              form: "ineo",
+              title: "Ineo (inire, inivi(ii), initus)"
+            })
+          },
+          on: { widthchange: _vm.inflTableWidthUpd }
+        }),
+        _vm._v(" "),
+        _c("wide-table", {
+          attrs: {
+            collapsed: _vm.inflBrowserTablesCollapsed,
+            "infl-browser-table": true,
+            messages: _vm.messages,
+            "no-suffix-matches-hidden": false,
+            view: _vm.latinInflView({
+              viewID: "latin_verb_irregular_view",
+              form: "veneo",
+              title: "Veneo (venire, venivi(ii), venitus)"
             })
           },
           on: { widthchange: _vm.inflTableWidthUpd }
@@ -13645,6 +14022,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({ viewID: "greek_noun_view" })
           },
@@ -13655,6 +14033,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({ viewID: "greek_noun_simplified_view" })
           },
@@ -13669,6 +14048,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({ viewID: "greek_adjective_view" })
           },
@@ -13679,6 +14059,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_adjective_simplified_view"
@@ -13695,6 +14076,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_person_pronoun_view",
@@ -13709,6 +14091,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_person_gender_pronoun_view",
@@ -13723,6 +14106,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_gender_pronoun_view",
@@ -13737,6 +14121,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_lemma_gender_pronoun_view",
@@ -13751,6 +14136,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_gender_pronoun_view",
@@ -13765,6 +14151,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_gender_pronoun_view",
@@ -13779,6 +14166,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_gender_pronoun_view",
@@ -13793,6 +14181,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_gender_pronoun_view",
@@ -13807,6 +14196,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_gender_pronoun_view",
@@ -13825,6 +14215,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_article_view",
@@ -13842,6 +14233,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekInflView({
               viewID: "greek_numeral_view",
@@ -13867,6 +14259,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm1" })
           },
@@ -13877,6 +14270,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm2" })
           },
@@ -13887,6 +14281,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm3" })
           },
@@ -13897,6 +14292,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm4" })
           },
@@ -13907,6 +14303,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm5" })
           },
@@ -13917,6 +14314,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm6" })
           },
@@ -13927,6 +14325,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm7" })
           },
@@ -13937,6 +14336,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm8" })
           },
@@ -13947,6 +14347,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm9" })
           },
@@ -13957,6 +14358,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm10" })
           },
@@ -13967,6 +14369,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm11" })
           },
@@ -13977,6 +14380,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm12" })
           },
@@ -13987,6 +14391,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm13" })
           },
@@ -13997,6 +14402,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm14" })
           },
@@ -14007,6 +14413,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm15" })
           },
@@ -14017,6 +14424,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm16" })
           },
@@ -14031,6 +14439,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm17" })
           },
@@ -14041,6 +14450,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm17b" })
           },
@@ -14051,6 +14461,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm17c" })
           },
@@ -14065,6 +14476,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm18" })
           },
@@ -14075,6 +14487,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm19" })
           },
@@ -14085,6 +14498,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm20" })
           },
@@ -14095,6 +14509,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm21" })
           },
@@ -14105,6 +14520,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm22" })
           },
@@ -14115,6 +14531,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm23" })
           },
@@ -14125,6 +14542,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm24" })
           },
@@ -14135,6 +14553,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm25" })
           },
@@ -14145,6 +14564,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm26" })
           },
@@ -14155,6 +14575,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm27" })
           },
@@ -14173,6 +14594,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm28" })
           },
@@ -14183,6 +14605,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm29" })
           },
@@ -14193,6 +14616,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm30" })
           },
@@ -14203,6 +14627,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm31" })
           },
@@ -14217,6 +14642,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm32" })
           },
@@ -14227,6 +14653,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm33" })
           },
@@ -14237,6 +14664,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm34" })
           },
@@ -14247,6 +14675,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm35" })
           },
@@ -14261,6 +14690,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm36" })
           },
@@ -14271,6 +14701,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm37" })
           },
@@ -14281,6 +14712,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm38" })
           },
@@ -14291,6 +14723,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm39" })
           },
@@ -14305,6 +14738,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm40" })
           },
@@ -14315,6 +14749,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm41" })
           },
@@ -14325,6 +14760,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm42" })
           },
@@ -14339,6 +14775,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm43" })
           },
@@ -14349,6 +14786,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm43b" })
           },
@@ -14359,6 +14797,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm44" })
           },
@@ -14369,6 +14808,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm45" })
           },
@@ -14379,6 +14819,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm46" })
           },
@@ -14389,6 +14830,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm47" })
           },
@@ -14399,6 +14841,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm48" })
           },
@@ -14409,6 +14852,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm49" })
           },
@@ -14419,6 +14863,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm50" })
           },
@@ -14429,6 +14874,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm51" })
           },
@@ -14439,6 +14885,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm52" })
           },
@@ -14449,6 +14896,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParadigmView({ paradigmID: "verbpdgm53" })
           },
@@ -14463,6 +14911,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm54" })
           },
@@ -14473,6 +14922,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm55" })
           },
@@ -14483,6 +14933,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm56" })
           },
@@ -14493,6 +14944,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm57" })
           },
@@ -14503,6 +14955,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm58" })
           },
@@ -14513,6 +14966,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm59" })
           },
@@ -14523,6 +14977,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm60" })
           },
@@ -14533,6 +14988,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm61" })
           },
@@ -14543,6 +14999,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm62" })
           },
@@ -14553,6 +15010,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm63" })
           },
@@ -14563,6 +15021,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm64" })
           },
@@ -14573,6 +15032,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm65" })
           },
@@ -14583,6 +15043,7 @@ var render = function() {
           attrs: {
             collapsed: _vm.inflBrowserTablesCollapsed,
             "infl-browser-table": true,
+            messages: _vm.messages,
             "no-suffix-matches-hidden": false,
             view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm66" })
           },
@@ -14726,7 +15187,7 @@ var render = function() {
             },
             [
               _vm._v(
-                _vm._s(_vm.l10n.getMsg("INFLECTIONS_MAIN_TABLE_LINK_TEXT"))
+                _vm._s(_vm.messages.INFLECTIONS_MAIN_TABLE_LINK_TEXT.get())
               )
             ]
           )
@@ -14921,7 +15382,7 @@ var render = function() {
                     _vm._v(
                       "\n      " +
                         _vm._s(
-                          _vm.l10n.getMsg("INFLECT_MSG_TABLE_NOT_IMPLEMENTED")
+                          _vm.ln10Messages("INFLECT_MSG_TABLE_NOT_IMPLEMENTED")
                         ) +
                         "\n    "
                     )
@@ -14961,7 +15422,7 @@ var render = function() {
                                     "alph-tooltip",
                                     {
                                       attrs: {
-                                        tooltipText: _vm.l10n.getMsg(
+                                        tooltipText: _vm.ln10Messages(
                                           "TOOLTIP_INFLECT_SHOWFULL"
                                         ),
                                         tooltipDirection: "bottom-right"
@@ -14979,7 +15440,7 @@ var render = function() {
                                           _vm._v(
                                             "\n              " +
                                               _vm._s(
-                                                _vm.l10n.getMsg(
+                                                _vm.ln10Messages(
                                                   "LABEL_INFLECT_SHOWFULL"
                                                 )
                                               ) +
@@ -15015,7 +15476,7 @@ var render = function() {
                                     "alph-tooltip",
                                     {
                                       attrs: {
-                                        tooltipText: _vm.l10n.getMsg(
+                                        tooltipText: _vm.ln10Messages(
                                           "TOOLTIP_INFLECT_COLLAPSE"
                                         ),
                                         tooltipDirection: "bottom-right"
@@ -15033,7 +15494,7 @@ var render = function() {
                                           _vm._v(
                                             "\n              " +
                                               _vm._s(
-                                                _vm.l10n.getMsg(
+                                                _vm.ln10Messages(
                                                   "LABEL_INFLECT_COLLAPSE"
                                                 )
                                               ) +
@@ -15127,7 +15588,10 @@ var render = function() {
                                           : _c("span", {
                                               domProps: {
                                                 innerHTML: _vm._s(
-                                                  _vm.l10n.getText(cell.value)
+                                                  _vm.ln10Messages(
+                                                    cell.value,
+                                                    cell.value
+                                                  )
                                                 )
                                               }
                                             })
@@ -15225,7 +15689,9 @@ var render = function() {
                         _vm._v(
                           "\n            " +
                             _vm._s(
-                              _vm.l10n.getMsg("PLACEHOLDER_INFLECT_IN_PROGRESS")
+                              _vm.ln10Messages(
+                                "PLACEHOLDER_INFLECT_IN_PROGRESS"
+                              )
                             ) +
                             "\n          "
                         )
@@ -15256,7 +15722,9 @@ var render = function() {
                 },
                 [
                   _c("label", { staticClass: "uk-form-label" }, [
-                    _vm._v(_vm._s(_vm.l10n.getMsg("LABEL_INFLECT_SELECT_POFS")))
+                    _vm._v(
+                      _vm._s(_vm.ln10Messages("LABEL_INFLECT_SELECT_POFS"))
+                    )
                   ]),
                   _vm._v(" "),
                   _c(
@@ -15381,9 +15849,8 @@ var render = function() {
                     staticClass: "alpheios-inflections__paradigms-expl",
                     domProps: {
                       innerHTML: _vm._s(
-                        _vm.l10n.getMsg(
-                          "INFLECTIONS_PARADIGMS_EXPLANATORY_HINT",
-                          { word: _vm.data.inflectionData.targetWord }
+                        _vm.messages.INFLECTIONS_PARADIGMS_EXPLANATORY_HINT.get(
+                          _vm.data.inflectionData.targetWord
                         )
                       )
                     }
@@ -15395,7 +15862,11 @@ var render = function() {
                     "div",
                     [
                       _c("main-table-wide-vue", {
-                        attrs: { collapsed: false, view: _vm.selectedView },
+                        attrs: {
+                          collapsed: false,
+                          messages: _vm.messages,
+                          view: _vm.selectedView
+                        },
                         on: { widthchange: _vm.updateWidth }
                       }),
                       _vm._v(" "),
@@ -15405,7 +15876,11 @@ var render = function() {
                         return _vm.selectedView.linkedViews
                           ? [
                               _c("main-table-wide-vue", {
-                                attrs: { collapsed: false, view: linkedView },
+                                attrs: {
+                                  collapsed: false,
+                                  messages: _vm.messages,
+                                  view: linkedView
+                                },
                                 on: { widthchange: _vm.updateWidth }
                               })
                             ]
@@ -15467,7 +15942,8 @@ var render = function() {
                                       paradigm.paradigmID
                                     )
                                   : "transparent",
-                                data: paradigm
+                                data: paradigm,
+                                messages: _vm.messages
                               },
                               on: { navigate: _vm.navigate }
                             })
@@ -15497,7 +15973,7 @@ var render = function() {
                     { staticClass: "alpheios-inflections__credits-title" },
                     [
                       _vm._v(
-                        _vm._s(_vm.l10n.getMsg("INFLECTIONS_CREDITS_TITLE"))
+                        _vm._s(_vm.ln10Messages("INFLECTIONS_CREDITS_TITLE"))
                       )
                     ]
                   ),
@@ -15516,7 +15992,7 @@ var render = function() {
         : _c("div", { staticClass: "alpheios-inflections__placeholder" }, [
             _vm._v(
               "\n    " +
-                _vm._s(_vm.l10n.getMsg("PLACEHOLDER_INFLECT_UNAVAILABLE")) +
+                _vm._s(_vm.ln10Messages("PLACEHOLDER_INFLECT_UNAVAILABLE")) +
                 "\n  "
             )
           ])
@@ -15565,7 +16041,7 @@ var render = function() {
       { staticClass: "alpheios-info__currentlanguage alpheios-text__smallest" },
       [
         _vm._v(
-          _vm._s(_vm.l10n.getMsg("LABEL_INFO_CURRENTLANGUAGE")) +
+          _vm._s(_vm.messages.LABEL_INFO_CURRENTLANGUAGE.get()) +
             "\n    " +
             _vm._s(_vm.data.languageName) +
             "\n  "
@@ -15574,34 +16050,34 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "alpheios-info__helptext" }, [
-      _c("h3", [_vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_GETTINGSTARTED")))]),
+      _c("h3", [_vm._v(_vm._s(_vm.messages.TEXT_INFO_GETTINGSTARTED.get()))]),
       _vm._v(" "),
       _c("p", { staticClass: "alpheios-text__small" }, [
-        _vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_ACTIVATE")))
+        _vm._v(_vm._s(_vm.messages.TEXT_INFO_ACTIVATE.get()))
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "alpheios-text__small" }, [
-        _vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_CLICK")))
+        _vm._v(_vm._s(_vm.messages.TEXT_INFO_CLICK.get()))
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "alpheios-text__small" }, [
-        _vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_LANGDETECT")))
+        _vm._v(_vm._s(_vm.messages.TEXT_INFO_LANGDETECT.get()))
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "alpheios-text__small" }, [
-        _vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_SETTINGS")))
+        _vm._v(_vm._s(_vm.messages.TEXT_INFO_SETTINGS.get()))
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "alpheios-text__small" }, [
-        _vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_ARROW")))
+        _vm._v(_vm._s(_vm.messages.TEXT_INFO_ARROW.get()))
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "alpheios-text__small" }, [
-        _vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_REOPEN")))
+        _vm._v(_vm._s(_vm.messages.TEXT_INFO_REOPEN.get()))
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "alpheios-text__small" }, [
-        _vm._v(_vm._s(_vm.l10n.getMsg("TEXT_INFO_DEACTIVATE")))
+        _vm._v(_vm._s(_vm.messages.TEXT_INFO_DEACTIVATE.get()))
       ])
     ])
   ])
@@ -15701,7 +16177,7 @@ var render = function() {
             ],
             staticClass: "uk-input alpheios-lookup__input",
             attrs: {
-              placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+              placeholder: _vm.ln10Messages("LABEL_LOOKUP_BUTTON"),
               type: "text"
             },
             domProps: { value: _vm.lookuptext },
@@ -15728,7 +16204,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+                tooltipText: _vm.ln10Messages("LABEL_LOOKUP_BUTTON"),
                 tooltipDirection: "top-right"
               }
             },
@@ -15745,7 +16221,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n      " +
-                        _vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")) +
+                        _vm._s(_vm.ln10Messages("LABEL_LOOKUP_BUTTON")) +
                         "\n    "
                     )
                   ]
@@ -16547,6 +17023,7 @@ var render = function() {
             index: index,
             lex: lex,
             linkedfeatures: _vm.linkedfeatures,
+            messages: _vm.messages,
             morphDataReady: _vm.morphDataReady,
             translations: _vm.translations
           },
@@ -16592,8 +17069,8 @@ var render = function() {
         {
           name: "show",
           rawName: "v-show",
-          value: this.$store.state.panel.visible,
-          expression: "this.$store.state.panel.visible"
+          value: _vm.data && _vm.data.isOpen,
+          expression: "data && data.isOpen"
         }
       ],
       staticClass: "alpheios-panel auk",
@@ -16620,7 +17097,7 @@ var render = function() {
                   "alph-tooltip",
                   {
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_HELP"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_HELP"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16646,7 +17123,7 @@ var render = function() {
                   "alph-tooltip",
                   {
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_DEFINITIONS"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16682,7 +17159,7 @@ var render = function() {
                       }
                     ],
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_INFLECT"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16710,7 +17187,7 @@ var render = function() {
                   "alph-tooltip",
                   {
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_INFLECT_BROWSER"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16748,7 +17225,7 @@ var render = function() {
                       }
                     ],
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_GRAMMAR"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16782,7 +17259,7 @@ var render = function() {
                       }
                     ],
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_TREEBANK"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16808,7 +17285,7 @@ var render = function() {
                   "alph-tooltip",
                   {
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_OPTIONS"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16834,7 +17311,7 @@ var render = function() {
                   "alph-tooltip",
                   {
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_USER"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16859,8 +17336,42 @@ var render = function() {
                 _c(
                   "alph-tooltip",
                   {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.wordUsageExamplesData,
+                        expression: "wordUsageExamplesData"
+                      }
+                    ],
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_STATUS"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_WORD_USAGE"),
+                      tooltipDirection: "bottom-narrow"
+                    }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "alpheios-panel__header-nav-btn",
+                        class: { active: _vm.data.tabs.wordUsage },
+                        on: {
+                          click: function($event) {
+                            _vm.changeTab("wordUsage")
+                          }
+                        }
+                      },
+                      [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
+                      1
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "alph-tooltip",
+                  {
+                    attrs: {
+                      tooltipText: _vm.ln10Messages("TOOLTIP_STATUS"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -16910,7 +17421,7 @@ var render = function() {
                   }
                 ],
                 attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_MOVE_PANEL_LEFT"),
+                  tooltipText: _vm.ln10Messages("TOOLTIP_MOVE_PANEL_LEFT"),
                   tooltipDirection: "bottom-narrow"
                 }
               },
@@ -16952,7 +17463,7 @@ var render = function() {
                   }
                 ],
                 attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_MOVE_PANEL_RIGHT"),
+                  tooltipText: _vm.ln10Messages("TOOLTIP_MOVE_PANEL_RIGHT"),
                   tooltipDirection: "bottom-narrow"
                 }
               },
@@ -16986,7 +17497,7 @@ var render = function() {
               "alph-tooltip",
               {
                 attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_CLOSE_PANEL"),
+                  tooltipText: _vm.ln10Messages("TOOLTIP_CLOSE_PANEL"),
                   tooltipDirection: "bottom-right"
                 }
               },
@@ -16996,7 +17507,7 @@ var render = function() {
                   {
                     staticClass:
                       "alpheios-panel__header-action-btn alpheios_close",
-                    on: { click: _vm.ui.closePanel }
+                    on: { click: _vm.close }
                   },
                   [_c("close-icon")],
                   1
@@ -17044,7 +17555,7 @@ var render = function() {
                   ? _c("div", [
                       _vm._v(
                         "\n        " +
-                          _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
+                          _vm._s(_vm.ln10Messages("PLACEHOLDER_DEFINITIONS")) +
                           "\n      "
                       )
                     ])
@@ -17075,7 +17586,9 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm.data.inflectionComponentData.inflDataReady && _vm.data.settings
+            _vm.data.inflectionComponentData.inflDataReady &&
+            _vm.data.settings &&
+            _vm.data.l10n
               ? _c(
                   "div",
                   {
@@ -17098,6 +17611,7 @@ var render = function() {
                         data: _vm.data.inflectionComponentData,
                         "inflections-enabled": _vm.data.inflectionsEnabled,
                         locale: _vm.data.settings.locale.currentValue,
+                        messages: _vm.data.l10n.messages,
                         "wait-state": _vm.data.inflectionsWaitState
                       },
                       on: { contentwidth: _vm.setContentWidth }
@@ -17107,7 +17621,9 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm.data.inflectionBrowserEnabled && _vm.data.settings
+            _vm.data.inflectionBrowserEnabled &&
+            _vm.data.settings &&
+            _vm.data.l10n
               ? _c(
                   "div",
                   {
@@ -17129,7 +17645,8 @@ var render = function() {
                         data: _vm.data.inflectionBrowserData,
                         "infl-browser-tables-collapsed":
                           _vm.data.inflBrowserTablesCollapsed,
-                        "language-id": _vm.inflectionBrowserLanguageID
+                        "language-id": _vm.inflectionBrowserLanguageID,
+                        messages: _vm.data.l10n.messages
                       },
                       on: { contentwidth: _vm.setContentWidth }
                     })
@@ -17156,7 +17673,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _vm.data.treebankComponentData && _vm.data.settings
+            _vm.data.treebankComponentData && _vm.data.settings && _vm.data.l10n
               ? _c(
                   "div",
                   {
@@ -17175,6 +17692,7 @@ var render = function() {
                     _c("treebank", {
                       attrs: {
                         locale: _vm.data.settings.locale.currentValue,
+                        messages: _vm.data.l10n.messages,
                         res: _vm.data.treebankComponentData.data,
                         visible: _vm.data.treebankComponentData.visible
                       },
@@ -17223,9 +17741,46 @@ var render = function() {
                 staticClass:
                   "alpheios-panel__tab-panel alpheios-panel__tab__status"
               },
-              [_c("user-auth", { attrs: { auth: _vm.data.auth } })],
+              [
+                _c("user-auth", {
+                  attrs: {
+                    auth: _vm.data.auth,
+                    messages: _vm.data.l10n.messages
+                  }
+                })
+              ],
               1
             ),
+            _vm._v(" "),
+            _vm.wordUsageExamplesData
+              ? _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.data.tabs.wordUsage,
+                        expression: "data.tabs.wordUsage"
+                      }
+                    ],
+                    staticClass:
+                      "alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
+                  },
+                  [
+                    _c("word-usage-examples-block", {
+                      attrs: {
+                        wordUsageList:
+                          _vm.wordUsageExamplesData.wordUsageExamples,
+                        targetWord: _vm.wordUsageExamplesData.targetWord,
+                        language: _vm.wordUsageExamplesData.language,
+                        provider: _vm.wordUsageExamplesData.provider
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "div",
@@ -17242,7 +17797,11 @@ var render = function() {
                   "alpheios-panel__tab-panel alpheios-panel__tab__options"
               },
               [
-                _c("reskin-font-color"),
+                _vm.data.l10n
+                  ? _c("reskin-font-color", {
+                      attrs: { messages: _vm.data.l10n.messages }
+                    })
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm.data.settings
                   ? _c("setting", {
@@ -17352,6 +17911,26 @@ var render = function() {
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
+                        data: _vm.data.settings.enableWordUsageExamples
+                      },
+                      on: { change: _vm.settingChanged }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.data.settings
+                  ? _c("setting", {
+                      attrs: {
+                        classes: ["alpheios-panel__options-item"],
+                        data: _vm.data.settings.wordUsageExamplesMax
+                      },
+                      on: { change: _vm.settingChanged }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.data.settings
+                  ? _c("setting", {
+                      attrs: {
+                        classes: ["alpheios-panel__options-item"],
                         data: _vm.data.settings.enableLemmaTranslations
                       },
                       on: { change: _vm.settingChanged }
@@ -17403,8 +17982,13 @@ var render = function() {
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.infoComponentData
-                  ? _c("info", { attrs: { data: _vm.data.infoComponentData } })
+                _vm.data.infoComponentData && _vm.data.l10n
+                  ? _c("info", {
+                      attrs: {
+                        data: _vm.data.infoComponentData,
+                        messages: _vm.data.l10n.messages
+                      }
+                    })
                   : _vm._e()
               ],
               1
@@ -17840,8 +18424,8 @@ var render = function() {
         {
           name: "show",
           rawName: "v-show",
-          value: this.$store.state.popup.visible,
-          expression: "this.$store.state.popup.visible"
+          value: _vm.visible,
+          expression: "visible"
         }
       ],
       ref: "popup",
@@ -17860,7 +18444,7 @@ var render = function() {
         {
           attrs: {
             additionalStyles: _vm.additionalStylesTootipCloseIcon,
-            tooltipText: _vm.l10n.getText("TOOLTIP_POPUP_CLOSE"),
+            tooltipText: _vm.ln10Messages("TOOLTIP_POPUP_CLOSE"),
             tooltipDirection: "left"
           }
         },
@@ -17869,7 +18453,7 @@ var render = function() {
             "span",
             {
               staticClass: "alpheios-popup__close-btn",
-              on: { click: _vm.ui.closePopup }
+              on: { click: _vm.closePopup }
             },
             [_c("close-icon")],
             1
@@ -17942,7 +18526,7 @@ var render = function() {
                       }
                     ],
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_DEFINITIONS"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_SHOW_DEFINITIONS"),
                       tooltipDirection: "bottom-wide"
                     }
                   },
@@ -17969,7 +18553,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_DEFINE")) +
+                            _vm._s(_vm.ln10Messages("LABEL_POPUP_DEFINE")) +
                             "\n        "
                         )
                       ]
@@ -17989,7 +18573,7 @@ var render = function() {
                       }
                     ],
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_INFLECTIONS"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_SHOW_INFLECTIONS"),
                       tooltipDirection: "bottom-wide"
                     }
                   },
@@ -18016,7 +18600,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_INFLECT")) +
+                            _vm._s(_vm.ln10Messages("LABEL_POPUP_INFLECT")) +
                             "\n        "
                         )
                       ]
@@ -18036,7 +18620,7 @@ var render = function() {
                       }
                     ],
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_TREEBANK"),
                       tooltipDirection: "bottom-wide"
                     }
                   },
@@ -18063,7 +18647,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_TREEBANK")) +
+                            _vm._s(_vm.ln10Messages("LABEL_POPUP_TREEBANK")) +
                             "\n        "
                         )
                       ]
@@ -18075,7 +18659,7 @@ var render = function() {
                   "alph-tooltip",
                   {
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_OPTIONS"),
+                      tooltipText: _vm.ln10Messages("TOOLTIP_SHOW_OPTIONS"),
                       tooltipDirection: "bottom-right"
                     }
                   },
@@ -18094,7 +18678,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_OPTIONS")) +
+                            _vm._s(_vm.ln10Messages("LABEL_POPUP_OPTIONS")) +
                             "\n        "
                         )
                       ]
@@ -18123,7 +18707,7 @@ var render = function() {
         },
         [
           _c("progress-bar", {
-            attrs: { text: _vm.l10n.getText("PLACEHOLDER_POPUP_DATA") }
+            attrs: { text: _vm.ln10Messages("PLACEHOLDER_POPUP_DATA") }
           })
         ],
         1
@@ -18146,7 +18730,7 @@ var render = function() {
         [
           _vm._v(
             "\n    " +
-              _vm._s(_vm.l10n.getText("PLACEHOLDER_NO_LANGUAGE_POPUP_DATA")) +
+              _vm._s(_vm.ln10Messages("PLACEHOLDER_NO_LANGUAGE_POPUP_DATA")) +
               "\n  "
           )
         ]
@@ -18169,7 +18753,7 @@ var render = function() {
         [
           _vm._v(
             "\n    " +
-              _vm._s(_vm.l10n.getText("PLACEHOLDER_NO_DATA_POPUP_DATA")) +
+              _vm._s(_vm.ln10Messages("PLACEHOLDER_NO_DATA_POPUP_DATA")) +
               "\n  "
           )
         ]
@@ -18197,6 +18781,7 @@ var render = function() {
               id: _vm.morphComponentID,
               lexemes: _vm.lexemes,
               linkedfeatures: _vm.linkedfeatures,
+              messages: _vm.data.l10n.messages,
               morphDataReady: _vm.morphDataReady && _vm.hasMorphData,
               translations: _vm.translations
             },
@@ -18213,7 +18798,7 @@ var render = function() {
                     {
                       staticClass: "alpheios-popup__morph-cont-providers-header"
                     },
-                    [_vm._v(_vm._s(_vm.l10n.getText("LABEL_POPUP_CREDITS")))]
+                    [_vm._v(_vm._s(_vm.ln10Messages("LABEL_POPUP_CREDITS")))]
                   ),
                   _vm._v(" "),
                   _vm._l(_vm.data.providers, function(p) {
@@ -18400,7 +18985,7 @@ var render = function() {
           ],
           staticClass: "uk-form-label alpheios-setting__label"
         },
-        [_vm._v(_vm._s(_vm.l10n.getMsg("LABEL_RESKIN_SETTINGS")) + ":")]
+        [_vm._v(_vm._s(_vm.messages.LABEL_RESKIN_SETTINGS.get()) + ":")]
       ),
       _vm._v(" "),
       _c(
@@ -18411,7 +18996,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getMsg("TOOLTIP_RESKIN_SMALLFONT"),
+                tooltipText: _vm.messages.TOOLTIP_RESKIN_SMALLFONT.get(),
                 tooltipDirection: "top-left"
               }
             },
@@ -18436,7 +19021,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getMsg("TOOLTIP_RESKIN_MEDIUMFONT"),
+                tooltipText: _vm.messages.TOOLTIP_RESKIN_MEDIUMFONT.get(),
                 tooltipDirection: "top-left"
               }
             },
@@ -18461,7 +19046,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getMsg("TOOLTIP_RESKIN_LARGEFONT"),
+                tooltipText: _vm.messages.TOOLTIP_RESKIN_LARGEFONT.get(),
                 tooltipDirection: "top-left"
               }
             },
@@ -18486,7 +19071,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getMsg("TOOLTIP_RESKIN_LIGHTBG"),
+                tooltipText: _vm.messages.TOOLTIP_RESKIN_LIGHTBG.get(),
                 tooltipDirection: "top-left"
               }
             },
@@ -18512,7 +19097,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getMsg("TOOLTIP_RESKIN_DARKBG"),
+                tooltipText: _vm.messages.TOOLTIP_RESKIN_DARKBG.get(),
                 tooltipDirection: "top-left"
               }
             },
@@ -18604,6 +19189,29 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
+          _vm.data.number
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selected,
+                    expression: "selected"
+                  }
+                ],
+                attrs: { type: "number", min: "0" },
+                domProps: { value: _vm.selected },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.selected = $event.target.value
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _vm.data.boolean
             ? _c("div", { staticClass: "alpheios-checkbox-block" }, [
                 _c("input", {
@@ -18655,7 +19263,7 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          !_vm.data.multiValue && !_vm.data.boolean
+          !_vm.data.multiValue && !_vm.data.boolean && !_vm.data.number
             ? _c(
                 "select",
                 {
@@ -18845,7 +19453,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n    " + _vm._s(_vm.l10n.getMsg("AUTH_LOG_IN_BTN_LABEL")) + "\n  "
+          "\n    " +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_BTN_LABEL")) +
+            "\n  "
         )
       ]
     ),
@@ -18866,7 +19476,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n    " + _vm._s(_vm.l10n.getMsg("AUTH_LOG_OUT_BTN_LABEL")) + "\n  "
+          "\n    " +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_OUT_BTN_LABEL")) +
+            "\n  "
         )
       ]
     ),
@@ -18887,7 +19499,7 @@ var render = function() {
       [
         _vm._v(
           "\n    " +
-            _vm._s(_vm.l10n.getMsg("AUTH_LOG_IN_PROGRESS_MSG")) +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_PROGRESS_MSG")) +
             "\n  "
         )
       ]
@@ -18908,7 +19520,9 @@ var render = function() {
       },
       [
         _vm._v(
-          "\n    " + _vm._s(_vm.l10n.getMsg("AUTH_LOG_IN_SUCCESS_MSG")) + "\n  "
+          "\n    " +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_SUCCESS_MSG")) +
+            "\n  "
         )
       ]
     ),
@@ -18929,7 +19543,7 @@ var render = function() {
       [
         _vm._v(
           "\n    " +
-            _vm._s(_vm.l10n.getMsg("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
+            _vm._s(_vm.l10n.getMessage("AUTH_LOG_IN_AUTH_FAILURE_MSG")) +
             "\n  "
         )
       ]
@@ -18944,7 +19558,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n        " +
-                    _vm._s(_vm.l10n.getMsg("AUTH_PROFILE_NICKNAME_LABEL")) +
+                    _vm._s(_vm.l10n.getMessage("AUTH_PROFILE_NICKNAME_LABEL")) +
                     ":\n      "
                 )
               ]
@@ -18972,7 +19586,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n        " +
-                    _vm._s(_vm.l10n.getMsg("AUTH_PROFILE_NAME_LABEL")) +
+                    _vm._s(_vm.l10n.getMessage("AUTH_PROFILE_NAME_LABEL")) +
                     ":\n      "
                 )
               ]
@@ -18990,6 +19604,98 @@ var render = function() {
               ]
             )
           ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-example-item.vue?vue&type=template&id=282848ba&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-usage-example-item.vue?vue&type=template&id=282848ba& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "alpheios_word_usage_list_item" }, [
+    _c("div", { staticClass: "alpheios_word_usage_list_item__source" }, [
+      _c(
+        "a",
+        {
+          staticClass: "alpheios_word_usage_list_item__source_link",
+          attrs: { href: _vm.wordUsageItem.source, target: "_blank" }
+        },
+        [_vm._v(_vm._s(_vm.wordUsageItem.source))]
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "alpheios_word_usage_list_item__source_cit" }, [
+        _vm._v(_vm._s(_vm.wordUsageItem.fullCit()))
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "alpheios_word_usage_list_item__text",
+      domProps: { innerHTML: _vm._s(_vm.wordUsageItem.htmlExample) }
+    })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-examples-block.vue?vue&type=template&id=43909d56&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-usage-examples-block.vue?vue&type=template&id=43909d56& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "alpheios-word-usage" }, [
+    _c("div", { staticClass: "alpheios_word_usage_list_title" }, [
+      _vm._v(_vm._s(_vm.targetWord) + " (" + _vm._s(_vm.language) + ")")
+    ]),
+    _vm._v(" "),
+    _vm.showWordUsageExampleItems
+      ? _c(
+          "div",
+          { staticClass: "alpheios_word_usage_list_mainblock" },
+          _vm._l(_vm.wordUsageList, function(wordUsageItem) {
+            return _c("word-usage-example-item", {
+              key: wordUsageItem.ID,
+              attrs: { wordUsageItem: wordUsageItem }
+            })
+          }),
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.provider
+      ? _c("div", { staticClass: "alpheios-word_usage_list__provider" }, [
+          _vm._v(_vm._s(_vm.provider.toString()))
         ])
       : _vm._e()
   ])
@@ -19171,10 +19877,10 @@ function normalizeComponent (
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../mini-css-extract-plugin/dist/loader.js!../../css-loader/dist/cjs.js!../../vue-loader/lib/loaders/stylePostLoader.js!./vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_lib_index_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../mini-css-extract-plugin/dist/loader.js!../../css-loader/dist/cjs.js!../../vue-loader/lib/loaders/stylePostLoader.js!../../postcss-loader/lib!./vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_lib_index_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_lib_index_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_lib_index_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_lib_index_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_mini_css_extract_plugin_dist_loader_js_css_loader_dist_cjs_js_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_lib_index_js_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -31323,7 +32029,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAArCAYAAADL
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M13 16l-6-6 6-6"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\attach-left.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M13 16l-6-6 6-6"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\attach-left.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31334,7 +32040,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M5.5 1l9 9-9 9"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\attach-right.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M5.5 1l9 9-9 9"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\attach-right.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31345,7 +32051,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#fff","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#4e6476"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005z"}})]),_c('path',{attrs:{"d":"M45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\black-brush.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#fff","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#4e6476"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005z"}})]),_c('path',{attrs:{"d":"M45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\black-brush.svg"};module.exports = { render: render, toString: toString };
+
+/***/ }),
+
+/***/ "./images/inline-icons/books-stack.svg":
+/*!*********************************************!*\
+  !*** ./images/inline-icons/books-stack.svg ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 335.08 335.08"}},[_c('path',{attrs:{"d":"M311.18 115.78c-1.355-10.186-1.546-27.73 7.915-33.621.169-.108.295-.264.443-.398 7.735-2.474 13.088-5.946 8.886-10.618l-114.1-34.38L29.564 62.45S8.407 65.474 10.297 98.344c1.026 17.89 6.637 26.676 11.544 31L6.68 133.913c-4.208 4.672 1.144 8.145 8.88 10.615.147.138.271.293.443.401 9.455 5.896 9.273 23.438 7.913 33.626-33.967 9.645-21.774 12.788-21.774 12.788l7.451 1.803c-5.241 4.736-10.446 13.717-9.471 30.75 1.891 32.864 19.269 35.132 19.269 35.132l120.9 39.298 182.49-44.202s12.197-3.148-21.779-12.794c-1.366-10.172-1.556-27.712 7.921-33.623.174-.105.301-.264.442-.396 7.736-2.474 13.084-5.943 8.881-10.615l-7.932-2.395c5.29-3.19 13.236-11.527 14.481-33.183.859-14.896-3.027-23.62-7.525-28.756l15.678-3.794c.001.006 12.198-3.142-21.773-12.788zm-152.64-.421l30.688-6.307 103.71-21.312 15.451-3.178c-4.937 9.036-4.73 21.402-3.913 29.35.179 1.798.385 3.44.585 4.688l-16.912 4.205-130.9 32.563 1.29-40.009zM26.72 147.342l15.449 3.178 99.597 20.474 8.701 1.782 26.093 5.363 1.287 40.01-134.53-33.471-13.263-3.296c.195-1.25.401-2.89.588-4.693.812-7.942 1.023-20.311-3.918-29.347zm-6.002-50.58c-.187-8.743 1.371-15.066 4.52-18.28 2.004-2.052 4.369-2.479 5.991-2.479.857 0 1.474.119 1.516.119l79.607 25.953 39.717 12.949-1.303 40.289-111.42-31.238-5.88-1.647a3.56 3.56 0 0 0-.735-.113c-.459-.033-11.475-1.047-12.011-25.553zm119.87 184.11l-117.3-32.886a3.489 3.489 0 0 0-.733-.116c-.467-.031-11.488-1.044-12.021-25.544-.19-8.754 1.376-15.071 4.519-18.288 2.009-2.052 4.375-2.479 5.994-2.479.859 0 1.474.115 1.519.115 0 0 .005 0 0 0l119.32 38.908-1.295 40.29zm153.7-41.407c.185 1.804.391 3.443.591 4.693l-147.81 36.771 1.292-40.01 31.601-6.497 4.667 1.129 17.492-5.685 80.631-16.569 15.457-3.18c-4.942 9.035-4.737 21.406-3.919 29.348zm8.142-54.375a2.84 2.84 0 0 0-.791.122l-11.148 3.121-106.15 29.764-1.298-40.289 34.826-11.359 84.327-27.501c.011-.005 4.436-.988 7.684 2.315 3.144 3.214 4.704 9.537 4.52 18.28-.55 24.498-11.571 25.516-11.972 25.547z"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\books-stack.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31356,7 +32073,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M16 16L4 4M16 4L4 16"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\close.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M16 16L4 4M16 4L4 16"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\close.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31367,7 +32084,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\definitions.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\definitions.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31378,7 +32095,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M-1-1h22v22H-1z"}}),_c('g',[_c('g',{attrs:{"stroke":"null"}},[_c('rect',{attrs:{"fill":"none","stroke-width":".551","x":".322","y":".475","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M9.14 3.518v8.812M4.733 3.518v8.811M.593 9.58H13.28M.594 6.555H13.28M.594 3.53H13.28"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"3.103","y":"2.807","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M11.922 5.85v8.812M7.515 5.85v8.811m-4.14-2.749h12.686M3.374 8.888H16.06M3.374 5.862H16.06"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"5.481","y":"4.525","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M14.3 7.568v8.812M9.893 7.568v8.812m-4.14-2.75H18.44M5.753 10.607H18.44M5.752 7.58h12.686"}}),_c('circle',{attrs:{"fill":"#fff","stroke-width":".367","r":"5.711","cy":"12.808","stroke-linecap":"round","cx":"13.667","stroke-linejoin":"round"}}),_c('path',{attrs:{"d":"M13.856 6.175c-.037-.002-.074-.005-.11-.005l-.03.001-.05-.001c-3.322 0-6.025 2.978-6.025 6.637 0 3.66 2.703 6.638 6.026 6.638s6.025-2.978 6.025-6.638c0-3.59-2.601-6.521-5.836-6.632h0zm-.095 12.298h-.032.032zm-.532-.125c-.608-.297-1.143-1.105-1.508-2.205a7.654 7.654 0 0 1 1.508-.245v2.45h0zm0-3.416a8.45 8.45 0 0 0-1.758.288 11.298 11.298 0 0 1-.24-1.93h1.998v1.642h0zm-1.998-2.606c.03-.753.128-1.47.281-2.116.543.146 1.12.238 1.717.273v1.843h-1.998 0zm1.998-2.81c-.5-.033-.986-.11-1.445-.23.362-1.008.87-1.743 1.445-2.024v2.254zm.876.975a8.503 8.503 0 0 0 1.874-.282c.153.647.252 1.363.281 2.117h-2.155V10.49h0zm0-.966V7.197c.64.215 1.21.993 1.604 2.093a7.73 7.73 0 0 1-1.604.235h0zM15.96 7.73a5.2 5.2 0 0 1 1.244.96 5.545 5.545 0 0 1-.652.318 6.858 6.858 0 0 0-.592-1.28v.002zM10.94 9.007a5.566 5.566 0 0 1-.753-.377c.416-.42.895-.766 1.42-1.02-.257.399-.48.869-.667 1.396v.001zm-.27.92a12.08 12.08 0 0 0-.317 2.399H8.538a5.982 5.982 0 0 1 1.044-2.964c.33.218.696.407 1.088.566h0zm-.316 3.364a12.2 12.2 0 0 0 .275 2.215c-.415.171-.798.376-1.14.612a5.998 5.998 0 0 1-.952-2.827h1.817zm.528 3.139c.198.603.445 1.135.73 1.579a5.172 5.172 0 0 1-1.547-1.152c.249-.16.524-.303.817-.427h0zm3.222 1.983V15.89c.58.025 1.142.113 1.665.254-.395 1.194-.992 2.042-1.665 2.27h0zm0-3.49V13.29h2.155c-.027.68-.11 1.329-.238 1.924a8.472 8.472 0 0 0-1.917-.292h0zm3.032-1.632h1.66a6.004 6.004 0 0 1-.903 2.752 6.133 6.133 0 0 0-1.031-.54 12.22 12.22 0 0 0 .274-2.212h0zm0-.965c-.03-.858-.139-1.667-.315-2.399.35-.141.678-.307.98-.496.555.822.912 1.816.994 2.895h-1.659 0zm-1.184 5.564a7.07 7.07 0 0 0 .656-1.46c.255.108.495.23.716.366a5.234 5.234 0 0 1-1.372 1.094h0z","fill":"#5bc8dc"}})])])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\inflections-browser.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M-1-1h22v22H-1z"}}),_c('g',[_c('g',{attrs:{"stroke":"null"}},[_c('rect',{attrs:{"fill":"none","stroke-width":".551","x":".322","y":".475","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M9.14 3.518v8.812M4.733 3.518v8.811M.593 9.58H13.28M.594 6.555H13.28M.594 3.53H13.28"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"3.103","y":"2.807","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M11.922 5.85v8.812M7.515 5.85v8.811m-4.14-2.749h12.686M3.374 8.888H16.06M3.374 5.862H16.06"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"5.481","y":"4.525","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M14.3 7.568v8.812M9.893 7.568v8.812m-4.14-2.75H18.44M5.753 10.607H18.44M5.752 7.58h12.686"}}),_c('circle',{attrs:{"fill":"#fff","stroke-width":".367","r":"5.711","cy":"12.808","stroke-linecap":"round","cx":"13.667","stroke-linejoin":"round"}}),_c('path',{attrs:{"d":"M13.856 6.175c-.037-.002-.074-.005-.11-.005l-.03.001-.05-.001c-3.322 0-6.025 2.978-6.025 6.637 0 3.66 2.703 6.638 6.026 6.638s6.025-2.978 6.025-6.638c0-3.59-2.601-6.521-5.836-6.632h0zm-.095 12.298h-.032.032zm-.532-.125c-.608-.297-1.143-1.105-1.508-2.205a7.654 7.654 0 0 1 1.508-.245v2.45h0zm0-3.416a8.45 8.45 0 0 0-1.758.288 11.298 11.298 0 0 1-.24-1.93h1.998v1.642h0zm-1.998-2.606c.03-.753.128-1.47.281-2.116.543.146 1.12.238 1.717.273v1.843h-1.998 0zm1.998-2.81c-.5-.033-.986-.11-1.445-.23.362-1.008.87-1.743 1.445-2.024v2.254zm.876.975a8.503 8.503 0 0 0 1.874-.282c.153.647.252 1.363.281 2.117h-2.155V10.49h0zm0-.966V7.197c.64.215 1.21.993 1.604 2.093a7.73 7.73 0 0 1-1.604.235h0zM15.96 7.73a5.2 5.2 0 0 1 1.244.96 5.545 5.545 0 0 1-.652.318 6.858 6.858 0 0 0-.592-1.28v.002zM10.94 9.007a5.566 5.566 0 0 1-.753-.377c.416-.42.895-.766 1.42-1.02-.257.399-.48.869-.667 1.396v.001zm-.27.92a12.08 12.08 0 0 0-.317 2.399H8.538a5.982 5.982 0 0 1 1.044-2.964c.33.218.696.407 1.088.566h0zm-.316 3.364a12.2 12.2 0 0 0 .275 2.215c-.415.171-.798.376-1.14.612a5.998 5.998 0 0 1-.952-2.827h1.817zm.528 3.139c.198.603.445 1.135.73 1.579a5.172 5.172 0 0 1-1.547-1.152c.249-.16.524-.303.817-.427h0zm3.222 1.983V15.89c.58.025 1.142.113 1.665.254-.395 1.194-.992 2.042-1.665 2.27h0zm0-3.49V13.29h2.155c-.027.68-.11 1.329-.238 1.924a8.472 8.472 0 0 0-1.917-.292h0zm3.032-1.632h1.66a6.004 6.004 0 0 1-.903 2.752 6.133 6.133 0 0 0-1.031-.54 12.22 12.22 0 0 0 .274-2.212h0zm0-.965c-.03-.858-.139-1.667-.315-2.399.35-.141.678-.307.98-.496.555.822.912 1.816.994 2.895h-1.659 0zm-1.184 5.564a7.07 7.07 0 0 0 .656-1.46c.255.108.495.23.716.366a5.234 5.234 0 0 1-1.372 1.094h0z","fill":"#5bc8dc"}})])])])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\inflections-browser.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31389,7 +32106,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 25 21"}},[_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\inflections.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 25 21"}},[_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\inflections.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31400,7 +32117,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\info.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\info.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31411,7 +32128,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"9.997","cy":"10","r":"3.31"}}),_c('path',{attrs:{"fill":"none","d":"M18.488 12.285l-2.283 3.952c-.883-.741-2.02-.956-2.902-.446-.875.498-1.256 1.582-1.057 2.709H7.735c.203-1.126-.182-2.201-1.051-2.709-.883-.521-2.029-.299-2.911.446L1.5 12.285c1.073-.414 1.817-1.286 1.817-2.294-.012-1.011-.744-1.87-1.817-2.275l2.265-3.932c.88.732 2.029.954 2.922.448.868-.51 1.252-1.595 1.048-2.732h4.528c-.191 1.137.178 2.21 1.051 2.72.892.51 2.029.296 2.911-.426l2.262 3.92c-1.083.403-1.826 1.274-1.817 2.295.002 1.009.745 1.871 1.818 2.276z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\options.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"9.997","cy":"10","r":"3.31"}}),_c('path',{attrs:{"fill":"none","d":"M18.488 12.285l-2.283 3.952c-.883-.741-2.02-.956-2.902-.446-.875.498-1.256 1.582-1.057 2.709H7.735c.203-1.126-.182-2.201-1.051-2.709-.883-.521-2.029-.299-2.911.446L1.5 12.285c1.073-.414 1.817-1.286 1.817-2.294-.012-1.011-.744-1.87-1.817-2.275l2.265-3.932c.88.732 2.029.954 2.922.448.868-.51 1.252-1.595 1.048-2.732h4.528c-.191 1.137.178 2.21 1.051 2.72.892.51 2.029.296 2.911-.426l2.262 3.92c-1.083.403-1.826 1.274-1.817 2.295.002 1.009.745 1.871 1.818 2.276z"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\options.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31422,7 +32139,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 24 24"}},[_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\resources.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 24 24"}},[_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\resources.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31433,7 +32150,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1792 1248v320q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H960v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H736q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H320v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H96q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960q0-52 38-90t90-38h512V640h-96q-40 0-68-28t-28-68V224q0-40 28-68t68-28h320q40 0 68 28t28 68v320q0 40-28 68t-68 28h-96v192h512q52 0 90 38t38 90v192h96q40 0 68 28t28 68z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\sitemap.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1792 1248v320q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H960v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H736q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H320v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H96q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960q0-52 38-90t90-38h512V640h-96q-40 0-68-28t-28-68V224q0-40 28-68t68-28h320q40 0 68 28t28 68v320q0 40-28 68t-68 28h-96v192h512q52 0 90 38t38 90v192h96q40 0 68 28t28 68z"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\sitemap.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31444,7 +32161,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\status.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\status.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31455,7 +32172,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1536 1399q0 109-62.5 187t-150.5 78H469q-88 0-150.5-78T256 1399q0-85 8.5-160.5t31.5-152 58.5-131 94-89T583 832q131 128 313 128t313-128q76 0 134.5 34.5t94 89 58.5 131 31.5 152 8.5 160.5zm-256-887q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\user.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1536 1399q0 109-62.5 187t-150.5 78H469q-88 0-150.5-78T256 1399q0-85 8.5-160.5t31.5-152 58.5-131 94-89T583 832q131 128 313 128t313-128q76 0 134.5 34.5t94 89 58.5 131 31.5 152 8.5 160.5zm-256-887q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"}})])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\user.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31466,7 +32183,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#4e6476","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#fff"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005zM45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('g',[_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\white-brush.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#4e6476","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#fff"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005zM45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('g',[_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])])])};var toString = function () {return "C:\\_Alpheios\\components\\src\\images\\inline-icons\\white-brush.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -31553,32 +32270,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
-/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
-/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
-var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/panel.vue */ "./vue/components/panel.vue");
+/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
+/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
+/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
+/* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_11___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/locales/en-us/messages-data.json */ "./locales/en-us/messages-data.json");
+var _locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_12___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages-data.json */ "./locales/en-us/messages-data.json", 1);
+/* harmony import */ var _locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/locales/en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json");
+var _locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_13___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
+var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_21___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_24___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
 /* global Event */
 
 
@@ -31588,11 +32314,15 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___names
 
 
 // A panel component
-// import Panel from '@/vue/components/panel.vue'
+
 // A popup component
 // import Popup from '@/vue/components/popup.vue'
 
-// Modules and their support dependencies
+// Modules
+
+
+
+
 
 
 
@@ -31645,23 +32375,9 @@ class UIController {
   constructor (state, options = {}) {
     this.state = state
     this.options = UIController.setOptions(options, UIController.optionsDefaults)
-
-    /*
-    Define defaults for resource options. If a UI controller creator
-    needs to provide its own defaults, they shall be defined in a `create()` function.
-     */
-    this.contentOptionsDefaults = _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__
-    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__
-    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__
-    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__
-    /*
-    All following options will be created during an init phase.
-    This will allow creators of UI controller to provide their own options defaults
-    inside a `create()` builder function.
-     */
-    this.contentOptions = null
-    this.resourceOptions = null
-    this.uiOptions = null
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_28__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_28__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_24__, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_28__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_21__, this.options.storageAdapter)
     this.siteOptions = null // Will be set during an `init` phase
     this.tabState = {
       definitions: false,
@@ -31670,7 +32386,8 @@ class UIController {
       status: false,
       options: false,
       info: false,
-      treebank: false
+      treebank: false,
+      wordUsage: false
     }
     this.tabStateDefault = 'info'
 
@@ -31680,9 +32397,7 @@ class UIController {
     this.isDeactivated = false
 
     this.store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store() // Vuex store. A public API for data and UI module interactions.
-    this.api = {} // An API object for functions of registered modules and UI controller.
-    this.dataModules = new Map() // Data modules that are registered to be included into the store.
-    this.uiModules = new Map()
+    this.registeredDataModules = new Map() // Data modules that are registered to be included into the store.
 
     /**
      * If an event controller be used with an instance of a UI Controller,
@@ -31703,62 +32418,47 @@ class UIController {
   static create (state, options) {
     let uiController = new UIController(state, options)
 
-    /*
-    If necessary override defaults of a UI controller's options objects here as:
-    uiController.siteOptionsDefaults = mySiteDefaults
-     */
-
-    // Register data modules
-    uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__["default"], _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].en_US, _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].bundleArr())
-
-    // Register UI modules
-    uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_7__["default"], {
-      mountPoint: '#alpheios-panel',
-      tabs: uiController.tabState, // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
-      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
-    })
-    uiController.registerUiModule(_vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_8__["default"], {
-      mountPoint: '#alpheios-popup',
-      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
-    })
+    // Register modules
+    uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__["default"])
 
     // Creates on configures an event listener
-    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_25__["default"]()
+    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_30__["default"]()
     switch (uiController.options.textQueryTrigger) {
       case 'dblClick':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_20__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_25__["default"])
         break
       case 'longTap':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_21__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_26__["default"])
         break
       default:
         eventController.registerListener(
-          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], uiController.options.textQueryTrigger
+          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_27__["default"], uiController.options.textQueryTrigger
         )
     }
 
-    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], 'keydown')
-    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], 'Alpheios_Page_Load')
+    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_27__["default"], 'keydown')
+    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_27__["default"], 'Alpheios_Page_Load')
 
     // Attaches an event controller to a UIController instance
     uiController.evc = eventController
 
     // Subscribe to LexicalQuery events
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.onWordUsageExamplesReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
     // Subscribe to ResourceQuery events
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_17__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_17__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_17__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
 
     // Subscribe to AnnotationQuery events
-    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
+    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_18__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
     return uiController
   }
@@ -31795,7 +32495,7 @@ class UIController {
         name: 'name',
         version: 'version'
       },
-      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_24__["default"],
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_29__["default"],
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
@@ -31805,8 +32505,10 @@ class UIController {
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
-        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10___default.a,
+        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_15___default.a,
+        panelId: 'alpheios-panel',
         defaultPanelComponent: 'panel',
+        popupId: 'alpheios-popup',
         defaultPopupComponent: 'popup',
         draggable: true,
         resizable: true
@@ -31842,7 +32544,7 @@ class UIController {
   }
 
   setDefaultPanelState () {
-    if (!this.hasUiModule('panel')) { return this }
+    if (!this.panel) { return this }
     if (this.uiOptions.items.panelOnActivate.currentValue) {
       // If option value of panelOnActivate is true
       this.state.setPanelOpen()
@@ -31855,39 +32557,30 @@ class UIController {
   /**
    * Registers a data module for use by UI controller and other modules.
    * It instantiates each module and adds them to the registered modules store.
-   * @param {Module} moduleClass - A data module's class (i.e. the constructor function).
+   * @param {DataModule} Module - A data module class (i.e. the constructor function).
    * @param options - Arbitrary number of values that will be passed to the module constructor.
    * @return {UIController} - A self reference for chaining.
    */
-  registerDataModule (moduleClass, ...options) {
-    this.dataModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
+  registerDataModule (Module, ...options) {
+    const module = new Module(...options)
+    this.registeredDataModules.set(module.name, module)
     return this
-  }
-
-  registerUiModule (moduleClass, ...options) {
-    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
-    return this
-  }
-
-  hasUiModule (moduleName) {
-    return this.uiModules.has(moduleName)
-  }
-
-  getUiModule (moduleName) {
-    return this.uiModules.get(moduleName).instance
   }
 
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
-    // TODO: Site options should probably be initialized the same way as other options objects
-    this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
+    this.siteOptions = this.loadSiteOptions()
 
-    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_18__["default"].getZIndexMax()
+    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_23__["default"].getZIndexMax()
+
+    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_9__["default"]()
+      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_11__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_US)
+      .addMessages(_locales_en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_12__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_US)
+      .addMessages(_locales_en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_13__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_US)
+      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_14__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_GB)
+      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_US)
 
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
 
@@ -31900,39 +32593,591 @@ class UIController {
     await Promise.all(optionLoadPromises)
 
     // All options shall be loaded at this point. Can initialize Vue components that will use them
-    // Create all registered data modules
-    this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(...m.options) })
-    // Mount all registered data modules into the store
-    this.dataModules.forEach((m) => this.store.registerModule(m.instance.publicName, m.instance.store))
-    // Mount all registered UI modules into the store
-    this.uiModules.forEach((m) => this.store.registerModule(m.ModuleClass.publicName, m.ModuleClass.store()))
-
-    // Construct a public API of all data modules that will be shared using `provide`
-    this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
-
-    /**
-     * This is a public API of a UI controller. All objects should use this public API only.
-     */
-    this.api.ui = {
-      // Modules
-      hasModule: this.hasUiModule.bind(this), // Checks if a UI module is available
-      getModule: this.getUiModule.bind(this), // Gets direct access to module.
-
-      // Actions
-      openPanel: this.openPanel.bind(this),
-      closePanel: this.closePanel.bind(this),
-      openPopup: this.openPopup.bind(this),
-      closePopup: this.closePopup.bind(this)
-    }
-
-    // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
-    // This must be done after creation of data modules.
-    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
+    // Mount all registered modules into the store
+    this.registeredDataModules.forEach((module) => this.store.registerModule(module.name, module.store))
+    // Expose public API of all modules with `provide`
+    this.api = Object.assign({}, ...Array.from(this.registeredDataModules.values()).map(module => ({ [module.name]: module.api(this.store) })))
 
     // Initialize components
-    // TODO: this is for compatibility with legacy code only. All UI modules must by dynamic, not static
-    this.panel = this.api.ui.getModule('panel')
-    this.popup = this.api.ui.getModule('popup')
+    this.panel = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a({
+      el: `#${this.options.template.panelId}`,
+      store: this.store, // Install store into the panel
+      provide: this.api, // Public API of the modules
+      components: {
+        panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+      },
+      data: {
+        panelData: {
+          isOpen: false,
+          tabs: this.tabState,
+          verboseMode: this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode,
+          currentLanguageID: null,
+          grammarAvailable: false,
+          grammarRes: {},
+          lexemes: [],
+          inflectionComponentData: {
+            visible: false,
+            inflectionViewSet: null,
+            inflDataReady: false
+          },
+          inflectionBrowserData: {
+            visible: false
+          },
+          inflectionsWaitState: false,
+          inflectionsEnabled: false,
+          // Whether inflection browser is enabled for a language. We always show an inflection browser for now.
+          inflectionBrowserEnabled: false,
+          inflBrowserTablesCollapsed: null, // Null means that state is not set
+          shortDefinitions: [],
+          fullDefinitions: '',
+          inflections: {
+            localeSwitcher: undefined,
+            viewSelector: undefined,
+            tableBody: undefined
+          },
+          inflectionIDs: {
+            localeSwitcher: 'alpheios-panel-content-infl-table-locale-switcher',
+            viewSelector: 'alpheios-panel-content-infl-table-view-selector',
+            tableBody: 'alpheios-panel-content-infl-table-body'
+          },
+          infoComponentData: {
+            appInfo: this.options.app,
+            languageName: UIController.getLanguageName(this.state.currentLanguage).name
+          },
+          messages: [],
+          notification: {
+            visible: false,
+            important: false,
+            showLanguageSwitcher: false,
+            text: ''
+          },
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: ''
+          },
+          settings: this.contentOptions.items,
+          treebankComponentData: {
+            data: {
+              word: {},
+              page: {}
+
+            },
+            visible: false
+          },
+          resourceSettings: this.resourceOptions.items,
+          uiOptions: this.uiOptions,
+          classes: [], // Will be set later by `setRootComponentClasses()`
+          styles: {
+            zIndex: this.zIndex
+          },
+          minWidth: 400,
+          l10n: this.l10n,
+          auth: this.auth,
+          wordUsageExamplesData: null
+        },
+        state: this.state,
+        options: this.contentOptions,
+        resourceOptions: this.resourceOptions,
+        currentPanelComponent: this.options.template.defaultPanelComponent,
+        uiController: this,
+        classesChanged: 0
+      },
+      methods: {
+        isOpen: function () {
+          return this.state.isPanelOpen()
+        },
+
+        open: function (forceOpen) {
+          if (forceOpen || !this.state.isPanelOpen()) {
+            this.panelData.isOpen = true
+            this.state.setPanelOpen()
+          }
+          return this
+        },
+
+        // `updateState == false` is used to close a panel without updating state
+        close: function (updateState = true) {
+          this.panelData.isOpen = false
+          if (updateState) { this.state.setPanelClosed() }
+          return this
+        },
+
+        setPositionTo: function (position) {
+          this.options.items.panelPosition.setValue(position)
+          this.classesChanged += 1
+        },
+
+        attachToLeft: function () {
+          this.setPositionTo('left')
+        },
+
+        attachToRight: function () {
+          this.setPositionTo('right')
+        },
+
+        changeTab (name) {
+          for (let key of Object.keys(this.panelData.tabs)) {
+            if (this.panelData.tabs[key]) { this.panelData.tabs[key] = false }
+          }
+
+          const inflectionsAvailable = Boolean(this.panelData && this.panelData.inflectionComponentData && this.panelData.inflectionComponentData.inflDataReady)
+          const grammarAvailable = Boolean(this.panelData && this.panelData.grammarAvailable)
+          const statusAvailable = Boolean(this.panelData && this.panelData.verboseMode)
+
+          // TODO: With state refactoring, eliminate similar code in `panel.vue`
+          const treebankTabAvaliable = Boolean(this.panelData && this.panelData.treebankComponentData && this.panelData.treebankComponentData.data &&
+          ((this.panelData.treebankComponentData.data.page && this.panelData.treebankComponentData.data.page.src) ||
+            (this.panelData.treebankComponentData.data.word && this.panelData.treebankComponentData.data.word.src)))
+          // If tab is disabled, switch to a default one
+          if (
+            (!inflectionsAvailable && name === 'inflections') ||
+            (!grammarAvailable && name === 'grammar') ||
+            (!treebankTabAvaliable && name === 'treebank') ||
+            (!statusAvailable && name === 'status')
+          ) {
+            name = this.uiController.tabStateDefault
+          }
+          this.panelData.tabs[name] = true
+          this.state.changeTab(name) // Reflect a tab change in a state
+          return this
+        },
+
+        clearContent: function () {
+          this.panelData.shortDefinitions = []
+          this.panelData.fullDefinitions = ''
+          this.panelData.messages = ''
+          this.panelData.treebankComponentData.data.word = {}
+          this.panelData.treebankComponentData.visible = false
+          this.clearNotifications()
+          this.clearStatus()
+          return this
+        },
+
+        showMessage: function (message) {
+          this.panelData.messages = [message]
+        },
+
+        appendMessage: function (message) {
+          this.panelData.messages.push(message)
+        },
+
+        clearMessages: function () {
+          this.panelData.messages = []
+        },
+
+        showNotification: function (text, important = false) {
+          this.panelData.notification.visible = true
+          this.panelData.notification.important = important
+          this.panelData.notification.showLanguageSwitcher = false
+          this.panelData.notification.text = text
+        },
+
+        showImportantNotification: function (text) {
+          this.showNotification(text, true)
+        },
+
+        showLanguageNotification: function (homonym, notFound = false) {
+          this.panelData.notification.visible = true
+          let languageName
+          if (homonym) {
+            languageName = UIController.getLanguageName(homonym.languageID).name
+          } else if (this.panelData.infoComponentData.languageName) {
+            languageName = this.panelData.infoComponentData.languageName
+          } else {
+            languageName = this.panelData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
+          }
+          if (notFound) {
+            this.panelData.notification.important = true
+            this.panelData.notification.showLanguageSwitcher = true
+            this.panelData.notification.text = this.panelData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
+          } else {
+            this.panelData.notification.visible = true
+            this.panelData.notification.important = false
+            this.panelData.notification.showLanguageSwitcher = false
+          }
+        },
+
+        showStatusInfo: function (selectionText, languageID) {
+          let langDetails = UIController.getLanguageName(languageID)
+          this.panelData.status.languageName = langDetails.name
+          this.panelData.status.languageCode = langDetails.code
+          this.panelData.status.selectedText = selectionText
+        },
+
+        showErrorInformation: function (errorText) {
+          this.panelData.notification.visible = true
+          this.panelData.notification.important = true
+          this.panelData.notification.showLanguageSwitcher = false
+          this.panelData.notification.text = errorText
+        },
+
+        clearNotifications: function () {
+          this.panelData.notification.visible = false
+          this.panelData.notification.important = false
+          this.panelData.notification.showLanguageSwitcher = false
+          this.panelData.notification.text = ''
+        },
+
+        clearStatus: function () {
+          this.panelData.status.languageName = ''
+          this.panelData.status.languageCode = ''
+          this.panelData.status.selectedText = ''
+        },
+
+        toggle: function () {
+          if (this.state.isPanelOpen()) {
+            this.close()
+          } else {
+            this.open()
+          }
+          return this
+        },
+
+        requestGrammar: function (feature) {
+          // ExpObjMon.track(
+          _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_17__["default"].create(feature, {
+            grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_1__["Grammars"]
+          }).getData()
+          //, {
+          // experience: 'Get resource',
+          //  actions: [
+          //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
+          //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
+          // ]
+          // }).getData()
+          this.uiController.message(this.panelData.l10n.messages.TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS.get())
+        },
+
+        settingChange: function (name, value) {
+          console.log('Change inside instance', name, value)
+          // TODO we need to refactor handling of boolean options
+          if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
+            this.options.items[name].setValue(value)
+          } else {
+            this.options.items[name].setTextValue(value)
+          }
+          switch (name) {
+            case 'locale':
+              if (this.uiController.presenter) {
+                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
+              }
+              this.uiController.updateLemmaTranslations()
+              break
+            case 'preferredLanguage':
+              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
+              break
+            case 'verboseMode':
+              this.uiController.updateVerboseMode()
+              break
+            case 'enableLemmaTranslations':
+              this.uiController.updateLemmaTranslations()
+              break
+          }
+        },
+        resourceSettingChange: function (name, value) {
+          let keyinfo = this.resourceOptions.parseKey(name)
+          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
+          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+        },
+
+        uiOptionChange: function (name, value) {
+          if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
+            this.uiController.uiOptions.items[name].setValue(value)
+          } else {
+            this.uiController.uiOptions.items[name].setTextValue(value)
+          }
+
+          switch (name) {
+            case 'skin':
+              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
+              break
+            case 'popup':
+              this.uiController.popup.vi.close() // Close an old popup
+              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
+              this.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
+              break
+            case 'fontSize':
+              this.uiController.updateFontSizeClass(value)
+              break
+            case 'colorSchema':
+              this.uiController.updateColorSchemaClass(value)
+              break
+          }
+        }
+      },
+      mounted: function () {
+        this.panelData.inflections.localeSwitcher = document.querySelector(`#${this.panelData.inflectionIDs.localeSwitcher}`)
+        this.panelData.inflections.viewSelector = document.querySelector(`#${this.panelData.inflectionIDs.viewSelector}`)
+        this.panelData.inflections.tableBody = document.querySelector(`#${this.panelData.inflectionIDs.tableBody}`)
+      }
+    })
+    console.log(`Panel's store is`, this.panel.$store)
+
+    // Create a Vue instance for a popup
+    /* this.popup = new Vue({
+      el: `#${this.options.template.popupId}`,
+      components: {
+        popup: Popup
+      },
+      data: {
+        messages: [],
+        lexemes: [],
+        definitions: {},
+
+        translations: {},
+
+        linkedFeatures: [],
+        visible: false,
+        popupData: {
+          fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
+          // Default popup position, with units
+          top: '10vh',
+          left: '10vw',
+
+          draggable: this.options.template.draggable,
+          resizable: this.options.template.resizable,
+          // Default popup dimensions, in pixels, without units. These values will override CSS rules.
+          // Can be scaled down on small screens automatically.
+          width: 210,
+          /!*
+          `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
+          and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
+          a height of a popup less this value.
+           *!/
+          fixedElementsHeight: 120,
+          heightMin: 150, // Initially, popup height will be set to this value
+          heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
+          // A margin between a popup and a selection
+          placementMargin: 15,
+          // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
+          viewportMargin: 5,
+
+          // A position of a word selection
+          targetRect: {},
+
+          /!*
+          A date and time when a new request was started, in milliseconds since 1970-01-01. It is used within a
+          component to identify a new request coming in and to distinguish it from data updates of the current request.
+           *!/
+          requestStartTime: 0,
+          settings: this.contentOptions.items,
+          verboseMode: this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode,
+          defDataReady: false,
+          hasTreebank: false,
+          inflDataReady: this.inflDataReady,
+          morphDataReady: false,
+
+          translationsDataReady: false,
+
+          showProviders: false,
+          updates: 0,
+          classes: [], // Will be set later by `setRootComponentClasses()`
+          l10n: this.l10n,
+          notification: {
+            visible: false,
+            important: false,
+            showLanguageSwitcher: false,
+            text: ''
+          },
+          providers: [],
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: ''
+          },
+          currentLanguage: null,
+          resourceSettings: this.resourceOptions.items,
+          styles: {
+            zIndex: this.zIndex
+          }
+        },
+        panel: this.panel,
+        options: this.contentOptions,
+        resourceOptions: this.resourceOptions,
+        currentPopupComponent: this.options.template.defaultPopupComponent,
+        uiController: this,
+        classesChanged: 0
+      },
+      methods: {
+        setTargetRect: function (targetRect) {
+          this.popupData.targetRect = targetRect
+        },
+
+        showMessage: function (message) {
+          this.messages = [message]
+          return this
+        },
+
+        appendMessage: function (message) {
+          this.messages.push(message)
+          return this
+        },
+
+        clearMessages: function () {
+          while (this.messages.length > 0) {
+            this.messages.pop()
+          }
+          return this
+        },
+
+        showNotification: function (text, important = false) {
+          this.popupData.notification.visible = true
+          this.popupData.notification.important = important
+          this.popupData.notification.showLanguageSwitcher = false
+          this.popupData.notification.text = text
+        },
+
+        showImportantNotification: function (text) {
+          this.showNotification(text, true)
+        },
+
+        showLanguageNotification: function (homonym, notFound = false) {
+          this.popupData.notification.visible = true
+          let languageName
+          if (homonym) {
+            languageName = UIController.getLanguageName(homonym.languageID).name
+          } else if (this.popupData.currentLanguageName) {
+            languageName = this.popupData.currentLanguageName
+          } else {
+            languageName = this.popupData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
+          }
+          if (notFound) {
+            this.popupData.notification.important = true
+            this.popupData.notification.showLanguageSwitcher = true
+            this.popupData.notification.text = this.popupData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
+          } else {
+            this.popupData.notification.important = false
+            this.popupData.notification.showLanguageSwitcher = false
+          }
+        },
+
+        showStatusInfo: function (selectionText, languageID) {
+          let langDetails = UIController.getLanguageName(languageID)
+          this.popupData.status.languageName = langDetails.name
+          this.popupData.status.languageCode = langDetails.code
+          this.popupData.status.selectedText = selectionText
+        },
+
+        showErrorInformation: function (errorText) {
+          this.popupData.notification.visible = true
+          this.popupData.notification.important = true
+          this.popupData.notification.showLanguageSwitcher = false
+          this.popupData.notification.text = errorText
+        },
+
+        newLexicalRequest: function () {
+          this.popupData.requestStartTime = new Date().getTime()
+          this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
+        },
+
+        clearContent: function () {
+          this.definitions = {}
+          this.translations = {}
+
+          this.lexemes = []
+          this.popupData.providers = []
+          this.popupData.defDataReady = false
+          this.popupData.inflDataReady = false
+          this.popupData.morphDataReady = false
+
+          this.popupData.translationsDataReady = false
+
+          this.popupData.showProviders = false
+          this.popupData.hasTreebank = false
+          this.clearNotifications()
+          this.clearStatus()
+          return this
+        },
+
+        clearNotifications: function () {
+          this.popupData.notification.visible = false
+          this.popupData.notification.important = false
+          this.popupData.notification.showLanguageSwitcher = false
+          this.popupData.notification.text = ''
+        },
+
+        clearStatus: function () {
+          this.popupData.status.languageName = ''
+          this.popupData.status.languageCode = ''
+          this.popupData.status.selectedText = ''
+        },
+
+        open: function () {
+          this.visible = true
+          return this
+        },
+
+        close: function () {
+          this.visible = false
+          return this
+        },
+
+        showPanelTab: function (tabName) {
+          this.panel.changeTab(tabName)
+          this.panel.open()
+          return this
+        },
+
+        sendFeature: function (feature) {
+          this.panel.requestGrammar(feature)
+          this.panel.changeTab('grammar')
+          this.panel.open()
+          return this
+        },
+
+        settingChange: function (name, value) {
+          console.log('Change inside instance', name, value)
+          this.options.items[name].setTextValue(value)
+          switch (name) {
+            case 'locale':
+              if (this.uiController.presenter) {
+                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
+              }
+              this.uiController.updateLemmaTranslations()
+              break
+            case 'preferredLanguage':
+              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
+              break
+          }
+        },
+
+        resourceSettingChange: function (name, value) {
+          let keyinfo = this.resourceOptions.parseKey(name)
+          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
+          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+        },
+
+        uiOptionChange: function (name, value) {
+          // TODO this should really be handled within OptionsItem
+          // the difference between value and textValues is a little confusing
+          // see issue #73
+          if (name === 'fontSize' || name === 'colorSchema') {
+            this.uiController.uiOptions.items[name].setValue(value)
+          } else {
+            this.uiController.uiOptions.items[name].setTextValue(value)
+          }
+
+          switch (name) {
+            case 'skin':
+              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
+              break
+            case 'popup':
+              this.uiController.popup.close() // Close an old popup
+              this.uiController.popup.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
+              this.uiController.popup.open() // Will trigger an initialisation of popup dimensions
+              break
+            case 'fontSize':
+              this.uiController.updateFontSizeClass(value)
+              break
+            case 'colorSchema':
+              this.uiController.updateColorSchemaClass(value)
+              break
+          }
+        }
+      }
+    }) */
+    this.popup = new _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_7__["default"](this.store, this)
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -31971,7 +33216,7 @@ class UIController {
     }
     // If panel should be opened according to the state, open it
     if (this.state.isPanelOpen()) {
-      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel(true) } // Force close the panel
+      this.panel.open(true)
     }
 
     if (this.state.tab) {
@@ -31996,8 +33241,8 @@ class UIController {
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
 
-    if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
-    if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+    this.popup.vi.close()
+    this.panel.close(false) // Close panel without updating it's state so the state can be saved for later reactivation
     this.isActivated = false
     this.isDeactivated = true
     this.state.deactivate()
@@ -32013,7 +33258,7 @@ class UIController {
    */
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
-      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_9__["default"])
+      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__["default"])
       UIController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
@@ -32024,13 +33269,12 @@ class UIController {
 
   /**
    * Load site-specific settings
-   * @param {Object[]} siteOptions - An array of site options
    */
-  loadSiteOptions (siteOptions) {
+  loadSiteOptions () {
     let allSiteOptions = []
-    for (let site of siteOptions) {
-      for (let domain of site.contentOptions) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](domain, this.options.storageAdapter)
+    for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_19__) {
+      for (let domain of site.options) {
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_28__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -32051,25 +33295,19 @@ class UIController {
   }
 
   message (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showMessage(message) }
+    this.panel.showMessage(message)
     return this
   }
 
   addMessage (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.appendMessage(message) }
+    this.panel.appendMessage(message)
   }
 
   addImportantMessage (message) {
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.appendMessage(message)
-      panel.vi.showImportantNotification(message)
-    }
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.appendMessage(message)
-      popup.vi.showImportantNotification(message)
-    }
+    this.panel.appendMessage(message)
+    this.popup.vi.appendMessage(message)
+    this.panel.showImportantNotification(message)
+    this.popup.vi.showImportantNotification(message)
   }
 
   /**
@@ -32090,31 +33328,31 @@ class UIController {
       !homonym.lexemes ||
       homonym.lexemes.length < 1 ||
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showLanguageNotification(homonym, notFound) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showLanguageNotification(homonym, notFound) }
+    this.panel.showLanguageNotification(homonym, notFound)
+    this.popup.vi.showLanguageNotification(homonym, notFound)
   }
 
   showStatusInfo (selectionText, languageID) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showStatusInfo(selectionText, languageID) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showStatusInfo(selectionText, languageID) }
+    this.panel.showStatusInfo(selectionText, languageID)
+    this.popup.vi.showStatusInfo(selectionText, languageID)
   }
 
   showErrorInfo (errorText) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showErrorInformation(errorText) }
+    this.panel.showErrorInformation(errorText)
   }
 
   showImportantNotification (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showImportantNotification(message) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showImportantNotification(message) }
+    this.panel.showImportantNotification(message)
+    this.popup.vi.showImportantNotification(message)
   }
 
   changeTab (tabName) {
-    if (this.hasUiModule('panel')) {
+    if (this.panel) {
       if (!this.tabState.hasOwnProperty(tabName)) {
         // Set tab to a default one if it is an unknown tab name
         tabName = this.tabStateDefault
       }
-      this.getUiModule('panel').vi.changeTab(tabName)
+      this.panel.changeTab(tabName)
     } else {
       console.warn(`Cannot switch tab because panel does not exist`)
     }
@@ -32122,35 +33360,30 @@ class UIController {
   }
 
   setTargetRect (targetRect) {
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.setTargetRect(targetRect) }
+    this.popup.vi.setTargetRect(targetRect)
     return this
   }
 
   newLexicalRequest (languageID) {
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
-    if (this.hasUiModule('panel')) {
-      const panel = this.api.ui.getModule('panel')
-      panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
-      panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
-      panel.vi.panelData.grammarAvailable = false
-    }
+    this.popup.vi.newLexicalRequest()
+    this.panel.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
+    this.panel.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
+    this.panel.panelData.grammarAvailable = false
+    this.panel.panelData.wordUsageExamplesData = null
     this.clear().open().changeTab('definitions')
     return this
   }
 
   updateMorphology (homonym) {
     homonym.lexemes.sort(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"].getSortByTwoLemmaFeatures(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part))
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.lexemes = homonym.lexemes
-      if (homonym.lexemes.length > 0) {
-        // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple
-        popup.vi.linkedFeatures = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
-      }
-      popup.vi.popupData.morphDataReady = true
-      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
+    this.popup.vi.lexemes = homonym.lexemes
+    if (homonym.lexemes.length > 0) {
+      // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple
+      this.popup.vi.linkedFeatures = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
     }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.lexemes = homonym.lexemes }
+    this.popup.vi.popupData.morphDataReady = true
+    this.panel.panelData.lexemes = homonym.lexemes
+    this.popup.vi.popupData.updates = this.popup.vi.popupData.updates + 1
     this.updateProviders(homonym)
   }
 
@@ -32171,7 +33404,7 @@ class UIController {
         providers.set(l.lemma.translation.provider, 1)
       }
     })
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.providers = Array.from(providers.keys()) }
+    this.popup.vi.popupData.providers = Array.from(providers.keys())
   }
 
   /**
@@ -32180,24 +33413,18 @@ class UIController {
    * @param {Array} urls
    */
   updateGrammar (urls = []) {
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      if (urls.length > 0) {
-        panel.vi.panelData.grammarRes = urls[0]
-        panel.vi.panelData.grammarAvailable = true
-      } else {
-        panel.vi.panelData.grammarRes = { provider: this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND') }
-      }
+    if (urls.length > 0) {
+      this.panel.panelData.grammarRes = urls[0]
+      this.panel.panelData.grammarAvailable = true
+    } else {
+      this.panel.panelData.grammarRes = { provider: this.l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND.get() }
     }
     // todo show TOC or not found
   }
 
   updateDefinitions (homonym) {
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.fullDefinitions = ''
-      panel.vi.panelData.shortDefinitions = []
-    }
+    this.panel.panelData.fullDefinitions = ''
+    this.panel.panelData.shortDefinitions = []
     let definitions = {}
     // let defsList = []
     let hasFullDefs = false
@@ -32213,25 +33440,22 @@ class UIController {
             definitions[lexeme.lemma.ID].push(def)
           }
         }
-        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.shortDefinitions.push(...lexeme.meaning.shortDefs) }
+        this.panel.panelData.shortDefinitions.push(...lexeme.meaning.shortDefs)
         this.updateProviders(homonym)
       } else if (Object.entries(lexeme.lemma.features).length > 0) {
         definitions[lexeme.lemma.ID] = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"]('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
       }
 
       if (lexeme.meaning.fullDefs.length > 0) {
-        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.fullDefinitions += this.formatFullDefinitions(lexeme) }
+        this.panel.panelData.fullDefinitions += this.formatFullDefinitions(lexeme)
         hasFullDefs = true
       }
     }
 
     // Populate a popup
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.definitions = definitions
-      popup.vi.popupData.defDataReady = hasFullDefs
-      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
-    }
+    this.popup.vi.definitions = definitions
+    this.popup.vi.popupData.defDataReady = hasFullDefs
+    this.popup.vi.popupData.updates = this.popup.vi.popupData.updates + 1
   }
 
   updateTranslations (homonym) {
@@ -32241,26 +33465,24 @@ class UIController {
         translations[lexeme.lemma.ID] = lexeme.lemma.translation
       }
     }
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.translations = translations
-      popup.vi.popupData.translationsDataReady = true
-      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
-    }
+    this.popup.vi.translations = translations
+    this.popup.vi.popupData.translationsDataReady = true
+    this.popup.vi.popupData.updates = this.popup.vi.popupData.updates + 1
     this.updateProviders(homonym)
   }
 
   updatePageAnnotationData (data) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.page = data.treebank.page || {} }
+    console.log(`Update page annotations`)
+    this.panel.panelData.treebankComponentData.data.page = data.treebank.page || {}
   }
 
   updateWordAnnotationData (data) {
     if (data && data.treebank) {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = data.treebank.word || {} }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = data.treebank.word }
+      this.panel.panelData.treebankComponentData.data.word = data.treebank.word || {}
+      this.popup.vi.popupData.hasTreebank = data.treebank.word
     } else {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = {} }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = false }
+      this.panel.panelData.treebankComponentData.data.word = {}
+      this.popup.vi.popupData.hasTreebank = false
     }
   }
 
@@ -32273,26 +33495,20 @@ class UIController {
     }
     this.state.setItem('currentLanguage', alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(currentLanguageID))
 
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
-      panel.vi.panelData.currentLanguageID = currentLanguageID
-      panel.vi.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID).name
-    }
+    this.panel.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
+    this.popup.vi.popupData.inflDataReady = this.inflDataReady
+    this.panel.panelData.currentLanguageID = currentLanguageID
+    this.panel.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID).name
 
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.popupData.inflDataReady = this.inflDataReady
-      vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(popup.vi.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
-    }
+    vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(this.popup.vi.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
   updateVerboseMode () {
     this.state.setItem('verboseMode', this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
 
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode) }
+    this.panel.panelData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
+    this.popup.vi.popupData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
   }
 
   updateLemmaTranslations () {
@@ -32304,35 +33520,36 @@ class UIController {
   }
 
   notifyInflectionBrowser () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionBrowserEnabled = true }
+    this.panel.panelData.inflectionBrowserEnabled = true
   }
 
   updateInflections (homonym) {
     this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].create(homonym, this.contentOptions.items.locale.currentValue)
 
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet }
+    this.panel.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet
     if (this.inflectionsViewSet.hasMatchingViews) {
-      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
+      this.addMessage(this.l10n.messages.TEXT_NOTICE_INFLDATA_READY.get())
     }
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.inflectionsWaitState = false
-      panel.vi.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
-    }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady }
+    this.panel.panelData.inflectionsWaitState = false
+    this.panel.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
+    this.popup.vi.popupData.inflDataReady = this.inflDataReady
+  }
+
+  updateWordUsageExamples (wordUsageExamplesData) {
+    this.panel.panelData.wordUsageExamplesData = wordUsageExamplesData
   }
 
   lexicalRequestComplete () {
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
+    this.popup.vi.popupData.morphDataReady = true
+    this.panel.panelData.inflBrowserTablesCollapsed = null // Reset inflection browser tables state
   }
 
   lexicalRequestSucceeded () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
+    this.panel.panelData.inflectionsWaitState = false
   }
 
   lexicalRequestFailed () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
+    this.panel.panelData.inflectionsWaitState = false
   }
 
   get inflDataReady () {
@@ -32340,54 +33557,21 @@ class UIController {
   }
 
   clear () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
+    this.panel.clearContent()
+    this.popup.vi.clearContent()
     return this
   }
 
-  // TODO: Is this ever called?
   open () {
     if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
-      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
+      this.panel.open()
     } else {
-      if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
-      if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
+      if (this.panel.isOpen) { this.panel.close() }
+      this.popup.vi.open()
     }
     return this
   }
 
-  /**
-   * Opens a panel. Used from a content script upon a panel status change request.
-   */
-  openPanel (forceOpen = false) {
-    if (this.api.ui.hasModule('panel')) {
-      if (forceOpen || !this.state.isPanelOpen()) {
-        this.store.commit('panel/open')
-        this.state.setPanelOpen()
-      }
-    }
-  }
-
-  /**
-   * Closes a panel. Used from a content script upon a panel status change request.
-   */
-  closePanel (syncState = true) {
-    if (this.api.ui.hasModule('panel')) {
-      this.store.commit('panel/close')
-      if (syncState) { this.state.setPanelClosed() }
-    }
-  }
-
-  openPopup () {
-    if (this.api.ui.hasModule('popup')) {
-      this.store.commit('popup/open')
-    }
-  }
-  closePopup () {
-    if (this.api.ui.hasModule('popup')) {
-      this.store.commit('popup/close')
-    }
-  }
   setRootComponentClasses () {
     let classes = []
 
@@ -32410,58 +33594,41 @@ class UIController {
       classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.defaultValue}_class`)
     }
 
-    let classesLength = 0
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      const classesLength = popup.vi.popupData.classes.length
-      popup.vi.popupData.classes.splice(0, classesLength)
-      classes.forEach(classItem => {
-        popup.vi.popupData.classes.push(classItem)
-      })
-    }
+    this.popup.vi.popupData.classes.splice(0, this.popup.vi.popupData.classes.length)
+    this.panel.panelData.classes.splice(0, this.popup.vi.popupData.classes.length)
 
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.classes.splice(0, classesLength)
-
-      classes.forEach(classItem => {
-        panel.vi.panelData.classes.push(classItem)
-      })
-    }
+    classes.forEach(classItem => {
+      this.popup.vi.popupData.classes.push(classItem)
+      this.panel.panelData.classes.push(classItem)
+    })
   }
 
   updateStyleClass (prefix, type) {
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      let popupClasses = popup.vi.popupData.classes.slice(0)
+    let popupClasses = this.popup.vi.popupData.classes.slice(0)
 
-      popupClasses.forEach(function (item, index) {
-        if (item.indexOf(prefix) === 0) {
-          popupClasses[index] = `${prefix}${type}_class`
-        }
-      })
+    popupClasses.forEach(function (item, index) {
+      if (item.indexOf(prefix) === 0) {
+        popupClasses[index] = `${prefix}${type}_class`
+      }
+    })
 
-      popup.vi.popupData.classes.splice(0, popup.vi.popupData.classes.length)
-      popupClasses.forEach(classItem => {
-        popup.vi.popupData.classes.push(classItem)
-      })
-    }
+    this.popup.vi.popupData.classes.splice(0, this.popup.vi.popupData.classes.length)
+    popupClasses.forEach(classItem => {
+      this.popup.vi.popupData.classes.push(classItem)
+    })
 
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      let panelClasses = panel.vi.panelData.classes.slice(0)
+    let panelClasses = this.panel.panelData.classes.slice(0)
 
-      panelClasses.forEach(function (item, index) {
-        if (item.indexOf(prefix) === 0) {
-          panelClasses[index] = `${prefix}${type}_class`
-        }
-      })
-      panel.vi.panelData.classes.splice(0, panel.vi.panelData.classes.length)
+    panelClasses.forEach(function (item, index) {
+      if (item.indexOf(prefix) === 0) {
+        panelClasses[index] = `${prefix}${type}_class`
+      }
+    })
+    this.panel.panelData.classes.splice(0, this.panel.panelData.classes.length)
 
-      panelClasses.forEach(classItem => {
-        panel.vi.panelData.classes.push(classItem)
-      })
-    }
+    panelClasses.forEach(classItem => {
+      this.panel.panelData.classes.push(classItem)
+    })
   }
 
   updateFontSizeClass (type) {
@@ -32484,7 +33651,7 @@ class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_17__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
+      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_22__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
       let textSelector = htmlSelector.createTextSelector()
 
       if (!textSelector.isEmpty()) {
@@ -32509,17 +33676,18 @@ class UIController {
           })
           .getData() */
 
-        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(textSelector, {
+        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
           resourceOptions: this.resourceOptions,
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.contentOptions.items.locale.currentValue } : null,
+          wordUsageExamples: this.enableWordUsageExamples(textSelector) ? { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue } : null,
           langOpts: { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
         this.setTargetRect(htmlSelector.targetRect)
         this.newLexicalRequest(textSelector.languageID)
-        this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
+        this.message(this.l10n.messages.TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS.get())
         this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
         this.updateLanguage(textSelector.languageID)
         this.updateWordAnnotationData(textSelector.data)
@@ -32539,14 +33707,19 @@ class UIController {
       !this.contentOptions.items.locale.currentValue.match(/^en-/)
   }
 
+  enableWordUsageExamples (textSelector) {
+    return textSelector.languageID === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN &&
+      this.contentOptions.items.enableWordUsageExamples.currentValue
+  }
+
   handleEscapeKey (event, nativeEvent) {
     // TODO: Move to keypress as keyCode is deprecated
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
-        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.api.ui.hasModule('popup')) {
-        this.api.ui.closePopup()
+        this.panel.close()
+      } else if (this.popup.vi.visible) {
+        this.popup.vi.close()
       }
     }
     return true
@@ -32555,41 +33728,27 @@ class UIController {
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
   updateAnnotations () {
+    console.log(`Update annotations called`)
     if (this.state.isActive() && this.state.uiIsActive()) {
-      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].create({
+      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_18__["default"].create({
         document: document,
         siteOptions: this.siteOptions
       }).getData()
     }
   }
 
-  startResourceQuery (feature) {
-    // ExpObjMon.track(
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].create(feature, {
-      grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_1__["Grammars"]
-    }).getData()
-    //, {
-    // experience: 'Get resource',
-    //  actions: [
-    //    { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
-    //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
-    // ]
-    // }).getData()
-    this.message(this.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
-  }
-
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.SUCCEEDED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].resultStatus.SUCCEEDED:
         this.lexicalRequestSucceeded()
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this.addMessage(this.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE.get())
         this.lexicalRequestComplete()
         break
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.FAILED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_16__["default"].resultStatus.FAILED:
         this.lexicalRequestFailed()
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this.addMessage(this.l10n.messages.TEXT_NOTICE_LEXQUERY_COMPLETE.get())
         this.lexicalRequestComplete()
         break
       default:
@@ -32599,11 +33758,11 @@ class UIController {
   }
 
   onMorphDataReady () {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_MORPHDATA_READY.get())
   }
 
   onMorphDataNotFound () {
-    this.addImportantMessage(this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'))
+    this.addImportantMessage(this.l10n.messages.TEXT_NOTICE_MORPHDATA_NOTFOUND.get())
     // Need to notify a UI controller that there is no morph data on this word in an analyzer
     // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
     if (this.morphologyDataNotFound) { this.morphologyDataNotFound(true) }
@@ -32617,31 +33776,41 @@ class UIController {
     this.updateInflections(homonym)
   }
 
+  onLemmaTranslationsReady (homonym) {
+    this.updateTranslations(homonym)
+  }
+
   onDefinitionsReady (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_DEFSDATA_READY.get(data.requestType, data.word))
     this.updateDefinitions(data.homonym)
   }
 
+  onWordUsageExamplesReady (wordUsageExamplesData) {
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_WORDUSAGE_READY.get())
+    this.updateWordUsageExamples(wordUsageExamplesData)
+  }
+
   onDefinitionsNotFound (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_DEFSDATA_NOTFOUND.get(data.requestType, data.word))
   }
 
   onResourceQueryComplete () {
     // We don't check result status for now. We always output the same message.
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_COMPLETE.get())
   }
 
   onGrammarAvailable (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_READY.get())
     this.updateGrammar(data.url)
   }
 
   onGrammarNotFound () {
     this.updateGrammar()
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
+    this.addMessage(this.l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND.get())
   }
 
   onAnnotationsAvailable (data) {
+    console.log(`Annotations becomes available`)
     this.updatePageAnnotationData(data.annotations)
   }
 }
@@ -33352,10 +34521,6 @@ class L10n {
     } else {
       messageBundle = new _message_bundle__WEBPACK_IMPORTED_MODULE_0__["default"](messageJSON, locale, missingTranslationMsgFn)
       this.addMessageBundle(messageBundle)
-      if (!this.selectedLocale) {
-        // If locale is not defined, set it to the value of the current (and the only one) message bundle
-        this.setLocale(locale)
-      }
     }
     return this
   }
@@ -33367,15 +34532,9 @@ class L10n {
    * @return {L10n} - Returns self for chaining.
    */
   addMessageBundle (messageBundle) {
-    const locale = messageBundle.locale
-    if (this.bundles.has(locale)) {
-      this.bundles.get(locale).appendFromBundle(messageBundle)
-    } else {
-      this.bundles.set(messageBundle.locale, messageBundle)
-      if (!this.selectedLocale) {
-        // If locale is not defined, set it to the value of the current (and the only one) message bundle
-        this.setLocale(messageBundle.locale)
-      }
+    this.bundles.set(messageBundle.locale, messageBundle)
+    if (!this.selectedLocale) {
+      this.setLocale(messageBundle.locale)
     }
     return this
   }
@@ -33397,11 +34556,12 @@ class L10n {
   }
 
   /**
-   * Returns a message from a bundle for a current locale.
-   * A wrapper for {@link MessageBundle#getMsg}
+   *
+   * @return {Object} - An object containing message objects as property values.
+   * The name of the property is a message key.
    */
-  getMsg (...params) {
-    return this.bundles.has(this.selectedLocale) ? this.bundles.get(this.selectedLocale).getMsg(...params) : {}
+  get messages () {
+    return this.bundles.has(this.selectedLocale) ? this.bundles.get(this.selectedLocale).messages : {}
   }
 
   /**
@@ -33444,43 +34604,30 @@ __webpack_require__.r(__webpack_exports__);
 class MessageBundle {
   /**
    * Creates a message bundle (a list of messages) for a locale.
-   * @param {string | object} messagesJSONorObj - Messages for a locale as a JSON string or as an object.
+   * @param {string} messagesJSON - Messages for a locale as a JSON string or as an object.
    * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
    * @param {Function} missingTranslationMsgFn - A placeholder message that will be shown if translation is not found.
    */
-  constructor (messagesJSONorObj, locale, missingTranslationMsgFn = (msgID, locale) => `Missing translation: ${msgID} [${locale}]`) {
+  constructor (messagesJSON, locale, missingTranslationMsgFn = (msgID, locale) => `Missing translation: ${msgID} [${locale}]`) {
     if (!locale) {
       throw new Error('Locale data is missing')
     }
-    if (!messagesJSONorObj) {
+    if (!messagesJSON) {
       throw new Error('Message data is missing')
     }
 
     this._locale = locale
-
     /**
-     * A map of message object. The key is a messageID
-     * @type {Map<string, Message>}
-     * @private
+     * An object whose properties are messages. Each message has a get() method and,
+     * if a message has any parameters, a format() method.
+     * @type {{get: Function, [format]: Function}}
      */
-    this._messages = new Map()
+    this.messages = {}
 
     this._missingTranslationMsgFn = missingTranslationMsgFn
 
-    let messages = (typeof messagesJSONorObj === 'string') ? JSON.parse(messagesJSONorObj) : messagesJSONorObj
+    let messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
     this.append(messages)
-  }
-
-  /**
-   * Appends messages from another bundle to the current message bundle.
-   * If message has the same messageID that already exists in the
-   * current bundle, it will be overwritten.
-   * @param {MessageBundle} messageBundle - A bundle of messages.
-   */
-  appendFromBundle (messageBundle) {
-    for (const key of messageBundle.messageIds) {
-      this._messages.set(key, messageBundle.getMessageObject(key))
-    }
   }
 
   /**
@@ -33494,87 +34641,38 @@ class MessageBundle {
 
   /**
    * Appends a series of messages from an object. Object properties are message names, and
-   * values are message objects. If appended message has the same key as en existing one,
-   * an existing message will be overwritten.
+   * values are message objects.
    * @param {object} messages - An object containing messages.
    */
   append (messages) {
     for (const [key, messageObj] of Object.entries(messages)) {
-      const message = new _message_js__WEBPACK_IMPORTED_MODULE_0__["default"](messageObj, this._locale)
-      this._messages.set(key, message)
+      if (!this.hasOwnProperty(key)) {
+        let message = new _message_js__WEBPACK_IMPORTED_MODULE_0__["default"](messageObj, this._locale)
+        this[key] = message
+        message.defineProperties(this.messages, key)
+      } else {
+        console.warn(`A key name "${key}" is reserved or already used. A message will be ignored"`)
+      }
     }
-  }
-
-  /**
-   * Returns a list of message IDs that exist in a bundle.
-   * @return {string[]}
-   */
-  get messageIds () {
-    return Array.from(this._messages.keys())
-  }
-
-  /**
-   * Checks if message with a given message ID exists among the translated messages.
-   * @param {string} messageID - A message ID of a message to be checked
-   * @return {boolean} True if message is present, false otherwise
-   */
-  hasMsg (messageID) {
-    return this._messages.has(messageID)
   }
 
   /**
    * Returns a (formatted) message for a message ID provided.
-   * @see {@link Message#getMsg}
-   * @param {string} messageID - An ID of a message.
-   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
+   * @param messageID - An ID of a message.
+   * @param options - Options that can be used for message formatting in the following format:
    * {
    *     paramOneName: paramOneValue,
    *     paramTwoName: paramTwoValue
    * }.
-   * @param {object} options - An object with the following possible options:
-   *     {boolean} passthrough - If true and a translation for a given message ID is not found, will return
-   *                             an original `messageID` string. Otherwise will return an error message if
-   *                             a translation is missing.
    * @returns {string} A formatted message. If message not found, returns a message that contains an error text.
    */
-  getMsg (messageID, formatOptions = undefined, options = {}) {
-    const defaultOptions = {
-      passthrough: false
-    }
-    options = Object.assign(defaultOptions, options)
-    if (this.hasMsg(messageID)) {
-      return this._messages.get(messageID).getMsg(formatOptions)
-    } else {
-      // If message with the ID provided is not in translation data, generate a warning.
-      return options.passthrough ? messageID : `"${messageID}" is not in translation data for ${this._locale}`
-    }
-  }
-
-  /**
-   * A wrapper around `get()` with a `passthrough` parameter set to `true`.
-   * @see {@link MessageBundle#getMsg} for more information.
-   * @param messageID
-   * @param formatOptions
-   * @param options
-   * @return {string}
-   */
-  getText (messageID, formatOptions, options = {}) {
-    options.passthrough = true
-    return this.getMsg(messageID, formatOptions, options)
-  }
-
-  /**
-   * Returns an abbreviated version of a message for a message ID provided.
-   * @see {@link Message#getAbbr}
-   * @param messageID - An ID of a message.
-   * @param formatOptions - Options that can be used for message formatting in the same order
-   * as they are defined in a translation source file.
-   * @returns {string} An abbreviated, and possibly formatted, message. If abbreviated message not found,
-   *          returns an original message text.
-   */
-  getAbbr (messageID, formatOptions = undefined) {
-    if (this.hasMsg(messageID)) {
-      return this._messages.get(messageID).getAbbr(formatOptions)
+  get (messageID, options = undefined) {
+    if (this.messages[messageID]) {
+      if (typeof this.messages[messageID].format === 'function') {
+        return this.messages[messageID].format(options)
+      } else {
+        return this.messages[messageID].get()
+      }
     } else {
       // If message with the ID provided is not in translation data, generate a warning.
       return this._missingTranslationMsgFn(messageID, this._locale)
@@ -33582,12 +34680,22 @@ class MessageBundle {
   }
 
   /**
-   * Returns a Message object for a given message ID.
-   * @param {string} messageID - A message ID of a message object to be retrieved..
-   * @return {Message} A message object.
+   * Returns an abbreviated version of a message for a message ID provided.
+   * @param messageID - An ID of a message.
+   * @param options - Options that can be used for message formatting in the following format:
+   * {
+   *     paramOneName: paramOneValue,
+   *     paramTwoName: paramTwoValue
+   * }.
+   * @returns {string} An abbreviated, and possibly formatted, message. If message not found, returns a message that contains an error text.
    */
-  getMessageObject (messageID) {
-    return this.hasMsg(messageID) ? this._messages.get(messageID) : null
+  abbr (messageID, options = undefined) {
+    if (this.messages[messageID]) {
+      return this.messages[messageID].abbr(options)
+    } else {
+      // If message with the ID provided is not in translation data, generate a warning.
+      return this._missingTranslationMsgFn(messageID, this._locale)
+    }
   }
 
   /**
@@ -33623,9 +34731,6 @@ class Message {
   /**
    * Creates a new Message object.
    * @param {object} message - A message object as read from JSON file.
-   * @param {string} message.name - A message string.
-   * @param {string[]} [message.params] - A list of message parameters (optional).
-   * @param {string} [message.abbr] - Message abbreviation (optional).
    * @param {string} locale - A message's locale.
    */
   constructor (message, locale) {
@@ -33636,16 +34741,13 @@ class Message {
       throw new Error('Message data is missing')
     }
 
-    this.message = `Message text is not defined in translation data` // Message format string or text
-    this.params = [] // Message parameters
-
     this.locale = locale
     for (const key of Object.keys(message)) {
       this[key] = message[key]
     }
 
-    this.formatFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(this.message, this.locale)
-    this.abbrFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(this.abbr || this.message, this.locale)
+    this.formatFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(message.message, this.locale)
+    this.abbrFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(message.abbr || message.message, this.locale)
   }
 
   /**
@@ -33653,34 +34755,53 @@ class Message {
    * @return {boolean} True if message has any parameters, false otherwise.
    */
   get hasParameters () {
-    return Boolean(this.params.length > 0)
+    return !!(this.params && Array.isArray(this.params) && this.params.length > 0)
   }
 
   /**
-   * Returns a formatted version of a message (if message has parameters) or
-   * a message text (if parameters do not exist for a message).
-   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
-   * {
-   *     paramOneName: paramOneValue,
-   *     paramTwoName: paramTwoValue
-   * }.
-   * @return {string} A formatted message text
+   * Defines getter methods on an object of messages.
+   * @param {object} messages - On object where messages will be stored. Each property corresponds to a message key.
+   *        Each property will have a getter function defined (will return a formatted message), and,
+   *        for messages with parameters, a format(function).
+   *        `messages` object usually comes from a MessageBundle object.
+   * @param {string} key - A message key, a name of a message.
+   * @return {undefined} Has no return value.
    */
-  getMsg (formatOptions) {
-    return !this.hasParameters ? this.message : this.formatFunc.format(formatOptions)
-  }
+  defineProperties (messages, key) {
+    let self = this
 
-  /**
-   * Returns an abbreviated version of a message (if defined) or a message itself otherwise.
-   * @param {object} formatOptions - Options that can be used for message formatting in the following format:
-   * {
-   *     paramOneName: paramOneValue,
-   *     paramTwoName: paramTwoValue
-   * }.
-   * @return {string} Abbreviated or full message text.
-   */
-  getAbbr (formatOptions) {
-    return !this.hasParameters ? this.abbrFunc.format() : this.abbrFunc.format(formatOptions)
+    if (this.hasParameters) {
+      messages[key] = {
+        format (options) {
+          return self.formatFunc.format(options)
+        },
+        get (...options) {
+          let params = {}
+          // TODO: Add checks
+          for (let [index, param] of self.params.entries()) {
+            params[param] = options[index]
+          }
+          return self.formatFunc.format(params)
+        },
+        abbr (...options) {
+          let params = {}
+          // TODO: Add checks
+          for (let [index, param] of self.params.entries()) {
+            params[param] = options[index]
+          }
+          return self.abbrFunc.format(params)
+        }
+      }
+    } else {
+      messages[key] = {
+        get () {
+          return self.formatFunc.format()
+        },
+        abbr () {
+          return self.abbrFunc.format()
+        }
+      }
+    }
   }
 }
 
@@ -34558,6 +35679,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     this.resourceOptions = options.resourceOptions || []
     this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
+    this.wordUsageExamples = options.wordUsageExamples
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
   }
@@ -34672,6 +35794,19 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       }
 
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
+    }
+
+    if (this.wordUsageExamples) {
+      let adapterConcordanceRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].wordusageExamples.concordance({
+        method: 'getWordUsageExamples',
+        params: { homonym: this.homonym, pagination: { property: 'max', value: this.wordUsageExamples.paginationMax } }
+      })
+
+      if (adapterConcordanceRes.errors.length > 0) {
+        adapterConcordanceRes.errors.forEach(error => console.error(error))
+      }
+
+      LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
     }
 
     yield 'Retrieval of lemma translations completed'
@@ -34818,7 +35953,9 @@ LexicalQuery.evt = {
    *   word: definitionRequest.lexeme.lemma.word
    * }
    */
-  DEFS_NOT_FOUND: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Definitions Data Not Found`, LexicalQuery)
+  DEFS_NOT_FOUND: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Definitions Data Not Found`, LexicalQuery),
+
+  WORD_USAGE_EXAMPLES_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Word usage examples ready`, LexicalQuery)
 }
 
 
@@ -36687,10 +37824,10 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, PLACEHOLDER_INFLECT_UNAVAILABLE, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_GRAMMAR_NOTFOUND, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOG_IN_BTN_LABEL, AUTH_LOG_OUT_BTN_LABEL, AUTH_LOG_IN_PROGRESS_MSG, AUTH_LOG_IN_SUCCESS_MSG, AUTH_LOG_IN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, PLACEHOLDER_INFLECT_UNAVAILABLE, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_GRAMMAR_NOTFOUND, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOG_IN_BTN_LABEL, AUTH_LOG_OUT_BTN_LABEL, AUTH_LOG_IN_PROGRESS_MSG, AUTH_LOG_IN_SUCCESS_MSG, AUTH_LOG_IN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Credits","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide Credits","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOG_IN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOG_OUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOG_IN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOG_IN_SUCCESS_MSG":{"message":"Congratulations! Your logged in successfully","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOG_IN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Credits","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide Credits","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOG_IN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOG_OUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOG_IN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOG_IN_SUCCESS_MSG":{"message":"Congratulations! Your logged in successfully","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOG_IN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"}};
 
 /***/ }),
 
@@ -36705,59 +37842,17 @@ module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./en-us/messages.json */ "./locales/en-us/messages.json");
 var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-us/messages-data.json */ "./locales/en-us/messages-data.json");
-var _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages-data.json */ "./locales/en-us/messages-data.json", 1);
-/* harmony import */ var _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json");
-var _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json", 1);
-/* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
-/* harmony import */ var _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/lib/l10n/message-bundle.js */ "./lib/l10n/message-bundle.js");
+/* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
 
 
-
-
-
-
-const localeEnUs = 'en-US'
-const localeEnGb = 'en-GB'
-const availableMessages = {
-  [localeEnUs]: [_en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__, _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_1__, _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_2__],
-  [localeEnGb]: [_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__]
-}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  en_US: localeEnUs,
-  en_GB: localeEnGb,
-  availableMessages: availableMessages,
-  /**
-   * A helper function that creates a message bundle out of a messages JSON and a locale.
-   * @param {string | object} messagesJSONorObj - Messages for a locale as a JSON string or as an object.
-   * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
-   * @return {MessageBundle} A message bundle with messages from JSON.
-   */
-  createBundle: (messagesJSONorObj, locale) => {
-    return new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__["default"](messagesJSONorObj, locale)
-  },
-  /**
-   * Same as above, but creates an array of message bundles out of an array of messages JSONs and a locales.
-   * @param {Array.<string | object, number>[]} msgArr - An array of arrays with
-   * the first element being {string | object} messagesJSONorObj - messages for a locale as a JSON string or as an object,
-   * and the second element being {string} locale - a locale code for a message group. IETF language tag format is recommended.
-   * @return {MessageBundle[]} An array of message bundles.
-   */
-  createBundleArr: (msgArr) => {
-    return msgArr.map((m) => new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__["default"](...m))
-  },
-  /**
-   * Creates an array of message bundles out of all availableMessages.
-   * @return {MessageBundle[]} An array of message bundles.
-   */
-  bundleArr: () => {
-    let msgArray = []
-    for (const [locale, messages] of Object.entries(availableMessages)) {
-      msgArray.push(...messages.map(m => new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__["default"](m, locale)))
-    }
-    return msgArray
+  en_US: 'en-US',
+  en_GB: 'en-GB',
+  messages: {
+    en_US: _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__,
+    en_GB: _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__
   }
 });
 
@@ -36768,7 +37863,7 @@ const availableMessages = {
 /*!*******************!*\
   !*** ./plugin.js ***!
   \*******************/
-/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript, L10nModule, PanelModule, PopupModule */
+/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36872,20 +37967,8 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace =
 /* harmony import */ var _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @/lib/state/tab-script.js */ "./lib/state/tab-script.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TabScript", function() { return _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_32__["default"]; });
 
-/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "L10nModule", function() { return _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_33__["default"]; });
-
-/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PanelModule", function() { return _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_34__["default"]; });
-
-/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PopupModule", function() { return _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_35__["default"]; });
-
 // The following import will not probably used by any client directly,
 // but is required to include Scss file specified in there to a MiniCssExtractPlugin bundle
-
-
-
 
 
 
@@ -36933,7 +38016,7 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace =
 /*! exports provided: domain, items, default */
 /***/ (function(module) {
 
-module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]},"lookupLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLangOverride":{"defaultValue":false,"labelText":"Override language at lookup panel","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]}}};
+module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesMax":{"defaultValue":5,"labelText":"Word Usage Examples - max results","number":true,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]},"lookupLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLangOverride":{"defaultValue":false,"labelText":"Override language at lookup panel","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]}}};
 
 /***/ }),
 
@@ -36988,7 +38071,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :visible=\"visible\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @close=\"close\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @close=\"close\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -37054,10 +38137,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./embed-lib-warning.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/embed-lib-warning.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./embed-lib-warning.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/embed-lib-warning.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_embed_lib_warning_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37141,10 +38224,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./grammar.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/grammar.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./grammar.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/grammar.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_grammar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37228,10 +38311,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./infl-attribute.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-attribute.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./infl-attribute.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-attribute.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_attribute_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37315,10 +38398,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./infl-footnote.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-footnote.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./infl-footnote.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/infl-footnote.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_infl_footnote_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37402,10 +38485,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-browser.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-browser.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-browser.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-browser.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_browser_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37489,10 +38572,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_subtables_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37576,10 +38659,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_supp_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37663,10 +38746,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_prerendered_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37750,10 +38833,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-table-wide.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-wide.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections-table-wide.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections-table-wide.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_table_wide_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37837,10 +38920,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./inflections.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/inflections.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_inflections_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -37924,10 +39007,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./info.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/info.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./info.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/info.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_info_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38011,10 +39094,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./lemma-translation.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lemma-translation.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./lemma-translation.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lemma-translation.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lemma_translation_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38098,10 +39181,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./lookup.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lookup.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./lookup.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/lookup.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38185,10 +39268,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./morph-inner-v1.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner-v1.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./morph-inner-v1.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner-v1.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_v1_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38272,10 +39355,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./morph.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./morph.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38359,10 +39442,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38446,10 +39529,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./popup-mobile.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./popup-mobile.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38533,10 +39616,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./popup.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./popup.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38620,10 +39703,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./progress-bar.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/progress-bar.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./progress-bar.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/progress-bar.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_progress_bar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38707,10 +39790,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./reskin-font-color.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/reskin-font-color.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./reskin-font-color.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/reskin-font-color.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_reskin_font_color_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38796,10 +39879,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./setting.vue?vue&type=style&index=1&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/setting.vue?vue&type=style&index=1&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./setting.vue?vue&type=style&index=1&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/setting.vue?vue&type=style&index=1&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_setting_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38883,10 +39966,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./shortdef.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./shortdef.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_shortdef_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -38970,10 +40053,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./tooltip.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./tooltip.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -39057,10 +40140,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./treebank.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/treebank.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./treebank.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/treebank.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_treebank_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -39144,10 +40227,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./user-auth.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/user-auth.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./user-auth.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/user-auth.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -39164,6 +40247,180 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_template_id_ec8da7b0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_user_auth_vue_vue_type_template_id_ec8da7b0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-example-item.vue":
+/*!****************************************************!*\
+  !*** ./vue/components/word-usage-example-item.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _word_usage_example_item_vue_vue_type_template_id_282848ba___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-usage-example-item.vue?vue&type=template&id=282848ba& */ "./vue/components/word-usage-example-item.vue?vue&type=template&id=282848ba&");
+/* harmony import */ var _word_usage_example_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-usage-example-item.vue?vue&type=script&lang=js& */ "./vue/components/word-usage-example-item.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_usage_example_item_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-usage-example-item.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/word-usage-example-item.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _word_usage_example_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_usage_example_item_vue_vue_type_template_id_282848ba___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_usage_example_item_vue_vue_type_template_id_282848ba___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/word-usage-example-item.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-example-item.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./vue/components/word-usage-example-item.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_usage_example_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./word-usage-example-item.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-usage-example-item.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_usage_example_item_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-example-item.vue?vue&type=style&index=0&lang=scss&":
+/*!**************************************************************************************!*\
+  !*** ./vue/components/word-usage-example-item.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./word-usage-example-item.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-example-item.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-example-item.vue?vue&type=template&id=282848ba&":
+/*!***********************************************************************************!*\
+  !*** ./vue/components/word-usage-example-item.vue?vue&type=template&id=282848ba& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_template_id_282848ba___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./word-usage-example-item.vue?vue&type=template&id=282848ba& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-example-item.vue?vue&type=template&id=282848ba&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_template_id_282848ba___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_example_item_vue_vue_type_template_id_282848ba___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-examples-block.vue":
+/*!******************************************************!*\
+  !*** ./vue/components/word-usage-examples-block.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _word_usage_examples_block_vue_vue_type_template_id_43909d56___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-usage-examples-block.vue?vue&type=template&id=43909d56& */ "./vue/components/word-usage-examples-block.vue?vue&type=template&id=43909d56&");
+/* harmony import */ var _word_usage_examples_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-usage-examples-block.vue?vue&type=script&lang=js& */ "./vue/components/word-usage-examples-block.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_usage_examples_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-usage-examples-block.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/word-usage-examples-block.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _word_usage_examples_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_usage_examples_block_vue_vue_type_template_id_43909d56___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_usage_examples_block_vue_vue_type_template_id_43909d56___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/word-usage-examples-block.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-examples-block.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./vue/components/word-usage-examples-block.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_usage_examples_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./word-usage-examples-block.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-usage-examples-block.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_usage_examples_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-examples-block.vue?vue&type=style&index=0&lang=scss&":
+/*!****************************************************************************************!*\
+  !*** ./vue/components/word-usage-examples-block.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./word-usage-examples-block.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-examples-block.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue/components/word-usage-examples-block.vue?vue&type=template&id=43909d56&":
+/*!*************************************************************************************!*\
+  !*** ./vue/components/word-usage-examples-block.vue?vue&type=template&id=43909d56& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_template_id_43909d56___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./word-usage-examples-block.vue?vue&type=template&id=43909d56& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-usage-examples-block.vue?vue&type=template&id=43909d56&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_template_id_43909d56___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_usage_examples_block_vue_vue_type_template_id_43909d56___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -39231,10 +40488,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/vue-loader/lib??vue-loader-options!./wordforms.vue?vue&type=style&index=0&lang=css& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/vue-loader/lib/index.js?!./vue/components/wordforms.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/vue-loader/lib??vue-loader-options!./wordforms.vue?vue&type=style&index=0&lang=css& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/vue-loader/lib/index.js?!./vue/components/wordforms.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_wordforms_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -39386,29 +40643,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
 /* harmony import */ var _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/l10n/l10n.js */ "./lib/l10n/l10n.js");
 /* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
+
 
 
 
 
 class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor (defaultLocale = _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US, messageBundles = []) {
-    super()
-    this._l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
-    messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
-    this._l10n.setLocale(defaultLocale)
+  constructor () {
+    super('l10n')
+    this.l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
+      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_3__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
+      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_GB)
+      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US)
 
     this.store = {
       // All stores of modules are namespaced
       namespaced: true,
 
       state: {
-        selectedLocale: this._l10n.selectedLocale
+        selectedLocale: this.l10n.selectedLocale
+      },
+      getters: {
+        // For arrow functions `this` will point to the class instance, not to the store
+        getMessage: () => (messageID) => {
+          return this.l10n.bundle.get(messageID)
+        }
       },
       mutations: {
         // For arrow functions `this` will point to the class instance, not to the store
         setLocale: (state, newLocale) => {
-          this._l10n.setLocale(newLocale)
-          state.selectedLocale = this._l10n.selectedLocale
+          this.l10n.setLocale(newLocale)
+          state.selectedLocale = this.l10n.selectedLocale
         }
       }
     }
@@ -39448,53 +40718,17 @@ class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
         },
 
         /**
-         * Checks if message is in translated messages list.
-         * @param messageID
-         * @return {boolean}
-         */
-        hasMsg: (messageID) => {
-          return this._l10n.bundle.hasMsg(messageID)
-        },
-
-        /**
-         * Returns a translated message for a message ID given.
-         * If not translation found, returns an error message.
+         * Returns a translated string for its message ID given.
          * @param {string} messageID - A message ID of a string to retrieve.
-         * @param formatOptions
-         * @param options
          * @return {string} - A formatted translated text of a string.
          */
-        getMsg: (messageID, formatOptions, options) => {
-          return this._l10n.bundle.getMsg(messageID, formatOptions, options)
-        },
-
-        /**
-         * Returns a translated message for a message ID given.
-         * If not translation found, returns a message ID string.
-         * @param {string} messageID - A message ID of a string to retrieve.
-         * @param formatOptions
-         * @param options
-         * @return {string} - A formatted translated text of a string.
-         */
-        getText: (messageID, formatOptions, options) => {
-          return this._l10n.bundle.getText(messageID, formatOptions, options)
-        },
-
-        /**
-         * Returns a translated version of an abbreviated message.
-         * @param messageID
-         * @param formatOptions
-         * @return {string}
-         */
-        getAbbr: (messageID, formatOptions) => {
-          return this._l10n.bundle.getAbbr(messageID, formatOptions)
+        getMessage: (messageID) => {
+          return this.l10n.bundle.get(messageID)
         }
       }
     }
   }
 }
-
-L10nModule.publicName = 'l10n'
 
 
 /***/ }),
@@ -39514,393 +40748,20 @@ __webpack_require__.r(__webpack_exports__);
  * across instances of al module types.
  */
 class Module {
-  constructor () {
+  constructor (name) {
+    /**
+     * A name with which a store of the module will be visible inside a UI controller's Vuex store,
+     * It is also used as a prefix for any global function a module may install on Vue instances.
+     * @type {string}
+     */
+    this.name = name
+
     /**
      * A module's Vuex store object that will be integrated into global Vuex store of a UI controller.
      * @type {Object}
      */
     this.store = {}
   }
-
-  get publicName () {
-    return this.constructor.publicName || `Module's name is not defined`
-  }
-}
-
-/**
- * A name by which a store of the module will be visible inside a UI controller's Vuex store,
- * It is also used as a prefix for any global function a module may install on Vue instances.
- * @type {string}
- */
-Module.publicName = `Module's name must be defined in a child`
-
-
-/***/ }),
-
-/***/ "./vue/vuex-modules/ui/panel-module.js":
-/*!*********************************************!*\
-  !*** ./vue/vuex-modules/ui/panel-module.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PanelModule; });
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/panel.vue */ "./vue/components/panel.vue");
-/* harmony import */ var _lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/utility/language-names.js */ "./lib/utility/language-names.js");
- // Vue in a runtime + compiler configuration
-
-
-
-// TODO: Add a check for required modules
-class PanelModule {
-  constructor (store, api, options) {
-    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
-    const uiController = options.uiController
-    this.options = Object.assign(PanelModule.optionsDefaults, options)
-
-    this.store = {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-        visible: true
-      },
-      mutations: {
-
-      }
-    }
-
-    this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: this.options.mountPoint,
-      store: store, // Install store into the panel
-      provide: api, // Public API of the modules for child components
-      /*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       */
-      api: api,
-      uiController: uiController, // TODO: Remove during refactoring
-      components: {
-        panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
-      },
-      data: {
-        panelData: {
-          // isOpen: false,
-          tabs: options.tabs,
-          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
-          currentLanguageID: null,
-          grammarAvailable: false,
-          grammarRes: {},
-          lexemes: [],
-          inflectionComponentData: {
-            visible: false,
-            inflectionViewSet: null,
-            inflDataReady: false
-          },
-          inflectionBrowserData: {
-            visible: false
-          },
-          inflectionsWaitState: false,
-          inflectionsEnabled: false,
-          // Whether inflection browser is enabled for a language. We always show an inflection browser for now.
-          inflectionBrowserEnabled: false,
-          inflBrowserTablesCollapsed: null, // Null means that state is not set
-          shortDefinitions: [],
-          fullDefinitions: '',
-          inflections: {
-            localeSwitcher: undefined,
-            viewSelector: undefined,
-            tableBody: undefined
-          },
-          inflectionIDs: {
-            localeSwitcher: 'alpheios-panel-content-infl-table-locale-switcher',
-            viewSelector: 'alpheios-panel-content-infl-table-view-selector',
-            tableBody: 'alpheios-panel-content-infl-table-body'
-          },
-          infoComponentData: {
-            appInfo: uiController.options.app,
-            // A string containing a language name
-            languageName: Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(uiController.state.currentLanguage).name
-          },
-          messages: [],
-          notification: {
-            visible: false,
-            important: false,
-            showLanguageSwitcher: false,
-            text: ''
-          },
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          },
-          settings: uiController.contentOptions.items,
-          treebankComponentData: {
-            data: {
-              word: {},
-              page: {}
-
-            },
-            visible: false
-          },
-          resourceSettings: uiController.resourceOptions.items,
-          uiOptions: uiController.uiOptions,
-          classes: [], // Will be set later by `setRootComponentClasses()`
-          styles: {
-            zIndex: uiController.zIndex
-          },
-          minWidth: 400,
-          auth: uiController.auth
-        },
-        state: uiController.state,
-        options: uiController.contentOptions,
-        resourceOptions: uiController.resourceOptions,
-        currentPanelComponent: uiController.options.template.defaultPanelComponent,
-        uiController: uiController,
-        classesChanged: 0
-      },
-      methods: {
-        setPositionTo: function (position) {
-          this.options.items.panelPosition.setValue(position)
-          this.classesChanged += 1
-        },
-
-        attachToLeft: function () {
-          this.setPositionTo('left')
-        },
-
-        attachToRight: function () {
-          this.setPositionTo('right')
-        },
-
-        changeTab (name) {
-          for (let key of Object.keys(this.panelData.tabs)) {
-            if (this.panelData.tabs[key]) { this.panelData.tabs[key] = false }
-          }
-
-          const inflectionsAvailable = Boolean(this.panelData && this.panelData.inflectionComponentData && this.panelData.inflectionComponentData.inflDataReady)
-          const grammarAvailable = Boolean(this.panelData && this.panelData.grammarAvailable)
-          const statusAvailable = Boolean(this.panelData && this.panelData.verboseMode)
-
-          // TODO: With state refactoring, eliminate similar code in `panel.vue`
-          const treebankTabAvaliable = Boolean(this.panelData && this.panelData.treebankComponentData && this.panelData.treebankComponentData.data &&
-            ((this.panelData.treebankComponentData.data.page && this.panelData.treebankComponentData.data.page.src) ||
-              (this.panelData.treebankComponentData.data.word && this.panelData.treebankComponentData.data.word.src)))
-          // If tab is disabled, switch to a default one
-          if (
-            (!inflectionsAvailable && name === 'inflections') ||
-            (!grammarAvailable && name === 'grammar') ||
-            (!treebankTabAvaliable && name === 'treebank') ||
-            (!statusAvailable && name === 'status')
-          ) {
-            name = this.$options.uiController.tabStateDefault
-          }
-          this.panelData.tabs[name] = true
-          this.state.changeTab(name) // Reflect a tab change in a state
-          return this
-        },
-
-        clearContent: function () {
-          this.panelData.shortDefinitions = []
-          this.panelData.fullDefinitions = ''
-          this.panelData.messages = ''
-          this.panelData.treebankComponentData.data.word = {}
-          this.panelData.treebankComponentData.visible = false
-          this.clearNotifications()
-          this.clearStatus()
-          return this
-        },
-
-        showMessage: function (message) {
-          this.panelData.messages = [message]
-        },
-
-        appendMessage: function (message) {
-          this.panelData.messages.push(message)
-        },
-
-        clearMessages: function () {
-          this.panelData.messages = []
-        },
-
-        showNotification: function (text, important = false) {
-          this.panelData.notification.visible = true
-          this.panelData.notification.important = important
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = text
-        },
-
-        showImportantNotification: function (text) {
-          this.showNotification(text, true)
-        },
-
-        showLanguageNotification: function (homonym, notFound = false) {
-          this.panelData.notification.visible = true
-          let languageName
-          if (homonym) {
-            languageName = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(homonym.languageID).name
-          } else if (this.panelData.infoComponentData.languageName) {
-            languageName = this.panelData.infoComponentData.languageName.name
-          } else {
-            languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN') // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
-          }
-          if (notFound) {
-            this.panelData.notification.important = true
-            this.panelData.notification.showLanguageSwitcher = true
-            this.panelData.notification.text = this.$options.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
-          } else {
-            this.panelData.notification.visible = true
-            this.panelData.notification.important = false
-            this.panelData.notification.showLanguageSwitcher = false
-          }
-        },
-
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(languageID)
-          this.panelData.status.languageName = langDetails.name
-          this.panelData.status.languageCode = langDetails.code
-          this.panelData.status.selectedText = selectionText
-        },
-
-        showErrorInformation: function (errorText) {
-          this.panelData.notification.visible = true
-          this.panelData.notification.important = true
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = errorText
-        },
-
-        clearNotifications: function () {
-          this.panelData.notification.visible = false
-          this.panelData.notification.important = false
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = ''
-        },
-
-        clearStatus: function () {
-          this.panelData.status.languageName = ''
-          this.panelData.status.languageCode = ''
-          this.panelData.status.selectedText = ''
-        },
-
-        toggle: function () {
-          if (this.state.isPanelOpen()) {
-            this.close()
-          } else {
-            this.open()
-          }
-          return this
-        },
-
-        requestGrammar: function (feature) {
-          this.$options.uiController.startResourceQuery(feature)
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          // TODO we need to refactor handling of boolean options
-          if (name === 'enableLemmaTranslations') {
-            this.options.items[name].setValue(value)
-          } else {
-            this.options.items[name].setTextValue(value)
-          }
-          switch (name) {
-            case 'locale':
-              if (this.$options.uiController.presenter) {
-                this.$options.uiController.presenter.setLocale(this.options.items.locale.currentValue)
-              }
-              this.$options.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.$options.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
-              break
-            case 'verboseMode':
-              this.$options.uiController.updateVerboseMode()
-              break
-            case 'enableLemmaTranslations':
-              this.$options.uiController.updateLemmaTranslations()
-              break
-          }
-        },
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
-            this.$options.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.$options.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.$options.uiController.popup.close() // Close an old popup
-              this.$options.uiController.popup.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.uiController.popup.open() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.$options.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.$options.uiController.updateColorSchemaClass(value)
-              break
-          }
-        }
-      },
-      mounted: function () {
-        this.panelData.inflections.localeSwitcher = document.querySelector(`#${this.panelData.inflectionIDs.localeSwitcher}`)
-        this.panelData.inflections.viewSelector = document.querySelector(`#${this.panelData.inflectionIDs.viewSelector}`)
-        this.panelData.inflections.tableBody = document.querySelector(`#${this.panelData.inflectionIDs.tableBody}`)
-      }
-    })
-  }
-
-  get publicName () {
-    return this.constructor.publicName || `Module's name is not defined`
-  }
-}
-
-PanelModule.publicName = 'panel'
-
-PanelModule.store = () => {
-  return {
-    // All stores of modules are namespaced
-    namespaced: true,
-
-    state: {
-      visible: false // A visibility of a panel
-    },
-    mutations: {
-      /**
-       * Opens a panel
-       * @param state
-       */
-      open (state) {
-        state.visible = true
-      },
-
-      /**
-       * Closes a panel
-       * @param state
-       */
-      close (state) {
-        state.visible = false
-      }
-    }
-  }
-}
-
-PanelModule.optionsDefaults = {
-  mountPoint: '#alpheios-panel'
 }
 
 
@@ -39924,23 +40785,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// TODO: Add a check for required modules
 class PopupModule {
-  constructor (store, api, options) {
-    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
-    const uiController = options.uiController
-    this.options = Object.assign(PopupModule.optionsDefaults, options)
-
+  constructor (store, uiController) {
+    this._uiController = uiController
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: this.options.mountPoint,
+      el: `#${this._uiController.options.template.popupId}`,
       store: store,
-      provide: api, // Expose APIs to child components
-      /*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       */
-      api: api,
-      uiController: uiController, // TODO: Remove during refactoring
       components: {
         popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
       },
@@ -39952,14 +40802,15 @@ class PopupModule {
         translations: {},
 
         linkedFeatures: [],
+        visible: false,
         popupData: {
           fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
           // Default popup position, with units
           top: '10vh',
           left: '10vw',
 
-          draggable: uiController.options.template.draggable,
-          resizable: uiController.options.template.resizable,
+          draggable: this._uiController.options.template.draggable,
+          resizable: this._uiController.options.template.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -39984,11 +40835,11 @@ class PopupModule {
           component to identify a new request coming in and to distinguish it from data updates of the current request.
            */
           requestStartTime: 0,
-          settings: uiController.contentOptions.items,
-          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
+          settings: this._uiController.contentOptions.items,
+          verboseMode: this._uiController.contentOptions.items.verboseMode.currentValue === this._uiController.options.verboseMode,
           defDataReady: false,
           hasTreebank: false,
-          inflDataReady: uiController.inflDataReady,
+          inflDataReady: this._uiController.inflDataReady,
           morphDataReady: false,
 
           translationsDataReady: false,
@@ -39996,6 +40847,7 @@ class PopupModule {
           showProviders: false,
           updates: 0,
           classes: [], // Will be set later by `setRootComponentClasses()`
+          l10n: this._uiController.l10n,
           notification: {
             visible: false,
             important: false,
@@ -40009,15 +40861,16 @@ class PopupModule {
             languageCode: ''
           },
           currentLanguage: null,
-          resourceSettings: uiController.resourceOptions.items,
+          resourceSettings: this._uiController.resourceOptions.items,
           styles: {
-            zIndex: uiController.zIndex
+            zIndex: this._uiController.zIndex
           }
         },
-        options: uiController.contentOptions,
-        resourceOptions: uiController.resourceOptions,
-        currentPopupComponent: uiController.options.template.defaultPopupComponent,
-        uiController: uiController,
+        panel: this._uiController.panel,
+        options: this._uiController.contentOptions,
+        resourceOptions: this._uiController.resourceOptions,
+        currentPopupComponent: this._uiController.options.template.defaultPopupComponent,
+        uiController: this._uiController,
         classesChanged: 0
       },
       methods: {
@@ -40061,13 +40914,12 @@ class PopupModule {
           } else if (this.popupData.currentLanguageName) {
             languageName = this.popupData.currentLanguageName
           } else {
-            // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
-            languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
+            languageName = this.popupData.l10n.messages.TEXT_NOTICE_LANGUAGE_UNKNOWN.get() // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
           }
           if (notFound) {
             this.popupData.notification.important = true
             this.popupData.notification.showLanguageSwitcher = true
-            this.popupData.notification.text = this.$options.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
+            this.popupData.notification.text = this.popupData.l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName)
           } else {
             this.popupData.notification.important = false
             this.popupData.notification.showLanguageSwitcher = false
@@ -40090,9 +40942,7 @@ class PopupModule {
 
         newLexicalRequest: function () {
           this.popupData.requestStartTime = new Date().getTime()
-          if (this.$options.api.ui.hasModule('panel')) {
-            this.$options.api.ui.getModule('panel').vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
-          }
+          this.panel.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
         },
 
         clearContent: function () {
@@ -40127,22 +40977,26 @@ class PopupModule {
           this.popupData.status.selectedText = ''
         },
 
+        open: function () {
+          this.visible = true
+          return this
+        },
+
+        close: function () {
+          this.visible = false
+          return this
+        },
+
         showPanelTab: function (tabName) {
-          if (this.$options.api.ui.hasModule('panel')) {
-            const panel = this.$options.api.ui.getModule('panel')
-            panel.vi.changeTab(tabName)
-            this.$options.api.ui.openPanel()
-          }
+          this.panel.changeTab(tabName)
+          this.panel.open()
           return this
         },
 
         sendFeature: function (feature) {
-          if (this.$options.api.ui.hasModule('panel')) {
-            const panel = this.$options.api.ui.getModule('panel')
-            panel.vi.requestGrammar(feature)
-            panel.vi.changeTab('grammar')
-            this.$options.api.ui.openPanel()
-          }
+          this.panel.requestGrammar(feature)
+          this.panel.changeTab('grammar')
+          this.panel.open()
           return this
         },
 
@@ -40151,13 +41005,13 @@ class PopupModule {
           this.options.items[name].setTextValue(value)
           switch (name) {
             case 'locale':
-              if (this.$options.uiController.presenter) {
-                this.$options.uiController.presenter.setLocale(this.$options.items.locale.currentValue)
+              if (this.uiController.presenter) {
+                this.uiController.presenter.setLocale(this.options.items.locale.currentValue)
               }
-              this.$options.uiController.updateLemmaTranslations()
+              this.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
-              this.$options.uiController.updateLanguage(this.$options.items.preferredLanguage.currentValue)
+              this.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
               break
           }
         },
@@ -40173,69 +41027,31 @@ class PopupModule {
           // the difference between value and textValues is a little confusing
           // see issue #73
           if (name === 'fontSize' || name === 'colorSchema') {
-            this.$options.uiController.uiOptions.items[name].setValue(value)
+            this.uiController.uiOptions.items[name].setValue(value)
           } else {
-            this.$options.uiController.uiOptions.items[name].setTextValue(value)
+            this.uiController.uiOptions.items[name].setTextValue(value)
           }
 
           switch (name) {
             case 'skin':
-              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
+              this.uiController.changeSkin(this.uiController.uiOptions.items[name].currentValue)
               break
             case 'popup':
-              this.$options.api.ui.closePopup() // Close an old popup
-              this.$options.uiController.popup.vi.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.api.ui.openPopup() // Will trigger an initialisation of popup dimensions
+              this.uiController.popup.vi.close() // Close an old popup
+              this.uiController.popup.vi.currentPopupComponent = this.uiController.uiOptions.items[name].currentValue
+              this.uiController.popup.vi.open() // Will trigger an initialisation of popup dimensions
               break
             case 'fontSize':
-              this.$options.uiController.updateFontSizeClass(value)
+              this.uiController.updateFontSizeClass(value)
               break
             case 'colorSchema':
-              this.$options.uiController.updateColorSchemaClass(value)
+              this.uiController.updateColorSchemaClass(value)
               break
           }
         }
       }
     })
   }
-
-  get publicName () {
-    return this.constructor.publicName || `Module's name is not defined`
-  }
-}
-
-PopupModule.publicName = 'popup'
-
-PopupModule.store = () => {
-  return {
-    // All stores of modules are namespaced
-    namespaced: true,
-
-    state: {
-      visible: false
-    },
-    mutations: {
-      /**
-       * Opens a panel
-       * @param state
-       */
-      open (state) {
-        state.visible = true
-      },
-
-      /**
-       * Closes a panel
-       * @param state
-       */
-      close (state) {
-        state.visible = false
-      }
-    }
-  }
-}
-
-PopupModule.optionsDefaults = {
-  mountPoint: '#alpheios-popup'
 }
 
 

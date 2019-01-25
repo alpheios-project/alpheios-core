@@ -480,5 +480,15 @@
     "message": "Name",
     "description": "A user's profile name filed label",
     "component": "UserAuth Vue Component"
+  },
+  "TEXT_NOTICE_WORDUSAGE_READY": {
+    "message": "Word Usage Examples are recieved",
+    "description": "Word Usage Examples recieved flag",
+    "component": "UIController onWordUsageExamplesReady"
+  },
+  "TOOLTIP_WORD_USAGE": {
+    "message": "Word Usage Examples",
+    "description": "Word Usage Examples tooltip",
+    "component": "Panel"
   }
 }

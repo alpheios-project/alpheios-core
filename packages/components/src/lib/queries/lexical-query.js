@@ -12,6 +12,7 @@ export default class LexicalQuery extends Query {
     this.resourceOptions = options.resourceOptions || []
     this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
+    this.wordUsageExamples = options.wordUsageExamples
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
   }
@@ -126,6 +127,19 @@ export default class LexicalQuery extends Query {
       }
 
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
+    }
+
+    if (this.wordUsageExamples) {
+      let adapterConcordanceRes = yield ClientAdapters.wordusageExamples.concordance({
+        method: 'getWordUsageExamples',
+        params: { homonym: this.homonym, pagination: { property: 'max', value: this.wordUsageExamples.paginationMax } }
+      })
+
+      if (adapterConcordanceRes.errors.length > 0) {
+        adapterConcordanceRes.errors.forEach(error => console.error(error))
+      }
+
+      LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
     }
 
     yield 'Retrieval of lemma translations completed'
@@ -272,5 +286,7 @@ LexicalQuery.evt = {
    *   word: definitionRequest.lexeme.lemma.word
    * }
    */
-  DEFS_NOT_FOUND: new PsEvent(`Definitions Data Not Found`, LexicalQuery)
+  DEFS_NOT_FOUND: new PsEvent(`Definitions Data Not Found`, LexicalQuery),
+
+  WORD_USAGE_EXAMPLES_READY: new PsEvent(`Word usage examples ready`, LexicalQuery)
 }
