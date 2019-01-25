@@ -6,7 +6,6 @@ import { ViewSetFactory } from 'alpheios-inflection-tables'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Vuex from 'vuex'
 
-
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import Locales from '@/locales/locales.js'
@@ -446,7 +445,7 @@ export default class UIController {
   loadSiteOptions (siteOptions) {
     let allSiteOptions = []
     for (let site of siteOptions) {
-      for (let domain of site.contentOptions) {
+      for (let domain of site.options) {
         let siteOpts = new Options(domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }

@@ -101,7 +101,8 @@ export default class PanelModule {
             zIndex: uiController.zIndex
           },
           minWidth: 400,
-          auth: uiController.auth
+          auth: uiController.auth,
+          wordUsageExamplesData: null
         },
         state: uiController.state,
         options: uiController.contentOptions,
@@ -154,7 +155,7 @@ export default class PanelModule {
         clearContent: function () {
           this.panelData.shortDefinitions = []
           this.panelData.fullDefinitions = ''
-          this.panelData.messages = ''
+          this.panelData.messages = []
           this.panelData.treebankComponentData.data.word = {}
           this.panelData.treebankComponentData.visible = false
           this.clearNotifications()
@@ -249,7 +250,7 @@ export default class PanelModule {
         settingChange: function (name, value) {
           console.log('Change inside instance', name, value)
           // TODO we need to refactor handling of boolean options
-          if (name === 'enableLemmaTranslations') {
+          if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
             this.options.items[name].setValue(value)
           } else {
             this.options.items[name].setTextValue(value)

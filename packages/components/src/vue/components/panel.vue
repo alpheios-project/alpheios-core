@@ -77,7 +77,7 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="ln10Messages('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn" v-bind:class="{ active: data.tabs.status }"
                       v-show="data.verboseMode">
                   <status-icon class="alpheios-icon"></status-icon>
