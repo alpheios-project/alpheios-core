@@ -31748,7 +31748,7 @@ class UIController {
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.onLemmaTranslationsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
@@ -31884,6 +31884,7 @@ class UIController {
     this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
     this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+    // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
     this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_18__["default"].getZIndexMax()
@@ -32614,10 +32615,6 @@ class UIController {
     // Update status info with data from a morphological analyzer
     this.showStatusInfo(homonym.targetWord, homonym.languageID)
     this.updateInflections(homonym)
-  }
-
-  onLemmaTranslationsReady (homonym) {
-    this.updateTranslations(homonym)
   }
 
   onDefinitionsReady (data) {
@@ -34561,7 +34558,6 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     this.resourceOptions = options.resourceOptions || []
     this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
-    console.log(`Lemma translations are ${this.lemmaTranslations}`)
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
   }
@@ -34663,7 +34659,6 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
 
     LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
 
-    console.log(`Lemma translations are (2) ${this.lemmaTranslations}`)
     if (this.lemmaTranslations) {
       let adapterTranslationRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].lemmatranslation.alpheios({
         method: 'fetchTranslations',
