@@ -31645,9 +31645,23 @@ class UIController {
   constructor (state, options = {}) {
     this.state = state
     this.options = UIController.setOptions(options, UIController.optionsDefaults)
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](_settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](_settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](_settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__, this.options.storageAdapter)
+
+    /*
+    Define defaults for resource options. If a UI controller creator
+    needs to provide its own defaults, they shall be defined in a `create()` function.
+     */
+    this.contentOptionsDefaults = _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__
+    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__
+    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__
+    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__
+    /*
+    All following options will be created during an init phase.
+    This will allow creators of UI controller to provide their own options defaults
+    inside a `create()` builder function.
+     */
+    this.contentOptions = null
+    this.resourceOptions = null
+    this.uiOptions = null
     this.siteOptions = null // Will be set during an `init` phase
     this.tabState = {
       definitions: false,
@@ -31688,6 +31702,11 @@ class UIController {
    */
   static create (state, options) {
     let uiController = new UIController(state, options)
+
+    /*
+    If necessary override defaults of a UI controller's options objects here as:
+    uiController.siteOptionsDefaults = mySiteDefaults
+     */
 
     // Register data modules
     uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__["default"], _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].en_US, _locales_locales_js__WEBPACK_IMPORTED_MODULE_6__["default"].bundleArr())
@@ -31861,8 +31880,11 @@ class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
-    this.siteOptions = this.loadSiteOptions()
+    this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
     this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_18__["default"].getZIndexMax()
 
@@ -32001,11 +32023,12 @@ class UIController {
 
   /**
    * Load site-specific settings
+   * @param {Object[]} siteOptions - An array of site options
    */
-  loadSiteOptions () {
+  loadSiteOptions (siteOptions) {
     let allSiteOptions = []
-    for (let site of _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__) {
-      for (let domain of site.options) {
+    for (let site of siteOptions) {
+      for (let domain of site.contentOptions) {
         let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
@@ -34538,6 +34561,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     this.resourceOptions = options.resourceOptions || []
     this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
+    console.log(`Lemma translations are ${this.lemmaTranslations}`)
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
   }
@@ -34639,6 +34663,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
 
     LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
 
+    console.log(`Lemma translations are (2) ${this.lemmaTranslations}`)
     if (this.lemmaTranslations) {
       let adapterTranslationRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].lemmatranslation.alpheios({
         method: 'fetchTranslations',

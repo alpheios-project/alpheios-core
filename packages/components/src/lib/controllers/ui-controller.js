@@ -64,9 +64,23 @@ export default class UIController {
   constructor (state, options = {}) {
     this.state = state
     this.options = UIController.setOptions(options, UIController.optionsDefaults)
-    this.contentOptions = new Options(ContentOptionDefaults, this.options.storageAdapter)
-    this.resourceOptions = new Options(LanguageOptionDefaults, this.options.storageAdapter)
-    this.uiOptions = new Options(UIOptionDefaults, this.options.storageAdapter)
+
+    /*
+    Define defaults for resource options. If a UI controller creator
+    needs to provide its own defaults, they shall be defined in a `create()` function.
+     */
+    this.contentOptionsDefaults = ContentOptionDefaults
+    this.resourceOptionsDefaults = LanguageOptionDefaults
+    this.uiOptionsDefaults = UIOptionDefaults
+    this.siteOptionsDefaults = SiteOptions
+    /*
+    All following options will be created during an init phase.
+    This will allow creators of UI controller to provide their own options defaults
+    inside a `create()` builder function.
+     */
+    this.contentOptions = null
+    this.resourceOptions = null
+    this.uiOptions = null
     this.siteOptions = null // Will be set during an `init` phase
     this.tabState = {
       definitions: false,
@@ -107,6 +121,11 @@ export default class UIController {
    */
   static create (state, options) {
     let uiController = new UIController(state, options)
+
+    /*
+    If necessary override defaults of a UI controller's options objects here as:
+    uiController.siteOptionsDefaults = mySiteDefaults
+     */
 
     // Register data modules
     uiController.registerDataModule(L10nModule, Locales.en_US, Locales.bundleArr())
@@ -280,8 +299,12 @@ export default class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
+    this.contentOptions = new Options(this.contentOptionsDefaults, this.options.storageAdapter)
+    this.resourceOptions = new Options(this.resourceOptionsDefaults, this.options.storageAdapter)
+    this.uiOptions = new Options(this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
-    this.siteOptions = this.loadSiteOptions()
+    // TODO: Site options should probably be initialized the same way as other options objects
+    this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
     this.zIndex = HTMLPage.getZIndexMax()
 
@@ -420,11 +443,12 @@ export default class UIController {
 
   /**
    * Load site-specific settings
+   * @param {Object[]} siteOptions - An array of site options
    */
-  loadSiteOptions () {
+  loadSiteOptions (siteOptions) {
     let allSiteOptions = []
-    for (let site of SiteOptions) {
-      for (let domain of site.options) {
+    for (let site of siteOptions) {
+      for (let domain of site.contentOptions) {
         let siteOpts = new Options(domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
