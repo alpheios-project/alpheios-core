@@ -9,18 +9,6 @@ export default class PanelModule {
     const uiController = options.uiController
     this.options = Object.assign(PanelModule.optionsDefaults, options)
 
-    this.store = {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-        visible: true
-      },
-      mutations: {
-
-      }
-    }
-
     this.vi = new Vue({
       el: this.options.mountPoint,
       store: store, // Install store into the panel
@@ -36,7 +24,6 @@ export default class PanelModule {
       },
       data: {
         panelData: {
-          // isOpen: false,
           tabs: options.tabs,
           verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           currentLanguageID: null,
@@ -58,16 +45,6 @@ export default class PanelModule {
           inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
-          inflections: {
-            localeSwitcher: undefined,
-            viewSelector: undefined,
-            tableBody: undefined
-          },
-          inflectionIDs: {
-            localeSwitcher: 'alpheios-panel-content-infl-table-locale-switcher',
-            viewSelector: 'alpheios-panel-content-infl-table-view-selector',
-            tableBody: 'alpheios-panel-content-infl-table-body'
-          },
           infoComponentData: {
             appInfo: uiController.options.app,
             // A string containing a language name
@@ -303,11 +280,6 @@ export default class PanelModule {
               break
           }
         }
-      },
-      mounted: function () {
-        this.panelData.inflections.localeSwitcher = document.querySelector(`#${this.panelData.inflectionIDs.localeSwitcher}`)
-        this.panelData.inflections.viewSelector = document.querySelector(`#${this.panelData.inflectionIDs.viewSelector}`)
-        this.panelData.inflections.tableBody = document.querySelector(`#${this.panelData.inflectionIDs.tableBody}`)
       }
     })
   }
@@ -325,7 +297,8 @@ PanelModule.store = () => {
     namespaced: true,
 
     state: {
-      visible: false // A visibility of a panel
+      // Whether a panel is shown or hidden
+      visible: false
     },
     mutations: {
       /**

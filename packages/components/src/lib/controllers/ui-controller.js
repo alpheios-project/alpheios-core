@@ -327,7 +327,7 @@ export default class UIController {
     this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
 
     /**
-     * This is a public API of a UI controller. All objects should use this public API only.
+     * This is a UI-level public API of a UI controller. All objects should use this public API only.
      */
     this.api.ui = {
       // Modules

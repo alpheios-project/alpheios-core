@@ -290,6 +290,7 @@ PopupModule.store = () => {
     namespaced: true,
 
     state: {
+      // Whether a popup is displayed
       visible: false
     },
     mutations: {
