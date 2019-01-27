@@ -39,7 +39,7 @@
 
 export default {
   name: 'UserAuth',
-  inject: ['l10n'], // Specify what modules are we going to use
+  inject: ['l10n'], // Specify what API modules are we going to use
   props: {
     auth: [Object, Function]
   },

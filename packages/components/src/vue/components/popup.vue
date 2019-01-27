@@ -190,9 +190,6 @@ export default {
     this.$on('updatePopupDimensions', function () {
       vm.updatePopupDimensions()
     })
-    this.$on('changeStyleClass', function (name, type) {
-      vm.uiOptionChanged(name, type)
-    })
   },
   computed: {
     divClasses () {
@@ -395,10 +392,6 @@ export default {
   },
 
   methods: {
-    uiOptionChanged: function (name, value) {
-      this.$emit('ui-option-change', name, value)
-    },
-
     clearMessages () {
       while (this.messages.length > 0) {
         this.messages.pop()

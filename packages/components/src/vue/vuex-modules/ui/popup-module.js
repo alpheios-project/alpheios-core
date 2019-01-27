@@ -244,34 +244,6 @@ export default class PopupModule {
           let keyinfo = this.resourceOptions.parseKey(name)
           console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
           this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          // TODO this should really be handled within OptionsItem
-          // the difference between value and textValues is a little confusing
-          // see issue #73
-          if (name === 'fontSize' || name === 'colorSchema') {
-            this.$options.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.$options.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.$options.api.ui.closePopup() // Close an old popup
-              this.$options.uiController.popup.vi.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.api.ui.openPopup() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.$options.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.$options.uiController.updateColorSchemaClass(value)
-              break
-          }
         }
       }
     })

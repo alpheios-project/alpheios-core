@@ -327,6 +327,16 @@ export default class UIController {
     this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
 
     /**
+     * This is a settings API. It exposes different options to modules and UI components.
+     */
+    this.api.settings = {
+      contentOptions: this.contentOptions,
+      resourceOptions: this.resourceOptions,
+      uiOptions: this.uiOptions,
+      siteOptions: this.siteOptions
+    }
+
+    /**
      * This is a UI-level public API of a UI controller. All objects should use this public API only.
      */
     this.api.ui = {
@@ -338,7 +348,10 @@ export default class UIController {
       openPanel: this.openPanel.bind(this),
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
-      closePopup: this.closePopup.bind(this)
+      closePopup: this.closePopup.bind(this),
+      switchPopup: this.switchPopup.bind(this), // Switches between different types of popups
+
+      optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
@@ -1077,6 +1090,55 @@ export default class UIController {
 
   onAnnotationsAvailable (data) {
     this.updatePageAnnotationData(data.annotations)
+  }
+
+  /**
+   * This is to support a switch between different popup types.
+   * It is not used now as the only type of popup is available currently.
+   */
+  switchPopup () {
+    if (this.api.ui.hasModule('popup')) {
+      const popup = this.api.ui.getModule('popup')
+      popup.close() // Close an old popup
+      popup.currentPopupComponent = this.api.settings.uiOptions.items[name].currentValue
+      popup.open() // Will trigger an initialisation of popup dimensions
+    }
+  }
+
+  /**
+   * Handles a UI options in settings.
+   * @param {string} name - A name of an option.
+   * @param {string | value} value - A new value of an options.
+   */
+  uiOptionChange (name, value) {
+    // TODO this should really be handled within OptionsItem
+    // the difference between value and textValues is a little confusing
+    // see issue #73
+    if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
+      this.api.settings.uiOptions.items[name].setValue(value)
+    } else {
+      this.api.settings.uiOptions.items[name].setTextValue(value)
+    }
+
+    switch (name) {
+      case 'skin':
+        this.changeSkin(this.api.settings.uiOptions.items[name].currentValue)
+        break
+      case 'popup':
+        if (this.api.ui.hasModule('popup')) {
+          const popup = this.api.ui.getModule('popup')
+          popup.close() // Close an old popup
+          popup.currentPopupComponent = this.api.settings.uiOptions.items[name].currentValue
+          popup.open() // Will trigger an initialisation of popup dimensions
+        }
+        break
+      case 'fontSize':
+        this.updateFontSizeClass(value)
+        break
+      case 'colorSchema':
+        this.updateColorSchemaClass(value)
+        break
+    }
   }
 }
 

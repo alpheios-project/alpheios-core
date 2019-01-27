@@ -41,7 +41,7 @@ import Tooltip from './tooltip.vue'
 
 export default {
   name: 'ReskinFontColor',
-  inject: ['l10n'],
+  inject: ['ui', 'l10n'],
   components: {
     whiteBrush: WhiteBrush,
     blackBrush: BlackBrush,
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     changeStyleClass (name, type) {
-      this.$parent.$emit('changeStyleClass', name, type)
+      this.ui.optionChange(name, type)
     }
   }
 }

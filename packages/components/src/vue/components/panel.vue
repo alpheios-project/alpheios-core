@@ -183,15 +183,15 @@
                  v-if="data.settings"></setting>
         <setting :classes="['alpheios-panel__options-item']" :data="data.settings.verboseMode" @change="settingChanged"
                  v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.uiOptions.items.skin"
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.skin"
                  @change="uiOptionChanged"
-                 v-if="data.uiOptions && data.uiOptions.items"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.uiOptions.items.popup"
+                 v-if="settings.uiOptions && settings.uiOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.popup"
                  @change="uiOptionChanged"
-                 v-if="data.uiOptions && data.uiOptions.items"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.uiOptions.items.panelOnActivate"
+                 v-if="settings.uiOptions && settings.uiOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.panelOnActivate"
                  @change="uiOptionChanged"
-                 v-if="data.uiOptions && data.uiOptions.items"></setting>
+                 v-if="settings.uiOptions && settings.uiOptions.items"></setting>
         <setting :classes="['alpheios-panel__options-item']" :data="languageSetting"
                  :key="languageSetting.name"
                  @change="resourceSettingChanged"
@@ -272,7 +272,7 @@ import interact from 'interactjs'
 
 export default {
   name: 'Panel',
-  inject: ['l10n', 'ui'], // API modules that are required for this component
+  inject: ['ui', 'l10n', 'settings'], // API modules that are required for this component
   storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: Inflections,
@@ -517,7 +517,7 @@ export default {
     },
 
     uiOptionChanged: function (name, value) {
-      this.$emit('ui-option-change', name, value) // Re-emit for a Vue instance to catch
+      this.ui.optionChange(name, value)
     },
 
     setContentWidth: function (dataObj) {
@@ -607,12 +607,6 @@ export default {
     }
   },
 
-  created: function () {
-    let vm = this
-    vm.$on('changeStyleClass', (name, type) => {
-      vm.uiOptionChanged(name, type)
-    })
-  },
   mounted: function () {
     // Determine paddings and sidebar width for calculation of a panel width to fit content
     if (this.data === undefined) {

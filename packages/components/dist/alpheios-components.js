@@ -11227,7 +11227,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  inject: ['l10n', 'ui'], // API modules that are required for this component
+  inject: ['ui', 'l10n', 'settings'], // API modules that are required for this component
   storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -11472,7 +11472,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     uiOptionChanged: function (name, value) {
-      this.$emit('ui-option-change', name, value) // Re-emit for a Vue instance to catch
+      this.ui.optionChange(name, value)
     },
 
     setContentWidth: function (dataObj) {
@@ -11562,12 +11562,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
-  created: function () {
-    let vm = this
-    vm.$on('changeStyleClass', (name, type) => {
-      vm.uiOptionChanged(name, type)
-    })
-  },
   mounted: function () {
     // Determine paddings and sidebar width for calculation of a panel width to fit content
     if (this.data === undefined) {
@@ -11907,9 +11901,6 @@ __webpack_require__.r(__webpack_exports__);
     this.$on('updatePopupDimensions', function () {
       vm.updatePopupDimensions()
     })
-    this.$on('changeStyleClass', function (name, type) {
-      vm.uiOptionChanged(name, type)
-    })
   },
   computed: {
     divClasses () {
@@ -12112,10 +12103,6 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
-    uiOptionChanged: function (name, value) {
-      this.$emit('ui-option-change', name, value)
-    },
-
     clearMessages () {
       while (this.messages.length > 0) {
         this.messages.pop()
@@ -12454,7 +12441,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ReskinFontColor',
-  inject: ['l10n'],
+  inject: ['ui', 'l10n'],
   components: {
     whiteBrush: _images_inline_icons_white_brush_svg__WEBPACK_IMPORTED_MODULE_0___default.a,
     blackBrush: _images_inline_icons_black_brush_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
@@ -12472,7 +12459,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changeStyleClass (name, type) {
-      this.$parent.$emit('changeStyleClass', name, type)
+      this.ui.optionChange(name, type)
     }
   }
 });
@@ -12804,7 +12791,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UserAuth',
-  inject: ['l10n'], // Specify what modules are we going to use
+  inject: ['l10n'], // Specify what API modules are we going to use
   props: {
     auth: [Object, Function]
   },
@@ -17609,31 +17596,31 @@ var render = function() {
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.uiOptions && _vm.data.uiOptions.items
+                _vm.settings.uiOptions && _vm.settings.uiOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.uiOptions.items.skin
+                        data: _vm.settings.uiOptions.items.skin
                       },
                       on: { change: _vm.uiOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.uiOptions && _vm.data.uiOptions.items
+                _vm.settings.uiOptions && _vm.settings.uiOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.uiOptions.items.popup
+                        data: _vm.settings.uiOptions.items.popup
                       },
                       on: { change: _vm.uiOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.uiOptions && _vm.data.uiOptions.items
+                _vm.settings.uiOptions && _vm.settings.uiOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.uiOptions.items.panelOnActivate
+                        data: _vm.settings.uiOptions.items.panelOnActivate
                       },
                       on: { change: _vm.uiOptionChanged }
                     })
@@ -32369,7 +32356,17 @@ class UIController {
     this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
 
     /**
-     * This is a public API of a UI controller. All objects should use this public API only.
+     * This is a settings API. It exposes different options to modules and UI components.
+     */
+    this.api.settings = {
+      contentOptions: this.contentOptions,
+      resourceOptions: this.resourceOptions,
+      uiOptions: this.uiOptions,
+      siteOptions: this.siteOptions
+    }
+
+    /**
+     * This is a UI-level public API of a UI controller. All objects should use this public API only.
      */
     this.api.ui = {
       // Modules
@@ -32380,7 +32377,10 @@ class UIController {
       openPanel: this.openPanel.bind(this),
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
-      closePopup: this.closePopup.bind(this)
+      closePopup: this.closePopup.bind(this),
+      switchPopup: this.switchPopup.bind(this), // Switches between different types of popups
+
+      optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
@@ -33119,6 +33119,55 @@ class UIController {
 
   onAnnotationsAvailable (data) {
     this.updatePageAnnotationData(data.annotations)
+  }
+
+  /**
+   * This is to support a switch between different popup types.
+   * It is not used now as the only type of popup is available currently.
+   */
+  switchPopup () {
+    if (this.api.ui.hasModule('popup')) {
+      const popup = this.api.ui.getModule('popup')
+      popup.close() // Close an old popup
+      popup.currentPopupComponent = this.api.settings.uiOptions.items[name].currentValue
+      popup.open() // Will trigger an initialisation of popup dimensions
+    }
+  }
+
+  /**
+   * Handles a UI options in settings.
+   * @param {string} name - A name of an option.
+   * @param {string | value} value - A new value of an options.
+   */
+  uiOptionChange (name, value) {
+    // TODO this should really be handled within OptionsItem
+    // the difference between value and textValues is a little confusing
+    // see issue #73
+    if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
+      this.api.settings.uiOptions.items[name].setValue(value)
+    } else {
+      this.api.settings.uiOptions.items[name].setTextValue(value)
+    }
+
+    switch (name) {
+      case 'skin':
+        this.changeSkin(this.api.settings.uiOptions.items[name].currentValue)
+        break
+      case 'popup':
+        if (this.api.ui.hasModule('popup')) {
+          const popup = this.api.ui.getModule('popup')
+          popup.close() // Close an old popup
+          popup.currentPopupComponent = this.api.settings.uiOptions.items[name].currentValue
+          popup.open() // Will trigger an initialisation of popup dimensions
+        }
+        break
+      case 'fontSize':
+        this.updateFontSizeClass(value)
+        break
+      case 'colorSchema':
+        this.updateColorSchemaClass(value)
+        break
+    }
   }
 }
 
@@ -37480,7 +37529,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\"\r\n           @ui-option-change=\"uiOptionChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -40291,7 +40340,6 @@ class PanelModule {
             visible: false
           },
           resourceSettings: uiController.resourceOptions.items,
-          uiOptions: uiController.uiOptions,
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
             zIndex: uiController.zIndex
@@ -40473,31 +40521,6 @@ class PanelModule {
           let keyinfo = this.resourceOptions.parseKey(name)
           console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
           this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
-            this.$options.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.$options.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.$options.uiController.popup.close() // Close an old popup
-              this.$options.uiController.popup.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.uiController.popup.open() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.$options.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.$options.uiController.updateColorSchemaClass(value)
-              break
-          }
         }
       }
     })
@@ -40806,34 +40829,6 @@ class PopupModule {
           let keyinfo = this.resourceOptions.parseKey(name)
           console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
           this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          // TODO this should really be handled within OptionsItem
-          // the difference between value and textValues is a little confusing
-          // see issue #73
-          if (name === 'fontSize' || name === 'colorSchema') {
-            this.$options.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.$options.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.$options.api.ui.closePopup() // Close an old popup
-              this.$options.uiController.popup.vi.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.api.ui.openPopup() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.$options.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.$options.uiController.updateColorSchemaClass(value)
-              break
-          }
         }
       }
     })

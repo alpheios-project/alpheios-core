@@ -72,7 +72,6 @@ export default class PanelModule {
             visible: false
           },
           resourceSettings: uiController.resourceOptions.items,
-          uiOptions: uiController.uiOptions,
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
             zIndex: uiController.zIndex
@@ -254,31 +253,6 @@ export default class PanelModule {
           let keyinfo = this.resourceOptions.parseKey(name)
           console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
           this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-        },
-
-        uiOptionChange: function (name, value) {
-          if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
-            this.$options.uiController.uiOptions.items[name].setValue(value)
-          } else {
-            this.$options.uiController.uiOptions.items[name].setTextValue(value)
-          }
-
-          switch (name) {
-            case 'skin':
-              this.$options.uiController.changeSkin(this.$options.uiController.uiOptions.items[name].currentValue)
-              break
-            case 'popup':
-              this.$options.uiController.popup.close() // Close an old popup
-              this.$options.uiController.popup.currentPopupComponent = this.$options.uiController.uiOptions.items[name].currentValue
-              this.$options.uiController.popup.open() // Will trigger an initialisation of popup dimensions
-              break
-            case 'fontSize':
-              this.$options.uiController.updateFontSizeClass(value)
-              break
-            case 'colorSchema':
-              this.$options.uiController.updateColorSchemaClass(value)
-              break
-          }
         }
       }
     })
