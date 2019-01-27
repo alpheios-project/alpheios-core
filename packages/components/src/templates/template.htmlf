@@ -2,11 +2,11 @@
     <component v-bind:is="currentPopupComponent" :messages="messages" :definitions="definitions" :lexemes="lexemes" :translations="translations"
     	   :linkedfeatures="linkedFeatures" :classes-changed="classesChanged"
            :data="popupData" @closepopupnotifications="clearNotifications" @showpaneltab="showPanelTab"
-           @sendfeature="sendFeature" @settingchange="settingChange" @resourcesettingchange="resourceSettingChange">
+           @sendfeature="sendFeature" @settingchange="settingChange">
     </component>
 </div>
 <div id="alpheios-panel" data-alpheios-ignore="all">
     <component v-bind:is="currentPanelComponent" :data="panelData" @closenotifications="clearNotifications" :classes-changed="classesChanged"
-           @setposition="setPositionTo" @settingchange="settingChange" @resourcesettingchange="resourceSettingChange" @changetab="changeTab">
+           @setposition="setPositionTo" @settingchange="settingChange" @changetab="changeTab">
     </component>
 </div>

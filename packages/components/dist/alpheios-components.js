@@ -10381,7 +10381,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Lookup',
-  inject: ['ui', 'l10n'],
+  inject: ['ui', 'l10n', 'settings'],
   components: {
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -10392,8 +10392,8 @@ __webpack_require__.r(__webpack_exports__);
       showLanguageSettings: false,
       initLanguage: null,
       currentLanguage: null,
-      options: {},
-      resourceOptions: {},
+      instanceContentOptions: {},
+      istanceResourceOptions: {},
 
       overrideLanguage: false,
       overrideLanguageLabel: 'Change language'
@@ -10415,23 +10415,20 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function () {
-    if (this.uiController) {
-      this.options = this.uiController.contentOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
-      this.resourceOptions = this.uiController.resourceOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
-
-      if (this.parentLanguage) {
-        this.initLanguage = this.parentLanguage
-        this.currentLanguage = this.parentLanguage
-      } else {
-        this.currentLanguage = this.options.items.preferredLanguage.currentTextValue()
-      }
-      this.options.items.lookupLanguage.setTextValue(this.currentLanguage)
-      console.log(`at creation current language is ${this.currentLanguage}`)
+    this.instanceContentOptions = this.settings.contentOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
+    this.instanceResourceOptions = this.settings.resourceOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
+    if (this.parentLanguage) {
+      this.initLanguage = this.parentLanguage
+      this.currentLanguage = this.parentLanguage
+    } else {
+      this.currentLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
     }
+    this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
+    console.log(`at creation current language is ${this.currentLanguage}`)
   },
   computed: {
     lexiconSettingName: function () {
-      let lang = this.options.items.preferredLanguage.values.filter(v => v.text === this.currentLanguage)
+      let lang = this.instanceContentOptions.items.preferredLanguage.values.filter(v => v.text === this.currentLanguage)
       let settingName
       if (lang.length > 0) {
         settingName = `lexiconsShort-${lang[0].value}`
@@ -10440,20 +10437,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     lexiconsFiltered: function () {
       console.log(`Lexicons filtered`)
-      return this.resourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
+      return this.instanceResourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
     },
     lookupLanguage: function () {
       // let currentLanguage
       if (this.overrideLanguage && !this.currentLanguage) {
-        this.initLanguage = this.options.items.preferredLanguage.currentTextValue()
+        this.initLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
         this.currentLanguage = this.initLanguage
-        this.options.items.lookupLanguage.setTextValue(this.initLanguage)
+        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.initLanguage)
       } else if ((this.parentLanguage && this.parentLanguage !== null) && (this.parentLanguage !== this.initLanguage)) {
         this.initLanguage = this.parentLanguage
         this.currentLanguage = this.parentLanguage
-        this.options.items.lookupLanguage.setTextValue(this.parentLanguage)
+        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.parentLanguage)
       }
-      return this.options.items.lookupLanguage
+      return this.instanceContentOptions.items.lookupLanguage
     }
   },
   watch: {
@@ -10476,14 +10473,14 @@ __webpack_require__.r(__webpack_exports__);
 
       const languageID = this.overrideLanguage
         ? alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.lookupLanguage.currentValue)
-        : alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.options.items.lookupLanguage.currentValue)
+        : alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.instanceContentOptions.items.lookupLanguage.currentValue)
 
       let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, languageID)
 
-      this.uiController.updateLanguage(this.options.items.lookupLanguage.currentValue)
-      this.resourceOptions.items.lexicons = this.uiController.resourceOptions.items.lexicons
+      this.uiController.updateLanguage(this.instanceContentOptions.items.lookupLanguage.currentValue)
+      this.instanceResourceOptions.items.lexicons = this.settings.resourceOptions.items.lexicons
 
-      const resourceOptions = this.resourceOptions || this.uiController.resourceOptions
+      const resourceOptions = this.instanceResourceOptions || this.settings.resourceOptions
       const lemmaTranslationLang = this.uiController.state.lemmaTranslationLang
       _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__["default"]
         .create(textSelector, resourceOptions, lemmaTranslationLang)
@@ -10501,14 +10498,13 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     settingChange: function (name, value) {
-      this.options.items.lookupLanguage.setTextValue(value)
+      this.instanceContentOptions.items.lookupLanguage.setTextValue(value)
       this.currentLanguage = value
     },
 
     resourceSettingChange: function (name, value) {
-      let keyinfo = this.resourceOptions.parseKey(name)
-
-      this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+      let keyinfo = this.instanceResourceOptions.parseKey(name)
+      this.instanceResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     },
 
     updateUIbyOverrideLanguage: function () {
@@ -10517,14 +10513,14 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (!this.overrideLanguage) {
-        this.currentLanguage = this.options.items.preferredLanguage.currentTextValue()
-        this.options.items.lookupLanguage.setTextValue(this.currentLanguage)
+        this.currentLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
+        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
       }
     },
 
     checkboxClick: function () {
       this.overrideLanguage = !this.overrideLanguage
-      this.uiController.contentOptions.items.lookupLangOverride.setValue(this.overrideLanguage)
+      this.settings.contentOptions.items.lookupLangOverride.setValue(this.overrideLanguage)
 
       this.updateUIbyOverrideLanguage()
     }
@@ -11227,7 +11223,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  inject: ['ui', 'l10n', 'settings'], // API modules that are required for this component
+  inject: ['ui', 'language', 'l10n', 'settings'], // API modules that are required for this component
   storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -11317,10 +11313,14 @@ __webpack_require__.r(__webpack_exports__);
       return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
     },
     resourceSettingsLexicons: function () {
-      return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
+      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
+        ? this.settings.resourceOptions.items.lexicons.filter(item => item.values.length > 0)
+        : []
     },
     resourceSettingsLexiconsShort: function () {
-      return this.data.resourceSettings && this.data.resourceSettings.lexiconsShort ? this.data.resourceSettings.lexiconsShort.filter(item => item.values.length > 0) : []
+      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexiconsShort
+        ? this.settings.resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
+        : []
     },
 
     showDefinitionsPlaceholder: function () {
@@ -11468,7 +11468,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     resourceSettingChanged: function (name, value) {
-      this.$emit('resourcesettingchange', name, value) // Re-emit for a Vue instance to catch
+      this.language.resourceSettingChange(name, value)
     },
 
     uiOptionChanged: function (name, value) {
@@ -15923,7 +15923,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.uiController
+  return _vm.settings
     ? _c(
         "div",
         { staticClass: "alpheios-lookup__form" },
@@ -16049,45 +16049,43 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm.uiController
-            ? _c("div", { staticClass: "alpheios-lookup__settings" }, [
-                _c(
-                  "div",
+          _c("div", { staticClass: "alpheios-lookup__settings" }, [
+            _c(
+              "div",
+              {
+                directives: [
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.showLanguageSettings,
-                        expression: "showLanguageSettings"
-                      }
-                    ],
-                    staticClass: "alpheios-lookup__settings-items"
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.showLanguageSettings,
+                    expression: "showLanguageSettings"
+                  }
+                ],
+                staticClass: "alpheios-lookup__settings-items"
+              },
+              [
+                _c("alph-setting", {
+                  attrs: {
+                    classes: ["alpheios-panel__options-item"],
+                    data: _vm.lookupLanguage
                   },
-                  [
-                    _c("alph-setting", {
-                      attrs: {
-                        classes: ["alpheios-panel__options-item"],
-                        data: _vm.lookupLanguage
-                      },
-                      on: { change: _vm.settingChange }
-                    }),
-                    _vm._v(" "),
-                    _vm._l(_vm.lexiconsFiltered, function(lexicon) {
-                      return _c("alph-setting", {
-                        key: lexicon.name,
-                        attrs: {
-                          classes: ["alpheios-panel__options-item"],
-                          data: lexicon
-                        },
-                        on: { change: _vm.resourceSettingChange }
-                      })
-                    })
-                  ],
-                  2
-                )
-              ])
-            : _vm._e()
+                  on: { change: _vm.settingChange }
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.lexiconsFiltered, function(lexicon) {
+                  return _c("alph-setting", {
+                    key: lexicon.name,
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: lexicon
+                    },
+                    on: { change: _vm.resourceSettingChange }
+                  })
+                })
+              ],
+              2
+            )
+          ])
         ],
         1
       )
@@ -32383,6 +32381,10 @@ class UIController {
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
+    this.api.language = {
+      resourceSettingChange: this.resourceSettingChange.bind(this)
+    }
+
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     // This must be done after creation of data modules.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
@@ -33168,6 +33170,12 @@ class UIController {
         this.updateColorSchemaClass(value)
         break
     }
+  }
+
+  resourceSettingChange (name, value) {
+    let keyinfo = this.api.settings.resourceOptions.parseKey(name)
+    console.log('Change inside instance', keyinfo.setting, keyinfo.group, value)
+    this.api.settings.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 }
 
@@ -37529,7 +37537,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @resourcesettingchange=\"resourceSettingChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -40339,7 +40347,6 @@ class PanelModule {
             },
             visible: false
           },
-          resourceSettings: uiController.resourceOptions.items,
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
             zIndex: uiController.zIndex
@@ -40350,7 +40357,6 @@ class PanelModule {
         },
         state: uiController.state,
         options: uiController.contentOptions,
-        resourceOptions: uiController.resourceOptions,
         currentPanelComponent: uiController.options.template.defaultPanelComponent,
         uiController: uiController,
         classesChanged: 0
@@ -40516,11 +40522,6 @@ class PanelModule {
               this.$options.uiController.updateLemmaTranslations()
               break
           }
-        },
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
         }
       }
     })
@@ -40672,13 +40673,11 @@ class PopupModule {
             languageCode: ''
           },
           currentLanguage: null,
-          resourceSettings: uiController.resourceOptions.items,
           styles: {
             zIndex: uiController.zIndex
           }
         },
         options: uiController.contentOptions,
-        resourceOptions: uiController.resourceOptions,
         currentPopupComponent: uiController.options.template.defaultPopupComponent,
         uiController: uiController,
         classesChanged: 0
@@ -40823,12 +40822,6 @@ class PopupModule {
               this.$options.uiController.updateLanguage(this.$options.items.preferredLanguage.currentValue)
               break
           }
-        },
-
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
         }
       }
     })

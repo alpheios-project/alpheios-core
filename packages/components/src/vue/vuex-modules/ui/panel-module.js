@@ -71,7 +71,6 @@ export default class PanelModule {
             },
             visible: false
           },
-          resourceSettings: uiController.resourceOptions.items,
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
             zIndex: uiController.zIndex
@@ -82,7 +81,6 @@ export default class PanelModule {
         },
         state: uiController.state,
         options: uiController.contentOptions,
-        resourceOptions: uiController.resourceOptions,
         currentPanelComponent: uiController.options.template.defaultPanelComponent,
         uiController: uiController,
         classesChanged: 0
@@ -248,11 +246,6 @@ export default class PanelModule {
               this.$options.uiController.updateLemmaTranslations()
               break
           }
-        },
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
         }
       }
     })

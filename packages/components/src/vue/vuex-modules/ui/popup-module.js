@@ -87,13 +87,11 @@ export default class PopupModule {
             languageCode: ''
           },
           currentLanguage: null,
-          resourceSettings: uiController.resourceOptions.items,
           styles: {
             zIndex: uiController.zIndex
           }
         },
         options: uiController.contentOptions,
-        resourceOptions: uiController.resourceOptions,
         currentPopupComponent: uiController.options.template.defaultPopupComponent,
         uiController: uiController,
         classesChanged: 0
@@ -238,12 +236,6 @@ export default class PopupModule {
               this.$options.uiController.updateLanguage(this.$options.items.preferredLanguage.currentValue)
               break
           }
-        },
-
-        resourceSettingChange: function (name, value) {
-          let keyinfo = this.resourceOptions.parseKey(name)
-          console.log('Change inside instance', keyinfo.setting, keyinfo.language, value)
-          this.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
         }
       }
     })

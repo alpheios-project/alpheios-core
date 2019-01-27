@@ -272,7 +272,7 @@ import interact from 'interactjs'
 
 export default {
   name: 'Panel',
-  inject: ['ui', 'l10n', 'settings'], // API modules that are required for this component
+  inject: ['ui', 'language', 'l10n', 'settings'], // API modules that are required for this component
   storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: Inflections,
@@ -362,10 +362,14 @@ export default {
       return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
     },
     resourceSettingsLexicons: function () {
-      return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
+      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
+        ? this.settings.resourceOptions.items.lexicons.filter(item => item.values.length > 0)
+        : []
     },
     resourceSettingsLexiconsShort: function () {
-      return this.data.resourceSettings && this.data.resourceSettings.lexiconsShort ? this.data.resourceSettings.lexiconsShort.filter(item => item.values.length > 0) : []
+      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexiconsShort
+        ? this.settings.resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
+        : []
     },
 
     showDefinitionsPlaceholder: function () {
@@ -513,7 +517,7 @@ export default {
     },
 
     resourceSettingChanged: function (name, value) {
-      this.$emit('resourcesettingchange', name, value) // Re-emit for a Vue instance to catch
+      this.language.resourceSettingChange(name, value)
     },
 
     uiOptionChanged: function (name, value) {

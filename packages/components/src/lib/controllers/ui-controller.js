@@ -354,6 +354,10 @@ export default class UIController {
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
+    this.api.language = {
+      resourceSettingChange: this.resourceSettingChange.bind(this)
+    }
+
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     // This must be done after creation of data modules.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
@@ -1139,6 +1143,11 @@ export default class UIController {
         this.updateColorSchemaClass(value)
         break
     }
+  }
+
+  resourceSettingChange (name, value) {
+    let keyinfo = this.api.settings.resourceOptions.parseKey(name)
+    this.api.settings.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 }
 
