@@ -91,8 +91,8 @@
               </span>
 
       <span v-html="data.notification.text"></span>
-      <setting :classes="['alpheios-popup__notifications--lang-switcher']" :data="data.settings.preferredLanguage"
-               :show-title="false" @change="settingChanged"
+      <setting :classes="['alpheios-popup__notifications--lang-switcher']" :data="settings.contentOptions.items.preferredLanguage"
+               :show-title="false" @change="contentOptionChanged"
                v-show="data.notification.showLanguageSwitcher"></setting>
     </div>
     <lookup :clearLookupText="hasMorphData && morphDataReady" :parentLanguage="currentLanguageName"
@@ -115,7 +115,7 @@ import { directive as onClickaway } from '../directives/clickaway.js'
 
 export default {
   name: 'Popup',
-  inject: ['ui', 'l10n'],
+  inject: ['app', 'ui', 'l10n', 'settings'],
   components: {
     morph: Morph,
     setting: Setting,
@@ -266,7 +266,7 @@ export default {
         return '0px'
       }
 
-      if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
+      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
         return this.data.left
       }
 
@@ -300,7 +300,7 @@ export default {
         return '0px'
       }
 
-      if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
+      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
         return this.data.top
       }
 
@@ -406,8 +406,8 @@ export default {
       this.$emit('showpaneltab', tabName)
     },
 
-    settingChanged: function (name, value) {
-      this.$emit('settingchange', name, value) // Re-emit for a Vue instance
+    contentOptionChanged: function (name, value) {
+      this.app.contentOptionChange(name, value)
     },
 
     switchProviders: function () {
@@ -623,7 +623,7 @@ export default {
   watch: {
     requestStartTime () {
       this.logger.log(`Request start time has been updated`)
-      this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
+      this.logger.log(`Popup position is ${this.settings.contentOptions.items.popupPosition.currentValue}`)
       // There is a new request coming in, reset popup dimensions
       this.resetPopupDimensions()
     },

@@ -11223,7 +11223,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  inject: ['ui', 'language', 'l10n', 'settings'], // API modules that are required for this component
+  inject: ['app', 'ui', 'language', 'l10n', 'settings'], // API modules that are required for this component
   storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -11332,7 +11332,7 @@ __webpack_require__.r(__webpack_exports__);
         const positionLeftIndex = this.data.classes.findIndex(v => v === this.positionLeftClassName)
         const positionRightIndex = this.data.classes.findIndex(v => v === this.positionRightClassName)
 
-        if (this.data.settings.panelPosition.currentValue === 'left') {
+        if (this.settings.contentOptions.items.panelPosition.currentValue === 'left') {
           if (positionRightIndex >= 0) {
             // Replace an existing value
             this.data.classes[positionRightIndex] = this.positionLeftClassName
@@ -11340,7 +11340,7 @@ __webpack_require__.r(__webpack_exports__);
             // Add an initial value
             this.data.classes.push(this.positionLeftClassName)
           }
-        } else if (this.data.settings.panelPosition.currentValue === 'right') {
+        } else if (this.settings.contentOptions.items.panelPosition.currentValue === 'right') {
           if (positionLeftIndex >= 0) {
             // Replace an existing value
             this.data.classes[positionLeftIndex] = this.positionRightClassName
@@ -11361,11 +11361,11 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     attachToLeftVisible: function () {
-      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'right' : false
+      return (this.settings.contentOptions.items) ? this.settings.contentOptions.items.panelPosition.currentValue === 'right' : false
     },
 
     attachToRightVisible: function () {
-      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'left' : true
+      return (this.settings.contentOptions.items) ? this.settings.contentOptions.items.panelPosition.currentValue === 'left' : true
     },
 
     // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
@@ -11410,7 +11410,7 @@ __webpack_require__.r(__webpack_exports__);
 
     positionClasses: function () {
       if (this.data) {
-        return this.positionClassVariants[this.data.settings.panelPosition.currentValue]
+        return this.positionClassVariants[this.settings.contentOptions.items.panelPosition.currentValue]
       }
       return null
     },
@@ -11463,8 +11463,8 @@ __webpack_require__.r(__webpack_exports__);
       this.contentAreas.messages.setContent('')
     },
 
-    settingChanged: function (name, value) {
-      this.$emit('settingchange', name, value) // Re-emit for a Vue instance to catch
+    contentOptionChanged: function (name, value) {
+      this.app.contentOptionChange(name, value)
     },
 
     resourceSettingChanged: function (name, value) {
@@ -11826,7 +11826,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Popup',
-  inject: ['ui', 'l10n'],
+  inject: ['app', 'ui', 'l10n', 'settings'],
   components: {
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -11977,7 +11977,7 @@ __webpack_require__.r(__webpack_exports__);
         return '0px'
       }
 
-      if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
+      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
         return this.data.left
       }
 
@@ -12011,7 +12011,7 @@ __webpack_require__.r(__webpack_exports__);
         return '0px'
       }
 
-      if (this.data.settings && this.data.settings.popupPosition.currentValue === 'fixed') {
+      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
         return this.data.top
       }
 
@@ -12117,8 +12117,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('showpaneltab', tabName)
     },
 
-    settingChanged: function (name, value) {
-      this.$emit('settingchange', name, value) // Re-emit for a Vue instance
+    contentOptionChanged: function (name, value) {
+      this.app.contentOptionChange(name, value)
     },
 
     switchProviders: function () {
@@ -12334,7 +12334,7 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     requestStartTime () {
       this.logger.log(`Request start time has been updated`)
-      this.logger.log(`Popup position is ${this.data.settings.popupPosition.currentValue}`)
+      this.logger.log(`Popup position is ${this.settings.contentOptions.items.popupPosition.currentValue}`)
       // There is a new request coming in, reset popup dimensions
       this.resetPopupDimensions()
     },
@@ -17345,7 +17345,8 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm.data.inflectionComponentData.inflDataReady && _vm.data.settings
+            _vm.data.inflectionComponentData.inflDataReady &&
+            _vm.settings.contentOptions.items
               ? _c(
                   "div",
                   {
@@ -17367,7 +17368,8 @@ var render = function() {
                       attrs: {
                         data: _vm.data.inflectionComponentData,
                         "inflections-enabled": _vm.data.inflectionsEnabled,
-                        locale: _vm.data.settings.locale.currentValue,
+                        locale:
+                          _vm.settings.contentOptions.items.locale.currentValue,
                         "wait-state": _vm.data.inflectionsWaitState
                       },
                       on: { contentwidth: _vm.setContentWidth }
@@ -17377,7 +17379,8 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm.data.inflectionBrowserEnabled && _vm.data.settings
+            _vm.data.inflectionBrowserEnabled &&
+            _vm.settings.contentOptions.items
               ? _c(
                   "div",
                   {
@@ -17426,7 +17429,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _vm.data.treebankComponentData && _vm.data.settings
+            _vm.data.treebankComponentData && _vm.settings.contentOptions.items
               ? _c(
                   "div",
                   {
@@ -17444,7 +17447,8 @@ var render = function() {
                   [
                     _c("treebank", {
                       attrs: {
-                        locale: _vm.data.settings.locale.currentValue,
+                        locale:
+                          _vm.settings.contentOptions.items.locale.currentValue,
                         res: _vm.data.treebankComponentData.data,
                         visible: _vm.data.treebankComponentData.visible
                       },
@@ -17544,53 +17548,54 @@ var render = function() {
               [
                 _c("reskin-font-color"),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.preferredLanguage
+                        data:
+                          _vm.settings.contentOptions.items.preferredLanguage
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.panelPosition
+                        data: _vm.settings.contentOptions.items.panelPosition
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.popupPosition
+                        data: _vm.settings.contentOptions.items.popupPosition
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.uiType
+                        data: _vm.settings.contentOptions.items.uiType
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.verboseMode
+                        data: _vm.settings.contentOptions.items.verboseMode
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
@@ -17648,43 +17653,48 @@ var render = function() {
                   })
                 }),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.enableWordUsageExamples
+                        data:
+                          _vm.settings.contentOptions.items
+                            .enableWordUsageExamples
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.wordUsageExamplesMax
+                        data:
+                          _vm.settings.contentOptions.items.wordUsageExamplesMax
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.enableLemmaTranslations
+                        data:
+                          _vm.settings.contentOptions.items
+                            .enableLemmaTranslations
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.data.settings
+                _vm.settings.contentOptions.items
                   ? _c("setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: _vm.data.settings.locale
+                        data: _vm.settings.contentOptions.items.locale
                       },
-                      on: { change: _vm.settingChanged }
+                      on: { change: _vm.contentOptionChanged }
                     })
                   : _vm._e()
               ],
@@ -17776,10 +17786,10 @@ var render = function() {
                   classes: [
                     "alpheios-panel__notifications--lang-switcher alpheios-text-smaller"
                   ],
-                  data: _vm.data.settings.preferredLanguage,
+                  data: _vm.settings.contentOptions.items.preferredLanguage,
                   "show-title": false
                 },
-                on: { change: _vm.settingChanged }
+                on: { change: _vm.contentOptionChanged }
               })
             ],
             1
@@ -18611,10 +18621,10 @@ var render = function() {
                 ],
                 attrs: {
                   classes: ["alpheios-popup__notifications--lang-switcher"],
-                  data: _vm.data.settings.preferredLanguage,
+                  data: _vm.settings.contentOptions.items.preferredLanguage,
                   "show-title": false
                 },
-                on: { change: _vm.settingChanged }
+                on: { change: _vm.contentOptionChanged }
               })
             ],
             1
@@ -32363,6 +32373,12 @@ class UIController {
       siteOptions: this.siteOptions
     }
 
+    this.api.app = {
+
+      // TODO: Some of the functions below should probably belong to other API groups.
+      contentOptionChange: this.contentOptionChange.bind(this)
+    }
+
     /**
      * This is a UI-level public API of a UI controller. All objects should use this public API only.
      */
@@ -33136,6 +33152,33 @@ class UIController {
     }
   }
 
+  contentOptionChange (name, value) {
+    console.log('Change inside instance', name, value)
+    // TODO we need to refactor handling of boolean options
+    if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
+      this.api.settings.contentOptions.items[name].setValue(value)
+    } else {
+      this.api.settings.contentOptions.items[name].setTextValue(value)
+    }
+    switch (name) {
+      case 'locale':
+        if (this.presenter) {
+          this.presenter.setLocale(this.options.items.locale.currentValue)
+        }
+        this.updateLemmaTranslations()
+        break
+      case 'preferredLanguage':
+        this.updateLanguage(this.options.items.preferredLanguage.currentValue)
+        break
+      case 'verboseMode':
+        this.updateVerboseMode()
+        break
+      case 'enableLemmaTranslations':
+        this.updateLemmaTranslations()
+        break
+    }
+  }
+
   /**
    * Handles a UI options in settings.
    * @param {string} name - A name of an option.
@@ -33174,7 +33217,6 @@ class UIController {
 
   resourceSettingChange (name, value) {
     let keyinfo = this.api.settings.resourceOptions.parseKey(name)
-    console.log('Change inside instance', keyinfo.setting, keyinfo.group, value)
     this.api.settings.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 }
@@ -37537,7 +37579,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\" @settingchange=\"settingChange\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @settingchange=\"settingChange\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -40338,7 +40380,6 @@ class PanelModule {
             languageName: '',
             languageCode: ''
           },
-          settings: uiController.contentOptions.items,
           treebankComponentData: {
             data: {
               word: {},
@@ -40495,33 +40536,6 @@ class PanelModule {
 
         requestGrammar: function (feature) {
           this.$options.uiController.startResourceQuery(feature)
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          // TODO we need to refactor handling of boolean options
-          if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
-            this.options.items[name].setValue(value)
-          } else {
-            this.options.items[name].setTextValue(value)
-          }
-          switch (name) {
-            case 'locale':
-              if (this.$options.uiController.presenter) {
-                this.$options.uiController.presenter.setLocale(this.options.items.locale.currentValue)
-              }
-              this.$options.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.$options.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
-              break
-            case 'verboseMode':
-              this.$options.uiController.updateVerboseMode()
-              break
-            case 'enableLemmaTranslations':
-              this.$options.uiController.updateLemmaTranslations()
-              break
-          }
         }
       }
     })
@@ -40648,7 +40662,6 @@ class PopupModule {
           component to identify a new request coming in and to distinguish it from data updates of the current request.
            */
           requestStartTime: 0,
-          settings: uiController.contentOptions.items,
           verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           defDataReady: false,
           hasTreebank: false,

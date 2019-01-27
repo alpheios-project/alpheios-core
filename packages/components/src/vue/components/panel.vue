@@ -131,14 +131,14 @@
              v-html="data.fullDefinitions"></div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="data.inflectionComponentData.inflDataReady && data.settings" v-show="inflectionsTabVisible">
+           v-if="data.inflectionComponentData.inflDataReady && settings.contentOptions.items" v-show="inflectionsTabVisible">
         <inflections :data="data.inflectionComponentData" :inflections-enabled="data.inflectionsEnabled"
-                     :locale="data.settings.locale.currentValue" :wait-state="data.inflectionsWaitState"
+                     :locale="settings.contentOptions.items.locale.currentValue" :wait-state="data.inflectionsWaitState"
                      @contentwidth="setContentWidth" class="alpheios-panel-inflections">
         </inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
-           v-if="data.inflectionBrowserEnabled && data.settings" v-show="inflectionsBrowserTabVisible">
+           v-if="data.inflectionBrowserEnabled && settings.contentOptions.items" v-show="inflectionsBrowserTabVisible">
         <inflection-browser :data="data.inflectionBrowserData" :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
                             :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
         </inflection-browser>
@@ -148,9 +148,9 @@
         <grammar :res="data.grammarRes"></grammar>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__treebank
-            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-if="data.treebankComponentData && data.settings"
+            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-if="data.treebankComponentData && settings.contentOptions.items"
            v-show="treebankTabVisible">
-        <treebank :locale="data.settings.locale.currentValue" :res="data.treebankComponentData.data"
+        <treebank :locale="settings.contentOptions.items.locale.currentValue" :res="data.treebankComponentData.data"
                   :visible="data.treebankComponentData.visible" @treebankcontentwidth="setTreebankContentWidth">
         </treebank>
       </div>
@@ -173,16 +173,16 @@
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="data.tabs.options">
         <reskin-font-color></reskin-font-color>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.preferredLanguage" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.panelPosition" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.popupPosition" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.uiType" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.verboseMode" @change="settingChanged"
-                 v-if="data.settings"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.preferredLanguage" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.panelPosition" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.popupPosition" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.uiType" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.verboseMode" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
         <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.skin"
                  @change="uiOptionChanged"
                  v-if="settings.uiOptions && settings.uiOptions.items"></setting>
@@ -201,17 +201,17 @@
                  @change="resourceSettingChanged"
                  v-for="languageSetting in resourceSettingsLexiconsShort"></setting>
 
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.enableWordUsageExamples" @change="settingChanged"
-                 v-if="data.settings"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.enableWordUsageExamples" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
 
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.wordUsageExamplesMax" @change="settingChanged"
-                 v-if="data.settings"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.wordUsageExamplesMax" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
 
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.enableLemmaTranslations" @change="settingChanged"
-                 v-if="data.settings"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.enableLemmaTranslations" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
 
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.locale" @change="settingChanged"
-                 v-if="data.settings"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.locale" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
            v-show="data.tabs.info">
@@ -228,9 +228,9 @@
                 <close-icon></close-icon>
             </span>
       <span class="alpheios-panel__notifications-text" v-html="data.notification.text"></span>
-      <setting :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']" :data="data.settings.preferredLanguage"
+      <setting :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']" :data="settings.contentOptions.items.preferredLanguage"
                :show-title="false"
-               @change="settingChanged"
+               @change="contentOptionChanged"
                v-show="data.notification.showLanguageSwitcher"></setting>
     </div>
   </div>
@@ -272,7 +272,7 @@ import interact from 'interactjs'
 
 export default {
   name: 'Panel',
-  inject: ['ui', 'language', 'l10n', 'settings'], // API modules that are required for this component
+  inject: ['app', 'ui', 'language', 'l10n', 'settings'], // API modules that are required for this component
   storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: Inflections,
@@ -381,7 +381,7 @@ export default {
         const positionLeftIndex = this.data.classes.findIndex(v => v === this.positionLeftClassName)
         const positionRightIndex = this.data.classes.findIndex(v => v === this.positionRightClassName)
 
-        if (this.data.settings.panelPosition.currentValue === 'left') {
+        if (this.settings.contentOptions.items.panelPosition.currentValue === 'left') {
           if (positionRightIndex >= 0) {
             // Replace an existing value
             this.data.classes[positionRightIndex] = this.positionLeftClassName
@@ -389,7 +389,7 @@ export default {
             // Add an initial value
             this.data.classes.push(this.positionLeftClassName)
           }
-        } else if (this.data.settings.panelPosition.currentValue === 'right') {
+        } else if (this.settings.contentOptions.items.panelPosition.currentValue === 'right') {
           if (positionLeftIndex >= 0) {
             // Replace an existing value
             this.data.classes[positionLeftIndex] = this.positionRightClassName
@@ -410,11 +410,11 @@ export default {
     },
 
     attachToLeftVisible: function () {
-      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'right' : false
+      return (this.settings.contentOptions.items) ? this.settings.contentOptions.items.panelPosition.currentValue === 'right' : false
     },
 
     attachToRightVisible: function () {
-      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'left' : true
+      return (this.settings.contentOptions.items) ? this.settings.contentOptions.items.panelPosition.currentValue === 'left' : true
     },
 
     // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
@@ -459,7 +459,7 @@ export default {
 
     positionClasses: function () {
       if (this.data) {
-        return this.positionClassVariants[this.data.settings.panelPosition.currentValue]
+        return this.positionClassVariants[this.settings.contentOptions.items.panelPosition.currentValue]
       }
       return null
     },
@@ -512,8 +512,8 @@ export default {
       this.contentAreas.messages.setContent('')
     },
 
-    settingChanged: function (name, value) {
-      this.$emit('settingchange', name, value) // Re-emit for a Vue instance to catch
+    contentOptionChanged: function (name, value) {
+      this.app.contentOptionChange(name, value)
     },
 
     resourceSettingChanged: function (name, value) {

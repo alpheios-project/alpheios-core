@@ -62,7 +62,6 @@ export default class PanelModule {
             languageName: '',
             languageCode: ''
           },
-          settings: uiController.contentOptions.items,
           treebankComponentData: {
             data: {
               word: {},
@@ -219,33 +218,6 @@ export default class PanelModule {
 
         requestGrammar: function (feature) {
           this.$options.uiController.startResourceQuery(feature)
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          // TODO we need to refactor handling of boolean options
-          if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
-            this.options.items[name].setValue(value)
-          } else {
-            this.options.items[name].setTextValue(value)
-          }
-          switch (name) {
-            case 'locale':
-              if (this.$options.uiController.presenter) {
-                this.$options.uiController.presenter.setLocale(this.options.items.locale.currentValue)
-              }
-              this.$options.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.$options.uiController.updateLanguage(this.options.items.preferredLanguage.currentValue)
-              break
-            case 'verboseMode':
-              this.$options.uiController.updateVerboseMode()
-              break
-            case 'enableLemmaTranslations':
-              this.$options.uiController.updateLemmaTranslations()
-              break
-          }
         }
       }
     })

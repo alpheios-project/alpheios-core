@@ -336,6 +336,12 @@ export default class UIController {
       siteOptions: this.siteOptions
     }
 
+    this.api.app = {
+
+      // TODO: Some of the functions below should probably belong to other API groups.
+      contentOptionChange: this.contentOptionChange.bind(this)
+    }
+
     /**
      * This is a UI-level public API of a UI controller. All objects should use this public API only.
      */
@@ -1106,6 +1112,33 @@ export default class UIController {
       popup.close() // Close an old popup
       popup.currentPopupComponent = this.api.settings.uiOptions.items[name].currentValue
       popup.open() // Will trigger an initialisation of popup dimensions
+    }
+  }
+
+  contentOptionChange (name, value) {
+    console.log('Change inside instance', name, value)
+    // TODO we need to refactor handling of boolean options
+    if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
+      this.api.settings.contentOptions.items[name].setValue(value)
+    } else {
+      this.api.settings.contentOptions.items[name].setTextValue(value)
+    }
+    switch (name) {
+      case 'locale':
+        if (this.presenter) {
+          this.presenter.setLocale(this.options.items.locale.currentValue)
+        }
+        this.updateLemmaTranslations()
+        break
+      case 'preferredLanguage':
+        this.updateLanguage(this.options.items.preferredLanguage.currentValue)
+        break
+      case 'verboseMode':
+        this.updateVerboseMode()
+        break
+      case 'enableLemmaTranslations':
+        this.updateLemmaTranslations()
+        break
     }
   }
 
