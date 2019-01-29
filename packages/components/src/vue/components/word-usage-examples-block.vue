@@ -2,46 +2,56 @@
   <div class="alpheios-word-usage">
     <div class="alpheios_word_usage_list_title">{{ targetWord }} ({{ language }})</div>
     <div class="alpheios_word_usage_list_mainblock" v-if="showWordUsageExampleItems">
-      <word-usage-example-item 
+      <word-usage-example-item
           v-for="wordUsageItem in wordUsageList"
           v-bind:key="wordUsageItem.ID"
           :wordUsageItem="wordUsageItem"
       ></word-usage-example-item>
     </div>
-    <div class="alpheios-word_usage_list__provider" v-if="provider">{{ provider.toString() }}</div>
+    <div class="alpheios-word_usage_list__provider" v-if="provider">
+      <div v-for="rightsItem in providerRights" :key="rightsItem.key">
+        {{ rightsItem.value }}
+      </div>
+    </div>
   </div>
 </template>
 <script>
-  import WordUsageExampleItem from '@/vue/components/word-usage-example-item.vue'
-  export default {
-    name: 'WordUsageExamplesBlock',
-    components: {
-      wordUsageExampleItem: WordUsageExampleItem
+import WordUsageExampleItem from '@/vue/components/word-usage-example-item.vue'
+export default {
+  name: 'WordUsageExamplesBlock',
+  components: {
+    wordUsageExampleItem: WordUsageExampleItem
+  },
+  props: {
+    wordUsageList: {
+      type: Array,
+      required: true
     },
-    props: {
-      wordUsageList: {
-        type: Array,
-        required: true
-      },
-      targetWord: {
-        type: String,
-        required: true
-      },
-      language: {
-        type: String,
-        required: true
-      },
-      provider: {
-        type: String,
-        required: false
-      }
+    targetWord: {
+      type: String,
+      required: true
     },
-    computed: {
-      showWordUsageExampleItems () {
-        return this.wordUsageList && this.wordUsageList.length > 0
-      }
+    language: {
+      type: String,
+      required: true
+    },
+    provider: {
+      type: Object,
+      required: false
+    }
+  },
+  computed: {
+    showWordUsageExampleItems () {
+      return this.wordUsageList && this.wordUsageList.length > 0
+    },
+
+    providerRights () {
+      return (this.provider && this.provider.rights)
+        ? Array.from(this.provider.rights.entries()).map(([key, value]) => { return { key, value } })
+        : []
     }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";
