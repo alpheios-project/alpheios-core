@@ -25,7 +25,7 @@ export default class PanelModule {
       data: {
         panelData: {
           tabs: options.tabs,
-          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
+          verboseMode: api.settings.contentOptions.items.verboseMode.currentValue === api.app.options.verboseMode,
           currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
@@ -79,14 +79,13 @@ export default class PanelModule {
           wordUsageExamplesData: null
         },
         state: uiController.state,
-        options: uiController.contentOptions,
-        currentPanelComponent: uiController.options.template.defaultPanelComponent,
+        currentPanelComponent: api.app.options.template.defaultPanelComponent,
         uiController: uiController,
         classesChanged: 0
       },
       methods: {
         setPositionTo: function (position) {
-          this.options.items.panelPosition.setValue(position)
+          this.$options.api.settings.contentOptions.items.panelPosition.setValue(position)
           this.classesChanged += 1
         },
 

@@ -11297,7 +11297,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.data.infoComponentData) {
         return this.data.infoComponentData.languageName
       } else {
-        return this.options.items.preferredLanguage.currentTextValue()
+        return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }
     },
     inflectionBrowserLanguageID: function () {
@@ -32374,6 +32374,7 @@ class UIController {
     }
 
     this.api.app = {
+      options: this.options, // Application-level options
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this)
@@ -40343,7 +40344,7 @@ class PanelModule {
       data: {
         panelData: {
           tabs: options.tabs,
-          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
+          verboseMode: api.settings.contentOptions.items.verboseMode.currentValue === api.app.options.verboseMode,
           currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
@@ -40397,14 +40398,14 @@ class PanelModule {
           wordUsageExamplesData: null
         },
         state: uiController.state,
-        options: uiController.contentOptions,
-        currentPanelComponent: uiController.options.template.defaultPanelComponent,
+        currentPanelComponent: api.app.options.template.defaultPanelComponent,
         uiController: uiController,
         classesChanged: 0
       },
       methods: {
         setPositionTo: function (position) {
-          this.options.items.panelPosition.setValue(position)
+          console.log(`SetPositionTo`)
+          this.$options.api.settings.contentOptions.items.panelPosition.setValue(position)
           this.classesChanged += 1
         },
 

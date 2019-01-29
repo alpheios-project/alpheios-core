@@ -337,6 +337,7 @@ export default class UIController {
     }
 
     this.api.app = {
+      options: this.options, // Application-level options
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this)

@@ -346,7 +346,7 @@ export default {
       if (this.data.infoComponentData) {
         return this.data.infoComponentData.languageName
       } else {
-        return this.options.items.preferredLanguage.currentTextValue()
+        return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }
     },
     inflectionBrowserLanguageID: function () {
