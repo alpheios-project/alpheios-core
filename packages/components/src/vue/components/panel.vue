@@ -79,7 +79,7 @@
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn" v-bind:class="{ active: data.tabs.status }"
-                      v-show="data.verboseMode">
+                      v-show="verboseMode">
                   <status-icon class="alpheios-icon"></status-icon>
                 </span>
               </alph-tooltip>
@@ -466,6 +466,10 @@ export default {
 
     wordUsageExamplesData () {
       return this.data.wordUsageExamplesData
+    },
+
+    verboseMode () {
+      return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
     }
   },
   methods: {
@@ -612,6 +616,8 @@ export default {
   },
 
   mounted: function () {
+    console.log(`Panel is mounted`)
+
     // Determine paddings and sidebar width for calculation of a panel width to fit content
     if (this.data === undefined) {
       return

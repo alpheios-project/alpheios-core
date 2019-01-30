@@ -70,7 +70,6 @@ describe.skip('ui-controller.test.js', () => {
   it('1 UIController - create object with min arguments', async () => {
     expect(uiC.options).toHaveProperty('uiTypePanel')
     expect(uiC.options).toHaveProperty('uiTypePopup')
-    expect(uiC.options).toHaveProperty('verboseMode')
 
     expect(uiC.options.irregularBaseFontSizeClassName.length).toBeGreaterThan(0)
     expect(uiC.irregularBaseFontSize).toBeDefined()
@@ -485,21 +484,6 @@ describe.skip('ui-controller.test.js', () => {
 
     uiC.updateLanguage(Constants.LANG_ARABIC)
     expect(uiC.panel.panelData.inflectionComponentData.enabled).toBeFalsy()
-  })
-
-  it('18 UIController - updateVerboseMode', () => {
-    uiC.contentOptions.items.verboseMode.setValue(true)
-    uiC.options.verboseMode = true
-    uiC.updateVerboseMode()
-    expect(uiC.options.verboseMode).toBeTruthy()
-    expect(uiC.panel.panelData.verboseMode).toBeTruthy()
-    expect(uiC.popup.vi.popupData.verboseMode).toBeTruthy()
-
-    uiC.options.verboseMode = false
-    uiC.updateVerboseMode()
-    expect(uiC.state.verboseMode).toBeFalsy()
-    expect(uiC.panel.panelData.verboseMode).toBeFalsy()
-    expect(uiC.popup.vi.popupData.verboseMode).toBeFalsy()
   })
 
   // TODO: Rewrite after updateInflection changes are finalized

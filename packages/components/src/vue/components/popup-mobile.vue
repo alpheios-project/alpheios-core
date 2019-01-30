@@ -11,7 +11,7 @@
         Mobile
         <span class="alpheios-popup__header-selection"
               v-show="data.status.selectedText">{{data.status.selectedText}}</span>
-        <span class="alpheios-popup__header-word" v-show="data.status.languageName && data.verboseMode">({{data.status.languageName}})</span>
+        <span class="alpheios-popup__header-word" v-show="data.status.languageName && verboseMode">({{data.status.languageName}})</span>
       </div>
       <div class="uk-button-group alpheios-popup__button-area">
         <button @click="showPanelTab('inflections')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn"

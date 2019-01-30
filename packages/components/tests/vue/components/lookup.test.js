@@ -4,8 +4,6 @@ import { mount } from '@vue/test-utils'
 import Lookup from '@/vue/components/lookup.vue'
 import Setting from '@/vue/components/setting.vue'
 
-import Vue from 'vue/dist/vue'
-
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
@@ -21,6 +19,9 @@ import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 
 describe('lookup.test.js', () => {
+  let contentOptions
+  let resourceOptions
+
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -29,6 +30,9 @@ describe('lookup.test.js', () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+
+    contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
+    resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
   })
   afterEach(() => {
     jest.resetModules()
@@ -48,6 +52,13 @@ describe('lookup.test.js', () => {
     let cmp = mount(Lookup, {
       propsData: {
         uiController: null
+      },
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
@@ -61,29 +72,28 @@ describe('lookup.test.js', () => {
       }
     }
 
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
       propsData: {
         uiController: {
-          contentOptions: contentOptions,
-          resourceOptions: resourceOptions,
           updateLanguage: function () {}
         }
       },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
 
-    expect(cmp.vm.options).toBeDefined()
-    expect(cmp.vm.resourceOptions).toBeDefined()
+    expect(cmp.vm.settings.contentOptions).toBeDefined()
+    expect(cmp.vm.settings.resourceOptions).toBeDefined()
 
     expect(cmp.vm.currentLanguage).toEqual(contentOptions.items.lookupLanguage.currentTextValue())
     expect(cmp.vm.initLanguage).toBeNull()
 
-    expect(cmp.vm.lookupLanguage.currentTextValue()).toEqual(cmp.vm.options.items.lookupLanguage.currentTextValue())
+    expect(cmp.vm.lookupLanguage.currentTextValue()).toEqual(cmp.vm.settings.contentOptions.items.lookupLanguage.currentTextValue())
 
     expect(cmp.find('input').exists()).toBeTruthy()
     jest.spyOn(LexicalQueryLookup, 'create')
@@ -105,38 +115,36 @@ describe('lookup.test.js', () => {
   })
 
   it('3 Lookup - created with parent language', () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
       propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions },
         parentLanguage: 'Latin'
       },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
 
     expect(cmp.vm.initLanguage).toEqual('Latin')
     expect(cmp.vm.currentLanguage).toEqual('Latin')
-    expect(cmp.vm.options.items.lookupLanguage.currentTextValue()).toEqual('Latin')
+    expect(cmp.vm.settings.contentOptions.items.lookupLanguage.currentTextValue()).toEqual('Latin')
 
     expect(cmp.vm.lexiconSettingName).toEqual(`lexiconsShort-lat`)
     expect(cmp.vm.lexiconsFiltered).toEqual(resourceOptions.items.lexiconsShort.filter((item) => item.name === `lexiconsShort-lat`))
-    expect(cmp.vm.lookupLanguage.currentTextValue()).toEqual(cmp.vm.options.items.lookupLanguage.currentTextValue())
+    expect(cmp.vm.lookupLanguage.currentTextValue()).toEqual(cmp.vm.settings.contentOptions.items.lookupLanguage.currentTextValue())
   })
 
   it('4 Lookup - settings block', () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
-      },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
     expect(cmp.vm.showLanguageSettings).toBeFalsy()
@@ -158,62 +166,64 @@ describe('lookup.test.js', () => {
   })
 
   it('5 Lookup - settings block events', () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
-      },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
 
     cmp.vm.settingChange('', 'Greek')
-    expect(cmp.vm.options.items.lookupLanguage.currentTextValue()).toEqual('Greek')
+    expect(cmp.vm.instanceContentOptions.items.lookupLanguage.currentTextValue()).toEqual('Greek')
     expect(cmp.vm.currentLanguage).toEqual('Greek')
 
     cmp.vm.resourceSettingChange('lexiconsShort-grc', ['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
     let keyinfo = resourceOptions.parseKey('lexiconsShort-grc')
 
-    expect(cmp.vm.resourceOptions.items[keyinfo.setting][0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
+    expect(cmp.vm.instanceResourceOptions.items[keyinfo.setting][0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
   })
 
   it('6 Lookup - check required props', () => {
-    let cmp = mount(Lookup)
+    let cmp = mount(Lookup, {
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
+      }
+    })
 
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "uiController"'))
   })
 
   it('7 Lookup - override language check - not checked by default', () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
-      },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
 
     expect(cmp.vm.overrideLanguage).toBeFalsy()
-    expect(cmp.vm.uiController.contentOptions.items.lookupLangOverride.currentValue).toBeFalsy()
+    expect(cmp.vm.settings.contentOptions.items.lookupLangOverride.currentValue).toBeFalsy()
     expect(cmp.vm.showLanguageSettings).toBeFalsy()
   })
 
   it('8 Lookup - override language check - checkboxClick method changes options (true)', () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
-      },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
 
@@ -223,22 +233,20 @@ describe('lookup.test.js', () => {
     cmp.vm.checkboxClick()
 
     expect(cmp.vm.overrideLanguage).toBeTruthy()
-    expect(cmp.vm.uiController.contentOptions.items.lookupLangOverride.currentValue).toBeTruthy()
+    expect(cmp.vm.settings.contentOptions.items.lookupLangOverride.currentValue).toBeTruthy()
     expect(cmp.vm.updateUIbyOverrideLanguage).toBeCalled()
     expect(cmp.vm.switchLookupSettings).toBeCalled()
     expect(cmp.vm.showLanguageSettings).toBeTruthy()
   })
 
   it('8 Lookup - override language check - checkboxClick method changes options (false)', () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
-      },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
 
@@ -246,21 +254,19 @@ describe('lookup.test.js', () => {
 
     cmp.vm.checkboxClick()
     expect(cmp.vm.overrideLanguage).toBeFalsy()
-    expect(cmp.vm.uiController.contentOptions.items.lookupLangOverride.currentValue).toBeFalsy()
-    expect(cmp.vm.currentLanguage).toEqual(cmp.vm.options.items.preferredLanguage.currentTextValue())
-    expect(cmp.vm.options.items.lookupLanguage.currentValue).toEqual(cmp.vm.options.items.preferredLanguage.currentValue)
+    expect(cmp.vm.settings.contentOptions.items.lookupLangOverride.currentValue).toBeFalsy()
+    expect(cmp.vm.currentLanguage).toEqual(cmp.vm.instanceContentOptions.items.preferredLanguage.currentTextValue())
+    expect(cmp.vm.instanceContentOptions.items.lookupLanguage.currentValue).toEqual(cmp.vm.instanceContentOptions.items.preferredLanguage.currentValue)
   })
 
   it('9 Lookup - watch clearLookupText - clears lookuptext and restore show language data from override language check', () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
-      },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
 
@@ -276,23 +282,21 @@ describe('lookup.test.js', () => {
   })
 
   it('9 Lookup - watch uiController.contentOptions.items.lookupLangOverride.currentValue - syncing overrideLanguage', async () => {
-    let contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: { contentOptions: contentOptions, resourceOptions: resourceOptions }
-      },
       mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+        l10n: l10nModule.api(l10nModule.store),
+        settings: {
+          contentOptions,
+          resourceOptions
+        }
       }
     })
     jest.spyOn(cmp.vm, 'updateUIbyOverrideLanguage')
 
     expect(cmp.vm.overrideLanguage).toBeFalsy()
-    expect(cmp.vm.uiController.contentOptions.items.lookupLangOverride.currentValue).toBeFalsy()
+    expect(cmp.vm.settings.contentOptions.items.lookupLangOverride.currentValue).toBeFalsy()
 
-    cmp.vm.uiController.contentOptions.items.lookupLangOverride.setValue(true)
+    cmp.vm.settings.contentOptions.items.lookupLangOverride.setValue(true)
 
     setTimeout(() => {
       expect(cmp.vm.overrideLanguage).toBeTruthy()

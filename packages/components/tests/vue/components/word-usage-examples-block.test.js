@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import { mount } from '@vue/test-utils'
 
-import { Constants, Author, TextWork } from 'alpheios-data-models'
+import { Constants, Author, TextWork, ResourceProvider } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
 
 import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.vue'
@@ -100,16 +100,17 @@ describe('word-usage-examples-block.test.js', () => {
   })
 
   it('4 WordUsageExamplesBlock - renders provider data if exists', async () => {
+    const resourceProviderName = 'Resource Provider'
     let cmp = mount(WordUsageExamplesBlock, {
       propsData: {
         wordUsageList: testWordUsageList.wordUsageExamples,
         targetWord: testWord1,
         language: 'lat',
-        provider: 'fooProvider'
+        provider: new ResourceProvider('https://test.com', resourceProviderName)
       }
     })
     expect(cmp.vm.showWordUsageExampleItems).toBeTruthy()
     expect(cmp.find('.alpheios-word_usage_list__provider')).toBeTruthy()
-    expect(cmp.find('.alpheios-word_usage_list__provider').text()).toEqual('fooProvider')
+    expect(cmp.find('.alpheios-word_usage_list__provider').text()).toEqual(resourceProviderName)
   })
 })

@@ -62,7 +62,6 @@ export default class PopupModule {
           component to identify a new request coming in and to distinguish it from data updates of the current request.
            */
           requestStartTime: 0,
-          verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           defDataReady: false,
           hasTreebank: false,
           inflDataReady: uiController.inflDataReady,

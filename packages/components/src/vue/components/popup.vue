@@ -14,7 +14,7 @@
       <div :lang="data.status.languageCode" class="alpheios-popup__header-text" v-if="data && data.status">
         <span :lang="data.status.languageCode" class="alpheios-popup__header-selection"
               v-show="data.status.selectedText">{{data.status.selectedText}}</span>
-        <span class="alpheios-popup__header-word" lang="en" v-show="data.status.languageName && data.verboseMode">({{data.status.languageName}})</span>
+        <span class="alpheios-popup__header-word" lang="en" v-show="data.status.languageName && verboseMode">({{data.status.languageName}})</span>
       </div>
 
       <div class="alpheios-popup__button-area" v-if="data">
@@ -207,12 +207,7 @@ export default {
       }, this.data ? this.data.styles : {})
     },
     logger: function () {
-      let verbMode = false
-      if (this.data) {
-        console.log(`Verbose = ${this.data.verboseMode}`)
-        verbMode = this.data.verboseMode
-      }
-      return Logger.getLogger(verbMode)
+      return Logger.getLogger(this.verboseMode)
     },
     requestStartTime: function () {
       return (this.data) ? this.data.requestStartTime : null
@@ -388,6 +383,10 @@ export default {
         top: '2px',
         right: '50px'
       }
+    },
+
+    verboseMode () {
+      return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
     }
   },
 

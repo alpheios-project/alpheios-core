@@ -25,7 +25,6 @@ export default class PanelModule {
       data: {
         panelData: {
           tabs: options.tabs,
-          verboseMode: api.settings.contentOptions.items.verboseMode.currentValue === api.app.options.verboseMode,
           currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
@@ -79,7 +78,7 @@ export default class PanelModule {
           wordUsageExamplesData: null
         },
         state: uiController.state,
-        currentPanelComponent: api.app.options.template.defaultPanelComponent,
+        currentPanelComponent: this.options.panelComponent,
         uiController: uiController,
         classesChanged: 0
       },
@@ -104,7 +103,7 @@ export default class PanelModule {
 
           const inflectionsAvailable = Boolean(this.panelData && this.panelData.inflectionComponentData && this.panelData.inflectionComponentData.inflDataReady)
           const grammarAvailable = Boolean(this.panelData && this.panelData.grammarAvailable)
-          const statusAvailable = Boolean(this.panelData && this.panelData.verboseMode)
+          const statusAvailable = Boolean(this.$options.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
 
           // TODO: With state refactoring, eliminate similar code in `panel.vue`
           const treebankTabAvaliable = Boolean(this.panelData && this.panelData.treebankComponentData && this.panelData.treebankComponentData.data &&
@@ -259,5 +258,11 @@ PanelModule.store = () => {
 }
 
 PanelModule.optionsDefaults = {
-  mountPoint: '#alpheios-panel'
+  // A selector that specifies to what DOM element a panel will be mounted.
+  // The element will be replaced with the root element of the panel component.
+  mountPoint: '#alpheios-panel',
+
+  // A name of the panel component defined in `components` section of a Vue instance.
+  // This is a component that will be mounted.
+  panelComponent: 'panel'
 }

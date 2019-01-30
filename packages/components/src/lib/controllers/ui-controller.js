@@ -128,7 +128,8 @@ export default class UIController {
 
     // Register UI modules
     uiController.registerUiModule(PanelModule, {
-      mountPoint: '#alpheios-panel',
+      mountPoint: '#alpheios-panel', // To what element a panel will be mounted
+      panelComponent: 'panel', // A Vue component that will represent a panel
       tabs: uiController.tabState, // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
       uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
     })
@@ -217,7 +218,6 @@ export default class UIController {
       textQuerySelector: 'body',
       uiTypePanel: 'panel',
       uiTypePopup: 'popup',
-      verboseMode: 'verbose',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
@@ -337,7 +337,7 @@ export default class UIController {
     }
 
     this.api.app = {
-      options: this.options, // Application-level options
+      state: this.state, // An app-level state
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this)
@@ -380,7 +380,6 @@ export default class UIController {
     const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
     this.contentOptions.items.lookupLangOverride.setValue(false)
     this.updateLanguage(currentLanguageID)
-    this.updateVerboseMode()
     this.updateLemmaTranslations()
     this.notifyInflectionBrowser()
 
@@ -727,13 +726,6 @@ export default class UIController {
       Vue.set(popup.vi.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
     }
     console.log(`Current language is ${this.state.currentLanguage}`)
-  }
-
-  updateVerboseMode () {
-    this.state.setItem('verboseMode', this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode)
-
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.verboseMode = (this.contentOptions.items.verboseMode.currentValue === this.options.verboseMode) }
   }
 
   updateLemmaTranslations () {
@@ -1133,9 +1125,6 @@ export default class UIController {
         break
       case 'preferredLanguage':
         this.updateLanguage(this.options.items.preferredLanguage.currentValue)
-        break
-      case 'verboseMode':
-        this.updateVerboseMode()
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
