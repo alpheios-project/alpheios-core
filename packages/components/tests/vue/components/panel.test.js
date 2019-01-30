@@ -91,7 +91,6 @@ describe('panel.test.js', () => {
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
-    expect(cmp.vm.uiController).toBeNull()
     expect(cmp.vm.attachToLeftVisible).toBeFalsy()
     expect(cmp.vm.attachToRightVisible).toBeTruthy()
     expect(cmp.vm.positionClasses).toBeNull()

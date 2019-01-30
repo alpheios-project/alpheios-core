@@ -41,7 +41,7 @@ import Setting from './setting.vue'
 
 export default {
   name: 'Lookup',
-  inject: ['ui', 'l10n', 'settings'],
+  inject: ['app', 'ui', 'l10n', 'settings'],
   components: {
     alphTooltip: Tooltip,
     alphSetting: Setting
@@ -60,10 +60,6 @@ export default {
     }
   },
   props: {
-    uiController: {
-      type: Object,
-      required: true
-    },
     parentLanguage: {
       type: String,
       required: false
@@ -120,7 +116,8 @@ export default {
         this.showLanguageSettings = this.overrideLanguage
       }
     },
-    'uiController.contentOptions.items.lookupLangOverride.currentValue': function (value) {
+
+    overrideLanguage: function (value) {
       this.overrideLanguage = value
       this.updateUIbyOverrideLanguage()
     }
@@ -137,11 +134,11 @@ export default {
 
       let textSelector = TextSelector.createObjectFromText(this.lookuptext, languageID)
 
-      this.uiController.updateLanguage(this.instanceContentOptions.items.lookupLanguage.currentValue)
+      this.app.updateLanguage(this.instanceContentOptions.items.lookupLanguage.currentValue)
       this.instanceResourceOptions.items.lexicons = this.settings.resourceOptions.items.lexicons
 
       const resourceOptions = this.instanceResourceOptions || this.settings.resourceOptions
-      const lemmaTranslationLang = this.uiController.state.lemmaTranslationLang
+      const lemmaTranslationLang = this.app.state.lemmaTranslationLang
       LexicalQueryLookup
         .create(textSelector, resourceOptions, lemmaTranslationLang)
         .getData()

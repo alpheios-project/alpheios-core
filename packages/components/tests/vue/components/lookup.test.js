@@ -50,9 +50,6 @@ describe('lookup.test.js', () => {
 
   it('1 Lookup - renders a vue instance (min requirements)', () => {
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: null
-      },
       mocks: {
         l10n: l10nModule.api(l10nModule.store),
         settings: {
@@ -73,11 +70,6 @@ describe('lookup.test.js', () => {
     }
 
     let cmp = mount(Lookup, {
-      propsData: {
-        uiController: {
-          updateLanguage: function () {}
-        }
-      },
       mocks: {
         l10n: l10nModule.api(l10nModule.store),
         settings: {
@@ -186,21 +178,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.instanceResourceOptions.items[keyinfo.setting][0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
   })
 
-  it('6 Lookup - check required props', () => {
-    let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
-    })
-
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "uiController"'))
-  })
-
-  it('7 Lookup - override language check - not checked by default', () => {
+  it('6 Lookup - override language check - not checked by default', () => {
     let cmp = mount(Lookup, {
       mocks: {
         l10n: l10nModule.api(l10nModule.store),
@@ -216,7 +194,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.showLanguageSettings).toBeFalsy()
   })
 
-  it('8 Lookup - override language check - checkboxClick method changes options (true)', () => {
+  it('7 Lookup - override language check - checkboxClick method changes options (true)', () => {
     let cmp = mount(Lookup, {
       mocks: {
         l10n: l10nModule.api(l10nModule.store),
@@ -281,7 +259,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.overrideLanguage).toBeTruthy()
   })
 
-  it('9 Lookup - watch uiController.contentOptions.items.lookupLangOverride.currentValue - syncing overrideLanguage', async () => {
+  it('10 Lookup - watch uiController.contentOptions.items.lookupLangOverride.currentValue - syncing overrideLanguage', async () => {
     let cmp = mount(Lookup, {
       mocks: {
         l10n: l10nModule.api(l10nModule.store),

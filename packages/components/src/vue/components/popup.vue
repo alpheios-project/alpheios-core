@@ -95,8 +95,7 @@
                :show-title="false" @change="contentOptionChanged"
                v-show="data.notification.showLanguageSwitcher"></setting>
     </div>
-    <lookup :clearLookupText="hasMorphData && morphDataReady" :parentLanguage="currentLanguageName"
-            :uiController="uiController"></lookup>
+    <lookup :clearLookupText="hasMorphData && morphDataReady" :parentLanguage="currentLanguageName"></lookup>
   </div>
 </template>
 <script>
@@ -194,9 +193,6 @@ export default {
   computed: {
     divClasses () {
       return this.data && this.data.classes ? this.data.classes.join(' ') : ''
-    },
-    uiController: function () {
-      return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
     },
     mainstyles: function () {
       return Object.assign({

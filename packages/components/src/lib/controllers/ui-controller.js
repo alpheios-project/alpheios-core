@@ -340,7 +340,8 @@ export default class UIController {
       state: this.state, // An app-level state
 
       // TODO: Some of the functions below should probably belong to other API groups.
-      contentOptionChange: this.contentOptionChange.bind(this)
+      contentOptionChange: this.contentOptionChange.bind(this),
+      updateLanguage: this.updateLanguage.bind(this)
     }
 
     /**
@@ -705,6 +706,7 @@ export default class UIController {
   }
 
   updateLanguage (currentLanguageID) {
+    console.log(`Update language`, currentLanguageID)
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
@@ -1118,13 +1120,14 @@ export default class UIController {
     }
     switch (name) {
       case 'locale':
+        // TODO: It seems that presenter is never defined. Do we need it?
         if (this.presenter) {
-          this.presenter.setLocale(this.options.items.locale.currentValue)
+          this.presenter.setLocale(this.api.settings.contentOptions.items.locale.currentValue)
         }
         this.updateLemmaTranslations()
         break
       case 'preferredLanguage':
-        this.updateLanguage(this.options.items.preferredLanguage.currentValue)
+        this.updateLanguage(this.api.settings.contentOptions.items.preferredLanguage.currentValue)
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()

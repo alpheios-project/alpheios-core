@@ -117,8 +117,7 @@
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
            v-show="data.tabs.definitions">
         <div class="alpheios-lookup__panel">
-          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"
-                  :uiController="uiController"></lookup>
+          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
         <div
             v-if="showDefinitionsPlaceholder">
@@ -216,8 +215,7 @@
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
            v-show="data.tabs.info">
         <div class="alpheios-lookup__panel" v-if="data.infoComponentData">
-          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"
-                  :uiController="uiController"></lookup>
+          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
         <info :data="data.infoComponentData" v-if="data.infoComponentData"></info>
       </div>
@@ -351,9 +349,6 @@ export default {
     },
     inflectionBrowserLanguageID: function () {
       return this.data.currentLanguageID
-    },
-    uiController: function () {
-      return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
     },
     mainstyles: function () {
       let mainstyles = (this.data) ? this.data.styles : {}
