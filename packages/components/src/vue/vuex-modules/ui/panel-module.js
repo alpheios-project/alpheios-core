@@ -1,6 +1,5 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Panel from '@/vue/components/panel.vue'
-import { getLanguageName } from '@/lib/utility/language-names.js'
 
 // TODO: Add a check for required modules
 export default class PanelModule {
@@ -25,7 +24,6 @@ export default class PanelModule {
       data: {
         panelData: {
           tabs: options.tabs,
-          currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
           lexemes: [],
@@ -44,11 +42,6 @@ export default class PanelModule {
           inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
-          infoComponentData: {
-            appInfo: uiController.options.app,
-            // A string containing a language name
-            languageName: getLanguageName(uiController.state.currentLanguage).name
-          },
           messages: [],
           notification: {
             visible: false,
@@ -77,7 +70,6 @@ export default class PanelModule {
           auth: uiController.auth,
           wordUsageExamplesData: null
         },
-        state: uiController.state,
         currentPanelComponent: this.options.panelComponent,
         uiController: uiController,
         classesChanged: 0
@@ -119,7 +111,7 @@ export default class PanelModule {
             name = this.$options.uiController.tabStateDefault
           }
           this.panelData.tabs[name] = true
-          this.state.changeTab(name) // Reflect a tab change in a state
+          this.$options.api.app.state.changeTab(name) // Reflect a tab change in a state
           return this
         },
 
@@ -161,9 +153,9 @@ export default class PanelModule {
           this.panelData.notification.visible = true
           let languageName
           if (homonym) {
-            languageName = getLanguageName(homonym.languageID).name
-          } else if (this.panelData.infoComponentData.languageName) {
-            languageName = this.panelData.infoComponentData.languageName.name
+            languageName = this.$options.api.app.getLanguageName(homonym.languageID).name
+          } else if (this.$store.state.app.currentLanguageName) {
+            languageName = this.$store.state.app.currentLanguageName
           } else {
             languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN') // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
           }
@@ -179,7 +171,7 @@ export default class PanelModule {
         },
 
         showStatusInfo: function (selectionText, languageID) {
-          let langDetails = getLanguageName(languageID)
+          let langDetails = this.$options.api.app.getLanguageName(languageID)
           this.panelData.status.languageName = langDetails.name
           this.panelData.status.languageCode = langDetails.code
           this.panelData.status.selectedText = selectionText
@@ -206,7 +198,7 @@ export default class PanelModule {
         },
 
         toggle: function () {
-          if (this.state.isPanelOpen()) {
+          if (this.$options.api.app.state.isPanelOpen()) {
             this.close()
           } else {
             this.open()

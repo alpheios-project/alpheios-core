@@ -1,11 +1,10 @@
 /* global Event */
-import { Lexeme, Feature, Definition, LanguageModelFactory, Constants } from 'alpheios-data-models'
+import { Constants, Definition, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Vuex from 'vuex'
-
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import Locales from '@/locales/locales.js'
@@ -337,12 +336,34 @@ export default class UIController {
     }
 
     this.api.app = {
+      name: this.options.app.name, // A name of an application
+      version: this.options.app.version, // An application's version
       state: this.state, // An app-level state
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this),
-      updateLanguage: this.updateLanguage.bind(this)
+      updateLanguage: this.updateLanguage.bind(this),
+      getLanguageName: UIController.getLanguageName
     }
+
+    this.store.registerModule('app', {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        currentLanguageID: undefined,
+        currentLanguageName: undefined
+      },
+      mutations: {
+        setLanguage (state, languageCodeOrID) {
+          let name
+          let id
+          ({ id, name } = UIController.getLanguageName(languageCodeOrID))
+          state.currentLanguageID = id
+          state.currentLanguageName = name
+        }
+      }
+    })
 
     /**
      * This is a UI-level public API of a UI controller. All objects should use this public API only.
@@ -520,9 +541,9 @@ export default class UIController {
   static getLanguageName (language) {
     let langID
     let langCode // eslint-disable-line
-    // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
+      // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
     ;({ languageID: langID, languageCode: langCode } = LanguageModelFactory.getLanguageAttrs(language))
-    return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode }
+    return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode, id: langID }
   }
 
   showLanguageInfo (homonym) {
@@ -706,26 +727,21 @@ export default class UIController {
   }
 
   updateLanguage (currentLanguageID) {
-    console.log(`Update language`, currentLanguageID)
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
       console.warn('updateLanguage was called with a string value')
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
+    this.store.commit('app/setLanguage', currentLanguageID)
     this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
 
     if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
-      panel.vi.panelData.currentLanguageID = currentLanguageID
-      panel.vi.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID).name
+      this.getUiModule('panel').vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
     }
 
     if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.popupData.inflDataReady = this.inflDataReady
-      Vue.set(popup.vi.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
+      this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady
     }
     console.log(`Current language is ${this.state.currentLanguage}`)
   }

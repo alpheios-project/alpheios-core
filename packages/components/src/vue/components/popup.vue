@@ -231,10 +231,10 @@ export default {
       return (this.data && this.data.morphDataReady) ? this.data.morphDataReady : false
     },
     noLanguage: function () {
-      return (this.data) ? this.data.currentLanguageName === undefined : false
+      return (this.data) ? this.$store.state.app.currentLanguageName === undefined : false
     },
     currentLanguageName: function () {
-      return (this.data) ? this.data.currentLanguageName : null
+      return (this.data) ? this.$store.state.app.currentLanguageName : null
     },
     notificationClasses: function () {
       return {

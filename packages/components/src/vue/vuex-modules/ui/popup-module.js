@@ -1,6 +1,5 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Popup from '@/vue/components/popup.vue'
-import { getLanguageName } from '@/lib/utility/language-names.js'
 
 // TODO: Add a check for required modules
 export default class PopupModule {
@@ -84,7 +83,6 @@ export default class PopupModule {
             languageName: '',
             languageCode: ''
           },
-          currentLanguage: null,
           styles: {
             zIndex: uiController.zIndex
           }
@@ -131,9 +129,9 @@ export default class PopupModule {
           this.popupData.notification.visible = true
           let languageName
           if (homonym) {
-            languageName = getLanguageName(homonym.languageID).name
-          } else if (this.popupData.currentLanguageName) {
-            languageName = this.popupData.currentLanguageName
+            languageName = this.$options.api.app.getLanguageName(homonym.languageID).name
+          } else if (this.$store.state.app.currentLanguageName) {
+            languageName = this.$store.state.app.currentLanguageName
           } else {
             // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
             languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
@@ -149,7 +147,7 @@ export default class PopupModule {
         },
 
         showStatusInfo: function (selectionText, languageID) {
-          let langDetails = getLanguageName(languageID)
+          let langDetails = this.$options.api.app.getLanguageName(languageID)
           this.popupData.status.languageName = langDetails.name
           this.popupData.status.languageCode = langDetails.code
           this.popupData.status.selectedText = selectionText
@@ -231,7 +229,7 @@ export default class PopupModule {
               this.$options.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
-              this.$options.uiController.updateLanguage(this.$options.items.preferredLanguage.currentValue)
+              this.$options.api.app.updateLanguage(this.$options.items.preferredLanguage.currentValue)
               break
           }
         }

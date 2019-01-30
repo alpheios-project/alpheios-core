@@ -67,11 +67,6 @@ export default class PanelCompactModule {
             viewSelector: 'alpheios-panel-content-infl-table-view-selector',
             tableBody: 'alpheios-panel-content-infl-table-body'
           },
-          infoComponentData: {
-            appInfo: uiController.options.app,
-            // A string containing a language name
-            languageName: getLanguageName(uiController.state.currentLanguage).name
-          },
           messages: [],
           notification: {
             visible: false,

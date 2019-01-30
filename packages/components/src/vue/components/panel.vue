@@ -214,10 +214,10 @@
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
            v-show="data.tabs.info">
-        <div class="alpheios-lookup__panel" v-if="data.infoComponentData">
+        <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
-        <info :data="data.infoComponentData" v-if="data.infoComponentData"></info>
+        <info></info>
       </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"
@@ -341,14 +341,14 @@ export default {
       return true
     },
     lookupParentLanguage: function () {
-      if (this.data.infoComponentData) {
-        return this.data.infoComponentData.languageName
+      if (this.$store.state.app.currentLanguageName) {
+        return this.$store.state.app.currentLanguageName
       } else {
         return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }
     },
     inflectionBrowserLanguageID: function () {
-      return this.data.currentLanguageID
+      return this.$store.state.app.currentLanguageID
     },
     mainstyles: function () {
       let mainstyles = (this.data) ? this.data.styles : {}

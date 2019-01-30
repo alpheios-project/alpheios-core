@@ -10267,17 +10267,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Info',
-  inject: ['l10n'],
-  props: {
-    data: {
-      type: Object,
-      required: true
-    }
-  }
+  inject: ['app', 'l10n']
 });
 
 
@@ -11289,14 +11282,14 @@ __webpack_require__.r(__webpack_exports__);
       return true
     },
     lookupParentLanguage: function () {
-      if (this.data.infoComponentData) {
-        return this.data.infoComponentData.languageName
+      if (this.$store.state.app.currentLanguageName) {
+        return this.$store.state.app.currentLanguageName
       } else {
         return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }
     },
     inflectionBrowserLanguageID: function () {
-      return this.data.currentLanguageID
+      return this.$store.state.app.currentLanguageID
     },
     mainstyles: function () {
       let mainstyles = (this.data) ? this.data.styles : {}
@@ -11940,10 +11933,10 @@ __webpack_require__.r(__webpack_exports__);
       return (this.data && this.data.morphDataReady) ? this.data.morphDataReady : false
     },
     noLanguage: function () {
-      return (this.data) ? this.data.currentLanguageName === undefined : false
+      return (this.data) ? this.$store.state.app.currentLanguageName === undefined : false
     },
     currentLanguageName: function () {
-      return (this.data) ? this.data.currentLanguageName : null
+      return (this.data) ? this.$store.state.app.currentLanguageName : null
     },
     notificationClasses: function () {
       return {
@@ -15786,20 +15779,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "alpheios-info uk-margin" }, [
-    _vm.data.appInfo
-      ? _c(
-          "div",
-          { staticClass: "alpheios-info__versiontext alpheios-text__smallest" },
-          [
-            _vm._v(
-              _vm._s(_vm.data.appInfo.name) +
-                " " +
-                _vm._s(_vm.data.appInfo.version) +
-                "\n  "
-            )
-          ]
-        )
-      : _vm._e(),
+    _c(
+      "div",
+      { staticClass: "alpheios-info__versiontext alpheios-text__smallest" },
+      [_vm._v(_vm._s(_vm.app.name) + " " + _vm._s(_vm.app.version) + "\n  ")]
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -15808,7 +15792,7 @@ var render = function() {
         _vm._v(
           _vm._s(_vm.l10n.getMsg("LABEL_INFO_CURRENTLANGUAGE")) +
             "\n    " +
-            _vm._s(_vm.data.languageName) +
+            _vm._s(_vm.$store.state.app.currentLanguageName) +
             "\n  "
         )
       ]
@@ -17718,25 +17702,21 @@ var render = function() {
                   "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
               },
               [
-                _vm.data.infoComponentData
-                  ? _c(
-                      "div",
-                      { staticClass: "alpheios-lookup__panel" },
-                      [
-                        _c("lookup", {
-                          attrs: {
-                            clearLookupText: _vm.clearLookupText,
-                            parentLanguage: _vm.lookupParentLanguage
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  : _vm._e(),
+                _c(
+                  "div",
+                  { staticClass: "alpheios-lookup__panel" },
+                  [
+                    _c("lookup", {
+                      attrs: {
+                        clearLookupText: _vm.clearLookupText,
+                        parentLanguage: _vm.lookupParentLanguage
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _vm.data.infoComponentData
-                  ? _c("info", { attrs: { data: _vm.data.infoComponentData } })
-                  : _vm._e()
+                _c("info")
               ],
               1
             )
@@ -32047,7 +32027,6 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___names
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
  // Vue in a runtime + compiler configuration
 
-
 // Modules and their support dependencies
 
 
@@ -32379,12 +32358,34 @@ class UIController {
     }
 
     this.api.app = {
+      name: this.options.app.name, // A name of an application
+      version: this.options.app.version, // An application's version
       state: this.state, // An app-level state
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this),
-      updateLanguage: this.updateLanguage.bind(this)
+      updateLanguage: this.updateLanguage.bind(this),
+      getLanguageName: UIController.getLanguageName
     }
+
+    this.store.registerModule('app', {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        currentLanguageID: undefined,
+        currentLanguageName: undefined
+      },
+      mutations: {
+        setLanguage (state, languageCodeOrID) {
+          let name
+          let id
+          ({ id, name } = UIController.getLanguageName(languageCodeOrID))
+          state.currentLanguageID = id
+          state.currentLanguageName = name
+        }
+      }
+    })
 
     /**
      * This is a UI-level public API of a UI controller. All objects should use this public API only.
@@ -32562,9 +32563,9 @@ class UIController {
   static getLanguageName (language) {
     let langID
     let langCode // eslint-disable-line
-    // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
+      // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
     ;({ languageID: langID, languageCode: langCode } = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageAttrs(language))
-    return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode }
+    return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode, id: langID }
   }
 
   showLanguageInfo (homonym) {
@@ -32748,26 +32749,21 @@ class UIController {
   }
 
   updateLanguage (currentLanguageID) {
-    console.log(`Update language`, currentLanguageID)
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
       console.warn('updateLanguage was called with a string value')
       currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(currentLanguageID)
     }
+    this.store.commit('app/setLanguage', currentLanguageID)
     this.state.setItem('currentLanguage', alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(currentLanguageID))
 
     if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
-      panel.vi.panelData.currentLanguageID = currentLanguageID
-      panel.vi.panelData.infoComponentData.languageName = UIController.getLanguageName(currentLanguageID).name
+      this.getUiModule('panel').vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
     }
 
     if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.popupData.inflDataReady = this.inflDataReady
-      vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.set(popup.vi.popupData, 'currentLanguageName', UIController.getLanguageName(currentLanguageID).name)
+      this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady
     }
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
@@ -37204,41 +37200,6 @@ HTMLPage.targetRequirements = {
 
 /***/ }),
 
-/***/ "./lib/utility/language-names.js":
-/*!***************************************!*\
-  !*** ./lib/utility/language-names.js ***!
-  \***************************************/
-/*! exports provided: getLanguageName */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLanguageName", function() { return getLanguageName; });
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-
-
-const languageNames = new Map([
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_LATIN, 'Latin'],
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK, 'Greek'],
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_ARABIC, 'Arabic'],
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN, 'Persian'],
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
-])
-
-const getLanguageName = language => {
-  let langID
-  let langCode // eslint-disable-line
-    // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
-  ;({ languageID: langID, languageCode: langCode } = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageAttrs(language))
-  return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode }
-}
-
-
-
-
-/***/ }),
-
 /***/ "./locales/en-gb/messages.json":
 /*!*************************************!*\
   !*** ./locales/en-gb/messages.json ***!
@@ -40313,9 +40274,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/panel.vue */ "./vue/components/panel.vue");
-/* harmony import */ var _lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/utility/language-names.js */ "./lib/utility/language-names.js");
  // Vue in a runtime + compiler configuration
-
 
 
 // TODO: Add a check for required modules
@@ -40341,7 +40300,6 @@ class PanelModule {
       data: {
         panelData: {
           tabs: options.tabs,
-          currentLanguageID: null,
           grammarAvailable: false,
           grammarRes: {},
           lexemes: [],
@@ -40360,11 +40318,6 @@ class PanelModule {
           inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
-          infoComponentData: {
-            appInfo: uiController.options.app,
-            // A string containing a language name
-            languageName: Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(uiController.state.currentLanguage).name
-          },
           messages: [],
           notification: {
             visible: false,
@@ -40393,7 +40346,6 @@ class PanelModule {
           auth: uiController.auth,
           wordUsageExamplesData: null
         },
-        state: uiController.state,
         currentPanelComponent: this.options.panelComponent,
         uiController: uiController,
         classesChanged: 0
@@ -40435,7 +40387,7 @@ class PanelModule {
             name = this.$options.uiController.tabStateDefault
           }
           this.panelData.tabs[name] = true
-          this.state.changeTab(name) // Reflect a tab change in a state
+          this.$options.api.app.state.changeTab(name) // Reflect a tab change in a state
           return this
         },
 
@@ -40477,9 +40429,9 @@ class PanelModule {
           this.panelData.notification.visible = true
           let languageName
           if (homonym) {
-            languageName = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(homonym.languageID).name
-          } else if (this.panelData.infoComponentData.languageName) {
-            languageName = this.panelData.infoComponentData.languageName.name
+            languageName = this.$options.api.app.getLanguageName(homonym.languageID).name
+          } else if (this.$store.state.app.currentLanguageName) {
+            languageName = this.$store.state.app.currentLanguageName
           } else {
             languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN') // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
           }
@@ -40495,7 +40447,7 @@ class PanelModule {
         },
 
         showStatusInfo: function (selectionText, languageID) {
-          let langDetails = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(languageID)
+          let langDetails = this.$options.api.app.getLanguageName(languageID)
           this.panelData.status.languageName = langDetails.name
           this.panelData.status.languageCode = langDetails.code
           this.panelData.status.selectedText = selectionText
@@ -40522,7 +40474,7 @@ class PanelModule {
         },
 
         toggle: function () {
-          if (this.state.isPanelOpen()) {
+          if (this.$options.api.app.state.isPanelOpen()) {
             this.close()
           } else {
             this.open()
@@ -40599,9 +40551,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/popup.vue */ "./vue/components/popup.vue");
-/* harmony import */ var _lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/utility/language-names.js */ "./lib/utility/language-names.js");
  // Vue in a runtime + compiler configuration
-
 
 
 // TODO: Add a check for required modules
@@ -40686,7 +40636,6 @@ class PopupModule {
             languageName: '',
             languageCode: ''
           },
-          currentLanguage: null,
           styles: {
             zIndex: uiController.zIndex
           }
@@ -40733,9 +40682,9 @@ class PopupModule {
           this.popupData.notification.visible = true
           let languageName
           if (homonym) {
-            languageName = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(homonym.languageID).name
-          } else if (this.popupData.currentLanguageName) {
-            languageName = this.popupData.currentLanguageName
+            languageName = this.$options.api.app.getLanguageName(homonym.languageID).name
+          } else if (this.$store.state.app.currentLanguageName) {
+            languageName = this.$store.state.app.currentLanguageName
           } else {
             // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
             languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
@@ -40751,7 +40700,7 @@ class PopupModule {
         },
 
         showStatusInfo: function (selectionText, languageID) {
-          let langDetails = Object(_lib_utility_language_names_js__WEBPACK_IMPORTED_MODULE_2__["getLanguageName"])(languageID)
+          let langDetails = this.$options.api.app.getLanguageName(languageID)
           this.popupData.status.languageName = langDetails.name
           this.popupData.status.languageCode = langDetails.code
           this.popupData.status.selectedText = selectionText
@@ -40833,7 +40782,7 @@ class PopupModule {
               this.$options.uiController.updateLemmaTranslations()
               break
             case 'preferredLanguage':
-              this.$options.uiController.updateLanguage(this.$options.items.preferredLanguage.currentValue)
+              this.$options.api.app.updateLanguage(this.$options.items.preferredLanguage.currentValue)
               break
           }
         }
