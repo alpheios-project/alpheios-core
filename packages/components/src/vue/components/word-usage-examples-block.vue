@@ -9,9 +9,7 @@
       ></word-usage-example-item>
     </div>
     <div class="alpheios-word_usage_list__provider" v-if="provider">
-      <div v-for="rightsItem in providerRights" :key="rightsItem.key">
-        {{ rightsItem.value }}
-      </div>
+      {{provider.toString()}}
     </div>
   </div>
 </template>

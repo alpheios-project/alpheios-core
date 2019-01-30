@@ -86,7 +86,11 @@
     "description": "tooltip for button options",
     "component": "Popup"
   },
-
+  "TOOLTIP_SHOW_USAGEEXAMPLES": {
+    "message": "Show example usages of this word",
+    "description": "tooltop for word usage examples button",
+    "component": "Popup"
+  },
   "PLACEHOLDER_DEFINITIONS":  {
     "message": "Lookup a word to show definitions...",
     "description": "placeholder for definitions panel",
@@ -224,6 +228,11 @@
   "LABEL_POPUP_DEFINE": {
     "message": "Define",
     "description": "label for define button on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_USAGEEXAMPLES": {
+    "message": "Examples",
+    "description": "label for usage examples button on popup",
     "component": "Popup"
   },
   "PLACEHOLDER_POPUP_DATA": {

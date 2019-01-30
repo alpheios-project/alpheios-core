@@ -66,12 +66,12 @@
       ]
     },
     "wordUsageExamplesMax": {
-      "defaultValue": 5,
+      "defaultValue": 50,
       "labelText": "Word Usage Examples - max results",
       "number": true,
       "values": []
     },
-    
+
     "panelPosition": {
       "defaultValue": "left",
       "labelText": "Panel position:",

@@ -777,6 +777,7 @@ export default class UIController {
     if (this.hasUiModule('panel')) {
       this.getUiModule('panel').vi.panelData.wordUsageExamplesData = wordUsageExamplesData
     }
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.wordUsageExamplesDataReady = true }
   }
 
   lexicalRequestComplete () {

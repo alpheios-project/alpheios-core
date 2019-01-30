@@ -14,7 +14,7 @@ describe('word-usage-examples-block.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
-  let testWordUsageList, testWord1
+  let testWordUsageList, testWord1, mockProvider
 
   beforeAll(async () => {
     let testAuthor = new Author('urn:cts:latinLit:phi0690', { "eng": "Virgil" })
@@ -47,6 +47,7 @@ describe('word-usage-examples-block.test.js', () => {
     })
 
     testWordUsageList = adapterConcordanceRes.result
+    mockProvider = { toString: () => { return 'fooProvider'} }
   })
 
   beforeEach(() => {
@@ -60,14 +61,14 @@ describe('word-usage-examples-block.test.js', () => {
   afterAll(() => {
     jest.clearAllMocks()
   })
-  
+
   it('1 WordUsageExamplesBlock - checks if component mounts properly', async () => {
     let cmp = mount(WordUsageExamplesBlock, {
       propsData: {
         wordUsageList: testWordUsageList.wordUsageExamples,
         targetWord: testWord1,
         language: 'lat',
-        provider: 'fooProvider'
+        provider: mockProvider
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
@@ -79,7 +80,7 @@ describe('word-usage-examples-block.test.js', () => {
         wordUsageList: [],
         targetWord: testWord1,
         language: 'lat',
-        provider: 'fooProvider'
+        provider: mockProvider
       }
     })
     expect(cmp.vm.showWordUsageExampleItems).toBeFalsy()
@@ -92,7 +93,7 @@ describe('word-usage-examples-block.test.js', () => {
         wordUsageList: testWordUsageList.wordUsageExamples,
         targetWord: testWord1,
         language: 'lat',
-        provider: 'fooProvider'
+        provider: mockProvider
       }
     })
     expect(cmp.vm.showWordUsageExampleItems).toBeTruthy()
