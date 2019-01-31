@@ -130,9 +130,9 @@
              v-html="data.fullDefinitions"></div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="data.inflectionComponentData.inflDataReady && settings.contentOptions.items" v-show="inflectionsTabVisible">
+           v-if="data.inflectionComponentData.inflDataReady" v-show="inflectionsTabVisible">
         <inflections :data="data.inflectionComponentData" :inflections-enabled="data.inflectionsEnabled"
-                     :locale="settings.contentOptions.items.locale.currentValue" :wait-state="data.inflectionsWaitState"
+                     :wait-state="data.inflectionsWaitState"
                      @contentwidth="setContentWidth" class="alpheios-panel-inflections">
         </inflections>
       </div>
@@ -468,14 +468,6 @@ export default {
     }
   },
   methods: {
-    updateZIndex: function (zIndexMax) {
-      if (zIndexMax >= this.zIndex) {
-        this.zIndex = zIndexMax
-        if (this.zIndex < Number.POSITIVE_INFINITY) { this.zIndex++ } // To be one level higher that the highest element on a page
-        this.self.element.style.zIndex = this.zIndex
-      }
-    },
-
     closeNotifications () {
       this.$emit('closenotifications')
     },

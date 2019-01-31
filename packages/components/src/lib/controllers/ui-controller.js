@@ -338,12 +338,15 @@ export default class UIController {
     this.api.app = {
       name: this.options.app.name, // A name of an application
       version: this.options.app.version, // An application's version
+      zIndex: this.zIndex, // A z-index of Alpheios UI elements
+      defaultTab: this.tabStateDefault, // A name of a default tab (a string)
       state: this.state, // An app-level state
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
-      getLanguageName: UIController.getLanguageName
+      getLanguageName: UIController.getLanguageName,
+      startResourceQuery: this.startResourceQuery.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -735,10 +738,7 @@ export default class UIController {
     }
     this.store.commit('app/setLanguage', currentLanguageID)
     this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
-
-    if (this.hasUiModule('panel')) {
-      this.getUiModule('panel').vi.requestGrammar({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
-    }
+    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
     if (this.hasUiModule('popup')) {
       this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady

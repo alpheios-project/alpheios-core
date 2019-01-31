@@ -92,7 +92,7 @@ export default class PanelCompactModule {
           uiOptions: uiController.uiOptions,
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
-            zIndex: uiController.zIndex
+            zIndex: api.app.zIndex
           },
           minWidth: 400,
           auth: uiController.auth
@@ -234,10 +234,6 @@ export default class PanelCompactModule {
             this.open()
           }
           return this
-        },
-
-        requestGrammar: function (feature) {
-          this.$options.uiController.startResourceQuery(feature)
         },
 
         settingChange: function (name, value) {

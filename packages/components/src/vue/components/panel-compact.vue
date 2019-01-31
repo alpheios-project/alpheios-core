@@ -432,14 +432,6 @@ export default {
     }
   },
   methods: {
-    updateZIndex: function (zIndexMax) {
-      if (zIndexMax >= this.zIndex) {
-        this.zIndex = zIndexMax
-        if (this.zIndex < Number.POSITIVE_INFINITY) { this.zIndex++ } // To be one level higher that the highest element on a page
-        this.self.element.style.zIndex = this.zIndex
-      }
-    },
-
     closeNotifications () {
       this.$emit('closenotifications')
     },

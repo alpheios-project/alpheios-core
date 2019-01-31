@@ -85,12 +85,10 @@ export default class PopupModule {
             languageCode: ''
           },
           styles: {
-            zIndex: uiController.zIndex
+            zIndex: api.app.zIndex
           }
         },
-        options: uiController.contentOptions,
         currentPopupComponent: uiController.options.template.defaultPopupComponent,
-        uiController: uiController,
         classesChanged: 0
       },
       methods: {
@@ -213,7 +211,8 @@ export default class PopupModule {
         sendFeature: function (feature) {
           if (this.$options.api.ui.hasModule('panel')) {
             const panel = this.$options.api.ui.getModule('panel')
-            panel.vi.requestGrammar(feature)
+            this.$options.api.app.startResourceQuery(feature)
+            // panel.vi.requestGrammar(feature)
             panel.vi.changeTab('grammar')
             this.$options.api.ui.openPanel()
           }

@@ -64,14 +64,13 @@ export default class PanelModule {
           },
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
-            zIndex: uiController.zIndex
+            zIndex: api.app.zIndex
           },
           minWidth: 400,
           auth: uiController.auth,
           wordUsageExamplesData: null
         },
         currentPanelComponent: this.options.panelComponent,
-        uiController: uiController,
         classesChanged: 0
       },
       methods: {
@@ -108,7 +107,7 @@ export default class PanelModule {
             (!treebankTabAvaliable && name === 'treebank') ||
             (!statusAvailable && name === 'status')
           ) {
-            name = this.$options.uiController.tabStateDefault
+            name = this.$options.api.app.defaultTab
           }
           this.panelData.tabs[name] = true
           this.$options.api.app.state.changeTab(name) // Reflect a tab change in a state
@@ -204,10 +203,6 @@ export default class PanelModule {
             this.open()
           }
           return this
-        },
-
-        requestGrammar: function (feature) {
-          this.$options.uiController.startResourceQuery(feature)
         }
       }
     })
