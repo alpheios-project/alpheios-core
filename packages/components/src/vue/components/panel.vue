@@ -63,7 +63,7 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow">
+              <alph-tooltip v-if="Boolean(auth)" :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('user')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.user }">
                   <user-icon class="alpheios-icon"></user-icon>
@@ -270,7 +270,15 @@ import interact from 'interactjs'
 
 export default {
   name: 'Panel',
-  inject: ['app', 'ui', 'language', 'l10n', 'settings'], // API modules that are required for this component
+  // API modules that are required for this component
+  inject: {
+    app: 'app',
+    ui: 'ui',
+    language: 'language',
+    l10n: 'l10n',
+    settings: 'settings',
+    auth: { from: 'auth', default: null } // This module is options
+  },
   storeModules: ['panel'], // Store modules that are required by this component
   components: {
     inflections: Inflections,

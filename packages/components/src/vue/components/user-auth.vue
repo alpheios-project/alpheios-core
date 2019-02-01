@@ -39,10 +39,11 @@
 
 export default {
   name: 'UserAuth',
-  inject: ['l10n'], // Specify what API modules are we going to use
-  props: {
-    auth: [Object, Function]
+  inject: {
+    l10n: 'l10n',
+    auth: { from: 'auth', default: null } // This module is options
   },
+  // inject: ['auth', 'l10n'], // Specify what API modules are we going to use
   data: function () {
     return {
       isLoggedIn: false,
@@ -84,7 +85,7 @@ export default {
 
     getUserInfo: function () {
       if (this.auth) {
-        // Retrieve user profile data
+      // Retrieve user profile data
         this.auth.getProfileData()
           .then(profileData => {
             console.log(`User info retrieved:`, profileData)

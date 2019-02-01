@@ -4,8 +4,6 @@ import Panel from '@/vue/components/panel.vue'
 // TODO: Add a check for required modules
 export default class PanelModule {
   constructor (store, api, options) {
-    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
-    const uiController = options.uiController
     this.options = Object.assign(PanelModule.optionsDefaults, options)
 
     this.vi = new Vue({
@@ -17,7 +15,6 @@ export default class PanelModule {
       let's assign APIs to a custom prop to have access to it
        */
       api: api,
-      uiController: uiController, // TODO: Remove during refactoring
       components: {
         panel: Panel
       },
@@ -67,7 +64,6 @@ export default class PanelModule {
             zIndex: api.app.zIndex
           },
           minWidth: 400,
-          auth: uiController.auth,
           wordUsageExamplesData: null
         },
         currentPanelComponent: this.options.panelComponent,

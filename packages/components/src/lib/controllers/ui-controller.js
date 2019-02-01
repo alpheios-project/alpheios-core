@@ -7,6 +7,7 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Vuex from 'vuex'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 import Locales from '@/locales/locales.js'
 import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
 import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
@@ -106,8 +107,6 @@ export default class UIController {
     this.evc = null
 
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
-
-    this.auth = null // An object used for user's authorization
   }
 
   /**
@@ -124,13 +123,14 @@ export default class UIController {
 
     // Register data modules
     uiController.registerDataModule(L10nModule, Locales.en_US, Locales.bundleArr())
+    uiController.registerDataModule(AuthModule,
+      undefined /* It should have an app or background authenticator as a second parameter or it will not work */)
 
     // Register UI modules
     uiController.registerUiModule(PanelModule, {
       mountPoint: '#alpheios-panel', // To what element a panel will be mounted
       panelComponent: 'panel', // A Vue component that will represent a panel
-      tabs: uiController.tabState, // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
-      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
+      tabs: uiController.tabState // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
     })
     uiController.registerUiModule(PopupModule, {
       mountPoint: '#alpheios-popup',
