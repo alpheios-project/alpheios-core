@@ -10,6 +10,7 @@ export default class IndexedDBAdapter {
   constructor (dbDriver) {
     this.available = this._initIndexedDBNamespaces()
     this.dbDriver = dbDriver
+    this.errors = []
   }
 
   /**
@@ -18,19 +19,25 @@ export default class IndexedDBAdapter {
    * @return {Boolean} true if create succeeded false if not
    */
   async create(data) {
-    let segments = this.dbDriver.segments
-    let updated
-    // iterate through the declared segmentation of the object
-    // and store accordingly
-    // TODO we need transaction handling here
-    for (let segment of segments) {
-      updated = await this.update(data, {segment: segment})
-      if (! updated) {
-        break
-        // TODO rollback?
+    try {
+      let segments = this.dbDriver.segments
+      let updated
+      // iterate through the declared segmentation of the object
+      // and store accordingly
+      // TODO we need transaction handling here
+      for (let segment of segments) {
+        updated = await this.update(data, {segment: segment})
+        if (! updated) {
+          throw new Error(`Unknown problems with updating segment ${segment}`)
+        }
       }
+      return updated > 0
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    return updated > 0
   }
 
   /**
@@ -41,14 +48,20 @@ export default class IndexedDBAdapter {
    *
    */
   async deleteMany(params) {
-    let deletedResult = {}
-    for (let segment of this.dbDriver.segments) {
-      let q = this.dbDriver.segmentDeleteManyQuery(segment,params)
-      let deletedItems = await this._deleteFromStore(q)
-      deletedResult[segment] = deletedItems
+    try {
+      let deletedResult = {}
+      for (let segment of this.dbDriver.segments) {
+        let q = this.dbDriver.segmentDeleteManyQuery(segment,params)
+        let deletedItems = await this._deleteFromStore(q)
+        deletedResult[segment] = deletedItems
+      }
+      return deletedResult
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    // TODO error handling
-    return deletedResult
   }
 
   /**
@@ -58,11 +71,17 @@ export default class IndexedDBAdapter {
    *
    */
   async deleteOne(data) {
-    for (let segment of this.dbDriver.segments) {
-      let q = this.dbDriver.segmentDeleteQuery(segment,data)
-      await this._deleteFromStore(q)
+    try {
+      for (let segment of this.dbDriver.segments) {
+        let q = this.dbDriver.segmentDeleteQuery(segment,data)
+        await this._deleteFromStore(q)
+      }
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    // TODO error handling
   }
 
   /**
@@ -73,24 +92,24 @@ export default class IndexedDBAdapter {
    * @return {Boolean} true if update succeeded false if not
    */
   async update (data, params) {
-    let segments = [params.segment]
-    let result
-    // if we weren't asked to update a specific segment, update them all
-    if (segments.length === 0)  {
-      segments = this.dbDriver.segments
-    }
-    for (let s of segments) {
-      let q = this.dbDriver.updateSegmentQuery(s,data)
-      try {
-        // console.info("Try ",q)
-        return await this._set(q)
-      } catch(error) {
-        console.error("Error on update",error)
-        // TODO need transaction rollback handling here if mulitple segments?
-        return false
+    try {
+      let segments = [params.segment]
+      let result
+      // if we weren't asked to update a specific segment, update them all
+      if (segments.length === 0)  {
+        segments = this.dbDriver.segments
       }
+      for (let s of segments) {
+        let q = this.dbDriver.updateSegmentQuery(s,data)
+        result = await this._set(q)
+      }
+      return result
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    return result
   }
 
   /**
@@ -99,28 +118,34 @@ export default class IndexedDBAdapter {
    * @return Object[] array of data model items
    */
   async query(params) {
-    let listQuery = this.dbDriver.listQuery(params)
-
-    let res = await this._getFromStore(listQuery)
-
-    let items = []
-    if (res.length > 0) {
-      for (let item of res) {
-        let modelObj = this.dbDriver.load(item)
-
-        let segments = this.dbDriver.segments
-        for (let segment of segments) {
-          let query = this.dbDriver.segmentQuery(segment, modelObj)
-
-          let res = await this._getFromStore(query)
-          if (res.length > 0) {
-            this.dbDriver.loadSegment(segment, modelObj, res)
+    try {
+      let listQuery = this.dbDriver.listQuery(params)
+      let queryResult = await this._getFromStore(listQuery)
+      
+      let items = []
+      if (queryResult.length > 0) {
+        for (let item of queryResult) {
+          let modelObj = this.dbDriver.load(item)
+  
+          let segments = this.dbDriver.segments
+          for (let segment of segments) {
+            let query = this.dbDriver.segmentQuery(segment, modelObj)
+  
+            let res = await this._getFromStore(query)
+            if (res.length > 0) {
+              this.dbDriver.loadSegment(segment, modelObj, res)
+            }
           }
+          items.push(modelObj)
         }
-        items.push(modelObj)
       }
+      return items
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return []
     }
-    return items
   }
 
   /**
@@ -131,22 +156,29 @@ export default class IndexedDBAdapter {
   clear () {
     let request = this.indexedDB.open(this.dbDriver.dbName, this.dbDriver.dbVersion)
     request.onsuccess = (event) => {
-      let db = event.target.result
-      let objectStores = this.dbDriver.objectStores
-      for (let store of objectStores) {
-        // open a read/write db transaction, ready for clearing the data
-        let transaction = db.transaction([store], 'readwrite')
-        // create an object store on the transaction
-        let objectStore = transaction.objectStore(store)
-        // Make a request to clear all the data out of the object store
-        let objectStoreRequest = objectStore.clear();
-        objectStoreRequest.onsuccess = function(event) {
-          console.log(`store ${store} cleared`)
+      try {
+        let db = event.target.result
+        let objectStores = this.dbDriver.objectStores
+        for (let store of objectStores) {
+          // open a read/write db transaction, ready for clearing the data
+          let transaction = db.transaction([store], 'readwrite')
+          // create an object store on the transaction
+          let objectStore = transaction.objectStore(store)
+          // Make a request to clear all the data out of the object store
+          let objectStoreRequest = objectStore.clear()
+          objectStoreRequest.onsuccess = function(event) {
+            console.log(`store ${store} cleared`)
+          }
+          objectStoreRequest.onerror = function(event) {
+            this.errors.push(event.target)
+          }
         }
-        objectStoreRequest.onerror = function(event) {
-          console.log(`store ${store} clear error`)
-        }
+      } catch (error) {
+        this.errors.push(error)
       }
+    }
+    request.onerror = (event) => {
+      this.errors.push(event.target)
     }
   }
 
@@ -185,22 +217,26 @@ export default class IndexedDBAdapter {
    * Iniitalize the object store(s) for for an IndexedDb adapter
    */
   _createObjectStores (db, upgradeTransaction) {
-    let objectStores = this.dbDriver.objectStores
-    objectStores.forEach(objectStoreName => {
-      const objectStoreStructure = this.dbDriver[objectStoreName]
+    try {
+      let objectStores = this.dbDriver.objectStores
+      objectStores.forEach(objectStoreName => {
+        const objectStoreStructure = this.dbDriver[objectStoreName]
 
-      let objectStore
-      if (!db.objectStoreNames.contains(objectStoreName)) {
-        objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
-      } else {
-        objectStore = upgradeTransaction.objectStore(objectStoreName)
-      }
-      objectStoreStructure.indexes.forEach(index => {
-        if (!objectStore.indexNames.contains(index.indexName)) {
-          objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })
+        let objectStore
+        if (!db.objectStoreNames.contains(objectStoreName)) {
+          objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+        } else {
+          objectStore = upgradeTransaction.objectStore(objectStoreName)
         }
+        objectStoreStructure.indexes.forEach(index => {
+          if (!objectStore.indexNames.contains(index.indexName)) {
+            objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })
+          }
+        })
       })
-    })
+    } catch (error) {
+      this.errors.push(error)
+    }
   }
 
   /**
@@ -211,6 +247,8 @@ export default class IndexedDBAdapter {
    * @return {Promise} resolves to true on success
    */
   async _set (data) {
+    let idba = this
+
     let promiseOpenDB = await new Promise((resolve, reject) => {
       let request = this._openDatabaseRequest()
       request.onsuccess = async (event) => {
@@ -219,6 +257,7 @@ export default class IndexedDBAdapter {
         resolve(rv)
       }
       request.onerror = (event) => {
+        idba.errors.push(event.target)
         reject()
       }
     })
@@ -234,24 +273,34 @@ export default class IndexedDBAdapter {
    * @return {Promise} resolves to true on success
    */
   async _putItem (db, data) {
+    let idba = this
+
     let promisePut = await new Promise((resolve, reject) => {
-      const transaction = db.transaction([data.objectStoreName], 'readwrite')
-      transaction.onerror = (event) => {
-        reject()
-      }
-      const objectStore = transaction.objectStore(data.objectStoreName)
-      let objectsDone = data.dataItems.length
-      for (let dataItem of data.dataItems) {
-        const requestPut = objectStore.put(dataItem)
-        requestPut.onsuccess = () => {
-          objectsDone = objectsDone - 1
-          if (objectsDone === 0) {
-            resolve(true)
+      try {
+        const transaction = db.transaction([data.objectStoreName], 'readwrite')
+        transaction.onerror = (event) => {
+          idba.errors.push(event.target)
+          reject()
+        }
+        const objectStore = transaction.objectStore(data.objectStoreName)
+        let objectsDone = data.dataItems.length
+        for (let dataItem of data.dataItems) {
+          const requestPut = objectStore.put(dataItem)
+          requestPut.onsuccess = () => {
+            objectsDone = objectsDone - 1
+            if (objectsDone === 0) {
+              resolve(true)
+            }
+          }
+          requestPut.onerror = () => {
+            idba.errors.push(event.target)
+            reject()
           }
         }
-        requestPut.onerror = () => {
-          console.log('requestPut error', event.target)
-          reject()
+      } catch (error) {
+        if (error) {
+          idba.errors.push(error)
+          return
         }
       }
     })
@@ -266,30 +315,38 @@ export default class IndexedDBAdapter {
    * @return {Promise} resolves to the retrieved items
    */
   async _getFromStore (data) {
+    let idba = this
     let promiseOpenDB = await new Promise((resolve, reject) => {
       let request = this._openDatabaseRequest()
       request.onsuccess = (event) => {
-        const db = event.target.result
-        const transaction = db.transaction([data.objectStoreName])
-        const objectStore = transaction.objectStore(data.objectStoreName)
+        try {
+          const db = event.target.result
+          const transaction = db.transaction([data.objectStoreName])
+          const objectStore = transaction.objectStore(data.objectStoreName)
 
-        const index = objectStore.index(data.condition.indexName)
-        const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+          const index = objectStore.index(data.condition.indexName)
+          const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+          
+          const requestOpenCursor = index.getAll(keyRange, 0)
+          requestOpenCursor.onsuccess = (event) => {
+            resolve(event.target.result)
+          }
 
-        const requestOpenCursor = index.getAll(keyRange, 0)
-        requestOpenCursor.onsuccess = (event) => {
-          resolve(event.target.result)
-        }
-
-        requestOpenCursor.onerror = (event) => {
+          requestOpenCursor.onerror = (event) => {
+            idba.errors.push(event.target)
+            reject()
+          }
+        } catch (error) {
+          idba.errors.push(error)
           reject()
         }
       }
       request.onerror = (event) => {
-        reject()
+        reject(event.target)
       }
     })
     return promiseOpenDB
+    
   }
 
   /**
@@ -300,37 +357,44 @@ export default class IndexedDBAdapter {
    * @return {Promise} resolves to the number of deleted items
    */
   async _deleteFromStore (data) {
+    let idba = this
     let promiseOpenDB = await new Promise((resolve, reject) => {
       let request = this._openDatabaseRequest()
       request.onsuccess = (event) => {
-        const db = event.target.result
-        const transaction = db.transaction([data.objectStoreName], 'readwrite')
-        const objectStore = transaction.objectStore(data.objectStoreName)
+        try {
+          const db = event.target.result
+          const transaction = db.transaction([data.objectStoreName], 'readwrite')
+          const objectStore = transaction.objectStore(data.objectStoreName)
 
-        const index = objectStore.index(data.condition.indexName)
-        const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+          const index = objectStore.index(data.condition.indexName)
+          const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
 
-        let requestOpenCursor = index.openCursor(keyRange)
-        let deletedItems = 0
-        requestOpenCursor.onsuccess = (event) => {
-          const cursor = event.target.result
-          if (cursor) {
-            const requestDelete = cursor.delete()
-            requestDelete.onerror = (event) => {
-              reject()
+          let requestOpenCursor = index.openCursor(keyRange)
+          let deletedItems = 0
+          requestOpenCursor.onsuccess = (event) => {
+            const cursor = event.target.result
+            if (cursor) {
+              const requestDelete = cursor.delete()
+              requestDelete.onerror = (event) => {
+                idba.errors.push(event.target)
+                reject()
+              }
+              requestDelete.onsuccess = (event) => {
+                deletedItems = deletedItems + 1
+              }
+              cursor.continue()
+            } else {
+              resolve(deletedItems)
             }
-            requestDelete.onsuccess = (event) => {
-              deletedItems = deletedItems + 1
-            }
-            cursor.continue()
-          } else {
-            // TODO I want to return the number of items deleted here
-            resolve(deletedItems)
           }
+        } catch (error) {
+          idba.errors.push(error)
+          reject()
         }
       }
 
       request.onerror = (event) => {
+        idba.errors.push(event.target)
         reject()
       }
     })

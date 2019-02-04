@@ -1,6 +1,4 @@
-import { PsEvent } from 'alpheios-data-models'
-import WordList from '@/lib/word-list'
-import WordItem from '@/lib/word-item'
+import { PsEvent, WordList, WordItem } from 'alpheios-data-models'
 
 export default class WordlistController {
   /**

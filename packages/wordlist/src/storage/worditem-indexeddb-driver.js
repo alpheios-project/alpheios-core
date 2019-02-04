@@ -1,5 +1,4 @@
-import WordItem from '@/lib/word-item'
-import { Homonym } from 'alpheios-data-models'
+import { Homonym, WordItem } from 'alpheios-data-models'
 
 export default class WordItemIndexedDbDriver {
 
@@ -144,7 +143,7 @@ export default class WordItemIndexedDbDriver {
     }
   }
 
-  _segmentDeleteQueryByWordItemID(segment,worditem) {
+  _segmentDeleteQueryByWordItemID(segment, worditem) {
     let ID = this._makeStorageID(worditem)
     return {
       objectStoreName: this.storageMap[segment].objectStoreName,
@@ -153,7 +152,7 @@ export default class WordItemIndexedDbDriver {
   }
 
 
-  segmentDeleteManyQuery(segment,params) {
+  segmentDeleteManyQuery(segment, params) {
     if (params.languageCode) {
       let listID = this.userId + '-' + params.languageCode
       return  {
@@ -161,7 +160,7 @@ export default class WordItemIndexedDbDriver {
         condition: { indexName: 'listID', value: listID, type: 'only' }
       }
     } else {
-      // TODO throw error
+      throw new Error("Invalid query parameters - missing languageCode")
     }
   }
 
@@ -193,7 +192,6 @@ export default class WordItemIndexedDbDriver {
       }
     } else {
       throw new Error("Invalid query parameters - missing languageCode")
-      // TODO throw error
     }
   }
 

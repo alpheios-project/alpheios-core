@@ -12952,11 +12952,13 @@ class UserDataManager {
     try {
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
-      let ls = this._localStorageAdapter(finalConstrName)
-      let rs = this._remoteStorageAdapter(finalConstrName)
-      let updatedLocal = await ls.update(data.dataObj,data.params)
-      let updatedRemote = await rs.update(data.dataObj,data.params)
-      // TODO error handling upon update failure
+      let localAdapter = this._localStorageAdapter(finalConstrName)
+      let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
+      let updatedLocal = await localAdapter.update(data.dataObj,data.params)
+      let updatedRemote = await remoteAdapter.update(data.dataObj,data.params)
+      
+      this.printErrors(localAdapter)
+
       return updatedLocal && updatedRemote
     } catch (error) {
       console.error('Some errors happen on updating data in IndexedDB', error.message)
@@ -12973,10 +12975,12 @@ class UserDataManager {
     try {
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
-      let ls = this._localStorageAdapter(finalConstrName)
-      let rs = this._remoteStorageAdapter(finalConstrName)
-      let deletedLocal = await ls.deleteOne(data.dataObj)
-      let deletedRemote = await rs.deleteOne(data.dataObj)
+      let localAdapter = this._localStorageAdapter(finalConstrName)
+      let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
+      let deletedLocal = await localAdapter.deleteOne(data.dataObj)
+      let deletedRemote = await remoteAdapter.deleteOne(data.dataObj)
+
+      this.printErrors(localAdapter)
       // TODO error handling upon delete failure
       return deletedLocal && deletedRemote
     } catch (error) {
@@ -12999,6 +13003,8 @@ class UserDataManager {
       let deletedRemoteResult = remoteAdapter.deleteMany(data.params)
       const finalResult = [await deletedLocalResult, await deletedRemoteResult]
 
+      this.printErrors(localAdapter)
+
       console.info('Result of deleted many from IndexedDB', finalResult)
       
     } catch (error) {
@@ -13019,8 +13025,11 @@ class UserDataManager {
     // the results
     let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
     let localAdapter = this._localStorageAdapter(data.dataType)
+
     let remoteDataItems = await remoteAdapter.query(data.params)
     let localDataItems = await localAdapter.query(data.params)
+
+    this.printErrors(localAdapter)
 
     // if we have any remoteData items then we are going to
     // reset the local store from the remoteData, adding back in any
@@ -13030,6 +13039,7 @@ class UserDataManager {
     }
     let addToRemote = []
     let updateInRemote = []
+    
     localDataItems.forEach(item => {
       let inRemote = false
       for (let i=0; i<remoteDataItems.length; i++ ) {
@@ -13060,6 +13070,12 @@ class UserDataManager {
     })
     return [...remoteDataItems,...addToRemote]
   }
+
+  printErrors (localAdapter) {
+    if (localAdapter.errors && localAdapter.errors.length > 0) {
+      localAdapter.errors.forEach(error => console.error(`Print error - ${error.message}`))
+    }
+  }
 }
 
 // Constants (could be done better, dynamically, etc.)
@@ -13085,10 +13101,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordlistController; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_word_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/word-list */ "./lib/word-list.js");
-/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
-
-
 
 
 class WordlistController {
@@ -13117,7 +13129,7 @@ class WordlistController {
     for (let languageCode of this.availableLangs) {
       let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}})
       if (wordItems.length > 0) {
-        this.wordLists[languageCode] = new _lib_word_list__WEBPACK_IMPORTED_MODULE_1__["default"](languageCode,wordItems)
+        this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode,wordItems)
       }
     }
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
@@ -13132,7 +13144,7 @@ class WordlistController {
    */
   getWordList (languageCode, create=true) {
     if (create && ! this._wordListExist(languageCode)) {
-      let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_1__["default"](languageCode,[])
+      let wordList = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode,[])
       this.wordLists[languageCode] = wordList
       WordlistController.evt.WORDLIST_CREATED.pub(wordList)
     }
@@ -13738,260 +13750,6 @@ class Message {
 
 /***/ }),
 
-/***/ "./lib/word-item.js":
-/*!**************************!*\
-  !*** ./lib/word-item.js ***!
-  \**************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItem; });
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-
-class WordItem {
-  /**
-   * @constructor
-   * @param {Object} constructorArgs
-   *   {String} targetWord
-   *   {String} languageCode
-   *   {Boolean} important
-   *   {Boolean} currentSession
-   *   {TextQuoteSelector[]} context
-   *   {Homonym} homonym
-   *
-   */
-  constructor (data = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {} }) {
-    // TODO handling of version
-    this.version = 1
-    this.targetWord = data.targetWord
-    this.languageCode = data.languageCode
-    if (!this.targetWord || !this.languageCode) {
-      throw new Error("Unable to construct a worditem without at least a targetWord and a languageCode")
-    }
-    this.important = data.important === undefined ? false : data.important
-    this.currentSession = data.currentSession == undefined ? true : data.currentSession
-    this.context = data.context || []
-    this.homonym = data.homonym || {}
-  }
-
-  /**
-   * Construct a WordItem from JSON
-   */
-  static readObject(jsonObject) {
-    let homonym = {}
-    let context = []
-    if (jsonObject.homonym) {
-        homonym = WordItem.readHomonym(jsonObject)
-    }
-    if (jsonObject.context) {
-        context = WordItem.readContext(jsonObject)
-    }
-    let worditem = new WordItem({
-      targetWord: jsonObject.targetWord,
-      languageCode: jsonObject.languageCode,
-      important: jsonObject.important,
-      currentSession: jsonObject.currentSession,
-      context: context,
-      homonym: homonym
-    })
-    return worditem
-  }
-
-  /**
-   * Construct the homonym portion of a WordItem from JSON
-   */
-  static readHomonym(jsonObject) {
-    return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(jsonObject.homonym)
-  }
-
-  get hasTextQuoteSelectors () {
-    return this.context.length > 0
-  }
-
-  /**
-   * Construct the context portion of a WordItem from JSON
-   */
-  static readContext(jsonObject) {
-    let tqs = []
-    for (let jsonObj of jsonObject) {
-      let tq = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["TextQuoteSelector"].readObject(jsonObj)
-      tqs.push(tq)
-    }
-    return tqs
-  }
-
-  /**
-   * add one or more context selectors
-   * @param {TextQuoteSelector[]} selectors
-   */
-  addContext(selectors) {
-    for (let s of selectors) {
-      let found = this.context.filter(tqs => tqs.isEqual(s))
-      if (found.length == 0) {
-        this.context.push(s)
-      }
-    }
-  }
-
-  /**
-   * getter for the lemmas in this WordItem
-   */
-  get lemmasList () {
-    if (this.homonym && this.homonym.lexemes) {
-      return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => {
-        return self.indexOf(value) === index
-      }).join(', ')
-    }
-    return ''
-  }
-
-
-  // TODO NOT SURE HOW THE MERGE FUNCTIONALITY IS USED
-  merge (prevWordItem) {
-    let checkProps = ['homonym', 'important', 'currentSession']
-    for(let prop of checkProps) {
-      if (this._emptyProp(prop) && !prevWordItem._emptyProp(prop)) {
-        this[prop] = prevWordItem[prop]
-      }
-    }
-  }
-
-  /**
-   * private method to detect an empty property
-   */
-  _emptyProp (propName) {
-    return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
-  }
-
-  get formattedContext () {
-    let res = {}
-    for (let tq of this.context) {
-      if (!res[tq.source]) {
-        res[tq.source] = []
-      }
-      res[tq.source].push(tq)
-    }
-    return res
-  }
-}
-
-
-/***/ }),
-
-/***/ "./lib/word-list.js":
-/*!**************************!*\
-  !*** ./lib/word-list.js ***!
-  \**************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordList; });
-/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
-
-
-class WordList {
-  /**
-  * @constructor
-  * @param {String} languageCode the language code of the list
-  * @param {WordItem[]} worditems an optional array of WordItems with which to initialize the list
-  */
-  constructor (languageCode,worditems=[]) {
-    if (!languageCode) {
-      throw new Error("Unable to construct a wordlist without a languagecode")
-    }
-    this.languageCode = languageCode
-    this.items = {}
-    worditems.forEach(item => {
-      this.addWordItem(item)
-    })
-  }
-
-  /**
-   * get the items of the list
-   */
-  get values () {
-    return Object.values(this.items)
-  }
-
-  /**
-   * checks to see if the list is empty
-   * @return {Boolean}
-   */
-  get isEmpty() {
-    return Object.values(this.items).length === 0
-  }
-
-
-  addWordItem (item) {
-    if (item.languageCode !== this.languageCode) {
-      throw new Error(`Language Code mismatch ${item.languageCode} !=== ${this.languageCode}`)
-    }
-    let existingItem = this.getWordItem(item.targetWord,false)
-    if (existingItem) {
-      item = item.merge(existingItem)
-    }
-    let key = this._makeItemKey(this.languageCode,item.targetWord)
-    this.items[key]  = item
-  }
-
-  /**
-  * delete an individual word item from the list
-  * @param {String} targetWord the word to delete
-  * @return {WordItem} the deleted item
-  */
-  deleteWordItem (targetWord) {
-    let key = this._makeItemKey(this.languageCode,targetWord)
-    let toDelete = this.items[key]
-    if (toDelete) {
-      delete this.items[key]
-    }
-    return toDelete
-  }
-
-  /**
-  * delete all items from a list
-  */
-  removeAllWordItems () {
-    this.items = {}
-  }
-
-
-  /**
-   * get an item from a list
-   * @param targetWord the word to get
-   * @param {Boolean} create true to create the item if it doesn't exist
-   * @return {WordItem} the retrieved item
-   */
-  getWordItem(targetWord, create = true, eventWordItemUpdated = null) {
-    let key = this._makeItemKey(this.languageCode,targetWord)
-    if (create && !this.items[key]) {
-      let wordItem = new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"]({targetWord: targetWord, languageCode: this.languageCode})
-      if (eventWordItemUpdated) {
-        eventWordItemUpdated.pub({dataObj: wordItem, params: {segment: 'common'}})
-      }
-      this.items[key]  = wordItem
-    }
-    return this.items[key]
-  }
-
-   /**
-    * make a key for a word item
-    * @param {String} languageCode
-    * @param {String} targetWord
-    */
-  _makeItemKey(languageCode,targetWord) {
-    return `${languageCode}:${targetWord}`
-  }
-}
-
-
-/***/ }),
-
 /***/ "./locales/en-gb/messages.json":
 /*!*************************************!*\
   !*** ./locales/en-gb/messages.json ***!
@@ -14064,6 +13822,7 @@ class IndexedDBAdapter {
   constructor (dbDriver) {
     this.available = this._initIndexedDBNamespaces()
     this.dbDriver = dbDriver
+    this.errors = []
   }
 
   /**
@@ -14072,19 +13831,25 @@ class IndexedDBAdapter {
    * @return {Boolean} true if create succeeded false if not
    */
   async create(data) {
-    let segments = this.dbDriver.segments
-    let updated
-    // iterate through the declared segmentation of the object
-    // and store accordingly
-    // TODO we need transaction handling here
-    for (let segment of segments) {
-      updated = await this.update(data, {segment: segment})
-      if (! updated) {
-        break
-        // TODO rollback?
+    try {
+      let segments = this.dbDriver.segments
+      let updated
+      // iterate through the declared segmentation of the object
+      // and store accordingly
+      // TODO we need transaction handling here
+      for (let segment of segments) {
+        updated = await this.update(data, {segment: segment})
+        if (! updated) {
+          throw new Error(`Unknown problems with updating segment ${segment}`)
+        }
       }
+      return updated > 0
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    return updated > 0
   }
 
   /**
@@ -14095,14 +13860,20 @@ class IndexedDBAdapter {
    *
    */
   async deleteMany(params) {
-    let deletedResult = {}
-    for (let segment of this.dbDriver.segments) {
-      let q = this.dbDriver.segmentDeleteManyQuery(segment,params)
-      let deletedItems = await this._deleteFromStore(q)
-      deletedResult[segment] = deletedItems
+    try {
+      let deletedResult = {}
+      for (let segment of this.dbDriver.segments) {
+        let q = this.dbDriver.segmentDeleteManyQuery(segment,params)
+        let deletedItems = await this._deleteFromStore(q)
+        deletedResult[segment] = deletedItems
+      }
+      return deletedResult
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    // TODO error handling
-    return deletedResult
   }
 
   /**
@@ -14112,11 +13883,17 @@ class IndexedDBAdapter {
    *
    */
   async deleteOne(data) {
-    for (let segment of this.dbDriver.segments) {
-      let q = this.dbDriver.segmentDeleteQuery(segment,data)
-      await this._deleteFromStore(q)
+    try {
+      for (let segment of this.dbDriver.segments) {
+        let q = this.dbDriver.segmentDeleteQuery(segment,data)
+        await this._deleteFromStore(q)
+      }
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    // TODO error handling
   }
 
   /**
@@ -14127,24 +13904,24 @@ class IndexedDBAdapter {
    * @return {Boolean} true if update succeeded false if not
    */
   async update (data, params) {
-    let segments = [params.segment]
-    let result
-    // if we weren't asked to update a specific segment, update them all
-    if (segments.length === 0)  {
-      segments = this.dbDriver.segments
-    }
-    for (let s of segments) {
-      let q = this.dbDriver.updateSegmentQuery(s,data)
-      try {
-        // console.info("Try ",q)
-        return await this._set(q)
-      } catch(error) {
-        console.error("Error on update",error)
-        // TODO need transaction rollback handling here if mulitple segments?
-        return false
+    try {
+      let segments = [params.segment]
+      let result
+      // if we weren't asked to update a specific segment, update them all
+      if (segments.length === 0)  {
+        segments = this.dbDriver.segments
       }
+      for (let s of segments) {
+        let q = this.dbDriver.updateSegmentQuery(s,data)
+        result = await this._set(q)
+      }
+      return result
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return
     }
-    return result
   }
 
   /**
@@ -14153,28 +13930,34 @@ class IndexedDBAdapter {
    * @return Object[] array of data model items
    */
   async query(params) {
-    let listQuery = this.dbDriver.listQuery(params)
-
-    let res = await this._getFromStore(listQuery)
-
-    let items = []
-    if (res.length > 0) {
-      for (let item of res) {
-        let modelObj = this.dbDriver.load(item)
-
-        let segments = this.dbDriver.segments
-        for (let segment of segments) {
-          let query = this.dbDriver.segmentQuery(segment, modelObj)
-
-          let res = await this._getFromStore(query)
-          if (res.length > 0) {
-            this.dbDriver.loadSegment(segment, modelObj, res)
+    try {
+      let listQuery = this.dbDriver.listQuery(params)
+      let queryResult = await this._getFromStore(listQuery)
+      
+      let items = []
+      if (queryResult.length > 0) {
+        for (let item of queryResult) {
+          let modelObj = this.dbDriver.load(item)
+  
+          let segments = this.dbDriver.segments
+          for (let segment of segments) {
+            let query = this.dbDriver.segmentQuery(segment, modelObj)
+  
+            let res = await this._getFromStore(query)
+            if (res.length > 0) {
+              this.dbDriver.loadSegment(segment, modelObj, res)
+            }
           }
+          items.push(modelObj)
         }
-        items.push(modelObj)
       }
+      return items
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return []
     }
-    return items
   }
 
   /**
@@ -14185,22 +13968,29 @@ class IndexedDBAdapter {
   clear () {
     let request = this.indexedDB.open(this.dbDriver.dbName, this.dbDriver.dbVersion)
     request.onsuccess = (event) => {
-      let db = event.target.result
-      let objectStores = this.dbDriver.objectStores
-      for (let store of objectStores) {
-        // open a read/write db transaction, ready for clearing the data
-        let transaction = db.transaction([store], 'readwrite')
-        // create an object store on the transaction
-        let objectStore = transaction.objectStore(store)
-        // Make a request to clear all the data out of the object store
-        let objectStoreRequest = objectStore.clear();
-        objectStoreRequest.onsuccess = function(event) {
-          console.log(`store ${store} cleared`)
+      try {
+        let db = event.target.result
+        let objectStores = this.dbDriver.objectStores
+        for (let store of objectStores) {
+          // open a read/write db transaction, ready for clearing the data
+          let transaction = db.transaction([store], 'readwrite')
+          // create an object store on the transaction
+          let objectStore = transaction.objectStore(store)
+          // Make a request to clear all the data out of the object store
+          let objectStoreRequest = objectStore.clear()
+          objectStoreRequest.onsuccess = function(event) {
+            console.log(`store ${store} cleared`)
+          }
+          objectStoreRequest.onerror = function(event) {
+            this.errors.push(event.target)
+          }
         }
-        objectStoreRequest.onerror = function(event) {
-          console.log(`store ${store} clear error`)
-        }
+      } catch (error) {
+        this.errors.push(error)
       }
+    }
+    request.onerror = (event) => {
+      this.errors.push(event.target)
     }
   }
 
@@ -14239,22 +14029,26 @@ class IndexedDBAdapter {
    * Iniitalize the object store(s) for for an IndexedDb adapter
    */
   _createObjectStores (db, upgradeTransaction) {
-    let objectStores = this.dbDriver.objectStores
-    objectStores.forEach(objectStoreName => {
-      const objectStoreStructure = this.dbDriver[objectStoreName]
+    try {
+      let objectStores = this.dbDriver.objectStores
+      objectStores.forEach(objectStoreName => {
+        const objectStoreStructure = this.dbDriver[objectStoreName]
 
-      let objectStore
-      if (!db.objectStoreNames.contains(objectStoreName)) {
-        objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
-      } else {
-        objectStore = upgradeTransaction.objectStore(objectStoreName)
-      }
-      objectStoreStructure.indexes.forEach(index => {
-        if (!objectStore.indexNames.contains(index.indexName)) {
-          objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })
+        let objectStore
+        if (!db.objectStoreNames.contains(objectStoreName)) {
+          objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+        } else {
+          objectStore = upgradeTransaction.objectStore(objectStoreName)
         }
+        objectStoreStructure.indexes.forEach(index => {
+          if (!objectStore.indexNames.contains(index.indexName)) {
+            objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })
+          }
+        })
       })
-    })
+    } catch (error) {
+      this.errors.push(error)
+    }
   }
 
   /**
@@ -14265,6 +14059,8 @@ class IndexedDBAdapter {
    * @return {Promise} resolves to true on success
    */
   async _set (data) {
+    let idba = this
+
     let promiseOpenDB = await new Promise((resolve, reject) => {
       let request = this._openDatabaseRequest()
       request.onsuccess = async (event) => {
@@ -14273,6 +14069,7 @@ class IndexedDBAdapter {
         resolve(rv)
       }
       request.onerror = (event) => {
+        idba.errors.push(event.target)
         reject()
       }
     })
@@ -14288,24 +14085,34 @@ class IndexedDBAdapter {
    * @return {Promise} resolves to true on success
    */
   async _putItem (db, data) {
+    let idba = this
+
     let promisePut = await new Promise((resolve, reject) => {
-      const transaction = db.transaction([data.objectStoreName], 'readwrite')
-      transaction.onerror = (event) => {
-        reject()
-      }
-      const objectStore = transaction.objectStore(data.objectStoreName)
-      let objectsDone = data.dataItems.length
-      for (let dataItem of data.dataItems) {
-        const requestPut = objectStore.put(dataItem)
-        requestPut.onsuccess = () => {
-          objectsDone = objectsDone - 1
-          if (objectsDone === 0) {
-            resolve(true)
+      try {
+        const transaction = db.transaction([data.objectStoreName], 'readwrite')
+        transaction.onerror = (event) => {
+          idba.errors.push(event.target)
+          reject()
+        }
+        const objectStore = transaction.objectStore(data.objectStoreName)
+        let objectsDone = data.dataItems.length
+        for (let dataItem of data.dataItems) {
+          const requestPut = objectStore.put(dataItem)
+          requestPut.onsuccess = () => {
+            objectsDone = objectsDone - 1
+            if (objectsDone === 0) {
+              resolve(true)
+            }
+          }
+          requestPut.onerror = () => {
+            idba.errors.push(event.target)
+            reject()
           }
         }
-        requestPut.onerror = () => {
-          console.log('requestPut error', event.target)
-          reject()
+      } catch (error) {
+        if (error) {
+          idba.errors.push(error)
+          return
         }
       }
     })
@@ -14320,30 +14127,38 @@ class IndexedDBAdapter {
    * @return {Promise} resolves to the retrieved items
    */
   async _getFromStore (data) {
+    let idba = this
     let promiseOpenDB = await new Promise((resolve, reject) => {
       let request = this._openDatabaseRequest()
       request.onsuccess = (event) => {
-        const db = event.target.result
-        const transaction = db.transaction([data.objectStoreName])
-        const objectStore = transaction.objectStore(data.objectStoreName)
+        try {
+          const db = event.target.result
+          const transaction = db.transaction([data.objectStoreName])
+          const objectStore = transaction.objectStore(data.objectStoreName)
 
-        const index = objectStore.index(data.condition.indexName)
-        const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+          const index = objectStore.index(data.condition.indexName)
+          const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+          
+          const requestOpenCursor = index.getAll(keyRange, 0)
+          requestOpenCursor.onsuccess = (event) => {
+            resolve(event.target.result)
+          }
 
-        const requestOpenCursor = index.getAll(keyRange, 0)
-        requestOpenCursor.onsuccess = (event) => {
-          resolve(event.target.result)
-        }
-
-        requestOpenCursor.onerror = (event) => {
+          requestOpenCursor.onerror = (event) => {
+            idba.errors.push(event.target)
+            reject()
+          }
+        } catch (error) {
+          idba.errors.push(error)
           reject()
         }
       }
       request.onerror = (event) => {
-        reject()
+        reject(event.target)
       }
     })
     return promiseOpenDB
+    
   }
 
   /**
@@ -14354,37 +14169,44 @@ class IndexedDBAdapter {
    * @return {Promise} resolves to the number of deleted items
    */
   async _deleteFromStore (data) {
+    let idba = this
     let promiseOpenDB = await new Promise((resolve, reject) => {
       let request = this._openDatabaseRequest()
       request.onsuccess = (event) => {
-        const db = event.target.result
-        const transaction = db.transaction([data.objectStoreName], 'readwrite')
-        const objectStore = transaction.objectStore(data.objectStoreName)
+        try {
+          const db = event.target.result
+          const transaction = db.transaction([data.objectStoreName], 'readwrite')
+          const objectStore = transaction.objectStore(data.objectStoreName)
 
-        const index = objectStore.index(data.condition.indexName)
-        const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
+          const index = objectStore.index(data.condition.indexName)
+          const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
 
-        let requestOpenCursor = index.openCursor(keyRange)
-        let deletedItems = 0
-        requestOpenCursor.onsuccess = (event) => {
-          const cursor = event.target.result
-          if (cursor) {
-            const requestDelete = cursor.delete()
-            requestDelete.onerror = (event) => {
-              reject()
+          let requestOpenCursor = index.openCursor(keyRange)
+          let deletedItems = 0
+          requestOpenCursor.onsuccess = (event) => {
+            const cursor = event.target.result
+            if (cursor) {
+              const requestDelete = cursor.delete()
+              requestDelete.onerror = (event) => {
+                idba.errors.push(event.target)
+                reject()
+              }
+              requestDelete.onsuccess = (event) => {
+                deletedItems = deletedItems + 1
+              }
+              cursor.continue()
+            } else {
+              resolve(deletedItems)
             }
-            requestDelete.onsuccess = (event) => {
-              deletedItems = deletedItems + 1
-            }
-            cursor.continue()
-          } else {
-            // TODO I want to return the number of items deleted here
-            resolve(deletedItems)
           }
+        } catch (error) {
+          idba.errors.push(error)
+          reject()
         }
       }
 
       request.onerror = (event) => {
+        idba.errors.push(event.target)
         reject()
       }
     })
@@ -14442,10 +14264,8 @@ class RemoteDBAdapter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemIndexedDbDriver; });
-/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 
 
 class WordItemIndexedDbDriver {
@@ -14552,7 +14372,7 @@ class WordItemIndexedDbDriver {
     // make sure when we create from the database
     // that the currentSession flag is set to false
     data.currentSession = false
-    return new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"](data)
+    return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"](data)
   }
 
   /**
@@ -14591,7 +14411,7 @@ class WordItemIndexedDbDriver {
     }
   }
 
-  _segmentDeleteQueryByWordItemID(segment,worditem) {
+  _segmentDeleteQueryByWordItemID(segment, worditem) {
     let ID = this._makeStorageID(worditem)
     return {
       objectStoreName: this.storageMap[segment].objectStoreName,
@@ -14600,7 +14420,7 @@ class WordItemIndexedDbDriver {
   }
 
 
-  segmentDeleteManyQuery(segment,params) {
+  segmentDeleteManyQuery(segment, params) {
     if (params.languageCode) {
       let listID = this.userId + '-' + params.languageCode
       return  {
@@ -14608,7 +14428,7 @@ class WordItemIndexedDbDriver {
         condition: { indexName: 'listID', value: listID, type: 'only' }
       }
     } else {
-      // TODO throw error
+      throw new Error("Invalid query parameters - missing languageCode")
     }
   }
 
@@ -14640,7 +14460,6 @@ class WordItemIndexedDbDriver {
       }
     } else {
       throw new Error("Invalid query parameters - missing languageCode")
-      // TODO throw error
     }
   }
 
@@ -14648,7 +14467,7 @@ class WordItemIndexedDbDriver {
    * private method to load the Homonym property of a WordItem
    */
   _loadHomonym (worditem,jsonObj) {
-    worditem.homonym = _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"].readHomonym(jsonObj[0])
+    worditem.homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"].readHomonym(jsonObj[0])
   }
 
   /**
@@ -14658,7 +14477,7 @@ class WordItemIndexedDbDriver {
     if (! Array.isArray(jsonObjs)) {
       jsonObjs = [jsonObjs]  
     }
-    worditem.context = _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"].readContext(jsonObjs)
+    worditem.context = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"].readContext(jsonObjs)
   }
 
   /**
@@ -14715,7 +14534,7 @@ class WordItemIndexedDbDriver {
    * @param {WordItem}
    */
   _serializeHomonym (worditem,addMeaning = false) {
-    let resultHomonym = worditem.homonym && (worditem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Homonym"]) ? worditem.homonym.convertToJSONObject(addMeaning) : {}
+    let resultHomonym = worditem.homonym && (worditem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]) ? worditem.homonym.convertToJSONObject(addMeaning) : {}
     return {
       ID: this._makeStorageID(worditem),
       listID: this.userId + '-' + worditem.languageCode,
