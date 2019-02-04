@@ -27,6 +27,9 @@ import WordUsageExample from './texts/word-usage-example.js'
 import Author from './texts/author.js'
 import TextWork from './texts/text-work.js'
 
+import WordItem from './word-item.js'
+import WordList from './word-list.js'
+
 export {
   Constants,
   Definition,
@@ -53,4 +56,7 @@ export {
   TextQuoteSelector,
   WordUsageExample,
   Author,
-  TextWork }
+  TextWork,
+  WordItem,
+  WordList
+}
