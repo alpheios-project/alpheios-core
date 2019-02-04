@@ -48,4 +48,14 @@ describe('LanguageModelFactory object', () => {
   test('Should return false for an unsupported language', () => {
     expect(LanguageModelFactory.supportsLanguage('foo')).toBeFalsy()
   })
+
+  test('Should return available languages', () => {
+    expect(LanguageModelFactory.availableLanguages()).toEqual([
+      Constants.STR_LANG_CODE_LAT,
+      Constants.STR_LANG_CODE_GRC,
+      Constants.STR_LANG_CODE_ARA,
+      Constants.STR_LANG_CODE_PER,
+      Constants.STR_LANG_CODE_GEZ
+    ])
+  })
 })

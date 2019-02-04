@@ -3851,6 +3851,14 @@ class LanguageModelFactory {
     return MODELS.has(language)
   }
 
+  static availableLanguages () {
+    let avail = new Set()
+    for (let model of MODELS.values()) {
+      avail.add(model.languageCode)
+    }
+    return Array.from(avail)
+  }
+
   /**
    * Returns a constructor of language model for a specific language ID.
    * @param {symbol} languageID - A language ID of a desired language model.
@@ -5184,6 +5192,16 @@ class TextQuoteSelector {
     tq.text = jsonObject.targetWord
     tq.source = jsonObject.target.source
     return tq
+  }
+
+  isEqual (otherTqs) {
+    let checkContextThis = `${this.prefix}${this.text}${this.suffix}`
+    let checkContextOther = `${otherTqs.prefix}${otherTqs.text}${otherTqs.suffix}`
+
+    return this.text === otherTqs.text &&
+      this.source === otherTqs.source &&
+      this.languageCode === otherTqs.languageCode &&
+      checkContextThis === checkContextOther
   }
 }
 

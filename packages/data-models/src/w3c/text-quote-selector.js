@@ -37,4 +37,14 @@ export default class TextQuoteSelector {
     tq.source = jsonObject.target.source
     return tq
   }
+
+  isEqual (otherTqs) {
+    let checkContextThis = `${this.prefix}${this.text}${this.suffix}`
+    let checkContextOther = `${otherTqs.prefix}${otherTqs.text}${otherTqs.suffix}`
+
+    return this.text === otherTqs.text &&
+      this.source === otherTqs.source &&
+      this.languageCode === otherTqs.languageCode &&
+      checkContextThis === checkContextOther
+  }
 }
