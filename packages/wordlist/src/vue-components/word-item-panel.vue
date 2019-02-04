@@ -1,14 +1,14 @@
 <template>
     <div v-bind:class="itemClasses" class="alpheios-wordlist-language__worditem">
         <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_CHANGE_IMPORTANT">
-          <div class="alpheios-worditem__data alpheios-worditem__icon" 
+          <div class="alpheios-worditem__data alpheios-worditem__icon"
                   @click="changeImportant()">
                   <check-icon></check-icon>
           </div>
         </alph-tooltip>
 
         <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_REMOVE">
-          <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon" 
+          <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon"
                   @click="deleteItem()">
                   <delete-icon></delete-icon>
           </div>
@@ -22,11 +22,11 @@
                   <text-quote-icon></text-quote-icon>
           </div>
         </alph-tooltip>
-        <div 
+        <div
           class="alpheios-worditem__data alpheios-worditem__targetWord"
           @click="selectWordItem()"
         >{{ worditem.targetWord }}</div>
-        <div class="alpheios-worditem__data alpheios-worditem__lemmasList">{{ worditem.lemmasList }}</div>
+        <div class="alpheios-worditem__data alpheios-worditem__lemmasList">{{ lemmasList }}</div>
     </div>
 </template>
 <script>
@@ -44,12 +44,20 @@
       alphTooltip: TooltipWrap
     },
     props: {
+     controller: {
+       type: Object,
+       required: true
+     },
       worditem: {
         type: Object,
         required: true
       },
       messages: {
         type: Object,
+        required: true
+      },
+      updated: {
+        type: Number,
         required: true
       }
     },
@@ -64,29 +72,31 @@
     },
     computed: {
       itemClasses () {
-        // console.info('********************itemClasses', this.worditem.currentSession, this.worditem)
-        return { 
+        return {
           'alpheios-wordlist-language__worditem__active': this.important,
           'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
         }
+      },
+      lemmasList () {
+        return this.updated ? this.worditem.lemmasList : ''
       }
     },
     methods: {
       changeImportant () {
-        this.$emit('changeImportant', this.worditem.storageID, this.worditem.important)
+        this.$emit('changeImportant', this.worditem.targetWord, ! this.worditem.important)
         this.important = this.worditem.important
       },
       eventChangeImportant () {
         this.important = this.worditem.important
       },
       selectWordItem () {
-        this.worditem.selectWordItem()
+        this.controller.selectWordItem(this.worditem.languageCode, this.worditem.targetWord)
       },
       deleteItem () {
-        this.$emit('deleteItem', this.worditem.storageID)
+        this.$emit('deleteItem', this.worditem.targetWord)
       },
       showContexts () {
-        this.$emit('showContexts', this.worditem.storageID)
+        this.$emit('showContexts', this.worditem.targetWord)
       }
     }
   }

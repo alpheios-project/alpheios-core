@@ -96,9 +96,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-context-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -107,9 +107,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-item-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -118,9 +118,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-language-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -129,9 +129,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-list-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -619,126 +619,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "../node_modules/uuid/lib/bytesToUuid.js":
-/*!***********************************************!*\
-  !*** ../node_modules/uuid/lib/bytesToUuid.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-var byteToHex = [];
-for (var i = 0; i < 256; ++i) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-}
-
-function bytesToUuid(buf, offset) {
-  var i = offset || 0;
-  var bth = byteToHex;
-  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]]]).join('');
-}
-
-module.exports = bytesToUuid;
-
-
-/***/ }),
-
-/***/ "../node_modules/uuid/lib/rng-browser.js":
-/*!***********************************************!*\
-  !*** ../node_modules/uuid/lib/rng-browser.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// Unique ID creation requires a high quality random # generator.  In the
-// browser this is a little complicated due to unknown quality of Math.random()
-// and inconsistent support for the `crypto` API.  We do the best we can via
-// feature-detection
-
-// getRandomValues needs to be invoked in a context where "this" is a Crypto
-// implementation. Also, find the complete implementation of crypto on IE11.
-var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto)) ||
-                      (typeof(msCrypto) != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto));
-
-if (getRandomValues) {
-  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
-  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
-  module.exports = function whatwgRNG() {
-    getRandomValues(rnds8);
-    return rnds8;
-  };
-} else {
-  // Math.random()-based (RNG)
-  //
-  // If all else fails, use Math.random().  It's fast, but is of unspecified
-  // quality.
-  var rnds = new Array(16);
-
-  module.exports = function mathRNG() {
-    for (var i = 0, r; i < 16; i++) {
-      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return rnds;
-  };
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/uuid/v4.js":
-/*!**********************************!*\
-  !*** ../node_modules/uuid/v4.js ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var rng = __webpack_require__(/*! ./lib/rng */ "../node_modules/uuid/lib/rng-browser.js");
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "../node_modules/uuid/lib/bytesToUuid.js");
-
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
-
-  if (typeof(options) == 'string') {
-    buf = options === 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
-
-  var rnds = options.random || (options.rng || rng)();
-
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
-
-  return buf || bytesToUuid(rnds);
-}
-
-module.exports = v4;
-
-
-/***/ }),
-
 /***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/common-components/tooltip-wrap.vue?vue&type=script&lang=js& ***!
@@ -804,9 +684,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-context-block.vue?vue&type=script&lang=js&":
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-context-panel.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-context-block.vue?vue&type=script&lang=js& ***!
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-context-panel.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -817,6 +697,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_back_svg__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_icons_back_svg__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue-components/common-components/tooltip-wrap.vue */ "./vue-components/common-components/tooltip-wrap.vue");
 /* harmony import */ var _vue_components_word_tq_source_block_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue-components/word-tq-source-block.vue */ "./vue-components/word-tq-source-block.vue");
+//
 //
 //
 //
@@ -861,12 +742,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    formattedTextQuoteSelectors () {
-      console.info('**************************this.worditem.formattedTextQuoteSelectors', this.worditem.formattedTextQuoteSelectors)
-      return this.worditem.formattedTextQuoteSelectors
+    formattedContext () {
+      return this.worditem.formattedContext
     },
     sourcesList () {
-      return Object.keys(this.formattedTextQuoteSelectors)
+      return Object.keys(this.formattedContext)
     }
   },
   methods: {
@@ -879,9 +759,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-item-block.vue?vue&type=script&lang=js&":
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-item-panel.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-item-block.vue?vue&type=script&lang=js& ***!
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-item-panel.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -941,12 +821,20 @@ __webpack_require__.r(__webpack_exports__);
     alphTooltip: _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
+   controller: {
+     type: Object,
+     required: true
+   },
     worditem: {
       type: Object,
       required: true
     },
     messages: {
       type: Object,
+      required: true
+    },
+    updated: {
+      type: Number,
       required: true
     }
   },
@@ -961,29 +849,31 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     itemClasses () {
-      // console.info('********************itemClasses', this.worditem.currentSession, this.worditem)
-      return { 
+      return {
         'alpheios-wordlist-language__worditem__active': this.important,
         'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
       }
+    },
+    lemmasList () {
+      return this.updated ? this.worditem.lemmasList : ''
     }
   },
   methods: {
     changeImportant () {
-      this.$emit('changeImportant', this.worditem.storageID, this.worditem.important)
+      this.$emit('changeImportant', this.worditem.targetWord, ! this.worditem.important)
       this.important = this.worditem.important
     },
     eventChangeImportant () {
       this.important = this.worditem.important
     },
     selectWordItem () {
-      this.worditem.selectWordItem()
+      this.controller.selectWordItem(this.worditem.languageCode, this.worditem.targetWord)
     },
     deleteItem () {
-      this.$emit('deleteItem', this.worditem.storageID)
+      this.$emit('deleteItem', this.worditem.targetWord)
     },
     showContexts () {
-      this.$emit('showContexts', this.worditem.storageID)
+      this.$emit('showContexts', this.worditem.targetWord)
     }
   }
 });
@@ -991,9 +881,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-language-block.vue?vue&type=script&lang=js&":
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-language-panel.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-language-block.vue?vue&type=script&lang=js& ***!
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-language-panel.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1007,9 +897,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_check_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_icons_check_svg__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/icons/delete.svg */ "./icons/delete.svg");
 /* harmony import */ var _icons_delete_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_icons_delete_svg__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _vue_components_word_item_block_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-item-block.vue */ "./vue-components/word-item-block.vue");
+/* harmony import */ var _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-item-panel.vue */ "./vue-components/word-item-panel.vue");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
 //
 //
 //
@@ -1053,16 +945,20 @@ __webpack_require__.r(__webpack_exports__);
  // Vue in a runtime + compiler configuration
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'WordLanguageBlock',
+  name: 'WordLanguagePanel',
   components: {
     checkIcon: _icons_check_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
     deleteIcon: _icons_delete_svg__WEBPACK_IMPORTED_MODULE_3___default.a,
-    wordItem: _vue_components_word_item_block_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    wordItem: _vue_components_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     alphTooltip: _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    wordlist: {
+    controller: {
       type: Object,
+      required: true
+    },
+    languageCode: {
+      type: String,
       required: true
     },
     messages: {
@@ -1080,39 +976,40 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    wordlist () {
+      return this.controller.getWordList(this.languageCode)
+    },
     wordItems () {
       return this.updated && this.reloadList ? this.wordlist.values : []
     },
     languageName () {
-      return this.wordlist.languageName
+      // TODO with upcoming merge, this can be retrived from utility library
+      // so just return the code for now
+      return this.languageCode
     }
   },
   methods: {
     async makeAllImportant () {
-      await this.wordlist.makeAllImportant()
+      await this.controller.updateAllImportant(this.languageCode,true)
       this.$emit('eventChangeImportant')
     },
     async removeAllImportant () {
-      await this.wordlist.removeAllImportant()
+      await this.controller.updateAllImportant(this.languageCode,false)
       this.$emit('eventChangeImportant')
     },
-    async changeImportant (storageID, important) {
-      if (important) {
-        await this.wordlist.removeImportantByID(storageID)
-      } else {
-        await this.wordlist.makeImportantByID(storageID)
-      }
+    async changeImportant (targetWord, important) {
+      await this.controller.updateWordItemImportant(this.languageCode,targetWord,important)
     },
-    async deleteItem (storageID) {
-      await this.wordlist.removeWordItemByID(storageID)
+    async deleteItem (targetWord) {
+      await this.controller.removeWordListItem(this.languageCode,targetWord)
       this.reloadList = this.reloadList + 1
     },
     async deleteAll () {
-      await this.wordlist.removeAllWordItems()
+      await this.controller.removeWordList(this.languageCode)
       this.reloadList = this.reloadList + 1
     },
-    showContexts (wordItemStorageID) {
-      this.$emit('showContexts', wordItemStorageID, this.wordlist.languageCode)
+    showContexts (targetWord) {
+      this.$emit('showContexts', targetWord, this.languageCode)
     }
   }
 });
@@ -1120,9 +1017,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-list-block.vue?vue&type=script&lang=js&":
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-list-panel.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-list-block.vue?vue&type=script&lang=js& ***!
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue-components/word-list-panel.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1135,8 +1032,9 @@ __webpack_require__.r(__webpack_exports__);
 var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
 /* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
 var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
-/* harmony import */ var _vue_components_word_language_block_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-language-block.vue */ "./vue-components/word-language-block.vue");
-/* harmony import */ var _vue_components_word_context_block_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue-components/word-context-block.vue */ "./vue-components/word-context-block.vue");
+/* harmony import */ var _vue_components_word_language_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue-components/word-language-panel.vue */ "./vue-components/word-language-panel.vue");
+/* harmony import */ var _vue_components_word_context_panel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue-components/word-context-panel.vue */ "./vue-components/word-context-panel.vue");
+//
 //
 //
 //
@@ -1168,10 +1066,10 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__P
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'WordListBlock',
+  name: 'WordListPanel',
   components: {
-    wordLanguage: _vue_components_word_language_block_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    wordContext: _vue_components_word_context_block_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    wordLanguage: _vue_components_word_language_panel_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    wordContext: _vue_components_word_context_panel_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   props: {
     wordlistC: {
@@ -1207,13 +1105,11 @@ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__P
     }
   },
   methods: {
-    showContexts (wordItemStorageID, wordListLanguageCode) {
-      this.showContextWordItem = this.wordLists[wordListLanguageCode].items[wordItemStorageID]
+    showContexts (targetWord, wordListLanguageCode) {
+      this.showContextWordItem = this.wordLists[wordListLanguageCode].getWordItem(targetWord)
     },
     backToWordList () {
-      // console.info('***************backToWordList list before', this.showContext)
       this.showContextWordItem = null
-      // console.info('***************backToWordList list after', this.showContext)
     }
   }
 });
@@ -1308,9 +1204,9 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-block.vue?vue&type=template&id=554dc860&":
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-panel.vue?vue&type=template&id=6e1f0b52&":
 /*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-context-block.vue?vue&type=template&id=554dc860& ***!
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-context-panel.vue?vue&type=template&id=6e1f0b52& ***!
   \**************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1356,7 +1252,7 @@ var render = function() {
             _vm._v(
               _vm._s(_vm.worditem.targetWord) +
                 " (" +
-                _vm._s(_vm.worditem.languageName) +
+                _vm._s(_vm.worditem.languageCode) +
                 ")"
             )
           ])
@@ -1372,7 +1268,7 @@ var render = function() {
             _c("word-tq-source", {
               attrs: {
                 source: source,
-                tqSelectors: _vm.formattedTextQuoteSelectors[source],
+                tqSelectors: _vm.formattedContext[source],
                 messages: _vm.messages
               }
             })
@@ -1391,9 +1287,9 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-block.vue?vue&type=template&id=904d8a9c&":
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&":
 /*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-item-block.vue?vue&type=template&id=904d8a9c& ***!
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9& ***!
   \***********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1509,7 +1405,7 @@ var render = function() {
         {
           staticClass: "alpheios-worditem__data alpheios-worditem__lemmasList"
         },
-        [_vm._v(_vm._s(_vm.worditem.lemmasList))]
+        [_vm._v(_vm._s(_vm.lemmasList))]
       )
     ],
     1
@@ -1522,9 +1418,9 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-block.vue?vue&type=template&id=05ddf592&":
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&":
 /*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-language-block.vue?vue&type=template&id=05ddf592& ***!
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e& ***!
   \***************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1632,10 +1528,15 @@ var render = function() {
       _vm._l(_vm.wordItems, function(wordItem) {
         return _c(
           "div",
-          { key: wordItem.storageID },
+          { key: wordItem.targetWord },
           [
             _c("word-item", {
-              attrs: { worditem: wordItem, messages: _vm.messages },
+              attrs: {
+                controller: _vm.controller,
+                worditem: wordItem,
+                messages: _vm.messages,
+                updated: _vm.updated
+              },
               on: {
                 changeImportant: _vm.changeImportant,
                 deleteItem: _vm.deleteItem,
@@ -1657,9 +1558,9 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-block.vue?vue&type=template&id=c86d8306&":
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-panel.vue?vue&type=template&id=0f6bf074&":
 /*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-list-block.vue?vue&type=template&id=c86d8306& ***!
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-list-panel.vue?vue&type=template&id=0f6bf074& ***!
   \***********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1684,7 +1585,8 @@ var render = function() {
               [
                 _c("word-language", {
                   attrs: {
-                    wordlist: _vm.wordLists[languageCode],
+                    controller: _vm.wordlistC,
+                    languageCode: languageCode,
                     messages: _vm.l10n.messages,
                     updated: _vm.updated
                   },
@@ -12981,6 +12883,196 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./controllers/user-data-manager.js":
+/*!******************************************!*\
+  !*** ./controllers/user-data-manager.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserDataManager; });
+/* harmony import */ var _storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/storage/worditem-indexeddb-driver.js */ "./storage/worditem-indexeddb-driver.js");
+/* harmony import */ var _storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/storage/worditem-remotedb-driver.js */ "./storage/worditem-remotedb-driver.js");
+/* harmony import */ var _storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/storage/indexed-db-adapter.js */ "./storage/indexed-db-adapter.js");
+/* harmony import */ var _storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/storage/remote-db-adapter.js */ "./storage/remote-db-adapter.js");
+
+
+
+
+class UserDataManager {
+
+  constructor (userID,events) {
+    this.userID = userID
+    events.WORDITEM_UPDATED.sub(this.update.bind(this))
+    events.WORDITEM_DELETED.sub(this.delete.bind(this))
+    events.WORDLIST_DELETED.sub(this.deleteMany.bind(this))
+  }
+
+  _localStorageAdapter(dataType) {
+    let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.userID)
+    return new _storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_2__["default"](dbDriver)
+  }
+
+  _remoteStorageAdapter(dataType) {
+    let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.userID)
+    return new _storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__["default"](dbDriver)
+  }
+
+  /**
+   * Checks and formats Class name (if neccessary) to a normal state (after uglifying pugins)
+   * @param {String} sourceConstrName recieved class name
+   * @return {String} formatted class name
+   */
+
+  defineConstructorName (sourceConstrName) {
+    let firstLetter = sourceConstrName.substr(0,1)
+    let finalConstrName
+
+    if (firstLetter == firstLetter.toUpperCase()) {
+      finalConstrName = sourceConstrName
+    } else {
+      let removed = sourceConstrName.split('_').length-1
+      let classNameStart = sourceConstrName.replace('_', '').toLowerCase().length/2
+      finalConstrName = sourceConstrName.substr(-(classNameStart+removed-2))
+    }
+    return finalConstrName
+  }
+
+  /**
+   * Update data in the user data stores
+   * @param {Object} data object adhering to
+   *                      { dataObj: the data model object to be updated}
+   *                        params: datatype specific parameters
+   *                      }
+   * @return {Boolean} true if update succeeded false if not
+   */
+  async update(data) {
+    try {
+      let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
+
+      let ls = this._localStorageAdapter(finalConstrName)
+      let rs = this._remoteStorageAdapter(finalConstrName)
+      let updatedLocal = await ls.update(data.dataObj,data.params)
+      let updatedRemote = await rs.update(data.dataObj,data.params)
+      // TODO error handling upon update failure
+      return updatedLocal && updatedRemote
+    } catch (error) {
+      console.error('Some errors happen on updating data in IndexedDB', error.message)
+    }
+  }
+
+  /**
+   * Delete a single data model object from the user data stores
+   * @param {Object} data object adhering to
+   *                      { dataObj: the data model object to be updated} }
+   * @return {Boolean} true if delete succeeded false if not
+   */
+  async delete(data) {
+    try {
+      let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
+
+      let ls = this._localStorageAdapter(finalConstrName)
+      let rs = this._remoteStorageAdapter(finalConstrName)
+      let deletedLocal = await ls.deleteOne(data.dataObj)
+      let deletedRemote = await rs.deleteOne(data.dataObj)
+      // TODO error handling upon delete failure
+      return deletedLocal && deletedRemote
+    } catch (error) {
+      console.error('Some errors happen on deleting data from IndexedDB', error.message)
+    }
+  }
+
+  /**
+   * Delete a set objects from the data store
+   * @param {Object} data object adhering to
+   *                      { dataType: the name of the datatype to delete,
+   *                        params: parameters to identify items to be deleted
+   *                      }
+   */
+  async deleteMany(data) {
+    try {
+      let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
+      let localAdapter = this._localStorageAdapter(data.dataType)
+      let deletedLocalResult = localAdapter.deleteMany(data.params)
+      let deletedRemoteResult = remoteAdapter.deleteMany(data.params)
+      const finalResult = [await deletedLocalResult, await deletedRemoteResult]
+
+      console.info('Result of deleted many from IndexedDB', finalResult)
+      
+    } catch (error) {
+      console.error('Some errors happen on deleting data from IndexedDB', error.message)
+    }
+  }
+
+  /**
+   * Query the user data stores
+   * @param {Object} data object adhering to
+   *                      { dataType: the name of the datatype to query
+   *                        params: query parameters to
+   *                      }
+   * @return {Object[]} an array of data items
+   */
+  async query(data) {
+    // query queries both the remote and local stores and merges
+    // the results
+    let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
+    let localAdapter = this._localStorageAdapter(data.dataType)
+    let remoteDataItems = await remoteAdapter.query(data.params)
+    let localDataItems = await localAdapter.query(data.params)
+
+    // if we have any remoteData items then we are going to
+    // reset the local store from the remoteData, adding back in any
+    // items that appeared only in the local
+    if (remoteDataItems.length > 0) {
+        localAdapter.deleteMany(params)
+    }
+    let addToRemote = []
+    let updateInRemote = []
+    localDataItems.forEach(item => {
+      let inRemote = false
+      for (let i=0; i<remoteDataItems.length; i++ ) {
+        if (remoteDataItems[i].isSameItem(item)) {
+          inRemote = true
+          // if the item exists in the remote db, check to see if they differ
+          // and if so merge and update
+          if (remoteDataItems[i].isNotEqual(item)) {
+            let merged = remoteDataItems[i].merge(item)
+            remoteDataItems[i] = merged
+            updateInRemote.push(remoteDataItems[i].merge(item))
+          }
+        }
+      }
+      if (!inRemote) {
+        addToRemote.push(item)
+      }
+    })
+    addToRemote.forEach(item => {
+      remoteAdapter.create(item)
+    })
+    updateInRemote.forEach(item => {
+      remoteAdapter.update(item)
+    })
+    let mergedList = [...remoteDataItems, ...addToRemote]
+    mergedList.forEach(item=> {
+      localAdapter.create(item)
+    })
+    return [...remoteDataItems,...addToRemote]
+  }
+}
+
+// Constants (could be done better, dynamically, etc.)
+UserDataManager.LOCAL_DRIVER_CLASSES = {
+  WordItem: _storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_0__["default"]
+}
+UserDataManager.REMOTE_DRIVER_CLASSES = {
+  WordItem: _storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+}
+
+
+/***/ }),
+
 /***/ "./controllers/wordlist-controller.js":
 /*!********************************************!*\
   !*** ./controllers/wordlist-controller.js ***!
@@ -12994,127 +13086,230 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _lib_word_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/word-list */ "./lib/word-list.js");
-/* harmony import */ var _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/storage/indexed-db-adapter */ "./storage/indexed-db-adapter.js");
+/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
 
 
 
 
 class WordlistController {
-  constructor (userID) {
-    this.userID = userID
+  /**
+   * @constructor
+   * @param {String[]} availableLangs language codes
+   * @param {PSEvent[]} events events that the controller can subscribe to
+   */
+  constructor (availableLangs,events) {
     this.wordLists = {}
-
-    this.storageAdapter = new _storage_indexed_db_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]()
-  }
-
-  get availableLangs () {
-    return ['lat', 'grc', 'ara', 'per', 'gez']
+    this.availableLangs = availableLangs
+    events.TEXT_QUOTE_SELECTOR_RECEIVED.sub(this.onTextQuoteSelectorReceived.bind(this))
+    events.HOMONYM_READY.sub(this.onHomonymReady.bind(this))
+    events.DEFS_READY.sub(this.onDefinitionsReady.bind(this))
+    events.LEMMA_TRANSL_READY.sub(this.onLemmaTranslationsReady.bind(this))
   }
 
   /**
-   * This method executes in UIControler init method (at the end)
-   * It checks if storageAdapter is avalable (in our case it checks if IndexededDB works in the current browser)
-   * And if it is available, it executes openDatabase and 
-   * passes initDBStructure method for the case, when database doesn't exist (onupgradeneeded event)
-   * and uploadListsFromDB for the case when database already exists
+   * Asynchronously initialize the word lists managed by this controller
+   * @param {UserDataManager} dataManager a user data manager to retrieve initial wordlist data from
+   *  // TODO may need a way to process a queue of pending words here e.g. if the wordlist controller isn't
+    * // activated until after number of lookups have already occurred
+   * Emits a WORDLIST_UPDATED event when the wordlists are available
    */
-  async initLists () {
-    if (this.storageAdapter.available) {
-      await this.uploadListsFromDB()
-    }
-  }
-
-
-   /**
-   * This method loads data from the table in onsuccess event
-   * event is an argument, and event.target.result - is a database varaiable
-   * We are checking all available lists name (using userIDLangCode property, that defines wordlist)
-   * with the help of keyRange property condition - {indexName: 'userIDLangCode', value: listID, type: 'only' }
-   * and if it retrieves data successfully, it executes parseResultToWordList
-   */
-
-  async uploadListsFromDB () {
-    
-    this.availableLangs.forEach(async (languageCode) => {
-      this.createWordList(languageCode)
-      let result = await this.wordLists[languageCode].uploadFromDB()
-
-      if (!result) {
-        this.removeWordList(languageCode)
+  async initLists (dataManager) {
+    for (let languageCode of this.availableLangs) {
+      let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}})
+      if (wordItems.length > 0) {
+        this.wordLists[languageCode] = new _lib_word_list__WEBPACK_IMPORTED_MODULE_1__["default"](languageCode,wordItems)
       }
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)     
-    })
-  }
-
-  /**
-   * This method creates an empty wordlist and attaches to controller
-   */
-  createWordList (languageCode) {
-    let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_1__["default"](this.userID, languageCode, this.storageAdapter)
-    this.wordLists[languageCode] = wordList
-  }
-
-  removeWordList (languageCode) {
-    delete this.wordLists[languageCode]
-  }
-
-  wordListExist (languageCode) {
-    return Object.keys(this.wordLists).includes(languageCode)
-  }
-
-  async addToWordList (data) {
-    // check if such wordItem exists in the WordList
-
-    let languageCode = data.textQuoteSelector ? data.textQuoteSelector.languageCode : data.homonym.language
-    let targetWord = data.textQuoteSelector ? data.textQuoteSelector.normalizedText : data.homonym.targetWord
-
-    if (!this.wordListExist(languageCode)) {
-      this.createWordList(languageCode)
     }
-
-    let wordList = this.wordLists[languageCode]
-    await wordList.pushWordItem({
-      languageCode, targetWord,
-      homonym: data.homonym,
-      textQuoteSelector: data.textQuoteSelector,
-      userID: this.userID,
-      currentSession: true,
-      important: false
-    }, data.type)
-
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
   }
 
   /**
-   * This method executes updateWordList with default saveToStorage flag = true
+   * Get the wordlist for a specific language code
+   * @param {String} languageCode the language for the list
+   * @param {Boolean} create set to true to create the list of it doesn't exist
+   * Emits a WORDLIST_CREATED event if a new list is created
+   * @return {WordList} the wordlist
    */
-  async onHomonymReady (data) {
-    console.log('********************onHomonymReady1', data)
-    await this.addToWordList({ homonym: data.homonym, type: 'shortHomonym' })
+  getWordList (languageCode, create=true) {
+    if (create && ! this._wordListExist(languageCode)) {
+      let wordList = new _lib_word_list__WEBPACK_IMPORTED_MODULE_1__["default"](languageCode,[])
+      this.wordLists[languageCode] = wordList
+      WordlistController.evt.WORDLIST_CREATED.pub(wordList)
+    }
+    return this.wordLists[languageCode]
   }
 
   /**
-   * This method executes updateWordList with default saveToStorage flag = true 
-   * (because definitions could come much later we need to resave homonym with definitions data to database)
-  */
-  async onDefinitionsReady (data) {
-    console.log('********************onDefinitionsReady', data)
-    await this.addToWordList({ homonym: data.homonym, type: 'fullHomonym' })
+   * Remove a wordlist for a specific language code and all if its items
+   * @param {String} languageCode the language for the list
+   * Emits a WORDLIST_DELETED event
+   */
+  removeWordList (languageCode) {
+    let toDelete = this.wordLists[languageCode]
+    delete this.wordLists[languageCode]
+    WordlistController.evt.WORDLIST_DELETED.pub({dataType: 'WordItem', params: {languageCode: languageCode}})
+    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
   }
 
   /**
-   * This method executes updateWordList with default saveToStorage flag = true 
-   * (because lemma translations could come much later we need to resave homonym with translations data to database)
-  */
-  async onLemmaTranslationsReady (homonym) {
-    console.log('********************onLemmaTranslationsReady', homonym)
-    await this.addToWordList({ homonym, type: 'fullHomonym' })
+   * Remove a WordItem from a WordList
+   * @param {String} languageCode the language of the item to be removed
+   * @param {String} targetWord the word to be removed
+   * Emits a WORDITEM_DELETED event for for the item that was deleted
+   */
+  removeWordListItem (languageCode, targetWord) {
+    let wordList = this.getWordList(languageCode, false)
+    if (wordList) {
+      let deleted = wordList.deleteWordItem(targetWord)
+      if (deleted) {
+        WordlistController.evt.WORDITEM_DELETED.pub({dataObj: deleted})
+      }
+    }
+    // TODO error handling if item not found
+    // TODO call removeWordList if the list is empty now
   }
 
-  async onTextQuoteSelectorRecieved (textQuoteSelector) {
-    console.log('********************onTextQuoteSelectorRecieved', textQuoteSelector)
-    await this.addToWordList({ textQuoteSelector, type: 'textQuoteSelector' })
+  /**
+   * get an item from a word list
+   * @param {String} languageCode the language code of the item
+   * @param {String} targetWord the word of the item
+   * @param {Boolean} create true to create the item if it doesn't exist
+   * @return {WordItem} the retrieved or created WordItem
+   */
+  getWordListItem (languageCode, targetWord, create=false) {
+    let wordList = this.getWordList(languageCode, create)
+    let worditem
+    if (wordList) {
+      worditem = wordList.getWordItem(targetWord, create, WordlistController.evt.WORDITEM_UPDATED)
+    }
+    // TODO error handling for no item?
+    return worditem
   }
+
+  /**
+   * Responds to a HOMONYM_READY event by creating or updating a wordlist item for a retrieved Homonym
+   * @param {Homonym} data
+   * Emits WORDITEM_UPDATED and WORDLIST_UPDATED events
+   */
+   onHomonymReady (data) {
+    // console.info('********************onHomonymReady1', data)
+    // when receiving this event, it's possible this is the first time we are seeing the word so
+    // create the item in the word list if it doesn't exist
+    let wordItem = this.getWordListItem(data.language,data.targetWord,true)
+    wordItem.homonym = data
+    WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
+    // emit a wordlist updated event too in case the wordlist was updated
+    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+  }
+
+  /**
+  * Responds to a DEFINITIONS_READY event by updating a wordlist item for retrieved Definitions
+  * @param {Object} data {requestType: 'fullDefs',homonym: {Homonym}}
+  * Emits a WORDITEM_UPDATED event
+  */
+  onDefinitionsReady (data) {
+    // console.info('********************onDefinitionsReady', data.homonym)
+    let wordItem = this.getWordListItem(data.homonym.language,data.homonym.targetWord)
+    if (wordItem) {
+      wordItem.homonym = data.homonym
+      WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
+    } else {
+      // TODO error handling
+      console.error("Something went wrong: request to add definitions to non-existent item")
+    }
+  }
+
+  /**
+  * Responds to a LEMMA_TRANSLATIONS_READY event by updating a wordlist item for retrieved translations
+  * (because lemma translations could come much later we need to resave homonym with translations data to database)
+  * @param {Homonym} data
+  * Emits a WORDITEM_UPDATED event
+  */
+  onLemmaTranslationsReady (data) {
+    // console.info('********************onLemmaTranslationsReady', data)
+    let wordItem = this.getWordListItem(data.language, data.targetWord)
+    if (wordItem) {
+      wordItem.homonym = data
+      WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
+    } else {
+      console.error("Something went wrong: request to add translations to non-existent item")
+    }
+  }
+
+  /**
+  * Responds to a TextQuoteSelectorReceived  event by creating or updating a wordlist item for a retrieved Homonym
+  * @param {TextQuoteSelector} data
+  * Emits a WORDITEM_UPDATED and WORDLIST_UPDATED events
+  */
+  onTextQuoteSelectorReceived (data) {
+    // console.info('********************onTextQuoteSelectorReceived', data)
+    // when receiving this event, it's possible this is the first time we are seeing the word so
+    // create the item in the word list if it doesn't exist
+    let wordItem = this.getWordListItem(data.languageCode, data.normalizedText,true)
+    if (wordItem) {
+      wordItem.addContext([data])
+      WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
+      // emit a wordlist updated event too in case the wordlist was updated
+      WordlistController.evt.WORDLIST_UPDATED.pub(this.getWordList(wordItem.languageCode))
+    } else {
+      console.error("Unable to create or retrieve worditem")
+    }
+
+  }
+
+  /**
+  * Update a wordlist item's important flag
+  * @param {String} languageCode  the language of the item
+  * @param {String} targetWord the word of the item
+  * @param {Boolean} important true or false
+  * Emits a WORDITEM_UPDATED event
+  */
+  updateWordItemImportant (languageCode, targetWord, important) {
+    let wordItem = this.getWordListItem(languageCode, targetWord,false)
+    if (wordItem) {
+      wordItem.important = important
+      WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
+    } else {
+      console.error("Something went wrong: request to set important flag on non-existent item")
+    }
+  }
+
+  /**
+  * Update the important flag of all the items in a WordList
+  * @param {String} languageCode  the language of the list
+  * @param {Boolean} important true or false
+  * Emits a WORDITEM_UPDATED event for each updated item
+  */
+  updateAllImportant (languageCode, important) {
+    let wordList = this.getWordList(languageCode, false)
+    wordList.values.forEach(wordItem => {
+      wordItem.important = important
+      WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
+    })
+  }
+
+  /**
+  * Select an item in a word list
+  * @param {String} languageCode  the language of the item
+  * @param {String} targetWord the word of the item
+  * Emits a WORDITEM_SELECTED event for the selected item
+  */
+  selectWordItem (languageCode, targetWord) {
+    let wordItem = this.getWordListItem(languageCode, targetWord,false)
+    // console.info('*********************selectWordItem 1', languageCode, targetWord)
+    // console.info('*********************selectWordItem 2', wordItem)
+    WordlistController.evt.WORDITEM_SELECTED.pub(wordItem.homonym)
+  }
+
+  /**
+   * Private method - check to see if we have a wordlist for a specific language code
+   * @param {String} languageCode the language code
+   * @return {Boolean} true if the wordlist exists otherwise false
+   */
+  _wordListExist (languageCode) {
+    return Object.keys(this.wordLists).includes(languageCode)
+  }
+
 }
 
 WordlistController.evt = {
@@ -13125,14 +13320,50 @@ WordlistController.evt = {
    * }
    */
   WORDLIST_UPDATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist updated', WordlistController),
+
+  /**
+   * Published when a WordList was created
+   * Data: {
+   *  {wordLists} an Array with WordLists object
+   * }
+   */
+  WORDLIST_CREATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist created', WordlistController),
+
+
+  /**
+   * Published when a WordList was deleted
+   * Data: {
+   *  dataType: constructor name for the contained word list items
+   *  params: parameters to identify the items to be deleted
+   * }
+   */
+  WORDLIST_DELETED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('Wordlist deleted', WordlistController),
+
   /**
    * Published when a WordItem was selected.
    * Data: {
-   *  {Homonym} a Homonym that should be uploaded to popup/panel
+   *  dataObj: the selected WordItem
    * }
    */
   WORDITEM_SELECTED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem selected', WordlistController),
-  
+
+  /**
+   * Published when a WordItem was updated
+   * Data: {
+   *   dataObj: the selected WordItem
+   *   params: additional update parameters
+   * }
+   */
+  WORDITEM_UPDATED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem updated', WordlistController),
+
+  /**
+   * Published when a WordItem was deleted
+   * Data: {
+   *   dataObj: the deleted WordItem
+   * }
+   */
+  WORDITEM_DELETED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"]('WordItem deleted', WordlistController)
+
 }
 
 
@@ -13145,7 +13376,7 @@ WordlistController.evt = {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 459 459"}},[_c('path',{attrs:{"d":"M178.5 140.25v-102L0 216.75l178.5 178.5V290.7c127.5 0 216.75 40.8 280.5 130.05-25.5-127.5-102-255-280.5-280.5z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\back.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 459 459"}},[_c('path',{attrs:{"d":"M178.5 140.25v-102L0 216.75l178.5 178.5V290.7c127.5 0 216.75 40.8 280.5 130.05-25.5-127.5-102-255-280.5-280.5z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\back.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -13156,7 +13387,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\check.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\check.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -13167,7 +13398,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\delete.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\delete.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -13178,7 +13409,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 442 442"}},[_c('path',{attrs:{"d":"M171 336H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM322 336H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 86H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h252c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 136H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 186H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 236H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 286H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM171 286H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM171 136H70c-5.523 0-10 4.477-10 10v101c0 5.523 4.477 10 10 10h101c5.523 0 10-4.477 10-10V146c0-5.523-4.477-10-10-10zm-10 101H80v-81h81v81z"}}),_c('path',{attrs:{"d":"M422 76h-30V46c0-11.028-8.972-20-20-20H20C8.972 26 0 34.972 0 46v320c0 27.57 22.43 50 50 50h342c27.57 0 50-22.43 50-50V96c0-11.028-8.972-20-20-20zm0 290c0 16.542-13.458 30-30 30H50c-16.542 0-30-13.458-30-30V46h352v305c0 13.785 11.215 25 25 25 5.522 0 10-4.477 10-10s-4.478-10-10-10c-2.757 0-5-2.243-5-5V96h30v270z"}})])};var toString = function () {return "C:\\_alpheios\\wordlist\\src\\icons\\text-quote.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 442 442"}},[_c('path',{attrs:{"d":"M171 336H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM322 336H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 86H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h252c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 136H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 186H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 236H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 286H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM171 286H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM171 136H70c-5.523 0-10 4.477-10 10v101c0 5.523 4.477 10 10 10h101c5.523 0 10-4.477 10-10V146c0-5.523-4.477-10-10-10zm-10 101H80v-81h81v81z"}}),_c('path',{attrs:{"d":"M422 76h-30V46c0-11.028-8.972-20-20-20H20C8.972 26 0 34.972 0 46v320c0 27.57 22.43 50 50 50h342c27.57 0 50-22.43 50-50V96c0-11.028-8.972-20-20-20zm0 290c0 16.542-13.458 30-30 30H50c-16.542 0-30-13.458-30-30V46h352v305c0 13.785 11.215 25 25 25 5.522 0 10-4.477 10-10s-4.478-10-10-10c-2.757 0-5-2.243-5-5V96h30v270z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\text-quote.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -13186,7 +13417,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: Style, WordlistController, WordListBlock */
+/*! exports provided: Style, WordlistController, WordListPanel, UserDataManager */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13197,8 +13428,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/controllers/wordlist-controller.js */ "./controllers/wordlist-controller.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordlistController", function() { return _controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _vue_components_word_list_block_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue-components/word-list-block.vue */ "./vue-components/word-list-block.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordListBlock", function() { return _vue_components_word_list_block_vue__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _vue_components_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue-components/word-list-panel.vue */ "./vue-components/word-list-panel.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordListPanel", function() { return _vue_components_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/controllers/user-data-manager.js */ "./controllers/user-data-manager.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserDataManager", function() { return _controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
 
 
 
@@ -13513,42 +13748,127 @@ class Message {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItem; });
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/controllers/wordlist-controller */ "./controllers/wordlist-controller.js");
-
-
-
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 
 class WordItem {
-  constructor (data) {
+  /**
+   * @constructor
+   * @param {Object} constructorArgs
+   *   {String} targetWord
+   *   {String} languageCode
+   *   {Boolean} important
+   *   {Boolean} currentSession
+   *   {TextQuoteSelector[]} context
+   *   {Homonym} homonym
+   *
+   */
+  constructor (data = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {} }) {
+    // TODO handling of version
+    this.version = 1
     this.targetWord = data.targetWord
     this.languageCode = data.languageCode
-    this.userID = data.userID
-
-    this.textQuoteSelectors = data.textQuoteSelector ? [ data.textQuoteSelector ] : []
-    this.homonym = data.homonym ? data.homonym : {}
-    this.important = data.important || false
-    this.currentSession = data.currentSession || false
+    if (!this.targetWord || !this.languageCode) {
+      throw new Error("Unable to construct a worditem without at least a targetWord and a languageCode")
+    }
+    this.important = data.important === undefined ? false : data.important
+    this.currentSession = data.currentSession == undefined ? true : data.currentSession
+    this.context = data.context || []
+    this.homonym = data.homonym || {}
   }
 
-  get storageID () {
-    return this.userID + '-' + this.languageCode + '-' + this.targetWord
+  /**
+   * Construct a WordItem from JSON
+   */
+  static readObject(jsonObject) {
+    let homonym = {}
+    let context = []
+    if (jsonObject.homonym) {
+        homonym = WordItem.readHomonym(jsonObject)
+    }
+    if (jsonObject.context) {
+        context = WordItem.readContext(jsonObject)
+    }
+    let worditem = new WordItem({
+      targetWord: jsonObject.targetWord,
+      languageCode: jsonObject.languageCode,
+      important: jsonObject.important,
+      currentSession: jsonObject.currentSession,
+      context: context,
+      homonym: homonym
+    })
+    return worditem
   }
 
-  get listID () {
-    return this.userID + '-' + this.languageCode
+  /**
+   * Construct the homonym portion of a WordItem from JSON
+   */
+  static readHomonym(jsonObject) {
+    return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].readObject(jsonObject.homonym)
   }
 
   get hasTextQuoteSelectors () {
-    return this.textQuoteSelectors.length > 0
+    return this.context.length > 0
   }
 
-  get formattedTextQuoteSelectors () {
+  /**
+   * Construct the context portion of a WordItem from JSON
+   */
+  static readContext(jsonObject) {
+    let tqs = []
+    for (let jsonObj of jsonObject) {
+      let tq = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["TextQuoteSelector"].readObject(jsonObj)
+      tqs.push(tq)
+    }
+    return tqs
+  }
+
+  /**
+   * add one or more context selectors
+   * @param {TextQuoteSelector[]} selectors
+   */
+  addContext(selectors) {
+    for (let s of selectors) {
+      let found = this.context.filter(tqs => tqs.isEqual(s))
+      if (found.length == 0) {
+        this.context.push(s)
+      }
+    }
+  }
+
+  /**
+   * getter for the lemmas in this WordItem
+   */
+  get lemmasList () {
+    if (this.homonym && this.homonym.lexemes) {
+      return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => {
+        return self.indexOf(value) === index
+      }).join(', ')
+    }
+    return ''
+  }
+
+
+  // TODO NOT SURE HOW THE MERGE FUNCTIONALITY IS USED
+  merge (prevWordItem) {
+    let checkProps = ['homonym', 'important', 'currentSession']
+    for(let prop of checkProps) {
+      if (this._emptyProp(prop) && !prevWordItem._emptyProp(prop)) {
+        this[prop] = prevWordItem[prop]
+      }
+    }
+  }
+
+  /**
+   * private method to detect an empty property
+   */
+  _emptyProp (propName) {
+    return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
+  }
+
+  get formattedContext () {
     let res = {}
-    for (let tq of this.textQuoteSelectors) {
+    for (let tq of this.context) {
       if (!res[tq.source]) {
         res[tq.source] = []
       }
@@ -13556,158 +13876,8 @@ class WordItem {
     }
     return res
   }
-
-  get languageName () {
-    switch(this.languageCode) {
-      case 'lat':
-        return 'Latin'
-      case 'grc':
-        return 'Greek'
-      case 'ara':
-        return 'Arabic'
-      case 'per':
-        return 'Persian'
-      case 'gez':
-        return 'Ancient Ethiopic (Ge\'ez)'
-      default:
-        'Unknown'
-    }
-  }
-  
-  makeImportant () {
-    this.important = true
-  }
-
-  removeImportant () {
-    this.important = false
-  }
-
-  get lemmasList () {
-    if (this.homonym && this.homonym.lexemes) {
-      return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => { 
-        return self.indexOf(value) === index
-      }).join(', ')
-    }
-    return ''
-  }
-  
-  uploadHomonym (jsonObj) {
-    let homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Homonym"].readObject(jsonObj.homonym)
-    this.homonym = homonym
-  }
-
-  uploadTextQuoteSelectors (jsonObjs) {
-    for (let jsonObj of jsonObjs) {
-      let tq = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["TextQuoteSelector"].readObject(jsonObj)
-      this.textQuoteSelectors.push(tq)
-    }
-  }
-
-  selectWordItem () {
-    _controllers_wordlist_controller__WEBPACK_IMPORTED_MODULE_2__["default"].evt.WORDITEM_SELECTED.pub(this.homonym)
-  }
-
-  static get currentDate () {
-    let dt = new Date()
-    return dt.getFullYear() + '/'
-        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"  
-                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":" 
-                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
-  }
-
-  convertCommonToStorage () {
-    return {
-      ID: this.storageID,
-      listID: this.listID,
-      userID: this.userID,
-      languageCode: this.languageCode,
-      targetWord: this.targetWord,
-      important: this.important,
-      createdDT: WordItem.currentDate
-    }
-  }
-
-  convertTQSelectorToStorage () {
-    let result = []
-    let index = 0
-    for (let tq of this.textQuoteSelectors) {
-      index++
-      let resultItem = {
-        ID: this.storageID + '-' + index,
-        listID: this.listID,
-        userID: this.userID,
-        languageCode: this.languageCode,
-        targetWord: this.targetWord,
-        wordItemID: this.storageID,
-        
-        target: {
-          source: tq.source,
-          selector: {
-            type: 'TextQuoteSelector',
-            exact: tq.text,
-            prefix: tq.prefix,
-            suffix: tq.suffix,
-            contextHTML: tq.contextHTML,
-            languageCode: tq.languageCode
-          }
-        },
-        createdDT: WordItem.currentDate
-      }
-      result.push(resultItem)
-    }
-    return result
-  }
-
-  convertHomonymToStorage (addMeaning = false) {
-    let resultHomonym = this.homonym.convertToJSONObject(addMeaning)
-    return {
-      ID: this.storageID,
-      listID: this.listID,
-      userID: this.userID,
-      languageCode: this.languageCode,
-      targetWord: this.targetWord,
-
-      homonym: resultHomonym
-    }
-  }
-  convertShortHomonymToStorage () {
-    return this.convertHomonymToStorage(false)
-  }
-
-  convertFullHomonymToStorage () {
-    return this.convertHomonymToStorage(true)
-  }
-
-  emptyProp (propName) {
-    return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
-  }
-
-  hasThisTextQuoteSelector (tq) {
-    return this.textQuoteSelectors.filter(tqCurrent => tqCurrent.prefix === tq.prefix && tqCurrent.suffix === tq.suffix && tqCurrent.source === tq.source).length > 0
-  }
-
-  mergeTextQuoteSelectors (prevWordItem) {
-    for (let tq of prevWordItem.textQuoteSelectors) {
-      if (!this.hasThisTextQuoteSelector(tq)) {
-        this.textQuoteSelectors.push(tq)
-      }
-    }
-  }
-
-  merge (prevWordItem) {
-    let checkProps = ['homonym', 'important', 'currentSession']
-    for(let prop of checkProps) {
-      if (this.emptyProp(prop) && !prevWordItem.emptyProp(prop)) {
-        this[prop] = prevWordItem[prop]
-      }
-    }
-
-    this.mergeTextQuoteSelectors(prevWordItem)
-  }
 }
+
 
 /***/ }),
 
@@ -13725,210 +13895,100 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class WordList {
-  constructor (userID, languageCode, storageAdapter) {
-    this.userID = userID
-    this.languageCode = languageCode
-    this.storageAdapter = storageAdapter
-    this.items = {}
-  }
-
-  get languageName () {
-    switch(this.languageCode) {
-      case 'lat':
-        return 'Latin'
-      case 'grc':
-        return 'Greek'
-      case 'ara':
-        return 'Arabic'
-      case 'per':
-        return 'Persian'
-      case 'gez':
-        return 'Ancient Ethiopic (Ge\'ez)'
-      default:
-        'Unknown'
+  /**
+  * @constructor
+  * @param {String} languageCode the language code of the list
+  * @param {WordItem[]} worditems an optional array of WordItems with which to initialize the list
+  */
+  constructor (languageCode,worditems=[]) {
+    if (!languageCode) {
+      throw new Error("Unable to construct a wordlist without a languagecode")
     }
+    this.languageCode = languageCode
+    this.items = {}
+    worditems.forEach(item => {
+      this.addWordItem(item)
+    })
   }
 
-  get storageID () {
-    return this.userID + '-' + this.languageCode
-  }
-
+  /**
+   * get the items of the list
+   */
   get values () {
     return Object.values(this.items)
   }
 
-  get storageMap () {
-    return {
-      common: {
-        objectStoreName: 'WordListsCommon',
-        convertMethodName: 'convertCommonToStorage'
-      },
-      textQuoteSelector: {
-        objectStoreName: 'WordListsContext',
-        convertMethodName: 'convertTQSelectorToStorage'
-      },
-      shortHomonym: {
-        objectStoreName: 'WordListsHomonym',
-        convertMethodName: 'convertShortHomonymToStorage'
-      },
-      fullHomonym: {
-        objectStoreName: 'WordListsFullHomonym',
-        convertMethodName: 'convertFullHomonymToStorage'
-      }
-    }
+  /**
+   * checks to see if the list is empty
+   * @return {Boolean}
+   */
+  get isEmpty() {
+    return Object.values(this.items).length === 0
   }
 
-  async pushWordItem (data, type) {
-    let wordItem = new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"](data)
-    //check if worditem exists in the list
-    if (!this.contains(wordItem)) {
-      await this.pushWordItemPart([wordItem], 'common')
-    } else {
-      wordItem.merge(this.items[wordItem.storageID])
+
+  addWordItem (item) {
+    if (item.languageCode !== this.languageCode) {
+      throw new Error(`Language Code mismatch ${item.languageCode} !=== ${this.languageCode}`)
     }
-    
-    await this.pushWordItemPart([wordItem], type)
-    // console.info('*******************pushWordItem', data, this)
+    let existingItem = this.getWordItem(item.targetWord,false)
+    if (existingItem) {
+      item = item.merge(existingItem)
+    }
+    let key = this._makeItemKey(this.languageCode,item.targetWord)
+    this.items[key]  = item
   }
 
-  async pushWordItemPart (wordItems, type) {
-    if (this.storageMap[type]) {
-      let dataItems = []
-      for (let wordItem of wordItems) {
-        this.items[wordItem.storageID] = wordItem
-        let resDataItem = wordItem[this.storageMap[type].convertMethodName]()
-
-        if (!Array.isArray(resDataItem)) {
-          dataItems.push(resDataItem)
-        } else {
-          dataItems = dataItems.concat(resDataItem)
-        }
-      }
-
-      await this.storageAdapter.set({
-        objectStoreName: this.storageMap[type].objectStoreName,
-        dataItems: dataItems
-      })
-      
+  /**
+  * delete an individual word item from the list
+  * @param {String} targetWord the word to delete
+  * @return {WordItem} the deleted item
+  */
+  deleteWordItem (targetWord) {
+    let key = this._makeItemKey(this.languageCode,targetWord)
+    let toDelete = this.items[key]
+    if (toDelete) {
+      delete this.items[key]
     }
-  }
-  
-  async removeWordItemByID (ID) {
-    if (this.items[ID]) { 
-      await this.removeFromStorage({indexName: 'ID', value: this.items[ID].storageID, type: 'only' })
-      delete this.items[ID]
-    }
+    return toDelete
   }
 
-  async removeAllWordItems () {
-    await this.removeFromStorage({indexName: 'listID', value: this.storageID, type: 'only' })
+  /**
+  * delete all items from a list
+  */
+  removeAllWordItems () {
     this.items = {}
   }
 
-  async removeFromStorage (condition) {
-    for (let objectStoreData of Object.values(this.storageMap)) {
-      await this.storageAdapter.delete({
-        objectStoreName: objectStoreData.objectStoreName,
-        condition
-      })
-    }
-  }
 
-  contains (wordItem) {
-    return this.values.map(item => item.targetWord).includes(wordItem.targetWord)
-  }
-
-  async makeImportantByID (wordItemID) {
-    this.items[wordItemID].makeImportant()
-    await this.pushWordItemPart([this.items[wordItemID]], 'common')
-  }
-
-  async removeImportantByID (wordItemID) {
-    this.items[wordItemID].removeImportant()
-    await this.pushWordItemPart([this.items[wordItemID]], 'common')
-  }
-
-  async makeAllImportant () {
-    this.values.forEach(wordItem => {
-      wordItem.makeImportant()
-    })
-    await this.pushWordItemPart(this.values, 'common')
-  }
-
-  async removeAllImportant () {
-    this.values.forEach(wordItem => {
-      wordItem.removeImportant()
-    })
-    await this.pushWordItemPart(this.values, 'common')
-  }
-
-  async pushWordItemPart (wordItems, type) {
-    if (this.storageMap[type]) {
-      let dataItems = []
-      for (let wordItem of wordItems) {
-        this.items[wordItem.storageID] = wordItem
-        let resDataItem = wordItem[this.storageMap[type].convertMethodName]()
-
-        if (!Array.isArray(resDataItem)) {
-          dataItems.push(resDataItem)
-        } else {
-          dataItems = dataItems.concat(resDataItem)
-        }
+  /**
+   * get an item from a list
+   * @param targetWord the word to get
+   * @param {Boolean} create true to create the item if it doesn't exist
+   * @return {WordItem} the retrieved item
+   */
+  getWordItem(targetWord, create = true, eventWordItemUpdated = null) {
+    let key = this._makeItemKey(this.languageCode,targetWord)
+    if (create && !this.items[key]) {
+      let wordItem = new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"]({targetWord: targetWord, languageCode: this.languageCode})
+      if (eventWordItemUpdated) {
+        eventWordItemUpdated.pub({dataObj: wordItem, params: {segment: 'common'}})
       }
-
-      await this.storageAdapter.set({
-        objectStoreName: this.storageMap[type].objectStoreName,
-        dataItems: dataItems
-      })
-      
+      this.items[key]  = wordItem
     }
+    return this.items[key]
   }
 
-  async uploadFromDB () {
-    let res = await this.storageAdapter.get({
-      objectStoreName: this.storageMap.common.objectStoreName,
-      condition: {indexName: 'listID', value: this.storageID, type: 'only' }
-    })
-
-    if (res.length === 0) {
-      return false
-    } else {
-      for (let resWordItem of res) {
-        let resKey = resWordItem.ID
-        let wordItem = new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"](resWordItem)
-
-        let resFullHomonym = await this.storageAdapter.get({
-          objectStoreName: this.storageMap.fullHomonym.objectStoreName,
-          condition: {indexName: 'ID', value: resKey, type: 'only' }
-        })
-        
-        if (resFullHomonym.length > 0) {
-          wordItem.uploadHomonym(resFullHomonym[0])
-        } else {
-          let resShortHomonym = await this.storageAdapter.get({
-            objectStoreName: this.storageMap.shortHomonym.objectStoreName,
-            condition: {indexName: 'ID', value: resKey, type: 'only' }
-          })
-          if (resShortHomonym.length > 0)
-          wordItem.uploadHomonym(resShortHomonym[0])
-        }
-
-        let resTextQuoteSelectors = await this.storageAdapter.get({
-          objectStoreName: this.storageMap.textQuoteSelector.objectStoreName,
-          condition: {indexName: 'wordItemID', value: resKey, type: 'only' }
-        })
-
-        if (resTextQuoteSelectors.length > 0) {
-          wordItem.uploadTextQuoteSelectors(resTextQuoteSelectors)
-        }
-
-        // console.info('**********************wordItem final', wordItem)
-        this.items[wordItem.storageID] = wordItem
-      }
-      return true
-    }
+   /**
+    * make a key for a word item
+    * @param {String} languageCode
+    * @param {String} targetWord
+    */
+  _makeItemKey(languageCode,targetWord) {
+    return `${languageCode}:${targetWord}`
   }
 }
+
 
 /***/ }),
 
@@ -13992,27 +14052,164 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBAdapter; });
-/* harmony import */ var _storage_storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/storage/storage-adapter.js */ "./storage/storage-adapter.js");
-/* harmony import */ var _storage_indexed_db_structure_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/storage/indexed-db-structure.js */ "./storage/indexed-db-structure.js");
-
-
-
 /**
- * An implementation of a StorageAdapter interface for a local storage.
+ * An interface to IndexedDB Storage
  */
-class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  
-  constructor (domain = 'alpheios-storage-domain') {
-    super(domain)
+class IndexedDBAdapter {
 
-    this.available = this.initIndexedDBNamespaces()
-    this.dbData = new _storage_indexed_db_structure_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
+  /**
+   * @param {String} domain the storage domain
+   * @param {Object} dbDriver a driver for a specific data type
+   */
+  constructor (dbDriver) {
+    this.available = this._initIndexedDBNamespaces()
+    this.dbDriver = dbDriver
   }
+
+  /**
+   * Create a new data item in the data base
+   * @param {Object} data the data model item to be created
+   * @return {Boolean} true if create succeeded false if not
+   */
+  async create(data) {
+    let segments = this.dbDriver.segments
+    let updated
+    // iterate through the declared segmentation of the object
+    // and store accordingly
+    // TODO we need transaction handling here
+    for (let segment of segments) {
+      updated = await this.update(data, {segment: segment})
+      if (! updated) {
+        break
+        // TODO rollback?
+      }
+    }
+    return updated > 0
+  }
+
+  /**
+   * Clear the datastore of many items of a given type
+   * @param {Object} params data type specific parameters for identifying the items
+   *                        to be deleted
+   * @return {int} number of items deleted
+   *
+   */
+  async deleteMany(params) {
+    let deletedResult = {}
+    for (let segment of this.dbDriver.segments) {
+      let q = this.dbDriver.segmentDeleteManyQuery(segment,params)
+      let deletedItems = await this._deleteFromStore(q)
+      deletedResult[segment] = deletedItems
+    }
+    // TODO error handling
+    return deletedResult
+  }
+
+  /**
+   * Remove a single item from the data store
+   * @param {Object} data the deta model object to be deleted
+   * @return {int} number of items deleted
+   *
+   */
+  async deleteOne(data) {
+    for (let segment of this.dbDriver.segments) {
+      let q = this.dbDriver.segmentDeleteQuery(segment,data)
+      await this._deleteFromStore(q)
+    }
+    // TODO error handling
+  }
+
+  /**
+   * Update a data item, creating it if it doesn't exist
+   * @param {Object} data the data model object to update
+   * @param {Object} params update params
+   *                  { segment: name of segment needing update }
+   * @return {Boolean} true if update succeeded false if not
+   */
+  async update (data, params) {
+    let segments = [params.segment]
+    let result
+    // if we weren't asked to update a specific segment, update them all
+    if (segments.length === 0)  {
+      segments = this.dbDriver.segments
+    }
+    for (let s of segments) {
+      let q = this.dbDriver.updateSegmentQuery(s,data)
+      try {
+        // console.info("Try ",q)
+        return await this._set(q)
+      } catch(error) {
+        console.error("Error on update",error)
+        // TODO need transaction rollback handling here if mulitple segments?
+        return false
+      }
+    }
+    return result
+  }
+
+  /**
+   * Query for a set of data items
+   * @param {Object} params datatype specific query parameters
+   * @return Object[] array of data model items
+   */
+  async query(params) {
+    let listQuery = this.dbDriver.listQuery(params)
+
+    let res = await this._getFromStore(listQuery)
+
+    let items = []
+    if (res.length > 0) {
+      for (let item of res) {
+        let modelObj = this.dbDriver.load(item)
+
+        let segments = this.dbDriver.segments
+        for (let segment of segments) {
+          let query = this.dbDriver.segmentQuery(segment, modelObj)
+
+          let res = await this._getFromStore(query)
+          if (res.length > 0) {
+            this.dbDriver.loadSegment(segment, modelObj, res)
+          }
+        }
+        items.push(modelObj)
+      }
+    }
+    return items
+  }
+
+  /**
+   * Clear all the object stores
+   * Used primarily for testing right now
+   * TODO needs to be enhanced to support async removal of old database versions
+   */
+  clear () {
+    let request = this.indexedDB.open(this.dbDriver.dbName, this.dbDriver.dbVersion)
+    request.onsuccess = (event) => {
+      let db = event.target.result
+      let objectStores = this.dbDriver.objectStores
+      for (let store of objectStores) {
+        // open a read/write db transaction, ready for clearing the data
+        let transaction = db.transaction([store], 'readwrite')
+        // create an object store on the transaction
+        let objectStore = transaction.objectStore(store)
+        // Make a request to clear all the data out of the object store
+        let objectStoreRequest = objectStore.clear();
+        objectStoreRequest.onsuccess = function(event) {
+          console.log(`store ${store} cleared`)
+        }
+        objectStoreRequest.onerror = function(event) {
+          console.log(`store ${store} clear error`)
+        }
+      }
+    }
+  }
+
+
 
   /**
    * This method checks if IndexedDB is used in the current browser
    */
-  initIndexedDBNamespaces () {
+  _initIndexedDBNamespaces () {
     this.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
     this.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // This line should only be needed if it is needed to support the object's constants for older browsers
     this.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
@@ -14023,36 +14220,57 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return true
   }
 
-  /**
-   * This method create a request for opening database and passes callbacks for two events
-   */
-  openDatabase (upgradeCallback, successCallback) {
-    let request = this.indexedDB.open(this.dbName, this.currentVersion)
-    request.onerror = (event) => {
-      console.info('*************Some problems with opening', event.target)
-    }
-    request.onsuccess = successCallback
-    request.onupgradeneeded = upgradeCallback
-    return request
-  }
 
-  openDatabaseRequest () {
-    let request = this.indexedDB.open(this.dbData.dbName, this.dbData.dbVersion)
+  /**
+   * utility method ot open a database. Sets a callback which causes the database to be created if it doesn't exist
+   */
+  _openDatabaseRequest () {
+    let request = this.indexedDB.open(this.dbDriver.dbName, this.dbDriver.dbVersion)
     request.onupgradeneeded = (event) => {
       const db = event.target.result
       const upgradeTransaction = event.target.transaction
-      this.dbData.createObjectStores(db, upgradeTransaction)
+      this._createObjectStores(db, upgradeTransaction)
+      // TODO we should clean up old database versions
     }
     return request
   }
 
-  async set (data) {
+  /**
+   * Iniitalize the object store(s) for for an IndexedDb adapter
+   */
+  _createObjectStores (db, upgradeTransaction) {
+    let objectStores = this.dbDriver.objectStores
+    objectStores.forEach(objectStoreName => {
+      const objectStoreStructure = this.dbDriver[objectStoreName]
+
+      let objectStore
+      if (!db.objectStoreNames.contains(objectStoreName)) {
+        objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+      } else {
+        objectStore = upgradeTransaction.objectStore(objectStoreName)
+      }
+      objectStoreStructure.indexes.forEach(index => {
+        if (!objectStore.indexNames.contains(index.indexName)) {
+          objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })
+        }
+      })
+    })
+  }
+
+  /**
+   * Internal method to open a database and update one or items in a specific store
+   * @param {Object} data data item to be updated  in the format
+   *                      { objectStoreName: name of the object store,
+   *                        dataItems: array of data items to be updated }
+   * @return {Promise} resolves to true on success
+   */
+  async _set (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.openDatabaseRequest()
+      let request = this._openDatabaseRequest()
       request.onsuccess = async (event) => {
         const db = event.target.result
-        await this.putItem(db, data)
-        resolve()
+        let rv = await this._putItem(db, data)
+        resolve(rv)
       }
       request.onerror = (event) => {
         reject()
@@ -14061,7 +14279,15 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return promiseOpenDB
   }
 
-  async putItem (db, data) {
+  /**
+   * Internal method to put an item into a database
+   * @param {} db the database handle
+   * @param {Object} data data item to be updated  in the format
+   *                      { objectStoreName: name of the object store,
+   *                        dataItems: array of data items to be updated }
+   * @return {Promise} resolves to true on success
+   */
+  async _putItem (db, data) {
     let promisePut = await new Promise((resolve, reject) => {
       const transaction = db.transaction([data.objectStoreName], 'readwrite')
       transaction.onerror = (event) => {
@@ -14074,10 +14300,11 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
         requestPut.onsuccess = () => {
           objectsDone = objectsDone - 1
           if (objectsDone === 0) {
-            resolve()
+            resolve(true)
           }
         }
         requestPut.onerror = () => {
+          console.log('requestPut error', event.target)
           reject()
         }
       }
@@ -14085,9 +14312,16 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return promisePut
   }
 
-  async get (data) {
+  /**
+   * Internal method to get an item from a database store
+   * @param {Object} data data item to be retrieved  in the format
+   *                      { objectStoreName: name of the object store,
+   *                        condition: query parameters }
+   * @return {Promise} resolves to the retrieved items
+   */
+  async _getFromStore (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.openDatabaseRequest()
+      let request = this._openDatabaseRequest()
       request.onsuccess = (event) => {
         const db = event.target.result
         const transaction = db.transaction([data.objectStoreName])
@@ -14103,7 +14337,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
 
         requestOpenCursor.onerror = (event) => {
           reject()
-        }        
+        }
       }
       request.onerror = (event) => {
         reject()
@@ -14112,9 +14346,16 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
     return promiseOpenDB
   }
 
-  async delete (data) {
+  /**
+   * Internal method to delete an item from  a specific data store
+   * @param {Object} data data item to be retrieved  in the format
+   *                      { objectStoreName: name of the object store,
+   *                        condition: query parameters }
+   * @return {Promise} resolves to the number of deleted items
+   */
+  async _deleteFromStore (data) {
     let promiseOpenDB = await new Promise((resolve, reject) => {
-      let request = this.openDatabaseRequest()
+      let request = this._openDatabaseRequest()
       request.onsuccess = (event) => {
         const db = event.target.result
         const transaction = db.transaction([data.objectStoreName], 'readwrite')
@@ -14124,6 +14365,7 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
         const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
 
         let requestOpenCursor = index.openCursor(keyRange)
+        let deletedItems = 0
         requestOpenCursor.onsuccess = (event) => {
           const cursor = event.target.result
           if (cursor) {
@@ -14131,9 +14373,13 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
             requestDelete.onerror = (event) => {
               reject()
             }
+            requestDelete.onsuccess = (event) => {
+              deletedItems = deletedItems + 1
+            }
             cursor.continue()
           } else {
-            resolve()
+            // TODO I want to return the number of items deleted here
+            resolve(deletedItems)
           }
         }
       }
@@ -14145,39 +14391,360 @@ class IndexedDBAdapter extends _storage_storage_adapter_js__WEBPACK_IMPORTED_MOD
 
     return promiseOpenDB
   }
+
 }
 
 /***/ }),
 
-/***/ "./storage/indexed-db-structure.js":
-/*!*****************************************!*\
-  !*** ./storage/indexed-db-structure.js ***!
-  \*****************************************/
+/***/ "./storage/remote-db-adapter.js":
+/*!**************************************!*\
+  !*** ./storage/remote-db-adapter.js ***!
+  \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBStructure; });
-class IndexedDBStructure {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RemoteDBAdapter; });
+class RemoteDBAdapter {
+
+  create() {
+    return true
+  }
+
+  update() {
+    return true
+  }
+
+  deleteOne() {
+    return true
+  }
+
+  deleteMany() {
+    return true
+  }
+
+  query() {
+    return []
+  }
+}
+
+
+/***/ }),
+
+/***/ "./storage/worditem-indexeddb-driver.js":
+/*!**********************************************!*\
+  !*** ./storage/worditem-indexeddb-driver.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemIndexedDbDriver; });
+/* harmony import */ var _lib_word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/word-item */ "./lib/word-item.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class WordItemIndexedDbDriver {
+
+  /**
+   * @constructor
+   * @param {String} userId user id for the database
+   */
+  constructor(userId) {
+    this.userId = userId
+    this.storageMap = {
+      common: {
+        objectStoreName: 'WordListsCommon',
+        serialize: this._serializeCommon.bind(this),
+        delete: this._segmentDeleteQueryByID.bind(this)
+      },
+      context: {
+        objectStoreName: 'WordListsContext',
+        serialize: this._serializeContext.bind(this),
+        load: this._loadContext,
+        delete: this._segmentDeleteQueryByWordItemID.bind(this)
+      },
+      shortHomonym: {
+        objectStoreName: 'WordListsHomonym',
+        serialize: this._serializeHomonym.bind(this),
+        load: this._loadHomonym,
+        delete: this._segmentDeleteQueryByID.bind(this)
+      },
+      fullHomonym: {
+        objectStoreName: 'WordListsFullHomonym',
+        serialize: this._serializeHomonymWithFullDefs.bind(this),
+        load: this._loadHomonym,
+        delete: this._segmentDeleteQueryByID.bind(this)
+      }
+    }
+  }
+
+  /**
+  * dbName getter
+  */
   get dbName () {
     return 'AlpheiosWordLists'
   }
 
+  /**
+   * dbVersion getter
+   */
   get dbVersion () {
-    return 2
+    return 3
   }
 
+  /**
+   * db segments getter
+   */
+  get segments() {
+    return Object.keys(this.storageMap)
+  }
+
+  /**
+   * objectStores getter
+   * @return {Object} the IndexedDb objectStores for the WordItems
+   */
   get objectStores () {
-    return {
-      WordListsCommon: this.wordListsCommon,
-      WordListsContext: this.wordListsContext,
-      WordListsHomonym: this.wordListsHomonym,
-      WordListsFullHomonym: this.wordListsFullHomonym
+    return Object.keys(this.storageMap).map(k => this.storageMap[k].objectStoreName)
+  }
+
+  /**
+   * getter for the Common segment store
+   */
+  get WordListsCommon () {
+    return this._objectStoreTemplate()
+  }
+
+  /**
+   * getter for the Context segment store
+   */
+  get WordListsContext () {
+    let structure = this._objectStoreTemplate()
+    structure.indexes.push(
+      { indexName: 'wordItemID', keyPath: 'wordItemID', unique: false}
+    )
+    return structure
+  }
+
+  /**
+   * getter for the Homonym segment store
+   */
+  get WordListsHomonym () {
+    return this._objectStoreTemplate()
+  }
+
+  /**
+   * getter for the Full Homonym segment store
+   */
+  get WordListsFullHomonym () {
+    return this._objectStoreTemplate()
+  }
+
+
+  /**
+   * load a data model object from the database
+   */
+  load(data) {
+    // make sure when we create from the database
+    // that the currentSession flag is set to false
+    data.currentSession = false
+    return new _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"](data)
+  }
+
+  /**
+   * load a segment of a data model object from the database
+   */
+  loadSegment(segment,dataObj,data) {
+    if (this.storageMap[segment].load) {
+      this.storageMap[segment].load(dataObj,data)
     }
   }
 
-  get objectStoreTemplate () {
+  /**
+   * get a query object which retrieves a segment of an item
+   * @param {String} segment segment name
+   * @param {WordItem} worditem the worditem object
+   * @return {Object} IndexedDBQuery object
+   */
+  segmentQuery(segment,worditem) {
+    let id = this._makeStorageID(worditem)
+    let index = segment === 'context' ? 'wordItemID' : 'ID'
+    return {
+      objectStoreName: this.storageMap[segment].objectStoreName,
+      condition: {indexName: index, value: id, type: 'only' }
+    }
+  }
+
+  segmentDeleteQuery (segment,worditem) {
+    return this.storageMap[segment].delete(segment,worditem)
+  }
+
+  _segmentDeleteQueryByID(segment,worditem) {
+    let ID = this._makeStorageID(worditem)
+    return {
+      objectStoreName: this.storageMap[segment].objectStoreName,
+      condition: { indexName: 'ID', value: ID, type: 'only' }
+    }
+  }
+
+  _segmentDeleteQueryByWordItemID(segment,worditem) {
+    let ID = this._makeStorageID(worditem)
+    return {
+      objectStoreName: this.storageMap[segment].objectStoreName,
+      condition: { indexName: 'wordItemID', value: ID, type: 'only' }
+    }
+  }
+
+
+  segmentDeleteManyQuery(segment,params) {
+    if (params.languageCode) {
+      let listID = this.userId + '-' + params.languageCode
+      return  {
+        objectStoreName: this.storageMap[segment].objectStoreName,
+        condition: { indexName: 'listID', value: listID, type: 'only' }
+      }
+    } else {
+      // TODO throw error
+    }
+  }
+
+  updateSegmentQuery(segment,data) {
+    let dataItems = []
+    let resDataItem = this.storageMap[segment].serialize(data)
+    if (!Array.isArray(resDataItem)) {
+      dataItems.push(resDataItem)
+    } else {
+      dataItems = dataItems.concat(resDataItem)
+    }
+    return {
+      objectStoreName: this.storageMap[segment].objectStoreName,
+      dataItems: dataItems
+    }
+  }
+
+  /**
+   * get a query object which retrieves a list of WordItems
+   * @param {Object} params query parameters
+   * @return {Object} IndexedDBQuery object
+   */
+  listQuery(params) {
+    if (params.languageCode) {
+      let listID = this.userId + '-' + params.languageCode
+      return {
+        objectStoreName: this.storageMap.common.objectStoreName,
+        condition: {indexName: 'listID', value: listID, type: 'only' }
+      }
+    } else {
+      throw new Error("Invalid query parameters - missing languageCode")
+      // TODO throw error
+    }
+  }
+
+  /**
+   * private method to load the Homonym property of a WordItem
+   */
+  _loadHomonym (worditem,jsonObj) {
+    worditem.homonym = _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"].readHomonym(jsonObj[0])
+  }
+
+  /**
+   * private method to load the Context property of a WordItem
+   */
+  _loadContext (worditem, jsonObjs) {
+    if (! Array.isArray(jsonObjs)) {
+      jsonObjs = [jsonObjs]  
+    }
+    worditem.context = _lib_word_item__WEBPACK_IMPORTED_MODULE_0__["default"].readContext(jsonObjs)
+  }
+
+  /**
+   * private method to convert the common segment to storage
+   */
+  _serializeCommon (worditem) {
+    return {
+      ID: this._makeStorageID(worditem),
+      listID: this.userId + '-' + worditem.languageCode,
+      userID: this.userId,
+      languageCode: worditem.languageCode,
+      targetWord: worditem.targetWord,
+      important: worditem.important,
+      createdDT: WordItemIndexedDbDriver.currentDate
+    }
+  }
+
+  /**
+   * private method to convert the context segment to storage
+   */
+  _serializeContext (worditem) {
+    let result = []
+    let index = 0
+    let wordItemId = this._makeStorageID(worditem)
+    for (let tq of worditem.context) {
+      index++
+      let resultItem = {
+        ID: wordItemId + '-' + index,
+        listID: this.userId + '-' + worditem.languageCode,
+        userID: this.userId,
+        languageCode: worditem.languageCode,
+        targetWord: worditem.targetWord,
+        wordItemID: wordItemId,
+        target: {
+          source: tq.source,
+          selector: {
+            type: 'TextQuoteSelector',
+            exact: tq.text,
+            prefix: tq.prefix,
+            suffix: tq.suffix,
+            contextHTML: tq.contextHTML,
+            languageCode: tq.languageCode
+          }
+        },
+        createdDT: WordItemIndexedDbDriver.currentDate
+      }
+      result.push(resultItem)
+    }
+    return result
+  }
+
+  /**
+   * private method to convert the homonym segment to storage
+   * @param {WordItem}
+   */
+  _serializeHomonym (worditem,addMeaning = false) {
+    let resultHomonym = worditem.homonym && (worditem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Homonym"]) ? worditem.homonym.convertToJSONObject(addMeaning) : {}
+    return {
+      ID: this._makeStorageID(worditem),
+      listID: this.userId + '-' + worditem.languageCode,
+      userID: this.userId,
+      languageCode: worditem.languageCode,
+      targetWord: worditem.targetWord,
+      homonym: resultHomonym
+    }
+  }
+
+  /**
+   * private method to serialize homonymns with full defs
+   * @param {WordItem}
+   */
+  _serializeHomonymWithFullDefs (worditem) {
+    return this._serializeHomonym(worditem,true)
+  }
+
+  /**
+  * private method to create the storage ID for a WordItem
+  */
+  _makeStorageID(item) {
+    return this.userId + '-' + item.languageCode + '-' + item.targetWord
+  }
+
+  /**
+   * private method - creates a template for a new Object Store
+   */
+  _objectStoreTemplate () {
     return {
       keyPath: 'ID',
       indexes: [
@@ -14190,112 +14757,33 @@ class IndexedDBStructure {
     }
   }
 
-  get wordListsCommon () {
-    return this.objectStoreTemplate
+  static get currentDate () {
+    let dt = new Date()
+    return dt.getFullYear() + '/'
+        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
+        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
+                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
+                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
+                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
+
   }
 
-  get wordListsContext () {
-    let structure = this.objectStoreTemplate
-    structure.indexes.push(
-      { indexName: 'wordItemID', keyPath: 'wordItemID', unique: false}
-    )
-    return structure
-  }
-
-  get wordListsHomonym () {
-    return this.objectStoreTemplate
-  }
-
-  get wordListsFullHomonym () {
-    return this.objectStoreTemplate
-  }
-
-  createObjectStores (db, upgradeTransaction) {
-    Object.keys(this.objectStores).forEach(objectStoreName => {
-      const objectStoreStructure = this.objectStores[objectStoreName]
-
-      let objectStore
-      if (!db.objectStoreNames.contains(objectStoreName)) {
-        objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
-      } else {
-        objectStore = upgradeTransaction.objectStore(objectStoreName)
-      }
-      objectStoreStructure.indexes.forEach(index => {
-        if (!objectStore.indexNames.contains(index.indexName)) {
-          objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })    
-        }
-      })
-    })
-  }
 }
 
 
 /***/ }),
 
-/***/ "./storage/storage-adapter.js":
-/*!************************************!*\
-  !*** ./storage/storage-adapter.js ***!
-  \************************************/
+/***/ "./storage/worditem-remotedb-driver.js":
+/*!*********************************************!*\
+  !*** ./storage/worditem-remotedb-driver.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StorageAdapter; });
-/**
- * An abstract storage adapter class for an Options object. Implements two methods: set() and get().
- * A `domain` argument of a constructor designates a storage area where options key-value pairs
- * are stored. This allows to avoid possible collisions with other options objects.
- *
- * Local storage can contain multiple key-value pairs. get() with an empty parameter
- * should return all keys related to the particular object (e.g. set of options). A set of those keys
- * is defined by the `domain` concept. A key named `domain-name-key` is saved to the
- * local storage along with its key-value pairs. This special key
- * will contain an array of keys that belong to the storage domain. If no key values are provided,
- * get() function will use a list of those stored keys to retrieve all values that belong to a domain.
- */
-class StorageAdapter {
-  constructor (domain = 'alpheios-storage-domain') {
-    this.domain = domain
-  }
-
-  /**
-   * Stores one or several key-value pairs to local storage.
-   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
-   * If a particular item already exists, its value will be updated.
-   * @return {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
-   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
-   */
-  set (keysObject) {
-    console.info('*****************set value to storage')
-    // return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
-  }
-
-  /**
-   * Retrieves one or several values from local storage.
-   * @param {string | Array | object | null | undefined } keys - A key (string)
-   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
-   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
-   * or an undefined value, the entire storage contents will be retrieved.
-   * @return {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
-   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
-   */
-  get (keys) {
-    console.info('*****************get value from storage')
-    // return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
-  }
-
-  /**
-   * A wrapper around a local storage `removeItem()` function.
-   * It allows to remove one key-value pair from local storage.
-   * @param {String} key - key of the item to be removed.
-   * If a particular item exists, it will be removed.
-   * @return {Promise} - A promise that is resolved with with true if a key was removed
-   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
-   */
-  remove (key) {
-    return new Promise((resolve, reject) => reject(new Error(`Remove method should be implemented in a subclass`)))
-  }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemRemoteDbDriver; });
+class WordItemRemoteDbDriver {
 }
 
 
@@ -14381,18 +14869,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./vue-components/word-context-block.vue":
+/***/ "./vue-components/word-context-panel.vue":
 /*!***********************************************!*\
-  !*** ./vue-components/word-context-block.vue ***!
+  !*** ./vue-components/word-context-panel.vue ***!
   \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _word_context_block_vue_vue_type_template_id_554dc860___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-context-block.vue?vue&type=template&id=554dc860& */ "./vue-components/word-context-block.vue?vue&type=template&id=554dc860&");
-/* harmony import */ var _word_context_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-context-block.vue?vue&type=script&lang=js& */ "./vue-components/word-context-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _word_context_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-context-block.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-context-block.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _word_context_panel_vue_vue_type_template_id_6e1f0b52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-context-panel.vue?vue&type=template&id=6e1f0b52& */ "./vue-components/word-context-panel.vue?vue&type=template&id=6e1f0b52&");
+/* harmony import */ var _word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-context-panel.vue?vue&type=script&lang=js& */ "./vue-components/word-context-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-context-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -14403,9 +14891,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _word_context_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _word_context_block_vue_vue_type_template_id_554dc860___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _word_context_block_vue_vue_type_template_id_554dc860___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_context_panel_vue_vue_type_template_id_6e1f0b52___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_context_panel_vue_vue_type_template_id_6e1f0b52___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -14415,71 +14903,71 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "vue-components/word-context-block.vue"
+component.options.__file = "vue-components/word-context-panel.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./vue-components/word-context-block.vue?vue&type=script&lang=js&":
+/***/ "./vue-components/word-context-panel.vue?vue&type=script&lang=js&":
 /*!************************************************************************!*\
-  !*** ./vue-components/word-context-block.vue?vue&type=script&lang=js& ***!
+  !*** ./vue-components/word-context-panel.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_context_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-context-block.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-context-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_context_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-context-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-context-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./vue-components/word-context-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!*********************************************************************************!*\
-  !*** ./vue-components/word-context-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-context-block.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-block.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-context-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./vue-components/word-context-block.vue?vue&type=template&id=554dc860&":
+/***/ "./vue-components/word-context-panel.vue?vue&type=template&id=6e1f0b52&":
 /*!******************************************************************************!*\
-  !*** ./vue-components/word-context-block.vue?vue&type=template&id=554dc860& ***!
+  !*** ./vue-components/word-context-panel.vue?vue&type=template&id=6e1f0b52& ***!
   \******************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_template_id_554dc860___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-context-block.vue?vue&type=template&id=554dc860& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-block.vue?vue&type=template&id=554dc860&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_template_id_554dc860___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_template_id_6e1f0b52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-context-panel.vue?vue&type=template&id=6e1f0b52& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-panel.vue?vue&type=template&id=6e1f0b52&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_template_id_6e1f0b52___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_block_vue_vue_type_template_id_554dc860___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_template_id_6e1f0b52___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./vue-components/word-item-block.vue":
+/***/ "./vue-components/word-item-panel.vue":
 /*!********************************************!*\
-  !*** ./vue-components/word-item-block.vue ***!
+  !*** ./vue-components/word-item-panel.vue ***!
   \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _word_item_block_vue_vue_type_template_id_904d8a9c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item-block.vue?vue&type=template&id=904d8a9c& */ "./vue-components/word-item-block.vue?vue&type=template&id=904d8a9c&");
-/* harmony import */ var _word_item_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-item-block.vue?vue&type=script&lang=js& */ "./vue-components/word-item-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _word_item_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-item-block.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-item-block.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item-panel.vue?vue&type=template&id=2b7beca9& */ "./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&");
+/* harmony import */ var _word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-item-panel.vue?vue&type=script&lang=js& */ "./vue-components/word-item-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-item-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -14490,9 +14978,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _word_item_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _word_item_block_vue_vue_type_template_id_904d8a9c___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _word_item_block_vue_vue_type_template_id_904d8a9c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -14502,71 +14990,71 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "vue-components/word-item-block.vue"
+component.options.__file = "vue-components/word-item-panel.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./vue-components/word-item-block.vue?vue&type=script&lang=js&":
+/***/ "./vue-components/word-item-panel.vue?vue&type=script&lang=js&":
 /*!*********************************************************************!*\
-  !*** ./vue-components/word-item-block.vue?vue&type=script&lang=js& ***!
+  !*** ./vue-components/word-item-panel.vue?vue&type=script&lang=js& ***!
   \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_item_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-item-block.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-item-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_item_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-item-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-item-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_item_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./vue-components/word-item-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!******************************************************************************!*\
-  !*** ./vue-components/word-item-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-item-block.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-block.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-item-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./vue-components/word-item-block.vue?vue&type=template&id=904d8a9c&":
+/***/ "./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&":
 /*!***************************************************************************!*\
-  !*** ./vue-components/word-item-block.vue?vue&type=template&id=904d8a9c& ***!
+  !*** ./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9& ***!
   \***************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_template_id_904d8a9c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-item-block.vue?vue&type=template&id=904d8a9c& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-block.vue?vue&type=template&id=904d8a9c&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_template_id_904d8a9c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-item-panel.vue?vue&type=template&id=2b7beca9& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-item-panel.vue?vue&type=template&id=2b7beca9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_block_vue_vue_type_template_id_904d8a9c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_item_panel_vue_vue_type_template_id_2b7beca9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./vue-components/word-language-block.vue":
+/***/ "./vue-components/word-language-panel.vue":
 /*!************************************************!*\
-  !*** ./vue-components/word-language-block.vue ***!
+  !*** ./vue-components/word-language-panel.vue ***!
   \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _word_language_block_vue_vue_type_template_id_05ddf592___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-language-block.vue?vue&type=template&id=05ddf592& */ "./vue-components/word-language-block.vue?vue&type=template&id=05ddf592&");
-/* harmony import */ var _word_language_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-language-block.vue?vue&type=script&lang=js& */ "./vue-components/word-language-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _word_language_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-language-block.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-language-block.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=template&id=70b3b72e& */ "./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&");
+/* harmony import */ var _word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=script&lang=js& */ "./vue-components/word-language-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-language-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -14577,9 +15065,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _word_language_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _word_language_block_vue_vue_type_template_id_05ddf592___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _word_language_block_vue_vue_type_template_id_05ddf592___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -14589,71 +15077,71 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "vue-components/word-language-block.vue"
+component.options.__file = "vue-components/word-language-panel.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./vue-components/word-language-block.vue?vue&type=script&lang=js&":
+/***/ "./vue-components/word-language-panel.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
-  !*** ./vue-components/word-language-block.vue?vue&type=script&lang=js& ***!
+  !*** ./vue-components/word-language-panel.vue?vue&type=script&lang=js& ***!
   \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-language-block.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-language-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-language-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-language-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_language_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./vue-components/word-language-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!**********************************************************************************!*\
-  !*** ./vue-components/word-language-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-language-block.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-block.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-language-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./vue-components/word-language-block.vue?vue&type=template&id=05ddf592&":
+/***/ "./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&":
 /*!*******************************************************************************!*\
-  !*** ./vue-components/word-language-block.vue?vue&type=template&id=05ddf592& ***!
+  !*** ./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e& ***!
   \*******************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_template_id_05ddf592___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-language-block.vue?vue&type=template&id=05ddf592& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-block.vue?vue&type=template&id=05ddf592&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_template_id_05ddf592___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-language-panel.vue?vue&type=template&id=70b3b72e& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-language-panel.vue?vue&type=template&id=70b3b72e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_block_vue_vue_type_template_id_05ddf592___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_language_panel_vue_vue_type_template_id_70b3b72e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./vue-components/word-list-block.vue":
+/***/ "./vue-components/word-list-panel.vue":
 /*!********************************************!*\
-  !*** ./vue-components/word-list-block.vue ***!
+  !*** ./vue-components/word-list-panel.vue ***!
   \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _word_list_block_vue_vue_type_template_id_c86d8306___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-list-block.vue?vue&type=template&id=c86d8306& */ "./vue-components/word-list-block.vue?vue&type=template&id=c86d8306&");
-/* harmony import */ var _word_list_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-list-block.vue?vue&type=script&lang=js& */ "./vue-components/word-list-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _word_list_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-list-block.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-list-block.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _word_list_panel_vue_vue_type_template_id_0f6bf074___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-list-panel.vue?vue&type=template&id=0f6bf074& */ "./vue-components/word-list-panel.vue?vue&type=template&id=0f6bf074&");
+/* harmony import */ var _word_list_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-list-panel.vue?vue&type=script&lang=js& */ "./vue-components/word-list-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_list_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-list-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -14664,9 +15152,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _word_list_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _word_list_block_vue_vue_type_template_id_c86d8306___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _word_list_block_vue_vue_type_template_id_c86d8306___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _word_list_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_list_panel_vue_vue_type_template_id_0f6bf074___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_list_panel_vue_vue_type_template_id_0f6bf074___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -14676,54 +15164,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "vue-components/word-list-block.vue"
+component.options.__file = "vue-components/word-list-panel.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./vue-components/word-list-block.vue?vue&type=script&lang=js&":
+/***/ "./vue-components/word-list-panel.vue?vue&type=script&lang=js&":
 /*!*********************************************************************!*\
-  !*** ./vue-components/word-list-block.vue?vue&type=script&lang=js& ***!
+  !*** ./vue-components/word-list-panel.vue?vue&type=script&lang=js& ***!
   \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_list_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-list-block.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-list-block.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_list_block_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_list_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib??vue-loader-options!../../node_modules/source-map-loader!./word-list-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue-components/word-list-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_list_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./vue-components/word-list-block.vue?vue&type=style&index=0&lang=scss&":
+/***/ "./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!******************************************************************************!*\
-  !*** ./vue-components/word-list-block.vue?vue&type=style&index=0&lang=scss& ***!
+  !*** ./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-list-block.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-block.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./word-list-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./vue-components/word-list-block.vue?vue&type=template&id=c86d8306&":
+/***/ "./vue-components/word-list-panel.vue?vue&type=template&id=0f6bf074&":
 /*!***************************************************************************!*\
-  !*** ./vue-components/word-list-block.vue?vue&type=template&id=c86d8306& ***!
+  !*** ./vue-components/word-list-panel.vue?vue&type=template&id=0f6bf074& ***!
   \***************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_template_id_c86d8306___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-list-block.vue?vue&type=template&id=c86d8306& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-block.vue?vue&type=template&id=c86d8306&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_template_id_c86d8306___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_template_id_0f6bf074___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./word-list-panel.vue?vue&type=template&id=0f6bf074& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-list-panel.vue?vue&type=template&id=0f6bf074&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_template_id_0f6bf074___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_block_vue_vue_type_template_id_c86d8306___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_template_id_0f6bf074___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

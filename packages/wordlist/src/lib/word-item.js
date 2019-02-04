@@ -1,190 +1,127 @@
-import uuidv4 from 'uuid/v4'
-import { Homonym, TextQuoteSelector, LanguageModelFactory as LMF } from 'alpheios-data-models'
-import WordlistController from '@/controllers/wordlist-controller';
-
+import {Homonym, TextQuoteSelector} from 'alpheios-data-models'
 export default class WordItem {
-  constructor (data) {
+  /**
+   * @constructor
+   * @param {Object} constructorArgs
+   *   {String} targetWord
+   *   {String} languageCode
+   *   {Boolean} important
+   *   {Boolean} currentSession
+   *   {TextQuoteSelector[]} context
+   *   {Homonym} homonym
+   *
+   */
+  constructor (data = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {} }) {
+    // TODO handling of version
+    this.version = 1
     this.targetWord = data.targetWord
     this.languageCode = data.languageCode
-    this.userID = data.userID
-
-    this.textQuoteSelectors = data.textQuoteSelector ? [ data.textQuoteSelector ] : []
-    this.homonym = data.homonym ? data.homonym : {}
-    this.important = data.important || false
-    this.currentSession = data.currentSession || false
+    if (!this.targetWord || !this.languageCode) {
+      throw new Error("Unable to construct a worditem without at least a targetWord and a languageCode")
+    }
+    this.important = data.important === undefined ? false : data.important
+    this.currentSession = data.currentSession == undefined ? true : data.currentSession
+    this.context = data.context || []
+    this.homonym = data.homonym || {}
   }
 
-  get storageID () {
-    return this.userID + '-' + this.languageCode + '-' + this.targetWord
+  /**
+   * Construct a WordItem from JSON
+   */
+  static readObject(jsonObject) {
+    let homonym = {}
+    let context = []
+    if (jsonObject.homonym) {
+        homonym = WordItem.readHomonym(jsonObject)
+    }
+    if (jsonObject.context) {
+        context = WordItem.readContext(jsonObject)
+    }
+    let worditem = new WordItem({
+      targetWord: jsonObject.targetWord,
+      languageCode: jsonObject.languageCode,
+      important: jsonObject.important,
+      currentSession: jsonObject.currentSession,
+      context: context,
+      homonym: homonym
+    })
+    return worditem
   }
 
-  get listID () {
-    return this.userID + '-' + this.languageCode
+  /**
+   * Construct the homonym portion of a WordItem from JSON
+   */
+  static readHomonym(jsonObject) {
+    return Homonym.readObject(jsonObject.homonym)
   }
 
   get hasTextQuoteSelectors () {
-    return this.textQuoteSelectors.length > 0
+    return this.context.length > 0
   }
 
-  get formattedTextQuoteSelectors () {
+  /**
+   * Construct the context portion of a WordItem from JSON
+   */
+  static readContext(jsonObject) {
+    let tqs = []
+    for (let jsonObj of jsonObject) {
+      let tq = TextQuoteSelector.readObject(jsonObj)
+      tqs.push(tq)
+    }
+    return tqs
+  }
+
+  /**
+   * add one or more context selectors
+   * @param {TextQuoteSelector[]} selectors
+   */
+  addContext(selectors) {
+    for (let s of selectors) {
+      let found = this.context.filter(tqs => tqs.isEqual(s))
+      if (found.length == 0) {
+        this.context.push(s)
+      }
+    }
+  }
+
+  /**
+   * getter for the lemmas in this WordItem
+   */
+  get lemmasList () {
+    if (this.homonym && this.homonym.lexemes) {
+      return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => {
+        return self.indexOf(value) === index
+      }).join(', ')
+    }
+    return ''
+  }
+
+
+  // TODO NOT SURE HOW THE MERGE FUNCTIONALITY IS USED
+  merge (prevWordItem) {
+    let checkProps = ['homonym', 'important', 'currentSession']
+    for(let prop of checkProps) {
+      if (this._emptyProp(prop) && !prevWordItem._emptyProp(prop)) {
+        this[prop] = prevWordItem[prop]
+      }
+    }
+  }
+
+  /**
+   * private method to detect an empty property
+   */
+  _emptyProp (propName) {
+    return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
+  }
+
+  get formattedContext () {
     let res = {}
-    for (let tq of this.textQuoteSelectors) {
+    for (let tq of this.context) {
       if (!res[tq.source]) {
         res[tq.source] = []
       }
       res[tq.source].push(tq)
     }
     return res
-  }
-
-  get languageName () {
-    switch(this.languageCode) {
-      case 'lat':
-        return 'Latin'
-      case 'grc':
-        return 'Greek'
-      case 'ara':
-        return 'Arabic'
-      case 'per':
-        return 'Persian'
-      case 'gez':
-        return 'Ancient Ethiopic (Ge\'ez)'
-      default:
-        'Unknown'
-    }
-  }
-  
-  makeImportant () {
-    this.important = true
-  }
-
-  removeImportant () {
-    this.important = false
-  }
-
-  get lemmasList () {
-    if (this.homonym && this.homonym.lexemes) {
-      return this.homonym.lexemes.map(lexeme => lexeme.lemma.word).filter( (value, index, self) => { 
-        return self.indexOf(value) === index
-      }).join(', ')
-    }
-    return ''
-  }
-  
-  uploadHomonym (jsonObj) {
-    let homonym = Homonym.readObject(jsonObj.homonym)
-    this.homonym = homonym
-  }
-
-  uploadTextQuoteSelectors (jsonObjs) {
-    for (let jsonObj of jsonObjs) {
-      let tq = TextQuoteSelector.readObject(jsonObj)
-      this.textQuoteSelectors.push(tq)
-    }
-  }
-
-  selectWordItem () {
-    WordlistController.evt.WORDITEM_SELECTED.pub(this.homonym)
-  }
-
-  static get currentDate () {
-    let dt = new Date()
-    return dt.getFullYear() + '/'
-        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"  
-                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":" 
-                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
-  }
-
-  convertCommonToStorage () {
-    return {
-      ID: this.storageID,
-      listID: this.listID,
-      userID: this.userID,
-      languageCode: this.languageCode,
-      targetWord: this.targetWord,
-      important: this.important,
-      createdDT: WordItem.currentDate
-    }
-  }
-
-  convertTQSelectorToStorage () {
-    let result = []
-    let index = 0
-    for (let tq of this.textQuoteSelectors) {
-      index++
-      let resultItem = {
-        ID: this.storageID + '-' + index,
-        listID: this.listID,
-        userID: this.userID,
-        languageCode: this.languageCode,
-        targetWord: this.targetWord,
-        wordItemID: this.storageID,
-        
-        target: {
-          source: tq.source,
-          selector: {
-            type: 'TextQuoteSelector',
-            exact: tq.text,
-            prefix: tq.prefix,
-            suffix: tq.suffix,
-            contextHTML: tq.contextHTML,
-            languageCode: tq.languageCode
-          }
-        },
-        createdDT: WordItem.currentDate
-      }
-      result.push(resultItem)
-    }
-    return result
-  }
-
-  convertHomonymToStorage (addMeaning = false) {
-    let resultHomonym = this.homonym.convertToJSONObject(addMeaning)
-    return {
-      ID: this.storageID,
-      listID: this.listID,
-      userID: this.userID,
-      languageCode: this.languageCode,
-      targetWord: this.targetWord,
-
-      homonym: resultHomonym
-    }
-  }
-  convertShortHomonymToStorage () {
-    return this.convertHomonymToStorage(false)
-  }
-
-  convertFullHomonymToStorage () {
-    return this.convertHomonymToStorage(true)
-  }
-
-  emptyProp (propName) {
-    return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
-  }
-
-  hasThisTextQuoteSelector (tq) {
-    return this.textQuoteSelectors.filter(tqCurrent => tqCurrent.prefix === tq.prefix && tqCurrent.suffix === tq.suffix && tqCurrent.source === tq.source).length > 0
-  }
-
-  mergeTextQuoteSelectors (prevWordItem) {
-    for (let tq of prevWordItem.textQuoteSelectors) {
-      if (!this.hasThisTextQuoteSelector(tq)) {
-        this.textQuoteSelectors.push(tq)
-      }
-    }
-  }
-
-  merge (prevWordItem) {
-    let checkProps = ['homonym', 'important', 'currentSession']
-    for(let prop of checkProps) {
-      if (this.emptyProp(prop) && !prevWordItem.emptyProp(prop)) {
-        this[prop] = prevWordItem[prop]
-      }
-    }
-
-    this.mergeTextQuoteSelectors(prevWordItem)
   }
 }

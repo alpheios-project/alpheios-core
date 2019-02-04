@@ -8,12 +8,13 @@
           </div>
         </alph-tooltip>
 
-        <div class="alpheios-wordlist-language__title">{{ worditem.targetWord }} ({{ worditem.languageName}})</div>
+        <div class="alpheios-wordlist-language__title">{{ worditem.targetWord }} ({{ worditem.languageCode}})</div>
       </div>
+
       <div class = "alpheios-wordlists-tqs" v-for="source in sourcesList">
         <word-tq-source
           :source = "source"
-          :tqSelectors = "formattedTextQuoteSelectors[source]"
+          :tqSelectors = "formattedContext[source]"
           :messages = "messages"
         ></word-tq-source>
       </div>
@@ -42,12 +43,11 @@
       }
     },
     computed: {
-      formattedTextQuoteSelectors () {
-        console.info('**************************this.worditem.formattedTextQuoteSelectors', this.worditem.formattedTextQuoteSelectors)
-        return this.worditem.formattedTextQuoteSelectors
+      formattedContext () {
+        return this.worditem.formattedContext
       },
       sourcesList () {
-        return Object.keys(this.formattedTextQuoteSelectors)
+        return Object.keys(this.formattedContext)
       }
     },
     methods: {

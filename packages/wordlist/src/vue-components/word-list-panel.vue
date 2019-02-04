@@ -2,9 +2,10 @@
   <div>
     <div class="alpheios-wordlist" v-if="!showContext">
         <div class="alpheios-wordlist-language" v-for="(languageCode, langIndex) in languagesList" v-bind:key="langIndex">
-          <word-language 
-            :wordlist = "wordLists[languageCode]" 
-            :messages = "l10n.messages" 
+          <word-language
+            :controller = "wordlistC"
+            :languageCode = "languageCode"
+            :messages = "l10n.messages"
             :updated = "updated"
             @showContexts = "showContexts"
             ></word-language>
@@ -15,7 +16,7 @@
         :worditem = "showContextWordItem"
         :messages = "l10n.messages"
         @backToWordList = "backToWordList"
-      ></word-context>       
+      ></word-context>     
     </div>
   </div>
 </template>
@@ -25,14 +26,14 @@
   import enUS from '@/locales/en-us/messages.json'
   import enGB from '@/locales/en-gb/messages.json'
 
-  import WordLanguageBlock from '@/vue-components/word-language-block.vue'
-  import WordContextBlock from '@/vue-components/word-context-block.vue'
+  import WordLanguagePanel from '@/vue-components/word-language-panel.vue'
+  import WordContextPanel from '@/vue-components/word-context-panel.vue'
 
   export default {
-    name: 'WordListBlock',
+    name: 'WordListPanel',
     components: {
-      wordLanguage: WordLanguageBlock,
-      wordContext: WordContextBlock
+      wordLanguage: WordLanguagePanel,
+      wordContext: WordContextPanel
     },
     props: {
       wordlistC: {
@@ -68,13 +69,11 @@
       }
     },
     methods: {
-      showContexts (wordItemStorageID, wordListLanguageCode) {
-        this.showContextWordItem = this.wordLists[wordListLanguageCode].items[wordItemStorageID]
+      showContexts (targetWord, wordListLanguageCode) {
+        this.showContextWordItem = this.wordLists[wordListLanguageCode].getWordItem(targetWord)
       },
       backToWordList () {
-        // console.info('***************backToWordList list before', this.showContext)
         this.showContextWordItem = null
-        // console.info('***************backToWordList list after', this.showContext)
       }
     }
   }
