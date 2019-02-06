@@ -64,6 +64,22 @@ describe('panel.test.js', () => {
           },
           actions: {},
           getters: {}
+        },
+        app: {
+          namespaced: true,
+          state: {
+            tabState: {
+              definitions: false,
+              inflections: false,
+              inflectionsbrowser: false,
+              grammar: false,
+              status: false,
+              options: false,
+              info: true,
+              treebank: false,
+              wordUsage: false
+            }
+          }
         }
       }
     })
@@ -78,7 +94,12 @@ describe('panel.test.js', () => {
   it('1 Panel - renders a vue instance (min requirements)', () => {
     localVue.use(Vuex)
     let cmp = shallowMount(Panel, {
-      propsData: {},
+      propsData: {
+        data: {
+          wordUsageExamplesData: null,
+          classes: []
+        }
+      },
       store,
       localVue,
       mocks: {
@@ -93,7 +114,7 @@ describe('panel.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.vm.attachToLeftVisible).toBeFalsy()
     expect(cmp.vm.attachToRightVisible).toBeTruthy()
-    expect(cmp.vm.positionClasses).toBeNull()
+    expect(cmp.vm.panelPosition).toBe('left')
   })
 
   it.skip('2 Panel - render with children components (min requirements)', () => {

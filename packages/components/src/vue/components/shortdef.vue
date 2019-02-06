@@ -8,11 +8,7 @@
 <script>
 export default {
   name: 'ShortDef',
-  props: ['definition', 'languageCode'],
-  methods: {},
-  mounted () {
-    // console.log('ShortDef is mounted')
-  }
+  props: ['definition', 'languageCode']
 }
 </script>
 <style lang="scss">

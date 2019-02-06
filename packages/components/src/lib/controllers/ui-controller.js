@@ -77,16 +77,6 @@ export default class UIController {
     this.resourceOptions = null
     this.uiOptions = null
     this.siteOptions = null // Will be set during an `init` phase
-    this.tabState = {
-      definitions: false,
-      inflections: false,
-      inflectionsbrowser: false,
-      status: false,
-      options: false,
-      info: false,
-      treebank: false,
-      wordUsage: false
-    }
     this.tabStateDefault = 'info'
 
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
@@ -129,12 +119,10 @@ export default class UIController {
     // Register UI modules
     uiController.registerUiModule(PanelModule, {
       mountPoint: '#alpheios-panel', // To what element a panel will be mounted
-      panelComponent: 'panel', // A Vue component that will represent a panel
-      tabs: uiController.tabState // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
+      panelComponent: 'panel' // A Vue component that will represent a panel
     })
     uiController.registerUiModule(PopupModule, {
-      mountPoint: '#alpheios-popup',
-      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
+      mountPoint: '#alpheios-popup'
     })
 
     // Creates on configures an event listener
@@ -202,8 +190,6 @@ export default class UIController {
    *     a standard CSS selector. Default value: 'body'.
    *     {Object} template - object w ith the following properties:
    *         html: HTML string for the container of the Alpheios components
-   *         panelId: the id of the wrapper for the panel component,
-   *         popupId: the id of the wrapper for the popup component
    */
   static get optionsDefaults () {
     return {
@@ -215,16 +201,10 @@ export default class UIController {
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
-      uiTypePanel: 'panel',
-      uiTypePopup: 'popup',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
-        html: Template,
-        defaultPanelComponent: 'panel',
-        defaultPopupComponent: 'popup',
-        draggable: true,
-        resizable: true
+        html: Template
       }
     }
   }
@@ -346,7 +326,8 @@ export default class UIController {
       contentOptionChange: this.contentOptionChange.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       getLanguageName: UIController.getLanguageName,
-      startResourceQuery: this.startResourceQuery.bind(this)
+      startResourceQuery: this.startResourceQuery.bind(this),
+      changeTab: this.changeTab.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -355,8 +336,43 @@ export default class UIController {
 
       state: {
         currentLanguageID: undefined,
-        currentLanguageName: undefined
+        currentLanguageName: undefined,
+        inflDataReady: false, // Whether there is inflection data for a current world
+        grammarRes: null,
+        treebankData: {
+          word: {},
+          page: {}
+        },
+        tabState: {
+          definitions: false,
+          inflections: false,
+          inflectionsbrowser: false,
+          grammar: false,
+          status: false,
+          options: false,
+          info: true,
+          treebank: false,
+          wordUsage: false
+        }
       },
+
+      getters: {
+        /**
+         * Identifies wither grammar resource(s) are available for the current state.
+         * @param state - A local state.
+         * @return {boolean} True if grammar resource(s) are available, false otherwise.
+         */
+        hasGrammarRes (state) {
+          return state.grammarRes !== null
+        },
+
+        hasTreebankData (state) {
+          // Treebank data is available if we have it for the word or the page
+          return Boolean((state.treebankData.page && state.treebankData.page.src) ||
+            (state.treebankData.word && state.treebankData.word.src))
+        }
+      },
+
       mutations: {
         setLanguage (state, languageCodeOrID) {
           let name
@@ -364,6 +380,41 @@ export default class UIController {
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
           state.currentLanguageID = id
           state.currentLanguageName = name
+        },
+
+        setInflData (state, inflectionsViewSet = null) {
+          state.inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
+        },
+
+        resetInflData (state) {
+          state.inflDataReady = false
+        },
+
+        setGrammarRes (state, grammarRes) {
+          state.grammarRes = grammarRes
+        },
+
+        resetGrammarRes (state) {
+          state.grammarRes = null
+        },
+
+        setPageAnnotationData (state, pageData) {
+          state.treebankData.page = pageData
+        },
+
+        setWordAnnotationData (state, wordData) {
+          state.treebankData.word = wordData
+        },
+
+        resetTreebankData (state) {
+          state.treebankData.page = {}
+          state.treebankData.word = {}
+        },
+
+        setTab (state, tabName) {
+          for (let key of Object.keys(state.tabState)) {
+            state.tabState[key] = (key === tabName)
+          }
         }
       }
     })
@@ -428,6 +479,10 @@ export default class UIController {
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
 
+    this.isActivated = true
+    this.isDeactivated = false
+    // Activate an app first, then activate the UI
+    this.state.activate()
     this.state.activateUI()
 
     if (this.state.isPanelStateDefault() || !this.state.isPanelStateValid()) {
@@ -441,10 +496,6 @@ export default class UIController {
     if (this.state.tab) {
       this.changeTab(this.state.tab)
     }
-
-    this.isActivated = true
-    this.isDeactivated = false
-    this.state.activate()
 
     return this
   }
@@ -573,15 +624,18 @@ export default class UIController {
   }
 
   changeTab (tabName) {
-    if (this.hasUiModule('panel')) {
-      if (!this.tabState.hasOwnProperty(tabName)) {
-        // Set tab to a default one if it is an unknown tab name
-        tabName = this.tabStateDefault
-      }
-      this.getUiModule('panel').vi.changeTab(tabName)
-    } else {
-      console.warn(`Cannot switch tab because panel does not exist`)
+    const statusAvailable = Boolean(this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
+    // If tab is disabled, switch to a default one
+    if (
+      (!this.store.state.app.tabState.hasOwnProperty(tabName)) ||
+      (!this.store.state.app.inflDataReady && name === 'inflections') ||
+      (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
+      (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
+      (!statusAvailable && name === 'status')
+    ) {
+      tabName = this.tabStateDefault
     }
+    this.store.commit('app/setTab', tabName) // Reflect a tab change in a state
     return this
   }
 
@@ -596,7 +650,7 @@ export default class UIController {
       const panel = this.api.ui.getModule('panel')
       panel.vi.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
-      panel.vi.panelData.grammarAvailable = false
+      this.store.commit('app/resetGrammarRes')
       panel.vi.panelData.wordUsageExamplesData = null
     }
     this.clear().open().changeTab('definitions')
@@ -645,16 +699,11 @@ export default class UIController {
    * @param {Array} urls
    */
   updateGrammar (urls = []) {
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      if (urls.length > 0) {
-        panel.vi.panelData.grammarRes = urls[0]
-        panel.vi.panelData.grammarAvailable = true
-      } else {
-        panel.vi.panelData.grammarRes = { provider: this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND') }
-      }
+    if (urls.length > 0) {
+      this.store.commit('app/setGrammarRes', urls[0])
+    } else {
+      this.store.commit('app/resetGrammarRes')
     }
-    // todo show TOC or not found
   }
 
   updateDefinitions (homonym) {
@@ -716,16 +765,14 @@ export default class UIController {
   }
 
   updatePageAnnotationData (data) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.page = data.treebank.page || {} }
+    this.store.commit('app/setPageAnnotationData', data.treebank.page)
   }
 
   updateWordAnnotationData (data) {
     if (data && data.treebank) {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = data.treebank.word || {} }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = data.treebank.word }
+      this.store.commit('app/setWordAnnotationData', data.treebank.word)
     } else {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = {} }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = false }
+      this.store.commit('app/resetTreebankData')
     }
   }
 
@@ -740,9 +787,7 @@ export default class UIController {
     this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
-    if (this.hasUiModule('popup')) {
-      this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady
-    }
+    this.store.commit('app/setInflData', this.inflectionsViewSet)
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
@@ -765,12 +810,11 @@ export default class UIController {
     if (this.inflectionsViewSet.hasMatchingViews) {
       this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
+    this.store.commit('app/setInflData', this.inflectionsViewSet)
     if (this.hasUiModule('panel')) {
       const panel = this.getUiModule('panel')
       panel.vi.panelData.inflectionsWaitState = false
-      panel.vi.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
     }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady }
   }
 
   updateWordUsageExamples (wordUsageExamplesData) {
@@ -793,11 +837,9 @@ export default class UIController {
     if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
   }
 
-  get inflDataReady () {
-    return this.inflectionsViewSet && this.inflectionsViewSet.hasMatchingViews
-  }
-
   clear () {
+    this.store.commit(`app/resetInflData`)
+    this.store.commit(`app/resetTreebankData`)
     if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
     return this

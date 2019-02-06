@@ -27,9 +27,9 @@
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
-                      v-show="data.inflDataReady">
-          <button @click="showPanelTab('inflections')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
-                  v-show="data.inflDataReady">
+                      v-show="$store.state.app.inflDataReady">
+          <button @click="showPanelTab('inflections')"
+                  class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections">
             {{ l10n.getText('LABEL_POPUP_INFLECT') }}
           </button>
         </alph-tooltip>
@@ -42,11 +42,10 @@
           </button>
         </alph-tooltip>
 
-
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                      v-show="data.hasTreebank">
-          <button @click="showPanelTab('treebank')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank"
-                  v-show="data.hasTreebank">
+                      v-show="$store.getters['app/hasTreebankData']">
+          <button @click="showPanelTab('treebank')"
+                  class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank">
             {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
           </button>
 
@@ -218,9 +217,6 @@ export default {
       return (this.data) ? this.data.requestStartTime : null
     },
 
-    inflDataReady: function () {
-      return (this.data && this.data.inflDataReady) ? this.data.inflDataReady : false
-    },
     defDataReady: function () {
       return (this.data && this.data.defDataReady) ? this.data.defDataReady : false
     },

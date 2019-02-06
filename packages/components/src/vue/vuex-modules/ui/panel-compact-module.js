@@ -39,8 +39,6 @@ export default class PanelCompactModule {
           tabs: options.tabs,
           verboseMode: uiController.contentOptions.items.verboseMode.currentValue === uiController.options.verboseMode,
           currentLanguageID: null,
-          grammarAvailable: false,
-          grammarRes: {},
           lexemes: [],
           inflectionComponentData: {
             visible: false,

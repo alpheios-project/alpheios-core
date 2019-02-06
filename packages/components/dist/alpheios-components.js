@@ -8474,13 +8474,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Grammar',
-  props: {
-    res: {
-      type: Object,
-      required: true
+  inject: ['l10n'],
+  storeModules: ['app'],
+
+  beforeCreate: function () {
+    // Check store dependencies. API dependencies will be verified by the `inject`
+    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   }
 });
@@ -11174,9 +11181,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Vue components
-
 
 
 
@@ -11220,7 +11244,7 @@ __webpack_require__.r(__webpack_exports__);
     settings: 'settings',
     auth: { from: 'auth', default: null } // This module is options
   },
-  storeModules: ['panel'], // Store modules that are required by this component
+  storeModules: ['app', 'panel'], // Store modules that are required by this component
   components: {
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -11251,16 +11275,15 @@ __webpack_require__.r(__webpack_exports__);
   directives: {
     onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__["directive"]
   },
+  positionClassVariants: {
+    left: 'alpheios-panel-left',
+    right: 'alpheios-panel-right'
+  },
   data: function () {
     return {
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
       inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
-
-      positionClassVariants: {
-        left: 'alpheios-panel-left',
-        right: 'alpheios-panel-right'
-      },
-
+      panelPosition: 'left',
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
@@ -11273,17 +11296,12 @@ __webpack_require__.r(__webpack_exports__);
     data: {
       type: Object,
       required: true
-    },
-    classesChanged: {
-      type: Number,
-      required: false,
-      default: 0
     }
   },
 
   computed: {
     divClasses () {
-      return (this.data && this.data.classes ? this.data.classes.join(' ') : '') + ' ' + this.positionClasses
+      return this.data.classes.concat([this.$options.positionClassVariants[this.panelPosition]])
     },
     clearLookupText: function () {
       // always true to clear panels lookup
@@ -11319,33 +11337,6 @@ __webpack_require__.r(__webpack_exports__);
     showDefinitionsPlaceholder: function () {
       return (!this.data.shortDefinitions || this.data.shortDefinitions.length === 0) && (!this.data.fullDefinitions || this.data.fullDefinitions.length === 0)
     },
-    classes: function () {
-      // Find index of an existing position class and replace it with an updated value
-      if (this.data) {
-        const positionLeftIndex = this.data.classes.findIndex(v => v === this.positionLeftClassName)
-        const positionRightIndex = this.data.classes.findIndex(v => v === this.positionRightClassName)
-
-        if (this.settings.contentOptions.items.panelPosition.currentValue === 'left') {
-          if (positionRightIndex >= 0) {
-            // Replace an existing value
-            this.data.classes[positionRightIndex] = this.positionLeftClassName
-          } else {
-            // Add an initial value
-            this.data.classes.push(this.positionLeftClassName)
-          }
-        } else if (this.settings.contentOptions.items.panelPosition.currentValue === 'right') {
-          if (positionLeftIndex >= 0) {
-            // Replace an existing value
-            this.data.classes[positionLeftIndex] = this.positionRightClassName
-          } else {
-            // Add an initial value
-            this.data.classes.push(this.positionRightClassName)
-          }
-        }
-        return this.data.classes
-      }
-      return null
-    },
 
     notificationClasses: function () {
       return {
@@ -11354,44 +11345,16 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     attachToLeftVisible: function () {
-      return (this.settings.contentOptions.items) ? this.settings.contentOptions.items.panelPosition.currentValue === 'right' : false
+      return this.panelPosition === 'right'
     },
 
     attachToRightVisible: function () {
-      return (this.settings.contentOptions.items) ? this.settings.contentOptions.items.panelPosition.currentValue === 'left' : true
+      return this.panelPosition === 'left'
     },
 
     // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
     inflectionsTabVisible: function () {
-      // Inform an inflection component about its visibility state change
-      if (this.data && this.data.inflectionComponentData.inflectionViewSet) {
-        this.data.inflectionComponentData.visible = this.data.tabs.inflections
-      }
-      return this.data.tabs.inflections
-    },
-
-    // Need this to watch when inflections browser tab becomes active and adjust panel width to fully fit an inflection table in
-    inflectionsBrowserTabVisible: function () {
-      // Inform an inflection browser component about its visibility state change
-      if (this.data && this.data.inflectionBrowserData) {
-        this.data.inflectionBrowserData.visible = this.data.tabs.inflectionsbrowser
-      }
-      return this.data.tabs.inflectionsbrowser
-    },
-
-    treebankTabAvailable: function () {
-      // treebank data is possible if we have it for the word or the page
-      return !!(this.data && this.data.treebankComponentData && this.data.treebankComponentData.data &&
-          ((this.data.treebankComponentData.data.page && this.data.treebankComponentData.data.page.src) ||
-            (this.data.treebankComponentData.data.word && this.data.treebankComponentData.data.word.src)))
-    },
-
-    treebankTabVisible: function () {
-      // Inform treebank component about visibility state change
-      if (this.data && this.data.treebankComponentData && this.data.treebankComponentData.data) {
-        this.data.treebankComponentData.visible = this.data.tabs.treebank
-      }
-      return this.data.tabs.treebank
+      return Boolean(this.$store.state.app.tabState.inflections && this.data && this.data.inflectionComponentData.inflectionViewSet)
     },
 
     additionalStylesTootipCloseIcon: function () {
@@ -11399,17 +11362,6 @@ __webpack_require__.r(__webpack_exports__);
         top: '2px',
         right: '50px'
       }
-    },
-
-    positionClasses: function () {
-      if (this.data) {
-        return this.positionClassVariants[this.settings.contentOptions.items.panelPosition.currentValue]
-      }
-      return null
-    },
-
-    wordUsageExamplesData () {
-      return this.data.wordUsageExamplesData
     },
 
     verboseMode () {
@@ -11422,12 +11374,13 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     setPosition (position) {
-      this.$emit('setposition', position)
+      this.settings.contentOptions.items.panelPosition.setValue(position)
+      this.panelPosition = position
     },
 
     changeTab (name) {
       this.setContentWidth({ width: 'auto', component: null })
-      this.$emit('changetab', name)
+      this.app.changeTab(name)
     },
 
     clearContent: function () {
@@ -11552,8 +11505,6 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   mounted: function () {
-    console.log(`Panel is mounted`)
-
     // Determine paddings and sidebar width for calculation of a panel width to fit content
     if (this.data === undefined) {
       return
@@ -11808,7 +11759,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -11920,9 +11870,6 @@ __webpack_require__.r(__webpack_exports__);
       return (this.data) ? this.data.requestStartTime : null
     },
 
-    inflDataReady: function () {
-      return (this.data && this.data.inflDataReady) ? this.data.inflDataReady : false
-    },
     defDataReady: function () {
       return (this.data && this.data.defDataReady) ? this.data.defDataReady : false
     },
@@ -12579,11 +12526,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ShortDef',
-  props: ['definition', 'languageCode'],
-  methods: {},
-  mounted () {
-    // console.log('ShortDef is mounted')
-  }
+  props: ['definition', 'languageCode']
 });
 
 
@@ -12681,54 +12624,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Treebank',
   inject: ['l10n'],
-  props: {
-    res: {
-      type: Object,
-      required: true
+  storeModules: ['app'],
+  computed: {
+    visible: function () {
+      return this.$store.getters[`app/hasTreebankData`]
     },
-    locale: {
-      type: String,
-      required: true
-    },
-    visible: {
-      type: Boolean,
-      required: true
-    }
-  },
-  data: function () {
-    return {
-      srcUrl: ''
-    }
-  },
-  methods: {
-    updateSrcUrl (url) {
-      this.srcUrl = url
+
+    /*
+    Returns a source URL of a treebank page. This computed prop will be cached by Vue.js.
+    If caching will not work effectively, we shall prevent unnecessary page reloads manually.
+    */
+    srcURL: function () {
+      let newSrcUrl = this.$store.state.app.treebankData.page.src
+      if (this.$store.state.app.treebankData.word &&
+        this.$store.state.app.treebankData.word.src &&
+        this.$store.state.app.treebankData.word.ref) {
+        let [doc, ref] = this.$store.state.app.treebankData.word.ref.split(/#/)
+        if (doc && ref) {
+          let [s, w] = ref.split(/-/)
+          newSrcUrl = this.$store.state.app.treebankData.word.src.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)
+        }
+      }
+      return newSrcUrl
     }
   },
   watch: {
     visible: function (val) {
-      // The arethusa application can't initialize itself properly
-      // if it's not visible, so we wait to update the src url of the
-      // parent iframe until the tab is visible
       if (val) {
         this.$emit('treebankcontentwidth', '43em')
-        let newSrcUrl
-        if (this.res.word && this.res.word.src && this.res.word.ref) {
-          let [doc, ref] = this.res.word.ref.split(/#/)
-          if (doc && ref) {
-            let [s, w] = ref.split(/-/)
-            newSrcUrl = this.res.word.src.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)
-          }
-          // only update the srcUrl property if we have a new URL - we don't
-          // want to reload if it was hidden after being populated but hasn't
-          // actually changed
-          if (newSrcUrl != this.srcUrl) {
-            this.updateSrcUrl(newSrcUrl)
-          }
-        } else if (this.res.page) {
-          this.updateSrcUrl(this.res.page.src)
-        }
       }
+    }
+  },
+
+  beforeCreate: function () {
+    // Check store dependencies. API dependencies will be verified by the `inject`
+    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   }
 });
@@ -13093,7 +13025,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.res
+  return _vm.$store.getters["app/hasGrammarRes"]
     ? _c("div", { staticClass: "alpheios-grammar" }, [
         _c(
           "div",
@@ -13102,29 +13034,40 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.res.url,
-                expression: "res.url"
+                value: _vm.$store.state.app.grammarRes.url,
+                expression: "$store.state.app.grammarRes.url"
               }
             ],
             staticClass: "alpheios-grammar__frame-cont"
           },
           [
-            _vm.res.url
+            _vm.$store.state.app.grammarRes.url
               ? _c("iframe", {
                   staticClass: "alpheios-grammar__frame",
-                  attrs: { src: _vm.res.url, scrolling: "yes" }
+                  attrs: {
+                    src: _vm.$store.state.app.grammarRes.url,
+                    scrolling: "yes"
+                  }
                 })
               : _vm._e()
           ]
         ),
         _vm._v(" "),
-        _vm.res.provider
+        _vm.$store.state.app.grammarRes.provider
           ? _c("div", { staticClass: "alpheios-grammar__provider" }, [
-              _vm._v(_vm._s(_vm.res.provider.toString()))
+              _vm._v(
+                _vm._s(_vm.$store.state.app.grammarRes.provider.toString())
+              )
             ])
           : _vm._e()
       ])
-    : _vm._e()
+    : _c("div", { staticClass: "alpheios-grammar__provider" }, [
+        _vm._v(
+          "\n  " +
+            _vm._s(_vm.l10n.getMsg("TEXT_NOTICE_GRAMMAR_NOTFOUND")) +
+            "\n"
+        )
+      ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -16842,7 +16785,7 @@ var render = function() {
       _c("div", { staticClass: "alpheios-panel__header" }, [
         _vm._m(0),
         _vm._v(" "),
-        _vm.data && _vm.data.tabs
+        _vm.$store.state.app.tabState
           ? _c(
               "span",
               { staticClass: "alpheios-panel__header-btn-group--center" },
@@ -16860,7 +16803,7 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.info },
+                        class: { active: _vm.$store.state.app.tabState.info },
                         on: {
                           click: function($event) {
                             _vm.changeTab("info")
@@ -16886,7 +16829,9 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.definitions },
+                        class: {
+                          active: _vm.$store.state.app.tabState.definitions
+                        },
                         on: {
                           click: function($event) {
                             _vm.changeTab("definitions")
@@ -16908,8 +16853,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.inflectionComponentData.inflDataReady,
-                        expression: "data.inflectionComponentData.inflDataReady"
+                        value: _vm.$store.state.app.inflDataReady,
+                        expression: "$store.state.app.inflDataReady"
                       }
                     ],
                     attrs: {
@@ -16922,7 +16867,9 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.inflections },
+                        class: {
+                          active: _vm.$store.state.app.tabState.inflections
+                        },
                         on: {
                           click: function($event) {
                             _vm.changeTab("inflections")
@@ -16950,7 +16897,10 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.inflectionsbrowser },
+                        class: {
+                          active:
+                            _vm.$store.state.app.tabState.inflectionsbrowser
+                        },
                         on: {
                           click: function($event) {
                             _vm.changeTab("inflectionsbrowser")
@@ -16974,8 +16924,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.grammarAvailable,
-                        expression: "data.grammarAvailable"
+                        value: _vm.$store.getters["app/hasGrammarRes"],
+                        expression: "$store.getters[`app/hasGrammarRes`]"
                       }
                     ],
                     attrs: {
@@ -16988,7 +16938,9 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.grammar },
+                        class: {
+                          active: _vm.$store.state.app.tabState.grammar
+                        },
                         on: {
                           click: function($event) {
                             _vm.changeTab("grammar")
@@ -17008,8 +16960,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.treebankTabAvailable,
-                        expression: "treebankTabAvailable"
+                        value: _vm.$store.getters["app/hasTreebankData"],
+                        expression: "$store.getters['app/hasTreebankData']"
                       }
                     ],
                     attrs: {
@@ -17022,7 +16974,9 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.treebank },
+                        class: {
+                          active: _vm.$store.state.app.tabState.treebank
+                        },
                         on: {
                           click: function($event) {
                             _vm.changeTab("treebank")
@@ -17048,7 +17002,9 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.options },
+                        class: {
+                          active: _vm.$store.state.app.tabState.options
+                        },
                         on: {
                           click: function($event) {
                             _vm.changeTab("options")
@@ -17075,7 +17031,9 @@ var render = function() {
                           "span",
                           {
                             staticClass: "alpheios-panel__header-nav-btn",
-                            class: { active: _vm.data.tabs.user },
+                            class: {
+                              active: _vm.$store.state.app.tabState.user
+                            },
                             on: {
                               click: function($event) {
                                 _vm.changeTab("user")
@@ -17096,8 +17054,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.wordUsageExamplesData,
-                        expression: "wordUsageExamplesData"
+                        value: Boolean(this.data.wordUsageExamplesData),
+                        expression: "Boolean(this.data.wordUsageExamplesData)"
                       }
                     ],
                     attrs: {
@@ -17110,7 +17068,9 @@ var render = function() {
                       "span",
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.wordUsage },
+                        class: {
+                          active: _vm.$store.state.app.tabState.wordUsage
+                        },
                         on: {
                           click: function($event) {
                             _vm.changeTab("wordUsage")
@@ -17144,7 +17104,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.data.tabs.status },
+                        class: { active: _vm.$store.state.app.tabState.status },
                         on: {
                           click: function($event) {
                             _vm.changeTab("status")
@@ -17275,7 +17235,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm.data && _vm.data.tabs
+      _vm.$store.state.app.tabState
         ? _c("div", { staticClass: "alpheios-panel__content" }, [
             _c(
               "div",
@@ -17284,8 +17244,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.data.tabs.definitions,
-                    expression: "data.tabs.definitions"
+                    value: _vm.$store.state.app.tabState.definitions,
+                    expression: "$store.state.app.tabState.definitions"
                   }
                 ],
                 staticClass:
@@ -17341,7 +17301,7 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm.data.inflectionComponentData.inflDataReady
+            _vm.$store.state.app.inflDataReady
               ? _c(
                   "div",
                   {
@@ -17381,8 +17341,9 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.inflectionsBrowserTabVisible,
-                        expression: "inflectionsBrowserTabVisible"
+                        value: _vm.$store.state.app.tabState.inflectionsbrowser,
+                        expression:
+                          "$store.state.app.tabState.inflectionsbrowser"
                       }
                     ],
                     staticClass:
@@ -17411,18 +17372,18 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.data.tabs.grammar,
-                    expression: "data.tabs.grammar"
+                    value: _vm.$store.state.app.tabState.grammar,
+                    expression: "$store.state.app.tabState.grammar"
                   }
                 ],
                 staticClass:
                   "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
               },
-              [_c("grammar", { attrs: { res: _vm.data.grammarRes } })],
+              [_c("grammar")],
               1
             ),
             _vm._v(" "),
-            _vm.data.treebankComponentData && _vm.settings.contentOptions.items
+            _vm.$store.getters["app/hasTreebankData"]
               ? _c(
                   "div",
                   {
@@ -17430,21 +17391,15 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.treebankTabVisible,
-                        expression: "treebankTabVisible"
+                        value: _vm.$store.state.app.tabState.treebank,
+                        expression: "$store.state.app.tabState.treebank"
                       }
                     ],
                     staticClass:
-                      "alpheios-panel__tab-panel alpheios-panel__tab__treebank\n          alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+                      "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
                   },
                   [
                     _c("treebank", {
-                      attrs: {
-                        locale:
-                          _vm.settings.contentOptions.items.locale.currentValue,
-                        res: _vm.data.treebankComponentData.data,
-                        visible: _vm.data.treebankComponentData.visible
-                      },
                       on: { treebankcontentwidth: _vm.setTreebankContentWidth }
                     })
                   ],
@@ -17459,8 +17414,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.data.tabs.status,
-                    expression: "data.tabs.status"
+                    value: _vm.$store.state.app.tabState.status,
+                    expression: "$store.state.app.tabState.status"
                   }
                 ],
                 staticClass:
@@ -17483,8 +17438,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.data.tabs.user,
-                    expression: "data.tabs.user"
+                    value: _vm.$store.state.app.tabState.user,
+                    expression: "$store.state.app.tabState.user"
                   }
                 ],
                 staticClass:
@@ -17494,7 +17449,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _vm.wordUsageExamplesData
+            Boolean(this.data.wordUsageExamplesData)
               ? _c(
                   "div",
                   {
@@ -17502,8 +17457,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.tabs.wordUsage,
-                        expression: "data.tabs.wordUsage"
+                        value: _vm.$store.state.app.tabState.wordUsage,
+                        expression: "$store.state.app.tabState.wordUsage"
                       }
                     ],
                     staticClass:
@@ -17512,11 +17467,11 @@ var render = function() {
                   [
                     _c("word-usage-examples-block", {
                       attrs: {
-                        wordUsageList:
-                          _vm.wordUsageExamplesData.wordUsageExamples,
-                        targetWord: _vm.wordUsageExamplesData.targetWord,
-                        language: _vm.wordUsageExamplesData.language,
-                        provider: _vm.wordUsageExamplesData.provider
+                        wordUsageList: this.data.wordUsageExamplesData
+                          .wordUsageExamples,
+                        targetWord: this.data.wordUsageExamplesData.targetWord,
+                        language: this.data.wordUsageExamplesData.language,
+                        provider: this.data.wordUsageExamplesData.provider
                       }
                     })
                   ],
@@ -17531,8 +17486,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.data.tabs.options,
-                    expression: "data.tabs.options"
+                    value: _vm.$store.state.app.tabState.options,
+                    expression: "$store.state.app.tabState.options"
                   }
                 ],
                 staticClass:
@@ -17701,8 +17656,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.data.tabs.info,
-                    expression: "data.tabs.info"
+                    value: _vm.$store.state.app.tabState.info,
+                    expression: "$store.state.app.tabState.info"
                   }
                 ],
                 staticClass:
@@ -18300,8 +18255,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.inflDataReady,
-                        expression: "data.inflDataReady"
+                        value: _vm.$store.state.app.inflDataReady,
+                        expression: "$store.state.app.inflDataReady"
                       }
                     ],
                     attrs: {
@@ -18313,14 +18268,6 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.data.inflDataReady,
-                            expression: "data.inflDataReady"
-                          }
-                        ],
                         staticClass:
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
                         on: {
@@ -18398,8 +18345,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.hasTreebank,
-                        expression: "data.hasTreebank"
+                        value: _vm.$store.getters["app/hasTreebankData"],
+                        expression: "$store.getters['app/hasTreebankData']"
                       }
                     ],
                     attrs: {
@@ -18411,14 +18358,6 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.data.hasTreebank,
-                            expression: "data.hasTreebank"
-                          }
-                        ],
                         staticClass:
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank",
                         on: {
@@ -19191,7 +19130,7 @@ var render = function() {
   return _c("div", { staticClass: "alpheios-treebank" }, [
     _c("iframe", {
       staticClass: "alpheios-treebank__frame",
-      attrs: { src: _vm.srcUrl }
+      attrs: { src: _vm.srcURL }
     })
   ])
 }
@@ -32151,16 +32090,6 @@ class UIController {
     this.resourceOptions = null
     this.uiOptions = null
     this.siteOptions = null // Will be set during an `init` phase
-    this.tabState = {
-      definitions: false,
-      inflections: false,
-      inflectionsbrowser: false,
-      status: false,
-      options: false,
-      info: false,
-      treebank: false,
-      wordUsage: false
-    }
     this.tabStateDefault = 'info'
 
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
@@ -32203,12 +32132,10 @@ class UIController {
     // Register UI modules
     uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_8__["default"], {
       mountPoint: '#alpheios-panel', // To what element a panel will be mounted
-      panelComponent: 'panel', // A Vue component that will represent a panel
-      tabs: uiController.tabState // TODO: should be accessed via a public API, not via a direct link. This is a temporary solutions
+      panelComponent: 'panel' // A Vue component that will represent a panel
     })
     uiController.registerUiModule(_vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_9__["default"], {
-      mountPoint: '#alpheios-popup',
-      uiController: uiController // Some child UI components require direct link to a uiController. TODO: remove during refactoring
+      mountPoint: '#alpheios-popup'
     })
 
     // Creates on configures an event listener
@@ -32276,8 +32203,6 @@ class UIController {
    *     a standard CSS selector. Default value: 'body'.
    *     {Object} template - object w ith the following properties:
    *         html: HTML string for the container of the Alpheios components
-   *         panelId: the id of the wrapper for the panel component,
-   *         popupId: the id of the wrapper for the popup component
    */
   static get optionsDefaults () {
     return {
@@ -32289,16 +32214,10 @@ class UIController {
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
-      uiTypePanel: 'panel',
-      uiTypePopup: 'popup',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
-        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_11___default.a,
-        defaultPanelComponent: 'panel',
-        defaultPopupComponent: 'popup',
-        draggable: true,
-        resizable: true
+        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_11___default.a
       }
     }
   }
@@ -32420,7 +32339,8 @@ class UIController {
       contentOptionChange: this.contentOptionChange.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       getLanguageName: UIController.getLanguageName,
-      startResourceQuery: this.startResourceQuery.bind(this)
+      startResourceQuery: this.startResourceQuery.bind(this),
+      changeTab: this.changeTab.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -32429,8 +32349,43 @@ class UIController {
 
       state: {
         currentLanguageID: undefined,
-        currentLanguageName: undefined
+        currentLanguageName: undefined,
+        inflDataReady: false, // Whether there is inflection data for a current world
+        grammarRes: null,
+        treebankData: {
+          word: {},
+          page: {}
+        },
+        tabState: {
+          definitions: false,
+          inflections: false,
+          inflectionsbrowser: false,
+          grammar: false,
+          status: false,
+          options: false,
+          info: true,
+          treebank: false,
+          wordUsage: false
+        }
       },
+
+      getters: {
+        /**
+         * Identifies wither grammar resource(s) are available for the current state.
+         * @param state - A local state.
+         * @return {boolean} True if grammar resource(s) are available, false otherwise.
+         */
+        hasGrammarRes (state) {
+          return state.grammarRes !== null
+        },
+
+        hasTreebankData (state) {
+          // Treebank data is available if we have it for the word or the page
+          return Boolean((state.treebankData.page && state.treebankData.page.src) ||
+            (state.treebankData.word && state.treebankData.word.src))
+        }
+      },
+
       mutations: {
         setLanguage (state, languageCodeOrID) {
           let name
@@ -32438,6 +32393,41 @@ class UIController {
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
           state.currentLanguageID = id
           state.currentLanguageName = name
+        },
+
+        setInflData (state, inflectionsViewSet = null) {
+          state.inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
+        },
+
+        resetInflData (state) {
+          state.inflDataReady = false
+        },
+
+        setGrammarRes (state, grammarRes) {
+          state.grammarRes = grammarRes
+        },
+
+        resetGrammarRes (state) {
+          state.grammarRes = null
+        },
+
+        setPageAnnotationData (state, pageData) {
+          state.treebankData.page = pageData
+        },
+
+        setWordAnnotationData (state, wordData) {
+          state.treebankData.word = wordData
+        },
+
+        resetTreebankData (state) {
+          state.treebankData.page = {}
+          state.treebankData.word = {}
+        },
+
+        setTab (state, tabName) {
+          for (let key of Object.keys(state.tabState)) {
+            state.tabState[key] = (key === tabName)
+          }
         }
       }
     })
@@ -32502,6 +32492,10 @@ class UIController {
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
 
+    this.isActivated = true
+    this.isDeactivated = false
+    // Activate an app first, then activate the UI
+    this.state.activate()
     this.state.activateUI()
 
     if (this.state.isPanelStateDefault() || !this.state.isPanelStateValid()) {
@@ -32515,10 +32509,6 @@ class UIController {
     if (this.state.tab) {
       this.changeTab(this.state.tab)
     }
-
-    this.isActivated = true
-    this.isDeactivated = false
-    this.state.activate()
 
     return this
   }
@@ -32647,15 +32637,18 @@ class UIController {
   }
 
   changeTab (tabName) {
-    if (this.hasUiModule('panel')) {
-      if (!this.tabState.hasOwnProperty(tabName)) {
-        // Set tab to a default one if it is an unknown tab name
-        tabName = this.tabStateDefault
-      }
-      this.getUiModule('panel').vi.changeTab(tabName)
-    } else {
-      console.warn(`Cannot switch tab because panel does not exist`)
+    const statusAvailable = Boolean(this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
+    // If tab is disabled, switch to a default one
+    if (
+      (!this.store.state.app.tabState.hasOwnProperty(tabName)) ||
+      (!this.store.state.app.inflDataReady && name === 'inflections') ||
+      (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
+      (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
+      (!statusAvailable && name === 'status')
+    ) {
+      tabName = this.tabStateDefault
     }
+    this.store.commit('app/setTab', tabName) // Reflect a tab change in a state
     return this
   }
 
@@ -32670,7 +32663,7 @@ class UIController {
       const panel = this.api.ui.getModule('panel')
       panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
-      panel.vi.panelData.grammarAvailable = false
+      this.store.commit('app/resetGrammarRes')
       panel.vi.panelData.wordUsageExamplesData = null
     }
     this.clear().open().changeTab('definitions')
@@ -32719,16 +32712,11 @@ class UIController {
    * @param {Array} urls
    */
   updateGrammar (urls = []) {
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      if (urls.length > 0) {
-        panel.vi.panelData.grammarRes = urls[0]
-        panel.vi.panelData.grammarAvailable = true
-      } else {
-        panel.vi.panelData.grammarRes = { provider: this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND') }
-      }
+    if (urls.length > 0) {
+      this.store.commit('app/setGrammarRes', urls[0])
+    } else {
+      this.store.commit('app/resetGrammarRes')
     }
-    // todo show TOC or not found
   }
 
   updateDefinitions (homonym) {
@@ -32790,16 +32778,14 @@ class UIController {
   }
 
   updatePageAnnotationData (data) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.page = data.treebank.page || {} }
+    this.store.commit('app/setPageAnnotationData', data.treebank.page)
   }
 
   updateWordAnnotationData (data) {
     if (data && data.treebank) {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = data.treebank.word || {} }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = data.treebank.word }
+      this.store.commit('app/setWordAnnotationData', data.treebank.word)
     } else {
-      if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.treebankComponentData.data.word = {} }
-      if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.hasTreebank = false }
+      this.store.commit('app/resetTreebankData')
     }
   }
 
@@ -32814,9 +32800,7 @@ class UIController {
     this.state.setItem('currentLanguage', alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(currentLanguageID))
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
-    if (this.hasUiModule('popup')) {
-      this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady
-    }
+    this.store.commit('app/setInflData', this.inflectionsViewSet)
     console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
@@ -32839,12 +32823,11 @@ class UIController {
     if (this.inflectionsViewSet.hasMatchingViews) {
       this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
+    this.store.commit('app/setInflData', this.inflectionsViewSet)
     if (this.hasUiModule('panel')) {
       const panel = this.getUiModule('panel')
       panel.vi.panelData.inflectionsWaitState = false
-      panel.vi.panelData.inflectionComponentData.inflDataReady = this.inflDataReady
     }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.inflDataReady = this.inflDataReady }
   }
 
   updateWordUsageExamples (wordUsageExamplesData) {
@@ -32867,11 +32850,9 @@ class UIController {
     if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
   }
 
-  get inflDataReady () {
-    return this.inflectionsViewSet && this.inflectionsViewSet.hasMatchingViews
-  }
-
   clear () {
+    this.store.commit(`app/resetInflData`)
+    this.store.commit(`app/resetTreebankData`)
     if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
     return this
@@ -37595,7 +37576,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\" :classes-changed=\"classesChanged\"\r\n           @setposition=\"setPositionTo\" @changetab=\"changeTab\">\r\n    </component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @closepopupnotifications=\"clearNotifications\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPanelComponent\" :data=\"panelData\" @closenotifications=\"clearNotifications\">\r\n    </component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -40395,14 +40376,10 @@ class PanelModule {
       },
       data: {
         panelData: {
-          tabs: options.tabs,
-          grammarAvailable: false,
-          grammarRes: {},
           lexemes: [],
           inflectionComponentData: {
             visible: false,
-            inflectionViewSet: null,
-            inflDataReady: false
+            inflectionViewSet: null
           },
           inflectionBrowserData: {
             visible: false
@@ -40426,14 +40403,6 @@ class PanelModule {
             languageName: '',
             languageCode: ''
           },
-          treebankComponentData: {
-            data: {
-              word: {},
-              page: {}
-
-            },
-            visible: false
-          },
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
             zIndex: api.app.zIndex
@@ -40441,56 +40410,13 @@ class PanelModule {
           minWidth: 400,
           wordUsageExamplesData: null
         },
-        currentPanelComponent: this.options.panelComponent,
-        classesChanged: 0
+        currentPanelComponent: this.options.panelComponent
       },
       methods: {
-        setPositionTo: function (position) {
-          this.$options.api.settings.contentOptions.items.panelPosition.setValue(position)
-          this.classesChanged += 1
-        },
-
-        attachToLeft: function () {
-          this.setPositionTo('left')
-        },
-
-        attachToRight: function () {
-          this.setPositionTo('right')
-        },
-
-        changeTab (name) {
-          for (let key of Object.keys(this.panelData.tabs)) {
-            if (this.panelData.tabs[key]) { this.panelData.tabs[key] = false }
-          }
-
-          const inflectionsAvailable = Boolean(this.panelData && this.panelData.inflectionComponentData && this.panelData.inflectionComponentData.inflDataReady)
-          const grammarAvailable = Boolean(this.panelData && this.panelData.grammarAvailable)
-          const statusAvailable = Boolean(this.$options.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
-
-          // TODO: With state refactoring, eliminate similar code in `panel.vue`
-          const treebankTabAvaliable = Boolean(this.panelData && this.panelData.treebankComponentData && this.panelData.treebankComponentData.data &&
-            ((this.panelData.treebankComponentData.data.page && this.panelData.treebankComponentData.data.page.src) ||
-              (this.panelData.treebankComponentData.data.word && this.panelData.treebankComponentData.data.word.src)))
-          // If tab is disabled, switch to a default one
-          if (
-            (!inflectionsAvailable && name === 'inflections') ||
-            (!grammarAvailable && name === 'grammar') ||
-            (!treebankTabAvaliable && name === 'treebank') ||
-            (!statusAvailable && name === 'status')
-          ) {
-            name = this.$options.api.app.defaultTab
-          }
-          this.panelData.tabs[name] = true
-          this.$options.api.app.state.changeTab(name) // Reflect a tab change in a state
-          return this
-        },
-
         clearContent: function () {
           this.panelData.shortDefinitions = []
           this.panelData.fullDefinitions = ''
           this.panelData.messages = []
-          this.panelData.treebankComponentData.data.word = {}
-          this.panelData.treebankComponentData.visible = false
           this.clearNotifications()
           this.clearStatus()
           return this
@@ -40617,7 +40543,7 @@ PanelModule.store = () => {
 
 PanelModule.optionsDefaults = {
   // A selector that specifies to what DOM element a panel will be mounted.
-  // The element will be replaced with the root element of the panel component.
+  // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-panel',
 
   // A name of the panel component defined in `components` section of a Vue instance.
@@ -40648,7 +40574,6 @@ __webpack_require__.r(__webpack_exports__);
 class PopupModule {
   constructor (store, api, options) {
     // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
-    const uiController = options.uiController
     this.options = Object.assign(PopupModule.optionsDefaults, options)
 
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -40660,7 +40585,6 @@ class PopupModule {
       let's assign APIs to a custom prop to have access to it
        */
       api: api,
-      uiController: uiController, // TODO: Remove during refactoring
       components: {
         popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
       },
@@ -40678,8 +40602,8 @@ class PopupModule {
           top: '10vh',
           left: '10vw',
 
-          draggable: uiController.options.template.draggable,
-          resizable: uiController.options.template.resizable,
+          draggable: this.options.draggable,
+          resizable: this.options.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -40705,8 +40629,6 @@ class PopupModule {
            */
           requestStartTime: 0,
           defDataReady: false,
-          hasTreebank: false,
-          inflDataReady: uiController.inflDataReady,
           morphDataReady: false,
 
           translationsDataReady: false,
@@ -40731,7 +40653,7 @@ class PopupModule {
             zIndex: api.app.zIndex
           }
         },
-        currentPopupComponent: uiController.options.template.defaultPopupComponent,
+        currentPopupComponent: this.options.popupComponent,
         classesChanged: 0
       },
       methods: {
@@ -40816,14 +40738,12 @@ class PopupModule {
           this.lexemes = []
           this.popupData.providers = []
           this.popupData.defDataReady = false
-          this.popupData.inflDataReady = false
           this.popupData.morphDataReady = false
 
           this.popupData.translationsDataReady = false
           this.popupData.wordUsageExamplesDataReady = false
 
           this.popupData.showProviders = false
-          this.popupData.hasTreebank = false
           this.clearNotifications()
           this.clearStatus()
           return this
@@ -40843,14 +40763,10 @@ class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          if (this.$options.api.ui.hasModule('panel')) {
-            const panel = this.$options.api.ui.getModule('panel')
-            panel.vi.changeTab(tabName)
-            this.$options.api.ui.openPanel()
-          }
+          this.$options.api.app.changeTab(tabName)
+          this.$options.api.ui.openPanel()
           return this
         },
-
         sendFeature: function (feature) {
           if (this.$options.api.ui.hasModule('panel')) {
             const panel = this.$options.api.ui.getModule('panel')
@@ -40860,22 +40776,6 @@ class PopupModule {
             this.$options.api.ui.openPanel()
           }
           return this
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          this.options.items[name].setTextValue(value)
-          switch (name) {
-            case 'locale':
-              if (this.$options.uiController.presenter) {
-                this.$options.uiController.presenter.setLocale(this.$options.items.locale.currentValue)
-              }
-              this.$options.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.$options.api.app.updateLanguage(this.$options.items.preferredLanguage.currentValue)
-              break
-          }
         }
       }
     })
@@ -40918,7 +40818,17 @@ PopupModule.store = () => {
 }
 
 PopupModule.optionsDefaults = {
-  mountPoint: '#alpheios-popup'
+  // A selector that specifies to what DOM element a popup will be mounted.
+  // This element will be replaced with the root element of the popup component.
+  mountPoint: '#alpheios-popup',
+
+  // A name of the popup component defined in `components` section of a Vue instance.
+  // This is a component that will be mounted.
+  popupComponent: 'popup',
+
+  // Whether a popup can be dragged and resized
+  draggable: true,
+  resizeable: true
 }
 
 

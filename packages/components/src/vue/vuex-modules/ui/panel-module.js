@@ -20,14 +20,10 @@ export default class PanelModule {
       },
       data: {
         panelData: {
-          tabs: options.tabs,
-          grammarAvailable: false,
-          grammarRes: {},
           lexemes: [],
           inflectionComponentData: {
             visible: false,
-            inflectionViewSet: null,
-            inflDataReady: false
+            inflectionViewSet: null
           },
           inflectionBrowserData: {
             visible: false
@@ -51,14 +47,6 @@ export default class PanelModule {
             languageName: '',
             languageCode: ''
           },
-          treebankComponentData: {
-            data: {
-              word: {},
-              page: {}
-
-            },
-            visible: false
-          },
           classes: [], // Will be set later by `setRootComponentClasses()`
           styles: {
             zIndex: api.app.zIndex
@@ -66,56 +54,13 @@ export default class PanelModule {
           minWidth: 400,
           wordUsageExamplesData: null
         },
-        currentPanelComponent: this.options.panelComponent,
-        classesChanged: 0
+        currentPanelComponent: this.options.panelComponent
       },
       methods: {
-        setPositionTo: function (position) {
-          this.$options.api.settings.contentOptions.items.panelPosition.setValue(position)
-          this.classesChanged += 1
-        },
-
-        attachToLeft: function () {
-          this.setPositionTo('left')
-        },
-
-        attachToRight: function () {
-          this.setPositionTo('right')
-        },
-
-        changeTab (name) {
-          for (let key of Object.keys(this.panelData.tabs)) {
-            if (this.panelData.tabs[key]) { this.panelData.tabs[key] = false }
-          }
-
-          const inflectionsAvailable = Boolean(this.panelData && this.panelData.inflectionComponentData && this.panelData.inflectionComponentData.inflDataReady)
-          const grammarAvailable = Boolean(this.panelData && this.panelData.grammarAvailable)
-          const statusAvailable = Boolean(this.$options.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
-
-          // TODO: With state refactoring, eliminate similar code in `panel.vue`
-          const treebankTabAvaliable = Boolean(this.panelData && this.panelData.treebankComponentData && this.panelData.treebankComponentData.data &&
-            ((this.panelData.treebankComponentData.data.page && this.panelData.treebankComponentData.data.page.src) ||
-              (this.panelData.treebankComponentData.data.word && this.panelData.treebankComponentData.data.word.src)))
-          // If tab is disabled, switch to a default one
-          if (
-            (!inflectionsAvailable && name === 'inflections') ||
-            (!grammarAvailable && name === 'grammar') ||
-            (!treebankTabAvaliable && name === 'treebank') ||
-            (!statusAvailable && name === 'status')
-          ) {
-            name = this.$options.api.app.defaultTab
-          }
-          this.panelData.tabs[name] = true
-          this.$options.api.app.state.changeTab(name) // Reflect a tab change in a state
-          return this
-        },
-
         clearContent: function () {
           this.panelData.shortDefinitions = []
           this.panelData.fullDefinitions = ''
           this.panelData.messages = []
-          this.panelData.treebankComponentData.data.word = {}
-          this.panelData.treebankComponentData.visible = false
           this.clearNotifications()
           this.clearStatus()
           return this
@@ -242,7 +187,7 @@ PanelModule.store = () => {
 
 PanelModule.optionsDefaults = {
   // A selector that specifies to what DOM element a panel will be mounted.
-  // The element will be replaced with the root element of the panel component.
+  // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-panel',
 
   // A name of the panel component defined in `components` section of a Vue instance.

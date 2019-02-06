@@ -5,7 +5,6 @@ import Popup from '@/vue/components/popup.vue'
 export default class PopupModule {
   constructor (store, api, options) {
     // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
-    const uiController = options.uiController
     this.options = Object.assign(PopupModule.optionsDefaults, options)
 
     this.vi = new Vue({
@@ -17,7 +16,6 @@ export default class PopupModule {
       let's assign APIs to a custom prop to have access to it
        */
       api: api,
-      uiController: uiController, // TODO: Remove during refactoring
       components: {
         popup: Popup
       },
@@ -35,8 +33,8 @@ export default class PopupModule {
           top: '10vh',
           left: '10vw',
 
-          draggable: uiController.options.template.draggable,
-          resizable: uiController.options.template.resizable,
+          draggable: this.options.draggable,
+          resizable: this.options.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -62,8 +60,6 @@ export default class PopupModule {
            */
           requestStartTime: 0,
           defDataReady: false,
-          hasTreebank: false,
-          inflDataReady: uiController.inflDataReady,
           morphDataReady: false,
 
           translationsDataReady: false,
@@ -88,7 +84,7 @@ export default class PopupModule {
             zIndex: api.app.zIndex
           }
         },
-        currentPopupComponent: uiController.options.template.defaultPopupComponent,
+        currentPopupComponent: this.options.popupComponent,
         classesChanged: 0
       },
       methods: {
@@ -173,14 +169,12 @@ export default class PopupModule {
           this.lexemes = []
           this.popupData.providers = []
           this.popupData.defDataReady = false
-          this.popupData.inflDataReady = false
           this.popupData.morphDataReady = false
 
           this.popupData.translationsDataReady = false
           this.popupData.wordUsageExamplesDataReady = false
 
           this.popupData.showProviders = false
-          this.popupData.hasTreebank = false
           this.clearNotifications()
           this.clearStatus()
           return this
@@ -200,14 +194,10 @@ export default class PopupModule {
         },
 
         showPanelTab: function (tabName) {
-          if (this.$options.api.ui.hasModule('panel')) {
-            const panel = this.$options.api.ui.getModule('panel')
-            panel.vi.changeTab(tabName)
-            this.$options.api.ui.openPanel()
-          }
+          this.$options.api.app.changeTab(tabName)
+          this.$options.api.ui.openPanel()
           return this
         },
-
         sendFeature: function (feature) {
           if (this.$options.api.ui.hasModule('panel')) {
             const panel = this.$options.api.ui.getModule('panel')
@@ -217,22 +207,6 @@ export default class PopupModule {
             this.$options.api.ui.openPanel()
           }
           return this
-        },
-
-        settingChange: function (name, value) {
-          console.log('Change inside instance', name, value)
-          this.options.items[name].setTextValue(value)
-          switch (name) {
-            case 'locale':
-              if (this.$options.uiController.presenter) {
-                this.$options.uiController.presenter.setLocale(this.$options.items.locale.currentValue)
-              }
-              this.$options.uiController.updateLemmaTranslations()
-              break
-            case 'preferredLanguage':
-              this.$options.api.app.updateLanguage(this.$options.items.preferredLanguage.currentValue)
-              break
-          }
         }
       }
     })
@@ -275,5 +249,15 @@ PopupModule.store = () => {
 }
 
 PopupModule.optionsDefaults = {
-  mountPoint: '#alpheios-popup'
+  // A selector that specifies to what DOM element a popup will be mounted.
+  // This element will be replaced with the root element of the popup component.
+  mountPoint: '#alpheios-popup',
+
+  // A name of the popup component defined in `components` section of a Vue instance.
+  // This is a component that will be mounted.
+  popupComponent: 'popup',
+
+  // Whether a popup can be dragged and resized
+  draggable: true,
+  resizeable: true
 }

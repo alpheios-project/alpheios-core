@@ -1,60 +1,49 @@
 <template>
   <div class="alpheios-treebank">
-    <iframe :src="srcUrl" class="alpheios-treebank__frame"></iframe>
+    <iframe :src="srcURL" class="alpheios-treebank__frame"></iframe>
   </div>
 </template>
 <script>
 export default {
   name: 'Treebank',
   inject: ['l10n'],
-  props: {
-    res: {
-      type: Object,
-      required: true
+  storeModules: ['app'],
+  computed: {
+    visible: function () {
+      return this.$store.getters[`app/hasTreebankData`]
     },
-    locale: {
-      type: String,
-      required: true
-    },
-    visible: {
-      type: Boolean,
-      required: true
-    }
-  },
-  data: function () {
-    return {
-      srcUrl: ''
-    }
-  },
-  methods: {
-    updateSrcUrl (url) {
-      this.srcUrl = url
+
+    /*
+    Returns a source URL of a treebank page. This computed prop will be cached by Vue.js.
+    If caching will not work effectively, we shall prevent unnecessary page reloads manually.
+    */
+    srcURL: function () {
+      let newSrcUrl = this.$store.state.app.treebankData.page.src
+      if (this.$store.state.app.treebankData.word &&
+        this.$store.state.app.treebankData.word.src &&
+        this.$store.state.app.treebankData.word.ref) {
+        let [doc, ref] = this.$store.state.app.treebankData.word.ref.split(/#/)
+        if (doc && ref) {
+          let [s, w] = ref.split(/-/)
+          newSrcUrl = this.$store.state.app.treebankData.word.src.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)
+        }
+      }
+      return newSrcUrl
     }
   },
   watch: {
     visible: function (val) {
-      // The arethusa application can't initialize itself properly
-      // if it's not visible, so we wait to update the src url of the
-      // parent iframe until the tab is visible
       if (val) {
         this.$emit('treebankcontentwidth', '43em')
-        let newSrcUrl
-        if (this.res.word && this.res.word.src && this.res.word.ref) {
-          let [doc, ref] = this.res.word.ref.split(/#/)
-          if (doc && ref) {
-            let [s, w] = ref.split(/-/)
-            newSrcUrl = this.res.word.src.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)
-          }
-          // only update the srcUrl property if we have a new URL - we don't
-          // want to reload if it was hidden after being populated but hasn't
-          // actually changed
-          if (newSrcUrl != this.srcUrl) {
-            this.updateSrcUrl(newSrcUrl)
-          }
-        } else if (this.res.page) {
-          this.updateSrcUrl(this.res.page.src)
-        }
       }
+    }
+  },
+
+  beforeCreate: function () {
+    // Check store dependencies. API dependencies will be verified by the `inject`
+    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
+    if (missingDependencies.length > 0) {
+      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   }
 }

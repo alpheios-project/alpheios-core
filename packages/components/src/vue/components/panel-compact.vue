@@ -41,7 +41,7 @@
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
-                            v-show="data.grammarAvailable">
+                            v-show="$store.getters[`app/hasGrammarRes`]">
                 <span @click="changeTab('grammar')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: data.tabs.grammar }">
                   <grammar-icon class="alpheios-icon"></grammar-icon>
@@ -138,7 +138,7 @@
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
             alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-show="data.tabs.grammar">
-        <grammar :res="data.grammarRes"></grammar>
+        <grammar></grammar>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__treebank
             alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-if="data.treebankComponentData && data.settings"

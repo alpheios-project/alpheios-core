@@ -1,9 +1,25 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { mount } from '@vue/test-utils'
+import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Grammar from '@/vue/components/grammar.vue'
+import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import Locales from '@/locales/locales.js'
+import enUS from '@/locales/en-us/messages.json'
+import enUSData from '@/locales/en-us/messages-data.json'
+import enUSInfl from '@/locales/en-us/messages-inflections.json'
+import enGB from '@/locales/en-gb/messages.json'
+import Vuex from 'vuex'
 
 describe('grammar.test.js', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
+  let store
+  const l10nModule = new L10nModule(Locales.en_US, Locales.bundleArr([
+    [enUS, Locales.en_US],
+    [enUSData, Locales.en_US],
+    [enUSInfl, Locales.en_US],
+    [enGB, Locales.en_GB]
+  ]))
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -19,34 +35,79 @@ describe('grammar.test.js', () => {
   })
 
   it('1 Grammar - renders a vue instance (min requirements)', () => {
-    let cmp = mount(Grammar, {
-      propsData: {
-        res: {}
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          state: {
+            grammarRes: {}
+          }
+        }
+      }
+    })
+    let cmp = shallowMount(Grammar, {
+      store,
+      localVue,
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
   it('2 Grammar - renders a vue instance (min requirements)', () => {
-    let cmp = mount(Grammar, {
-      propsData: {
-        res: {
-          url: 'http://example.com/'
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            grammarRes: {
+              url: 'http://example.com/'
+            }
+          },
+          getters: {
+            hasGrammarRes (state) {
+              return state.grammarRes !== null
+            }
+          }
         }
       }
     })
+    let cmp = shallowMount(Grammar, {
+      store,
+      localVue,
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
+      }
+    })
     expect(cmp.find('iframe').attributes().src).toEqual('http://example.com/')
-
     expect(cmp.find('.alpheios-grammar__provider').exists()).toBeFalsy()
 
-    cmp.setProps({ res: { url: 'http://example.com/', provider: 'fooprovider' } })
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            grammarRes: {
+              url: 'http://example.com/',
+              provider: 'fooprovider'
+            }
+          },
+          getters: {
+            hasGrammarRes (state) {
+              return state.grammarRes !== null
+            }
+          }
+        }
+      }
+    })
+    cmp = shallowMount(Grammar, {
+      store,
+      localVue,
+      mocks: {
+        l10n: l10nModule.api(l10nModule.store)
+      }
+    })
 
     expect(cmp.find('.alpheios-grammar__provider').exists()).toBeTruthy()
     expect(cmp.find('.alpheios-grammar__provider').text()).toEqual('fooprovider')
-  })
-
-  it('3 Grammar - check required props', () => {
-    let cmp = mount(Grammar)
-
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "res"'))
   })
 })
