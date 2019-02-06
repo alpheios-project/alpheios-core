@@ -35,9 +35,9 @@
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
-                      v-show="data.wordUsageExamplesDataReady">
-          <button @click="showPanelTab('wordUsage')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
-                  v-show="data.wordUsageExamplesDataReady">
+                      v-show="$store.getters['app/hasWordUsageExamplesData']">
+          <button class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
+                  @click="showPanelTab('wordUsage')">
             {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
           </button>
         </alph-tooltip>

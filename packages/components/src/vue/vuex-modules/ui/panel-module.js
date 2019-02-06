@@ -47,12 +47,7 @@ export default class PanelModule {
             languageName: '',
             languageCode: ''
           },
-          classes: [], // Will be set later by `setRootComponentClasses()`
-          styles: {
-            zIndex: api.app.zIndex
-          },
-          minWidth: 400,
-          wordUsageExamplesData: null
+          classes: [] // Will be set later by `setRootComponentClasses()`
         },
         currentPanelComponent: this.options.panelComponent
       },

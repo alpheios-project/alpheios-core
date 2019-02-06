@@ -11284,6 +11284,8 @@ __webpack_require__.r(__webpack_exports__);
     left: 'alpheios-panel-left',
     right: 'alpheios-panel-right'
   },
+  minWidth: 400, // A minimal width of a panel, in pixels
+  defaultScrollPadding: 20,
   data: function () {
     return {
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
@@ -11292,9 +11294,10 @@ __webpack_require__.r(__webpack_exports__);
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
-      defaultScrollPadding: 20,
-      defaultPanelWidth: 400,
-      panelWidth: null
+      panelWidth: null,
+      styles: {
+        zIndex: this.ui.zIndex
+      }
     }
   },
   props: {
@@ -11323,8 +11326,8 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.app.currentLanguageID
     },
     mainstyles: function () {
-      let mainstyles = (this.data) ? this.data.styles : {}
-      this.panelWidth = this.panelWidth ? this.panelWidth : this.defaultPanelWidth
+      let mainstyles = (this.data) ? this.styles : {}
+      this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
 
       return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
     },
@@ -11439,7 +11442,7 @@ __webpack_require__.r(__webpack_exports__);
           this.panelRightPadding +
           this.scrollPadding
 
-      if (dataObj.width > this.data.minWidth - widthDelta) {
+      if (dataObj.width > this.$options.minWidth - widthDelta) {
         let adjustedWidth = dataObj.width + widthDelta
         // Max viewport width less some space to display page content
         let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
@@ -11461,7 +11464,7 @@ __webpack_require__.r(__webpack_exports__);
     calcScrollPadding: function () {
       if (typeof this.$el.querySelector === 'function') {
         this.scrollPadding = this.$el.scrollHeight > this.$el.offsetHeight
-          ? this.defaultScrollPadding : 0
+          ? this.$options.defaultScrollPadding : 0
       }
     },
 
@@ -11523,7 +11526,7 @@ __webpack_require__.r(__webpack_exports__);
 
           // minimum size
           restrictSize: {
-            min: { width: this.data.minWidth }
+            min: { width: this.$options.minWidth }
           },
 
           inertia: true
@@ -17053,8 +17056,10 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: Boolean(this.data.wordUsageExamplesData),
-                        expression: "Boolean(this.data.wordUsageExamplesData)"
+                        value:
+                          _vm.$store.getters["app/hasWordUsageExamplesData"],
+                        expression:
+                          "$store.getters['app/hasWordUsageExamplesData']"
                       }
                     ],
                     attrs: {
@@ -17448,7 +17453,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            Boolean(this.data.wordUsageExamplesData)
+            _vm.$store.getters["app/hasWordUsageExamplesData"]
               ? _c(
                   "div",
                   {
@@ -17466,11 +17471,15 @@ var render = function() {
                   [
                     _c("word-usage-examples-block", {
                       attrs: {
-                        wordUsageList: this.data.wordUsageExamplesData
-                          .wordUsageExamples,
-                        targetWord: this.data.wordUsageExamplesData.targetWord,
-                        language: this.data.wordUsageExamplesData.language,
-                        provider: this.data.wordUsageExamplesData.provider
+                        wordUsageList:
+                          _vm.$store.state.app.wordUsageExamplesData
+                            .wordUsageExamples,
+                        targetWord:
+                          _vm.$store.state.app.wordUsageExamplesData.targetWord,
+                        language:
+                          _vm.$store.state.app.wordUsageExamplesData.language,
+                        provider:
+                          _vm.$store.state.app.wordUsageExamplesData.provider
                       }
                     })
                   ],
@@ -18293,8 +18302,10 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.wordUsageExamplesDataReady,
-                        expression: "data.wordUsageExamplesDataReady"
+                        value:
+                          _vm.$store.getters["app/hasWordUsageExamplesData"],
+                        expression:
+                          "$store.getters['app/hasWordUsageExamplesData']"
                       }
                     ],
                     attrs: {
@@ -18308,14 +18319,6 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.data.wordUsageExamplesDataReady,
-                            expression: "data.wordUsageExamplesDataReady"
-                          }
-                        ],
                         staticClass:
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
                         on: {
@@ -32164,7 +32167,7 @@ class UIController {
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.onWordUsageExamplesReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
@@ -32330,7 +32333,6 @@ class UIController {
     this.api.app = {
       name: this.options.app.name, // A name of an application
       version: this.options.app.version, // An application's version
-      zIndex: this.zIndex, // A z-index of Alpheios UI elements
       defaultTab: this.tabStateDefault, // A name of a default tab (a string)
       state: this.state, // An app-level state
 
@@ -32355,6 +32357,7 @@ class UIController {
           word: {},
           page: {}
         },
+        wordUsageExamplesData: null,
         tabState: {
           definitions: false,
           inflections: false,
@@ -32382,6 +32385,11 @@ class UIController {
           // Treebank data is available if we have it for the word or the page
           return Boolean((state.treebankData.page && state.treebankData.page.src) ||
             (state.treebankData.word && state.treebankData.word.src))
+        },
+
+        hasWordUsageExamplesData (state) {
+          console.log(`hasWordUsageExamplesData: `, state.wordUsageExamplesData)
+          return Boolean(state.wordUsageExamplesData)
         }
       },
 
@@ -32423,6 +32431,16 @@ class UIController {
           state.treebankData.word = {}
         },
 
+        setWordUsageExamplesData (state, data) {
+          console.log(`setWordUsageExamplesData: `, data)
+          state.wordUsageExamplesData = data
+        },
+
+        resetWordUsageExamplesData (state) {
+          console.log(`resetWordUsageExamplesData`)
+          state.wordUsageExamplesData = null
+        },
+
         setTab (state, tabName) {
           for (let key of Object.keys(state.tabState)) {
             state.tabState[key] = (key === tabName)
@@ -32435,6 +32453,8 @@ class UIController {
      * This is a UI-level public API of a UI controller. All objects should use this public API only.
      */
     this.api.ui = {
+      zIndex: this.zIndex, // A z-index of Alpheios UI elements
+
       // Modules
       hasModule: this.hasUiModule.bind(this), // Checks if a UI module is available
       getModule: this.getUiModule.bind(this), // Gets direct access to module.
@@ -32657,13 +32677,13 @@ class UIController {
   }
 
   newLexicalRequest (languageID) {
+    this.store.commit('app/resetGrammarRes')
+    this.store.commit('app/resetWordUsageExamplesData')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
     if (this.hasUiModule('panel')) {
       const panel = this.api.ui.getModule('panel')
       panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
       panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
-      this.store.commit('app/resetGrammarRes')
-      panel.vi.panelData.wordUsageExamplesData = null
     }
     this.clear().open().changeTab('definitions')
     return this
@@ -32830,10 +32850,8 @@ class UIController {
   }
 
   updateWordUsageExamples (wordUsageExamplesData) {
-    if (this.hasUiModule('panel')) {
-      this.getUiModule('panel').vi.panelData.wordUsageExamplesData = wordUsageExamplesData
-    }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.wordUsageExamplesDataReady = true }
+    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
+    this.store.commit('app/setWordUsageExamplesData', wordUsageExamplesData)
   }
 
   lexicalRequestComplete () {
@@ -33138,11 +33156,6 @@ class UIController {
   onDefinitionsReady (data) {
     this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateDefinitions(data.homonym)
-  }
-
-  onWordUsageExamplesReady (wordUsageExamplesData) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
-    this.updateWordUsageExamples(wordUsageExamplesData)
   }
 
   onDefinitionsNotFound (data) {
@@ -40431,12 +40444,7 @@ class PanelModule {
             languageName: '',
             languageCode: ''
           },
-          classes: [], // Will be set later by `setRootComponentClasses()`
-          styles: {
-            zIndex: api.app.zIndex
-          },
-          minWidth: 400,
-          wordUsageExamplesData: null
+          classes: [] // Will be set later by `setRootComponentClasses()`
         },
         currentPanelComponent: this.options.panelComponent
       },
@@ -40660,7 +40668,6 @@ class PopupModule {
           morphDataReady: false,
 
           translationsDataReady: false,
-          wordUsageExamplesDataReady: false,
 
           showProviders: false,
           updates: 0,
@@ -40769,7 +40776,6 @@ class PopupModule {
           this.popupData.morphDataReady = false
 
           this.popupData.translationsDataReady = false
-          this.popupData.wordUsageExamplesDataReady = false
 
           this.popupData.showProviders = false
           this.clearNotifications()

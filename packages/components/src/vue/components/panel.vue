@@ -73,7 +73,7 @@
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
-                            v-show="Boolean(this.data.wordUsageExamplesData)">
+                            v-show="$store.getters['app/hasWordUsageExamplesData']">
                 <span @click="changeTab('wordUsage')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: $store.state.app.tabState.wordUsage }">
                   <word-usage-icon class="alpheios-icon"></word-usage-icon>
@@ -170,12 +170,12 @@
         <user-auth :auth="data.auth"></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
-           v-show="$store.state.app.tabState.wordUsage" v-if="Boolean(this.data.wordUsageExamplesData)">
+           v-show="$store.state.app.tabState.wordUsage" v-if="$store.getters['app/hasWordUsageExamplesData']">
         <word-usage-examples-block
-            :wordUsageList="this.data.wordUsageExamplesData.wordUsageExamples"
-            :targetWord="this.data.wordUsageExamplesData.targetWord"
-            :language="this.data.wordUsageExamplesData.language"
-            :provider="this.data.wordUsageExamplesData.provider">
+            :wordUsageList="$store.state.app.wordUsageExamplesData.wordUsageExamples"
+            :targetWord="$store.state.app.wordUsageExamplesData.targetWord"
+            :language="$store.state.app.wordUsageExamplesData.language"
+            :provider="$store.state.app.wordUsageExamplesData.provider">
         </word-usage-examples-block>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.state.app.tabState.options">
@@ -334,6 +334,8 @@ export default {
     left: 'alpheios-panel-left',
     right: 'alpheios-panel-right'
   },
+  minWidth: 400, // A minimal width of a panel, in pixels
+  defaultScrollPadding: 20,
   data: function () {
     return {
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
@@ -342,9 +344,10 @@ export default {
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
-      defaultScrollPadding: 20,
-      defaultPanelWidth: 400,
-      panelWidth: null
+      panelWidth: null,
+      styles: {
+        zIndex: this.ui.zIndex
+      }
     }
   },
   props: {
@@ -373,8 +376,8 @@ export default {
       return this.$store.state.app.currentLanguageID
     },
     mainstyles: function () {
-      let mainstyles = (this.data) ? this.data.styles : {}
-      this.panelWidth = this.panelWidth ? this.panelWidth : this.defaultPanelWidth
+      let mainstyles = (this.data) ? this.styles : {}
+      this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
 
       return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
     },
@@ -489,7 +492,7 @@ export default {
           this.panelRightPadding +
           this.scrollPadding
 
-      if (dataObj.width > this.data.minWidth - widthDelta) {
+      if (dataObj.width > this.$options.minWidth - widthDelta) {
         let adjustedWidth = dataObj.width + widthDelta
         // Max viewport width less some space to display page content
         let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
@@ -511,7 +514,7 @@ export default {
     calcScrollPadding: function () {
       if (typeof this.$el.querySelector === 'function') {
         this.scrollPadding = this.$el.scrollHeight > this.$el.offsetHeight
-          ? this.defaultScrollPadding : 0
+          ? this.$options.defaultScrollPadding : 0
       }
     },
 
@@ -573,7 +576,7 @@ export default {
 
           // minimum size
           restrictSize: {
-            min: { width: this.data.minWidth }
+            min: { width: this.$options.minWidth }
           },
 
           inertia: true
