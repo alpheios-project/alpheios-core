@@ -58,6 +58,9 @@ describe('popup.test.js', () => {
           },
           actions: {},
           getters: {}
+        },
+        app: {
+
         }
       }
     })

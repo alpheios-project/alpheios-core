@@ -18,9 +18,13 @@
   </div>
 </template>
 <script>
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'Info',
-  inject: ['app', 'l10n']
+  inject: ['app', 'l10n'],
+  storeModules: ['app'],
+  mixins: [DependencyCheck]
 }
 </script>
 <style lang="scss">

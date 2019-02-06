@@ -284,6 +284,8 @@ import WordUsageIcon from '../../images/inline-icons/books-stack.svg'
 import { directive as onClickaway } from '../directives/clickaway.js'
 // JS imports
 import interact from 'interactjs'
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Panel',
@@ -297,6 +299,7 @@ export default {
     auth: { from: 'auth', default: null } // This module is options
   },
   storeModules: ['app', 'panel'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
   components: {
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
@@ -545,14 +548,6 @@ export default {
           }
         }
       }
-    }
-  },
-
-  beforeCreate: function () {
-    // Check store dependencies. API dependencies will be verified by the `inject`
-    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
-    if (missingDependencies.length > 0) {
-      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   },
 

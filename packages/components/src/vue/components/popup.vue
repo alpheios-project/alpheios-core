@@ -120,9 +120,14 @@ import CloseIcon from '../../images/inline-icons/close.svg'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
 
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'Popup',
   inject: ['app', 'ui', 'l10n', 'settings'],
+  storeModules: ['app', 'popup'],
+  mixins: [DependencyCheck],
   components: {
     morph: Morph,
     setting: Setting,

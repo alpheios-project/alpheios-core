@@ -10,18 +10,13 @@
   </div>
 </template>
 <script>
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'Grammar',
   inject: ['l10n'],
   storeModules: ['app'],
-
-  beforeCreate: function () {
-    // Check store dependencies. API dependencies will be verified by the `inject`
-    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
-    if (missingDependencies.length > 0) {
-      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
-    }
-  }
+  mixins: [DependencyCheck]
 }
 </script>
 <style lang="scss">

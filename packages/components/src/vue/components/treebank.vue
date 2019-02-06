@@ -4,10 +4,13 @@
   </div>
 </template>
 <script>
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'Treebank',
   inject: ['l10n'],
   storeModules: ['app'],
+  mixins: [DependencyCheck],
   computed: {
     visible: function () {
       return this.$store.getters[`app/hasTreebankData`]
@@ -36,14 +39,6 @@ export default {
       if (val) {
         this.$emit('treebankcontentwidth', '43em')
       }
-    }
-  },
-
-  beforeCreate: function () {
-    // Check store dependencies. API dependencies will be verified by the `inject`
-    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
-    if (missingDependencies.length > 0) {
-      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
     }
   }
 }
