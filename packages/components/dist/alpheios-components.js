@@ -12448,7 +12448,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -12475,21 +12474,32 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  /*
+  TODO: A temporary solution to force Vue.js to redraw when settings are changed
+       (as settings objects of `app` are not reactive).
+       This better be handled by refactoring settings objects and integrating them into a Vuex store.
+   */
+  data: function () {
+    return {
+      dataModel: undefined
+    }
+  },
   computed: {
     selected: {
       get: function () {
         let rv
-        if (typeof this.data.currentTextValue === 'function' && this.data.boolean !== true  && this.data.number !== true) {
-          rv = this.data.currentTextValue()
-        } else if (this.data.boolean === true) {
-          rv = this.data.currentValue
-        } else if (this.data.number === true) {
-          rv = parseInt(this.data.currentValue)
+        if (typeof this.dataModel.currentTextValue === 'function' && this.dataModel.boolean !== true && this.dataModel.number !== true) {
+          rv = this.dataModel.currentTextValue()
+        } else if (this.dataModel.boolean === true) {
+          rv = this.dataModel.currentValue
+        } else if (this.dataModel.number === true) {
+          rv = parseInt(this.dataModel.currentValue)
         }
         return rv
       },
       set: function (newValue) {
         this.$emit('change', this.data.name, newValue)
+        this.dataModel = this.data
       }
     },
     values: function () {
@@ -12507,6 +12517,9 @@ __webpack_require__.r(__webpack_exports__);
         this.selected = !this.selected
       }
     }
+  },
+  created: function () {
+    this.dataModel = this.data
   }
 });
 
@@ -18868,7 +18881,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.data && Object.keys(_vm.data).length > 0
+  return _vm.dataModel && Object.keys(_vm.dataModel).length > 0
     ? _c(
         "div",
         { class: _vm.classes },
@@ -18886,10 +18899,10 @@ var render = function() {
               ],
               staticClass: "uk-form-label alpheios-setting__label"
             },
-            [_vm._v(_vm._s(_vm.data.labelText))]
+            [_vm._v(_vm._s(_vm.dataModel.labelText))]
           ),
           _vm._v(" "),
-          _vm.data.multiValue
+          _vm.dataModel.multiValue
             ? _c("multiselect", {
                 attrs: {
                   "clear-on-select": false,
@@ -18911,7 +18924,7 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _vm.data.number
+          _vm.dataModel.number
             ? _c("input", {
                 directives: [
                   {
@@ -18934,7 +18947,7 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _vm.data.boolean
+          _vm.dataModel.boolean
             ? _c("div", { staticClass: "alpheios-checkbox-block" }, [
                 _c("input", {
                   directives: [
@@ -18985,7 +18998,9 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          !_vm.data.multiValue && !_vm.data.boolean && !_vm.data.number
+          !_vm.dataModel.multiValue &&
+          !_vm.dataModel.boolean &&
+          !_vm.dataModel.number
             ? _c(
                 "select",
                 {
