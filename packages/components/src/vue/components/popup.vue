@@ -27,7 +27,7 @@
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
-                      v-show="$store.state.app.inflDataReady">
+                      v-show="$store.getters[`app/hasInflData`]">
           <button @click="showPanelTab('inflections')"
                   class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections">
             {{ l10n.getText('LABEL_POPUP_INFLECT') }}

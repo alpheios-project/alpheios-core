@@ -27,7 +27,7 @@
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
-                            v-show="$store.state.app.inflDataReady">
+                            v-show="$store.getters[`app/hasInflData`]">
                 <span @click="changeTab('inflections')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: $store.state.app.tabState.inflections }">
                   <inflections-icon class="alpheios-icon"></inflections-icon>
@@ -137,14 +137,11 @@
              v-html="data.fullDefinitions"></div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="$store.state.app.inflDataReady" v-show="inflectionsTabVisible">
-        <inflections :data="data.inflectionComponentData" :inflections-enabled="data.inflectionsEnabled"
-                     :wait-state="data.inflectionsWaitState"
-                     @contentwidth="setContentWidth" class="alpheios-panel-inflections">
-        </inflections>
+           v-if="$store.getters[`app/hasInflData`]" v-show="inflectionsTabVisible">
+        <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
-           v-if="data.inflectionBrowserEnabled && settings.contentOptions.items" v-show="$store.state.app.tabState.inflectionsbrowser">
+           v-if="settings.contentOptions.items" v-show="$store.state.app.tabState.inflectionsbrowser">
         <inflection-browser :data="data.inflectionBrowserData"
                             :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
                             :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
@@ -412,7 +409,7 @@ export default {
 
     // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
     inflectionsTabVisible: function () {
-      return Boolean(this.$store.state.app.tabState.inflections && this.data && this.data.inflectionComponentData.inflectionViewSet)
+      return Boolean(this.$store.state.app.tabState.inflections && this.$store.state.app.inflectionsViewSet)
     },
 
     additionalStylesTootipCloseIcon: function () {
@@ -503,7 +500,6 @@ export default {
     },
 
     setTreebankContentWidth: function (width) {
-      console.log(`Set width to ${width}`)
       this.panelWidth = width
     },
 
@@ -522,7 +518,7 @@ export default {
       let panelTabId
       if (component === 'inflections') {
         panelTabId = this.inflectionsPanelID
-      } else if (component === 'inflections=browser') {
+      } else if (component === 'inflections-browser') {
         panelTabId = this.inflectionsBrowserPanelID
       }
 

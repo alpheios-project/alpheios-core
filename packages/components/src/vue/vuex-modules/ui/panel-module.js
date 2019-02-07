@@ -21,17 +21,9 @@ export default class PanelModule {
       data: {
         panelData: {
           lexemes: [],
-          inflectionComponentData: {
-            visible: false,
-            inflectionViewSet: null
-          },
           inflectionBrowserData: {
             visible: false
           },
-          inflectionsWaitState: false,
-          inflectionsEnabled: false,
-          // Whether inflection browser is enabled for a language. We always show an inflection browser for now.
-          inflectionBrowserEnabled: false,
           inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',

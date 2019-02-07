@@ -1,6 +1,6 @@
 <template>
   <div :id="elementIDs.content">
-    <div class="alpheios-inflections__placeholder" v-if="waitState">
+    <div class="alpheios-inflections__placeholder" v-if="$store.state.app.inflectionsWaitState">
       <div class="alpheios-inflections__progress-wrapper">
         <div class="alpheios-inflections__progress-border">
           <div class="alpheios-inflections__progress-whitespace">
@@ -35,8 +35,8 @@
       </div>
 
       <div class="alpheios-inflections__paradigms-expl"
-           v-html="l10n.getMsg('INFLECTIONS_PARADIGMS_EXPLANATORY_HINT', { word: data.inflectionData.targetWord })"
-           v-if="data.inflectionData"
+           v-html="l10n.getMsg('INFLECTIONS_PARADIGMS_EXPLANATORY_HINT', { word: this.$store.state.app.inflectionsViewSet.targetWord })"
+           v-if="$store.getters[`app/hasInflData`]"
            v-show="showExplanatoryHint">
       </div>
 
@@ -80,6 +80,7 @@
   </div>
 </template>
 <script>
+import { ViewSetFactory } from 'alpheios-inflection-tables'
 // Subcomponents
 import WidePrerenderedTable from './inflections-table-prerendered.vue'
 import WideTableVue from './inflections-table-wide.vue'
@@ -89,9 +90,14 @@ import WordForms from './wordforms.vue'
 
 import Vue from 'vue/dist/vue'
 
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'Inflections',
   inject: ['l10n'],
+  storeModules: ['app'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
   components: {
     prerenderedTableWide: WidePrerenderedTable,
     mainTableWideVue: WideTableVue,
@@ -100,37 +106,9 @@ export default {
     wordForms: WordForms
   },
 
-  props: {
-    // Whether inflections component is enabled or not
-    inflectionsEnabled: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-
-    data: {
-      type: Object,
-      required: true
-    },
-
-    /*
-          Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
-          inflections data is calculated
-          */
-    waitState: {
-      type: Boolean,
-      default: false,
-      required: false
-    }
-  },
-
   data: function () {
     return {
       languageID: undefined,
-      events: {
-        EVENT: 'event',
-        DATA_UPDATE: 'dataUpdate'
-      },
       hasInflectionData: false,
       partsOfSpeech: [],
       selectedPartOfSpeech: [],
@@ -151,17 +129,23 @@ export default {
 
   computed: {
     isEnabled: function () {
-      return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled
+      console.log(`isEnabled`)
+      return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled
     },
     hasMatchingViews: function () {
-      return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled && this.data.inflectionViewSet.hasMatchingViews
+      console.log(`hasMatchingViews`)
+      return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled && this.$store.state.app.inflectionsViewSet.hasMatchingViews
     },
     inflectionViewSet: function () {
-      return this.data.inflectionViewSet
+      console.log(`inflectionViewSet`)
+      return this.$store.state.app.inflectionsViewSet
     },
     // Need this for a watcher that will monitor a parent container visibility state
     isVisible: function () {
-      return this.data.visible
+      return this.$store.state.app.tabState.inflections
+    },
+    inflectionsEnabled: function () {
+      return ViewSetFactory.hasInflectionsEnabled(this.$store.state.app.currentLanguageID)
     },
     partOfSpeechSelector: {
       get: function () {
@@ -169,7 +153,7 @@ export default {
       },
       set: function (newValue) {
         this.selectedPartOfSpeech = newValue
-        this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
+        this.views = this.$store.state.app.inflectionsViewSet.getViews(this.selectedPartOfSpeech)
         this.selectedView = this.views[0].render()
       }
     },
@@ -205,8 +189,9 @@ export default {
 
   watch: {
     inflectionViewSet: function () {
+      // This watcher is called when a new inflection set becomes available
+      console.log(`New inflection view set becomes available`)
       this.initViewSet()
-      this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.data.inflectionViewSet)
     },
 
     /*
@@ -231,14 +216,14 @@ export default {
   methods: {
     initViewSet () {
       this.hasInflectionData = false
-      if (this.data.inflectionViewSet) {
-        this.languageID = this.data.inflectionViewSet.languageID
+      if (this.$store.state.app.inflectionsViewSet) {
+        this.languageID = this.$store.state.app.inflectionsViewSet.languageID
       }
-      if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
-        this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
+      if (this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.hasMatchingViews) {
+        this.partsOfSpeech = this.$store.state.app.inflectionsViewSet.partsOfSpeech
         if (this.partsOfSpeech.length > 0) {
           this.selectedPartOfSpeech = this.partsOfSpeech[0]
-          this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
+          this.views = this.$store.state.app.inflectionsViewSet.getViews(this.selectedPartOfSpeech)
         } else {
           this.selectedPartOfSpeech = []
           this.views = []

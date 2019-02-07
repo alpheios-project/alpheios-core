@@ -336,7 +336,8 @@ export default class UIController {
       state: {
         currentLanguageID: undefined,
         currentLanguageName: undefined,
-        inflDataReady: false, // Whether there is inflection data for a current world
+        inflectionsWaitState: false, // Whether there is a lexical query in progress
+        inflectionsViewSet: null,
         grammarRes: null,
         treebankData: {
           word: {},
@@ -357,6 +358,10 @@ export default class UIController {
       },
 
       getters: {
+        hasInflData (state) {
+          return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
+        },
+
         /**
          * Identifies wither grammar resource(s) are available for the current state.
          * @param state - A local state.
@@ -373,7 +378,6 @@ export default class UIController {
         },
 
         hasWordUsageExamplesData (state) {
-          console.log(`hasWordUsageExamplesData: `, state.wordUsageExamplesData)
           return Boolean(state.wordUsageExamplesData)
         }
       },
@@ -387,12 +391,26 @@ export default class UIController {
           state.currentLanguageName = name
         },
 
+        lexicalRequestStarted (state) {
+          state.inflectionsWaitState = true
+          state.wordUsageExamplesData = null
+        },
+
+        lexicalRequestFinished (state) {
+          state.inflectionsWaitState = false
+        },
+
         setInflData (state, inflectionsViewSet = null) {
-          state.inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
+          state.inflectionsWaitState = false
+          if (inflectionsViewSet && inflectionsViewSet.hasMatchingViews) {
+            state.inflectionsViewSet = inflectionsViewSet
+          }
         },
 
         resetInflData (state) {
+          state.inflectionsWaitState = false
           state.inflDataReady = false
+          state.inflectionsViewSet = false
         },
 
         setGrammarRes (state, grammarRes) {
@@ -417,13 +435,7 @@ export default class UIController {
         },
 
         setWordUsageExamplesData (state, data) {
-          console.log(`setWordUsageExamplesData: `, data)
           state.wordUsageExamplesData = data
-        },
-
-        resetWordUsageExamplesData (state) {
-          console.log(`resetWordUsageExamplesData`)
-          state.wordUsageExamplesData = null
         },
 
         setTab (state, tabName) {
@@ -474,7 +486,6 @@ export default class UIController {
     this.contentOptions.items.lookupLangOverride.setValue(false)
     this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
-    this.notifyInflectionBrowser()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
 
@@ -645,7 +656,7 @@ export default class UIController {
     // If tab is disabled, switch to a default one
     if (
       (!this.store.state.app.tabState.hasOwnProperty(tabName)) ||
-      (!this.store.state.app.inflDataReady && name === 'inflections') ||
+      (!this.store.getters[`app/hasInflData`] && name === 'inflections') ||
       (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
       (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
       (!statusAvailable && name === 'status')
@@ -662,14 +673,9 @@ export default class UIController {
   }
 
   newLexicalRequest (languageID) {
+    this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
-    this.store.commit('app/resetWordUsageExamplesData')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
-    if (this.hasUiModule('panel')) {
-      const panel = this.api.ui.getModule('panel')
-      panel.vi.panelData.inflectionsEnabled = ViewSetFactory.hasInflectionsEnabled(languageID)
-      panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
-    }
     this.clear().open().changeTab('definitions')
     return this
   }
@@ -805,7 +811,6 @@ export default class UIController {
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
     this.store.commit('app/setInflData', this.inflectionsViewSet)
-    console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
   updateLemmaTranslations () {
@@ -816,40 +821,9 @@ export default class UIController {
     }
   }
 
-  notifyInflectionBrowser () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionBrowserEnabled = true }
-  }
-
-  updateInflections (homonym) {
-    this.inflectionsViewSet = ViewSetFactory.create(homonym, this.contentOptions.items.locale.currentValue)
-
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet }
-    if (this.inflectionsViewSet.hasMatchingViews) {
-      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
-    }
-    this.store.commit('app/setInflData', this.inflectionsViewSet)
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.inflectionsWaitState = false
-    }
-  }
-
   updateWordUsageExamples (wordUsageExamplesData) {
     this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.store.commit('app/setWordUsageExamplesData', wordUsageExamplesData)
-  }
-
-  lexicalRequestComplete () {
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
-  }
-
-  lexicalRequestSucceeded () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
-  }
-
-  lexicalRequestFailed () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
   }
 
   clear () {
@@ -1102,21 +1076,16 @@ export default class UIController {
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
       case LexicalQuery.resultStatus.SUCCEEDED:
-        this.lexicalRequestSucceeded()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
-        this.lexicalRequestComplete()
         break
       case LexicalQuery.resultStatus.FAILED:
-        this.lexicalRequestFailed()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
-        this.lexicalRequestComplete()
-        break
-      default:
-        // Request was probably cancelled
-        this.lexicalRequestComplete()
     }
+    this.store.commit('app/lexicalRequestFinished')
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
   }
 
   onMorphDataReady () {
@@ -1135,7 +1104,13 @@ export default class UIController {
     this.updateDefinitions(homonym)
     // Update status info with data from a morphological analyzer
     this.showStatusInfo(homonym.targetWord, homonym.languageID)
-    this.updateInflections(homonym)
+
+    // Update inflections data
+    this.inflectionsViewSet = ViewSetFactory.create(homonym, this.contentOptions.items.locale.currentValue)
+    if (this.inflectionsViewSet.hasMatchingViews) {
+      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
+    }
+    this.store.commit('app/setInflData', this.inflectionsViewSet)
   }
 
   onDefinitionsReady (data) {
@@ -1180,7 +1155,6 @@ export default class UIController {
   }
 
   contentOptionChange (name, value) {
-    console.log('Change inside instance', name, value)
     // TODO we need to refactor handling of boolean options
     if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
       this.api.settings.contentOptions.items[name].setValue(value)

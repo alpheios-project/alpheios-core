@@ -9941,13 +9941,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _inflections_table_prerendered_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inflections-table-prerendered.vue */ "./vue/components/inflections-table-prerendered.vue");
-/* harmony import */ var _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflections-table-wide.vue */ "./vue/components/inflections-table-wide.vue");
-/* harmony import */ var _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inflections-subtables-wide.vue */ "./vue/components/inflections-subtables-wide.vue");
-/* harmony import */ var _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections-supp-table-wide.vue */ "./vue/components/inflections-supp-table-wide.vue");
-/* harmony import */ var _wordforms_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./wordforms.vue */ "./vue/components/wordforms.vue");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-inflection-tables */ "alpheios-inflection-tables");
+/* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _inflections_table_prerendered_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflections-table-prerendered.vue */ "./vue/components/inflections-table-prerendered.vue");
+/* harmony import */ var _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inflections-table-wide.vue */ "./vue/components/inflections-table-wide.vue");
+/* harmony import */ var _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections-subtables-wide.vue */ "./vue/components/inflections-subtables-wide.vue");
+/* harmony import */ var _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflections-supp-table-wide.vue */ "./vue/components/inflections-supp-table-wide.vue");
+/* harmony import */ var _wordforms_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./wordforms.vue */ "./vue/components/wordforms.vue");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -10029,6 +10032,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 // Subcomponents
 
@@ -10039,48 +10043,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// Modules support
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Inflections',
   inject: ['l10n'],
+  storeModules: ['app'], // Store modules that are required by this component
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_7__["default"]],
   components: {
-    prerenderedTableWide: _inflections_table_prerendered_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    mainTableWideVue: _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    subTablesWide: _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    suppTablesWide: _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    wordForms: _wordforms_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
-  },
-
-  props: {
-    // Whether inflections component is enabled or not
-    inflectionsEnabled: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-
-    data: {
-      type: Object,
-      required: true
-    },
-
-    /*
-          Inflections component is in a wait state while homonym data is retrieved from a morph analyzer and
-          inflections data is calculated
-          */
-    waitState: {
-      type: Boolean,
-      default: false,
-      required: false
-    }
+    prerenderedTableWide: _inflections_table_prerendered_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    mainTableWideVue: _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    subTablesWide: _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    suppTablesWide: _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    wordForms: _wordforms_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
 
   data: function () {
     return {
       languageID: undefined,
-      events: {
-        EVENT: 'event',
-        DATA_UPDATE: 'dataUpdate'
-      },
       hasInflectionData: false,
       partsOfSpeech: [],
       selectedPartOfSpeech: [],
@@ -10101,17 +10082,23 @@ __webpack_require__.r(__webpack_exports__);
 
   computed: {
     isEnabled: function () {
-      return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled
+      console.log(`isEnabled`)
+      return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled
     },
     hasMatchingViews: function () {
-      return this.data.inflectionViewSet && this.data.inflectionViewSet.enabled && this.data.inflectionViewSet.hasMatchingViews
+      console.log(`hasMatchingViews`)
+      return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled && this.$store.state.app.inflectionsViewSet.hasMatchingViews
     },
     inflectionViewSet: function () {
-      return this.data.inflectionViewSet
+      console.log(`inflectionViewSet`)
+      return this.$store.state.app.inflectionsViewSet
     },
     // Need this for a watcher that will monitor a parent container visibility state
     isVisible: function () {
-      return this.data.visible
+      return this.$store.state.app.tabState.inflections
+    },
+    inflectionsEnabled: function () {
+      return alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_0__["ViewSetFactory"].hasInflectionsEnabled(this.$store.state.app.currentLanguageID)
     },
     partOfSpeechSelector: {
       get: function () {
@@ -10119,7 +10106,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       set: function (newValue) {
         this.selectedPartOfSpeech = newValue
-        this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
+        this.views = this.$store.state.app.inflectionsViewSet.getViews(this.selectedPartOfSpeech)
         this.selectedView = this.views[0].render()
       }
     },
@@ -10155,8 +10142,9 @@ __webpack_require__.r(__webpack_exports__);
 
   watch: {
     inflectionViewSet: function () {
+      // This watcher is called when a new inflection set becomes available
+      console.log(`New inflection view set becomes available`)
       this.initViewSet()
-      this.$emit(this.events.EVENT, this.events.DATA_UPDATE, this.data.inflectionViewSet)
     },
 
     /*
@@ -10181,14 +10169,14 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     initViewSet () {
       this.hasInflectionData = false
-      if (this.data.inflectionViewSet) {
-        this.languageID = this.data.inflectionViewSet.languageID
+      if (this.$store.state.app.inflectionsViewSet) {
+        this.languageID = this.$store.state.app.inflectionsViewSet.languageID
       }
-      if (this.data.inflectionViewSet && this.data.inflectionViewSet.hasMatchingViews) {
-        this.partsOfSpeech = this.data.inflectionViewSet.partsOfSpeech
+      if (this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.hasMatchingViews) {
+        this.partsOfSpeech = this.$store.state.app.inflectionsViewSet.partsOfSpeech
         if (this.partsOfSpeech.length > 0) {
           this.selectedPartOfSpeech = this.partsOfSpeech[0]
-          this.views = this.data.inflectionViewSet.getViews(this.selectedPartOfSpeech)
+          this.views = this.$store.state.app.inflectionsViewSet.getViews(this.selectedPartOfSpeech)
         } else {
           this.selectedPartOfSpeech = []
           this.views = []
@@ -10204,7 +10192,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     updateWidth: function () {
-      vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default.a.nextTick(() => {
+      vue_dist_vue__WEBPACK_IMPORTED_MODULE_6___default.a.nextTick(() => {
         this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections' })
       })
     },
@@ -11198,9 +11186,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 // Vue components
 
@@ -11362,7 +11347,7 @@ __webpack_require__.r(__webpack_exports__);
 
     // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
     inflectionsTabVisible: function () {
-      return Boolean(this.$store.state.app.tabState.inflections && this.data && this.data.inflectionComponentData.inflectionViewSet)
+      return Boolean(this.$store.state.app.tabState.inflections && this.$store.state.app.inflectionsViewSet)
     },
 
     additionalStylesTootipCloseIcon: function () {
@@ -11453,7 +11438,6 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     setTreebankContentWidth: function (width) {
-      console.log(`Set width to ${width}`)
       this.panelWidth = width
     },
 
@@ -11472,7 +11456,7 @@ __webpack_require__.r(__webpack_exports__);
       let panelTabId
       if (component === 'inflections') {
         panelTabId = this.inflectionsPanelID
-      } else if (component === 'inflections=browser') {
+      } else if (component === 'inflections-browser') {
         panelTabId = this.inflectionsBrowserPanelID
       }
 
@@ -12499,7 +12483,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       set: function (newValue) {
         this.$emit('change', this.data.name, newValue)
-        this.dataModel = this.data
+        this.dataModel = this.data // To force Vue.js to redraw
       }
     },
     values: function () {
@@ -15403,7 +15387,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: _vm.elementIDs.content } }, [
-    _vm.waitState
+    _vm.$store.state.app.inflectionsWaitState
       ? _c("div", { staticClass: "alpheios-inflections__placeholder" }, [
           _c("div", { staticClass: "alpheios-inflections__progress-wrapper" }, [
             _c(
@@ -15568,7 +15552,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm.data.inflectionData
+              _vm.$store.getters["app/hasInflData"]
                 ? _c("div", {
                     directives: [
                       {
@@ -15583,7 +15567,10 @@ var render = function() {
                       innerHTML: _vm._s(
                         _vm.l10n.getMsg(
                           "INFLECTIONS_PARADIGMS_EXPLANATORY_HINT",
-                          { word: _vm.data.inflectionData.targetWord }
+                          {
+                            word: this.$store.state.app.inflectionsViewSet
+                              .targetWord
+                          }
                         )
                       )
                     }
@@ -16868,8 +16855,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.$store.state.app.inflDataReady,
-                        expression: "$store.state.app.inflDataReady"
+                        value: _vm.$store.getters["app/hasInflData"],
+                        expression: "$store.getters[`app/hasInflData`]"
                       }
                     ],
                     attrs: {
@@ -17318,7 +17305,7 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm.$store.state.app.inflDataReady
+            _vm.$store.getters["app/hasInflData"]
               ? _c(
                   "div",
                   {
@@ -17337,11 +17324,6 @@ var render = function() {
                   [
                     _c("inflections", {
                       staticClass: "alpheios-panel-inflections",
-                      attrs: {
-                        data: _vm.data.inflectionComponentData,
-                        "inflections-enabled": _vm.data.inflectionsEnabled,
-                        "wait-state": _vm.data.inflectionsWaitState
-                      },
                       on: { contentwidth: _vm.setContentWidth }
                     })
                   ],
@@ -17349,7 +17331,6 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm.data.inflectionBrowserEnabled &&
             _vm.settings.contentOptions.items
               ? _c(
                   "div",
@@ -18276,8 +18257,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.$store.state.app.inflDataReady,
-                        expression: "$store.state.app.inflDataReady"
+                        value: _vm.$store.getters["app/hasInflData"],
+                        expression: "$store.getters[`app/hasInflData`]"
                       }
                     ],
                     attrs: {
@@ -32366,7 +32347,8 @@ class UIController {
       state: {
         currentLanguageID: undefined,
         currentLanguageName: undefined,
-        inflDataReady: false, // Whether there is inflection data for a current world
+        inflectionsWaitState: false, // Whether there is a lexical query in progress
+        inflectionsViewSet: null,
         grammarRes: null,
         treebankData: {
           word: {},
@@ -32387,6 +32369,10 @@ class UIController {
       },
 
       getters: {
+        hasInflData (state) {
+          return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
+        },
+
         /**
          * Identifies wither grammar resource(s) are available for the current state.
          * @param state - A local state.
@@ -32403,7 +32389,6 @@ class UIController {
         },
 
         hasWordUsageExamplesData (state) {
-          console.log(`hasWordUsageExamplesData: `, state.wordUsageExamplesData)
           return Boolean(state.wordUsageExamplesData)
         }
       },
@@ -32417,12 +32402,26 @@ class UIController {
           state.currentLanguageName = name
         },
 
+        lexicalRequestStarted (state) {
+          state.inflectionsWaitState = true
+          state.wordUsageExamplesData = null
+        },
+
+        lexicalRequestFinished (state) {
+          state.inflectionsWaitState = false
+        },
+
         setInflData (state, inflectionsViewSet = null) {
-          state.inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
+          state.inflectionsWaitState = false
+          if (inflectionsViewSet && inflectionsViewSet.hasMatchingViews) {
+            state.inflectionsViewSet = inflectionsViewSet
+          }
         },
 
         resetInflData (state) {
+          state.inflectionsWaitState = false
           state.inflDataReady = false
+          state.inflectionsViewSet = false
         },
 
         setGrammarRes (state, grammarRes) {
@@ -32447,13 +32446,7 @@ class UIController {
         },
 
         setWordUsageExamplesData (state, data) {
-          console.log(`setWordUsageExamplesData: `, data)
           state.wordUsageExamplesData = data
-        },
-
-        resetWordUsageExamplesData (state) {
-          console.log(`resetWordUsageExamplesData`)
-          state.wordUsageExamplesData = null
         },
 
         setTab (state, tabName) {
@@ -32504,7 +32497,6 @@ class UIController {
     this.contentOptions.items.lookupLangOverride.setValue(false)
     this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
-    this.notifyInflectionBrowser()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
 
@@ -32675,7 +32667,7 @@ class UIController {
     // If tab is disabled, switch to a default one
     if (
       (!this.store.state.app.tabState.hasOwnProperty(tabName)) ||
-      (!this.store.state.app.inflDataReady && name === 'inflections') ||
+      (!this.store.getters[`app/hasInflData`] && name === 'inflections') ||
       (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
       (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
       (!statusAvailable && name === 'status')
@@ -32692,14 +32684,9 @@ class UIController {
   }
 
   newLexicalRequest (languageID) {
+    this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
-    this.store.commit('app/resetWordUsageExamplesData')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
-    if (this.hasUiModule('panel')) {
-      const panel = this.api.ui.getModule('panel')
-      panel.vi.panelData.inflectionsEnabled = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].hasInflectionsEnabled(languageID)
-      panel.vi.panelData.inflectionsWaitState = true // Homonym is retrieved and inflection data is calculated
-    }
     this.clear().open().changeTab('definitions')
     return this
   }
@@ -32835,7 +32822,6 @@ class UIController {
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
     this.store.commit('app/setInflData', this.inflectionsViewSet)
-    console.log(`Current language is ${this.state.currentLanguage}`)
   }
 
   updateLemmaTranslations () {
@@ -32846,40 +32832,9 @@ class UIController {
     }
   }
 
-  notifyInflectionBrowser () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionBrowserEnabled = true }
-  }
-
-  updateInflections (homonym) {
-    this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].create(homonym, this.contentOptions.items.locale.currentValue)
-
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionComponentData.inflectionViewSet = this.inflectionsViewSet }
-    if (this.inflectionsViewSet.hasMatchingViews) {
-      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
-    }
-    this.store.commit('app/setInflData', this.inflectionsViewSet)
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.inflectionsWaitState = false
-    }
-  }
-
   updateWordUsageExamples (wordUsageExamplesData) {
     this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.store.commit('app/setWordUsageExamplesData', wordUsageExamplesData)
-  }
-
-  lexicalRequestComplete () {
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
-  }
-
-  lexicalRequestSucceeded () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
-  }
-
-  lexicalRequestFailed () {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflectionsWaitState = false }
   }
 
   clear () {
@@ -33132,21 +33087,16 @@ class UIController {
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
       case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].resultStatus.SUCCEEDED:
-        this.lexicalRequestSucceeded()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
-        this.lexicalRequestComplete()
         break
       case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].resultStatus.FAILED:
-        this.lexicalRequestFailed()
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
-        this.lexicalRequestComplete()
-        break
-      default:
-        // Request was probably cancelled
-        this.lexicalRequestComplete()
     }
+    this.store.commit('app/lexicalRequestFinished')
+    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
   }
 
   onMorphDataReady () {
@@ -33165,7 +33115,13 @@ class UIController {
     this.updateDefinitions(homonym)
     // Update status info with data from a morphological analyzer
     this.showStatusInfo(homonym.targetWord, homonym.languageID)
-    this.updateInflections(homonym)
+
+    // Update inflections data
+    this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].create(homonym, this.contentOptions.items.locale.currentValue)
+    if (this.inflectionsViewSet.hasMatchingViews) {
+      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
+    }
+    this.store.commit('app/setInflData', this.inflectionsViewSet)
   }
 
   onDefinitionsReady (data) {
@@ -33210,7 +33166,6 @@ class UIController {
   }
 
   contentOptionChange (name, value) {
-    console.log('Change inside instance', name, value)
     // TODO we need to refactor handling of boolean options
     if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax') {
       this.api.settings.contentOptions.items[name].setValue(value)
@@ -40433,17 +40388,9 @@ class PanelModule {
       data: {
         panelData: {
           lexemes: [],
-          inflectionComponentData: {
-            visible: false,
-            inflectionViewSet: null
-          },
           inflectionBrowserData: {
             visible: false
           },
-          inflectionsWaitState: false,
-          inflectionsEnabled: false,
-          // Whether inflection browser is enabled for a language. We always show an inflection browser for now.
-          inflectionBrowserEnabled: false,
           inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
