@@ -10082,15 +10082,12 @@ __webpack_require__.r(__webpack_exports__);
 
   computed: {
     isEnabled: function () {
-      console.log(`isEnabled`)
       return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled
     },
     hasMatchingViews: function () {
-      console.log(`hasMatchingViews`)
       return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled && this.$store.state.app.inflectionsViewSet.hasMatchingViews
     },
     inflectionViewSet: function () {
-      console.log(`inflectionViewSet`)
       return this.$store.state.app.inflectionsViewSet
     },
     // Need this for a watcher that will monitor a parent container visibility state
@@ -10143,7 +10140,6 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     inflectionViewSet: function () {
       // This watcher is called when a new inflection set becomes available
-      console.log(`New inflection view set becomes available`)
       this.initViewSet()
     },
 
