@@ -1,41 +1,42 @@
 <template>
-  <div :class="divClasses" :data-notification-visible="data && data.notification && data.notification.important" :style="mainstyles" class="alpheios-panel auk"
+  <div :class="divClasses" :data-notification-visible="data && data.notification && data.notification.important"
+       :style="mainstyles" class="alpheios-panel auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
-       v-show="this.$store.state.panelCompact.visible">
+       v-show="this.$store.state.panel.visible">
     <!-- Show only important notifications for now -->
 
     <div class="alpheios-panel__header">
       <div class="alpheios-panel__header-logo">
         <img class="alpheios-panel__header-logo-img" src="../../images/icon.png">
       </div>
-      <span class="alpheios-panel__header-btn-group--center" v-if="data && data.tabs">
+      <span class="alpheios-panel__header-btn-group--center" v-if="$store.state.app.tabState">
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('info')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: data.tabs.info }">
+                      v-bind:class="{ active: $store.state.app.tabState.info }">
                   <info-icon class="alpheios-icon"></info-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
-                <span :class="{ active: data.tabs.definitions }" @click="changeTab('definitions')"
+                <span :class="{ active: $store.state.app.tabState.definitions }" @click="changeTab('definitions')"
                       class="alpheios-panel__header-nav-btn">
                   <definitions-icon class="alpheios-icon"></definitions-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
-                            v-show="data.inflectionComponentData.inflDataReady">
+                            v-show="$store.getters[`app/hasInflData`]">
                 <span @click="changeTab('inflections')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: data.tabs.inflections }">
+                      v-bind:class="{ active: $store.state.app.tabState.inflections }">
                   <inflections-icon class="alpheios-icon"></inflections-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('inflectionsbrowser')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: data.tabs.inflectionsbrowser }">
+                      v-bind:class="{ active: $store.state.app.tabState.inflectionsbrowser }">
                   <inflections-browser-icon class="alpheios-icon"></inflections-browser-icon>
                 </span>
               </alph-tooltip>
@@ -43,36 +44,46 @@
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
                             v-show="$store.getters[`app/hasGrammarRes`]">
                 <span @click="changeTab('grammar')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: data.tabs.grammar }">
+                      v-bind:class="{ active: $store.state.app.tabState.grammar }">
                   <grammar-icon class="alpheios-icon"></grammar-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
-                            v-show="treebankTabAvailable">
+                            v-show="$store.getters['app/hasTreebankData']">
                 <span @click="changeTab('treebank')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: data.tabs.treebank }">
+                      v-bind:class="{ active: $store.state.app.tabState.treebank }">
                   <treebank-icon class="alpheios-icon"></treebank-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('options')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: data.tabs.options }">
+                      v-bind:class="{ active: $store.state.app.tabState.options }">
                   <options-icon class="alpheios-icon"></options-icon>
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow">
+              <alph-tooltip v-if="Boolean(auth)" :tooltipText="l10n.getText('TOOLTIP_USER')"
+                            tooltipDirection="bottom-narrow">
                 <span @click="changeTab('user')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: data.tabs.user }">
+                      v-bind:class="{ active: $store.state.app.tabState.user }">
                   <user-icon class="alpheios-icon"></user-icon>
                 </span>
               </alph-tooltip>
 
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
+                            v-show="$store.getters['app/hasWordUsageExamplesData']">
+                <span @click="changeTab('wordUsage')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.state.app.tabState.wordUsage }">
+                  <word-usage-icon class="alpheios-icon"></word-usage-icon>
+                </span>
+              </alph-tooltip>
+
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
-                <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn" v-bind:class="{ active: data.tabs.status }"
-                      v-show="data.verboseMode">
+                <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.state.app.tabState.status }"
+                      v-show="verboseMode">
                   <status-icon class="alpheios-icon"></status-icon>
                 </span>
               </alph-tooltip>
@@ -81,7 +92,8 @@
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
                             v-show="attachToLeftVisible">
-                <span @click="setPosition('left')" class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left"
+                <span @click="setPosition('left')"
+                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left"
                       v-show="attachToLeftVisible">
                     <attach-left-icon></attach-left-icon>
                 </span>
@@ -89,7 +101,8 @@
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
                             v-show="attachToRightVisible">
-                <span @click="setPosition('right')" class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right"
+                <span @click="setPosition('right')"
+                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right"
                       v-show="attachToRightVisible">
                     <attach-right-icon></attach-right-icon>
                 </span>
@@ -105,13 +118,13 @@
             </span>
     </div>
 
-    <div class="alpheios-panel__content" v-if="data && data.tabs">
+    <div class="alpheios-panel__content" v-if="$store.state.app.tabState">
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
-           v-show="data.tabs.definitions">
+      <div
+          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
+          v-show="$store.state.app.tabState.definitions">
         <div class="alpheios-lookup__panel">
-          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"
-                  :uiController="uiController"></lookup>
+          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
         <div
             v-if="showDefinitionsPlaceholder">
@@ -124,59 +137,70 @@
              v-html="data.fullDefinitions"></div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="data.inflectionComponentData.inflDataReady && data.settings" v-show="inflectionsTabVisible">
-        <inflections :data="data.inflectionComponentData" :inflections-enabled="data.inflectionsEnabled"
-                     :locale="data.settings.locale.currentValue" :wait-state="data.inflectionsWaitState"
-                     @contentwidth="setContentWidth" class="alpheios-panel-inflections">
-        </inflections>
+           v-if="$store.getters[`app/hasInflData`]" v-show="inflectionsTabVisible">
+        <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
-           v-if="data.inflectionBrowserEnabled && data.settings" v-show="inflectionsBrowserTabVisible">
-        <inflection-browser :data="data.inflectionBrowserData" :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
+           v-if="settings.contentOptions.items" v-show="$store.state.app.tabState.inflectionsbrowser">
+        <inflection-browser :data="data.inflectionBrowserData"
+                            :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
                             :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
-            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-show="data.tabs.grammar">
+            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+           v-show="$store.state.app.tabState.grammar">
         <grammar></grammar>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__treebank
-            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw" v-if="data.treebankComponentData && data.settings"
-           v-show="treebankTabVisible">
-        <treebank :locale="data.settings.locale.currentValue" :res="data.treebankComponentData.data"
-                  :visible="data.treebankComponentData.visible" @treebankcontentwidth="setTreebankContentWidth">
-        </treebank>
+      <div
+          class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+          v-if="$store.getters['app/hasTreebankData']" v-show="$store.state.app.tabState.treebank">
+        <treebank @treebankcontentwidth="setTreebankContentWidth"></treebank>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="data.tabs.status">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.state.app.tabState.status">
         <!-- Messages to be displayed in a status panel -->
         <div v-for="message in data.messages">
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="data.tabs.user">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.state.app.tabState.user">
         <user-auth :auth="data.auth"></user-auth>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="data.tabs.options">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
+           v-show="$store.state.app.tabState.wordUsage" v-if="$store.getters['app/hasWordUsageExamplesData']">
+        <word-usage-examples-block
+            :wordUsageList="$store.state.app.wordUsageExamplesData.wordUsageExamples"
+            :targetWord="$store.state.app.wordUsageExamplesData.targetWord"
+            :language="$store.state.app.wordUsageExamplesData.language"
+            :provider="$store.state.app.wordUsageExamplesData.provider">
+        </word-usage-examples-block>
+      </div>
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.state.app.tabState.options">
         <reskin-font-color></reskin-font-color>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.preferredLanguage" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.panelPosition" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.popupPosition" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.uiType" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.verboseMode" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.uiOptions.items.skin"
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.preferredLanguage"
+                 @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.panelPosition"
+                 @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.popupPosition"
+                 @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.uiType"
+                 @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.verboseMode"
+                 @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.skin"
                  @change="uiOptionChanged"
-                 v-if="data.uiOptions && data.uiOptions.items"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.uiOptions.items.popup"
+                 v-if="settings.uiOptions && settings.uiOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.popup"
                  @change="uiOptionChanged"
-                 v-if="data.uiOptions && data.uiOptions.items"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.uiOptions.items.panelOnActivate"
+                 v-if="settings.uiOptions && settings.uiOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.panelOnActivate"
                  @change="uiOptionChanged"
-                 v-if="data.uiOptions && data.uiOptions.items"></setting>
+                 v-if="settings.uiOptions && settings.uiOptions.items"></setting>
         <setting :classes="['alpheios-panel__options-item']" :data="languageSetting"
                  :key="languageSetting.name"
                  @change="resourceSettingChanged"
@@ -185,18 +209,30 @@
                  :key="languageSetting.name"
                  @change="resourceSettingChanged"
                  v-for="languageSetting in resourceSettingsLexiconsShort"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.enableLemmaTranslations" @change="settingChanged"
-                 v-if="data.settings"></setting>
-        <setting :classes="['alpheios-panel__options-item']" :data="data.settings.locale" @change="settingChanged"
-                 v-if="data.settings"></setting>
+
+        <setting :classes="['alpheios-panel__options-item']"
+                 :data="settings.contentOptions.items.enableWordUsageExamples" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.wordUsageExamplesMax"
+                 @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+
+        <setting :classes="['alpheios-panel__options-item']"
+                 :data="settings.contentOptions.items.enableLemmaTranslations" @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
+
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.locale"
+                 @change="contentOptionChanged"
+                 v-if="settings.contentOptions.items"></setting>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
-           v-show="data.tabs.info">
-        <div class="alpheios-lookup__panel" v-if="data.infoComponentData">
-          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"
-                  :uiController="uiController"></lookup>
+           v-show="$store.state.app.tabState.info">
+        <div class="alpheios-lookup__panel">
+          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
-        <info :data="data.infoComponentData" v-if="data.infoComponentData"></info>
+        Compact panel
+        <info></info>
       </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"
@@ -205,14 +241,19 @@
                 <close-icon></close-icon>
             </span>
       <span class="alpheios-panel__notifications-text" v-html="data.notification.text"></span>
-      <setting :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']" :data="data.settings.preferredLanguage"
+      <setting :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']"
+               :data="settings.contentOptions.items.preferredLanguage"
                :show-title="false"
-               @change="settingChanged"
+               @change="contentOptionChanged"
                v-show="data.notification.showLanguageSwitcher"></setting>
     </div>
   </div>
 </template>
 <script>
+/*
+This is a mobile version of a panel
+ */
+
 // Vue components
 import Inflections from './inflections.vue'
 import Setting from './setting.vue'
@@ -225,6 +266,7 @@ import Tooltip from './tooltip.vue'
 import Lookup from './lookup.vue'
 import ReskinFontColor from './reskin-font-color.vue'
 import UserAuth from './user-auth.vue'
+import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.vue'
 // Embeddable SVG icons
 import AttachLeftIcon from '../../images/inline-icons/attach-left.svg'
 import AttachRightIcon from '../../images/inline-icons/attach-right.svg'
@@ -238,15 +280,28 @@ import OptionsIcon from '../../images/inline-icons/options.svg'
 import GrammarIcon from '../../images/inline-icons/resources.svg'
 import TreebankIcon from '../../images/inline-icons/sitemap.svg'
 import InfoIcon from '../../images/inline-icons/info.svg'
+
+import WordUsageIcon from '../../images/inline-icons/books-stack.svg'
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
 // JS imports
 import interact from 'interactjs'
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
-  name: 'Panel',
-  inject: ['l10n', 'ui'], // API modules that are required for this component
-  storeModules: ['panelCompact'], // Store modules that are required by this component
+  name: 'PanelCompact',
+  // API modules that are required for this component
+  inject: {
+    app: 'app',
+    ui: 'ui',
+    language: 'language',
+    l10n: 'l10n',
+    settings: 'settings',
+    auth: { from: 'auth', default: null } // This module is options
+  },
+  storeModules: ['app', 'panel'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
   components: {
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
@@ -268,106 +323,79 @@ export default {
     infoIcon: InfoIcon,
     grammarIcon: GrammarIcon,
     treebankIcon: TreebankIcon,
+    wordUsageIcon: WordUsageIcon,
     alphTooltip: Tooltip,
     lookup: Lookup,
-    reskinFontColor: ReskinFontColor
+    reskinFontColor: ReskinFontColor,
+    wordUsageExamplesBlock: WordUsageExamplesBlock
   },
   directives: {
     onClickaway: onClickaway
   },
+  positionClassVariants: {
+    left: 'alpheios-panel-left',
+    right: 'alpheios-panel-right'
+  },
+  minWidth: 400, // A minimal width of a panel, in pixels
+  defaultScrollPadding: 20,
   data: function () {
     return {
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
       inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
-
-      positionClassVariants: {
-        left: 'alpheios-panel-left',
-        right: 'alpheios-panel-right'
-      },
-
+      panelPosition: 'left',
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
-      defaultScrollPadding: 20,
-      defaultPanelWidth: 400,
-      panelWidth: null
+      panelWidth: null,
+      styles: {
+        zIndex: this.ui.zIndex
+      }
     }
   },
   props: {
     data: {
       type: Object,
       required: true
-    },
-    classesChanged: {
-      type: Number,
-      required: false,
-      default: 0
     }
   },
 
   computed: {
     divClasses () {
-      return (this.data && this.data.classes ? this.data.classes.join(' ') : '') + ' ' + this.positionClasses
+      return this.data.classes.concat([this.$options.positionClassVariants[this.panelPosition]])
     },
     clearLookupText: function () {
       // always true to clear panels lookup
       return true
     },
     lookupParentLanguage: function () {
-      if (this.data.infoComponentData) {
-        return this.data.infoComponentData.languageName
+      if (this.$store.state.app.currentLanguageName) {
+        return this.$store.state.app.currentLanguageName
       } else {
-        return this.options.items.preferredLanguage.currentTextValue()
+        return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }
     },
     inflectionBrowserLanguageID: function () {
-      return this.data.currentLanguageID
-    },
-    uiController: function () {
-      return (this.$parent && this.$parent.uiController) ? this.$parent.uiController : null
+      return this.$store.state.app.currentLanguageID
     },
     mainstyles: function () {
-      let mainstyles = (this.data) ? this.data.styles : {}
-      this.panelWidth = this.panelWidth ? this.panelWidth : this.defaultPanelWidth
+      let mainstyles = (this.data) ? this.styles : {}
+      this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
 
       return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
     },
     resourceSettingsLexicons: function () {
-      return this.data.resourceSettings && this.data.resourceSettings.lexicons ? this.data.resourceSettings.lexicons.filter(item => item.values.length > 0) : []
+      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
+        ? this.settings.resourceOptions.items.lexicons.filter(item => item.values.length > 0)
+        : []
     },
     resourceSettingsLexiconsShort: function () {
-      return this.data.resourceSettings && this.data.resourceSettings.lexiconsShort ? this.data.resourceSettings.lexiconsShort.filter(item => item.values.length > 0) : []
+      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexiconsShort
+        ? this.settings.resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
+        : []
     },
 
     showDefinitionsPlaceholder: function () {
       return (!this.data.shortDefinitions || this.data.shortDefinitions.length === 0) && (!this.data.fullDefinitions || this.data.fullDefinitions.length === 0)
-    },
-    classes: function () {
-      // Find index of an existing position class and replace it with an updated value
-      if (this.data) {
-        const positionLeftIndex = this.data.classes.findIndex(v => v === this.positionLeftClassName)
-        const positionRightIndex = this.data.classes.findIndex(v => v === this.positionRightClassName)
-
-        if (this.data.settings.panelPosition.currentValue === 'left') {
-          if (positionRightIndex >= 0) {
-            // Replace an existing value
-            this.data.classes[positionRightIndex] = this.positionLeftClassName
-          } else {
-            // Add an initial value
-            this.data.classes.push(this.positionLeftClassName)
-          }
-        } else if (this.data.settings.panelPosition.currentValue === 'right') {
-          if (positionLeftIndex >= 0) {
-            // Replace an existing value
-            this.data.classes[positionLeftIndex] = this.positionRightClassName
-          } else {
-            // Add an initial value
-            this.data.classes.push(this.positionRightClassName)
-          }
-        }
-        return this.data.classes
-      }
-      return null
     },
 
     notificationClasses: function () {
@@ -377,44 +405,16 @@ export default {
     },
 
     attachToLeftVisible: function () {
-      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'right' : false
+      return this.panelPosition === 'right'
     },
 
     attachToRightVisible: function () {
-      return (this.data && this.data.settings) ? this.data.settings.panelPosition.currentValue === 'left' : true
+      return this.panelPosition === 'left'
     },
 
     // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
     inflectionsTabVisible: function () {
-      // Inform an inflection component about its visibility state change
-      if (this.data && this.data.inflectionComponentData.inflectionViewSet) {
-        this.data.inflectionComponentData.visible = this.data.tabs.inflections
-      }
-      return this.data.tabs.inflections
-    },
-
-    // Need this to watch when inflections browser tab becomes active and adjust panel width to fully fit an inflection table in
-    inflectionsBrowserTabVisible: function () {
-      // Inform an inflection browser component about its visibility state change
-      if (this.data && this.data.inflectionBrowserData) {
-        this.data.inflectionBrowserData.visible = this.data.tabs.inflectionsbrowser
-      }
-      return this.data.tabs.inflectionsbrowser
-    },
-
-    treebankTabAvailable: function () {
-      // treebank data is possible if we have it for the word or the page
-      return !!(this.data && this.data.treebankComponentData && this.data.treebankComponentData.data &&
-          ((this.data.treebankComponentData.data.page && this.data.treebankComponentData.data.page.src) ||
-            (this.data.treebankComponentData.data.word && this.data.treebankComponentData.data.word.src)))
-    },
-
-    treebankTabVisible: function () {
-      // Inform treebank component about visibility state change
-      if (this.data && this.data.treebankComponentData && this.data.treebankComponentData.data) {
-        this.data.treebankComponentData.visible = this.data.tabs.treebank
-      }
-      return this.data.tabs.treebank
+      return Boolean(this.$store.state.app.tabState.inflections && this.$store.state.app.inflectionsViewSet)
     },
 
     additionalStylesTootipCloseIcon: function () {
@@ -424,11 +424,8 @@ export default {
       }
     },
 
-    positionClasses: function () {
-      if (this.data) {
-        return this.positionClassVariants[this.data.settings.panelPosition.currentValue]
-      }
-      return null
+    verboseMode () {
+      return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
     }
   },
   methods: {
@@ -437,12 +434,13 @@ export default {
     },
 
     setPosition (position) {
-      this.$emit('setposition', position)
+      this.settings.contentOptions.items.panelPosition.setValue(position)
+      this.panelPosition = position
     },
 
     changeTab (name) {
       this.setContentWidth({ width: 'auto', component: null })
-      this.$emit('changetab', name)
+      this.app.changeTab(name)
     },
 
     clearContent: function () {
@@ -467,16 +465,16 @@ export default {
       this.contentAreas.messages.setContent('')
     },
 
-    settingChanged: function (name, value) {
-      this.$emit('settingchange', name, value) // Re-emit for a Vue instance to catch
+    contentOptionChanged: function (name, value) {
+      this.app.contentOptionChange(name, value)
     },
 
     resourceSettingChanged: function (name, value) {
-      this.$emit('resourcesettingchange', name, value) // Re-emit for a Vue instance to catch
+      this.language.resourceSettingChange(name, value)
     },
 
     uiOptionChanged: function (name, value) {
-      this.$emit('ui-option-change', name, value) // Re-emit for a Vue instance to catch
+      this.ui.optionChange(name, value)
     },
 
     setContentWidth: function (dataObj) {
@@ -496,7 +494,7 @@ export default {
           this.panelRightPadding +
           this.scrollPadding
 
-      if (dataObj.width > this.data.minWidth - widthDelta) {
+      if (dataObj.width > this.$options.minWidth - widthDelta) {
         let adjustedWidth = dataObj.width + widthDelta
         // Max viewport width less some space to display page content
         let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
@@ -507,7 +505,6 @@ export default {
     },
 
     setTreebankContentWidth: function (width) {
-      console.log(`Set width to ${width}`)
       this.panelWidth = width
     },
 
@@ -518,7 +515,7 @@ export default {
     calcScrollPadding: function () {
       if (typeof this.$el.querySelector === 'function') {
         this.scrollPadding = this.$el.scrollHeight > this.$el.offsetHeight
-          ? this.defaultScrollPadding : 0
+          ? this.$options.defaultScrollPadding : 0
       }
     },
 
@@ -526,7 +523,7 @@ export default {
       let panelTabId
       if (component === 'inflections') {
         panelTabId = this.inflectionsPanelID
-      } else if (component === 'inflections=browser') {
+      } else if (component === 'inflections-browser') {
         panelTabId = this.inflectionsBrowserPanelID
       }
 
@@ -558,20 +555,6 @@ export default {
     }
   },
 
-  beforeCreate: function () {
-    // Check store dependencies. API dependencies will be verified by the `inject`
-    const missingDependencies = this.$options.storeModules.filter(d => !this.$store.state.hasOwnProperty(d))
-    if (missingDependencies.length > 0) {
-      throw new Error(`Cannot create a ${this.$options.name} Vue component because the following dependencies are missing: ${missingDependencies}`)
-    }
-  },
-
-  created: function () {
-    let vm = this
-    vm.$on('changeStyleClass', (name, type) => {
-      vm.uiOptionChanged(name, type)
-    })
-  },
   mounted: function () {
     // Determine paddings and sidebar width for calculation of a panel width to fit content
     if (this.data === undefined) {
@@ -594,7 +577,7 @@ export default {
 
           // minimum size
           restrictSize: {
-            min: { width: this.data.minWidth }
+            min: { width: this.$options.minWidth }
           },
 
           inertia: true
@@ -708,7 +691,7 @@ export default {
     cursor: pointer;
     fill: $alpheios-link-color-dark-bg;
     stroke: $alpheios-link-color-dark-bg;
-    margin: 10px 15px;
+    margin: 10px 9px;
 
     svg {
       width: 20px;

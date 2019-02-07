@@ -1,5 +1,6 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Panel from '@/vue/components/panel.vue'
+import CompactPanel from '@/vue/components/panel-compact.vue'
 
 // TODO: Add a check for required modules
 export default class PanelModule {
@@ -16,7 +17,8 @@ export default class PanelModule {
        */
       api: api,
       components: {
-        panel: Panel
+        panel: Panel, // A desktop version of a panel
+        compactPanel: CompactPanel // A mobile version of a panel
       },
       data: {
         panelData: {
