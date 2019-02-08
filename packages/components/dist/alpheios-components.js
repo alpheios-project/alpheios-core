@@ -9243,11 +9243,6 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       required: false,
       default: true
-    },
-
-    data: {
-      type: Object,
-      required: true
     }
   },
 
@@ -9270,14 +9265,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
-  computed: {
-    // Need this for a watcher that will monitor a parent container visibility state
-    isVisible: function () {
-      return this.data.visible
-    }
-
-  },
-
   watch: {
     languageId: function (newValue, oldValue) {
       if (oldValue) {
@@ -9286,21 +9273,6 @@ __webpack_require__.r(__webpack_exports__);
       if (newValue) {
         this.languageId = newValue
         this.collapsed[newValue.toString()] = false
-      }
-    },
-    /*
-        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-        use this information to adjust a width of a container that displays an inflection component. However, a width
-        of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
-        an inflection table width and notify a parent component only when a parent container is visible.
-        A parent component will notify us of that by setting a `visible` property. A change of that property state
-        will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
-        as it won't be used by anything and thus will not be calculated by Vue.
-         */
-    isVisible: function (visibility) {
-      if (visibility && this.htmlElements.content) {
-        // If container is become visible, update parent with its width
-        this.inflTableWidthUpd()
       }
     }
   },
@@ -11193,7 +11165,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
+/*
+This is a mobile version of a panel
+ */
 
 // Vue components
 
@@ -11794,8 +11769,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
+/*
+  This is a desktop version of a panel
+   */
 // Vue components
 
 
@@ -17631,7 +17608,6 @@ var render = function() {
                   [
                     _c("inflection-browser", {
                       attrs: {
-                        data: _vm.data.inflectionBrowserData,
                         "infl-browser-tables-collapsed":
                           _vm.data.inflBrowserTablesCollapsed,
                         "language-id": _vm.inflectionBrowserLanguageID
@@ -18653,7 +18629,6 @@ var render = function() {
                   [
                     _c("inflection-browser", {
                       attrs: {
-                        data: _vm.data.inflectionBrowserData,
                         "infl-browser-tables-collapsed":
                           _vm.data.inflBrowserTablesCollapsed,
                         "language-id": _vm.inflectionBrowserLanguageID
@@ -41774,15 +41749,12 @@ class PanelModule {
        */
       api: api,
       components: {
-        panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-        compactPanel: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+        panel: _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_1__["default"], // A desktop version of a panel
+        compactPanel: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_2__["default"] // A mobile version of a panel
       },
       data: {
         panelData: {
           lexemes: [],
-          inflectionBrowserData: {
-            visible: false
-          },
           inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',

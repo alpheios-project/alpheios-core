@@ -459,11 +459,6 @@ export default {
       type: Boolean,
       required: false,
       default: true
-    },
-
-    data: {
-      type: Object,
-      required: true
     }
   },
 
@@ -486,14 +481,6 @@ export default {
     }
   },
 
-  computed: {
-    // Need this for a watcher that will monitor a parent container visibility state
-    isVisible: function () {
-      return this.data.visible
-    }
-
-  },
-
   watch: {
     languageId: function (newValue, oldValue) {
       if (oldValue) {
@@ -502,21 +489,6 @@ export default {
       if (newValue) {
         this.languageId = newValue
         this.collapsed[newValue.toString()] = false
-      }
-    },
-    /*
-        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-        use this information to adjust a width of a container that displays an inflection component. However, a width
-        of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
-        an inflection table width and notify a parent component only when a parent container is visible.
-        A parent component will notify us of that by setting a `visible` property. A change of that property state
-        will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
-        as it won't be used by anything and thus will not be calculated by Vue.
-         */
-    isVisible: function (visibility) {
-      if (visibility && this.htmlElements.content) {
-        // If container is become visible, update parent with its width
-        this.inflTableWidthUpd()
       }
     }
   },

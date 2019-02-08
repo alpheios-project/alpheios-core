@@ -142,8 +142,7 @@
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
            v-if="settings.contentOptions.items" v-show="$store.state.app.tabState.inflectionsbrowser">
-        <inflection-browser :data="data.inflectionBrowserData"
-                            :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
+        <inflection-browser :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
                             :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
