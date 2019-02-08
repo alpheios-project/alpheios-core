@@ -88,7 +88,7 @@ describe('text-selector.test.js', () => {
     expect(testTSelector.normalizedText).toEqual(testModel.normalizeWord('caelis'))
   })
 
-  it('9 TextSelector - textQuoteSelector returns an object TextQuoteSelector', () => {
+  it.skip('9 TextSelector - textQuoteSelector returns an object TextQuoteSelector', () => {
     let testTSelector = new TextSelector()
     let testTQSelector = testTSelector.textQuoteSelector
     expect(testTQSelector.constructor.name).toEqual('TextQuoteSelector')

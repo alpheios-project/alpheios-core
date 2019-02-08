@@ -15,6 +15,10 @@ export default class LexicalQuery extends Query {
     this.wordUsageExamples = options.wordUsageExamples
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
+
+    if (this.selector.textQuoteSelector) {
+      LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
+    }
   }
 
   static create (selector, options) {
@@ -59,7 +63,7 @@ export default class LexicalQuery extends Query {
       }
 
       if (adapterTreebankRes.errors.length > 0) {
-        adapterTreebankRes.errors.forEach(error => console.error(error))
+        adapterTreebankRes.errors.forEach(error => console.error(error.message))
       }
     }
 
@@ -74,7 +78,7 @@ export default class LexicalQuery extends Query {
       })
 
       if (adapterTuftsRes.errors.length > 0) {
-        adapterTuftsRes.errors.forEach(error => console.error(error))
+        adapterTuftsRes.errors.forEach(error => console.error(error.message))
       }
 
       if (adapterTuftsRes.result) {
@@ -123,7 +127,7 @@ export default class LexicalQuery extends Query {
         }
       })
       if (adapterTranslationRes.errors.length > 0) {
-        adapterTranslationRes.errors.forEach(error => console.error(error))
+        adapterTranslationRes.errors.forEach(error => console.error(error.message))
       }
 
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
@@ -155,7 +159,7 @@ export default class LexicalQuery extends Query {
     })
 
     if (adapterLexiconResShort.errors.length > 0) {
-      adapterLexiconResShort.errors.forEach(error => console.error(error))
+      adapterLexiconResShort.errors.forEach(error => console.error(error.message))
     }
 
     let adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
@@ -172,6 +176,7 @@ export default class LexicalQuery extends Query {
       adapterLexiconResFull.errors.forEach(error => console.error(error))
     }
 
+    yield 'Finalizing'
     if (adapterLexiconResShort.result || adapterLexiconResFull.result) {
       this.finalize('Success')
     }
@@ -288,5 +293,12 @@ LexicalQuery.evt = {
    */
   DEFS_NOT_FOUND: new PsEvent(`Definitions Data Not Found`, LexicalQuery),
 
+  /**
+   * Published when Lexical Query is created and TextQuoteSelector is passed inside TextSelector.
+   * Data: {
+   *    textQuoteSelector
+   * }
+   */
+  TEXT_QUOTE_SELECTOR_RECEIVED: new PsEvent(`TextQuoteSelector recieved for the target word`, LexicalQuery),
   WORD_USAGE_EXAMPLES_READY: new PsEvent(`Word usage examples ready`, LexicalQuery)
 }

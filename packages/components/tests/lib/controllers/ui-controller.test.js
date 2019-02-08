@@ -812,4 +812,5 @@ describe.skip('ui-controller.test.js', () => {
     expect(uiC.popup.vi.currentPopupComponent).toEqual('popup')
     expect(uiC.popup.vi.open).toHaveBeenCalled()
   })
+
 })

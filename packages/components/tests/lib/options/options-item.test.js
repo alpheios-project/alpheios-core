@@ -126,7 +126,7 @@ describe('options-item.test.js', () => {
     let testOption = { preferredLanguage: JSON.stringify('lat') }
 
     expect(curStAdapter.set).toHaveBeenCalledWith(testOption)
-    expect(console.log).toHaveBeenCalledWith('Value "lat" of "preferredLanguage" option value was stored successfully')
+    // expect(console.log).toHaveBeenCalledWith('Value "lat" of "preferredLanguage" option value was stored successfully')
   })
 
   it('12 OptionItem has a save method and it executes a set method of StorageAdapter, if set Promise is rejected it prints an error to console', async () => {

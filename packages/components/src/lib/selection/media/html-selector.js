@@ -196,6 +196,9 @@ export default class HTMLSelector extends MediaSelector {
       ro = selection.anchorOffset
     }
 
+    if (!anchorText) {
+      return undefined
+    }
     // clean string:
     //   convert punctuation to spaces
     anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
@@ -224,7 +227,6 @@ export default class HTMLSelector extends MediaSelector {
 
     // extract word
     let word = anchorText.substring(wordStart, wordEnd).trim()
-
     /* Identify the words preceeding and following the focus word
     * TODO - query the type of node in the selection to see if we are
     * dealing with something other than text nodes
@@ -235,7 +237,10 @@ export default class HTMLSelector extends MediaSelector {
     let contextStr = null
     let contextPos = 0
 
-    if (textSelector.model.contextForward || textSelector.model.contextBackward) {
+    let contextForward = textSelector.model.contextForward
+    let contextBackward = textSelector.model.contextBackward
+
+    if (contextForward || contextBackward) {
       let startstr = anchorText.substring(0, wordEnd)
       let endstr = anchorText.substring(wordEnd + 1, anchorText.length)
       let preWordlist = startstr.split(/\s+/)
@@ -279,6 +284,7 @@ export default class HTMLSelector extends MediaSelector {
         selection.setBaseAndExtent(anchor, wordStart, focus, wordEnd)
       }
     }
+    textSelector.createTextQuoteSelector(this)
     return textSelector
   }
 

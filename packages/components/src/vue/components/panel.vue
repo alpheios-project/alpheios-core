@@ -80,6 +80,13 @@
                 </span>
               </alph-tooltip>
 
+              <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="l10n.getText('TOOLTIP_WORDLIST')">
+                <span v-show="showWordList" v-bind:class="{ active: data.tabs.wordlist }" @click="changeTab('wordlist')"
+                  class="alpheios-panel__header-nav-btn">
+                  <wordlist-icon class="alpheios-icon"></wordlist-icon>
+                </span>
+              </alph-tooltip>
+
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: $store.state.app.tabState.status }"
@@ -230,6 +237,10 @@
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
         <info></info>
+      </div>
+
+      <div v-show="data.tabs.wordlist" class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist">
+        <word-list-panel :wordlistC="data.wordlistC" :updated="data.wordListUpdated"></word-list-panel>
       </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"

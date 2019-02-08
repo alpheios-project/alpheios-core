@@ -65,6 +65,11 @@
     "description": "tooltip for status tab",
     "component": "Panel"
   },
+  "TOOLTIP_WORDLIST": {
+    "message": "User word list",
+    "description": "tooltip for user word list tab",
+    "component": "Panel"
+  },
   "TOOLTIP_USER": {
     "message": "User info",
     "description": "tooltip for a user info tab",

@@ -87,7 +87,7 @@ export default class OptionItem {
     this.storageAdapter.set(option).then(
       () => {
         // Options storage succeeded
-        console.log(`Value "${this.currentValue}" of "${this.name}" option value was stored successfully`)
+        // console.log(`Value "${this.currentValue}" of "${this.name}" option value was stored successfully`)
       },
       (errorMessage) => {
         console.error(`Storage of an option value failed: ${errorMessage}`)

@@ -18,6 +18,7 @@ const webpack = {
     },
     externals: {
       'alpheios-client-adapters': 'alpheios-client-adapters',
+      'alpheios-wordlist': 'alpheios-wordlist',
       'alpheios-data-models': 'alpheios-data-models',
       'alpheios-inflection-tables': 'alpheios-inflection-tables',
       'alpheios-experience': 'alpheios-experience',

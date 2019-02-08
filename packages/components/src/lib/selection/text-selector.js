@@ -1,5 +1,6 @@
-import TextQuoteSelector from './w3c/text-quote-selector'
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory, TextQuoteSelector } from 'alpheios-data-models'
+
+import HTMLSelector from '@/lib/selection/media/html-selector'
 /**
  * This is a general-purpose, media abstract selector.
  * @property {string} selectedText - Selected text (usually a single word)
@@ -90,7 +91,9 @@ export default class TextSelector {
     return Models.LanguageModelFactory.getLanguageForCode(languageCode)
   } */
 
-  get textQuoteSelector () {
-    return new TextQuoteSelector()
+  createTextQuoteSelector (htmlSelector) {
+    this.textQuoteSelector = new TextQuoteSelector(this.languageCode, this.normalizedText)
+    let selection = HTMLSelector.getSelection(htmlSelector.target)
+    this.textQuoteSelector.createContext(selection, this)
   }
 }

@@ -36,8 +36,7 @@ export default class PanelModule {
             selectedText: '',
             languageName: '',
             languageCode: ''
-          },
-          classes: [] // Will be set later by `setRootComponentClasses()`
+          }
         },
         currentPanelComponent: this.config.panelComponent
       },
