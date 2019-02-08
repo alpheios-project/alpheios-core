@@ -221,7 +221,6 @@ export default {
     requestStartTime: function () {
       return (this.data) ? this.data.requestStartTime : null
     },
-
     defDataReady: function () {
       return (this.data && this.data.defDataReady) ? this.data.defDataReady : false
     },

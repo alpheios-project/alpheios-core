@@ -1085,7 +1085,6 @@ export default class UIController {
     }
     this.store.commit('app/lexicalRequestFinished')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
   }
 
   onMorphDataReady () {

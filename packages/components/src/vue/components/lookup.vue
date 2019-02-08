@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-lookup__form" v-if="settings">
+  <div class="alpheios-lookup__form">
     <input :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')" @keyup.enter="lookup" class="uk-input alpheios-lookup__input"
            type="text"
            v-model="lookuptext"

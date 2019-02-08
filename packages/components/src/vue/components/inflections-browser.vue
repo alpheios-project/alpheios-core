@@ -453,12 +453,6 @@ export default {
     languageId: {
       type: Symbol,
       required: false
-    },
-
-    inflBrowserTablesCollapsed: {
-      type: Boolean,
-      required: false,
-      default: true
     }
   },
 
@@ -477,7 +471,8 @@ export default {
       },
       htmlElements: {
         content: undefined
-      }
+      },
+      inflBrowserTablesCollapsed: true
     }
   },
 

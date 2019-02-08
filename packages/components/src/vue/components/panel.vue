@@ -141,9 +141,8 @@
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
-           v-if="settings.contentOptions.items" v-show="$store.state.app.tabState.inflectionsbrowser">
-        <inflection-browser :infl-browser-tables-collapsed="data.inflBrowserTablesCollapsed"
-                            :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
+           v-show="$store.state.app.tabState.inflectionsbrowser">
+        <inflection-browser :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar

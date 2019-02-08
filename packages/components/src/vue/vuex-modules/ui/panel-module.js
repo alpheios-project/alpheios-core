@@ -23,7 +23,6 @@ export default class PanelModule {
       data: {
         panelData: {
           lexemes: [],
-          inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
           messages: [],
