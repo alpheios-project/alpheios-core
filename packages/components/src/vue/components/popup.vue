@@ -208,12 +208,13 @@ export default {
       return this.data && this.data.classes ? this.data.classes.join(' ') : ''
     },
     mainstyles: function () {
-      return Object.assign({
+      return {
         left: this.positionLeftDm,
         top: this.positionTopDm,
         width: this.widthDm,
-        height: this.heightDm
-      }, this.data ? this.data.styles : {})
+        height: this.heightDm,
+        zIndex: this.ui.zIndex
+      }
     },
     logger: function () {
       return Logger.getLogger(this.verboseMode)

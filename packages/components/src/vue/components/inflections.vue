@@ -142,6 +142,7 @@ export default {
       return this.$store.state.app.tabState.inflections
     },
     inflectionsEnabled: function () {
+      // TODO: This is a temporary solution. This should be handled in accord with our overall state handling policy
       return ViewSetFactory.hasInflectionsEnabled(this.$store.state.app.currentLanguageID)
     },
     partOfSpeechSelector: {

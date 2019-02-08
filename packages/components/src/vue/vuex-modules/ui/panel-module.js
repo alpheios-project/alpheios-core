@@ -4,11 +4,11 @@ import CompactPanel from '@/vue/components/panel-compact.vue'
 
 // TODO: Add a check for required modules
 export default class PanelModule {
-  constructor (store, api, options) {
-    this.options = Object.assign(PanelModule.optionsDefaults, options)
+  constructor (store, api, config) {
+    this.config = Object.assign(PanelModule.configDefaults, config)
 
     this.vi = new Vue({
-      el: this.options.mountPoint,
+      el: this.config.mountPoint,
       store: store, // Install store into the panel
       provide: api, // Public API of the modules for child components
       /*
@@ -39,7 +39,7 @@ export default class PanelModule {
           },
           classes: [] // Will be set later by `setRootComponentClasses()`
         },
-        currentPanelComponent: this.options.panelComponent
+        currentPanelComponent: this.config.panelComponent
       },
       methods: {
         clearContent: function () {
@@ -170,7 +170,7 @@ PanelModule.store = () => {
   }
 }
 
-PanelModule.optionsDefaults = {
+PanelModule.configDefaults = {
   // A selector that specifies to what DOM element a panel will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-panel',

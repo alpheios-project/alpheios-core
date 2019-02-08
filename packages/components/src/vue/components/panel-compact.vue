@@ -142,8 +142,7 @@
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
            v-show="$store.state.app.tabState.inflectionsbrowser">
-        <inflection-browser :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
-        </inflection-browser>
+        <inflection-browser @contentwidth="setContentWidth"></inflection-browser>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
             alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
@@ -153,6 +152,7 @@
       <div
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
           v-if="$store.getters['app/hasTreebankData']" v-show="$store.state.app.tabState.treebank">
+        <!-- TODO: Instead of this we need to create a universal mechanism for handling panel resizing for every tab's content change -->
         <treebank @treebankcontentwidth="setTreebankContentWidth"></treebank>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.state.app.tabState.status">
@@ -330,10 +330,7 @@ export default {
   directives: {
     onClickaway: onClickaway
   },
-  positionClassVariants: {
-    left: 'alpheios-panel-left',
-    right: 'alpheios-panel-right'
-  },
+
   minWidth: 400, // A minimal width of a panel, in pixels
   defaultScrollPadding: 20,
   data: function () {
@@ -344,10 +341,7 @@ export default {
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
-      panelWidth: null,
-      styles: {
-        zIndex: this.ui.zIndex
-      }
+      panelWidth: null
     }
   },
   props: {
@@ -359,7 +353,7 @@ export default {
 
   computed: {
     divClasses () {
-      return this.data.classes.concat([this.$options.positionClassVariants[this.panelPosition]])
+      return this.data.classes
     },
     clearLookupText: function () {
       // always true to clear panels lookup
@@ -372,14 +366,12 @@ export default {
         return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }
     },
-    inflectionBrowserLanguageID: function () {
-      return this.$store.state.app.currentLanguageID
-    },
     mainstyles: function () {
-      let mainstyles = (this.data) ? this.styles : {}
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
-
-      return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
+      return {
+        zIndex: this.ui.zIndex,
+        width: `${this.panelWidth}px`
+      }
     },
     resourceSettingsLexicons: function () {
       return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons

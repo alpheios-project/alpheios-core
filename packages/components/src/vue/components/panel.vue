@@ -255,7 +255,17 @@ import CompactPanel from '@/vue/components/panel-compact.vue'
 
 export default {
   name: 'Panel',
-  extends: CompactPanel
+  extends: CompactPanel,
+  // This is implemented as a custom option so that Vue won't attach any reactivity watchers to it (because it does really not need to be reactive)
+  positionClassVariants: {
+    left: 'alpheios-panel-left',
+    right: 'alpheios-panel-right'
+  },
+  computed: {
+    divClasses () {
+      return this.data.classes.concat([this.$options.positionClassVariants[this.panelPosition]])
+    }
+  }
 }
 </script>
 <style lang="scss">

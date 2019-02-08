@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+// TODO: Update to retrieve usage examples data directly from the Vue store, not from a parent component
 import WordUsageExampleItem from '@/vue/components/word-usage-example-item.vue'
 export default {
   name: 'WordUsageExamplesBlock',

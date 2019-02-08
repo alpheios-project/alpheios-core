@@ -443,18 +443,16 @@ import Comparable from '@/lib/utility/comparable.js'
 import WideTable from './inflections-table-wide.vue'
 import Vue from 'vue/dist/vue'
 
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'InflectionStandardForms',
   components: {
     wideTable: WideTable
   },
-
-  props: {
-    languageId: {
-      type: Symbol,
-      required: false
-    }
-  },
+  storeModules: ['app'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
 
   data: function () {
     return {
@@ -472,6 +470,7 @@ export default {
       htmlElements: {
         content: undefined
       },
+      languageId: this.$store.state.app.currentLanguageID,
       inflBrowserTablesCollapsed: true
     }
   },
@@ -529,8 +528,8 @@ export default {
 
     collapseLanguage: function (languageID) {
       const language = languageID.toString()
-      if (this.collapsed.hasOwnProperty(language)) {
-        this.collapsed[language] = !this.collapsed[language]
+      for (const lang of Object.keys(this.collapsed)) {
+        this.collapsed[lang] = (lang === language) ? !this.collapsed[language] : true
       }
     },
 

@@ -3,12 +3,12 @@ import Popup from '@/vue/components/popup.vue'
 
 // TODO: Add a check for required modules
 export default class PopupModule {
-  constructor (store, api, options) {
+  constructor (store, api, config) {
     // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
-    this.options = Object.assign(PopupModule.optionsDefaults, options)
+    this.config = Object.assign(PopupModule.configDefaults, config)
 
     this.vi = new Vue({
-      el: this.options.mountPoint,
+      el: this.config.mountPoint,
       store: store,
       provide: api, // Expose APIs to child components
       /*
@@ -33,8 +33,8 @@ export default class PopupModule {
           top: '10vh',
           left: '10vw',
 
-          draggable: this.options.draggable,
-          resizable: this.options.resizable,
+          draggable: this.config.draggable,
+          resizable: this.config.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -78,12 +78,9 @@ export default class PopupModule {
             selectedText: '',
             languageName: '',
             languageCode: ''
-          },
-          styles: {
-            zIndex: api.app.zIndex
           }
         },
-        currentPopupComponent: this.options.popupComponent,
+        currentPopupComponent: this.config.popupComponent,
         classesChanged: 0
       },
       methods: {
@@ -246,7 +243,7 @@ PopupModule.store = () => {
   }
 }
 
-PopupModule.optionsDefaults = {
+PopupModule.configDefaults = {
   // A selector that specifies to what DOM element a popup will be mounted.
   // This element will be replaced with the root element of the popup component.
   mountPoint: '#alpheios-popup',
