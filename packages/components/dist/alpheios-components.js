@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("alpheios-client-adapters"), require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-res-client"), require("alpheios-wordlist"), require("intl-messageformat"));
+		module.exports = factory(require("alpheios-client-adapters"), require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-res-client"), require("intl-messageformat"));
 	else if(typeof define === 'function' && define.amd)
-		define(["alpheios-client-adapters", "alpheios-data-models", "alpheios-inflection-tables", "alpheios-res-client", "alpheios-wordlist", "intl-messageformat"], factory);
+		define(["alpheios-client-adapters", "alpheios-data-models", "alpheios-inflection-tables", "alpheios-res-client", "intl-messageformat"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("alpheios-client-adapters"), require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-res-client"), require("alpheios-wordlist"), require("intl-messageformat")) : factory(root["alpheios-client-adapters"], root["alpheios-data-models"], root["alpheios-inflection-tables"], root["alpheios-res-client"], root["alpheios-wordlist"], root["intl-messageformat"]);
+		var a = typeof exports === 'object' ? factory(require("alpheios-client-adapters"), require("alpheios-data-models"), require("alpheios-inflection-tables"), require("alpheios-res-client"), require("intl-messageformat")) : factory(root["alpheios-client-adapters"], root["alpheios-data-models"], root["alpheios-inflection-tables"], root["alpheios-res-client"], root["intl-messageformat"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_client_adapters__, __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_alpheios_inflection_tables__, __WEBPACK_EXTERNAL_MODULE_alpheios_res_client__, __WEBPACK_EXTERNAL_MODULE_alpheios_wordlist__, __WEBPACK_EXTERNAL_MODULE_intl_messageformat__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_client_adapters__, __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_alpheios_inflection_tables__, __WEBPACK_EXTERNAL_MODULE_alpheios_res_client__, __WEBPACK_EXTERNAL_MODULE_intl_messageformat__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -110,8 +110,8 @@ function polyfill(window) {
 
   if (typeof ElementPrototype.matches !== 'function') {
     ElementPrototype.matches = ElementPrototype.msMatchesSelector || ElementPrototype.mozMatchesSelector || ElementPrototype.webkitMatchesSelector || function matches(selector) {
-      let element = this;
       const elements = (element.document || element.ownerDocument).querySelectorAll(selector);
+      let element = this;
       let index = 0;
 
       while (elements[index] && elements[index] !== element) {
@@ -8782,7 +8782,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections-table-wide.vue */ "./vue/components/inflections-table-wide.vue");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -9226,9 +9225,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-// Modules support
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -9236,8 +9232,24 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     wideTable: _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  storeModules: ['app'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
+
+  props: {
+    languageId: {
+      type: Symbol,
+      required: false
+    },
+
+    inflBrowserTablesCollapsed: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+
+    data: {
+      type: Object,
+      required: true
+    }
+  },
 
   data: function () {
     return {
@@ -9254,10 +9266,16 @@ __webpack_require__.r(__webpack_exports__);
       },
       htmlElements: {
         content: undefined
-      },
-      languageId: this.$store.state.app.currentLanguageID,
-      inflBrowserTablesCollapsed: true
+      }
     }
+  },
+
+  computed: {
+    // Need this for a watcher that will monitor a parent container visibility state
+    isVisible: function () {
+      return this.data.visible
+    }
+
   },
 
   watch: {
@@ -9268,6 +9286,21 @@ __webpack_require__.r(__webpack_exports__);
       if (newValue) {
         this.languageId = newValue
         this.collapsed[newValue.toString()] = false
+      }
+    },
+    /*
+        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
+        use this information to adjust a width of a container that displays an inflection component. However, a width
+        of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
+        an inflection table width and notify a parent component only when a parent container is visible.
+        A parent component will notify us of that by setting a `visible` property. A change of that property state
+        will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
+        as it won't be used by anything and thus will not be calculated by Vue.
+         */
+    isVisible: function (visibility) {
+      if (visibility && this.htmlElements.content) {
+        // If container is become visible, update parent with its width
+        this.inflTableWidthUpd()
       }
     }
   },
@@ -9313,8 +9346,8 @@ __webpack_require__.r(__webpack_exports__);
 
     collapseLanguage: function (languageID) {
       const language = languageID.toString()
-      for (const lang of Object.keys(this.collapsed)) {
-        this.collapsed[lang] = (lang === language) ? !this.collapsed[language] : true
+      if (this.collapsed.hasOwnProperty(language)) {
+        this.collapsed[language] = !this.collapsed[language]
       }
     },
 
@@ -10073,7 +10106,6 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.app.tabState.inflections
     },
     inflectionsEnabled: function () {
-      // TODO: This is a temporary solution. This should be handled in accord with our overall state handling policy
       return alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_0__["ViewSetFactory"].hasInflectionsEnabled(this.$store.state.app.currentLanguageID)
     },
     partOfSpeechSelector: {
@@ -10881,50 +10913,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./reskin-font-color.vue */ "./vue/components/reskin-font-color.vue");
 /* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
 /* harmony import */ var _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/components/word-usage-examples-block.vue */ "./vue/components/word-usage-examples-block.vue");
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! alpheios-wordlist */ "alpheios-wordlist");
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../../images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
-/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -11194,7 +11212,6 @@ This is a mobile version of a panel
 
 
 
-
 // Embeddable SVG icons
 
 
@@ -11228,8 +11245,8 @@ This is a mobile version of a panel
     settings: 'settings',
     auth: { from: 'auth', default: null } // This module is options
   },
-  storeModules: ['app', 'panel'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_29__["default"]],
+  storeModules: ['app', 'ui', 'panel'], // Store modules that are required by this component
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_27__["default"]],
   components: {
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -11239,30 +11256,31 @@ This is a mobile version of a panel
     grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_13___default.a,
-    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
-    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
-    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
-    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_17___default.a,
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_18___default.a,
-    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_21___default.a,
-    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_24___default.a,
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_22___default.a,
-    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_23___default.a,
-    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_26___default.a,
+    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_12___default.a,
+    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_13___default.a,
+    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17___default.a,
+    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18___default.a,
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
+    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23___default.a,
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21___default.a,
+    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22___default.a,
+    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24___default.a,
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     reskinFontColor: _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_25___default.a,
-    wordListPanel: alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12__["WordListPanel"],
     wordUsageExamplesBlock: _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_27__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__["directive"]
   },
-
+  positionClassVariants: {
+    left: 'alpheios-panel-left',
+    right: 'alpheios-panel-right'
+  },
   minWidth: 400, // A minimal width of a panel, in pixels
   defaultScrollPadding: 20,
   data: function () {
@@ -11273,7 +11291,10 @@ This is a mobile version of a panel
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
-      panelWidth: null
+      panelWidth: null,
+      styles: {
+        zIndex: this.ui.zIndex
+      }
     }
   },
   props: {
@@ -11284,8 +11305,8 @@ This is a mobile version of a panel
   },
 
   computed: {
-    divClasses () {
-      return this.data.classes
+    rootClasses () {
+      return this.$store.state.ui.rootClasses.concat([this.$options.positionClassVariants[this.panelPosition]])
     },
     clearLookupText: function () {
       // always true to clear panels lookup
@@ -11298,12 +11319,14 @@ This is a mobile version of a panel
         return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }
     },
+    inflectionBrowserLanguageID: function () {
+      return this.$store.state.app.currentLanguageID
+    },
     mainstyles: function () {
+      let mainstyles = (this.data) ? this.styles : {}
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
-      return {
-        zIndex: this.ui.zIndex,
-        width: `${this.panelWidth}px`
-      }
+
+      return Object.assign({ width: `${this.panelWidth}px` }, mainstyles)
     },
     resourceSettingsLexicons: function () {
       return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
@@ -11348,10 +11371,6 @@ This is a mobile version of a panel
 
     verboseMode () {
       return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
-    },
-
-    showWordList () {
-      return this.data.wordListUpdated && this.data.wordlistC && Object.keys(this.data.wordlistC.wordLists) && Object.keys(this.data.wordlistC.wordLists).length > 0
     }
   },
   methods: {
@@ -11490,7 +11509,7 @@ This is a mobile version of a panel
       this.calcWidthPaddings()
 
       // Initialize Interact.js: make panel resizable
-      interactjs__WEBPACK_IMPORTED_MODULE_28___default()(this.$el)
+      interactjs__WEBPACK_IMPORTED_MODULE_26___default()(this.$el)
         .resizable({
           // resize from all edges and corners
           edges: { left: true, right: true, bottom: false, top: false },
@@ -11780,15 +11799,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /*
   This is a desktop version of a panel
@@ -11798,17 +11808,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-  // This is implemented as a custom option so that Vue won't attach any reactivity watchers to it (because it does really not need to be reactive)
-  positionClassVariants: {
-    left: 'alpheios-panel-left',
-    right: 'alpheios-panel-right'
-  },
-  computed: {
-    divClasses () {
-      return this.data.classes.concat([this.$options.positionClassVariants[this.panelPosition]])
-    }
-  }
+  extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
 });
 
 
@@ -12051,7 +12051,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Popup',
   inject: ['app', 'ui', 'l10n', 'settings'],
-  storeModules: ['app', 'popup'],
+  storeModules: ['app', 'ui', 'popup'],
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__["default"]],
   components: {
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -12129,17 +12129,16 @@ __webpack_require__.r(__webpack_exports__);
     })
   },
   computed: {
-    divClasses () {
-      return this.data && this.data.classes ? this.data.classes.join(' ') : ''
+    rootClasses () {
+      return this.$store.state.ui.rootClasses
     },
     mainstyles: function () {
-      return {
+      return Object.assign({
         left: this.positionLeftDm,
         top: this.positionTopDm,
         width: this.widthDm,
-        height: this.heightDm,
-        zIndex: this.ui.zIndex
-      }
+        height: this.heightDm
+      }, this.data ? this.data.styles : {})
     },
     logger: function () {
       return _lib_log_logger__WEBPACK_IMPORTED_MODULE_3__["default"].getLogger(this.verboseMode)
@@ -12147,6 +12146,7 @@ __webpack_require__.r(__webpack_exports__);
     requestStartTime: function () {
       return (this.data) ? this.data.requestStartTime : null
     },
+
     defDataReady: function () {
       return (this.data && this.data.defDataReady) ? this.data.defDataReady : false
     },
@@ -13139,7 +13139,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-// TODO: Update to retrieve usage examples data directly from the Vue store, not from a parent component
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WordUsageExamplesBlock',
@@ -13385,9 +13384,7 @@ var render = function() {
         domProps: { innerHTML: _vm._s(_vm.decorate(_vm.data, _vm.type)) },
         on: {
           click: function($event) {
-            return _vm.sendFeature(_vm.data[_vm.type], [
-              "alpheios-text__medium"
-            ])
+            _vm.sendFeature(_vm.data[_vm.type], ["alpheios-text__medium"])
           }
         }
       })
@@ -13522,7 +13519,7 @@ var render = function() {
         staticClass: "alpheios-ib__title alpheios-clickable",
         on: {
           click: function($event) {
-            return _vm.collapseLanguage(_vm.constants.LANG_LATIN)
+            _vm.collapseLanguage(_vm.constants.LANG_LATIN)
           }
         }
       },
@@ -14058,7 +14055,7 @@ var render = function() {
         staticClass: "alpheios-ib__title alpheios-clickable",
         on: {
           click: function($event) {
-            return _vm.collapseLanguage(_vm.constants.LANG_GREEK)
+            _vm.collapseLanguage(_vm.constants.LANG_GREEK)
           }
         }
       },
@@ -15118,7 +15115,7 @@ var render = function() {
                           },
                           on: {
                             click: function($event) {
-                              return _vm.navigate(cell.reflink.id)
+                              _vm.navigate(cell.reflink.id)
                             }
                           }
                         },
@@ -15402,251 +15399,252 @@ var render = function() {
                   ]
                 )
               : _vm.view.wideView
-              ? _c(
-                  "div",
-                  [
-                    !_vm.view.hasPrerenderedTables && !_vm.inflBrowserTable
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "alpheios-inflections__table-ctrl-cont"
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value:
-                                      _vm.view.canCollapse &&
-                                      _vm.state.noSuffixGroupsHidden,
-                                    expression:
-                                      "view.canCollapse && state.noSuffixGroupsHidden"
-                                  }
-                                ],
-                                staticClass:
-                                  "alpheios-inflections__table-ctrl-cell--btn"
-                              },
-                              [
-                                _c(
-                                  "alph-tooltip",
-                                  {
-                                    attrs: {
-                                      tooltipText: _vm.l10n.getMsg(
-                                        "TOOLTIP_INFLECT_SHOWFULL"
-                                      ),
-                                      tooltipDirection: "bottom-right"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
-                                        on: { click: _vm.showNoSuffixGroups }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n              " +
-                                            _vm._s(
-                                              _vm.l10n.getMsg(
-                                                "LABEL_INFLECT_SHOWFULL"
-                                              )
-                                            ) +
-                                            "\n            "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value:
-                                      _vm.view.canCollapse &&
-                                      !_vm.state.noSuffixGroupsHidden,
-                                    expression:
-                                      "view.canCollapse && !state.noSuffixGroupsHidden"
-                                  }
-                                ],
-                                staticClass:
-                                  "alpheios-inflections__table-ctrl-cell--btn"
-                              },
-                              [
-                                _c(
-                                  "alph-tooltip",
-                                  {
-                                    attrs: {
-                                      tooltipText: _vm.l10n.getMsg(
-                                        "TOOLTIP_INFLECT_COLLAPSE"
-                                      ),
-                                      tooltipDirection: "bottom-right"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
-                                        on: { click: _vm.hideNoSuffixGroups }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n              " +
-                                            _vm._s(
-                                              _vm.l10n.getMsg(
-                                                "LABEL_INFLECT_COLLAPSE"
-                                              )
-                                            ) +
-                                            "\n            "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !_vm.view.hasPrerenderedTables
-                      ? [
-                          _c(
+                ? _c(
+                    "div",
+                    [
+                      !_vm.view.hasPrerenderedTables && !_vm.inflBrowserTable
+                        ? _c(
                             "div",
                             {
-                              staticClass: "infl-table infl-table--wide",
-                              style: _vm.tableStyles,
-                              attrs: { id: "alpheios-wide-vue-table" }
+                              staticClass:
+                                "alpheios-inflections__table-ctrl-cont"
                             },
                             [
-                              _vm._l(_vm.view.wideView.rows, function(row) {
-                                return _vm._l(row.cells, function(cell) {
-                                  return _c(
-                                    "div",
+                              _c(
+                                "div",
+                                {
+                                  directives: [
                                     {
-                                      class: _vm.cellClasses(cell),
-                                      on: {
-                                        mouseleave: function($event) {
-                                          $event.stopPropagation()
-                                          $event.preventDefault()
-                                          return _vm.cellMouseLeave(cell)
-                                        },
-                                        mouseover: function($event) {
-                                          $event.stopPropagation()
-                                          $event.preventDefault()
-                                          return _vm.cellMouseOver(cell)
-                                        }
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        _vm.view.canCollapse &&
+                                        _vm.state.noSuffixGroupsHidden,
+                                      expression:
+                                        "view.canCollapse && state.noSuffixGroupsHidden"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "alpheios-inflections__table-ctrl-cell--btn"
+                                },
+                                [
+                                  _c(
+                                    "alph-tooltip",
+                                    {
+                                      attrs: {
+                                        tooltipText: _vm.l10n.getMsg(
+                                          "TOOLTIP_INFLECT_SHOWFULL"
+                                        ),
+                                        tooltipDirection: "bottom-right"
                                       }
                                     },
                                     [
-                                      cell.isDataCell
-                                        ? [
-                                            _vm._l(cell.morphemes, function(
-                                              morpheme,
-                                              index
-                                            ) {
-                                              return [
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    class: _vm.morphemeClasses(
-                                                      morpheme
-                                                    )
-                                                  },
-                                                  [
-                                                    morpheme.value
-                                                      ? [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              morpheme.value
-                                                            )
-                                                          )
-                                                        ]
-                                                      : [_vm._v("-")]
-                                                  ],
-                                                  2
-                                                ),
-                                                _vm._v(" "),
-                                                morpheme.hasFootnotes
-                                                  ? _c("infl-footnote", {
-                                                      attrs: {
-                                                        footnotes:
-                                                          morpheme.footnotes
-                                                      }
-                                                    })
-                                                  : _vm._e(),
-                                                _vm._v(" "),
-                                                index <
-                                                cell.morphemes.length - 1
-                                                  ? [_vm._v(",")]
-                                                  : _vm._e()
-                                              ]
-                                            })
-                                          ]
-                                        : _c("span", {
-                                            domProps: {
-                                              innerHTML: _vm._s(
-                                                _vm.l10n.getText(cell.value)
-                                              )
-                                            }
-                                          })
-                                    ],
-                                    2
-                                  )
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ]
-                      : [
-                          _c(
-                            "div",
-                            { staticClass: "infl-prdgm-tbl" },
-                            _vm._l(_vm.view.wideTable.rows, function(row) {
-                              return _c(
-                                "div",
-                                { staticClass: "infl-prdgm-tbl__row" },
-                                _vm._l(row.cells, function(cell) {
-                                  return _c(
-                                    "div",
-                                    {
-                                      staticClass: "infl-prdgm-tbl__cell",
-                                      class: _vm.prerenderedCellClasses(cell)
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(cell.value) +
-                                          "\n            "
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          on: { click: _vm.showNoSuffixGroups }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n              " +
+                                              _vm._s(
+                                                _vm.l10n.getMsg(
+                                                  "LABEL_INFLECT_SHOWFULL"
+                                                )
+                                              ) +
+                                              "\n            "
+                                          )
+                                        ]
                                       )
                                     ]
                                   )
-                                }),
-                                0
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        _vm.view.canCollapse &&
+                                        !_vm.state.noSuffixGroupsHidden,
+                                      expression:
+                                        "view.canCollapse && !state.noSuffixGroupsHidden"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "alpheios-inflections__table-ctrl-cell--btn"
+                                },
+                                [
+                                  _c(
+                                    "alph-tooltip",
+                                    {
+                                      attrs: {
+                                        tooltipText: _vm.l10n.getMsg(
+                                          "TOOLTIP_INFLECT_COLLAPSE"
+                                        ),
+                                        tooltipDirection: "bottom-right"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          on: { click: _vm.hideNoSuffixGroups }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n              " +
+                                              _vm._s(
+                                                _vm.l10n.getMsg(
+                                                  "LABEL_INFLECT_COLLAPSE"
+                                                )
+                                              ) +
+                                              "\n            "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
                               )
-                            }),
-                            0
+                            ]
                           )
-                        ]
-                  ],
-                  2
-                )
-              : _vm._e()
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.view.hasPrerenderedTables
+                        ? [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "infl-table infl-table--wide",
+                                style: _vm.tableStyles,
+                                attrs: { id: "alpheios-wide-vue-table" }
+                              },
+                              [
+                                _vm._l(_vm.view.wideView.rows, function(row) {
+                                  return _vm._l(row.cells, function(cell) {
+                                    return _c(
+                                      "div",
+                                      {
+                                        class: _vm.cellClasses(cell),
+                                        on: {
+                                          mouseleave: function($event) {
+                                            $event.stopPropagation()
+                                            $event.preventDefault()
+                                            _vm.cellMouseLeave(cell)
+                                          },
+                                          mouseover: function($event) {
+                                            $event.stopPropagation()
+                                            $event.preventDefault()
+                                            _vm.cellMouseOver(cell)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        cell.isDataCell
+                                          ? [
+                                              _vm._l(cell.morphemes, function(
+                                                morpheme,
+                                                index
+                                              ) {
+                                                return [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      class: _vm.morphemeClasses(
+                                                        morpheme
+                                                      )
+                                                    },
+                                                    [
+                                                      morpheme.value
+                                                        ? [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                morpheme.value
+                                                              )
+                                                            )
+                                                          ]
+                                                        : [_vm._v("-")]
+                                                    ],
+                                                    2
+                                                  ),
+                                                  _vm._v(" "),
+                                                  morpheme.hasFootnotes
+                                                    ? _c("infl-footnote", {
+                                                        attrs: {
+                                                          footnotes:
+                                                            morpheme.footnotes
+                                                        }
+                                                      })
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  index <
+                                                  cell.morphemes.length - 1
+                                                    ? [_vm._v(",")]
+                                                    : _vm._e()
+                                                ]
+                                              })
+                                            ]
+                                          : _c("span", {
+                                              domProps: {
+                                                innerHTML: _vm._s(
+                                                  _vm.l10n.getText(cell.value)
+                                                )
+                                              }
+                                            })
+                                      ],
+                                      2
+                                    )
+                                  })
+                                })
+                              ],
+                              2
+                            )
+                          ]
+                        : [
+                            _c(
+                              "div",
+                              { staticClass: "infl-prdgm-tbl" },
+                              _vm._l(_vm.view.wideTable.rows, function(row) {
+                                return _c(
+                                  "div",
+                                  { staticClass: "infl-prdgm-tbl__row" },
+                                  _vm._l(row.cells, function(cell) {
+                                    return _c(
+                                      "div",
+                                      {
+                                        staticClass: "infl-prdgm-tbl__cell",
+                                        class: _vm.prerenderedCellClasses(cell)
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n              " +
+                                            _vm._s(cell.value) +
+                                            "\n            "
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                )
+                              }),
+                              0
+                            )
+                          ]
+                    ],
+                    2
+                  )
+                : _vm._e()
           ]
         : _vm._e()
     ],
@@ -15711,208 +15709,78 @@ var render = function() {
           ])
         ])
       : _vm.inflectionsEnabled && _vm.hasMatchingViews
-      ? _c(
-          "div",
-          { staticClass: "alpheios-inflections__content" },
-          [
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.partsOfSpeech.length > 1,
-                    expression: "partsOfSpeech.length > 1"
-                  }
-                ]
-              },
-              [
-                _c("label", { staticClass: "uk-form-label" }, [
-                  _vm._v(_vm._s(_vm.l10n.getMsg("LABEL_INFLECT_SELECT_POFS")))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.partOfSpeechSelector,
-                        expression: "partOfSpeechSelector"
-                      }
-                    ],
-                    staticClass:
-                      "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.partOfSpeechSelector = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  _vm._l(_vm.partsOfSpeech, function(partOfSpeech) {
-                    return _c("option", [_vm._v(_vm._s(partOfSpeech))])
-                  }),
-                  0
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "alpheios-inflections__actions" },
-              [
-                _vm.selectedView && _vm.selectedView.homonym
-                  ? _c("word-forms", {
-                      attrs: {
-                        lexemes: _vm.selectedView.homonym.lexemes,
-                        partOfSpeech:
-                          _vm.selectedView.constructor.mainPartOfSpeech,
-                        targetWord: _vm.selectedView.homonym.targetWord
-                      }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.views.length > 1,
-                        expression: "views.length > 1"
-                      }
-                    ]
-                  },
-                  [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.viewSelector,
-                            expression: "viewSelector"
-                          }
-                        ],
-                        staticClass:
-                          "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.viewSelector = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      _vm._l(_vm.views, function(view) {
-                        return _c("option", { domProps: { value: view.id } }, [
-                          _vm._v(_vm._s(view.name))
-                        ])
-                      }),
-                      0
-                    )
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _vm.$store.getters["app/hasInflData"]
-              ? _c("div", {
+        ? _c(
+            "div",
+            { staticClass: "alpheios-inflections__content" },
+            [
+              _c(
+                "div",
+                {
                   directives: [
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.showExplanatoryHint,
-                      expression: "showExplanatoryHint"
+                      value: _vm.partsOfSpeech.length > 1,
+                      expression: "partsOfSpeech.length > 1"
                     }
-                  ],
-                  staticClass: "alpheios-inflections__paradigms-expl",
-                  domProps: {
-                    innerHTML: _vm._s(
-                      _vm.l10n.getMsg(
-                        "INFLECTIONS_PARADIGMS_EXPLANATORY_HINT",
-                        {
-                          word: this.$store.state.app.inflectionsViewSet
-                            .targetWord
-                        }
-                      )
-                    )
-                  }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.selectedView.hasPrerenderedTables
-              ? _c(
-                  "div",
-                  [
-                    _c("main-table-wide-vue", {
-                      attrs: { collapsed: false, view: _vm.selectedView },
-                      on: { widthchange: _vm.updateWidth }
-                    }),
-                    _vm._v(" "),
-                    _vm._l(_vm.selectedView.linkedViews, function(linkedView) {
-                      return _vm.selectedView.linkedViews
-                        ? [
-                            _c("main-table-wide-vue", {
-                              attrs: { collapsed: false, view: linkedView },
-                              on: { widthchange: _vm.updateWidth }
-                            })
-                          ]
-                        : _vm._e()
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "alpheios-inflections__footnotes",
-                        attrs: { id: _vm.elementIDs.footnotes }
-                      },
-                      [
-                        _vm._l(_vm.footnotes, function(footnote) {
-                          return [
-                            _c("dt", [_vm._v(_vm._s(footnote.index))]),
-                            _vm._v(" "),
-                            _c("dd", [_vm._v(_vm._s(footnote.text))])
-                          ]
-                        })
-                      ],
-                      2
-                    )
-                  ],
-                  2
-                )
-              : [
-                  _c("prerendered-table-wide", {
-                    attrs: { collapsed: false, view: _vm.selectedView }
-                  }),
+                  ]
+                },
+                [
+                  _c("label", { staticClass: "uk-form-label" }, [
+                    _vm._v(_vm._s(_vm.l10n.getMsg("LABEL_INFLECT_SELECT_POFS")))
+                  ]),
                   _vm._v(" "),
-                  _c("sub-tables-wide", {
-                    attrs: { collapsed: false, view: _vm.selectedView },
-                    on: { navigate: _vm.navigate }
-                  }),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.partOfSpeechSelector,
+                          expression: "partOfSpeechSelector"
+                        }
+                      ],
+                      staticClass:
+                        "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.partOfSpeechSelector = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(_vm.partsOfSpeech, function(partOfSpeech) {
+                      return _c("option", [_vm._v(_vm._s(partOfSpeech))])
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "alpheios-inflections__actions" },
+                [
+                  _vm.selectedView && _vm.selectedView.homonym
+                    ? _c("word-forms", {
+                        attrs: {
+                          lexemes: _vm.selectedView.homonym.lexemes,
+                          partOfSpeech:
+                            _vm.selectedView.constructor.mainPartOfSpeech,
+                          targetWord: _vm.selectedView.homonym.targetWord
+                        }
+                      })
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -15921,71 +15789,211 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.selectedView.hasSuppParadigms,
-                          expression: "selectedView.hasSuppParadigms"
+                          value: _vm.views.length > 1,
+                          expression: "views.length > 1"
                         }
-                      ],
-                      staticClass: "alpheios-inflections__supp-tables"
+                      ]
                     },
                     [
-                      _vm._l(_vm.selectedView.suppParadigms, function(
-                        paradigm
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.viewSelector,
+                              expression: "viewSelector"
+                            }
+                          ],
+                          staticClass:
+                            "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.viewSelector = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        _vm._l(_vm.views, function(view) {
+                          return _c(
+                            "option",
+                            { domProps: { value: view.id } },
+                            [_vm._v(_vm._s(view.name))]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.$store.getters["app/hasInflData"]
+                ? _c("div", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.showExplanatoryHint,
+                        expression: "showExplanatoryHint"
+                      }
+                    ],
+                    staticClass: "alpheios-inflections__paradigms-expl",
+                    domProps: {
+                      innerHTML: _vm._s(
+                        _vm.l10n.getMsg(
+                          "INFLECTIONS_PARADIGMS_EXPLANATORY_HINT",
+                          {
+                            word: this.$store.state.app.inflectionsViewSet
+                              .targetWord
+                          }
+                        )
+                      )
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.selectedView.hasPrerenderedTables
+                ? _c(
+                    "div",
+                    [
+                      _c("main-table-wide-vue", {
+                        attrs: { collapsed: false, view: _vm.selectedView },
+                        on: { widthchange: _vm.updateWidth }
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.selectedView.linkedViews, function(
+                        linkedView
                       ) {
-                        return [
-                          _c("supp-tables-wide", {
-                            attrs: {
-                              "bg-color": _vm.selectedView.hlSuppParadigms
-                                ? _vm.selectedView.suppHlColors.get(
-                                    paradigm.paradigmID
-                                  )
-                                : "transparent",
-                              data: paradigm
-                            },
-                            on: { navigate: _vm.navigate }
+                        return _vm.selectedView.linkedViews
+                          ? [
+                              _c("main-table-wide-vue", {
+                                attrs: { collapsed: false, view: linkedView },
+                                on: { widthchange: _vm.updateWidth }
+                              })
+                            ]
+                          : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "alpheios-inflections__footnotes",
+                          attrs: { id: _vm.elementIDs.footnotes }
+                        },
+                        [
+                          _vm._l(_vm.footnotes, function(footnote) {
+                            return [
+                              _c("dt", [_vm._v(_vm._s(footnote.index))]),
+                              _vm._v(" "),
+                              _c("dd", [_vm._v(_vm._s(footnote.text))])
+                            ]
                           })
-                        ]
-                      })
+                        ],
+                        2
+                      )
                     ],
                     2
                   )
-                ],
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.selectedView.hasCredits,
-                    expression: "selectedView.hasCredits"
-                  }
-                ],
-                staticClass: "alpheios-inflections__credits-cont"
-              },
-              [
-                _c(
-                  "h3",
-                  { staticClass: "alpheios-inflections__credits-title" },
-                  [_vm._v(_vm._s(_vm.l10n.getMsg("INFLECTIONS_CREDITS_TITLE")))]
-                ),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "alpheios-inflections__credits-text",
-                  domProps: { innerHTML: _vm._s(_vm.selectedView.creditsText) }
-                })
-              ]
-            )
-          ],
-          2
-        )
-      : _c("div", { staticClass: "alpheios-inflections__placeholder" }, [
-          _vm._v(
-            "\n    " +
-              _vm._s(_vm.l10n.getMsg("PLACEHOLDER_INFLECT_UNAVAILABLE")) +
-              "\n  "
+                : [
+                    _c("prerendered-table-wide", {
+                      attrs: { collapsed: false, view: _vm.selectedView }
+                    }),
+                    _vm._v(" "),
+                    _c("sub-tables-wide", {
+                      attrs: { collapsed: false, view: _vm.selectedView },
+                      on: { navigate: _vm.navigate }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.selectedView.hasSuppParadigms,
+                            expression: "selectedView.hasSuppParadigms"
+                          }
+                        ],
+                        staticClass: "alpheios-inflections__supp-tables"
+                      },
+                      [
+                        _vm._l(_vm.selectedView.suppParadigms, function(
+                          paradigm
+                        ) {
+                          return [
+                            _c("supp-tables-wide", {
+                              attrs: {
+                                "bg-color": _vm.selectedView.hlSuppParadigms
+                                  ? _vm.selectedView.suppHlColors.get(
+                                      paradigm.paradigmID
+                                    )
+                                  : "transparent",
+                                data: paradigm
+                              },
+                              on: { navigate: _vm.navigate }
+                            })
+                          ]
+                        })
+                      ],
+                      2
+                    )
+                  ],
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.selectedView.hasCredits,
+                      expression: "selectedView.hasCredits"
+                    }
+                  ],
+                  staticClass: "alpheios-inflections__credits-cont"
+                },
+                [
+                  _c(
+                    "h3",
+                    { staticClass: "alpheios-inflections__credits-title" },
+                    [
+                      _vm._v(
+                        _vm._s(_vm.l10n.getMsg("INFLECTIONS_CREDITS_TITLE"))
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", {
+                    staticClass: "alpheios-inflections__credits-text",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.selectedView.creditsText)
+                    }
+                  })
+                ]
+              )
+            ],
+            2
           )
-        ])
+        : _c("div", { staticClass: "alpheios-inflections__placeholder" }, [
+            _vm._v(
+              "\n    " +
+                _vm._s(_vm.l10n.getMsg("PLACEHOLDER_INFLECT_UNAVAILABLE")) +
+                "\n  "
+            )
+          ])
   ])
 }
 var staticRenderFns = []
@@ -16142,171 +16150,173 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "alpheios-lookup__form" },
-    [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.lookuptext,
-            expression: "lookuptext"
-          }
-        ],
-        staticClass: "uk-input alpheios-lookup__input",
-        attrs: {
-          placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
-          type: "text"
-        },
-        domProps: { value: _vm.lookuptext },
-        on: {
-          keyup: function($event) {
-            if (
-              "keyCode" in $event &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.lookup($event)
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.lookuptext = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "alph-tooltip",
-        {
-          attrs: {
-            tooltipText: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
-            tooltipDirection: "top-right"
-          }
-        },
-        [
-          _c("span", { staticClass: "alpheios-lookup__button_with_link" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-lookup__button",
-                attrs: { tabindex: "-1", type: "button" },
-                on: { click: _vm.lookup }
-              },
-              [
-                _vm._v(
-                  "\n      " +
-                    _vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")) +
-                    "\n    "
-                )
-              ]
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
+  return _vm.settings
+    ? _c(
         "div",
-        {
-          staticClass:
-            "alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small"
-        },
+        { staticClass: "alpheios-lookup__form" },
         [
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.overrideLanguage,
-                expression: "overrideLanguage"
+                value: _vm.lookuptext,
+                expression: "lookuptext"
               }
             ],
-            attrs: { id: "alpheios-checkbox-input", type: "checkbox" },
-            domProps: {
-              checked: Array.isArray(_vm.overrideLanguage)
-                ? _vm._i(_vm.overrideLanguage, null) > -1
-                : _vm.overrideLanguage
+            staticClass: "uk-input alpheios-lookup__input",
+            attrs: {
+              placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+              type: "text"
             },
+            domProps: { value: _vm.lookuptext },
             on: {
-              change: function($event) {
-                var $$a = _vm.overrideLanguage,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.overrideLanguage = $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      (_vm.overrideLanguage = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
-                  }
-                } else {
-                  _vm.overrideLanguage = $$c
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
                 }
+                return _vm.lookup($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.lookuptext = $event.target.value
               }
             }
           }),
           _vm._v(" "),
           _c(
-            "label",
+            "alph-tooltip",
             {
-              staticClass: "alpheios-override-lang__label",
-              attrs: { for: "checkbox" },
-              on: { click: _vm.checkboxClick }
-            },
-            [_vm._v(_vm._s(_vm.overrideLanguageLabel))]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "alpheios-lookup__settings" }, [
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.showLanguageSettings,
-                expression: "showLanguageSettings"
-              }
-            ],
-            staticClass: "alpheios-lookup__settings-items"
-          },
-          [
-            _c("alph-setting", {
               attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.lookupLanguage
-              },
-              on: { change: _vm.settingChange }
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.lexiconsFiltered, function(lexicon) {
-              return _c("alph-setting", {
-                key: lexicon.name,
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: lexicon
+                tooltipText: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+                tooltipDirection: "top-right"
+              }
+            },
+            [
+              _c("span", { staticClass: "alpheios-lookup__button_with_link" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "uk-button uk-button-primary uk-button-small alpheios-lookup__button",
+                    attrs: { tabindex: "-1", type: "button" },
+                    on: { click: _vm.lookup }
+                  },
+                  [
+                    _vm._v(
+                      "\n      " +
+                        _vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")) +
+                        "\n    "
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small"
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.overrideLanguage,
+                    expression: "overrideLanguage"
+                  }
+                ],
+                attrs: { id: "alpheios-checkbox-input", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.overrideLanguage)
+                    ? _vm._i(_vm.overrideLanguage, null) > -1
+                    : _vm.overrideLanguage
                 },
-                on: { change: _vm.resourceSettingChange }
-              })
-            })
-          ],
-          2
-        )
-      ])
-    ],
-    1
-  )
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.overrideLanguage,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.overrideLanguage = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.overrideLanguage = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.overrideLanguage = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "alpheios-override-lang__label",
+                  attrs: { for: "checkbox" },
+                  on: { click: _vm.checkboxClick }
+                },
+                [_vm._v(_vm._s(_vm.overrideLanguageLabel))]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-lookup__settings" }, [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.showLanguageSettings,
+                    expression: "showLanguageSettings"
+                  }
+                ],
+                staticClass: "alpheios-lookup__settings-items"
+              },
+              [
+                _c("alph-setting", {
+                  attrs: {
+                    classes: ["alpheios-panel__options-item"],
+                    data: _vm.lookupLanguage
+                  },
+                  on: { change: _vm.settingChange }
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.lexiconsFiltered, function(lexicon) {
+                  return _c("alph-setting", {
+                    key: lexicon.name,
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: lexicon
+                    },
+                    on: { change: _vm.resourceSettingChange }
+                  })
+                })
+              ],
+              2
+            )
+          ])
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -16346,8 +16356,8 @@ var render = function() {
                         _vm._v(_vm._s(_vm.index + 1))
                       ])
                     : lemmaIndex > 0 && _vm.count > 1
-                    ? _c("span", { staticClass: "lemma_index_spacer" })
-                    : _vm._e(),
+                      ? _c("span", { staticClass: "lemma_index_spacer" })
+                      : _vm._e(),
                   _vm._v(" "),
                   !lemma.principalParts.includes(lemma.word)
                     ? _c(
@@ -17050,7 +17060,7 @@ var render = function() {
         }
       ],
       staticClass: "alpheios-panel auk",
-      class: _vm.divClasses,
+      class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
         "data-notification-visible":
@@ -17085,7 +17095,7 @@ var render = function() {
                         class: { active: _vm.$store.state.app.tabState.info },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("info")
+                            _vm.changeTab("info")
                           }
                         }
                       },
@@ -17113,7 +17123,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("definitions")
+                            _vm.changeTab("definitions")
                           }
                         }
                       },
@@ -17151,7 +17161,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("inflections")
+                            _vm.changeTab("inflections")
                           }
                         }
                       },
@@ -17182,7 +17192,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("inflectionsbrowser")
+                            _vm.changeTab("inflectionsbrowser")
                           }
                         }
                       },
@@ -17222,7 +17232,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("grammar")
+                            _vm.changeTab("grammar")
                           }
                         }
                       },
@@ -17258,7 +17268,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("treebank")
+                            _vm.changeTab("treebank")
                           }
                         }
                       },
@@ -17286,7 +17296,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("options")
+                            _vm.changeTab("options")
                           }
                         }
                       },
@@ -17315,7 +17325,7 @@ var render = function() {
                             },
                             on: {
                               click: function($event) {
-                                return _vm.changeTab("user")
+                                _vm.changeTab("user")
                               }
                             }
                           },
@@ -17354,47 +17364,11 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("wordUsage")
+                            _vm.changeTab("wordUsage")
                           }
                         }
                       },
                       [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipDirection: "bottom-narrow",
-                      tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST")
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.showWordList,
-                            expression: "showWordList"
-                          }
-                        ],
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.wordlist
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("wordlist")
-                          }
-                        }
-                      },
-                      [_c("wordlist-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
@@ -17424,7 +17398,7 @@ var render = function() {
                         class: { active: _vm.$store.state.app.tabState.status },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("status")
+                            _vm.changeTab("status")
                           }
                         }
                       },
@@ -17474,7 +17448,7 @@ var render = function() {
                       "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left",
                     on: {
                       click: function($event) {
-                        return _vm.setPosition("left")
+                        _vm.setPosition("left")
                       }
                     }
                   },
@@ -17516,7 +17490,7 @@ var render = function() {
                       "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right",
                     on: {
                       click: function($event) {
-                        return _vm.setPosition("right")
+                        _vm.setPosition("right")
                       }
                     }
                   },
@@ -17644,29 +17618,37 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
+            _vm.settings.contentOptions.items
+              ? _c(
+                  "div",
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.inflectionsbrowser,
-                    expression: "$store.state.app.tabState.inflectionsbrowser"
-                  }
-                ],
-                staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
-                attrs: { id: _vm.inflectionsBrowserPanelID }
-              },
-              [
-                _c("inflection-browser", {
-                  attrs: { "language-id": _vm.inflectionBrowserLanguageID },
-                  on: { contentwidth: _vm.setContentWidth }
-                })
-              ],
-              1
-            ),
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.$store.state.app.tabState.inflectionsbrowser,
+                        expression:
+                          "$store.state.app.tabState.inflectionsbrowser"
+                      }
+                    ],
+                    staticClass:
+                      "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
+                    attrs: { id: _vm.inflectionsBrowserPanelID }
+                  },
+                  [
+                    _c("inflection-browser", {
+                      attrs: {
+                        data: _vm.data.inflectionBrowserData,
+                        "infl-browser-tables-collapsed":
+                          _vm.data.inflBrowserTablesCollapsed,
+                        "language-id": _vm.inflectionBrowserLanguageID
+                      },
+                      on: { contentwidth: _vm.setContentWidth }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "div",
@@ -17988,31 +17970,6 @@ var render = function() {
                 _c("info")
               ],
               1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.wordlist,
-                    expression: "$store.state.app.tabState.wordlist"
-                  }
-                ],
-                staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
-              },
-              [
-                _c("word-list-panel", {
-                  attrs: {
-                    wordlistC: _vm.app.wordlistC,
-                    updated: _vm.$store.state.app.wordListUpdated
-                  }
-                })
-              ],
-              1
             )
           ])
         : _vm._e(),
@@ -18160,7 +18117,7 @@ var render = function() {
                         class: { active: _vm.$store.state.app.tabState.info },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("info")
+                            _vm.changeTab("info")
                           }
                         }
                       },
@@ -18188,7 +18145,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("definitions")
+                            _vm.changeTab("definitions")
                           }
                         }
                       },
@@ -18226,7 +18183,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("inflections")
+                            _vm.changeTab("inflections")
                           }
                         }
                       },
@@ -18257,7 +18214,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("inflectionsbrowser")
+                            _vm.changeTab("inflectionsbrowser")
                           }
                         }
                       },
@@ -18297,7 +18254,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("grammar")
+                            _vm.changeTab("grammar")
                           }
                         }
                       },
@@ -18333,7 +18290,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("treebank")
+                            _vm.changeTab("treebank")
                           }
                         }
                       },
@@ -18361,7 +18318,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("options")
+                            _vm.changeTab("options")
                           }
                         }
                       },
@@ -18390,7 +18347,7 @@ var render = function() {
                             },
                             on: {
                               click: function($event) {
-                                return _vm.changeTab("user")
+                                _vm.changeTab("user")
                               }
                             }
                           },
@@ -18429,47 +18386,11 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("wordUsage")
+                            _vm.changeTab("wordUsage")
                           }
                         }
                       },
                       [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipDirection: "bottom-narrow",
-                      tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST")
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.showWordList,
-                            expression: "showWordList"
-                          }
-                        ],
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.wordlist
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("wordlist")
-                          }
-                        }
-                      },
-                      [_c("wordlist-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
@@ -18499,7 +18420,7 @@ var render = function() {
                         class: { active: _vm.$store.state.app.tabState.status },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("status")
+                            _vm.changeTab("status")
                           }
                         }
                       },
@@ -18549,7 +18470,7 @@ var render = function() {
                       "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left",
                     on: {
                       click: function($event) {
-                        return _vm.setPosition("left")
+                        _vm.setPosition("left")
                       }
                     }
                   },
@@ -18591,7 +18512,7 @@ var render = function() {
                       "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right",
                     on: {
                       click: function($event) {
-                        return _vm.setPosition("right")
+                        _vm.setPosition("right")
                       }
                     }
                   },
@@ -18719,29 +18640,37 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
+            _vm.settings.contentOptions.items
+              ? _c(
+                  "div",
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.inflectionsbrowser,
-                    expression: "$store.state.app.tabState.inflectionsbrowser"
-                  }
-                ],
-                staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
-                attrs: { id: _vm.inflectionsBrowserPanelID }
-              },
-              [
-                _c("inflection-browser", {
-                  attrs: { "language-id": _vm.inflectionBrowserLanguageID },
-                  on: { contentwidth: _vm.setContentWidth }
-                })
-              ],
-              1
-            ),
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.$store.state.app.tabState.inflectionsbrowser,
+                        expression:
+                          "$store.state.app.tabState.inflectionsbrowser"
+                      }
+                    ],
+                    staticClass:
+                      "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
+                    attrs: { id: _vm.inflectionsBrowserPanelID }
+                  },
+                  [
+                    _c("inflection-browser", {
+                      attrs: {
+                        data: _vm.data.inflectionBrowserData,
+                        "infl-browser-tables-collapsed":
+                          _vm.data.inflBrowserTablesCollapsed,
+                        "language-id": _vm.inflectionBrowserLanguageID
+                      },
+                      on: { contentwidth: _vm.setContentWidth }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "div",
@@ -19063,31 +18992,6 @@ var render = function() {
                 _c("info")
               ],
               1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.wordlist,
-                    expression: "$store.state.app.tabState.wordlist"
-                  }
-                ],
-                staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
-              },
-              [
-                _c("word-list-panel", {
-                  attrs: {
-                    wordlistC: _vm.api.wordlistC,
-                    updated: _vm.data.wordListUpdated
-                  }
-                })
-              ],
-              1
             )
           ])
         : _vm._e(),
@@ -19271,7 +19175,7 @@ var render = function() {
                   "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
                 on: {
                   click: function($event) {
-                    return _vm.showPanelTab("inflections")
+                    _vm.showPanelTab("inflections")
                   }
                 }
               },
@@ -19299,7 +19203,7 @@ var render = function() {
                   "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
                 on: {
                   click: function($event) {
-                    return _vm.showPanelTab("definitions")
+                    _vm.showPanelTab("definitions")
                   }
                 }
               },
@@ -19319,7 +19223,7 @@ var render = function() {
                   "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
                 on: {
                   click: function($event) {
-                    return _vm.showPanelTab("options")
+                    _vm.showPanelTab("options")
                   }
                 }
               },
@@ -19526,7 +19430,7 @@ var render = function() {
       ],
       ref: "popup",
       staticClass: "alpheios-popup auk",
-      class: _vm.divClasses,
+      class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
         "data-notification-visible":
@@ -19640,7 +19544,7 @@ var render = function() {
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions",
                         on: {
                           click: function($event) {
-                            return _vm.showPanelTab("definitions")
+                            _vm.showPanelTab("definitions")
                           }
                         }
                       },
@@ -19679,7 +19583,7 @@ var render = function() {
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
                         on: {
                           click: function($event) {
-                            return _vm.showPanelTab("inflections")
+                            _vm.showPanelTab("inflections")
                           }
                         }
                       },
@@ -19722,7 +19626,7 @@ var render = function() {
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
                         on: {
                           click: function($event) {
-                            return _vm.showPanelTab("wordUsage")
+                            _vm.showPanelTab("wordUsage")
                           }
                         }
                       },
@@ -19763,7 +19667,7 @@ var render = function() {
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank",
                         on: {
                           click: function($event) {
-                            return _vm.showPanelTab("treebank")
+                            _vm.showPanelTab("treebank")
                           }
                         }
                       },
@@ -19794,7 +19698,7 @@ var render = function() {
                           "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options",
                         on: {
                           click: function($event) {
-                            return _vm.showPanelTab("options")
+                            _vm.showPanelTab("options")
                           }
                         }
                       },
@@ -20129,7 +20033,7 @@ var render = function() {
                     "alpheios-skin_properties_item alpheios-skin_properties_item__small_font",
                   on: {
                     click: function($event) {
-                      return _vm.changeStyleClass("fontSize", "small")
+                      _vm.changeStyleClass("fontSize", "small")
                     }
                   }
                 },
@@ -20154,7 +20058,7 @@ var render = function() {
                     "alpheios-skin_properties_item alpheios-skin_properties_item__medium_font",
                   on: {
                     click: function($event) {
-                      return _vm.changeStyleClass("fontSize", "medium")
+                      _vm.changeStyleClass("fontSize", "medium")
                     }
                   }
                 },
@@ -20179,7 +20083,7 @@ var render = function() {
                     "alpheios-skin_properties_item alpheios-skin_properties_item__large_font",
                   on: {
                     click: function($event) {
-                      return _vm.changeStyleClass("fontSize", "large")
+                      _vm.changeStyleClass("fontSize", "large")
                     }
                   }
                 },
@@ -20204,7 +20108,7 @@ var render = function() {
                     "alpheios-skin_properties_item alpheios-skin_properties_item__light_bg",
                   on: {
                     click: function($event) {
-                      return _vm.changeStyleClass("colorSchema", "light")
+                      _vm.changeStyleClass("colorSchema", "light")
                     }
                   }
                 },
@@ -20230,7 +20134,7 @@ var render = function() {
                     "alpheios-skin_properties_item alpheios-skin_properties_item__dark_bg",
                   on: {
                     click: function($event) {
-                      return _vm.changeStyleClass("colorSchema", "dark")
+                      _vm.changeStyleClass("colorSchema", "dark")
                     }
                   }
                 },
@@ -21020,14 +20924,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.3
+ * Vue.js v2.5.22
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
 (function (global, factory) {
    true ? module.exports = factory() :
   undefined;
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   /*  */
 
@@ -21102,21 +21006,13 @@ __webpack_require__.r(__webpack_exports__);
     return n >= 0 && Math.floor(n) === n && isFinite(val)
   }
 
-  function isPromise (val) {
-    return (
-      isDef(val) &&
-      typeof val.then === 'function' &&
-      typeof val.catch === 'function'
-    )
-  }
-
   /**
    * Convert a value to a string that is actually rendered.
    */
   function toString (val) {
     return val == null
       ? ''
-      : Array.isArray(val) || (isPlainObject(val) && val.toString === _toString)
+      : typeof val === 'object'
         ? JSON.stringify(val, null, 2)
         : String(val)
   }
@@ -21392,8 +21288,7 @@ __webpack_require__.r(__webpack_exports__);
     'destroyed',
     'activated',
     'deactivated',
-    'errorCaptured',
-    'serverPrefetch'
+    'errorCaptured'
   ];
 
   /*  */
@@ -21497,13 +21392,6 @@ __webpack_require__.r(__webpack_exports__);
   /*  */
 
   /**
-   * unicode letters used for parsing html tags, component names and property paths.
-   * using https://www.w3.org/TR/html53/semantics-scripting.html#potentialcustomelementname
-   * skipping \u10000-\uEFFFF due to it freezing up PhantomJS
-   */
-  var unicodeLetters = 'a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD';
-
-  /**
    * Check if a string starts with $ or _
    */
   function isReserved (str) {
@@ -21526,7 +21414,7 @@ __webpack_require__.r(__webpack_exports__);
   /**
    * Parse simple path.
    */
-  var bailRE = new RegExp(("[^" + unicodeLetters + ".$_\\d]"));
+  var bailRE = /[^\w.$]/;
   function parsePath (path) {
     if (bailRE.test(path)) {
       return
@@ -21557,8 +21445,6 @@ __webpack_require__.r(__webpack_exports__);
   var isAndroid = (UA && UA.indexOf('android') > 0) || (weexPlatform === 'android');
   var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
   var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
-  var isPhantomJS = UA && /phantomjs/.test(UA);
-  var isFF = UA && UA.match(/firefox\/(\d+)/);
 
   // Firefox has a "watch" function on Object.prototype...
   var nativeWatch = ({}).watch;
@@ -22202,15 +22088,9 @@ __webpack_require__.r(__webpack_exports__);
   function mergeData (to, from) {
     if (!from) { return to }
     var key, toVal, fromVal;
-
-    var keys = hasSymbol
-      ? Reflect.ownKeys(from)
-      : Object.keys(from);
-
+    var keys = Object.keys(from);
     for (var i = 0; i < keys.length; i++) {
       key = keys[i];
-      // in case the object is already observed...
-      if (key === '__ob__') { continue }
       toVal = to[key];
       fromVal = from[key];
       if (!hasOwn(to, key)) {
@@ -22430,10 +22310,11 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   function validateComponentName (name) {
-    if (!new RegExp(("^[a-zA-Z][\\-\\.0-9_" + unicodeLetters + "]*$")).test(name)) {
+    if (!/^[a-zA-Z][\w-]*$/.test(name)) {
       warn(
         'Invalid component name: "' + name + '". Component names ' +
-        'should conform to valid custom element name in html5 specification.'
+        'can only contain alphanumeric characters and the hyphen, ' +
+        'and must start with a letter.'
       );
     }
     if (isBuiltInTag(name) || config.isReservedTag(name)) {
@@ -22516,9 +22397,9 @@ __webpack_require__.r(__webpack_exports__);
     var dirs = options.directives;
     if (dirs) {
       for (var key in dirs) {
-        var def$$1 = dirs[key];
-        if (typeof def$$1 === 'function') {
-          dirs[key] = { bind: def$$1, update: def$$1 };
+        var def = dirs[key];
+        if (typeof def === 'function') {
+          dirs[key] = { bind: def, update: def };
         }
       }
     }
@@ -22864,25 +22745,6 @@ __webpack_require__.r(__webpack_exports__);
     globalHandleError(err, vm, info);
   }
 
-  function invokeWithErrorHandling (
-    handler,
-    context,
-    args,
-    vm,
-    info
-  ) {
-    var res;
-    try {
-      res = args ? handler.apply(context, args) : handler.call(context);
-      if (res && !res._isVue && isPromise(res)) {
-        res.catch(function (e) { return handleError(e, vm, info + " (Promise/async)"); });
-      }
-    } catch (e) {
-      handleError(e, vm, info);
-    }
-    return res
-  }
-
   function globalHandleError (err, vm, info) {
     if (config.errorHandler) {
       try {
@@ -22908,8 +22770,6 @@ __webpack_require__.r(__webpack_exports__);
 
   /*  */
 
-  var isUsingMicroTask = false;
-
   var callbacks = [];
   var pending = false;
 
@@ -22922,69 +22782,76 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 
-  // Here we have async deferring wrappers using microtasks.
-  // In 2.5 we used (macro) tasks (in combination with microtasks).
-  // However, it has subtle problems when state is changed right before repaint
-  // (e.g. #6813, out-in transitions).
-  // Also, using (macro) tasks in event handler would cause some weird behaviors
-  // that cannot be circumvented (e.g. #7109, #7153, #7546, #7834, #8109).
-  // So we now use microtasks everywhere, again.
-  // A major drawback of this tradeoff is that there are some scenarios
-  // where microtasks have too high a priority and fire in between supposedly
-  // sequential events (e.g. #4521, #6690, which have workarounds)
-  // or even between bubbling of the same event (#6566).
-  var timerFunc;
+  // Here we have async deferring wrappers using both microtasks and (macro) tasks.
+  // In < 2.4 we used microtasks everywhere, but there are some scenarios where
+  // microtasks have too high a priority and fire in between supposedly
+  // sequential events (e.g. #4521, #6690) or even between bubbling of the same
+  // event (#6566). However, using (macro) tasks everywhere also has subtle problems
+  // when state is changed right before repaint (e.g. #6813, out-in transitions).
+  // Here we use microtask by default, but expose a way to force (macro) task when
+  // needed (e.g. in event handlers attached by v-on).
+  var microTimerFunc;
+  var macroTimerFunc;
+  var useMacroTask = false;
 
-  // The nextTick behavior leverages the microtask queue, which can be accessed
-  // via either native Promise.then or MutationObserver.
-  // MutationObserver has wider support, however it is seriously bugged in
-  // UIWebView in iOS >= 9.3.3 when triggered in touch event handlers. It
-  // completely stops working after triggering a few times... so, if native
-  // Promise is available, we will use it:
+  // Determine (macro) task defer implementation.
+  // Technically setImmediate should be the ideal choice, but it's only available
+  // in IE. The only polyfill that consistently queues the callback after all DOM
+  // events triggered in the same loop is by using MessageChannel.
+  /* istanbul ignore if */
+  if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
+    macroTimerFunc = function () {
+      setImmediate(flushCallbacks);
+    };
+  } else if (typeof MessageChannel !== 'undefined' && (
+    isNative(MessageChannel) ||
+    // PhantomJS
+    MessageChannel.toString() === '[object MessageChannelConstructor]'
+  )) {
+    var channel = new MessageChannel();
+    var port = channel.port2;
+    channel.port1.onmessage = flushCallbacks;
+    macroTimerFunc = function () {
+      port.postMessage(1);
+    };
+  } else {
+    /* istanbul ignore next */
+    macroTimerFunc = function () {
+      setTimeout(flushCallbacks, 0);
+    };
+  }
+
+  // Determine microtask defer implementation.
   /* istanbul ignore next, $flow-disable-line */
   if (typeof Promise !== 'undefined' && isNative(Promise)) {
     var p = Promise.resolve();
-    timerFunc = function () {
+    microTimerFunc = function () {
       p.then(flushCallbacks);
-      // In problematic UIWebViews, Promise.then doesn't completely break, but
+      // in problematic UIWebViews, Promise.then doesn't completely break, but
       // it can get stuck in a weird state where callbacks are pushed into the
       // microtask queue but the queue isn't being flushed, until the browser
       // needs to do some other work, e.g. handle a timer. Therefore we can
       // "force" the microtask queue to be flushed by adding an empty timer.
       if (isIOS) { setTimeout(noop); }
     };
-    isUsingMicroTask = true;
-  } else if (!isIE && typeof MutationObserver !== 'undefined' && (
-    isNative(MutationObserver) ||
-    // PhantomJS and iOS 7.x
-    MutationObserver.toString() === '[object MutationObserverConstructor]'
-  )) {
-    // Use MutationObserver where native Promise is not available,
-    // e.g. PhantomJS, iOS7, Android 4.4
-    // (#6466 MutationObserver is unreliable in IE11)
-    var counter = 1;
-    var observer = new MutationObserver(flushCallbacks);
-    var textNode = document.createTextNode(String(counter));
-    observer.observe(textNode, {
-      characterData: true
-    });
-    timerFunc = function () {
-      counter = (counter + 1) % 2;
-      textNode.data = String(counter);
-    };
-    isUsingMicroTask = true;
-  } else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
-    // Fallback to setImmediate.
-    // Techinically it leverages the (macro) task queue,
-    // but it is still a better choice than setTimeout.
-    timerFunc = function () {
-      setImmediate(flushCallbacks);
-    };
   } else {
-    // Fallback to setTimeout.
-    timerFunc = function () {
-      setTimeout(flushCallbacks, 0);
-    };
+    // fallback to macro
+    microTimerFunc = macroTimerFunc;
+  }
+
+  /**
+   * Wrap a function so that if any code inside triggers state change,
+   * the changes are queued using a (macro) task instead of a microtask.
+   */
+  function withMacroTask (fn) {
+    return fn._withTask || (fn._withTask = function () {
+      useMacroTask = true;
+      try {
+        return fn.apply(null, arguments)
+      } finally {
+        useMacroTask = false;    
+      }
+    })
   }
 
   function nextTick (cb, ctx) {
@@ -23002,7 +22869,11 @@ __webpack_require__.r(__webpack_exports__);
     });
     if (!pending) {
       pending = true;
-      timerFunc();
+      if (useMacroTask) {
+        macroTimerFunc();
+      } else {
+        microTimerFunc();
+      }
     }
     // $flow-disable-line
     if (!cb && typeof Promise !== 'undefined') {
@@ -23032,7 +22903,7 @@ __webpack_require__.r(__webpack_exports__);
         perf.measure(name, startTag, endTag);
         perf.clearMarks(startTag);
         perf.clearMarks(endTag);
-        // perf.clearMeasures(name)
+        perf.clearMeasures(name);
       };
     }
   }
@@ -23179,7 +23050,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   });
 
-  function createFnInvoker (fns, vm) {
+  function createFnInvoker (fns) {
     function invoker () {
       var arguments$1 = arguments;
 
@@ -23187,11 +23058,11 @@ __webpack_require__.r(__webpack_exports__);
       if (Array.isArray(fns)) {
         var cloned = fns.slice();
         for (var i = 0; i < cloned.length; i++) {
-          invokeWithErrorHandling(cloned[i], null, arguments$1, vm, "v-on handler");
+          cloned[i].apply(null, arguments$1);
         }
       } else {
         // return handler return value for single handlers
-        return invokeWithErrorHandling(fns, null, arguments, vm, "v-on handler")
+        return fns.apply(null, arguments)
       }
     }
     invoker.fns = fns;
@@ -23218,7 +23089,7 @@ __webpack_require__.r(__webpack_exports__);
         );
       } else if (isUndef(old)) {
         if (isUndef(cur.fns)) {
-          cur = on[name] = createFnInvoker(cur, vm);
+          cur = on[name] = createFnInvoker(cur);
         }
         if (isTrue(event.once)) {
           cur = on[name] = createOnceHandler(event.name, cur, event.capture);
@@ -23429,1108 +23300,6 @@ __webpack_require__.r(__webpack_exports__);
 
   /*  */
 
-  function initProvide (vm) {
-    var provide = vm.$options.provide;
-    if (provide) {
-      vm._provided = typeof provide === 'function'
-        ? provide.call(vm)
-        : provide;
-    }
-  }
-
-  function initInjections (vm) {
-    var result = resolveInject(vm.$options.inject, vm);
-    if (result) {
-      toggleObserving(false);
-      Object.keys(result).forEach(function (key) {
-        /* istanbul ignore else */
-        {
-          defineReactive$$1(vm, key, result[key], function () {
-            warn(
-              "Avoid mutating an injected value directly since the changes will be " +
-              "overwritten whenever the provided component re-renders. " +
-              "injection being mutated: \"" + key + "\"",
-              vm
-            );
-          });
-        }
-      });
-      toggleObserving(true);
-    }
-  }
-
-  function resolveInject (inject, vm) {
-    if (inject) {
-      // inject is :any because flow is not smart enough to figure out cached
-      var result = Object.create(null);
-      var keys = hasSymbol
-        ? Reflect.ownKeys(inject)
-        : Object.keys(inject);
-
-      for (var i = 0; i < keys.length; i++) {
-        var key = keys[i];
-        // #6574 in case the inject object is observed...
-        if (key === '__ob__') { continue }
-        var provideKey = inject[key].from;
-        var source = vm;
-        while (source) {
-          if (source._provided && hasOwn(source._provided, provideKey)) {
-            result[key] = source._provided[provideKey];
-            break
-          }
-          source = source.$parent;
-        }
-        if (!source) {
-          if ('default' in inject[key]) {
-            var provideDefault = inject[key].default;
-            result[key] = typeof provideDefault === 'function'
-              ? provideDefault.call(vm)
-              : provideDefault;
-          } else {
-            warn(("Injection \"" + key + "\" not found"), vm);
-          }
-        }
-      }
-      return result
-    }
-  }
-
-  /*  */
-
-
-
-  /**
-   * Runtime helper for resolving raw children VNodes into a slot object.
-   */
-  function resolveSlots (
-    children,
-    context
-  ) {
-    if (!children || !children.length) {
-      return {}
-    }
-    var slots = {};
-    for (var i = 0, l = children.length; i < l; i++) {
-      var child = children[i];
-      var data = child.data;
-      // remove slot attribute if the node is resolved as a Vue slot node
-      if (data && data.attrs && data.attrs.slot) {
-        delete data.attrs.slot;
-      }
-      // named slots should only be respected if the vnode was rendered in the
-      // same context.
-      if ((child.context === context || child.fnContext === context) &&
-        data && data.slot != null
-      ) {
-        var name = data.slot;
-        var slot = (slots[name] || (slots[name] = []));
-        if (child.tag === 'template') {
-          slot.push.apply(slot, child.children || []);
-        } else {
-          slot.push(child);
-        }
-      } else {
-        (slots.default || (slots.default = [])).push(child);
-      }
-    }
-    // ignore slots that contains only whitespace
-    for (var name$1 in slots) {
-      if (slots[name$1].every(isWhitespace)) {
-        delete slots[name$1];
-      }
-    }
-    return slots
-  }
-
-  function isWhitespace (node) {
-    return (node.isComment && !node.asyncFactory) || node.text === ' '
-  }
-
-  /*  */
-
-  function normalizeScopedSlots (
-    slots,
-    normalSlots
-  ) {
-    var res;
-    if (!slots) {
-      res = {};
-    } else if (slots._normalized) {
-      return slots
-    } else {
-      res = {};
-      for (var key in slots) {
-        if (slots[key] && key[0] !== '$') {
-          res[key] = normalizeScopedSlot(slots[key]);
-        }
-      }
-    }
-    // expose normal slots on scopedSlots
-    for (var key$1 in normalSlots) {
-      if (!(key$1 in res)) {
-        res[key$1] = proxyNormalSlot(normalSlots, key$1);
-      }
-    }
-    def(res, '_normalized', true);
-    def(res, '$stable', slots ? !!slots.$stable : true);
-    return res
-  }
-
-  function normalizeScopedSlot(fn) {
-    return function (scope) {
-      var res = fn(scope);
-      return res && typeof res === 'object' && !Array.isArray(res)
-        ? [res] // single vnode
-        : normalizeChildren(res)
-    }
-  }
-
-  function proxyNormalSlot(slots, key) {
-    return function () { return slots[key]; }
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for rendering v-for lists.
-   */
-  function renderList (
-    val,
-    render
-  ) {
-    var ret, i, l, keys, key;
-    if (Array.isArray(val) || typeof val === 'string') {
-      ret = new Array(val.length);
-      for (i = 0, l = val.length; i < l; i++) {
-        ret[i] = render(val[i], i);
-      }
-    } else if (typeof val === 'number') {
-      ret = new Array(val);
-      for (i = 0; i < val; i++) {
-        ret[i] = render(i + 1, i);
-      }
-    } else if (isObject(val)) {
-      if (hasSymbol && val[Symbol.iterator]) {
-        ret = [];
-        var iterator = val[Symbol.iterator]();
-        var result = iterator.next();
-        while (!result.done) {
-          ret.push(render(result.value, ret.length));
-          result = iterator.next();
-        }
-      } else {
-        keys = Object.keys(val);
-        ret = new Array(keys.length);
-        for (i = 0, l = keys.length; i < l; i++) {
-          key = keys[i];
-          ret[i] = render(val[key], key, i);
-        }
-      }
-    }
-    if (!isDef(ret)) {
-      ret = [];
-    }
-    (ret)._isVList = true;
-    return ret
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for rendering <slot>
-   */
-  function renderSlot (
-    name,
-    fallback,
-    props,
-    bindObject
-  ) {
-    var scopedSlotFn = this.$scopedSlots[name];
-    var nodes;
-    if (scopedSlotFn) { // scoped slot
-      props = props || {};
-      if (bindObject) {
-        if (!isObject(bindObject)) {
-          warn(
-            'slot v-bind without argument expects an Object',
-            this
-          );
-        }
-        props = extend(extend({}, bindObject), props);
-      }
-      nodes = scopedSlotFn(props) || fallback;
-    } else {
-      nodes = this.$slots[name] || fallback;
-    }
-
-    var target = props && props.slot;
-    if (target) {
-      return this.$createElement('template', { slot: target }, nodes)
-    } else {
-      return nodes
-    }
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for resolving filters
-   */
-  function resolveFilter (id) {
-    return resolveAsset(this.$options, 'filters', id, true) || identity
-  }
-
-  /*  */
-
-  function isKeyNotMatch (expect, actual) {
-    if (Array.isArray(expect)) {
-      return expect.indexOf(actual) === -1
-    } else {
-      return expect !== actual
-    }
-  }
-
-  /**
-   * Runtime helper for checking keyCodes from config.
-   * exposed as Vue.prototype._k
-   * passing in eventKeyName as last argument separately for backwards compat
-   */
-  function checkKeyCodes (
-    eventKeyCode,
-    key,
-    builtInKeyCode,
-    eventKeyName,
-    builtInKeyName
-  ) {
-    var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
-    if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
-      return isKeyNotMatch(builtInKeyName, eventKeyName)
-    } else if (mappedKeyCode) {
-      return isKeyNotMatch(mappedKeyCode, eventKeyCode)
-    } else if (eventKeyName) {
-      return hyphenate(eventKeyName) !== key
-    }
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for merging v-bind="object" into a VNode's data.
-   */
-  function bindObjectProps (
-    data,
-    tag,
-    value,
-    asProp,
-    isSync
-  ) {
-    if (value) {
-      if (!isObject(value)) {
-        warn(
-          'v-bind without argument expects an Object or Array value',
-          this
-        );
-      } else {
-        if (Array.isArray(value)) {
-          value = toObject(value);
-        }
-        var hash;
-        var loop = function ( key ) {
-          if (
-            key === 'class' ||
-            key === 'style' ||
-            isReservedAttribute(key)
-          ) {
-            hash = data;
-          } else {
-            var type = data.attrs && data.attrs.type;
-            hash = asProp || config.mustUseProp(tag, type, key)
-              ? data.domProps || (data.domProps = {})
-              : data.attrs || (data.attrs = {});
-          }
-          var camelizedKey = camelize(key);
-          if (!(key in hash) && !(camelizedKey in hash)) {
-            hash[key] = value[key];
-
-            if (isSync) {
-              var on = data.on || (data.on = {});
-              on[("update:" + camelizedKey)] = function ($event) {
-                value[key] = $event;
-              };
-            }
-          }
-        };
-
-        for (var key in value) loop( key );
-      }
-    }
-    return data
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for rendering static trees.
-   */
-  function renderStatic (
-    index,
-    isInFor
-  ) {
-    var cached = this._staticTrees || (this._staticTrees = []);
-    var tree = cached[index];
-    // if has already-rendered static tree and not inside v-for,
-    // we can reuse the same tree.
-    if (tree && !isInFor) {
-      return tree
-    }
-    // otherwise, render a fresh tree.
-    tree = cached[index] = this.$options.staticRenderFns[index].call(
-      this._renderProxy,
-      null,
-      this // for render fns generated for functional component templates
-    );
-    markStatic(tree, ("__static__" + index), false);
-    return tree
-  }
-
-  /**
-   * Runtime helper for v-once.
-   * Effectively it means marking the node as static with a unique key.
-   */
-  function markOnce (
-    tree,
-    index,
-    key
-  ) {
-    markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
-    return tree
-  }
-
-  function markStatic (
-    tree,
-    key,
-    isOnce
-  ) {
-    if (Array.isArray(tree)) {
-      for (var i = 0; i < tree.length; i++) {
-        if (tree[i] && typeof tree[i] !== 'string') {
-          markStaticNode(tree[i], (key + "_" + i), isOnce);
-        }
-      }
-    } else {
-      markStaticNode(tree, key, isOnce);
-    }
-  }
-
-  function markStaticNode (node, key, isOnce) {
-    node.isStatic = true;
-    node.key = key;
-    node.isOnce = isOnce;
-  }
-
-  /*  */
-
-  function bindObjectListeners (data, value) {
-    if (value) {
-      if (!isPlainObject(value)) {
-        warn(
-          'v-on without argument expects an Object value',
-          this
-        );
-      } else {
-        var on = data.on = data.on ? extend({}, data.on) : {};
-        for (var key in value) {
-          var existing = on[key];
-          var ours = value[key];
-          on[key] = existing ? [].concat(existing, ours) : ours;
-        }
-      }
-    }
-    return data
-  }
-
-  /*  */
-
-  function resolveScopedSlots (
-    fns, // see flow/vnode
-    hasDynamicKeys,
-    res
-  ) {
-    res = res || { $stable: !hasDynamicKeys };
-    for (var i = 0; i < fns.length; i++) {
-      var slot = fns[i];
-      if (Array.isArray(slot)) {
-        resolveScopedSlots(slot, hasDynamicKeys, res);
-      } else if (slot) {
-        res[slot.key] = slot.fn;
-      }
-    }
-    return res
-  }
-
-  /*  */
-
-  function bindDynamicKeys (baseObj, values) {
-    for (var i = 0; i < values.length; i += 2) {
-      var key = values[i];
-      if (typeof key === 'string' && key) {
-        baseObj[values[i]] = values[i + 1];
-      } else if (key !== '' && key !== null) {
-        // null is a speical value for explicitly removing a binding
-        warn(
-          ("Invalid value for dynamic directive argument (expected string or null): " + key),
-          this
-        );
-      }
-    }
-    return baseObj
-  }
-
-  // helper to dynamically append modifier runtime markers to event names.
-  // ensure only append when value is already string, otherwise it will be cast
-  // to string and cause the type check to miss.
-  function prependModifier (value, symbol) {
-    return typeof value === 'string' ? symbol + value : value
-  }
-
-  /*  */
-
-  function installRenderHelpers (target) {
-    target._o = markOnce;
-    target._n = toNumber;
-    target._s = toString;
-    target._l = renderList;
-    target._t = renderSlot;
-    target._q = looseEqual;
-    target._i = looseIndexOf;
-    target._m = renderStatic;
-    target._f = resolveFilter;
-    target._k = checkKeyCodes;
-    target._b = bindObjectProps;
-    target._v = createTextVNode;
-    target._e = createEmptyVNode;
-    target._u = resolveScopedSlots;
-    target._g = bindObjectListeners;
-    target._d = bindDynamicKeys;
-    target._p = prependModifier;
-  }
-
-  /*  */
-
-  function FunctionalRenderContext (
-    data,
-    props,
-    children,
-    parent,
-    Ctor
-  ) {
-    var options = Ctor.options;
-    // ensure the createElement function in functional components
-    // gets a unique context - this is necessary for correct named slot check
-    var contextVm;
-    if (hasOwn(parent, '_uid')) {
-      contextVm = Object.create(parent);
-      // $flow-disable-line
-      contextVm._original = parent;
-    } else {
-      // the context vm passed in is a functional context as well.
-      // in this case we want to make sure we are able to get a hold to the
-      // real context instance.
-      contextVm = parent;
-      // $flow-disable-line
-      parent = parent._original;
-    }
-    var isCompiled = isTrue(options._compiled);
-    var needNormalization = !isCompiled;
-
-    this.data = data;
-    this.props = props;
-    this.children = children;
-    this.parent = parent;
-    this.listeners = data.on || emptyObject;
-    this.injections = resolveInject(options.inject, parent);
-    this.slots = function () { return resolveSlots(children, parent); };
-
-    Object.defineProperty(this, 'scopedSlots', ({
-      enumerable: true,
-      get: function get () {
-        return normalizeScopedSlots(data.scopedSlots, this.slots())
-      }
-    }));
-
-    // support for compiled functional template
-    if (isCompiled) {
-      // exposing $options for renderStatic()
-      this.$options = options;
-      // pre-resolve slots for renderSlot()
-      this.$slots = this.slots();
-      this.$scopedSlots = normalizeScopedSlots(data.scopedSlots, this.$slots);
-    }
-
-    if (options._scopeId) {
-      this._c = function (a, b, c, d) {
-        var vnode = createElement(contextVm, a, b, c, d, needNormalization);
-        if (vnode && !Array.isArray(vnode)) {
-          vnode.fnScopeId = options._scopeId;
-          vnode.fnContext = parent;
-        }
-        return vnode
-      };
-    } else {
-      this._c = function (a, b, c, d) { return createElement(contextVm, a, b, c, d, needNormalization); };
-    }
-  }
-
-  installRenderHelpers(FunctionalRenderContext.prototype);
-
-  function createFunctionalComponent (
-    Ctor,
-    propsData,
-    data,
-    contextVm,
-    children
-  ) {
-    var options = Ctor.options;
-    var props = {};
-    var propOptions = options.props;
-    if (isDef(propOptions)) {
-      for (var key in propOptions) {
-        props[key] = validateProp(key, propOptions, propsData || emptyObject);
-      }
-    } else {
-      if (isDef(data.attrs)) { mergeProps(props, data.attrs); }
-      if (isDef(data.props)) { mergeProps(props, data.props); }
-    }
-
-    var renderContext = new FunctionalRenderContext(
-      data,
-      props,
-      children,
-      contextVm,
-      Ctor
-    );
-
-    var vnode = options.render.call(null, renderContext._c, renderContext);
-
-    if (vnode instanceof VNode) {
-      return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options, renderContext)
-    } else if (Array.isArray(vnode)) {
-      var vnodes = normalizeChildren(vnode) || [];
-      var res = new Array(vnodes.length);
-      for (var i = 0; i < vnodes.length; i++) {
-        res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options, renderContext);
-      }
-      return res
-    }
-  }
-
-  function cloneAndMarkFunctionalResult (vnode, data, contextVm, options, renderContext) {
-    // #7817 clone node before setting fnContext, otherwise if the node is reused
-    // (e.g. it was from a cached normal slot) the fnContext causes named slots
-    // that should not be matched to match.
-    var clone = cloneVNode(vnode);
-    clone.fnContext = contextVm;
-    clone.fnOptions = options;
-    {
-      (clone.devtoolsMeta = clone.devtoolsMeta || {}).renderContext = renderContext;
-    }
-    if (data.slot) {
-      (clone.data || (clone.data = {})).slot = data.slot;
-    }
-    return clone
-  }
-
-  function mergeProps (to, from) {
-    for (var key in from) {
-      to[camelize(key)] = from[key];
-    }
-  }
-
-  /*  */
-
-  /*  */
-
-  /*  */
-
-  /*  */
-
-  // inline hooks to be invoked on component VNodes during patch
-  var componentVNodeHooks = {
-    init: function init (vnode, hydrating) {
-      if (
-        vnode.componentInstance &&
-        !vnode.componentInstance._isDestroyed &&
-        vnode.data.keepAlive
-      ) {
-        // kept-alive components, treat as a patch
-        var mountedNode = vnode; // work around flow
-        componentVNodeHooks.prepatch(mountedNode, mountedNode);
-      } else {
-        var child = vnode.componentInstance = createComponentInstanceForVnode(
-          vnode,
-          activeInstance
-        );
-        child.$mount(hydrating ? vnode.elm : undefined, hydrating);
-      }
-    },
-
-    prepatch: function prepatch (oldVnode, vnode) {
-      var options = vnode.componentOptions;
-      var child = vnode.componentInstance = oldVnode.componentInstance;
-      updateChildComponent(
-        child,
-        options.propsData, // updated props
-        options.listeners, // updated listeners
-        vnode, // new parent vnode
-        options.children // new children
-      );
-    },
-
-    insert: function insert (vnode) {
-      var context = vnode.context;
-      var componentInstance = vnode.componentInstance;
-      if (!componentInstance._isMounted) {
-        componentInstance._isMounted = true;
-        callHook(componentInstance, 'mounted');
-      }
-      if (vnode.data.keepAlive) {
-        if (context._isMounted) {
-          // vue-router#1212
-          // During updates, a kept-alive component's child components may
-          // change, so directly walking the tree here may call activated hooks
-          // on incorrect children. Instead we push them into a queue which will
-          // be processed after the whole patch process ended.
-          queueActivatedComponent(componentInstance);
-        } else {
-          activateChildComponent(componentInstance, true /* direct */);
-        }
-      }
-    },
-
-    destroy: function destroy (vnode) {
-      var componentInstance = vnode.componentInstance;
-      if (!componentInstance._isDestroyed) {
-        if (!vnode.data.keepAlive) {
-          componentInstance.$destroy();
-        } else {
-          deactivateChildComponent(componentInstance, true /* direct */);
-        }
-      }
-    }
-  };
-
-  var hooksToMerge = Object.keys(componentVNodeHooks);
-
-  function createComponent (
-    Ctor,
-    data,
-    context,
-    children,
-    tag
-  ) {
-    if (isUndef(Ctor)) {
-      return
-    }
-
-    var baseCtor = context.$options._base;
-
-    // plain options object: turn it into a constructor
-    if (isObject(Ctor)) {
-      Ctor = baseCtor.extend(Ctor);
-    }
-
-    // if at this stage it's not a constructor or an async component factory,
-    // reject.
-    if (typeof Ctor !== 'function') {
-      {
-        warn(("Invalid Component definition: " + (String(Ctor))), context);
-      }
-      return
-    }
-
-    // async component
-    var asyncFactory;
-    if (isUndef(Ctor.cid)) {
-      asyncFactory = Ctor;
-      Ctor = resolveAsyncComponent(asyncFactory, baseCtor);
-      if (Ctor === undefined) {
-        // return a placeholder node for async component, which is rendered
-        // as a comment node but preserves all the raw information for the node.
-        // the information will be used for async server-rendering and hydration.
-        return createAsyncPlaceholder(
-          asyncFactory,
-          data,
-          context,
-          children,
-          tag
-        )
-      }
-    }
-
-    data = data || {};
-
-    // resolve constructor options in case global mixins are applied after
-    // component constructor creation
-    resolveConstructorOptions(Ctor);
-
-    // transform component v-model data into props & events
-    if (isDef(data.model)) {
-      transformModel(Ctor.options, data);
-    }
-
-    // extract props
-    var propsData = extractPropsFromVNodeData(data, Ctor, tag);
-
-    // functional component
-    if (isTrue(Ctor.options.functional)) {
-      return createFunctionalComponent(Ctor, propsData, data, context, children)
-    }
-
-    // extract listeners, since these needs to be treated as
-    // child component listeners instead of DOM listeners
-    var listeners = data.on;
-    // replace with listeners with .native modifier
-    // so it gets processed during parent component patch.
-    data.on = data.nativeOn;
-
-    if (isTrue(Ctor.options.abstract)) {
-      // abstract components do not keep anything
-      // other than props & listeners & slot
-
-      // work around flow
-      var slot = data.slot;
-      data = {};
-      if (slot) {
-        data.slot = slot;
-      }
-    }
-
-    // install component management hooks onto the placeholder node
-    installComponentHooks(data);
-
-    // return a placeholder vnode
-    var name = Ctor.options.name || tag;
-    var vnode = new VNode(
-      ("vue-component-" + (Ctor.cid) + (name ? ("-" + name) : '')),
-      data, undefined, undefined, undefined, context,
-      { Ctor: Ctor, propsData: propsData, listeners: listeners, tag: tag, children: children },
-      asyncFactory
-    );
-
-    return vnode
-  }
-
-  function createComponentInstanceForVnode (
-    vnode, // we know it's MountedComponentVNode but flow doesn't
-    parent // activeInstance in lifecycle state
-  ) {
-    var options = {
-      _isComponent: true,
-      _parentVnode: vnode,
-      parent: parent
-    };
-    // check inline-template render functions
-    var inlineTemplate = vnode.data.inlineTemplate;
-    if (isDef(inlineTemplate)) {
-      options.render = inlineTemplate.render;
-      options.staticRenderFns = inlineTemplate.staticRenderFns;
-    }
-    return new vnode.componentOptions.Ctor(options)
-  }
-
-  function installComponentHooks (data) {
-    var hooks = data.hook || (data.hook = {});
-    for (var i = 0; i < hooksToMerge.length; i++) {
-      var key = hooksToMerge[i];
-      var existing = hooks[key];
-      var toMerge = componentVNodeHooks[key];
-      if (existing !== toMerge && !(existing && existing._merged)) {
-        hooks[key] = existing ? mergeHook$1(toMerge, existing) : toMerge;
-      }
-    }
-  }
-
-  function mergeHook$1 (f1, f2) {
-    var merged = function (a, b) {
-      // flow complains about extra args which is why we use any
-      f1(a, b);
-      f2(a, b);
-    };
-    merged._merged = true;
-    return merged
-  }
-
-  // transform component v-model info (value and callback) into
-  // prop and event handler respectively.
-  function transformModel (options, data) {
-    var prop = (options.model && options.model.prop) || 'value';
-    var event = (options.model && options.model.event) || 'input'
-    ;(data.attrs || (data.attrs = {}))[prop] = data.model.value;
-    var on = data.on || (data.on = {});
-    var existing = on[event];
-    var callback = data.model.callback;
-    if (isDef(existing)) {
-      if (
-        Array.isArray(existing)
-          ? existing.indexOf(callback) === -1
-          : existing !== callback
-      ) {
-        on[event] = [callback].concat(existing);
-      }
-    } else {
-      on[event] = callback;
-    }
-  }
-
-  /*  */
-
-  var SIMPLE_NORMALIZE = 1;
-  var ALWAYS_NORMALIZE = 2;
-
-  // wrapper function for providing a more flexible interface
-  // without getting yelled at by flow
-  function createElement (
-    context,
-    tag,
-    data,
-    children,
-    normalizationType,
-    alwaysNormalize
-  ) {
-    if (Array.isArray(data) || isPrimitive(data)) {
-      normalizationType = children;
-      children = data;
-      data = undefined;
-    }
-    if (isTrue(alwaysNormalize)) {
-      normalizationType = ALWAYS_NORMALIZE;
-    }
-    return _createElement(context, tag, data, children, normalizationType)
-  }
-
-  function _createElement (
-    context,
-    tag,
-    data,
-    children,
-    normalizationType
-  ) {
-    if (isDef(data) && isDef((data).__ob__)) {
-      warn(
-        "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
-        'Always create fresh vnode data objects in each render!',
-        context
-      );
-      return createEmptyVNode()
-    }
-    // object syntax in v-bind
-    if (isDef(data) && isDef(data.is)) {
-      tag = data.is;
-    }
-    if (!tag) {
-      // in case of component :is set to falsy value
-      return createEmptyVNode()
-    }
-    // warn against non-primitive key
-    if (isDef(data) && isDef(data.key) && !isPrimitive(data.key)
-    ) {
-      {
-        warn(
-          'Avoid using non-primitive value as key, ' +
-          'use string/number value instead.',
-          context
-        );
-      }
-    }
-    // support single function children as default scoped slot
-    if (Array.isArray(children) &&
-      typeof children[0] === 'function'
-    ) {
-      data = data || {};
-      data.scopedSlots = { default: children[0] };
-      children.length = 0;
-    }
-    if (normalizationType === ALWAYS_NORMALIZE) {
-      children = normalizeChildren(children);
-    } else if (normalizationType === SIMPLE_NORMALIZE) {
-      children = simpleNormalizeChildren(children);
-    }
-    var vnode, ns;
-    if (typeof tag === 'string') {
-      var Ctor;
-      ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
-      if (config.isReservedTag(tag)) {
-        // platform built-in elements
-        vnode = new VNode(
-          config.parsePlatformTagName(tag), data, children,
-          undefined, undefined, context
-        );
-      } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
-        // component
-        vnode = createComponent(Ctor, data, context, children, tag);
-      } else {
-        // unknown or unlisted namespaced elements
-        // check at runtime because it may get assigned a namespace when its
-        // parent normalizes children
-        vnode = new VNode(
-          tag, data, children,
-          undefined, undefined, context
-        );
-      }
-    } else {
-      // direct component options / constructor
-      vnode = createComponent(tag, data, context, children);
-    }
-    if (Array.isArray(vnode)) {
-      return vnode
-    } else if (isDef(vnode)) {
-      if (isDef(ns)) { applyNS(vnode, ns); }
-      if (isDef(data)) { registerDeepBindings(data); }
-      return vnode
-    } else {
-      return createEmptyVNode()
-    }
-  }
-
-  function applyNS (vnode, ns, force) {
-    vnode.ns = ns;
-    if (vnode.tag === 'foreignObject') {
-      // use default namespace inside foreignObject
-      ns = undefined;
-      force = true;
-    }
-    if (isDef(vnode.children)) {
-      for (var i = 0, l = vnode.children.length; i < l; i++) {
-        var child = vnode.children[i];
-        if (isDef(child.tag) && (
-          isUndef(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
-          applyNS(child, ns, force);
-        }
-      }
-    }
-  }
-
-  // ref #5318
-  // necessary to ensure parent re-render when deep bindings like :style and
-  // :class are used on slot nodes
-  function registerDeepBindings (data) {
-    if (isObject(data.style)) {
-      traverse(data.style);
-    }
-    if (isObject(data.class)) {
-      traverse(data.class);
-    }
-  }
-
-  /*  */
-
-  function initRender (vm) {
-    vm._vnode = null; // the root of the child tree
-    vm._staticTrees = null; // v-once cached trees
-    var options = vm.$options;
-    var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
-    var renderContext = parentVnode && parentVnode.context;
-    vm.$slots = resolveSlots(options._renderChildren, renderContext);
-    vm.$scopedSlots = emptyObject;
-    // bind the createElement fn to this instance
-    // so that we get proper render context inside it.
-    // args order: tag, data, children, normalizationType, alwaysNormalize
-    // internal version is used by render functions compiled from templates
-    vm._c = function (a, b, c, d) { return createElement(vm, a, b, c, d, false); };
-    // normalization is always applied for the public version, used in
-    // user-written render functions.
-    vm.$createElement = function (a, b, c, d) { return createElement(vm, a, b, c, d, true); };
-
-    // $attrs & $listeners are exposed for easier HOC creation.
-    // they need to be reactive so that HOCs using them are always updated
-    var parentData = parentVnode && parentVnode.data;
-
-    /* istanbul ignore else */
-    {
-      defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
-        !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
-      }, true);
-      defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
-        !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
-      }, true);
-    }
-  }
-
-  var currentRenderingInstance = null;
-
-  function renderMixin (Vue) {
-    // install runtime convenience helpers
-    installRenderHelpers(Vue.prototype);
-
-    Vue.prototype.$nextTick = function (fn) {
-      return nextTick(fn, this)
-    };
-
-    Vue.prototype._render = function () {
-      var vm = this;
-      var ref = vm.$options;
-      var render = ref.render;
-      var _parentVnode = ref._parentVnode;
-
-      if (_parentVnode) {
-        vm.$scopedSlots = normalizeScopedSlots(
-          _parentVnode.data.scopedSlots,
-          vm.$slots
-        );
-      }
-
-      // set parent vnode. this allows render functions to have access
-      // to the data on the placeholder node.
-      vm.$vnode = _parentVnode;
-      // render self
-      var vnode;
-      try {
-        // There's no need to maintain a stack becaues all render fns are called
-        // separately from one another. Nested component's render fns are called
-        // when parent component is patched.
-        currentRenderingInstance = vm;
-        vnode = render.call(vm._renderProxy, vm.$createElement);
-      } catch (e) {
-        handleError(e, vm, "render");
-        // return error render result,
-        // or previous vnode to prevent render error causing blank component
-        /* istanbul ignore else */
-        if (vm.$options.renderError) {
-          try {
-            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
-          } catch (e) {
-            handleError(e, vm, "renderError");
-            vnode = vm._vnode;
-          }
-        } else {
-          vnode = vm._vnode;
-        }
-      } finally {
-        currentRenderingInstance = null;
-      }
-      // if the returned array contains only a single node, allow it
-      if (Array.isArray(vnode) && vnode.length === 1) {
-        vnode = vnode[0];
-      }
-      // return empty vnode in case the render function errored out
-      if (!(vnode instanceof VNode)) {
-        if (Array.isArray(vnode)) {
-          warn(
-            'Multiple root nodes returned from render function. Render function ' +
-            'should return a single root node.',
-            vm
-          );
-        }
-        vnode = createEmptyVNode();
-      }
-      // set parent
-      vnode.parent = _parentVnode;
-      return vnode
-    };
-  }
-
-  /*  */
-
   function ensureCtor (comp, base) {
     if (
       comp.__esModule ||
@@ -24558,7 +23327,8 @@ __webpack_require__.r(__webpack_exports__);
 
   function resolveAsyncComponent (
     factory,
-    baseCtor
+    baseCtor,
+    context
   ) {
     if (isTrue(factory.error) && isDef(factory.errorComp)) {
       return factory.errorComp
@@ -24572,21 +23342,20 @@ __webpack_require__.r(__webpack_exports__);
       return factory.loadingComp
     }
 
-    var owner = currentRenderingInstance;
-    if (isDef(factory.owners)) {
+    if (isDef(factory.contexts)) {
       // already pending
-      factory.owners.push(owner);
+      factory.contexts.push(context);
     } else {
-      var owners = factory.owners = [owner];
+      var contexts = factory.contexts = [context];
       var sync = true;
 
       var forceRender = function (renderCompleted) {
-        for (var i = 0, l = owners.length; i < l; i++) {
-          (owners[i]).$forceUpdate();
+        for (var i = 0, l = contexts.length; i < l; i++) {
+          contexts[i].$forceUpdate();
         }
 
         if (renderCompleted) {
-          owners.length = 0;
+          contexts.length = 0;
         }
       };
 
@@ -24598,7 +23367,7 @@ __webpack_require__.r(__webpack_exports__);
         if (!sync) {
           forceRender(true);
         } else {
-          owners.length = 0;
+          contexts.length = 0;
         }
       });
 
@@ -24616,12 +23385,12 @@ __webpack_require__.r(__webpack_exports__);
       var res = factory(resolve, reject);
 
       if (isObject(res)) {
-        if (isPromise(res)) {
+        if (typeof res.then === 'function') {
           // () => Promise
           if (isUndef(factory.resolved)) {
             res.then(resolve, reject);
           }
-        } else if (isPromise(res.component)) {
+        } else if (isDef(res.component) && typeof res.component.then === 'function') {
           res.component.then(resolve, reject);
 
           if (isDef(res.error)) {
@@ -24809,13 +23578,82 @@ __webpack_require__.r(__webpack_exports__);
       if (cbs) {
         cbs = cbs.length > 1 ? toArray(cbs) : cbs;
         var args = toArray(arguments, 1);
-        var info = "event handler for \"" + event + "\"";
         for (var i = 0, l = cbs.length; i < l; i++) {
-          invokeWithErrorHandling(cbs[i], vm, args, vm, info);
+          try {
+            cbs[i].apply(vm, args);
+          } catch (e) {
+            handleError(e, vm, ("event handler for \"" + event + "\""));
+          }
         }
       }
       return vm
     };
+  }
+
+  /*  */
+
+
+
+  /**
+   * Runtime helper for resolving raw children VNodes into a slot object.
+   */
+  function resolveSlots (
+    children,
+    context
+  ) {
+    var slots = {};
+    if (!children) {
+      return slots
+    }
+    for (var i = 0, l = children.length; i < l; i++) {
+      var child = children[i];
+      var data = child.data;
+      // remove slot attribute if the node is resolved as a Vue slot node
+      if (data && data.attrs && data.attrs.slot) {
+        delete data.attrs.slot;
+      }
+      // named slots should only be respected if the vnode was rendered in the
+      // same context.
+      if ((child.context === context || child.fnContext === context) &&
+        data && data.slot != null
+      ) {
+        var name = data.slot;
+        var slot = (slots[name] || (slots[name] = []));
+        if (child.tag === 'template') {
+          slot.push.apply(slot, child.children || []);
+        } else {
+          slot.push(child);
+        }
+      } else {
+        (slots.default || (slots.default = [])).push(child);
+      }
+    }
+    // ignore slots that contains only whitespace
+    for (var name$1 in slots) {
+      if (slots[name$1].every(isWhitespace)) {
+        delete slots[name$1];
+      }
+    }
+    return slots
+  }
+
+  function isWhitespace (node) {
+    return (node.isComment && !node.asyncFactory) || node.text === ' '
+  }
+
+  function resolveScopedSlots (
+    fns, // see flow/vnode
+    res
+  ) {
+    res = res || {};
+    for (var i = 0; i < fns.length; i++) {
+      if (Array.isArray(fns[i])) {
+        resolveScopedSlots(fns[i], res);
+      } else {
+        res[fns[i].key] = fns[i].fn;
+      }
+    }
+    return res
   }
 
   /*  */
@@ -25026,23 +23864,12 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     // determine whether component has slot children
-    // we need to do this before overwriting $options._renderChildren.
-
-    // check if there are dynamic scopedSlots (hand-written or compiled but with
-    // dynamic slot names). Static scoped slots compiled from template has the
-    // "$stable" marker.
-    var hasDynamicScopedSlot = !!(
-      (parentVnode.data.scopedSlots && !parentVnode.data.scopedSlots.$stable) ||
-      (vm.$scopedSlots !== emptyObject && !vm.$scopedSlots.$stable)
-    );
-
-    // Any static slot children from the parent may have changed during parent's
-    // update. Dynamic scoped slots may also have changed. In such cases, a forced
-    // update is necessary to ensure correctness.
-    var needsForceUpdate = !!(
+    // we need to do this before overwriting $options._renderChildren
+    var hasChildren = !!(
       renderChildren ||               // has new static slots
       vm.$options._renderChildren ||  // has old static slots
-      hasDynamicScopedSlot
+      parentVnode.data.scopedSlots || // has new scoped slots
+      vm.$scopedSlots !== emptyObject // has old scoped slots
     );
 
     vm.$options._parentVnode = parentVnode;
@@ -25081,7 +23908,7 @@ __webpack_require__.r(__webpack_exports__);
     updateComponentListeners(vm, listeners, oldListeners);
 
     // resolve slots + force update if has children
-    if (needsForceUpdate) {
+    if (hasChildren) {
       vm.$slots = resolveSlots(renderChildren, parentVnode.context);
       vm.$forceUpdate();
     }
@@ -25136,10 +23963,13 @@ __webpack_require__.r(__webpack_exports__);
     // #7573 disable dep collection when invoking lifecycle hooks
     pushTarget();
     var handlers = vm.$options[hook];
-    var info = hook + " hook";
     if (handlers) {
       for (var i = 0, j = handlers.length; i < j; i++) {
-        invokeWithErrorHandling(handlers[i], vm, null, vm, info);
+        try {
+          handlers[i].call(vm);
+        } catch (e) {
+          handleError(e, vm, (hook + " hook"));
+        }
       }
     }
     if (vm._hasHookEvent) {
@@ -25172,32 +24002,10 @@ __webpack_require__.r(__webpack_exports__);
     waiting = flushing = false;
   }
 
-  // Async edge case #6566 requires saving the timestamp when event listeners are
-  // attached. However, calling performance.now() has a perf overhead especially
-  // if the page has thousands of event listeners. Instead, we take a timestamp
-  // every time the scheduler flushes and use that for all event listeners
-  // attached during that flush.
-  var currentFlushTimestamp = 0;
-
-  // Async edge case fix requires storing an event listener's attach timestamp.
-  var getNow = Date.now;
-
-  // Determine what event timestamp the browser is using. Annoyingly, the
-  // timestamp can either be hi-res (relative to page load) or low-res
-  // (relative to UNIX epoch), so in order to compare time we have to use the
-  // same timestamp type when saving the flush timestamp.
-  if (inBrowser && getNow() > document.createEvent('Event').timeStamp) {
-    // if the low-res timestamp which is bigger than the event timestamp
-    // (which is evaluated AFTER) it means the event is using a hi-res timestamp,
-    // and we need to use the hi-res version for event listeners as well.
-    getNow = function () { return performance.now(); };
-  }
-
   /**
    * Flush both queues and run the watchers.
    */
   function flushSchedulerQueue () {
-    currentFlushTimestamp = getNow();
     flushing = true;
     var watcher, id;
 
@@ -25321,7 +24129,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-  var uid$2 = 0;
+  var uid$1 = 0;
 
   /**
    * A watcher parses an expression, collects dependencies,
@@ -25351,7 +24159,7 @@ __webpack_require__.r(__webpack_exports__);
       this.deep = this.user = this.lazy = this.sync = false;
     }
     this.cb = cb;
-    this.id = ++uid$2; // uid for batching
+    this.id = ++uid$1; // uid for batching
     this.active = true;
     this.dirty = this.lazy; // for lazy watchers
     this.deps = [];
@@ -25867,6 +24675,937 @@ __webpack_require__.r(__webpack_exports__);
 
   /*  */
 
+  function initProvide (vm) {
+    var provide = vm.$options.provide;
+    if (provide) {
+      vm._provided = typeof provide === 'function'
+        ? provide.call(vm)
+        : provide;
+    }
+  }
+
+  function initInjections (vm) {
+    var result = resolveInject(vm.$options.inject, vm);
+    if (result) {
+      toggleObserving(false);
+      Object.keys(result).forEach(function (key) {
+        /* istanbul ignore else */
+        {
+          defineReactive$$1(vm, key, result[key], function () {
+            warn(
+              "Avoid mutating an injected value directly since the changes will be " +
+              "overwritten whenever the provided component re-renders. " +
+              "injection being mutated: \"" + key + "\"",
+              vm
+            );
+          });
+        }
+      });
+      toggleObserving(true);
+    }
+  }
+
+  function resolveInject (inject, vm) {
+    if (inject) {
+      // inject is :any because flow is not smart enough to figure out cached
+      var result = Object.create(null);
+      var keys = hasSymbol
+        ? Reflect.ownKeys(inject).filter(function (key) {
+          /* istanbul ignore next */
+          return Object.getOwnPropertyDescriptor(inject, key).enumerable
+        })
+        : Object.keys(inject);
+
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var provideKey = inject[key].from;
+        var source = vm;
+        while (source) {
+          if (source._provided && hasOwn(source._provided, provideKey)) {
+            result[key] = source._provided[provideKey];
+            break
+          }
+          source = source.$parent;
+        }
+        if (!source) {
+          if ('default' in inject[key]) {
+            var provideDefault = inject[key].default;
+            result[key] = typeof provideDefault === 'function'
+              ? provideDefault.call(vm)
+              : provideDefault;
+          } else {
+            warn(("Injection \"" + key + "\" not found"), vm);
+          }
+        }
+      }
+      return result
+    }
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for rendering v-for lists.
+   */
+  function renderList (
+    val,
+    render
+  ) {
+    var ret, i, l, keys, key;
+    if (Array.isArray(val) || typeof val === 'string') {
+      ret = new Array(val.length);
+      for (i = 0, l = val.length; i < l; i++) {
+        ret[i] = render(val[i], i);
+      }
+    } else if (typeof val === 'number') {
+      ret = new Array(val);
+      for (i = 0; i < val; i++) {
+        ret[i] = render(i + 1, i);
+      }
+    } else if (isObject(val)) {
+      keys = Object.keys(val);
+      ret = new Array(keys.length);
+      for (i = 0, l = keys.length; i < l; i++) {
+        key = keys[i];
+        ret[i] = render(val[key], key, i);
+      }
+    }
+    if (!isDef(ret)) {
+      ret = [];
+    }
+    (ret)._isVList = true;
+    return ret
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for rendering <slot>
+   */
+  function renderSlot (
+    name,
+    fallback,
+    props,
+    bindObject
+  ) {
+    var scopedSlotFn = this.$scopedSlots[name];
+    var nodes;
+    if (scopedSlotFn) { // scoped slot
+      props = props || {};
+      if (bindObject) {
+        if (!isObject(bindObject)) {
+          warn(
+            'slot v-bind without argument expects an Object',
+            this
+          );
+        }
+        props = extend(extend({}, bindObject), props);
+      }
+      nodes = scopedSlotFn(props) || fallback;
+    } else {
+      nodes = this.$slots[name] || fallback;
+    }
+
+    var target = props && props.slot;
+    if (target) {
+      return this.$createElement('template', { slot: target }, nodes)
+    } else {
+      return nodes
+    }
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for resolving filters
+   */
+  function resolveFilter (id) {
+    return resolveAsset(this.$options, 'filters', id, true) || identity
+  }
+
+  /*  */
+
+  function isKeyNotMatch (expect, actual) {
+    if (Array.isArray(expect)) {
+      return expect.indexOf(actual) === -1
+    } else {
+      return expect !== actual
+    }
+  }
+
+  /**
+   * Runtime helper for checking keyCodes from config.
+   * exposed as Vue.prototype._k
+   * passing in eventKeyName as last argument separately for backwards compat
+   */
+  function checkKeyCodes (
+    eventKeyCode,
+    key,
+    builtInKeyCode,
+    eventKeyName,
+    builtInKeyName
+  ) {
+    var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
+    if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
+      return isKeyNotMatch(builtInKeyName, eventKeyName)
+    } else if (mappedKeyCode) {
+      return isKeyNotMatch(mappedKeyCode, eventKeyCode)
+    } else if (eventKeyName) {
+      return hyphenate(eventKeyName) !== key
+    }
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for merging v-bind="object" into a VNode's data.
+   */
+  function bindObjectProps (
+    data,
+    tag,
+    value,
+    asProp,
+    isSync
+  ) {
+    if (value) {
+      if (!isObject(value)) {
+        warn(
+          'v-bind without argument expects an Object or Array value',
+          this
+        );
+      } else {
+        if (Array.isArray(value)) {
+          value = toObject(value);
+        }
+        var hash;
+        var loop = function ( key ) {
+          if (
+            key === 'class' ||
+            key === 'style' ||
+            isReservedAttribute(key)
+          ) {
+            hash = data;
+          } else {
+            var type = data.attrs && data.attrs.type;
+            hash = asProp || config.mustUseProp(tag, type, key)
+              ? data.domProps || (data.domProps = {})
+              : data.attrs || (data.attrs = {});
+          }
+          var camelizedKey = camelize(key);
+          if (!(key in hash) && !(camelizedKey in hash)) {
+            hash[key] = value[key];
+
+            if (isSync) {
+              var on = data.on || (data.on = {});
+              on[("update:" + camelizedKey)] = function ($event) {
+                value[key] = $event;
+              };
+            }
+          }
+        };
+
+        for (var key in value) loop( key );
+      }
+    }
+    return data
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for rendering static trees.
+   */
+  function renderStatic (
+    index,
+    isInFor
+  ) {
+    var cached = this._staticTrees || (this._staticTrees = []);
+    var tree = cached[index];
+    // if has already-rendered static tree and not inside v-for,
+    // we can reuse the same tree.
+    if (tree && !isInFor) {
+      return tree
+    }
+    // otherwise, render a fresh tree.
+    tree = cached[index] = this.$options.staticRenderFns[index].call(
+      this._renderProxy,
+      null,
+      this // for render fns generated for functional component templates
+    );
+    markStatic(tree, ("__static__" + index), false);
+    return tree
+  }
+
+  /**
+   * Runtime helper for v-once.
+   * Effectively it means marking the node as static with a unique key.
+   */
+  function markOnce (
+    tree,
+    index,
+    key
+  ) {
+    markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
+    return tree
+  }
+
+  function markStatic (
+    tree,
+    key,
+    isOnce
+  ) {
+    if (Array.isArray(tree)) {
+      for (var i = 0; i < tree.length; i++) {
+        if (tree[i] && typeof tree[i] !== 'string') {
+          markStaticNode(tree[i], (key + "_" + i), isOnce);
+        }
+      }
+    } else {
+      markStaticNode(tree, key, isOnce);
+    }
+  }
+
+  function markStaticNode (node, key, isOnce) {
+    node.isStatic = true;
+    node.key = key;
+    node.isOnce = isOnce;
+  }
+
+  /*  */
+
+  function bindObjectListeners (data, value) {
+    if (value) {
+      if (!isPlainObject(value)) {
+        warn(
+          'v-on without argument expects an Object value',
+          this
+        );
+      } else {
+        var on = data.on = data.on ? extend({}, data.on) : {};
+        for (var key in value) {
+          var existing = on[key];
+          var ours = value[key];
+          on[key] = existing ? [].concat(existing, ours) : ours;
+        }
+      }
+    }
+    return data
+  }
+
+  /*  */
+
+  function installRenderHelpers (target) {
+    target._o = markOnce;
+    target._n = toNumber;
+    target._s = toString;
+    target._l = renderList;
+    target._t = renderSlot;
+    target._q = looseEqual;
+    target._i = looseIndexOf;
+    target._m = renderStatic;
+    target._f = resolveFilter;
+    target._k = checkKeyCodes;
+    target._b = bindObjectProps;
+    target._v = createTextVNode;
+    target._e = createEmptyVNode;
+    target._u = resolveScopedSlots;
+    target._g = bindObjectListeners;
+  }
+
+  /*  */
+
+  function FunctionalRenderContext (
+    data,
+    props,
+    children,
+    parent,
+    Ctor
+  ) {
+    var options = Ctor.options;
+    // ensure the createElement function in functional components
+    // gets a unique context - this is necessary for correct named slot check
+    var contextVm;
+    if (hasOwn(parent, '_uid')) {
+      contextVm = Object.create(parent);
+      // $flow-disable-line
+      contextVm._original = parent;
+    } else {
+      // the context vm passed in is a functional context as well.
+      // in this case we want to make sure we are able to get a hold to the
+      // real context instance.
+      contextVm = parent;
+      // $flow-disable-line
+      parent = parent._original;
+    }
+    var isCompiled = isTrue(options._compiled);
+    var needNormalization = !isCompiled;
+
+    this.data = data;
+    this.props = props;
+    this.children = children;
+    this.parent = parent;
+    this.listeners = data.on || emptyObject;
+    this.injections = resolveInject(options.inject, parent);
+    this.slots = function () { return resolveSlots(children, parent); };
+
+    // support for compiled functional template
+    if (isCompiled) {
+      // exposing $options for renderStatic()
+      this.$options = options;
+      // pre-resolve slots for renderSlot()
+      this.$slots = this.slots();
+      this.$scopedSlots = data.scopedSlots || emptyObject;
+    }
+
+    if (options._scopeId) {
+      this._c = function (a, b, c, d) {
+        var vnode = createElement(contextVm, a, b, c, d, needNormalization);
+        if (vnode && !Array.isArray(vnode)) {
+          vnode.fnScopeId = options._scopeId;
+          vnode.fnContext = parent;
+        }
+        return vnode
+      };
+    } else {
+      this._c = function (a, b, c, d) { return createElement(contextVm, a, b, c, d, needNormalization); };
+    }
+  }
+
+  installRenderHelpers(FunctionalRenderContext.prototype);
+
+  function createFunctionalComponent (
+    Ctor,
+    propsData,
+    data,
+    contextVm,
+    children
+  ) {
+    var options = Ctor.options;
+    var props = {};
+    var propOptions = options.props;
+    if (isDef(propOptions)) {
+      for (var key in propOptions) {
+        props[key] = validateProp(key, propOptions, propsData || emptyObject);
+      }
+    } else {
+      if (isDef(data.attrs)) { mergeProps(props, data.attrs); }
+      if (isDef(data.props)) { mergeProps(props, data.props); }
+    }
+
+    var renderContext = new FunctionalRenderContext(
+      data,
+      props,
+      children,
+      contextVm,
+      Ctor
+    );
+
+    var vnode = options.render.call(null, renderContext._c, renderContext);
+
+    if (vnode instanceof VNode) {
+      return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options, renderContext)
+    } else if (Array.isArray(vnode)) {
+      var vnodes = normalizeChildren(vnode) || [];
+      var res = new Array(vnodes.length);
+      for (var i = 0; i < vnodes.length; i++) {
+        res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options, renderContext);
+      }
+      return res
+    }
+  }
+
+  function cloneAndMarkFunctionalResult (vnode, data, contextVm, options, renderContext) {
+    // #7817 clone node before setting fnContext, otherwise if the node is reused
+    // (e.g. it was from a cached normal slot) the fnContext causes named slots
+    // that should not be matched to match.
+    var clone = cloneVNode(vnode);
+    clone.fnContext = contextVm;
+    clone.fnOptions = options;
+    {
+      (clone.devtoolsMeta = clone.devtoolsMeta || {}).renderContext = renderContext;
+    }
+    if (data.slot) {
+      (clone.data || (clone.data = {})).slot = data.slot;
+    }
+    return clone
+  }
+
+  function mergeProps (to, from) {
+    for (var key in from) {
+      to[camelize(key)] = from[key];
+    }
+  }
+
+  /*  */
+
+  /*  */
+
+  /*  */
+
+  /*  */
+
+  // inline hooks to be invoked on component VNodes during patch
+  var componentVNodeHooks = {
+    init: function init (vnode, hydrating) {
+      if (
+        vnode.componentInstance &&
+        !vnode.componentInstance._isDestroyed &&
+        vnode.data.keepAlive
+      ) {
+        // kept-alive components, treat as a patch
+        var mountedNode = vnode; // work around flow
+        componentVNodeHooks.prepatch(mountedNode, mountedNode);
+      } else {
+        var child = vnode.componentInstance = createComponentInstanceForVnode(
+          vnode,
+          activeInstance
+        );
+        child.$mount(hydrating ? vnode.elm : undefined, hydrating);
+      }
+    },
+
+    prepatch: function prepatch (oldVnode, vnode) {
+      var options = vnode.componentOptions;
+      var child = vnode.componentInstance = oldVnode.componentInstance;
+      updateChildComponent(
+        child,
+        options.propsData, // updated props
+        options.listeners, // updated listeners
+        vnode, // new parent vnode
+        options.children // new children
+      );
+    },
+
+    insert: function insert (vnode) {
+      var context = vnode.context;
+      var componentInstance = vnode.componentInstance;
+      if (!componentInstance._isMounted) {
+        componentInstance._isMounted = true;
+        callHook(componentInstance, 'mounted');
+      }
+      if (vnode.data.keepAlive) {
+        if (context._isMounted) {
+          // vue-router#1212
+          // During updates, a kept-alive component's child components may
+          // change, so directly walking the tree here may call activated hooks
+          // on incorrect children. Instead we push them into a queue which will
+          // be processed after the whole patch process ended.
+          queueActivatedComponent(componentInstance);
+        } else {
+          activateChildComponent(componentInstance, true /* direct */);
+        }
+      }
+    },
+
+    destroy: function destroy (vnode) {
+      var componentInstance = vnode.componentInstance;
+      if (!componentInstance._isDestroyed) {
+        if (!vnode.data.keepAlive) {
+          componentInstance.$destroy();
+        } else {
+          deactivateChildComponent(componentInstance, true /* direct */);
+        }
+      }
+    }
+  };
+
+  var hooksToMerge = Object.keys(componentVNodeHooks);
+
+  function createComponent (
+    Ctor,
+    data,
+    context,
+    children,
+    tag
+  ) {
+    if (isUndef(Ctor)) {
+      return
+    }
+
+    var baseCtor = context.$options._base;
+
+    // plain options object: turn it into a constructor
+    if (isObject(Ctor)) {
+      Ctor = baseCtor.extend(Ctor);
+    }
+
+    // if at this stage it's not a constructor or an async component factory,
+    // reject.
+    if (typeof Ctor !== 'function') {
+      {
+        warn(("Invalid Component definition: " + (String(Ctor))), context);
+      }
+      return
+    }
+
+    // async component
+    var asyncFactory;
+    if (isUndef(Ctor.cid)) {
+      asyncFactory = Ctor;
+      Ctor = resolveAsyncComponent(asyncFactory, baseCtor, context);
+      if (Ctor === undefined) {
+        // return a placeholder node for async component, which is rendered
+        // as a comment node but preserves all the raw information for the node.
+        // the information will be used for async server-rendering and hydration.
+        return createAsyncPlaceholder(
+          asyncFactory,
+          data,
+          context,
+          children,
+          tag
+        )
+      }
+    }
+
+    data = data || {};
+
+    // resolve constructor options in case global mixins are applied after
+    // component constructor creation
+    resolveConstructorOptions(Ctor);
+
+    // transform component v-model data into props & events
+    if (isDef(data.model)) {
+      transformModel(Ctor.options, data);
+    }
+
+    // extract props
+    var propsData = extractPropsFromVNodeData(data, Ctor, tag);
+
+    // functional component
+    if (isTrue(Ctor.options.functional)) {
+      return createFunctionalComponent(Ctor, propsData, data, context, children)
+    }
+
+    // extract listeners, since these needs to be treated as
+    // child component listeners instead of DOM listeners
+    var listeners = data.on;
+    // replace with listeners with .native modifier
+    // so it gets processed during parent component patch.
+    data.on = data.nativeOn;
+
+    if (isTrue(Ctor.options.abstract)) {
+      // abstract components do not keep anything
+      // other than props & listeners & slot
+
+      // work around flow
+      var slot = data.slot;
+      data = {};
+      if (slot) {
+        data.slot = slot;
+      }
+    }
+
+    // install component management hooks onto the placeholder node
+    installComponentHooks(data);
+
+    // return a placeholder vnode
+    var name = Ctor.options.name || tag;
+    var vnode = new VNode(
+      ("vue-component-" + (Ctor.cid) + (name ? ("-" + name) : '')),
+      data, undefined, undefined, undefined, context,
+      { Ctor: Ctor, propsData: propsData, listeners: listeners, tag: tag, children: children },
+      asyncFactory
+    );
+
+    return vnode
+  }
+
+  function createComponentInstanceForVnode (
+    vnode, // we know it's MountedComponentVNode but flow doesn't
+    parent // activeInstance in lifecycle state
+  ) {
+    var options = {
+      _isComponent: true,
+      _parentVnode: vnode,
+      parent: parent
+    };
+    // check inline-template render functions
+    var inlineTemplate = vnode.data.inlineTemplate;
+    if (isDef(inlineTemplate)) {
+      options.render = inlineTemplate.render;
+      options.staticRenderFns = inlineTemplate.staticRenderFns;
+    }
+    return new vnode.componentOptions.Ctor(options)
+  }
+
+  function installComponentHooks (data) {
+    var hooks = data.hook || (data.hook = {});
+    for (var i = 0; i < hooksToMerge.length; i++) {
+      var key = hooksToMerge[i];
+      var existing = hooks[key];
+      var toMerge = componentVNodeHooks[key];
+      if (existing !== toMerge && !(existing && existing._merged)) {
+        hooks[key] = existing ? mergeHook$1(toMerge, existing) : toMerge;
+      }
+    }
+  }
+
+  function mergeHook$1 (f1, f2) {
+    var merged = function (a, b) {
+      // flow complains about extra args which is why we use any
+      f1(a, b);
+      f2(a, b);
+    };
+    merged._merged = true;
+    return merged
+  }
+
+  // transform component v-model info (value and callback) into
+  // prop and event handler respectively.
+  function transformModel (options, data) {
+    var prop = (options.model && options.model.prop) || 'value';
+    var event = (options.model && options.model.event) || 'input'
+    ;(data.props || (data.props = {}))[prop] = data.model.value;
+    var on = data.on || (data.on = {});
+    var existing = on[event];
+    var callback = data.model.callback;
+    if (isDef(existing)) {
+      if (
+        Array.isArray(existing)
+          ? existing.indexOf(callback) === -1
+          : existing !== callback
+      ) {
+        on[event] = [callback].concat(existing);
+      }
+    } else {
+      on[event] = callback;
+    }
+  }
+
+  /*  */
+
+  var SIMPLE_NORMALIZE = 1;
+  var ALWAYS_NORMALIZE = 2;
+
+  // wrapper function for providing a more flexible interface
+  // without getting yelled at by flow
+  function createElement (
+    context,
+    tag,
+    data,
+    children,
+    normalizationType,
+    alwaysNormalize
+  ) {
+    if (Array.isArray(data) || isPrimitive(data)) {
+      normalizationType = children;
+      children = data;
+      data = undefined;
+    }
+    if (isTrue(alwaysNormalize)) {
+      normalizationType = ALWAYS_NORMALIZE;
+    }
+    return _createElement(context, tag, data, children, normalizationType)
+  }
+
+  function _createElement (
+    context,
+    tag,
+    data,
+    children,
+    normalizationType
+  ) {
+    if (isDef(data) && isDef((data).__ob__)) {
+      warn(
+        "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
+        'Always create fresh vnode data objects in each render!',
+        context
+      );
+      return createEmptyVNode()
+    }
+    // object syntax in v-bind
+    if (isDef(data) && isDef(data.is)) {
+      tag = data.is;
+    }
+    if (!tag) {
+      // in case of component :is set to falsy value
+      return createEmptyVNode()
+    }
+    // warn against non-primitive key
+    if (isDef(data) && isDef(data.key) && !isPrimitive(data.key)
+    ) {
+      {
+        warn(
+          'Avoid using non-primitive value as key, ' +
+          'use string/number value instead.',
+          context
+        );
+      }
+    }
+    // support single function children as default scoped slot
+    if (Array.isArray(children) &&
+      typeof children[0] === 'function'
+    ) {
+      data = data || {};
+      data.scopedSlots = { default: children[0] };
+      children.length = 0;
+    }
+    if (normalizationType === ALWAYS_NORMALIZE) {
+      children = normalizeChildren(children);
+    } else if (normalizationType === SIMPLE_NORMALIZE) {
+      children = simpleNormalizeChildren(children);
+    }
+    var vnode, ns;
+    if (typeof tag === 'string') {
+      var Ctor;
+      ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
+      if (config.isReservedTag(tag)) {
+        // platform built-in elements
+        vnode = new VNode(
+          config.parsePlatformTagName(tag), data, children,
+          undefined, undefined, context
+        );
+      } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
+        // component
+        vnode = createComponent(Ctor, data, context, children, tag);
+      } else {
+        // unknown or unlisted namespaced elements
+        // check at runtime because it may get assigned a namespace when its
+        // parent normalizes children
+        vnode = new VNode(
+          tag, data, children,
+          undefined, undefined, context
+        );
+      }
+    } else {
+      // direct component options / constructor
+      vnode = createComponent(tag, data, context, children);
+    }
+    if (Array.isArray(vnode)) {
+      return vnode
+    } else if (isDef(vnode)) {
+      if (isDef(ns)) { applyNS(vnode, ns); }
+      if (isDef(data)) { registerDeepBindings(data); }
+      return vnode
+    } else {
+      return createEmptyVNode()
+    }
+  }
+
+  function applyNS (vnode, ns, force) {
+    vnode.ns = ns;
+    if (vnode.tag === 'foreignObject') {
+      // use default namespace inside foreignObject
+      ns = undefined;
+      force = true;
+    }
+    if (isDef(vnode.children)) {
+      for (var i = 0, l = vnode.children.length; i < l; i++) {
+        var child = vnode.children[i];
+        if (isDef(child.tag) && (
+          isUndef(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
+          applyNS(child, ns, force);
+        }
+      }
+    }
+  }
+
+  // ref #5318
+  // necessary to ensure parent re-render when deep bindings like :style and
+  // :class are used on slot nodes
+  function registerDeepBindings (data) {
+    if (isObject(data.style)) {
+      traverse(data.style);
+    }
+    if (isObject(data.class)) {
+      traverse(data.class);
+    }
+  }
+
+  /*  */
+
+  function initRender (vm) {
+    vm._vnode = null; // the root of the child tree
+    vm._staticTrees = null; // v-once cached trees
+    var options = vm.$options;
+    var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
+    var renderContext = parentVnode && parentVnode.context;
+    vm.$slots = resolveSlots(options._renderChildren, renderContext);
+    vm.$scopedSlots = emptyObject;
+    // bind the createElement fn to this instance
+    // so that we get proper render context inside it.
+    // args order: tag, data, children, normalizationType, alwaysNormalize
+    // internal version is used by render functions compiled from templates
+    vm._c = function (a, b, c, d) { return createElement(vm, a, b, c, d, false); };
+    // normalization is always applied for the public version, used in
+    // user-written render functions.
+    vm.$createElement = function (a, b, c, d) { return createElement(vm, a, b, c, d, true); };
+
+    // $attrs & $listeners are exposed for easier HOC creation.
+    // they need to be reactive so that HOCs using them are always updated
+    var parentData = parentVnode && parentVnode.data;
+
+    /* istanbul ignore else */
+    {
+      defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
+        !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
+      }, true);
+      defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
+        !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
+      }, true);
+    }
+  }
+
+  function renderMixin (Vue) {
+    // install runtime convenience helpers
+    installRenderHelpers(Vue.prototype);
+
+    Vue.prototype.$nextTick = function (fn) {
+      return nextTick(fn, this)
+    };
+
+    Vue.prototype._render = function () {
+      var vm = this;
+      var ref = vm.$options;
+      var render = ref.render;
+      var _parentVnode = ref._parentVnode;
+
+      if (_parentVnode) {
+        vm.$scopedSlots = _parentVnode.data.scopedSlots || emptyObject;
+      }
+
+      // set parent vnode. this allows render functions to have access
+      // to the data on the placeholder node.
+      vm.$vnode = _parentVnode;
+      // render self
+      var vnode;
+      try {
+        vnode = render.call(vm._renderProxy, vm.$createElement);
+      } catch (e) {
+        handleError(e, vm, "render");
+        // return error render result,
+        // or previous vnode to prevent render error causing blank component
+        /* istanbul ignore else */
+        if (vm.$options.renderError) {
+          try {
+            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
+          } catch (e) {
+            handleError(e, vm, "renderError");
+            vnode = vm._vnode;
+          }
+        } else {
+          vnode = vm._vnode;
+        }
+      }
+      // return empty vnode in case the render function errored out
+      if (!(vnode instanceof VNode)) {
+        if (Array.isArray(vnode)) {
+          warn(
+            'Multiple root nodes returned from render function. Render function ' +
+            'should return a single root node.',
+            vm
+          );
+        }
+        vnode = createEmptyVNode();
+      }
+      // set parent
+      vnode.parent = _parentVnode;
+      return vnode
+    };
+  }
+
+  /*  */
+
   var uid$3 = 0;
 
   function initMixin (Vue) {
@@ -26314,12 +26053,6 @@ __webpack_require__.r(__webpack_exports__);
     Vue.delete = del;
     Vue.nextTick = nextTick;
 
-    // 2.6 explicit observable API
-    Vue.observable = function (obj) {
-      observe(obj);
-      return obj
-    };
-
     Vue.options = Object.create(null);
     ASSET_TYPES.forEach(function (type) {
       Vue.options[type + 's'] = Object.create(null);
@@ -26355,7 +26088,7 @@ __webpack_require__.r(__webpack_exports__);
     value: FunctionalRenderContext
   });
 
-  Vue.version = '2.6.3';
+  Vue.version = '2.5.22';
 
   /*  */
 
@@ -26375,17 +26108,6 @@ __webpack_require__.r(__webpack_exports__);
   };
 
   var isEnumeratedAttr = makeMap('contenteditable,draggable,spellcheck');
-
-  var isValidContentEditableValue = makeMap('events,caret,typing,plaintext-only');
-
-  var convertEnumeratedValue = function (key, value) {
-    return isFalsyAttrValue(value) || value === 'false'
-      ? 'false'
-      // allow arbitrary string value for contenteditable
-      : key === 'contenteditable' && isValidContentEditableValue(value)
-        ? value
-        : 'true'
-  };
 
   var isBooleanAttr = makeMap(
     'allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,' +
@@ -27510,7 +27232,6 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         // existing directive, update
         dir.oldValue = oldDir.value;
-        dir.oldArg = oldDir.arg;
         callHook$1(dir, 'update', vnode, oldVnode);
         if (dir.def && dir.def.componentUpdated) {
           dirsWithPostpatch.push(dir);
@@ -27654,7 +27375,7 @@ __webpack_require__.r(__webpack_exports__);
         el.setAttribute(key, value);
       }
     } else if (isEnumeratedAttr(key)) {
-      el.setAttribute(key, convertEnumeratedValue(key, value));
+      el.setAttribute(key, isFalsyAttrValue(value) || value === 'false' ? 'false' : 'true');
     } else if (isXlink(key)) {
       if (isFalsyAttrValue(value)) {
         el.removeAttributeNS(xlinkNS, getXlinkProp(key));
@@ -27676,8 +27397,8 @@ __webpack_require__.r(__webpack_exports__);
       /* istanbul ignore if */
       if (
         isIE && !isIE9 &&
-        el.tagName === 'TEXTAREA' &&
-        key === 'placeholder' && value !== '' && !el.__ieph
+        (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') &&
+        key === 'placeholder' && !el.__ieph
       ) {
         var blocker = function (e) {
           e.stopImmediatePropagation();
@@ -27834,13 +27555,9 @@ __webpack_require__.r(__webpack_exports__);
 
   /*  */
 
-
-
-  /* eslint-disable no-unused-vars */
-  function baseWarn (msg, range) {
+  function baseWarn (msg) {
     console.error(("[Vue compiler]: " + msg));
   }
-  /* eslint-enable no-unused-vars */
 
   function pluckModuleFunction (
     modules,
@@ -27851,23 +27568,20 @@ __webpack_require__.r(__webpack_exports__);
       : []
   }
 
-  function addProp (el, name, value, range, dynamic) {
-    (el.props || (el.props = [])).push(rangeSetItem({ name: name, value: value, dynamic: dynamic }, range));
+  function addProp (el, name, value) {
+    (el.props || (el.props = [])).push({ name: name, value: value });
     el.plain = false;
   }
 
-  function addAttr (el, name, value, range, dynamic) {
-    var attrs = dynamic
-      ? (el.dynamicAttrs || (el.dynamicAttrs = []))
-      : (el.attrs || (el.attrs = []));
-    attrs.push(rangeSetItem({ name: name, value: value, dynamic: dynamic }, range));
+  function addAttr (el, name, value) {
+    (el.attrs || (el.attrs = [])).push({ name: name, value: value });
     el.plain = false;
   }
 
   // add a raw attr (use this in preTransforms)
-  function addRawAttr (el, name, value, range) {
+  function addRawAttr (el, name, value) {
     el.attrsMap[name] = value;
-    el.attrsList.push(rangeSetItem({ name: name, value: value }, range));
+    el.attrsList.push({ name: name, value: value });
   }
 
   function addDirective (
@@ -27876,25 +27590,10 @@ __webpack_require__.r(__webpack_exports__);
     rawName,
     value,
     arg,
-    isDynamicArg,
-    modifiers,
-    range
+    modifiers
   ) {
-    (el.directives || (el.directives = [])).push(rangeSetItem({
-      name: name,
-      rawName: rawName,
-      value: value,
-      arg: arg,
-      isDynamicArg: isDynamicArg,
-      modifiers: modifiers
-    }, range));
+    (el.directives || (el.directives = [])).push({ name: name, rawName: rawName, value: value, arg: arg, modifiers: modifiers });
     el.plain = false;
-  }
-
-  function prependModifierMarker (symbol, name, dynamic) {
-    return dynamic
-      ? ("_p(" + name + ",\"" + symbol + "\")")
-      : symbol + name // mark the event as captured
   }
 
   function addHandler (
@@ -27903,9 +27602,7 @@ __webpack_require__.r(__webpack_exports__);
     value,
     modifiers,
     important,
-    warn,
-    range,
-    dynamic
+    warn
   ) {
     modifiers = modifiers || emptyObject;
     // warn prevent and passive modifier
@@ -27916,25 +27613,18 @@ __webpack_require__.r(__webpack_exports__);
     ) {
       warn(
         'passive and prevent can\'t be used together. ' +
-        'Passive handler can\'t prevent default event.',
-        range
+        'Passive handler can\'t prevent default event.'
       );
     }
 
     // normalize click.right and click.middle since they don't actually fire
     // this is technically browser-specific, but at least for now browsers are
     // the only target envs that have right/middle clicks.
-    if (modifiers.right) {
-      if (dynamic) {
-        name = "(" + name + ")==='click'?'contextmenu':(" + name + ")";
-      } else if (name === 'click') {
+    if (name === 'click') {
+      if (modifiers.right) {
         name = 'contextmenu';
         delete modifiers.right;
-      }
-    } else if (modifiers.middle) {
-      if (dynamic) {
-        name = "(" + name + ")==='click'?'mouseup':(" + name + ")";
-      } else if (name === 'click') {
+      } else if (modifiers.middle) {
         name = 'mouseup';
       }
     }
@@ -27942,16 +27632,16 @@ __webpack_require__.r(__webpack_exports__);
     // check capture modifier
     if (modifiers.capture) {
       delete modifiers.capture;
-      name = prependModifierMarker('!', name, dynamic);
+      name = '!' + name; // mark the event as captured
     }
     if (modifiers.once) {
       delete modifiers.once;
-      name = prependModifierMarker('~', name, dynamic);
+      name = '~' + name; // mark the event as once
     }
     /* istanbul ignore if */
     if (modifiers.passive) {
       delete modifiers.passive;
-      name = prependModifierMarker('&', name, dynamic);
+      name = '&' + name; // mark the event as passive
     }
 
     var events;
@@ -27962,7 +27652,9 @@ __webpack_require__.r(__webpack_exports__);
       events = el.events || (el.events = {});
     }
 
-    var newHandler = rangeSetItem({ value: value.trim(), dynamic: dynamic }, range);
+    var newHandler = {
+      value: value.trim()
+    };
     if (modifiers !== emptyObject) {
       newHandler.modifiers = modifiers;
     }
@@ -27978,15 +27670,6 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     el.plain = false;
-  }
-
-  function getRawBindingAttr (
-    el,
-    name
-  ) {
-    return el.rawAttrsMap[':' + name] ||
-      el.rawAttrsMap['v-bind:' + name] ||
-      el.rawAttrsMap[name]
   }
 
   function getBindingAttr (
@@ -28030,35 +27713,6 @@ __webpack_require__.r(__webpack_exports__);
       delete el.attrsMap[name];
     }
     return val
-  }
-
-  function getAndRemoveAttrByRegex (
-    el,
-    name
-  ) {
-    var list = el.attrsList;
-    for (var i = 0, l = list.length; i < l; i++) {
-      var attr = list[i];
-      if (name.test(attr.name)) {
-        list.splice(i, 1);
-        return attr
-      }
-    }
-  }
-
-  function rangeSetItem (
-    item,
-    range
-  ) {
-    if (range) {
-      if (range.start != null) {
-        item.start = range.start;
-      }
-      if (range.end != null) {
-        item.end = range.end;
-      }
-    }
-    return item
   }
 
   /*  */
@@ -28235,8 +27889,7 @@ __webpack_require__.r(__webpack_exports__);
       if (tag === 'input' && type === 'file') {
         warn$1(
           "<" + (el.tag) + " v-model=\"" + value + "\" type=\"file\">:\n" +
-          "File inputs are read only. Use a v-on:change listener instead.",
-          el.rawAttrsMap['v-model']
+          "File inputs are read only. Use a v-on:change listener instead."
         );
       }
     }
@@ -28262,8 +27915,7 @@ __webpack_require__.r(__webpack_exports__);
         "<" + (el.tag) + " v-model=\"" + value + "\">: " +
         "v-model is not supported on this element type. " +
         'If you are working with contenteditable, it\'s recommended to ' +
-        'wrap a library dedicated for that purpose inside a custom component.',
-        el.rawAttrsMap['v-model']
+        'wrap a library dedicated for that purpose inside a custom component.'
       );
     }
 
@@ -28347,8 +27999,7 @@ __webpack_require__.r(__webpack_exports__);
         var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
         warn$1(
           binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " +
-          'because the latter already expands to a value binding internally',
-          el.rawAttrsMap[binding]
+          'because the latter already expands to a value binding internally'
         );
       }
     }
@@ -28419,39 +28070,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 
-  // #9446: Firefox <= 53 (in particular, ESR 52) has incorrect Event.timeStamp
-  // implementation and does not fire microtasks in between event propagation, so
-  // safe to exclude.
-  var useMicrotaskFix = isUsingMicroTask && !(isFF && Number(isFF[1]) <= 53);
-
   function add$1 (
-    name,
+    event,
     handler,
     capture,
     passive
   ) {
-    // async edge case #6566: inner click event triggers patch, event handler
-    // attached to outer element during patch, and triggered again. This
-    // happens because browsers fire microtask ticks between event propagation.
-    // the solution is simple: we save the timestamp when a handler is attached,
-    // and the handler would only fire if the event passed to it was fired
-    // AFTER it was attached.
-    if (useMicrotaskFix) {
-      var attachedTimestamp = currentFlushTimestamp;
-      var original = handler;
-      handler = original._wrapper = function (e) {
-        if (
-          e.timeStamp >= attachedTimestamp ||
-          // #9448 bail if event is fired in another document in a multi-page
-          // electron/nw.js app
-          e.target.ownerDocument !== document
-        ) {
-          return original.apply(this, arguments)
-        }
-      };
-    }
+    handler = withMacroTask(handler);
     target$1.addEventListener(
-      name,
+      event,
       handler,
       supportsPassive
         ? { capture: capture, passive: passive }
@@ -28460,14 +28087,14 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   function remove$2 (
-    name,
+    event,
     handler,
     capture,
     _target
   ) {
     (_target || target$1).removeEventListener(
-      name,
-      handler._wrapper || handler,
+      event,
+      handler._withTask || handler,
       capture
     );
   }
@@ -28490,8 +28117,6 @@ __webpack_require__.r(__webpack_exports__);
   };
 
   /*  */
-
-  var svgContainer;
 
   function updateDOMProps (oldVnode, vnode) {
     if (isUndef(oldVnode.data.domProps) && isUndef(vnode.data.domProps)) {
@@ -28526,14 +28151,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      // skip the update if old and new VDOM state is the same.
-      // the only exception is `value` where the DOM value may be temporarily
-      // out of sync with VDOM state due to focus, composition and modifiers.
-      // This also covers #4521 by skipping the unnecesarry `checked` update.
-      if (key !== 'value' && cur === oldProps[key]) {
-        continue
-      }
-
       if (key === 'value') {
         // store value as _value as well since
         // non-string values will be stringified
@@ -28542,17 +28159,6 @@ __webpack_require__.r(__webpack_exports__);
         var strCur = isUndef(cur) ? '' : String(cur);
         if (shouldUpdateValue(elm, strCur)) {
           elm.value = strCur;
-        }
-      } else if (key === 'innerHTML' && isSVG(elm.tagName) && isUndef(elm.innerHTML)) {
-        // IE doesn't support innerHTML for SVG elements
-        svgContainer = svgContainer || document.createElement('div');
-        svgContainer.innerHTML = "<svg>" + cur + "</svg>";
-        var svg = svgContainer.firstChild;
-        while (elm.firstChild) {
-          elm.removeChild(elm.firstChild);
-        }
-        while (svg.firstChild) {
-          elm.appendChild(svg.firstChild);
         }
       } else {
         elm[key] = cur;
@@ -28585,6 +28191,10 @@ __webpack_require__.r(__webpack_exports__);
     var value = elm.value;
     var modifiers = elm._vModifiers; // injected by v-model runtime
     if (isDef(modifiers)) {
+      if (modifiers.lazy) {
+        // inputs with lazy should only be updated when not in focus
+        return false
+      }
       if (modifiers.number) {
         return toNumber(value) !== toNumber(newVal)
       }
@@ -28679,7 +28289,7 @@ __webpack_require__.r(__webpack_exports__);
     if (cssVarRE.test(name)) {
       el.style.setProperty(name, val);
     } else if (importantRE.test(val)) {
-      el.style.setProperty(hyphenate(name), val.replace(importantRE, ''), 'important');
+      el.style.setProperty(name, val.replace(importantRE, ''), 'important');
     } else {
       var normalizedName = normalize(name);
       if (Array.isArray(val)) {
@@ -29950,7 +29560,9 @@ __webpack_require__.r(__webpack_exports__);
       if (config.devtools) {
         if (devtools) {
           devtools.emit('init', Vue);
-        } else {
+        } else if (
+          isChrome
+        ) {
           console[console.info ? 'info' : 'log'](
             'Download the Vue Devtools extension for a better development experience:\n' +
             'https://github.com/vuejs/vue-devtools'
@@ -30029,8 +29641,7 @@ __webpack_require__.r(__webpack_exports__);
           "class=\"" + staticClass + "\": " +
           'Interpolation inside attributes has been removed. ' +
           'Use v-bind or the colon shorthand instead. For example, ' +
-          'instead of <div class="{{ val }}">, use <div :class="val">.',
-          el.rawAttrsMap['class']
+          'instead of <div class="{{ val }}">, use <div :class="val">.'
         );
       }
     }
@@ -30074,8 +29685,7 @@ __webpack_require__.r(__webpack_exports__);
             "style=\"" + staticStyle + "\": " +
             'Interpolation inside attributes has been removed. ' +
             'Use v-bind or the colon shorthand instead. For example, ' +
-            'instead of <div style="{{ val }}">, use <div :style="val">.',
-            el.rawAttrsMap['style']
+            'instead of <div style="{{ val }}">, use <div :style="val">.'
           );
         }
       }
@@ -30146,8 +29756,9 @@ __webpack_require__.r(__webpack_exports__);
 
   // Regular Expressions for parsing tags and attributes
   var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
-  var dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
-  var ncname = "[a-zA-Z_][\\-\\.0-9_a-zA-Z" + unicodeLetters + "]*";
+  // could use https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-QName
+  // but for Vue templates we can enforce a simple charset
+  var ncname = '[a-zA-Z_][\\w\\-\\.]*';
   var qnameCapture = "((?:" + ncname + "\\:)?" + ncname + ")";
   var startTagOpen = new RegExp(("^<" + qnameCapture));
   var startTagClose = /^\s*(\/?)>/;
@@ -30167,11 +29778,10 @@ __webpack_require__.r(__webpack_exports__);
     '&quot;': '"',
     '&amp;': '&',
     '&#10;': '\n',
-    '&#9;': '\t',
-    '&#39;': "'"
+    '&#9;': '\t'
   };
-  var encodedAttr = /&(?:lt|gt|quot|amp|#39);/g;
-  var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#39|#10|#9);/g;
+  var encodedAttr = /&(?:lt|gt|quot|amp);/g;
+  var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#10|#9);/g;
 
   // #5992
   var isIgnoreNewlineTag = makeMap('pre,textarea', true);
@@ -30201,7 +29811,7 @@ __webpack_require__.r(__webpack_exports__);
 
             if (commentEnd >= 0) {
               if (options.shouldKeepComment) {
-                options.comment(html.substring(4, commentEnd), index, index + commentEnd + 3);
+                options.comment(html.substring(4, commentEnd));
               }
               advance(commentEnd + 3);
               continue
@@ -30261,18 +29871,16 @@ __webpack_require__.r(__webpack_exports__);
             rest = html.slice(textEnd);
           }
           text = html.substring(0, textEnd);
+          advance(textEnd);
         }
 
         if (textEnd < 0) {
           text = html;
-        }
-
-        if (text) {
-          advance(text.length);
+          html = '';
         }
 
         if (options.chars && text) {
-          options.chars(text, index - text.length, index);
+          options.chars(text);
         }
       } else {
         var endTagLength = 0;
@@ -30301,7 +29909,7 @@ __webpack_require__.r(__webpack_exports__);
       if (html === last) {
         options.chars && options.chars(html);
         if (!stack.length && options.warn) {
-          options.warn(("Mal-formatted tag at end of template: \"" + html + "\""), { start: index + html.length });
+          options.warn(("Mal-formatted tag at end of template: \"" + html + "\""));
         }
         break
       }
@@ -30325,10 +29933,8 @@ __webpack_require__.r(__webpack_exports__);
         };
         advance(start[0].length);
         var end, attr;
-        while (!(end = html.match(startTagClose)) && (attr = html.match(dynamicArgAttribute) || html.match(attribute))) {
-          attr.start = index;
+        while (!(end = html.match(startTagClose)) && (attr = html.match(attribute))) {
           advance(attr[0].length);
-          attr.end = index;
           match.attrs.push(attr);
         }
         if (end) {
@@ -30367,14 +29973,10 @@ __webpack_require__.r(__webpack_exports__);
           name: args[1],
           value: decodeAttr(value, shouldDecodeNewlines)
         };
-        if (options.outputSourceRange) {
-          attrs[i].start = args.start + args[0].match(/^\s*/).length;
-          attrs[i].end = args.end;
-        }
       }
 
       if (!unary) {
-        stack.push({ tag: tagName, lowerCasedTag: tagName.toLowerCase(), attrs: attrs, start: match.start, end: match.end });
+        stack.push({ tag: tagName, lowerCasedTag: tagName.toLowerCase(), attrs: attrs });
         lastTag = tagName;
       }
 
@@ -30408,8 +30010,7 @@ __webpack_require__.r(__webpack_exports__);
             options.warn
           ) {
             options.warn(
-              ("tag <" + (stack[i].tag) + "> has no matching end tag."),
-              { start: stack[i].start }
+              ("tag <" + (stack[i].tag) + "> has no matching end tag.")
             );
           }
           if (options.end) {
@@ -30442,22 +30043,12 @@ __webpack_require__.r(__webpack_exports__);
   var forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
   var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
   var stripParensRE = /^\(|\)$/g;
-  var dynamicArgRE = /^\[.*\]$/;
 
   var argRE = /:(.*)$/;
-  var bindRE = /^:|^\.|^v-bind:/;
+  var bindRE = /^:|^v-bind:/;
   var modifierRE = /\.[^.]+/g;
 
-  var slotRE = /^v-slot(:|$)|^#/;
-
-  var lineBreakRE = /[\r\n]/;
-  var whitespaceRE$1 = /\s+/g;
-
-  var invalidAttributeRE = /[\s"'<>\/=]/;
-
   var decodeHTMLCached = cached(he.decode);
-
-  var emptySlotScopeToken = "_empty_";
 
   // configurable state
   var warn$2;
@@ -30468,7 +30059,8 @@ __webpack_require__.r(__webpack_exports__);
   var platformIsPreTag;
   var platformMustUseProp;
   var platformGetTagNamespace;
-  var maybeComponent;
+
+
 
   function createASTElement (
     tag,
@@ -30480,7 +30072,6 @@ __webpack_require__.r(__webpack_exports__);
       tag: tag,
       attrsList: attrs,
       attrsMap: makeAttrsMap(attrs),
-      rawAttrsMap: {},
       parent: parent,
       children: []
     }
@@ -30498,8 +30089,6 @@ __webpack_require__.r(__webpack_exports__);
     platformIsPreTag = options.isPreTag || no;
     platformMustUseProp = options.mustUseProp || no;
     platformGetTagNamespace = options.getTagNamespace || no;
-    var isReservedTag = options.isReservedTag || no;
-    maybeComponent = function (el) { return !!el.component || !isReservedTag(el.tag); };
 
     transforms = pluckModuleFunction(options.modules, 'transformNode');
     preTransforms = pluckModuleFunction(options.modules, 'preTransformNode');
@@ -30509,67 +30098,20 @@ __webpack_require__.r(__webpack_exports__);
 
     var stack = [];
     var preserveWhitespace = options.preserveWhitespace !== false;
-    var whitespaceOption = options.whitespace;
     var root;
     var currentParent;
     var inVPre = false;
     var inPre = false;
     var warned = false;
 
-    function warnOnce (msg, range) {
+    function warnOnce (msg) {
       if (!warned) {
         warned = true;
-        warn$2(msg, range);
+        warn$2(msg);
       }
     }
 
     function closeElement (element) {
-      trimEndingWhitespace(element);
-      if (!inVPre && !element.processed) {
-        element = processElement(element, options);
-      }
-      // tree management
-      if (!stack.length && element !== root) {
-        // allow root elements with v-if, v-else-if and v-else
-        if (root.if && (element.elseif || element.else)) {
-          {
-            checkRootConstraints(element);
-          }
-          addIfCondition(root, {
-            exp: element.elseif,
-            block: element
-          });
-        } else {
-          warnOnce(
-            "Component template should contain exactly one root element. " +
-            "If you are using v-if on multiple elements, " +
-            "use v-else-if to chain them instead.",
-            { start: element.start }
-          );
-        }
-      }
-      if (currentParent && !element.forbidden) {
-        if (element.elseif || element.else) {
-          processIfConditions(element, currentParent);
-        } else {
-          if (element.slotScope) {
-            // scoped slot
-            // keep it in the children list so that v-else(-if) conditions can
-            // find it as the prev node.
-            var name = element.slotTarget || '"default"'
-            ;(currentParent.scopedSlots || (currentParent.scopedSlots = {}))[name] = element;
-          }
-          currentParent.children.push(element);
-          element.parent = currentParent;
-        }
-      }
-
-      // final children cleanup
-      // filter out scoped slots
-      element.children = element.children.filter(function (c) { return !(c).slotScope; });
-      // remove trailing whitespace node again
-      trimEndingWhitespace(element);
-
       // check pre state
       if (element.pre) {
         inVPre = false;
@@ -30583,37 +30125,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
 
-    function trimEndingWhitespace (el) {
-      // remove trailing whitespace node
-      if (!inPre) {
-        var lastNode;
-        while (
-          (lastNode = el.children[el.children.length - 1]) &&
-          lastNode.type === 3 &&
-          lastNode.text === ' '
-        ) {
-          el.children.pop();
-        }
-      }
-    }
-
-    function checkRootConstraints (el) {
-      if (el.tag === 'slot' || el.tag === 'template') {
-        warnOnce(
-          "Cannot use <" + (el.tag) + "> as component root element because it may " +
-          'contain multiple nodes.',
-          { start: el.start }
-        );
-      }
-      if (el.attrsMap.hasOwnProperty('v-for')) {
-        warnOnce(
-          'Cannot use v-for on stateful component root element because ' +
-          'it renders multiple elements.',
-          el.rawAttrsMap['v-for']
-        );
-      }
-    }
-
     parseHTML(template, {
       warn: warn$2,
       expectHTML: options.expectHTML,
@@ -30622,8 +30133,7 @@ __webpack_require__.r(__webpack_exports__);
       shouldDecodeNewlines: options.shouldDecodeNewlines,
       shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
       shouldKeepComment: options.comments,
-      outputSourceRange: options.outputSourceRange,
-      start: function start (tag, attrs, unary, start$1) {
+      start: function start (tag, attrs, unary) {
         // check namespace.
         // inherit parent ns if there is one
         var ns = (currentParent && currentParent.ns) || platformGetTagNamespace(tag);
@@ -30639,35 +30149,12 @@ __webpack_require__.r(__webpack_exports__);
           element.ns = ns;
         }
 
-        {
-          if (options.outputSourceRange) {
-            element.start = start$1;
-            element.rawAttrsMap = element.attrsList.reduce(function (cumulated, attr) {
-              cumulated[attr.name] = attr;
-              return cumulated
-            }, {});
-          }
-          attrs.forEach(function (attr) {
-            if (invalidAttributeRE.test(attr.name)) {
-              warn$2(
-                "Invalid dynamic argument expression: attribute names cannot contain " +
-                "spaces, quotes, <, >, / or =.",
-                {
-                  start: attr.start + attr.name.indexOf("["),
-                  end: attr.start + attr.name.length
-                }
-              );
-            }
-          });
-        }
-
         if (isForbiddenTag(element) && !isServerRendering()) {
           element.forbidden = true;
           warn$2(
             'Templates should only be responsible for mapping the state to the ' +
             'UI. Avoid placing tags with side-effects in your templates, such as ' +
-            "<" + tag + ">" + ', as they will not be parsed.',
-            { start: element.start }
+            "<" + tag + ">" + ', as they will not be parsed.'
           );
         }
 
@@ -30692,15 +30179,59 @@ __webpack_require__.r(__webpack_exports__);
           processFor(element);
           processIf(element);
           processOnce(element);
+          // element-scope stuff
+          processElement(element, options);
         }
 
-        if (!root) {
-          root = element;
+        function checkRootConstraints (el) {
           {
-            checkRootConstraints(root);
+            if (el.tag === 'slot' || el.tag === 'template') {
+              warnOnce(
+                "Cannot use <" + (el.tag) + "> as component root element because it may " +
+                'contain multiple nodes.'
+              );
+            }
+            if (el.attrsMap.hasOwnProperty('v-for')) {
+              warnOnce(
+                'Cannot use v-for on stateful component root element because ' +
+                'it renders multiple elements.'
+              );
+            }
           }
         }
 
+        // tree management
+        if (!root) {
+          root = element;
+          checkRootConstraints(root);
+        } else if (!stack.length) {
+          // allow root elements with v-if, v-else-if and v-else
+          if (root.if && (element.elseif || element.else)) {
+            checkRootConstraints(element);
+            addIfCondition(root, {
+              exp: element.elseif,
+              block: element
+            });
+          } else {
+            warnOnce(
+              "Component template should contain exactly one root element. " +
+              "If you are using v-if on multiple elements, " +
+              "use v-else-if to chain them instead."
+            );
+          }
+        }
+        if (currentParent && !element.forbidden) {
+          if (element.elseif || element.else) {
+            processIfConditions(element, currentParent);
+          } else if (element.slotScope) { // scoped slot
+            currentParent.plain = false;
+            var name = element.slotTarget || '"default"'
+            ;(currentParent.scopedSlots || (currentParent.scopedSlots = {}))[name] = element;
+          } else {
+            currentParent.children.push(element);
+            element.parent = currentParent;
+          }
+        }
         if (!unary) {
           currentParent = element;
           stack.push(element);
@@ -30709,29 +30240,29 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
 
-      end: function end (tag, start, end$1) {
+      end: function end () {
+        // remove trailing whitespace
         var element = stack[stack.length - 1];
+        var lastNode = element.children[element.children.length - 1];
+        if (lastNode && lastNode.type === 3 && lastNode.text === ' ' && !inPre) {
+          element.children.pop();
+        }
         // pop stack
         stack.length -= 1;
         currentParent = stack[stack.length - 1];
-        if (options.outputSourceRange) {
-          element.end = end$1;
-        }
         closeElement(element);
       },
 
-      chars: function chars (text, start, end) {
+      chars: function chars (text) {
         if (!currentParent) {
           {
             if (text === template) {
               warnOnce(
-                'Component template requires a root element, rather than just text.',
-                { start: start }
+                'Component template requires a root element, rather than just text.'
               );
             } else if ((text = text.trim())) {
               warnOnce(
-                ("text \"" + text + "\" outside root element will be ignored."),
-                { start: start }
+                ("text \"" + text + "\" outside root element will be ignored.")
               );
             }
           }
@@ -30746,66 +30277,33 @@ __webpack_require__.r(__webpack_exports__);
           return
         }
         var children = currentParent.children;
-        if (inPre || text.trim()) {
-          text = isTextTag(currentParent) ? text : decodeHTMLCached(text);
-        } else if (!children.length) {
-          // remove the whitespace-only node right after an opening tag
-          text = '';
-        } else if (whitespaceOption) {
-          if (whitespaceOption === 'condense') {
-            // in condense mode, remove the whitespace node if it contains
-            // line break, otherwise condense to a single space
-            text = lineBreakRE.test(text) ? '' : ' ';
-          } else {
-            text = ' ';
-          }
-        } else {
-          text = preserveWhitespace ? ' ' : '';
-        }
+        text = inPre || text.trim()
+          ? isTextTag(currentParent) ? text : decodeHTMLCached(text)
+          // only preserve whitespace if its not right after a starting tag
+          : preserveWhitespace && children.length ? ' ' : '';
         if (text) {
-          if (whitespaceOption === 'condense') {
-            // condense consecutive whitespaces into single space
-            text = text.replace(whitespaceRE$1, ' ');
-          }
           var res;
-          var child;
           if (!inVPre && text !== ' ' && (res = parseText(text, delimiters))) {
-            child = {
+            children.push({
               type: 2,
               expression: res.expression,
               tokens: res.tokens,
               text: text
-            };
+            });
           } else if (text !== ' ' || !children.length || children[children.length - 1].text !== ' ') {
-            child = {
+            children.push({
               type: 3,
               text: text
-            };
-          }
-          if (child) {
-            if (options.outputSourceRange) {
-              child.start = start;
-              child.end = end;
-            }
-            children.push(child);
+            });
           }
         }
       },
-      comment: function comment (text, start, end) {
-        // adding anyting as a sibling to the root node is forbidden
-        // comments should still be allowed, but ignored
-        if (currentParent) {
-          var child = {
-            type: 3,
-            text: text,
-            isComment: true
-          };
-          if (options.outputSourceRange) {
-            child.start = start;
-            child.end = end;
-          }
-          currentParent.children.push(child);
-        }
+      comment: function comment (text) {
+        currentParent.children.push({
+          type: 3,
+          text: text,
+          isComment: true
+        });
       }
     });
     return root
@@ -30818,19 +30316,14 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   function processRawAttrs (el) {
-    var list = el.attrsList;
-    var len = list.length;
-    if (len) {
-      var attrs = el.attrs = new Array(len);
-      for (var i = 0; i < len; i++) {
+    var l = el.attrsList.length;
+    if (l) {
+      var attrs = el.attrs = new Array(l);
+      for (var i = 0; i < l; i++) {
         attrs[i] = {
-          name: list[i].name,
-          value: JSON.stringify(list[i].value)
+          name: el.attrsList[i].name,
+          value: JSON.stringify(el.attrsList[i].value)
         };
-        if (list[i].start != null) {
-          attrs[i].start = list[i].start;
-          attrs[i].end = list[i].end;
-        }
       }
     } else if (!el.pre) {
       // non root node in pre blocks with no attributes
@@ -30838,29 +30331,20 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 
-  function processElement (
-    element,
-    options
-  ) {
+  function processElement (element, options) {
     processKey(element);
 
     // determine whether this is a plain element after
     // removing structural attributes
-    element.plain = (
-      !element.key &&
-      !element.scopedSlots &&
-      !element.attrsList.length
-    );
+    element.plain = !element.key && !element.attrsList.length;
 
     processRef(element);
-    processSlotContent(element);
-    processSlotOutlet(element);
+    processSlot(element);
     processComponent(element);
     for (var i = 0; i < transforms.length; i++) {
       element = transforms[i](element, options) || element;
     }
     processAttrs(element);
-    return element
   }
 
   function processKey (el) {
@@ -30868,10 +30352,7 @@ __webpack_require__.r(__webpack_exports__);
     if (exp) {
       {
         if (el.tag === 'template') {
-          warn$2(
-            "<template> cannot be keyed. Place the key on real elements instead.",
-            getRawBindingAttr(el, 'key')
-          );
+          warn$2("<template> cannot be keyed. Place the key on real elements instead.");
         }
         if (el.for) {
           var iterator = el.iterator2 || el.iterator1;
@@ -30879,9 +30360,7 @@ __webpack_require__.r(__webpack_exports__);
           if (iterator && iterator === exp && parent && parent.tag === 'transition-group') {
             warn$2(
               "Do not use v-for index as key on <transition-group> children, " +
-              "this is the same as not using keys.",
-              getRawBindingAttr(el, 'key'),
-              true /* tip */
+              "this is the same as not using keys."
             );
           }
         }
@@ -30906,8 +30385,7 @@ __webpack_require__.r(__webpack_exports__);
         extend(el, res);
       } else {
         warn$2(
-          ("Invalid v-for expression: " + exp),
-          el.rawAttrsMap['v-for']
+          ("Invalid v-for expression: " + exp)
         );
       }
     }
@@ -30963,8 +30441,7 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       warn$2(
         "v-" + (el.elseif ? ('else-if="' + el.elseif + '"') : 'else') + " " +
-        "used on element <" + (el.tag) + "> without corresponding v-if.",
-        el.rawAttrsMap[el.elseif ? 'v-else-if' : 'v-else']
+        "used on element <" + (el.tag) + "> without corresponding v-if."
       );
     }
   }
@@ -30978,8 +30455,7 @@ __webpack_require__.r(__webpack_exports__);
         if (children[i].text !== ' ') {
           warn$2(
             "text \"" + (children[i].text.trim()) + "\" between v-if and v-else(-if) " +
-            "will be ignored.",
-            children[i]
+            "will be ignored."
           );
         }
         children.pop();
@@ -31001,157 +30477,51 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 
-  // handle content being passed to a component as slot,
-  // e.g. <template slot="xxx">, <div slot-scope="xxx">
-  function processSlotContent (el) {
-    var slotScope;
-    if (el.tag === 'template') {
-      slotScope = getAndRemoveAttr(el, 'scope');
-      /* istanbul ignore if */
-      if (slotScope) {
-        warn$2(
-          "the \"scope\" attribute for scoped slots have been deprecated and " +
-          "replaced by \"slot-scope\" since 2.5. The new \"slot-scope\" attribute " +
-          "can also be used on plain elements in addition to <template> to " +
-          "denote scoped slots.",
-          el.rawAttrsMap['scope'],
-          true
-        );
-      }
-      el.slotScope = slotScope || getAndRemoveAttr(el, 'slot-scope');
-    } else if ((slotScope = getAndRemoveAttr(el, 'slot-scope'))) {
-      /* istanbul ignore if */
-      if (el.attrsMap['v-for']) {
-        warn$2(
-          "Ambiguous combined usage of slot-scope and v-for on <" + (el.tag) + "> " +
-          "(v-for takes higher priority). Use a wrapper <template> for the " +
-          "scoped slot to make it clearer.",
-          el.rawAttrsMap['slot-scope'],
-          true
-        );
-      }
-      el.slotScope = slotScope;
-    }
-
-    // slot="xxx"
-    var slotTarget = getBindingAttr(el, 'slot');
-    if (slotTarget) {
-      el.slotTarget = slotTarget === '""' ? '"default"' : slotTarget;
-      el.slotTargetDynamic = !!(el.attrsMap[':slot'] || el.attrsMap['v-bind:slot']);
-      // preserve slot as an attribute for native shadow DOM compat
-      // only for non-scoped slots.
-      if (el.tag !== 'template' && !el.slotScope) {
-        addAttr(el, 'slot', slotTarget, getRawBindingAttr(el, 'slot'));
-      }
-    }
-
-    // 2.6 v-slot syntax
-    {
-      if (el.tag === 'template') {
-        // v-slot on <template>
-        var slotBinding = getAndRemoveAttrByRegex(el, slotRE);
-        if (slotBinding) {
-          {
-            if (el.slotTarget || el.slotScope) {
-              warn$2(
-                "Unexpected mixed usage of different slot syntaxes.",
-                el
-              );
-            }
-            if (el.parent && !maybeComponent(el.parent)) {
-              warn$2(
-                "<template v-slot> can only appear at the root level inside " +
-                "the receiving the component",
-                el
-              );
-            }
-          }
-          var ref = getSlotName(slotBinding);
-          var name = ref.name;
-          var dynamic = ref.dynamic;
-          el.slotTarget = name;
-          el.slotTargetDynamic = dynamic;
-          el.slotScope = slotBinding.value || emptySlotScopeToken; // force it into a scoped slot for perf
-        }
-      } else {
-        // v-slot on component, denotes default slot
-        var slotBinding$1 = getAndRemoveAttrByRegex(el, slotRE);
-        if (slotBinding$1) {
-          {
-            if (!maybeComponent(el)) {
-              warn$2(
-                "v-slot can only be used on components or <template>.",
-                slotBinding$1
-              );
-            }
-            if (el.slotScope || el.slotTarget) {
-              warn$2(
-                "Unexpected mixed usage of different slot syntaxes.",
-                el
-              );
-            }
-            if (el.scopedSlots) {
-              warn$2(
-                "To avoid scope ambiguity, the default slot should also use " +
-                "<template> syntax when there are other named slots.",
-                slotBinding$1
-              );
-            }
-          }
-          // add the component's children to its default slot
-          var slots = el.scopedSlots || (el.scopedSlots = {});
-          var ref$1 = getSlotName(slotBinding$1);
-          var name$1 = ref$1.name;
-          var dynamic$1 = ref$1.dynamic;
-          var slotContainer = slots[name$1] = createASTElement('template', [], el);
-          slotContainer.slotTarget = name$1;
-          slotContainer.slotTargetDynamic = dynamic$1;
-          slotContainer.children = el.children.filter(function (c) {
-            if (!c.slotScope) {
-              c.parent = slotContainer;
-              return true
-            }
-          });
-          slotContainer.slotScope = slotBinding$1.value || emptySlotScopeToken;
-          // remove children as they are returned from scopedSlots now
-          el.children = [];
-          // mark el non-plain so data gets generated
-          el.plain = false;
-        }
-      }
-    }
-  }
-
-  function getSlotName (binding) {
-    var name = binding.name.replace(slotRE, '');
-    if (!name) {
-      if (binding.name[0] !== '#') {
-        name = 'default';
-      } else {
-        warn$2(
-          "v-slot shorthand syntax requires a slot name.",
-          binding
-        );
-      }
-    }
-    return dynamicArgRE.test(name)
-      // dynamic [name]
-      ? { name: name.slice(1, -1), dynamic: true }
-      // static name
-      : { name: ("\"" + name + "\""), dynamic: false }
-  }
-
-  // handle <slot/> outlets
-  function processSlotOutlet (el) {
+  function processSlot (el) {
     if (el.tag === 'slot') {
       el.slotName = getBindingAttr(el, 'name');
       if (el.key) {
         warn$2(
           "`key` does not work on <slot> because slots are abstract outlets " +
           "and can possibly expand into multiple elements. " +
-          "Use the key on a wrapping element instead.",
-          getRawBindingAttr(el, 'key')
+          "Use the key on a wrapping element instead."
         );
+      }
+    } else {
+      var slotScope;
+      if (el.tag === 'template') {
+        slotScope = getAndRemoveAttr(el, 'scope');
+        /* istanbul ignore if */
+        if (slotScope) {
+          warn$2(
+            "the \"scope\" attribute for scoped slots have been deprecated and " +
+            "replaced by \"slot-scope\" since 2.5. The new \"slot-scope\" attribute " +
+            "can also be used on plain elements in addition to <template> to " +
+            "denote scoped slots.",
+            true
+          );
+        }
+        el.slotScope = slotScope || getAndRemoveAttr(el, 'slot-scope');
+      } else if ((slotScope = getAndRemoveAttr(el, 'slot-scope'))) {
+        /* istanbul ignore if */
+        if (el.attrsMap['v-for']) {
+          warn$2(
+            "Ambiguous combined usage of slot-scope and v-for on <" + (el.tag) + "> " +
+            "(v-for takes higher priority). Use a wrapper <template> for the " +
+            "scoped slot to make it clearer.",
+            true
+          );
+        }
+        el.slotScope = slotScope;
+      }
+      var slotTarget = getBindingAttr(el, 'slot');
+      if (slotTarget) {
+        el.slotTarget = slotTarget === '""' ? '"default"' : slotTarget;
+        // preserve slot as an attribute for native shadow DOM compat
+        // only for non-scoped slots.
+        if (el.tag !== 'template' && !el.slotScope) {
+          addAttr(el, 'slot', slotTarget);
+        }
       }
     }
   }
@@ -31168,7 +30538,7 @@ __webpack_require__.r(__webpack_exports__);
 
   function processAttrs (el) {
     var list = el.attrsList;
-    var i, l, name, rawName, value, modifiers, syncGen, isDynamic;
+    var i, l, name, rawName, value, modifiers, isProp;
     for (i = 0, l = list.length; i < l; i++) {
       name = rawName = list[i].name;
       value = list[i].value;
@@ -31176,18 +30546,14 @@ __webpack_require__.r(__webpack_exports__);
         // mark element as dynamic
         el.hasBindings = true;
         // modifiers
-        modifiers = parseModifiers(name.replace(dirRE, ''));
-        // support .foo shorthand syntax for the .prop modifier
+        modifiers = parseModifiers(name);
         if (modifiers) {
           name = name.replace(modifierRE, '');
         }
         if (bindRE.test(name)) { // v-bind
           name = name.replace(bindRE, '');
           value = parseFilters(value);
-          isDynamic = dynamicArgRE.test(name);
-          if (isDynamic) {
-            name = name.slice(1, -1);
-          }
+          isProp = false;
           if (
             value.trim().length === 0
           ) {
@@ -31196,79 +30562,41 @@ __webpack_require__.r(__webpack_exports__);
             );
           }
           if (modifiers) {
-            if (modifiers.prop && !isDynamic) {
+            if (modifiers.prop) {
+              isProp = true;
               name = camelize(name);
               if (name === 'innerHtml') { name = 'innerHTML'; }
             }
-            if (modifiers.camel && !isDynamic) {
+            if (modifiers.camel) {
               name = camelize(name);
             }
             if (modifiers.sync) {
-              syncGen = genAssignmentCode(value, "$event");
-              if (!isDynamic) {
-                addHandler(
-                  el,
-                  ("update:" + (camelize(name))),
-                  syncGen,
-                  null,
-                  false,
-                  warn$2,
-                  list[i]
-                );
-                if (hyphenate(name) !== camelize(name)) {
-                  addHandler(
-                    el,
-                    ("update:" + (hyphenate(name))),
-                    syncGen,
-                    null,
-                    false,
-                    warn$2,
-                    list[i]
-                  );
-                }
-              } else {
-                // handler w/ dynamic event name
-                addHandler(
-                  el,
-                  ("\"update:\"+(" + name + ")"),
-                  syncGen,
-                  null,
-                  false,
-                  warn$2,
-                  list[i],
-                  true // dynamic
-                );
-              }
+              addHandler(
+                el,
+                ("update:" + (camelize(name))),
+                genAssignmentCode(value, "$event")
+              );
             }
           }
-          if ((modifiers && modifiers.prop) || (
+          if (isProp || (
             !el.component && platformMustUseProp(el.tag, el.attrsMap.type, name)
           )) {
-            addProp(el, name, value, list[i], isDynamic);
+            addProp(el, name, value);
           } else {
-            addAttr(el, name, value, list[i], isDynamic);
+            addAttr(el, name, value);
           }
         } else if (onRE.test(name)) { // v-on
           name = name.replace(onRE, '');
-          isDynamic = dynamicArgRE.test(name);
-          if (isDynamic) {
-            name = name.slice(1, -1);
-          }
-          addHandler(el, name, value, modifiers, false, warn$2, list[i], isDynamic);
+          addHandler(el, name, value, modifiers, false, warn$2);
         } else { // normal directives
           name = name.replace(dirRE, '');
           // parse arg
           var argMatch = name.match(argRE);
           var arg = argMatch && argMatch[1];
-          isDynamic = false;
           if (arg) {
             name = name.slice(0, -(arg.length + 1));
-            if (dynamicArgRE.test(arg)) {
-              arg = arg.slice(1, -1);
-              isDynamic = true;
-            }
           }
-          addDirective(el, name, rawName, value, arg, isDynamic, modifiers, list[i]);
+          addDirective(el, name, rawName, value, arg, modifiers);
           if (name === 'model') {
             checkForAliasModel(el, value);
           }
@@ -31282,18 +30610,17 @@ __webpack_require__.r(__webpack_exports__);
               name + "=\"" + value + "\": " +
               'Interpolation inside attributes has been removed. ' +
               'Use v-bind or the colon shorthand instead. For example, ' +
-              'instead of <div id="{{ val }}">, use <div :id="val">.',
-              list[i]
+              'instead of <div id="{{ val }}">, use <div :id="val">.'
             );
           }
         }
-        addAttr(el, name, JSON.stringify(value), list[i]);
+        addAttr(el, name, JSON.stringify(value));
         // #6887 firefox doesn't update muted state if set via attribute
         // even immediately after element creation
         if (!el.component &&
             name === 'muted' &&
             platformMustUseProp(el.tag, el.attrsMap.type, name)) {
-          addProp(el, name, 'true', list[i]);
+          addProp(el, name, 'true');
         }
       }
     }
@@ -31325,7 +30652,7 @@ __webpack_require__.r(__webpack_exports__);
       if (
         map[attrs[i].name] && !isIE && !isEdge
       ) {
-        warn$2('duplicate attribute: ' + attrs[i].name, attrs[i]);
+        warn$2('duplicate attribute: ' + attrs[i].name);
       }
       map[attrs[i].name] = attrs[i].value;
     }
@@ -31372,8 +30699,7 @@ __webpack_require__.r(__webpack_exports__);
           "You are binding v-model directly to a v-for iteration alias. " +
           "This will not be able to modify the v-for source array because " +
           "writing to the alias is like modifying a function local variable. " +
-          "Consider using an array of objects and use v-model on an object property instead.",
-          el.rawAttrsMap['v-model']
+          "Consider using an array of objects and use v-model on an object property instead."
         );
       }
       _el = _el.parent;
@@ -31462,7 +30788,7 @@ __webpack_require__.r(__webpack_exports__);
 
   function text (el, dir) {
     if (dir.value) {
-      addProp(el, 'textContent', ("_s(" + (dir.value) + ")"), dir);
+      addProp(el, 'textContent', ("_s(" + (dir.value) + ")"));
     }
   }
 
@@ -31470,7 +30796,7 @@ __webpack_require__.r(__webpack_exports__);
 
   function html (el, dir) {
     if (dir.value) {
-      addProp(el, 'innerHTML', ("_s(" + (dir.value) + ")"), dir);
+      addProp(el, 'innerHTML', ("_s(" + (dir.value) + ")"));
     }
   }
 
@@ -31525,7 +30851,7 @@ __webpack_require__.r(__webpack_exports__);
 
   function genStaticKeys$1 (keys) {
     return makeMap(
-      'type,tag,attrsList,attrsMap,plain,parent,children,attrs,start,end,rawAttrsMap' +
+      'type,tag,attrsList,attrsMap,plain,parent,children,attrs' +
       (keys ? ',' + keys : '')
     )
   }
@@ -31625,7 +30951,6 @@ __webpack_require__.r(__webpack_exports__);
   /*  */
 
   var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/;
-  var fnInvokeRE = /\([^)]*?\);*$/;
   var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 
   // KeyboardEvent.keyCode aliases
@@ -31680,43 +31005,33 @@ __webpack_require__.r(__webpack_exports__);
     events,
     isNative
   ) {
-    var prefix = isNative ? 'nativeOn:' : 'on:';
-    var staticHandlers = "";
-    var dynamicHandlers = "";
+    var res = isNative ? 'nativeOn:{' : 'on:{';
     for (var name in events) {
-      var handlerCode = genHandler(events[name]);
-      if (events[name] && events[name].dynamic) {
-        dynamicHandlers += name + "," + handlerCode + ",";
-      } else {
-        staticHandlers += "\"" + name + "\":" + handlerCode + ",";
-      }
+      res += "\"" + name + "\":" + (genHandler(name, events[name])) + ",";
     }
-    staticHandlers = "{" + (staticHandlers.slice(0, -1)) + "}";
-    if (dynamicHandlers) {
-      return prefix + "_d(" + staticHandlers + ",[" + (dynamicHandlers.slice(0, -1)) + "])"
-    } else {
-      return prefix + staticHandlers
-    }
+    return res.slice(0, -1) + '}'
   }
 
-  function genHandler (handler) {
+  function genHandler (
+    name,
+    handler
+  ) {
     if (!handler) {
       return 'function(){}'
     }
 
     if (Array.isArray(handler)) {
-      return ("[" + (handler.map(function (handler) { return genHandler(handler); }).join(',')) + "]")
+      return ("[" + (handler.map(function (handler) { return genHandler(name, handler); }).join(',')) + "]")
     }
 
     var isMethodPath = simplePathRE.test(handler.value);
     var isFunctionExpression = fnExpRE.test(handler.value);
-    var isFunctionInvocation = simplePathRE.test(handler.value.replace(fnInvokeRE, ''));
 
     if (!handler.modifiers) {
       if (isMethodPath || isFunctionExpression) {
         return handler.value
       }
-      return ("function($event){" + (isFunctionInvocation ? ("return " + (handler.value)) : handler.value) + "}") // inline statement
+      return ("function($event){" + (handler.value) + "}") // inline statement
     } else {
       var code = '';
       var genModifierCode = '';
@@ -31751,15 +31066,13 @@ __webpack_require__.r(__webpack_exports__);
         ? ("return " + (handler.value) + "($event)")
         : isFunctionExpression
           ? ("return (" + (handler.value) + ")($event)")
-          : isFunctionInvocation
-            ? ("return " + (handler.value))
-            : handler.value;
+          : handler.value;
       return ("function($event){" + code + handlerCode + "}")
     }
   }
 
   function genKeyFilter (keys) {
-    return ("if(('keyCode' in $event)&&" + (keys.map(genFilterCode).join('&&')) + ")return null;")
+    return ("if(!('button' in $event)&&" + (keys.map(genFilterCode).join('&&')) + ")return null;")
   }
 
   function genFilterCode (key) {
@@ -31817,7 +31130,7 @@ __webpack_require__.r(__webpack_exports__);
     this.dataGenFns = pluckModuleFunction(options.modules, 'genData');
     this.directives = extend(extend({}, baseDirectives), options.directives);
     var isReservedTag = options.isReservedTag || no;
-    this.maybeComponent = function (el) { return !!el.component || !isReservedTag(el.tag); };
+    this.maybeComponent = function (el) { return !(isReservedTag(el.tag) && !el.component); };
     this.onceId = 0;
     this.staticRenderFns = [];
     this.pre = false;
@@ -31908,8 +31221,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       if (!key) {
         state.warn(
-          "v-once can only be used inside v-for that is keyed. ",
-          el.rawAttrsMap['v-once']
+          "v-once can only be used inside v-for that is keyed. "
         );
         return genElement(el, state)
       }
@@ -31976,7 +31288,6 @@ __webpack_require__.r(__webpack_exports__);
         "<" + (el.tag) + " v-for=\"" + alias + " in " + exp + "\">: component lists rendered with " +
         "v-for should have explicit keys. " +
         "See https://vuejs.org/guide/list.html#key for more info.",
-        el.rawAttrsMap['v-for'],
         true /* tip */
       );
     }
@@ -32021,11 +31332,11 @@ __webpack_require__.r(__webpack_exports__);
     }
     // attributes
     if (el.attrs) {
-      data += "attrs:" + (genProps(el.attrs)) + ",";
+      data += "attrs:{" + (genProps(el.attrs)) + "},";
     }
     // DOM props
     if (el.props) {
-      data += "domProps:" + (genProps(el.props)) + ",";
+      data += "domProps:{" + (genProps(el.props)) + "},";
     }
     // event handlers
     if (el.events) {
@@ -32041,7 +31352,7 @@ __webpack_require__.r(__webpack_exports__);
     }
     // scoped slots
     if (el.scopedSlots) {
-      data += (genScopedSlots(el, el.scopedSlots, state)) + ",";
+      data += (genScopedSlots(el.scopedSlots, state)) + ",";
     }
     // component v-model
     if (el.model) {
@@ -32055,12 +31366,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
     data = data.replace(/,$/, '') + '}';
-    // v-bind dynamic argument wrap
-    // v-bind with dynamic arguments must be applied using the same v-bind object
-    // merge helper so that class/style/mustUseProp attrs are handled correctly.
-    if (el.dynamicAttrs) {
-      data = "_b(" + data + ",\"" + (el.tag) + "\"," + (genProps(el.dynamicAttrs)) + ")";
-    }
     // v-bind data wrap
     if (el.wrapData) {
       data = el.wrapData(data);
@@ -32089,7 +31394,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       if (needRuntime) {
         hasRuntime = true;
-        res += "{name:\"" + (dir.name) + "\",rawName:\"" + (dir.rawName) + "\"" + (dir.value ? (",value:(" + (dir.value) + "),expression:" + (JSON.stringify(dir.value))) : '') + (dir.arg ? (",arg:" + (dir.isDynamicArg ? dir.arg : ("\"" + (dir.arg) + "\""))) : '') + (dir.modifiers ? (",modifiers:" + (JSON.stringify(dir.modifiers))) : '') + "},";
+        res += "{name:\"" + (dir.name) + "\",rawName:\"" + (dir.rawName) + "\"" + (dir.value ? (",value:(" + (dir.value) + "),expression:" + (JSON.stringify(dir.value))) : '') + (dir.arg ? (",arg:\"" + (dir.arg) + "\"") : '') + (dir.modifiers ? (",modifiers:" + (JSON.stringify(dir.modifiers))) : '') + "},";
       }
     }
     if (hasRuntime) {
@@ -32100,69 +31405,54 @@ __webpack_require__.r(__webpack_exports__);
   function genInlineTemplate (el, state) {
     var ast = el.children[0];
     if (el.children.length !== 1 || ast.type !== 1) {
-      state.warn(
-        'Inline-template components must have exactly one child element.',
-        { start: el.start }
-      );
+      state.warn('Inline-template components must have exactly one child element.');
     }
-    if (ast && ast.type === 1) {
+    if (ast.type === 1) {
       var inlineRenderFns = generate(ast, state.options);
       return ("inlineTemplate:{render:function(){" + (inlineRenderFns.render) + "},staticRenderFns:[" + (inlineRenderFns.staticRenderFns.map(function (code) { return ("function(){" + code + "}"); }).join(',')) + "]}")
     }
   }
 
   function genScopedSlots (
-    el,
     slots,
     state
   ) {
-    // by default scoped slots are considered "stable", this allows child
-    // components with only scoped slots to skip forced updates from parent.
-    // but in some cases we have to bail-out of this optimization
-    // for example if the slot contains dynamic names, has v-if or v-for on them...
-    var needsForceUpdate = Object.keys(slots).some(function (key) {
-      var slot = slots[key];
-      return slot.slotTargetDynamic || slot.if || slot.for
-    });
-    // OR when it is inside another scoped slot (the reactivity is disconnected)
-    // #9438
-    if (!needsForceUpdate) {
-      var parent = el.parent;
-      while (parent) {
-        if (parent.slotScope && parent.slotScope !== emptySlotScopeToken) {
-          needsForceUpdate = true;
-          break
-        }
-        parent = parent.parent;
-      }
-    }
-
     return ("scopedSlots:_u([" + (Object.keys(slots).map(function (key) {
-        return genScopedSlot(slots[key], state)
-      }).join(',')) + "]" + (needsForceUpdate ? ",true" : "") + ")")
+        return genScopedSlot(key, slots[key], state)
+      }).join(',')) + "])")
   }
 
   function genScopedSlot (
+    key,
     el,
     state
   ) {
-    var isLegacySyntax = el.attrsMap['slot-scope'];
-    if (el.if && !el.ifProcessed && !isLegacySyntax) {
-      return genIf(el, state, genScopedSlot, "null")
-    }
     if (el.for && !el.forProcessed) {
-      return genFor(el, state, genScopedSlot)
+      return genForScopedSlot(key, el, state)
     }
-    var slotScope = el.slotScope === emptySlotScopeToken
-      ? ""
-      : String(el.slotScope);
-    var fn = "function(" + slotScope + "){" +
+    var fn = "function(" + (String(el.slotScope)) + "){" +
       "return " + (el.tag === 'template'
-        ? el.if && isLegacySyntax
+        ? el.if
           ? ("(" + (el.if) + ")?" + (genChildren(el, state) || 'undefined') + ":undefined")
           : genChildren(el, state) || 'undefined'
         : genElement(el, state)) + "}";
-    return ("{key:" + (el.slotTarget || "\"default\"") + ",fn:" + fn + "}")
+    return ("{key:" + key + ",fn:" + fn + "}")
+  }
+
+  function genForScopedSlot (
+    key,
+    el,
+    state
+  ) {
+    var exp = el.for;
+    var alias = el.alias;
+    var iterator1 = el.iterator1 ? ("," + (el.iterator1)) : '';
+    var iterator2 = el.iterator2 ? ("," + (el.iterator2)) : '';
+    el.forProcessed = true; // avoid recursion
+    return "_l((" + exp + ")," +
+      "function(" + alias + iterator1 + iterator2 + "){" +
+        "return " + (genScopedSlot(key, el, state)) +
+      '})'
   }
 
   function genChildren (
@@ -32249,14 +31539,7 @@ __webpack_require__.r(__webpack_exports__);
     var slotName = el.slotName || '"default"';
     var children = genChildren(el, state);
     var res = "_t(" + slotName + (children ? ("," + children) : '');
-    var attrs = el.attrs || el.dynamicAttrs
-      ? genProps((el.attrs || []).concat(el.dynamicAttrs || []).map(function (attr) { return ({
-          // slot props are camelized
-          name: camelize(attr.name),
-          value: attr.value,
-          dynamic: attr.dynamic
-        }); }))
-      : null;
+    var attrs = el.attrs && ("{" + (el.attrs.map(function (a) { return ((camelize(a.name)) + ":" + (a.value)); }).join(',')) + "}");
     var bind$$1 = el.attrsMap['v-bind'];
     if ((attrs || bind$$1) && !children) {
       res += ",null";
@@ -32281,23 +31564,15 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   function genProps (props) {
-    var staticProps = "";
-    var dynamicProps = "";
+    var res = '';
     for (var i = 0; i < props.length; i++) {
       var prop = props[i];
-      var value = transformSpecialNewlines(prop.value);
-      if (prop.dynamic) {
-        dynamicProps += (prop.name) + "," + value + ",";
-      } else {
-        staticProps += "\"" + (prop.name) + "\":" + value + ",";
+      /* istanbul ignore if */
+      {
+        res += "\"" + (prop.name) + "\":" + (transformSpecialNewlines(prop.value)) + ",";
       }
     }
-    staticProps = "{" + (staticProps.slice(0, -1)) + "}";
-    if (dynamicProps) {
-      return ("_d(" + staticProps + ",[" + (dynamicProps.slice(0, -1)) + "])")
-    } else {
-      return staticProps
-    }
+    return res.slice(0, -1)
   }
 
   // #3895, #4268
@@ -32308,8 +31583,6 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   /*  */
-
-
 
   // these keywords should not appear inside expressions, but operators like
   // typeof, instanceof and in are allowed
@@ -32328,147 +31601,92 @@ __webpack_require__.r(__webpack_exports__);
   var stripStringRE = /'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*\$\{|\}(?:[^`\\]|\\.)*`|`(?:[^`\\]|\\.)*`/g;
 
   // detect problematic expressions in a template
-  function detectErrors (ast, warn) {
+  function detectErrors (ast) {
+    var errors = [];
     if (ast) {
-      checkNode(ast, warn);
+      checkNode(ast, errors);
     }
+    return errors
   }
 
-  function checkNode (node, warn) {
+  function checkNode (node, errors) {
     if (node.type === 1) {
       for (var name in node.attrsMap) {
         if (dirRE.test(name)) {
           var value = node.attrsMap[name];
           if (value) {
-            var range = node.rawAttrsMap[name];
             if (name === 'v-for') {
-              checkFor(node, ("v-for=\"" + value + "\""), warn, range);
+              checkFor(node, ("v-for=\"" + value + "\""), errors);
             } else if (onRE.test(name)) {
-              checkEvent(value, (name + "=\"" + value + "\""), warn, range);
+              checkEvent(value, (name + "=\"" + value + "\""), errors);
             } else {
-              checkExpression(value, (name + "=\"" + value + "\""), warn, range);
+              checkExpression(value, (name + "=\"" + value + "\""), errors);
             }
           }
         }
       }
       if (node.children) {
         for (var i = 0; i < node.children.length; i++) {
-          checkNode(node.children[i], warn);
+          checkNode(node.children[i], errors);
         }
       }
     } else if (node.type === 2) {
-      checkExpression(node.expression, node.text, warn, node);
+      checkExpression(node.expression, node.text, errors);
     }
   }
 
-  function checkEvent (exp, text, warn, range) {
+  function checkEvent (exp, text, errors) {
     var stipped = exp.replace(stripStringRE, '');
     var keywordMatch = stipped.match(unaryOperatorsRE);
     if (keywordMatch && stipped.charAt(keywordMatch.index - 1) !== '$') {
-      warn(
+      errors.push(
         "avoid using JavaScript unary operator as property name: " +
-        "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim()),
-        range
+        "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim())
       );
     }
-    checkExpression(exp, text, warn, range);
+    checkExpression(exp, text, errors);
   }
 
-  function checkFor (node, text, warn, range) {
-    checkExpression(node.for || '', text, warn, range);
-    checkIdentifier(node.alias, 'v-for alias', text, warn, range);
-    checkIdentifier(node.iterator1, 'v-for iterator', text, warn, range);
-    checkIdentifier(node.iterator2, 'v-for iterator', text, warn, range);
+  function checkFor (node, text, errors) {
+    checkExpression(node.for || '', text, errors);
+    checkIdentifier(node.alias, 'v-for alias', text, errors);
+    checkIdentifier(node.iterator1, 'v-for iterator', text, errors);
+    checkIdentifier(node.iterator2, 'v-for iterator', text, errors);
   }
 
   function checkIdentifier (
     ident,
     type,
     text,
-    warn,
-    range
+    errors
   ) {
     if (typeof ident === 'string') {
       try {
         new Function(("var " + ident + "=_"));
       } catch (e) {
-        warn(("invalid " + type + " \"" + ident + "\" in expression: " + (text.trim())), range);
+        errors.push(("invalid " + type + " \"" + ident + "\" in expression: " + (text.trim())));
       }
     }
   }
 
-  function checkExpression (exp, text, warn, range) {
+  function checkExpression (exp, text, errors) {
     try {
       new Function(("return " + exp));
     } catch (e) {
       var keywordMatch = exp.replace(stripStringRE, '').match(prohibitedKeywordRE);
       if (keywordMatch) {
-        warn(
+        errors.push(
           "avoid using JavaScript keyword as property name: " +
-          "\"" + (keywordMatch[0]) + "\"\n  Raw expression: " + (text.trim()),
-          range
+          "\"" + (keywordMatch[0]) + "\"\n  Raw expression: " + (text.trim())
         );
       } else {
-        warn(
+        errors.push(
           "invalid expression: " + (e.message) + " in\n\n" +
           "    " + exp + "\n\n" +
-          "  Raw expression: " + (text.trim()) + "\n",
-          range
+          "  Raw expression: " + (text.trim()) + "\n"
         );
       }
     }
-  }
-
-  /*  */
-
-  var range = 2;
-
-  function generateCodeFrame (
-    source,
-    start,
-    end
-  ) {
-    if ( start === void 0 ) start = 0;
-    if ( end === void 0 ) end = source.length;
-
-    var lines = source.split(/\r?\n/);
-    var count = 0;
-    var res = [];
-    for (var i = 0; i < lines.length; i++) {
-      count += lines[i].length + 1;
-      if (count >= start) {
-        for (var j = i - range; j <= i + range || end > count; j++) {
-          if (j < 0 || j >= lines.length) { continue }
-          res.push(("" + (j + 1) + (repeat$1(" ", 3 - String(j + 1).length)) + "|  " + (lines[j])));
-          var lineLength = lines[j].length;
-          if (j === i) {
-            // push underline
-            var pad = start - (count - lineLength) + 1;
-            var length = end > count ? lineLength - pad : end - start;
-            res.push("   |  " + repeat$1(" ", pad) + repeat$1("^", length));
-          } else if (j > i) {
-            if (end > count) {
-              var length$1 = Math.min(end - count, lineLength);
-              res.push("   |  " + repeat$1("^", length$1));
-            }
-            count += lineLength + 1;
-          }
-        }
-        break
-      }
-    }
-    return res.join('\n')
-  }
-
-  function repeat$1 (str, n) {
-    var result = '';
-    while (true) { // eslint-disable-line
-      if (n & 1) { result += str; }
-      n >>>= 1;
-      if (n <= 0) { break }
-      str += str;
-    }
-    return result
   }
 
   /*  */
@@ -32528,28 +31746,14 @@ __webpack_require__.r(__webpack_exports__);
       // check compilation errors/tips
       {
         if (compiled.errors && compiled.errors.length) {
-          if (options.outputSourceRange) {
-            compiled.errors.forEach(function (e) {
-              warn$$1(
-                "Error compiling template:\n\n" + (e.msg) + "\n\n" +
-                generateCodeFrame(template, e.start, e.end),
-                vm
-              );
-            });
-          } else {
-            warn$$1(
-              "Error compiling template:\n\n" + template + "\n\n" +
-              compiled.errors.map(function (e) { return ("- " + e); }).join('\n') + '\n',
-              vm
-            );
-          }
+          warn$$1(
+            "Error compiling template:\n\n" + template + "\n\n" +
+            compiled.errors.map(function (e) { return ("- " + e); }).join('\n') + '\n',
+            vm
+          );
         }
         if (compiled.tips && compiled.tips.length) {
-          if (options.outputSourceRange) {
-            compiled.tips.forEach(function (e) { return tip(e.msg, vm); });
-          } else {
-            compiled.tips.forEach(function (msg) { return tip(msg, vm); });
-          }
+          compiled.tips.forEach(function (msg) { return tip(msg, vm); });
         }
       }
 
@@ -32595,29 +31799,11 @@ __webpack_require__.r(__webpack_exports__);
         var finalOptions = Object.create(baseOptions);
         var errors = [];
         var tips = [];
-
-        var warn = function (msg, range, tip) {
+        finalOptions.warn = function (msg, tip) {
           (tip ? tips : errors).push(msg);
         };
 
         if (options) {
-          if (options.outputSourceRange) {
-            // $flow-disable-line
-            var leadingSpaceLength = template.match(/^\s*/)[0].length;
-
-            warn = function (msg, range, tip) {
-              var data = { msg: msg };
-              if (range) {
-                if (range.start != null) {
-                  data.start = range.start + leadingSpaceLength;
-                }
-                if (range.end != null) {
-                  data.end = range.end + leadingSpaceLength;
-                }
-              }
-              (tip ? tips : errors).push(data);
-            };
-          }
           // merge custom modules
           if (options.modules) {
             finalOptions.modules =
@@ -32638,11 +31824,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        finalOptions.warn = warn;
-
-        var compiled = baseCompile(template.trim(), finalOptions);
+        var compiled = baseCompile(template, finalOptions);
         {
-          detectErrors(compiled.ast, warn);
+          errors.push.apply(errors, detectErrors(compiled.ast));
         }
         compiled.errors = errors;
         compiled.tips = tips;
@@ -32754,7 +31938,6 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         var ref = compileToFunctions(template, {
-          outputSourceRange: "development" !== 'production',
           shouldDecodeNewlines: shouldDecodeNewlines,
           shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
           delimiters: options.delimiters,
@@ -32793,7 +31976,7 @@ __webpack_require__.r(__webpack_exports__);
 
   return Vue;
 
-}));
+})));
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../timers-browserify/main.js */ "../node_modules/timers-browserify/main.js").setImmediate))
 
@@ -34025,17 +33208,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 
 /***/ }),
 
-/***/ "./images/inline-icons/wordlist-icon.svg":
-/*!***********************************************!*\
-  !*** ./images/inline-icons/wordlist-icon.svg ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 285.102 285.102"}},[_c('path',{attrs:{"d":"M220.741 46.137h-30.188v-5.785c0-7.444-6.056-13.5-13.5-13.5h-1.667C172.294 11.554 158.747 0 142.552 0c-16.195 0-29.742 11.554-32.835 26.852h-1.669c-7.444 0-13.5 6.056-13.5 13.5v5.785H64.36c-12.406 0-22.5 10.094-22.5 22.5v193.965c0 12.406 10.094 22.5 22.5 22.5h156.381c12.406 0 22.5-10.094 22.5-22.5V68.637c0-12.407-10.094-22.5-22.5-22.5zm-111.193-4.285h66.006v24.571h-66.006V41.852zM142.552 15c7.856 0 14.566 4.931 17.244 11.852h-34.488C127.986 19.931 134.696 15 142.552 15zm85.689 247.602c0 4.136-3.364 7.5-7.5 7.5H64.36c-4.136 0-7.5-3.364-7.5-7.5V68.637c0-4.136 3.364-7.5 7.5-7.5h30.188v6.786c0 7.444 6.056 13.5 13.5 13.5h69.006c7.444 0 13.5-6.056 13.5-13.5v-6.786h30.188c4.136 0 7.5 3.364 7.5 7.5v193.965z"}}),_c('path',{attrs:{"d":"M153.883 107.931H91.891a7.499 7.499 0 0 0-7.5 7.5 7.5 7.5 0 0 0 7.5 7.5h61.992a7.5 7.5 0 0 0 7.5-7.5 7.5 7.5 0 0 0-7.5-7.5zM153.883 146.484H91.891a7.499 7.499 0 0 0-7.5 7.5c0 4.143 3.357 7.5 7.5 7.5h61.992a7.5 7.5 0 0 0 0-15zM153.883 185.041H91.891c-4.143 0-7.5 3.357-7.5 7.5s3.357 7.5 7.5 7.5h61.992c4.143 0 7.5-3.357 7.5-7.5s-3.358-7.5-7.5-7.5zM153.883 223.597H91.891a7.499 7.499 0 0 0-7.5 7.5c0 4.143 3.357 7.5 7.5 7.5h61.992c4.143 0 7.5-3.357 7.5-7.5a7.5 7.5 0 0 0-7.5-7.5zM182.081 120.222a10.753 10.753 0 0 0 7.955 2.803 10.756 10.756 0 0 0 7.55-3.758l10.421-12.118a5 5 0 1 0-7.582-6.52l-10.421 12.118a.819.819 0 0 1-1.197.074l-6.561-5.965a4.998 4.998 0 0 0-7.063.336 4.999 4.999 0 0 0 .336 7.063l6.562 5.967zM200.425 140.659l-10.421 12.117a.824.824 0 0 1-.584.297.815.815 0 0 1-.613-.224l-6.561-5.964a5.003 5.003 0 0 0-7.064.337 5.002 5.002 0 0 0 .337 7.064l6.56 5.963a10.746 10.746 0 0 0 7.953 2.806 10.768 10.768 0 0 0 7.554-3.759l10.421-12.116a5.001 5.001 0 0 0-7.582-6.521zM200.425 216.718l-10.421 12.117a.818.818 0 0 1-1.197.073l-6.561-5.964a5 5 0 0 0-6.727 7.4l6.561 5.963a10.746 10.746 0 0 0 7.955 2.805 10.762 10.762 0 0 0 7.552-3.759l10.421-12.117a5 5 0 1 0-7.583-6.518zM179.529 203.302c.976.977 2.256 1.465 3.535 1.465s2.56-.488 3.535-1.465l4.948-4.948 4.949 4.949a4.981 4.981 0 0 0 3.535 1.465 4.98 4.98 0 0 0 3.535-1.465 4.998 4.998 0 0 0 0-7.07l-4.949-4.949 4.95-4.949a4.997 4.997 0 0 0 0-7.069 4.996 4.996 0 0 0-7.07 0l-4.949 4.948-4.949-4.948a4.996 4.996 0 0 0-7.07 0 4.997 4.997 0 0 0 0 7.069l4.948 4.949-4.948 4.948a4.998 4.998 0 0 0 0 7.07z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\wordlist-icon.svg"};module.exports = { render: render, toString: toString };
-
-/***/ }),
-
 /***/ "./lib/controllers/language.js":
 /*!*************************************!*\
   !*** ./lib/controllers/language.js ***!
@@ -34116,39 +33288,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_res_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_res_client__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-inflection-tables */ "alpheios-inflection-tables");
 /* harmony import */ var alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-wordlist */ "alpheios-wordlist");
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
-/* harmony import */ var _vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/data/auth-module.js */ "./vue/vuex-modules/data/auth-module.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
-/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
-/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
-var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_21___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
-
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
+/* harmony import */ var _vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/data/auth-module.js */ "./vue/vuex-modules/data/auth-module.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
+/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
+/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
+var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* global Event */
 
 
 
@@ -34190,7 +33360,7 @@ const languageNames = new Map([
 ])
 
 // Enable Vuex
-vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_5__["default"])
+vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_4__["default"])
 
 class UIController {
   /**
@@ -34214,10 +33384,10 @@ class UIController {
     Define defaults for resource options. If a UI controller creator
     needs to provide its own defaults, they shall be defined in a `create()` function.
      */
-    this.contentOptionsDefaults = _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__
-    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_21__
-    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__
-    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_16__
+    this.contentOptionsDefaults = _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__
+    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__
+    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__
+    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15__
     /*
     All following options will be created during an init phase.
     This will allow creators of UI controller to provide their own options defaults
@@ -34234,7 +33404,7 @@ class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
-    this.store = new vuex__WEBPACK_IMPORTED_MODULE_5__["default"].Store() // Vuex store. A public API for data and UI module interactions.
+    this.store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store() // Vuex store. A public API for data and UI module interactions.
     this.api = {} // An API object for functions of registered modules and UI controller.
     this.dataModules = new Map() // Data modules that are registered to be included into the store.
     this.uiModules = new Map()
@@ -34245,8 +33415,6 @@ class UIController {
      * @type {UIEventController}
      */
     this.evc = null
-
-    this.wordlistC = {} // This is a word list controller
 
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
   }
@@ -34264,61 +33432,57 @@ class UIController {
      */
 
     // Register data modules
-    uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__["default"], _locales_locales_js__WEBPACK_IMPORTED_MODULE_8__["default"].en_US, _locales_locales_js__WEBPACK_IMPORTED_MODULE_8__["default"].bundleArr())
-    uiController.registerDataModule(_vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_7__["default"],
+    uiController.registerDataModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_5__["default"], _locales_locales_js__WEBPACK_IMPORTED_MODULE_7__["default"].en_US, _locales_locales_js__WEBPACK_IMPORTED_MODULE_7__["default"].bundleArr())
+    uiController.registerDataModule(_vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_6__["default"],
       undefined /* It should have an app or background authenticator as a second parameter or it will not work */)
 
     // Register UI modules
-    uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    uiController.registerUiModule(_vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_8__["default"], {
       mountPoint: '#alpheios-panel', // To what element a panel will be mounted
       panelComponent: 'panel' // A Vue component that will represent a panel
     })
-    uiController.registerUiModule(_vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    uiController.registerUiModule(_vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_9__["default"], {
       mountPoint: '#alpheios-popup'
     })
 
     // Creates on configures an event listener
-    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_27__["default"]()
+    let eventController = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_26__["default"]()
     switch (uiController.options.textQueryTrigger) {
       case 'dblClick':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_22__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_21__["default"])
         break
       case 'longTap':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_23__["default"])
+        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_22__["default"])
         break
       default:
         eventController.registerListener(
-          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__["default"], uiController.options.textQueryTrigger
+          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_23__["default"], uiController.options.textQueryTrigger
         )
     }
 
-    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__["default"], 'keydown')
-    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__["default"], 'Alpheios_Page_Load')
+    eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_23__["default"], 'keydown')
+    eventController.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_23__["default"], 'Alpheios_Page_Load')
 
     // Attaches an event controller to a UIController instance
     uiController.evc = eventController
 
     // Subscribe to LexicalQuery events
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
     // Subscribe to ResourceQuery events
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
 
     // Subscribe to AnnotationQuery events
-    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
-
-    uiController.wordlistC = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].availableLanguages(), _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt)
-    alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"].evt.WORDLIST_UPDATED.sub(uiController.onWordListUpdated.bind(uiController))
-    alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"].evt.WORDITEM_SELECTED.sub(uiController.onWordItemSelected.bind(uiController))
+    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
     return uiController
   }
@@ -34353,14 +33517,14 @@ class UIController {
         name: 'name',
         version: 'version'
       },
-      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_26__["default"],
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_25__["default"],
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
-        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_12___default.a
+        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_11___default.a
       }
     }
   }
@@ -34431,14 +33595,14 @@ class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_24__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_24__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_24__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
-    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_20__["default"].getZIndexMax()
+    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_19__["default"].getZIndexMax()
 
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
 
@@ -34476,7 +33640,6 @@ class UIController {
       version: this.options.app.version, // An application's version
       defaultTab: this.tabStateDefault, // A name of a default tab (a string)
       state: this.state, // An app-level state
-      wordlistC: this.wordlistC, // A word list controller
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this),
@@ -34501,8 +33664,6 @@ class UIController {
           page: {}
         },
         wordUsageExamplesData: null,
-        wordLists: null,
-        wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
         tabState: {
           definitions: false,
           inflections: false,
@@ -34512,7 +33673,6 @@ class UIController {
           options: false,
           info: true,
           treebank: false,
-          wordlist: false,
           wordUsage: false
         }
       },
@@ -34598,11 +33758,6 @@ class UIController {
           state.wordUsageExamplesData = data
         },
 
-        setWordLists (state, wordLists) {
-          state.wordLists = wordLists
-          state.wordListUpdated++
-        },
-
         setTab (state, tabName) {
           for (let key of Object.keys(state.tabState)) {
             state.tabState[key] = (key === tabName)
@@ -34635,6 +33790,21 @@ class UIController {
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
 
+    this.store.registerModule('ui', {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        rootClasses: []
+      },
+
+      mutations: {
+        setRootClasses (state, classes) {
+          state.rootClasses = classes
+        }
+      }
+    })
+
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     // This must be done after creation of data modules.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
@@ -34651,15 +33821,6 @@ class UIController {
     this.contentOptions.items.lookupLangOverride.setValue(false)
     this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
-
-    if (this.wordlistC) {
-      // TODO we need to integrate this with auth functionality, postponing both the initialization of the wordlists
-      // and the creation of the user data manager until we have an authenticated user, or else maybe using a user datamanager
-      // that operates on an in-memory user until such time the user authenticates
-      // see issue 317
-      this.userDataManager = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["UserDataManager"]('testUserID', alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"].evt)
-      this.wordlistC.initLists(this.userDataManager)
-    }
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
 
@@ -34730,7 +33891,7 @@ class UIController {
    */
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
-      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_11__["default"])
+      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_3___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_10__["default"])
       UIController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
@@ -34747,7 +33908,7 @@ class UIController {
     let allSiteOptions = []
     for (let site of siteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](domain, this.options.storageAdapter)
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_24__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -35051,6 +34212,10 @@ class UIController {
       this.store.commit('popup/close')
     }
   }
+
+  /**
+   * Populates a list of classes that will be used for root HTML elements of UI module's components.
+   */
   setRootComponentClasses () {
     let classes = []
 
@@ -35061,36 +34226,19 @@ class UIController {
       classes.push(`auk--${this.uiOptions.items.skin.currentValue}`)
     }
 
-    if (this.uiOptions.items.fontSize !== undefined && this.uiOptions.items.fontSize.value !== undefined) {
+    if (this.uiOptions.items.fontSize !== undefined && this.uiOptions.items.fontSize.currentValue !== undefined) {
       classes.push(`alpheios-font_${this.uiOptions.items.fontSize.currentValue}_class`)
     } else {
       classes.push(`alpheios-font_${this.uiOptions.items.fontSize.defaultValue}_class`)
     }
 
-    if (this.uiOptions.items.colorSchema !== undefined && this.uiOptions.items.colorSchema.value !== undefined) {
+    if (this.uiOptions.items.colorSchema !== undefined && this.uiOptions.items.colorSchema.currentValue !== undefined) {
       classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.currentValue}_class`)
     } else {
       classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.defaultValue}_class`)
     }
 
-    let classesLength = 0
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      const classesLength = popup.vi.popupData.classes.length
-      popup.vi.popupData.classes.splice(0, classesLength)
-      classes.forEach(classItem => {
-        popup.vi.popupData.classes.push(classItem)
-      })
-    }
-
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.classes.splice(0, classesLength)
-
-      classes.forEach(classItem => {
-        panel.vi.panelData.classes.push(classItem)
-      })
-    }
+    this.store.commit(`ui/setRootClasses`, classes)
   }
 
   updateStyleClass (prefix, type) {
@@ -35127,19 +34275,6 @@ class UIController {
     }
   }
 
-  updateFontSizeClass (type) {
-    this.updateStyleClass('alpheios-font_', type)
-  }
-
-  updateColorSchemaClass (type) {
-    this.updateStyleClass('alpheios-color_schema_', type)
-  }
-
-  changeSkin () {
-    // Update skin name in classes
-    this.setRootComponentClasses()
-  }
-
   getSelectedText (event) {
     if (this.state.isActive() && this.state.uiIsActive()) {
       /*
@@ -35147,7 +34282,7 @@ class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
+      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_18__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
       let textSelector = htmlSelector.createTextSelector()
 
       if (!textSelector.isEmpty()) {
@@ -35172,7 +34307,7 @@ class UIController {
           })
           .getData() */
 
-        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].create(textSelector, {
+        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
           resourceOptions: this.resourceOptions,
           siteOptions: [],
@@ -35225,7 +34360,7 @@ class UIController {
    */
   updateAnnotations () {
     if (this.state.isActive() && this.state.uiIsActive()) {
-      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].create({
+      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create({
         document: document,
         siteOptions: this.siteOptions
       }).getData()
@@ -35234,7 +34369,7 @@ class UIController {
 
   startResourceQuery (feature) {
     // ExpObjMon.track(
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create(feature, {
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].create(feature, {
       grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_1__["Grammars"]
     }).getData()
     //, {
@@ -35249,16 +34384,17 @@ class UIController {
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].resultStatus.SUCCEEDED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].resultStatus.FAILED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].resultStatus.FAILED:
         this.showLanguageInfo(data.homonym)
         this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
     this.store.commit('app/lexicalRequestFinished')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
+    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.inflBrowserTablesCollapsed = null } // Reset inflection browser tables state
   }
 
   onMorphDataReady () {
@@ -35284,14 +34420,6 @@ class UIController {
       this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.store.commit('app/setInflData', this.inflectionsViewSet)
-  }
-
-  onWordListUpdated (wordLists) {
-    this.store.commit('app/setWordLists', wordLists)
-  }
-
-  onLemmaTranslationsReady (homonym) {
-    this.updateTranslations(homonym)
   }
 
   onDefinitionsReady (data) {
@@ -35320,20 +34448,6 @@ class UIController {
 
   onAnnotationsAvailable (data) {
     this.updatePageAnnotationData(data.annotations)
-  }
-
-  onWordItemSelected (homonym) {
-    let languageID = homonym.lexemes[0].lemma.languageID
-
-    this.newLexicalRequest(languageID)
-    this.message(this.l10n.messages.TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS)
-    this.showStatusInfo(homonym.targetWord, languageID)
-    this.updateLanguage(languageID)
-    this.updateWordAnnotationData()
-
-    this.onHomonymReady(homonym)
-    this.updateDefinitions(homonym)
-    this.updateTranslations(homonym)
   }
 
   /**
@@ -35390,7 +34504,7 @@ class UIController {
 
     switch (name) {
       case 'skin':
-        this.changeSkin(this.api.settings.uiOptions.items[name].currentValue)
+        this.setRootComponentClasses()
         break
       case 'popup':
         if (this.api.ui.hasModule('popup')) {
@@ -35401,10 +34515,10 @@ class UIController {
         }
         break
       case 'fontSize':
-        this.updateFontSizeClass(value)
+        this.setRootComponentClasses()
         break
       case 'colorSchema':
-        this.updateColorSchemaClass(value)
+        this.setRootComponentClasses()
         break
     }
   }
@@ -36902,7 +36016,7 @@ class OptionItem {
     this.storageAdapter.set(option).then(
       () => {
         // Options storage succeeded
-        // console.log(`Value "${this.currentValue}" of "${this.name}" option value was stored successfully`)
+        console.log(`Value "${this.currentValue}" of "${this.name}" option value was stored successfully`)
       },
       (errorMessage) => {
         console.error(`Storage of an option value failed: ${errorMessage}`)
@@ -37330,10 +36444,6 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     this.wordUsageExamples = options.wordUsageExamples
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
-
-    if (this.selector.textQuoteSelector) {
-      LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
-    }
   }
 
   static create (selector, options) {
@@ -37378,7 +36488,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       }
 
       if (adapterTreebankRes.errors.length > 0) {
-        adapterTreebankRes.errors.forEach(error => console.error(error.message))
+        adapterTreebankRes.errors.forEach(error => console.error(error))
       }
     }
 
@@ -37393,7 +36503,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       })
 
       if (adapterTuftsRes.errors.length > 0) {
-        adapterTuftsRes.errors.forEach(error => console.error(error.message))
+        adapterTuftsRes.errors.forEach(error => console.error(error))
       }
 
       if (adapterTuftsRes.result) {
@@ -37442,7 +36552,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
         }
       })
       if (adapterTranslationRes.errors.length > 0) {
-        adapterTranslationRes.errors.forEach(error => console.error(error.message))
+        adapterTranslationRes.errors.forEach(error => console.error(error))
       }
 
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
@@ -37474,7 +36584,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     })
 
     if (adapterLexiconResShort.errors.length > 0) {
-      adapterLexiconResShort.errors.forEach(error => console.error(error.message))
+      adapterLexiconResShort.errors.forEach(error => console.error(error))
     }
 
     let adapterLexiconResFull = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].lexicon.alpheios({
@@ -37491,7 +36601,6 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       adapterLexiconResFull.errors.forEach(error => console.error(error))
     }
 
-    yield 'Finalizing'
     if (adapterLexiconResShort.result || adapterLexiconResFull.result) {
       this.finalize('Success')
     }
@@ -37608,13 +36717,6 @@ LexicalQuery.evt = {
    */
   DEFS_NOT_FOUND: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Definitions Data Not Found`, LexicalQuery),
 
-  /**
-   * Published when Lexical Query is created and TextQuoteSelector is passed inside TextSelector.
-   * Data: {
-   *    textQuoteSelector
-   * }
-   */
-  TEXT_QUOTE_SELECTOR_RECEIVED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`TextQuoteSelector recieved for the target word`, LexicalQuery),
   WORD_USAGE_EXAMPLES_READY: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["PsEvent"](`Word usage examples ready`, LexicalQuery)
 }
 
@@ -37673,7 +36775,7 @@ class Query {
 
     let query = new constructor(constructor.name, selector, options)
     queries[query.name].set(query.ID, query)
-    // console.log(`An instance of ${query.name} has been created`)
+    console.log(`An instance of ${query.name} has been created`)
     return query
   }
 
@@ -37682,7 +36784,7 @@ class Query {
    * @param {Query} query - A query to be destroyed.
    */
   static destroy (query) {
-    // console.log(`Destroying a ${query.name} instance`)
+    console.log(`Destroying a ${query.name} instance`)
     queries[query.name].delete(query.ID)
   }
 
@@ -38302,9 +37404,6 @@ class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default
       ro = selection.anchorOffset
     }
 
-    if (!anchorText) {
-      return undefined
-    }
     // clean string:
     //   convert punctuation to spaces
     anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
@@ -38333,6 +37432,7 @@ class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default
 
     // extract word
     let word = anchorText.substring(wordStart, wordEnd).trim()
+
     /* Identify the words preceeding and following the focus word
     * TODO - query the type of node in the selection to see if we are
     * dealing with something other than text nodes
@@ -38343,10 +37443,7 @@ class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default
     let contextStr = null
     let contextPos = 0
 
-    let contextForward = textSelector.model.contextForward
-    let contextBackward = textSelector.model.contextBackward
-
-    if (contextForward || contextBackward) {
+    if (textSelector.model.contextForward || textSelector.model.contextBackward) {
       let startstr = anchorText.substring(0, wordEnd)
       let endstr = anchorText.substring(wordEnd + 1, anchorText.length)
       let preWordlist = startstr.split(/\s+/)
@@ -38390,7 +37487,6 @@ class HTMLSelector extends _media_selector__WEBPACK_IMPORTED_MODULE_3__["default
         selection.setBaseAndExtent(anchor, wordStart, focus, wordEnd)
       }
     }
-    textSelector.createTextQuoteSelector(this)
     return textSelector
   }
 
@@ -38506,10 +37602,9 @@ class MediaSelector {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TextSelector; });
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_selection_media_html_selector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/selection/media/html-selector */ "./lib/selection/media/html-selector.js");
-
+/* harmony import */ var _w3c_text_quote_selector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./w3c/text-quote-selector */ "./lib/selection/w3c/text-quote-selector.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 /**
@@ -38566,7 +37661,7 @@ class TextSelector {
   // languageCodes
 
   static readObject (jsonObject) {
-    let textSelector = new TextSelector(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(jsonObject.languageCode))
+    let textSelector = new TextSelector(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageIdFromCode(jsonObject.languageCode))
     textSelector.text = jsonObject.text
     // textSelector.language = TextSelector.getLanguage(textSelector.languageCode)
     return textSelector
@@ -38576,13 +37671,13 @@ class TextSelector {
     let textSelector = new TextSelector(languageID)
     textSelector.text = text
 
-    textSelector.model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(textSelector.languageID)
+    textSelector.model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageModel(textSelector.languageID)
     return textSelector
   }
 
   get languageCode () {
     console.warn(`Deprecated. Please use "languageID" instead of "languageCode"`)
-    return (this.languageID) ? alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID) : ''
+    return (this.languageID) ? alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(this.languageID) : ''
   }
 
   isEmpty () {
@@ -38602,11 +37697,28 @@ class TextSelector {
     return Models.LanguageModelFactory.getLanguageForCode(languageCode)
   } */
 
-  createTextQuoteSelector (htmlSelector) {
-    this.textQuoteSelector = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["TextQuoteSelector"](this.languageCode, this.normalizedText)
-    let selection = _lib_selection_media_html_selector__WEBPACK_IMPORTED_MODULE_1__["default"].getSelection(htmlSelector.target)
-    this.textQuoteSelector.createContext(selection, this)
+  get textQuoteSelector () {
+    return new _w3c_text_quote_selector__WEBPACK_IMPORTED_MODULE_0__["default"]()
   }
+}
+
+
+/***/ }),
+
+/***/ "./lib/selection/w3c/text-quote-selector.js":
+/*!**************************************************!*\
+  !*** ./lib/selection/w3c/text-quote-selector.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TextQuoteSelector; });
+/**
+ * Implements a W3C Text Quote Selector (https://www.w3.org/TR/annotation-model/#h-text-quote-selector)
+ */
+class TextQuoteSelector {
 }
 
 
@@ -39439,10 +38551,10 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, PLACEHOLDER_INFLECT_UNAVAILABLE, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_GRAMMAR_NOTFOUND, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOG_IN_BTN_LABEL, AUTH_LOG_OUT_BTN_LABEL, AUTH_LOG_IN_PROGRESS_MSG, AUTH_LOG_IN_SUCCESS_MSG, AUTH_LOG_IN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, PLACEHOLDER_INFLECT_UNAVAILABLE, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_GRAMMAR_NOTFOUND, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOG_IN_BTN_LABEL, AUTH_LOG_OUT_BTN_LABEL, AUTH_LOG_IN_PROGRESS_MSG, AUTH_LOG_IN_SUCCESS_MSG, AUTH_LOG_IN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_WORDLIST":{"message":"User word list","description":"tooltip for user word list tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Credits","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide Credits","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOG_IN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOG_OUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOG_IN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOG_IN_SUCCESS_MSG":{"message":"Congratulations! Your logged in successfully","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOG_IN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Credits","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide Credits","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOG_IN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOG_OUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOG_IN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOG_IN_SUCCESS_MSG":{"message":"Congratulations! Your logged in successfully","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOG_IN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"}};
 
 /***/ }),
 
@@ -42645,11 +41757,11 @@ __webpack_require__.r(__webpack_exports__);
 
 // TODO: Add a check for required modules
 class PanelModule {
-  constructor (store, api, config) {
-    this.config = Object.assign(PanelModule.configDefaults, config)
+  constructor (store, api, options) {
+    this.options = Object.assign(PanelModule.optionsDefaults, options)
 
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: this.config.mountPoint,
+      el: this.options.mountPoint,
       store: store, // Install store into the panel
       provide: api, // Public API of the modules for child components
       /*
@@ -42664,6 +41776,10 @@ class PanelModule {
       data: {
         panelData: {
           lexemes: [],
+          inflectionBrowserData: {
+            visible: false
+          },
+          inflBrowserTablesCollapsed: null, // Null means that state is not set
           shortDefinitions: [],
           fullDefinitions: '',
           messages: [],
@@ -42679,7 +41795,7 @@ class PanelModule {
             languageCode: ''
           }
         },
-        currentPanelComponent: this.config.panelComponent
+        currentPanelComponent: this.options.panelComponent
       },
       methods: {
         clearContent: function () {
@@ -42810,7 +41926,7 @@ PanelModule.store = () => {
   }
 }
 
-PanelModule.configDefaults = {
+PanelModule.optionsDefaults = {
   // A selector that specifies to what DOM element a panel will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-panel',
@@ -42841,12 +41957,12 @@ __webpack_require__.r(__webpack_exports__);
 
 // TODO: Add a check for required modules
 class PopupModule {
-  constructor (store, api, config) {
+  constructor (store, api, options) {
     // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
-    this.config = Object.assign(PopupModule.configDefaults, config)
+    this.options = Object.assign(PopupModule.optionsDefaults, options)
 
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: this.config.mountPoint,
+      el: this.options.mountPoint,
       store: store,
       provide: api, // Expose APIs to child components
       /*
@@ -42871,8 +41987,8 @@ class PopupModule {
           top: '10vh',
           left: '10vw',
 
-          draggable: this.config.draggable,
-          resizable: this.config.resizable,
+          draggable: this.options.draggable,
+          resizable: this.options.resizable,
           // Default popup dimensions, in pixels, without units. These values will override CSS rules.
           // Can be scaled down on small screens automatically.
           width: 210,
@@ -42904,7 +42020,6 @@ class PopupModule {
 
           showProviders: false,
           updates: 0,
-          classes: [], // Will be set later by `setRootComponentClasses()`
           notification: {
             visible: false,
             important: false,
@@ -42916,9 +42031,12 @@ class PopupModule {
             selectedText: '',
             languageName: '',
             languageCode: ''
+          },
+          styles: {
+            zIndex: api.app.zIndex
           }
         },
-        currentPopupComponent: this.config.popupComponent,
+        currentPopupComponent: this.options.popupComponent,
         classesChanged: 0
       },
       methods: {
@@ -42990,7 +42108,7 @@ class PopupModule {
         },
 
         newLexicalRequest: function () {
-          this.popupData.requestStartTime = new Date().getTime()
+          this.popupData.requestStartTime = Date.now()
           if (this.$options.api.ui.hasModule('panel')) {
             this.$options.api.ui.getModule('panel').vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
           }
@@ -43081,7 +42199,7 @@ PopupModule.store = () => {
   }
 }
 
-PopupModule.configDefaults = {
+PopupModule.optionsDefaults = {
   // A selector that specifies to what DOM element a popup will be mounted.
   // This element will be replaced with the root element of the popup component.
   mountPoint: '#alpheios-popup',
@@ -43139,17 +42257,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_inflection_tables__;
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_res_client__;
-
-/***/ }),
-
-/***/ "alpheios-wordlist":
-/*!************************************!*\
-  !*** external "alpheios-wordlist" ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_wordlist__;
 
 /***/ }),
 

@@ -485,6 +485,21 @@ export default class UIController {
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
 
+    this.store.registerModule('ui', {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        rootClasses: []
+      },
+
+      mutations: {
+        setRootClasses (state, classes) {
+          state.rootClasses = classes
+        }
+      }
+    })
+
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     // This must be done after creation of data modules.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
@@ -901,6 +916,10 @@ export default class UIController {
       this.store.commit('popup/close')
     }
   }
+
+  /**
+   * Populates a list of classes that will be used for root HTML elements of UI module's components.
+   */
   setRootComponentClasses () {
     let classes = []
 
@@ -911,36 +930,19 @@ export default class UIController {
       classes.push(`auk--${this.uiOptions.items.skin.currentValue}`)
     }
 
-    if (this.uiOptions.items.fontSize !== undefined && this.uiOptions.items.fontSize.value !== undefined) {
+    if (this.uiOptions.items.fontSize !== undefined && this.uiOptions.items.fontSize.currentValue !== undefined) {
       classes.push(`alpheios-font_${this.uiOptions.items.fontSize.currentValue}_class`)
     } else {
       classes.push(`alpheios-font_${this.uiOptions.items.fontSize.defaultValue}_class`)
     }
 
-    if (this.uiOptions.items.colorSchema !== undefined && this.uiOptions.items.colorSchema.value !== undefined) {
+    if (this.uiOptions.items.colorSchema !== undefined && this.uiOptions.items.colorSchema.currentValue !== undefined) {
       classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.currentValue}_class`)
     } else {
       classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.defaultValue}_class`)
     }
 
-    let classesLength = 0
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      const classesLength = popup.vi.popupData.classes.length
-      popup.vi.popupData.classes.splice(0, classesLength)
-      classes.forEach(classItem => {
-        popup.vi.popupData.classes.push(classItem)
-      })
-    }
-
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.classes.splice(0, classesLength)
-
-      classes.forEach(classItem => {
-        panel.vi.panelData.classes.push(classItem)
-      })
-    }
+    this.store.commit(`ui/setRootClasses`, classes)
   }
 
   updateStyleClass (prefix, type) {
@@ -975,19 +977,6 @@ export default class UIController {
         panel.vi.panelData.classes.push(classItem)
       })
     }
-  }
-
-  updateFontSizeClass (type) {
-    this.updateStyleClass('alpheios-font_', type)
-  }
-
-  updateColorSchemaClass (type) {
-    this.updateStyleClass('alpheios-color_schema_', type)
-  }
-
-  changeSkin () {
-    // Update skin name in classes
-    this.setRootComponentClasses()
   }
 
   getSelectedText (event) {
@@ -1240,7 +1229,7 @@ export default class UIController {
 
     switch (name) {
       case 'skin':
-        this.changeSkin(this.api.settings.uiOptions.items[name].currentValue)
+        this.setRootComponentClasses()
         break
       case 'popup':
         if (this.api.ui.hasModule('popup')) {
@@ -1251,10 +1240,10 @@ export default class UIController {
         }
         break
       case 'fontSize':
-        this.updateFontSizeClass(value)
+        this.setRootComponentClasses()
         break
       case 'colorSchema':
-        this.updateColorSchemaClass(value)
+        this.setRootComponentClasses()
         break
     }
   }

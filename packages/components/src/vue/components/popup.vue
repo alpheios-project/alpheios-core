@@ -1,6 +1,6 @@
 <template>
   <div :data-notification-visible="data && data.notification && data.notification.visible" :style="mainstyles" class="alpheios-popup auk" id="alpheios-popup-inner" ref="popup"
-       v-bind:class="divClasses" v-on-clickaway="attachTrackingClick"
+       :class="rootClasses" v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.popup.visible">
     <alph-tooltip
         :additionalStyles="additionalStylesTootipCloseIcon"
@@ -126,7 +126,7 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'Popup',
   inject: ['app', 'ui', 'l10n', 'settings'],
-  storeModules: ['app', 'popup'],
+  storeModules: ['app', 'ui', 'popup'],
   mixins: [DependencyCheck],
   components: {
     morph: Morph,
@@ -204,8 +204,8 @@ export default {
     })
   },
   computed: {
-    divClasses () {
-      return this.data && this.data.classes ? this.data.classes.join(' ') : ''
+    rootClasses () {
+      return this.$store.state.ui.rootClasses
     },
     mainstyles: function () {
       return {
