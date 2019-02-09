@@ -1,4 +1,3 @@
-/* global Event */
 import { Constants, Definition, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
@@ -96,6 +95,8 @@ export default class UIController {
      * @type {UIEventController}
      */
     this.evc = null
+
+    this.wordlistC = {} // This is a word list controller
 
     this.inflectionsViewSet = null // Holds inflection tables ViewSet
   }
@@ -325,6 +326,7 @@ export default class UIController {
       version: this.options.app.version, // An application's version
       defaultTab: this.tabStateDefault, // A name of a default tab (a string)
       state: this.state, // An app-level state
+      wordlistC: this.wordlistC, // A word list controller
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this),
@@ -349,6 +351,8 @@ export default class UIController {
           page: {}
         },
         wordUsageExamplesData: null,
+        wordLists: null,
+        wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
         tabState: {
           definitions: false,
           inflections: false,
@@ -442,6 +446,11 @@ export default class UIController {
 
         setWordUsageExamplesData (state, data) {
           state.wordUsageExamplesData = data
+        },
+
+        setWordLists (state, wordLists) {
+          state.wordLists = wordLists
+          state.wordListUpdated++
         },
 
         setTab (state, tabName) {
@@ -1127,16 +1136,8 @@ export default class UIController {
     this.store.commit('app/setInflData', this.inflectionsViewSet)
   }
 
-  updateWordLists (wordLists) {
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.wordLists = wordLists
-      panel.vi.panelData.wordListUpdated = panel.vi.panelData.wordListUpdated + 1
-    }
-  }
-
   onWordListUpdated (wordLists) {
-    this.updateWordLists(wordLists)
+    this.store.commit('app/setWordLists', wordLists)
   }
 
   onLemmaTranslationsReady (homonym) {

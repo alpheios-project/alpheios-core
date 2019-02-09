@@ -81,7 +81,7 @@
               </alph-tooltip>
 
               <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="l10n.getText('TOOLTIP_WORDLIST')">
-                <span v-show="showWordList" v-bind:class="{ active: data.tabs.wordlist }" @click="changeTab('wordlist')"
+                <span v-show="showWordList" v-bind:class="{ active: $store.state.app.tabState.wordlist }" @click="changeTab('wordlist')"
                   class="alpheios-panel__header-nav-btn">
                   <wordlist-icon class="alpheios-icon"></wordlist-icon>
                 </span>
@@ -149,7 +149,7 @@
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
            v-show="$store.state.app.tabState.inflectionsbrowser">
-        <inflection-browser :language-id="inflectionBrowserLanguageID" @contentwidth="setContentWidth">
+        <inflection-browser @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
@@ -239,8 +239,8 @@
         <info></info>
       </div>
 
-      <div v-show="data.tabs.wordlist" class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist">
-        <word-list-panel :wordlistC="data.wordlistC" :updated="data.wordListUpdated"></word-list-panel>
+      <div v-show="$store.state.app.tabState.wordlist" class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist">
+        <word-list-panel :wordlistC="api.wordlistC" :updated="data.wordListUpdated"></word-list-panel>
       </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"

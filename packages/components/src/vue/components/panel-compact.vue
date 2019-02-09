@@ -80,6 +80,13 @@
                 </span>
               </alph-tooltip>
 
+              <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="l10n.getText('TOOLTIP_WORDLIST')">
+                <span v-show="showWordList" v-bind:class="{ active: $store.state.app.tabState.wordlist }" @click="changeTab('wordlist')"
+                  class="alpheios-panel__header-nav-btn">
+                  <wordlist-icon class="alpheios-icon"></wordlist-icon>
+                </span>
+              </alph-tooltip>
+
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
                 <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: $store.state.app.tabState.status }"
@@ -142,7 +149,8 @@
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
            v-show="$store.state.app.tabState.inflectionsbrowser">
-        <inflection-browser @contentwidth="setContentWidth"></inflection-browser>
+        <inflection-browser @contentwidth="setContentWidth">
+        </inflection-browser>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
             alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
@@ -232,6 +240,10 @@
         Compact panel
         <info></info>
       </div>
+
+      <div v-show="$store.state.app.tabState.wordlist" class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist">
+        <word-list-panel :wordlistC="app.wordlistC" :updated="$store.state.app.wordListUpdated"></word-list-panel>
+      </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"
          v-if="data && data.notification" v-show="data.notification.important">
@@ -265,6 +277,7 @@ import Lookup from './lookup.vue'
 import ReskinFontColor from './reskin-font-color.vue'
 import UserAuth from './user-auth.vue'
 import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.vue'
+import { WordListPanel } from 'alpheios-wordlist'
 // Embeddable SVG icons
 import AttachLeftIcon from '../../images/inline-icons/attach-left.svg'
 import AttachRightIcon from '../../images/inline-icons/attach-right.svg'
@@ -278,7 +291,7 @@ import OptionsIcon from '../../images/inline-icons/options.svg'
 import GrammarIcon from '../../images/inline-icons/resources.svg'
 import TreebankIcon from '../../images/inline-icons/sitemap.svg'
 import InfoIcon from '../../images/inline-icons/info.svg'
-
+import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
 import WordUsageIcon from '../../images/inline-icons/books-stack.svg'
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
@@ -325,6 +338,8 @@ export default {
     alphTooltip: Tooltip,
     lookup: Lookup,
     reskinFontColor: ReskinFontColor,
+    wordlistIcon: WordlistIcon,
+    wordListPanel: WordListPanel,
     wordUsageExamplesBlock: WordUsageExamplesBlock
   },
   directives: {
@@ -416,6 +431,10 @@ export default {
 
     verboseMode () {
       return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
+    },
+
+    showWordList () {
+      return this.data.wordListUpdated && this.data.wordlistC && Object.keys(this.data.wordlistC.wordLists) && Object.keys(this.data.wordlistC.wordLists).length > 0
     }
   },
   methods: {
