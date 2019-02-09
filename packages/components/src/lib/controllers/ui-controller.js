@@ -7,10 +7,7 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Vuex from 'vuex'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 import Locales from '@/locales/locales.js'
-import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
-import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
 
 import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
 
@@ -115,17 +112,29 @@ export default class UIController {
 
     // Register data modules
     uiController.registerDataModule(L10nModule, Locales.en_US, Locales.bundleArr())
-    uiController.registerDataModule(AuthModule,
-      undefined /* It should have an app or background authenticator as a second parameter or it will not work */)
+    /* It should have an app or background authenticator as a second parameter or it will not work,
+     * This registration shall be done in the code that creates a UI controller because
+     * it is the owner of
+     *  */
 
-    // Register UI modules
-    uiController.registerUiModule(PanelModule, {
+    /*
+    The second parameter of an AuthModule is environment specific.
+    For webexetension it, for example, can be a messaging service.
+    Some environments may not register an Auth module at all.
+    That's why this registration shall be made not here,
+    but from within an environment that creates a UI controller
+    (after a call to `create()` function, usually).
+     */
+    // uiController.registerDataModule(AuthModule, undefined)
+
+    // Register UI modules. This is environment specific and thus shall be done after a `create()` call.
+    /* uiController.registerUiModule(PanelModule, {
       mountPoint: '#alpheios-panel', // To what element a panel will be mounted
       panelComponent: 'panel' // A Vue component that will represent a panel
     })
     uiController.registerUiModule(PopupModule, {
       mountPoint: '#alpheios-popup'
-    })
+    }) */
 
     // Creates on configures an event listener
     let eventController = new UIEventController()
@@ -361,6 +370,7 @@ export default class UIController {
           status: false,
           options: false,
           info: true,
+          user: false,
           treebank: false,
           wordlist: false,
           wordUsage: false

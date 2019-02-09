@@ -1,5 +1,5 @@
 <template>
-  <div :class="divClasses" :data-notification-visible="data && data.notification && data.notification.important"
+  <div :class="rootClasses" :data-notification-visible="data && data.notification && data.notification.important"
        :style="mainstyles" class="alpheios-panel auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
@@ -240,7 +240,7 @@
       </div>
 
       <div v-show="$store.state.app.tabState.wordlist" class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist">
-        <word-list-panel :wordlistC="api.wordlistC" :updated="data.wordListUpdated"></word-list-panel>
+        <word-list-panel :wordlistC="app.wordlistC" :updated="$store.state.app.wordListUpdated"></word-list-panel>
       </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"

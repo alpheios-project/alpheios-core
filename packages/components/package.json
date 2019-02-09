@@ -69,7 +69,7 @@
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "uikit": "^3.0.3",
-    "vue": "^2.6.3",
+    "vue": "^2.6.4",
     "whatwg-fetch": "^3.0.0",
     "wrap-range-text": "*"
   },
@@ -78,6 +78,7 @@
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
     "alpheios-res-client": "github:alpheios-project/res-client",
+    "alpheios-wordlist": "github:alpheios-project/wordlist",
     "dom-anchor-text-quote": "4.0.2",
     "intl-messageformat": "2.x.x",
     "uuid": "3.x.x",
