@@ -345,11 +345,6 @@ export default {
   directives: {
     onClickaway: onClickaway
   },
-  // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
-  positionClassVariants: {
-    left: 'alpheios-panel-left',
-    right: 'alpheios-panel-right'
-  },
   minWidth: 400, // A minimal width of a panel, in pixels
   defaultScrollPadding: 20,
   data: function () {
@@ -372,7 +367,7 @@ export default {
 
   computed: {
     rootClasses () {
-      return this.$store.state.ui.rootClasses.concat([this.$options.positionClassVariants[this.panelPosition]])
+      return this.$store.state.ui.rootClasses
     },
     clearLookupText: function () {
       // always true to clear panels lookup
@@ -438,7 +433,7 @@ export default {
     },
 
     showWordList () {
-      return this.data.wordListUpdated && this.data.wordlistC && Object.keys(this.data.wordlistC.wordLists) && Object.keys(this.data.wordlistC.wordLists).length > 0
+      return this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists) && Object.keys(this.app.wordlistC.wordLists).length > 0
     }
   },
   methods: {

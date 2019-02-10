@@ -61,6 +61,9 @@ describe('popup.test.js', () => {
         },
         app: {
 
+        },
+        ui: {
+          rootClasses: []
         }
       }
     })

@@ -78,7 +78,13 @@ describe('panel.test.js', () => {
               info: true,
               treebank: false,
               wordUsage: false
-            }
+            },
+            wordListUpdated: 0
+          }
+        },
+        ui: {
+          state: {
+            rootClasses: []
           }
         }
       }
@@ -96,13 +102,15 @@ describe('panel.test.js', () => {
     let cmp = shallowMount(Panel, {
       propsData: {
         data: {
-          wordUsageExamplesData: null,
-          classes: []
+          wordUsageExamplesData: null
         }
       },
       store,
       localVue,
       mocks: {
+        app: {
+          wordlistC: {}
+        },
         l10n: l10nModule.api(l10nModule.store),
         ui: uiAPI,
         settings: {
