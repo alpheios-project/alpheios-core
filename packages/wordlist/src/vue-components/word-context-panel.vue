@@ -2,7 +2,7 @@
     <div>
       <div class="alpheios-wordlist-commands">
         
-        <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_BACK">
+        <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getMsg('TOOLTIP_BACK')">
           <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-back" @click="backToWordList">
               <back-icon></back-icon>
           </div>
@@ -31,6 +31,7 @@
       alphTooltip: TooltipWrap,
       wordTqSource: WordTqSourceBlock
     },
+    inject: ['l10n'],
     props: {
       worditem: {
         type: Object,

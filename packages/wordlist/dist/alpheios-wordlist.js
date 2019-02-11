@@ -730,6 +730,7 @@ __webpack_require__.r(__webpack_exports__);
     alphTooltip: _vue_components_common_components_tooltip_wrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     wordTqSource: _vue_components_word_tq_source_block_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
+  inject: ['l10n'],
   props: {
     worditem: {
       type: Object,
@@ -1196,7 +1197,7 @@ var render = function() {
             {
               attrs: {
                 tooltipDirection: "top-left",
-                tooltipText: _vm.messages.TOOLTIP_BACK
+                tooltipText: _vm.l10n.getMsg("TOOLTIP_BACK")
               }
             },
             [
