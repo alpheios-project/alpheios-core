@@ -11262,11 +11262,6 @@ This is a mobile version of a panel
   directives: {
     onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_27__["directive"]
   },
-  // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
-  positionClassVariants: {
-    left: 'alpheios-panel-left',
-    right: 'alpheios-panel-right'
-  },
   minWidth: 400, // A minimal width of a panel, in pixels
   defaultScrollPadding: 20,
   data: function () {
@@ -11289,7 +11284,7 @@ This is a mobile version of a panel
 
   computed: {
     rootClasses () {
-      return this.$store.state.ui.rootClasses.concat([this.$options.positionClassVariants[this.panelPosition]])
+      return this.$store.state.ui.rootClasses
     },
     clearLookupText: function () {
       // always true to clear panels lookup
@@ -11355,7 +11350,7 @@ This is a mobile version of a panel
     },
 
     showWordList () {
-      return this.data.wordListUpdated && this.data.wordlistC && Object.keys(this.data.wordlistC.wordLists) && Object.keys(this.data.wordlistC.wordLists).length > 0
+      return this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists) && Object.keys(this.app.wordlistC.wordLists).length > 0
     }
   },
   methods: {
@@ -11803,14 +11798,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
   extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-  // This is implemented as a custom option so that Vue won't attach any reactivity watchers to it (because it does really not need to be reactive)
+  // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
   positionClassVariants: {
     left: 'alpheios-panel-left',
     right: 'alpheios-panel-right'
   },
   computed: {
-    divClasses () {
-      return this.data.classes.concat([this.$options.positionClassVariants[this.panelPosition]])
+    rootClasses () {
+      return this.$store.state.ui.rootClasses.concat([this.$options.positionClassVariants[this.panelPosition]])
     }
   }
 });
