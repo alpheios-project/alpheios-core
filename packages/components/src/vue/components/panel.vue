@@ -1,6 +1,6 @@
 <template>
   <div :class="rootClasses" :data-notification-visible="data && data.notification && data.notification.important"
-       :style="mainstyles" class="alpheios-panel auk"
+       :style="mainstyles" class="alpheios-panel alpheios-panel--large auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.panel.visible">
@@ -200,6 +200,9 @@
         <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.skin"
                  @change="uiOptionChanged"
                  v-if="settings.uiOptions && settings.uiOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.panel"
+                 @change="uiOptionChanged"
+                 v-if="settings.uiOptions && settings.uiOptions.items && app.isDevMode()"></setting>
         <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.popup"
                  @change="uiOptionChanged"
                  v-if="settings.uiOptions && settings.uiOptions.items"></setting>
@@ -275,10 +278,27 @@ export default {
   computed: {
     rootClasses () {
       return this.$store.state.ui.rootClasses.concat([this.$options.positionClassVariants[this.panelPosition]])
+    },
+    mainstyles: function () {
+      this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
+      return {
+        zIndex: this.ui.zIndex,
+        width: `${this.panelWidth}px`
+      }
     }
   }
 }
 </script>
 <style lang="scss">
   @import "../../styles/alpheios";
+
+  .alpheios-panel--large {
+    height: 100vh;
+    top: 0;
+    overflow: auto;
+
+    & .alpheios-panel__content {
+      margin-top: 20px;
+    }
+  }
 </style>

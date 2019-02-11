@@ -212,6 +212,7 @@ export default class UIController {
         name: 'name',
         version: 'version'
       },
+      mode: 'production', // Controls options available and output. Other possible values: `development`
       storageAdapter: LocalStorage,
       openPanel: true,
       textQueryTrigger: 'dblClick',
@@ -309,17 +310,6 @@ export default class UIController {
 
     await Promise.all(optionLoadPromises)
 
-    // All options shall be loaded at this point. Can initialize Vue components that will use them
-    // Create all registered data modules
-    this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(...m.options) })
-    // Mount all registered data modules into the store
-    this.dataModules.forEach((m) => this.store.registerModule(m.instance.publicName, m.instance.store))
-    // Mount all registered UI modules into the store
-    this.uiModules.forEach((m) => this.store.registerModule(m.ModuleClass.publicName, m.ModuleClass.store()))
-
-    // Construct a public API of all data modules that will be shared using `provide`
-    this.api = Object.assign(this.api, ...Array.from(this.dataModules.values()).map(m => ({ [m.instance.publicName]: m.instance.api(this.store) })))
-
     /**
      * This is a settings API. It exposes different options to modules and UI components.
      */
@@ -333,9 +323,14 @@ export default class UIController {
     this.api.app = {
       name: this.options.app.name, // A name of an application
       version: this.options.app.version, // An application's version
+      mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.tabStateDefault, // A name of a default tab (a string)
       state: this.state, // An app-level state
       wordlistC: this.wordlistC, // A word list controller
+
+      isDevMode: () => {
+        return this.options.mode === 'development'
+      },
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this),
@@ -510,11 +505,12 @@ export default class UIController {
       }
     })
 
+    // Create all registered data modules
+    this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     // This must be done after creation of data modules.
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
 
-    // Initialize components
     // TODO: this is for compatibility with legacy code only. All UI modules must by dynamic, not static
     this.panel = this.api.ui.getModule('panel')
     this.popup = this.api.ui.getModule('popup')
@@ -1241,6 +1237,13 @@ export default class UIController {
     switch (name) {
       case 'skin':
         this.setRootComponentClasses()
+        break
+      case 'panel':
+        if (this.api.ui.hasModule('popup')) {
+          this.store.commit('panel/close')
+          this.store.commit('panel/setPanelLayout', this.api.settings.uiOptions.items[name].currentValue)
+          this.store.commit('panel/open')
+        }
         break
       case 'popup':
         if (this.api.ui.hasModule('popup')) {

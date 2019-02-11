@@ -3,7 +3,7 @@ import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
 
 export default class L10nModule extends Module {
-  constructor (defaultLocale = Locales.en_US, messageBundles = []) {
+  constructor (store, api, defaultLocale = Locales.en_US, messageBundles = []) {
     super()
     this._l10n = new L10n()
     messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
@@ -24,6 +24,7 @@ export default class L10nModule extends Module {
         }
       }
     }
+    store.registerModule(this.constructor.publicName, this.store)
 
     /**
      * An API object groups all publicly available methods of a module.
@@ -103,6 +104,7 @@ export default class L10nModule extends Module {
         }
       }
     }
+    api[this.constructor.publicName] = this.api(store)
   }
 }
 

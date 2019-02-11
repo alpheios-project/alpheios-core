@@ -4,14 +4,14 @@ export default class AuthModule extends Module {
   /**
    * @param {Object} auth - A background or app authenticator object
    */
-  constructor (auth) {
+  constructor (store, api, auth) {
     super()
     this._auth = auth
-
     this.store = {
       // All stores of modules are namespaced
       namespaced: true
     }
+    store.registerModule(this.constructor.publicName, this.store)
 
     this.api = () => {
       return {
@@ -21,6 +21,7 @@ export default class AuthModule extends Module {
         logout: this._auth.logout.bind(this._auth)
       }
     }
+    api[this.constructor.publicName] = this.api()
   }
 }
 

@@ -4,8 +4,9 @@ import CompactPanel from '@/vue/components/panel-compact.vue'
 
 // TODO: Add a check for required modules
 export default class PanelModule {
-  constructor (store, api, config) {
+  constructor (store, api, config = {}) {
     this.config = Object.assign(PanelModule.configDefaults, config)
+    store.registerModule(this.constructor.publicName, this.constructor.store(config.panelComponent))
 
     this.vi = new Vue({
       el: this.config.mountPoint,
@@ -37,8 +38,7 @@ export default class PanelModule {
             languageName: '',
             languageCode: ''
           }
-        },
-        currentPanelComponent: this.config.panelComponent
+        }
       },
       methods: {
         clearContent: function () {
@@ -140,14 +140,15 @@ export default class PanelModule {
 
 PanelModule.publicName = 'panel'
 
-PanelModule.store = () => {
+PanelModule.store = (panelLayout) => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
 
     state: {
       // Whether a panel is shown or hidden
-      visible: false
+      visible: false,
+      layout: panelLayout
     },
     mutations: {
       /**
@@ -164,6 +165,10 @@ PanelModule.store = () => {
        */
       close (state) {
         state.visible = false
+      },
+
+      setPanelLayout (state, layout) {
+        state.layout = layout
       }
     }
   }

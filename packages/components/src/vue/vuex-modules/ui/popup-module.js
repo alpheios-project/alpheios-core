@@ -6,6 +6,7 @@ export default class PopupModule {
   constructor (store, api, config) {
     // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
     this.config = Object.assign(PopupModule.configDefaults, config)
+    store.registerModule(this.constructor.publicName, this.constructor.store())
 
     this.vi = new Vue({
       el: this.config.mountPoint,

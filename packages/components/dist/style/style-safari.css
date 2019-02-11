@@ -297,7 +297,6 @@
   background: #ffffff !important;
   border-color: 1px solid #d3d3d3 !important;
   box-sizing: border-box !important;
-  overflow: auto !important;
   margin: 0 !important; }
   .alpheios-popup h1, .alpheios-popup h2, .alpheios-popup h3, .alpheios-popup h4, .alpheios-popup h5, .alpheios-popup h6, .alpheios-popup p, .alpheios-popup span, .alpheios-popup a,
   .alpheios-panel h1,
@@ -10227,19 +10226,16 @@ ul.alpheios-skin_properties {
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
 .alpheios-panel {
-  overflow: auto !important;
-  height: 100vh !important;
-  top: 0 !important;
   z-index: 2000 !important;
   position: fixed !important;
   background: #FFF !important;
-  resize: both;
+  resize: both !important;
   opacity: 0.95 !important;
   direction: ltr !important;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 40px 20px auto 60px !important;
-  grid-template-areas: "header" "title" "content" "content" !important;
+  grid-template-rows: 40px auto 60px !important;
+  grid-template-areas: "header" "content" "content" !important;
 }
 .alpheios-panel[data-notification-visible="true"] {
   grid-template-areas: "header" "title" "content" "notifications" !important;
@@ -10476,12 +10472,30 @@ ul.alpheios-skin_properties {
 .alpheios-panel__tab__inflectionsbrowser {
   width: 100% !important;
 }
+.alpheios-panel--compact {
+  height: 50vh !important;
+  width: 100% !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  border-top: 1px solid #D1D1D0 !important;
+}
+.alpheios-panel--compact .alpheios-panel__content {
+    overflow: auto !important;
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios-panel--large {
+  height: 100vh !important;
+  top: 0 !important;
+  overflow: auto !important;
+}
+.alpheios-panel--large .alpheios-panel__content {
+    margin-top: 20px !important;
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/

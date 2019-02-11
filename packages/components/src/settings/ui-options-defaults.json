@@ -21,6 +21,20 @@
         }
       ]
     },
+    "panel": {
+      "defaultValue": "panel",
+      "labelText": "Panel layout",
+      "values": [
+        {
+          "value": "panel",
+          "text": "Normal panel layout"
+        },
+        {
+          "value": "compactPanel",
+          "text": "Compact panel layout"
+        }
+      ]
+    },
     "panelOnActivate": {
       "defaultValue": true,
       "labelText": "Panel on activate",

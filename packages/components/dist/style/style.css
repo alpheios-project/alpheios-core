@@ -297,7 +297,6 @@
   background: #ffffff;
   border-color: 1px solid #d3d3d3;
   box-sizing: border-box;
-  overflow: auto;
   margin: 0; }
   .alpheios-popup h1, .alpheios-popup h2, .alpheios-popup h3, .alpheios-popup h4, .alpheios-popup h5, .alpheios-popup h6, .alpheios-popup p, .alpheios-popup span, .alpheios-popup a,
   .alpheios-panel h1,
@@ -10227,20 +10226,16 @@ ul.alpheios-skin_properties {
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
 .alpheios-panel {
-  overflow: auto;
-  height: 100vh;
-  top: 0;
   z-index: 2000;
   position: fixed;
   background: #FFF;
   resize: both;
-  /* no !important */
   opacity: 0.95;
   direction: ltr;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 40px 20px auto 60px;
-  grid-template-areas: "header" "title" "content" "content";
+  grid-template-rows: 40px auto 60px;
+  grid-template-areas: "header" "content" "content";
 }
 .alpheios-panel[data-notification-visible="true"] {
   grid-template-areas: "header" "title" "content" "notifications";
@@ -10477,12 +10472,30 @@ ul.alpheios-skin_properties {
 .alpheios-panel__tab__inflectionsbrowser {
   width: 100%;
 }
+.alpheios-panel--compact {
+  height: 50vh;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  border-top: 1px solid #D1D1D0;
+}
+.alpheios-panel--compact .alpheios-panel__content {
+    overflow: auto;
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios-panel--large {
+  height: 100vh;
+  top: 0;
+  overflow: auto;
+}
+.alpheios-panel--large .alpheios-panel__content {
+    margin-top: 20px;
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/

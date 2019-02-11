@@ -1,6 +1,6 @@
 <template>
   <div :class="rootClasses" :data-notification-visible="data && data.notification && data.notification.important"
-       :style="mainstyles" class="alpheios-panel auk"
+       :style="mainstyles" class="alpheios-panel alpheios-panel--compact auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.panel.visible">
@@ -64,8 +64,8 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip v-if="Boolean(auth)" :tooltipText="l10n.getText('TOOLTIP_USER')"
-                            tooltipDirection="bottom-narrow">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
+                            v-if="Boolean(auth)">
                 <span @click="changeTab('user')" class="alpheios-panel__header-nav-btn"
                       v-bind:class="{ active: $store.state.app.tabState.user }">
                   <user-icon class="alpheios-icon"></user-icon>
@@ -80,9 +80,10 @@
                 </span>
               </alph-tooltip>
 
-              <alph-tooltip tooltipDirection="bottom-narrow" :tooltipText="l10n.getText('TOOLTIP_WORDLIST')">
-                <span v-show="showWordList" v-bind:class="{ active: $store.state.app.tabState.wordlist }" @click="changeTab('wordlist')"
-                  class="alpheios-panel__header-nav-btn">
+              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
+                <span @click="changeTab('wordlist')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.state.app.tabState.wordlist }"
+                      v-show="showWordList">
                   <wordlist-icon class="alpheios-icon"></wordlist-icon>
                 </span>
               </alph-tooltip>
@@ -96,33 +97,14 @@
               </alph-tooltip>
             </span>
       <span class="alpheios-panel__header-btn-group--end">
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
-                            v-show="attachToLeftVisible">
-                <span @click="setPosition('left')"
-                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left"
-                      v-show="attachToLeftVisible">
-                    <attach-left-icon></attach-left-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
-                            v-show="attachToRightVisible">
-                <span @click="setPosition('right')"
-                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right"
-                      v-show="attachToRightVisible">
-                    <attach-right-icon></attach-right-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip
-                  :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
-                  tooltipDirection="bottom-right">
-                <span @click="ui.closePanel" class="alpheios-panel__header-action-btn alpheios_close">
-                    <close-icon></close-icon>
-                </span>
-              </alph-tooltip>
-            </span>
+        <alph-tooltip
+            :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
+            tooltipDirection="bottom-right">
+          <span @click="ui.closePanel" class="alpheios-panel__header-action-btn alpheios_close">
+              <close-icon></close-icon>
+          </span>
+        </alph-tooltip>
+      </span>
     </div>
 
     <div class="alpheios-panel__content" v-if="$store.state.app.tabState">
@@ -173,12 +155,12 @@
         <user-auth :auth="data.auth"></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
-           v-show="$store.state.app.tabState.wordUsage" v-if="$store.getters['app/hasWordUsageExamplesData']">
+           v-if="$store.getters['app/hasWordUsageExamplesData']" v-show="$store.state.app.tabState.wordUsage">
         <word-usage-examples-block
-            :wordUsageList="$store.state.app.wordUsageExamplesData.wordUsageExamples"
-            :targetWord="$store.state.app.wordUsageExamplesData.targetWord"
             :language="$store.state.app.wordUsageExamplesData.language"
-            :provider="$store.state.app.wordUsageExamplesData.provider">
+            :provider="$store.state.app.wordUsageExamplesData.provider"
+            :targetWord="$store.state.app.wordUsageExamplesData.targetWord"
+            :wordUsageList="$store.state.app.wordUsageExamplesData.wordUsageExamples">
         </word-usage-examples-block>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.state.app.tabState.options">
@@ -201,6 +183,9 @@
         <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.skin"
                  @change="uiOptionChanged"
                  v-if="settings.uiOptions && settings.uiOptions.items"></setting>
+        <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.panel"
+                 @change="uiOptionChanged"
+                 v-if="settings.uiOptions && settings.uiOptions.items && app.isDevMode()"></setting>
         <setting :classes="['alpheios-panel__options-item']" :data="settings.uiOptions.items.popup"
                  @change="uiOptionChanged"
                  v-if="settings.uiOptions && settings.uiOptions.items"></setting>
@@ -241,8 +226,8 @@
         <info></info>
       </div>
 
-      <div v-show="$store.state.app.tabState.wordlist" class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist">
-        <word-list-panel :wordlistC="app.wordlistC" :updated="$store.state.app.wordListUpdated"></word-list-panel>
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist" v-show="$store.state.app.tabState.wordlist">
+        <word-list-panel :updated="$store.state.app.wordListUpdated" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
     <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"
@@ -261,8 +246,8 @@
 </template>
 <script>
 /*
-This is a mobile version of a panel
- */
+  This is a mobile version of a panel
+   */
 
 // Vue components
 import Inflections from './inflections.vue'
@@ -383,8 +368,7 @@ export default {
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
       return {
-        zIndex: this.ui.zIndex,
-        width: `${this.panelWidth}px`
+        zIndex: this.ui.zIndex
       }
     },
     resourceSettingsLexicons: function () {
@@ -603,24 +587,18 @@ export default {
   @import "../../styles/alpheios";
 
   $alpheios-panel-header-height: 40px;
-  $alpheios-panel-title-height: 20px;
 
   .alpheios-panel {
-    // width: 400px; /* no !important */
-    overflow: auto;
-    height: 100vh;
-    top: 0;
     z-index: 2000;
     position: fixed;
     background: #FFF;
-    resize: both; /* no !important */
+    resize: both;
     opacity: 0.95;
     direction: ltr;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: #{$alpheios-panel-header-height} #{$alpheios-panel-title-height} auto 60px;
-    grid-template-areas: "header" "title" "content" "content"
-
+    grid-template-rows: #{$alpheios-panel-header-height} auto 60px;
+    grid-template-areas: "header" "content" "content"
   }
 
   .alpheios-panel[data-notification-visible="true"] {
@@ -903,5 +881,18 @@ export default {
 
   .alpheios-panel__tab__inflectionsbrowser {
     width: 100%;
+  }
+
+  // Special styles for compact panel
+  .alpheios-panel--compact {
+    height: 50vh;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid $alpheios-link-color-dark-bg;
+
+    & .alpheios-panel__content {
+      overflow: auto;
+    }
   }
 </style>
