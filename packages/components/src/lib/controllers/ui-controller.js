@@ -1172,10 +1172,11 @@ export default class UIController {
   }
 
   onWordItemSelected (homonym) {
+    console.log(`On word item selected`)
     let languageID = homonym.lexemes[0].lemma.languageID
 
     this.newLexicalRequest(languageID)
-    this.message(this.l10n.messages.TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS)
+    this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.showStatusInfo(homonym.targetWord, languageID)
     this.updateLanguage(languageID)
     this.updateWordAnnotationData()
