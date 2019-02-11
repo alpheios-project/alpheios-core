@@ -253,5 +253,5 @@ PopupModule.configDefaults = {
 
   // Whether a popup can be dragged and resized
   draggable: true,
-  resizeable: true
+  resizable: true
 }
