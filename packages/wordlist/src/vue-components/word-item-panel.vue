@@ -1,13 +1,13 @@
 <template>
     <div v-bind:class="itemClasses" class="alpheios-wordlist-language__worditem">
-        <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_CHANGE_IMPORTANT">
+        <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getMsg('TOOLTIP_CHANGE_IMPORTANT')">
           <div class="alpheios-worditem__data alpheios-worditem__icon"
                   @click="changeImportant()">
                   <check-icon></check-icon>
           </div>
         </alph-tooltip>
 
-        <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_REMOVE">
+        <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getMsg('TOOLTIP_REMOVE')">
           <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon"
                   @click="deleteItem()">
                   <delete-icon></delete-icon>
@@ -15,7 +15,7 @@
         </alph-tooltip>
 
         <alph-tooltip tooltipDirection="top-left" 
-          :tooltipText="messages.TOOLTIP_TEXT_CONTEXT"
+          :tooltipText="l10n.getMsg('TOOLTIP_TEXT_CONTEXT')"
           v-bind:class="{ 'alpheios_no_tq ': !worditem.hasTextQuoteSelectors }">
           <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon" 
                   @click="showContexts()">
@@ -37,6 +37,7 @@
 
   export default {
     name: 'WordItemBlock',
+    inject: ['l10n'],
     components: {
       checkIcon: CheckIcon,
       deleteIcon: DeleteIcon,
@@ -49,10 +50,6 @@
        required: true
      },
       worditem: {
-        type: Object,
-        required: true
-      },
-      messages: {
         type: Object,
         required: true
       },

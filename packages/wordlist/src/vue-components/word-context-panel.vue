@@ -15,7 +15,6 @@
         <word-tq-source
           :source = "source"
           :tqSelectors = "formattedContext[source]"
-          :messages = "messages"
         ></word-tq-source>
       </div>
     </div>
@@ -34,10 +33,6 @@
     },
     props: {
       worditem: {
-        type: Object,
-        required: true
-      },
-      messages: {
         type: Object,
         required: true
       }

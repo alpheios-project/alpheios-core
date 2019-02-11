@@ -2,17 +2,17 @@
     <div>
         <div class="alpheios-wordlist-commands">
             <div class="alpheios-wordlist-language__title">{{ languageName }}</div>
-            <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_ALL_IMPORTANT">
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getMsg('TOOLTIP_ALL_IMPORTANT')">
             <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-all-important" @click="makeAllImportant()">
                 <check-icon></check-icon>
             </div>
             </alph-tooltip>
-            <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_NO_IMPORTANT">
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getMsg('TOOLTIP_NO_IMPORTANT')">
             <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-no-important" @click="removeAllImportant()">
                 <check-icon></check-icon>
             </div>
             </alph-tooltip>
-            <alph-tooltip tooltipDirection="top-left" :tooltipText="messages.TOOLTIP_REMOVE_ALL">
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getMsg('TOOLTIP_REMOVE_ALL')">
             <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-remove-all" @click="deleteAll()">
                 <delete-icon></delete-icon>
             </div>
@@ -25,7 +25,6 @@
             <word-item
               :controller="controller"
               :worditem="wordItem"
-              :messages="messages"
               :updated="updated"
               @changeImportant = "changeImportant"
               @deleteItem = "deleteItem"
@@ -50,6 +49,7 @@ export default {
     wordItem: WordItemPanel,
     alphTooltip: TooltipWrap
   },
+  inject: ['l10n'],
   props: {
     controller: {
       type: Object,
@@ -57,10 +57,6 @@ export default {
     },
     languageCode: {
       type: String,
-      required: true
-    },
-    messages: {
-      type: Object,
       required: true
     },
     updated: {

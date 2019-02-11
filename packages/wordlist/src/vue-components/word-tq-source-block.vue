@@ -19,10 +19,6 @@
       tqSelectors: {
         type: Array,
         required: true
-      },
-      messages: {
-        type: Object,
-        required: true
       }
     },
     computed: {
