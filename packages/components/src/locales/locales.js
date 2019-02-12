@@ -1,3 +1,5 @@
+import { EnUs as EnUsWordList } from 'alpheios-wordlist'
+
 import EnUs from './en-us/messages.json'
 import EnUsData from './en-us/messages-data.json'
 import EnUsInflectons from './en-us/messages-inflections.json'
@@ -7,7 +9,7 @@ import MessageBundle from '@/lib/l10n/message-bundle.js'
 const localeEnUs = 'en-US'
 const localeEnGb = 'en-GB'
 const availableMessages = {
-  [localeEnUs]: [EnUs, EnUsData, EnUsInflectons],
+  [localeEnUs]: [EnUs, EnUsData, EnUsInflectons, EnUsWordList],
   [localeEnGb]: [EnGb]
 }
 

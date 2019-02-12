@@ -39465,15 +39465,19 @@ module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./en-us/messages.json */ "./locales/en-us/messages.json");
-var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-us/messages-data.json */ "./locales/en-us/messages-data.json");
-var _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages-data.json */ "./locales/en-us/messages-data.json", 1);
-/* harmony import */ var _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json");
-var _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json", 1);
-/* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
-/* harmony import */ var _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/lib/l10n/message-bundle.js */ "./lib/l10n/message-bundle.js");
+/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-wordlist */ "alpheios-wordlist");
+/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_wordlist__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-us/messages.json */ "./locales/en-us/messages.json");
+var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./en-us/messages-data.json */ "./locales/en-us/messages-data.json");
+var _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages-data.json */ "./locales/en-us/messages-data.json", 1);
+/* harmony import */ var _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json");
+var _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-us/messages-inflections.json */ "./locales/en-us/messages-inflections.json", 1);
+/* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/lib/l10n/message-bundle.js */ "./lib/l10n/message-bundle.js");
+
+
 
 
 
@@ -39483,8 +39487,8 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/_
 const localeEnUs = 'en-US'
 const localeEnGb = 'en-GB'
 const availableMessages = {
-  [localeEnUs]: [_en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__, _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_1__, _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_2__],
-  [localeEnGb]: [_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_3__]
+  [localeEnUs]: [_en_us_messages_json__WEBPACK_IMPORTED_MODULE_1__, _en_us_messages_data_json__WEBPACK_IMPORTED_MODULE_2__, _en_us_messages_inflections_json__WEBPACK_IMPORTED_MODULE_3__, alpheios_wordlist__WEBPACK_IMPORTED_MODULE_0__["EnUs"]],
+  [localeEnGb]: [_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_4__]
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -39498,7 +39502,7 @@ const availableMessages = {
    * @return {MessageBundle} A message bundle with messages from JSON.
    */
   createBundle: (messagesJSONorObj, locale) => {
-    return new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__["default"](messagesJSONorObj, locale)
+    return new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_5__["default"](messagesJSONorObj, locale)
   },
   /**
    * Same as above, but creates an array of message bundles out of an array of messages JSONs and a locales.
@@ -39508,7 +39512,7 @@ const availableMessages = {
    * @return {MessageBundle[]} An array of message bundles.
    */
   createBundleArr: (msgArr) => {
-    return msgArr.map((m) => new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__["default"](...m))
+    return msgArr.map((m) => new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_5__["default"](...m))
   },
   /**
    * Creates an array of message bundles out of all availableMessages.
@@ -39517,7 +39521,7 @@ const availableMessages = {
   bundleArr: () => {
     let msgArray = []
     for (const [locale, messages] of Object.entries(availableMessages)) {
-      msgArray.push(...messages.map(m => new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_4__["default"](m, locale)))
+      msgArray.push(...messages.map(m => new _lib_l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_5__["default"](m, locale)))
     }
     return msgArray
   }
