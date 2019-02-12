@@ -423,9 +423,7 @@ export default class UIController {
 
         setInflData (state, inflectionsViewSet = null) {
           state.inflectionsWaitState = false
-          if (inflectionsViewSet && inflectionsViewSet.hasMatchingViews) {
-            state.inflectionsViewSet = inflectionsViewSet
-          }
+          state.inflectionsViewSet = (inflectionsViewSet && inflectionsViewSet.hasMatchingViews) ? inflectionsViewSet : false
         },
 
         resetInflData (state) {
@@ -728,6 +726,7 @@ export default class UIController {
   newLexicalRequest (languageID) {
     this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
+    this.store.commit('app/resetInflData')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
     this.clear().open().changeTab('definitions')
     return this
@@ -863,7 +862,7 @@ export default class UIController {
     this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
-    this.store.commit('app/setInflData', this.inflectionsViewSet)
+    this.store.commit('app/resetInflData')
   }
 
   updateLemmaTranslations () {
