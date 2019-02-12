@@ -357,7 +357,8 @@ export default class UIController {
         wordUsageExamplesData: null,
         wordLists: null,
         wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
-        tabState: {
+        activeTab: 'info' // A currently selected panel's tab
+        /* tabState: {
           definitions: false,
           inflections: false,
           inflectionsbrowser: false,
@@ -369,10 +370,15 @@ export default class UIController {
           treebank: false,
           wordlist: false,
           wordUsage: false
-        }
+        } */
       },
 
       getters: {
+        isActiveTab: (state) => (tabName) => {
+          console.log(`isActiveTab getter: ${tabName}`)
+          return state.activeTab === tabName
+        },
+
         hasInflData (state) {
           return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
         },
@@ -459,9 +465,11 @@ export default class UIController {
         },
 
         setTab (state, tabName) {
-          for (let key of Object.keys(state.tabState)) {
+          console.log(`setTab mutation is called`)
+          state.activeTab = tabName
+          /* for (let key of Object.keys(state.tabState)) {
             state.tabState[key] = (key === tabName)
-          }
+          } */
         }
       }
     })
@@ -700,7 +708,7 @@ export default class UIController {
     const statusAvailable = Boolean(this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
     // If tab is disabled, switch to a default one
     if (
-      (!this.store.state.app.tabState.hasOwnProperty(tabName)) ||
+      /* (!this.store.state.app.tabState.hasOwnProperty(tabName)) || */
       (!this.store.getters[`app/hasInflData`] && name === 'inflections') ||
       (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
       (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||

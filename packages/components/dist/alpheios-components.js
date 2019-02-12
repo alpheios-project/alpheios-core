@@ -11158,9 +11158,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /*
   This is a mobile version of a panel
@@ -11268,6 +11265,12 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   computed: {
+    classObject: function () {
+      console.log(`Class object called`)
+      return {
+        active: true
+      }
+    },
     rootClasses () {
       return this.$store.state.ui.rootClasses
     },
@@ -11318,9 +11321,10 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
-    inflectionsTabVisible: function () {
-      return Boolean(this.$store.state.app.tabState.inflections && this.$store.state.app.inflectionsViewSet)
-    },
+    /* inflectionsTabVisible: function () {
+      return Boolean($store.getters.isActiveTab('inflections') && this.$store.state.app.inflectionsViewSet)
+      // return Boolean(this.$store.state.app.tabState.inflections && this.$store.state.app.inflectionsViewSet)
+    }, */
 
     additionalStylesTootipCloseIcon: function () {
       return {
@@ -11338,6 +11342,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    tabActiveClass (tabName) {
+      console.log(`tab active class, ${tabName}, ${this.$store.state.app.activeTab === tabName}`)
+      return (this.$store.state.app.activeTab === tabName) ? ['active'] : []
+    },
+
     closeNotifications () {
       this.$emit('closenotifications')
     },
@@ -11348,6 +11357,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     changeTab (name) {
+      console.log(`changeTab called`)
       this.setContentWidth({ width: 'auto', component: null })
       this.app.changeTab(name)
     },
@@ -11464,6 +11474,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
+  /* watch: {
+    isSelectedTab: function () {
+      console.log(`isSelectedTab watcher`)
+    }
+  }, */
+
   mounted: function () {
     // Determine paddings and sidebar width for calculation of a panel width to fit content
     if (this.data === undefined) {
@@ -11497,6 +11513,17 @@ __webpack_require__.r(__webpack_exports__);
           target.style.width = `${event.rect.width}px`
         })
     }
+
+    console.log(`Panel mounted`, this.$store.state.app)
+    console.log(`Active tab info`, this.$store.state.app.activeTab === 'info')
+    console.log(`Tab active class: ${this.tabActiveClass('info')}`)
+    this.$store.watch((state, getters) => getters['app/isActiveTab'], () => {
+      console.log('isActiveTab called')
+      // console.log('onSIgnin error', this.error.code)
+    },
+    {
+      deep: true
+    })
   }
 });
 
@@ -17057,283 +17084,244 @@ var render = function() {
       _c("div", { staticClass: "alpheios-panel__header" }, [
         _vm._m(0),
         _vm._v(" "),
-        _vm.$store.state.app.tabState
-          ? _c(
-              "span",
-              { staticClass: "alpheios-panel__header-btn-group--center" },
+        _c(
+          "span",
+          { staticClass: "alpheios-panel__header-btn-group--center" },
+          [
+            _c(
+              "alph-tooltip",
+              {
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_HELP"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
               [
                 _c(
-                  "alph-tooltip",
+                  "span",
                   {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_HELP"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.$store.state.app.tabState.info },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("info")
-                          }
-                        }
-                      },
-                      [_c("info-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.definitions
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("definitions")
-                          }
-                        }
-                      },
-                      [
-                        _c("definitions-icon", { staticClass: "alpheios-icon" })
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.$store.getters["app/hasInflData"],
-                        expression: "$store.getters[`app/hasInflData`]"
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: _vm.classObject,
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("info")
                       }
-                    ],
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
-                      tooltipDirection: "bottom-narrow"
                     }
                   },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.inflections
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("inflections")
-                          }
-                        }
-                      },
-                      [
-                        _c("inflections-icon", { staticClass: "alpheios-icon" })
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
+                  [_c("info-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
                 _c(
-                  "alph-tooltip",
+                  "span",
                   {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active:
-                            _vm.$store.state.app.tabState.inflectionsbrowser
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("inflectionsbrowser")
-                          }
-                        }
-                      },
-                      [
-                        _c("inflections-browser-icon", {
-                          staticClass: "alpheios-icon"
-                        })
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.$store.getters["app/hasGrammarRes"],
-                        expression: "$store.getters[`app/hasGrammarRes`]"
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"](
+                        "definitions"
+                      )
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("definitions")
                       }
-                    ],
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
-                      tooltipDirection: "bottom-narrow"
                     }
                   },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.grammar
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("grammar")
-                          }
-                        }
-                      },
-                      [_c("grammar-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
+                  [_c("definitions-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                directives: [
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.$store.getters["app/hasTreebankData"],
-                        expression: "$store.getters['app/hasTreebankData']"
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.$store.getters["app/hasInflData"],
+                    expression: "$store.getters[`app/hasInflData`]"
+                  }
+                ],
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"](
+                        "inflections"
+                      )
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("inflections")
                       }
-                    ],
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
-                      tooltipDirection: "bottom-narrow"
                     }
                   },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.treebank
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("treebank")
-                          }
-                        }
-                      },
-                      [_c("treebank-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
+                  [_c("inflections-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
                 _c(
-                  "alph-tooltip",
+                  "span",
                   {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.options
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("options")
-                          }
-                        }
-                      },
-                      [_c("options-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                Boolean(_vm.auth)
-                  ? _c(
-                      "alph-tooltip",
-                      {
-                        attrs: {
-                          tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
-                          tooltipDirection: "bottom-narrow"
-                        }
-                      },
-                      [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "alpheios-panel__header-nav-btn",
-                            class: {
-                              active: _vm.$store.state.app.tabState.user
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.changeTab("user")
-                              }
-                            }
-                          },
-                          [_c("user-icon", { staticClass: "alpheios-icon" })],
-                          1
-                        )
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value:
-                          _vm.$store.getters["app/hasWordUsageExamplesData"],
-                        expression:
-                          "$store.getters['app/hasWordUsageExamplesData']"
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"](
+                        "inflectionsbrowser"
+                      )
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("inflectionsbrowser")
                       }
-                    ],
+                    }
+                  },
+                  [
+                    _c("inflections-browser-icon", {
+                      staticClass: "alpheios-icon"
+                    })
+                  ],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.$store.getters["app/hasGrammarRes"],
+                    expression: "$store.getters[`app/hasGrammarRes`]"
+                  }
+                ],
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"]("grammar")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("grammar")
+                      }
+                    }
+                  },
+                  [_c("grammar-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.$store.getters["app/hasTreebankData"],
+                    expression: "$store.getters['app/hasTreebankData']"
+                  }
+                ],
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"]("treebank")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("treebank")
+                      }
+                    }
+                  },
+                  [_c("treebank-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"]("options")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("options")
+                      }
+                    }
+                  },
+                  [_c("options-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            Boolean(_vm.auth)
+              ? _c(
+                  "alph-tooltip",
+                  {
                     attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
+                      tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
                       tooltipDirection: "bottom-narrow"
                     }
                   },
@@ -17343,93 +17331,131 @@ var render = function() {
                       {
                         staticClass: "alpheios-panel__header-nav-btn",
                         class: {
-                          active: _vm.$store.state.app.tabState.wordUsage
+                          active: _vm.$store.getters["app/isActiveTab"]("user")
                         },
                         on: {
                           click: function($event) {
-                            return _vm.changeTab("wordUsage")
+                            return _vm.changeTab("user")
                           }
                         }
                       },
-                      [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.showWordList,
-                            expression: "showWordList"
-                          }
-                        ],
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.state.app.tabState.wordlist
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("wordlist")
-                          }
-                        }
-                      },
-                      [_c("wordlist-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_STATUS"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.verboseMode,
-                            expression: "verboseMode"
-                          }
-                        ],
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: { active: _vm.$store.state.app.tabState.status },
-                        on: {
-                          click: function($event) {
-                            return _vm.changeTab("status")
-                          }
-                        }
-                      },
-                      [_c("status-icon", { staticClass: "alpheios-icon" })],
+                      [_c("user-icon", { staticClass: "alpheios-icon" })],
                       1
                     )
                   ]
                 )
-              ],
-              1
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.$store.getters["app/hasWordUsageExamplesData"],
+                    expression: "$store.getters['app/hasWordUsageExamplesData']"
+                  }
+                ],
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"]("wordUsage")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("wordUsage")
+                      }
+                    }
+                  },
+                  [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.showWordList,
+                        expression: "showWordList"
+                      }
+                    ],
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"]("wordlist")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("wordlist")
+                      }
+                    }
+                  },
+                  [_c("wordlist-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "alph-tooltip",
+              {
+                attrs: {
+                  tooltipText: _vm.l10n.getText("TOOLTIP_STATUS"),
+                  tooltipDirection: "bottom-narrow"
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.verboseMode,
+                        expression: "verboseMode"
+                      }
+                    ],
+                    staticClass: "alpheios-panel__header-nav-btn",
+                    class: {
+                      active: _vm.$store.getters["app/isActiveTab"]("status")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeTab("status")
+                      }
+                    }
+                  },
+                  [_c("status-icon", { staticClass: "alpheios-icon" })],
+                  1
+                )
+              ]
             )
-          : _vm._e(),
+          ],
+          1
+        ),
         _vm._v(" "),
         _c(
           "span",
@@ -17470,8 +17496,9 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.definitions,
-                    expression: "$store.state.app.tabState.definitions"
+                    value: _vm.$store.getters["app/isActiveTab"]("definitions"),
+                    expression:
+                      "$store.getters['app/isActiveTab']('definitions')"
                   }
                 ],
                 staticClass:
@@ -17535,8 +17562,12 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.inflectionsTabVisible,
-                        expression: "inflectionsTabVisible"
+                        value:
+                          _vm.$store.getters["app/isActiveTab"](
+                            "inflections"
+                          ) && _vm.$store.state.app.inflectionsViewSet,
+                        expression:
+                          "$store.getters['app/isActiveTab']('inflections') && $store.state.app.inflectionsViewSet"
                       }
                     ],
                     staticClass:
@@ -17560,8 +17591,11 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.inflectionsbrowser,
-                    expression: "$store.state.app.tabState.inflectionsbrowser"
+                    value: _vm.$store.getters["app/isActiveTab"](
+                      "inflectionsbrowser"
+                    ),
+                    expression:
+                      "$store.getters['app/isActiveTab']('inflectionsbrowser')"
                   }
                 ],
                 staticClass:
@@ -17583,8 +17617,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.grammar,
-                    expression: "$store.state.app.tabState.grammar"
+                    value: _vm.$store.getters["app/isActiveTab"]("grammar"),
+                    expression: "$store.getters['app/isActiveTab']('grammar')"
                   }
                 ],
                 staticClass:
@@ -17602,8 +17636,11 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.$store.state.app.tabState.treebank,
-                        expression: "$store.state.app.tabState.treebank"
+                        value: _vm.$store.getters["app/isActiveTab"](
+                          "treebank"
+                        ),
+                        expression:
+                          "$store.getters['app/isActiveTab']('treebank')"
                       }
                     ],
                     staticClass:
@@ -17625,8 +17662,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.status,
-                    expression: "$store.state.app.tabState.status"
+                    value: _vm.$store.getters["app/isActiveTab"]("status"),
+                    expression: "$store.getters['app/isActiveTab']('status')"
                   }
                 ],
                 staticClass:
@@ -17649,8 +17686,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.user,
-                    expression: "$store.state.app.tabState.user"
+                    value: _vm.$store.getters["app/isActiveTab"]("user"),
+                    expression: "$store.getters['app/isActiveTab']('user')"
                   }
                 ],
                 staticClass:
@@ -17668,8 +17705,11 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.$store.state.app.tabState.wordUsage,
-                        expression: "$store.state.app.tabState.wordUsage"
+                        value: _vm.$store.getters["app/isActiveTab"](
+                          "wordUsage"
+                        ),
+                        expression:
+                          "$store.getters['app/isActiveTab']('wordUsage')"
                       }
                     ],
                     staticClass:
@@ -17701,8 +17741,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.options,
-                    expression: "$store.state.app.tabState.options"
+                    value: _vm.$store.getters["app/isActiveTab"]("options"),
+                    expression: "$store.getters['app/isActiveTab']('options')"
                   }
                 ],
                 staticClass:
@@ -17883,8 +17923,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.info,
-                    expression: "$store.state.app.tabState.info"
+                    value: _vm.$store.getters["app/isActiveTab"]("info"),
+                    expression: "$store.getters['app/isActiveTab']('info')"
                   }
                 ],
                 staticClass:
@@ -17904,7 +17944,7 @@ var render = function() {
                   ],
                   1
                 ),
-                _vm._v("\n      Compact panel\n      "),
+                _vm._v(" "),
                 _c("info")
               ],
               1
@@ -17917,8 +17957,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$store.state.app.tabState.wordlist,
-                    expression: "$store.state.app.tabState.wordlist"
+                    value: _vm.$store.getters["app/isActiveTab"]("wordlist"),
+                    expression: "$store.getters['app/isActiveTab']('wordlist')"
                   }
                 ],
                 staticClass:
@@ -34479,7 +34519,8 @@ class UIController {
         wordUsageExamplesData: null,
         wordLists: null,
         wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
-        tabState: {
+        activeTab: 'info' // A currently selected panel's tab
+        /* tabState: {
           definitions: false,
           inflections: false,
           inflectionsbrowser: false,
@@ -34491,10 +34532,15 @@ class UIController {
           treebank: false,
           wordlist: false,
           wordUsage: false
-        }
+        } */
       },
 
       getters: {
+        isActiveTab: (state) => (tabName) => {
+          console.log(`isActiveTab getter: ${tabName}`)
+          return state.activeTab === tabName
+        },
+
         hasInflData (state) {
           return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
         },
@@ -34581,9 +34627,11 @@ class UIController {
         },
 
         setTab (state, tabName) {
-          for (let key of Object.keys(state.tabState)) {
+          console.log(`setTab mutation is called`)
+          state.activeTab = tabName
+          /* for (let key of Object.keys(state.tabState)) {
             state.tabState[key] = (key === tabName)
-          }
+          } */
         }
       }
     })
@@ -34822,7 +34870,7 @@ class UIController {
     const statusAvailable = Boolean(this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
     // If tab is disabled, switch to a default one
     if (
-      (!this.store.state.app.tabState.hasOwnProperty(tabName)) ||
+      /* (!this.store.state.app.tabState.hasOwnProperty(tabName)) || */
       (!this.store.getters[`app/hasInflData`] && name === 'inflections') ||
       (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
       (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
@@ -35290,10 +35338,11 @@ class UIController {
   }
 
   onWordItemSelected (homonym) {
+    console.log(`On word item selected`)
     let languageID = homonym.lexemes[0].lemma.languageID
 
     this.newLexicalRequest(languageID)
-    this.message(this.l10n.messages.TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS)
+    this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.showStatusInfo(homonym.targetWord, languageID)
     this.updateLanguage(languageID)
     this.updateWordAnnotationData()
@@ -43074,7 +43123,7 @@ PopupModule.configDefaults = {
 
   // Whether a popup can be dragged and resized
   draggable: true,
-  resizeable: true
+  resizable: true
 }
 
 
