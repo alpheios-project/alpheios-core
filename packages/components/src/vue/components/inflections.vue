@@ -105,6 +105,7 @@ export default {
     suppTablesWide: WideSuppTable,
     wordForms: WordForms
   },
+  visibilityUnwatch: null, // Will hold a function for removal of visibility watcher
 
   data: function () {
     return {
@@ -136,10 +137,6 @@ export default {
     },
     inflectionViewSet: function () {
       return this.$store.state.app.inflectionsViewSet
-    },
-    // Need this for a watcher that will monitor a parent container visibility state
-    isVisible: function () {
-      return this.$store.state.app.tabState.inflections
     },
     inflectionsEnabled: function () {
       // TODO: This is a temporary solution. This should be handled in accord with our overall state handling policy
@@ -189,24 +186,6 @@ export default {
     inflectionViewSet: function () {
       // This watcher is called when a new inflection set becomes available
       this.initViewSet()
-    },
-
-    /*
-          An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-          use this information to adjust a width of a container that displays an inflection component. However, a width
-          of an inflection table within an invisible parent container will always be zero. Because of that, we can determine
-          an inflection table width and notify a parent component only when a parent container is visible.
-          A parent component will notify us of that by setting a `visible` property. A change of that property state
-          will be monitored here with the help of a `isVisible` computed property. Computed property alone will not work
-          as it won't be used by anything and thus will not be calculated by Vue.
-           */
-    isVisible: function (visibility) {
-      if (visibility && this.htmlElements.content) {
-        // If container is become visible, update parent with its width
-        this.updateWidth()
-        // Scroll to top if panel is reopened
-        this.navigate('top')
-      }
     }
   },
 
@@ -236,6 +215,10 @@ export default {
     },
 
     updateWidth: function () {
+      /*
+      An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
+      use this information to adjust a width of a container that displays an inflection component.
+       */
       Vue.nextTick(() => {
         this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections' })
       })
@@ -268,6 +251,19 @@ export default {
       this.htmlElements.content = this.$el
     }
     this.initViewSet()
+
+    this.$options.visibilityUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
+      if (tabName === 'inflections') {
+        console.log(`inflections became visible`)
+        this.updateWidth()
+        // Scroll to top if panel is reopened
+        this.navigate('top')
+      }
+    })
+  },
+
+  beforeDestroy: function () {
+    this.$options.visibilityUnwatch()
   }
 }
 </script>

@@ -14,18 +14,16 @@ describe('grammar.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store
-  const l10nModule = new L10nModule(Locales.en_US, Locales.bundleArr([
-    [enUS, Locales.en_US],
-    [enUSData, Locales.en_US],
-    [enUSInfl, Locales.en_US],
-    [enGB, Locales.en_GB]
-  ]))
+  let api
+  let l10nModule
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
+
+    api = {}
   })
   afterEach(() => {
     jest.resetModules()
@@ -44,12 +42,18 @@ describe('grammar.test.js', () => {
         }
       }
     })
+
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
+
     let cmp = shallowMount(Grammar, {
       store,
       localVue,
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store)
-      }
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
@@ -71,12 +75,18 @@ describe('grammar.test.js', () => {
         }
       }
     })
+
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
+
     let cmp = shallowMount(Grammar, {
       store,
       localVue,
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store)
-      }
+      mocks: api
     })
     expect(cmp.find('iframe').attributes().src).toEqual('http://example.com/')
     expect(cmp.find('.alpheios-grammar__provider').exists()).toBeFalsy()
@@ -99,12 +109,18 @@ describe('grammar.test.js', () => {
         }
       }
     })
+
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
+
     cmp = shallowMount(Grammar, {
       store,
       localVue,
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store)
-      }
+      mocks: api
     })
 
     expect(cmp.find('.alpheios-grammar__provider').exists()).toBeTruthy()

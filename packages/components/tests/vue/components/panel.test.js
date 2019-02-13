@@ -32,14 +32,10 @@ describe('panel.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store
+  let api = {}
   let contentOptions
   let resourceOptions
-  const l10nModule = new L10nModule(Locales.en_US, Locales.bundleArr([
-    [enUS, Locales.en_US],
-    [enUSData, Locales.en_US],
-    [enUSInfl, Locales.en_US],
-    [enGB, Locales.en_GB]
-  ]))
+  let l10nModule
   const uiAPI = {
     closePanel: () => {}
   }
@@ -83,12 +79,38 @@ describe('panel.test.js', () => {
           }
         },
         ui: {
+          namespaced: true,
           state: {
+            activeTab: 'info',
             rootClasses: []
+          },
+
+          getters: {
+            isActiveTab: (state) => (tabName) => {
+              return state.activeTab === tabName
+            }
           }
         }
       }
     })
+
+    api = {
+      app: {
+        wordlistC: {}
+      },
+      ui: uiAPI,
+      settings: {
+        contentOptions,
+        resourceOptions
+      }
+    }
+
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
   })
   afterEach(() => {
     jest.resetModules()
@@ -107,17 +129,7 @@ describe('panel.test.js', () => {
       },
       store,
       localVue,
-      mocks: {
-        app: {
-          wordlistC: {}
-        },
-        l10n: l10nModule.api(l10nModule.store),
-        ui: uiAPI,
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.vm.attachToLeftVisible).toBeFalsy()

@@ -74,7 +74,7 @@ export default class UIController {
     this.resourceOptions = null
     this.uiOptions = null
     this.siteOptions = null // Will be set during an `init` phase
-    this.tabStateDefault = 'info'
+    this.defaultTab = 'info'
 
     this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
     this.isInitialized = false
@@ -324,7 +324,7 @@ export default class UIController {
       name: this.options.app.name, // A name of an application
       version: this.options.app.version, // An application's version
       mode: this.options.mode, // Mode of an application: `production` or `development`
-      defaultTab: this.tabStateDefault, // A name of a default tab (a string)
+      defaultTab: this.defaultTab, // A name of a default tab (a string)
       state: this.state, // An app-level state
       wordlistC: this.wordlistC, // A word list controller
 
@@ -356,29 +356,10 @@ export default class UIController {
         },
         wordUsageExamplesData: null,
         wordLists: null,
-        wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
-        activeTab: 'info' // A currently selected panel's tab
-        /* tabState: {
-          definitions: false,
-          inflections: false,
-          inflectionsbrowser: false,
-          grammar: false,
-          status: false,
-          options: false,
-          info: true,
-          user: false,
-          treebank: false,
-          wordlist: false,
-          wordUsage: false
-        } */
+        wordListUpdated: 0 // To notify word list panel about data update. TODO: Can we monitor data instead?
       },
 
       getters: {
-        isActiveTab: (state) => (tabName) => {
-          console.log(`isActiveTab getter: ${tabName}`)
-          return state.activeTab === tabName
-        },
-
         hasInflData (state) {
           return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
         },
@@ -460,14 +441,6 @@ export default class UIController {
         setWordLists (state, wordLists) {
           state.wordLists = wordLists
           state.wordListUpdated++
-        },
-
-        setTab (state, tabName) {
-          console.log(`setTab mutation is called`)
-          state.activeTab = tabName
-          /* for (let key of Object.keys(state.tabState)) {
-            state.tabState[key] = (key === tabName)
-          } */
         }
       }
     })
@@ -492,24 +465,39 @@ export default class UIController {
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
-    this.api.language = {
-      resourceSettingChange: this.resourceSettingChange.bind(this)
-    }
-
     this.store.registerModule('ui', {
       // All stores of modules are namespaced
       namespaced: true,
 
       state: {
+        activeTab: this.defaultTab, // A currently selected panel's tab
         rootClasses: []
       },
 
+      getters: {
+        isActiveTab: (state) => (tabName) => {
+          return state.activeTab === tabName
+        }
+      },
+
       mutations: {
+        setActiveTab (state, tabName) {
+          console.log(`setTab mutation is called`)
+          state.activeTab = tabName
+          /* for (let key of Object.keys(state.tabState)) {
+            state.tabState[key] = (key === tabName)
+          } */
+        },
+
         setRootClasses (state, classes) {
           state.rootClasses = classes
         }
       }
     })
+
+    this.api.language = {
+      resourceSettingChange: this.resourceSettingChange.bind(this)
+    }
 
     // Create all registered data modules
     this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
@@ -712,9 +700,9 @@ export default class UIController {
       (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
       (!statusAvailable && name === 'status')
     ) {
-      tabName = this.tabStateDefault
+      tabName = this.defaultTab
     }
-    this.store.commit('app/setTab', tabName) // Reflect a tab change in a state
+    this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
     return this
   }
 

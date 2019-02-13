@@ -12,14 +12,14 @@
       </div>
       <span class="alpheios-panel__header-btn-group--center">
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
-                <span @click="changeTab('info')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="classObject">
+                <span @click="app.changeTab('info')" class="alpheios-panel__header-nav-btn"
+                      :class="{ active: $store.getters['ui/isActiveTab']('info') }">
                   <info-icon class="alpheios-icon"></info-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
-                <span :class="{ active: $store.getters['app/isActiveTab']('definitions') }" @click="changeTab('definitions')"
+                <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="app.changeTab('definitions')"
                       class="alpheios-panel__header-nav-btn">
                   <definitions-icon class="alpheios-icon"></definitions-icon>
                 </span>
@@ -27,69 +27,69 @@
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
                             v-show="$store.getters[`app/hasInflData`]">
-                <span @click="changeTab('inflections')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('inflections') }">
+                <span @click="app.changeTab('inflections')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
                   <inflections-icon class="alpheios-icon"></inflections-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
-                <span @click="changeTab('inflectionsbrowser')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('inflectionsbrowser') }">
+                <span @click="app.changeTab('inflectionsbrowser')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }">
                   <inflections-browser-icon class="alpheios-icon"></inflections-browser-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
                             v-show="$store.getters[`app/hasGrammarRes`]">
-                <span @click="changeTab('grammar')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('grammar') }">
+                <span @click="app.changeTab('grammar')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('grammar') }">
                   <grammar-icon class="alpheios-icon"></grammar-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
                             v-show="$store.getters['app/hasTreebankData']">
-                <span @click="changeTab('treebank')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('treebank') }">
+                <span @click="app.changeTab('treebank')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('treebank') }">
                   <treebank-icon class="alpheios-icon"></treebank-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
-                <span @click="changeTab('options')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('options') }">
+                <span @click="app.changeTab('options')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('options') }">
                   <options-icon class="alpheios-icon"></options-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
                             v-if="Boolean(auth)">
-                <span @click="changeTab('user')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('user') }">
+                <span @click="app.changeTab('user')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
                   <user-icon class="alpheios-icon"></user-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
                             v-show="$store.getters['app/hasWordUsageExamplesData']">
-                <span @click="changeTab('wordUsage')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('wordUsage') }">
+                <span @click="app.changeTab('wordUsage')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
                   <word-usage-icon class="alpheios-icon"></word-usage-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
-                <span @click="changeTab('wordlist')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('wordlist') }"
+                <span @click="app.changeTab('wordlist')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
                       v-show="showWordList">
                   <wordlist-icon class="alpheios-icon"></wordlist-icon>
                 </span>
               </alph-tooltip>
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
-                <span @click="changeTab('status')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['app/isActiveTab']('status') }"
+                <span @click="app.changeTab('status')" class="alpheios-panel__header-nav-btn"
+                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('status') }"
                       v-show="verboseMode">
                   <status-icon class="alpheios-icon"></status-icon>
                 </span>
@@ -110,7 +110,7 @@
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
-          v-show="$store.getters['app/isActiveTab']('definitions')">
+          v-show="$store.getters['ui/isActiveTab']('definitions')">
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
@@ -125,36 +125,36 @@
              v-html="data.fullDefinitions"></div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="$store.getters[`app/hasInflData`]" v-show="$store.getters['app/isActiveTab']('inflections') && $store.state.app.inflectionsViewSet">
+           v-if="$store.getters[`app/hasInflData`]" v-show="$store.getters['ui/isActiveTab']('inflections') && $store.state.app.inflectionsViewSet">
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
-           v-show="$store.getters['app/isActiveTab']('inflectionsbrowser')">
+           v-show="$store.getters['ui/isActiveTab']('inflectionsbrowser')">
         <inflection-browser @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
             alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
-           v-show="$store.getters['app/isActiveTab']('grammar')">
+           v-show="$store.getters['ui/isActiveTab']('grammar')">
         <grammar></grammar>
       </div>
       <div
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
-          v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['app/isActiveTab']('treebank')">
+          v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')">
         <!-- TODO: Instead of this we need to create a universal mechanism for handling panel resizing for every tab's content change -->
         <treebank @treebankcontentwidth="setTreebankContentWidth"></treebank>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['app/isActiveTab']('status')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('status')">
         <!-- Messages to be displayed in a status panel -->
         <div v-for="message in data.messages">
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['app/isActiveTab']('user')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('user')">
         <user-auth :auth="data.auth"></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
-           v-if="$store.getters['app/hasWordUsageExamplesData']" v-show="$store.getters['app/isActiveTab']('wordUsage')">
+           v-if="$store.getters['app/hasWordUsageExamplesData']" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
         <word-usage-examples-block
             :language="$store.state.app.wordUsageExamplesData.language"
             :provider="$store.state.app.wordUsageExamplesData.provider"
@@ -162,7 +162,7 @@
             :wordUsageList="$store.state.app.wordUsageExamplesData.wordUsageExamples">
         </word-usage-examples-block>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.getters['app/isActiveTab']('options')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.getters['ui/isActiveTab']('options')">
         <reskin-font-color></reskin-font-color>
         <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.preferredLanguage"
                  @change="contentOptionChanged"
@@ -217,13 +217,13 @@
                  v-if="settings.contentOptions.items"></setting>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
-           v-show="$store.getters['app/isActiveTab']('info')">
+           v-show="$store.getters['ui/isActiveTab']('info')">
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
         <info></info>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist" v-show="$store.getters['app/isActiveTab']('wordlist')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist" v-show="$store.getters['ui/isActiveTab']('wordlist')">
         <word-list-panel :updated="$store.state.app.wordListUpdated" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
@@ -261,8 +261,6 @@ import UserAuth from './user-auth.vue'
 import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.vue'
 import { WordListPanel } from 'alpheios-wordlist'
 // Embeddable SVG icons
-import AttachLeftIcon from '../../images/inline-icons/attach-left.svg'
-import AttachRightIcon from '../../images/inline-icons/attach-right.svg'
 import CloseIcon from '../../images/inline-icons/close.svg'
 import DefinitionsIcon from '../../images/inline-icons/definitions.svg'
 import InflectionsIcon from '../../images/inline-icons/inflections.svg'
@@ -304,8 +302,6 @@ export default {
     grammar: Grammar,
     treebank: Treebank,
     userAuth: UserAuth,
-    attachLeftIcon: AttachLeftIcon,
-    attachRightIcon: AttachRightIcon,
     closeIcon: CloseIcon,
     definitionsIcon: DefinitionsIcon,
     inflectionsIcon: InflectionsIcon,
@@ -348,12 +344,6 @@ export default {
   },
 
   computed: {
-    classObject: function () {
-      console.log(`Class object called`)
-      return {
-        active: true
-      }
-    },
     rootClasses () {
       return this.$store.state.ui.rootClasses
     },
@@ -425,11 +415,6 @@ export default {
     }
   },
   methods: {
-    tabActiveClass (tabName) {
-      console.log(`tab active class, ${tabName}, ${this.$store.state.app.activeTab === tabName}`)
-      return (this.$store.state.app.activeTab === tabName) ? ['active'] : []
-    },
-
     closeNotifications () {
       this.$emit('closenotifications')
     },
@@ -437,12 +422,6 @@ export default {
     setPosition (position) {
       this.settings.contentOptions.items.panelPosition.setValue(position)
       this.panelPosition = position
-    },
-
-    changeTab (name) {
-      console.log(`changeTab called`)
-      this.setContentWidth({ width: 'auto', component: null })
-      this.app.changeTab(name)
     },
 
     clearContent: function () {
@@ -596,17 +575,6 @@ export default {
           target.style.width = `${event.rect.width}px`
         })
     }
-
-    console.log(`Panel mounted`, this.$store.state.app)
-    console.log(`Active tab info`, this.$store.state.app.activeTab === 'info')
-    console.log(`Tab active class: ${this.tabActiveClass('info')}`)
-    this.$store.watch((state, getters) => getters['app/isActiveTab'], () => {
-      console.log('isActiveTab called')
-      // console.log('onSIgnin error', this.error.code)
-    },
-    {
-      deep: true
-    })
   }
 }
 </script>

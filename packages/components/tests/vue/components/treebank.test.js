@@ -14,12 +14,8 @@ describe('treebank.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store
-  const l10nModule = new L10nModule(Locales.en_US, Locales.bundleArr([
-    [enUS, Locales.en_US],
-    [enUSData, Locales.en_US],
-    [enUSInfl, Locales.en_US],
-    [enGB, Locales.en_GB]
-  ]))
+  let api
+  let l10nModule
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -28,6 +24,8 @@ describe('treebank.test.js', () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+
+    api = {}
   })
   afterEach(() => {
     jest.resetModules()
@@ -50,12 +48,17 @@ describe('treebank.test.js', () => {
       }
     })
 
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
+
     let cmp = shallowMount(Treebank, {
       store,
       localVue,
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store)
-      }
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
@@ -77,12 +80,17 @@ describe('treebank.test.js', () => {
       }
     })
 
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
+
     let cmp = shallowMount(Treebank, {
       store,
       localVue,
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store)
-      }
+      mocks: api
     })
 
     expect(cmp.vm.srcURL).toEqual('http/example.com/doc/foo1/foo2')
@@ -102,12 +110,17 @@ describe('treebank.test.js', () => {
       }
     })
 
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
+
     cmp = shallowMount(Treebank, {
       store,
       localVue,
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store)
-      }
+      mocks: api
     })
 
     expect(cmp.vm.srcURL).toEqual('http/example.com/foo3/foo4')

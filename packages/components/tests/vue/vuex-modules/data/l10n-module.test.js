@@ -60,18 +60,17 @@ describe('l10n-module.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    l10nModule = new L10nModule(Locales.en_US, Locales.createBundleArr([
-      [testMsgsEnUs, Locales.en_US],
-      [testMsgsEnGb, Locales.en_GB]
-    ]))
-
     store = new Vuex.Store({
       modules: {
-        l10n: l10nModule.store
       }
     })
 
-    api = l10nModule.api(store)
+    api = {}
+
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.createBundleArr([
+      [testMsgsEnUs, Locales.en_US],
+      [testMsgsEnGb, Locales.en_GB]
+    ]))
   })
 
   afterEach(() => {
@@ -124,69 +123,69 @@ describe('l10n-module.test.js', () => {
 
   it('L10nModule should expose an api with a correct set of methods', () => {
     const methods = ['getLocale', 'setLocale', 'hasMsg', 'getMsg', 'getText', 'getAbbr']
-    expect(Object.keys(api)).toEqual(expect.arrayContaining(methods))
+    expect(Object.keys(api.l10n)).toEqual(expect.arrayContaining(methods))
   })
 
   it(`L10nModule API's getLocale() should return a value of a current locale`, () => {
     const currentLocale = `en-US`
-    expect(api.getLocale()).toEqual(currentLocale)
+    expect(api.l10n.getLocale()).toEqual(currentLocale)
   })
 
   it(`L10nModule API's setLocale() should change a current locale value`, () => {
     const newLocale = `en-GB`
-    api.setLocale(newLocale)
+    api.l10n.setLocale(newLocale)
     expect(store.state.l10n.selectedLocale).toEqual(newLocale)
   })
 
   it(`L10nModule API's hasMsg() should return true for an existing message`, () => {
-    expect(api.hasMsg(existingMsgId)).toBeTruthy()
+    expect(api.l10n.hasMsg(existingMsgId)).toBeTruthy()
   })
 
   it(`L10nModule API's hasMsg() should change a current locale value`, () => {
-    expect(api.hasMsg(existingMsgId)).toBeTruthy()
+    expect(api.l10n.hasMsg(existingMsgId)).toBeTruthy()
   })
 
   it(`L10nModule API's getMsg() should retrieve a message text`, () => {
-    expect(api.getMsg(existingMsgId)).toEqual(testMsgsEnUs[existingMsgId].message)
+    expect(api.l10n.getMsg(existingMsgId)).toEqual(testMsgsEnUs[existingMsgId].message)
   })
 
   it(`L10nModule API's getMsg() with default options should display an error message if message does not exist`, () => {
-    expect(api.getMsg(nonExistingMsgId)).toEqual(nonExistingMsgTxt)
+    expect(api.l10n.getMsg(nonExistingMsgId)).toEqual(nonExistingMsgTxt)
   })
 
   it(`L10nModule API's getMsg() with passthrough options should return a message ID if message does not exist`, () => {
-    expect(api.getMsg(nonExistingMsgId, {}, { passthrough: true })).toEqual(nonExistingMsgId)
+    expect(api.l10n.getMsg(nonExistingMsgId, {}, { passthrough: true })).toEqual(nonExistingMsgId)
   })
 
   it(`L10nModule API's getMsg() with formatting parameters should retrieve a message text`, () => {
     const prmMsg = 'There is one line.'
-    expect(api.getMsg(existingPrmMsgId, { numLines: 1 })).toEqual(prmMsg)
+    expect(api.l10n.getMsg(existingPrmMsgId, { numLines: 1 })).toEqual(prmMsg)
   })
 
   it(`L10nModule API's getText() should retrieve a message text`, () => {
-    expect(api.getText(existingMsgId)).toEqual(testMsgsEnUs[existingMsgId].message)
+    expect(api.l10n.getText(existingMsgId)).toEqual(testMsgsEnUs[existingMsgId].message)
   })
 
   it(`L10nModule API's getText() with formatting parameters should retrieve a message text`, () => {
     const prmMsg = 'There are 2 lines.'
-    expect(api.getText(existingPrmMsgId, { numLines: 2 })).toEqual(prmMsg)
+    expect(api.l10n.getText(existingPrmMsgId, { numLines: 2 })).toEqual(prmMsg)
   })
 
   it(`L10nModule API's getText() should return a message ID if message does not exist`, () => {
-    expect(api.getText(nonExistingMsgId)).toEqual(nonExistingMsgId)
+    expect(api.l10n.getText(nonExistingMsgId)).toEqual(nonExistingMsgId)
   })
 
   it(`L10nModule API's getAbbr() should return an abbreviated version of a message if exists`, () => {
     const abbrMsg = 'Abbrev.'
-    expect(api.getAbbr(existingAbbrMsgId)).toEqual(abbrMsg)
+    expect(api.l10n.getAbbr(existingAbbrMsgId)).toEqual(abbrMsg)
   })
 
   it(`L10nModule API's getAbbr() should return a message text if abbreviation does not exists`, () => {
-    expect(api.getAbbr(existingMsgId)).toEqual(testMsgsEnUs[existingMsgId].message)
+    expect(api.l10n.getAbbr(existingMsgId)).toEqual(testMsgsEnUs[existingMsgId].message)
   })
 
   it(`L10nModule API's getAbbr() should return a formatted message text if abbreviation does not exists and message has parameters`, () => {
     const prmMsg = 'There are no lines.'
-    expect(api.getAbbr(existingPrmMsgId, { numLines: 0 })).toEqual(prmMsg)
+    expect(api.l10n.getAbbr(existingPrmMsgId, { numLines: 0 })).toEqual(prmMsg)
   })
 })

@@ -1,6 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { mount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import Lookup from '@/vue/components/lookup.vue'
 import Setting from '@/vue/components/setting.vue'
 
@@ -19,8 +20,13 @@ import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 
 describe('lookup.test.js', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
   let contentOptions
   let resourceOptions
+  let store
+  let api
+  let l10nModule
 
   console.error = function () {}
   console.log = function () {}
@@ -31,8 +37,26 @@ describe('lookup.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
+    store = new Vuex.Store({
+      modules: {}
+    })
+
     contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+
+    api = {
+      settings: {
+        contentOptions,
+        resourceOptions
+      }
+    }
+
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
   })
   afterEach(() => {
     jest.resetModules()
@@ -41,22 +65,9 @@ describe('lookup.test.js', () => {
     jest.clearAllMocks()
   })
 
-  const l10nModule = new L10nModule(Locales.en_US, Locales.bundleArr([
-    [enUS, Locales.en_US],
-    [enUSData, Locales.en_US],
-    [enUSInfl, Locales.en_US],
-    [enGB, Locales.en_GB]
-  ]))
-
   it('1 Lookup - renders a vue instance (min requirements)', () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
@@ -70,13 +81,7 @@ describe('lookup.test.js', () => {
     }
 
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
 
     expect(cmp.vm.settings.contentOptions).toBeDefined()
@@ -111,13 +116,7 @@ describe('lookup.test.js', () => {
       propsData: {
         parentLanguage: 'Latin'
       },
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
 
     expect(cmp.vm.initLanguage).toEqual('Latin')
@@ -131,13 +130,7 @@ describe('lookup.test.js', () => {
 
   it('4 Lookup - settings block', () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
     expect(cmp.vm.showLanguageSettings).toBeFalsy()
     expect(cmp.find('.alpheios-lookup__settings-items').element.style.display).toEqual('none')
@@ -159,13 +152,7 @@ describe('lookup.test.js', () => {
 
   it('5 Lookup - settings block events', () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
 
     cmp.vm.settingChange('', 'Greek')
@@ -180,13 +167,7 @@ describe('lookup.test.js', () => {
 
   it('6 Lookup - override language check - not checked by default', () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
 
     expect(cmp.vm.overrideLanguage).toBeFalsy()
@@ -196,13 +177,7 @@ describe('lookup.test.js', () => {
 
   it('7 Lookup - override language check - checkboxClick method changes options (true)', () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
 
     jest.spyOn(cmp.vm, 'updateUIbyOverrideLanguage')
@@ -219,13 +194,7 @@ describe('lookup.test.js', () => {
 
   it('8 Lookup - override language check - checkboxClick method changes options (false)', () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
 
     cmp.vm.checkboxClick()
@@ -239,13 +208,7 @@ describe('lookup.test.js', () => {
 
   it('9 Lookup - watch clearLookupText - clears lookuptext and restore show language data from override language check', () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
 
     cmp.vm.lookuptext = 'some text'
@@ -261,13 +224,7 @@ describe('lookup.test.js', () => {
 
   it('10 Lookup - watch uiController.contentOptions.items.lookupLangOverride.currentValue - syncing overrideLanguage', async () => {
     let cmp = mount(Lookup, {
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
     jest.spyOn(cmp.vm, 'updateUIbyOverrideLanguage')
 

@@ -26,14 +26,10 @@ describe('popup.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store
+  let api = {}
   let contentOptions
   let resourceOptions
-  const l10nModule = new L10nModule(Locales.en_US, Locales.bundleArr([
-    [enUS, Locales.en_US],
-    [enUSData, Locales.en_US],
-    [enUSInfl, Locales.en_US],
-    [enGB, Locales.en_GB]
-  ]))
+  let l10nModule
   const uiAPI = {
     closePopup: () => {}
   }
@@ -67,6 +63,21 @@ describe('popup.test.js', () => {
         }
       }
     })
+
+    api = {
+      ui: uiAPI,
+      settings: {
+        contentOptions,
+        resourceOptions
+      }
+    }
+
+    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ]))
   })
   afterEach(() => {
     jest.resetModules()
@@ -87,14 +98,7 @@ describe('popup.test.js', () => {
       },
       store,
       localVue,
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store),
-        ui: uiAPI,
-        settings: {
-          contentOptions,
-          resourceOptions
-        }
-      }
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
 
