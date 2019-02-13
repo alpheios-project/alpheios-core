@@ -1,20 +1,20 @@
 <template>
-<div class="alpheios-navbuttons alpheios-navbuttons--compact">
-  <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
-  <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="app.changeTab('definitions')"
-        class="alpheios-navbuttons__btn">
-    <definitions-icon class="alpheios-navbuttons__icon"></definitions-icon>
-  </span>
-  </alph-tooltip>
+  <div class="alpheios-navbuttons alpheios-navbuttons--compact">
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
+      <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="app.changeTab('definitions')"
+            class="alpheios-navbuttons__btn">
+        <definitions-icon></definitions-icon>
+      </span>
+    </alph-tooltip>
 
-  <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
-              v-show="$store.getters[`app/hasInflData`]">
-  <span @click="app.changeTab('inflections')" class="alpheios-navbuttons__btn"
-        v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
-    <inflections-icon class="alpheios-navbuttons__icon"></inflections-icon>
-  </span>
-  </alph-tooltip>
-</div>
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
+                v-show="$store.getters[`app/hasInflData`]">
+      <span @click="app.changeTab('inflections')" class="alpheios-navbuttons__btn"
+            v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
+        <inflections-icon></inflections-icon>
+      </span>
+    </alph-tooltip>
+  </div>
 </template>
 <script>
 // Vue components

@@ -9482,6 +9482,53 @@ img.alpheios-popup__logo {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios-navmenu {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FFF;
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-navmenu__item {
+  width: 100%;
+  display: flex;
+  padding: 10px 10px 10px 20px;
+  border-bottom: 1px solid #D1D1D0;
+  cursor: pointer;
+}
+alpheios-navmenu__item,
+.alpheios-navmenu__item.active:hover,
+.alpheios-navmenu__item.active:focus {
+  color: #D1D1D0;
+  fill: #D1D1D0;
+  stroke: #D1D1D0;
+}
+.alpheios-navmenu__item:hover,
+.alpheios-navmenu__item:focus,
+.alpheios-navmenu__item.active {
+  color: #5BC8DC;
+  fill: #5BC8DC;
+  stroke: #5BC8DC;
+}
+.alpheios-navbuttons__icon-cont {
+  flex-grow: 0;
+  width: 40px;
+  margin-right: 20px;
+}
+.alpheios-navbuttons__icon {
+  width: 20px;
+  height: 20px;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
 .infl-prdgm-tbl {
   display: table;
   border-top: 1px solid gray;
@@ -10477,6 +10524,21 @@ ul.alpheios-skin_properties {
 }
 .alpheios-panel__tab__inflectionsbrowser {
   width: 100%;
+}
+.alpheios-panel__menu-btn {
+  width: 20px;
+  height: 20px;
+  margin: 10px 10px 10px 20px;
+  cursor: pointer;
+}
+.alpheios-panel__menu-icon {
+  width: 20px;
+  height: 20px;
+  fill: #D1D1D0;
+}
+.alpheios-panel__menu-icon:hover,
+.alpheios-panel__menu-icon:focus {
+  fill: #5BC8DC;
 }
 .alpheios-panel--compact {
   height: 50vh;

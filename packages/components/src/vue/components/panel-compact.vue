@@ -5,9 +5,9 @@
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.panel.visible">
 
-    <div class="alpheios-panel__header">
-      <div class="alpheios-panel__header-logo">
-        <img class="alpheios-panel__header-logo-img" src="../../images/icon.png">
+    <div class="alpheios-panel__header" >
+      <div class="alpheios-panel__menu-btn" @click="menuItemClicked">
+        <menu-icon class="alpheios-panel__menu-icon"></menu-icon>
       </div>
       <span class="alpheios-panel__header-btn-group--center">
         <navbuttons-compact></navbuttons-compact>
@@ -24,6 +24,7 @@
     </div>
 
     <div class="alpheios-panel__content">
+      <navmenu :visibility="menuVisible"></navmenu>
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
@@ -164,6 +165,7 @@
    */
 
 // Vue components
+import Navmenu from '@/vue/components/nav/navmenu.vue'
 import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
 import Inflections from './inflections.vue'
 import Setting from './setting.vue'
@@ -179,18 +181,8 @@ import UserAuth from './user-auth.vue'
 import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.vue'
 import { WordListPanel } from 'alpheios-wordlist'
 // Embeddable SVG icons
+import MenuIcon from '@/images/inline-icons/menu.svg'
 import CloseIcon from '../../images/inline-icons/close.svg'
-import DefinitionsIcon from '../../images/inline-icons/definitions.svg'
-import InflectionsIcon from '../../images/inline-icons/inflections.svg'
-import InflectionsBrowserIcon from '../../images/inline-icons/inflections-browser.svg'
-import StatusIcon from '../../images/inline-icons/status.svg'
-import UserIcon from '../../images/inline-icons/user.svg'
-import OptionsIcon from '../../images/inline-icons/options.svg'
-import GrammarIcon from '../../images/inline-icons/resources.svg'
-import TreebankIcon from '../../images/inline-icons/sitemap.svg'
-import InfoIcon from '../../images/inline-icons/info.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import WordUsageIcon from '../../images/inline-icons/books-stack.svg'
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
 // JS imports
@@ -212,6 +204,8 @@ export default {
   storeModules: ['app', 'ui', 'panel'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
+    menuIcon: MenuIcon,
+    navmenu: Navmenu,
     navbuttonsCompact: NavbuttonsCompact,
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
@@ -222,20 +216,9 @@ export default {
     treebank: Treebank,
     userAuth: UserAuth,
     closeIcon: CloseIcon,
-    definitionsIcon: DefinitionsIcon,
-    inflectionsIcon: InflectionsIcon,
-    inflectionsBrowserIcon: InflectionsBrowserIcon,
-    statusIcon: StatusIcon,
-    userIcon: UserIcon,
-    optionsIcon: OptionsIcon,
-    infoIcon: InfoIcon,
-    grammarIcon: GrammarIcon,
-    treebankIcon: TreebankIcon,
-    wordUsageIcon: WordUsageIcon,
     alphTooltip: Tooltip,
     lookup: Lookup,
     reskinFontColor: ReskinFontColor,
-    wordlistIcon: WordlistIcon,
     wordListPanel: WordListPanel,
     wordUsageExamplesBlock: WordUsageExamplesBlock
   },
@@ -246,6 +229,7 @@ export default {
   defaultScrollPadding: 20,
   data: function () {
     return {
+      menuVisible: false,
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
       inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
       panelPosition: 'left',
@@ -334,6 +318,10 @@ export default {
     }
   },
   methods: {
+    menuItemClicked () {
+      console.log(`menuItemClicked`)
+      this.menuVisible = !this.menuVisible
+    },
     closeNotifications () {
       this.$emit('closenotifications')
     },
@@ -759,6 +747,24 @@ export default {
 
   .alpheios-panel__tab__inflectionsbrowser {
     width: 100%;
+  }
+
+  .alpheios-panel__menu-btn {
+    width: 20px;
+    height: 20px;
+    margin: 10px 10px 10px 20px;
+    cursor: pointer;
+  }
+
+  .alpheios-panel__menu-icon {
+    width: 20px;
+    height: 20px;
+    fill: $alpheios-link-color-dark-bg;
+  }
+
+  .alpheios-panel__menu-icon:hover,
+  .alpheios-panel__menu-icon:focus {
+    fill: $alpheios-link-hover-color;
   }
 
   // Special styles for compact panel
