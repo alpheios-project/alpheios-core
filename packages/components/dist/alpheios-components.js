@@ -7694,6 +7694,17 @@ var singleton = jumper();
 
 /***/ }),
 
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-compact.vue?vue&type=style&index=0&lang=scss&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/navbuttons-compact.vue?vue&type=style&index=0&lang=scss& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel-compact.vue?vue&type=style&index=0&lang=scss&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/panel-compact.vue?vue&type=style&index=0&lang=scss& ***!
@@ -10856,6 +10867,231 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/navbuttons-compact.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/nav/navbuttons-compact.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// Vue components
+
+// Embeddable SVG icons
+
+
+// Modules support
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NavbuttonsCompact',
+  // API modules that are required for this component
+  inject: {
+    app: 'app',
+    ui: 'ui',
+    l10n: 'l10n',
+    settings: 'settings',
+    auth: { from: 'auth', default: null } // This module is options
+  },
+  storeModules: ['app', 'ui'], // Store modules that are required by this component
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  components: {
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/nav/navbuttons-compact.vue */ "./vue/components/nav/navbuttons-compact.vue");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// Vue components
+
+// Embeddable SVG icons
+
+
+
+
+
+
+
+
+
+// Modules support
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NavbuttonsLarge',
+  extends: _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+  // API modules that are required for this component
+  inject: {
+    app: 'app',
+    ui: 'ui',
+    l10n: 'l10n',
+    settings: 'settings',
+    auth: { from: 'auth', default: null } // This module is options
+  },
+  storeModules: ['app', 'ui'], // Store modules that are required by this component
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_10__["default"]],
+  components: {
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
+    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_3___default.a,
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_4___default.a,
+    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_7___default.a,
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_5___default.a,
+    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_6___default.a,
+    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_9___default.a,
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_8___default.a
+  }
+});
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/panel-compact.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/panel-compact.vue?vue&type=script&lang=js& ***!
@@ -10865,131 +11101,49 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
-/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
-/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
-/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
-/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
-/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./reskin-font-color.vue */ "./vue/components/reskin-font-color.vue");
-/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/components/word-usage-examples-block.vue */ "./vue/components/word-usage-examples-block.vue");
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! alpheios-wordlist */ "alpheios-wordlist");
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
-/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/nav/navbuttons-compact.vue */ "./vue/components/nav/navbuttons-compact.vue");
+/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
+/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
+/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
+/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
+/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
+/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./reskin-font-color.vue */ "./vue/components/reskin-font-color.vue");
+/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
+/* harmony import */ var _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/vue/components/word-usage-examples-block.vue */ "./vue/components/word-usage-examples-block.vue");
+/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! alpheios-wordlist */ "alpheios-wordlist");
+/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(alpheios_wordlist__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -11169,6 +11323,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // Embeddable SVG icons
 
 
@@ -11201,36 +11356,37 @@ __webpack_require__.r(__webpack_exports__);
     auth: { from: 'auth', default: null } // This module is options
   },
   storeModules: ['app', 'ui', 'panel'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_27__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_28__["default"]],
   components: {
-    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    info: _info_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_13___default.a,
-    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
-    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
-    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_17___default.a,
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_18___default.a,
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
-    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_22___default.a,
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
-    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_21___default.a,
-    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_24___default.a,
-    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    reskinFontColor: _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_23___default.a,
-    wordListPanel: alpheios_wordlist__WEBPACK_IMPORTED_MODULE_12__["WordListPanel"],
-    wordUsageExamplesBlock: _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+    navbuttonsCompact: _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    info: _info_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_17___default.a,
+    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_18___default.a,
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_19___default.a,
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_20___default.a,
+    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_23___default.a,
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_21___default.a,
+    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_22___default.a,
+    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_25___default.a,
+    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    reskinFontColor: _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_24___default.a,
+    wordListPanel: alpheios_wordlist__WEBPACK_IMPORTED_MODULE_13__["WordListPanel"],
+    wordUsageExamplesBlock: _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_26__["directive"]
   },
   minWidth: 400, // A minimal width of a panel, in pixels
   defaultScrollPadding: 20,
@@ -11460,7 +11616,7 @@ __webpack_require__.r(__webpack_exports__);
       this.calcWidthPaddings()
 
       // Initialize Interact.js: make panel resizable
-      interactjs__WEBPACK_IMPORTED_MODULE_26___default()(this.$el)
+      interactjs__WEBPACK_IMPORTED_MODULE_27___default()(this.$el)
         .resizable({
           // resize from all edges and corners
           edges: { left: true, right: true, bottom: false, top: false },
@@ -11499,94 +11655,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _vue_components_nav_navbuttons_large_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/nav/navbuttons-large.vue */ "./vue/components/nav/navbuttons-large.vue");
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
 //
 //
 //
@@ -11770,6 +11844,8 @@ __webpack_require__.r(__webpack_exports__);
 /*
   This is a desktop version of a panel
    */
+// UI components
+
 // SVG icons
 
 
@@ -11779,10 +11855,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+  extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   components: {
-    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_0___default.a,
-    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_1___default.a
+    navbuttonsLarge: _vue_components_nav_navbuttons_large_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
+    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
   // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
@@ -17022,6 +17099,499 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-compact.vue?vue&type=template&id=30a48df2&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/navbuttons-compact.vue?vue&type=template&id=30a48df2& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "alpheios-navbuttons alpheios-navbuttons--compact" },
+    [
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("definitions")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("definitions")
+                }
+              }
+            },
+            [
+              _c("definitions-icon", {
+                staticClass: "alpheios-navbuttons__icon"
+              })
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.getters["app/hasInflData"],
+              expression: "$store.getters[`app/hasInflData`]"
+            }
+          ],
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("inflections")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("inflections")
+                }
+              }
+            },
+            [
+              _c("inflections-icon", {
+                staticClass: "alpheios-navbuttons__icon"
+              })
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "alpheios-navbuttons alpheios-navbuttons--large" },
+    [
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_HELP"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: { active: _vm.$store.getters["ui/isActiveTab"]("info") },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("info")
+                }
+              }
+            },
+            [_c("info-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("definitions")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("definitions")
+                }
+              }
+            },
+            [_c("definitions-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.getters["app/hasInflData"],
+              expression: "$store.getters[`app/hasInflData`]"
+            }
+          ],
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("inflections")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("inflections")
+                }
+              }
+            },
+            [_c("inflections-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"](
+                  "inflectionsbrowser"
+                )
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("inflectionsbrowser")
+                }
+              }
+            },
+            [_c("inflections-browser-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.getters["app/hasGrammarRes"],
+              expression: "$store.getters[`app/hasGrammarRes`]"
+            }
+          ],
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("grammar")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("grammar")
+                }
+              }
+            },
+            [_c("grammar-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.getters["app/hasTreebankData"],
+              expression: "$store.getters['app/hasTreebankData']"
+            }
+          ],
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("treebank")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("treebank")
+                }
+              }
+            },
+            [_c("treebank-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("options")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("options")
+                }
+              }
+            },
+            [_c("options-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      Boolean(_vm.auth)
+        ? _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
+                tooltipDirection: "bottom-narrow"
+              }
+            },
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "alpheios-navbuttons__btn",
+                  class: {
+                    active: _vm.$store.getters["ui/isActiveTab"]("user")
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.app.changeTab("user")
+                    }
+                  }
+                },
+                [_c("user-icon", { staticClass: "alpheios-icon" })],
+                1
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.getters["app/hasWordUsageExamplesData"],
+              expression: "$store.getters['app/hasWordUsageExamplesData']"
+            }
+          ],
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("wordUsage")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("wordUsage")
+                }
+              }
+            },
+            [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    this.$store.state.app.wordListUpdated &&
+                    this.app.wordlistC &&
+                    Object.keys(this.app.wordlistC.wordLists).length > 0,
+                  expression:
+                    "this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
+                }
+              ],
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("wordlist")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("wordlist")
+                }
+              }
+            },
+            [_c("wordlist-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_STATUS"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    this.settings.contentOptions.items.verboseMode
+                      .currentValue === "verbose",
+                  expression:
+                    "this.settings.contentOptions.items.verboseMode.currentValue === `verbose`"
+                }
+              ],
+              staticClass: "alpheios-navbuttons__btn",
+              class: { active: _vm.$store.getters["ui/isActiveTab"]("status") },
+              on: {
+                click: function($event) {
+                  return _vm.app.changeTab("status")
+                }
+              }
+            },
+            [_c("status-icon", { staticClass: "alpheios-icon" })],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel-compact.vue?vue&type=template&id=5c9f49d0&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/panel-compact.vue?vue&type=template&id=5c9f49d0& ***!
@@ -17072,375 +17642,7 @@ var render = function() {
         _c(
           "span",
           { staticClass: "alpheios-panel__header-btn-group--center" },
-          [
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_HELP"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("info")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("info")
-                      }
-                    }
-                  },
-                  [_c("info-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"](
-                        "definitions"
-                      )
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("definitions")
-                      }
-                    }
-                  },
-                  [_c("definitions-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasInflData"],
-                    expression: "$store.getters[`app/hasInflData`]"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"](
-                        "inflections"
-                      )
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("inflections")
-                      }
-                    }
-                  },
-                  [_c("inflections-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"](
-                        "inflectionsbrowser"
-                      )
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("inflectionsbrowser")
-                      }
-                    }
-                  },
-                  [
-                    _c("inflections-browser-icon", {
-                      staticClass: "alpheios-icon"
-                    })
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasGrammarRes"],
-                    expression: "$store.getters[`app/hasGrammarRes`]"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("grammar")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("grammar")
-                      }
-                    }
-                  },
-                  [_c("grammar-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasTreebankData"],
-                    expression: "$store.getters['app/hasTreebankData']"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("treebank")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("treebank")
-                      }
-                    }
-                  },
-                  [_c("treebank-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("options")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("options")
-                      }
-                    }
-                  },
-                  [_c("options-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            Boolean(_vm.auth)
-              ? _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.getters["ui/isActiveTab"]("user")
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.app.changeTab("user")
-                          }
-                        }
-                      },
-                      [_c("user-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasWordUsageExamplesData"],
-                    expression: "$store.getters['app/hasWordUsageExamplesData']"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("wordUsage")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("wordUsage")
-                      }
-                    }
-                  },
-                  [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.showWordList,
-                        expression: "showWordList"
-                      }
-                    ],
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("wordlist")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("wordlist")
-                      }
-                    }
-                  },
-                  [_c("wordlist-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_STATUS"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.verboseMode,
-                        expression: "verboseMode"
-                      }
-                    ],
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("status")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("status")
-                      }
-                    }
-                  },
-                  [_c("status-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            )
-          ],
+          [_c("navbuttons-compact")],
           1
         ),
         _vm._v(" "),
@@ -18073,375 +18275,7 @@ var render = function() {
         _c(
           "span",
           { staticClass: "alpheios-panel__header-btn-group--center" },
-          [
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_HELP"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("info")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("info")
-                      }
-                    }
-                  },
-                  [_c("info-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"](
-                        "definitions"
-                      )
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("definitions")
-                      }
-                    }
-                  },
-                  [_c("definitions-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasInflData"],
-                    expression: "$store.getters[`app/hasInflData`]"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"](
-                        "inflections"
-                      )
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("inflections")
-                      }
-                    }
-                  },
-                  [_c("inflections-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"](
-                        "inflectionsbrowser"
-                      )
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("inflectionsbrowser")
-                      }
-                    }
-                  },
-                  [
-                    _c("inflections-browser-icon", {
-                      staticClass: "alpheios-icon"
-                    })
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasGrammarRes"],
-                    expression: "$store.getters[`app/hasGrammarRes`]"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("grammar")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("grammar")
-                      }
-                    }
-                  },
-                  [_c("grammar-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasTreebankData"],
-                    expression: "$store.getters['app/hasTreebankData']"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("treebank")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("treebank")
-                      }
-                    }
-                  },
-                  [_c("treebank-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("options")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("options")
-                      }
-                    }
-                  },
-                  [_c("options-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            Boolean(_vm.auth)
-              ? _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
-                      tooltipDirection: "bottom-narrow"
-                    }
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "alpheios-panel__header-nav-btn",
-                        class: {
-                          active: _vm.$store.getters["ui/isActiveTab"]("user")
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.app.changeTab("user")
-                          }
-                        }
-                      },
-                      [_c("user-icon", { staticClass: "alpheios-icon" })],
-                      1
-                    )
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["app/hasWordUsageExamplesData"],
-                    expression: "$store.getters['app/hasWordUsageExamplesData']"
-                  }
-                ],
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("wordUsage")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("wordUsage")
-                      }
-                    }
-                  },
-                  [_c("word-usage-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.showWordList,
-                        expression: "showWordList"
-                      }
-                    ],
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("wordlist")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("wordlist")
-                      }
-                    }
-                  },
-                  [_c("wordlist-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getText("TOOLTIP_STATUS"),
-                  tooltipDirection: "bottom-narrow"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.verboseMode,
-                        expression: "verboseMode"
-                      }
-                    ],
-                    staticClass: "alpheios-panel__header-nav-btn",
-                    class: {
-                      active: _vm.$store.getters["ui/isActiveTab"]("status")
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.app.changeTab("status")
-                      }
-                    }
-                  },
-                  [_c("status-icon", { staticClass: "alpheios-icon" })],
-                  1
-                )
-              ]
-            )
-          ],
+          [_c("navbuttons-large")],
           1
         ),
         _vm._v(" "),
@@ -34649,11 +34483,7 @@ class UIController {
 
       mutations: {
         setActiveTab (state, tabName) {
-          console.log(`setTab mutation is called`)
           state.activeTab = tabName
-          /* for (let key of Object.keys(state.tabState)) {
-            state.tabState[key] = (key === tabName)
-          } */
         },
 
         setRootClasses (state, classes) {
@@ -41067,6 +40897,162 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_template_id_5375b274___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_template_id_5375b274___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/nav/navbuttons-compact.vue":
+/*!***************************************************!*\
+  !*** ./vue/components/nav/navbuttons-compact.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _navbuttons_compact_vue_vue_type_template_id_30a48df2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./navbuttons-compact.vue?vue&type=template&id=30a48df2& */ "./vue/components/nav/navbuttons-compact.vue?vue&type=template&id=30a48df2&");
+/* harmony import */ var _navbuttons_compact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navbuttons-compact.vue?vue&type=script&lang=js& */ "./vue/components/nav/navbuttons-compact.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _navbuttons_compact_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbuttons-compact.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/nav/navbuttons-compact.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _navbuttons_compact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _navbuttons_compact_vue_vue_type_template_id_30a48df2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _navbuttons_compact_vue_vue_type_template_id_30a48df2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/nav/navbuttons-compact.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/nav/navbuttons-compact.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./vue/components/nav/navbuttons-compact.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_navbuttons_compact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./navbuttons-compact.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/navbuttons-compact.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_navbuttons_compact_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/nav/navbuttons-compact.vue?vue&type=style&index=0&lang=scss&":
+/*!*************************************************************************************!*\
+  !*** ./vue/components/nav/navbuttons-compact.vue?vue&type=style&index=0&lang=scss& ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/lib!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./navbuttons-compact.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-compact.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue/components/nav/navbuttons-compact.vue?vue&type=template&id=30a48df2&":
+/*!**********************************************************************************!*\
+  !*** ./vue/components/nav/navbuttons-compact.vue?vue&type=template&id=30a48df2& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_template_id_30a48df2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./navbuttons-compact.vue?vue&type=template&id=30a48df2& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-compact.vue?vue&type=template&id=30a48df2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_template_id_30a48df2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_compact_vue_vue_type_template_id_30a48df2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/nav/navbuttons-large.vue":
+/*!*************************************************!*\
+  !*** ./vue/components/nav/navbuttons-large.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=template&id=767c43ca& */ "./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca&");
+/* harmony import */ var _navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=script&lang=js& */ "./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/nav/navbuttons-large.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./navbuttons-large.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca&":
+/*!********************************************************************************!*\
+  !*** ./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./navbuttons-large.vue?vue&type=template&id=767c43ca& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

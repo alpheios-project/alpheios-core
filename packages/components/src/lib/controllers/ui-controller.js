@@ -482,11 +482,7 @@ export default class UIController {
 
       mutations: {
         setActiveTab (state, tabName) {
-          console.log(`setTab mutation is called`)
           state.activeTab = tabName
-          /* for (let key of Object.keys(state.tabState)) {
-            state.tabState[key] = (key === tabName)
-          } */
         },
 
         setRootClasses (state, classes) {

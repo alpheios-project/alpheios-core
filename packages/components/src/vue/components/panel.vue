@@ -4,97 +4,14 @@
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.panel.visible">
-    <!-- Show only important notifications for now -->
 
     <div class="alpheios-panel__header">
       <div class="alpheios-panel__header-logo">
         <img class="alpheios-panel__header-logo-img" src="../../images/icon.png">
       </div>
       <span class="alpheios-panel__header-btn-group--center">
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
-                <span @click="app.changeTab('info')" class="alpheios-panel__header-nav-btn"
-                      :class="{ active: $store.getters['ui/isActiveTab']('info') }">
-                  <info-icon class="alpheios-icon"></info-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
-                <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="app.changeTab('definitions')"
-                      class="alpheios-panel__header-nav-btn">
-                  <definitions-icon class="alpheios-icon"></definitions-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
-                            v-show="$store.getters[`app/hasInflData`]">
-                <span @click="app.changeTab('inflections')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
-                  <inflections-icon class="alpheios-icon"></inflections-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
-                <span @click="app.changeTab('inflectionsbrowser')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }">
-                  <inflections-browser-icon class="alpheios-icon"></inflections-browser-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
-                            v-show="$store.getters[`app/hasGrammarRes`]">
-                <span @click="app.changeTab('grammar')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('grammar') }">
-                  <grammar-icon class="alpheios-icon"></grammar-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
-                            v-show="$store.getters['app/hasTreebankData']">
-                <span @click="app.changeTab('treebank')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('treebank') }">
-                  <treebank-icon class="alpheios-icon"></treebank-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
-                <span @click="app.changeTab('options')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('options') }">
-                  <options-icon class="alpheios-icon"></options-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
-                            v-if="Boolean(auth)">
-                <span @click="app.changeTab('user')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
-                  <user-icon class="alpheios-icon"></user-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
-                            v-show="$store.getters['app/hasWordUsageExamplesData']">
-                <span @click="app.changeTab('wordUsage')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
-                  <word-usage-icon class="alpheios-icon"></word-usage-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
-                <span @click="app.changeTab('wordlist')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
-                      v-show="showWordList">
-                  <wordlist-icon class="alpheios-icon"></wordlist-icon>
-                </span>
-              </alph-tooltip>
-
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
-                <span @click="app.changeTab('status')" class="alpheios-panel__header-nav-btn"
-                      v-bind:class="{ active: $store.getters['ui/isActiveTab']('status') }"
-                      v-show="verboseMode">
-                  <status-icon class="alpheios-icon"></status-icon>
-                </span>
-              </alph-tooltip>
-            </span>
+        <navbuttons-large></navbuttons-large>
+      </span>
       <span class="alpheios-panel__header-btn-group--end">
 
               <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
@@ -264,6 +181,8 @@
 /*
   This is a desktop version of a panel
    */
+// UI components
+import NavbuttonsLarge from '@/vue/components/nav/navbuttons-large.vue'
 // SVG icons
 import AttachLeftIcon from '../../images/inline-icons/attach-left.svg'
 import AttachRightIcon from '../../images/inline-icons/attach-right.svg'
@@ -275,6 +194,7 @@ export default {
   name: 'Panel',
   extends: CompactPanel,
   components: {
+    navbuttonsLarge: NavbuttonsLarge,
     attachLeftIcon: AttachLeftIcon,
     attachRightIcon: AttachRightIcon
   },

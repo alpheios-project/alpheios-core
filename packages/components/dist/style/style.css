@@ -9445,6 +9445,43 @@ img.alpheios-popup__logo {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios-navbuttons__btn {
+  display: block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+  background: transparent no-repeat center center;
+  background-size: contain;
+  margin: 10px 5px;
+}
+.alpheios-navbuttons__btn svg {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+.alpheios-navbuttons__btn.alpheios-panel__header-nav-btn--short {
+  margin: -10px 5px 20px;
+}
+.alpheios-navbuttons__btn,
+.alpheios-navbuttons__btn.active:hover,
+.alpheios-navbuttons__btn.active:focus {
+  fill: #D1D1D0;
+  stroke: #D1D1D0;
+}
+.alpheios-navbuttons__btn:hover,
+.alpheios-navbuttons__btn:focus,
+.alpheios-navbuttons__btn.active {
+  fill: #5BC8DC;
+  stroke: #5BC8DC;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
 .infl-prdgm-tbl {
   display: table;
   border-top: 1px solid gray;
@@ -10414,37 +10451,6 @@ ul.alpheios-skin_properties {
   flex-wrap: nowrap;
   justify-content: flex-end;
   box-sizing: border-box;
-}
-.alpheios-panel__header-nav-btn {
-  display: block;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  cursor: pointer;
-  background: transparent no-repeat center center;
-  background-size: contain;
-  margin: 10px 15px;
-}
-.alpheios-panel__header-nav-btn svg {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    vertical-align: top;
-}
-.alpheios-panel__header-nav-btn.alpheios-panel__header-nav-btn--short {
-  margin: -10px 5px 20px;
-}
-.alpheios-panel__header-nav-btn,
-.alpheios-panel__header-nav-btn.active:hover,
-.alpheios-panel__header-nav-btn.active:focus {
-  fill: #D1D1D0;
-  stroke: #D1D1D0;
-}
-.alpheios-panel__header-nav-btn:hover,
-.alpheios-panel__header-nav-btn:focus,
-.alpheios-panel__header-nav-btn.active {
-  fill: #5BC8DC;
-  stroke: #5BC8DC;
 }
 .alpheios-panel__tab__options {
   width: 100%;

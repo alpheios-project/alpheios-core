@@ -9445,6 +9445,43 @@ img.alpheios-popup__logo {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+.alpheios-navbuttons__btn {
+  display: block;
+  width: 20px !important;
+  height: 20px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  background: transparent no-repeat center center !important;
+  background-size: contain !important;
+  margin: 10px 5px !important;
+}
+.alpheios-navbuttons__btn svg {
+    width: 20px !important;
+    height: 20px !important;
+    display: inline-block;
+    vertical-align: top !important;
+}
+.alpheios-navbuttons__btn.alpheios-panel__header-nav-btn--short {
+  margin: -10px 5px 20px !important;
+}
+.alpheios-navbuttons__btn,
+.alpheios-navbuttons__btn.active:hover,
+.alpheios-navbuttons__btn.active:focus {
+  fill: #D1D1D0 !important;
+  stroke: #D1D1D0 !important;
+}
+.alpheios-navbuttons__btn:hover,
+.alpheios-navbuttons__btn:focus,
+.alpheios-navbuttons__btn.active {
+  fill: #5BC8DC !important;
+  stroke: #5BC8DC !important;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
 .infl-prdgm-tbl {
   display: table;
   border-top: 1px solid gray !important;
@@ -10414,37 +10451,6 @@ ul.alpheios-skin_properties {
   flex-wrap: nowrap !important;
   justify-content: flex-end !important;
   box-sizing: border-box !important;
-}
-.alpheios-panel__header-nav-btn {
-  display: block;
-  width: 20px !important;
-  height: 20px !important;
-  text-align: center !important;
-  cursor: pointer !important;
-  background: transparent no-repeat center center !important;
-  background-size: contain !important;
-  margin: 10px 15px !important;
-}
-.alpheios-panel__header-nav-btn svg {
-    width: 20px !important;
-    height: 20px !important;
-    display: inline-block;
-    vertical-align: top !important;
-}
-.alpheios-panel__header-nav-btn.alpheios-panel__header-nav-btn--short {
-  margin: -10px 5px 20px !important;
-}
-.alpheios-panel__header-nav-btn,
-.alpheios-panel__header-nav-btn.active:hover,
-.alpheios-panel__header-nav-btn.active:focus {
-  fill: #D1D1D0 !important;
-  stroke: #D1D1D0 !important;
-}
-.alpheios-panel__header-nav-btn:hover,
-.alpheios-panel__header-nav-btn:focus,
-.alpheios-panel__header-nav-btn.active {
-  fill: #5BC8DC !important;
-  stroke: #5BC8DC !important;
 }
 .alpheios-panel__tab__options {
   width: 100% !important;
