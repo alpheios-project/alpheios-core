@@ -8,6 +8,14 @@
       <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_HELP') }}</div>
     </div>
 
+    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('morphology') }"
+         @click="changeTab('morphology')">
+      <div class="alpheios-navbuttons__icon-cont">
+        <morphology-icon class="alpheios-navbuttons__icon"></morphology-icon>
+      </div>
+      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_MORPHOLOGY') }}</div>
+    </div>
+
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('definitions') }"
          @click="changeTab('definitions')">
       <div class="alpheios-navbuttons__icon-cont">
@@ -93,6 +101,7 @@
 </template>
 <script>
 // Embeddable SVG icons
+import MorphologyIcon from '@/images/inline-icons/language.svg'
 import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
 import InflectionsIcon from '@/images/inline-icons/inflections.svg'
 import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
@@ -121,6 +130,7 @@ export default {
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
+    morphologyIcon: MorphologyIcon,
     definitionsIcon: DefinitionsIcon,
     inflectionsIcon: InflectionsIcon,
     inflectionsBrowserIcon: InflectionsBrowserIcon,

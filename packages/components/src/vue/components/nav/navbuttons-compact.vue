@@ -1,5 +1,12 @@
 <template>
   <div class="alpheios-navbuttons alpheios-navbuttons--compact">
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MORPHOLOGY')" tooltipDirection="top">
+      <span :class="{ active: $store.getters['ui/isActiveTab']('morphology') }" @click="app.changeTab('morphology')"
+            class="alpheios-navbuttons__btn">
+        <morphology-icon></morphology-icon>
+      </span>
+    </alph-tooltip>
+
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="top">
       <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="app.changeTab('definitions')"
             class="alpheios-navbuttons__btn">
@@ -20,6 +27,7 @@
 // Vue components
 import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons
+import MorphologyIcon from '@/images/inline-icons/language.svg'
 import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
 import InflectionsIcon from '@/images/inline-icons/inflections.svg'
 // Modules support
@@ -38,6 +46,7 @@ export default {
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
+    morphologyIcon: MorphologyIcon,
     definitionsIcon: DefinitionsIcon,
     inflectionsIcon: InflectionsIcon,
     alphTooltip: Tooltip

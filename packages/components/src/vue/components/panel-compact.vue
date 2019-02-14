@@ -28,6 +28,11 @@
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
+          v-show="$store.getters['ui/isActiveTab']('morphology')">
+        This is a morphology panel
+      </div>
+      <div
+          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
           v-show="$store.getters['ui/isActiveTab']('definitions')">
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>

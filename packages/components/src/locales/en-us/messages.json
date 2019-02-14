@@ -96,6 +96,11 @@
     "description": "tooltop for word usage examples button",
     "component": "Popup"
   },
+  "TOOLTIP_MORPHOLOGY": {
+    "message": "Show morphology",
+    "description": "tooltop for a morphology button",
+    "component": "Panel"
+  },
   "PLACEHOLDER_DEFINITIONS":  {
     "message": "Lookup a word to show definitions...",
     "description": "placeholder for definitions panel",
