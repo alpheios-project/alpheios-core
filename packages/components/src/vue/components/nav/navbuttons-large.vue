@@ -129,4 +129,16 @@ export default {
 </script>
 <style lang="scss">
 
+  .alpheios-navbuttons--large {
+    & .alpheios-navbuttons__btn {
+      width: 20px;
+      height: 20px;
+      margin: 10px 5px;
+    }
+
+    & .alpheios-navbuttons__btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 </style>

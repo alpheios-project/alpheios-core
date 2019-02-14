@@ -594,9 +594,11 @@ export default {
     // Updated popup dimensions when its visibility is updated
     this.$options.visibleUnwatch = this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
       if (newValue) {
+        console.log(`Popup became visible`)
         // A popup became visible
         this.updatePopupDimensions()
       } else {
+        console.log(`Popup was hidden`)
         // A popup became invisible
         this.resetPopupDimensions()
       }

@@ -798,6 +798,9 @@ export default class UIController {
       }
     }
 
+    console.log(`Full definitions are: `, this.getUiModule('panel').vi.panelData.fullDefinitions)
+    console.log(`Short definitions are: `, this.getUiModule('panel').vi.panelData.shortDefinitions)
+
     // Populate a popup
     if (this.hasUiModule('popup')) {
       const popup = this.getUiModule('popup')

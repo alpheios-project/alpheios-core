@@ -9474,6 +9474,16 @@ img.alpheios-popup__logo {
   stroke: #5BC8DC;
 }
 
+.alpheios-navbuttons--large .alpheios-navbuttons__btn {
+  width: 20px;
+  height: 20px;
+  margin: 10px 5px;
+}
+.alpheios-navbuttons--large .alpheios-navbuttons__btn svg {
+  width: 20px;
+  height: 20px;
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
