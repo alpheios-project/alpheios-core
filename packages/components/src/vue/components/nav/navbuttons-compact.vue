@@ -1,13 +1,13 @@
 <template>
   <div class="alpheios-navbuttons alpheios-navbuttons--compact">
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow">
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="top">
       <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="app.changeTab('definitions')"
             class="alpheios-navbuttons__btn">
         <definitions-icon></definitions-icon>
       </span>
     </alph-tooltip>
 
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="top"
                 v-show="$store.getters[`app/hasInflData`]">
       <span @click="app.changeTab('inflections')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
@@ -49,24 +49,20 @@ export default {
 
   .alpheios-navbuttons__btn {
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     cursor: pointer;
     background: transparent no-repeat center center;
     background-size: contain;
-    margin: 10px 5px;
+    margin: 10px;
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: 40px;
+      height: 40px;
       display: inline-block;
       vertical-align: top;
     }
-  }
-
-  .alpheios-navbuttons__btn.alpheios-panel__header-nav-btn--short {
-    margin: -10px 5px 20px;
   }
 
   .alpheios-navbuttons__btn,

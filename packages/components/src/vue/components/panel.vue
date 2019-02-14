@@ -220,7 +220,6 @@ export default {
 
   mounted: function () {
     this.$options.tabChangeUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
-      console.log(`activeTab changed to ${tabName}`)
       this.setContentWidth({ width: 'auto', component: null })
     })
   },
@@ -237,6 +236,7 @@ export default {
     height: 100vh;
     top: 0;
     overflow: auto;
+    grid-template-rows: 40px auto 60px;
 
     & .alpheios-panel__content {
       margin-top: 20px;

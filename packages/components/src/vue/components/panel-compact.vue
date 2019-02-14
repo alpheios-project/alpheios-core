@@ -15,7 +15,7 @@
       <span class="alpheios-panel__header-btn-group--end">
         <alph-tooltip
             :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
-            tooltipDirection="bottom-right">
+            tooltipDirection="top">
           <span @click="ui.closePanel" class="alpheios-panel__header-action-btn alpheios_close">
               <close-icon></close-icon>
           </span>
@@ -488,8 +488,6 @@ export default {
 <style lang="scss">
   @import "../../styles/alpheios";
 
-  $alpheios-panel-header-height: 40px;
-
   .alpheios-panel {
     z-index: 2000;
     position: fixed;
@@ -499,7 +497,7 @@ export default {
     direction: ltr;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: #{$alpheios-panel-header-height} auto 60px;
+    grid-template-rows: 60px auto 60px;
     grid-template-areas: "header" "content" "content"
   }
 
@@ -750,15 +748,15 @@ export default {
   }
 
   .alpheios-panel__menu-btn {
-    width: 20px;
-    height: 20px;
-    margin: 10px 10px 10px 20px;
+    width: 40px;
+    height: 40px;
+    margin: 10px 10px 10px 30px;
     cursor: pointer;
   }
 
   .alpheios-panel__menu-icon {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     fill: $alpheios-link-color-dark-bg;
   }
 
@@ -777,6 +775,22 @@ export default {
 
     & .alpheios-panel__content {
       overflow: auto;
+    }
+
+    // To override skin styles
+    &.auk .alpheios-panel__header-action-btn {
+      width: 40px;
+      height: 40px;
+    }
+
+    &.auk .alpheios-panel__header-action-btn {
+      width: 40px;
+      height: 40px;
+
+      svg {
+        width: 40px;
+        height: 40px;
+      }
     }
   }
 </style>

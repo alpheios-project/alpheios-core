@@ -133,6 +133,8 @@ export default {
     wordUsageIcon: WordUsageIcon,
     wordlistIcon: WordlistIcon
   },
+  tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
+
   props: {
     visibility: {
       type: Boolean,
@@ -140,11 +142,13 @@ export default {
       default: false
     }
   },
+
   data: function () {
     return {
       visible: false
     }
   },
+
   watch: {
     visibility: function () {
       // If visibility is changed it means a menu button is clicked.
@@ -152,11 +156,22 @@ export default {
       this.visible = !this.visible
     }
   },
+
   methods: {
     changeTab: function (tabName) {
       this.app.changeTab(tabName)
       this.visible = false // Close the menu panel
     }
+  },
+
+  mounted: function () {
+    this.$options.tabChangeUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
+      this.visible = false // Close the menu panel
+    })
+  },
+
+  beforeDestroy: function () {
+    this.$options.tabChangeUnwatch()
   }
 }
 </script>
@@ -176,25 +191,27 @@ export default {
   }
 
   .alpheios-navmenu__item {
-    width: 100%;
     display: flex;
-    padding: 10px 10px 10px 20px;
+    padding: 10px 20px 10px 30px;
     border-bottom: 1px solid $alpheios-link-color-dark-bg;
     cursor: pointer;
   }
 
-  alpheios-navmenu__item,
-  .alpheios-navmenu__item.active:hover,
-  .alpheios-navmenu__item.active:focus {
-    color: $alpheios-link-color-dark-bg;
+  .alpheios-navmenu__item:hover,
+  .alpheios-navmenu__item:focus {
+    color: $alpheios-link-hover-color;
+  }
+
+  .alpheios-navmenu__item .alpheios-navbuttons__icon,
+  .alpheios-navmenu__item.active:hover .alpheios-navbuttons__icon,
+  .alpheios-navmenu__item.active:focus .alpheios-navbuttons__icon {
     fill: $alpheios-link-color-dark-bg;
     stroke: $alpheios-link-color-dark-bg;
   }
 
-  .alpheios-navmenu__item:hover,
-  .alpheios-navmenu__item:focus,
-  .alpheios-navmenu__item.active {
-    color: $alpheios-link-hover-color;
+  .alpheios-navmenu__item:hover .alpheios-navbuttons__icon,
+  .alpheios-navmenu__item:focus .alpheios-navbuttons__icon,
+  .alpheios-navmenu__item.active .alpheios-navbuttons__icon {
     fill: $alpheios-link-hover-color;
     stroke: $alpheios-link-hover-color;
   }
@@ -202,15 +219,20 @@ export default {
   .alpheios-navbuttons__icon-cont {
     flex-grow: 0;
     width: 40px;
-    margin-right: 20px;
+    height: 40px;
+    margin-right: 40px;
   }
 
   .alpheios-navbuttons__icon {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
   }
 
-  .alpheios-navmenu__text {
-
+  // Longer selector is to overcome font options' styles
+  .alpheios-navmenu div.alpheios-navmenu__text {
+    font-size: 20px;
+    line-height: 1.2;
+    top: 10px;
+    position: relative;
   }
 </style>

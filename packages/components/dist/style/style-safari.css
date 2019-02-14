@@ -9447,22 +9447,19 @@ img.alpheios-popup__logo {
 /********** Dark Schema ***********************/
 .alpheios-navbuttons__btn {
   display: block;
-  width: 20px !important;
-  height: 20px !important;
+  width: 40px !important;
+  height: 40px !important;
   text-align: center !important;
   cursor: pointer !important;
   background: transparent no-repeat center center !important;
   background-size: contain !important;
-  margin: 10px 5px !important;
+  margin: 10px !important;
 }
 .alpheios-navbuttons__btn svg {
-    width: 20px !important;
-    height: 20px !important;
+    width: 40px !important;
+    height: 40px !important;
     display: inline-block;
     vertical-align: top !important;
-}
-.alpheios-navbuttons__btn.alpheios-panel__header-nav-btn--short {
-  margin: -10px 5px 20px !important;
 }
 .alpheios-navbuttons__btn,
 .alpheios-navbuttons__btn.active:hover,
@@ -9494,34 +9491,42 @@ img.alpheios-popup__logo {
   flex-direction: column !important;
 }
 .alpheios-navmenu__item {
-  width: 100% !important;
   display: flex;
-  padding: 10px 10px 10px 20px !important;
+  padding: 10px 20px 10px 30px !important;
   border-bottom: 1px solid #D1D1D0 !important;
   cursor: pointer !important;
 }
-alpheios-navmenu__item,
-.alpheios-navmenu__item.active:hover,
-.alpheios-navmenu__item.active:focus {
-  color: #D1D1D0 !important;
+.alpheios-navmenu__item:hover,
+.alpheios-navmenu__item:focus {
+  color: #5BC8DC !important;
+}
+.alpheios-navmenu__item .alpheios-navbuttons__icon,
+.alpheios-navmenu__item.active:hover .alpheios-navbuttons__icon,
+.alpheios-navmenu__item.active:focus .alpheios-navbuttons__icon {
   fill: #D1D1D0 !important;
   stroke: #D1D1D0 !important;
 }
-.alpheios-navmenu__item:hover,
-.alpheios-navmenu__item:focus,
-.alpheios-navmenu__item.active {
-  color: #5BC8DC !important;
+.alpheios-navmenu__item:hover .alpheios-navbuttons__icon,
+.alpheios-navmenu__item:focus .alpheios-navbuttons__icon,
+.alpheios-navmenu__item.active .alpheios-navbuttons__icon {
   fill: #5BC8DC !important;
   stroke: #5BC8DC !important;
 }
 .alpheios-navbuttons__icon-cont {
   flex-grow: 0 !important;
   width: 40px !important;
-  margin-right: 20px !important;
+  height: 40px !important;
+  margin-right: 40px !important;
 }
 .alpheios-navbuttons__icon {
-  width: 20px !important;
-  height: 20px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+.alpheios-navmenu div.alpheios-navmenu__text {
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+  top: 10px !important;
+  position: relative !important;
 }
 
 /************ UIKit vars ************************/
@@ -10318,7 +10323,7 @@ ul.alpheios-skin_properties {
   direction: ltr !important;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 40px auto 60px !important;
+  grid-template-rows: 60px auto 60px !important;
   grid-template-areas: "header" "content" "content" !important;
 }
 .alpheios-panel[data-notification-visible="true"] {
@@ -10526,14 +10531,14 @@ ul.alpheios-skin_properties {
   width: 100% !important;
 }
 .alpheios-panel__menu-btn {
-  width: 20px !important;
-  height: 20px !important;
-  margin: 10px 10px 10px 20px !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 10px 10px 10px 30px !important;
   cursor: pointer !important;
 }
 .alpheios-panel__menu-icon {
-  width: 20px !important;
-  height: 20px !important;
+  width: 40px !important;
+  height: 40px !important;
   fill: #D1D1D0 !important;
 }
 .alpheios-panel__menu-icon:hover,
@@ -10550,6 +10555,18 @@ ul.alpheios-skin_properties {
 .alpheios-panel--compact .alpheios-panel__content {
     overflow: auto !important;
 }
+.alpheios-panel--compact.auk .alpheios-panel__header-action-btn {
+    width: 40px !important;
+    height: 40px !important;
+}
+.alpheios-panel--compact.auk .alpheios-panel__header-action-btn {
+    width: 40px !important;
+    height: 40px !important;
+}
+.alpheios-panel--compact.auk .alpheios-panel__header-action-btn svg {
+      width: 40px !important;
+      height: 40px !important;
+}
 
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
@@ -10560,6 +10577,7 @@ ul.alpheios-skin_properties {
   height: 100vh !important;
   top: 0 !important;
   overflow: auto !important;
+  grid-template-rows: 40px auto 60px !important;
 }
 .alpheios-panel--large .alpheios-panel__content {
     margin-top: 20px !important;
