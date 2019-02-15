@@ -59,7 +59,17 @@ describe('popup.test.js', () => {
 
         },
         ui: {
-          rootClasses: []
+          namespaced: true,
+          state: {
+            rootClasses: [],
+
+            notification: {
+              visible: false,
+              important: false,
+              showLanguageSwitcher: false,
+              text: null
+            }
+          }
         }
       }
     })

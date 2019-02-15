@@ -82,7 +82,14 @@ describe('panel.test.js', () => {
           namespaced: true,
           state: {
             activeTab: 'info',
-            rootClasses: []
+            rootClasses: [],
+
+            notification: {
+              visible: false,
+              important: false,
+              showLanguageSwitcher: false,
+              text: null
+            }
           },
 
           getters: {

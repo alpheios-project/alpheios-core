@@ -1,5 +1,6 @@
 <template>
-  <div :data-notification-visible="data && data.notification && data.notification.visible" :style="mainstyles" class="alpheios-popup auk" id="alpheios-popup-inner" ref="popup"
+  <div :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.visible"
+       :style="mainstyles" class="alpheios-popup auk" id="alpheios-popup-inner" ref="popup"
        :class="rootClasses" v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.popup.visible">
     <alph-tooltip
@@ -91,17 +92,18 @@
       <img class="alpheios-popup__logo" src="../../images/icon.png">
       <a class="alpheios-popup__providers-link uk-link" v-on:click="switchProviders">{{providersLinkText}}</a>
     </div>
-    <div :class="notificationClasses" class="alpheios-popup__notifications uk-text-small"
-         v-if="data && data.notification" v-show="data.notification.important">
+    <div class="alpheios-popup__notifications uk-text-small"
+         :class="{ 'alpheios-popup__notifications--important': this.$store.state.ui.notification.important }"
+         v-if="$store.state.ui.notification.text" v-show="$store.state.ui.notification.important">
 
-              <span @click="closeNotifications" class="alpheios-popup__notifications-close-btn">
+              <span @click="$store.commit(`ui/resetNotification`)" class="alpheios-popup__notifications-close-btn">
                   <close-icon></close-icon>
               </span>
 
-      <span v-html="data.notification.text"></span>
+      <span v-html="$store.state.ui.notification.text"></span>
       <setting :classes="['alpheios-popup__notifications--lang-switcher']" :data="settings.contentOptions.items.preferredLanguage"
                :show-title="false" @change="contentOptionChanged"
-               v-show="data.notification.showLanguageSwitcher"></setting>
+               v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
     <lookup :clearLookupText="hasMorphData && morphDataReady" :parentLanguage="currentLanguageName"></lookup>
   </div>
@@ -245,11 +247,6 @@ export default {
     },
     currentLanguageName: function () {
       return (this.data) ? this.$store.state.app.currentLanguageName : null
-    },
-    notificationClasses: function () {
-      return {
-        'alpheios-popup__notifications--important': this.data.notification.important
-      }
     },
     providersLinkText: function () {
       return (this.data) ? (this.data.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')) : ''
@@ -401,10 +398,6 @@ export default {
       while (this.messages.length > 0) {
         this.messages.pop()
       }
-    },
-
-    closeNotifications () {
-      this.$emit('closepopupnotifications')
     },
 
     showPanelTab (tabName) {

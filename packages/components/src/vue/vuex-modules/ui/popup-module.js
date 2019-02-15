@@ -67,12 +67,6 @@ export default class PopupModule {
 
           showProviders: false,
           updates: 0,
-          notification: {
-            visible: false,
-            important: false,
-            showLanguageSwitcher: false,
-            text: ''
-          },
           providers: [],
           status: {
             selectedText: '',
@@ -105,50 +99,11 @@ export default class PopupModule {
           return this
         },
 
-        showNotification: function (text, important = false) {
-          this.popupData.notification.visible = true
-          this.popupData.notification.important = important
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = text
-        },
-
-        showImportantNotification: function (text) {
-          this.showNotification(text, true)
-        },
-
-        showLanguageNotification: function (homonym, notFound = false) {
-          this.popupData.notification.visible = true
-          let languageName
-          if (homonym) {
-            languageName = this.$options.api.app.getLanguageName(homonym.languageID).name
-          } else if (this.$store.state.app.currentLanguageName) {
-            languageName = this.$store.state.app.currentLanguageName
-          } else {
-            // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
-            languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
-          }
-          if (notFound) {
-            this.popupData.notification.important = true
-            this.popupData.notification.showLanguageSwitcher = true
-            this.popupData.notification.text = this.$options.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
-          } else {
-            this.popupData.notification.important = false
-            this.popupData.notification.showLanguageSwitcher = false
-          }
-        },
-
         showStatusInfo: function (selectionText, languageID) {
           let langDetails = this.$options.api.app.getLanguageName(languageID)
           this.popupData.status.languageName = langDetails.name
           this.popupData.status.languageCode = langDetails.code
           this.popupData.status.selectedText = selectionText
-        },
-
-        showErrorInformation: function (errorText) {
-          this.popupData.notification.visible = true
-          this.popupData.notification.important = true
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = errorText
         },
 
         newLexicalRequest: function () {
@@ -170,16 +125,8 @@ export default class PopupModule {
           this.popupData.translationsDataReady = false
 
           this.popupData.showProviders = false
-          this.clearNotifications()
           this.clearStatus()
           return this
-        },
-
-        clearNotifications: function () {
-          this.popupData.notification.visible = false
-          this.popupData.notification.important = false
-          this.popupData.notification.showLanguageSwitcher = false
-          this.popupData.notification.text = ''
         },
 
         clearStatus: function () {

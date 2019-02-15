@@ -1,5 +1,5 @@
 <template>
-  <div :class="rootClasses" :data-notification-visible="data && data.notification && data.notification.important"
+  <div :class="rootClasses" :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
        :style="mainstyles" class="alpheios-panel alpheios-panel--large auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
@@ -165,17 +165,18 @@
         <word-list-panel :updated="$store.state.app.wordListUpdated" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
-    <div :class="notificationClasses" class="alpheios-panel__notifications uk-text-small"
-         v-if="data && data.notification" v-show="data.notification.important">
-            <span @click="closeNotifications" class="alpheios-panel__notifications-close-btn">
+    <div class="alpheios-panel__notifications uk-text-small"
+         :class="{ 'alpheios-panel__notifications--important': $store.state.ui.notification.important }"
+         v-if="$store.state.ui.notification.visible" v-show="$store.state.ui.notification.important">
+            <span @click="$store.commit(`ui/resetNotification`)" class="alpheios-panel__notifications-close-btn">
                 <close-icon></close-icon>
             </span>
-      <span class="alpheios-panel__notifications-text" v-html="data.notification.text"></span>
+      <span class="alpheios-panel__notifications-text" v-html="$store.state.ui.notification.text"></span>
       <setting :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']"
                :data="settings.contentOptions.items.preferredLanguage"
                :show-title="false"
                @change="contentOptionChanged"
-               v-show="data.notification.showLanguageSwitcher"></setting>
+               v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
   </div>
 </template>

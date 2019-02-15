@@ -10337,7 +10337,7 @@ ul.alpheios-skin_properties {
   grid-template-areas: "header" "content" "content";
 }
 .alpheios-panel[data-notification-visible="true"] {
-  grid-template-areas: "header" "title" "content" "notifications";
+  grid-template-areas: "header" "content" "notifications";
 }
 .alpheios-panel.alpheios-panel-left {
   left: 0;
@@ -10350,7 +10350,7 @@ ul.alpheios-skin_properties {
   grid-template-areas: "header" "title" "content" "content";
 }
 .alpheios-panel.alpheios-panel-right[data-notification-visible="true"] {
-  grid-template-areas: "header" "title" "content" "notifications";
+  grid-template-areas: "header" "content" "notifications";
 }
 .alpheios-panel__header {
   position: relative;
@@ -10364,11 +10364,9 @@ ul.alpheios-skin_properties {
 }
 .alpheios-panel-left .alpheios-panel__header {
   direction: ltr;
-  /*padding: 0 0 0 10px;*/
 }
 .alpheios-panel-right .alpheios-panel__header {
   direction: rtl;
-  /*padding: 0 10px 0 0;*/
 }
 .alpheios-panel__header-logo {
   flex-grow: 0;

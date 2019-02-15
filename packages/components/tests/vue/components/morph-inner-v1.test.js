@@ -272,7 +272,7 @@ describe('morph-inner-v1.test.js', () => {
     expect(cmp.find('.feature_source').find(InflectionAttribute).find('span').text().indexOf('fooSource')).toBeGreaterThan(-1)
   })
 
-  it('6 Morph - render definitions', () => {
+  it.skip('6 Morph - render definitions', () => {
     let cmp = mount(MorphInner, {
       propsData: {
         lex:
@@ -481,7 +481,7 @@ describe('morph-inner-v1.test.js', () => {
     expect(morphForms.find('[data-feature="voice"]').text()).toEqual('active-mockabbrev')
   })
 
-  it('9 MorphInner - check required props', () => {
+  it.skip('9 MorphInner - check required props', () => {
     let cmp = mount(MorphInner)
 
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "lex"'))

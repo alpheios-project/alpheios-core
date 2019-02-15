@@ -25,12 +25,6 @@ export default class PanelModule {
         panelData: {
           lexemes: [],
           messages: [],
-          notification: {
-            visible: false,
-            important: false,
-            showLanguageSwitcher: false,
-            text: ''
-          },
           status: {
             selectedText: '',
             languageName: '',
@@ -41,7 +35,6 @@ export default class PanelModule {
       methods: {
         clearContent: function () {
           this.panelData.messages = []
-          this.clearNotifications()
           this.clearStatus()
           return this
         },
@@ -58,57 +51,11 @@ export default class PanelModule {
           this.panelData.messages = []
         },
 
-        showNotification: function (text, important = false) {
-          this.panelData.notification.visible = true
-          this.panelData.notification.important = important
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = text
-        },
-
-        showImportantNotification: function (text) {
-          this.showNotification(text, true)
-        },
-
-        showLanguageNotification: function (homonym, notFound = false) {
-          this.panelData.notification.visible = true
-          let languageName
-          if (homonym) {
-            languageName = this.$options.api.app.getLanguageName(homonym.languageID).name
-          } else if (this.$store.state.app.currentLanguageName) {
-            languageName = this.$store.state.app.currentLanguageName
-          } else {
-            languageName = this.$options.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN') // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
-          }
-          if (notFound) {
-            this.panelData.notification.important = true
-            this.panelData.notification.showLanguageSwitcher = true
-            this.panelData.notification.text = this.$options.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
-          } else {
-            this.panelData.notification.visible = true
-            this.panelData.notification.important = false
-            this.panelData.notification.showLanguageSwitcher = false
-          }
-        },
-
         showStatusInfo: function (selectionText, languageID) {
           let langDetails = this.$options.api.app.getLanguageName(languageID)
           this.panelData.status.languageName = langDetails.name
           this.panelData.status.languageCode = langDetails.code
           this.panelData.status.selectedText = selectionText
-        },
-
-        showErrorInformation: function (errorText) {
-          this.panelData.notification.visible = true
-          this.panelData.notification.important = true
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = errorText
-        },
-
-        clearNotifications: function () {
-          this.panelData.notification.visible = false
-          this.panelData.notification.important = false
-          this.panelData.notification.showLanguageSwitcher = false
-          this.panelData.notification.text = ''
         },
 
         clearStatus: function () {

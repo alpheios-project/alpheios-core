@@ -546,7 +546,15 @@ export default class UIController {
 
       state: {
         activeTab: this.defaultTab, // A currently selected panel's tab
-        rootClasses: []
+        rootClasses: [],
+
+        // Panel and popup notifications
+        notification: {
+          visible: false,
+          important: false,
+          showLanguageSwitcher: false,
+          text: null
+        }
       },
 
       getters: {
@@ -562,6 +570,20 @@ export default class UIController {
 
         setRootClasses (state, classes) {
           state.rootClasses = classes
+        },
+
+        setNotification (state, data) {
+          state.notification.visible = true
+          state.notification.important = data.important || false
+          state.notification.showLanguageSwitcher = data.showLanguageSwitcher || false
+          state.notification.text = data.text || data
+        },
+
+        resetNotification (state) {
+          state.notification.visible = false
+          state.notification.important = false
+          state.notification.showLanguageSwitcher = false
+          state.notification.text = null
         }
       }
     })
@@ -713,22 +735,24 @@ export default class UIController {
   }
 
   addImportantMessage (message) {
+    this.store.commit(`ui/setNotification`, { text: message, important: true })
     if (this.hasUiModule('panel')) {
       const panel = this.getUiModule('panel')
       panel.vi.appendMessage(message)
-      panel.vi.showImportantNotification(message)
     }
     if (this.hasUiModule('popup')) {
       const popup = this.getUiModule('popup')
       popup.vi.appendMessage(message)
-      popup.vi.showImportantNotification(message)
     }
   }
 
   /**
    * Gets language name details by either language ID (a symbol) or language code (string)
    * @param {symbol|string} language - Either language ID or language code (see constants in `data-models` for definitions)
-   * @return {string} A language name
+   * @return {Object} An object containing:
+   *     {string} name - Language name
+   *     {string} code - Language code
+   *     {symbol} id - Language ID
    */
   static getLanguageName (language) {
     let langID
@@ -739,12 +763,25 @@ export default class UIController {
   }
 
   showLanguageInfo (homonym) {
-    let notFound = !homonym ||
+    console.log(`Show language info`)
+    const notFound = !homonym ||
       !homonym.lexemes ||
       homonym.lexemes.length < 1 ||
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showLanguageNotification(homonym, notFound) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showLanguageNotification(homonym, notFound) }
+
+    if (notFound) {
+      let languageName
+      if (homonym) {
+        languageName = this.api.app.getLanguageName(homonym.languageID).name
+      } else if (this.store.state.app.currentLanguageName) {
+        languageName = this.store.state.app.currentLanguageName
+      } else {
+        // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
+        languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
+      }
+      const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
+      this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: true })
+    }
   }
 
   showStatusInfo (selectionText, languageID) {
@@ -752,13 +789,14 @@ export default class UIController {
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showStatusInfo(selectionText, languageID) }
   }
 
+  // TODO: Do we need this function
   showErrorInfo (errorText) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showErrorInformation(errorText) }
+    this.store.commit(`ui/setNotification`, { text: errorText, important: true })
   }
 
+  // TODO: Do we need this function
   showImportantNotification (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showImportantNotification(message) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showImportantNotification(message) }
+    this.store.commit(`ui/setNotification`, { text: message, important: true })
   }
 
   changeTab (tabName) {
@@ -942,6 +980,7 @@ export default class UIController {
     this.store.commit(`app/resetDefs`)
     this.store.commit(`app/resetInflData`)
     this.store.commit(`app/resetTreebankData`)
+    this.store.commit(`ui/resetNotification`)
     if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
     return this
