@@ -67,12 +67,7 @@ export default class PopupModule {
 
           showProviders: false,
           updates: 0,
-          providers: [],
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          }
+          providers: []
         },
         currentPopupComponent: this.config.popupComponent,
         classesChanged: 0
@@ -99,13 +94,6 @@ export default class PopupModule {
           return this
         },
 
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = this.$options.api.app.getLanguageName(languageID)
-          this.popupData.status.languageName = langDetails.name
-          this.popupData.status.languageCode = langDetails.code
-          this.popupData.status.selectedText = selectionText
-        },
-
         newLexicalRequest: function () {
           this.popupData.requestStartTime = Date.now()
           if (this.$options.api.ui.hasModule('panel')) {
@@ -125,14 +113,7 @@ export default class PopupModule {
           this.popupData.translationsDataReady = false
 
           this.popupData.showProviders = false
-          this.clearStatus()
           return this
-        },
-
-        clearStatus: function () {
-          this.popupData.status.languageName = ''
-          this.popupData.status.languageCode = ''
-          this.popupData.status.selectedText = ''
         },
 
         showPanelTab: function (tabName) {

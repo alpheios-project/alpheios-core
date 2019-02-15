@@ -18421,7 +18421,8 @@ var render = function() {
                             _c("shortdef", {
                               attrs: {
                                 definition: definition,
-                                languageCode: _vm.data.status.languageCode
+                                languageCode:
+                                  _vm.$store.state.app.status.languageCode
                               }
                             })
                           ],
@@ -19158,7 +19159,8 @@ var render = function() {
                           _c("shortdef", {
                             attrs: {
                               definition: definition,
-                              languageCode: _vm.data.status.languageCode
+                              languageCode:
+                                _vm.$store.state.app.status.languageCode
                             }
                           })
                         ],
@@ -20073,12 +20075,12 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "alpheios-popup__header" }, [
-        _vm.data && _vm.data.status
+        _vm.$store.state.app.status
           ? _c(
               "div",
               {
                 staticClass: "alpheios-popup__header-text",
-                attrs: { lang: _vm.data.status.languageCode }
+                attrs: { lang: _vm.$store.state.app.status.languageCode }
               },
               [
                 _c(
@@ -20088,14 +20090,14 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.status.selectedText,
-                        expression: "data.status.selectedText"
+                        value: _vm.$store.state.app.status.selectedText,
+                        expression: "$store.state.app.status.selectedText"
                       }
                     ],
                     staticClass: "alpheios-popup__header-selection",
-                    attrs: { lang: _vm.data.status.languageCode }
+                    attrs: { lang: _vm.$store.state.app.status.languageCode }
                   },
-                  [_vm._v(_vm._s(_vm.data.status.selectedText))]
+                  [_vm._v(_vm._s(_vm.$store.state.app.status.selectedText))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -20105,14 +20107,23 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.data.status.languageName && _vm.verboseMode,
-                        expression: "data.status.languageName && verboseMode"
+                        value:
+                          _vm.$store.state.app.status.languageName &&
+                          _vm.verboseMode,
+                        expression:
+                          "$store.state.app.status.languageName && verboseMode"
                       }
                     ],
                     staticClass: "alpheios-popup__header-word",
                     attrs: { lang: "en" }
                   },
-                  [_vm._v("(" + _vm._s(_vm.data.status.languageName) + ")")]
+                  [
+                    _vm._v(
+                      "(" +
+                        _vm._s(_vm.$store.state.app.status.languageName) +
+                        ")"
+                    )
+                  ]
                 )
               ]
             )
@@ -35121,6 +35132,11 @@ class UIController {
       state: {
         currentLanguageID: undefined,
         currentLanguageName: undefined,
+        status: {
+          selectedText: '',
+          languageName: '',
+          languageCode: ''
+        },
         homonym: null,
         definitions: {
           full: '',
@@ -35218,6 +35234,19 @@ class UIController {
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
           state.currentLanguageID = id
           state.currentLanguageName = name
+        },
+
+        setStatusData (state, data) {
+          let langDetails = UIController.getLanguageName(data.languageID)
+          state.status.languageName = langDetails.name
+          state.status.languageCode = langDetails.code
+          state.status.selectedText = data.text
+        },
+
+        resetStatusData: function (state) {
+          state.status.languageName = ''
+          state.status.languageCode = ''
+          state.status.selectedText = ''
         },
 
         lexicalRequestStarted (state) {
@@ -35559,8 +35588,7 @@ class UIController {
   }
 
   showStatusInfo (selectionText, languageID) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showStatusInfo(selectionText, languageID) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showStatusInfo(selectionText, languageID) }
+    this.store.commit(`app/setStatusData`, { text: selectionText, languageID: languageID })
   }
 
   // TODO: Do we need this function
@@ -35751,6 +35779,7 @@ class UIController {
   }
 
   clear () {
+    this.store.commit(`app/resetStatusData`)
     this.store.commit(`app/resetDefs`)
     this.store.commit(`app/resetInflData`)
     this.store.commit(`app/resetTreebankData`)
@@ -43667,18 +43696,12 @@ class PanelModule {
       data: {
         panelData: {
           lexemes: [],
-          messages: [],
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          }
+          messages: []
         }
       },
       methods: {
         clearContent: function () {
           this.panelData.messages = []
-          this.clearStatus()
           return this
         },
 
@@ -43692,19 +43715,6 @@ class PanelModule {
 
         clearMessages: function () {
           this.panelData.messages = []
-        },
-
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = this.$options.api.app.getLanguageName(languageID)
-          this.panelData.status.languageName = langDetails.name
-          this.panelData.status.languageCode = langDetails.code
-          this.panelData.status.selectedText = selectionText
-        },
-
-        clearStatus: function () {
-          this.panelData.status.languageName = ''
-          this.panelData.status.languageCode = ''
-          this.panelData.status.selectedText = ''
         },
 
         toggle: function () {
@@ -43855,12 +43865,7 @@ class PopupModule {
 
           showProviders: false,
           updates: 0,
-          providers: [],
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          }
+          providers: []
         },
         currentPopupComponent: this.config.popupComponent,
         classesChanged: 0
@@ -43887,13 +43892,6 @@ class PopupModule {
           return this
         },
 
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = this.$options.api.app.getLanguageName(languageID)
-          this.popupData.status.languageName = langDetails.name
-          this.popupData.status.languageCode = langDetails.code
-          this.popupData.status.selectedText = selectionText
-        },
-
         newLexicalRequest: function () {
           this.popupData.requestStartTime = Date.now()
           if (this.$options.api.ui.hasModule('panel')) {
@@ -43913,14 +43911,7 @@ class PopupModule {
           this.popupData.translationsDataReady = false
 
           this.popupData.showProviders = false
-          this.clearStatus()
           return this
-        },
-
-        clearStatus: function () {
-          this.popupData.status.languageName = ''
-          this.popupData.status.languageCode = ''
-          this.popupData.status.selectedText = ''
         },
 
         showPanelTab: function (tabName) {

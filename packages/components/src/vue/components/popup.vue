@@ -12,10 +12,10 @@
           </span>
     </alph-tooltip>
     <div class="alpheios-popup__header">
-      <div :lang="data.status.languageCode" class="alpheios-popup__header-text" v-if="data && data.status">
-        <span :lang="data.status.languageCode" class="alpheios-popup__header-selection"
-              v-show="data.status.selectedText">{{data.status.selectedText}}</span>
-        <span class="alpheios-popup__header-word" lang="en" v-show="data.status.languageName && verboseMode">({{data.status.languageName}})</span>
+      <div :lang="$store.state.app.status.languageCode" class="alpheios-popup__header-text" v-if="$store.state.app.status">
+        <span :lang="$store.state.app.status.languageCode" class="alpheios-popup__header-selection"
+              v-show="$store.state.app.status.selectedText">{{$store.state.app.status.selectedText}}</span>
+        <span class="alpheios-popup__header-word" lang="en" v-show="$store.state.app.status.languageName && verboseMode">({{$store.state.app.status.languageName}})</span>
       </div>
 
       <div class="alpheios-popup__button-area" v-if="data">

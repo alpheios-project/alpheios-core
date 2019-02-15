@@ -24,18 +24,12 @@ export default class PanelModule {
       data: {
         panelData: {
           lexemes: [],
-          messages: [],
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          }
+          messages: []
         }
       },
       methods: {
         clearContent: function () {
           this.panelData.messages = []
-          this.clearStatus()
           return this
         },
 
@@ -49,19 +43,6 @@ export default class PanelModule {
 
         clearMessages: function () {
           this.panelData.messages = []
-        },
-
-        showStatusInfo: function (selectionText, languageID) {
-          let langDetails = this.$options.api.app.getLanguageName(languageID)
-          this.panelData.status.languageName = langDetails.name
-          this.panelData.status.languageCode = langDetails.code
-          this.panelData.status.selectedText = selectionText
-        },
-
-        clearStatus: function () {
-          this.panelData.status.languageName = ''
-          this.panelData.status.languageCode = ''
-          this.panelData.status.selectedText = ''
         },
 
         toggle: function () {

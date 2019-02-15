@@ -56,7 +56,11 @@ describe('popup.test.js', () => {
           getters: {}
         },
         app: {
-
+          status: {
+            selectedText: '',
+            languageName: '',
+            languageCode: ''
+          }
         },
         ui: {
           namespaced: true,

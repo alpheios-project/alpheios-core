@@ -64,6 +64,11 @@ describe('panel.test.js', () => {
         app: {
           namespaced: true,
           state: {
+            status: {
+              selectedText: '',
+              languageName: '',
+              languageCode: ''
+            },
             tabState: {
               definitions: false,
               inflections: false,

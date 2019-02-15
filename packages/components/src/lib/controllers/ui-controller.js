@@ -347,6 +347,11 @@ export default class UIController {
       state: {
         currentLanguageID: undefined,
         currentLanguageName: undefined,
+        status: {
+          selectedText: '',
+          languageName: '',
+          languageCode: ''
+        },
         homonym: null,
         definitions: {
           full: '',
@@ -444,6 +449,19 @@ export default class UIController {
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
           state.currentLanguageID = id
           state.currentLanguageName = name
+        },
+
+        setStatusData (state, data) {
+          let langDetails = UIController.getLanguageName(data.languageID)
+          state.status.languageName = langDetails.name
+          state.status.languageCode = langDetails.code
+          state.status.selectedText = data.text
+        },
+
+        resetStatusData: function (state) {
+          state.status.languageName = ''
+          state.status.languageCode = ''
+          state.status.selectedText = ''
         },
 
         lexicalRequestStarted (state) {
@@ -785,8 +803,7 @@ export default class UIController {
   }
 
   showStatusInfo (selectionText, languageID) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showStatusInfo(selectionText, languageID) }
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.showStatusInfo(selectionText, languageID) }
+    this.store.commit(`app/setStatusData`, { text: selectionText, languageID: languageID })
   }
 
   // TODO: Do we need this function
@@ -977,6 +994,7 @@ export default class UIController {
   }
 
   clear () {
+    this.store.commit(`app/resetStatusData`)
     this.store.commit(`app/resetDefs`)
     this.store.commit(`app/resetInflData`)
     this.store.commit(`app/resetTreebankData`)

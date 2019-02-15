@@ -40,7 +40,7 @@
         <div v-if="$store.getters['app/hasAnyDefs']">
           <div class="alpheios-panel__contentitem"
                v-for="definition in $store.state.app.definitions.short" :key="definition.ID">
-            <shortdef :definition="definition" :languageCode="data.status.languageCode"></shortdef>
+            <shortdef :definition="definition" :languageCode="$store.state.app.status.languageCode"></shortdef>
           </div>
           <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
                v-html="$store.state.app.definitions.full"></div>
