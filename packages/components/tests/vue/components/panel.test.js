@@ -89,6 +89,7 @@ describe('panel.test.js', () => {
             activeTab: 'info',
             rootClasses: [],
 
+            messages: [],
             notification: {
               visible: false,
               important: false,

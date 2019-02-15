@@ -23,28 +23,10 @@ export default class PanelModule {
       },
       data: {
         panelData: {
-          lexemes: [],
-          messages: []
+          lexemes: []
         }
       },
       methods: {
-        clearContent: function () {
-          this.panelData.messages = []
-          return this
-        },
-
-        showMessage: function (message) {
-          this.panelData.messages = [message]
-        },
-
-        appendMessage: function (message) {
-          this.panelData.messages.push(message)
-        },
-
-        clearMessages: function () {
-          this.panelData.messages = []
-        },
-
         toggle: function () {
           if (this.$options.api.app.state.isPanelOpen()) {
             this.close()

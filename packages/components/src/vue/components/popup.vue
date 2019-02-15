@@ -173,10 +173,6 @@ export default {
       type: Object,
       required: true
     },
-    messages: {
-      type: Array,
-      required: true
-    },
     lexemes: {
       type: Array,
       required: true
@@ -394,12 +390,6 @@ export default {
   },
 
   methods: {
-    clearMessages () {
-      while (this.messages.length > 0) {
-        this.messages.pop()
-      }
-    },
-
     showPanelTab (tabName) {
       this.$emit('showpaneltab', tabName)
     },

@@ -71,7 +71,7 @@
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('status')">
         <!-- Messages to be displayed in a status panel -->
-        <div v-for="message in data.messages">
+        <div v-for="message in $store.state.ui.messages">
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>
@@ -333,19 +333,6 @@ export default {
         }
       }
       return this
-    },
-
-    showMessage: function (messageHTML) {
-      this.contentAreas.messages.setContent(messageHTML)
-      this.tabGroups.contentTabs.activate('statusTab')
-    },
-
-    appendMessage: function (messageHTML) {
-      this.contentAreas.messages.appendContent(messageHTML)
-    },
-
-    clearMessages: function () {
-      this.contentAreas.messages.setContent('')
     },
 
     contentOptionChanged: function (name, value) {

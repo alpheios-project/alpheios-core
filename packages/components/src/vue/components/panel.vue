@@ -84,7 +84,7 @@
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('status')">
         <!-- Messages to be displayed in a status panel -->
-        <div v-for="message in data.messages">
+        <div v-for="message in $store.state.ui.messages">
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>

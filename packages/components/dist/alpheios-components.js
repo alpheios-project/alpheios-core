@@ -11720,19 +11720,6 @@ __webpack_require__.r(__webpack_exports__);
       return this
     },
 
-    showMessage: function (messageHTML) {
-      this.contentAreas.messages.setContent(messageHTML)
-      this.tabGroups.contentTabs.activate('statusTab')
-    },
-
-    appendMessage: function (messageHTML) {
-      this.contentAreas.messages.appendContent(messageHTML)
-    },
-
-    clearMessages: function () {
-      this.contentAreas.messages.setContent('')
-    },
-
     contentOptionChanged: function (name, value) {
       this.app.contentOptionChange(name, value)
     },
@@ -12398,10 +12385,6 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
-    messages: {
-      type: Array,
-      required: true
-    },
     lexemes: {
       type: Array,
       required: true
@@ -12619,12 +12602,6 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
-    clearMessages () {
-      while (this.messages.length > 0) {
-        this.messages.pop()
-      }
-    },
-
     showPanelTab (tabName) {
       this.$emit('showpaneltab', tabName)
     },
@@ -18563,7 +18540,7 @@ var render = function() {
               staticClass:
                 "alpheios-panel__tab-panel alpheios-panel__tab__status"
             },
-            _vm._l(_vm.data.messages, function(message) {
+            _vm._l(_vm.$store.state.ui.messages, function(message) {
               return _c("div", [
                 _c("div", { staticClass: "alpheios-panel__message" }, [
                   _vm._v(_vm._s(message))
@@ -19298,7 +19275,7 @@ var render = function() {
             ],
             staticClass: "alpheios-panel__tab-panel alpheios-panel__tab__status"
           },
-          _vm._l(_vm.data.messages, function(message) {
+          _vm._l(_vm.$store.state.ui.messages, function(message) {
             return _c("div", [
               _c("div", { staticClass: "alpheios-panel__message" }, [
                 _vm._v(_vm._s(message))
@@ -35351,6 +35328,7 @@ class UIController {
         activeTab: this.defaultTab, // A currently selected panel's tab
         rootClasses: [],
 
+        messages: [],
         // Panel and popup notifications
         notification: {
           visible: false,
@@ -35387,6 +35365,14 @@ class UIController {
           state.notification.important = false
           state.notification.showLanguageSwitcher = false
           state.notification.text = null
+        },
+
+        addMessage (state, text) {
+          state.messages.push(text)
+        },
+
+        resetMessages (state) {
+          state.messages = []
         }
       }
     })
@@ -35526,15 +35512,6 @@ class UIController {
       content += `${fullDef.text}<br>\n`
     }
     return content
-  }
-
-  message (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showMessage(message) }
-    return this
-  }
-
-  addMessage (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.appendMessage(message) }
   }
 
   addImportantMessage (message) {
@@ -35774,7 +35751,7 @@ class UIController {
   }
 
   updateWordUsageExamples (wordUsageExamplesData) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.store.commit('app/setWordUsageExamplesData', wordUsageExamplesData)
   }
 
@@ -35784,7 +35761,7 @@ class UIController {
     this.store.commit(`app/resetInflData`)
     this.store.commit(`app/resetTreebankData`)
     this.store.commit(`ui/resetNotification`)
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }
+    this.store.commit(`ui/resetMessages`)
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
     return this
   }
@@ -35938,7 +35915,7 @@ class UIController {
 
         this.setTargetRect(htmlSelector.targetRect)
         this.newLexicalRequest(textSelector.languageID)
-        this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
+        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
         this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
         this.updateLanguage(textSelector.languageID)
         this.updateWordAnnotationData(textSelector.data)
@@ -35999,25 +35976,25 @@ class UIController {
     //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
     // ]
     // }).getData()
-    this.message(this.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
   }
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
       case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
       case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.FAILED:
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
     this.store.commit('app/lexicalRequestFinished')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
   }
 
   onMorphDataReady () {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
   }
 
   onMorphDataNotFound () {
@@ -36036,7 +36013,7 @@ class UIController {
     // Update inflections data
     this.inflectionsViewSet = alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_2__["ViewSetFactory"].create(homonym, this.contentOptions.items.locale.currentValue)
     if (this.inflectionsViewSet.hasMatchingViews) {
-      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
+      this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.store.commit('app/setInflData', this.inflectionsViewSet)
   }
@@ -36050,27 +36027,27 @@ class UIController {
   }
 
   onDefinitionsReady (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateDefinitions(data.homonym)
   }
 
   onDefinitionsNotFound (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
   }
 
   onResourceQueryComplete () {
     // We don't check result status for now. We always output the same message.
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
   }
 
   onGrammarAvailable (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
     this.updateGrammar(data.url)
   }
 
   onGrammarNotFound () {
     this.updateGrammar()
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
   }
 
   onAnnotationsAvailable (data) {
@@ -40511,7 +40488,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :messages=\"messages\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"$store.state.panel.layout\" :data=\"panelData\"></component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :definitions=\"definitions\" :lexemes=\"lexemes\" :translations=\"translations\"\r\n    \t   :linkedfeatures=\"linkedFeatures\" :classes-changed=\"classesChanged\"\r\n           :data=\"popupData\" @showpaneltab=\"showPanelTab\"\r\n           @sendfeature=\"sendFeature\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"$store.state.panel.layout\" :data=\"panelData\"></component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -43695,28 +43672,10 @@ class PanelModule {
       },
       data: {
         panelData: {
-          lexemes: [],
-          messages: []
+          lexemes: []
         }
       },
       methods: {
-        clearContent: function () {
-          this.panelData.messages = []
-          return this
-        },
-
-        showMessage: function (message) {
-          this.panelData.messages = [message]
-        },
-
-        appendMessage: function (message) {
-          this.panelData.messages.push(message)
-        },
-
-        clearMessages: function () {
-          this.panelData.messages = []
-        },
-
         toggle: function () {
           if (this.$options.api.app.state.isPanelOpen()) {
             this.close()
@@ -43819,7 +43778,6 @@ class PopupModule {
         popup: _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
       },
       data: {
-        messages: [],
         lexemes: [],
         definitions: {},
 
@@ -43873,23 +43831,6 @@ class PopupModule {
       methods: {
         setTargetRect: function (targetRect) {
           this.popupData.targetRect = targetRect
-        },
-
-        showMessage: function (message) {
-          this.messages = [message]
-          return this
-        },
-
-        appendMessage: function (message) {
-          this.messages.push(message)
-          return this
-        },
-
-        clearMessages: function () {
-          while (this.messages.length > 0) {
-            this.messages.pop()
-          }
-          return this
         },
 
         newLexicalRequest: function () {

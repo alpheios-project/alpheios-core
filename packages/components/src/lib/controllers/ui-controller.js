@@ -566,6 +566,7 @@ export default class UIController {
         activeTab: this.defaultTab, // A currently selected panel's tab
         rootClasses: [],
 
+        messages: [],
         // Panel and popup notifications
         notification: {
           visible: false,
@@ -602,6 +603,14 @@ export default class UIController {
           state.notification.important = false
           state.notification.showLanguageSwitcher = false
           state.notification.text = null
+        },
+
+        addMessage (state, text) {
+          state.messages.push(text)
+        },
+
+        resetMessages (state) {
+          state.messages = []
         }
       }
     })
@@ -741,15 +750,6 @@ export default class UIController {
       content += `${fullDef.text}<br>\n`
     }
     return content
-  }
-
-  message (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.showMessage(message) }
-    return this
-  }
-
-  addMessage (message) {
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.appendMessage(message) }
   }
 
   addImportantMessage (message) {
@@ -989,7 +989,7 @@ export default class UIController {
   }
 
   updateWordUsageExamples (wordUsageExamplesData) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.store.commit('app/setWordUsageExamplesData', wordUsageExamplesData)
   }
 
@@ -999,7 +999,7 @@ export default class UIController {
     this.store.commit(`app/resetInflData`)
     this.store.commit(`app/resetTreebankData`)
     this.store.commit(`ui/resetNotification`)
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }
+    this.store.commit(`ui/resetMessages`)
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
     return this
   }
@@ -1153,7 +1153,7 @@ export default class UIController {
 
         this.setTargetRect(htmlSelector.targetRect)
         this.newLexicalRequest(textSelector.languageID)
-        this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
+        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
         this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
         this.updateLanguage(textSelector.languageID)
         this.updateWordAnnotationData(textSelector.data)
@@ -1214,25 +1214,25 @@ export default class UIController {
     //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
     // ]
     // }).getData()
-    this.message(this.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
   }
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
       case LexicalQuery.resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
       case LexicalQuery.resultStatus.FAILED:
         this.showLanguageInfo(data.homonym)
-        this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
     this.store.commit('app/lexicalRequestFinished')
     if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
   }
 
   onMorphDataReady () {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
   }
 
   onMorphDataNotFound () {
@@ -1251,7 +1251,7 @@ export default class UIController {
     // Update inflections data
     this.inflectionsViewSet = ViewSetFactory.create(homonym, this.contentOptions.items.locale.currentValue)
     if (this.inflectionsViewSet.hasMatchingViews) {
-      this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
+      this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.store.commit('app/setInflData', this.inflectionsViewSet)
   }
@@ -1265,27 +1265,27 @@ export default class UIController {
   }
 
   onDefinitionsReady (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateDefinitions(data.homonym)
   }
 
   onDefinitionsNotFound (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
   }
 
   onResourceQueryComplete () {
     // We don't check result status for now. We always output the same message.
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
   }
 
   onGrammarAvailable (data) {
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
     this.updateGrammar(data.url)
   }
 
   onGrammarNotFound () {
     this.updateGrammar()
-    this.addMessage(this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
   }
 
   onAnnotationsAvailable (data) {

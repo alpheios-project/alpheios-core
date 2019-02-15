@@ -67,6 +67,7 @@ describe('popup.test.js', () => {
           state: {
             rootClasses: [],
 
+            messages: [],
             notification: {
               visible: false,
               important: false,

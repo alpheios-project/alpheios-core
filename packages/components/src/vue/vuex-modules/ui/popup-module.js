@@ -21,7 +21,6 @@ export default class PopupModule {
         popup: Popup
       },
       data: {
-        messages: [],
         lexemes: [],
         definitions: {},
 
@@ -75,23 +74,6 @@ export default class PopupModule {
       methods: {
         setTargetRect: function (targetRect) {
           this.popupData.targetRect = targetRect
-        },
-
-        showMessage: function (message) {
-          this.messages = [message]
-          return this
-        },
-
-        appendMessage: function (message) {
-          this.messages.push(message)
-          return this
-        },
-
-        clearMessages: function () {
-          while (this.messages.length > 0) {
-            this.messages.pop()
-          }
-          return this
         },
 
         newLexicalRequest: function () {
