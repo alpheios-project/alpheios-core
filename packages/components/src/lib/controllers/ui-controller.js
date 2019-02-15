@@ -347,6 +347,11 @@ export default class UIController {
       state: {
         currentLanguageID: undefined,
         currentLanguageName: undefined,
+        homonym: null,
+        definitions: {
+          full: '',
+          short: []
+        },
         inflectionsWaitState: false, // Whether there is a lexical query in progress
         inflectionsViewSet: null,
         grammarRes: null,
@@ -360,8 +365,56 @@ export default class UIController {
       },
 
       getters: {
+        hasAnyDefs (state) {
+          return Boolean(state.definitions.full || state.definitions.short.length > 0)
+        },
+
         hasInflData (state) {
           return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
+        },
+
+        hasShortDefs (state) {
+
+        },
+
+        shortDefs: (state) => (lemmaID) => {
+          let definitions = []
+          const lexeme = state.homonym.lexemes.find(l => l.lemma.ID === lemmaID)
+          if (lexeme && lexeme.meaning.shortDefs.length > 0) {
+            for (const def of lexeme.meaning.shortDefs) {
+              // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
+              // object without a provider if it has the same provider as the morphology info
+              if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
+                definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
+              } else {
+                definitions.push(def)
+              }
+            }
+          } else if (Object.entries(lexeme.lemma.features).length > 0) {
+            definitions = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
+          }
+          console.log(`shortDefsByLemmaID, returning`, definitions)
+          return definitions
+        },
+
+        shortDefsByLemmaID: (state) => (lemmaID) => {
+          let definitions = []
+          const lexeme = state.homonym.lexemes.find(l => l.lemma.ID === lemmaID)
+          if (lexeme && lexeme.meaning.shortDefs.length > 0) {
+            for (const def of lexeme.meaning.shortDefs) {
+              // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
+              // object without a provider if it has the same provider as the morphology info
+              if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
+                definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
+              } else {
+                definitions.push(def)
+              }
+            }
+          } else if (Object.entries(lexeme.lemma.features).length > 0) {
+            definitions = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
+          }
+          console.log(`shortDefsByLemmaID, returning`, definitions)
+          return definitions
         },
 
         /**
@@ -400,6 +453,28 @@ export default class UIController {
 
         lexicalRequestFinished (state) {
           state.inflectionsWaitState = false
+        },
+
+        setHomonym (state, homonym) {
+          state.homonym = homonym
+        },
+
+        /**
+         * Appends one or several short definitions to the store
+         * @param state
+         * @param {Array} shortDefs - A single short definition or an array of short definitions
+         */
+        appendShortDefs (state, shortDefs) {
+          state.definitions.short.push(...shortDefs)
+        },
+
+        appendFullDef (state, fullDef) {
+          state.definitions.full += fullDef
+        },
+
+        resetDefs (state) {
+          state.definitions.full = ''
+          state.definitions.short = []
         },
 
         setInflData (state, inflectionsViewSet = null) {
@@ -620,7 +695,7 @@ export default class UIController {
     return window.getComputedStyle(htmlElement, null).getPropertyValue('font-size') === '16px'
   }
 
-  formatFullDefinitions (lexeme) {
+  static formatFullDefinitions (lexeme) {
     let content = `<h3>${lexeme.lemma.word}</h3>\n`
     for (let fullDef of lexeme.meaning.fullDefs) {
       content += `${fullDef.text}<br>\n`
@@ -717,7 +792,11 @@ export default class UIController {
   }
 
   updateMorphology (homonym) {
+    console.log(`Update morphology`)
+    this.store.commit(`app/setHomonym`, homonym)
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
+    console.log(`Homonym sorted`)
+    this.store.commit(`app/setHomonym`, homonym)
     if (this.hasUiModule('popup')) {
       const popup = this.getUiModule('popup')
       popup.vi.lexemes = homonym.lexemes
@@ -730,6 +809,8 @@ export default class UIController {
     }
     if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.lexemes = homonym.lexemes }
     this.updateProviders(homonym)
+    console.log(`Providers updated`)
+    this.store.commit(`app/setHomonym`, homonym)
   }
 
   updateProviders (homonym) {
@@ -766,13 +847,8 @@ export default class UIController {
   }
 
   updateDefinitions (homonym) {
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.panelData.fullDefinitions = ''
-      panel.vi.panelData.shortDefinitions = []
-    }
+    this.store.commit('app/resetDefs')
     let definitions = {}
-    // let defsList = []
     let hasFullDefs = false
     for (let lexeme of homonym.lexemes) {
       if (lexeme.meaning.shortDefs.length > 0) {
@@ -786,20 +862,17 @@ export default class UIController {
             definitions[lexeme.lemma.ID].push(def)
           }
         }
-        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.shortDefinitions.push(...lexeme.meaning.shortDefs) }
+        this.store.commit('app/appendShortDefs', lexeme.meaning.shortDefs)
         this.updateProviders(homonym)
       } else if (Object.entries(lexeme.lemma.features).length > 0) {
         definitions[lexeme.lemma.ID] = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
       }
 
       if (lexeme.meaning.fullDefs.length > 0) {
-        if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.fullDefinitions += this.formatFullDefinitions(lexeme) }
+        this.store.commit('app/appendFullDef', this.constructor.formatFullDefinitions(lexeme))
         hasFullDefs = true
       }
     }
-
-    console.log(`Full definitions are: `, this.getUiModule('panel').vi.panelData.fullDefinitions)
-    console.log(`Short definitions are: `, this.getUiModule('panel').vi.panelData.shortDefinitions)
 
     // Populate a popup
     if (this.hasUiModule('popup')) {
@@ -866,6 +939,7 @@ export default class UIController {
   }
 
   clear () {
+    this.store.commit(`app/resetDefs`)
     this.store.commit(`app/resetInflData`)
     this.store.commit(`app/resetTreebankData`)
     if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.clearContent() }

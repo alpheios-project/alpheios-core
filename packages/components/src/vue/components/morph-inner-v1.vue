@@ -51,8 +51,9 @@
 
     <div class="alpheios-morph__definition_list" v-if="definitions.length > 0">
       <!-- <p class="block_title">definitions</p> -->
-      <div :data-lemmakey="lex.lemma.ID" class="alpheios-morph__definition" v-for="(definition, dindex) in definitions">
-        <span class="definition_index" v-if="definitions.length > 1">{{ definitionIndex(dindex) }}</span>
+      <div :data-lemmakey="lex.lemma.ID" class="alpheios-morph__definition"
+           v-for="(definition, dindex) in $store.getters['app/shortDefsByLemmaID'](lex.lemma.ID)" :key="definition.ID">
+        <span class="definition_index" v-if="$store.getters['app/shortDefsByLemmaID'](lex.lemma.ID).length > 1">{{ definitionIndex(dindex) }}</span>
         <shortdef :definition="definition"></shortdef>
       </div>
     </div>

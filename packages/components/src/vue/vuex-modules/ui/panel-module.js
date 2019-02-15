@@ -24,8 +24,6 @@ export default class PanelModule {
       data: {
         panelData: {
           lexemes: [],
-          shortDefinitions: [],
-          fullDefinitions: '',
           messages: [],
           notification: {
             visible: false,
@@ -42,8 +40,6 @@ export default class PanelModule {
       },
       methods: {
         clearContent: function () {
-          this.panelData.shortDefinitions = []
-          this.panelData.fullDefinitions = ''
           this.panelData.messages = []
           this.clearNotifications()
           this.clearStatus()

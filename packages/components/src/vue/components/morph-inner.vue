@@ -34,7 +34,7 @@
                            :type="types.note" @sendfeature="sendFeature"/>
     </div>
 
-    <div :data-lemmakey="lex.lemma.ID" class="alpheios-morph__definition" v-for="definition in definitions">
+    <div :data-lemmakey="lex.lemma.ID" class="alpheios-morph__definition" v-for="definition in $store.getters['app/shortDefsByLemmaID'](lex.lemma.ID)">
       <shortdef :definition="definition"></shortdef>
     </div>
     <!-- definitions-->
@@ -141,7 +141,7 @@ export default {
     definitions: {
       type: Array,
       required: false,
-      default: () => { [] }
+      default: () => { return [] }
     },
     linkedfeatures: {
       type: Array,

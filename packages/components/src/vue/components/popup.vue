@@ -603,6 +603,13 @@ export default {
         this.resetPopupDimensions()
       }
     })
+
+    console.log(`Setting a homonym watcher`)
+    this.$store.watch((state, getters) => state.app.homonym, (oldValue, newValue) => {
+      console.log('Homonym has changed')
+      console.log(oldValue)
+      console.log(newValue)
+    })
   },
 
   beforeDestroy () {

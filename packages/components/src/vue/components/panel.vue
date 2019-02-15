@@ -50,15 +50,17 @@
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
-        <div
-            v-if="showDefinitionsPlaceholder">
+        <div v-if="$store.getters['app/hasAnyDefs']">
+          <div class="alpheios-panel__contentitem"
+               v-for="definition in $store.state.app.definitions.short" :key="definition.ID">
+            <shortdef :definition="definition" :languageCode="data.status.languageCode"></shortdef>
+          </div>
+          <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
+               v-html="$store.state.app.definitions.full"></div>
+        </div>
+        <div v-else>
           {{ l10n.getText('PLACEHOLDER_DEFINITIONS') }}
         </div>
-        <div class="alpheios-panel__contentitem" v-for="definition in data.shortDefinitions">
-          <shortdef :definition="definition" :languageCode="data.status.languageCode"></shortdef>
-        </div>
-        <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
-             v-html="data.fullDefinitions"></div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
            v-if="$store.getters[`app/hasInflData`]" v-show="$store.getters['ui/isActiveTab']('inflections') && $store.state.app.inflectionsViewSet">
