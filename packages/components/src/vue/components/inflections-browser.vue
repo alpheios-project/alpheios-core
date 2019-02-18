@@ -453,6 +453,7 @@ export default {
   },
   storeModules: ['app'], // Store modules that are required by this component
   mixins: [DependencyCheck],
+  lexrqStartedUnwatch: null,
 
   data: function () {
     return {
@@ -551,6 +552,15 @@ export default {
     if (typeof this.$el.querySelector === 'function') {
       this.htmlElements.content = this.$el
     }
+
+    this.$options.lexrqStartedUnwatch = this.$store.watch((state) => state.app.lexicalRequest.startTime, () => {
+      this.inflBrowserTablesCollapsed = true
+    })
+  },
+
+  beforeDestroy () {
+    // Teardown the watch function
+    this.$options.lexrqStartedUnwatch()
   }
 }
 </script>

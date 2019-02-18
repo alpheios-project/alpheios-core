@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('user')">
-        <user-auth :auth="data.auth"></user-auth>
+        <user-auth></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
            v-if="$store.getters['app/hasWordUsageExamplesData']" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
@@ -247,12 +247,6 @@ export default {
       panelWidth: null
     }
   },
-  props: {
-    data: {
-      type: Object,
-      required: true
-    }
-  },
 
   computed: {
     rootClasses () {
@@ -348,9 +342,6 @@ export default {
     },
 
     setContentWidth: function (dataObj) {
-      if (this.data === undefined) {
-        return
-      }
       if (dataObj.width === 'auto') {
         this.panelWidth = null
         return
@@ -427,9 +418,6 @@ export default {
 
   mounted: function () {
     // Determine paddings and sidebar width for calculation of a panel width to fit content
-    if (this.data === undefined) {
-      return
-    }
     if (typeof this.$el.querySelector === 'function') {
       this.calcWidthPaddings()
 

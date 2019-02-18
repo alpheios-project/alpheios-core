@@ -2,14 +2,12 @@
   <div>
     <div class="alpheios-morph__lexemes morph-inner-v1">
       <morph-inner
-          :count="lexemes.length"
+          :count="count"
           :definitions="definitions[lex.lemma.ID] ? definitions[lex.lemma.ID] : []"
           :index="index"
           :key="lex.lemma.ID"
           :lex="lex"
           :linkedfeatures="linkedfeatures"
-          :morphDataReady="morphDataReady"
-          :translations="translations"
           @sendfeature="sendFeature"
           v-for="(lex,index) in lexemes"
           v-show="showLexeme(lex)"
@@ -18,16 +16,17 @@
   </div>
 </template>
 <script>
-import MorphInner from './morph-inner-v1.vue'
+// import { LanguageModelFactory } from 'alpheios-data-models'
+import MorphInner from './morph-inner.vue'
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Morph',
   components: { morphInner: MorphInner },
+  storeModules: ['app'],
+  mixins: [DependencyCheck],
   props: {
-    lexemes: {
-      type: Array,
-      required: true
-    },
     definitions: {
       type: Object,
       required: false,
@@ -37,16 +36,21 @@ export default {
       type: Array,
       required: false,
       default: () => []
-    },
-    translations: {
-      type: Object,
-      required: false,
-      default: () => {}
-    },
-    morphDataReady: {
-      type: Boolean,
-      required: true
     }
+  },
+  computed: {
+    lexemes () {
+      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes : []
+    },
+
+    count () {
+      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes.length : 0
+    }
+
+    // TODO: This is not used now. Will we need it in the future?
+    /* linkedFeatures () {
+      return LanguageModelFactory.getLanguageModel(this.$store.app.homonym.lexemes[0].lemma.languageID).grammarFeatures()
+    } */
   },
   methods: {
     showLexeme (lex) {

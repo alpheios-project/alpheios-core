@@ -21,12 +21,8 @@ export default class PopupModule {
         popup: Popup
       },
       data: {
-        lexemes: [],
         definitions: {},
 
-        translations: {},
-
-        linkedFeatures: [],
         popupData: {
           fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
           // Default popup position, with units
@@ -52,21 +48,7 @@ export default class PopupModule {
           viewportMargin: 5,
 
           // A position of a word selection
-          targetRect: {},
-
-          /*
-          A date and time when a new request was started, in milliseconds since 1970-01-01. It is used within a
-          component to identify a new request coming in and to distinguish it from data updates of the current request.
-           */
-          requestStartTime: 0,
-          defDataReady: false,
-          morphDataReady: false,
-
-          translationsDataReady: false,
-
-          showProviders: false,
-          updates: 0,
-          providers: []
+          targetRect: {}
         },
         currentPopupComponent: this.config.popupComponent,
         classesChanged: 0
@@ -76,25 +58,8 @@ export default class PopupModule {
           this.popupData.targetRect = targetRect
         },
 
-        newLexicalRequest: function () {
-          this.popupData.requestStartTime = Date.now()
-          if (this.$options.api.ui.hasModule('panel')) {
-            this.$options.api.ui.getModule('panel').vi.panelData.inflBrowserTablesCollapsed = true // Collapse all inflection tables in a browser
-          }
-        },
-
         clearContent: function () {
           this.definitions = {}
-          this.translations = {}
-
-          this.lexemes = []
-          this.popupData.providers = []
-          this.popupData.defDataReady = false
-          this.popupData.morphDataReady = false
-
-          this.popupData.translationsDataReady = false
-
-          this.popupData.showProviders = false
           return this
         },
 

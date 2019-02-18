@@ -1,10 +1,8 @@
 <div id="alpheios-popup" data-alpheios-ignore="all">
-    <component v-bind:is="currentPopupComponent" :definitions="definitions" :lexemes="lexemes" :translations="translations"
-    	   :linkedfeatures="linkedFeatures" :classes-changed="classesChanged"
-           :data="popupData" @showpaneltab="showPanelTab"
-           @sendfeature="sendFeature">
+    <component v-bind:is="currentPopupComponent" :definitions="definitions"
+     :classes-changed="classesChanged" :data="popupData" @showpaneltab="showPanelTab" @sendfeature="sendFeature">
     </component>
 </div>
 <div id="alpheios-panel" data-alpheios-ignore="all">
-    <component v-bind:is="$store.state.panel.layout" :data="panelData"></component>
+    <component v-bind:is="$store.state.panel.layout"></component>
 </div>

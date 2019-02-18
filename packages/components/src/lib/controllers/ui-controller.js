@@ -112,10 +112,6 @@ export default class UIController {
 
     // Register data modules
     uiController.registerDataModule(L10nModule, Locales.en_US, Locales.bundleArr())
-    /* It should have an app or background authenticator as a second parameter or it will not work,
-     * This registration shall be done in the code that creates a UI controller because
-     * it is the owner of
-     *  */
 
     /*
     The second parameter of an AuthModule is environment specific.
@@ -357,8 +353,16 @@ export default class UIController {
           full: '',
           short: []
         },
+        defDataReady: false,
+        lexicalRequest: {
+          startTime: 0, // A time when the last lexical request is started, in ms
+          endTime: 0, // A time when the last lexical request is started, in ms
+          outcome: null // A result of the completed lexical request
+        },
         inflectionsWaitState: false, // Whether there is a lexical query in progress
         inflectionsViewSet: null,
+        morphDataReady: false,
+        translationsDataReady: false,
         grammarRes: null,
         treebankData: {
           word: {},
@@ -366,7 +370,8 @@ export default class UIController {
         },
         wordUsageExamplesData: null,
         wordLists: null,
-        wordListUpdated: 0 // To notify word list panel about data update. TODO: Can we monitor data instead?
+        wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
+        providers: [] // A list of resource providers
       },
 
       getters: {
@@ -422,6 +427,20 @@ export default class UIController {
           return definitions
         },
 
+        hasMorphData (state) {
+          if (!state.homonym || !state.homonym.lexemes) {
+            return false
+          }
+          const lexemes = state.homonym.lexemes
+          if (Array.isArray(lexemes) && lexemes.length > 0 &&
+            (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
+              lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
+          ) {
+            return true
+          }
+          return false
+        },
+
         /**
          * Identifies wither grammar resource(s) are available for the current state.
          * @param state - A local state.
@@ -467,10 +486,17 @@ export default class UIController {
         lexicalRequestStarted (state) {
           state.inflectionsWaitState = true
           state.wordUsageExamplesData = null
+          state.defDataReady = false
+          state.morphDataReady = false
+          state.translationsDataReady = false
+          state.providers = []
+          state.lexicalRequest.startTime = Date.now()
         },
 
         lexicalRequestFinished (state) {
           state.inflectionsWaitState = false
+          state.morphDataReady = true
+          state.lexicalRequest.endTime = Date.now()
         },
 
         setHomonym (state, homonym) {
@@ -534,6 +560,31 @@ export default class UIController {
         setWordLists (state, wordLists) {
           state.wordLists = wordLists
           state.wordListUpdated++
+        },
+
+        /**
+         * @param {Object} state - State object of the store
+         * @param {ResourceProvider[]} providers - An array of resource provider objects
+         */
+        setProviders (state, providers) {
+          state.providers = providers
+        },
+
+        setDefDataReady (state, value = true) {
+          state.defDataReady = value
+        },
+
+        setMorphDataReady (state, value = true) {
+          state.morphDataReady = value
+        },
+
+        setTranslDataReady (state, value = true) {
+          state.translationsDataReady = value
+          if (value) {
+            // This code has been transferred from popup.vue.
+            // TODO: do we need this functionality?
+            // this.logger.log(`${Date.now()}: translation data became available`, this.translations)
+          }
         }
       }
     })
@@ -841,30 +892,16 @@ export default class UIController {
     this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
     this.store.commit('app/resetInflData')
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.newLexicalRequest() }
     this.clear().open().changeTab('definitions')
     return this
   }
 
   updateMorphology (homonym) {
     console.log(`Update morphology`)
-    this.store.commit(`app/setHomonym`, homonym)
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
-    console.log(`Homonym sorted`)
     this.store.commit(`app/setHomonym`, homonym)
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.lexemes = homonym.lexemes
-      if (homonym.lexemes.length > 0) {
-        // TODO we could really move this into the morph component and have it be calculated for each lemma in case languages are multiple
-        popup.vi.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
-      }
-      popup.vi.popupData.morphDataReady = true
-      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
-    }
-    if (this.hasUiModule('panel')) { this.getUiModule('panel').vi.panelData.lexemes = homonym.lexemes }
+    this.store.commit('app/setMorphDataReady')
     this.updateProviders(homonym)
-    console.log(`Providers updated`)
     this.store.commit(`app/setHomonym`, homonym)
   }
 
@@ -885,7 +922,7 @@ export default class UIController {
         providers.set(l.lemma.translation.provider, 1)
       }
     })
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.providers = Array.from(providers.keys()) }
+    this.store.commit(`app/setProviders`, Array.from(providers.keys()))
   }
 
   /**
@@ -933,24 +970,12 @@ export default class UIController {
     if (this.hasUiModule('popup')) {
       const popup = this.getUiModule('popup')
       popup.vi.definitions = definitions
-      popup.vi.popupData.defDataReady = hasFullDefs
-      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
     }
+    this.store.commit('app/setDefDataReady', hasFullDefs)
   }
 
   updateTranslations (homonym) {
-    let translations = {}
-    for (let lexeme of homonym.lexemes) {
-      if (lexeme.lemma.translation !== undefined) {
-        translations[lexeme.lemma.ID] = lexeme.lemma.translation
-      }
-    }
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.translations = translations
-      popup.vi.popupData.translationsDataReady = true
-      popup.vi.popupData.updates = popup.vi.popupData.updates + 1
-    }
+    this.store.commit('app/setTranslDataReady')
     this.updateProviders(homonym)
   }
 
@@ -1228,7 +1253,6 @@ export default class UIController {
         this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
     this.store.commit('app/lexicalRequestFinished')
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.popupData.morphDataReady = true }
   }
 
   onMorphDataReady () {

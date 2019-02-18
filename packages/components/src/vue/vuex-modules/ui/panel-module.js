@@ -21,11 +21,6 @@ export default class PanelModule {
         panel: Panel, // A desktop version of a panel
         compactPanel: CompactPanel // A mobile version of a panel
       },
-      data: {
-        panelData: {
-          lexemes: []
-        }
-      },
       methods: {
         toggle: function () {
           if (this.$options.api.app.state.isPanelOpen()) {

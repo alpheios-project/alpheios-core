@@ -20,9 +20,8 @@
 
       <div class="alpheios-popup__button-area" v-if="data">
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
-                      v-show="data.defDataReady">
-          <button @click="showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions"
-                  v-show="data.defDataReady">
+                      v-show="$store.state.app.defDataReady">
+          <button @click="showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions">
             {{ l10n.getText('LABEL_POPUP_DEFINE') }}
           </button>
         </alph-tooltip>
@@ -62,28 +61,26 @@
     </div>
 
     <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
-         v-show="!morphDataReady && !noLanguage">
+         v-show="!$store.state.app.morphDataReady && !noLanguage">
       <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
     </div>
 
     <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
-         v-show="noLanguage && !morphDataReady">
+         v-show="noLanguage && !$store.state.app.morphDataReady">
       {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
     </div>
     <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
-         v-show="!hasMorphData && morphDataReady && !noLanguage">
+         v-show="!$store.getters['app/hasMorphData'] && $store.state.app.morphDataReady && !noLanguage">
       {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
     </div>
     <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
-         v-show="morphDataReady && hasMorphData">
-      <morph :definitions="definitions" :id="morphComponentID" :lexemes="lexemes" :linkedfeatures="linkedfeatures"
-             :morphDataReady="morphDataReady && hasMorphData" :translations="translations"
-             @sendfeature="sendFeature">
+         v-show="$store.state.app.morphDataReady && $store.getters['app/hasMorphData']">
+      <morph :definitions="definitions" :id="morphComponentID" @sendfeature="sendFeature">
       </morph>
 
-      <div class="alpheios-popup__morph-cont-providers" v-if="data && showProviders">
+      <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
         <div class="alpheios-popup__morph-cont-providers-header">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
-        <div class="alpheios-popup__morph-cont-providers-source" v-for="p in data.providers">
+        <div class="alpheios-popup__morph-cont-providers-source" v-for="p in $store.state.app.providers">
           {{ p.toString() }}
         </div>
       </div>
@@ -105,7 +102,7 @@
                :show-title="false" @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
-    <lookup :clearLookupText="hasMorphData && morphDataReady" :parentLanguage="currentLanguageName"></lookup>
+    <lookup :clearLookupText="$store.getters['app/hasMorphData'] && $store.state.app.morphDataReady" :parentLanguage="$store.state.app.currentLanguageName"></lookup>
   </div>
 </template>
 <script>
@@ -141,6 +138,10 @@ export default {
   directives: {
     onClickaway: onClickaway
   },
+  // Custom props to store unwatch functions
+  visibleUnwatch: null,
+  lexrqStartedUnwatch: null,
+
   data: function () {
     return {
       resizable: true,
@@ -165,7 +166,9 @@ export default {
       resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
       resizeCount: 0, // Should not exceed `resizeCountMax`
       resizeCountMax: 100, // Max number of resize iteration
-      updateDimensionsTimeout: null
+      updateDimensionsTimeout: null,
+
+      showProviders: false
     }
   },
   props: {
@@ -173,19 +176,7 @@ export default {
       type: Object,
       required: true
     },
-    lexemes: {
-      type: Array,
-      required: true
-    },
     definitions: {
-      type: Object,
-      required: true
-    },
-    linkedfeatures: {
-      type: Array,
-      required: true
-    },
-    translations: {
       type: Object,
       required: true
     },
@@ -217,41 +208,11 @@ export default {
     logger: function () {
       return Logger.getLogger(this.verboseMode)
     },
-    requestStartTime: function () {
-      return (this.data) ? this.data.requestStartTime : null
-    },
-    defDataReady: function () {
-      return (this.data && this.data.defDataReady) ? this.data.defDataReady : false
-    },
-    translationsDataReady: function () {
-      return (this.data && this.data.translationsDataReady) ? this.data.translationsDataReady : false
-    },
-    hasMorphData: function () {
-      if (Array.isArray(this.lexemes) && this.lexemes.length > 0 &&
-          (this.lexemes[0].lemma.principalParts.length > 0 || this.lexemes[0].inflections.length > 0 || this.lexemes[0].inflections.length > 0 ||
-            this.lexemes[0].meaning.fullDefs.length > 0 || this.lexemes[0].meaning.shortDefs.length > 0)
-      ) {
-        return true
-      }
-      return false
-    },
-    morphDataReady: function () {
-      return (this.data && this.data.morphDataReady) ? this.data.morphDataReady : false
-    },
     noLanguage: function () {
-      return (this.data) ? this.$store.state.app.currentLanguageName === undefined : false
-    },
-    currentLanguageName: function () {
-      return (this.data) ? this.$store.state.app.currentLanguageName : null
+      return Boolean(!this.$store.state.app.currentLanguageName)
     },
     providersLinkText: function () {
-      return (this.data) ? (this.data.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')) : ''
-    },
-    showProviders: function () {
-      return (this.data) ? this.data.showProviders : null
-    },
-    updates: function () {
-      return (this.data) ? this.data.updates : null
+      return this.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')
     },
 
     positionLeftDm: function () {
@@ -399,8 +360,8 @@ export default {
     },
 
     switchProviders: function () {
-      this.data.showProviders = !this.data.showProviders
-      if (this.data.showProviders) {
+      this.showProviders = !this.showProviders
+      if (this.showProviders) {
         // Show credits info
         this.$nextTick(() => {
           let container = this.$el.querySelector(`#${this.lexicalDataContainerID}`)
@@ -587,6 +548,14 @@ export default {
       }
     })
 
+    this.$options.lexrqStartedUnwatch = this.$store.watch((state, getters) => state.app.lexicalRequest.startTime, (value) => {
+      this.logger.log(`Request start time has been updated`)
+      this.logger.log(`Popup position is ${this.settings.contentOptions.items.popupPosition.currentValue}`)
+      // There is a new request coming in, reset popup dimensions
+      this.resetPopupDimensions()
+      this.showProviders = false
+    })
+
     console.log(`Setting a homonym watcher`)
     this.$store.watch((state, getters) => state.app.homonym, (oldValue, newValue) => {
       console.log('Homonym has changed')
@@ -598,6 +567,7 @@ export default {
   beforeDestroy () {
     // Teardown the watch function
     this.$options.visibleUnwatch()
+    this.$options.lexrqStartedUnwatch()
   },
 
   updated () {
@@ -614,20 +584,6 @@ export default {
       this.updateDimensionsTimeout = setTimeout(function () {
         vm.updatePopupDimensions()
       }, timeoutDuration)
-    }
-  },
-
-  watch: {
-    requestStartTime () {
-      this.logger.log(`Request start time has been updated`)
-      this.logger.log(`Popup position is ${this.settings.contentOptions.items.popupPosition.currentValue}`)
-      // There is a new request coming in, reset popup dimensions
-      this.resetPopupDimensions()
-    },
-
-    translationsDataReady: function (value) {
-      let time = Date.now()
-      this.logger.log(`${time}: translation data became available`, this.translations)
     }
   }
 }

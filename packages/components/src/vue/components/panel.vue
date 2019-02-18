@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('user')">
-        <user-auth :auth="data.auth"></user-auth>
+        <user-auth></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
            v-if="$store.getters['app/hasWordUsageExamplesData']" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
