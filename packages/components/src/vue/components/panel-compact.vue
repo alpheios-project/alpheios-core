@@ -311,7 +311,6 @@ export default {
   },
   methods: {
     menuItemClicked () {
-      console.log(`menuItemClicked`)
       this.menuVisible = !this.menuVisible
     },
 

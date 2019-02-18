@@ -118,17 +118,9 @@ describe('popup.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
 
     expect(cmp.vm.classesChanged).toEqual(0)
-    expect(cmp.vm.requestStartTime).toBeNull()
-    expect(cmp.vm.inflDataReady).toBeFalsy()
-    expect(cmp.vm.defDataReady).toBeFalsy()
-    expect(cmp.vm.translationsDataReady).toBeFalsy()
-    expect(cmp.vm.morphDataReady).toBeFalsy()
     // TODO: fix this test
     // expect(cmp.vm.noLanguage).toBeTruthy()
     // expect(cmp.vm.currentLanguageName).toBeUndefined()
-    expect(cmp.vm.providersLinkText).toEqual('')
-    expect(cmp.vm.showProviders).toBeNull()
-    expect(cmp.vm.updates).toBeNull()
   })
 
   it.skip('2 Popup - render with children components (min requirements)', async () => {

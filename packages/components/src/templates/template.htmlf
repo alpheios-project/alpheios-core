@@ -1,5 +1,5 @@
 <div id="alpheios-popup" data-alpheios-ignore="all">
-    <component v-bind:is="currentPopupComponent" :definitions="definitions"
+    <component v-bind:is="currentPopupComponent"
      :classes-changed="classesChanged" :data="popupData" @showpaneltab="showPanelTab" @sendfeature="sendFeature">
     </component>
 </div>

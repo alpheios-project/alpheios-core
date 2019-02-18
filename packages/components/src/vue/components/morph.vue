@@ -3,7 +3,6 @@
     <div class="alpheios-morph__lexemes morph-inner-v1">
       <morph-inner
           :count="count"
-          :definitions="definitions[lex.lemma.ID] ? definitions[lex.lemma.ID] : []"
           :index="index"
           :key="lex.lemma.ID"
           :lex="lex"
@@ -27,11 +26,6 @@ export default {
   storeModules: ['app'],
   mixins: [DependencyCheck],
   props: {
-    definitions: {
-      type: Object,
-      required: false,
-      default: () => {}
-    },
     linkedfeatures: {
       type: Array,
       required: false,

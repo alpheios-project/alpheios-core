@@ -52,8 +52,8 @@
     <div class="alpheios-morph__definition_list" v-if="definitions.length > 0">
       <!-- <p class="block_title">definitions</p> -->
       <div :data-lemmakey="lex.lemma.ID" class="alpheios-morph__definition"
-           v-for="(definition, dindex) in $store.getters['app/shortDefsByLemmaID'](lex.lemma.ID)" :key="definition.ID">
-        <span class="definition_index" v-if="$store.getters['app/shortDefsByLemmaID'](lex.lemma.ID).length > 1">{{ definitionIndex(dindex) }}</span>
+           v-for="(definition, dindex) in definitions" :key="definition.ID">
+        <span class="definition_index" v-if="definitions.length > 1">{{ definitionIndex(dindex) }}</span>
         <shortdef :definition="definition"></shortdef>
       </div>
     </div>
@@ -88,7 +88,7 @@
           <div class="alpheios-morph__inflgroup" v-for="group in inflset.inflections">
             <span v-if="group.groupingKey.isCaseInflectionSet">
               <inflectionattribute :data="group.groupingKey" :decorators="['abbreviate']" :grouplevel="2"
-                                   :linkedfeatures="linkedfeatures" :messages="messages" :type="types.number"
+                                   :linkedfeaturfes="linkedfeatures" :messages="messages" :type="types.number"
                                    @sendfeature="sendFeature"/>
               <inflectionattribute :data="group.groupingKey" :decorators="['abbreviate']" :grouplevel="2"
                                    :linkedfeatures="linkedfeatures" :messages="messages" :type="types.tense"
@@ -153,7 +153,7 @@
   </div><!--alpheios-morph__dictentry-->
 </template>
 <script>
-import { Feature, LanguageModelFactory } from 'alpheios-data-models'
+import { Feature, Definition, LanguageModelFactory } from 'alpheios-data-models'
 import ShortDef from './shortdef.vue'
 import InflectionAttribute from './infl-attribute.vue'
 import LemmaTranslation from './lemma-translation.vue'
@@ -171,6 +171,7 @@ export default {
   storeModules: ['app'],
   mixins: [DependencyCheck],
   props: {
+    // This is a current Lexeme object
     lex: {
       type: Object,
       required: true
@@ -183,21 +184,11 @@ export default {
       type: Number,
       required: true
     },
-    definitions: {
-      type: Array,
-      required: false,
-      default: () => []
-    },
     linkedfeatures: {
       type: Array,
       required: false,
       default: () => []
     },
-/*    translations: {
-      type: Object,
-      required: false,
-      default: () => {}
-    },*/
     messages: {
       type: Object,
       required: false
@@ -243,6 +234,25 @@ export default {
           ? this.lex.getGroupedInflections()
           : []
       }
+    },
+    definitions () {
+      let definitions = []
+      if (this.lex.meaning && this.lex.meaning.shortDefs && this.lex.meaning.shortDefs.length > 0) {
+        definitions = this.lex.meaning.shortDefs
+        // We don't need the deduplication code below as of now; it is here just for historic reference
+        /* for (const def of lexeme.meaning.shortDefs) {
+          // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
+          // object without a provider if it has the same provider as the morphology info
+          if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
+            definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
+          } else {
+            definitions.push(def)
+          }
+        } */
+      } else if (this.lex.lemma.features && Object.entries(this.lex.lemma.features).length > 0) {
+        definitions = [new Definition('No definition found.', 'en-US', 'text/plain', this.lex.lemma.word)]
+      }
+      return definitions
     },
     translations () {
       let translations = {}

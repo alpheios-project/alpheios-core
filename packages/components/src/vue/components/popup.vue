@@ -75,7 +75,7 @@
     </div>
     <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
          v-show="$store.state.app.morphDataReady && $store.getters['app/hasMorphData']">
-      <morph :definitions="definitions" :id="morphComponentID" @sendfeature="sendFeature">
+      <morph :id="morphComponentID" @sendfeature="sendFeature">
       </morph>
 
       <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
@@ -173,10 +173,6 @@ export default {
   },
   props: {
     data: {
-      type: Object,
-      required: true
-    },
-    definitions: {
       type: Object,
       required: true
     },
@@ -538,29 +534,18 @@ export default {
     // Updated popup dimensions when its visibility is updated
     this.$options.visibleUnwatch = this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
       if (newValue) {
-        console.log(`Popup became visible`)
         // A popup became visible
         this.updatePopupDimensions()
       } else {
-        console.log(`Popup was hidden`)
         // A popup became invisible
         this.resetPopupDimensions()
       }
     })
 
-    this.$options.lexrqStartedUnwatch = this.$store.watch((state, getters) => state.app.lexicalRequest.startTime, (value) => {
-      this.logger.log(`Request start time has been updated`)
-      this.logger.log(`Popup position is ${this.settings.contentOptions.items.popupPosition.currentValue}`)
+    this.$options.lexrqStartedUnwatch = this.$store.watch((state, getters) => state.app.lexicalRequest.startTime, () => {
       // There is a new request coming in, reset popup dimensions
       this.resetPopupDimensions()
       this.showProviders = false
-    })
-
-    console.log(`Setting a homonym watcher`)
-    this.$store.watch((state, getters) => state.app.homonym, (oldValue, newValue) => {
-      console.log('Homonym has changed')
-      console.log(oldValue)
-      console.log(newValue)
     })
   },
 

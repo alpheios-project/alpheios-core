@@ -92,7 +92,6 @@ export default {
       return settingName
     },
     lexiconsFiltered: function () {
-      console.log(`Lexicons filtered`)
       return this.instanceResourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
     },
     lookupLanguage: function () {

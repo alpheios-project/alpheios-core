@@ -403,27 +403,6 @@ export default class UIController {
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
             definitions = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
           }
-          console.log(`shortDefsByLemmaID, returning`, definitions)
-          return definitions
-        },
-
-        shortDefsByLemmaID: (state) => (lemmaID) => {
-          let definitions = []
-          const lexeme = state.homonym.lexemes.find(l => l.lemma.ID === lemmaID)
-          if (lexeme && lexeme.meaning.shortDefs.length > 0) {
-            for (const def of lexeme.meaning.shortDefs) {
-              // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
-              // object without a provider if it has the same provider as the morphology info
-              if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
-                definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
-              } else {
-                definitions.push(def)
-              }
-            }
-          } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
-          }
-          console.log(`shortDefsByLemmaID, returning`, definitions)
           return definitions
         },
 
@@ -580,11 +559,11 @@ export default class UIController {
 
         setTranslDataReady (state, value = true) {
           state.translationsDataReady = value
-          if (value) {
-            // This code has been transferred from popup.vue.
-            // TODO: do we need this functionality?
-            // this.logger.log(`${Date.now()}: translation data became available`, this.translations)
-          }
+          // if (value) {
+          // This code has been transferred from popup.vue.
+          // TODO: do we need this functionality?
+          // this.logger.log(`${Date.now()}: translation data became available`, this.translations)
+          // }
         }
       }
     })
@@ -832,7 +811,6 @@ export default class UIController {
   }
 
   showLanguageInfo (homonym) {
-    console.log(`Show language info`)
     const notFound = !homonym ||
       !homonym.lexemes ||
       homonym.lexemes.length < 1 ||
@@ -897,7 +875,6 @@ export default class UIController {
   }
 
   updateMorphology (homonym) {
-    console.log(`Update morphology`)
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
     this.store.commit(`app/setHomonym`, homonym)
     this.store.commit('app/setMorphDataReady')
@@ -1025,7 +1002,6 @@ export default class UIController {
     this.store.commit(`app/resetTreebankData`)
     this.store.commit(`ui/resetNotification`)
     this.store.commit(`ui/resetMessages`)
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.clearContent() }
     return this
   }
 
@@ -1317,7 +1293,6 @@ export default class UIController {
   }
 
   onWordItemSelected (homonym) {
-    console.log(`On word item selected`)
     let languageID = homonym.lexemes[0].lemma.languageID
 
     this.newLexicalRequest(languageID)

@@ -254,7 +254,6 @@ export default {
 
     this.$options.visibilityUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
       if (tabName === 'inflections') {
-        console.log(`inflections became visible`)
         this.updateWidth()
         // Scroll to top if panel is reopened
         this.navigate('top')

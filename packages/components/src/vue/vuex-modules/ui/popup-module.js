@@ -21,8 +21,6 @@ export default class PopupModule {
         popup: Popup
       },
       data: {
-        definitions: {},
-
         popupData: {
           fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
           // Default popup position, with units
@@ -56,11 +54,6 @@ export default class PopupModule {
       methods: {
         setTargetRect: function (targetRect) {
           this.popupData.targetRect = targetRect
-        },
-
-        clearContent: function () {
-          this.definitions = {}
-          return this
         },
 
         showPanelTab: function (tabName) {

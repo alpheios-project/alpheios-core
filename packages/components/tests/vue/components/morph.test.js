@@ -1,10 +1,15 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { shallowMount, mount } from '@vue/test-utils'
+import Vuex from 'vuex'
+import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Morph from '@/vue/components/morph.vue'
-import MorphInner from '@/vue/components/morph-inner-v1.vue'
+import MorphInner from '@/vue/components/morph-inner.vue'
 
 describe('morph.test.js', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
+  let store
+  let api = {}
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -13,6 +18,27 @@ describe('morph.test.js', () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            morphDataReady: true,
+            translationsDataReady: false
+          },
+          getters: {
+            hasMorphData () {
+              return true
+            }
+          }
+        }
+      }
+    })
+
+    api = {
+      app: {}
+    }
   })
   afterEach(() => {
     jest.resetModules()
@@ -25,7 +51,10 @@ describe('morph.test.js', () => {
     let cmp = shallowMount(Morph, {
       propsData: {
         lexemes: []
-      }
+      },
+      store,
+      localVue,
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
@@ -34,21 +63,17 @@ describe('morph.test.js', () => {
     let cmp = mount(Morph, {
       propsData: {
         lexemes: []
-      }
+      },
+      store,
+      localVue,
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
 
     expect(cmp.find(MorphInner).exists()).toBeFalsy()
   })
 
-  it('3 Morph - check required props', () => {
-    let cmp = mount(Morph)
-
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "lexemes"'))
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "morphDataReady"'))
-  })
-
-  it('4 Morph - check non-required props', () => {
+  it('3 Morph - check non-required props', () => {
     let cmp = mount(Morph, {
       propsData: {
         lexemes: [],
@@ -56,31 +81,38 @@ describe('morph.test.js', () => {
         definitions: false,
         translations: false,
         linkedfeatures: false
-      }
+      },
+      store,
+      localVue,
+      mocks: api
     })
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Invalid prop: type check failed for prop "definitions"'))
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Invalid prop: type check failed for prop "translations"'))
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Invalid prop: type check failed for prop "linkedfeatures"'))
   })
 
-  it('5 Morph - sendFeature', () => {
+  it('4 Morph - sendFeature', () => {
     let cmp = mount(Morph, {
       propsData: {
         lexemes: [],
         morphDataReady: false
-      }
+      },
+      store,
+      localVue,
+      mocks: api
     })
 
     cmp.vm.sendFeature(false)
     expect(cmp.emitted()['sendfeature']).toBeTruthy()
   })
 
-  it('6 Morph - showLexeme', () => {
+  it('5 Morph - showLexeme', () => {
     let cmp = mount(Morph, {
       propsData: {
         lexemes: [],
         morphDataReady: false
-      }
+      },
+      store,
+      localVue,
+      mocks: api
     })
 
     let testLexeme = {}
