@@ -1,6 +1,6 @@
 {
   "name": "alpheios-data-models",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Alpheios Data Models",
   "main": "dist/alpheios-data-models.min.js",
   "directories": {
