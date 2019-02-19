@@ -27,7 +27,7 @@
       <navmenu :visibility="menuVisible"></navmenu>
 
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
+          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw"
           v-show="$store.getters['ui/isActiveTab']('morphology')">
 
         <div :id="'alpheios-panel-lexical-data-container'" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
@@ -48,13 +48,13 @@
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
-        <div v-if="$store.getters['app/hasAnyDefs']">
+        <div v-if="$store.state.app.defDataReady">
           <div class="alpheios-panel__contentitem"
-               v-for="definition in $store.state.app.definitions.short" :key="definition.ID">
+               v-for="definition in formattedShortDefinitions" :key="definition.ID">
             <shortdef :definition="definition" :languageCode="$store.state.app.status.languageCode"></shortdef>
           </div>
           <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
-               v-html="$store.state.app.definitions.full"></div>
+               v-html="formattedFullDefinitions"></div>
         </div>
         <div v-else>
           {{ l10n.getText('PLACEHOLDER_DEFINITIONS') }}
@@ -199,6 +199,7 @@ import Lookup from './lookup.vue'
 import ReskinFontColor from './reskin-font-color.vue'
 import UserAuth from './user-auth.vue'
 import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.vue'
+import { Definition } from 'alpheios-data-models'
 import { WordListPanel } from 'alpheios-wordlist'
 // Embeddable SVG icons
 import MenuIcon from '@/images/inline-icons/menu.svg'
@@ -320,6 +321,33 @@ export default {
 
     showWordList () {
       return this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists) && Object.keys(this.app.wordlistC.wordLists).length > 0
+    },
+
+    formattedShortDefinitions () {
+      let definitions = []
+      if (this.$store.state.app.defDataReady && this.$store.state.app.homonym) {
+        for (const lexeme of this.$store.state.app.homonym.lexemes) {
+          if (lexeme.meaning.shortDefs.length > 0) {
+            definitions.push(...lexeme.meaning.shortDefs)
+          } else if (Object.entries(lexeme.lemma.features).length > 0) {
+            definitions.push(new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word))
+          }
+        }
+      }
+      return definitions
+    },
+
+    formattedFullDefinitions () {
+      let content = ''
+      if (this.$store.state.app.defDataReady && this.$store.state.app.homonym) {
+        for (const lexeme of this.$store.state.app.homonym.lexemes) {
+          content += `<h3>${lexeme.lemma.word}</h3>\n`
+          for (const fullDef of lexeme.meaning.fullDefs) {
+            content += `${fullDef.text}<br>\n`
+          }
+        }
+      }
+      return content
     }
   },
   methods: {

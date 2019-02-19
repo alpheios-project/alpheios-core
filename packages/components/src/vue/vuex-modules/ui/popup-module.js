@@ -4,7 +4,6 @@ import Popup from '@/vue/components/popup.vue'
 // TODO: Add a check for required modules
 export default class PopupModule {
   constructor (store, api, config) {
-    // TODO: Direct links to a UI controller is a temporary solution for compatibility with older code
     this.config = Object.assign(PopupModule.configDefaults, config)
     store.registerModule(this.constructor.publicName, this.constructor.store())
 
@@ -63,10 +62,8 @@ export default class PopupModule {
         },
         sendFeature: function (feature) {
           if (this.$options.api.ui.hasModule('panel')) {
-            const panel = this.$options.api.ui.getModule('panel')
             this.$options.api.app.startResourceQuery(feature)
-            // panel.vi.requestGrammar(feature)
-            panel.vi.changeTab('grammar')
+            this.$options.api.app.changeTab('grammar')
             this.$options.api.ui.openPanel()
           }
           return this

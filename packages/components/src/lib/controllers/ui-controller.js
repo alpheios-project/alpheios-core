@@ -1,4 +1,4 @@
-import { Constants, Definition, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
@@ -365,10 +365,6 @@ export default class UIController {
           languageCode: ''
         },
         homonym: null,
-        definitions: {
-          full: '',
-          short: []
-        },
         defDataReady: false,
         lexicalRequest: {
           startTime: 0, // A time when the last lexical request is started, in ms
@@ -391,35 +387,8 @@ export default class UIController {
       },
 
       getters: {
-        hasAnyDefs (state) {
-          return Boolean(state.definitions.full || state.definitions.short.length > 0)
-        },
-
         hasInflData (state) {
           return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
-        },
-
-        hasShortDefs (state) {
-
-        },
-
-        shortDefs: (state) => (lemmaID) => {
-          let definitions = []
-          const lexeme = state.homonym.lexemes.find(l => l.lemma.ID === lemmaID)
-          if (lexeme && lexeme.meaning.shortDefs.length > 0) {
-            for (const def of lexeme.meaning.shortDefs) {
-              // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
-              // object without a provider if it has the same provider as the morphology info
-              if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
-                definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
-              } else {
-                definitions.push(def)
-              }
-            }
-          } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
-          }
-          return definitions
         },
 
         hasMorphData (state) {
@@ -498,24 +467,6 @@ export default class UIController {
           state.homonym = homonym
         },
 
-        /**
-         * Appends one or several short definitions to the store
-         * @param state
-         * @param {Array} shortDefs - A single short definition or an array of short definitions
-         */
-        appendShortDefs (state, shortDefs) {
-          state.definitions.short.push(...shortDefs)
-        },
-
-        appendFullDef (state, fullDef) {
-          state.definitions.full += fullDef
-        },
-
-        resetDefs (state) {
-          state.definitions.full = ''
-          state.definitions.short = []
-        },
-
         setInflData (state, inflectionsViewSet = null) {
           state.inflectionsWaitState = false
           state.inflectionsViewSet = (inflectionsViewSet && inflectionsViewSet.hasMatchingViews) ? inflectionsViewSet : false
@@ -567,6 +518,10 @@ export default class UIController {
 
         setDefDataReady (state, value = true) {
           state.defDataReady = value
+        },
+
+        resetDefDataReady (state) {
+          state.defDataReady = false
         },
 
         setMorphDataReady (state, value = true) {
@@ -786,14 +741,6 @@ export default class UIController {
     return window.getComputedStyle(htmlElement, null).getPropertyValue('font-size') === '16px'
   }
 
-  static formatFullDefinitions (lexeme) {
-    let content = `<h3>${lexeme.lemma.word}</h3>\n`
-    for (let fullDef of lexeme.meaning.fullDefs) {
-      content += `${fullDef.text}<br>\n`
-    }
-    return content
-  }
-
   addImportantMessage (message) {
     this.store.commit(`ui/setNotification`, { text: message, important: true })
     if (this.hasUiModule('panel')) {
@@ -928,39 +875,8 @@ export default class UIController {
   }
 
   updateDefinitions (homonym) {
-    this.store.commit('app/resetDefs')
-    let definitions = {}
-    let hasFullDefs = false
-    for (let lexeme of homonym.lexemes) {
-      if (lexeme.meaning.shortDefs.length > 0) {
-        definitions[lexeme.lemma.ID] = []
-        for (let def of lexeme.meaning.shortDefs) {
-          // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
-          // object without a provider if it has the same provider as the morphology info
-          if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
-            definitions[lexeme.lemma.ID].push(new Definition(def.text, def.language, def.format, def.lemmaText))
-          } else {
-            definitions[lexeme.lemma.ID].push(def)
-          }
-        }
-        this.store.commit('app/appendShortDefs', lexeme.meaning.shortDefs)
-        this.updateProviders(homonym)
-      } else if (Object.entries(lexeme.lemma.features).length > 0) {
-        definitions[lexeme.lemma.ID] = [new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word)]
-      }
-
-      if (lexeme.meaning.fullDefs.length > 0) {
-        this.store.commit('app/appendFullDef', this.constructor.formatFullDefinitions(lexeme))
-        hasFullDefs = true
-      }
-    }
-
-    // Populate a popup
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.definitions = definitions
-    }
-    this.store.commit('app/setDefDataReady', hasFullDefs)
+    this.updateProviders(homonym)
+    this.store.commit('app/setDefDataReady')
   }
 
   updateTranslations (homonym) {
@@ -1009,7 +925,7 @@ export default class UIController {
 
   clear () {
     this.store.commit(`app/resetStatusData`)
-    this.store.commit(`app/resetDefs`)
+    this.store.commit(`app/resetDefDataReady`)
     this.store.commit(`app/resetInflData`)
     this.store.commit(`app/resetTreebankData`)
     this.store.commit(`ui/resetNotification`)
@@ -1017,13 +933,11 @@ export default class UIController {
     return this
   }
 
-  // TODO: Is this ever called?
   open () {
-    if (this.contentOptions.items.uiType.currentValue === 'panel') {
-      if (this.api.ui.hasModule('panel')) {
-        this.api.ui.openPanel()
-        this.changeTab('morphology')
-      }
+    if (this.api.ui.hasModule('panel') && this.api.ui.getModule('panel').config.panelComponent === 'compactPanel') {
+      // This is a compact version of a UI
+      this.api.ui.openPanel()
+      this.changeTab('morphology')
     } else {
       if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
       if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }

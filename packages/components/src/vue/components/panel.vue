@@ -46,17 +46,17 @@
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
-          v-show="$store.getters['ui/isActiveTab']('definitions')">
+          v-if="$store.getters['ui/isActiveTab']('definitions')">
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
-        <div v-if="$store.getters['app/hasAnyDefs']">
+        <div v-if="$store.state.app.defDataReady">
           <div class="alpheios-panel__contentitem"
-               v-for="definition in $store.state.app.definitions.short" :key="definition.ID">
+               v-for="definition in formattedShortDefinitions" :key="definition.ID">
             <shortdef :definition="definition" :languageCode="$store.state.app.status.languageCode"></shortdef>
           </div>
           <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
-               v-html="$store.state.app.definitions.full"></div>
+               v-html="formattedFullDefinitions"></div>
         </div>
         <div v-else>
           {{ l10n.getText('PLACEHOLDER_DEFINITIONS') }}

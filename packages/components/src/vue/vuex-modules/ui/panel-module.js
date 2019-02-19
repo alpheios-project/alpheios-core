@@ -20,16 +20,6 @@ export default class PanelModule {
       components: {
         panel: Panel, // A desktop version of a panel
         compactPanel: CompactPanel // A mobile version of a panel
-      },
-      methods: {
-        toggle: function () {
-          if (this.$options.api.app.state.isPanelOpen()) {
-            this.close()
-          } else {
-            this.open()
-          }
-          return this
-        }
       }
     })
   }
