@@ -11397,24 +11397,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
 /* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
 /* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
-/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
-/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
-/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
-/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./reskin-font-color.vue */ "./vue/components/reskin-font-color.vue");
-/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/word-usage-examples-block.vue */ "./vue/components/word-usage-examples-block.vue");
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! alpheios-wordlist */ "alpheios-wordlist");
-/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(alpheios_wordlist__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/images/inline-icons/menu.svg */ "./images/inline-icons/menu.svg");
-/* harmony import */ var _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
+/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
+/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
+/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
+/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./reskin-font-color.vue */ "./vue/components/reskin-font-color.vue");
+/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
+/* harmony import */ var _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/word-usage-examples-block.vue */ "./vue/components/word-usage-examples-block.vue");
+/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! alpheios-wordlist */ "alpheios-wordlist");
+/* harmony import */ var alpheios_wordlist__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(alpheios_wordlist__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/images/inline-icons/menu.svg */ "./images/inline-icons/menu.svg");
+/* harmony import */ var _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11605,6 +11617,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // Embeddable SVG icons
 
 
@@ -11627,28 +11640,29 @@ __webpack_require__.r(__webpack_exports__);
     auth: { from: 'auth', default: null } // This module is options
   },
   storeModules: ['app', 'ui', 'panel'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_19__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_20__["default"]],
   components: {
-    menuIcon: _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
+    menuIcon: _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
     navmenu: _vue_components_nav_navmenu_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     navbuttonsCompact: _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    info: _info_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    info: _info_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_16___default.a,
-    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    reskinFontColor: _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    wordListPanel: alpheios_wordlist__WEBPACK_IMPORTED_MODULE_14__["WordListPanel"],
-    wordUsageExamplesBlock: _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+    morph: _morph_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_17___default.a,
+    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    reskinFontColor: _reskin_font_color_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    wordListPanel: alpheios_wordlist__WEBPACK_IMPORTED_MODULE_15__["WordListPanel"],
+    wordUsageExamplesBlock: _vue_components_word_usage_examples_block_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_17__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_18__["directive"]
   },
   minWidth: 400, // A minimal width of a panel, in pixels
   defaultScrollPadding: 20,
@@ -11838,7 +11852,7 @@ __webpack_require__.r(__webpack_exports__);
       this.calcWidthPaddings()
 
       // Initialize Interact.js: make panel resizable
-      interactjs__WEBPACK_IMPORTED_MODULE_18___default()(this.$el)
+      interactjs__WEBPACK_IMPORTED_MODULE_19___default()(this.$el)
         .resizable({
           // resize from all edges and corners
           edges: { left: true, right: true, bottom: false, top: false },
@@ -17302,14 +17316,6 @@ var render = function() {
       _c(
         "alph-tooltip",
         {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.state.app.defDataReady,
-              expression: "$store.state.app.defDataReady"
-            }
-          ],
           attrs: {
             tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
             tooltipDirection: "top"
@@ -18323,7 +18329,33 @@ var render = function() {
               staticClass:
                 "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
             },
-            [_vm._v("\n      This is a morphology panel\n    ")]
+            [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.$store.state.app.morphDataReady &&
+                        _vm.$store.getters["app/hasMorphData"],
+                      expression:
+                        "$store.state.app.morphDataReady && $store.getters['app/hasMorphData']"
+                    }
+                  ],
+                  staticClass:
+                    "alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready",
+                  attrs: { id: "alpheios-panel-lexical-data-container" }
+                },
+                [
+                  _c("morph", {
+                    attrs: { id: "alpheios-panel-morph-component" }
+                  })
+                ],
+                1
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -34855,8 +34887,7 @@ class UIController {
 
     // Register UI modules. This is environment specific and thus shall be done after a `create()` call.
     /* uiController.registerUiModule(PanelModule, {
-      mountPoint: '#alpheios-panel', // To what element a panel will be mounted
-      panelComponent: 'panel' // A Vue component that will represent a panel
+      mountPoint: '#alpheios-panel' // To what element a panel will be mounted
     })
     uiController.registerUiModule(PopupModule, {
       mountPoint: '#alpheios-popup'
@@ -35001,8 +35032,13 @@ class UIController {
     return this
   }
 
-  registerUiModule (moduleClass, ...options) {
-    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
+  registerUiModule (moduleClass, options) {
+    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options, instance: null })
+    return this
+  }
+
+  unregisterUiModule (moduleName) {
+    this.uiModules.delete(moduleName)
     return this
   }
 
@@ -35035,6 +35071,18 @@ class UIController {
     container.outerHTML = this.options.template.html
 
     await Promise.all(optionLoadPromises)
+
+    // Override stored settings with user specified ones, if necessary
+    if (_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].enableCompactUI) {
+      if (this.uiModules.has('panel')) {
+        console.warn(`Detected a device with limited screen estate. UI will be forced to its compact representation`)
+        let panelData = this.uiModules.get('panel')
+        panelData.options.panelComponent = 'compactPanel'
+      }
+      if (this.uiModules.has('popup')) {
+        this.unregisterUiModule('popup')
+      }
+    }
 
     /**
      * This is a settings API. It exposes different options to modules and UI components.
@@ -35383,11 +35431,7 @@ class UIController {
     this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     // This must be done after creation of data modules.
-    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
-
-    // TODO: this is for compatibility with legacy code only. All UI modules must by dynamic, not static
-    this.panel = this.api.ui.getModule('panel')
-    this.popup = this.api.ui.getModule('popup')
+    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, m.options) })
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -35600,7 +35644,7 @@ class UIController {
     this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
     this.store.commit('app/resetInflData')
-    this.clear().open().changeTab('definitions')
+    this.clear().open()
     return this
   }
 
@@ -35737,11 +35781,15 @@ class UIController {
 
   // TODO: Is this ever called?
   open () {
-    if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
-      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
+    if (this.contentOptions.items.uiType.currentValue === 'panel') {
+      if (this.api.ui.hasModule('panel')) {
+        this.api.ui.openPanel()
+        this.changeTab('morphology')
+      }
     } else {
       if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
       if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
+      this.changeTab('definitions')
     }
     return this
   }
@@ -40093,6 +40141,14 @@ class HTMLPage {
     const attrValue = window.document.body.getAttribute('alpheios-embed-lib-status')
     return attrValue === 'active'
   }
+
+  /**
+   * Determines wither a compact version of the UI shall be enabled.
+   * @return {boolean} - True if compact version shall be enabled, false otherwise.
+   */
+  static get enableCompactUI () {
+    return window.matchMedia('(max-width: 720px)').matches
+  }
 }
 
 HTMLPage.targetRequirements = {
@@ -43622,7 +43678,7 @@ __webpack_require__.r(__webpack_exports__);
 class PanelModule {
   constructor (store, api, config = {}) {
     this.config = Object.assign(PanelModule.configDefaults, config)
-    store.registerModule(this.constructor.publicName, this.constructor.store(config.panelComponent))
+    store.registerModule(this.constructor.publicName, this.constructor.store(this.config.panelComponent))
 
     this.vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       el: this.config.mountPoint,

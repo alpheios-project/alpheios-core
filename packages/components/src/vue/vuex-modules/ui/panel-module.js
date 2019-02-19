@@ -6,7 +6,7 @@ import CompactPanel from '@/vue/components/panel-compact.vue'
 export default class PanelModule {
   constructor (store, api, config = {}) {
     this.config = Object.assign(PanelModule.configDefaults, config)
-    store.registerModule(this.constructor.publicName, this.constructor.store(config.panelComponent))
+    store.registerModule(this.constructor.publicName, this.constructor.store(this.config.panelComponent))
 
     this.vi = new Vue({
       el: this.config.mountPoint,

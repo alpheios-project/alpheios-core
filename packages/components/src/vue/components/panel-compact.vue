@@ -29,7 +29,18 @@
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
           v-show="$store.getters['ui/isActiveTab']('morphology')">
-        This is a morphology panel
+
+        <div :id="'alpheios-panel-lexical-data-container'" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
+             v-show="$store.state.app.morphDataReady && $store.getters['app/hasMorphData']">
+          <morph :id="'alpheios-panel-morph-component'"></morph>
+
+          <!--<div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
+            <div class="alpheios-popup__morph-cont-providers-header">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
+            <div class="alpheios-popup__morph-cont-providers-source" v-for="p in $store.state.app.providers">
+              {{ p.toString() }}
+            </div>
+          </div>-->
+        </div>
       </div>
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
@@ -179,6 +190,7 @@ import Inflections from './inflections.vue'
 import Setting from './setting.vue'
 import ShortDef from './shortdef.vue'
 import Grammar from './grammar.vue'
+import Morph from './morph.vue'
 import Treebank from './treebank.vue'
 import Info from './info.vue'
 import InflectionBrowser from './inflections-browser.vue'
@@ -221,6 +233,7 @@ export default {
     shortdef: ShortDef,
     info: Info,
     grammar: Grammar,
+    morph: Morph,
     treebank: Treebank,
     userAuth: UserAuth,
     closeIcon: CloseIcon,

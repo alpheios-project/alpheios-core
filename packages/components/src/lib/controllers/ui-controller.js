@@ -125,8 +125,7 @@ export default class UIController {
 
     // Register UI modules. This is environment specific and thus shall be done after a `create()` call.
     /* uiController.registerUiModule(PanelModule, {
-      mountPoint: '#alpheios-panel', // To what element a panel will be mounted
-      panelComponent: 'panel' // A Vue component that will represent a panel
+      mountPoint: '#alpheios-panel' // To what element a panel will be mounted
     })
     uiController.registerUiModule(PopupModule, {
       mountPoint: '#alpheios-popup'
@@ -271,8 +270,13 @@ export default class UIController {
     return this
   }
 
-  registerUiModule (moduleClass, ...options) {
-    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
+  registerUiModule (moduleClass, options) {
+    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options, instance: null })
+    return this
+  }
+
+  unregisterUiModule (moduleName) {
+    this.uiModules.delete(moduleName)
     return this
   }
 
@@ -305,6 +309,18 @@ export default class UIController {
     container.outerHTML = this.options.template.html
 
     await Promise.all(optionLoadPromises)
+
+    // Override stored settings with user specified ones, if necessary
+    if (HTMLPage.enableCompactUI) {
+      if (this.uiModules.has('panel')) {
+        console.warn(`Detected a device with limited screen estate. UI will be forced to its compact representation`)
+        let panelData = this.uiModules.get('panel')
+        panelData.options.panelComponent = 'compactPanel'
+      }
+      if (this.uiModules.has('popup')) {
+        this.unregisterUiModule('popup')
+      }
+    }
 
     /**
      * This is a settings API. It exposes different options to modules and UI components.
@@ -653,11 +669,7 @@ export default class UIController {
     this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
     // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
     // This must be done after creation of data modules.
-    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
-
-    // TODO: this is for compatibility with legacy code only. All UI modules must by dynamic, not static
-    this.panel = this.api.ui.getModule('panel')
-    this.popup = this.api.ui.getModule('popup')
+    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, m.options) })
 
     // Set initial values of components
     this.setRootComponentClasses()
@@ -870,7 +882,7 @@ export default class UIController {
     this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
     this.store.commit('app/resetInflData')
-    this.clear().open().changeTab('definitions')
+    this.clear().open()
     return this
   }
 
@@ -1007,11 +1019,15 @@ export default class UIController {
 
   // TODO: Is this ever called?
   open () {
-    if (this.contentOptions.items.uiType.currentValue === this.options.uiTypePanel) {
-      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel() }
+    if (this.contentOptions.items.uiType.currentValue === 'panel') {
+      if (this.api.ui.hasModule('panel')) {
+        this.api.ui.openPanel()
+        this.changeTab('morphology')
+      }
     } else {
       if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
       if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
+      this.changeTab('definitions')
     }
     return this
   }

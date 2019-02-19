@@ -124,6 +124,14 @@ export default class HTMLPage {
     const attrValue = window.document.body.getAttribute('alpheios-embed-lib-status')
     return attrValue === 'active'
   }
+
+  /**
+   * Determines wither a compact version of the UI shall be enabled.
+   * @return {boolean} - True if compact version shall be enabled, false otherwise.
+   */
+  static get enableCompactUI () {
+    return window.matchMedia('(max-width: 720px)').matches
+  }
 }
 
 HTMLPage.targetRequirements = {
