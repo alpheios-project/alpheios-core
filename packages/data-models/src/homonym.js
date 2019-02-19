@@ -23,6 +23,7 @@ class Homonym {
       }
     }
 
+    /** @type {Lexeme[]} */
     this.lexemes = lexemes
     this.targetWord = form
   }

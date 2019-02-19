@@ -885,12 +885,18 @@ class DefinitionSet {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
+
+
 class Definition {
   constructor (text, language, format, lemmaText) {
     this.text = text
     this.language = language
     this.format = format
     this.lemmaText = lemmaText
+
+    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
   }
 
   static readObject (jsonObject) {
@@ -902,7 +908,8 @@ class Definition {
       text: this.text,
       language: this.language,
       format: this.format,
-      lemmaText: this.lemmaText
+      lemmaText: this.lemmaText,
+      ID: this.ID
     }
   }
 }
@@ -2562,6 +2569,7 @@ class Homonym {
       }
     }
 
+    /** @type {Lexeme[]} */
     this.lexemes = lexemes
     this.targetWord = form
   }
