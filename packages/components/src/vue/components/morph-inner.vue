@@ -15,37 +15,37 @@
                 class="alpheios-morph__listitem" v-for="part in lemma.principalParts">{{ part }}</span>
         </span>
         <inflectionattribute :data="lemma.features" :decorators="['brackets']" :linkedfeatures="linkedfeatures"
-                             :messages="messages" :type="types.pronunciation"/>
+                             :type="types.pronunciation"/>
 
         <span
             class="feature_extras"
             v-if="lemma.features && (getFeature(lemma,'frequency') || getFeature(lemma,'age') || getFeature(lemma,'area') || getFeature(lemma,'geo'))">
-        <inflectionattribute :data="featureList(lemma,['age','area','geo','frequency'],'extras')" :messages="messages"
+        <inflectionattribute :data="featureList(lemma,['age','area','geo','frequency'],'extras')"
                              :type="'extras'" @sendfeature="sendFeature"/>
       </span>
         <span class="feature_source" v-if="lemma.features && getFeature(lemma,'source')">
         <inflectionattribute :data="lemma.features" :decorators="['link','brackets']" :linkedfeatures="linkedfeatures"
-                             :messages="messages" :type="types.source" @sendfeature="sendFeature"/>
+                             :type="types.source" @sendfeature="sendFeature"/>
       </span>
       </p><!-- principal_parts -->
 
       <div class="alpheios-morph__morphdata" v-if="lex.lemma.features">
         <span class="alpheios-morph__pofs">
-          <inflectionattribute :data="lex.lemma.features" :linkedfeatures="linkedfeatures" :messages="messages"
+          <inflectionattribute :data="lex.lemma.features" :linkedfeatures="linkedfeatures"
                                :type="types.grmCase" @sendfeature="sendFeature"/>
-          <inflectionattribute :data="lex.lemma.features" :linkedfeatures="linkedfeatures" :messages="messages"
+          <inflectionattribute :data="lex.lemma.features" :linkedfeatures="linkedfeatures"
                                :type="types.gender" @sendfeature="sendFeature"/>
-          <inflectionattribute :data="lex.lemma.features" :linkedfeatures="linkedfeatures" :messages="messages"
+          <inflectionattribute :data="lex.lemma.features" :linkedfeatures="linkedfeatures"
                                :type="types.part" @sendfeature="sendFeature"/>
         </span>
         <inflectionattribute :data="lex.lemma.features" :decorators="['parenthesize']" :linkedfeatures="linkedfeatures"
-                             :messages="messages" :type="types.kind" @sendfeature="sendFeature"/>
+                             :type="types.kind" @sendfeature="sendFeature"/>
         <inflectionattribute :data="lex.lemma.features" :decorators="['appendtype']" :linkedfeatures="linkedfeatures"
-                             :messages="messages" :type="types.declension" @sendfeature="sendFeature"/>
+                             :type="types.declension" @sendfeature="sendFeature"/>
         <inflectionattribute :data="lex.lemma.features" :decorators="['appendtype']" :linkedfeatures="linkedfeatures"
-                             :messages="messages" :type="types.conjugation" @sendfeature="sendFeature"/>
+                             :type="types.conjugation" @sendfeature="sendFeature"/>
         <inflectionattribute :data="lex.lemma.features" :decorators="['brackets']" :linkedfeatures="linkedfeatures"
-                             :messages="messages" :type="types.note" @sendfeature="sendFeature"/>
+                             :type="types.note" @sendfeature="sendFeature"/>
       </div>
     </div><!--alpheios-morph__features-->
 
@@ -78,69 +78,68 @@
                 data-grouplevel="1" v-if="inflset.groupingKey.suffix"> -{{inflset.groupingKey.suffix}}</span>
           <span class="alpheios-morph__inflfeatures">
             <inflectionattribute :data="inflset.groupingKey" :grouplevel="1" :linkedfeatures="linkedfeatures"
-                                 :messages="messages" :type="types.part" @sendfeature="sendFeature"
+                                 :type="types.part" @sendfeature="sendFeature"
                                  v-if="! featureMatch(lex.lemma.features[types.part],inflset.groupingKey[types.part])"/>
             <inflectionattribute :data="inflset.groupingKey" :decorators="['appendtype']" :grouplevel="1"
-                                 :linkedfeatures="linkedfeatures" :messages="messages" :type="types.declension"
+                                 :linkedfeatures="linkedfeatures" :type="types.declension"
                                  @sendfeature="sendFeature"
                                  v-if="inflset.groupingKey.declension && ! featureMatch(inflset.groupingKey.declension,lex.lemma.features.declension)"/>
           </span>
           <div class="alpheios-morph__inflgroup" v-for="group in inflset.inflections">
             <span v-if="group.groupingKey.isCaseInflectionSet">
               <inflectionattribute :data="group.groupingKey" :decorators="['abbreviate']" :grouplevel="2"
-                                   :linkedfeaturfes="linkedfeatures" :messages="messages" :type="types.number"
+                                   :linkedfeaturfes="linkedfeatures" :type="types.number"
                                    @sendfeature="sendFeature"/>
               <inflectionattribute :data="group.groupingKey" :decorators="['abbreviate']" :grouplevel="2"
-                                   :linkedfeatures="linkedfeatures" :messages="messages" :type="types.tense"
+                                   :linkedfeatures="linkedfeatures" :type="types.tense"
                                    @sendfeature="sendFeature"/>
             </span>
             <div :class="groupClass(group)"
                  v-for="nextGroup in group.inflections">
               <span v-if="group.groupingKey.isCaseInflectionSet">
                 <inflectionattribute :data="nextGroup.groupingKey" :decorators="['abbreviate']" :grouplevel="3"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.tense"
+                                     :linkedfeatures="linkedfeatures" :type="types.tense"
                                      @sendfeature="sendFeature"/>
                 <inflectionattribute :data="nextGroup.groupingKey" :decorators="['abbreviate']" :grouplevel="3"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.voice"
+                                     :linkedfeatures="linkedfeatures" :type="types.voice"
                                      @sendfeature="sendFeature"/>
               </span>
               <div :class="groupClass(group)"
                    v-for="infl in nextGroup.inflections">
                 <inflectionattribute :data="infl.groupingKey" :decorators="['abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.grmCase"
+                                     :linkedfeatures="linkedfeatures" :type="types.grmCase"
                                      @sendfeature="sendFeature"/>
                 <inflectionattribute :data="infl.groupingKey" :decorators="['parenthesize','abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages"
-                                     :type="types.gender"
+                                     :linkedfeatures="linkedfeatures" :type="types.gender"
                                      @sendfeature="sendFeature"
                                      v-if="! featureMatch(infl.groupingKey[types.gender],lex.lemma.features[types.gender])"/>
                 <inflectionattribute :data="infl.groupingKey" :decorators="['abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.comparison"
+                                     :linkedfeatures="linkedfeatures" :type="types.comparison"
                                      @sendfeature="sendFeature"/>
                 <inflectionattribute :data="infl.groupingKey" :decorators="['appendtype','abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages"
+                                     :linkedfeatures="linkedfeatures"
                                      :type="types.person" @sendfeature="sendFeature"/>
                 <inflectionattribute :data="infl.groupingKey" :decorators="['abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.number"
+                                     :linkedfeatures="linkedfeatures" :type="types.number"
                                      @sendfeature="sendFeature"
                                      v-if="! group.groupingKey.isCaseInflectionSet"/>
                 <inflectionattribute :data="infl.groupingKey" :decorators="['abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.tense"
+                                     :linkedfeatures="linkedfeatures" :type="types.tense"
                                      @sendfeature="sendFeature"
                                      v-if="! group.groupingKey.isCaseInflectionSet"/>
                 <inflectionattribute :data="infl.groupingKey" :decorators="['abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.mood"
+                                     :linkedfeatures="linkedfeatures" :type="types.mood"
                                      @sendfeature="sendFeature"
                                      v-if="! group.groupingKey.isCaseInflectionSet"/>
                 <inflectionattribute :data="infl.groupingKey" :decorators="['abbreviate']" :grouplevel="4"
-                                     :linkedfeatures="linkedfeatures" :messages="messages" :type="types.voice"
+                                     :linkedfeatures="linkedfeatures" :type="types.voice"
                                      @sendfeature="sendFeature"
                                      v-if="! group.groupingKey.isCaseInflectionSet"/>
                 <span v-for="item in infl.inflections">
                     <inflectionattribute :data="item" :decorators="['parenthesize']" :linkedfeatures="linkedfeatures"
-                                         :messages="messages" @sendfeature="sendFeature"
+                                         @sendfeature="sendFeature"
                                          type="dialect"/>
-                    <inflectionattribute :data="item" :linkedfeatures="linkedfeatures" :messages="messages"
+                    <inflectionattribute :data="item" :linkedfeatures="linkedfeatures"
                                          @sendfeature="sendFeature" type="example"/>
                   </span>
               </div><!-- end infl -->
@@ -188,10 +187,6 @@ export default {
       type: Array,
       required: false,
       default: () => []
-    },
-    messages: {
-      type: Object,
-      required: false
     }
   },
   data: function () {

@@ -42,19 +42,12 @@ export default class PopupModule {
           // A margin between a popup and a selection
           placementMargin: 15,
           // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
-          viewportMargin: 5,
-
-          // A position of a word selection
-          targetRect: {}
+          viewportMargin: 5
         },
         currentPopupComponent: this.config.popupComponent,
         classesChanged: 0
       },
       methods: {
-        setTargetRect: function (targetRect) {
-          this.popupData.targetRect = targetRect
-        },
-
         showPanelTab: function (tabName) {
           this.$options.api.app.changeTab(tabName)
           this.$options.api.ui.openPanel()

@@ -364,6 +364,7 @@ export default class UIController {
           languageName: '',
           languageCode: ''
         },
+        htmlSelector: null, // An HTMLSelector object, reflects the latest text selection
         homonym: null,
         defDataReady: false,
         lexicalRequest: {
@@ -448,6 +449,7 @@ export default class UIController {
         },
 
         lexicalRequestStarted (state) {
+          state.htmlSelector = null
           state.inflectionsWaitState = true
           state.wordUsageExamplesData = null
           state.defDataReady = false
@@ -461,6 +463,10 @@ export default class UIController {
           state.inflectionsWaitState = false
           state.morphDataReady = true
           state.lexicalRequest.endTime = Date.now()
+        },
+
+        setHtmlSelector (state, htmlSelector) {
+          state.htmlSelector = htmlSelector
         },
 
         setHomonym (state, homonym) {
@@ -741,18 +747,6 @@ export default class UIController {
     return window.getComputedStyle(htmlElement, null).getPropertyValue('font-size') === '16px'
   }
 
-  addImportantMessage (message) {
-    this.store.commit(`ui/setNotification`, { text: message, important: true })
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      panel.vi.appendMessage(message)
-    }
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      popup.vi.appendMessage(message)
-    }
-  }
-
   /**
    * Gets language name details by either language ID (a symbol) or language code (string)
    * @param {symbol|string} language - Either language ID or language code (see constants in `data-models` for definitions)
@@ -820,12 +814,7 @@ export default class UIController {
     return this
   }
 
-  setTargetRect (targetRect) {
-    if (this.hasUiModule('popup')) { this.getUiModule('popup').vi.setTargetRect(targetRect) }
-    return this
-  }
-
-  newLexicalRequest (languageID) {
+  newLexicalRequest () {
     this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
     this.store.commit('app/resetInflData')
@@ -1007,40 +996,6 @@ export default class UIController {
     this.store.commit(`ui/setRootClasses`, classes)
   }
 
-  updateStyleClass (prefix, type) {
-    if (this.hasUiModule('popup')) {
-      const popup = this.getUiModule('popup')
-      let popupClasses = popup.vi.popupData.classes.slice(0)
-
-      popupClasses.forEach(function (item, index) {
-        if (item.indexOf(prefix) === 0) {
-          popupClasses[index] = `${prefix}${type}_class`
-        }
-      })
-
-      popup.vi.popupData.classes.splice(0, popup.vi.popupData.classes.length)
-      popupClasses.forEach(classItem => {
-        popup.vi.popupData.classes.push(classItem)
-      })
-    }
-
-    if (this.hasUiModule('panel')) {
-      const panel = this.getUiModule('panel')
-      let panelClasses = panel.vi.panelData.classes.slice(0)
-
-      panelClasses.forEach(function (item, index) {
-        if (item.indexOf(prefix) === 0) {
-          panelClasses[index] = `${prefix}${type}_class`
-        }
-      })
-      panel.vi.panelData.classes.splice(0, panel.vi.panelData.classes.length)
-
-      panelClasses.forEach(classItem => {
-        panel.vi.panelData.classes.push(classItem)
-      })
-    }
-  }
-
   getSelectedText (event) {
     if (this.state.isActive() && this.state.uiIsActive()) {
       /*
@@ -1049,6 +1004,7 @@ export default class UIController {
       It's probably better to keep them separated in order to follow a more abstract model.
        */
       let htmlSelector = new HTMLSelector(event, this.contentOptions.items.preferredLanguage.currentValue)
+      this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
       if (!textSelector.isEmpty()) {
@@ -1082,8 +1038,7 @@ export default class UIController {
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
-        this.setTargetRect(htmlSelector.targetRect)
-        this.newLexicalRequest(textSelector.languageID)
+        this.newLexicalRequest()
         this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
         this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
         this.updateLanguage(textSelector.languageID)
@@ -1166,7 +1121,7 @@ export default class UIController {
   }
 
   onMorphDataNotFound () {
-    this.addImportantMessage(this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'))
+    this.store.commit(`ui/setNotification`, { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
     // Need to notify a UI controller that there is no morph data on this word in an analyzer
     // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
     if (this.morphologyDataNotFound) { this.morphologyDataNotFound(true) }
@@ -1225,7 +1180,7 @@ export default class UIController {
   onWordItemSelected (homonym) {
     let languageID = homonym.lexemes[0].lemma.languageID
 
-    this.newLexicalRequest(languageID)
+    this.newLexicalRequest()
     this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.showStatusInfo(homonym.targetWord, languageID)
     this.updateLanguage(languageID)

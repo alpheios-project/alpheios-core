@@ -15,7 +15,6 @@
   </div>
 </template>
 <script>
-// import { LanguageModelFactory } from 'alpheios-data-models'
 import MorphInner from './morph-inner.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
