@@ -1,7 +1,7 @@
 <template>
   <div class="alpheios-navbuttons alpheios-navbuttons--compact">
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MORPHOLOGY')" tooltipDirection="top">
-      <span :class="{ active: $store.getters['ui/isActiveTab']('morphology') }" @click="app.changeTab('morphology')"
+      <span :class="{ active: $store.getters['ui/isActiveTab']('morphology') }" @click="ui.changeTab('morphology')"
             class="alpheios-navbuttons__btn">
         <morphology-icon></morphology-icon>
       </span>
@@ -9,7 +9,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="top"
                   v-show="$store.state.app.defDataReady">
-      <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="app.changeTab('definitions')"
+      <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="ui.changeTab('definitions')"
             class="alpheios-navbuttons__btn">
         <definitions-icon></definitions-icon>
       </span>
@@ -17,7 +17,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="top"
                 v-show="$store.getters[`app/hasInflData`]">
-      <span @click="app.changeTab('inflections')" class="alpheios-navbuttons__btn"
+      <span @click="ui.changeTab('inflections')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
         <inflections-icon></inflections-icon>
       </span>

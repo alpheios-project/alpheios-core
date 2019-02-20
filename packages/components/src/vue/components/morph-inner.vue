@@ -272,6 +272,7 @@ export default {
       return false
     },
     sendFeature (data) {
+      console.log(`SendFeature is called`)
       this.$emit('sendfeature', data)
     },
     getFeature (lemma, type) {

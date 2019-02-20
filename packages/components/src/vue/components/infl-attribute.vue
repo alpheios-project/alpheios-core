@@ -1,6 +1,10 @@
 <template>
+  <span>
+    [Inflection attribute]
   <span :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel"
         @click="sendFeature(data[type],['alpheios-text__medium'])" v-html="decorate(data,type)" v-if="data[type]"></span>
+    [Inflection attribute end]
+    </span>
 </template>
 <script>
 export default {
@@ -74,6 +78,7 @@ export default {
       return decorated
     },
     sendFeature (features) {
+      console.log(`SendFeature called`)
       let tosend = features
 
       if (Array.isArray(features)) {

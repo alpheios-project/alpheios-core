@@ -21,14 +21,14 @@
       <div class="alpheios-popup__button-area" v-if="data">
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                       v-show="$store.state.app.defDataReady">
-          <button @click="showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions">
+          <button @click="ui.showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions">
             {{ l10n.getText('LABEL_POPUP_DEFINE') }}
           </button>
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
                       v-show="$store.getters[`app/hasInflData`]">
-          <button @click="showPanelTab('inflections')"
+          <button @click="ui.showPanelTab('inflections')"
                   class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections">
             {{ l10n.getText('LABEL_POPUP_INFLECT') }}
           </button>
@@ -37,14 +37,14 @@
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
                       v-show="$store.getters['app/hasWordUsageExamplesData']">
           <button class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
-                  @click="showPanelTab('wordUsage')">
+                  @click="ui.showPanelTab('wordUsage')">
             {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
           </button>
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
                       v-show="$store.getters['app/hasTreebankData']">
-          <button @click="showPanelTab('treebank')"
+          <button @click="ui.showPanelTab('treebank')"
                   class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank">
             {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
           </button>
@@ -52,7 +52,7 @@
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
-          <button @click="showPanelTab('options')"
+          <button @click="ui.showPanelTab('options')"
                   class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options">
             {{ l10n.getText('LABEL_POPUP_OPTIONS') }}
           </button>
@@ -175,11 +175,6 @@ export default {
     data: {
       type: Object,
       required: true
-    },
-    classesChanged: {
-      type: Number,
-      required: false,
-      default: 0
     }
   },
   created () {
@@ -347,10 +342,6 @@ export default {
   },
 
   methods: {
-    showPanelTab (tabName) {
-      this.$emit('showpaneltab', tabName)
-    },
-
     contentOptionChanged: function (name, value) {
       this.app.contentOptionChange(name, value)
     },

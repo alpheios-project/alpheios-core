@@ -169,7 +169,7 @@ export default {
 
   methods: {
     changeTab: function (tabName) {
-      this.app.changeTab(tabName)
+      this.ui.changeTab(tabName)
       this.visible = false // Close the menu panel
     }
   },

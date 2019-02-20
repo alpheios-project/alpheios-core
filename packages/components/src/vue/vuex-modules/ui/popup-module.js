@@ -21,7 +21,6 @@ export default class PopupModule {
       },
       data: {
         popupData: {
-          fixedPosition: true, // Whether to put popup into a fixed position or calculate that position dynamically
           // Default popup position, with units
           top: '10vh',
           left: '10vw',
@@ -44,19 +43,13 @@ export default class PopupModule {
           // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
           viewportMargin: 5
         },
-        currentPopupComponent: this.config.popupComponent,
-        classesChanged: 0
+        currentPopupComponent: this.config.popupComponent
       },
       methods: {
-        showPanelTab: function (tabName) {
-          this.$options.api.app.changeTab(tabName)
-          this.$options.api.ui.openPanel()
-          return this
-        },
         sendFeature: function (feature) {
           if (this.$options.api.ui.hasModule('panel')) {
             this.$options.api.app.startResourceQuery(feature)
-            this.$options.api.app.changeTab('grammar')
+            this.$options.api.ui.changeTab('grammar')
             this.$options.api.ui.openPanel()
           }
           return this

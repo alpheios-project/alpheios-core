@@ -348,8 +348,7 @@ export default class UIController {
       contentOptionChange: this.contentOptionChange.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       getLanguageName: UIController.getLanguageName,
-      startResourceQuery: this.startResourceQuery.bind(this),
-      changeTab: this.changeTab.bind(this)
+      startResourceQuery: this.startResourceQuery.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -561,6 +560,8 @@ export default class UIController {
       openPopup: this.openPopup.bind(this),
       closePopup: this.closePopup.bind(this),
       switchPopup: this.switchPopup.bind(this), // Switches between different types of popups
+      changeTab: this.changeTab.bind(this),
+      showPanelTab: this.showPanelTab.bind(this),
 
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
@@ -796,6 +797,12 @@ export default class UIController {
   // TODO: Do we need this function
   showImportantNotification (message) {
     this.store.commit(`ui/setNotification`, { text: message, important: true })
+  }
+
+  showPanelTab (tabName) {
+    this.api.ui.changeTab(tabName)
+    this.api.ui.openPanel()
+    return this
   }
 
   changeTab (tabName) {
