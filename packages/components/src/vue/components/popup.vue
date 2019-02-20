@@ -75,8 +75,9 @@
     </div>
     <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
          v-show="$store.state.app.morphDataReady && $store.getters['app/hasMorphData']">
-      <morph :id="morphComponentID" @sendfeature="sendFeature">
-      </morph>
+      <morph
+          :id="morphComponentID"
+      />
 
       <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
         <div class="alpheios-popup__morph-cont-providers-header">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
@@ -504,14 +505,9 @@ export default {
       }
     },
 
-    sendFeature (data) {
-      this.$emit('sendfeature', data)
-    },
-
     attachTrackingClick: function () {
       this.ui.closePopup()
     }
-
   },
 
   mounted () {

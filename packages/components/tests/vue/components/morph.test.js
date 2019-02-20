@@ -73,38 +73,7 @@ describe('morph.test.js', () => {
     expect(cmp.find(MorphInner).exists()).toBeFalsy()
   })
 
-  it('3 Morph - check non-required props', () => {
-    let cmp = mount(Morph, {
-      propsData: {
-        lexemes: [],
-        morphDataReady: false,
-        definitions: false,
-        translations: false,
-        linkedfeatures: false
-      },
-      store,
-      localVue,
-      mocks: api
-    })
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Invalid prop: type check failed for prop "linkedfeatures"'))
-  })
-
-  it('4 Morph - sendFeature', () => {
-    let cmp = mount(Morph, {
-      propsData: {
-        lexemes: [],
-        morphDataReady: false
-      },
-      store,
-      localVue,
-      mocks: api
-    })
-
-    cmp.vm.sendFeature(false)
-    expect(cmp.emitted()['sendfeature']).toBeTruthy()
-  })
-
-  it('5 Morph - showLexeme', () => {
+  it('3 Morph - showLexeme', () => {
     let cmp = mount(Morph, {
       propsData: {
         lexemes: [],

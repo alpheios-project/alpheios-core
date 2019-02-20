@@ -44,16 +44,6 @@ export default class PopupModule {
           viewportMargin: 5
         },
         currentPopupComponent: this.config.popupComponent
-      },
-      methods: {
-        sendFeature: function (feature) {
-          if (this.$options.api.ui.hasModule('panel')) {
-            this.$options.api.app.startResourceQuery(feature)
-            this.$options.api.ui.changeTab('grammar')
-            this.$options.api.ui.openPanel()
-          }
-          return this
-        }
       }
     })
   }

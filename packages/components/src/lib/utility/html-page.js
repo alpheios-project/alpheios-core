@@ -16,7 +16,6 @@ export default class HTMLPage {
    * @returns {boolean}
    */
   static get isFrame () {
-    console.log(`isFrame = ${window.self !== window.top}`, window.self, window.top)
     return (window.self !== window.top)
   }
 

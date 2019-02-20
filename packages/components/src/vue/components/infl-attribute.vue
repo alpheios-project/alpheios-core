@@ -1,15 +1,16 @@
 <template>
-  <span>
-    [Inflection attribute]
   <span :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel"
         @click="sendFeature(data[type],['alpheios-text__medium'])" v-html="decorate(data,type)" v-if="data[type]"></span>
-    [Inflection attribute end]
-    </span>
 </template>
 <script>
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'InflectionAttribute',
-  inject: ['l10n'],
+  inject: ['app', 'l10n'],
+  storeModules: ['app'],
+  mixins: [DependencyCheck],
   props: {
     data: {
       type: Object,
@@ -24,11 +25,6 @@ export default {
       required: false,
       default: () => 0
     },
-    linkedfeatures: {
-      type: Array,
-      required: false,
-      default: () => []
-    },
     decorators: {
       type: Array,
       required: false,
@@ -38,7 +34,7 @@ export default {
   methods: {
     attributeClass (featureType, ...extras) {
       let classList = []
-      if (this.linkedfeatures.includes(featureType)) {
+      if (this.$store.state.app.linkedFeatures.includes(featureType)) {
         classList.push('alpheios-morph__linkedattr')
       } else {
         classList.push('alpheios-morph__attr')
@@ -78,7 +74,6 @@ export default {
       return decorated
     },
     sendFeature (features) {
-      console.log(`SendFeature called`)
       let tosend = features
 
       if (Array.isArray(features)) {
@@ -86,8 +81,8 @@ export default {
         // for the moment just send the first
         tosend = features[0]
       }
-      if (this.linkedfeatures.includes(tosend.type)) {
-        this.$emit('sendfeature', tosend)
+      if (this.$store.state.app.linkedFeatures.includes(tosend.type)) {
+        this.app.sendFeature(tosend)
       } else return false
     }
   }

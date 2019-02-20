@@ -8544,18 +8544,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
 //
 
+// Modules support
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'InflectionAttribute',
-  inject: ['l10n'],
+  inject: ['app', 'l10n'],
+  storeModules: ['app'],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     data: {
       type: Object,
@@ -8570,11 +8572,6 @@ __webpack_require__.r(__webpack_exports__);
       required: false,
       default: () => 0
     },
-    linkedfeatures: {
-      type: Array,
-      required: false,
-      default: () => []
-    },
     decorators: {
       type: Array,
       required: false,
@@ -8584,7 +8581,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     attributeClass (featureType, ...extras) {
       let classList = []
-      if (this.linkedfeatures.includes(featureType)) {
+      if (this.$store.state.app.linkedFeatures.includes(featureType)) {
         classList.push('alpheios-morph__linkedattr')
       } else {
         classList.push('alpheios-morph__attr')
@@ -8624,7 +8621,6 @@ __webpack_require__.r(__webpack_exports__);
       return decorated
     },
     sendFeature (features) {
-      console.log(`SendFeature called`)
       let tosend = features
 
       if (Array.isArray(features)) {
@@ -8632,8 +8628,8 @@ __webpack_require__.r(__webpack_exports__);
         // for the moment just send the first
         tosend = features[0]
       }
-      if (this.linkedfeatures.includes(tosend.type)) {
-        this.$emit('sendfeature', tosend)
+      if (this.$store.state.app.linkedFeatures.includes(tosend.type)) {
+        this.app.sendFeature(tosend)
       } else return false
     }
   }
@@ -10701,7 +10697,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10732,11 +10799,6 @@ __webpack_require__.r(__webpack_exports__);
     count: {
       type: Number,
       required: true
-    },
-    linkedfeatures: {
-      type: Array,
-      required: false,
-      default: () => []
     }
   },
   data: function () {
@@ -10786,14 +10848,14 @@ __webpack_require__.r(__webpack_exports__);
         definitions = this.lex.meaning.shortDefs
         // We don't need the deduplication code below as of now; it is here just for historic reference
         /* for (const def of lexeme.meaning.shortDefs) {
-          // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
-          // object without a provider if it has the same provider as the morphology info
-          if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
-            definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
-          } else {
-            definitions.push(def)
-          }
-        } */
+            // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
+            // object without a provider if it has the same provider as the morphology info
+            if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
+              definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
+            } else {
+              definitions.push(def)
+            }
+          } */
       } else if (this.lex.lemma.features && Object.entries(this.lex.lemma.features).length > 0) {
         definitions = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"]('No definition found.', 'en-US', 'text/plain', this.lex.lemma.word)]
       }
@@ -10820,10 +10882,6 @@ __webpack_require__.r(__webpack_exports__);
         return a.isEqual(b)
       }
       return false
-    },
-    sendFeature (data) {
-      console.log(`SendFeature is called`)
-      this.$emit('sendfeature', data)
     },
     getFeature (lemma, type) {
       if (lemma.features[type] !== undefined) {
@@ -10876,8 +10934,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 // Modules support
@@ -10888,13 +10944,6 @@ __webpack_require__.r(__webpack_exports__);
   components: { morphInner: _morph_inner_vue__WEBPACK_IMPORTED_MODULE_0__["default"] },
   storeModules: ['app'],
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  props: {
-    linkedfeatures: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
-  },
   computed: {
     lexemes () {
       return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes : []
@@ -10903,18 +10952,10 @@ __webpack_require__.r(__webpack_exports__);
     count () {
       return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes.length : 0
     }
-
-    // TODO: This is not used now. Will we need it in the future?
-    /* linkedFeatures () {
-      return LanguageModelFactory.getLanguageModel(this.$store.app.homonym.lexemes[0].lemma.languageID).grammarFeatures()
-    } */
   },
   methods: {
     showLexeme (lex) {
       return (lex.isPopulated) ? lex.isPopulated() : false
-    },
-    sendFeature (data) {
-      this.$emit('sendfeature', data)
     }
   }
 });
@@ -12381,6 +12422,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -12780,14 +12822,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
-    sendFeature (data) {
-      this.$emit('sendfeature', data)
-    },
-
     attachTrackingClick: function () {
       this.ui.closePopup()
     }
-
   },
 
   mounted () {
@@ -13653,27 +13690,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("span", [
-    _vm._v("\n  [Inflection attribute]\n"),
-    _vm.data[_vm.type]
-      ? _c("span", {
-          class: _vm.attributeClass(_vm.type),
-          attrs: {
-            "data-feature": _vm.type,
-            "data-grouplevel": _vm.grouplevel
-          },
-          domProps: { innerHTML: _vm._s(_vm.decorate(_vm.data, _vm.type)) },
-          on: {
-            click: function($event) {
-              return _vm.sendFeature(_vm.data[_vm.type], [
-                "alpheios-text__medium"
-              ])
-            }
+  return _vm.data[_vm.type]
+    ? _c("span", {
+        class: _vm.attributeClass(_vm.type),
+        attrs: { "data-feature": _vm.type, "data-grouplevel": _vm.grouplevel },
+        domProps: { innerHTML: _vm._s(_vm.decorate(_vm.data, _vm.type)) },
+        on: {
+          click: function($event) {
+            return _vm.sendFeature(_vm.data[_vm.type], [
+              "alpheios-text__medium"
+            ])
           }
-        })
-      : _vm._e(),
-    _vm._v("\n  [Inflection attribute end]\n  ")
-  ])
+        }
+      })
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -16666,7 +16696,6 @@ var render = function() {
                     attrs: {
                       data: lemma.features,
                       decorators: ["brackets"],
-                      linkedfeatures: _vm.linkedfeatures,
                       type: _vm.types.pronunciation
                     }
                   }),
@@ -16688,8 +16717,7 @@ var render = function() {
                                 "extras"
                               ),
                               type: "extras"
-                            },
-                            on: { sendfeature: _vm.sendFeature }
+                            }
                           })
                         ],
                         1
@@ -16705,10 +16733,8 @@ var render = function() {
                             attrs: {
                               data: lemma.features,
                               decorators: ["link", "brackets"],
-                              linkedfeatures: _vm.linkedfeatures,
                               type: _vm.types.source
-                            },
-                            on: { sendfeature: _vm.sendFeature }
+                            }
                           })
                         ],
                         1
@@ -16731,28 +16757,22 @@ var render = function() {
                         _c("inflectionattribute", {
                           attrs: {
                             data: _vm.lex.lemma.features,
-                            linkedfeatures: _vm.linkedfeatures,
                             type: _vm.types.grmCase
-                          },
-                          on: { sendfeature: _vm.sendFeature }
+                          }
                         }),
                         _vm._v(" "),
                         _c("inflectionattribute", {
                           attrs: {
                             data: _vm.lex.lemma.features,
-                            linkedfeatures: _vm.linkedfeatures,
                             type: _vm.types.gender
-                          },
-                          on: { sendfeature: _vm.sendFeature }
+                          }
                         }),
                         _vm._v(" "),
                         _c("inflectionattribute", {
                           attrs: {
                             data: _vm.lex.lemma.features,
-                            linkedfeatures: _vm.linkedfeatures,
                             type: _vm.types.part
-                          },
-                          on: { sendfeature: _vm.sendFeature }
+                          }
                         })
                       ],
                       1
@@ -16762,40 +16782,32 @@ var render = function() {
                       attrs: {
                         data: _vm.lex.lemma.features,
                         decorators: ["parenthesize"],
-                        linkedfeatures: _vm.linkedfeatures,
                         type: _vm.types.kind
-                      },
-                      on: { sendfeature: _vm.sendFeature }
+                      }
                     }),
                     _vm._v(" "),
                     _c("inflectionattribute", {
                       attrs: {
                         data: _vm.lex.lemma.features,
                         decorators: ["appendtype"],
-                        linkedfeatures: _vm.linkedfeatures,
                         type: _vm.types.declension
-                      },
-                      on: { sendfeature: _vm.sendFeature }
+                      }
                     }),
                     _vm._v(" "),
                     _c("inflectionattribute", {
                       attrs: {
                         data: _vm.lex.lemma.features,
                         decorators: ["appendtype"],
-                        linkedfeatures: _vm.linkedfeatures,
                         type: _vm.types.conjugation
-                      },
-                      on: { sendfeature: _vm.sendFeature }
+                      }
                     }),
                     _vm._v(" "),
                     _c("inflectionattribute", {
                       attrs: {
                         data: _vm.lex.lemma.features,
                         decorators: ["brackets"],
-                        linkedfeatures: _vm.linkedfeatures,
                         type: _vm.types.note
-                      },
-                      on: { sendfeature: _vm.sendFeature }
+                      }
                     })
                   ],
                   1
@@ -16927,10 +16939,8 @@ var render = function() {
                                 attrs: {
                                   data: inflset.groupingKey,
                                   grouplevel: 1,
-                                  linkedfeatures: _vm.linkedfeatures,
                                   type: _vm.types.part
-                                },
-                                on: { sendfeature: _vm.sendFeature }
+                                }
                               })
                             : _vm._e(),
                           _vm._v(" "),
@@ -16944,10 +16954,8 @@ var render = function() {
                                   data: inflset.groupingKey,
                                   decorators: ["appendtype"],
                                   grouplevel: 1,
-                                  linkedfeatures: _vm.linkedfeatures,
                                   type: _vm.types.declension
-                                },
-                                on: { sendfeature: _vm.sendFeature }
+                                }
                               })
                             : _vm._e()
                         ],
@@ -16968,10 +16976,8 @@ var render = function() {
                                         data: group.groupingKey,
                                         decorators: ["abbreviate"],
                                         grouplevel: 2,
-                                        linkedfeaturfes: _vm.linkedfeatures,
                                         type: _vm.types.number
-                                      },
-                                      on: { sendfeature: _vm.sendFeature }
+                                      }
                                     }),
                                     _vm._v(" "),
                                     _c("inflectionattribute", {
@@ -16979,10 +16985,8 @@ var render = function() {
                                         data: group.groupingKey,
                                         decorators: ["abbreviate"],
                                         grouplevel: 2,
-                                        linkedfeatures: _vm.linkedfeatures,
                                         type: _vm.types.tense
-                                      },
-                                      on: { sendfeature: _vm.sendFeature }
+                                      }
                                     })
                                   ],
                                   1
@@ -17003,11 +17007,8 @@ var render = function() {
                                               data: nextGroup.groupingKey,
                                               decorators: ["abbreviate"],
                                               grouplevel: 3,
-                                              linkedfeatures:
-                                                _vm.linkedfeatures,
                                               type: _vm.types.tense
-                                            },
-                                            on: { sendfeature: _vm.sendFeature }
+                                            }
                                           }),
                                           _vm._v(" "),
                                           _c("inflectionattribute", {
@@ -17015,11 +17016,8 @@ var render = function() {
                                               data: nextGroup.groupingKey,
                                               decorators: ["abbreviate"],
                                               grouplevel: 3,
-                                              linkedfeatures:
-                                                _vm.linkedfeatures,
                                               type: _vm.types.voice
-                                            },
-                                            on: { sendfeature: _vm.sendFeature }
+                                            }
                                           })
                                         ],
                                         1
@@ -17036,10 +17034,8 @@ var render = function() {
                                             data: infl.groupingKey,
                                             decorators: ["abbreviate"],
                                             grouplevel: 4,
-                                            linkedfeatures: _vm.linkedfeatures,
                                             type: _vm.types.grmCase
-                                          },
-                                          on: { sendfeature: _vm.sendFeature }
+                                          }
                                         }),
                                         _vm._v(" "),
                                         !_vm.featureMatch(
@@ -17056,12 +17052,7 @@ var render = function() {
                                                   "abbreviate"
                                                 ],
                                                 grouplevel: 4,
-                                                linkedfeatures:
-                                                  _vm.linkedfeatures,
                                                 type: _vm.types.gender
-                                              },
-                                              on: {
-                                                sendfeature: _vm.sendFeature
                                               }
                                             })
                                           : _vm._e(),
@@ -17071,10 +17062,8 @@ var render = function() {
                                             data: infl.groupingKey,
                                             decorators: ["abbreviate"],
                                             grouplevel: 4,
-                                            linkedfeatures: _vm.linkedfeatures,
                                             type: _vm.types.comparison
-                                          },
-                                          on: { sendfeature: _vm.sendFeature }
+                                          }
                                         }),
                                         _vm._v(" "),
                                         _c("inflectionattribute", {
@@ -17085,10 +17074,8 @@ var render = function() {
                                               "abbreviate"
                                             ],
                                             grouplevel: 4,
-                                            linkedfeatures: _vm.linkedfeatures,
                                             type: _vm.types.person
-                                          },
-                                          on: { sendfeature: _vm.sendFeature }
+                                          }
                                         }),
                                         _vm._v(" "),
                                         !group.groupingKey.isCaseInflectionSet
@@ -17097,12 +17084,7 @@ var render = function() {
                                                 data: infl.groupingKey,
                                                 decorators: ["abbreviate"],
                                                 grouplevel: 4,
-                                                linkedfeatures:
-                                                  _vm.linkedfeatures,
                                                 type: _vm.types.number
-                                              },
-                                              on: {
-                                                sendfeature: _vm.sendFeature
                                               }
                                             })
                                           : _vm._e(),
@@ -17113,12 +17095,7 @@ var render = function() {
                                                 data: infl.groupingKey,
                                                 decorators: ["abbreviate"],
                                                 grouplevel: 4,
-                                                linkedfeatures:
-                                                  _vm.linkedfeatures,
                                                 type: _vm.types.tense
-                                              },
-                                              on: {
-                                                sendfeature: _vm.sendFeature
                                               }
                                             })
                                           : _vm._e(),
@@ -17129,12 +17106,7 @@ var render = function() {
                                                 data: infl.groupingKey,
                                                 decorators: ["abbreviate"],
                                                 grouplevel: 4,
-                                                linkedfeatures:
-                                                  _vm.linkedfeatures,
                                                 type: _vm.types.mood
-                                              },
-                                              on: {
-                                                sendfeature: _vm.sendFeature
                                               }
                                             })
                                           : _vm._e(),
@@ -17145,12 +17117,7 @@ var render = function() {
                                                 data: infl.groupingKey,
                                                 decorators: ["abbreviate"],
                                                 grouplevel: 4,
-                                                linkedfeatures:
-                                                  _vm.linkedfeatures,
                                                 type: _vm.types.voice
-                                              },
-                                              on: {
-                                                sendfeature: _vm.sendFeature
                                               }
                                             })
                                           : _vm._e(),
@@ -17165,24 +17132,14 @@ var render = function() {
                                                 attrs: {
                                                   data: item,
                                                   decorators: ["parenthesize"],
-                                                  linkedfeatures:
-                                                    _vm.linkedfeatures,
                                                   type: "dialect"
-                                                },
-                                                on: {
-                                                  sendfeature: _vm.sendFeature
                                                 }
                                               }),
                                               _vm._v(" "),
                                               _c("inflectionattribute", {
                                                 attrs: {
                                                   data: item,
-                                                  linkedfeatures:
-                                                    _vm.linkedfeatures,
                                                   type: "example"
-                                                },
-                                                on: {
-                                                  sendfeature: _vm.sendFeature
                                                 }
                                               })
                                             ],
@@ -17249,13 +17206,7 @@ var render = function() {
             }
           ],
           key: lex.lemma.ID,
-          attrs: {
-            count: _vm.count,
-            index: index,
-            lex: lex,
-            linkedfeatures: _vm.linkedfeatures
-          },
-          on: { sendfeature: _vm.sendFeature }
+          attrs: { count: _vm.count, index: index, lex: lex }
         })
       }),
       1
@@ -20409,10 +20360,7 @@ var render = function() {
           attrs: { id: _vm.lexicalDataContainerID }
         },
         [
-          _c("morph", {
-            attrs: { id: _vm.morphComponentID },
-            on: { sendfeature: _vm.sendFeature }
-          }),
+          _c("morph", { attrs: { id: _vm.morphComponentID } }),
           _vm._v(" "),
           _vm.showProviders
             ? _c(
@@ -35113,7 +35061,8 @@ class UIController {
       contentOptionChange: this.contentOptionChange.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       getLanguageName: UIController.getLanguageName,
-      startResourceQuery: this.startResourceQuery.bind(this)
+      startResourceQuery: this.startResourceQuery.bind(this),
+      sendFeature: this.sendFeature.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -35130,6 +35079,7 @@ class UIController {
         },
         htmlSelector: null, // An HTMLSelector object, reflects the latest text selection
         homonym: null,
+        linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
         defDataReady: false,
         lexicalRequest: {
           startTime: 0, // A time when the last lexical request is started, in ms
@@ -35216,6 +35166,7 @@ class UIController {
           state.htmlSelector = null
           state.inflectionsWaitState = true
           state.wordUsageExamplesData = null
+          state.linkedFeatures = []
           state.defDataReady = false
           state.morphDataReady = false
           state.translationsDataReady = false
@@ -35235,6 +35186,7 @@ class UIController {
 
         setHomonym (state, homonym) {
           state.homonym = homonym
+          state.linkedFeatures = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
         },
 
         setInflData (state, inflectionsViewSet = null) {
@@ -35583,6 +35535,15 @@ class UIController {
       tabName = this.defaultTab
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
+    return this
+  }
+
+  sendFeature (feature) {
+    if (this.api.ui.hasModule('panel')) {
+      this.api.app.startResourceQuery(feature)
+      this.api.ui.changeTab('grammar')
+      this.api.ui.openPanel()
+    }
     return this
   }
 
@@ -39912,7 +39873,6 @@ class HTMLPage {
    * @returns {boolean}
    */
   static get isFrame () {
-    console.log(`isFrame = ${window.self !== window.top}`, window.self, window.top)
     return (window.self !== window.top)
   }
 
@@ -40390,7 +40350,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :data=\"popupData\" @sendfeature=\"sendFeature\">\r\n    </component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"currentPopupComponent\" :data=\"popupData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -43688,16 +43648,6 @@ class PopupModule {
           viewportMargin: 5
         },
         currentPopupComponent: this.config.popupComponent
-      },
-      methods: {
-        sendFeature: function (feature) {
-          if (this.$options.api.ui.hasModule('panel')) {
-            this.$options.api.app.startResourceQuery(feature)
-            this.$options.api.ui.changeTab('grammar')
-            this.$options.api.ui.openPanel()
-          }
-          return this
-        }
       }
     })
   }

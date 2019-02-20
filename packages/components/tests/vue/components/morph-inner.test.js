@@ -61,6 +61,7 @@ describe('morph-inner.test.js', () => {
         app: {
           namespaced: true,
           state: {
+            linkedFeatures: [],
             morphDataReady: true,
             translationsDataReady: false
           },

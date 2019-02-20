@@ -116,11 +116,6 @@ describe('popup.test.js', () => {
       mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
-
-    expect(cmp.vm.classesChanged).toEqual(0)
-    // TODO: fix this test
-    // expect(cmp.vm.noLanguage).toBeTruthy()
-    // expect(cmp.vm.currentLanguageName).toBeUndefined()
   })
 
   it.skip('2 Popup - render with children components (min requirements)', async () => {

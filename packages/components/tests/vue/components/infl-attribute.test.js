@@ -1,11 +1,16 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { mount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
-import Vue from 'vue/dist/vue'
+import Vuex from 'vuex'
 import { Feature, Constants } from 'alpheios-data-models'
 
 describe('infl-attribute.test.js', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
+  let store
+  let api = {}
+  let mockSendFeature
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -31,25 +36,62 @@ describe('infl-attribute.test.js', () => {
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
+
+    mockSendFeature = jest.fn(() => {})
+    api = {
+      app: {
+        sendFeature: mockSendFeature
+      },
+      l10n: {
+        hasMsg: (value) => mockMessages.hasOwnProperty(value),
+        getMsg: (value) => mockMessages[value].get(),
+        getAbbr: (value) => mockMessages[value].abbr()
+      }
+    }
   })
   afterEach(() => {
     jest.resetModules()
+    jest.clearAllMocks()
   })
   afterAll(() => {
-    jest.clearAllMocks()
   })
 
   it('1 InflectionAttribute - renders a vue instance (min requirements)', () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: []
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {},
         type: ''
-      }
+      },
+      store,
+      localVue,
+      mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
 
   it('2 InflectionAttribute - renders a vue instance (min requirements)', () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: []
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
@@ -57,7 +99,10 @@ describe('infl-attribute.test.js', () => {
         },
         type: 'fooType',
         grouplevel: 2
-      }
+      },
+      store,
+      localVue,
+      mocks: api
     })
     expect(cmp.find('span').text()).toEqual('fooValue')
     expect(cmp.find('span').attributes()['data-feature']).toEqual('fooType')
@@ -65,6 +110,17 @@ describe('infl-attribute.test.js', () => {
   })
 
   it('3 InflectionAttribute - renders a vue instance (min requirements)', async () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: ['fooType2']
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
@@ -80,26 +136,40 @@ describe('infl-attribute.test.js', () => {
           }
         },
         type: 'fooType',
-        grouplevel: 2,
-        linkedfeatures: ['fooType2']
-      }
+        grouplevel: 2
+      },
+      store,
+      localVue,
+      mocks: api
     })
 
     cmp.find('span').trigger('click')
 
-    await Vue.nextTick()
-
-    expect(cmp.emitted()['sendfeature']).toBeTruthy()
-    expect(cmp.emitted()['sendfeature'][0]).toEqual([{ value: 'fooValue', values: ['fooValue'], type: 'fooType2' }])
+    expect(mockSendFeature.mock.calls.length).toBe(1)
+    expect(mockSendFeature).toBeCalledWith({ value: 'fooValue', values: ['fooValue'], type: 'fooType2' })
   })
 
   it('3 InflectionAttribute - attributeClass method creates class list from featureType and extra classes', () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: ['fooFeatureType']
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {},
         type: '',
-        linkedfeatures: ['fooFeatureType']
-      }
+        decorators: ['']
+      },
+      store,
+      localVue,
+      mocks: api
     })
 
     let classList1 = cmp.vm.attributeClass('fooFeatureType')
@@ -113,6 +183,17 @@ describe('infl-attribute.test.js', () => {
   })
 
   it('4 InflectionAttribute - decorate method formats data depending on the type and decorators', () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: ['fooType2']
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
@@ -124,13 +205,9 @@ describe('infl-attribute.test.js', () => {
         decorators: ['brackets'],
         messages: mockMessages
       },
-      mocks: {
-        l10n: {
-          hasMsg: (value) => mockMessages.hasOwnProperty(value),
-          getMsg: (value) => mockMessages[value].get(),
-          getAbbr: (value) => mockMessages[value].abbr()
-        }
-      }
+      store,
+      localVue,
+      mocks: api
     })
 
     expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('[verb]')
@@ -155,36 +232,74 @@ describe('infl-attribute.test.js', () => {
   })
 
   it('5 InflectionAttribute - sendFeature method check arguments and if passed an array - it takes only the first value', () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: ['part of speech']
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {},
-        type: '',
-        linkedfeatures: ['part of speech']
-      }
+        type: ''
+      },
+      store,
+      localVue,
+      mocks: api
     })
 
     let testFeature = new Feature(Feature.types.part, 'verb', Constants.LANG_GREEK)
 
     cmp.vm.sendFeature([testFeature])
-    expect(cmp.emitted()['sendfeature'][0]).toEqual([testFeature])
+    expect(mockSendFeature.mock.calls.length).toBe(1)
+    expect(mockSendFeature).toBeCalledWith(testFeature)
   })
 
   it('6 InflectionAttribute - sendFeature method check arguments and if the type of passed feature is not in linked features - event won\'t be emitted', () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: ['part of speech']
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {},
-        type: '',
-        linkedfeatures: ['part of speech']
-      }
+        type: ''
+      },
+      store,
+      localVue,
+      mocks: api
     })
 
     let testFeature = new Feature(Feature.types.gender, 'femine', Constants.LANG_GREEK)
 
     cmp.vm.sendFeature([testFeature])
-    expect(cmp.emitted()['sendfeature']).toBeFalsy()
+    expect(mockSendFeature.mock.calls.length).toBe(0)
   })
 
   it('7 InflectionAttribute - decorate method handles multivalued features properly', () => {
+    store = new Vuex.Store({
+      modules: {
+        app: {
+          namespaced: true,
+          state: {
+            linkedFeatures: []
+          }
+        }
+      }
+    })
+
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
@@ -194,13 +309,9 @@ describe('infl-attribute.test.js', () => {
         decorators: ['abbreviate'],
         messages: mockMessages
       },
-      mocks: {
-        l10n: {
-          hasMsg: (value) => mockMessages.hasOwnProperty(value),
-          getMsg: (value) => mockMessages[value].get(),
-          getAbbr: (value) => mockMessages[value].abbr()
-        }
-      }
+      store,
+      localVue,
+      mocks: api
     })
 
     expect(cmp.vm.decorate(cmp.vm.data, 'gender')).toEqual('f. m.')

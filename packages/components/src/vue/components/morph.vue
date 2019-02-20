@@ -6,8 +6,6 @@
           :index="index"
           :key="lex.lemma.ID"
           :lex="lex"
-          :linkedfeatures="linkedfeatures"
-          @sendfeature="sendFeature"
           v-for="(lex,index) in lexemes"
           v-show="showLexeme(lex)"
       ></morph-inner>
@@ -24,13 +22,6 @@ export default {
   components: { morphInner: MorphInner },
   storeModules: ['app'],
   mixins: [DependencyCheck],
-  props: {
-    linkedfeatures: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
-  },
   computed: {
     lexemes () {
       return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes : []
@@ -39,18 +30,10 @@ export default {
     count () {
       return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes.length : 0
     }
-
-    // TODO: This is not used now. Will we need it in the future?
-    /* linkedFeatures () {
-      return LanguageModelFactory.getLanguageModel(this.$store.app.homonym.lexemes[0].lemma.languageID).grammarFeatures()
-    } */
   },
   methods: {
     showLexeme (lex) {
       return (lex.isPopulated) ? lex.isPopulated() : false
-    },
-    sendFeature (data) {
-      this.$emit('sendfeature', data)
     }
   }
 }

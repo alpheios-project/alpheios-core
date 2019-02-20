@@ -348,7 +348,8 @@ export default class UIController {
       contentOptionChange: this.contentOptionChange.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       getLanguageName: UIController.getLanguageName,
-      startResourceQuery: this.startResourceQuery.bind(this)
+      startResourceQuery: this.startResourceQuery.bind(this),
+      sendFeature: this.sendFeature.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -365,6 +366,7 @@ export default class UIController {
         },
         htmlSelector: null, // An HTMLSelector object, reflects the latest text selection
         homonym: null,
+        linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
         defDataReady: false,
         lexicalRequest: {
           startTime: 0, // A time when the last lexical request is started, in ms
@@ -451,6 +453,7 @@ export default class UIController {
           state.htmlSelector = null
           state.inflectionsWaitState = true
           state.wordUsageExamplesData = null
+          state.linkedFeatures = []
           state.defDataReady = false
           state.morphDataReady = false
           state.translationsDataReady = false
@@ -470,6 +473,7 @@ export default class UIController {
 
         setHomonym (state, homonym) {
           state.homonym = homonym
+          state.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
         },
 
         setInflData (state, inflectionsViewSet = null) {
@@ -818,6 +822,15 @@ export default class UIController {
       tabName = this.defaultTab
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
+    return this
+  }
+
+  sendFeature (feature) {
+    if (this.api.ui.hasModule('panel')) {
+      this.api.app.startResourceQuery(feature)
+      this.api.ui.changeTab('grammar')
+      this.api.ui.openPanel()
+    }
     return this
   }
 
