@@ -20,6 +20,7 @@ export default class PopupModule {
         popup: Popup
       },
       data: {
+        // Reactive options of the Popup UI component
         popupData: {
           // Default popup position, with units
           top: '10vh',

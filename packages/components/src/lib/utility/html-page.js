@@ -129,7 +129,8 @@ export default class HTMLPage {
    * @return {boolean} - True if compact version shall be enabled, false otherwise.
    */
   static get enableCompactUI () {
-    return window.matchMedia('(max-width: 720px)').matches
+    const screenWidthThreshold = 720
+    return window.screen.width < screenWidthThreshold
   }
 }
 

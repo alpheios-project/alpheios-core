@@ -473,7 +473,7 @@ export default class UIController {
 
         setHomonym (state, homonym) {
           state.homonym = homonym
-          state.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.lexemes[0].lemma.languageID).grammarFeatures()
+          state.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.languageID).grammarFeatures()
         },
 
         setInflData (state, inflectionsViewSet = null) {
@@ -834,7 +834,11 @@ export default class UIController {
     return this
   }
 
-  newLexicalRequest () {
+  newLexicalRequest (targetWord, languageID) {
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
+    this.showStatusInfo(targetWord, languageID)
+    this.updateLanguage(languageID)
+    this.updateWordAnnotationData()
     this.store.commit('app/lexicalRequestStarted')
     this.store.commit('app/resetGrammarRes')
     this.store.commit('app/resetInflData')
@@ -844,10 +848,9 @@ export default class UIController {
 
   updateMorphology (homonym) {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
-    this.store.commit(`app/setHomonym`, homonym)
-    this.store.commit('app/setMorphDataReady')
     this.updateProviders(homonym)
     this.store.commit(`app/setHomonym`, homonym)
+    this.store.commit('app/setMorphDataReady')
   }
 
   updateProviders (homonym) {
@@ -1058,12 +1061,7 @@ export default class UIController {
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
-        this.newLexicalRequest()
-        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
-        this.showStatusInfo(textSelector.normalizedText, textSelector.languageID)
-        this.updateLanguage(textSelector.languageID)
-        this.updateWordAnnotationData(textSelector.data)
-
+        this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID)
         lexQuery.getData()
       }
     }
@@ -1198,13 +1196,7 @@ export default class UIController {
   }
 
   onWordItemSelected (homonym) {
-    let languageID = homonym.lexemes[0].lemma.languageID
-
-    this.newLexicalRequest()
-    this.message(this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
-    this.showStatusInfo(homonym.targetWord, languageID)
-    this.updateLanguage(languageID)
-    this.updateWordAnnotationData()
+    this.newLexicalRequest(homonym.targetWord, homonym.languageID)
 
     this.onHomonymReady(homonym)
     this.updateDefinitions(homonym)
