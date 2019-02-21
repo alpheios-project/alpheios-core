@@ -7672,17 +7672,6 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner.vue?vue&type=style&index=0&lang=scss&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph-inner.vue?vue&type=style&index=0&lang=scss& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph.vue?vue&type=style&index=0&lang=scss&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph.vue?vue&type=style&index=0&lang=scss& ***!
@@ -10529,10 +10518,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/morph-inner.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/morph-inner.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************/
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/morph.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/morph.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -10769,6 +10758,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10778,7 +10776,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'MorphInner',
+  name: 'Morph',
   components: {
     shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     inflectionattribute: _infl_attribute_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -10786,81 +10784,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   storeModules: ['app'],
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_4__["default"]],
-  props: {
-    // This is a current Lexeme object
-    lex: {
-      type: Object,
-      required: true
-    },
-    index: {
-      type: Number,
-      required: true
-    },
-    count: {
-      type: Number,
-      required: true
-    }
-  },
   data: function () {
     return {
-      showSource: false
+      types: null // These are Feature.types
     }
   },
-  created: function () {
-    this.types = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types
-  },
   computed: {
-    allLemmas () {
-      if (this.lex.altLemmas && this.lex.altLemmas.length > 0) {
-        return [this.lex.lemma, ...this.lex.altLemmas].sort((a, b) => {
-          if (a.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency]) {
-            return a.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency].compareTo(b.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency])
-          } else if (b.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency]) {
-            // frequency of a isn't defined so sort b first
-            return 1
-          } else {
-            // equal
-            return 0
-          }
-        })
-      } else {
-        return [this.lex.lemma]
-      }
+    lexemes () {
+      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes : []
     },
-    morphClass () {
-      let c = 'alpheios-morph__dictentry'
-      if (this.lex.disambiguated) {
-        c = `${c} alpheios-morph__dictentry-disambiguated`
-      }
-      return c
+
+    count () {
+      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes.length : 0
     },
-    inflections: {
-      get: function () {
-        return (
-          this.$store.state.app.morphDataReady && this.$store.getters['app/hasMorphData'] && this.lex.getGroupedInflections)
-          ? this.lex.getGroupedInflections()
-          : []
-      }
-    },
-    definitions () {
-      let definitions = []
-      if (this.lex.meaning && this.lex.meaning.shortDefs && this.lex.meaning.shortDefs.length > 0) {
-        definitions = this.lex.meaning.shortDefs
-        // We don't need the deduplication code below as of now; it is here just for historic reference
-        /* for (const def of lexeme.meaning.shortDefs) {
-            // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
-            // object without a provider if it has the same provider as the morphology info
-            if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
-              definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
-            } else {
-              definitions.push(def)
-            }
-          } */
-      } else if (this.lex.lemma.features && Object.entries(this.lex.lemma.features).length > 0) {
-        definitions = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"]('No definition found.', 'en-US', 'text/plain', this.lex.lemma.word)]
-      }
-      return definitions
-    },
+
     translations () {
       let translations = {}
       if (this.$store.state.app.translationsDataReady) {
@@ -10874,25 +10811,33 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    showLexeme (lex) {
+      return (lex.isPopulated) ? lex.isPopulated() : false
+    },
+
     groupClass (group) {
       return group.groupingKey.isCaseInflectionSet ? 'alpheios-morph__inline' : 'alpheios-morph__block'
     },
+
     featureMatch (a, b) {
       if (a && b) {
         return a.isEqual(b)
       }
       return false
     },
+
     getFeature (lemma, type) {
       if (lemma.features[type] !== undefined) {
         return lemma.features[type].value
       }
       return undefined
     },
+
     definitionIndex (index) {
       let letters = 'abcdefghijklmnopqrstuvwxyz'
       return letters.substr(index, 1) + '.'
     },
+
     featureList (lemma, features, name) {
       let list = features.map(i => lemma.features[i] ? lemma.features[i] : null).filter(i => i)
       list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
@@ -10900,63 +10845,66 @@ __webpack_require__.r(__webpack_exports__);
       returnObj[name] = { value: list, values: [list] }
       return returnObj
     },
+
     languageCode (languageID) {
       return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
-    }
-  }
-});
-
-
-/***/ }),
-
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/morph.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/morph.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _morph_inner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./morph-inner.vue */ "./vue/components/morph-inner.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-// Modules support
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Morph',
-  components: { morphInner: _morph_inner_vue__WEBPACK_IMPORTED_MODULE_0__["default"] },
-  storeModules: ['app'],
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  computed: {
-    lexemes () {
-      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes : []
     },
 
-    count () {
-      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes.length : 0
+    allLemmas (lex) {
+      if (lex.altLemmas && lex.altLemmas.length > 0) {
+        return [lex.lemma, ...lex.altLemmas].sort((a, b) => {
+          if (a.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency]) {
+            return a.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency].compareTo(b.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency])
+          } else if (b.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency]) {
+            // frequency of a isn't defined so sort b first
+            return 1
+          } else {
+            // equal
+            return 0
+          }
+        })
+      } else {
+        return [lex.lemma]
+      }
+    },
+
+    morphClass (lex) {
+      let c = 'alpheios-morph__dictentry'
+      if (lex.disambiguated) {
+        c = `${c} alpheios-morph__dictentry-disambiguated`
+      }
+      return c
+    },
+
+    inflections (lex) {
+      return (
+        this.$store.state.app.morphDataReady && this.$store.getters['app/hasMorphData'] && lex.getGroupedInflections)
+        ? lex.getGroupedInflections()
+        : []
+    },
+
+    definitions (lex) {
+      let definitions = []
+      if (lex.meaning && lex.meaning.shortDefs && lex.meaning.shortDefs.length > 0) {
+        definitions = lex.meaning.shortDefs
+        // We don't need the deduplication code below as of now; it is here just for historic reference
+        /* for (const def of lexeme.meaning.shortDefs) {
+            // for now, to avoid duplicate showing of the provider we create a new unproxied definitions
+            // object without a provider if it has the same provider as the morphology info
+            if (def.provider && lexeme.provider && def.provider.uri === lexeme.provider.uri) {
+              definitions.push(new Definition(def.text, def.language, def.format, def.lemmaText))
+            } else {
+              definitions.push(def)
+            }
+          } */
+      } else if (lex.lemma.features && Object.entries(lex.lemma.features).length > 0) {
+        definitions = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"]('No definition found.', 'en-US', 'text/plain', lex.lemma.word)]
+      }
+      return definitions
     }
   },
-  methods: {
-    showLexeme (lex) {
-      return (lex.isPopulated) ? lex.isPopulated() : false
-    }
+  created: function () {
+    this.types = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types
   }
 });
 
@@ -16627,555 +16575,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner.vue?vue&type=template&id=bd743be2&":
-/*!*******************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph-inner.vue?vue&type=template&id=bd743be2& ***!
-  \*******************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.lex
-    ? _c("div", { class: _vm.morphClass }, [
-        _c(
-          "div",
-          { staticClass: "alpheios-morph__features" },
-          [
-            _vm._l(_vm.allLemmas, function(lemma, lemmaIndex) {
-              return _c(
-                "p",
-                { staticClass: "principal_parts" },
-                [
-                  lemmaIndex === 0 && _vm.count > 1
-                    ? _c("span", { staticClass: "lemma_index" }, [
-                        _vm._v(_vm._s(_vm.index + 1))
-                      ])
-                    : lemmaIndex > 0 && _vm.count > 1
-                    ? _c("span", { staticClass: "lemma_index_spacer" })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !lemma.principalParts.includes(lemma.word)
-                    ? _c(
-                        "span",
-                        {
-                          staticClass:
-                            "alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem",
-                          attrs: { lang: _vm.languageCode(lemma.languageID) }
-                        },
-                        [_vm._v(_vm._s(lemma.word))]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem"
-                    },
-                    _vm._l(lemma.principalParts, function(part) {
-                      return _c(
-                        "span",
-                        {
-                          staticClass: "alpheios-morph__listitem",
-                          attrs: { lang: _vm.languageCode(lemma.languageID) }
-                        },
-                        [_vm._v(_vm._s(part))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("inflectionattribute", {
-                    attrs: {
-                      data: lemma.features,
-                      decorators: ["brackets"],
-                      type: _vm.types.pronunciation
-                    }
-                  }),
-                  _vm._v(" "),
-                  lemma.features &&
-                  (_vm.getFeature(lemma, "frequency") ||
-                    _vm.getFeature(lemma, "age") ||
-                    _vm.getFeature(lemma, "area") ||
-                    _vm.getFeature(lemma, "geo"))
-                    ? _c(
-                        "span",
-                        { staticClass: "feature_extras" },
-                        [
-                          _c("inflectionattribute", {
-                            attrs: {
-                              data: _vm.featureList(
-                                lemma,
-                                ["age", "area", "geo", "frequency"],
-                                "extras"
-                              ),
-                              type: "extras"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  lemma.features && _vm.getFeature(lemma, "source")
-                    ? _c(
-                        "span",
-                        { staticClass: "feature_source" },
-                        [
-                          _c("inflectionattribute", {
-                            attrs: {
-                              data: lemma.features,
-                              decorators: ["link", "brackets"],
-                              type: _vm.types.source
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    : _vm._e()
-                ],
-                1
-              )
-            }),
-            _vm._v(" "),
-            _vm.lex.lemma.features
-              ? _c(
-                  "div",
-                  { staticClass: "alpheios-morph__morphdata" },
-                  [
-                    _c(
-                      "span",
-                      { staticClass: "alpheios-morph__pofs" },
-                      [
-                        _c("inflectionattribute", {
-                          attrs: {
-                            data: _vm.lex.lemma.features,
-                            type: _vm.types.grmCase
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("inflectionattribute", {
-                          attrs: {
-                            data: _vm.lex.lemma.features,
-                            type: _vm.types.gender
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("inflectionattribute", {
-                          attrs: {
-                            data: _vm.lex.lemma.features,
-                            type: _vm.types.part
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("inflectionattribute", {
-                      attrs: {
-                        data: _vm.lex.lemma.features,
-                        decorators: ["parenthesize"],
-                        type: _vm.types.kind
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("inflectionattribute", {
-                      attrs: {
-                        data: _vm.lex.lemma.features,
-                        decorators: ["appendtype"],
-                        type: _vm.types.declension
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("inflectionattribute", {
-                      attrs: {
-                        data: _vm.lex.lemma.features,
-                        decorators: ["appendtype"],
-                        type: _vm.types.conjugation
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("inflectionattribute", {
-                      attrs: {
-                        data: _vm.lex.lemma.features,
-                        decorators: ["brackets"],
-                        type: _vm.types.note
-                      }
-                    })
-                  ],
-                  1
-                )
-              : _vm._e()
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _vm.definitions.length > 0
-          ? _c(
-              "div",
-              { staticClass: "alpheios-morph__definition_list" },
-              _vm._l(_vm.definitions, function(definition, dindex) {
-                return _c(
-                  "div",
-                  {
-                    key: definition.ID,
-                    staticClass: "alpheios-morph__definition",
-                    attrs: { "data-lemmakey": _vm.lex.lemma.ID }
-                  },
-                  [
-                    _vm.definitions.length > 1
-                      ? _c("span", { staticClass: "definition_index" }, [
-                          _vm._v(_vm._s(_vm.definitionIndex(dindex)))
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("shortdef", { attrs: { definition: definition } })
-                  ],
-                  1
-                )
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.translations &&
-        _vm.translations[_vm.lex.lemma.ID] &&
-        _vm.translations[_vm.lex.lemma.ID].glosses &&
-        _vm.translations[_vm.lex.lemma.ID].glosses.length > 0
-          ? _c(
-              "div",
-              { staticClass: "alpheios-morph__translation_list" },
-              [
-                _c("lemmatranslation", {
-                  attrs: {
-                    lemmakey: _vm.lex.lemma.ID,
-                    translations: _vm.translations
-                  }
-                })
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.inflections.length > 0
-          ? _c(
-              "div",
-              { staticClass: "alpheios-morph__inflections" },
-              _vm._l(_vm.inflections, function(inflset, ifindex) {
-                return _c("div", { staticClass: "alpheios-morph__inflset" }, [
-                  _vm.inflections.length > 1
-                    ? _c("span", { staticClass: "inflset_index" }, [
-                        _vm._v(_vm._s(ifindex + 1) + ".")
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "alpheios-morph__forms" },
-                    [
-                      inflset.groupingKey.prefix
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "alpheios-morph__formtext",
-                              attrs: {
-                                lang: _vm.languageCode(
-                                  _vm.lex.lemma.languageID
-                                ),
-                                "data-feature": "prefix",
-                                "data-grouplevel": "1"
-                              }
-                            },
-                            [_vm._v(_vm._s(inflset.groupingKey.prefix) + " ")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          staticClass: "alpheios-morph__formtext",
-                          attrs: {
-                            lang: _vm.languageCode(_vm.lex.lemma.languageID),
-                            "data-feature": "stem",
-                            "data-grouplevel": "1"
-                          }
-                        },
-                        [_vm._v(_vm._s(inflset.groupingKey.stem))]
-                      ),
-                      _vm._v(" "),
-                      inflset.groupingKey.suffix
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "alpheios-morph__formtext",
-                              attrs: {
-                                lang: _vm.languageCode(
-                                  _vm.lex.lemma.languageID
-                                ),
-                                "data-feature": "suffix",
-                                "data-grouplevel": "1"
-                              }
-                            },
-                            [_vm._v(" -" + _vm._s(inflset.groupingKey.suffix))]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "alpheios-morph__inflfeatures" },
-                        [
-                          !_vm.featureMatch(
-                            _vm.lex.lemma.features[_vm.types.part],
-                            inflset.groupingKey[_vm.types.part]
-                          )
-                            ? _c("inflectionattribute", {
-                                attrs: {
-                                  data: inflset.groupingKey,
-                                  grouplevel: 1,
-                                  type: _vm.types.part
-                                }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          inflset.groupingKey.declension &&
-                          !_vm.featureMatch(
-                            inflset.groupingKey.declension,
-                            _vm.lex.lemma.features.declension
-                          )
-                            ? _c("inflectionattribute", {
-                                attrs: {
-                                  data: inflset.groupingKey,
-                                  decorators: ["appendtype"],
-                                  grouplevel: 1,
-                                  type: _vm.types.declension
-                                }
-                              })
-                            : _vm._e()
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _vm._l(inflset.inflections, function(group) {
-                        return _c(
-                          "div",
-                          { staticClass: "alpheios-morph__inflgroup" },
-                          [
-                            group.groupingKey.isCaseInflectionSet
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("inflectionattribute", {
-                                      attrs: {
-                                        data: group.groupingKey,
-                                        decorators: ["abbreviate"],
-                                        grouplevel: 2,
-                                        type: _vm.types.number
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("inflectionattribute", {
-                                      attrs: {
-                                        data: group.groupingKey,
-                                        decorators: ["abbreviate"],
-                                        grouplevel: 2,
-                                        type: _vm.types.tense
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm._l(group.inflections, function(nextGroup) {
-                              return _c(
-                                "div",
-                                { class: _vm.groupClass(group) },
-                                [
-                                  group.groupingKey.isCaseInflectionSet
-                                    ? _c(
-                                        "span",
-                                        [
-                                          _c("inflectionattribute", {
-                                            attrs: {
-                                              data: nextGroup.groupingKey,
-                                              decorators: ["abbreviate"],
-                                              grouplevel: 3,
-                                              type: _vm.types.tense
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("inflectionattribute", {
-                                            attrs: {
-                                              data: nextGroup.groupingKey,
-                                              decorators: ["abbreviate"],
-                                              grouplevel: 3,
-                                              type: _vm.types.voice
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm._l(nextGroup.inflections, function(infl) {
-                                    return _c(
-                                      "div",
-                                      { class: _vm.groupClass(group) },
-                                      [
-                                        _c("inflectionattribute", {
-                                          attrs: {
-                                            data: infl.groupingKey,
-                                            decorators: ["abbreviate"],
-                                            grouplevel: 4,
-                                            type: _vm.types.grmCase
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        !_vm.featureMatch(
-                                          infl.groupingKey[_vm.types.gender],
-                                          _vm.lex.lemma.features[
-                                            _vm.types.gender
-                                          ]
-                                        )
-                                          ? _c("inflectionattribute", {
-                                              attrs: {
-                                                data: infl.groupingKey,
-                                                decorators: [
-                                                  "parenthesize",
-                                                  "abbreviate"
-                                                ],
-                                                grouplevel: 4,
-                                                type: _vm.types.gender
-                                              }
-                                            })
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _c("inflectionattribute", {
-                                          attrs: {
-                                            data: infl.groupingKey,
-                                            decorators: ["abbreviate"],
-                                            grouplevel: 4,
-                                            type: _vm.types.comparison
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("inflectionattribute", {
-                                          attrs: {
-                                            data: infl.groupingKey,
-                                            decorators: [
-                                              "appendtype",
-                                              "abbreviate"
-                                            ],
-                                            grouplevel: 4,
-                                            type: _vm.types.person
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        !group.groupingKey.isCaseInflectionSet
-                                          ? _c("inflectionattribute", {
-                                              attrs: {
-                                                data: infl.groupingKey,
-                                                decorators: ["abbreviate"],
-                                                grouplevel: 4,
-                                                type: _vm.types.number
-                                              }
-                                            })
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        !group.groupingKey.isCaseInflectionSet
-                                          ? _c("inflectionattribute", {
-                                              attrs: {
-                                                data: infl.groupingKey,
-                                                decorators: ["abbreviate"],
-                                                grouplevel: 4,
-                                                type: _vm.types.tense
-                                              }
-                                            })
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        !group.groupingKey.isCaseInflectionSet
-                                          ? _c("inflectionattribute", {
-                                              attrs: {
-                                                data: infl.groupingKey,
-                                                decorators: ["abbreviate"],
-                                                grouplevel: 4,
-                                                type: _vm.types.mood
-                                              }
-                                            })
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        !group.groupingKey.isCaseInflectionSet
-                                          ? _c("inflectionattribute", {
-                                              attrs: {
-                                                data: infl.groupingKey,
-                                                decorators: ["abbreviate"],
-                                                grouplevel: 4,
-                                                type: _vm.types.voice
-                                              }
-                                            })
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _vm._l(infl.inflections, function(
-                                          item
-                                        ) {
-                                          return _c(
-                                            "span",
-                                            [
-                                              _c("inflectionattribute", {
-                                                attrs: {
-                                                  data: item,
-                                                  decorators: ["parenthesize"],
-                                                  type: "dialect"
-                                                }
-                                              }),
-                                              _vm._v(" "),
-                                              _c("inflectionattribute", {
-                                                attrs: {
-                                                  data: item,
-                                                  type: "example"
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                        })
-                                      ],
-                                      2
-                                    )
-                                  })
-                                ],
-                                2
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ])
-    : _vm._e()
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph.vue?vue&type=template&id=5375b274&":
 /*!*************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/morph.vue?vue&type=template&id=5375b274& ***!
@@ -17191,12 +16590,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "alpheios-morph__lexemes morph-inner-v1" },
-      _vm._l(_vm.lexemes, function(lex, index) {
-        return _c("morph-inner", {
+  return _c(
+    "div",
+    { staticClass: "alpheios-morph__lexemes morph-inner-v1" },
+    _vm._l(_vm.lexemes, function(lex, index) {
+      return _c(
+        "div",
+        {
           directives: [
             {
               name: "show",
@@ -17205,13 +16605,640 @@ var render = function() {
               expression: "showLexeme(lex)"
             }
           ],
-          key: lex.lemma.ID,
-          attrs: { count: _vm.count, index: index, lex: lex }
-        })
-      }),
-      1
-    )
-  ])
+          key: lex.lemma.ID
+        },
+        [
+          lex
+            ? _c("div", { class: _vm.morphClass(lex) }, [
+                _c(
+                  "div",
+                  { staticClass: "alpheios-morph__features" },
+                  [
+                    _vm._l(_vm.allLemmas(lex), function(lemma, lemmaIndex) {
+                      return _c(
+                        "p",
+                        { staticClass: "principal_parts" },
+                        [
+                          lemmaIndex === 0 && _vm.count > 1
+                            ? _c("span", { staticClass: "lemma_index" }, [
+                                _vm._v(_vm._s(index + 1))
+                              ])
+                            : lemmaIndex > 0 && _vm.count > 1
+                            ? _c("span", { staticClass: "lemma_index_spacer" })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !lemma.principalParts.includes(lemma.word)
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem",
+                                  attrs: {
+                                    lang: _vm.languageCode(lemma.languageID)
+                                  }
+                                },
+                                [_vm._v(_vm._s(lemma.word))]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem"
+                            },
+                            _vm._l(lemma.principalParts, function(part) {
+                              return _c(
+                                "span",
+                                {
+                                  staticClass: "alpheios-morph__listitem",
+                                  attrs: {
+                                    lang: _vm.languageCode(lemma.languageID)
+                                  }
+                                },
+                                [_vm._v(_vm._s(part))]
+                              )
+                            }),
+                            0
+                          ),
+                          _vm._v(" "),
+                          _c("inflectionattribute", {
+                            attrs: {
+                              data: lemma.features,
+                              decorators: ["brackets"],
+                              type: _vm.types.pronunciation
+                            }
+                          }),
+                          _vm._v(" "),
+                          lemma.features &&
+                          (_vm.getFeature(lemma, "frequency") ||
+                            _vm.getFeature(lemma, "age") ||
+                            _vm.getFeature(lemma, "area") ||
+                            _vm.getFeature(lemma, "geo"))
+                            ? _c(
+                                "span",
+                                { staticClass: "feature_extras" },
+                                [
+                                  _c("inflectionattribute", {
+                                    attrs: {
+                                      data: _vm.featureList(
+                                        lemma,
+                                        ["age", "area", "geo", "frequency"],
+                                        "extras"
+                                      ),
+                                      type: "extras"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          lemma.features && _vm.getFeature(lemma, "source")
+                            ? _c(
+                                "span",
+                                { staticClass: "feature_source" },
+                                [
+                                  _c("inflectionattribute", {
+                                    attrs: {
+                                      data: lemma.features,
+                                      decorators: ["link", "brackets"],
+                                      type: _vm.types.source
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    }),
+                    _vm._v(" "),
+                    lex.lemma.features
+                      ? _c(
+                          "div",
+                          { staticClass: "alpheios-morph__morphdata" },
+                          [
+                            _c(
+                              "span",
+                              { staticClass: "alpheios-morph__pofs" },
+                              [
+                                _c("inflectionattribute", {
+                                  attrs: {
+                                    data: lex.lemma.features,
+                                    type: _vm.types.grmCase
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("inflectionattribute", {
+                                  attrs: {
+                                    data: lex.lemma.features,
+                                    type: _vm.types.gender
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("inflectionattribute", {
+                                  attrs: {
+                                    data: lex.lemma.features,
+                                    type: _vm.types.part
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("inflectionattribute", {
+                              attrs: {
+                                data: lex.lemma.features,
+                                decorators: ["parenthesize"],
+                                type: _vm.types.kind
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("inflectionattribute", {
+                              attrs: {
+                                data: lex.lemma.features,
+                                decorators: ["appendtype"],
+                                type: _vm.types.declension
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("inflectionattribute", {
+                              attrs: {
+                                data: lex.lemma.features,
+                                decorators: ["appendtype"],
+                                type: _vm.types.conjugation
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("inflectionattribute", {
+                              attrs: {
+                                data: lex.lemma.features,
+                                decorators: ["brackets"],
+                                type: _vm.types.note
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _vm.definitions(lex).length > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "alpheios-morph__definition_list" },
+                      _vm._l(_vm.definitions(lex), function(
+                        definition,
+                        dindex
+                      ) {
+                        return _c(
+                          "div",
+                          {
+                            key: definition.ID,
+                            staticClass: "alpheios-morph__definition",
+                            attrs: { "data-lemmakey": lex.lemma.ID }
+                          },
+                          [
+                            _vm.definitions(lex).length > 1
+                              ? _c(
+                                  "span",
+                                  { staticClass: "definition_index" },
+                                  [_vm._v(_vm._s(_vm.definitionIndex(dindex)))]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("shortdef", {
+                              attrs: { definition: definition }
+                            })
+                          ],
+                          1
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.translations &&
+                _vm.translations[lex.lemma.ID] &&
+                _vm.translations[lex.lemma.ID].glosses &&
+                _vm.translations[lex.lemma.ID].glosses.length > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "alpheios-morph__translation_list" },
+                      [
+                        _c("lemmatranslation", {
+                          attrs: {
+                            lemmakey: lex.lemma.ID,
+                            translations: _vm.translations
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.inflections(lex).length > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "alpheios-morph__inflections" },
+                      _vm._l(_vm.inflections(lex), function(inflset, ifindex) {
+                        return _c(
+                          "div",
+                          { staticClass: "alpheios-morph__inflset" },
+                          [
+                            _vm.inflections(lex).length > 1
+                              ? _c("span", { staticClass: "inflset_index" }, [
+                                  _vm._v(_vm._s(ifindex + 1) + ".")
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "alpheios-morph__forms" },
+                              [
+                                inflset.groupingKey.prefix
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass: "alpheios-morph__formtext",
+                                        attrs: {
+                                          lang: _vm.languageCode(
+                                            lex.lemma.languageID
+                                          ),
+                                          "data-feature": "prefix",
+                                          "data-grouplevel": "1"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(inflset.groupingKey.prefix) +
+                                            " "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "alpheios-morph__formtext",
+                                    attrs: {
+                                      lang: _vm.languageCode(
+                                        lex.lemma.languageID
+                                      ),
+                                      "data-feature": "stem",
+                                      "data-grouplevel": "1"
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(inflset.groupingKey.stem))]
+                                ),
+                                _vm._v(" "),
+                                inflset.groupingKey.suffix
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass: "alpheios-morph__formtext",
+                                        attrs: {
+                                          lang: _vm.languageCode(
+                                            lex.lemma.languageID
+                                          ),
+                                          "data-feature": "suffix",
+                                          "data-grouplevel": "1"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          " -" +
+                                            _vm._s(inflset.groupingKey.suffix)
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "alpheios-morph__inflfeatures"
+                                  },
+                                  [
+                                    !_vm.featureMatch(
+                                      lex.lemma.features[_vm.types.part],
+                                      inflset.groupingKey[_vm.types.part]
+                                    )
+                                      ? _c("inflectionattribute", {
+                                          attrs: {
+                                            data: inflset.groupingKey,
+                                            grouplevel: 1,
+                                            type: _vm.types.part
+                                          }
+                                        })
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    inflset.groupingKey.declension &&
+                                    !_vm.featureMatch(
+                                      inflset.groupingKey.declension,
+                                      lex.lemma.features.declension
+                                    )
+                                      ? _c("inflectionattribute", {
+                                          attrs: {
+                                            data: inflset.groupingKey,
+                                            decorators: ["appendtype"],
+                                            grouplevel: 1,
+                                            type: _vm.types.declension
+                                          }
+                                        })
+                                      : _vm._e()
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _vm._l(inflset.inflections, function(group) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      staticClass: "alpheios-morph__inflgroup"
+                                    },
+                                    [
+                                      group.groupingKey.isCaseInflectionSet
+                                        ? _c(
+                                            "span",
+                                            [
+                                              _c("inflectionattribute", {
+                                                attrs: {
+                                                  data: group.groupingKey,
+                                                  decorators: ["abbreviate"],
+                                                  grouplevel: 2,
+                                                  type: _vm.types.number
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("inflectionattribute", {
+                                                attrs: {
+                                                  data: group.groupingKey,
+                                                  decorators: ["abbreviate"],
+                                                  grouplevel: 2,
+                                                  type: _vm.types.tense
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm._l(group.inflections, function(
+                                        nextGroup
+                                      ) {
+                                        return _c(
+                                          "div",
+                                          { class: _vm.groupClass(group) },
+                                          [
+                                            group.groupingKey
+                                              .isCaseInflectionSet
+                                              ? _c(
+                                                  "span",
+                                                  [
+                                                    _c("inflectionattribute", {
+                                                      attrs: {
+                                                        data:
+                                                          nextGroup.groupingKey,
+                                                        decorators: [
+                                                          "abbreviate"
+                                                        ],
+                                                        grouplevel: 3,
+                                                        type: _vm.types.tense
+                                                      }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c("inflectionattribute", {
+                                                      attrs: {
+                                                        data:
+                                                          nextGroup.groupingKey,
+                                                        decorators: [
+                                                          "abbreviate"
+                                                        ],
+                                                        grouplevel: 3,
+                                                        type: _vm.types.voice
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                )
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            _vm._l(
+                                              nextGroup.inflections,
+                                              function(infl) {
+                                                return _c(
+                                                  "div",
+                                                  {
+                                                    class: _vm.groupClass(group)
+                                                  },
+                                                  [
+                                                    _c("inflectionattribute", {
+                                                      attrs: {
+                                                        data: infl.groupingKey,
+                                                        decorators: [
+                                                          "abbreviate"
+                                                        ],
+                                                        grouplevel: 4,
+                                                        type: _vm.types.grmCase
+                                                      }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    !_vm.featureMatch(
+                                                      infl.groupingKey[
+                                                        _vm.types.gender
+                                                      ],
+                                                      lex.lemma.features[
+                                                        _vm.types.gender
+                                                      ]
+                                                    )
+                                                      ? _c(
+                                                          "inflectionattribute",
+                                                          {
+                                                            attrs: {
+                                                              data:
+                                                                infl.groupingKey,
+                                                              decorators: [
+                                                                "parenthesize",
+                                                                "abbreviate"
+                                                              ],
+                                                              grouplevel: 4,
+                                                              type:
+                                                                _vm.types.gender
+                                                            }
+                                                          }
+                                                        )
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    _c("inflectionattribute", {
+                                                      attrs: {
+                                                        data: infl.groupingKey,
+                                                        decorators: [
+                                                          "abbreviate"
+                                                        ],
+                                                        grouplevel: 4,
+                                                        type:
+                                                          _vm.types.comparison
+                                                      }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c("inflectionattribute", {
+                                                      attrs: {
+                                                        data: infl.groupingKey,
+                                                        decorators: [
+                                                          "appendtype",
+                                                          "abbreviate"
+                                                        ],
+                                                        grouplevel: 4,
+                                                        type: _vm.types.person
+                                                      }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    !group.groupingKey
+                                                      .isCaseInflectionSet
+                                                      ? _c(
+                                                          "inflectionattribute",
+                                                          {
+                                                            attrs: {
+                                                              data:
+                                                                infl.groupingKey,
+                                                              decorators: [
+                                                                "abbreviate"
+                                                              ],
+                                                              grouplevel: 4,
+                                                              type:
+                                                                _vm.types.number
+                                                            }
+                                                          }
+                                                        )
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    !group.groupingKey
+                                                      .isCaseInflectionSet
+                                                      ? _c(
+                                                          "inflectionattribute",
+                                                          {
+                                                            attrs: {
+                                                              data:
+                                                                infl.groupingKey,
+                                                              decorators: [
+                                                                "abbreviate"
+                                                              ],
+                                                              grouplevel: 4,
+                                                              type:
+                                                                _vm.types.tense
+                                                            }
+                                                          }
+                                                        )
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    !group.groupingKey
+                                                      .isCaseInflectionSet
+                                                      ? _c(
+                                                          "inflectionattribute",
+                                                          {
+                                                            attrs: {
+                                                              data:
+                                                                infl.groupingKey,
+                                                              decorators: [
+                                                                "abbreviate"
+                                                              ],
+                                                              grouplevel: 4,
+                                                              type:
+                                                                _vm.types.mood
+                                                            }
+                                                          }
+                                                        )
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    !group.groupingKey
+                                                      .isCaseInflectionSet
+                                                      ? _c(
+                                                          "inflectionattribute",
+                                                          {
+                                                            attrs: {
+                                                              data:
+                                                                infl.groupingKey,
+                                                              decorators: [
+                                                                "abbreviate"
+                                                              ],
+                                                              grouplevel: 4,
+                                                              type:
+                                                                _vm.types.voice
+                                                            }
+                                                          }
+                                                        )
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    _vm._l(
+                                                      infl.inflections,
+                                                      function(item) {
+                                                        return _c(
+                                                          "span",
+                                                          [
+                                                            _c(
+                                                              "inflectionattribute",
+                                                              {
+                                                                attrs: {
+                                                                  data: item,
+                                                                  decorators: [
+                                                                    "parenthesize"
+                                                                  ],
+                                                                  type:
+                                                                    "dialect"
+                                                                }
+                                                              }
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "inflectionattribute",
+                                                              {
+                                                                attrs: {
+                                                                  data: item,
+                                                                  type:
+                                                                    "example"
+                                                                }
+                                                              }
+                                                            )
+                                                          ],
+                                                          1
+                                                        )
+                                                      }
+                                                    )
+                                                  ],
+                                                  2
+                                                )
+                                              }
+                                            )
+                                          ],
+                                          2
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ]
+      )
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41473,93 +41500,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_template_id_50b826a8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_lookup_vue_vue_type_template_id_50b826a8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./vue/components/morph-inner.vue":
-/*!****************************************!*\
-  !*** ./vue/components/morph-inner.vue ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _morph_inner_vue_vue_type_template_id_bd743be2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./morph-inner.vue?vue&type=template&id=bd743be2& */ "./vue/components/morph-inner.vue?vue&type=template&id=bd743be2&");
-/* harmony import */ var _morph_inner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./morph-inner.vue?vue&type=script&lang=js& */ "./vue/components/morph-inner.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _morph_inner_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./morph-inner.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/morph-inner.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _morph_inner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _morph_inner_vue_vue_type_template_id_bd743be2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _morph_inner_vue_vue_type_template_id_bd743be2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "vue/components/morph-inner.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./vue/components/morph-inner.vue?vue&type=script&lang=js&":
-/*!*****************************************************************!*\
-  !*** ./vue/components/morph-inner.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_morph_inner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./morph-inner.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/morph-inner.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_morph_inner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./vue/components/morph-inner.vue?vue&type=style&index=0&lang=scss&":
-/*!**************************************************************************!*\
-  !*** ./vue/components/morph-inner.vue?vue&type=style&index=0&lang=scss& ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./morph-inner.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./vue/components/morph-inner.vue?vue&type=template&id=bd743be2&":
-/*!***********************************************************************!*\
-  !*** ./vue/components/morph-inner.vue?vue&type=template&id=bd743be2& ***!
-  \***********************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_template_id_bd743be2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./morph-inner.vue?vue&type=template&id=bd743be2& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/morph-inner.vue?vue&type=template&id=bd743be2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_template_id_bd743be2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_inner_vue_vue_type_template_id_bd743be2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
