@@ -24,7 +24,7 @@ export default class L10nModule extends Module {
         }
       }
     }
-    store.registerModule(this.constructor.publicName, this.store)
+    store.registerModule(this.constructor.moduleName, this.store)
 
     /**
      * An API object groups all publicly available methods of a module.
@@ -104,8 +104,8 @@ export default class L10nModule extends Module {
         }
       }
     }
-    api[this.constructor.publicName] = this.api(store)
+    api[this.constructor.moduleName] = this.api(store)
   }
 }
 
-L10nModule.publicName = 'l10n'
+L10nModule.moduleName = 'l10n'

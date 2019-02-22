@@ -83,7 +83,7 @@ describe('l10n-module.test.js', () => {
 
   it('L10nModule should have a correct static public name', () => {
     const modulePublicName = 'l10n'
-    expect(L10nModule.publicName).toEqual(modulePublicName)
+    expect(L10nModule.moduleName).toEqual(modulePublicName)
   })
 
   it('L10nModule should have a fully initialized private L10n object', () => {

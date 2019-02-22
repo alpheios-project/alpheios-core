@@ -5,7 +5,7 @@ import Popup from '@/vue/components/popup.vue'
 export default class PopupModule {
   constructor (store, api, config) {
     this.config = Object.assign(PopupModule.configDefaults, config)
-    store.registerModule(this.constructor.publicName, this.constructor.store())
+    store.registerModule(this.constructor.moduleName, this.constructor.store())
 
     this.vi = new Vue({
       el: this.config.mountPoint,
@@ -21,7 +21,7 @@ export default class PopupModule {
       },
       data: {
         // Reactive options of the Popup UI component
-        popupData: {
+        moduleData: {
           // Default popup position, with units
           top: '10vh',
           left: '10vw',
@@ -44,17 +44,17 @@ export default class PopupModule {
           // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
           viewportMargin: 5
         },
-        currentPopupComponent: this.config.popupComponent
+        componentName: this.config.popupComponent
       }
     })
   }
 
-  get publicName () {
-    return this.constructor.publicName || `Module's name is not defined`
+  get moduleName () {
+    return this.constructor.moduleName || `Module's name is not defined`
   }
 }
 
-PopupModule.publicName = 'popup'
+PopupModule.moduleName = 'popup'
 
 PopupModule.store = () => {
   return {

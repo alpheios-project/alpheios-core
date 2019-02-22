@@ -118,7 +118,7 @@ import WordUsageIcon from '@/images/inline-icons/books-stack.svg'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
-  name: 'Navmenu',
+  name: 'DropDownMenu',
   // API modules that are required for this component
   inject: {
     app: 'app',

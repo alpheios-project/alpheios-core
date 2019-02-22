@@ -3,7 +3,7 @@
        :style="mainstyles" class="alpheios-panel alpheios-panel--compact auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
-       v-show="this.$store.state.panel.visible">
+       v-show="$store.state.panel.visible">
 
     <div class="alpheios-panel__header" >
       <div class="alpheios-panel__menu-btn" @click="menuItemClicked">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="alpheios-panel__content">
-      <navmenu :visibility="menuVisible"></navmenu>
+      <drop-down-menu :visibility="menuVisible"/>
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw"
@@ -184,7 +184,7 @@
    */
 
 // Vue components
-import Navmenu from '@/vue/components/nav/navmenu.vue'
+import DropDownMenu from '@/vue/components/nav/drop-down-menu.vue'
 import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
 import Inflections from './inflections.vue'
 import Setting from './setting.vue'
@@ -226,7 +226,7 @@ export default {
   mixins: [DependencyCheck],
   components: {
     menuIcon: MenuIcon,
-    navmenu: Navmenu,
+    dropDownMenu: DropDownMenu,
     navbuttonsCompact: NavbuttonsCompact,
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,

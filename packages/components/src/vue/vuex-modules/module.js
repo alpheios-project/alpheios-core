@@ -11,8 +11,8 @@ export default class Module {
     this.store = {}
   }
 
-  get publicName () {
-    return this.constructor.publicName || `Module's name is not defined`
+  get moduleName () {
+    return this.constructor.moduleName || `Module's name is not defined`
   }
 }
 
@@ -21,4 +21,4 @@ export default class Module {
  * It is also used as a prefix for any global function a module may install on Vue instances.
  * @type {string}
  */
-Module.publicName = `Module's name must be defined in a child`
+Module.moduleName = `Module's name must be defined in a child`

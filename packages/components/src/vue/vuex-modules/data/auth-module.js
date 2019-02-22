@@ -11,7 +11,7 @@ export default class AuthModule extends Module {
       // All stores of modules are namespaced
       namespaced: true
     }
-    store.registerModule(this.constructor.publicName, this.store)
+    store.registerModule(this.constructor.moduleName, this.store)
 
     this.api = () => {
       return {
@@ -21,8 +21,8 @@ export default class AuthModule extends Module {
         logout: this._auth.logout.bind(this._auth)
       }
     }
-    api[this.constructor.publicName] = this.api()
+    api[this.constructor.moduleName] = this.api()
   }
 }
 
-AuthModule.publicName = 'auth'
+AuthModule.moduleName = 'auth'

@@ -3,7 +3,7 @@
        :style="mainstyles" class="alpheios-panel alpheios-panel--large auk"
        data-component="alpheios-panel"
        data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
-       v-show="this.$store.state.panel.visible">
+       v-show="$store.state.panel.visible">
 
     <div class="alpheios-panel__header">
       <div class="alpheios-panel__header-logo">

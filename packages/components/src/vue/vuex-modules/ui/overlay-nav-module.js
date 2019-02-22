@@ -1,12 +1,11 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
-import Panel from '@/vue/components/panel.vue'
-import CompactPanel from '@/vue/components/panel-compact.vue'
+import OverlayNav from '@/vue/components/nav/overlay-nav.vue'
 
 // TODO: Add a check for required modules
-export default class PanelModule {
+export default class OverlayNavModule {
   constructor (store, api, config = {}) {
-    this.config = Object.assign(PanelModule.configDefaults, config)
-    store.registerModule(this.constructor.moduleName, this.constructor.store(this.config.panelComponent))
+    this.config = Object.assign(OverlayNavModule.configDefaults, config)
+    store.registerModule(this.constructor.moduleName, this.constructor.store())
 
     this.vi = new Vue({
       el: this.config.mountPoint,
@@ -18,8 +17,10 @@ export default class PanelModule {
        */
       api: api,
       components: {
-        panel: Panel, // A desktop version of a panel
-        compactPanel: CompactPanel // A mobile version of a panel
+        overlayNav: OverlayNav
+      },
+      data: {
+        componentName: 'overlayNav'
       }
     })
   }
@@ -29,17 +30,16 @@ export default class PanelModule {
   }
 }
 
-PanelModule.moduleName = 'panel'
+OverlayNavModule.moduleName = 'overlayNav'
 
-PanelModule.store = (panelLayout) => {
+OverlayNavModule.store = () => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
 
     state: {
       // Whether a panel is shown or hidden
-      visible: false,
-      layout: panelLayout
+      visible: false
     },
     mutations: {
       /**
@@ -65,12 +65,8 @@ PanelModule.store = (panelLayout) => {
   }
 }
 
-PanelModule.configDefaults = {
-  // A selector that specifies to what DOM element a panel will be mounted.
+OverlayNavModule.configDefaults = {
+  // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-panel',
-
-  // A name of the panel component defined in `components` section of a Vue instance.
-  // This is a component that will be mounted.
-  panelComponent: 'panel'
+  mountPoint: '#alpheios-overlay-nav'
 }

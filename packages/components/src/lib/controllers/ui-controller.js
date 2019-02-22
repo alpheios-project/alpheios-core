@@ -81,7 +81,10 @@ export default class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
-    this.store = new Vuex.Store() // Vuex store. A public API for data and UI module interactions.
+    // Vuex store. A public API for data and UI module interactions.
+    this.store = new Vuex.Store({
+      strict: true
+    })
     this.api = {} // An API object for functions of registered modules and UI controller.
     this.dataModules = new Map() // Data modules that are registered to be included into the store.
     this.uiModules = new Map()
@@ -266,12 +269,12 @@ export default class UIController {
    * @return {UIController} - A self reference for chaining.
    */
   registerDataModule (moduleClass, ...options) {
-    this.dataModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options: options, instance: null })
+    this.dataModules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options: options, instance: null })
     return this
   }
 
   registerUiModule (moduleClass, options) {
-    this.uiModules.set(moduleClass.publicName, { ModuleClass: moduleClass, options, instance: null })
+    this.uiModules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     return this
   }
 
@@ -566,6 +569,7 @@ export default class UIController {
       switchPopup: this.switchPopup.bind(this), // Switches between different types of popups
       changeTab: this.changeTab.bind(this),
       showPanelTab: this.showPanelTab.bind(this),
+      togglePanelTab: this.togglePanelTab.bind(this),
 
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
@@ -803,12 +807,6 @@ export default class UIController {
     this.store.commit(`ui/setNotification`, { text: message, important: true })
   }
 
-  showPanelTab (tabName) {
-    this.api.ui.changeTab(tabName)
-    this.api.ui.openPanel()
-    return this
-  }
-
   changeTab (tabName) {
     const statusAvailable = Boolean(this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
     // If tab is disabled, switch to a default one
@@ -822,6 +820,29 @@ export default class UIController {
       tabName = this.defaultTab
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
+    return this
+  }
+
+  showPanelTab (tabName) {
+    this.api.ui.changeTab(tabName)
+    this.api.ui.openPanel()
+    return this
+  }
+
+  togglePanelTab (tabName) {
+    if (this.store.state.ui.activeTab === tabName) {
+      // If clicked on the tab matching a currently selected tab, close the panel
+      if (this.state.isPanelOpen()) {
+        this.api.ui.closePanel()
+      } else {
+        this.api.ui.openPanel()
+      }
+    } else {
+      this.api.ui.changeTab(tabName)
+      if (!this.state.isPanelOpen()) {
+        this.api.ui.openPanel()
+      }
+    }
     return this
   }
 

@@ -8917,12 +8917,6 @@ body {
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
-
-/************ UIKit vars ************************/
-/************ Multiselect vars ************************/
-/*********** Font styles ***********************/
-/********** Light Schema ***********************/
-/********** Dark Schema ***********************/
 .alpheios-lemma__translations {
   padding: 5px 0 0 22px;
   font-style: italic;
@@ -10612,6 +10606,121 @@ ul.alpheios-skin_properties {
   position: absolute;
   top: 5px;
   right: 5px;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
+.alpheios-overlay-nav {
+  background: transparent;
+  width: 30px;
+  position: fixed;
+  top: 10px;
+  right: 15px;
+  z-index: 10000;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+.alpheios-overlay-nav .alpheios-navbuttons__btn {
+    background: #FFF;
+    border: 1px solid #B8B7B5;
+    padding: 5px;
+}
+.alpheios-overlay-nav .alpheios-navbuttons__btn {
+    width: 40px;
+    height: 40px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+}
+.alpheios-overlay-nav .alpheios-navbuttons__btn svg {
+    width: 20px;
+    height: 20px;
+    top: 9px;
+    left: 0;
+    position: relative;
+    box-sizing: border-box;
+}
+.alpheios-overlay-nav .alph_tooltip {
+    position: relative;
+}
+.alpheios-overlay-nav .alph_tooltip .tooltiptext {
+    visibility: hidden;
+    position: absolute;
+    width: 120px;
+    text-align: center;
+    z-index: 1;
+    opacity: 0;
+    font-size: 12px;
+    display: none;
+    padding: 5px 0;
+    border-radius: 6px;
+    transition: opacity 0.6s ease 0s;
+    background-color: #fcfcfa;
+    color: #4e6476;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #4e6476;
+    border-image: initial;
+}
+.alpheios-overlay-nav .alph_tooltip-left {
+    top: 5px;
+    bottom: auto;
+    right: 128%;
+}
+.alpheios-overlay-nav .alph_tooltip-left::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #555;
+}
+.alpheios-overlay-nav .alph_tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    display: inline;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__header {
+    height: 20px;
+    width: 40px;
+    box-sizing: border-box;
+    border: 1px solid #B8B7B5;
+    cursor: pointer;
+    background: #FFF;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__header svg {
+      width: 20px;
+      height: auto;
+      position: relative;
+      left: 9px;
+      top: -5px;
+      fill: #B8B7B5;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__header.expanded svg {
+      top: 5px;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__header:hover svg {
+      fill: #5BC8DC;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__drag-handle {
+    width: 40px;
+    height: 30px;
+    border: 1px solid #B8B7B5;
+    border-bottom: none;
+    background: #FFF;
+    box-sizing: border-box;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__logo-icon {
+    width: 30px;
+    height: auto;
+    position: relative;
+    top: 3px;
+    left: 4px;
 }
 
 
