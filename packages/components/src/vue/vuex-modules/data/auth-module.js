@@ -1,17 +1,15 @@
 import Module from '@/vue/vuex-modules/module.js'
+import HTMLPage from '@/lib/utility/html-page.js'
 
 export default class AuthModule extends Module {
   /**
-   * @param {Object} auth - A background or app authenticator object
+   * @param {Object} config - A module's configuration object.
+   *        {Object} auth - A background or app authenticator object.
    */
-  constructor (store, api, auth) {
-    super()
-    this._auth = auth
-    this.store = {
-      // All stores of modules are namespaced
-      namespaced: true
-    }
-    store.registerModule(this.constructor.moduleName, this.store)
+  constructor (store, api, config) {
+    super(store, api, config)
+    this._auth = this.config.auth
+    store.registerModule(this.constructor.moduleName, this.constructor.store())
 
     this.api = () => {
       return {
@@ -25,4 +23,9 @@ export default class AuthModule extends Module {
   }
 }
 
-AuthModule.moduleName = 'auth'
+AuthModule._configDefaults = {
+  _moduleName: 'auth',
+  _moduleType: Module.types.DATA,
+  _supportedPlatforms: [HTMLPage.platforms.ANY],
+  auth: null
+}

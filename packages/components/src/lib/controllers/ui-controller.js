@@ -81,13 +81,18 @@ export default class UIController {
     this.isActivated = false
     this.isDeactivated = false
 
+    /**
+     * A name of the platform (mobile/desktop) UI controller is running within.
+     * @type {string} - A platform name from {HTMLPage.platforms}
+     */
+    this.platform = HTMLPage.getPlatform()
+
     // Vuex store. A public API for data and UI module interactions.
     this.store = new Vuex.Store({
       strict: true
     })
     this.api = {} // An API object for functions of registered modules and UI controller.
-    this.dataModules = new Map() // Data modules that are registered to be included into the store.
-    this.uiModules = new Map()
+    this.modules = new Map()
 
     /**
      * If an event controller be used with an instance of a UI Controller,
@@ -114,7 +119,10 @@ export default class UIController {
      */
 
     // Register data modules
-    uiController.registerDataModule(L10nModule, Locales.en_US, Locales.bundleArr())
+    uiController.registerModule(L10nModule, {
+      defaultLocale: Locales.en_US,
+      messageBundles: Locales.bundleArr()
+    })
 
     /*
     The second parameter of an AuthModule is environment specific.
@@ -251,7 +259,7 @@ export default class UIController {
   }
 
   setDefaultPanelState () {
-    if (!this.hasUiModule('panel')) { return this }
+    if (!this.hasModule('panel')) { return this }
     if (this.uiOptions.items.panelOnActivate.currentValue) {
       // If option value of panelOnActivate is true
       this.state.setPanelOpen()
@@ -262,33 +270,43 @@ export default class UIController {
   }
 
   /**
-   * Registers a data module for use by UI controller and other modules.
+   * Registers a module for use by UI controller and other modules.
    * It instantiates each module and adds them to the registered modules store.
    * @param {Module} moduleClass - A data module's class (i.e. the constructor function).
    * @param options - Arbitrary number of values that will be passed to the module constructor.
    * @return {UIController} - A self reference for chaining.
    */
-  registerDataModule (moduleClass, ...options) {
-    this.dataModules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options: options, instance: null })
+  registerModule (moduleClass, options) {
+    if (moduleClass.isSupportedPlatform(this.platform)) {
+      // Add `platform` to module's options
+      options.platform = this.platform
+      this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
+    } else {
+      console.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform} platform`)
+    }
     return this
   }
 
-  registerUiModule (moduleClass, options) {
-    this.uiModules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
-    return this
+  get dataModules () {
+    return Array.from(this.modules.values()).filter(m => m.ModuleClass.isDataModule)
   }
 
-  unregisterUiModule (moduleName) {
-    this.uiModules.delete(moduleName)
-    return this
+  get uiModules () {
+    return Array.from(this.modules.values()).filter(m => m.ModuleClass.isUiModule)
   }
 
-  hasUiModule (moduleName) {
-    return this.uiModules.has(moduleName)
+  createModules () {
+    // Create data modules fist, UI modules after that because UI modules are dependent on data ones
+    this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, m.options) })
+    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, m.options) })
   }
 
-  getUiModule (moduleName) {
-    return this.uiModules.get(moduleName).instance
+  hasModule (moduleName) {
+    return this.modules.has(moduleName)
+  }
+
+  getModule (moduleName) {
+    return this.modules.get(moduleName).instance
   }
 
   async init () {
@@ -312,18 +330,6 @@ export default class UIController {
     container.outerHTML = this.options.template.html
 
     await Promise.all(optionLoadPromises)
-
-    // Override stored settings with user specified ones, if necessary
-    if (HTMLPage.enableCompactUI) {
-      if (this.uiModules.has('panel')) {
-        console.warn(`Detected a device with limited screen estate. UI will be forced to its compact representation`)
-        let panelData = this.uiModules.get('panel')
-        panelData.options.panelComponent = 'compactPanel'
-      }
-      if (this.uiModules.has('popup')) {
-        this.unregisterUiModule('popup')
-      }
-    }
 
     /**
      * This is a settings API. It exposes different options to modules and UI components.
@@ -558,8 +564,8 @@ export default class UIController {
       zIndex: this.zIndex, // A z-index of Alpheios UI elements
 
       // Modules
-      hasModule: this.hasUiModule.bind(this), // Checks if a UI module is available
-      getModule: this.getUiModule.bind(this), // Gets direct access to module.
+      hasModule: this.hasModule.bind(this), // Checks if a UI module is available
+      getModule: this.getModule.bind(this), // Gets direct access to module.
 
       // Actions
       openPanel: this.openPanel.bind(this),
@@ -635,11 +641,7 @@ export default class UIController {
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
 
-    // Create all registered data modules
-    this.dataModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, ...m.options) })
-    // Create all registered UI modules. First two parameters of their constructors are Vuex store and API refs.
-    // This must be done after creation of data modules.
-    this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, m.options) })
+    this.createModules()
 
     // Set initial values of components
     this.setRootComponentClasses()

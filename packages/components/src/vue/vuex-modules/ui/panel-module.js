@@ -1,12 +1,14 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
+import Module from '@/vue/vuex-modules/module.js'
 import Panel from '@/vue/components/panel.vue'
 import CompactPanel from '@/vue/components/panel-compact.vue'
+import HTMLPage from '@/lib/utility/html-page.js'
 
 // TODO: Add a check for required modules
-export default class PanelModule {
-  constructor (store, api, config = {}) {
-    this.config = Object.assign(PanelModule.configDefaults, config)
-    store.registerModule(this.constructor.moduleName, this.constructor.store(this.config.panelComponent))
+export default class PanelModule extends Module {
+  constructor (store, api, config) {
+    super(store, api, config)
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this.config))
 
     this.vi = new Vue({
       el: this.config.mountPoint,
@@ -23,15 +25,9 @@ export default class PanelModule {
       }
     })
   }
-
-  get moduleName () {
-    return this.constructor.moduleName || `Module's name is not defined`
-  }
 }
 
-PanelModule.moduleName = 'panel'
-
-PanelModule.store = (panelLayout) => {
+PanelModule.store = (config) => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
@@ -39,7 +35,7 @@ PanelModule.store = (panelLayout) => {
     state: {
       // Whether a panel is shown or hidden
       visible: false,
-      layout: panelLayout
+      layout: config.platform === HTMLPage.platforms.DESKTOP ? `panel` : 'compactPanel'
     },
     mutations: {
       /**
@@ -65,12 +61,11 @@ PanelModule.store = (panelLayout) => {
   }
 }
 
-PanelModule.configDefaults = {
+PanelModule._configDefaults = {
+  _moduleName: 'panel',
+  _moduleType: Module.types.UI,
+  _supportedPlatforms: [HTMLPage.platforms.DESKTOP, HTMLPage.platforms.MOBILE],
   // A selector that specifies to what DOM element a panel will be mounted.
   // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-panel',
-
-  // A name of the panel component defined in `components` section of a Vue instance.
-  // This is a component that will be mounted.
-  panelComponent: 'panel'
+  mountPoint: '#alpheios-panel'
 }

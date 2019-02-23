@@ -1,10 +1,12 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
+import Module from '@/vue/vuex-modules/module.js'
 import Popup from '@/vue/components/popup.vue'
+import HTMLPage from '@/lib/utility/html-page.js'
 
 // TODO: Add a check for required modules
-export default class PopupModule {
+export default class PopupModule extends Module {
   constructor (store, api, config) {
-    this.config = Object.assign(PopupModule.configDefaults, config)
+    super(store, api, config)
     store.registerModule(this.constructor.moduleName, this.constructor.store())
 
     this.vi = new Vue({
@@ -48,13 +50,7 @@ export default class PopupModule {
       }
     })
   }
-
-  get moduleName () {
-    return this.constructor.moduleName || `Module's name is not defined`
-  }
 }
-
-PopupModule.moduleName = 'popup'
 
 PopupModule.store = () => {
   return {
@@ -85,7 +81,11 @@ PopupModule.store = () => {
   }
 }
 
-PopupModule.configDefaults = {
+PopupModule._configDefaults = {
+  _moduleName: 'popup',
+  _moduleType: Module.types.UI,
+  _supportedPlatforms: [HTMLPage.platforms.DESKTOP],
+
   // A selector that specifies to what DOM element a popup will be mounted.
   // This element will be replaced with the root element of the popup component.
   mountPoint: '#alpheios-popup',

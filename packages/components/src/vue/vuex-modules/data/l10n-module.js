@@ -1,30 +1,23 @@
 import Module from '@/vue/vuex-modules/module.js'
 import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
+import HTMLPage from '@/lib/utility/html-page.js'
 
 export default class L10nModule extends Module {
-  constructor (store, api, defaultLocale = Locales.en_US, messageBundles = []) {
-    super()
+  // defaultLocale = Locales.en_US, messageBundles = []
+
+  /**
+   * @param {Object} store - A Vuex store.
+   * @param {Object} api - A public API object.
+   * @param {Object} config - A module's configuration object:
+   *        {string} defaultLocale - A default locale's code.
+   */
+  constructor (store, api, config) {
+    super(store, api, config)
     this._l10n = new L10n()
-    messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
-    this._l10n.setLocale(defaultLocale)
-
-    this.store = {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-        selectedLocale: this._l10n.selectedLocale
-      },
-      mutations: {
-        // For arrow functions `this` will point to the class instance, not to the store
-        setLocale: (state, newLocale) => {
-          this._l10n.setLocale(newLocale)
-          state.selectedLocale = this._l10n.selectedLocale
-        }
-      }
-    }
-    store.registerModule(this.constructor.moduleName, this.store)
+    this.config.messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
+    this._l10n.setLocale(this.config.defaultLocale)
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this.config, this))
 
     /**
      * An API object groups all publicly available methods of a module.
@@ -108,4 +101,28 @@ export default class L10nModule extends Module {
   }
 }
 
-L10nModule.moduleName = 'l10n'
+L10nModule.store = (config, moduleInstance) => {
+  return {
+    // All stores of modules are namespaced
+    namespaced: true,
+
+    state: {
+      selectedLocale: moduleInstance._l10n.selectedLocale
+    },
+    mutations: {
+      // For arrow functions `this` will point to the class instance, not to the store
+      setLocale: (state, newLocale) => {
+        moduleInstance._l10n.setLocale(newLocale)
+        state.selectedLocale = moduleInstance._l10n.selectedLocale
+      }
+    }
+  }
+}
+
+L10nModule._configDefaults = {
+  _moduleName: 'l10n',
+  _moduleType: Module.types.DATA,
+  _supportedPlatforms: [HTMLPage.platforms.ANY],
+  defaultLocale: Locales.en_US,
+  messageBundles: []
+}

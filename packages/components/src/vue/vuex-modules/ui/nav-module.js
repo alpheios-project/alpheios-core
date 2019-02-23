@@ -1,10 +1,12 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
+import Module from '@/vue/vuex-modules/module.js'
 import OverlayNav from '@/vue/components/nav/overlay-nav.vue'
+import HTMLPage from '@/lib/utility/html-page.js'
 
 // TODO: Add a check for required modules
-export default class OverlayNavModule {
-  constructor (store, api, config = {}) {
-    this.config = Object.assign(OverlayNavModule.configDefaults, config)
+export default class NavModule extends Module {
+  constructor (store, api, config) {
+    super(store, api, config)
     store.registerModule(this.constructor.moduleName, this.constructor.store())
 
     this.vi = new Vue({
@@ -24,15 +26,9 @@ export default class OverlayNavModule {
       }
     })
   }
-
-  get moduleName () {
-    return this.constructor.moduleName || `Module's name is not defined`
-  }
 }
 
-OverlayNavModule.moduleName = 'overlayNav'
-
-OverlayNavModule.store = () => {
+NavModule.store = () => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
@@ -65,7 +61,10 @@ OverlayNavModule.store = () => {
   }
 }
 
-OverlayNavModule.configDefaults = {
+NavModule._configDefaults = {
+  _moduleName: 'navModule',
+  _moduleType: Module.types.UI,
+  _supportedPlatforms: [HTMLPage.platforms.DESKTOP],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-overlay-nav'

@@ -125,12 +125,12 @@ export default class HTMLPage {
   }
 
   /**
-   * Determines wither a compact version of the UI shall be enabled.
-   * @return {boolean} - True if compact version shall be enabled, false otherwise.
+   * Determines what version of a UI shall be used.
+   * @return {string} - A name of one of the platforms defined in HTMLPage.platforms.
    */
-  static get enableCompactUI () {
+  static getPlatform () {
     const screenWidthThreshold = 720
-    return window.screen.width < screenWidthThreshold
+    return window.screen.width <= screenWidthThreshold ? HTMLPage.platforms.MOBILE : HTMLPage.platforms.DESKTOP
   }
 }
 
@@ -143,4 +143,25 @@ HTMLPage.targetRequirements = {
     'grammars.alpheios.net',
     'alpheios.net/alpheios-treebanks'
   ]
+}
+
+/**
+ * Constants that determine platforms where an app is running.
+ * Used by modules and components to tweak their appearance.
+ */
+HTMLPage.platforms = {
+  /**
+   * An environment with limited screen estate with finger-based interactions.
+   */
+  MOBILE: 'mobile',
+
+  /**
+   * Environment with larger screens and mouse-based interactions.
+   */
+  DESKTOP: 'desktop',
+
+  /**
+   * Indicates a platform agnostic value.
+   */
+  ANY: 'any'
 }
