@@ -144,17 +144,21 @@ export default class UIController {
 
     // Creates on configures an event listener
     let eventController = new UIEventController()
-    switch (uiController.options.textQueryTrigger) {
-      case 'dblClick':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), MouseDblClick)
-        break
-      case 'longTap':
-        eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), LongTap)
-        break
-      default:
-        eventController.registerListener(
-          'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), GenericEvt, uiController.options.textQueryTrigger
-        )
+    if (uiController.platform === HTMLPage.platforms.MOBILE) {
+      eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), LongTap)
+    } else {
+      switch (uiController.options.textQueryTrigger) {
+        case 'dblClick':
+          eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), MouseDblClick)
+          break
+        case 'longTap':
+          eventController.registerListener('GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), LongTap)
+          break
+        default:
+          eventController.registerListener(
+            'GetSelectedText', uiController.options.textQuerySelector, uiController.getSelectedText.bind(uiController), GenericEvt, uiController.options.textQueryTrigger
+          )
+      }
     }
 
     eventController.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), GenericEvt, 'keydown')
@@ -657,7 +661,7 @@ export default class UIController {
       // that operates on an in-memory user until such time the user authenticates
       // see issue 317
       this.userDataManager = new UserDataManager('testUserID', WordlistController.evt)
-      this.wordlistC.initLists(this.userDataManager)
+      await this.wordlistC.initLists(this.userDataManager)
     }
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))

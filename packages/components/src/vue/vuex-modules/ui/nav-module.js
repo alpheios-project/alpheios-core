@@ -7,9 +7,10 @@ import HTMLPage from '@/lib/utility/html-page.js'
 export default class NavModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
+
     store.registerModule(this.constructor.moduleName, this.constructor.store())
 
-    this.vi = new Vue({
+    this._vi = new Vue({
       el: this.config.mountPoint,
       store: store, // Install store into the panel
       provide: api, // Public API of the modules for child components

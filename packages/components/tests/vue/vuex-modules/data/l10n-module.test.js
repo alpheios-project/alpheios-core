@@ -67,10 +67,13 @@ describe('l10n-module.test.js', () => {
 
     api = {}
 
-    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.createBundleArr([
-      [testMsgsEnUs, Locales.en_US],
-      [testMsgsEnGb, Locales.en_GB]
-    ]))
+    l10nModule = new L10nModule(store, api, {
+      defaultLocale: Locales.en_US,
+      messageBundles: Locales.createBundleArr([
+        [testMsgsEnUs, Locales.en_US],
+        [testMsgsEnGb, Locales.en_GB]
+      ])
+    })
   })
 
   afterEach(() => {
@@ -94,20 +97,6 @@ describe('l10n-module.test.js', () => {
     expect(l10nModule._l10n.locales).toEqual(expect.arrayContaining(l10nLocales))
     expect(l10nModule._l10n.locales).toHaveLength(l10nLocalesQty)
     expect(l10nModule._l10n.selectedLocale).toEqual(selectedLocale)
-  })
-
-  it('L10nModule should expose a store object with correct data props', () => {
-    const props = ['selectedLocale']
-    expect(Object.keys(l10nModule.store.state)).toEqual(expect.arrayContaining(props))
-  })
-
-  it('L10nModule should expose a store object with correct mutations', () => {
-    const props = ['setLocale']
-    expect(Object.keys(l10nModule.store.mutations)).toEqual(expect.arrayContaining(props))
-  })
-
-  it('L10nModule should expose a store object that must be namespaced', () => {
-    expect(Object.keys(l10nModule.store.namespaced)).toBeTruthy()
   })
 
   it(`L10nModule's store should be initialized with correct default values`, () => {

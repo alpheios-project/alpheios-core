@@ -46,13 +46,33 @@ export default class Module {
 }
 
 /**
- * A module's Vuex store object that will be integrated into global Vuex store of a UI controller.
- * @type {Object}
+ * Specifies a generic API of a function that returns a module's Vuex store object
+ * that will be integrated into a global Vuex store of a UI controller.
  */
-Module.store = (config) => {
+Module.store = (moduleInstance) => {
   return {
-    // All stores of modules are namespaced
-    namespaced: true
+    // Should return a Vuex store module object (if module provides any store module)
+  }
+}
+
+/**
+ * Specifies a generic API of a function that returns a module's public API object
+ * that will be integrated into a global Vuex store of a UI controller.
+ * An API object groups all publicly available methods of a module.
+ * They will be exposed to UI components by the UI controller.
+ * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
+ * Methods of a module will be available within a UI component after injection as
+ * `this.moduleName.methodName`.
+ *
+ * Because some methods may need access to the module itself and Vuex store instance, `api` is a function
+ * that takes `store` as an argument and returns an object that contains API methods.
+ * @param {Module} moduleInstance - An instance of a module object.
+ * @param {Vuex} store - an instance of a Vuex store that API methods may need to operate upon.
+ * @return {Object} An object containing public methods of a module.
+ */
+Module.api = (moduleInstance, store) => {
+  return {
+    // Should return a list of functions from the module's public API (of module provides a public API)
   }
 }
 

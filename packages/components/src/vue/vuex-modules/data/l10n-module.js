@@ -17,91 +17,12 @@ export default class L10nModule extends Module {
     this._l10n = new L10n()
     this.config.messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
     this._l10n.setLocale(this.config.defaultLocale)
-    store.registerModule(this.constructor.moduleName, this.constructor.store(this.config, this))
-
-    /**
-     * An API object groups all publicly available methods of a module.
-     * They will be exposed to UI components by the UI controller.
-     * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
-     * Methods of a module will be available within a UI component after injection as
-     * `this.moduleName.methodName`
-     *
-     * Because some methods may need access to the Vuex store instance, `api` is a function
-     * that takes `store` as an argument and returns an object that contains API methods.
-     * For arrow functions `this` will be bound to the module's instance,
-     * for regular functions - to the object that is returned by the `api` function.
-     * @param {Vuex} store - an instance of a Vuex store that API methods may need to operate upon.
-     * @return {Object} An object containing public methods of a module.
-     */
-    this.api = (store) => {
-      return {
-        /**
-         * Returns a current locale of L10n.
-         * @return {string} - A current locale
-         */
-        getLocale: () => {
-          return this.store.state.selectedLocale
-        },
-
-        /**
-         * Sets locale of L10n to a new value.
-         * @param newLocale
-         */
-        setLocale: function (newLocale) {
-          if (store.state.l10n.selectedLocale !== newLocale) {
-            return store.commit('l10n/setLocale', newLocale)
-          }
-        },
-
-        /**
-         * Checks if message is in translated messages list.
-         * @param messageID
-         * @return {boolean}
-         */
-        hasMsg: (messageID) => {
-          return this._l10n.bundle.hasMsg(messageID)
-        },
-
-        /**
-         * Returns a translated message for a message ID given.
-         * If not translation found, returns an error message.
-         * @param {string} messageID - A message ID of a string to retrieve.
-         * @param formatOptions
-         * @param options
-         * @return {string} - A formatted translated text of a string.
-         */
-        getMsg: (messageID, formatOptions, options) => {
-          return this._l10n.bundle.getMsg(messageID, formatOptions, options)
-        },
-
-        /**
-         * Returns a translated message for a message ID given.
-         * If not translation found, returns a message ID string.
-         * @param {string} messageID - A message ID of a string to retrieve.
-         * @param formatOptions
-         * @param options
-         * @return {string} - A formatted translated text of a string.
-         */
-        getText: (messageID, formatOptions, options) => {
-          return this._l10n.bundle.getText(messageID, formatOptions, options)
-        },
-
-        /**
-         * Returns a translated version of an abbreviated message.
-         * @param messageID
-         * @param formatOptions
-         * @return {string}
-         */
-        getAbbr: (messageID, formatOptions) => {
-          return this._l10n.bundle.getAbbr(messageID, formatOptions)
-        }
-      }
-    }
-    api[this.constructor.moduleName] = this.api(store)
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this))
+    api[this.constructor.moduleName] = this.constructor.api(this, store)
   }
 }
 
-L10nModule.store = (config, moduleInstance) => {
+L10nModule.store = (moduleInstance) => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
@@ -115,6 +36,71 @@ L10nModule.store = (config, moduleInstance) => {
         moduleInstance._l10n.setLocale(newLocale)
         state.selectedLocale = moduleInstance._l10n.selectedLocale
       }
+    }
+  }
+}
+
+L10nModule.api = (moduleInstance, store) => {
+  return {
+    /**
+     * Returns a current locale of L10n.
+     * @return {string} - A current locale
+     */
+    getLocale: () => {
+      return store.state.l10n.selectedLocale
+    },
+
+    /**
+     * Sets locale of L10n to a new value.
+     * @param newLocale
+     */
+    setLocale: function (newLocale) {
+      if (store.state.l10n.selectedLocale !== newLocale) {
+        return store.commit('l10n/setLocale', newLocale)
+      }
+    },
+
+    /**
+     * Checks if message is in translated messages list.
+     * @param messageID
+     * @return {boolean}
+     */
+    hasMsg: (messageID) => {
+      return moduleInstance._l10n.bundle.hasMsg(messageID)
+    },
+
+    /**
+     * Returns a translated message for a message ID given.
+     * If not translation found, returns an error message.
+     * @param {string} messageID - A message ID of a string to retrieve.
+     * @param formatOptions
+     * @param options
+     * @return {string} - A formatted translated text of a string.
+     */
+    getMsg: (messageID, formatOptions, options) => {
+      return moduleInstance._l10n.bundle.getMsg(messageID, formatOptions, options)
+    },
+
+    /**
+     * Returns a translated message for a message ID given.
+     * If not translation found, returns a message ID string.
+     * @param {string} messageID - A message ID of a string to retrieve.
+     * @param formatOptions
+     * @param options
+     * @return {string} - A formatted translated text of a string.
+     */
+    getText: (messageID, formatOptions, options) => {
+      return moduleInstance._l10n.bundle.getText(messageID, formatOptions, options)
+    },
+
+    /**
+     * Returns a translated version of an abbreviated message.
+     * @param messageID
+     * @param formatOptions
+     * @return {string}
+     */
+    getAbbr: (messageID, formatOptions) => {
+      return moduleInstance._l10n.bundle.getAbbr(messageID, formatOptions)
     }
   }
 }

@@ -7,9 +7,10 @@ import HTMLPage from '@/lib/utility/html-page.js'
 export default class PopupModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
+
     store.registerModule(this.constructor.moduleName, this.constructor.store())
 
-    this.vi = new Vue({
+    this._vi = new Vue({
       el: this.config.mountPoint,
       store: store,
       provide: api, // Expose APIs to child components

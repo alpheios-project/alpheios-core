@@ -118,12 +118,15 @@ describe('panel.test.js', () => {
       }
     }
 
-    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
-      [enUS, Locales.en_US],
-      [enUSData, Locales.en_US],
-      [enUSInfl, Locales.en_US],
-      [enGB, Locales.en_GB]
-    ]))
+    l10nModule = new L10nModule(store, api, {
+      defaultLocale: Locales.en_US,
+      messageBundles: Locales.bundleArr([
+        [enUS, Locales.en_US],
+        [enUSData, Locales.en_US],
+        [enUSInfl, Locales.en_US],
+        [enGB, Locales.en_GB]
+      ])
+    })
   })
   afterEach(() => {
     jest.resetModules()

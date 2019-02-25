@@ -9,17 +9,17 @@ export default class AuthModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
     this._auth = this.config.auth
-    store.registerModule(this.constructor.moduleName, this.constructor.store())
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this))
+    api[this.constructor.moduleName] = this.constructor.api(this)
+  }
+}
 
-    this.api = () => {
-      return {
-        authenticate: this._auth.authenticate.bind(this._auth),
-        getProfileData: this._auth.getProfileData.bind(this._auth),
-        getUserData: this._auth.getUserData.bind(this._auth),
-        logout: this._auth.logout.bind(this._auth)
-      }
-    }
-    api[this.constructor.moduleName] = this.api()
+AuthModule.api = (moduleInstance) => {
+  return {
+    authenticate: moduleInstance._auth.authenticate.bind(moduleInstance._auth),
+    getProfileData: moduleInstance._auth.getProfileData.bind(moduleInstance._auth),
+    getUserData: moduleInstance._auth.getUserData.bind(moduleInstance._auth),
+    logout: moduleInstance._auth.logout.bind(moduleInstance._auth)
   }
 }
 

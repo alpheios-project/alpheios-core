@@ -8,9 +8,10 @@ import HTMLPage from '@/lib/utility/html-page.js'
 export default class PanelModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
-    store.registerModule(this.constructor.moduleName, this.constructor.store(this.config))
 
-    this.vi = new Vue({
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this))
+
+    this._vi = new Vue({
       el: this.config.mountPoint,
       store: store, // Install store into the panel
       provide: api, // Public API of the modules for child components
@@ -27,7 +28,7 @@ export default class PanelModule extends Module {
   }
 }
 
-PanelModule.store = (config) => {
+PanelModule.store = (moduleInstance) => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
@@ -35,7 +36,8 @@ PanelModule.store = (config) => {
     state: {
       // Whether a panel is shown or hidden
       visible: false,
-      layout: config.platform === HTMLPage.platforms.DESKTOP ? `panel` : 'compactPanel'
+      // Choose mobile or desktop layout from the value of the `platform` prop of a configuration object
+      layout: moduleInstance.config.platform === HTMLPage.platforms.DESKTOP ? `panel` : 'compactPanel'
     },
     mutations: {
       /**
