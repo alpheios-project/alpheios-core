@@ -508,7 +508,7 @@ export default {
     right: 0;
     border-left: 1px solid $alpheios-link-color-dark-bg;
     grid-template-columns: auto;
-    grid-template-areas: "header" "title" "content" "content"
+    grid-template-areas: "header" "content" "content"
 
   }
 
