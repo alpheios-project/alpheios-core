@@ -564,11 +564,6 @@ export default class UIController {
 
         setTranslDataReady (state, value = true) {
           state.translationsDataReady = value
-          // if (value) {
-          // This code has been transferred from popup.vue.
-          // TODO: do we need this functionality?
-          // this.logger.log(`${Date.now()}: translation data became available`, this.translations)
-          // }
         }
       }
     })
@@ -803,7 +798,6 @@ export default class UIController {
       } else if (this.store.state.app.currentLanguageName) {
         languageName = this.store.state.app.currentLanguageName
       } else {
-        // TODO this wil be unnecessary when the morphological adapter returns a consistent response for erors
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
       const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })

@@ -247,7 +247,7 @@ export default {
     inflectionattribute: InflectionAttribute,
     lemmatranslation: LemmaTranslation
   },
-  inject: ['app'],
+  inject: ['app', 'l10n'],
   storeModules: ['app'],
   mixins: [DependencyCheck],
   data: function () {
@@ -364,7 +364,7 @@ export default {
             }
           } */
       } else if (lex.lemma.features && Object.entries(lex.lemma.features).length > 0) {
-        definitions = [new Definition('No definition found.', 'en-US', 'text/plain', lex.lemma.word)]
+        definitions = [new Definition(this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lex.lemma.word)]
       }
       return definitions
     }

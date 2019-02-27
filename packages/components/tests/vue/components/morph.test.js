@@ -6,6 +6,12 @@ import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Morph from '@/vue/components/morph.vue'
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 import ShortDef from '@/vue/components/shortdef.vue'
+import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import Locales from '@/locales/locales.js'
+import enUS from '@/locales/en-us/messages.json'
+import enUSData from '@/locales/en-us/messages-data.json'
+import enUSInfl from '@/locales/en-us/messages-inflections.json'
+import enGB from '@/locales/en-gb/messages.json'
 
 describe('morph.test.js', () => {
   const localVue = createLocalVue()
@@ -28,7 +34,22 @@ describe('morph.test.js', () => {
       }
     }
   })
-  let api = {}
+  let api = {
+    app: {
+      getHomonymLexemes: () => homonym ? homonym.lexemes : [],
+      hasMorphData: () => true
+    }
+  }
+  const l10nModule = new L10nModule(store, api, {
+    defaultLocale: Locales.en_US,
+    messageBundles: Locales.bundleArr([
+      [enUS, Locales.en_US],
+      [enUSData, Locales.en_US],
+      [enUSInfl, Locales.en_US],
+      [enGB, Locales.en_GB]
+    ])
+  })
+
   let homonym
   console.error = function () {}
   console.log = function () {}
@@ -74,17 +95,6 @@ describe('morph.test.js', () => {
     jest.spyOn(console, 'warn')
 
     homonym = null
-    api = {
-      app: {
-        getHomonymLexemes: () => homonym ? homonym.lexemes : [],
-        hasMorphData: () => true
-      },
-      l10n: {
-        hasMsg () {
-          return false
-        }
-      }
-    }
   })
   afterEach(() => {
     jest.resetModules()
@@ -558,16 +568,16 @@ describe('morph.test.js', () => {
     expect(morphForms.find('[data-feature="person"]').text()).toEqual('3rd person')
 
     expect(morphForms.find('[data-feature="number"]').element.getAttribute('data-grouplevel')).toEqual('4')
-    expect(morphForms.find('[data-feature="number"]').text()).toEqual('singular')
+    expect(morphForms.find('[data-feature="number"]').text()).toEqual('sing.')
 
     expect(morphForms.find('[data-feature="tense"]').element.getAttribute('data-grouplevel')).toEqual('4')
-    expect(morphForms.find('[data-feature="tense"]').text()).toEqual('perfect')
+    expect(morphForms.find('[data-feature="tense"]').text()).toEqual('perf.')
 
     expect(morphForms.find('[data-feature="mood"]').element.getAttribute('data-grouplevel')).toEqual('4')
-    expect(morphForms.find('[data-feature="mood"]').text()).toEqual('indicative')
+    expect(morphForms.find('[data-feature="mood"]').text()).toEqual('ind.')
 
     expect(morphForms.find('[data-feature="voice"]').element.getAttribute('data-grouplevel')).toEqual('4')
-    expect(morphForms.find('[data-feature="voice"]').text()).toEqual('active')
+    expect(morphForms.find('[data-feature="voice"]').text()).toEqual('act.')
   })
 
   it('10 Morph - renders with disambiguated class', () => {

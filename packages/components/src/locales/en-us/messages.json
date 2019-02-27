@@ -318,6 +318,11 @@
     "component": "UI",
     "params": ["requestType","word"]
   },
+  "TEXT_NOTICE_NO_DEFS_FOUND": {
+    "message":"No definitions found",
+    "description": "displayed by the morph compoennt when there are no definition data exist",
+    "component": "UI"
+  },
   "TEXT_NOTICE_LEXQUERY_COMPLETE": {
     "message": "All lexical queries complete.",
     "description": "lexical queries complete notice",

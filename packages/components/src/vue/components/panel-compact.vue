@@ -320,7 +320,7 @@ export default {
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions.push(new Definition('No definition found.', 'en-US', 'text/plain', lexeme.lemma.word))
+            definitions.push(new Definition(this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
           }
         }
       }
@@ -348,15 +348,6 @@ export default {
     setPosition (position) {
       this.settings.contentOptions.items.panelPosition.setValue(position)
       this.panelPosition = position
-    },
-
-    clearContent: function () {
-      for (let contentArea in this.contentAreas) {
-        if (this.contentAreas.hasOwnProperty(contentArea)) {
-          this.contentAreas[contentArea].clearContent()
-        }
-      }
-      return this
     },
 
     contentOptionChanged: function (name, value) {
